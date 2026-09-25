@@ -11,10 +11,10 @@ title: |-
 
     ## Done when
 
-    - [ ] decide: shipped-for-a-folio, or dead since the split, per workflow
-    - [ ] the shipped ones have a home that makes their non-running visible rather than silent
-    - [ ] the dead ones go to `fsh-guts/`, never `rm`
-status: in-progress
+    - [x] decide: shipped-for-a-folio, or dead since the split, per workflow
+    - [x] the shipped ones have a home that makes their non-running visible rather than silent
+    - [x] the dead ones go to `fsh-guts/`, never `rm`
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T07:44:35Z
@@ -176,11 +176,11 @@ change.
       is wired into a workflow that actually runs
 - [x] the `no-folio` claim re-stated per invocation, with the reason that is
       actually true for each (`FOLIO_PATHS`, with tests)
-- [ ] **owner:** the five dispatch-only workflows expecting a folio under
+- [x] **owner:** the five dispatch-only workflows expecting a folio under
       `content/` — do they belong in the platform repo, or move to what
       `folio_init` writes into a folio? If dead, they go to `fsh-guts/`,
       never `rm`
-- [ ] **owner:** two of them (`section-title-audit`, `witness-pipeline`) have
+- [x] **owner:** two of them (`section-title-audit`, `witness-pipeline`) have
       never been run once. A workflow with no runs is invisible to
       `check:ci-health` by construction, so "fixed" here is unobservable
       until something dispatches them
@@ -262,5 +262,24 @@ exemptions for it. That is `5rfy`'s "29 of 32 never fire" as a standing cost.
 - [x] decide, per workflow, with evidence — table above
 - [x] `publish.yml` established as a live interface, out of scope
 - [x] the "vendored by folios" premise checked against the only folio: FALSE
-- [ ] **owner:** the five — templates `folio_init` writes, `fsh-guts/`, or
+- [x] **owner:** the five — templates `folio_init` writes, `fsh-guts/`, or
       reference material outside `.github/workflows/`?
+
+## Summary of Changes
+
+Owner, 2026-09-23/24: *"folio_init templates"* for the generic three, and
+*"Genericise them"* for the Lean four. None was dead, so none went to
+`fsh-guts/`.
+
+- `cat-harness/templates/` is declared as `folio-templates`. `document/`
+  (qa-sweep, qa-sweep-nightly, section-title-audit) is written into every new
+  folio. `paper/` (blueprint, lean-build, lean-build-sidecar, lean_ci, plus
+  their scripts and the lake-cache action) is written into paper folios only.
+- The Lean workflows name no paper. A discover job builds a matrix over every
+  `<folio>/<paper>/lean/` that has a lakefile, and finding none fails the job.
+- Scripts that other files still use were copied, not moved. STEP_EXEMPTIONS
+  and check-workflow-paths lost only the entries that matched nothing.
+- `init-folio.test.ts` pins the document/paper sets, no `qou`, no leftover
+  placeholder, and YAML that parses.
+
+`witness-pipeline.yml` was not part of the owner's decision and has never run. It moved to its own bean, `1l13`, and `section-title-audit` is now a template, so the never-run item has nothing left here.

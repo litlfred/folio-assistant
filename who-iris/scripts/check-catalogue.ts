@@ -31,6 +31,8 @@
  *   4. the census, printed rather than asserted, because the ratio of
  *      referenced to materialized is the whole point of a catalogue by
  *      reference and a number nobody looks at is a number nobody checks.
+ *
+ * @covers catalogue
  */
 import { existsSync, readFileSync, readdirSync } from "fs";
 import { join, relative, resolve } from "path";
@@ -38,6 +40,7 @@ import { CatalogueNodeSchema, CatalogueSchema, materializationCensus, type Catal
 import { DublinCoreRecordSchema } from "../../folio-assistant-core/schemas/dublin-core.js";
 import { instanceDirectoryForGraph } from "../../cat-harness/schemas/cat-harness.js";
 import { checkLocalPath } from "./lib/local-path.js";
+import { PUBLICATION_GATES } from "../../folio-assistant-core/schemas/materialization.js";
 
 const INSTANCE = resolve(import.meta.dir, "..");
 const REPO = resolve(INSTANCE, "..");
@@ -62,6 +65,8 @@ const LIBRARY =
   join(INSTANCE, "library");
 
 const problems: string[] = [];
+/** Held here but not publishable — reported by name, never a silent pass (bean `cw35`). */
+const heldNotPublished: string[] = [];
 const cat = CatalogueSchema.parse(JSON.parse(readFileSync(join(INSTANCE, "catalogue", "catalogue.json"), "utf8")));
 const dir = join(INSTANCE, "catalogue", cat.nodesDir);
 
@@ -119,6 +124,26 @@ for (const n of nodes) {
   }
   for (const b of n.bitstreams ?? []) {
     const m = b.materialization;
+    // THE PUBLICATION GATES ARE ANSWERED ON EVERYTHING HELD (bean `cw35`).
+    // `materialize-remote.bpmn` says "`unknown` on any single gate is enough to
+    // keep the node `referenced`", and the v048 roast found all three items
+    // `materialized` with copyright AND restrictions unknown, redistributed by
+    // the pages and a CDN anyway. An unanswered licence is not a licence, so a
+    // held copy whose publication gates are unanswered fails here; a `refused`
+    // one is a completed decision, held but never linked (the page generator
+    // enforces that), and is listed below rather than hidden.
+    if (m?.state === "materialized") {
+      const g = m.gates;
+      const unanswered = PUBLICATION_GATES.filter((k) => !g || g[k].verdict === "unknown");
+      if (unanswered.length) {
+        problems.push(
+          `${n.id}: ${b.bundle} "${b.name}" is materialized with ${unanswered.join(" and ")} unanswered — ` +
+            `answer each from the publication's own licence, or return it to \`referenced\`.`,
+        );
+      }
+      const refused = PUBLICATION_GATES.filter((k) => g?.[k].verdict === "refused");
+      if (refused.length) heldNotPublished.push(`${n.id}: ${b.bundle} "${b.name}" (${refused.join(", ")} refused)`);
+    }
     const lp = m?.localPath;
     if (m === undefined || lp === undefined) continue;
     // Three states, and the third is not an error: `lib/local-path.ts` carries
@@ -161,6 +186,11 @@ console.log(
     `${cat.totalBytesUpstream ? (cat.totalBytesUpstream / 1024 ** 3).toFixed(2) + " GiB" : "unknown"}.`,
 );
 console.log(`  The gap between ${census.materialized} and that is the point of a catalogue by reference.\n`);
+if (heldNotPublished.length) {
+  console.log(`  Held here, NOT published — a publication gate is refused (bean cw35):`);
+  for (const h of heldNotPublished) console.log(`    · ${h}`);
+  console.log("");
+}
 
 if (problems.length) {
   console.error(`✗ ${problems.length} problem(s):`);

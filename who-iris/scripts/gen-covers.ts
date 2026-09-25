@@ -3,6 +3,7 @@
  * Render a cover thumbnail for every item whose PDF this repository holds.
  *
  * @module who-iris/scripts/gen-covers
+ * @covers catalogue, uploads
  *
  * Owner, 2026-09-20: *"do the needed things like extract cover avatar igf
  * neeeded"* — the IRIS home page shows a cover beside each recent submission,

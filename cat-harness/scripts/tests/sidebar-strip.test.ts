@@ -43,8 +43,15 @@ const REPO = resolve(import.meta.dir, "..", "..", "..");
 const read = (p: string) => readFileSync(join(REPO, p), "utf-8");
 
 const css = read("cat-harness/docs/assets/css/docs-ui.css");
-/** Inside `.side-bar` — where all three controls now live. */
-const inside = read("cat-harness/docs/_includes/nav_footer_custom.html");
+/**
+ * Inside `.side-bar` — where all three controls now live.
+ *
+ * The GENERATED include, not `nav_footer_custom.html`, since `sjic`: that
+ * template is now a single `{% include %}` and composes no markup, so reading
+ * it here would assert over a file with no controls in it and pass by being
+ * blind. The markup moved; the question this file asks did not.
+ */
+const inside = read("cat-harness/docs/_includes/generated/navbar-footer.html");
 /** Inside `.main` — which should carry none of them any more. */
 const outside = read("cat-harness/docs/_includes/footer_custom.html");
 
@@ -187,13 +194,22 @@ describe("three ways in, one way back", () => {
   });
 
   it("hides the ☰ once pinned — two controls for one state is one too many", () => {
-    expect(block).toContain(".side-bar:has(.fa-nav-open:checked) .fa-nav-toggle { display: none; }");
+    // BOTH vocabularies. `sjic` moved the sidebar's markup to `lib/navbar.ts`,
+    // which calls this control `.fa-nav-head`; the hand-written Liquid called
+    // it `.fa-nav-toggle`. One rule, two selectors — asserting only the old
+    // name would have passed while the renderer's control stayed visible.
+    expect(block).toContain(".side-bar:has(.fa-nav-open:checked) .fa-nav-toggle");
+    expect(block).toContain(".side-bar:has(.fa-nav-open:checked) .fa-nav-head");
+    expect(block).toContain("display: none;");
   });
 });
 
 describe("the controls live inside the sidebar now", () => {
   it("all three are in the sidebar's own include", () => {
-    for (const cls of ["fa-nav-open", "fa-nav-close", "fa-nav-toggle"]) {
+    // `fa-nav-head` is what the renderer calls the ☰; `fa-nav-toggle` was the
+    // hand-written name for the same control. The QUESTION — are all three
+    // controls painted from inside the sidebar — is unchanged.
+    for (const cls of ["fa-nav-open", "fa-nav-close", "fa-nav-head"]) {
       expect({ cls, present: inside.includes(cls) }).toEqual({ cls, present: true });
     }
   });
@@ -208,17 +224,47 @@ describe("the controls live inside the sidebar now", () => {
   it("both labels drive the same checkbox", () => {
     const id = /<input[^>]*class="fa-nav-open"[^>]*id="([^"]+)"/.exec(inside)?.[1];
     expect(id).toBeDefined();
-    expect([...inside.matchAll(new RegExp(`for="${id}"`, "g"))]).toHaveLength(2);
+    // PER RENDERED VARIANT. The generated include carries the canonical and
+    // staging renderings behind one Liquid conditional, so the file holds four
+    // and a PAGE receives two — measured on a real build: one `#fa-nav-open`.
+    const variants = inside.split("{%- else -%}");
+    expect(variants).toHaveLength(2);
+    for (const v of variants) {
+      expect([...v.matchAll(new RegExp(`for="${id}"`, "g"))]).toHaveLength(2);
+    }
   });
 
   it("the checkbox is focusable, not `display: none`", () => {
-    expect(ruleWith("left: -9999px")).not.toContain("display: none");
+    expect(ruleWith("clip-path: inset(50%)")).not.toContain("display: none");
+  });
+
+  it("and it is clipped in place, never parked off an edge (bean `2r2n`)", () => {
+    // `left: -9999px` is on the SCROLLABLE side of a right-to-left page: it
+    // made the Arabic onboarding guide 10,389px wide at a 390px viewport.
+    expect(block).not.toMatch(/left:\s*-9{3,}px/);
   });
 
   it("both controls have an accessible name — this is navigation", () => {
-    for (const cls of ["fa-nav-close", "fa-nav-toggle"]) {
+    for (const cls of ["fa-nav-close", "fa-nav-head"]) {
       const label = new RegExp(`<label[^>]*class="${cls}"[^>]*>([\\s\\S]*?)</label>`).exec(inside)?.[1] ?? "";
-      const named = label.includes("fa-sr-only") || label.includes("fa-nav-text");
+      // THE REQUIREMENT IS A NAME, not a particular class.
+      //
+      // `fa-sr-only` was the template's visually-hidden class and `fa-nav-sr`
+      // is the renderer's. But the renderer names its ☰ a third way, and the
+      // better one: `fa-nav-name` is REAL TEXT — the instance's name, beside
+      // the glyph, visible whenever the navbar is open. A visually-hidden span
+      // is what you reach for when there is no visible text to use; there is.
+      //
+      // Listing the mechanism rather than the property is how this test nearly
+      // taught the wrong lesson: it failed against a control that was named,
+      // and the first fix attempt was to hide that name with `display: none`
+      // — which would have removed it from the accessibility tree and left the
+      // control genuinely nameless, passing a test about naming.
+      const named =
+        label.includes("fa-sr-only") ||
+        label.includes("fa-nav-sr") ||
+        label.includes("fa-nav-text") ||
+        label.includes("fa-nav-name");
       expect({ cls, named }).toEqual({ cls, named: true });
     }
   });

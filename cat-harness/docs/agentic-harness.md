@@ -2,6 +2,8 @@
 layout: default
 title: Agentic harness
 nav_order: 5
+documents:
+  - interaction
 lang: en
 available_locales: ["en"]
 ---
@@ -176,9 +178,9 @@ switches context.
 
 Workflow processing here is a **spectrum, not a switch**, and the harness is
 already at four different points on it without ever having named the axis:
-`folio:policy enforcement` decides whether a step that is not enabled is
+`cat-harness.processes:policy enforcement` decides whether a step that is not enabled is
 refused or merely noted; `relaxable="false"` decides whether a package may
-negotiate a base step away; `folio:decision` decides whether a branch is
+negotiate a base step away; `cat-harness.processes:decision` decides whether a branch is
 computed from a table rather than chosen; and the commit-boundary gate refuses
 the write by something that is not the agent.
 
@@ -189,8 +191,8 @@ fully agentic on the first and fully deterministic on the third: the commit
 boundary is exactly that, an agent deciding freely and a hook refusing the
 write regardless.
 
-A gateway now says which it is. `<folio:decision>` means a table computes it
-and a hand-supplied outcome is refused; `<folio:judgement reason="…">` means
+A gateway now says which it is. `<cat-harness.processes:decision>` means a table computes it
+and a hand-supplied outcome is refused; `<cat-harness.processes:judgement reason="…">` means
 somebody's call, with the reason required. Before that marker, "no table
 because this is a judgement" and "no table because nobody wrote one" were
 indistinguishable — and `bun run check:workflow-refs` now prints the three-way
@@ -247,9 +249,11 @@ gateways are computed and which are judgement calls. A signing step can be
 engine-enforced inside an otherwise agentic run, and that is a property of the
 task, not of the whole diagram.
 
-**Not built yet.** No BPMN engine is wired in, and no QA/QC report reads a
-PROV-O log today. What exists is the process diagrams, the role graph, the
-lane bindings and the per-gateway count. This section names the target so the
+**Partly built.** No BPMN engine is wired in. The mechanical QA/QC report
+now exists: `bun run prov:qaqc` writes each workflow instance's history as a
+PROV-O log and re-checks every step against the ODRL policies, advisory
+(issue #1180, step 5; the `task-authorization` skill). The agentic QA/QC
+report does not exist yet. The rest of this section names the target so the
 proposal has something to be measured against.
 
 ## Feature-request workflow (CRDM)

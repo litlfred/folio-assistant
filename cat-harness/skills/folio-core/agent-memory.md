@@ -8,6 +8,9 @@ description: >
 adapters: [document, paper, dak]
 profiles: [document, paper]
 consulted: true
+graph-kinds:
+  - memory
+  - waiver
 ---
 
 # Subagent memory — what a durable entry may claim

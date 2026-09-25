@@ -94,6 +94,7 @@ package state {
     tags.references [0..*] : {kind, id, note}[]
     tags.artefacts [0..*] : {kind, id, provider, repo, note}[]
     theme [0..1] : string
+    layout [0..1] : laptop | mobile | card
     status [1] : string
     priority [1] : string
     origin [1] : string
@@ -128,7 +129,6 @@ package schema {
     specUrl [1] : string<uri>
     namespaces [0..*] : string[]
     use [1] : conforms | reads | cites
-    usedBy [1..*] : string[]
     terms [0..*] : {term, operative}[]
     note [0..1] : string
   }
@@ -142,12 +142,15 @@ package schema {
 package test {
   class "Test Run" as TestRun <<json: TestRunSchema>> #f4e6e6 {
     $schema [1] : 'folio-test-run/v1'
+    skill [1] : string
     subject [1] : string
     data.hash [1] : string
     data.inputs [1..*] : string[]
     process.hash [1] : string
     process.inputs [1..*] : string[]
     outcome [1] : map<any>
+    cases [0..*] : {input, output}[]
+    requirements [0..*] : string[]
     updated_at [1] : string
   }
   class "KG QA Report" as KgQaReport <<json: KgQaReportSchema>> #f4e6e6 {
@@ -187,6 +190,7 @@ Todo --> "0..*" Task : tags\ntags.tasks
 Todo --> "0..*" Actor : identities[].actor\ntags.identities
 Bean --> "0..1" Bean : parent\nparentId
 Bean --> "0..*" Bean : blocks\nblockingIds
+TestRun --> "1" Skill : tests\nskill
 KgQaReport --> "1" Role : audits\nsubject.kind
 KgQaReport --> "1" Process : audits\nsubject.kind
 KgQaReport --> "1" Skill : audits\nsubject.kind

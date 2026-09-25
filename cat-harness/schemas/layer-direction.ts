@@ -6,7 +6,7 @@
  *
  * - `scripts/partition/engine.ts` (`check:partition`) asks it of every import
  *   between modules, where the layers are the repos a module is assigned to.
- * - `scripts/kg-detangle.ts` asks it of every outbound edge of a
+ * - `skills/graph-management/kg-detangle.ts` asks it of every outbound edge of a
  *   candidate group, where the layers are the instances a node lives in and
  *   the allowed relation is each instance's declared `needs`.
  *

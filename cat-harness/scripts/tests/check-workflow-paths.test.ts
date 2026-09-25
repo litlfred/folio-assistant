@@ -491,16 +491,17 @@ describe("working-directory — does the cwd exist at all", () => {
     expect(verdictOf(wfCwd("${{ matrix.lake-root }}"))).toBe(Verdict.Undetermined);
   });
 
+  // `folio-assistant/snappea-wasm` rather than `content`: the `content` entry
+  // left FOLIO_WORKDIRS under bean `52dz`, when the workflows that `cd content`
+  // became `folio_init` templates.
   test("a folio directory is exempt WITH A REASON, not silently skipped", () => {
-    const [wd] = workDirsFrom("w.yml", wfCwd("content"));
+    const [wd] = workDirsFrom("w.yml", wfCwd("folio-assistant/snappea-wasm"));
     expect(wd?.verdict).toBe(Verdict.NeedsFolio);
     expect(wd?.note ?? "").not.toBe("");
   });
 
   test("the exemption matches a subdirectory of a folio path too", () => {
-    expect(verdictOf(wfCwd("content/quantum-observable-universe/lean"))).toBe(
-      Verdict.NeedsFolio,
-    );
+    expect(verdictOf(wfCwd("folio-assistant/snappea-wasm/src"))).toBe(Verdict.NeedsFolio);
   });
 });
 

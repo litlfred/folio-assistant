@@ -32,6 +32,7 @@
  * Exit:   0 all pass · 1 one failed · 2 nothing found, which is not a pass.
  *
  * @module scripts/check-ci-invocations
+ * @covers none — .github/workflows/ is not a declared graph kind
  */
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";

@@ -5,7 +5,7 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/crdm/crdm-detect.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-detect.md) — do not edit here.
+> Generated from [`cat-harness/skills/crdm/crdm-detect.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-detect.md) — do not edit here. Typed contract: [schema reference](../skills/crdm-detect.html).
 >
 > [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/crdm/crdm-detect.md){: .fa-edit-source }
 
@@ -86,10 +86,15 @@ its sentences fall into.
 - "Proposal: …" as a document's OPENING line
 - "design document for …"
 
-Anchored to the opening line on purpose. A document that *mentions* a proposal
-is not one: #187 asks for a write-up of a merged proposal's changes and is not
-a feature request, while #199 IS that write-up. An unanchored `proposal` costs
-that distinction — measured, not supposed.
+Anchored to the opening line, and the reason has CHANGED. The anchor was
+chosen because an unanchored `proposal` also caught #187, a request to write
+up a merged proposal's changes, which was labelled *not* a feature request. On
+2026-09-24 the owner relabelled #187 a feature request, after a blind second
+annotation (bean `vjbl`): it is the change register for pipeline changes not
+yet built. Measured on the adjudicated corpus, the unanchored pattern now adds
+no false alarm and catches #187, which the anchor misses (recall 95.5% →
+100%). The anchor is kept until the owner decides, because changing a detector
+to fit its own 27-item eval set is tuning to the test.
 
 ## What is NOT a feature request
 

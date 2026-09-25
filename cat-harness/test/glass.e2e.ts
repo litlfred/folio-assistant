@@ -74,6 +74,61 @@ test.describe("the glass exists on a page that is not the harness's", () => {
     // would pass for the old reason and the change would be untested.
     expect(await page.locator(".fa-sticky-board").count()).toBe(0);
   });
+
+  // Bean `015u`. A harness VIEWER has no theme header, so the handle landed
+  // on its h1. A viewer carries the fixture's own mark, and with it the page
+  // reserves the handle's band. The REPLICA above carries no mark and must
+  // stay unchanged (`folio-mount.e2e`, bean `jpjt`).
+  for (const width of [1280, 390]) {
+    test(`on a VIEWER the handle covers none of the first content at ${width} px`, async ({ page }) => {
+      await page.route("http://replica.test/viewer.html", (route) =>
+        route.fulfill({
+          contentType: "text/html",
+          body: REPLICA.replace("<style>", "<style data-folio-narrow-viewport></style><style>"),
+        }),
+      );
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto("http://replica.test/viewer.html");
+      await page.waitForSelector(handle, { state: "attached" });
+      const hb = await page.locator(handle).boundingBox();
+      const h1 = await page.locator("h1").boundingBox();
+      expect(hb).not.toBeNull();
+      expect(h1).not.toBeNull();
+      expect(h1!.y).toBeGreaterThanOrEqual(hb!.y + hb!.height);
+    });
+  }
+
+  // Owner, 2026-09-24: "folio handle on LHS on navbar". With a navbar on the
+  // page, the handle is an item IN it, so it overhangs nothing: not a
+  // viewer's h1 (`015u`), not a replica's banner (`269z`).
+  const NAVBARS: [string, string, string][] = [
+    ["the harness rail", `<nav class="fa-nav"><div class="fa-nav-in"><div class="fa-nav-top"><label class="fa-nav-head">☰</label></div></div></nav>`, ".fa-nav-top"],
+    ["the theme's sidebar", `<header class="side-bar"><div class="site-header"><a class="site-title">Site</a></div></header>`, ".side-bar"],
+  ];
+  for (const [name, nav, parent] of NAVBARS) {
+    for (const width of [1280, 390]) {
+      test(`with ${name}, the handle sits IN it and covers no content, at ${width} px`, async ({ page }) => {
+        await page.route("http://replica.test/nav.html", (route) =>
+          route.fulfill({ contentType: "text/html", body: REPLICA.replace("<body>", `<body>${nav}`) }),
+        );
+        await page.setViewportSize({ width, height: 800 });
+        await page.goto("http://replica.test/nav.html");
+        await page.waitForSelector(handle, { state: "attached" });
+        expect(await page.locator(`${parent} ${handle}`).count()).toBe(1);
+        await expect(page.locator(handle)).toHaveClass(/fa-glass-handle--in-nav/);
+        // Not over the page's content.
+        const hb = (await page.locator(handle).boundingBox())!;
+        const h1 = (await page.locator("h1").boundingBox())!;
+        const overlaps = hb.x < h1.x + h1.width && h1.x < hb.x + hb.width && hb.y < h1.y + h1.height && h1.y < hb.y + hb.height;
+        expect(overlaps).toBe(false);
+        // And it still opens and closes the glass from there.
+        await page.locator(handle).click();
+        await expect(page.locator(handle)).toHaveAttribute("aria-expanded", "true");
+        await page.locator(handle).click();
+        await expect(page.locator(handle)).toHaveAttribute("aria-expanded", "false");
+      });
+    }
+  }
 });
 
 test.describe("pulled down, and put away", () => {

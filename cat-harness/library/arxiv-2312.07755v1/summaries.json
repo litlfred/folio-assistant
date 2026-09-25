@@ -1,0 +1,380 @@
+{
+  "$schema": "folio-block-summaries/v1",
+  "entry": "arxiv-2312.07755v1",
+  "summaries": [
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-000",
+      "source": "sections/sec-000-1-introduction.md",
+      "source_hash": "905e8116bb731404097efea10bfb5e38b4ec2fa224430170c39ac08a14818e2b",
+      "narrative": {
+        "text": "Argues that wireframing is a common way to express UI design intent, and that mid-fidelity wireframes add real content and semantic icons to low-fidelity sketches at a higher cost in time and effort, which no previous work has streamlined. Introduces WireGen, which fine-tunes LLMs on Rico UI screens and view hierarchies to generate mid-fidelity wireframes from design-intent descriptions, then post-processes them with semantic icons, text typography and UI guidelines. Reports 77.5% significantly better generations than two in-context learning baselines, 84.5% against three ablation models, and a user study with five professional designers.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-001",
+      "source": "sections/sec-001-2-related-work.md",
+      "source_hash": "532d6b5287a311efd8990362097ecc8e419acd30ad78d825ea8f781480c3abf6",
+      "narrative": {
+        "text": "A single sentence that breaks off mid-way: the work aims to make designing mobile mid-fidelity UI wireframes easier by prompting with design descriptions.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-003",
+      "source": "sections/sec-003-22-designing-with-natural-language.md",
+      "source_hash": "6f1bbc7b938f1f96025a7b7aeddec941042c7d94fef4c56da4d654c510f803b2",
+      "narrative": {
+        "text": "Opens subsection 2.1, \"Mobile UI Wireframe\": wireframing suits creative work because it is highly visual and can be created, manipulated and revised without unnecessary detail. The text breaks off mid-sentence.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-004",
+      "source": "sections/sec-004-abstract.md",
+      "source_hash": "5cd00850872ee4bbd5fffd7aa7302c423a9e59c57a6e7a77011f6a6a1f89649e",
+      "narrative": {
+        "text": "Despite its heading, this block continues the related-work discussion of UI wireframing: tools from SILK to Photoshop, Sketch and Figma support low- to mid-fidelity wireframes, and human-AI co-creation systems such as Swire help designers find inspiration or generate layouts. The authors note that these still require designers to sketch a low-fidelity wireframe and add content, whereas their work generates mid-fidelity wireframes directly from a design-intent description; the block ends by opening subsection 2.2 on bridging natural language and UI screens.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-005",
+      "source": "sections/sec-005-3-approach.md",
+      "source_hash": "f5a83e93eb87add0a687795893b52d3b4636d7194670212e6999e2a293611612",
+      "narrative": {
+        "text": "Reviews work linking natural language and UIs (screen summarisation, alt-text generation) and text-to-image generation, noting that DALLE, Stable Diffusion and MidJourney misspell text and lack design coherence and that a prior UI Generator yields only low-fidelity layouts. Subsection 2.3 describes zero-shot, few-shot and fine-tuned prompting of LLMs and motivates fine-tuning for UI wireframing. Section 3 then outlines WireGen's three phases: data preparation, model fine-tuning and output beautification.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-006",
+      "source": "sections/sec-006-31-prepare-dataset-of-ui-wireframes-and-descript.md",
+      "source_hash": "0709df3b71cbfc550961445baa8201674622ba40116806394d08af67f06dbef6",
+      "narrative": {
+        "text": "Builds a training set by treating Rico's 66k Android UI screens (9.7k apps, 27 categories) as mid-fidelity wireframes and pairing them with Screen2Words descriptions written by 85 professional labelers. Screens are converted to HTML plus a style sheet by a depth-first traversal of the view hierarchy, mapping native classes to HTML tags (Table 1) from the resource_id, class, text, content_desc and bounds properties, with absolute positioning for layout.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-007",
+      "source": "sections/sec-007-32-fine-tune-large-language-models-with-best-pra.md",
+      "source_hash": "33d7f1421a6432315df83b14ebadb2e3957ed88fec23f937f18064125002ac20",
+      "narrative": {
+        "text": "Fine-tunes with descriptions as input and HTML wireframes as output, and details three sensitive choices: 1,000 training samples selected by app (191 apps, 27 categories) to avoid leakage; the GPT model Turbo (gpt-3.5-turbo), chosen as the most advanced and strong at understanding code; and hyperparameters of learning rate 0.1, batch size 256, 4 epochs, temperature 0.65, a 4,096-token maximum length and </html> as the stop sequence.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-008",
+      "source": "sections/sec-008-33-transform-raw-generation-into-beautiful-ui-wi.md",
+      "source_hash": "da8616ab8686f0aac864eae4e9bf92f029f34480e0d5ab6797d16025ab5b9fe9",
+      "narrative": {
+        "text": "Post-processes the raw HTML into usable wireframes in three ways: semantic icons, chosen by prompting the LLM against a top-10 icon-semantics category derived by open coding 4,000 Rico icons; text typography, framed as an optimisation over wrapping and font size that minimises wasted block space; and heuristics for three UI-guideline flaws found in 100 generations, namely occlusion, duplication and out-of-bound elements.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-009",
+      "source": "sections/sec-009-4-evaluation.md",
+      "source_hash": "38e9da11da8f19dca0bfde4be45797a92a63670e43526524766c798b14dcdba7",
+      "narrative": {
+        "text": "Introduces Section 4, which runs experiments on how effectively the fine-tuned LLMs generate mid-fidelity UI wireframes.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-010",
+      "source": "sections/sec-010-41-research-questions.md",
+      "source_hash": "17918c78057886528748ad8c54b28946313351ad4b8a55242ad24a4194e6510b",
+      "narrative": {
+        "text": "Poses two research questions: RQ1, whether fine-tuning yields better wireframes than zero-shot and few-shot in-context learning; and RQ2, whether Turbo outperforms the other GPT variants Curie, Babbage and Ada.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-011",
+      "source": "sections/sec-011-42-testing-data.md",
+      "source_hash": "bafc9b5f486da2bb84dde9a03dd8f0af77a546a3318053e9ed17ec2c61120d07",
+      "narrative": {
+        "text": "The test set is 100 UI textual descriptions, two apps per category, drawn from the Section 3.1 data after removing the 1,000 training samples. The original UI screens are not used as ground truth, because a generated wireframe may be reasonable yet differ from them.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-012",
+      "source": "sections/sec-012-43-annotation-methodology.md",
+      "source_hash": "1d21966d0d3628b60d89178887044bd9c95768cd3f4127a6730faa8944c48909",
+      "narrative": {
+        "text": "Two people with UI/UX design and art backgrounds, after 30 minutes reading design books, independently rated shuffled grids of generated wireframes as significantly better or significantly worse without knowing which model produced each; they were paid $20 per hour.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-013",
+      "source": "sections/sec-013-44-rq1-performance-of-fine-tuning.md",
+      "source_hash": "745795f3e7f7e4661e087beeeb8705346e1d7c3e6716a03deb1becaf1ce0d587",
+      "narrative": {
+        "text": "Compares WireGen with zero-shot and few-shot prompting (K of 1 to 2 examples) under identical settings. WireGen's generations were rated significantly better 85.5% of the time on average, while zero-shot and few-shot received 51.5% and 44.5% significantly worse ratings, with a Cohen's kappa of 0.32; zero-shot produced relevant elements without regard to layout, and few-shot improved layouts but generalised poorly.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-014",
+      "source": "sections/sec-014-45-rq2-performance-of-variations.md",
+      "source_hash": "ca2d42de4e192de95210f7f3fd818ac954a784e553a4ffbc285100d1a9be62e1",
+      "narrative": {
+        "text": "Sets up Curie, Babbage and Ada as the RQ2 baselines, each fine-tuned on the same training data with the same settings as Turbo.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-015",
+      "source": "sections/sec-015-53-results.md",
+      "source_hash": "4695ec0e474c7c969320f958dc495caac2883a7e0693faea431f34d60b0e5601",
+      "narrative": {
+        "text": "Turbo was rated significantly better in 76.5% of cases, against 11.5%, 10.5% and 1.5% for Curie, Babbage and Ada; Curie and Babbage mostly produced average wireframes and 81.5% of Ada's were rated significantly worse, with a Cohen's kappa of 0.28. Examples show Turbo generating more detailed elements, such as subtitles under titles, which the authors attribute to it being the most powerful model.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-016",
+      "source": "sections/sec-016-5-user-study.md",
+      "source_hash": "75d8dd98b4cda2656330e3782451d6e2c115724561991f99a187246761af6be2",
+      "narrative": {
+        "text": "Introduces a user study of how useful the model is in helping designers generate UI wireframes from real-world descriptions, since the same thing can be said in many different words.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-017",
+      "source": "sections/sec-017-51-participants.md",
+      "source_hash": "aaf6c8f0f5858da5f34c433afa597f35ccc8bcfdd72f3393c5f8f8af1071c5fc",
+      "narrative": {
+        "text": "Five UI/UX designers took part, recruited by word of mouth and online advertisements, with 2 to 6 years of experience in visual, interaction and product design at companies of various sizes and at a design-sharing community.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-018",
+      "source": "sections/sec-018-52-procedure.md",
+      "source_hash": "4072011dcb72addb1d4b5140183841d8a4de30e62e4b2f114ef6170558b4cf6b",
+      "narrative": {
+        "text": "In one-hour Zoom sessions, participants generated a login-page wireframe by editing a given prompt, then used WireGen freely on their own scenarios alongside other tools, and rated it on a 5-point scale: effective for inspiration (4.4), relevant to the prompts (4.0) and diverse (3.6). All judged it better than wireframe-sharing, layout-generation and text-to-image tools, and they asked for integration with design software as a plugin and for representative images in place of alt-text.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-019",
+      "source": "sections/sec-019-6-discussion.md",
+      "source_hash": "18d378f9735b6c3d3691c95bb1b60b818c893a8ea0771d00342b78351088eada",
+      "narrative": {
+        "text": "Names limitations and future work: training on only 1,000 samples for budget reasons, post-processing based on a small-scale study of design flaws, and prompts built only from screens and view hierarchies. Proposes multimodal prompts, iterative design through chat, and retrieving similar existing UI designs by encoding generated wireframes with Screen2Vec.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-020",
+      "source": "sections/sec-020-7-conclusion.md",
+      "source_hash": "b957892539ff0395f3bfbd13ad4dfcaf1623e281624edc9dcba0afd1a85975ce",
+      "narrative": {
+        "text": "Restates that WireGen fine-tunes LLMs on thousands of UI screens and view hierarchies, generates raw wireframes from design-intent descriptions and post-processes them, and that experiments and a user study show it outperforms baselines and ablated models and is useful in practice.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-021",
+      "source": "sections/sec-021-references.md",
+      "source_hash": "fa1f5f81586539594aa76561dba95dff5d74646a7e17e2ab24534084b129b8a6",
+      "narrative": {
+        "text": "The paper's numbered reference list of 84 entries: web pages for design and AI tools, followed by academic papers on GUI design and semantics, UI datasets and design search, layout generation, and large language models such as GPT-3.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    },
+    {
+      "block": "library/arxiv-2312.07755v1/blocks/prose-sec-front-matter",
+      "source": "sections/sec-front-matter.md",
+      "source_hash": "cd1665d83ef39d0e22c3b62ce60810318a2d4df014e8af010519ad74205bac91",
+      "narrative": {
+        "text": "Title, authors and affiliations (Monash University, UNSW, CSIRO's Data61, ANU) of a paper introducing WireGen, which fine-tunes generative LLMs on thousands of UI examples so that a brief design-intent description yields mid-fidelity wireframes. The abstract reports 77.5% significantly better wireframes than two in-context learning baselines and a user study with 5 designers; CCS concepts and keywords follow.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5",
+          "session": "https://claude.ai/code/session_01TA4id51RCSxZ4NxijDwrWQ",
+          "skill": "folio-core/library-ingestion"
+        },
+        "drafted_at": "2026-09-24"
+      }
+    }
+  ]
+}

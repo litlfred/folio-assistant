@@ -87,7 +87,6 @@ package schema {
     specUrl [1] : string<uri>
     namespaces [0..*] : string[]
     use [1] : conforms | reads | cites
-    usedBy [1..*] : string[]
     terms [0..*] : {term, operative}[]
     note [0..1] : string
   }
@@ -101,12 +100,15 @@ package schema {
 package test {
   class "Test Run" as TestRun <<json: TestRunSchema>> #f4e6e6 {
     $schema [1] : 'folio-test-run/v1'
+    skill [1] : string
     subject [1] : string
     data.hash [1] : string
     data.inputs [1..*] : string[]
     process.hash [1] : string
     process.inputs [1..*] : string[]
     outcome [1] : map<any>
+    cases [0..*] : {input, output}[]
+    requirements [0..*] : string[]
     updated_at [1] : string
   }
   class "KG QA Report" as KgQaReport <<json: KgQaReportSchema>> #f4e6e6 {
@@ -139,6 +141,7 @@ UserStory --> "1" Role : as a\nrole.role
 Task --> "1" Process : in\nprocess
 Task ..> "1" Role : in lane of\n«folio:role ref on the lane»
 Task ..> "1" Skill : uses\n«folio:skill ref»
+TestRun --> "1" Skill : tests\nskill
 KgQaReport --> "1" Role : audits\nsubject.kind
 KgQaReport --> "1" Process : audits\nsubject.kind
 KgQaReport --> "1" Skill : audits\nsubject.kind

@@ -140,6 +140,14 @@ package "cat-harness/schemas" as pkg_cat_harness_schemas <<schemas, cat-harness>
     overallStatus [1] : pass | warnings | errors
     results [0..*] : Result[]
   }
+  class "CRDM Detect Input" as cat_harness_schemas_skills_crdm_detect_input_schema_json_CRDM_Detect_Input <<schema: skills/crdm-detect/input.schema.json>> #e9edf3 {
+    text [1] : string
+  }
+  class "CRDM Detect Output" as cat_harness_schemas_skills_crdm_detect_output_schema_json_CRDM_Detect_Output <<schema: skills/crdm-detect/output.schema.json>> #e9edf3 {
+    fires [1] : boolean
+    categories [0..*] : list<direct-capability | workflow-gap | platform-change | cross-cutting | review-surfaced | self-declared-genre>
+    excluded [1] : boolean
+  }
   class "InputVariable" as cat_harness_schemas_skills_dmn_authoring_input_schema_json_InputVariable <<schema: skills/dmn-authoring/input.schema.json>> #e9edf3 {
     name [1] : string
     type [1] : string | integer | boolean | date | codeable-concept

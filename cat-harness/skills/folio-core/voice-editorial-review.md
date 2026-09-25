@@ -6,6 +6,8 @@ description: >
   out of scope, or the block is a stated exception. The human/agent half of
   the voice QA axis; the mechanical half runs in `qa-checkers-voice.ts`.
 allowed-tools: Read Edit Bash Grep Glob
+graph-kinds:
+  - voices
 ---
 
 # Voice editorial review

@@ -11,7 +11,7 @@
  * `processes/publish-alert.bpmn`, which every failing step after the publish
  * button shares.
  *
- *   bun run cat-harness/scripts/publish-verify.ts --dir ./_site [--report out.json]
+ *   bun run cat-harness/scripts/publish-verify.ts --dir ./_site [--report out.md] [--base <url>]... [--instance <dir>]
  *
  * Exit 0 every in-scope document passed · 1 a verifier found a failure ·
  * 2 could not tell (nothing to verify, or a verifier could not run). The
@@ -24,12 +24,19 @@
  * report, the exit code and the alert need no change. The first is JSON-LD
  * expansion, because the graph was JSON-LD by convention and not by
  * construction — nothing had ever run a processor over it, and the first run
- * found two documents silently dropping a property.
+ * found two documents silently dropping a property. The second is unique ids
+ * in built HTML (bean `uknu`) — a defect the source cannot show.
  *
  * ## What is in scope
  *
  * A document is OURS — and so verified — when its `@context` references our
- * content context or binds one of our namespaces (`own-namespaces` code list).
+ * content context or binds one of our namespaces (`own-namespaces` code list),
+ * OR when its own `@id` is under the site's address (the declaration's
+ * `canonicalUrl`, or each `--base`). The second test is bean `7h1c`: the SKOS
+ * code-lists document binds only `skos`, `dcterms`, `owl` and `rdf`, so the
+ * context test counted it "not ours" although we mint every IRI in it. A
+ * document's `@id` says who published it; its context says only whose
+ * vocabulary it speaks.
  * Anything else in the tree is ingested third-party data (a WHO IG's artefact
  * index, say): counted and reported, never silently passed, and never able to
  * block our release. The same scoping the owner approved for bean `2j09`.
@@ -40,7 +47,9 @@ import { join, relative, resolve } from "node:path";
 import jsonld from "jsonld";
 
 import { CONTENT_CONTEXT_URL } from "../schemas/jsonld";
+import { readDeclaration } from "../schemas/cat-harness";
 import { OWN_NAMESPACE_VALUES } from "../schemas/namespaces";
+import { duplicateIds } from "./check-duplicate-ids";
 
 export interface Finding {
   verifier: string;
@@ -58,34 +67,58 @@ export interface VerifierResult {
   couldNotTell?: string;
 }
 
+/** What a verifier knows about the site beyond its files. */
+export interface VerifyContext {
+  /** The addresses the site publishes under; an `@id` below one is ours. */
+  bases: readonly string[];
+}
+
 export interface Verifier {
   id: string;
   asks: string;
-  run(dir: string): Promise<Omit<VerifierResult, "id" | "asks">>;
+  run(dir: string, ctx: VerifyContext): Promise<Omit<VerifierResult, "id" | "asks">>;
 }
 
-/** Every `.jsonld` under a directory, skipping dot-prefixed segments. */
-export function jsonLdFiles(dir: string): string[] {
+/** Every file with this extension under a directory, skipping dot-prefixed segments. */
+export function treeFiles(dir: string, ext: string): string[] {
   const out: string[] = [];
   const walk = (d: string) => {
     for (const e of readdirSync(d, { withFileTypes: true })) {
       if (e.name.startsWith(".") || e.name === "node_modules") continue;
       const p = join(d, e.name);
       if (e.isDirectory()) walk(p);
-      else if (e.name.endsWith(".jsonld")) out.push(p);
+      else if (e.name.endsWith(ext)) out.push(p);
     }
   };
   if (existsSync(dir) && statSync(dir).isDirectory()) walk(dir);
   return out.sort();
 }
 
-/** Ours: the context names our content context, or binds a namespace we mint. */
-export function isOurs(doc: unknown): boolean {
+/** Whether an IRI is the base itself or sits below it — a path boundary, never a bare prefix. */
+function underBase(iri: string, base: string): boolean {
+  const b = base.replace(/\/+$/, "");
+  return iri === b || iri.startsWith(`${b}/`) || iri.startsWith(`${b}#`);
+}
+
+/**
+ * Ours: the context names our content context or binds a namespace we mint,
+ * or the document's own `@id` is under one of the site's bases.
+ */
+export function isOurs(doc: unknown, bases: readonly string[] = []): boolean {
   if (doc === null || typeof doc !== "object") return false;
-  const ctx = (doc as { "@context"?: unknown })["@context"];
-  if (ctx === undefined) return false;
-  const s = JSON.stringify(ctx);
+  const d = doc as { "@context"?: unknown; "@id"?: unknown };
+  if (typeof d["@id"] === "string" && bases.some((b) => underBase(d["@id"] as string, b))) return true;
+  if (d["@context"] === undefined) return false;
+  const s = JSON.stringify(d["@context"]);
   return s.includes(CONTENT_CONTEXT_URL) || OWN_NAMESPACE_VALUES.some((ns) => s.includes(ns));
+}
+
+/**
+ * The site's own address, from the instance declaration — `undefined` when the
+ * instance declares none, which leaves only the context test.
+ */
+export function declaredBase(instanceRoot: string): string | undefined {
+  return readDeclaration(instanceRoot)?.canonicalUrl;
 }
 
 /** A document that is only a context — nothing to expand, and not a failure. */
@@ -133,12 +166,12 @@ export const JSONLD_EXPAND: Verifier = {
   asks:
     "Does every JSON-LD document of ours expand under a real processor with no warning — no " +
     "property dropped, no relative IRI, no context that fails to load?",
-  async run(dir) {
+  async run(dir, ctx) {
     const loader = localLoader(dir);
     const findings: Finding[] = [];
     let checked = 0;
     let outOfScope = 0;
-    for (const f of jsonLdFiles(dir)) {
+    for (const f of treeFiles(dir, ".jsonld")) {
       let doc: unknown;
       try {
         doc = JSON.parse(readFileSync(f, "utf-8"));
@@ -146,7 +179,7 @@ export const JSONLD_EXPAND: Verifier = {
         findings.push({ verifier: "jsonld-expand", file: relative(dir, f), detail: `not JSON: ${(e as Error).message}` });
         continue;
       }
-      if (!isOurs(doc)) {
+      if (!isOurs(doc, ctx.bases)) {
         outOfScope += 1;
         continue;
       }
@@ -160,17 +193,52 @@ export const JSONLD_EXPAND: Verifier = {
   },
 };
 
-/** The set. Add a verifier here; nothing else changes. */
-export const VERIFIERS: readonly Verifier[] = [JSONLD_EXPAND];
+/**
+ * Bean `uknu`: the theme renders `nav_footer_custom.html` twice, so 1,222
+ * published pages carried `id="fa-nav-open"` twice while the source was
+ * correct and every gate was green. #1213 fixed it and added
+ * `check:duplicate-ids`, which runs on a PR's STAGING build — this runs the
+ * same scanner on the build that DEPLOYS, so a duplicate that reaches `main`
+ * blocks the release and raises the publication-manager alert instead of
+ * going live. One scanner, two call sites.
+ *
+ * Every page in the tree is in scope. Unlike a JSON-LD document, which may be
+ * someone else's data we carry, an HTML page here is one our site build wrote
+ * and publishes under our URL.
+ */
+export const HTML_UNIQUE_IDS: Verifier = {
+  id: "html-unique-ids",
+  asks:
+    "Does every built HTML page declare each id once — so every `<label for>`, `#fragment` link and " +
+    "`aria-labelledby` reaches the one element it names?",
+  async run(dir) {
+    const findings: Finding[] = [];
+    let checked = 0;
+    for (const f of treeFiles(dir, ".html")) {
+      checked += 1;
+      for (const [id, n] of duplicateIds(readFileSync(f, "utf-8"))) {
+        findings.push({ verifier: "html-unique-ids", file: relative(dir, f), detail: `duplicate id ${id} ×${n}` });
+      }
+    }
+    return { checked, outOfScope: 0, findings };
+  },
+};
 
-export async function verify(dir: string, verifiers: readonly Verifier[] = VERIFIERS): Promise<{
+/** The set. Add a verifier here; nothing else changes. */
+export const VERIFIERS: readonly Verifier[] = [JSONLD_EXPAND, HTML_UNIQUE_IDS];
+
+export async function verify(
+  dir: string,
+  verifiers: readonly Verifier[] = VERIFIERS,
+  ctx: VerifyContext = { bases: [] },
+): Promise<{
   results: VerifierResult[];
   exit: 0 | 1 | 2;
 }> {
   const results: VerifierResult[] = [];
   for (const v of verifiers) {
     try {
-      const r = await v.run(dir);
+      const r = await v.run(dir, ctx);
       results.push({ id: v.id, asks: v.asks, ...r, ...(r.checked === 0 ? { couldNotTell: "no in-scope document found" } : {}) });
     } catch (e) {
       results.push({ id: v.id, asks: v.asks, checked: 0, outOfScope: 0, findings: [], couldNotTell: (e as Error).message });
@@ -181,8 +249,9 @@ export async function verify(dir: string, verifiers: readonly Verifier[] = VERIF
 }
 
 /** The markdown the alert carries — what failed, where, and how to reproduce. */
-export function reportMarkdown(dir: string, results: readonly VerifierResult[]): string {
-  const lines = [`Verified \`${dir}\` before deployment:`, ""];
+export function reportMarkdown(dir: string, results: readonly VerifierResult[], bases: readonly string[] = []): string {
+  const scope = bases.length ? `; a document whose \`@id\` is under ${bases.map((b) => `\`${b}\``).join(", ")} is ours` : "";
+  const lines = [`Verified \`${dir}\` before deployment${scope}:`, ""];
   for (const r of results) {
     const state = r.couldNotTell ? `could not tell — ${r.couldNotTell}` : r.findings.length ? `${r.findings.length} finding(s)` : "pass";
     lines.push(`- **${r.id}**: ${state} — ${r.checked} document(s) checked, ${r.outOfScope} out of scope (not ours)`);
@@ -197,8 +266,13 @@ if (import.meta.main) {
   const argv = process.argv.slice(2);
   const arg = (f: string) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
   const dir = resolve(arg("--dir") ?? "_site");
-  const { results, exit } = await verify(dir);
-  const md = reportMarkdown(relative(process.cwd(), dir) || ".", results);
+  // `--base` may repeat (a staging build mints under its preview address as
+  // well); with none given, the instance's declared `canonicalUrl` is the base.
+  const given = argv.flatMap((a, i) => (a === "--base" && argv[i + 1] ? [argv[i + 1]!] : []));
+  const declared = declaredBase(resolve(arg("--instance") ?? resolve(import.meta.dir, "..")));
+  const bases = given.length > 0 ? given : declared ? [declared] : [];
+  const { results, exit } = await verify(dir, VERIFIERS, { bases });
+  const md = reportMarkdown(relative(process.cwd(), dir) || ".", results, bases);
   console.log(md);
   const report = arg("--report");
   if (report) writeFileSync(report, `${md}\n`);

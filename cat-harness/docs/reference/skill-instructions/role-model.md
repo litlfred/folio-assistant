@@ -259,19 +259,19 @@ activity whose lane is unbound or absent is already reported by
 
 ```xml
 <bpmn:extensionElements>
-  <folio:fulfilment kinds="person agent"
+  <cat-harness.processes:fulfilment kinds="person agent"
                     reason="a person or an agent drafts this; a pipeline cannot." />
 </bpmn:extensionElements>
 ```
 
 The **reason is required at load time** and a reasonless declaration does not
-parse — the same rule `<folio:no-skill reason>` follows, and for the same
+parse — the same rule `<cat-harness.processes:no-skill reason>` follows, and for the same
 reason. Widening `kinds` is the cheapest way to make this criterion pass, so
 silencing it has to cost a sentence somebody reads in the diff.
 
 **Read a failure as a question with three answers, not one.** The task type may
 be wrong, the lane may be wrong, or the step may really admit that kind — and
-only the third is a `<folio:fulfilment/>`. Reaching for the exemption first is
+only the third is a `<cat-harness.processes:fulfilment/>`. Reaching for the exemption first is
 how it becomes a rubber stamp.
 
 ## Three questions about an actor, and only two are answered on the actor
@@ -308,10 +308,15 @@ one. What this buys:
   task in a lane needs the permission **and** the lane's role, so eligibility
   (`roles`) and permission stay separate, as below.
 - **Anyone.** `cat-harness:anyone` is an unauthenticated reader. The owner's floor:
-  it may `visualize` and `render`, and nothing else.
+  it may `visualize` and `render`, and nothing else. Owner, 2026-09-24:
+  *"person acting w/ no login = reader/browser"*. A person with no login is a
+  reader/browser, whoever they are, and holds exactly this.
 
 **Identity is not here.** Which login is which actor is the data store's to
-know (owner, 2026-09-23). No actor file and no policy carries a login.
+know (owner, 2026-09-23). No actor file and no policy carries a login, and
+workflow history names the **actor**, never the login: the repository owner's
+steps are recorded as `owner` (owner, 2026-09-24, *"Yes, exactly"*), and the
+data store maps the login to `owner`.
 
 **Who reads all three before a task runs:** the BPMN executor. Before any task
 or decision is recorded, `authorizeTask` asks whether the actor is
@@ -381,7 +386,7 @@ what discharges it arrives later, so the pointer lives on the arrival.
 The references are audited. `satisfies-resolves`, `requirement-actors-resolve`
 and `requirement-derived-from-resolves` are `critical`, because a reader
 following a broken one gets nothing — the same test as a dangling
-`<folio:skill ref>`. `requirement-statement-satisfied` is `minor` coverage: a
+`<bootstrap.processes:skill ref>`. `requirement-statement-satisfied` is `minor` coverage: a
 statement nothing claims is visible only from the requirement's side. `requirement-statements-graded` is `major`: an
 ungraded statement is readable, it just cannot be conformance-tested, and
 SHALL-vs-SHOULD is the whole reason to write a requirement rather than a note.
@@ -445,13 +450,13 @@ itself, and only this way:**
 ```xml
 <bpmn:lane id="Lane_Reviewer" name="Reviewer">
   <bpmn:extensionElements>
-    <folio:role ref="reviewer" />
+    <bootstrap.processes:role ref="reviewer" />
   </bpmn:extensionElements>
   ...
 </bpmn:lane>
 ```
 
-An explicit `<folio:role ref>` **wins** over name matching: a diagram that has
+An explicit `<bootstrap.processes:role ref>` **wins** over name matching: a diagram that has
 said which role it means must not be second-guessed by a string table. A ref
 naming no declared role is a `critical` finding — it is *not* quietly
 name-matched instead.
@@ -555,7 +560,7 @@ reachability questions** and only one of them is about the role model:
 was a live defect: `actors/` holds participants, `capabilities/` holds
 environment probes (`docker`, `pandoc`, `python3`), `roles/` holds an assignment
 table and `hooks/` holds a shell script. Scanning all of them put 46 non-skills
-into the set, so `<folio:skill ref="viewer"/>` or `ref="latex-compiler"` would
+into the set, so `<bootstrap.processes:skill ref="viewer"/>` or `ref="latex-compiler"` would
 have resolved. `NON_SKILL_GROUPS` excludes them — 176 names down to 136, with no
 existing reference becoming dangling.
 
@@ -616,7 +621,7 @@ uniquely was had no picture.
    > bean `zdrf`'s failure class, and it happened — the three roles added in
    > #453 each carry a `summary` that reaches no graph.
 2. Bind its lanes: each lane that this role plays carries
-   `<folio:role ref="<role id>">`. The role lists no lanes, since a role is the
+   `<bootstrap.processes:role ref="<role id>">`. The role lists no lanes, since a role is the
    general node and a lane the dependent one (`data-modelling` step 8, #1168).
    A lane with no ref is unbound, whatever its name.
 3. Give it the skills its lane's activities name. `role-carries-activity-skill`

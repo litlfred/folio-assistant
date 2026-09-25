@@ -47,7 +47,7 @@ Measured 2026-09-21, the question does not arise:
 
 - **`coverage.visualiser` is a rendered PATH, not a kind.** Every value in the
   corpus has the shape `cat-harness/docs/cat-harness/<graph>/<instance>/index.html`.
-  It names an artefact, the way `coverage.docs` names a page.
+  It names an artefact, the way `coverage.docs` named a page until #1168 B7c.
 - **The owner's own placement rule says Tool.** `v1hw`: *"the visualiser lives
   as a tool in the harness that DEFINES the schema, declared in
   `skills`/`tools`."* Not beside the data, and not in whichever layer happens
@@ -85,7 +85,7 @@ A prefix names the **layer** or the **owner** an instance belongs to.
 
 | prefix | what it marks | instances here |
 |---|---|---|
-| `cat-` | the agentic-harness layer | `cat-harness`, `bootstrap`, `bootstrap-tools` |
+| `cat-` | the agentic-harness layer | `cat-harness`, `bootstrap` |
 | `folio-assistant-` | the content/core layer | `folio-assistant-core`, `folio-assistant-sci` |
 | `who-` | WHO material | `who-iris`, `who-style-guide` |
 | `litlfred-` | the owner's own | — none yet |

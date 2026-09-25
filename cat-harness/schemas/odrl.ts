@@ -36,6 +36,8 @@
  *
  * @module schemas/odrl
  * @graphNode schema
+ *
+ * @conformsTo w3c-odrl
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";

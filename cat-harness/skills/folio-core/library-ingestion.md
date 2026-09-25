@@ -4,6 +4,9 @@ description: >
   Taking a file from `uploads/` to `library/<bib-slug>/` — which rung to reach
   for and why, what a complete L1 entry holds, and why an inferred structure is
   refused rather than guessed. One entry point: `bun run ingest`.
+graph-kinds:
+  - library
+  - uploads
 ---
 
 # Library ingestion
@@ -137,6 +140,7 @@ library/<bib-slug>/
   sections/          one Markdown file per section, front matter + body
   blocks/            the block projection consumers read
   manifest.jsonld    @id, @type folio:SourceDocument, contains[], provenance
+  summaries.json     agent summaries of prose blocks, a QA sidecar (see below)
   ocr/               page-NNN.txt, only where the source was scanned
 ```
 
@@ -346,6 +350,50 @@ failing it would make an unreviewed queue indistinguishable from a broken arm.
 
 A null `rows`/`columns` is likewise not an empty sheet: `shape_source` says
 whether the shape was read, counted, or `undetermined`.
+
+### Summarising prose blocks — a QA sidecar, drained slowly
+
+Owner, 2026-09-24: *"on library/ page, the extract of a node is shown, but no
+agentic summary"*, and on scope: *"Make as QA sidecar as part of general doc
+ingestion to slowly drain."*
+
+**The block stays verbatim.** A prose block is the source's text,
+`provenance: "ingested"`, and re-ingestion regenerates it. A summary is an
+agent's account of that text, so it lives beside the blocks in
+`library/<slug>/summaries.json` (`folio-block-summaries/v1`,
+`schemas/block-summary.ts`): one record per block, holding `block`, `source`
+(the section file), `source_hash` and a `narrative`. That narrative is the
+state machine above, not a second one: `draft`, `confirmed` by a person only,
+`rejected` with a reason, and an agent author must name its model.
+
+**`source_hash` makes a changed source read as STALE.** It is the sha256 of
+the section text the summariser was shown (`proseBody`). Re-ingest a document
+and any section whose text moved puts its summary back in the queue, marked
+stale. `bun run narratives` shows it and refuses to confirm it.
+
+**The queue is derived, so nothing enqueues.** Every prose block in every
+declared library is in it until it has a current draft or confirmation. A
+rejected draft is back in it, and its rejection reason travels with it.
+
+```sh
+bun run summaries                                   # the backlog, per entry
+bun run summaries:next -- --n 5 [--entry <slug>]    # next K blocks WITH their text, as JSON
+bun run summaries:record -- drafts.json             # write drafts; validated, all or nothing
+```
+
+`drafts.json` is `{drafted_by: {kind: "agent", id, model, session}, drafted_at,
+drafts: [{block, source_hash, text}]}`, with `source_hash` echoed from
+`summaries:next`. `record` refuses a state other than `draft`, a hash that no
+longer matches, and a block that already has a current summary.
+
+**Drain K at a time during ingestion work**, not all at once: a thousand
+unreviewed drafts at once is a buried reviewer. Write 1–3 sentences in your
+own words, from the block's text only, adding nothing from outside it. If the
+extraction put the wrong text under a heading, summarise what is there and say
+so. The backlog is reported by `check:l1-complete` (`block-summaries`) and on
+the library page. It is advisory, never a gate. What the gate does fail is a
+sidecar that does not parse, names another entry, or holds a record for a block
+or source that is not there.
 
 ### Describing a document's images — and why it is an ARM, not a step you run
 

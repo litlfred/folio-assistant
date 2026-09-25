@@ -128,6 +128,12 @@ hosted one are both real configurations. Collapsing them into one
 "model supply" axis was the first draft's error and it is what made the
 air-gapped contradiction in §3 invisible.
 
+**Owner, 2026-09-24 (beans `4y2i`, `61tg`): a data store is something the
+harness sits BESIDE, never something it connects to** — in sovereign cloud
+it produces artefacts a deployment pulls ("artefacts only"). The one
+exception under discussion is custody of wallet credentials in
+self-sovereign mode: see [wallet custody](wallet-custody.md).
+
 **Axis 9 is a set, not a single value.** A sovereign deployment may hold a HAPI
 FHIR store *and* reach a national portal. Every other axis takes one value.
 
@@ -384,7 +390,7 @@ as a Mermaid fence.
 
 **"Formal formal" has to mean executable, not longer.** A process here is formal
 when its lanes bind to declared roles, every activity carries
-`<folio:skill ref>`, bean operations are declared with `<folio:bean op>`, and
+`<bootstrap.processes:skill ref>`, bean operations are declared with `<cat-harness.processes:bean op>`, and
 `bun run kg:audit` is green on its joins. `crdm-requirements.bpmn` already meets
 that bar and is the model to copy.
 

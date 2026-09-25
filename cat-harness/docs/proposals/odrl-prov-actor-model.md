@@ -176,6 +176,14 @@ See [BPMN execution: one skill, two engines](../agentic-harness.html#bpmn-execut
 - **The agentic swarm** acts first. Its QA/QC report reads the PROV-O log
   **after**, and every `prov:Activity` with no matching ODRL permission, or a
   `hadRole` the lane does not bind, is a finding.
+  *Built 2026-09-24, advisory (#1180 step 5): `scripts/prov-qaqc.ts` derives
+  the PROV-O log from each workflow instance's history, writes it to
+  `docs/assets/prov/<instance>.prov.jsonld`, and re-runs `authorizeTask` on
+  every step with the actor `asserted`. Findings are listed on the
+  `/prov-qaqc/` page and do not fail the build; `check:prov-qaqc` fails only
+  on stale outputs or a record that does not validate. An entry with no actor
+  or no lane role gets a finding, not a `prov:Activity`, because the schema
+  requires both. See the `task-authorization` skill.*
 
 It is the same policy and the same log, checked at two different times. That
 is exactly how the figure describes the mitigation at the agentic end:
@@ -218,6 +226,20 @@ Each step is its own PR with its own QA, and missing QA is a failure:
    - `raci.md`.
 5. **The QA/QC report over PROV-O**: the agentic end's mitigation, which is the
    first real consumer of all this.
+   *Built 2026-09-24: `scripts/prov-qaqc.ts` (`bun run prov:qaqc`, gated by
+   `check:prov-qaqc`), tested in `scripts/tests/prov-qaqc.test.ts`. It reuses
+   `authorizeTask`, `laneBinding` and `ProvActivitySchema` rather than
+   restating them. `cat-harness:underPolicy` now takes an array, because
+   `decide` evaluates every policy in force and naming one would misstate
+   the verdict. First run, over the 4 committed instances: 55 steps, 55
+   activities, and every step `unknown` (no policy grants `perform-task`) with
+   an undeclared actor (`claude`, `litlfred`). The history records who, not
+   which declared actor, so the log is only as good as the name written into
+   it.*
+   *2026-09-24, owner: "Declare both". `claude` is now declared (an agent,
+   roles `authoring-agent` and `code-reviewer`). `litlfred` is not: it is a
+   GitHub login, and an actor file never carries one. Bean `jwoc` records why
+   and what the owner can choose; `prov:hadRole` stays required.*
 6. **ihris**:
    - the 2009 use-case actors (A-PT1 HR Manager, …) become Roles;
    - "Assigned To" and "Source" become opaque `prov:Person` actors

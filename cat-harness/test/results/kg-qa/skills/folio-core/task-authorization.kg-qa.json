@@ -5,15 +5,20 @@
     "id": "task-authorization",
     "path": "skills/folio-core/task-authorization.md"
   },
-  "source_hash": "c4fb6c2ae4eb",
+  "source_hash": "3c98e7295464",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
       "findings": []
     },
     "skill-is-brief": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-core/task-authorization.md",
+          "detail": "347 lines; p75 of the skill corpus is 279."
+        }
+      ]
     },
     "skill-not-a-document": {
       "result": "pass",
@@ -33,8 +38,8 @@
     }
   },
   "totals": {
-    "pass": 4,
-    "fail": 0,
+    "pass": 3,
+    "fail": 1,
     "n/a": 2,
     "unknown": 0
   }

@@ -663,13 +663,17 @@ describe("the cat's introduction keeps the owner's own words", () => {
     // So the two differing is no longer the point; the harness having one look
     // is. `engineer` is reserved for testing surfaces and is deliberately used
     // by nothing here.
+    //
+    // `grumpy-cyborg-agents` since 2026-09-24 — the same hoodie, on a sled pulled by robot
+    // cats: "use this for the cat-harness theme, the current plain grump cat
+    // them it is using should be for folio-assisnt-core".
     const themes = new Set(CAT.map((c) => c.contribution.theme));
-    expect([...themes]).toEqual(["grumpy-cat"]);
+    expect([...themes]).toEqual(["grumpy-cyborg-agents"]);
   });
 
   test("bootstrap does NOT share it, which is what makes the theme the harness's own", () => {
     const boot = new Set(BOOT.map((c) => c.contribution.theme));
-    for (const t of boot) expect(t).not.toBe("grumpy-cat");
+    for (const t of boot) expect(t).not.toBe("grumpy-cyborg-agents");
   });
 
   test("its source link is absolute and does not point at this site", () => {

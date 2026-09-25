@@ -10,17 +10,18 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The <folio:skill> extension on an activity names the folio-assistant skill
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
   that implements it; a name in parentheses is a tool the proposal asks for and
   no skill yet wraps (fsh-cone, fhir_context_load, fhir_validate, fhir_narrative,
-  ig_metaindex_rebuild, ig-cache). <folio:bean> marks a step that writes the
+  ig_metaindex_rebuild, ig-cache). <cat-harness.processes:bean> marks a step that writes the
   shared work plan in beans/.
 -->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_IgIncremental"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -41,11 +42,11 @@
       package that owns the content owns what adequate means.
     </bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory" />
+      <cat-harness.processes:policy enforcement="advisory" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_IgIncremental_LaneSet">
       <bpmn:lane id="Lane_Author" name="FHIR modeller / PR author (person + authoring agent)">
-        <bpmn:extensionElements><folio:role ref="fhir-modeller"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="fhir-modeller"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_SourceChanged</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_Findings</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_FindingsQc</bpmn:flowNodeRef>
@@ -53,14 +54,14 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
         <bpmn:documentation>Where every failure branch lands before the process ends rather than just stopping: Gateway_Valid's `no`, Gateway_QcPass's `no` and Gateway_Restore's `environment error` each write here — Task_LogFindings, Task_QcBeans, Task_LogEnvError — before EndEvent_Findings, EndEvent_FindingsQc or EndEvent_EnvError, so a run that stops short always leaves a record of why rather than only a red check.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="work-plan"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="work-plan"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_LogFindings</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_QcBeans</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_LogEnvError</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Build" name="Incremental build (system)">
         <bpmn:documentation>Owns everything that stays inside the cone: restore the cache, compute the cone, check it out, compile and re-render only that slice, then merge and rebuild the aggregates — Task_Index never re-derives an artefact on its own, so a missing record is a miss rather than a silent rebuild. What needs the JVM's warm state, it hands to Lane_Services rather than running itself.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Restore</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Restore</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Cone</bpmn:flowNodeRef>
@@ -73,7 +74,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Services" name="Publisher + validator services (JVM)">
         <bpmn:documentation>Two separate duties rather than one: Task_FullBuild is the complete fallback the diagram takes when Gateway_Restore finds the cache unusable, bypassing the cone machinery and reaching Task_Qa on its own. Task_ContextLoad and Task_Validate are the other duty — holding the loaded dependency packages and expansions warm across runs is what makes validating a handful of cone files cheap, and losing that warm state is the same cache miss that routes to the fallback instead.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="ig-publisher-service"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="ig-publisher-service"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_FullBuild</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ContextLoad</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Validate</bpmn:flowNodeRef>
@@ -81,7 +82,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Review" name="PR reviewer / QC reviewer">
         <bpmn:documentation>Sees the change's shape before the build finishes — Task_ConeReport names what will rebuild and whether a shared hub is touched, posted while the checkout is still running — then gates on Task_Qa by reading the cone's own rows in the aggregate first. On a PR branch it also deploys the preview itself, but never seeds the shared cache: that stays Lane_PubMgr's, reached only past Gateway_Path on main or a release.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="qc-reviewer"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="qc-reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_ConeReport</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Qa</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_QcPass</bpmn:flowNodeRef>
@@ -90,7 +91,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_PubMgr" name="Publication manager — deploy and seed">
         <bpmn:documentation>Reached only past Gateway_Path's main-or-release branch, never for a PR preview — which is what makes this the one lane allowed to touch the shared cache. Task_Seed does not seed on a green build alone: it writes to a -test branch and verifies a restore from a clean clone before promoting, so what licenses the shared cache is the verified restore, not the deploy that came before it.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="publication-manager"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="publication-manager"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Gateway_Path</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Deploy</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Seed</bpmn:flowNodeRef>
@@ -104,7 +105,7 @@
     <bpmn:serviceTask id="Task_Restore" name="Restore derived state&#10;[ig-publication]">
       <bpmn:documentation>ig-cache restore: per-artefact records, the terminology cache, the package cache and temp/, keyed by the toolchain slug. Exit 0 usable, 1 miss, 2 environment error, 3 present but toolchain moved.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
       </bpmn:extensionElements>
       <bpmn:incoming>F01</bpmn:incoming>
       <bpmn:outgoing>F02</bpmn:outgoing>
@@ -119,8 +120,8 @@
     <bpmn:task id="Task_LogEnvError" name="Log the environment error&#10;on the bean [todo-manager]">
       <bpmn:documentation>Exit 2 from restore: the cache store or the toolchain could not be reached. Record that on the change's bean, with the restore output, so the work plan says the build did not run and why. Check before creating — beans create is not idempotent.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="note" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>F04E</bpmn:incoming>
       <bpmn:outgoing>F04F</bpmn:outgoing>
@@ -132,7 +133,7 @@
     <bpmn:serviceTask id="Task_FullBuild" name="Full publisher build&#10;[ig-publication]">
       <bpmn:documentation>Exit 1 or 3 from restore: the whole IG is built as today. Its outputs become the records the next seed writes.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
       </bpmn:extensionElements>
       <bpmn:incoming>F04</bpmn:incoming>
       <bpmn:outgoing>F18</bpmn:outgoing>
@@ -140,9 +141,9 @@
     <bpmn:serviceTask id="Task_Cone" name="Compute the cone of the change&#10;(fsh-cone --changed)">
       <bpmn:documentation>content/pipeline/fsh-cone.ts over the changed files: the forward cone is what to rebuild, the backward cone is what to check out.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ig-publication" />
-        <folio:skill ref="ig-publication" />
-        <folio:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
       </bpmn:extensionElements>
       <bpmn:incoming>F03</bpmn:incoming>
       <bpmn:outgoing>F05</bpmn:outgoing>
@@ -150,9 +151,9 @@
     <bpmn:task id="Task_ConeReport" name="Post the cone report on the PR">
       <bpmn:documentation>Review path: the reviewer sees what this change rebuilds — how many artefacts, and whether a hub (a shared RuleSet, CQL library or value set) is touched — before the build finishes. On main it is a log line.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="quality-control" />
-        <folio:skill ref="quality-control" />
-        <folio:skill ref="quality-control" />
+        <bootstrap.processes:skill ref="quality-control" />
+        <bootstrap.processes:skill ref="quality-control" />
+        <bootstrap.processes:skill ref="quality-control" />
       </bpmn:extensionElements>
       <bpmn:incoming>F05</bpmn:incoming>
       <bpmn:outgoing>F06</bpmn:outgoing>
@@ -160,9 +161,9 @@
     <bpmn:serviceTask id="Task_Checkout" name="Restricted checkout&#10;of the backward cone">
       <bpmn:documentation>git sparse-checkout of the cone's files plus sushi-config.yaml, ig.ini and the alias files — a median of three files, p90 eleven, on smart-immunizations.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ig-publication" />
-        <folio:skill ref="ig-publication" />
-        <folio:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
       </bpmn:extensionElements>
       <bpmn:incoming>F06</bpmn:incoming>
       <bpmn:outgoing>F07</bpmn:outgoing>
@@ -170,7 +171,7 @@
     <bpmn:serviceTask id="Task_Sushi" name="SUSHI on the restricted tank&#10;[l3-fhir-authoring]">
       <bpmn:documentation>Compile the restricted checkout with SUSHI — the cone's FSH, not the whole IG. A build optimisation, not a validation shortcut: SUSHI compiling is not conformance, so a green compile goes on to validation rather than standing in for it.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="l3-fhir-authoring" />
+        <bootstrap.processes:skill ref="l3-fhir-authoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>F07</bpmn:incoming>
       <bpmn:outgoing>F08</bpmn:outgoing>
@@ -178,9 +179,9 @@
     <bpmn:serviceTask id="Task_ContextLoad" name="Load or reuse the warm context&#10;(fhir_context_load)">
       <bpmn:documentation>The validator's server mode holds the loaded dependency packages, snapshots and expansions in its session cache. Cold start loads the restored derived FHIR rather than regenerating it.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ig-publication" />
-        <folio:skill ref="ig-publication" />
-        <folio:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
       </bpmn:extensionElements>
       <bpmn:incoming>F08</bpmn:incoming>
       <bpmn:outgoing>F09</bpmn:outgoing>
@@ -188,7 +189,7 @@
     <bpmn:serviceTask id="Task_Validate" name="Validate the cone&#10;(fhir_validate) [fhir-validation]">
       <bpmn:documentation>Validate the cone's resources against the warm validator and report the cone that was checked. A validator that could not start is could-not-determine, never a pass with no findings. A green cone is not a green IG: a profile the change did not touch can still be broken by it.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="fhir-validation" />
+        <bootstrap.processes:skill ref="fhir-validation" />
       </bpmn:extensionElements>
       <bpmn:incoming>F09</bpmn:incoming>
       <bpmn:outgoing>F10</bpmn:outgoing>
@@ -202,8 +203,8 @@
     <bpmn:task id="Task_LogFindings" name="Log findings on the bean&#10;[todo-manager]">
       <bpmn:documentation>Validation failed: record the findings on the change's bean, so the work plan says what blocks it. Check before creating — beans create is not idempotent.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="note" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>F11</bpmn:incoming>
       <bpmn:outgoing>F12</bpmn:outgoing>
@@ -214,9 +215,9 @@
     <bpmn:serviceTask id="Task_Render" name="Re-render the cone's records&#10;(fhir_narrative · skip lists)">
       <bpmn:documentation>Narrative and fragments for the cone only: the publisher's -no-validate / -no-narrative complements today, Rapido's differential build once its tracker is persisted.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ig-publication" />
-        <folio:skill ref="ig-publication" />
-        <folio:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
       </bpmn:extensionElements>
       <bpmn:incoming>F13</bpmn:incoming>
       <bpmn:outgoing>F14</bpmn:outgoing>
@@ -224,7 +225,7 @@
     <bpmn:serviceTask id="Task_Merge" name="Merge restored and&#10;rebuilt records">
       <bpmn:documentation>Combine the restored per-artefact records with the cone's freshly rendered ones into one complete set, so the meta-index rebuild that follows has every artefact's record and never re-derives one.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
       </bpmn:extensionElements>
       <bpmn:incoming>F14</bpmn:incoming>
       <bpmn:outgoing>F15</bpmn:outgoing>
@@ -232,9 +233,9 @@
     <bpmn:serviceTask id="Task_Index" name="Rebuild the meta-index&#10;(ig_metaindex_rebuild)">
       <bpmn:documentation>The whole-IG aggregates only — artifacts, TOC, canonicals, expansions, package, QA aggregate. Never re-derives an artefact: a missing record is a miss (exit 1), not a silent rebuild.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ig-publication" />
-        <folio:skill ref="ig-publication" />
-        <folio:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
       </bpmn:extensionElements>
       <bpmn:incoming>F15</bpmn:incoming>
       <bpmn:outgoing>F16</bpmn:outgoing>
@@ -242,7 +243,7 @@
     <bpmn:serviceTask id="Task_Site" name="Assemble the site&#10;(template · Jekyll) [ig-publication]">
       <bpmn:documentation>Assemble the site from the merged records: the IG template and a Jekyll build over output/. Only site assembly happens here — every artefact record already exists.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
       </bpmn:extensionElements>
       <bpmn:incoming>F16</bpmn:incoming>
       <bpmn:outgoing>F17</bpmn:outgoing>
@@ -250,7 +251,7 @@
     <bpmn:userTask id="Task_Qa" name="QC gates on the aggregate QA&#10;[quality-control]">
       <bpmn:documentation>qa.json is the aggregate of per-artefact outcomes; the reviewer reads the cone's rows first.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="quality-control" />
+        <bootstrap.processes:skill ref="quality-control" />
       </bpmn:extensionElements>
       <bpmn:incoming>F17</bpmn:incoming>
       <bpmn:incoming>F18</bpmn:incoming>
@@ -265,8 +266,8 @@
     <bpmn:task id="Task_QcBeans" name="File QC findings as beans&#10;[todo-manager]">
       <bpmn:documentation>QC failed on the aggregate: file each finding as a bean, so it is tracked on the work plan rather than lost in qa.json. Check for an existing bean before creating one.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="note" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>F20</bpmn:incoming>
       <bpmn:outgoing>F21</bpmn:outgoing>
@@ -283,8 +284,8 @@
     <bpmn:serviceTask id="Task_DeployPreview" name="Deploy the preview site&#10;[content-publish]">
       <bpmn:documentation>A preview never seeds the shared cache.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:fulfilment kinds="person system" reason="the preview deploy is mechanical but belongs to the reviewer’s lane because the preview exists FOR the review — moving it to Lane_Build would hide who the artefact is built for. A reviewer may also deploy one by hand." />
-        <folio:skill ref="content-publish" />
+        <cat-harness.processes:fulfilment kinds="person system" reason="the preview deploy is mechanical but belongs to the reviewer’s lane because the preview exists FOR the review — moving it to Lane_Build would hide who the artefact is built for. A reviewer may also deploy one by hand." />
+        <bootstrap.processes:skill ref="content-publish" />
       </bpmn:extensionElements>
       <bpmn:incoming>F23</bpmn:incoming>
       <bpmn:outgoing>F24</bpmn:outgoing>
@@ -295,9 +296,9 @@
     <bpmn:serviceTask id="Task_Deploy" name="Deploy the site&#10;[content-publish] [ig-publication]">
       <bpmn:documentation>Deploy the site built from main or a release. Deploying is release-management, after a human authorised the release — an agent never records that authorisation. Report the published URL only once it answers: a returned deploy is not a serving site.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:fulfilment kinds="person system" reason="deploying the built site is mechanical; the lane records who is accountable for what is live, and its name “Publication manager — deploy and seed” says so. A publication manager may also deploy by hand." />
-        <folio:skill ref="content-publish" />
-        <folio:skill ref="ig-publication" />
+        <cat-harness.processes:fulfilment kinds="person system" reason="deploying the built site is mechanical; the lane records who is accountable for what is live, and its name “Publication manager — deploy and seed” says so. A publication manager may also deploy by hand." />
+        <bootstrap.processes:skill ref="content-publish" />
+        <bootstrap.processes:skill ref="ig-publication" />
       </bpmn:extensionElements>
       <bpmn:incoming>F25</bpmn:incoming>
       <bpmn:outgoing>F26</bpmn:outgoing>
@@ -305,10 +306,10 @@
     <bpmn:serviceTask id="Task_Seed" name="Seed the cache from the green build&#10;(ig-cache seed · verify · promote)">
       <bpmn:documentation>Only a green build of main or a release seeds. Seed writes to the -test branch, verifies a restore from a clean clone, then promotes.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:fulfilment kinds="person system" reason="seeding, verifying and promoting the cache is a fixed program the publication manager is accountable for; the manual promote is the same program run by hand." />
-        <folio:skill ref="ig-publication" />
-        <folio:skill ref="ig-publication" />
-        <folio:skill ref="ig-publication" />
+        <cat-harness.processes:fulfilment kinds="person system" reason="seeding, verifying and promoting the cache is a fixed program the publication manager is accountable for; the manual promote is the same program run by hand." />
+        <bootstrap.processes:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
+        <bootstrap.processes:skill ref="ig-publication" />
       </bpmn:extensionElements>
       <bpmn:incoming>F26</bpmn:incoming>
       <bpmn:outgoing>F27</bpmn:outgoing>

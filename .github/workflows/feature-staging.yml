@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/feature-staging.bpmn
 name: Feature Staging (GitHub Pages)
 
 # Deploy feature-branch rendered content to gh-pages under STAGING/<branch>/
@@ -105,6 +106,7 @@ concurrency:
 jobs:
   # ── Deploy feature branch to STAGING/ ─────────────────────────
   stage:
+    # bpmn-node: Start_PR
     # A cleanup dispatch is not a staging request. `github.event.action` is
     # empty on `workflow_dispatch`, so without the second clause a run asked to
     # REMOVE a preview would deploy one as well.
@@ -886,6 +888,26 @@ jobs:
           # bootstrap's OWN files, as the deploy publishes them (bean `iwtn`):
           # LAST, and it never overwrites the graph's `.json` copy above.
           bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}"
+          # bootstrap's diagram vocabulary at its extensionless address, which is
+          # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
+          # `.json` copy every rendering here carries for Pages.
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns"
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns.json"
+          # cat-harness's diagram vocabulary likewise (bean `12s9` stage 3). Its
+          # processes are not otherwise published, so it is copied from source.
+          mkdir -p "./_site/${STUB}/processes"
+          for f in ns ns.jsonld ns.json; do cp ./cat-harness/processes/ns.jsonld "./_site/${STUB}/processes/$f"; done
+
+          # The harness rail on every standalone page — bean `oi1y`. LAST, after
+          # every generator that writes one, for the reason stated at the same
+          # step in `docs-site.yml`: a call placed earlier walks the site before
+          # bootstrap's pages exist and misses ten of them silently.
+          #
+          # Here as well as in the deploy because `check:invocation-parity`
+          # requires it, and rightly: a preview that rails nothing is a preview
+          # that cannot show whether the railing worked, which is exactly how
+          # this defect was found in the first place.
+          bun run cat-harness/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness
         shell: bash
 
       # The QA witnesses, published at the path the badges already point at.
@@ -1179,6 +1201,7 @@ jobs:
   # label still guards is the case where nobody decided anything — a PR closed
   # without merging.
   cleanup:
+    # bpmn-node: Start_Closed
     if: github.event.action == 'closed'
     runs-on: ubuntu-latest
     # NO shared group, for the reason above: a queued job is cancelled by the
@@ -1436,6 +1459,7 @@ jobs:
 
   # ── Remove ONE preview, on an explicit human dispatch ─────────
   cleanup-dispatch:
+    # bpmn-node: Start_Dispatch
     # THE REMEDY A PERSON CAN ACTUALLY INVOKE — bean `w2g5`, second half.
     #
     # `cleanup` above is the only mechanism that removes a preview and it is

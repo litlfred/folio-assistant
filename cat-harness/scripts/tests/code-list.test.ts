@@ -100,11 +100,11 @@ describe("the engine checks an adjudication's codes against the list it names", 
       p,
       `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn" targetNamespace="urn:t">
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#" targetNamespace="urn:t">
   <bpmn:process id="Process_T" isExecutable="false">
     <bpmn:startEvent id="Start_T"/>
     <bpmn:task id="A_T" name="Adjudicate">
-      <bpmn:extensionElements>${adj}<folio:fulfilment kinds="person agent" reason="a judgement"/></bpmn:extensionElements>
+      <bpmn:extensionElements>${adj}<cat-harness.processes:fulfilment kinds="person agent" reason="a judgement"/></bpmn:extensionElements>
     </bpmn:task>
   </bpmn:process>
 </bpmn:definitions>
@@ -114,32 +114,35 @@ describe("the engine checks an adjudication's codes against the list it names", 
   };
 
   test("the list's own codes load", async () => {
-    const m = await loadProcessModel(diagram('<folio:adjudication codes="stands withdrawn" list="adjudication-content-finding"/>'));
+    const m = await loadProcessModel(diagram('<cat-harness.processes:adjudication codes="stands withdrawn" list="adjudication-content-finding"/>'));
     expect(m.nodes.get("A_T")!.adjudication).toEqual({ codes: ["stands", "withdrawn"], list: "adjudication-content-finding" });
   });
 
   test("REFUSES a code the list does not define, and one it defines that is missing", async () => {
     await expect(
-      loadProcessModel(diagram('<folio:adjudication codes="stands overruled" list="adjudication-content-finding"/>')),
+      loadProcessModel(diagram('<cat-harness.processes:adjudication codes="stands overruled" list="adjudication-content-finding"/>')),
     ).rejects.toThrow(/defines \(stands, withdrawn\)/);
   });
 
   test("REFUSES a list nothing declares", async () => {
     await expect(
-      loadProcessModel(diagram('<folio:adjudication codes="a b" list="no-such-list"/>')),
+      loadProcessModel(diagram('<cat-harness.processes:adjudication codes="a b" list="no-such-list"/>')),
     ).rejects.toThrow(/no declared code-list/);
   });
 
   test("REFUSES a list with no codes beside it", async () => {
     await expect(
-      loadProcessModel(diagram('<folio:adjudication list="adjudication-criterion"/>')),
+      loadProcessModel(diagram('<cat-harness.processes:adjudication list="adjudication-criterion"/>')),
     ).rejects.toThrow(/without `codes`/);
   });
 
   test("this repository's diagrams all name their list", () => {
     const f = mkdtempSync(join(tmpdir(), "cl-unlisted-"));
     mkdirSync(join(f, "p"));
-    writeFileSync(join(f, "p", "x.bpmn"), '<folio:adjudication codes="a b"/><folio:adjudication codes="a b" list="l"/>');
+    writeFileSync(
+      join(f, "p", "x.bpmn"),
+      `<bpmn:definitions xmlns:bootstrap.processes="${ns.BOOTSTRAP_PROCESSES_NS}" xmlns:cat-harness.processes="${ns.CAT_HARNESS_PROCESSES_NS}"><cat-harness.processes:adjudication codes="a b"/><cat-harness.processes:adjudication codes="a b" list="l"/></bpmn:definitions>`,
+    );
     expect(unlistedAdjudications([join(f, "p", "x.bpmn")], f)).toHaveLength(1);
   });
 });

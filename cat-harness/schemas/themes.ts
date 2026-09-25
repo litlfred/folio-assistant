@@ -140,6 +140,45 @@ const RAW = [
   {
     $schema: THEME_SCHEMA_TAG,
     kind: "sticky",
+    id: "grumpy-cyborg-agents",
+    name: "Grumpy cyborg agents",
+    description: "Cloud cream and a harness teal, behind the cat on the sled and the four robot cats pulling it.",
+    palette: {
+      // Sampled from the art: binned into a 16-step cube over the square crop,
+      // the thought-cloud cream (#f0f0e0 bin) is 21% of the frame, far ahead of
+      // the rain-grey blues. `ink` is the hoodie's dark green, 14.15:1 on
+      // `surface`.
+      surface: "#fbf9ef", ink: "#1c2a24", edge: "#c5cdc3",
+      // The teal of the harness lines and the robots' chest marks — the colour
+      // that says "harness" in the picture. 4.72:1 on `surface`, past the 3:1
+      // SC 1.4.11 floor for the priority stripe, and clear of the literal amber
+      // and red the high and critical stripes carry.
+      accent: "#2f7a80",
+    },
+    // CAT-HARNESS'S OWN, owner 2026-09-24: "use this for the cat-harness theme,
+    // the current plain grump cat them it is using should be for
+    // folio-assisnt-core". The same grumpy cat in the same sage hoodie, now in
+    // a sled with the reins in paw, pulled by four robot cats in harness — the
+    // name drawn literally. Named by the owner: "grumpy-cyborg-agents" — the
+    // robot cats are the agents doing the pulling. `grumpy-cat` is unchanged and moves to
+    // folio-assistant-core, which keeps "each harness its own theme" true.
+    //
+    // All three crops declare their own `textRegion`, measured by rendering
+    // boxes over them: the @ mark sits at the cloud's top centre, so the words
+    // go below it.
+    backdrop: {
+      imageRole: "landing-grumpy-cyborg-agents",
+      // Measured like its siblings: `ink` over this scrim laid on PURE BLACK is
+      // 9.29:1, clear of the AAA 7:1 floor; 14.29:1 on pure white.
+      scrim: "rgba(251, 249, 239, 0.82)",
+      description:
+        "The instance's declared grumpy-cyborg-agents art, behind the sticky's ink rather than composited with it.",
+    },
+    layouts: LAYOUTS,
+  },
+  {
+    $schema: THEME_SCHEMA_TAG,
+    kind: "sticky",
     id: "bootstrap",
     name: "CatBootstrap",
     description: "Desert sand and sienna \u2014 the frontier at the start of the trail.",
@@ -345,42 +384,24 @@ const RAW = [
       // the same on every board.
       accent: "#6a7c73",
     },
-    // NO `backdrop`, AND THAT IS THE WHOLE STORY OF THIS THEME.
+    // THE ART IS COMPLETE since 2026-09-24, and this is the edit the earlier
+    // comment here said it would be. Owner, 2026-09-23: *"create architecture
+    // theme"* — shipped palette-only then, because `landing-architecture`
+    // declared laptop and card and NO mobile crop (commit 1b62b57's third
+    // upload was a byte-identical copy of its second), and
+    // `resolveThemeBackdrop` refuses a partial set wholesale. The owner then
+    // supplied the portrait crop and a matching square one.
     //
-    // Owner, 2026-09-23: *"create architecture theme"*. The palette above is
-    // real and measured; the art is NOT complete, so the backdrop is withheld
-    // rather than declared against a set that cannot serve it.
-    //
-    // `landing-architecture` declares **laptop and card, and no mobile**.
-    // `resolveThemeBackdrop` refuses a partial set wholesale, and
-    // `themes.test.ts` fails any shipped backdrop that does not resolve all
-    // three — which is exactly what happened when this entry was first written
-    // WITH a backdrop. The gate caught it; that is the gate working.
-    //
-    // The reason the set is short is recorded on the card image itself and in
-    // that test: the third upload was a byte-identical copy of the second, so
-    // the portrait crop was never actually supplied. It is not a file somebody
-    // mislaid — it does not exist.
-    //
-    // A palette-only theme is a real object: it carries an id, a palette and
-    // layouts, and a sticky using it renders palette-only. What it cannot yet
-    // do is supply a backdrop or a navbar avatar, both of which come from the
-    // art.
-    //
-    // WHEN THE PORTRAIT CROP ARRIVES, this is the whole edit — declare
-    // `landing-architecture-mobile` beside its two siblings, then add here:
-    //
-    //     backdrop: {
-    //       imageRole: "landing-architecture",
-    //       scrim: "rgba(253, 251, 240, 0.86)",
-    //       description: "...",
-    //     },
-    //
-    // The scrim is already measured, so it is not a value the next person has
-    // to re-derive: ink over it is **9.02:1** on PURE BLACK and 12.52:1 over
-    // white, swept rather than copied — 0.78 already clears the 7:1 floor at
-    // 7.36:1, and 0.86 buys margin without going past where the other cards
-    // settled.
+    // The scrim was measured before the crop existed and is used unchanged:
+    // ink over it is **9.02:1** on PURE BLACK and 12.52:1 over white — 0.78
+    // already clears the 7:1 floor at 7.36:1, and 0.86 buys margin without
+    // going past where the other cards settled.
+    backdrop: {
+      imageRole: "landing-architecture",
+      scrim: "rgba(253, 251, 240, 0.86)",
+      description:
+        "The instance's declared architecture art, behind the sticky's ink rather than composited with it.",
+    },
     layouts: LAYOUTS,
   },
   {

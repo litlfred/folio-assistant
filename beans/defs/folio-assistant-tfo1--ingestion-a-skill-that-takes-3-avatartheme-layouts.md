@@ -91,7 +91,7 @@ Derived from what actually went wrong, not invented:
 
 ## Done when
 
-- [ ] the duplicate-vs-missing question on `1b62b57` is answered
+- [x] the duplicate-vs-missing question on `1b62b57` is answered — MISSING: the owner supplied the portrait crop 2026-09-24
 - [ ] the constraint list is confirmed or corrected
 - [ ] a skill (and a Tool, if it should be callable) ingests 3 layouts, declares
       them, and returns success or a named failure
@@ -132,7 +132,7 @@ Against the `## Done when`:
       `undeclared-destination`; weight and format are **warnings**, because
       heavy art renders correctly and refusing it would block work over a
       bandwidth judgement.
-- [ ] the duplicate-vs-missing question on `1b62b57` — **still the owner's**
+- [x] the duplicate-vs-missing question on `1b62b57` — answered 2026-09-24: the third crop was missing, and the owner supplied it
 - [ ] the constraint list confirmed — **built from the incidents rather than
       waiting**, so this is now a correction rather than a blocker
 - [ ] avatars for testing / engineering / architecture; the board reflecting
@@ -214,3 +214,24 @@ been supplied. The second is the only thing standing between
 `check:theme-art:check` and being a CI gate — the exemption in `gates.ts` names
 it as the exact unblocking condition, so the gate arrives the moment the crop
 does.
+
+
+_2026-09-24_ — **The architecture set is COMPLETE, and the gate is in.** The owner
+supplied the portrait crop (941×1672) and a matching new square (1254×1254),
+which replaces the earlier square; that one stays in git history. So the answer to
+this bean's standing question is *missing*, not *upload slip*.
+
+- `landing-architecture-mobile` declared; every crop carries a `textRegion`, and
+  the card's `avatarRegion` was re-measured. All were chosen by rendering boxes
+  over the art and looking.
+- The `architecture` theme now has its backdrop, with the scrim measured earlier
+  (9.02:1 on pure black).
+- `check:theme-art:check` is wired into CI (`@covers themes`); its `gates.ts`
+  exemption is gone, as it said it would be.
+- `check-image-roles`' `PERMITTED_ORPHANS` is empty — its one permit was this
+  role. `failing`/`stalePermits` take the list as a parameter so their tests
+  run on a fixture rather than on an empty real list.
+- The intake test that asserted the defect was LIVE now asserts it is CLOSED.
+
+Still open here: avatars for testing/engineering/architecture surfaces, and the
+board reflecting which harnesses fired.

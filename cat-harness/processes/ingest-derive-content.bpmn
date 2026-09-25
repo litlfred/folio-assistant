@@ -6,15 +6,16 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The <folio:skill> extension on an activity names the folio-assistant skill
-  that implements it; <folio:bean> marks a step that reads or writes the shared
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+  that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
   work plan in beans/.
 -->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_DeriveContent"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -28,16 +29,16 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
-  that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+  The &lt;bootstrap.processes:skill&gt; extension on an activity names the folio-assistant skill
+  that implements it; &lt;cat-harness.processes:bean&gt; marks a step that reads or writes the shared
   work plan in beans/.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory" />
+      <cat-harness.processes:policy enforcement="advisory" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_DeriveContent_LaneSet">
       <bpmn:lane id="Lane_0" name="Ingestion Engine (agent, runs unattended)">
         <bpmn:documentation>The only lane in this subprocess, so nothing produced here is checked by a different party before it reaches the L1 graph. Five of these six tasks carry their own NOT IMPLEMENTED note; Task_Provenance does not, and its citation of who or what wrote each narrative is what is meant to stand between a generated description and its being treated as source material.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="ingestion-agent"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_Assets</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Fan</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Archive</bpmn:flowNodeRef>
@@ -64,7 +65,7 @@
     <bpmn:serviceTask id="Task_Archive" name="Archive → greppable
 contents manifest">
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake"/>
+        <bootstrap.processes:skill ref="document-intake"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Tar/zip is opaque to every grep in the corpus until its contents are listed as data.</bpmn:documentation>
@@ -74,7 +75,7 @@ contents manifest">
     <bpmn:serviceTask id="Task_TechMeta" name="File info, sizes, hashes,
 timestamps, mimetype">
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake"/>
+        <bootstrap.processes:skill ref="document-intake"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Mechanical and cheap; the checksum is what makes a remote asset verifiable.</bpmn:documentation>
@@ -84,7 +85,7 @@ timestamps, mimetype">
     <bpmn:serviceTask id="Task_Image" name="Narrative description
 per image, localized">
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake"/>
+        <bootstrap.processes:skill ref="document-intake"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Applies equally to an image EXTRACTED FROM A PDF, not only to an uploaded one.</bpmn:documentation>
@@ -94,7 +95,7 @@ per image, localized">
     <bpmn:serviceTask id="Task_Audio" name="Transcribe and
 translate audio">
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake"/>
+        <bootstrap.processes:skill ref="document-intake"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md.</bpmn:documentation>
@@ -104,7 +105,7 @@ translate audio">
     <bpmn:serviceTask id="Task_Tabular" name="Sheet names, headers,
 shape, narrative">
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake"/>
+        <bootstrap.processes:skill ref="document-intake"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. CSV and spreadsheet: tabs, column and row headers, sizes, and what the dataset is about.</bpmn:documentation>
@@ -122,7 +123,7 @@ shape, narrative">
     <bpmn:serviceTask id="Task_Provenance" name="Cite the author of
 every narrative">
       <bpmn:extensionElements>
-        <folio:skill ref="document-intake"/>
+        <bootstrap.processes:skill ref="document-intake"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>A generated description is a claim by someone. Record whether a human or an agent wrote it, and for an agent the model version. An uncited narrative is indistinguishable from a transcription of the source.</bpmn:documentation>
