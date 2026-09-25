@@ -265,8 +265,8 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Proof Editor (Coordinator)](proof-editor.html) | `proof-editor` | — |  |
 | [Proof Exposition Review](proof-exposition-review.html) | `proof-exposition-review` | — |  |
 | [Proof Gap Audit](proof-gap-audit.html) | `proof-gap-audit` | — |  |
-| [/proof-integration-watcher](proof-integration-watcher.html) | `proof-integration-watcher` | — | A concrete instance of [`local/integration-watcher`](../folio-core/integration-watcher.md). |
-| [Proof Narrative ↔ Lean Equivalence Audit](proof-narrative-lean-equivalence.html) | `proof-narrative-lean-equivalence` | — | > **Specialises [`narrative-asserts-code`](../folio-core/narrative-asserts-code.md)** |
+| [/proof-integration-watcher](proof-integration-watcher.html) | `proof-integration-watcher` | — | A concrete instance of [`local/integration-watcher`](integration-watcher.md). |
+| [Proof Narrative ↔ Lean Equivalence Audit](proof-narrative-lean-equivalence.html) | `proof-narrative-lean-equivalence` | — | > **Specialises [`narrative-asserts-code`](narrative-asserts-code.md)** |
 | [Proof Simplifier](proof-simplifier.html) | `proof-simplifier` | — | bun run content/pipeline/refactor-strategy.ts --lean 4.24.0 --applicable |
 | [Proof Status Tracking](proof-status-tracking.html) | `proof-status-tracking` | — |  |
 | [Proof Triage & Resolution](proof-triage.html) | `proof-triage` | — | [[require]] |

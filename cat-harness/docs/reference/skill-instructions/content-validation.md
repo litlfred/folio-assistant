@@ -78,7 +78,7 @@ kind (a numeric bound in a proposition, a constant in a conjecture, a
 calibration value in a definition, a quoted intermediate in a proof,
 etc.), flag it as drift risk and migrate it to `:val[name]`.  The
 `content/pipeline/codemod-val.ts` codemod handles bulk migration.
-See [`witnessed-values.md`](./witnessed-values.md) for full details.
+See [`witnessed-values.md`](witnessed-values.md) for full details.
 
 ### Level 3: LaTeX AST validation
 - Rendered LaTeX parses through unified-latex without errors

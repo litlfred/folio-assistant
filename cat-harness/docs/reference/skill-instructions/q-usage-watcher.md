@@ -26,7 +26,7 @@ parent: Skill instructions
 > `content/pipeline/qa-criteria-registry.ts`.
 
 
-A concrete instance of [`local/integration-watcher`](../folio-core/integration-watcher.md).
+A concrete instance of [`local/integration-watcher`](integration-watcher.md).
 The parent encodes the shared mechanics; this file fills the nine
 domain-specific slots A–I and documents the q-regime taxonomy.
 
@@ -312,14 +312,14 @@ bun run content/pipeline/q-usage-audit.ts --no-write --strict
 
 ## Cross-references
 
-- Parent: [`local/integration-watcher`](../folio-core/integration-watcher.md)
-- Sibling watchers: [`canonical-watcher`](../folio-core/canonical-watcher.md),
+- Parent: [`local/integration-watcher`](integration-watcher.md)
+- Sibling watchers: [`canonical-watcher`](canonical-watcher.md),
   [`proof-integration-watcher`](proof-integration-watcher.md),
-  [`compute-integration-watcher`](../folio-core/compute-integration-watcher.md),
-  [`detangler-integration-watcher`](../folio-core/detangler-integration-watcher.md),
-  [`one-voice-integration-watcher`](../folio-core/one-voice-integration-watcher.md).
+  [`compute-integration-watcher`](compute-integration-watcher.md),
+  [`detangler-integration-watcher`](detangler-integration-watcher.md),
+  [`one-voice-integration-watcher`](one-voice-integration-watcher.md).
 - Skill for placement decisions:
-  [`production-vs-exploratory-discipline`](../folio-core/production-vs-exploratory-discipline.md).
+  [`production-vs-exploratory-discipline`](production-vs-exploratory-discipline.md).
 - Checker source: [`content/pipeline/qa-checkers-q-usage.ts`](../../content/pipeline/qa-checkers-q-usage.ts).
 - CLI runner: [`content/pipeline/q-usage-audit.ts`](../../content/pipeline/q-usage-audit.ts).
 - Criterion registry entries:

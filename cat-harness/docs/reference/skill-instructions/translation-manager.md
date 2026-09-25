@@ -615,7 +615,7 @@ The WHO `smart-base` repository defines the formal actor
 `SGAuthoring.Skills.ReviewTranslations`.
 
 Follow the principle in
-[`smart-base-tools.md`](../authoring-who-smart-guidelines/smart-base-tools.md):
+[`smart-base-tools.md`](smart-base-tools.md):
 **load it; never vendor it.** The translation subsystem is invoked from the
 smart-base checkout, not copied.
 

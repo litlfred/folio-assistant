@@ -48,7 +48,7 @@ invisible because the file looks authored.
 **3 — A published generated asset needs a Tool that `maintains` it.** Otherwise
 the provenance is unreachable: nothing can answer "which node produced this
 stylesheet", and the asset becomes the third case in
-[`covered-is-not-reachable`](../folio-core/covered-is-not-reachable.md) — a mechanism nobody
+[`covered-is-not-reachable`](covered-is-not-reachable.md) — a mechanism nobody
 can find. Declare the artefact by its **published** path, and check that
 something actually publishes it before claiming so.
 
@@ -84,7 +84,7 @@ a failure.
 
 ## What this skill does not cover
 
-- **Prose voice and tone** — [`one-voice-style-guide`](../folio-core/one-voice-style-guide.md).
+- **Prose voice and tone** — [`one-voice-style-guide`](one-voice-style-guide.md).
 - **Whether a rendered block LOOKS right** — that is a content question, and the
   rendering auditor's.
 - **How a link is spelled** —
@@ -101,7 +101,7 @@ skill and **no skill stated this capability**. The mechanism had existed for som
 time; the vocabulary had not.
 
 That is the third mismatch in
-[`covered-is-not-reachable`](../folio-core/covered-is-not-reachable.md), and it is invisible to
+[`covered-is-not-reachable`](covered-is-not-reachable.md), and it is invisible to
 `bun run tools:coverage` by construction: that tool enumerates **skills** and asks
 which lack Tools, so a capability nobody stated is absent from the list it walks.
 Bean `yean`.
