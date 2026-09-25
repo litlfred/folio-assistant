@@ -7,9 +7,9 @@
  * claim. Writes `kind: "agent"` entries to the per-block .qa.json.
  *
  * Usage:
- *   bun run pipeline/proof-narrative-lean-equiv-sweep.ts <chapter-dir>
- *   bun run pipeline/proof-narrative-lean-equiv-sweep.ts <chapter-dir> --dry-run
- *   bun run pipeline/proof-narrative-lean-equiv-sweep.ts <chapter-dir> --json
+ *   bun run cat-harness/content/pipeline/proof-narrative-lean-equiv-sweep.ts <chapter-dir>
+ *   bun run cat-harness/content/pipeline/proof-narrative-lean-equiv-sweep.ts <chapter-dir> --dry-run
+ *   bun run cat-harness/content/pipeline/proof-narrative-lean-equiv-sweep.ts <chapter-dir> --json
  */
 
 import { folioDir } from "../../schemas/cat-harness.js";
@@ -462,7 +462,7 @@ export function checkEquivalence(
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   if (!args.root) {
-    console.error("Usage: bun run pipeline/proof-narrative-lean-equiv-sweep.ts <chapter-dir>");
+    console.error("Usage: bun run cat-harness/content/pipeline/proof-narrative-lean-equiv-sweep.ts <chapter-dir>");
     process.exit(2);
   }
 

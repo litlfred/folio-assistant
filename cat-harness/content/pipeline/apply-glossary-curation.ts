@@ -20,8 +20,8 @@
  *
  * Run modes:
  *
- *   bun run pipeline/apply-glossary-curation.ts <paper-dir>           # dry-run (default)
- *   bun run pipeline/apply-glossary-curation.ts <paper-dir> --write   # apply edits
+ *   bun run cat-harness/content/pipeline/apply-glossary-curation.ts <paper-dir>           # dry-run (default)
+ *   bun run cat-harness/content/pipeline/apply-glossary-curation.ts <paper-dir> --write   # apply edits
  *
  * The script does **not** re-format the file beyond inserting the
  * single new field; downstream `bun run validate` checks the result.
@@ -153,7 +153,7 @@ if (import.meta.main) {
   const paperArg = args.find(a => !a.startsWith("--"));
   const write = args.includes("--write");
   if (!paperArg) {
-    console.error("Usage: bun run pipeline/apply-glossary-curation.ts <paper-dir> [--write]");
+    console.error("Usage: bun run cat-harness/content/pipeline/apply-glossary-curation.ts <paper-dir> [--write]");
     process.exit(2);
   }
 

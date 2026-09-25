@@ -56,10 +56,10 @@
  *
  * Usage
  * -----
- *   bun run pipeline/latex-preflight.ts [main.tex]        # gate (exit 1 on error)
- *   bun run pipeline/latex-preflight.ts --json            # machine-readable
- *   bun run pipeline/latex-preflight.ts --seed [main.tex] # (re)write allowlist
- *   bun run pipeline/latex-preflight.ts --warn            # never exit 1
+ *   bun run cat-harness/content/pipeline/latex-preflight.ts [main.tex]        # gate (exit 1 on error)
+ *   bun run cat-harness/content/pipeline/latex-preflight.ts --json            # machine-readable
+ *   bun run cat-harness/content/pipeline/latex-preflight.ts --seed [main.tex] # (re)write allowlist
+ *   bun run cat-harness/content/pipeline/latex-preflight.ts --warn            # never exit 1
  *
  * Default target: ../main.tex relative to content/.
  *
@@ -638,7 +638,7 @@ export function seedAllowlist(mainTexPath: string): {
       "Seeded standard/package LaTeX control sequences (macros) and " +
       "inputenc-safe non-ASCII chars (unicode) in actual use across " +
       "main.tex + chapters/*.tex (comment + verbatim contexts stripped). " +
-      "Regenerate with: bun run pipeline/latex-preflight.ts --seed. " +
+      "Regenerate with: bun run cat-harness/content/pipeline/latex-preflight.ts --seed. " +
       "Adding a macro asserts it is a real standard/package command whose " +
       "package is loaded in latex/preamble.tex; adding a unicode char " +
       "asserts inputenc/fontenc typeset it without a \\newunicodechar.",
