@@ -226,11 +226,12 @@
                 "jurisdiction-endpoint",
                 "none"
               ]
+            },
+            "state": {
+              "type": "string",
+              "const": "draft"
             }
-          },
-          "required": [
-            "host"
-          ]
+          }
         },
         "topology": {
           "type": "object",
@@ -380,14 +381,6 @@
                       }
                     ]
                   },
-                  "docs": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "skill": {
-                    "type": "string",
-                    "minLength": 1
-                  },
                   "serialisations": {
                     "type": "string",
                     "minLength": 1
@@ -478,6 +471,47 @@
               "id",
               "url",
               "graphKinds"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "associatedHarnesses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "repository": {
+                "type": "string",
+                "format": "uri"
+              },
+              "declarationUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "relation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "url"
             ],
             "additionalProperties": false
           }
@@ -659,9 +693,6 @@
             "minLength": 1
           }
         },
-        "publishable": {
-          "type": "boolean"
-        },
         "id": {
           "type": "string",
           "minLength": 1
@@ -682,8 +713,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-wizardly-galileo-feyypz/cat-harness.jsonld",
   "staging": {
     "branch": "claude/wizardly-galileo-feyypz",
-    "sha": "2a9c14cd5bd4ba63555879b54379e0a3dfba9eca",
+    "sha": "0b1e6beb18db79c74072e5760ef7dcb17941d898",
     "pr": "951/merge",
-    "run": "35844540079"
+    "run": "36174342563"
   }
 }

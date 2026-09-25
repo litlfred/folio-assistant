@@ -25,7 +25,8 @@
     "inScheme": {
       "@id": "skos:inScheme",
       "@type": "@id"
-    }
+    },
+    "layer": "https://litlfred.github.io/folio-assistant/cat-harness/ns#layer"
   },
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
   "@type": [
@@ -65,6 +66,21 @@
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "core",
       "seeAlso": "https://litlfred.github.io/content-types.html"
+    },
+    {
+      "@id": "folio-assistant-core:GlossaryGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "GlossaryGraph",
+      "comment": "A graph of SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS concepts rather than copying them. Registered by core, not the harness.",
+      "prefLabel": "GlossaryGraph",
+      "definition": "A graph of SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS concepts rather than copying them. Registered by core, not the harness.",
+      "notation": "folio-assistant-core:GlossaryGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "core"
     },
     {
       "@id": "folio-assistant-core:PreviewGraph",
@@ -107,6 +123,21 @@
       "prefLabel": "LibraryGraph",
       "definition": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL.",
       "notation": "folio-assistant-core:LibraryGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "core"
+    },
+    {
+      "@id": "folio-assistant-core:ReviewVerdictsGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "ReviewVerdictsGraph",
+      "comment": "Reviewers' per-block verdicts — one `folio-review-verdict/v1` JSON each, pinned to the block's content hash and committed on the edit-set's feature branch. Read by the review coverage gate (`folio-review-coverage`), which counts a verdict only while its hash is current.",
+      "prefLabel": "ReviewVerdictsGraph",
+      "definition": "Reviewers' per-block verdicts — one `folio-review-verdict/v1` JSON each, pinned to the block's content hash and committed on the edit-set's feature branch. Read by the review coverage gate (`folio-review-coverage`), which counts a verdict only while its hash is current.",
+      "notation": "folio-assistant-core:ReviewVerdictsGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "core"

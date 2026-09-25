@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script data-folio-saved-scheme>try{var s=localStorage.getItem("fa-color-scheme");if(s==="light"||s==="dark")document.documentElement.setAttribute("data-fa-scheme",s)}catch(e){}</script>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Processes · docs-auto</title>
@@ -29,6 +31,84 @@
   ul.subs li { padding: .3rem 0; border-bottom: 1px solid var(--edge); }
   .n { float: right; color: var(--muted); font-variant-numeric: tabular-nums; }
 </style>
+<style data-folio-narrow-viewport>
+/* Narrow viewports: nothing may widen the PAGE — bean `2r2n`.
+ *
+ * At 390 px, 105 of 249 built pages scrolled sideways (measured 2026-09-24).
+ * The rule here is the bean's: wide content scrolls INSIDE ITS OWN BOX with a
+ * visible cue, and the page itself never pans.
+ *
+ * ONE FILE, TWO WAYS IN. Themed pages link it from `_includes/head_custom.html`.
+ * The standalone viewer pages carry no theme stylesheet at all, so
+ * `withViewerNav` in `scripts/viewer-page.ts` inlines this same file when it
+ * adds the rail. A copy of these rules in each place would be two answers to
+ * "what does a table do at 390 px", free to drift apart.
+ *
+ * Every selector here is written to be safe on both kinds of page: no
+ * `.main-content` scope (a standalone page has none), the navbar excluded by
+ * name, and the theme's own `.table-wrapper` left alone, since it already does
+ * this job for Markdown tables. */
+
+@media (max-width: 799.98px) {
+  /* A table the theme did not wrap: raw HTML from a generator, or one built at
+   * runtime. `display: block` makes the table its own scroll box. Its cells
+   * still lay out as a table inside the anonymous table box. */
+  table:not(.table-wrapper > table):not(.fa-nav table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* THE CUE: the edge that has more content past it fades out. The fade is a
+   * MASK over the table's own pixels, driven by its own scroll position, so
+   * it needs no knowledge of the page's background. A painted cover (the
+   * usual `background-attachment: local` trick) does: the first version used
+   * `Canvas`, and on a page that is dark under a LIGHT scheme it laid a white
+   * band over the first column.
+   *
+   * A table that does not overflow has an inactive scroll timeline, so the
+   * animation has no effect and both fades stay at their initial 0: no cue
+   * where there is nothing to scroll to. A browser without scroll-driven
+   * animations shows no fade, and the table still scrolls. */
+  @supports (animation-timeline: scroll()) {
+    table:not(.table-wrapper > table):not(.fa-nav table) {
+      mask-image: linear-gradient(to right,
+        transparent 0, #000 var(--fa-cue-l),
+        #000 calc(100% - var(--fa-cue-r)), transparent 100%);
+      animation: fa-scroll-cue linear both;
+      animation-timeline: scroll(self inline);
+    }
+  }
+
+  /* A code block scrolls in its own box, which is what `pre` is for. Mermaid
+   * SOURCE sits in a `pre` until the renderer replaces it, and at 390 px a
+   * diagram's source line is longer than the screen. */
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Prose that has no break opportunity: a long path in inline code, or a
+   * glossary definition naming one. Breaking the string is better than
+   * widening the page it sits on. */
+  :not(pre) > code,
+  dd {
+    overflow-wrap: anywhere;
+  }
+}
+
+@property --fa-cue-l { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --fa-cue-r { syntax: "<length>"; inherits: false; initial-value: 0px; }
+
+@keyframes fa-scroll-cue {
+  0%   { --fa-cue-l: 0px;    --fa-cue-r: 2.5rem; }
+  12%  { --fa-cue-l: 2.5rem; }
+  88%  { --fa-cue-r: 2.5rem; }
+  100% { --fa-cue-l: 2.5rem; --fa-cue-r: 0px; }
+}
+
+</style>
 </head>
 <body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){
 function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
@@ -49,13 +129,13 @@ function fill(d,f,r){
   var rel=location.pathname.slice(r.length);
   if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
   if(!f.mainPagesKnown){
-    d.appendChild(link(f.mainSite+'/','compare with main \u2197'));
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
   }else if(f.newPages.indexOf(rel)>=0){
-    d.appendChild(link(f.mainSite+'/','main \u2197'));
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
     d.appendChild(document.createTextNode(' '));
     d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
   }else{
-    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
   }
   d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
   stamp(f);
@@ -79,7 +159,7 @@ function go(){
 }
 if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
 window.addEventListener('resize',measure);window.addEventListener('load',measure);
-})();</script>
+})();</script><style>body{padding-left:56px}.fa-nav{position:fixed;top:0;left:0;bottom:0;width:56px;z-index:2147483000;background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:248px}.fa-nav:not(:hover):not(:focus-within):not(:has(.fa-nav-open:checked)) .fa-glass-handle__label{opacity:0}@media(min-width:1064px){.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:264px}.fa-nav-in{width:264px}}.fa-nav-open{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.fa-nav-in{width:248px;height:100%;display:flex;flex-direction:column}.fa-nav-top{flex:0 0 auto}.fa-nav-graphs{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden}.fa-nav-bottom{flex:0 0 auto;border-top:1px solid #30363d}.fa-nav-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #30363d;cursor:pointer;user-select:none}.fa-nav-glyph{flex:0 0 32px;text-align:center;font-size:16px}.fa-nav-glyph img{width:32px;height:32px;display:block}.fa-nav-crop{position:relative;overflow:hidden;height:32px}.fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}.fa-nav-name{font-weight:600}.fa-nav a{display:flex;align-items:center;gap:8px;padding:8px 12px;color:#e6edf3;text-decoration:none;white-space:nowrap}.fa-nav a:hover{background:#30363d}.fa-nav a[aria-current="page"]{background:#30363d;font-weight:600}.fa-nav-dead{display:flex;align-items:center;gap:8px;padding:8px 12px;opacity:.55;cursor:default}.fa-nav-note{margin-left:auto;font-size:11px;font-style:italic;white-space:nowrap}.fa-nav-row{display:grid;grid-template-columns:1fr auto;align-items:center}.fa-nav-row>a,.fa-nav-row>.fa-nav-dead{min-width:0}.fa-nav-kids{grid-column:1/-1}.fa-nav-action{display:none;background:none;border:0;cursor:pointer;padding:0 12px;font-size:13px;line-height:1;color:inherit;opacity:.7}.fa-nav-action:hover,.fa-nav-action:focus-visible{opacity:1}.fa-nav:hover .fa-nav-action,.fa-nav:focus-within .fa-nav-action,.fa-nav:has(.fa-nav-open:checked) .fa-nav-action{display:block}.fa-nav-group>summary{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;user-select:none;list-style:none}.fa-nav-group>summary::-webkit-details-marker{display:none}.fa-nav-group>summary:hover{background:#30363d}.fa-nav-group[open]>summary{font-weight:600}.fa-nav-group .fa-nav-sub a{padding-left:52px}.fa-nav-tone{border-radius:3px}.fa-nav-close{display:none}.fa-nav:has(.fa-nav-open:checked) .fa-nav-close{position:sticky;top:0;float:right;display:flex;align-items:center;justify-content:center;width:26px;height:26px;margin:6px 6px 0 0;cursor:pointer;user-select:none;border-radius:4px;background:#1f2328;opacity:.75}.fa-nav-close:hover{opacity:1}.fa-nav-label{white-space:nowrap;opacity:0;transition:opacity .12s ease}.fa-nav:hover .fa-nav-label,.fa-nav:focus-within .fa-nav-label,.fa-nav:has(.fa-nav-open:checked) .fa-nav-label{opacity:1}@media print{.fa-nav{display:none}body{padding-left:0}}.fa-nav-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style><nav class="fa-nav" aria-label="folio-assistant"><input type="checkbox" class="fa-nav-open" id="fa-nav-open"><label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label><div class="fa-nav-in"><div class="fa-nav-top"><label class="fa-nav-head" for="fa-nav-open" title="Open navigation"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span><span class="fa-nav-name fa-nav-label">cat-harness</span></label></div><div class="fa-nav-graphs"><details class="fa-nav-group" open><summary><span class="fa-nav-glyph" aria-hidden="true">▤</span><span class="fa-nav-label">Graphs</span></summary><div class="fa-nav-sub"><a href="../../../../beans/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">B</span><span class="fa-nav-label">beans</span></a><a href="../../../../cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">cat-harness</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code-list</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../cat-harness/docs-auto/index/docs/docs/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">D</span><span class="fa-nav-label">docs</span></a><a href="../../../../external-schemas/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">E</span><span class="fa-nav-label">external-schema</span></a><a href="../../../../cat-harness/folio/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">folio</span></a><a href="../../../../fsh-guts/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">fsh-guts</span></a><a href="../../../../health/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">H</span><span class="fa-nav-label">health</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">interaction</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../issue-marks/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">issue-marks</span></a><a href="../../../../cat-harness/library/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">L</span><span class="fa-nav-label">library</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">memory</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../methodologies/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">methodology</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">policies</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../processes/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">processes</span></a><a href="../../../../qa/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">Q</span><span class="fa-nav-label">qa</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">scenarios</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">schemas</span></a><a href="../../../../cat-harness/docs-auto/index/skills/large-datasets-skills/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">skills</span></a><a href="../../../../swimlane-glossary/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">swimlane-glossary</span></a><a href="../../../../todos/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">todos</span></a><a href="../../../../tools/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">tools</span></a><a href="../../../../translation-status/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">translation-sources</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uml</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../uploads/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uploads</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">W</span><span class="fa-nav-label">waiver</span><span class="fa-nav-note">no viewer yet</span></span></div></details></div><div class="fa-nav-bottom"><details class="fa-nav-group"><summary><span class="fa-nav-glyph" aria-hidden="true">▦</span><span class="fa-nav-label">Harnesses</span></summary><div class="fa-nav-sub"><a href="../../../../smart-trust/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">smart-trust</span></a><a href="../../../../who-iris/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">W</span><span class="fa-nav-label">WHO IRIS</span></a><a href="../../../../cat-harness/library/smart-base/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">S</span><span class="fa-nav-label">SMART Base</span></a><a href="../../../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(236 45% 28%)" aria-hidden="true">F</span><span class="fa-nav-label">Folio Assistant</span></a><a href="../../../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(268 45% 28%)"><img src="../../../../assets/img/icons/cat-mark.svg" alt="" title="c@t"></span><span class="fa-nav-label">C@T Harness</span></a><a href="../../../../bootstrap/README.html"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(96 45% 28%)" aria-hidden="true">B</span><span class="fa-nav-label">Bootstrap</span></a></div></details><a href="../../../../"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">⌂</span><span class="fa-nav-label">folio-assistant</span></a></div></div></nav>
 <div class="wrap">
 <h1>Processes</h1>
 <p class="lede">Derived: every BPMN process, with its own documentation, its lanes, and the skills its activities name.</p>
@@ -92,7 +172,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div>
 
 <ul class="subs">
-<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">61</span></li>
+<li><a href="../folio-assistant-core-processes/">folio-assistant-core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">1</span></li>
+<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">69</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
 </ul>
 
@@ -109,7 +190,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/adjudication.bpmn"><code>Adjudication</code></a><br><span class="p">cat-harness/processes/adjudication.bpmn</span></td>
-  <td>A criterion's reviewer entries disagree and no mechanism can settle them: this is the judgement that does, and the record it must leave.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Feedback provider · Adjudicator</div><div class="f"><span class="k">skills</span> adjudication, content-feedback, untainted-verification</div></td>
+  <td>A criterion's reviewer entries disagree and no mechanism can settle them: this is the judgement that does, and the record it must leave.<div class="f"><span class="k">activities</span> 3</div><div class="f"><span class="k">lanes</span> Feedback provider · Adjudicator</div><div class="f"><span class="k">skills</span> adjudication, content-feedback, untainted-verification</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/atomic-mass-drift-check.bpmn"><code>Is AtomicMass.lean still in sync with its data table?</code></a><br><span class="p">cat-harness/processes/atomic-mass-drift-check.bpmn</span></td>
@@ -157,7 +238,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-change-review.bpmn"><code>Content Change and Review</code></a><br><span class="p">cat-harness/processes/content-change-review.bpmn</span></td>
-  <td>Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline depl…<div class="f"><span class="k">activities</span> 23</div><div class="f"><span class="k">lanes</span> Content Author · Folio-Assistant Agent · Review Committee · CI/CD Pipeline</div><div class="f"><span class="k">skills</span> content-author, content-graph, content-publish, content-review, decision-audit, feature-staging, prepare-merge-auto, semantic-review-scoping, staging-review, todo-manager, watch</div></td>
+  <td>Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline depl…<div class="f"><span class="k">activities</span> 29</div><div class="f"><span class="k">lanes</span> Content Author · Folio-Assistant Agent · Review Committee · CI/CD Pipeline · Review Coordinator</div><div class="f"><span class="k">skills</span> adjudication, content-author, content-graph, content-publish, content-review, decision-audit, feature-staging, prepare-merge, prepare-merge-auto, review-comments, review-heatmap, semantic-review-scoping, staging-review, todo-manager, visual-diff, watch</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-lifecycle.bpmn"><code>Content lifecycle</code></a><br><span class="p">cat-harness/processes/content-lifecycle.bpmn</span></td>
@@ -177,11 +258,11 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-deliver.bpmn"><code>CRDM Phase 6 — implement, MVP, acceptance</code></a><br><span class="p">cat-harness/processes/crdm-deliver.bpmn</span></td>
-  <td>One phase and not three, because the loops say so: an increment the BA rejects, an MVP that is not ready, and stakeholder findings all route back into implementation.<div class="f"><span class="k">activities</span> 10</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent · Stakeholders</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow, delivery-summary, feature-staging, prepare-merge</div></td>
+  <td>One phase and not three, because the loops say so: an increment the BA rejects, an MVP that is not ready, and stakeholder findings all route back into implementation.<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent · Stakeholders</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow, delivery-summary, feature-staging, prepare-merge</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-issue-linking.bpmn"><code>CRDM — link the work to an issue</code></a><br><span class="p">cat-harness/processes/crdm-issue-linking.bpmn</span></td>
-  <td>Feature work must be linked to a GitHub issue.<div class="f"><span class="k">activities</span> 3</div><div class="f"><span class="k">lanes</span> Agent</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow</div></td>
+  <td>Feature work must be linked to a GitHub issue.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Agent</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-needs.bpmn"><code>CRDM Phase 1 — needs</code></a><br><span class="p">cat-harness/processes/crdm-needs.bpmn</span></td>
@@ -200,12 +281,16 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>The approved requirements become work-plan items, the BA signs off, and the branch is announced on the issue.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> BA / Feature Requestor · Agent</div><div class="f"><span class="k">skills</span> crdm-requirements-workflow, decision-audit, kg-contribution-offer, placement, todo-manager</div></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/criterion-adjudication.bpmn"><code>Criterion adjudication</code></a><br><span class="p">cat-harness/processes/criterion-adjudication.bpmn</span></td>
+  <td>Two reviewer entries for ONE QA criterion disagree: ask the adjudication, then do the one of three things that a criterion disagreement admits.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Adjudicator</div><div class="f"><span class="k">skills</span> adjudication</div></td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/docs-site-publish.bpmn"><code>Publishing the docs site, and keeping the previews alive</code></a><br><span class="p">cat-harness/processes/docs-site-publish.bpmn</span></td>
-  <td>PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAWN.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> feature-staging</div></td>
+  <td>PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAWN.<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> feature-staging, publish-verification</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/document-ingestion.bpmn"><code>Document ingestion — uploads/ to the L1 source knowledge graph</code></a><br><span class="p">cat-harness/processes/document-ingestion.bpmn</span></td>
-  <td>folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph.<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Work plan — beans (shared by humans and agents) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> document-intake, theme-art-intake, todo-manager</div></td>
+  <td>folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph.<div class="f"><span class="k">activities</span> 10</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Work plan — beans (shared by humans and agents) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> document-intake, library-ingestion, theme-art-intake, todo-manager</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/draft-to-publication.bpmn"><code>Draft, review and publish</code></a><br><span class="p">cat-harness/processes/draft-to-publication.bpmn</span></td>
@@ -237,7 +322,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ig-incremental-build.bpmn"><code>Incremental IG build</code></a><br><span class="p">cat-harness/processes/ig-incremental-build.bpmn</span></td>
-  <td>One change — a PR push or a push to main — through the incremental IG build of docs/proposals/ig-incremental-build.md: restore the derived state, compute the change's dependency cone, compile and validate only the cone…<div class="f"><span class="k">activities</span> 18</div><div class="f"><span class="k">lanes</span> FHIR modeller / PR author (person + authoring agent) · Work plan — beans (shared by humans and agents) · Incremental build (system) · Publisher + validator services (JVM) · PR reviewer / QC reviewer · Publication manager — deploy and seed</div><div class="f"><span class="k">skills</span> content-publish, fhir-validation, ig-publication, l3-fhir-authoring, quality-control, todo-manager</div></td>
+  <td>One change — a PR push or a push to main — through the incremental IG build of docs/proposals/ig-incremental-build.md: restore the derived state, compute the change's dependency cone, compile and validate only the cone…<div class="f"><span class="k">activities</span> 19</div><div class="f"><span class="k">lanes</span> FHIR modeller / PR author (person + authoring agent) · Work plan — beans (shared by humans and agents) · Incremental build (system) · Publisher + validator services (JVM) · PR reviewer / QC reviewer · Publication manager — deploy and seed</div><div class="f"><span class="k">skills</span> content-publish, fhir-validation, ig-publication, l3-fhir-authoring, quality-control, todo-manager</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ingest-build-l1-kg.bpmn"><code>Ingestion subprocess — build the L1 knowledge graph</code></a><br><span class="p">cat-harness/processes/ingest-build-l1-kg.bpmn</span></td>
@@ -277,7 +362,15 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/materialize-remote.bpmn"><code>Materialize remote content — the shared subprocess</code></a><br><span class="p">cat-harness/processes/materialize-remote.bpmn</span></td>
-  <td>One process, called wherever remote content is landed locally.<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> materialize-remote</div></td>
+  <td>One process, called wherever remote content is landed locally.<div class="f"><span class="k">activities</span> 10</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> materialize-remote</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/methodology-from-source.bpmn"><code>Adopt a methodology from a source document</code></a><br><span class="p">cat-harness/processes/methodology-from-source.bpmn</span></td>
+  <td>The general process an agent follows when someone shares a paper, book or standard and asks for its method to be used: establish origin and licence, ingest it, render what the method says with what is adopted and refuse…<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> Owner · Agent</div><div class="f"><span class="k">skills</span> adopt-methodology-from-source, methodology-adoption</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/narrative-code-review.bpmn"><code>Prose and the code it describes</code></a><br><span class="p">cat-harness/processes/narrative-code-review.bpmn</span></td>
+  <td>Judging whether the prose side of a declared prose/code pair still says what the code does, once the machine has done what it can.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Reviewer</div><div class="f"><span class="k">skills</span> content-feedback, narrative-asserts-code</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/options-analysis.bpmn"><code>Options analysis</code></a><br><span class="p">cat-harness/processes/options-analysis.bpmn</span></td>
@@ -288,12 +381,24 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>A PULL REQUEST WITH ZERO CHECKS IS INVISIBLE PRECISELY BECAUSE NOBODY IS LOOKING.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Scheduled log sweep</div><div class="f"><span class="k">skills</span> ci-health, issue-working</div></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/publish-alert.bpmn"><code>Alert the publication manager</code></a><br><span class="p">cat-harness/processes/publish-alert.bpmn</span></td>
+  <td>Owner, 2026-09-23: &quot;there is another alert needed for deployment failure.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline · Publication manager</div><div class="f"><span class="k">skills</span> publish-verification</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/publish-verification.bpmn"><code>Verify the export before it is deployed</code></a><br><span class="p">cat-harness/processes/publish-verification.bpmn</span></td>
+  <td>Bean vigi, owner 2026-09-23: a set of post-processing tools that verify what the build produced, run BEFORE deployment and blocking — &quot;a failure triggers an alert to the publisher manager&quot;.<div class="f"><span class="k">activities</span> 1</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> publish-verification</div></td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/qa-report-signing.bpmn"><code>QA report signing</code></a><br><span class="p">cat-harness/processes/qa-report-signing.bpmn</span></td>
   <td>Attesting a QA report: build the test run, work out what the performer can actually reach, and sign — over the API where that is available, or as release authority where it is not.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Validation and QA (mechanical + agents) · Attestation service (API) · Human signer</div><div class="f"><span class="k">skills</span> content-test, qa-report-signing</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/refresh-materialized.bpmn"><code>Refresh materialized remote content</code></a><br><span class="p">cat-harness/processes/refresh-materialized.bpmn</span></td>
-  <td>Owner, 2026-09-20: &quot;also need to know about refreshing amterialed remote content.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> adjudication, materialize-remote</div></td>
+  <td>Owner, 2026-09-20: &quot;also need to know about refreshing amterialed remote content.<div class="f"><span class="k">activities</span> 8</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> adjudication, materialize-remote</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/related-work.bpmn"><code>Related work: find, sort, summarize, ask to coordinate</code></a><br><span class="p">cat-harness/processes/related-work.bpmn</span></td>
+  <td>Before new work takes shape, find the work it touches.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Agent · User</div><div class="f"><span class="k">skills</span> related-work-coordination</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/repository-health-watch.bpmn"><code>Is the repository itself healthy?</code></a><br><span class="p">cat-harness/processes/repository-health-watch.bpmn</span></td>
@@ -309,7 +414,11 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/review-task.bpmn"><code>Review task</code></a><br><span class="p">cat-harness/processes/review-task.bpmn</span></td>
-  <td>The generic review position: classify what changed, descend into the review that fits it, consolidate what comes back, and accept or send back.<div class="f"><span class="k">activities</span> 5</div><div class="f"><span class="k">lanes</span> Reviewer / SME · Editors + authoring agents</div><div class="f"><span class="k">skills</span> content-review, content-validate, semantic-review-scoping</div></td>
+  <td>The generic review position: classify what changed, descend into the review that fits it, consolidate what comes back, and accept or send back.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Reviewer / SME · Editors + authoring agents</div><div class="f"><span class="k">skills</span> content-review, content-validate, semantic-review-scoping</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sample-import.bpmn"><code>Sample import into a structured data store</code></a><br><span class="p">cat-harness/processes/sample-import.bpmn</span></td>
+  <td>The SDLC for testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store.<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> Contributor (human or agent) · Ingestion Engine (agent, runs unattended) · Corpus — L1 source knowledge graph</div><div class="f"><span class="k">skills</span> materialize-remote, sample-import</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/session-state-machine.bpmn"><code>Session state machine</code></a><br><span class="p">cat-harness/processes/session-state-machine.bpmn</span></td>
@@ -324,12 +433,12 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Situation analysis over two axes — internal/external and helpful/harmful — producing the raw material a decision is made from, and NEVER the decision.<div class="f"><span class="k">activities</span> 7</div><div class="f"><span class="k">lanes</span> Business analyst · Stakeholder</div><div class="f"><span class="k">skills</span> methodology-adoption, swot-analysis</div></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/theme-ui-review.bpmn"><code>Post-MVP theme and UI review</code></a><br><span class="p">cat-harness/processes/theme-ui-review.bpmn</span></td>
-  <td>Reviewing what the MVP actually RENDERS — accessibility, branding, languages — once stakeholders have accepted it.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Reviewer · Agent</div><div class="f"><span class="k">skills</span> theme-ui-review</div></td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/theme-ui-review.bpmn"><code>Theme and UI review — at ingestion</code></a><br><span class="p">cat-harness/processes/theme-ui-review.bpmn</span></td>
+  <td>Reviewing GRAPHICAL ASSETS AS THEY ARE INGESTED — accessibility, branding, languages — in the context of the website or app design they are for, to determine what the graphical assets and the UI are going to be.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Reviewer · Agent</div><div class="f"><span class="k">skills</span> theme-ui-review</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/translation-workflow.bpmn"><code>Translation Workflow</code></a><br><span class="p">cat-harness/processes/translation-workflow.bpmn</span></td>
-  <td>The machine half of translation, end to end: extract the translatable strings, inject a catalogue back, check the result by back-translating it, and track whether the source has moved since.<div class="f"><span class="k">activities</span> 9</div><div class="f"><span class="k">lanes</span> Author (source content) · Agent / platform (automated) · Human reviewer / adjudicator</div><div class="f"><span class="k">skills</span> adjudication, translation-manager</div></td>
+  <td>The machine half of translation, end to end: extract the translatable strings, inject a catalogue back, check the result by back-translating it, and track whether the source has moved since.<div class="f"><span class="k">activities</span> 10</div><div class="f"><span class="k">lanes</span> Author (source content) · Agent / platform (automated) · Human reviewer / adjudicator</div><div class="f"><span class="k">skills</span> adjudication, translation-manager</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/upstream-pin-watch.bpmn"><code>Watching a pinned upstream dependency</code></a><br><span class="p">cat-harness/processes/upstream-pin-watch.bpmn</span></td>
@@ -342,6 +451,14 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/voice-review.bpmn"><code>Voice overlay review</code></a><br><span class="p">cat-harness/processes/voice-review.bpmn</span></td>
   <td>The voice axis: load whichever editorial voices are active, run each rule's mechanical half, and decide — for each finding — whether the prose is wrong, the rule does not apply to this content, or this block is a stated…<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Narrative reviewer</div><div class="f"><span class="k">skills</span> adjudication, voice-overlay-review</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/wireframe-design-review.bpmn"><code>Wireframe design review</code></a><br><span class="p">cat-harness/processes/wireframe-design-review.bpmn</span></td>
+  <td>WireGen (methodologies/wiregen) made executable: a written design intent, at least two mid-fidelity candidates each with a web AND a mobile layout, mechanical checks, a blind per-criterion review, adjudication where rev…<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> Designer · Feedback providers · Adjudicator</div><div class="f"><span class="k">skills</span> wireframe-design-review</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/deep-document-research.bpmn"><code>Deep document research</code></a><br><span class="p">folio-assistant-core/processes/deep-document-research.bpmn</span></td>
+  <td>Answer a question from a corpus this folio ALREADY HOLDS, iteratively, stopping on a stated condition.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Deep researcher</div><div class="f"><span class="k">skills</span> deep-document-research</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn"><code>DIIG — from a health system bottleneck to a costed implementation plan</code></a><br><span class="p">smart-base/methodologies/processes/diig-investment-path.bpmn</span></td>
