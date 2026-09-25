@@ -48,3 +48,77 @@ is not diagnosed from scratch.
 
 Not actionable in code today. The delivery logs that would settle it
 (Settings → Webhooks → Recent Deliveries) are not readable from a session.
+
+## SECOND OCCURRENCE — 2026-09-25, PR #1348 (appended by another session)
+
+This is the second occurrence the "Done when" asks for. Same shape as #1241, on
+a different branch, 26 hours later — so **it is not a one-off**, and the first
+entry's alternative ("somebody establishes this was a one-off GitHub delivery
+failure") is now closed off.
+
+`9132c5ee7a4` was pushed to `claude/fix-detangle-sidecar-065p`, the open head of
+PR #1348, at **19:02:55Z**. **No workflow fired for it** — not
+`code-quality-gates`, not `jsonld-gen-check`, not `feature-staging`. The latest
+run of every workflow stayed on the previous SHA, `e82eb541c47`, for **14
+minutes**, until a later commit was pushed.
+
+Ruled out the same way as #1241, and the checks all came back the same:
+
+- **The push landed.** `git fetch` then `git log -1 origin/<branch>` returned
+  `9132c5ee7a4`; the reflog records `update by push` at 19:02:55.
+- **No path filter**, and the `on:` block is unchanged from what the first entry
+  quotes.
+- **No queue backlog** — see the control below, which is stronger than the
+  first entry's "runs were completing in ~4 minutes".
+
+### The new evidence: a near-simultaneous control push that DID fire
+
+This is what #1241 could not supply, and it narrows the cause considerably.
+At **19:13:37Z**, ten minutes into the silence, a push to a *different* open PR
+branch (`claude/0uu2-declare-deploy-tools`, PR #1327) fired **three** workflows
+within seconds — `code-quality-gates`, `jsonld-gen-check` and
+`feature-staging`, all created at `19:13:37`.
+
+| | push at 19:02:55 | control push at 19:13:37 |
+|---|---|---|
+| branch | `claude/fix-detangle-sidecar-065p` (PR #1348) | `claude/0uu2-declare-deploy-tools` (PR #1327) |
+| workflows fired | **0** | **3**, within seconds |
+| ref on remote afterwards | yes | yes |
+
+So it is **not** an account-wide or repository-wide outage, not a runner
+shortage, not a quota exhaustion and not a queue backlog: the same repository
+delivered a push event normally while this branch's push was still unserved.
+That localises it to the **delivery of an individual push event**, which is
+consistent with the first entry's guess but was not established by it.
+
+### How it was cleared, and what was deliberately not done
+
+A later real commit — a base merge that was owed anyway, `main` having moved 10
+commits — fired `code-quality-gates` at **19:25:46**, four seconds after its
+push. So the branch was never in a bad state.
+
+**No empty commit and no close-and-reopen**, both of which are forbidden. A
+`workflow_dispatch` was available (the `on:` block has it) and was deliberately
+NOT used: a dispatch run tests the branch alone, whereas a `pull_request` run
+tests the branch merged with `main`, and that distinction had already cost this
+same PR a real failure earlier the same day — `check:prov-qaqc` passed on the
+branch and failed on the merge. A dispatch would have produced a green that was
+evidence about the wrong tree.
+
+### What this adds to "Done when"
+
+The original clause is satisfied on its first limb — a second occurrence, with
+enough evidence to localise the cause to individual push-event delivery rather
+than to the repository, the runners or the workflow definitions. What is still
+missing is a **detection**, and that is the part worth stating as work:
+
+- [ ] something notices that a pushed SHA has no runs after N minutes. This is
+      the actionable half and does not need the webhook delivery logs: the runs
+      API answers "are there any runs for this SHA" directly, which is how both
+      occurrences were confirmed
+- [ ] the guidance says what to do when it happens — specifically that a base
+      merge or a real commit is the legitimate way to get a verdict, and that a
+      `workflow_dispatch` green is a verdict about the branch rather than the
+      merge, so it does not substitute for one
+- [ ] MEASURED AFTER: the second occurrence is detected by a tool rather than
+      by an agent tracking the SHA by hand, which is how both of these were found
