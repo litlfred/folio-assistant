@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/skills/l3-fhir-authoring/input.schema.json",
+  "title": "L3 FHIR Authoring Input",
+  "description": "Input schema for L3 FHIR IG authoring. Creates machine-readable FHIR artifacts from L2 DAK specifications.",
+  "type": "object",
+  "required": [
+    "artifactType",
+    "l2Source"
+  ],
+  "properties": {
+    "artifactType": {
+      "type": "string",
+      "enum": [
+        "logical-model",
+        "profile",
+        "questionnaire",
+        "cql-library",
+        "structure-map",
+        "plan-definition",
+        "measure",
+        "test-case",
+        "actor-definition",
+        "requirements"
+      ],
+      "description": "Type of FHIR artifact to author."
+    },
+    "l2Source": {
+      "type": "string",
+      "description": "Path or reference to the L2 DAK source material."
+    },
+    "fshOutputDir": {
+      "type": "string",
+      "default": "input/fsh",
+      "description": "Directory for FSH output files."
+    },
+    "igRoot": {
+      "type": "string",
+      "description": "IG repository root directory."
+    }
+  },
+  "staging": {
+    "branch": "claude/fervent-mccarthy-nw4olk",
+    "sha": "3a3613cf19354409eb8f6ecde5dc9a98982a4775",
+    "pr": "1358/merge",
+    "run": "36172596102"
+  }
+}
