@@ -6836,13 +6836,6 @@
           "doc": "The page that renders this subgraph, **relative to the REPOSITORY root**"
         },
         {
-          "name": "docs",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}."
-        },
-        {
           "name": "serialisations",
           "type": "z.string().min(1).optional()",
           "optional": true,
@@ -23734,6 +23727,13 @@
           "doc": "Absent means the reference scan did not run — a third state, not \"none\"."
         },
         {
+          "name": "withheld",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why the entry is withheld (bean `cw35`/`mkao`): no avatar, no verbatim excerpt."
+        },
+        {
           "name": "avatar",
           "type": "z.object({ href: z.string(), src: z.string(), source: z.enum([\"cover\", \"figure\"]) }).strict().optional()",
           "optional": true,
@@ -29667,6 +29667,13 @@
           "optional": true,
           "array": true,
           "doc": "Published artefacts this Tool is authoritative for. See"
+        },
+        {
+          "name": "renders",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The graph KINDS this Tool draws a viewer for — one page per declared"
         }
       ],
       "extendsNames": [],
@@ -34358,6 +34365,13 @@
           "optional": true,
           "array": false,
           "doc": "just-the-docs nav front matter."
+        },
+        {
+          "name": "documents",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "What this page documents: graph kinds (`library`), or one directory as"
         },
         {
           "name": "parent",

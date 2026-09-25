@@ -6453,25 +6453,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.subgraphcoverageschema.docs",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "SubgraphCoverageSchema.docs"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.docs",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.subgraphcoverageschema.serialisations",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -7932,6 +7913,443 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/dak.ts#DakDeclaration.publicationUrl",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.decisioncontextschema.alternativecount",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionContextSchema.alternativeCount"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How many alternatives are being compared."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.alternativeCount",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.decisioncontextschema.criteriacount",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionContextSchema.criteriaCount"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How many criteria the alternatives are scored against."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.criteriaCount",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.decisioncontextschema.criteriaweightsknown",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionContextSchema.criteriaWeightsKnown"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether criteria weights are known a priori or must be derived."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.criteriaWeightsKnown",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.decisioncontextschema.datatype",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionContextSchema.dataType"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Kind of data available for the criteria values."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.dataType",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.decisioncontextschema.questiontype",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionContextSchema.questionType"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The methodology-adoption lane. When provided, only methods in this lane are candidates."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.questionType",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.decisioncontextschema.reversibility",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionContextSchema.reversibility"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Can the decision be undone, and at what cost?"
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.reversibility",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.decisioncontextschema.sequential",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionContextSchema.sequential"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "True when decisions recur or adapt over time (sequential/bandit setting)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.sequential",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.decisioncontextschema.stakeholdercount",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionContextSchema.stakeholderCount"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Number of people involved in the decision."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.stakeholderCount",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.decisioncontextschema.summary",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionContextSchema.summary"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Free-text summary of what is being decided. Not matched algorithmically — carried for the rationale narrative."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.summary",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.decisioncontextschema.timeconstraint",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionContextSchema.timeConstraint"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How much time is available for the analysis."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.timeConstraint",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.decisioncontextschema.uncertainty",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DecisionContextSchema.uncertainty"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How much is unknown about the problem."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.uncertainty",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.methodologyrecommendationschema.avoidwhen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MethodologyRecommendationSchema.avoidWhen"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Under what conditions this method should NOT be used. Matched against context."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.avoidWhen",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.methodologyrecommendationschema.complexity",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MethodologyRecommendationSchema.complexity"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Low / Medium / High."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.complexity",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.methodologyrecommendationschema.datarequirements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MethodologyRecommendationSchema.dataRequirements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What data the method requires."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.dataRequirements",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.methodologyrecommendationschema.family",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MethodologyRecommendationSchema.family"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which method family: mcdm-aggregation, probabilistic, social, classical, hybrid-mcdm."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.family",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.methodologyrecommendationschema.matchtier",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MethodologyRecommendationSchema.matchTier"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How well this method fits the context. A tier, not a score — the platform refuses pseudo-measurement (methodology-adoption: \"never quantify a judgement to make it look measured; where a method scores and sums, take structure and refuse arithmetic\")."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.matchTier",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.methodologyrecommendationschema.methodologyid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MethodologyRecommendationSchema.methodologyId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The methodology's `name` from its front matter (kebab-case id)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.methodologyId",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.methodologyrecommendationschema.rationale",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MethodologyRecommendationSchema.rationale"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why this methodology fits the given context. Matched against `applies-when`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.rationale",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.methodologyrecommendationschema.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MethodologyRecommendationSchema.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Bibliographic source: paper title, authors, arxiv id or standard."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.methodologyrecommendationschema.title",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MethodologyRecommendationSchema.title"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The methodology's human-readable title."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.title",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.methodologyselectionresultschema.context",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MethodologySelectionResultSchema.context"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The context that was provided."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#MethodologySelectionResultSchema.context",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.methodologyselectionresultschema.nomatchreason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MethodologySelectionResultSchema.noMatchReason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "If no methodology fits, this explains why. Per methodology-adoption: \"If none fits, that is a finding, not a licence.\""
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#MethodologySelectionResultSchema.noMatchReason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/decision-methodology-context.methodologyselectionresultschema.recommendations",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MethodologySelectionResultSchema.recommendations"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Ranked recommendations, best fit first."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/decision-methodology-context.ts#MethodologySelectionResultSchema.recommendations",
       "skos:note": "candidate"
     },
     {
@@ -12359,6 +12777,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.validatorNotApplicable",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.within",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.within"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The kind this one is a SUB-GRAPH of, when it is one."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.within",
       "skos:note": "candidate"
     },
     {
@@ -17435,6 +17872,253 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementfields.derivedfrom",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementFields.derivedFrom"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Broader requirements this one specialises, by id."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementFields.derivedFrom",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementfields.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementFields.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`req:<slug>`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementFields.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementfields.proposedin",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementFields.proposedIn"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "WHERE IT CAME FROM — the proposal it was filed from, as a path, when it began as one. Kept after the proposal is moved, so the history can be followed back through `git log --follow`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementFields.proposedIn",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementfields.supersededby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementFields.supersededBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When `superseded`: what replaced it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementFields.supersededBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.activity",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementStatementFields.activity"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "FUNCTIONAL — the activity the statement is part of."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.activity",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.actors",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementStatementFields.actors"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The roles it is about, by id in the harness's own role registry."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.actors",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.benefit",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementStatementFields.benefit"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "FUNCTIONAL — why (\"so that …\")."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.benefit",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.capability",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementStatementFields.capability"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "FUNCTIONAL — what the actor wants to be able to do (\"I want …\")."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.capability",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.category",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementStatementFields.category"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "NON-FUNCTIONAL — which quality it constrains."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.category",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.conformance",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementStatementFields.conformance"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How strongly it binds. Named `conformance` — the word the harness's requirement files have used since they were first written — so that building them on this base moved no file."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.conformance",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.dependson",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementStatementFields.dependsOn"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Other statements this one presupposes, by {@link requirementRef}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.dependsOn",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.key",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementStatementFields.key"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Unique within its requirement; with the requirement's id it is the statement's address."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.key",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.requirement",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RequirementStatementFields.requirement"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The statement itself, as one sentence a reviewer can say yes or no to."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.requirement",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/role-graph.actordef.roles",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -18420,6 +19104,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.referencedBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/site-indexes.libraryindexentryschema.withheld",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LibraryIndexEntrySchema.withheld"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why the entry is withheld (bean `cw35`/`mkao`): no avatar, no verbatim excerpt."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/site-indexes.ts#LibraryIndexEntrySchema.withheld",
       "skos:note": "candidate"
     },
     {
@@ -19810,6 +20513,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/test-run.testrunschema.requirements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TestRunSchema.requirements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "WHICH REQUIREMENTS THIS RUN CHECKS — owner, 2026-09-23 (issue #1164): *\"put requirements in Test schema as array\"*, as REFERENCES (`req:<slug>` or `req:<slug>#<statement-key>`), never copies: the requirement's text lives in one place, and a copy in every run is a copy free to disagree with it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/test-run.ts#TestRunSchema.requirements",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/test-run.testrunschema.skill",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -21099,6 +21821,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.maintains",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/tool.tooldefinitionschema.renders",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolDefinitionSchema.renders"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The graph KINDS this Tool draws a viewer for — one page per declared directory of the kind, placed by the Tool itself."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.renders",
       "skos:note": "candidate"
     },
     {
@@ -25906,6 +26647,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/waiver.ts#WaiverNodeSchema.scope",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/webpage.webpage.documents",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WebPage.documents"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What this page documents: graph kinds (`library`), or one directory as `<instance>/<id>` where the kind is too general. Emitted into the page's front matter, where the coverage check reads it — the page names the directory, and the directory names no page (#1168 B7c)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/webpage.ts#WebPage.documents",
       "skos:note": "candidate"
     },
     {
