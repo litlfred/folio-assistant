@@ -62,3 +62,16 @@ assuming.
 ## Review
 
 https://github.com/litlfred/folio-assistant/issues/370, opened per #363's instruction.
+
+--------
+
+## Owner, 2026-09-24: **"It may hold credentials"**
+
+The owner chose this over the strawperson ("the harness produces artefacts
+and holds no credentials") and over parking it. Custody is a security design
+of its own, so no code is written. The CRDM proposal is
+`docs/proposals/wallet-custody.md`. It lists seven questions in order: whose
+credentials, hold or broker, where the bytes live (never the repository),
+which actors may use a credential, audit, offline revocation, and which
+standards. The offline "stand it up with no network" demonstration is still
+owed, and is not superseded by this.

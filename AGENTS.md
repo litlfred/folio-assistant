@@ -312,10 +312,11 @@ pair the Pages question needs — `cancelled` as a **third state**, and saying
 **whose** contention a cancellation was — and why the counts are reported but
 the share is not graded (bean `3yi4`).
 
-**Do not "fix" a dispatch-only workflow by dispatching it.** `qa-sweep` and
-`witness-refresh` fail by design in this repo: the first preflights on
-`content/package.json`, the second needs `folio-assistant/computations/`, and
-the platform carries no folio.
+**Do not "fix" a dispatch-only workflow by dispatching it.** `witness-refresh`
+fails by design in this repo: it needs `folio-assistant/computations/`, and the
+platform carries no folio. `qa-sweep` used to be the second example; since bean
+`52dz` it is a template in `cat-harness/templates/` that `folio_init` writes
+into a new folio, and no longer a workflow here.
 
 ## Repository health — the same shape, one level out
 

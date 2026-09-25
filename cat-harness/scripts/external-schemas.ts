@@ -432,9 +432,21 @@ function run(argv: string[]): number {
     }
     console.error("  Conforming to a specification nobody named is the defect this registry ends.");
   }
-  if (unused.length > 0) {
-    console.log(`\n· ${unused.length} declared namespace(s) nothing uses — a record outliving its dependency:`);
-    for (const ns of unused) console.log(`    ${ns}`);
+  // A `cites` record is pinned AHEAD of use on purpose (bean `4sim`: DCAT,
+  // "reference only"), so nothing using it yet is its expected state, not a
+  // record that outlived its dependency. Said in different words so the
+  // remedy the second line offers — drop the record — is never read as
+  // applying to the first.
+  const citedAhead = new Set(specs.filter((s) => s.use === "cites").flatMap((s) => s.namespaces));
+  const ahead = unused.filter((ns) => citedAhead.has(ns));
+  const outlived = unused.filter((ns) => !citedAhead.has(ns));
+  if (ahead.length > 0) {
+    console.log(`\n· ${ahead.length} namespace(s) cited AHEAD of use — pinned by decision, nothing emits them yet:`);
+    for (const ns of ahead) console.log(`    ${ns}`);
+  }
+  if (outlived.length > 0) {
+    console.log(`\n· ${outlived.length} declared namespace(s) nothing uses — a record outliving its dependency:`);
+    for (const ns of outlived) console.log(`    ${ns}`);
   }
 
   if (drifted.length > 0) {

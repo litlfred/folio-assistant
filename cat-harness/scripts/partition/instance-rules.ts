@@ -262,6 +262,7 @@ export const RULES: Rule[] = [
       "scripts/check-lane-documentation.ts", // a lane has a name AND a definition
       "scripts/check-process-documentation.ts", // ...and the process says what it is FOR
       "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
+      "scripts/eval-crdm-detect-blind.ts",   // a blinded packet for a second annotator, and the kappa that scores it (bean `vjbl`)
       // ...and the signals themselves, lifted out of it by bean `xfoh` so the
       // patterns could be checked against the skill prose they transcribe.
       // Same side as its runner, and harness by subject too: whether a request
@@ -636,6 +637,7 @@ export const RULES: Rule[] = [
       "scripts/gen-processes-viz.ts", // the processes graph → a searchable index over every executable BPMN diagram
       "scripts/gen-folio-viz.ts",            // the folio GRAPH → projection + viewer. Its content already renders as the landing board; this is a view of the nodes behind it (bean `7ofc`)
       "scripts/check-materialized-fixity.ts", // materialized bytes vs their recorded digest — the read-only rule, enforced
+      "scripts/sync-remote-skills.ts",       // a remote package's declared skills, materialized at its pinned commit (issue #556)
       "scripts/backfill-materialized-fixity.ts", // records the baseline digest that check reads
       "scripts/cache-index.ts",              // what is materialized, how big, how old, what could go — derived from the same walk (bean `54rk`)
       "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
@@ -948,6 +950,15 @@ export const RULES: Rule[] = [
       // is harness machinery, and none imports the content vocabulary.
       "scripts/beans-fallback.ts",
       "scripts/check-harness-dirs.ts",
+      // Issue #1164: bootstrap schemas name no outside concept, and a filed
+      // requirement is a valid one with no name used twice. Harness
+      // machinery over the harness's own declarations; neither imports the
+      // content vocabulary.
+      "scripts/check-bootstrap-concepts.ts",
+      "scripts/check-requirements.ts",
+      // Bean `95ir`: declared-but-absent is reported by a scanner, never
+      // dropped. Harness machinery over declarations; imports only node:fs.
+      "scripts/lib/declared-presence.ts",
       "scripts/kg-audit.ts",
       // WHICH audits reach which kind of node (bean `xutg`). Harness machinery
       // for the same reason `kg-audit.ts` is: its subject is the graph-kind
@@ -1032,6 +1043,9 @@ export const RULES: Rule[] = [
       "schemas/graph.ts",
       "schemas/discussion.ts",
       "schemas/bootstrap-graph.ts",
+      // The Requirement bootstrap publishes (issue #1164); `skill-package.ts`
+      // builds the harness Requirement on it, so core would be an edge downward.
+      "schemas/requirement.ts",
       // Code lists (owner, 2026-09-23): the shape the ENGINE checks an
       // adjudication's codes against, and the loader `namespaces.ts` sits
       // beside. Needed to RUN a process, so harness — the same test as the

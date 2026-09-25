@@ -543,6 +543,23 @@ classDiagram
       $schema [1] 'kg-qa-manifest/v1'
       auditor [1] object
     }
+    class cat_harness_skills_folio_remote_skill_v1_File["File"] {
+      <<json: RemoteSkillRecordSchema>>
+      id [1] string
+      name [1] string
+      materialization [1] object
+    }
+    class cat_harness_skills_folio_remote_skill_v1_folio_remote_skill_v1["folio-remote-skill/v1"] {
+      <<json: RemoteSkillRecordSchema>>
+      $schema [1] 'folio-remote-skill/v1'
+      skill [1] string
+      package [1] string
+      repo [1] string~uri~
+      ref [1] string
+      wrapper [1] string
+      note [1] string
+      files [1..*] File[]
+    }
   }
   namespace cat_harness__scenarios {
     class cat_harness_scenarios_Role["Role"] {
@@ -682,6 +699,7 @@ classDiagram
       process [1] object
       outcome [1] map~any~
       cases [0..*] Case[]
+      requirements [0..*] string[]
       updated_at [1] string
     }
     class cat_harness_qa_qa_witness_v1["qa-witness/v1"] {
@@ -1718,6 +1736,11 @@ classDiagram
       <<could not determine>>
     }
   }
+  namespace cat_harness__folio_templates {
+    class n_cat_harness_folio_templates_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
   namespace cat_harness__folio_assistant_core_processes {
     class cat_harness_folio_assistant_core_processes_omg_bpmn_2_0["Business Process Model and Notation (BPMN)"] {
       <<ext: omg-bpmn-2.0>>
@@ -1843,7 +1866,10 @@ classDiagram
   cssClass "cat_harness_schemas_block_qa_schema_schema_block_qa_schema_json_BlockQaReport" fa_uml_kind_schemas
   cssClass "cat_harness_schemas_block_qa_schema_schema_qa_script_schema_json_QaScriptSidecar" fa_uml_kind_schemas
   cssClass "cat_harness_uml_uml_shape" fa_uml_kind_uml
+  cat_harness_skills_folio_remote_skill_v1_folio_remote_skill_v1 *-- "1..*" cat_harness_skills_folio_remote_skill_v1_File : files
   cssClass "cat_harness_skills_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_skills
+  cssClass "cat_harness_skills_folio_remote_skill_v1_File" fa_uml_kind_skills
+  cssClass "cat_harness_skills_folio_remote_skill_v1_folio_remote_skill_v1" fa_uml_kind_skills
   cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Role : roles
   cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Actor : actors
   cssClass "cat_harness_scenarios_Role" fa_uml_kind_scenarios
@@ -2053,4 +2079,6 @@ classDiagram
   cssClass "n_cat_harness_cat_harness_adapters_code" fa_uml_undetermined
   cssClass "n_cat_harness_cat_harness_tests_code" fa_uml_kind_code
   cssClass "n_cat_harness_cat_harness_tests_code" fa_uml_undetermined
+  cssClass "n_cat_harness_folio_templates_code" fa_uml_kind_code
+  cssClass "n_cat_harness_folio_templates_code" fa_uml_undetermined
   cssClass "cat_harness_folio_assistant_core_processes_omg_bpmn_2_0" fa_uml_kind_processes

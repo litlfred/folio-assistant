@@ -159,6 +159,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [One-Voice Style Guide](one-voice-style-guide.html) | `one-voice-style-guide` | — | > **See also:** `one-voice-audit` is the mechanical sweep (greps for |
 | [Semantic Ontologist (Ambiguity Detection & Glossary)](ontologist.html) | `ontologist` | — |  |
 | [Opening brief](opening-brief.html) | `opening-brief` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
+| [Cutting a package release](package-release.html) | `package-release` | — | A **release** is a version number that one commit keeps from then on: a tag, |
 | [/pending-show](pending-show.html) | `pending-show` | — | Quick status display. Read-only. Run any time to answer "where am I?" |
 | [Pickup](pickup.html) | `pickup` | — | Continue work on existing open PRs with minimal wasted tokens. This skill |
 | [Placement](placement.html) | `placement` | — | **One question, answered before the first file exists:** |
@@ -288,6 +289,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Graph detanglement](graph-detanglement.html) | `graph-detanglement` | — | > Skill id: `graph-detanglement` · Capability: `architecture` · Package: `graph-management` |
 | [Graph rendering: one set of rules for every drawn graph](graph-rendering.html) | `graph-rendering` | — | > Skill id: `graph-rendering` · Capability: `architecture` · Package: `graph-management` |
 
+## Synced from claude-scientific-skills (pinned, read-only)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
+
 ## Knowledge-graph navigation (tooled)
 
 | Skill | Id | Schema | Summary |
@@ -300,15 +307,17 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [RACI](raci.html) | `raci` | — | **The method is not in this file.** It is the `raci` node in the `methodology` |
 
-## Declared but not implemented here (stubs)
+## Synced from claude-scientific-skills (pinned, read-only)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [fhir-client-operations](fhir-client-operations.html) | `fhir-client-operations` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
-| [hypothesis-generation](hypothesis-generation.html) | `hypothesis-generation` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
-| [scientific-critical-thinking](scientific-critical-thinking.html) | `scientific-critical-thinking` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
-| [scientific-visualization](scientific-visualization.html) | `scientific-visualization` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
-| [smart-launch](smart-launch.html) | `smart-launch` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
+| [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
+
+## Synced from claude-scientific-skills (pinned, read-only)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
 
 ## Theming (theming)
 
