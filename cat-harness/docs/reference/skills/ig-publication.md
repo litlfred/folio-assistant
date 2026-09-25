@@ -22,7 +22,7 @@ Input schema for FHIR Implementation Guide publication.
 | `publicationTarget` | `"github-pages"` \| `"smart-who-int"` \| `"both"` | no | default: `"github-pages"` |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/ig-publication/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/ig-publication/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/ig-publication/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/ig-publication/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -38,4 +38,4 @@ Output schema for FHIR IG publication.
 | `buildStatus` | `"success"` \| `"failed"` | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/ig-publication/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/ig-publication/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/ig-publication/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/ig-publication/output.schema.json){: .fa-edit-source }
