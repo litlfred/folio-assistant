@@ -26,7 +26,7 @@ Input schema for the document-authoring skill: create or revise one content bloc
 | `body` | string | no | GitHub-flavoured Markdown for the block's .md file. |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/document-authoring/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/document-authoring/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/document-authoring/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/document-authoring/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -46,4 +46,4 @@ Input schema for the document-authoring skill: create or revise one content bloc
 | `profileViolations` | integer | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/document-authoring/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/document-authoring/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/document-authoring/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/document-authoring/output.schema.json){: .fa-edit-source }
