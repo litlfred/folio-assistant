@@ -146,7 +146,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 320,
+      "count": 327,
       "unit": "beans"
     },
     {
@@ -330,7 +330,8 @@
         "glass"
       ],
       "href": "/cat-harness/docs-auto/index/skills/cat-harness/",
-      "hidden": false
+      "hidden": false,
+      "readOnly": false
     },
     {
       "id": "swimlane-glossary",
@@ -1404,17 +1405,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 44
+          "value": 47
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 27
+          "value": 29
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 19
+          "value": 21
         }
       ],
       "visualisations": [
@@ -1484,8 +1485,18 @@
           "path": "/processes/"
         },
         {
+          "kind": "proposals",
+          "within": "docs",
+          "path": "/proposals/"
+        },
+        {
           "kind": "qa",
           "path": "/qa/"
+        },
+        {
+          "kind": "requirements",
+          "within": "docs",
+          "path": "/requirements/"
         },
         {
           "kind": "scenarios",
@@ -1497,7 +1508,8 @@
         },
         {
           "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/large-datasets-skills/"
+          "path": "/cat-harness/docs-auto/index/skills/large-datasets-skills/",
+          "readOnly": false
         },
         {
           "kind": "swimlane-glossary",
@@ -1732,8 +1744,18 @@
         "path": "/processes/"
       },
       {
+        "kind": "proposals",
+        "within": "docs",
+        "path": "/proposals/"
+      },
+      {
         "kind": "qa",
         "path": "/qa/"
+      },
+      {
+        "kind": "requirements",
+        "within": "docs",
+        "path": "/requirements/"
       },
       {
         "kind": "scenarios",
@@ -2538,7 +2560,7 @@
           },
           {
             "key": "directories",
-            "summary": "44: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
+            "summary": "45: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
           },
           {
             "key": "associatedHarnesses",

@@ -69,6 +69,8 @@
     "check:bean-front-matter": "bun run cat-harness/scripts/check-bean-front-matter.ts",
     "check:bean-issue-links": "bun run cat-harness/scripts/check-bean-issue-links.ts",
     "check:bean-parents": "bun run cat-harness/scripts/check-bean-parents.ts",
+    "check:bootstrap-concepts": "bun run cat-harness/scripts/check-bootstrap-concepts.ts",
+    "check:requirements": "bun run cat-harness/scripts/check-requirements.ts",
     "check:bean-rollup": "bun run cat-harness/scripts/check-bean-rollup.ts",
     "check:bean-restates-skill": "bun run cat-harness/scripts/check-bean-restates-skill.ts",
     "check:catalogue": "bun run who-iris/scripts/check-catalogue.ts",
@@ -326,7 +328,9 @@
     "uploads:viz:check": "bun run cat-harness/scripts/gen-uploads-viz.ts --check",
     "voices:graph": "bun run cat-harness/scripts/voices-graph.ts",
     "voices:viz": "bun run cat-harness/scripts/gen-voices-viz.ts",
-    "voices:viz:check": "bun run cat-harness/scripts/gen-voices-viz.ts --check"
+    "voices:viz:check": "bun run cat-harness/scripts/gen-voices-viz.ts --check",
+    "sync:remote-skills": "bun run cat-harness/scripts/sync-remote-skills.ts",
+    "check:remote-skills": "bun run cat-harness/scripts/sync-remote-skills.ts --check"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",

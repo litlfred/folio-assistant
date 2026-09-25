@@ -19,14 +19,16 @@
  * the skill fails. A low precision here is more damning, because a phrase that
  * fires on a bug report will push a model toward the wrong branch too.
  *
- * ## The ground truth is one annotator's, unblinded
+ * ## The ground truth: two annotators, and the owner's adjudication
  *
  * `scripts/eval/crdm-detect-corpus.json` carries all 27 issues in this
  * repository — the whole population, not a sample — each labelled with a
- * one-line reason. The labels were written by the same agent that wrote this
- * script, without a second annotator and without blinding. That is a real
- * weakness and is the first thing to fix before quoting these numbers as a
- * property of the skill rather than of this corpus.
+ * one-line reason. The first labels were written by the same agent that wrote
+ * this script, without blinding. On 2026-09-24 (bean `vjbl`) a fresh agent
+ * labelled a blinded copy (`eval-crdm-detect-blind.ts`) and agreed on 23/27,
+ * Cohen's kappa 0.62. The owner adjudicated the four disagreements, so the
+ * labels are now owner-adjudicated where the two raters differed. The second
+ * rater's labels are kept in `crdm-detect-second-annotator.json`.
  *
  * ## The signals are not in this file
  *
@@ -118,8 +120,8 @@ if (skillExclusions.judgementOnly.length) {
 console.log(
   `\nLOWER BOUND. This runs the phrase list only; the skill also asks for\n` +
     `judgement, which catches wording the list never anticipated. Ground truth\n` +
-    `is ONE annotator's, unblinded — fix that before quoting these as a\n` +
-    `property of the skill rather than of this corpus.`,
+    `is two annotators (kappa 0.62), with the owner adjudicating their\n` +
+    `disagreements (bean vjbl). It is still 27 issues, one repository.`,
 );
 
 // ─── The run is RECORDED, not only printed ──────────────────────────────────

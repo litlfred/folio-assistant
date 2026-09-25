@@ -965,9 +965,18 @@ jobs:
           # in the same change, which is what makes the exception checkable
           # instead of a carve-out.
           bun run check:materialized-fixity
+          # Every skill a remote-package wrapper declares is MATERIALIZED at the
+          # commit that wrapper pins — offline, no fetch (issue #556).
+          bun run check:remote-skills
           bun run check:read-only-graphs
           bun run check:actor-reach
           bun run check:harness-dirs
+          # A bootstrap schema names no outside concept — no derivative's
+          # content model, layer names or standards (owner, issue #1164).
+          bun run check:bootstrap-concepts
+          # A filed requirement parses as one, its id is its file name, and no
+          # name is both a proposal and a requirement (issue #1164).
+          bun run check:requirements
           # Does a path-filtered workflow rebuild when the scripts it RUNS
           # change? `docs-site.yml` named eight generators and ran 22, so a
           # fix to `kg-export.ts` -- the script producing both graph documents

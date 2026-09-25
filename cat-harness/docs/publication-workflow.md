@@ -2,6 +2,8 @@
 layout: default
 title: Publication workflow
 nav_order: 6
+documents:
+  - processes
 lang: en
 available_locales: ["en"]
 ---

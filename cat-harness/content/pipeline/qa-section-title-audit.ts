@@ -585,7 +585,8 @@ async function main(): Promise<void> {
   const soft = flags.filter((f) => !HARD.has(f.kind));
   console.log(`section-title audit: ${allNodes.length} titles across ${byChapter.size} chapters (max-len ${MAX_LEN})`);
   // An audit of nothing is a broken run, not a clean one — the rule
-  // `validateObjects` settled (bean `vald`). `section-title-audit.yml` calls
+  // `validateObjects` settled (bean `vald`). `section-title-audit.yml` (a
+  // `folio_init` template since bean `52dz`) calls
   // this a HARD GATE, and over an empty corpus it printed the three ✓ lines
   // below and exited 0, one line after saying "0 titles across 0 chapters".
   if (allNodes.length === 0) {

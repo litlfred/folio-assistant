@@ -11,13 +11,13 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 84 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 2 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 101 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 2 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 99 terms and is 64 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 116 terms and is 73 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">99</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">116</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -172,6 +172,13 @@ Editorial content-graph analysis <span class="fa-gloss-status">candidate, extrac
 <p>Build the block- and section-level editorial dependency graph of one paper from its `.ts` manifests and report forward references, cross-chapter coupling, sparse or dense sections and isolated blocks, ranked. Reads `uses[]`/`interprets` only — the editorial relation, never the formal one.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#content-graph-analysis</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--external-schemas-viewer" data-fa-state="extracted" data-fa-gloss="">
+External schemas viewer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Render the declared external schemas, and which of this instance's modules conform to each, as one page.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#external-schemas-viewer</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--translation-extract" data-fa-state="extracted" data-fa-gloss="">
 Extract translatable strings <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -225,6 +232,13 @@ Folio review coverage <span class="fa-gloss-status">candidate, extracted</span>
 <p>Compute the two facts `content-change-review.bpmn`'s coverage gate (`GW_Covered`) reads: `uncoveredBlocks`, the changed blocks with no reviewer verdict on their CURRENT hash, and `openDefects`. Reads a preview's `changeset.json`, `blocks.json` and `review-comments.json`. With `--commit`, writes the ingested `folio-review-verdict/v1` verdicts into the todos graph's declared `review-verdicts` directory and commits them to the edit-set's FEATURE branch; refused on the base branch and a detached HEAD. Prints the facts as JSON on stdout.</p>
 <p class="fa-gloss-meta">Tools of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/tools/index.ts"><code>folio-assistant-core/tools/index.ts#folio-review-coverage</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--folio-viewer" data-fa-state="extracted" data-fa-gloss="">
+Folio viewer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Render each declared folio directory as a browsable page over its published index.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#folio-viewer</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--fsh-cone" data-fa-state="extracted" data-fa-gloss="">
 FSH dependency cone <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -242,6 +256,13 @@ Gates on the merged tree <span class="fa-gloss-status">candidate, extracted</spa
 <dd>
 <p>Build this branch merged with the current base in a throwaway worktree and run the full `bun run gates` there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#gates-merged</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--docs-auto-viewer" data-fa-state="extracted" data-fa-gloss="">
+Generated index pages <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#docs-auto-viewer</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--github" data-fa-state="extracted" data-fa-gloss="">
 GitHub <span class="fa-gloss-status">candidate, extracted</span>
@@ -410,6 +431,13 @@ Lean vacuity audit <span class="fa-gloss-status">candidate, extracted</span>
 <p>Inspect Lean declarations chapter by chapter for proofs that type-check, are sorry-free and axiom-clean, and still carry no mathematical content — assuming what they claim, concluding something trivially true, or resting on a false premise.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#lean-audit</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--library-viewer" data-fa-state="extracted" data-fa-gloss="">
+Library viewer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Render each declared library directory — its entries, intakes and avatars — as a page per subject instance.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#library-viewer</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--workflow-list" data-fa-state="extracted" data-fa-gloss="">
 List processes <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -456,6 +484,13 @@ May this step be performed? <span class="fa-gloss-status">candidate, extracted</
 <p>Ask before doing work a strict process governs. The content-agnostic processes refuse a step that is not enabled; the per-content-type ones advise.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/mcp.ts"><code>cat-harness/tools/mcp.ts#workflow-gate</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--methodologies-viewer" data-fa-state="extracted" data-fa-gloss="">
+Methodologies viewer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Render the declared methodology graph as one page.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#methodologies-viewer</code></a></p>
+</dd>
 <dt id="folio-assistant-core--kg-tools--folio-review-comment-move" data-fa-state="extracted" data-fa-gloss="">
 Move a review comment's status <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -489,6 +524,13 @@ Open a render <span class="fa-gloss-status">candidate, extracted</span>
 
 <h2 id="letter-P">P</h2>
 <dl class="fa-gloss">
+<dt id="cat-harness--kg-tools--package-release-manual" data-fa-state="extracted" data-fa-gloss="">
+Package release by hand <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `&lt;package&gt;-v&lt;version&gt;`, and creates the release on the host. The same four steps with nothing to configure.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#package-release-manual</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--paper-latex-build" data-fa-state="extracted" data-fa-gloss="">
 Paper build to LaTeX chapters <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -509,6 +551,13 @@ Prime the work plan <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Load the current work plan for this session — the same committed beans store the CLI reads, so a fresh container starts from the plan rather than from nothing.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/mcp.ts"><code>cat-harness/tools/mcp.ts#work-plan-prime</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--processes-viewer" data-fa-state="extracted" data-fa-gloss="">
+Processes viewer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Render the declared BPMN processes as an index page and one page per diagram.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#processes-viewer</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--proof-dependency-graph" data-fa-state="extracted" data-fa-gloss="">
 Proof dependency graph <span class="fa-gloss-status">candidate, extracted</span>
@@ -567,6 +616,13 @@ Record what the publish branch served <span class="fa-gloss-status">candidate, e
 <p>Append one entry to the render log on the publish branch: what was published or taken down, when, from which commit, and — for a removal or a retention — WHY. The log is the only place a preview that vanished leaves a trace.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#render-log</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--release-please" data-fa-state="extracted" data-fa-gloss="">
+release-please (declared, not configured here) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`).</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#release-please</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--paper-preferences" data-fa-state="extracted" data-fa-gloss="">
 Rendering preferences <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -591,6 +647,13 @@ Scaffold a folio <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Create a new folio repository that uses this platform — folio/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/mcp.ts"><code>cat-harness/tools/mcp.ts#folio-init</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--schemas-viewer" data-fa-state="extracted" data-fa-gloss="">
+Schemas viewer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Render each declared schema directory as a page per subject instance, over one shared data index.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#schemas-viewer</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--sibling-sessions" data-fa-state="extracted" data-fa-gloss="">
 Sibling sessions in a window <span class="fa-gloss-status">candidate, extracted</span>
@@ -647,6 +710,13 @@ Start a process instance <span class="fa-gloss-status">candidate, extracted</spa
 <dd>
 <p>Open an instance of a process for a subject. Idempotent: an existing instance for the same subject is returned rather than duplicated.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/mcp.ts"><code>cat-harness/tools/mcp.ts#workflow-start</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--state-viewer" data-fa-state="extracted" data-fa-gloss="">
+State graph viewer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Render each declared state graph with a projection as a dashboard page: what the work plan holds, and what state it is in.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#state-viewer</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-tools--strip-library-binaries" data-fa-state="extracted" data-fa-gloss="">
 Strip binary payloads from Library resources <span class="fa-gloss-status">candidate, extracted</span>
@@ -708,12 +778,47 @@ Tool node schema <span class="fa-gloss-status">candidate, extracted</span>
 <p>The zod definition of a Tool node — what `defineTool` accepts — and the published JSON Schema generated from it.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#tool-schema</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--tools-viewer" data-fa-state="extracted" data-fa-gloss="">
+Tools viewer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Render this instance's Tool nodes, and the skills each satisfies, as one page.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#tools-viewer</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--transcribe-faster-whisper" data-fa-state="extracted" data-fa-gloss="">
+Transcribe audio — faster-whisper (option, not installed) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Transcribe an audio file with faster-whisper (the Whisper models on CTranslate2), from Python. A declared OPTION: not installed in this repository.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#transcribe-faster-whisper</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--transcribe-vosk" data-fa-state="extracted" data-fa-gloss="">
+Transcribe audio — vosk (option, not installed) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Transcribe an audio file with vosk (Kaldi-based), offline, from Python, with small per-language models. A declared OPTION: not installed in this repository.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#transcribe-vosk</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--transcribe-whisper-cpp" data-fa-state="extracted" data-fa-gloss="">
+Transcribe audio — whisper.cpp (option, not installed) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`).</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#transcribe-whisper-cpp</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--translation-status" data-fa-state="extracted" data-fa-gloss="">
 Translation coverage <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Per-locale translation coverage, computed from the .po files under the translations directory.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/mcp.ts"><code>cat-harness/tools/mcp.ts#translation-status</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--translation-status-viewer" data-fa-state="extracted" data-fa-gloss="">
+Translation status viewer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Render the translation status of every declared translation-sources directory, per locale, as one page.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#translation-status-viewer</code></a></p>
 </dd>
 </dl>
 
@@ -725,6 +830,13 @@ UML overview per named sub-graph <span class="fa-gloss-status">candidate, extrac
 <dd>
 <p>Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#uml-overview</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--uploads-viewer" data-fa-state="extracted" data-fa-gloss="">
+Uploads viewer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Render each declared uploads directory's intakes as a page per subject instance.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#uploads-viewer</code></a></p>
 </dd>
 </dl>
 
@@ -757,6 +869,13 @@ ValueSets → JSON Schema <span class="fa-gloss-status">candidate, extracted</sp
 <dd>
 <p>A JSON Schema per ValueSet, plus the enumeration-response schemas published at the IG root.</p>
 <p class="fa-gloss-meta">Tools of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/tools/index.ts"><code>smart-base/tools/index.ts#valueset-schemas</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--voices-viewer" data-fa-state="extracted" data-fa-gloss="">
+Voices viewer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Render each declared voices directory as a page per subject instance.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#voices-viewer</code></a></p>
 </dd>
 </dl>
 

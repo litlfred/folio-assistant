@@ -1114,8 +1114,10 @@ export const SubgraphCoverageSchema = z.object({
    * behaviour rather than changing it.
    */
   visualiser: VisualiserDeclarationSchema.optional(),
-  /** The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}. */
-  docs: z.string().min(1).optional(),
+  // NO `docs`: the documentation page says what it documents — a
+  // `documents:` list in its front matter (generated pages get it from their
+  // WebPage manifest) or `<meta name="documents">` — #1168 B7c,
+  // `scripts/docs-declarations.ts`. A waiver is still `exempt.docs` below.
   // NO `skill`: the governing skill is read from the SKILLS, whose front
   // matter names the kinds (`graph-kinds:`) or the directory (`governs:`)
   // they govern — #1168 B7b, `scripts/skill-governance.ts`. The directory
@@ -4942,6 +4944,56 @@ export function declaredKinds(
 function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string }): string {
   const base = d.scope === "repository" ? repoRootFor(root) : root;
   return resolve(base, d.path);
+}
+
+/**
+ * The sub-graphs a declared directory names FROM WITHIN — its nested
+ * declaration's entries, with paths rebased onto the instance root.
+ *
+ * Issue #1164, under the owner's #980 ruling: nesting is sanctioned when a
+ * node inside the outer directory labels what it holds (`docs/docs.json`,
+ * `beans/beans.json`). {@link declaredKinds} already reads those files for
+ * KINDS; this returns the ENTRIES, for a consumer that needs a sub-graph's
+ * path — the navbar's folders, `check:requirements`.
+ *
+ * Only the file the kind names (`declarationFile`) is read, not the
+ * directory-name fallbacks `declaredKinds` tries: a consumer taking a PATH
+ * from here must not take it from a file nobody declared. A file that does
+ * not parse is skipped here and reported by the check that owns it.
+ */
+export function nestedDirectories(
+  root: string,
+  decl: CatHarnessDeclaration,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> {
+  const out: Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> = [];
+  for (const d of decl.directories ?? []) {
+    const files = (d.graphKinds ?? [])
+      .map((g) => registry.get(g)?.declarationFile)
+      .filter((f): f is string => typeof f === "string");
+    for (const f of [...new Set(files)]) {
+      const p = join(declaredKindsEntryRoot(root, d), f);
+      if (!existsSync(p)) continue;
+      let nested: { directories?: Array<{ id?: string; path?: string; graphKinds?: string[]; description?: string }> };
+      try {
+        nested = JSON.parse(readFileSync(p, "utf-8"));
+      } catch {
+        continue;
+      }
+      const parent = d.path.replace(/\/+$/, "");
+      for (const nd of nested.directories ?? []) {
+        if (!nd.id || !nd.path) continue;
+        out.push({
+          id: `${d.id}/${nd.id}`,
+          path: `${parent}/${nd.path.replace(/^\.\//, "").replace(/\/+$/, "")}/`,
+          graphKinds: nd.graphKinds ?? [],
+          ...(nd.description ? { description: nd.description } : {}),
+          parentId: d.id,
+        });
+      }
+    }
+  }
+  return out;
 }
 
 // ── Core's kinds, registered ────────────────────────────────────

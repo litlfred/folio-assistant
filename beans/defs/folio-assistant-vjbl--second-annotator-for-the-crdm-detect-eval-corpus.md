@@ -1,7 +1,7 @@
 ---
 # folio-assistant-vjbl
 title: Second annotator for the crdm-detect eval corpus
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T15:07:07Z
@@ -54,14 +54,14 @@ agree with labels it had been told the shape of.
 
 ### What the bean needs before anyone attempts it again
 
-- [ ] A **blinded view** of the corpus — `number`, `title`, `text` only — so
+- [x] A **blinded view** of the corpus — `number`, `title`, `text` only — so
       inspecting the data cannot leak a label. Trivial to emit; it does not
       exist today
-- [ ] The diagnosis in `xfoh` and the hard-case list here moved behind a
+- [x] The diagnosis in `xfoh` and the hard-case list here moved behind a
       pointer the annotator is told **not** to open until after labelling, or
       a stated acceptance that both are contaminating and the annotator must
       come from outside this work plan
-- [ ] A stated answer to **who** may annotate: a second agent that has read
+- [x] A stated answer to **who** may annotate: a second agent that has read
       neither bean is possible; the owner is possible; an agent that has read
       this thread is not
 
@@ -102,3 +102,55 @@ second annotator should treat that axis — action requested vs. subject matter 
 as the corpus's stated convention and disagree with it explicitly if they do,
 rather than rediscovering the pair. No label flipped; `eval:crdm-detect` stays
 at precision 86% / recall 100% / F1 93% over 27.
+
+
+--------
+
+## 2026-09-24 — done blind, owner's choice: **"Fresh blind agent"**
+
+- **Blinded packet** (`scripts/eval-crdm-detect-blind.ts pack`): opaque ids
+  (`b01`…), title and text only. crdm-detect.md is included with only the
+  paragraph naming corpus issues removed: it stated #187's and #199's labels.
+  The key stays apart from the packet.
+- **The annotator** was a fresh agent told to read only the three packet
+  files. It confirmed it did; its session context held AGENTS.md, which it
+  did not use.
+- **Result:** 21 true / 6 false. Against the first labels, **23/27 raw,
+  Cohen's kappa 0.62** (`agree`). The labels are kept as
+  `scripts/eval/crdm-detect-second-annotator.json`, keyed by issue number.
+
+The four disagreements:
+
+| issue | first | second | turns on |
+|---|---|---|---|
+| #27 | feature | not | the text reads "Delivered… closing as done", so it is a record |
+| #187 | not | feature | the owner's 6o1z ruling, "label the action requested", which the blind annotator could not know |
+| #222 | not | feature | "document the pipeline", but also "formalize as a DAK .ts content object" |
+| #223 | not | feature | "a doc note", but also asks for a repo split and a migration plan |
+
+Adjudicating them is the owner's call. Until that is done, 71% / 63% is a
+property of labels two raters agree on at kappa 0.62, not of the skill alone.
+
+## Summary of Changes
+
+The second annotator was produced blind (see above): a packet generator plus a kappa scorer (`eval-crdm-detect-blind.ts`, with tests) and the committed second labels. 23/27 agree, kappa 0.62. Adjudicating the four disagreements is left to the owner.
+
+## Owner adjudication, 2026-09-24: **all four are feature requests**
+
+The owner ticked #27, #187, #222 and #223. #27 was already `true`; #187, #222
+and #223 flip to `true`. Each `why` now quotes the adjudication. #187's
+supersedes the 6o1z rule, "label the action requested".
+
+`bun run eval:crdm-detect`, with the DATA hash moving `d211c42e` → `2e3ab7fa`:
+
+| | precision | recall | F1 | missed | false alarms |
+|---|---|---|---|---|---|
+| before | 86% | 100% | 93% | — | #166, #222, #223 |
+| after | 95% | 95% | 95% | #187 | #166 |
+
+**Consequence for the detector, left to the owner:** the anchor on
+`^proposal:` existed because the unanchored form "cost #187". It now costs
+nothing and would catch #187 (recall 100%). The detector is unchanged, since
+changing it to fit its own 27-item eval set is tuning to the test.
+`crdm-detect-signals.test.ts` and the skill now say so instead of carrying
+the old argument.

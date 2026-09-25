@@ -13,6 +13,22 @@ package "cat-harness/skills" as pkg_cat_harness_skills <<skills>> {
     $schema [1] : 'kg-qa-manifest/v1'
     auditor [1] : object
   }
+  class "File" as cat_harness_skills_folio_remote_skill_v1_File <<json: RemoteSkillRecordSchema>> #e8f0ee {
+    id [1] : string
+    name [1] : string
+    materialization [1] : object
+  }
+  class "folio-remote-skill/v1" as cat_harness_skills_folio_remote_skill_v1_folio_remote_skill_v1 <<json: RemoteSkillRecordSchema>> #e8f0ee {
+    $schema [1] : 'folio-remote-skill/v1'
+    skill [1] : string
+    package [1] : string
+    repo [1] : string<uri>
+    ref [1] : string
+    wrapper [1] : string
+    note [1] : string
+    files [1..*] : File[]
+  }
 }
 
+cat_harness_skills_folio_remote_skill_v1_folio_remote_skill_v1 *-- "1..*" cat_harness_skills_folio_remote_skill_v1_File : files
 @enduml

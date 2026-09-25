@@ -222,8 +222,8 @@ describe("a mounted directory's withheld.json is honoured — bean cw35", () => 
   it("a withheld.json it cannot read REFUSES to mount — never 'publish everything'", () => {
     const d = tree();
     writeFileSync(join(d, WITHHELD_FILE), "{ not json");
-    expect(() => withheldPaths(d)).toThrow(/refusing to mount/);
+    expect(() => withheldPaths(d)).toThrow(/refusing to publish/);
     writeFileSync(join(d, WITHHELD_FILE), JSON.stringify({ paths: [{ nope: 1 }] }));
-    expect(() => withheldPaths(d)).toThrow(/refusing to mount/);
+    expect(() => withheldPaths(d)).toThrow(/refusing to publish/);
   });
 });

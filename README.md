@@ -21,7 +21,8 @@ per-content-type skill system.
 The three live badges are the workflows that actually run on `main` — the only
 ones a badge can tell the truth about. A badge for a `workflow_dispatch`-only
 workflow reports its last dispatch forever, which is how `witness-refresh.yml`
-and `qa-sweep.yml` would read as red for all time (bean `lq7e`). If you add a
+and `qa-sweep.yml` (now a `folio_init` template, bean `52dz`) would read as red
+for all time (bean `lq7e`). If you add a
 workflow that auto-triggers on `main`, badge it here; if you add one that does
 not, do not.
 -->
