@@ -53,7 +53,77 @@ state until the owner says otherwise.
 wrong-direction edges**, re-measured on main at `4cdd77d7d8` with 0
 unassigned modules. The critical path is now `wggr` (invert the stub
 pattern for the workflow files, `skills/` and `schemas/`), then
-`b5f0` / `zkgs`, then `zmdo` (fork twice and prove an empty-repo bootstrap).
+`b5f0`, then `zmdo` (fork twice and prove an empty-repo bootstrap).
+
+**`zkgs` withdrawn from the path, 2026-09-25.** It sat beside `b5f0` as a
+joint second step and has been `completed` (and archived) since. Withdrawn
+rather than deleted, because a reader who remembers the old chain needs to
+find out what happened to the step rather than notice it is simply gone —
+the same reason `p5wm` keeps a withdrawal table. `wggr`, `b5f0` and `zmdo`
+were each re-checked against the store in the same pass and are all still
+open, so the rest of the chain stands.
+
+## Box 2 — the owner's ruling, 2026-09-25
+
+The re-measurement below left box 2 with a question the store could not answer:
+the box and `check:instance-config` disagreed about whether an instance with no
+config is a shortfall. Put to the owner as a selectable decision; the ruling,
+kept as chosen:
+
+> **Every config that exists is correct** — "the box means: any config present
+> sits at its instantiation root and is named for its instance."
+
+So the box asks about **naming and location, not coverage**, and an instance
+with no config is not outstanding work. That is exactly what the gate already
+enforces and reports green:
+
+```
+✓ every config is named after its instance, and no retired name survives
+```
+
+**Box 2 is therefore ticked**, on the gate's evidence rather than on this
+bean's say-so — re-derivable at any time by running it, which is the standard
+`bean-coordination` asks for when a box is closed.
+
+The rejected reading is recorded because it changes more than this bean: had
+the box meant *every instance must carry one*, 10 of 16 would be outstanding
+AND `check:instance-config` would have to start failing on a state it currently
+prints as legitimate. Nothing needs to change in the gate.
+
+**GOAL 1 now has two open boxes, not three**, and box 1 is still blocked on
+`zmdo`. Box 3 is NOT ticked here: the 2026-09-21 row calls it "substantially
+satisfied", which is not a measurement, and nobody has re-derived it. That is
+the next thing this milestone needs, and it is agent work rather than an owner
+decision.
+
+## RE-MEASURED 2026-09-25 — box 2, in the filename that now exists
+
+The 2026-09-21 row below reads *"12 instances declare `harness.json`; **one**
+has a `*.config.json`, and 11 have none"*. **`harness.json` no longer exists
+anywhere in this repository** — the declaration moved to `<name>.json` beside
+a `<name>.config.json` — so that row is a measurement in a vocabulary the tree
+has dropped, and its arithmetic cannot be re-derived to agree or disagree.
+
+Re-measured by running the repo's own gate rather than by counting files,
+because the gate is what decides the box:
+
+```
+bun run check:instance-config
+  → 16 instance(s) declared; 6 configs written; 10 declared with no config
+  → "(· = declared but no config written; a legitimate state.)"
+  → ✓ every config is named after its instance, and no retired name survives
+```
+
+So the box's premise has changed rather than its answer improving: **an
+instance with no config is not a deficiency** by the gate's own verdict, and
+"11 have none" was counting a legitimate state as a shortfall. What the box
+still needs is a decision about what it is asking — *every instance carries a
+config*, which the gate contradicts, or *every config that exists is at its
+instantiation root and named for it*, which is green today. That is the
+owner's to settle; it is not re-derivable from the store.
+
+**Not touched:** the `zmdo` blocker on box 1, which was re-checked and still
+holds — `zmdo` is `todo`.
 
 ## MEASURED, 2026-09-21 — where Goal 1 actually stands, and what blocks each box
 
@@ -122,7 +192,8 @@ done?" has an answer with a named blocker rather than a shrug.
 - [ ] A new, empty repository can say "bootstrap a litlfred/folio-assistant
       here" and get a working instance — `zmdo`'s acceptance test, and the
       goal's own falsifier
-- [ ] Each instantiation declares its config in one file at its own root
+- [x] Each instantiation declares its config in one file at its own root —
+      **settled by the owner 2026-09-25**, see §"Box 2 — the owner's ruling"
 - [ ] The initiation steps are skilled, tooled and tested: a skill that
       governs them, a Tool node that performs them, and a test that fails
       when they do not run
