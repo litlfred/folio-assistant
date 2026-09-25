@@ -1,11 +1,12 @@
 ---
 # folio-assistant-vxho
 title: A test 14% under the default timeout is a gate that fails on a busy machine, not a red one
-status: in-progress
-parent: folio-assistant-1xhc
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-24T12:19:24Z
-updated_at: 2026-09-24T18:51:24Z
+updated_at: 2026-09-25T18:14:49Z
+parent: folio-assistant-1xhc
 ---
 
 Recorded 2026-09-24 while running `bun run gates` on a two-markdown-file diff.
@@ -94,3 +95,28 @@ was already ruled out.
 `cat-harness/schemas/viz-generators.test.ts` — `SCHEMA_GRAPH` and
 `LIBRARY_GRAPH` hoisted to module scope; four call sites became two reads.
 No assertion changed.
+
+---
+
+## Evidence — re-derived 2026-09-25, closing
+
+Closed on evidence per `bean-coordination` §"Closing a bean whose work has
+already landed". Re-run from a clean checkout identical to `origin/main` at
+`d8c450b9a2`.
+
+The test is `cat-harness/schemas/viz-generators.test.ts` — **not** under
+`scripts/tests/`, which is where I looked first and found nothing. Recorded
+because the path in a note is the part that rots.
+
+| box | how it was re-derived |
+|---|---|
+| runtime MEASURED, cause named | `bun test ./cat-harness/schemas/viz-generators.test.ts` → **16 pass, 0 fail, 1.72s for the whole file**, against the 5683ms ONE test took under the full suite |
+| walks the real tree — point or accident? | decided, and the decision is implemented: the graphs are a fixture, so reading them four times was *"four answers to one question that were only ever equal by luck"* |
+| no longer depends on machine load, never a bare number | **structural, verified.** `grep` finds no timeout override in the file at all. `readSchemaGraph` and `readLibraryGraph` are at lines 51–52, **column 0 — module scope** — each called exactly once, so no test's per-test budget contains that filesystem work |
+
+The fix was not a raised number and not a deleted test: 16 tests still run and
+still pass. The bean's own disclosure that **the 5683ms failure was never
+reproduced** stands, and does not block closing — the boxes ask for a measured
+runtime, a named cause and a load-independent gate, and all three are satisfied.
+
+Not mid-flight: last touched 2026-09-24, no branch on the remote names it.

@@ -4,8 +4,10 @@ title: 'WHO IG CHROME: the blue bar, DRAFT watermark and publish box, ingested f
 status: in-progress
 type: feature
 priority: normal
+tags:
+    - ready-to-close
 created_at: 2026-09-23T19:56:03Z
-updated_at: 2026-09-23T20:15:41Z
+updated_at: 2026-09-25T18:14:49Z
 parent: folio-assistant-yj32
 ---
 
@@ -127,3 +129,47 @@ settled a layering question inside a stylesheet loader. The question is
 - The mirrored rule set is four selectors, listed explicitly in `MIRRORED`.
   A regex over selectors would quietly widen the mirror every time upstream
   added a rule that matched it.
+
+---
+
+## Evidence
+
+_2026-09-25 — tagged `ready-to-close`, deliberately NOT closed._
+
+Re-derivation is **not available in this container**, which is the third state
+`bean-coordination` §"When you cannot re-derive it yourself" exists for.
+
+### What I DID verify, on a clean checkout identical to `origin/main` at `d8c450b9a2`
+
+| box | how |
+|---|---|
+| a schema for the ingested chrome | `cat-harness/schemas/ig-chrome.ts` present |
+| an ingest; `no --source exits 2` | `cat-harness/scripts/ingest-ig-chrome.ts` present |
+| a `--check` gate exists | `ingest:ig-chrome:check` is a script and runs |
+| declared at smart-base | `graph-kind-registry.ts` carries it |
+| tests | `ig-chrome.test.ts` + `ingest-ig-chrome.test.ts` → **28 pass, 0 fail** |
+
+### What I could NOT re-derive, and why — one line
+
+**That the smart-trust pages actually carry the blue bar, the DRAFT watermark
+and the publish box.** The gate that would establish it reports the third state
+rather than a pass:
+
+```
+could not determine: no --ig and --layer checkouts, so there is nothing to
+read the chrome from.
+  The committed chrome was NOT verified.
+```
+
+It exits 0 while saying so, so a caller reading only the exit code would
+record a pass — worth knowing independently of this bean. Verifying that box
+needs the IG and each `fhir.template` it depends on cloned and passed
+base-first with `--layer`, which this container does not have.
+
+The last box — *"gates green — 135 of 136, the one failure pre-existing on
+main"* — I have deliberately not taken on trust either. **I made exactly that
+claim wrongly today** on PR #1352, from a working directory holding an
+untracked root `scripts/` that `git status` could not see (bean `pomp`'s shape,
+third occurrence). A "pre-existing on main" claim is only as good as the
+cleanliness of the tree it was measured in, and I cannot re-measure this one
+without the checkouts above.
