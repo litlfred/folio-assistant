@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-20T16:36:29Z
-updated_at: 2026-09-21T14:02:42Z
+updated_at: 2026-09-25T16:24:24Z
 parent: folio-assistant-slw1
 ---
 
@@ -182,3 +182,29 @@ should not be implied by ticking it:
   feared, because 210 of the 219 were chrome.
 - **`2602.12670v4`** is an arXiv paper with 7 sub-threshold images. Same shape,
   different rung; no browser-print detection reaches it. Worth its own bean.
+
+## Evidence for the last open box — 2026-09-25, NOT ticked here
+
+Recorded, not resolved. The box below is this bean owner's to tick; a sibling
+session reporting a measurement is not the same act as closing somebody
+else's work, and `bean-coordination` keeps those apart on purpose.
+
+`bun run check:l1-complete` on `main` at `3d725cf36af`:
+
+- **exit 0**, 29 documents, **zero** `✗`.
+- All eleven `agent-skills/library/` documents pass, the seven this bean
+  blocked among them — `agent-skill-best-practices---gemini-cli`,
+  `agent-skills---google-antigravity-docs`,
+  `best-practices---google-antigravity-docs`,
+  `equipping-agents-for-the-real-world-with-agent-skills-anthro`,
+  `skill-authoring-best-practices---claude-platform-docs`,
+  `skills-in-openai-api`, and the two RFC documents.
+- `image-descriptions` passes on each.
+
+The one thing the run still reports as NOT a pass is `audio-transcripts`, "not
+derivable by any arm yet" (bean `1r0p`) — a different requirement, and it is
+printed as a third state rather than counted as green, which is the behaviour
+this bean's second box asked for.
+
+So the remaining box reads as satisfied on the evidence. The owner decides.
+

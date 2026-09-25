@@ -5,6 +5,7 @@ status: todo
 type: task
 created_at: 2026-09-25T16:21:47Z
 updated_at: 2026-09-25T16:22:33Z
+parent: folio-assistant-ahvw
 ---
 
 Found 2026-09-25 while closing `mi97`'s bean-store box.

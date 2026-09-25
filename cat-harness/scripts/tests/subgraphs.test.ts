@@ -18,7 +18,13 @@ import { describe, expect, test } from "bun:test";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { isDerivedGraph, owningDirectory, resolveDirectories, subgraphTree } from "../../schemas/cat-harness.ts";
+import {
+  isDerivedGraph,
+  owningDirectory,
+  resolveDirectories,
+  siteDirFor,
+  subgraphTree,
+} from "../../schemas/cat-harness.ts";
 import { overDeepLinks, scanSubgraphs } from "../check-subgraphs.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
@@ -240,7 +246,10 @@ describe("the `../` too many count is COMPUTED (bean `syrl`)", () => {
   //
   // Both halves are asserted, because a fix that returns nothing would pass
   // the first on its own and would be indistinguishable from a clean corpus.
-  const dir = resolve(ROOT, "docs");
+  // ASKED, not spelled: `site-dir-single-answer` refuses a literal here, and
+  // it is right to — a test naming the output root by hand is one more place
+  // the answer can disagree with the declaration.
+  const siteDir = resolve(ROOT, siteDirFor(ROOT));
 
   test("a target that resolves after dropping one `../` IS one", () => {
     // From `docs/reference/skill-instructions/`, `../../skill-instructions/…`
@@ -273,7 +282,7 @@ describe("the `../` too many count is COMPUTED (bean `syrl`)", () => {
   test("the real corpus carries none — the repair of `mi97` holds", () => {
     // Falsifier for `mi97`, which said the count must fall to zero once the
     // 27 were repaired. It is checkable ONLY because the number is live.
-    expect(existsSync(dir), "docs/ must exist or this asserts nothing").toBe(true);
+    expect(existsSync(siteDir), `${siteDir} must exist or this asserts nothing`).toBe(true);
     const { siteResolved } = scanSubgraphs(ROOT);
     expect(overDeepLinks(ROOT, siteResolved).map((l) => `${l.from} -> ${l.target}`)).toEqual([]);
   });
