@@ -105,6 +105,41 @@ verify a mounted instance from a local build will hit it too.
    large-datasets subsetting skill — rather than IRIS-catalogue work. Whether
    they belong under `kupb` is a re-parenting decision and is **the owner's**.
 
+## RE-MEASURED 2026-09-25 — `kupb` is three days closer than this bean says
+
+The section above was measured 2026-09-22. Re-derived against the store today,
+item by item, not carried forward:
+
+| item | recorded above | now |
+|---|---|---|
+| `j66n` | *"has one clause left … **owner-blocked**"* | **`completed`** |
+| `kupb`'s children | 13 open | **4 open**, 9 closed |
+
+**Nine closed since:** `54rk`, `809i`, `gpdo`, `hfwl`, `hpax`, `j66n`, `rtrg`,
+`v048`, `w5bn`.
+
+**Four still open:** `4pm8` (todo — Pagefind evaluation), `eof6` (in-progress
+— search index as a release artifact), `j79e` (in-progress — detangle),
+`xies` (in-progress — publish to CDN).
+
+Two things follow, and they point opposite ways:
+
+1. **The `j66n` line above is stale and should not be acted on.** It puts a
+   theme-sources question to the owner that its own bean has since closed.
+   Left in place with this correction beside it rather than deleted, so the
+   next reader can see the question was answered rather than dropped.
+2. **The re-parenting decision is unchanged and is still the owner's** — but
+   it is now a smaller question. Of the four that remain, all four are the
+   "large independent subject" kind the 2026-09-22 note flagged (search,
+   CDN publication, detangle), and **none** is IRIS-catalogue work. The case
+   for re-parenting them out of `kupb` is therefore stronger than when it was
+   4-of-13; whether to do it is still not an agent's call.
+
+This bean has now been re-measured twice for the same reason (`k59d`): a
+milestone's body is read as current by every session that opens it, and
+nothing recomputes it. That is the argument for the check `k59d` asks for,
+not for a third hand pass.
+
 ## Not blocked on the owner any more
 
 `hqku` is `completed`; the question *"is `library/` active content a sweep should

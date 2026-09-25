@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:00Z
-updated_at: 2026-09-21T11:03:00Z
+updated_at: 2026-09-25T16:06:46Z
 parent: folio-assistant-ahvw
 ---
 
@@ -233,3 +233,56 @@ Entered as an append, on this bean's own stated precedent: it is another
 session's, and an append cannot collide.
 
 *Recorded by stream 3/3 of the #956 consolidation — session_013vZiHGPug7PuHoMxRS82vw.*
+
+## Round 2 — re-measured 2026-09-25, and the class is NOT what the first pass implied
+
+Third sweep of the same three milestones (2026-09-21 found it, 2026-09-22
+repaired `p5wm` and `yg29`, this is 2026-09-25). What the window since shows:
+
+| milestone | drifted in 3 days? | what changed |
+|---|---|---|
+| `p5wm` (GOAL 2) | **no** | `b5f0 → 603s → 6lb8 → supn` — all four still open, nothing withdrawn |
+| `vuip` (GOAL 1) | **yes, mildly** | `zkgs` closed and stayed in the chain; box 2's measurement is written in `harness.json`, a filename the tree no longer has |
+| `yg29` (GOAL 3) | **yes, substantially** | `kupb` went from 13 open children to **4**; `j66n`, recorded as owner-blocked with a clause left, is `completed` |
+
+### The rate is not uniform, and that changes what the fix should be
+
+The first pass read as "milestone bodies rot". Three days of evidence say
+something narrower: **a body rots at the rate its subject moves.** `p5wm`
+needed no correction at all; `yg29` needed a substantial one. A periodic hand
+pass therefore spends most of its effort confirming things that did not move,
+and still misses the one that did — which is the argument for the mechanical
+check this bean asks for, and against scheduling another manual round.
+
+### A measurement trap, reproduced deliberately
+
+A crude sweep counting bean ids named in a milestone body against their status
+reports GOAL 3 at 19-of-29 "already closed" and GOAL 2 at 18-of-36. **Both
+numbers are near-meaningless as defect counts.** A repaired milestone names
+closed beans *on purpose* — withdrawal tables, "what this unblocks", "the
+ruling that settled this" — so correct prose about finished work is
+indistinguishable from a stale blocker to anything matching ids alone. This
+bean already said the figure was an upper bound; it is recorded again here
+because a session acting on it this window nearly rewrote a milestone that was
+correct.
+
+The discriminator a real check needs is therefore **not** "does this body name
+a closed bean" but "does it name one in a position that asserts it is still to
+come" — a route arrow, a numbered path step, an open Done-when clause.
+
+### What was changed, and what was left alone
+
+- `vuip`: `zkgs` withdrawn from the chain with its reason; box 2 re-measured by
+  running `check:instance-config` rather than counting files — 16 declared, 6
+  configs written, 10 absent **and legitimate by the gate's own verdict**, so
+  the box's premise needs an owner decision rather than more work.
+- `yg29`: `kupb`'s children re-derived (9 closed, 4 open); the stale `j66n`
+  line corrected in place rather than deleted.
+- `p5wm`: confirmation recorded. A confirmation is a measurement.
+- **Nobody else's bean was closed.** `j66n`, `zkgs` and the nine closed
+  children were closed by the sessions that did the work.
+
+Falsified both ways: after the edits, every id still asserted as a live
+blocker across the three milestones resolves to `todo` or `in-progress`
+(11 of 11), and the same check rejects `zkgs`, `j66n` and `54rk` — the ids
+just withdrawn — so it is not passing over an empty set.
