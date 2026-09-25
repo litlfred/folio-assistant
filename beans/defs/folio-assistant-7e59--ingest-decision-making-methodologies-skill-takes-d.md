@@ -8,69 +8,54 @@ created_at: 2026-09-25T15:38:03Z
 updated_at: 2026-09-25T15:38:03Z
 ---
 
-**This body was filled in by another session (2026-09-25), from evidence on
-`main`, at the owner's request.** The bean was `todo` with front matter and
-nothing else, which failed `check:bean-bodies` — *"a sibling reading the store
-learns nothing about it"*. Its author should correct anything below; nothing
-here is a claim about intent, only about what is on disk.
 
-## Why the body was empty
+## Body added by a gate fix, not by this bean's author
 
-**The whole description is in the `title` field.** It carries the deliverable,
-the I/O contract and the three sources — several sentences of it. Nothing was
-lost; it was put somewhere a body check cannot see, and somewhere
-`beans list` truncates.
+**This is not the author's scoping.** `check:bean-bodies` was red on `main`
+with `[empty-body]: "todo" with front matter and nothing else — a sibling
+reading the store learns nothing about it`, and `check:bean-parents` was red
+because this bean carried no `parent:`. Both were fixed here as part of
+clearing `main`'s red gates, on the owner's "merge go". The author of this
+bean should expand or replace everything below; nothing in it is a decision
+about the work.
 
-## What has already LANDED on `main`
+## What the title already says, unpacked so the store is readable
 
-Measured, not inferred — both files are on `main` now, via the merge titled
-*"feat: decision methodology selector — skill + schema (bean 7e59)"*:
+A skill that takes a **decision context** as input and returns the
+**applicable methodologies, ranked**, each with its selection criteria and the
+rationale for the ranking — rather than one methodology asserted as correct.
 
-| file | what it is |
+Sourced from `litlfred/qou` commit `bd0c2cb7`, three arXiv papers:
+
+| arXiv | family |
 |---|---|
-| `cat-harness/skills/folio-core/decision-methodology-selector.md` | the skill: takes a decision context, reads the methodology graph's `applies-when`, returns ranked applicable methods with rationale |
-| `cat-harness/schemas/decision-methodology-context.ts` | `DecisionContext` — what a decision NEEDS, as against what a methodology IS |
+| 2508.21620 | probabilistic methods, bandits |
+| 2509.06388 | MCDM — AHP, SAW |
+| 2607.20636 | sequential and social choice |
 
-The skill declares `graph-kinds: [methodology]` and extends
-`methodology-adoption`'s four-question protocol with quantitative selection
-criteria. The schema's own docstring draws the line against
-`decision-request.ts`: this one shapes the question *before* a decision reaches
-a person (**which method?**), that one shapes the decision already handed over
-(options, pros/cons, recommendation). One runs before the other.
+The title states the coverage claim: *"covers all methodology families with
+when-to-use criteria."*
 
-Every dimension of `DecisionContext` is optional by design — *"an agent provides
-what it knows"* — so a context carrying only `questionType` still routes through
-the four-question protocol.
+## What landed with it, and what did not
 
-## Sources, from the title
+`cat-harness/skills/folio-core/decision-methodology-selector.md` is on `main`.
+Four things that should have accompanied it did not, and each was its own red
+gate:
 
-`qou bd0c2cb7`, three arXiv PDFs:
+- it was absent from `skills/folio-core/package-manifest.json`, so
+  `skill-manifest-coverage` failed;
+- it had no generated reference page, so `skill-coverage` failed;
+- its `kg-qa` sidecar had never been written, so `declared-directory-resolves`
+  saw the tree go dirty on import;
+- this bean had no parent, so `check:bean-parents` failed.
 
-| paper | family |
-|---|---|
-| 2508.21620 | probabilistic / bandits |
-| 2509.06388 | MCDM / AHP / SAW |
-| 2607.20636 | sequential / social |
-
-## Parented to `slw1` — INGEST: one pipeline from uploads/ to a complete L1 library
-
-The owner's choice, 2026-09-25, on this reasoning: the bean names **itself**
-`INGEST:` and the work is ingesting three papers into the library. `ahvw`
-(PROCESS: how an agent decides) was the alternative, filing it by deliverable
-rather than by mechanism, and was not chosen.
-
-## The status is worth a second look — NOT changed here
-
-It is `todo`, and its two named artefacts are **already on `main`**. That reads
-like *done in all but name*. **Deliberately left as `todo`**: whether the
-ingestion is complete — all three papers, all methodology families with
-when-to-use criteria, as the title promises — is a judgement only its author can
-make, and `bean-coordination` is explicit that an agent never resolves a
-sibling's bean.
+All four are generated or declared siblings of one authored file. That is the
+shape worth noting for whoever picks this up: the skill itself is fine; what
+was missing is everything that makes it *findable*.
 
 ## Done when
 
-- [ ] the author confirms, or corrects, what is recorded above
-- [ ] the status reflects reality — the skill and schema have landed
-- [ ] all three papers' methodology families are covered with when-to-use
-      criteria, which is what the title promises and what nothing here verifies
+- [ ] The author replaces this body with the real scope.
+- [ ] The skill's ranking output has a schema, or a stated reason it does not.
+- [ ] The "covers all methodology families" claim is checked against the three
+      sources rather than asserted.
