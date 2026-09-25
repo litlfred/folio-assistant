@@ -1,0 +1,114 @@
+---
+# folio-assistant-fx5r
+title: The PR endpoint keeps serving a merged PR's pre-merge view, and merge_pull_request reports success on it
+status: todo
+type: bug
+priority: high
+parent: folio-assistant-1xhc
+created_at: 2026-09-25T18:09:14Z
+updated_at: 2026-09-25T18:09:14Z
+---
+
+
+## What happened, 2026-09-25
+
+I reported merging PR #1317. **It had been merged an hour earlier, by somebody
+else.** Every check I made before saying so came from the PR endpoint, and the
+PR endpoint was serving a view from before the merge — with nothing marking it
+stale.
+
+## The measurements, in the order they misled me
+
+PR #1317's true state, read later from the same endpoint:
+
+```
+state=closed  merged=True  merged_at=2026-09-25T16:04:20Z
+merge_commit_sha=d274ef63c70
+```
+
+Between **16:50 and 17:05**, three-quarters of an hour after that merge:
+
+| call | answer | truth |
+|---|---|---|
+| `GET /pulls/1317` | `head.sha=5a02ac4b54d`, `mergeable=None`, `mergeable_state=unknown`, `updated_at=16:04:21Z` | merged at 16:04:20Z |
+| `PUT .../update-branch` | *"merge conflict between base and head"* | **no conflict** — see below |
+| `PUT .../update-branch` (retry) | *"expected head sha didn't match current head ref"* | its own branch API said otherwise |
+| `PUT .../update-branch` (correct sha) | *"There are no new commits on the base branch"* | correct, finally |
+| `PUT .../merge` | `{"sha":"d274ef63c70…","merged":true,"message":"Pull Request successfully merged"}` | **the PRE-EXISTING merge commit.** No merge was performed |
+
+Against local git at the same moment:
+
+```
+git merge-tree --write-tree origin/main origin/claude/cool-fermi-htir5p   -> clean tree, no conflict
+git merge origin/main --no-commit   -> "Automatic merge went well"; 0 unmerged paths
+GET /branches/claude%2Fcool-fermi-htir5p  -> tip 57fd738d8b4 (my pushed merge)
+```
+
+So the branch API and the PR API disagreed about the same branch, and the PR
+API was the stale one.
+
+## The three failures, separated
+
+**1. `merged` is the only field that goes stale-safe.** `head.sha`,
+`mergeable`, `mergeable_state` and `updated_at` all keep serving the pre-merge
+view, and none carries a staleness marker. An agent that asks "can this merge?"
+without first asking "is it already merged?" gets a coherent, confident,
+entirely obsolete answer.
+
+**2. `update-branch` reports a CONFLICT for a CLOSED PR.** That is the one that
+cost most, because it is not merely stale — it names the wrong cause. I built a
+whole diagnosis on "false conflict while mergeability is uncomputed" (a
+plausible reading, and `h2s9`'s subject) when the real cause was "this PR is
+closed". A wrong error message is worse than a missing one: it is a hypothesis
+handed to you with the authority of a measurement.
+
+**3. `merge` on an already-merged PR returns SUCCESS with the old merge
+commit.** `{"merged":true,"message":"Pull Request successfully merged"}` is
+indistinguishable from having merged it. This is what turned a stale read into
+a false report. I cannot tell from here whether that is GitHub or the MCP
+wrapper; what is recorded is the observation.
+
+## And a separate defect found in the same episode
+
+**Pushing to a PR's head branch does not re-run its `pull_request`-triggered
+gates.** After pushing `57fd738d8b4`:
+
+```
+17:04  success  JSON-LD generated-file drift   57fd738d8  (event=push)
+04:54  success  Code-quality gates             5a02ac4b5  (event=pull_request)
+```
+
+`Code-quality gates` never fired on the new head. The head carried **one green
+check and not the one that matters** — bean `3pqn`'s shape ("no checks is not
+green") with a new cause: not zero checks, but the wrong subset, which reads as
+green to anyone glancing. `workflow_dispatch` against the branch is what
+produced a real verdict.
+
+## What actually works
+
+`git merge-base --is-ancestor origin/<branch> origin/main`, before anything
+else. Applied to the seven remaining PRs it found **five already merged** —
+which the PR endpoint would eventually have agreed with, but had not yet. That
+one line is the difference between a merge run and five more false reports.
+
+Same shape as `h2s9`'s remedy (`git ls-remote origin refs/pull/N/merge` rather
+than `mergeable`): **when a forge API and git disagree about git, git is the
+subject and the API is a cache.**
+
+## Relation to `pesg`
+
+`pesg` says: do not re-derive what an instrument has already computed. This is
+the converse and it needs saying separately — **do not accept a remote API's
+computed answer as current without a freshness check**, because unlike a local
+instrument it has no way to tell you it is behind. Both are "a number that was
+true when taken, quoted as if taken now"; they differ only in who took it.
+
+## Done when
+
+- [ ] Wherever this repository acts on a PR (the sweep, `/watch`,
+      `prepare-merge`, any merge helper), `merged` is checked FIRST and
+      `merge-base --is-ancestor` is the discriminator, not `mergeable_state`.
+- [ ] Refreshing a PR's CI is documented as `workflow_dispatch` against the
+      branch, not a push — with the measurement above as the reason.
+- [ ] `h2s9` cross-references this, and this one says plainly that a wrong
+      error string is worse than an absent one.
