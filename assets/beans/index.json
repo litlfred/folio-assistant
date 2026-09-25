@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 329,
+      "count": 333,
       "unit": "beans"
     }
   },
@@ -951,6 +951,20 @@
       "file": "beans/defs/folio-assistant-6pfo--staging-previews-on-gh-pages-carry-metadata-that-e.md"
     },
     {
+      "id": "folio-assistant-6ptx",
+      "title": "COORDINATION: eight sessions woke into the same 2435-commit gap and all eight re-surveyed it independently",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T15:44:18Z",
+      "updatedAt": "2026-09-25T15:44:18Z",
+      "preview": "## Measured 2026-09-25, from the session API\n\n`list_sessions` returned 30 sessions, of which **eight were RUNNING at the same\nminute** (15:38–15:39Z). Their own `task_summary` fields, verbatim:\n\n```\nrebasing from main; 2369 commits (PR #477→#1306); facts before plan\nreviewing PR #542 impact; fast-forward reset blocked; surveying origin/main\nre-fetching main after date change; will propose next ste",
+      "file": "beans/defs/folio-assistant-6ptx--coordination-eight-sessions-woke-into-the-same-243.md"
+    },
+    {
       "id": "folio-assistant-6qk5",
       "title": "QA REVIEW MODE: translation QA joins the audited review record under test/results",
       "status": "todo",
@@ -1054,12 +1068,12 @@
       "status": "todo",
       "type": "task",
       "priority": "",
-      "parent": "",
+      "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T15:38:03Z",
       "updatedAt": "2026-09-25T15:38:03Z",
-      "preview": "",
+      "preview": "## Body added by a gate fix, not by this bean's author\n\n**This is not the author's scoping.** `check:bean-bodies` was red on `main`\nwith `[empty-body]: \"todo\" with front matter and nothing else — a sibling\nreading the store learns nothing about it`, and `check:bean-parents` was red\nbecause this bean carried no `parent:`. Both were fixed here as part of\nclearing `main`'s red gates, on the owner's \"",
       "file": "beans/defs/folio-assistant-7e59--ingest-decision-making-methodologies-skill-takes-d.md"
     },
     {
@@ -1581,6 +1595,20 @@
       "file": "beans/defs/folio-assistant-b91x--decide-keep-beans-hmans-or-move-to-beads-gastownha.md"
     },
     {
+      "id": "folio-assistant-b94c",
+      "title": "Cross-platform support: detect Linux-specific assumptions and provide a Windows path",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T16:15:47Z",
+      "updatedAt": "2026-09-21T16:15:47Z",
+      "preview": "Issue [#735](https://github.com/litlfred/folio-assistant/issues/735). CRDM\nPhase 1 (needs assessment) — requester @costateixeira, sign-off @litlfred.\n\n## What\n\nA stated cross-platform policy, a mechanical check that detects Linux-specific\nassumptions across scripts, tooling, docs and content pipelines, and a Windows\npath wherever the check fires. Where Windows cannot be supported, a **declared**\ne",
+      "file": "beans/defs/folio-assistant-b94c--cross-platform-support-detect-linux-specific-assum.md"
+    },
+    {
       "id": "folio-assistant-b963",
       "title": "COLD START: the entry documents named scripts/ for the whole split, and nothing checks a command path",
       "status": "in-progress",
@@ -1959,6 +1987,20 @@
       "updatedAt": "2026-09-24T18:51:25Z",
       "preview": "## Owner decision 2026-09-24\n\"B: type all 9 now\". The graph-kind registry (@general) named the script writing each untyped family. Typing them removes the backwards pointer and the finding it recorded.\n\n## Families\nfolio-bean-index/v1, folio-translation-status/v1, folio-schema-graph/v1, folio-library-index/v1, folio-library-entry/v1, folio-voices-index/v1, folio-graph-projection/v1, folio-qa-index",
       "file": "beans/defs/folio-assistant-dv8v--b6b-1168-the-9-writtenby-families-get-zod-schemas.md"
+    },
+    {
+      "id": "folio-assistant-e8m3",
+      "title": "ARCHIVING IS A THIRD TERMINAL PATH, and it bypasses the scrapped-with-reasons rule",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T15:44:18Z",
+      "updatedAt": "2026-09-25T15:44:18Z",
+      "preview": "## Measured 2026-09-25, window `2133f720eb` → `origin/main` `0a2150d3f6`\n\n`beans/defs/` has an **`archive/` subdirectory**, and it is now the larger half\nof the store:\n\n```\nactive  (beans/defs/*.md)          327   todo 123 · in-progress 120 · completed 82 · scrapped 2\narchive (beans/defs/archive/*.md)  631   (219 at the window's open edge, +412)\n```\n\nIn this five-day window **131 beans left the to",
+      "file": "beans/defs/folio-assistant-e8m3--archiving-is-a-third-terminal-path-and-it-bypasses.md"
     },
     {
       "id": "folio-assistant-edx7",
@@ -3099,6 +3141,20 @@
       "file": "beans/defs/folio-assistant-p67i--ingest-csv-and-spreadsheet-sheet-names-headers-sha.md"
     },
     {
+      "id": "folio-assistant-pesg",
+      "title": "A review re-derived a finding the instrument had already computed, and got it wrong",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:05:34Z",
+      "updatedAt": "2026-09-25T16:05:34Z",
+      "preview": "## What happened, 2026-09-25\n\n`bun run health` reported **one** orphaned staging preview, named, sized and\nreasoned:\n\n> `STAGING/dependabot-github_actions-actions-c1d4c18a44` (101.6 MB, 1426 files)\n> — no open pull request; and no branch on the remote slugifies to it.\n\nRunning a `goal-review`, I re-derived that finding instead of quoting it. I\nwrote a slug function inline — `re.sub(r'[^a-zA-Z0-9]+",
+      "file": "beans/defs/folio-assistant-pesg--a-review-re-derived-a-finding-the-instrument-had-a.md"
+    },
+    {
       "id": "folio-assistant-pomp",
       "title": "A stale origin/main produced two confident wrong findings in one session — 'not in my checkout' is not 'does not exist'",
       "status": "in-progress",
@@ -3770,7 +3826,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T18:08:55Z",
-      "updatedAt": "2026-09-22T18:37:50Z",
+      "updatedAt": "2026-09-23T09:18:18Z",
       "preview": "## What this is\n\nA **consolidation claim**, not new subject matter. The work plan stalled: between\n11:00Z and 15:19Z on 2026-09-22 seventeen PRs merged, and **nothing merged in the\n2h40m after**. CI is not the cause — `check:ci-health` reports all eight\nworkflows that ran in the window green, 48 Pages deploys succeeded and 0 failed.\nWhat stalled is that PRs went **conflicted** against a `main` mov",
       "file": "beans/defs/folio-assistant-upgd--stream-13-goal-1-the-repo-split-and-the-kgs-own-de.md"
     },
