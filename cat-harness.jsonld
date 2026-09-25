@@ -269,14 +269,14 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-25T15:40:16.486Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6c63b41a8f6142f5a224825a699de999a5d9ad89",
-  "sourceCommitSha": "6c63b41a8f6142f5a224825a699de999a5d9ad89",
-  "sourceCommitAt": "2026-09-25T17:37:21+02:00",
+  "generatedAt": "2026-09-25T15:49:22.006Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9abb51b5283620d3827f3d0df0e8179cf36a3dd6",
+  "sourceCommitSha": "9abb51b5283620d3827f3d0df0e8179cf36a3dd6",
+  "sourceCommitAt": "2026-09-25T17:45:28+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 260,
+    "Skill": 261,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
@@ -286,7 +286,7 @@
     "Role": 148,
     "ProcessNode": 860,
     "Tool": 101,
-    "Schema": 122,
+    "Schema": 123,
     "GraphKind": 34,
     "Directory": 43,
     "Asset": 3
@@ -2377,6 +2377,22 @@
       ],
       "instructionsPath": "skills/folio-core/surprise-to-corpus.md",
       "instructionLines": 193,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-methodology-selector",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "decision-methodology-selector",
+      "title": "Decision methodology selector",
+      "description": "Given a decision context, select the applicable methodology from the methodology graph. Reads the graph's applies-when declarations, matches them against the context, and returns the ranked applicable methods with rationale. Extends methodology-adoption's four-question protocol with quantitative method-selection criteria from the MCDM literature.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/decision-methodology-selector.md",
+      "instructionLines": 167,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -38190,6 +38206,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/decision-methodology-context",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "decision-methodology-context",
+      "title": "The context an agent provides when asking \"which decision methodology fits?\"",
+      "module": "schemas/decision-methodology-context.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/decision-request",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "decision-request",
@@ -40642,8 +40666,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "6c63b41a8f6142f5a224825a699de999a5d9ad89",
+    "sha": "9abb51b5283620d3827f3d0df0e8179cf36a3dd6",
     "pr": "main",
-    "run": "36155417849"
+    "run": "36156327810"
   }
 }
