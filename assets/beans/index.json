@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 328,
+      "count": 329,
       "unit": "beans"
     }
   },
@@ -643,14 +643,14 @@
     {
       "id": "folio-assistant-4pm8",
       "title": "PAGEFIND: evaluate as the search engine for the large-datasets subgraph",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-5a3l",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T09:21:09Z",
-      "updatedAt": "2026-09-24T19:30:00Z",
+      "updatedAt": "2026-09-25T00:00:00Z",
       "preview": "Owner, 2026-09-20: '4 bean up. for now give requrements/constraings/issues/pros/cons/otpons here only for analysis/discussion./ not durable.'\n\nSo this bean is the TRACKING ITEM and deliberately not the analysis. The requirements, constraints, pros, cons and options were given in chat for discussion and are explicitly NOT to be written into the repository yet. Recording that instruction here matter",
       "file": "beans/defs/folio-assistant-4pm8--pagefind-evaluate-as-the-search-engine-for-the-lar.md"
     },
@@ -3039,6 +3039,20 @@
       "updatedAt": "2026-09-23T19:25:46Z",
       "preview": "_2026-09-19T00:07:53Z_ — Found 2026-09-19 while building the kg-viewer (bean 1dfh) — the viewer is the first real consumer of the document, and a consumer is what makes this visible. MEASURED: bun run kg:export now reports it. 34 property names, 3461 occurrences, used in @graph and absent from @context. A term that is neither in the context nor an absolute IRI is not a property at all: a JSON-LD p",
       "file": "beans/defs/folio-assistant-ovkk--the-context-declares-19-terms-the-graph-uses-53-34.md"
+    },
+    {
+      "id": "folio-assistant-oxka",
+      "title": "MERGE FRICTION: three generated files conflict on nearly every merge, and nothing declares them generated",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T19:11:59Z",
+      "updatedAt": "2026-09-24T19:19:59Z",
+      "preview": "Merging one branch cost **three rounds on one file** in a single sitting.\nMeasured over three days, 2026-09-24:\n\n| commits | file |\n|---|---|\n| 106 | `cat-harness/docs/cat-harness/docs-auto/index/index.html` |\n| 45 | `cat-harness/docs/glossary/index.md` (1.5 MB) |\n| 18 | `cat-harness/test/results/audit-coverage.qa-results.json` |\n\n**No `.gitattributes` existed at all.** So every concurrent pull re",
+      "file": "beans/defs/folio-assistant-oxka--merge-friction-three-generated-files-conflict-on-n.md"
     },
     {
       "id": "folio-assistant-oz5w",
