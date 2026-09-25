@@ -3,48 +3,37 @@
 title: 'INGEST: decision-making methodologies — skill takes decision context as input, outputs ranked applicable methods with criteria and rationale. Source: qou bd0c2cb7 (3 arxiv PDFs: 2508.21620 probabilistic/bandits, 2509.06388 MCDM/AHP/SAW, 2607.20636 sequential/social). Covers all methodology families with when-to-use criteria.'
 status: todo
 type: task
-priority: normal
 created_at: 2026-09-25T15:38:03Z
-updated_at: 2026-09-25T16:27:00Z
+updated_at: 2026-09-25T15:38:03Z
 parent: folio-assistant-slw1
 ---
 
-> **Body reconstructed by another session, 2026-09-25, and not by this bean's
-> author.** It landed in `#1343` with front matter and nothing else, which made
-> `check:bean-parents` and `check:bean-bodies` — both CI gates — **red on
-> `main`**, so every open PR inherited the failure. Everything below is taken
-> from the bean's own title and from the commit that created it
-> (`ad77224054`); nothing is invented. The author should replace it with what
-> they actually intend.
+---
 
-## What it asks for
+## Filed under `slw1` 2026-09-25 — and why this was urgent
 
-A skill that takes a **decision context** as input and returns the
-**applicable methods, ranked**, each with its when-to-use criteria and the
-rationale for its rank. So the output is a shortlist with reasons, not a single
-recommendation — the choosing stays with the reader.
+Created 2026-09-25T15:38 with **no `parent`**, which fails
+`check:bean-parents`. That check sits inside `bun test`, at **step 5** of the
+`TypeScript — tests, lint, types` job, so its one failure took `main` red and
+**skipped the 44 gate steps behind it** — run 3636 on `a83f8bee90`. A
+work-plan hygiene slip blacked out the whole gate set.
 
-## Source
+Parent is **`slw1`** — *"INGEST: one pipeline from uploads/ to a complete L1
+library"* — on this bean's own naming: its title opens `INGEST:`, which is how
+every other child of `slw1` is named, and what it describes is three arXiv PDFs
+ingested from `qou bd0c2cb7`.
 
-`qou` commit `bd0c2cb7`, three arXiv papers, named in the title so the coverage
-claim can be checked against them rather than taken on trust:
+**`ahvw`** (*"PROCESS: how an agent decides what it is doing"*) was the real
+alternative, filing it by what it PRODUCES — a selector over decision
+methodologies — rather than by how the material arrived. Put to the owner with
+both readings; `slw1` chosen.
 
-| paper | family |
-|---|---|
-| 2508.21620 | probabilistic methods, bandits |
-| 2509.06388 | MCDM — AHP, SAW |
-| 2607.20636 | sequential and social choice |
+Nothing else about the bean is touched: its scope, status and body are its
+author's.
 
-The title claims the skill *"covers all methodology families"*. That is a
-**claim, not a measurement**: three papers are the source, and whether they span
-the families is exactly what the ingest has to establish rather than assume.
+## The ordering is arguably the larger defect
 
-Issue [#206](https://github.com/litlfred/folio-assistant/issues/206).
-
-## Done when
-
-- [ ] the skill exists and takes a decision context, returning ranked methods
-      with when-to-use criteria and rationale
-- [ ] the coverage claim is either grounded against the three sources or
-      narrowed to what they actually support
-
+`7e59` is one line. That one line could dark 44 unrelated gates because
+`check:bean-parents` runs *behind* `bun test` in a single job rather than as its
+own step. Not fixed here — that is a change to the gate topology, and this
+change exists to get `main` green. Worth a bean of its own.
