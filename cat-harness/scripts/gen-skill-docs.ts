@@ -290,7 +290,12 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // how this was caught rather than shipped as two uncategorised packages.
   crdm: "CRDM requirements methodology (skills/crdm)",
   raci: "RACI involvement model (skills/raci)",
-  "remote-stubs": "Declared but not implemented here (stubs)",
+  // Synced from claude-scientific-skills at a pinned commit (issue #556):
+  // somebody else's bytes, one package per skill so upstream's relative links
+  // resolve. `remote-stubs` was retired when these arrived.
+  "hypothesis-generation": "Synced from claude-scientific-skills (pinned, read-only)",
+  "scientific-critical-thinking": "Synced from claude-scientific-skills (pinned, read-only)",
+  "scientific-visualization": "Synced from claude-scientific-skills (pinned, read-only)",
   // The entries below are declared kg directories that hold their skills
   // DIRECTLY rather than in package subdirectories, so they are keyed by the
   // directory's DECLARED ID — `bootstrap`, not `bootstrap/skills`.

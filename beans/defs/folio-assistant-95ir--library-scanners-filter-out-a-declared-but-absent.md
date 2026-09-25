@@ -1,11 +1,11 @@
 ---
 # folio-assistant-95ir
 title: Library scanners FILTER OUT a declared-but-absent directory, so a partial checkout reports a clean pass
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T16:29:50Z
-updated_at: 2026-09-20T16:30:17Z
+updated_at: 2026-09-23T21:40:48Z
 parent: folio-assistant-zzmr
 ---
 
@@ -32,14 +32,14 @@ rather than the filtered view, and the same fix applies here.
 
 ## Done when
 
-- [ ] Each of the three sites compares the DECLARED set against what is on
+- [x] Each of the three sites compares the DECLARED set against what is on
       disk, and reports the difference. `resolveDirectories([{name, root,
       own: true}])` is the unfiltered view; `directoriesForGraph` and friends
       are not.
-- [ ] A declared-but-absent library is a FINDING, distinct in wording from
+- [x] A declared-but-absent library is a FINDING, distinct in wording from
       "this library is empty" — those are different facts and the whole point
       of the third state.
-- [ ] Each guard is checked by REMOVING a declared directory and watching it
+- [x] Each guard is checked by REMOVING a declared directory and watching it
       fire. A guard written over a filtered view passes this test only if it
       was written over the right view.
 
@@ -55,3 +55,11 @@ My reading is that ABSENT and EMPTY are different — an empty directory that
 exists is a determined empty, and a path the declaration names with nothing
 there at all is a finding — but that distinction has never been written down,
 and it decides whether this is a one-line filter change or a new state.
+
+## Summary of Changes
+
+Closed 2026-09-23. The owner ruled: **"fail in CI for declarations (not for instances)"**.
+
+- **Declarations already fail in CI.** `check:declared-dirs` runs in `code-quality-gates.yml` and fails on every declared directory that is missing, across all 17 instances. I checked by moving `who-iris/library/` away: the report was `absent — declared and not on disk`, exit 1.
+- **Instances report and do not fail.** The three scanner sites (`check-tabular-stubs.ts`, and `check-l1-complete.ts` twice) now use `scripts/lib/declared-presence.ts`. It splits the DECLARED set into present and absent, and prints each absent library once: *"declared … is not on disk — skipped here, NOT read as empty"*. That wording is distinct from an empty library, which is a determined empty. With `who-iris/library/` moved away, both scanners printed the note and exited 0. Before the change they were silent.
+- `declared-presence.test.ts` passes 2/2.

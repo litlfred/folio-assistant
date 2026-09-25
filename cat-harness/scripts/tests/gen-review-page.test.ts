@@ -27,6 +27,13 @@ describe("review page", () => {
     expect(html).toContain("No block changed.");
   });
 
+  test("says which published site is the before side, main's or a stacked PR's base (5uuf)", () => {
+    expect(html).toContain("st.beforeRef");
+    expect(html).toContain('" Before side: " + beforeName');
+    expect(html).toContain('"view on " + beforeName');
+    expect(html).not.toContain('"view on main"');
+  });
+
   test("one key or one click: j/k and their visible button twins, and a live status", () => {
     expect(html).toContain('id="next"');
     expect(html).toContain('id="prev"');

@@ -3,13 +3,13 @@
   "skill": "crdm-detect",
   "subject": "crdm-detect phrase signals against the issue corpus",
   "data": {
-    "hash": "d211c42e6dfc",
+    "hash": "2e3ab7fa317f",
     "inputs": [
       "scripts/eval/crdm-detect-corpus.json"
     ]
   },
   "process": {
-    "hash": "040350c69750",
+    "hash": "cac2af445036",
     "inputs": [
       "scripts/eval-crdm-detect.ts",
       "skills/crdm/crdm-detect.md",
@@ -18,13 +18,13 @@
   },
   "outcome": {
     "population": 27,
-    "truePositives": 19,
-    "falsePositives": 3,
-    "trueNegatives": 5,
-    "falseNegatives": 0,
-    "precision": 0.8636,
-    "recall": 1,
-    "f1": 0.9268
+    "truePositives": 21,
+    "falsePositives": 1,
+    "trueNegatives": 4,
+    "falseNegatives": 1,
+    "precision": 0.9545,
+    "recall": 0.9545,
+    "f1": 0.9545
   },
   "cases": [
     {
@@ -353,5 +353,5 @@
       }
     }
   ],
-  "updated_at": "2026-09-24T06:01:47.332Z"
+  "updated_at": "2026-09-24T18:27:30.432Z"
 }

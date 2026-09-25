@@ -119,19 +119,21 @@ export type GraphLayer = "content" | "context" | "state" | "derived";
  * |---|---|---|
  * | `validator` | a Zod schema, `module#Export` — runnable | `kg-qa/v1` → `KgQaReportSchema` |
  * | `shape` | a TypeScript type, `module#Name` — readable, NOT runnable | `qa-witness/v1` → `QaWitness` |
- * | `writtenBy` | no declared type at all; the module that writes it — or, for an authored file, the one that consumes it | `folio-qa-index/v1` |
  * | `external` | a specification nobody here types; the node conforms to it | a JSON Schema document, `https://json-schema.org/draft/2020-12/schema` |
  *
- * `writtenBy` is a finding recorded as data rather than a gap hidden by
- * omission: the family exists on disk and nothing types it. `external` is
- * not a gap — the shape is somebody else's, and it is named rather than
- * restated.
+ * `external` is not a gap — the shape is somebody else's, and it is named
+ * rather than restated.
+ *
+ * There was a fourth, `writtenBy`: no type at all, just the module that wrote
+ * the family. It recorded the gap as data, and it was also this registry — a
+ * `@general` node — naming its dependent. #1168 B6b typed all nine families
+ * that used it (beans `dv8v`, `d4lb`) and removed the form, so an untyped
+ * family can no longer be registered: it is either typed or it is not listed.
  */
 export type NodeSchemaRef =
-  | { validator: string; shape?: never; writtenBy?: never; external?: never }
-  | { shape: string; validator?: never; writtenBy?: never; external?: never }
-  | { writtenBy: string; validator?: never; shape?: never; external?: never }
-  | { external: string; validator?: never; shape?: never; writtenBy?: never };
+  | { validator: string; shape?: never; external?: never }
+  | { shape: string; validator?: never; external?: never }
+  | { external: string; validator?: never; shape?: never };
 
 /**
  * @general — a node others depend on: it points only at other general nodes,
@@ -388,6 +390,22 @@ export interface GraphKindDef {
    * unmigrated graph keeps working.
    */
   declarationFile?: string;
+  /**
+   * The kind this one is a SUB-GRAPH of, when it is one.
+   *
+   * Owner, 2026-09-23 (issue #1164): proposals live in *"a docs/proposals/
+   * sub-graph declared sub-sub-graph (which starts closed in navbar, general
+   * behavior)"*. GENERAL is the operative word: this is not a special case for
+   * proposals, it is a relation any kind may declare, and every surface that
+   * lists kinds draws a kind with `within` INSIDE its parent's row, folded
+   * shut until the reader opens it. `check:graph-kind-within` holds the
+   * relation to a registered kind and forbids a cycle.
+   *
+   * A relation between KINDS, not directories: the navbar lists graphs by
+   * kind, and a directory nested on disk is not thereby a sub-graph (the
+   * `beans/workflow/` history above is exactly that confusion).
+   */
+  within?: string;
 }
 
 /**
@@ -517,6 +535,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-voice/v1": { validator: "schemas/voices.ts#VoiceProfileSchema" },
       "folio-voice-skill/v1": { validator: "schemas/voice-skill.ts#VoiceSkillSchema" },
       "kg-qa-manifest/v1": { validator: "schemas/kg-qa.ts#KgQaManifestSchema" },
+      // A synced remote skill's pinned, per-file fixity record (issue #556).
+      "folio-remote-skill/v1": { validator: "schemas/skill-package.ts#RemoteSkillRecordSchema" },
     },
     summary: "Skill packages — the authored instruction bodies an Actor performs a Task from.",
   },
@@ -651,6 +671,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   docs: {
     type: termIri("DocsGraph"),
     renderable: true,
+    // THE FROM-WITHIN NODE (issue #1164; the owner's #980 ruling: nesting is
+    // allowed when "a (Sub?)KGraph node within the first subdir labels all the
+    // other ones that exist within it"). `docs/docs.json` names the sub-graphs
+    // `docs/` holds — `proposals/`, `requirements/` — the way `beans/beans.json`
+    // names `defs/` and `workflows/`. A root declaration reaching down into
+    // `docs/proposals/` is the forbidden shape `check:layout-norms` refuses.
+    declarationFile: "docs.json",
     // `content`, by the one question: a running process PRODUCES documentation,
     // and it is the subject rather than something read or written in passing.
     // Both supporting questions agree — detach a docs page and it still
@@ -683,6 +710,51 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "the graph; the difference is the SUBJECT, not the format. The who-iris " +
       "catalogue is `library/`; a note about it is a `folio`; the page explaining " +
       "how ingestion works is `docs`.",
+  },
+  // ── SUB-GRAPHS OF `docs` — issue #1164 ──────────────────────────────────
+  //
+  // A harness feature's documents move through two places, and the move is the
+  // point: a PROPOSAL (initial analysis, MVP, options) is argued in
+  // `docs/proposals/`, and when the feature ships it is FILED as its
+  // requirements in `docs/requirements/`, checked against the bootstrap
+  // `Requirement` schema. Two kinds rather than one `docs` with a status,
+  // because a reader asking "what does the harness promise" must not be
+  // handed arguments that were never agreed — the same reason `beans` does
+  // not mix the work plan with instance state.
+  proposals: {
+    type: termIri("ProposalsGraph"),
+    // NOT a site of its own: its pages are built by `docs`, which it is
+    // `within`. The harness still owns exactly one renderable kind.
+    renderable: false,
+    within: "docs",
+    // `content`: authored argument, re-authored rather than regenerated.
+    holds: "content",
+    validatorNotApplicable:
+      "its nodes are markdown pages of argument with no fixed shape; a proposal is judged by the owner, " +
+      "not parsed. What IS checked mechanically is the move out of it: `check:requirements` refuses a slug " +
+      "that sits in both proposals and requirements.",
+    summary:
+      "Proposals for the harness's own features — initial analysis, MVP, " +
+      "options — argued before anything is agreed. A sub-graph of `docs`. When " +
+      "the feature ships, its proposal is MOVED to `requirements` and filed " +
+      "against the `Requirement` schema.",
+  },
+  requirements: {
+    type: termIri("RequirementsGraph"),
+    // NOT a site of its own: its pages are built by `docs`, which it is
+    // `within`. The harness still owns exactly one renderable kind.
+    renderable: false,
+    within: "docs",
+    holds: "content",
+    schema: "../bootstrap/schemas/requirement.schema.json",
+    validatorNotApplicable:
+      "its nodes are markdown pages whose FRONT MATTER is a `Requirement`. A registry validator parses a " +
+      "JSON node, so one here would be a category error. `check:requirements` extracts the front matter " +
+      "and parses it against the Requirement schema instead, and requires the id to match the file name.",
+    summary:
+      "What the harness promises, one document per shipped feature, each carrying " +
+      "a `Requirement` in its front matter. A sub-graph of `docs`. Test runs point " +
+      "at these statements by `req:<slug>#<key>`.",
   },
   "external-schema": {
     type: termIri("ExternalSchemaGraph"),
@@ -1162,7 +1234,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
       "folio-extraction/v1": { validator: "folio-assistant-core:schemas/extraction.ts#ExtractionSchema" },
-      "folio-intake/v1": { writtenBy: "scripts/library-graph.ts" },
+      "folio-intake/v1": { validator: "schemas/intake.ts#IntakeSchema" },
+      // The document adapter writes an upload's description beside its intake
+      // (bean `d4lb`), in the same family the IRIS catalogue records use.
+      "folio-dublin-core/v1": { validator: "folio-assistant-core:schemas/dublin-core.ts#DublinCoreRecordSchema" },
     },
     recordsWork: false, // live state, but nothing anybody is partway through
     summary:

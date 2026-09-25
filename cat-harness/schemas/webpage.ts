@@ -134,6 +134,13 @@ export interface WebPage {
   heading?: string;
   /** just-the-docs nav front matter. */
   navOrder?: number;
+  /**
+   * What this page documents: graph kinds (`library`), or one directory as
+   * `<instance>/<id>` where the kind is too general. Emitted into the page's
+   * front matter, where the coverage check reads it — the page names the
+   * directory, and the directory names no page (#1168 B7c).
+   */
+  documents?: string[];
   parent?: string;
   /** Ordered children. */
   nodes: WebPageNode[];

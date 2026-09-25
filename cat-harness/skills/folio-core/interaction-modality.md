@@ -4,6 +4,8 @@ description: Establish how to talk to the person in front of you before deciding
 user_invocable: true
 satisfies:
   - "req:agent-workflow#context-before-question"
+graph-kinds:
+  - interaction
 ---
 
 # /interaction-modality — ask in a form the person can answer

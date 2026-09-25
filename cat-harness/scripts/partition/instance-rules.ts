@@ -152,6 +152,7 @@ export const RULES: Rule[] = [
       "scripts/review-nav.ts",           // the review page outline, breadcrumb and minimap, embedded by toString (bean `eb4l`)
       "scripts/publish-block-qa.ts",     // a folio's QA verdicts summarised for the heat map (bean `qbfi`)
       "scripts/block-screenshots.ts",    // pictures of changed visual blocks, compared in Chromium (bean `0rxe`)
+      "scripts/publish-main-site.ts",    // a folio's main site at the publish root: the before side (bean `5uuf`)
       "scripts/repo-partition.ts",           // this tool; platform meta
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
@@ -218,6 +219,11 @@ export const RULES: Rule[] = [
       // (`<base-url>/<path-to-kind-or-node>`) is a statement about harnesses,
       // not about what a folio holds.
       "scripts/mount-instance-docs.ts",      // instance-rendered content -> /<kind>/<instance>/
+      // Its reader of `withheld.json` (bean `mkao`): what an instance must not
+      // publish. Same layer — it is a question about what a harness puts on
+      // the site, answered from a list the instance declares — and shared with
+      // the library viewer so the two publishing channels read ONE answer.
+      "scripts/lib/withheld.ts",
       // The harness navigation it injects into those pages. Same layer by the
       // same argument: the rail is the HARNESS's chrome, and it exists because
       // a mounted page gets no Jekyll layout. Putting it in a folio's
@@ -256,6 +262,7 @@ export const RULES: Rule[] = [
       "scripts/check-lane-documentation.ts", // a lane has a name AND a definition
       "scripts/check-process-documentation.ts", // ...and the process says what it is FOR
       "scripts/eval-crdm-detect.ts",         // measures the crdm-detect signals
+      "scripts/eval-crdm-detect-blind.ts",   // a blinded packet for a second annotator, and the kappa that scores it (bean `vjbl`)
       // ...and the signals themselves, lifted out of it by bean `xfoh` so the
       // patterns could be checked against the skill prose they transcribe.
       // Same side as its runner, and harness by subject too: whether a request
@@ -348,6 +355,7 @@ export const RULES: Rule[] = [
       // the reason a `<graph>/<stub>/` layout would carry the answer in the
       // path instead of in this list.
       "schemas/tool.ts",                     // what a Tool IS — `tools` is a harness graph kind
+      "schemas/withheld.ts",                 // what an instance must not publish — read by the harness mount (bean `mkao`)
       "schemas/tool-types.ts",               // the Tool I/O type vocabulary
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
@@ -629,6 +637,7 @@ export const RULES: Rule[] = [
       "scripts/gen-processes-viz.ts", // the processes graph → a searchable index over every executable BPMN diagram
       "scripts/gen-folio-viz.ts",            // the folio GRAPH → projection + viewer. Its content already renders as the landing board; this is a view of the nodes behind it (bean `7ofc`)
       "scripts/check-materialized-fixity.ts", // materialized bytes vs their recorded digest — the read-only rule, enforced
+      "scripts/sync-remote-skills.ts",       // a remote package's declared skills, materialized at its pinned commit (issue #556)
       "scripts/backfill-materialized-fixity.ts", // records the baseline digest that check reads
       "scripts/cache-index.ts",              // what is materialized, how big, how old, what could go — derived from the same walk (bean `54rk`)
       "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
@@ -941,6 +950,15 @@ export const RULES: Rule[] = [
       // is harness machinery, and none imports the content vocabulary.
       "scripts/beans-fallback.ts",
       "scripts/check-harness-dirs.ts",
+      // Issue #1164: bootstrap schemas name no outside concept, and a filed
+      // requirement is a valid one with no name used twice. Harness
+      // machinery over the harness's own declarations; neither imports the
+      // content vocabulary.
+      "scripts/check-bootstrap-concepts.ts",
+      "scripts/check-requirements.ts",
+      // Bean `95ir`: declared-but-absent is reported by a scanner, never
+      // dropped. Harness machinery over declarations; imports only node:fs.
+      "scripts/lib/declared-presence.ts",
       "scripts/kg-audit.ts",
       // WHICH audits reach which kind of node (bean `xutg`). Harness machinery
       // for the same reason `kg-audit.ts` is: its subject is the graph-kind
@@ -1025,6 +1043,9 @@ export const RULES: Rule[] = [
       "schemas/graph.ts",
       "schemas/discussion.ts",
       "schemas/bootstrap-graph.ts",
+      // The Requirement bootstrap publishes (issue #1164); `skill-package.ts`
+      // builds the harness Requirement on it, so core would be an edge downward.
+      "schemas/requirement.ts",
       // Code lists (owner, 2026-09-23): the shape the ENGINE checks an
       // adjudication's codes against, and the loader `namespaces.ts` sits
       // beside. Needed to RUN a process, so harness — the same test as the
@@ -1153,6 +1174,8 @@ export const RULES: Rule[] = [
       "scripts/check-instance-render.ts",   // can an instance render its own graph
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
+      "scripts/skill-governance.ts",        // which skill governs a directory, read from the skills (#1168 B7b)
+      "scripts/docs-declarations.ts",       // which page documents a directory, read from the pages (#1168 B7c)
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
       "scripts/ingest-ig-menu.ts",        // a FHIR IG's own navigation, read from its sushi-config (bean `0818`)
       "scripts/check-code-accounting.ts", // the two questions about a code file, kept apart (bean `ylj7`)

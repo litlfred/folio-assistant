@@ -126,6 +126,22 @@
       "status": "candidate"
     },
     {
+      "id": "docs-auto-viewer",
+      "prefLabel": "Generated index pages",
+      "definition": "Render index pages for the declared skills, docs and swimlane-glossary directories, one per directory.",
+      "notation": "docs-auto-viewer",
+      "source": "cat-harness/tools/viewers.ts#docs-auto-viewer",
+      "status": "candidate"
+    },
+    {
+      "id": "external-schemas-viewer",
+      "prefLabel": "External schemas viewer",
+      "definition": "Render the declared external schemas, and which of this instance's modules conform to each, as one page.",
+      "notation": "external-schemas-viewer",
+      "source": "cat-harness/tools/viewers.ts#external-schemas-viewer",
+      "status": "candidate"
+    },
+    {
       "id": "feature-staging",
       "prefLabel": "Stage a branch's preview",
       "definition": "Publish a branch's built site to `STAGING/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes.",
@@ -155,6 +171,14 @@
       "definition": "Create a new folio repository that uses this platform — folio/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform.",
       "notation": "folio-init",
       "source": "cat-harness/tools/mcp.ts#folio-init",
+      "status": "candidate"
+    },
+    {
+      "id": "folio-viewer",
+      "prefLabel": "Folio viewer",
+      "definition": "Render each declared folio directory as a browsable page over its published index.",
+      "notation": "folio-viewer",
+      "source": "cat-harness/tools/viewers.ts#folio-viewer",
       "status": "candidate"
     },
     {
@@ -302,6 +326,14 @@
       "status": "candidate"
     },
     {
+      "id": "library-viewer",
+      "prefLabel": "Library viewer",
+      "definition": "Render each declared library directory — its entries, intakes and avatars — as a page per subject instance.",
+      "notation": "library-viewer",
+      "source": "cat-harness/tools/viewers.ts#library-viewer",
+      "status": "candidate"
+    },
+    {
       "id": "log-message",
       "prefLabel": "Log a message to the discussion",
       "definition": "Write a log line where the human actor will read it: the discussion you are already in. Takes the five required fields and the optional body, and renders them as one entry.",
@@ -318,6 +350,14 @@
       "status": "candidate"
     },
     {
+      "id": "methodologies-viewer",
+      "prefLabel": "Methodologies viewer",
+      "definition": "Render the declared methodology graph as one page.",
+      "notation": "methodologies-viewer",
+      "source": "cat-harness/tools/viewers.ts#methodologies-viewer",
+      "status": "candidate"
+    },
+    {
       "id": "narrative-queue",
       "prefLabel": "What narratives are waiting on a person",
       "definition": "List the agent-drafted narratives awaiting human confirmation, numbered, with the numbered rejection reasons beside them. The queue is the only place a draft's state is visible before someone accepts it.",
@@ -331,6 +371,14 @@
       "definition": "Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets.",
       "notation": "ns-vocabulary",
       "source": "cat-harness/tools/index.ts#ns-vocabulary",
+      "status": "candidate"
+    },
+    {
+      "id": "package-release-manual",
+      "prefLabel": "Package release by hand",
+      "definition": "A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `<package>-v<version>`, and creates the release on the host. The same four steps with nothing to configure.",
+      "notation": "package-release-manual",
+      "source": "cat-harness/tools/index.ts#package-release-manual",
       "status": "candidate"
     },
     {
@@ -382,6 +430,14 @@
       "status": "candidate"
     },
     {
+      "id": "processes-viewer",
+      "prefLabel": "Processes viewer",
+      "definition": "Render the declared BPMN processes as an index page and one page per diagram.",
+      "notation": "processes-viewer",
+      "source": "cat-harness/tools/viewers.ts#processes-viewer",
+      "status": "candidate"
+    },
+    {
       "id": "proof-dependency-graph",
       "prefLabel": "Proof dependency graph",
       "definition": "Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF.",
@@ -430,6 +486,14 @@
       "status": "candidate"
     },
     {
+      "id": "release-please",
+      "prefLabel": "release-please (declared, not configured here)",
+      "definition": "Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`).",
+      "notation": "release-please",
+      "source": "cat-harness/tools/index.ts#release-please",
+      "status": "candidate"
+    },
+    {
       "id": "render-log",
       "prefLabel": "Record what the publish branch served",
       "definition": "Append one entry to the render log on the publish branch: what was published or taken down, when, from which commit, and — for a removal or a retention — WHY. The log is the only place a preview that vanished leaves a trace.",
@@ -451,6 +515,14 @@
       "definition": "Render each skill's input/output JSON Schema as a browsable Markdown reference page, with an index. The generated pages are committed so they are readable on the forge as well as on the site.",
       "notation": "schema-docs",
       "source": "cat-harness/tools/index.ts#schema-docs",
+      "status": "candidate"
+    },
+    {
+      "id": "schemas-viewer",
+      "prefLabel": "Schemas viewer",
+      "definition": "Render each declared schema directory as a page per subject instance, over one shared data index.",
+      "notation": "schemas-viewer",
+      "source": "cat-harness/tools/viewers.ts#schemas-viewer",
       "status": "candidate"
     },
     {
@@ -502,6 +574,14 @@
       "status": "candidate"
     },
     {
+      "id": "state-viewer",
+      "prefLabel": "State graph viewer",
+      "definition": "Render each declared state graph with a projection as a dashboard page: what the work plan holds, and what state it is in.",
+      "notation": "state-viewer",
+      "source": "cat-harness/tools/viewers.ts#state-viewer",
+      "status": "candidate"
+    },
+    {
       "id": "tabular-csv",
       "prefLabel": "CSV tabular metadata (STUB)",
       "definition": "STUB — not implemented. Would read a delimited text file into CSVW: one table, its columns and their datatypes. A CSV has no sheets and no cells outside the table, so `fac:anchor.sheet` and `fac:anchor.cell` are a determined null rather than an absence. Routing a CSV is not a sniff — it has no magic bytes — and must not become an extension guess (bean `p67i`).",
@@ -550,6 +630,38 @@
       "status": "candidate"
     },
     {
+      "id": "tools-viewer",
+      "prefLabel": "Tools viewer",
+      "definition": "Render this instance's Tool nodes, and the skills each satisfies, as one page.",
+      "notation": "tools-viewer",
+      "source": "cat-harness/tools/viewers.ts#tools-viewer",
+      "status": "candidate"
+    },
+    {
+      "id": "transcribe-faster-whisper",
+      "prefLabel": "Transcribe audio — faster-whisper (option, not installed)",
+      "definition": "Transcribe an audio file with faster-whisper (the Whisper models on CTranslate2), from Python. A declared OPTION: not installed in this repository.",
+      "notation": "transcribe-faster-whisper",
+      "source": "cat-harness/tools/index.ts#transcribe-faster-whisper",
+      "status": "candidate"
+    },
+    {
+      "id": "transcribe-vosk",
+      "prefLabel": "Transcribe audio — vosk (option, not installed)",
+      "definition": "Transcribe an audio file with vosk (Kaldi-based), offline, from Python, with small per-language models. A declared OPTION: not installed in this repository.",
+      "notation": "transcribe-vosk",
+      "source": "cat-harness/tools/index.ts#transcribe-vosk",
+      "status": "candidate"
+    },
+    {
+      "id": "transcribe-whisper-cpp",
+      "prefLabel": "Transcribe audio — whisper.cpp (option, not installed)",
+      "definition": "Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`).",
+      "notation": "transcribe-whisper-cpp",
+      "source": "cat-harness/tools/index.ts#transcribe-whisper-cpp",
+      "status": "candidate"
+    },
+    {
       "id": "translation-extract",
       "prefLabel": "Extract translatable strings",
       "definition": "Segment a folio's prose into a GNU gettext .pot template, leaving code, math and identifiers untranslated.",
@@ -590,6 +702,14 @@
       "status": "candidate"
     },
     {
+      "id": "translation-status-viewer",
+      "prefLabel": "Translation status viewer",
+      "definition": "Render the translation status of every declared translation-sources directory, per locale, as one page.",
+      "notation": "translation-status-viewer",
+      "source": "cat-harness/tools/viewers.ts#translation-status-viewer",
+      "status": "candidate"
+    },
+    {
       "id": "translation-validate",
       "prefLabel": "Validate a translation",
       "definition": "Check a .po against its .pot — every msgid present, none obsolete, placeholders preserved.",
@@ -614,11 +734,27 @@
       "status": "candidate"
     },
     {
+      "id": "uploads-viewer",
+      "prefLabel": "Uploads viewer",
+      "definition": "Render each declared uploads directory's intakes as a page per subject instance.",
+      "notation": "uploads-viewer",
+      "source": "cat-harness/tools/viewers.ts#uploads-viewer",
+      "status": "candidate"
+    },
+    {
       "id": "user-auth",
       "prefLabel": "Who is asking, and what may they do",
       "definition": "User authentication and authorization (issue #1207). Asks GitHub for the caller's login and repository role, maps the role to a gateway actor, and answers from the ODRL policies — for an action, or for a BPMN step. Always states that GitHub's role covers the whole repository, not a sub-graph, node or query path.",
       "notation": "user-auth",
       "source": "cat-harness/tools/mcp.ts#user-auth",
+      "status": "candidate"
+    },
+    {
+      "id": "voices-viewer",
+      "prefLabel": "Voices viewer",
+      "definition": "Render each declared voices directory as a page per subject instance.",
+      "notation": "voices-viewer",
+      "source": "cat-harness/tools/viewers.ts#voices-viewer",
       "status": "candidate"
     },
     {

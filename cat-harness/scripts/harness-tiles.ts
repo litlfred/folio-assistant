@@ -68,6 +68,8 @@ import {
   readDeclaration,
   siteDirFor,
   visualisationsOf,
+  defaultGraphKinds,
+  nestedDirectories,
 } from "../schemas/cat-harness.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
@@ -97,6 +99,12 @@ export type HarnessStat = {
 export type HarnessVisualisation = {
   /** The declared graph kind this shows. */
   kind: string;
+  /**
+   * The kind this one is a sub-graph of, from the registry's `within`
+   * (issue #1164). Every list of kinds draws it inside that kind's row,
+   * folded shut. Absent for a top-level kind.
+   */
+  within?: string;
   /** Site-root-relative, for `relative_url`. Absent when nothing is published. */
   path?: string;
   /**
@@ -482,7 +490,25 @@ function tileFor(
    */
   owner?: { decl: CatHarnessDeclaration; dir: string },
 ): HarnessTile {
-  const dirs = decl.directories ?? [];
+  // THE SUB-GRAPHS A DIRECTORY DECLARES FROM WITHIN (issue #1164) join the
+  // list — but only those whose kind says it is LISTED under its parent
+  // (`within`). `beans/` and `todos/` also carry nested declarations, and
+  // their inner nodes (`bean-defs`, `workflow-state`) are parts of one graph,
+  // not graphs a reader browses; `within` is the registry's statement that a
+  // kind is the second thing.
+  const byId = new Map((decl.directories ?? []).map((d) => [d.id, d]));
+  const listedSubgraphs = nestedDirectories(instanceDir, decl).filter((n) => {
+    const parentKinds = byId.get(n.parentId)?.graphKinds ?? [];
+    return n.graphKinds.some((g) => {
+      const w = defaultGraphKinds.get(g)?.within;
+      return w !== undefined && parentKinds.includes(w);
+    });
+  });
+  type Dir = NonNullable<CatHarnessDeclaration["directories"]>[number];
+  const dirs: Dir[] = [
+    ...(decl.directories ?? []),
+    ...listedSubgraphs.map(({ parentId: _parent, ...d }) => d as Dir),
+  ];
   const kinds = [...new Set(dirs.flatMap((d) => d.graphKinds ?? []))].sort();
   const findings: string[] = [];
 
@@ -557,7 +583,12 @@ function tileFor(
     const candidates = ownsSite
       ? [ownStatePage(kind), subjectPage(handler, kind, decl.name)]
       : [subjectPage(handler, kind, decl.name)];
-    const found = candidates.find((p) => existsSync(join(siteDir, p, "index.html")));
+    // `index.md` COUNTS TOO (issue #1164): Jekyll builds it to the same URL,
+    // so a plain documentation page at the conventional place IS the kind's
+    // page. Only `index.html` was recognised, which is why `methodologies`
+    // had to declare a viewer for a page the convention already named.
+    const found = candidates.find((p) =>
+      existsSync(join(siteDir, p, "index.html")) || existsSync(join(siteDir, p, "index.md")));
     // CONVENTION FIRST, declaration as the fallback — and the order is
     // OBSERVABLE, so it is a decision rather than a detail. Exactly one kind
     // in this repository resolves both ways today: cat-harness's `uploads`,
@@ -581,8 +612,10 @@ function tileFor(
         (d.graphKinds ?? []).includes(kind) &&
         visualisationsOf(d.coverage, d.id).some((v) => v.publish === "staging-only"),
     );
+    const within = defaultGraphKinds.get(kind)?.within;
     visualisations.push({
       kind,
+      ...(within ? { within } : {}),
       ...(path ? { path } : {}),
       ...(ro === undefined ? {} : { readOnly: ro }),
       ...(withheld ? { stagingOnly: true as const } : {}),

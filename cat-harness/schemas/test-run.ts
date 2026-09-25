@@ -85,6 +85,8 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { SkillNameSchema } from "./tool-types";
 
+import { RequirementRefSchema } from "./requirement.ts";
+
 /** The `$schema` tag every test run carries. */
 export const TEST_RUN_SCHEMA_ID = "folio-test-run/v1";
 
@@ -153,6 +155,20 @@ export const TestRunSchema = z.object({
    * `test-run-conforms` says so rather than passing it.
    */
   cases: z.array(TestCaseSchema).optional(),
+  /**
+   * WHICH REQUIREMENTS THIS RUN CHECKS — owner, 2026-09-23 (issue #1164):
+   * *"put requirements in Test schema as array"*, as REFERENCES
+   * (`req:<slug>` or `req:<slug>#<statement-key>`), never copies: the
+   * requirement's text lives in one place, and a copy in every run is a copy
+   * free to disagree with it.
+   *
+   * The test points at the requirement, not the reverse — the same direction
+   * as `skill` above. See `bootstrap/schemas/requirement.schema.json` (Zod
+   * source: `cat-harness/schemas/requirement.ts`). Optional so that a run
+   * recorded before the field existed still parses; a new run should say what
+   * it is evidence FOR.
+   */
+  requirements: z.array(RequirementRefSchema).optional(),
   /**
    * ISO-8601 UTC. Deliberately NOT part of either hash: when a run happened
    * is not what makes it reproducible, and including it would make every

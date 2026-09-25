@@ -2,6 +2,8 @@
 layout: default
 title: Agentic harness
 nav_order: 5
+documents:
+  - interaction
 lang: en
 available_locales: ["en"]
 ---

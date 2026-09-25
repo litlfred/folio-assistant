@@ -12,6 +12,26 @@
       "dcterms:source": "Skills of fhir-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/fhir-client-operations",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "fhir-client-operations"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Reading, searching and writing FHIR R4 resources through the SMARTerFHIR client (`BaseClient` and its vendor subclasses): the launch-context reads, `requestResource`, `create` with its automatic subject/encounter/context hydration, the per-vendor differences, how errors surface, and the operations the library does not have. Written against a pinned upstream commit; read before calling a FHIR server from a SMART app built on it."
+        }
+      ],
+      "skos:notation": "fhir-client-operations",
+      "dcterms:source": "fhir-harness/skills/fhir-client/fhir-client-operations.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/ig-build-pipeline",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -89,6 +109,26 @@
       ],
       "skos:notation": "ig-render-jekyll",
       "dcterms:source": "fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills/smart-launch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "smart-launch"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How a browser app performs a SMART on FHIR launch — EHR launch and standalone launch — with the SMARTerFHIR library: `SmartLaunchHandler`, the `LAUNCH` and `EMR` enums, the scopes it requests per EHR vendor, how the redirect URI is computed, and where the token ends up. Written against a pinned upstream commit; read before wiring a launch page or a redirect page."
+        }
+      ],
+      "skos:notation": "smart-launch",
+      "dcterms:source": "fhir-harness/skills/fhir-client/smart-launch.md",
       "skos:note": "candidate"
     }
   ]

@@ -673,14 +673,6 @@
       "status": "candidate"
     },
     {
-      "id": "fhir-client-operations",
-      "prefLabel": "fhir-client-operations",
-      "definition": "STUB. Client-side FHIR operations: search, read, transaction bundles. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
-      "notation": "fhir-client-operations",
-      "source": "cat-harness/skills/remote-stubs/fhir-client-operations.md",
-      "status": "candidate"
-    },
-    {
       "id": "fhir-validation",
       "prefLabel": "fhir-validation",
       "notation": "fhir-validation",
@@ -745,7 +737,7 @@
     {
       "id": "glossary-terms",
       "prefLabel": "glossary-terms",
-      "definition": "Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary.",
+      "definition": "Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary. Authored terms go to gettext (.pot) for translation; a paper's glossary is one more scheme.",
       "notation": "glossary-terms",
       "source": "cat-harness/skills/folio-core/glossary-terms.md",
       "status": "candidate"
@@ -816,9 +808,9 @@
     {
       "id": "hypothesis-generation",
       "prefLabel": "hypothesis-generation",
-      "definition": "STUB. Proposing candidate hypotheses from observations, with what each predicts. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
+      "definition": "Formulate evidence-bounded scientific questions, candidate hypotheses, rival explanations, causal or associational claims, discriminating predictions, measurements, and preregistration-ready analysis plans. Use when turning observations or preliminary findings into transparent, testable research plans without treating hypotheses as facts.",
       "notation": "hypothesis-generation",
-      "source": "cat-harness/skills/remote-stubs/hypothesis-generation.md",
+      "source": "cat-harness/skills/hypothesis-generation/hypothesis-generation.md",
       "status": "candidate"
     },
     {
@@ -857,6 +849,14 @@
       "definition": "How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH kind must declare. Read before naming a new instance, before adding a value to the graph-kind registry, and before building a visualiser. Carries the test that usually says \"this is not a new kind\".",
       "notation": "instance-kinds",
       "source": "cat-harness/skills/folio-core/instance-kinds.md",
+      "status": "candidate"
+    },
+    {
+      "id": "instance-publication",
+      "prefLabel": "instance-publication",
+      "definition": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft.",
+      "notation": "instance-publication",
+      "source": "cat-harness/skills/folio-core/instance-publication.md",
       "status": "candidate"
     },
     {
@@ -1203,6 +1203,14 @@
       "status": "candidate"
     },
     {
+      "id": "package-release",
+      "prefLabel": "package-release",
+      "definition": "Cut a release of a repository's packages: decide the next version, write the release notes, tag, and create the release — for any repository, the platform or a folio. Publishing the built artefact to a registry is a separate, later step that a person starts.",
+      "notation": "package-release",
+      "source": "cat-harness/skills/folio-core/package-release.md",
+      "status": "candidate"
+    },
+    {
       "id": "paper-importer",
       "prefLabel": "paper-importer",
       "definition": "Import external papers from PDF, LaTeX, or arXiv into the content object system. Scans for theorems, definitions, propositions, lemmas, and other formal environments. Generates .ts manifests and .md content files, optionally creates .lean stubs with sorry-bridged proofs citing the original source. Integrates with proof-writer skills so imported theorems can inform and accelerate formalization of the main paper.",
@@ -1542,17 +1550,17 @@
     {
       "id": "scientific-critical-thinking",
       "prefLabel": "scientific-critical-thinking",
-      "definition": "STUB. Appraising a scientific claim — what would falsify it, what the evidence actually supports. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
+      "definition": "Evaluate scientific claims and evidence quality. Use for assessing experimental design validity, identifying biases and confounders, applying evidence grading frameworks (GRADE, Cochrane Risk of Bias), or teaching critical analysis. Best for understanding evidence quality, identifying flaws. For formal peer review writing use peer-review.",
       "notation": "scientific-critical-thinking",
-      "source": "cat-harness/skills/remote-stubs/scientific-critical-thinking.md",
+      "source": "cat-harness/skills/scientific-critical-thinking/scientific-critical-thinking.md",
       "status": "candidate"
     },
     {
       "id": "scientific-visualization",
       "prefLabel": "scientific-visualization",
-      "definition": "STUB. Plotting and figure production for scientific results. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
+      "definition": "Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning.",
       "notation": "scientific-visualization",
-      "source": "cat-harness/skills/remote-stubs/scientific-visualization.md",
+      "source": "cat-harness/skills/scientific-visualization/scientific-visualization.md",
       "status": "candidate"
     },
     {
@@ -1633,14 +1641,6 @@
       "status": "candidate"
     },
     {
-      "id": "smart-launch",
-      "prefLabel": "smart-launch",
-      "definition": "STUB. The SMART on FHIR launch sequence — authorisation, context, scopes. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
-      "notation": "smart-launch",
-      "source": "cat-harness/skills/remote-stubs/smart-launch.md",
-      "status": "candidate"
-    },
-    {
       "id": "smart-stack-layering",
       "prefLabel": "smart-stack-layering",
       "definition": "Which of the five layers a WHO SMART asset, rule, script or page belongs to, and the one question that settles it. Read before adding anything to fhir-harness, smart-base, smart-l1, smart-dak or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",
@@ -1714,7 +1714,7 @@
     {
       "id": "task-authorization",
       "prefLabel": "task-authorization",
-      "definition": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; advisory today, and what would make it strict. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role.",
+      "definition": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; strict since 2026-09-24, with GitHub as the authenticator. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role.",
       "notation": "task-authorization",
       "source": "cat-harness/skills/folio-core/task-authorization.md",
       "status": "candidate"

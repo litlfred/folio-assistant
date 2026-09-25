@@ -380,7 +380,12 @@ jobs:
       # folio-assistant-core"): every `folio-glossary/v1` document validates,
       # and the glossary/ page and its SKOS JSON-LD are current.
       - name: glossary page and SKOS
-        run: bun run check:glossary
+        run: |
+          bun run check:glossary
+          # Bean `lqo9` (owner, 2026-09-24: "Authored terms only"): every
+          # authored term's labels and definition have a current .pot in
+          # every locale, beside the BPMN templates.
+          bun run glossary:pot:check
 
       # The agentic engine's after-check (#1180 step 5): every workflow
       # instance's history as W3C PROV-O, with authorizeTask re-run on each
@@ -960,9 +965,18 @@ jobs:
           # in the same change, which is what makes the exception checkable
           # instead of a carve-out.
           bun run check:materialized-fixity
+          # Every skill a remote-package wrapper declares is MATERIALIZED at the
+          # commit that wrapper pins — offline, no fetch (issue #556).
+          bun run check:remote-skills
           bun run check:read-only-graphs
           bun run check:actor-reach
           bun run check:harness-dirs
+          # A bootstrap schema names no outside concept — no derivative's
+          # content model, layer names or standards (owner, issue #1164).
+          bun run check:bootstrap-concepts
+          # A filed requirement parses as one, its id is its file name, and no
+          # name is both a proposal and a requirement (issue #1164).
+          bun run check:requirements
           # Does a path-filtered workflow rebuild when the scripts it RUNS
           # change? `docs-site.yml` named eight generators and ran 22, so a
           # fix to `kg-export.ts` -- the script producing both graph documents
@@ -1173,6 +1187,11 @@ jobs:
           # render, and this one carries byte counts and download links -- the
           # two things a reader would take on trust.
           bun run iris:pages:check
+          # The prefix-sharded identifier lookup over who-iris's REFERENCED
+          # nodes (bean `4pm8`). Gated because a stale shard still answers:
+          # it finds a node the catalogue no longer references, and a reader
+          # cannot tell a stale hit from a current one.
+          bun run id-lookup:check
           # The cover thumbnails, checked against the sha256, byte count and
           # PNG dimensions the catalogue nodes declare. The narrow half of
           # `yl5w` this script owns: a `materialized` claim it makes is a claim

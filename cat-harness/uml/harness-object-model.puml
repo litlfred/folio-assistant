@@ -94,6 +94,7 @@ package state {
     tags.references [0..*] : {kind, id, note}[]
     tags.artefacts [0..*] : {kind, id, provider, repo, note}[]
     theme [0..1] : string
+    layout [0..1] : laptop | mobile | card
     status [1] : string
     priority [1] : string
     origin [1] : string
@@ -128,7 +129,6 @@ package schema {
     specUrl [1] : string<uri>
     namespaces [0..*] : string[]
     use [1] : conforms | reads | cites
-    usedBy [1..*] : string[]
     terms [0..*] : {term, operative}[]
     note [0..1] : string
   }
@@ -150,6 +150,7 @@ package test {
     process.inputs [1..*] : string[]
     outcome [1] : map<any>
     cases [0..*] : {input, output}[]
+    requirements [0..*] : string[]
     updated_at [1] : string
   }
   class "KG QA Report" as KgQaReport <<json: KgQaReportSchema>> #f4e6e6 {

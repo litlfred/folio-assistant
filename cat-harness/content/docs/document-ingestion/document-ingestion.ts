@@ -3,6 +3,7 @@ import { webpage } from "../../../schemas/webpage.ts";
 export default webpage({
   slug: "document-ingestion",
   title: "Document ingestion",
+  documents: ["uploads", "library"],
   navOrder: 7,
   nodes: [
     {

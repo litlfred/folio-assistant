@@ -45,7 +45,18 @@ import { applyWorkPlanOp } from "../workflow/bean-link.js";
 import { checkGate, loadRelaxations, validateRelaxations } from "../workflow/gate.js";
 import { type RoleGraph } from "../../schemas/role-graph.js";
 import { roleGraphFor } from "../../scripts/known-skills.js";
-import { accessContext, principalFromEnv } from "../core/access.js";
+import { accessContext } from "../core/access.js";
+import { githubPrincipalFor } from "../core/github-auth.js";
+
+/**
+ * The engine's task-authorization mode. STRICT since the owner's rulings of
+ * 2026-09-24 (issue #1207, bean `n2l9`): `perform-task` is granted to `owner`
+ * and `collaborator` in every lane ("all write roles collapse"), and the
+ * principal is the one GitHub vouches for, so `unknown`, an asserted actor and
+ * nobody all refuse. If GitHub cannot be asked, a step cannot be recorded:
+ * that is the price of authentication being real rather than typed.
+ */
+const ENGINE_MODE = "strict" as const;
 import { authorizeTask, describeVerdict, type TaskAuthVerdict } from "../workflow/authorize.js";
 
 const text = (s: string) => ({ content: [{ type: "text" as const, text: s }] });
@@ -235,7 +246,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
     {
       instance: z.string(),
       activity: z.string().describe("Node id, e.g. `Task_Commit`"),
-      actor: z.string().optional().describe("Who would perform it: a declared actor id"),
+      actor: z.string().optional().describe("Who you say would perform it. Recorded only: strict mode authorizes the principal GitHub vouches for"),
       target: z.string().optional().describe("The content it would act on: a block id, path or bean id"),
     },
     async ({ instance, activity, actor, target }) => {
@@ -249,20 +260,24 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       // but "may THIS actor run it" (issue #1207). Both are shown; either
       // refusing refuses.
       const owner = findInModel(model, activity);
+      const { principal } = await githubPrincipalFor(root, process.env);
       const authz = authorizeTask(accessContext(root), {
-        principal: principalFromEnv(actor, process.env),
+        principal,
         process: owner?.model.id ?? model.id,
         task: activity,
         role: owner?.model.nodes.get(activity)?.roleRef,
         target,
-      });
+      }, ENGINE_MODE);
       const allowed = verdict.allowed && authz.allowed;
       return text(
         `${allowed ? "ALLOWED" : "REFUSED"} — ${verdict.reason}` +
           (verdict.relaxedBy
             ? `\n\nDeclared in skills/${verdict.relaxedBy.package}/workflow-policy.json.`
             : "") +
-          `\n\n${describeVerdict(authz)}`,
+          `\n\n${describeVerdict(authz)}` +
+          (actor && actor !== principal.actor
+            ? `\n\nYou named "${actor}"; strict mode decides on the principal GitHub vouches for, not on a typed actor.`
+            : ""),
       );
     },
   );
@@ -294,8 +309,8 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
         .string()
         .optional()
         .describe(
-          "Who did it: a declared actor id (.claude/skills/actors/). Checked against the lane's role " +
-            "and the ODRL policies before the step is recorded",
+          "Who you say did it, written to the history. Authorization is decided on the principal " +
+            "GitHub vouches for (owner or collaborator), in strict mode, before the step is recorded",
         ),
       target: z.string().optional().describe("The content the step acted on: a block id, path or bean id"),
       note: z.string().optional().describe("What happened, for the instance history"),
@@ -304,12 +319,15 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       const state = loadInstance(root, instance);
       if (!state) throw new Error(`No instance "${instance}". Try workflow_list.`);
       const model = await loadProcessModel(join(root, state.source.replace(`${root}/`, "")));
+      // `actor` stays in the history as what the caller SAID it was acting as;
+      // authorization is decided on the principal GitHub vouches for.
+      const { principal } = await githubPrincipalFor(root, process.env);
       const next = complete(model, state, node, {
         outcome,
         facts,
-        actor,
+        actor: actor ?? principal.account,
         note,
-        authz: { ctx: accessContext(root), principal: principalFromEnv(actor, process.env), target },
+        authz: { ctx: accessContext(root), principal, target, mode: ENGINE_MODE },
       });
       saveInstance(root, next);
 

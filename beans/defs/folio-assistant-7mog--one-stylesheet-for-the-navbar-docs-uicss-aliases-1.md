@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7mog
-title: 'ONE stylesheet for the navbar: docs-ui.css aliases 12 rules that navbarCss() already owns'
-status: todo
+title: 'The navbar stylesheets share 3 rules and 0 drift — a guard, not a merge (this bean''s first premise was WRONG)'
+status: in-progress
 parent: folio-assistant-p5wm
 type: task
 created_at: 2026-09-24T17:39:39Z
-updated_at: 2026-09-24T17:39:39Z
+updated_at: 2026-09-24T18:10:09Z
 ---
 
 The owner chose "1 2" on 2026-09-24: land the low-risk version first, then single-source the CSS. This is the 2.
@@ -57,3 +57,72 @@ staging preview, not just the local build.
 - [ ] the 12 aliases and the 185 hand-written sidebar lines are gone
 - [ ] before/after RENDERS match on the staging preview, not only locally
 - [ ] `bun run gates` green
+
+## MEASURED 2026-09-24, and it refutes the scope above — issue #1294
+
+Everything above this line was written before anything was measured. **It is
+wrong**, and it is kept rather than edited away because a scrapped premise
+stops the next agent re-entering the dead end, while a quietly corrected one
+leaves them wondering why the work is smaller than the title.
+
+Both stylesheets parsed into selector → normalised-declaration maps and
+compared:
+
+| | |
+|---|---|
+| rules in `navbarCss()` | **37** |
+| rules in `docs-ui.css` | **732** |
+| same selector, **same** body — genuine duplication | **3** |
+| same selector, **different** body — drift | **0** |
+| `fa-nav*` selectors the site declares and the rail does not | **50** |
+
+The three are `.fa-nav-open`, `.fa-nav-close`, `.fa-nav-close:hover`, and
+`navbarCss()` already names one in its own comment: *"Same rule as
+`.fa-nav-open` in docs-ui.css."*
+
+### The 185 lines are not a restatement of the rail
+
+The 50 site-only selectors are the sidebar's OWN behaviour and have no
+counterpart in `navbarCss()`: `.fa-nav-middle`, `.fa-nav-icons`,
+`.fa-nav-bottom__stack`, the persisted `:root[data-fa-nav="closed"]` preference
+state machine, the `.fa-nav-js` scripted-enhancement class, and responsive
+floors keyed to the theme's own column. The sidebar is a **superset with a
+different container**, not a copy.
+
+### And the 12 aliases are not duplication either
+
+#1264 added the renderer's names as ADDITIONAL SELECTORS on rules that already
+existed — one set of declarations carrying two vocabularies. That was the point
+of doing it that way, and this bean then described it as the thing to remove.
+
+So "delete the 185 lines" would have removed working behaviour to satisfy a
+sentence in this file.
+
+## What is actually worth doing, and is
+
+**Zero drift today is not the same as cannot drift.** Three rules live in two
+files with nothing checking they agree — the exact shape of the failure `sjic`
+exists to stop, and how the open/close control came apart before #928
+realigned it BY HAND. A hand-alignment drifts again.
+
+`scripts/tests/navbar-css-single-source.test.ts` asserts the narrow durable
+property: **where both files declare the same selector, they declare the same
+thing.** Mutation-tested, two injected drifts, both caught.
+
+It deliberately does NOT assert the two files are alike — that would fail on
+the sidebar doing its job.
+
+### The trade, recorded so it can be re-made rather than inherited
+
+Generating the shared rules into a stylesheet the site loads is the truer
+single-sourcing, and it stays available. For **three** rules it costs a new
+generated asset, a link in the head include, a gate and verification across
+1,283 pages. The guard pins the shared set as a literal, so the day that set
+grows is a test failure and a decision — not something somebody notices.
+
+## Done when
+
+- [x] a gate fails if any selector is declared in both stylesheets with differing declarations
+- [x] the guard names the shared set, so its size is observable rather than remembered
+- [x] this bean carries the measurement and the corrected scope
+- [x] `bun run gates` green

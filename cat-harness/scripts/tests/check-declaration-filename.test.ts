@@ -96,8 +96,23 @@ function fixture(rel: string, src: string, instance = "cat-harness"): string {
  * until the red went away.
  */
 let realCorpus: ReturnType<typeof checkDeclarationFilename> | undefined;
-const corpus = (): ReturnType<typeof checkDeclarationFilename> =>
-  (realCorpus ??= checkDeclarationFilename());
+const corpus = (): ReturnType<typeof checkDeclarationFilename> => {
+  if (realCorpus) return realCorpus;
+  const t0 = performance.now();
+  realCorpus = checkDeclarationFilename();
+  const ms = Math.round(performance.now() - t0);
+  // A timeout says only "timed out after N ms", which names nothing a
+  // contributor can act on (bean `6brk`). So the scan says what it cost and
+  // over how much, once it reaches half its budget, BEFORE it is a red: then
+  // "the corpus grew" can be told from "my change is slow".
+  if (ms > CORPUS_TIMEOUT / 2) {
+    console.warn(
+      `check-declaration-filename: the corpus scan took ${ms} ms over ${realCorpus.filesRead} files, ` +
+        `past half its ${CORPUS_TIMEOUT} ms budget. The corpus has grown; see CORPUS_TIMEOUT's basis.`,
+    );
+  }
+  return realCorpus;
+};
 
 /**
  * The budget for whichever test populates {@link corpus} first.
