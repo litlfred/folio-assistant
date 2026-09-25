@@ -243,7 +243,7 @@ repaired `p5wm` and `yg29`, this is 2026-09-25). What the window since shows:
 |---|---|---|
 | `p5wm` (GOAL 2) | **no** | `b5f0 → 603s → 6lb8 → supn` — all four still open, nothing withdrawn |
 | `vuip` (GOAL 1) | **yes, mildly** | `zkgs` closed and stayed in the chain; box 2's measurement is written in `harness.json`, a filename the tree no longer has |
-| `yg29` (GOAL 3) | **yes, substantially** | `kupb` went from 13 open children to **4**; `j66n`, recorded as owner-blocked with a clause left, is `completed` |
+| `yg29` (GOAL 3) | **yes, substantially** | `kupb` went from 13 open children to **3**; `j66n`, recorded as owner-blocked with a clause left, is `completed` |
 
 ### The rate is not uniform, and that changes what the fix should be
 
@@ -286,3 +286,19 @@ Falsified both ways: after the edits, every id still asserted as a live
 blocker across the three milestones resolves to `todo` or `in-progress`
 (11 of 11), and the same check rejects `zkgs`, `j66n` and `54rk` — the ids
 just withdrawn — so it is not passing over an empty set.
+
+### The measurement went stale DURING the turn that made it
+
+`4pm8` was `todo` when `yg29`'s table above was written and `completed` about
+twenty minutes later, inside the 23 commits `main` advanced while the edit was
+being composed. The corrected count is 3 open, not 4.
+
+It was caught only because the falsification was re-run **after** merging
+`origin/main` rather than before. Had the merge come last, a commit whose
+subject is "this milestone's numbers are stale" would have landed carrying a
+stale number.
+
+That is the whole case for the mechanical check, stated at the smallest scale
+it can be stated at: the drift here is not weeks, or the five days between
+sweeps — it is **shorter than one edit**. No cadence of hand passes is fast
+enough, which is why round 3 must not be another one.

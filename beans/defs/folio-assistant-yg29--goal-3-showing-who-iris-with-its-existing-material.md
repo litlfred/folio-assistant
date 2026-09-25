@@ -113,14 +113,22 @@ item by item, not carried forward:
 | item | recorded above | now |
 |---|---|---|
 | `j66n` | *"has one clause left … **owner-blocked**"* | **`completed`** |
-| `kupb`'s children | 13 open | **4 open**, 9 closed |
+| `kupb`'s children | 13 open | **3 open**, 10 closed |
 
-**Nine closed since:** `54rk`, `809i`, `gpdo`, `hfwl`, `hpax`, `j66n`, `rtrg`,
-`v048`, `w5bn`.
+**Ten closed since:** `4pm8`, `54rk`, `809i`, `gpdo`, `hfwl`, `hpax`, `j66n`,
+`rtrg`, `v048`, `w5bn`.
 
-**Four still open:** `4pm8` (todo — Pagefind evaluation), `eof6` (in-progress
-— search index as a release artifact), `j79e` (in-progress — detangle),
-`xies` (in-progress — publish to CDN).
+**Three still open:** `eof6` (in-progress — search index as a release
+artifact), `j79e` (in-progress — detangle), `xies` (in-progress — publish
+to CDN).
+
+> **`4pm8` closed while this section was being written.** It was `todo` when
+> the table above was first measured and `completed` twenty-odd minutes later,
+> in the 23 commits `main` took during the edit. Recorded rather than quietly
+> corrected, because it is the sharpest evidence this bean has for `k59d`'s
+> argument: a hand measurement of a fast-moving store is stale before the
+> commit that carries it lands. Caught only because the edit was re-falsified
+> after merging `main` instead of before.
 
 Two things follow, and they point opposite ways:
 
