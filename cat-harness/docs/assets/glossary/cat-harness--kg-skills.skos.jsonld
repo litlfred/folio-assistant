@@ -1167,6 +1167,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/decision-methodology-selector",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "decision-methodology-selector"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Given a decision context, select the applicable methodology from the methodology graph. Reads the graph's applies-when declarations, matches them against the context, and returns the ranked applicable methods with rationale. Extends methodology-adoption's four-question protocol with quantitative method-selection criteria from the MCDM literature."
+        }
+      ],
+      "skos:notation": "decision-methodology-selector",
+      "dcterms:source": "cat-harness/skills/folio-core/decision-methodology-selector.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/definition-clarity-audit",
       "@type": "skos:Concept",
       "skos:inScheme": {
