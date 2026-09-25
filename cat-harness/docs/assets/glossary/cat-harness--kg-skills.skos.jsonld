@@ -1167,6 +1167,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/decision-methodology-selector",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "decision-methodology-selector"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Given a decision context, select the applicable methodology from the methodology graph. Reads the graph's applies-when declarations, matches them against the context, and returns the ranked applicable methods with rationale. Extends methodology-adoption's four-question protocol with quantitative method-selection criteria from the MCDM literature."
+        }
+      ],
+      "skos:notation": "decision-methodology-selector",
+      "dcterms:source": "cat-harness/skills/folio-core/decision-methodology-selector.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/definition-clarity-audit",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2039,6 +2059,26 @@
       ],
       "skos:notation": "incremental-render",
       "dcterms:source": "cat-harness/skills/folio-core/incremental-render.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/injection-boundaries",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "injection-boundaries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the existing gate covers, the one latent gap in its model, and the argv rule."
+        }
+      ],
+      "skos:notation": "injection-boundaries",
+      "dcterms:source": "cat-harness/skills/security/injection-boundaries.md",
       "skos:note": "candidate"
     },
     {
@@ -2957,6 +2997,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/path-containment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "path-containment"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check."
+        }
+      ],
+      "skos:notation": "path-containment",
+      "dcterms:source": "cat-harness/skills/security/path-containment.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/pending-show",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3799,6 +3859,26 @@
       ],
       "skos:notation": "scientific-visualization",
       "dcterms:source": "cat-harness/skills/scientific-visualization/scientific-visualization.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/security",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "security"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The security sub-KG's entry point. What the boundaries are, which machinery already guards each one, and the single rule that unifies them — refuse, never repair. Read this before adding a check, so the answer that already exists is reused rather than rebuilt in a fourth place."
+        }
+      ],
+      "skos:notation": "security",
+      "dcterms:source": "cat-harness/skills/security/security.md",
       "skos:note": "candidate"
     },
     {

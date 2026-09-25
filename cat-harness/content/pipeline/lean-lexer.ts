@@ -106,22 +106,78 @@ export function stripLeanComments(src: string): string {
  * declaration whose presence most changes what a proof is worth. A triviality
  * probe that cannot see one is blind to exactly what it exists to find.
  *
- * ## Why this is not simply widened here and now
+ * ## The sweep the pin was waiting for — run 2026-09-25
  *
- * The bean's own warning, and it is right: every copy feeds a QA checker, so a
- * behavioural change is a corpus-wide re-sweep and a changed verdict on merged
- * content — *"converging them blind is how a cleanup becomes a silent
- * re-scoring."* **This repository holds 0 `.lean` files**, so the sweep cannot
- * be run here at all; it has to happen in a folio that carries a Lean corpus.
+ * The analysis above is right in every part, and this paragraph replaces only
+ * its last inference. It read:
  *
- * So the divergence is PINNED rather than blessed:
- * `lean-decl-regex-divergence.test.ts` asserts all four differences by name
- * and fails the moment either pattern changes. It does not approve of them —
- * it makes the next edit deliberate, and it is the place the sweep's results
- * land when somebody converges these onto one union pattern.
+ * > **This repository holds 0 `.lean` files**, so the sweep cannot be run here
+ * > at all; it has to happen in a folio that carries a Lean corpus.
+ *
+ * The first clause is true and still asserted by a test. The conclusion does
+ * not follow: the corpus is a SIBLING CHECKOUT, not a file in this tree, and
+ * `lean-lexer-is-the-only-stripper.test.ts` in this same directory already
+ * records a **3,954-file** sweep run from a container exactly like this one.
+ * The repository contained its own counter-example.
+ *
+ * Re-run over **3,971 `.lean` files**, **52,144 declarations**:
+ *
+ *     union (below)          52,144
+ *     DECL_RE, before        51,901   missed 243 in 105 files
+ *                                     axiom 113, opaque 130; no `unsafe` in this corpus
+ *     LEAN_DECL_RE           52,144   every name, 990 of them (1.9%) truncated at the dot
+ *
+ * **A missed keyword is not a skipped declaration.** `splitDeclarations`
+ * slices from one start to the NEXT, so unrecognised text is absorbed into the
+ * body of whatever precedes it. Those 243 were reported as part of another
+ * declaration's body, in authored content:
+ * `vertex-algebra-relations.lean` alone absorbed **9**. The triviality probe
+ * splices bodies, so it would rewrite a neighbour's axiom.
+ *
+ * So the divergence is CONVERGED rather than pinned, and the pattern below is
+ * the union: both keyword sets, both modifier sets, and the dotted name class.
+ * `declarationStarts` is the single answer, with the two projections over it.
+ *
+ * `[^\S\n]*` rather than `\s*`, deliberately: `\s` matches a newline, so
+ * `^\s*` under `/m` can begin a match on a blank line above the declaration
+ * and put the offset on the wrong line. Harmless for the byte spans here, a
+ * wrong answer for `leanDeclSpans`, which converts these offsets to line
+ * numbers. Spans are unaffected — `bodyAt` is `from + cut`, both relative to
+ * the same slice.
  */
 export const DECL_RE =
-  /^\s*(?:@\[[^\]]*\]\s*)?(?:private\s+|protected\s+|noncomputable\s+|partial\s+)*(theorem|lemma|def|abbrev|structure|inductive|instance|class|example)\s+([A-Za-z_][A-Za-z0-9_'.!?]*)/gm;
+  /^[^\S\n]*(?:@\[[^\]]*\][^\S\n]*)?(?:private\s+|protected\s+|noncomputable\s+|partial\s+|unsafe\s+)*(theorem|lemma|def|abbrev|structure|inductive|instance|class|example|axiom|opaque)\s+([A-Za-z_][A-Za-z0-9_'.!?]*)/gm;
+
+/** A declaration's name and the absolute offset at which its span begins. */
+export interface DeclStart {
+  name: string;
+  /** Absolute offset into the comment-stripped source. */
+  at: number;
+}
+
+/**
+ * Every declaration start in comment-stripped Lean source, in order.
+ *
+ * The shared half of two splitters that answer different questions:
+ * `splitDeclarations` projects these to CHARACTER spans cut into signature and
+ * body, for callers that splice source; `leanDeclSpans` in
+ * `qa-checkers-q-usage.ts` projects them to 1-indexed inclusive LINE ranges,
+ * for a caller that blanks around a declaration while preserving line numbers.
+ *
+ * Those projections are genuinely different and neither replaces the other —
+ * that part of the earlier analysis stands unchanged. Finding the starts is
+ * what was being done twice, with two answers.
+ */
+export function declarationStarts(stripped: string): DeclStart[] {
+  const starts: DeclStart[] = [];
+  // A fresh regex per call: `DECL_RE` carries the `g` flag, so `lastIndex`
+  // would leak between callers.
+  const re = new RegExp(DECL_RE.source, "gm");
+  for (const m of stripped.matchAll(re)) {
+    starts.push({ name: m[2], at: m.index ?? 0 });
+  }
+  return starts;
+}
 
 export interface DeclSpan {
   name: string;
@@ -215,10 +271,7 @@ export function topLevelCut(text: string): number {
  * `source: "scan"` on everything it produces.
  */
 export function splitDeclarations(stripped: string): DeclSpan[] {
-  const starts: Array<{ name: string; at: number }> = [];
-  for (const m of stripped.matchAll(DECL_RE)) {
-    starts.push({ name: m[2], at: m.index ?? 0 });
-  }
+  const starts = declarationStarts(stripped);
   const spans: DeclSpan[] = [];
   for (let i = 0; i < starts.length; i++) {
     const from = starts[i].at;
