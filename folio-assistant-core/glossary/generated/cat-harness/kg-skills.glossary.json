@@ -852,6 +852,14 @@
       "status": "candidate"
     },
     {
+      "id": "injection-boundaries",
+      "prefLabel": "injection-boundaries",
+      "definition": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the existing gate covers, the one latent gap in its model, and the argv rule.",
+      "notation": "injection-boundaries",
+      "source": "cat-harness/skills/security/injection-boundaries.md",
+      "status": "candidate"
+    },
+    {
       "id": "instance-kinds",
       "prefLabel": "instance-kinds",
       "definition": "How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH kind must declare. Read before naming a new instance, before adding a value to the graph-kind registry, and before building a visualiser. Carries the test that usually says \"this is not a new kind\".",
@@ -1227,6 +1235,14 @@
       "status": "candidate"
     },
     {
+      "id": "path-containment",
+      "prefLabel": "path-containment",
+      "definition": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check.",
+      "notation": "path-containment",
+      "source": "cat-harness/skills/security/path-containment.md",
+      "status": "candidate"
+    },
+    {
       "id": "pending-show",
       "prefLabel": "pending-show",
       "definition": "Show the current session's pending work — beans list + ledger intent. Read-only.",
@@ -1569,6 +1585,14 @@
       "definition": "Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning.",
       "notation": "scientific-visualization",
       "source": "cat-harness/skills/scientific-visualization/scientific-visualization.md",
+      "status": "candidate"
+    },
+    {
+      "id": "security",
+      "prefLabel": "security",
+      "definition": "The security sub-KG's entry point. What the boundaries are, which machinery already guards each one, and the single rule that unifies them — refuse, never repair. Read this before adding a check, so the answer that already exists is reused rather than rebuilt in a fourth place.",
+      "notation": "security",
+      "source": "cat-harness/skills/security/security.md",
       "status": "candidate"
     },
     {

@@ -36,7 +36,7 @@
  */
 
 import { existsSync, readFileSync } from "fs";
-import { stripLeanComments } from "./lean-lexer.js";
+import { declarationStarts, stripLeanComments } from "./lean-lexer.js";
 import { sep } from "path";
 
 // Chapter profiles are FOLIO content and now arrive through a registry, the
@@ -308,25 +308,6 @@ export function leanDeclFromTs(ts: string): string | undefined {
   return last && last.length > 0 ? last : undefined;
 }
 
-/**
- * The second declaration pattern in this repository, and it disagrees with
- * `DECL_RE` in `lean-lexer.ts` — see that constant's comment for the measured
- * table and why neither is simply widened into the other.
- *
- * EXPORTED only so `lean-decl-regex-divergence.test.ts` can compare the two
- * rather than re-typing them: a test that restates the pattern it is testing
- * drifts from it the first time either is edited, which is the failure mode
- * this whole bean is about.
- *
- * The one difference that is a defect HERE rather than there: the name class
- * omits `.`, so `theorem Foo.bar` yields a span named `Foo`. A caller looking
- * up the declaration by its full name does not find it and falls back to
- * scanning the whole file — which is the behaviour
- * {@link leanDeclSpans}' callers exist to avoid.
- */
-export const LEAN_DECL_RE =
-  /^\s*(?:@\[[^\]]*\]\s*)?(?:private\s+|protected\s+|noncomputable\s+|partial\s+|unsafe\s+)*(?:theorem|lemma|def|abbrev|structure|inductive|class|instance|axiom|example|opaque)\s+([A-Za-z_][A-Za-z0-9_'!?]*)/;
-
 interface LeanSpan {
   name: string;
   /** 1-indexed, inclusive. */
@@ -334,14 +315,46 @@ interface LeanSpan {
   end: number;
 }
 
-/** Lexical per-declaration line spans of a comment-stripped Lean file. */
+/**
+ * Lexical per-declaration LINE spans of a comment-stripped Lean file.
+ *
+ * ## Line spans, off the shared start detection
+ *
+ * This carried its own `LEAN_DECL_RE` beside `lean-lexer`'s `DECL_RE` until
+ * 2026-09-25 (bean `bqrg`). The two disagreed in four ways, neither a superset
+ * of the other; the measured table and the corpus sweep that settled it are on
+ * `declarationStarts`, which is now the one answer to *where does a
+ * declaration begin*.
+ *
+ * **The two splitters remain two functions, deliberately.**
+ * `splitDeclarations` returns character spans cut into signature and body, for
+ * callers that splice source. This returns 1-indexed inclusive line ranges,
+ * because {@link scopeLeanToDecl} blanks the lines outside a span while
+ * preserving line numbers — a QA hit reports a line, and a rewrite that shifts
+ * them reports the wrong one. Converging the projections would break one
+ * caller or the other; the detection is what was duplicated.
+ *
+ * The offset-to-line conversion is exact because `stripLeanComments` replaces
+ * comment bodies with equal-length whitespace rather than deleting them, so an
+ * offset into the stripped source is an offset into the original.
+ */
 export function leanDeclSpans(lean: string): LeanSpan[] {
   const lines = lean.split(/\r?\n/);
-  const starts: Array<{ name: string; at: number }> = [];
-  for (let i = 0; i < lines.length; i++) {
-    const m = LEAN_DECL_RE.exec(lines[i]);
-    if (m) starts.push({ name: m[1], at: i + 1 });
+  // One prefix scan rather than counting newlines per start, which would be
+  // quadratic on the 69-declaration shared modules this function exists for.
+  const lineAt = new Int32Array(lean.length + 1);
+  {
+    let line = 1;
+    for (let i = 0; i < lean.length; i++) {
+      lineAt[i] = line;
+      if (lean[i] === "\n") line++;
+    }
+    lineAt[lean.length] = line;
   }
+  const starts = declarationStarts(lean).map((s) => ({
+    name: s.name,
+    at: lineAt[s.at] ?? 1,
+  }));
   return starts.map((s, i) => ({
     name: s.name,
     start: s.at,
@@ -416,11 +429,36 @@ export function scopeLeanToDecl(lean: string, decl: string): string | undefined 
   const queue = [root];
   while (queue.length > 0) {
     const body = textOf(queue.shift()!);
-    for (const m of body.matchAll(/[A-Za-z_][A-Za-z0-9_']*/g)) {
-      const other = byName.get(m[0]);
-      if (other && !included.has(other.name)) {
-        included.add(other.name);
-        queue.push(other);
+    // DOTTED, because the span names are. 990 of the corpus's 52,144
+    // declarations are dotted, and a tokenizer stopping at the dot can never
+    // produce the key `AlgElement.add`.
+    //
+    // It was `[A-Za-z_][A-Za-z0-9_']*` against names truncated at the dot, and
+    // the pair was wrong in a way neither half showed alone: every member of a
+    // namespace collapsed to the SAME `byName` key, so the Map kept the LAST
+    // one, while `find` above returns the FIRST. The same name meant two
+    // different spans inside this one function, and a body mentioning any
+    // member pulled in whichever happened to be declared last — not the one
+    // referenced.
+    //
+    // Fixing only the names would have made this reach nothing at all: quieter
+    // and no more correct. Both halves speak dots or neither does.
+    for (const m of body.matchAll(/[A-Za-z_][A-Za-z0-9_'.]*/g)) {
+      // Longest match first, then shorten: a trailing dot is punctuation, and
+      // `Foo.bar.baz` should still find `Foo.bar` when that is what exists.
+      let tok = m[0];
+      while (tok.length > 0) {
+        const other = byName.get(tok);
+        if (other) {
+          if (!included.has(other.name)) {
+            included.add(other.name);
+            queue.push(other);
+          }
+          break;
+        }
+        const cut = tok.lastIndexOf(".");
+        if (cut < 0) break;
+        tok = tok.slice(0, cut);
       }
     }
   }
