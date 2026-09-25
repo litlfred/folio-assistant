@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script data-folio-saved-scheme>try{var s=localStorage.getItem("fa-color-scheme");if(s==="light"||s==="dark")document.documentElement.setAttribute("data-fa-scheme",s)}catch(e){}</script>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Skills · docs-auto</title>
@@ -29,6 +31,84 @@
   ul.subs li { padding: .3rem 0; border-bottom: 1px solid var(--edge); }
   .n { float: right; color: var(--muted); font-variant-numeric: tabular-nums; }
 </style>
+<style data-folio-narrow-viewport>
+/* Narrow viewports: nothing may widen the PAGE — bean `2r2n`.
+ *
+ * At 390 px, 105 of 249 built pages scrolled sideways (measured 2026-09-24).
+ * The rule here is the bean's: wide content scrolls INSIDE ITS OWN BOX with a
+ * visible cue, and the page itself never pans.
+ *
+ * ONE FILE, TWO WAYS IN. Themed pages link it from `_includes/head_custom.html`.
+ * The standalone viewer pages carry no theme stylesheet at all, so
+ * `withViewerNav` in `scripts/viewer-page.ts` inlines this same file when it
+ * adds the rail. A copy of these rules in each place would be two answers to
+ * "what does a table do at 390 px", free to drift apart.
+ *
+ * Every selector here is written to be safe on both kinds of page: no
+ * `.main-content` scope (a standalone page has none), the navbar excluded by
+ * name, and the theme's own `.table-wrapper` left alone, since it already does
+ * this job for Markdown tables. */
+
+@media (max-width: 799.98px) {
+  /* A table the theme did not wrap: raw HTML from a generator, or one built at
+   * runtime. `display: block` makes the table its own scroll box. Its cells
+   * still lay out as a table inside the anonymous table box. */
+  table:not(.table-wrapper > table):not(.fa-nav table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* THE CUE: the edge that has more content past it fades out. The fade is a
+   * MASK over the table's own pixels, driven by its own scroll position, so
+   * it needs no knowledge of the page's background. A painted cover (the
+   * usual `background-attachment: local` trick) does: the first version used
+   * `Canvas`, and on a page that is dark under a LIGHT scheme it laid a white
+   * band over the first column.
+   *
+   * A table that does not overflow has an inactive scroll timeline, so the
+   * animation has no effect and both fades stay at their initial 0: no cue
+   * where there is nothing to scroll to. A browser without scroll-driven
+   * animations shows no fade, and the table still scrolls. */
+  @supports (animation-timeline: scroll()) {
+    table:not(.table-wrapper > table):not(.fa-nav table) {
+      mask-image: linear-gradient(to right,
+        transparent 0, #000 var(--fa-cue-l),
+        #000 calc(100% - var(--fa-cue-r)), transparent 100%);
+      animation: fa-scroll-cue linear both;
+      animation-timeline: scroll(self inline);
+    }
+  }
+
+  /* A code block scrolls in its own box, which is what `pre` is for. Mermaid
+   * SOURCE sits in a `pre` until the renderer replaces it, and at 390 px a
+   * diagram's source line is longer than the screen. */
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Prose that has no break opportunity: a long path in inline code, or a
+   * glossary definition naming one. Breaking the string is better than
+   * widening the page it sits on. */
+  :not(pre) > code,
+  dd {
+    overflow-wrap: anywhere;
+  }
+}
+
+@property --fa-cue-l { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --fa-cue-r { syntax: "<length>"; inherits: false; initial-value: 0px; }
+
+@keyframes fa-scroll-cue {
+  0%   { --fa-cue-l: 0px;    --fa-cue-r: 2.5rem; }
+  12%  { --fa-cue-l: 2.5rem; }
+  88%  { --fa-cue-r: 2.5rem; }
+  100% { --fa-cue-l: 2.5rem; --fa-cue-r: 0px; }
+}
+
+</style>
 </head>
 <body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){
 function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
@@ -49,13 +129,13 @@ function fill(d,f,r){
   var rel=location.pathname.slice(r.length);
   if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
   if(!f.mainPagesKnown){
-    d.appendChild(link(f.mainSite+'/','compare with main \u2197'));
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
   }else if(f.newPages.indexOf(rel)>=0){
-    d.appendChild(link(f.mainSite+'/','main \u2197'));
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
     d.appendChild(document.createTextNode(' '));
     d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
   }else{
-    d.appendChild(link(f.mainSite+'/'+rel,'compare with main \u2197'));
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
   }
   d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
   stamp(f);
@@ -79,7 +159,7 @@ function go(){
 }
 if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
 window.addEventListener('resize',measure);window.addEventListener('load',measure);
-})();</script>
+})();</script><style>body{padding-left:56px}.fa-nav{position:fixed;top:0;left:0;bottom:0;width:56px;z-index:2147483000;background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:248px}.fa-nav:not(:hover):not(:focus-within):not(:has(.fa-nav-open:checked)) .fa-glass-handle__label{opacity:0}@media(min-width:1064px){.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:264px}.fa-nav-in{width:264px}}.fa-nav-open{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.fa-nav-in{width:248px;height:100%;display:flex;flex-direction:column}.fa-nav-top{flex:0 0 auto}.fa-nav-graphs{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden}.fa-nav-bottom{flex:0 0 auto;border-top:1px solid #30363d}.fa-nav-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #30363d;cursor:pointer;user-select:none}.fa-nav-glyph{flex:0 0 32px;text-align:center;font-size:16px}.fa-nav-glyph img{width:32px;height:32px;display:block}.fa-nav-crop{position:relative;overflow:hidden;height:32px}.fa-nav-crop img{position:absolute;width:auto;height:auto;max-width:none}.fa-nav-name{font-weight:600}.fa-nav a{display:flex;align-items:center;gap:8px;padding:8px 12px;color:#e6edf3;text-decoration:none;white-space:nowrap}.fa-nav a:hover{background:#30363d}.fa-nav a[aria-current="page"]{background:#30363d;font-weight:600}.fa-nav-dead{display:flex;align-items:center;gap:8px;padding:8px 12px;opacity:.55;cursor:default}.fa-nav-note{margin-left:auto;font-size:11px;font-style:italic;white-space:nowrap}.fa-nav-row{display:grid;grid-template-columns:1fr auto;align-items:center}.fa-nav-row>a,.fa-nav-row>.fa-nav-dead{min-width:0}.fa-nav-kids{grid-column:1/-1}.fa-nav-action{display:none;background:none;border:0;cursor:pointer;padding:0 12px;font-size:13px;line-height:1;color:inherit;opacity:.7}.fa-nav-action:hover,.fa-nav-action:focus-visible{opacity:1}.fa-nav:hover .fa-nav-action,.fa-nav:focus-within .fa-nav-action,.fa-nav:has(.fa-nav-open:checked) .fa-nav-action{display:block}.fa-nav-group>summary{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;user-select:none;list-style:none}.fa-nav-group>summary::-webkit-details-marker{display:none}.fa-nav-group>summary:hover{background:#30363d}.fa-nav-group[open]>summary{font-weight:600}.fa-nav-group .fa-nav-sub a{padding-left:52px}.fa-nav-tone{border-radius:3px}.fa-nav-close{display:none}.fa-nav:has(.fa-nav-open:checked) .fa-nav-close{position:sticky;top:0;float:right;display:flex;align-items:center;justify-content:center;width:26px;height:26px;margin:6px 6px 0 0;cursor:pointer;user-select:none;border-radius:4px;background:#1f2328;opacity:.75}.fa-nav-close:hover{opacity:1}.fa-nav-label{white-space:nowrap;opacity:0;transition:opacity .12s ease}.fa-nav:hover .fa-nav-label,.fa-nav:focus-within .fa-nav-label,.fa-nav:has(.fa-nav-open:checked) .fa-nav-label{opacity:1}@media print{.fa-nav{display:none}body{padding-left:0}}.fa-nav-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style><nav class="fa-nav" aria-label="folio-assistant"><input type="checkbox" class="fa-nav-open" id="fa-nav-open"><label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label><div class="fa-nav-in"><div class="fa-nav-top"><label class="fa-nav-head" for="fa-nav-open" title="Open navigation"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span><span class="fa-nav-name fa-nav-label">cat-harness</span></label></div><div class="fa-nav-graphs"><details class="fa-nav-group" open><summary><span class="fa-nav-glyph" aria-hidden="true">▤</span><span class="fa-nav-label">Graphs</span></summary><div class="fa-nav-sub"><a href="../../../../beans/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">B</span><span class="fa-nav-label">beans</span></a><a href="../../../../cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">cat-harness</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code-list</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../cat-harness/docs-auto/index/docs/docs/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">D</span><span class="fa-nav-label">docs</span></a><a href="../../../../external-schemas/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">E</span><span class="fa-nav-label">external-schema</span></a><a href="../../../../cat-harness/folio/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">folio</span></a><a href="../../../../fsh-guts/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">fsh-guts</span></a><a href="../../../../health/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">H</span><span class="fa-nav-label">health</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">interaction</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../issue-marks/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">issue-marks</span></a><a href="../../../../cat-harness/library/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">L</span><span class="fa-nav-label">library</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">memory</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../methodologies/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">methodology</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">policies</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../processes/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">processes</span></a><a href="../../../../qa/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">Q</span><span class="fa-nav-label">qa</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">scenarios</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">schemas</span></a><a href="../../../../cat-harness/docs-auto/index/skills/large-datasets-skills/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">skills</span></a><a href="../../../../swimlane-glossary/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">swimlane-glossary</span></a><a href="../../../../todos/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">todos</span></a><a href="../../../../tools/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">tools</span></a><a href="../../../../translation-status/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">translation-sources</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uml</span><span class="fa-nav-note">no viewer yet</span></span><a href="../../../../uploads/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uploads</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">W</span><span class="fa-nav-label">waiver</span><span class="fa-nav-note">no viewer yet</span></span></div></details></div><div class="fa-nav-bottom"><details class="fa-nav-group"><summary><span class="fa-nav-glyph" aria-hidden="true">▦</span><span class="fa-nav-label">Harnesses</span></summary><div class="fa-nav-sub"><a href="../../../../smart-trust/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">smart-trust</span></a><a href="../../../../who-iris/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">W</span><span class="fa-nav-label">WHO IRIS</span></a><a href="../../../../cat-harness/library/smart-base/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">S</span><span class="fa-nav-label">SMART Base</span></a><a href="../../../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(236 45% 28%)" aria-hidden="true">F</span><span class="fa-nav-label">Folio Assistant</span></a><a href="../../../../"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(268 45% 28%)"><img src="../../../../assets/img/icons/cat-mark.svg" alt="" title="c@t"></span><span class="fa-nav-label">C@T Harness</span></a><a href="../../../../bootstrap/README.html"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(96 45% 28%)" aria-hidden="true">B</span><span class="fa-nav-label">Bootstrap</span></a></div></details><a href="../../../../"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">⌂</span><span class="fa-nav-label">folio-assistant</span></a></div></div></nav>
 <div class="wrap">
 <h1>Skills</h1>
 <p class="lede">Derived: every skill markdown file, with the description it declares in its own front matter.</p>
@@ -92,43 +172,15 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div>
 
 <ul class="subs">
-<li><a href="../cat-bootstrap-render/">cat-bootstrap-render</a> <span class="p">cat-bootstrap/render</span> <span class="n">2</span></li>
-<li><a href="../cat-harness/">cat-harness</a> <span class="p">cat-harness/skills</span> <span class="n">212</span></li>
-<li><a href="../cat-harness-src/">cat-harness-src</a> <span class="p">cat-harness/src/skills</span> <span class="n">1</span></li>
-<li><a href="../kg-navigation/">kg-navigation</a> <span class="p">kg-navigation/skills</span> <span class="n">1</span></li>
-<li><a href="../large-datasets-skills/">large-datasets-skills</a> <span class="p">large-datasets/skills</span> <span class="n">1</span></li>
-<li><a href="../methodology-crdm/">methodology-crdm</a> <span class="p">cat-harness/methodologies/crdm</span> <span class="n">3</span></li>
-<li><a href="../methodology-raci/">methodology-raci</a> <span class="p">cat-harness/methodologies/raci</span> <span class="n">1</span></li>
+<li><a href="../folio-assistant-core-skills/">folio-assistant-core-skills</a> <span class="p">folio-assistant-core/skills</span> <span class="n">1</span></li>
+<li><a href="../large-datasets-skills/">large-datasets-skills</a> <span class="p">large-datasets/skills</span> <span class="n">3</span></li>
+<li><a href="../skills/">skills</a> <span class="p">cat-harness/skills</span> <span class="n">257</span></li>
 <li><a href="../who-iris-skills/">who-iris-skills</a> <span class="p">who-iris/skills</span> <span class="n">1</span></li>
 </ul>
 
 <table>
 <thead><tr><th>Artefact</th><th>What it declares about itself</th></tr></thead>
 <tbody>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-bootstrap/render/cat-bootstrap-graph-emission.md"><code>cat-bootstrap-graph-emission</code></a><br><span class="p">cat-bootstrap/render/cat-bootstrap-graph-emission.md</span></td>
-  <td>How cat-bootstrap emits its OWN graph as `.jsonld`/`.json`, and why that emission is the one obligation the layer cannot trade away.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-bootstrap/render/cat-bootstrap-graph-publication.md"><code>cat-bootstrap-graph-publication</code></a><br><span class="p">cat-bootstrap/render/cat-bootstrap-graph-publication.md</span></td>
-  <td>Where cat-bootstrap's graph is published, why its `@id` must equal exactly that path, why a `.json` alias sits beside the canonical `.jsonld`, and why the document is NOT committed any more.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/crdm/crdm-data-model.md"><code>crdm-data-model</code></a><br><span class="p">cat-harness/methodologies/crdm/crdm-data-model.md</span></td>
-  <td>The CRDM data-modelling phase — when in the requirements process a model is built, what it is built from, who confirms it, and what it hands to the phases either side.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/crdm/crdm-detect.md"><code>crdm-detect</code></a><br><span class="p">cat-harness/methodologies/crdm/crdm-detect.md</span></td>
-  <td><span class="none">no description in the artefact</span></td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/crdm/crdm-requirements-workflow.md"><code>crdm-requirements-workflow</code></a><br><span class="p">cat-harness/methodologies/crdm/crdm-requirements-workflow.md</span></td>
-  <td><span class="none">no description in the artefact</span></td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/raci/raci.md"><code>raci</code></a><br><span class="p">cat-harness/methodologies/raci/raci.md</span></td>
-  <td>RACI over this repository's processes — who is Responsible, Accountable, Consulted and Informed for each activity.</td>
-</tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-math/latex-authoring.md"><code>latex-authoring</code></a><br><span class="p">cat-harness/skills/authoring-math/latex-authoring.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
@@ -142,8 +194,20 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td><span class="none">no description in the artefact</span></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/dak-postprocessing.md"><code>dak-postprocessing</code></a><br><span class="p">cat-harness/skills/authoring-who-smart-guidelines/dak-postprocessing.md</span></td>
+  <td>What the DAK post-processing phase accomplishes after the IG Publisher runs — the JSON/JSON-LD surface, the DAK API hub, and the metadata-to-Liquid bridge that is the seam the just-the-docs transition cuts at.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/dak-preprocessing.md"><code>dak-preprocessing</code></a><br><span class="p">cat-harness/skills/authoring-who-smart-guidelines/dak-preprocessing.md</span></td>
+  <td>What the DAK pre-processing phase actually accomplishes, step by step, before the IG Publisher runs — and which of its steps exist only to satisfy the Publisher's own page index.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/fhir-validation.md"><code>fhir-validation</code></a><br><span class="p">cat-harness/skills/authoring-who-smart-guidelines/fhir-validation.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/grade.md"><code>grade</code></a><br><span class="p">cat-harness/skills/authoring-who-smart-guidelines/grade.md</span></td>
+  <td>GRADE — the grading system a WHO guideline folio declares for certainty of evidence, and the Evidence-to-Decision judgement a recommendation rests on.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/ig-artifact-ingestion.md"><code>ig-artifact-ingestion</code></a><br><span class="p">cat-harness/skills/authoring-who-smart-guidelines/ig-artifact-ingestion.md</span></td>
@@ -170,8 +234,16 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td><span class="none">no description in the artefact</span></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/smart-stack-layering.md"><code>smart-stack-layering</code></a><br><span class="p">cat-harness/skills/authoring-who-smart-guidelines/smart-stack-layering.md</span></td>
+  <td>Which of the five layers a WHO SMART asset, rule, script or page belongs to, and the one question that settles it.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/terminology-management.md"><code>terminology-management</code></a><br><span class="p">cat-harness/skills/authoring-who-smart-guidelines/terminology-management.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/toolchain-ownership.md"><code>toolchain-ownership</code></a><br><span class="p">cat-harness/skills/authoring-who-smart-guidelines/toolchain-ownership.md</span></td>
+  <td>Taking ownership of the WHO smart-base scripts in a litlfred fork, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/content-lifecycle/content-author.md"><code>content-author</code></a><br><span class="p">cat-harness/skills/content-lifecycle/content-author.md</span></td>
@@ -210,16 +282,56 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td><span class="none">no description in the artefact</span></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/content-lifecycle/sample-import.md"><code>sample-import</code></a><br><span class="p">cat-harness/skills/content-lifecycle/sample-import.md</span></td>
+  <td>Testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store: scope it, let materialize-remote gate it, land it in the library (permanent) or the kept, unpublished trashcan (trial),…</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-data-model.md"><code>crdm-data-model</code></a><br><span class="p">cat-harness/skills/crdm/crdm-data-model.md</span></td>
+  <td>The CRDM data-modelling phase — when in the requirements process a model is built, what it is built from, who confirms it, and what it hands to the phases either side.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-detect.md"><code>crdm-detect</code></a><br><span class="p">cat-harness/skills/crdm/crdm-detect.md</span></td>
+  <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-requirements-workflow.md"><code>crdm-requirements-workflow</code></a><br><span class="p">cat-harness/skills/crdm/crdm-requirements-workflow.md</span></td>
+  <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/activity-log.md"><code>activity-log</code></a><br><span class="p">cat-harness/skills/folio-core/activity-log.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/adjudication.md"><code>adjudication</code></a><br><span class="p">cat-harness/skills/folio-core/adjudication.md</span></td>
+  <td>Settle a review that reached no mechanical or consensus agreement.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/adopt-methodology-from-source.md"><code>adopt-methodology-from-source</code></a><br><span class="p">cat-harness/skills/folio-core/adopt-methodology-from-source.md</span></td>
+  <td>The general process for turning a shared paper, book or standard into an adopted methodology: establish origin and licence, ingest the source, find and summarize related beans and issues and ask whether to coordinate, r…</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/agent-memory.md"><code>agent-memory</code></a><br><span class="p">cat-harness/skills/folio-core/agent-memory.md</span></td>
   <td>Durable memory for a subagent — the three entry labels and what each promises, why entries are authored as graph nodes rather than in the generated file, the injection budget that silently truncates, and archiving as th…</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/archiving-arxiv.md"><code>archiving-arxiv</code></a><br><span class="p">cat-harness/skills/folio-core/archiving-arxiv.md</span></td>
+  <td>Materializing a paper from arXiv — why the version suffix is part of the identity rather than a detail, what to keep beside the PDF, and which facts must be read from the published API rather than recalled.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/archiving-web-pages.md"><code>archiving-web-pages</code></a><br><span class="p">cat-harness/skills/folio-core/archiving-web-pages.md</span></td>
+  <td>Capturing a web page so it can be cited later — the two fidelities, what each one is evidence of, and why capturing only one of them loses something that cannot be recovered.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/asset-extraction.md"><code>asset-extraction</code></a><br><span class="p">cat-harness/skills/folio-core/asset-extraction.md</span></td>
   <td>Reading a container — a zip, a PDF, a saved web page — into the knowledge graph.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/associate-harness.md"><code>associate-harness</code></a><br><span class="p">cat-harness/skills/folio-core/associate-harness.md</span></td>
+  <td>Declare a harness this one knows about and does not hold (`associatedHarnesses`): a folio in another repository, published at its own site.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/audit-coverage.md"><code>audit-coverage</code></a><br><span class="p">cat-harness/skills/folio-core/audit-coverage.md</span></td>
+  <td>Which audits reach which KIND of node, measured rather than inferred.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/bean-blocking.md"><code>bean-blocking</code></a><br><span class="p">cat-harness/skills/folio-core/bean-blocking.md</span></td>
@@ -266,8 +378,16 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>A red workflow looks exactly like a green one from inside a checkout.</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/code-lists.md"><code>code-lists</code></a><br><span class="p">cat-harness/skills/folio-core/code-lists.md</span></td>
+  <td>Author, extend or consume a code list: a closed set of codes, each with a label, a definition and a source, kept as a node and published as SKOS.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/code-node-review.md"><code>code-node-review</code></a><br><span class="p">cat-harness/skills/folio-core/code-node-review.md</span></td>
   <td>Review the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/` — for the joins a reader cannot see: that a node declares what it is, that what it names resol…</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/communication-language.md"><code>communication-language</code></a><br><span class="p">cat-harness/skills/folio-core/communication-language.md</span></td>
+  <td>Determine the language an agent SPEAKS IN — the language of a turn, as against the language of content.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/compute-integration-watcher.md"><code>compute-integration-watcher</code></a><br><span class="p">cat-harness/skills/folio-core/compute-integration-watcher.md</span></td>
@@ -302,6 +422,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Coordinate work across multiple in-flight Claude PRs working toward a shared goal.</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/corpus-grep.md"><code>corpus-grep</code></a><br><span class="p">cat-harness/skills/folio-core/corpus-grep.md</span></td>
+  <td>Pre-declaration corpus check.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/covered-is-not-reachable.md"><code>covered-is-not-reachable</code></a><br><span class="p">cat-harness/skills/folio-core/covered-is-not-reachable.md</span></td>
   <td>A skill can be satisfied by the neighbours of its mechanism while the mechanism is reachable from no Tool node.</td>
 </tr>
@@ -316,6 +440,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/decision-comparison.md"><code>decision-comparison</code></a><br><span class="p">cat-harness/skills/folio-core/decision-comparison.md</span></td>
   <td>Lay a decision out as a comparison before you ask it — what each option does, its pro, its con, what it changes downstream, and how reversible it is — in the prose that precedes the question, never inside the option lab…</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/decision-methodology-selector.md"><code>decision-methodology-selector</code></a><br><span class="p">cat-harness/skills/folio-core/decision-methodology-selector.md</span></td>
+  <td>Given a decision context, select the applicable methodology from the methodology graph.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/deletion-requires-confirmation.md"><code>deletion-requires-confirmation</code></a><br><span class="p">cat-harness/skills/folio-core/deletion-requires-confirmation.md</span></td>
@@ -362,6 +490,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td><span class="none">no description in the artefact</span></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/evidence-review.md"><code>evidence-review</code></a><br><span class="p">cat-harness/skills/folio-core/evidence-review.md</span></td>
+  <td>Evidence review as an instance of untainted verification — the separation of the appraising party from the drafting party, what recurring surveillance in a living guideline shares with a stale QA verdict, and which of g…</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/exposition-swarm-drain.md"><code>exposition-swarm-drain</code></a><br><span class="p">cat-harness/skills/folio-core/exposition-swarm-drain.md</span></td>
   <td>Drain the paper's narrative blocks through an exposition-quality swarm: a small fleet of grouped-batch agents each audit their batch against the Milnor exposition gate (expo-milnor-clarity, H1–H8) plus the deterministic…</td>
 </tr>
@@ -370,12 +502,20 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Manages feature-branch staging deployments under gh-pages/STAGING/&lt;branch-slug&gt;/ for before/after publication review comparison.</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/filing-dublin-core.md"><code>filing-dublin-core</code></a><br><span class="p">cat-harness/skills/folio-core/filing-dublin-core.md</span></td>
+  <td>Cataloguing a source as it arrives — which facts are `dcterms`, which are this project's own, and why the line is drawn by the vocabulary rather than by convenience.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/flushable-containers.md"><code>flushable-containers</code></a><br><span class="p">cat-harness/skills/folio-core/flushable-containers.md</span></td>
   <td>A flushable container is a named store that accumulates by design — a trash you can recover from, a review preview, a console log.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/fsh-guts.md"><code>fsh-guts</code></a><br><span class="p">cat-harness/skills/folio-core/fsh-guts.md</span></td>
   <td>The trashcan that is kept — where work that is not wanted goes instead of being deleted, what declares itself there, and what does NOT belong.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/generalise-the-fix.md"><code>generalise-the-fix</code></a><br><span class="p">cat-harness/skills/folio-core/generalise-the-fix.md</span></td>
+  <td>You have a fix.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/getting-started.md"><code>getting-started</code></a><br><span class="p">cat-harness/skills/folio-core/getting-started.md</span></td>
@@ -388,6 +528,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/glossary-build.md"><code>glossary-build</code></a><br><span class="p">cat-harness/skills/folio-core/glossary-build.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/glossary-terms.md"><code>glossary-terms</code></a><br><span class="p">cat-harness/skills/folio-core/glossary-terms.md</span></td>
+  <td>Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/goal-review.md"><code>goal-review</code></a><br><span class="p">cat-harness/skills/folio-core/goal-review.md</span></td>
@@ -416,6 +560,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/instance-kinds.md"><code>instance-kinds</code></a><br><span class="p">cat-harness/skills/folio-core/instance-kinds.md</span></td>
   <td>How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH kind m…</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/instance-publication.md"><code>instance-publication</code></a><br><span class="p">cat-harness/skills/folio-core/instance-publication.md</span></td>
+  <td>Every asset carries an id and a version and sits in DRAFT.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/integration-audit.md"><code>integration-audit</code></a><br><span class="p">cat-harness/skills/folio-core/integration-audit.md</span></td>
@@ -462,6 +610,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Taking a file from `uploads/` to `library/&lt;bib-slug&gt;/` — which rung to reach for and why, what a complete L1 entry holds, and why an inferred structure is refused rather than guessed.</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/literature-search.md"><code>literature-search</code></a><br><span class="p">cat-harness/skills/folio-core/literature-search.md</span></td>
+  <td>Finding the source a node cites but does not hold — memory first, then this repository, then open-access services.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/markdown-render-check.md"><code>markdown-render-check</code></a><br><span class="p">cat-harness/skills/folio-core/markdown-render-check.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
 </tr>
@@ -490,6 +642,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>The eight hallmarks of mathematical exposition, scored 0-2 with sixteen the only passing total, derived from John Milnor's &quot;Link Groups&quot; (1954).</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/narrative-asserts-code.md"><code>narrative-asserts-code</code></a><br><span class="p">cat-harness/skills/folio-core/narrative-asserts-code.md</span></td>
+  <td>Judge whether the prose side of a declared prose ↔ code pair still says what the code does, when the machine could not settle it.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/one-voice-audit.md"><code>one-voice-audit</code></a><br><span class="p">cat-harness/skills/folio-core/one-voice-audit.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
 </tr>
@@ -508,6 +664,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/opening-brief.md"><code>opening-brief</code></a><br><span class="p">cat-harness/skills/folio-core/opening-brief.md</span></td>
   <td>Brief a bean or a topic BEFORE touching anything: what you are doing and why it is worth doing, what you already know and with what provenance, how you plan to do it and what would falsify the approach.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/package-release.md"><code>package-release</code></a><br><span class="p">cat-harness/skills/folio-core/package-release.md</span></td>
+  <td>Cut a release of a repository's packages: decide the next version, write the release notes, tag, and create the release — for any repository, the platform or a folio.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/pending-show.md"><code>pending-show</code></a><br><span class="p">cat-harness/skills/folio-core/pending-show.md</span></td>
@@ -538,6 +698,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Distinguish PRODUCTION (derived-only, no fits) from EXPLORATORY (empirical-fit probes OK as shape-hints) from NUMEROLOGY (post-hoc fits to known constants).</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/publish-verification.md"><code>publish-verification</code></a><br><span class="p">cat-harness/skills/folio-core/publish-verification.md</span></td>
+  <td>Verify what a publish produced BEFORE it is deployed, and alert the publication manager whenever any step after the publish button fails — the verifier set, how to add a verifier, what is in scope, and how the publicati…</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/qa-report-signing.md"><code>qa-report-signing</code></a><br><span class="p">cat-harness/skills/folio-core/qa-report-signing.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
 </tr>
@@ -554,6 +718,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>A folio's README is the author's file; the platform owns only the marked regions it generates.</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/related-work-coordination.md"><code>related-work-coordination</code></a><br><span class="p">cat-harness/skills/folio-core/related-work-coordination.md</span></td>
+  <td>Before new work takes shape, find the work it touches.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/render-logging.md"><code>render-logging</code></a><br><span class="p">cat-harness/skills/folio-core/render-logging.md</span></td>
   <td>Log every render to the publish branch — what was published, removed, restored or deliberately retained — to an append-only log that lives beside what it describes.</td>
 </tr>
@@ -562,12 +730,24 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td><span class="none">no description in the artefact</span></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/rendered-verification.md"><code>rendered-verification</code></a><br><span class="p">cat-harness/skills/folio-core/rendered-verification.md</span></td>
+  <td>Confirm a UI change by LOOKING at it in a browser and sending the screenshots to the author, rather than describing it.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/repo-conversion.md"><code>repo-conversion</code></a><br><span class="p">cat-harness/skills/folio-core/repo-conversion.md</span></td>
   <td>Lay folio-assistant over a repository that already exists, without losing or silently moving what is in it.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/retry-backoff.md"><code>retry-backoff</code></a><br><span class="p">cat-harness/skills/folio-core/retry-backoff.md</span></td>
   <td>Every error gets a falling-off retry rate — each wait doubles, with jitter.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/review-comments.md"><code>review-comments</code></a><br><span class="p">cat-harness/skills/folio-core/review-comments.md</span></td>
+  <td>Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/review-heatmap.md"><code>review-heatmap</code></a><br><span class="p">cat-harness/skills/folio-core/review-heatmap.md</span></td>
+  <td>The review page's heat map: a section-by-metric table that tells a reviewer of a large document where to look first.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/role-model.md"><code>role-model</code></a><br><span class="p">cat-harness/skills/folio-core/role-model.md</span></td>
@@ -598,8 +778,20 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Staging preview and before/after comparison for content review.</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/surprise-to-corpus.md"><code>surprise-to-corpus</code></a><br><span class="p">cat-harness/skills/folio-core/surprise-to-corpus.md</span></td>
+  <td>What was unexpected in that task, and does it belong in the corpus? Logical surprise is the detectable kind, recurrence is the filter that stops this generating noise every turn, and the agent PROMPTS — it never writes…</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/swarm-management.md"><code>swarm-management</code></a><br><span class="p">cat-harness/skills/folio-core/swarm-management.md</span></td>
   <td>Decide whether to run parallel agents at all, and if so how many, at which model level, against which decomposition.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/swimlane-glossary.md"><code>swimlane-glossary</code></a><br><span class="p">cat-harness/skills/folio-core/swimlane-glossary.md</span></td>
+  <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/swot-analysis.md"><code>swot-analysis</code></a><br><span class="p">cat-harness/skills/folio-core/swot-analysis.md</span></td>
+  <td>Running a SWOT situation analysis — the four activities of `swot-analysis.bpmn`, what each step must produce, and the one thing the technique must never be used for.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/symbiotic-interaction.md"><code>symbiotic-interaction</code></a><br><span class="p">cat-harness/skills/folio-core/symbiotic-interaction.md</span></td>
@@ -610,12 +802,20 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Extract tabular metadata from a CSV or spreadsheet as CSVW — tables, rows, headers, columns, datatypes and location on sheet — recording every field as determined or explicitly undetermined.</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/task-authorization.md"><code>task-authorization</code></a><br><span class="p">cat-harness/skills/folio-core/task-authorization.md</span></td>
+  <td>The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content…</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/technical-documentation.md"><code>technical-documentation</code></a><br><span class="p">cat-harness/skills/folio-core/technical-documentation.md</span></td>
+  <td>Write and review technical documentation of standards, software and knowledge assets as an SDO writes.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/test-engineer.md"><code>test-engineer</code></a><br><span class="p">cat-harness/skills/folio-core/test-engineer.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/theme-ui-review.md"><code>theme-ui-review</code></a><br><span class="p">cat-harness/skills/folio-core/theme-ui-review.md</span></td>
-  <td>Review what the MVP actually renders — accessibility, branding, languages — once stakeholders have accepted it.</td>
+  <td>Review graphical assets AS THEY ARE INGESTED, in the context of the website or app design they are for — accessibility, branding, languages — to determine what the assets and the UI will be.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/todo-manager.md"><code>todo-manager</code></a><br><span class="p">cat-harness/skills/folio-core/todo-manager.md</span></td>
@@ -638,6 +838,14 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit.</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/uml-overview.md"><code>uml-overview</code></a><br><span class="p">cat-harness/skills/folio-core/uml-overview.md</span></td>
+  <td>Read, regenerate or extend the UML class diagrams of a harness: one per harness and one per named sub-graph it declares, plus the harness object model.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/untainted-verification.md"><code>untainted-verification</code></a><br><span class="p">cat-harness/skills/folio-core/untainted-verification.md</span></td>
+  <td>The party that produced an artefact does not write the verdict on it.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/untrusted-input.md"><code>untrusted-input</code></a><br><span class="p">cat-harness/skills/folio-core/untrusted-input.md</span></td>
   <td>Keep attacker-controlled values out of program text — in GitHub Actions, in command lines, in anything that is parsed before it runs.</td>
 </tr>
@@ -658,6 +866,14 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Adjudicate `uses-editorial-completeness` — read a block as a reader would and judge whether its `uses[]` is complete and genuinely expository.</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/visual-diff.md"><code>visual-diff</code></a><br><span class="p">cat-harness/skills/folio-core/visual-diff.md</span></td>
+  <td>Pictures of a changed figure, diagram or table, before and after, and how much of it changed.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/vocabulary-authority.md"><code>vocabulary-authority</code></a><br><span class="p">cat-harness/skills/folio-core/vocabulary-authority.md</span></td>
+  <td>One vocabulary is authoritative for one kind of fact, and every other is a derived rendering reached by a declared mapping.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/voice-authoring-guidance.md"><code>voice-authoring-guidance</code></a><br><span class="p">cat-harness/skills/folio-core/voice-authoring-guidance.md</span></td>
   <td>Load the active voices' rules BEFORE writing, so a block is drafted in the register it will be reviewed against.</td>
 </tr>
@@ -676,6 +892,14 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/where-a-proposal-goes.md"><code>where-a-proposal-goes</code></a><br><span class="p">cat-harness/skills/folio-core/where-a-proposal-goes.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/where-does-this-go.md"><code>where-does-this-go</code></a><br><span class="p">cat-harness/skills/folio-core/where-does-this-go.md</span></td>
+  <td>The router for filing decisions.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/wireframe-design-review.md"><code>wireframe-design-review</code></a><br><span class="p">cat-harness/skills/folio-core/wireframe-design-review.md</span></td>
+  <td>Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both vie…</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-document-adapter/document-authoring.md"><code>document-authoring</code></a><br><span class="p">cat-harness/skills/folio-document-adapter/document-authoring.md</span></td>
@@ -894,24 +1118,28 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Drive a tangled graph toward a clean partition, so a sub-graph can be split off when it grows too large or when a business reason separates it.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/fhir-client-operations.md"><code>fhir-client-operations</code></a><br><span class="p">cat-harness/skills/remote-stubs/fhir-client-operations.md</span></td>
-  <td>STUB.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/graph-management/graph-rendering.md"><code>graph-rendering</code></a><br><span class="p">cat-harness/skills/graph-management/graph-rendering.md</span></td>
+  <td>Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/hypothesis-generation.md"><code>hypothesis-generation</code></a><br><span class="p">cat-harness/skills/remote-stubs/hypothesis-generation.md</span></td>
-  <td>STUB.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/hypothesis-generation/hypothesis-generation.md"><code>hypothesis-generation</code></a><br><span class="p">cat-harness/skills/hypothesis-generation/hypothesis-generation.md</span></td>
+  <td>Formulate evidence-bounded scientific questions, candidate hypotheses, rival explanations, causal or associational claims, discriminating predictions, measurements, and preregistration-ready analysis plans.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/scientific-critical-thinking.md"><code>scientific-critical-thinking</code></a><br><span class="p">cat-harness/skills/remote-stubs/scientific-critical-thinking.md</span></td>
-  <td>STUB.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg-navigation/kg-navigation.md"><code>kg-navigation</code></a><br><span class="p">cat-harness/skills/kg-navigation/kg-navigation.md</span></td>
+  <td>How a cold agent finds and loads the skill that governs its task.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/scientific-visualization.md"><code>scientific-visualization</code></a><br><span class="p">cat-harness/skills/remote-stubs/scientific-visualization.md</span></td>
-  <td>STUB.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/raci/raci.md"><code>raci</code></a><br><span class="p">cat-harness/skills/raci/raci.md</span></td>
+  <td>RACI over this repository's processes — who is Responsible, Accountable, Consulted and Informed for each activity.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/smart-launch.md"><code>smart-launch</code></a><br><span class="p">cat-harness/skills/remote-stubs/smart-launch.md</span></td>
-  <td>STUB.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/scientific-critical-thinking/scientific-critical-thinking.md"><code>scientific-critical-thinking</code></a><br><span class="p">cat-harness/skills/scientific-critical-thinking/scientific-critical-thinking.md</span></td>
+  <td>Evaluate scientific claims and evidence quality.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/scientific-visualization/scientific-visualization.md"><code>scientific-visualization</code></a><br><span class="p">cat-harness/skills/scientific-visualization/scientific-visualization.md</span></td>
+  <td>Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/create-sticky-note.md"><code>create-sticky-note</code></a><br><span class="p">cat-harness/skills/theming/create-sticky-note.md</span></td>
@@ -974,16 +1202,24 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>An agent PLAYING a state machine rather than an engine executing one.</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/specification-compiled-agents.md"><code>specification-compiled-agents</code></a><br><span class="p">cat-harness/skills/workflow/specification-compiled-agents.md</span></td>
+  <td>When a diagram already says what the process is, the model should not be planning it.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/workflow-state.md"><code>workflow-state</code></a><br><span class="p">cat-harness/skills/workflow/workflow-state.md</span></td>
   <td>Where a running process keeps what it knows, and which store answers which question.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/src/skills/corpus-grep.md"><code>corpus-grep</code></a><br><span class="p">cat-harness/src/skills/corpus-grep.md</span></td>
-  <td>Pre-declaration corpus check.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/deep-document-research.md"><code>deep-document-research</code></a><br><span class="p">folio-assistant-core/skills/deep-document-research.md</span></td>
+  <td>Answer a question from a corpus this folio already holds, iteratively, and stop on a stated condition.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/kg-navigation/skills/kg-navigation.md"><code>kg-navigation</code></a><br><span class="p">kg-navigation/skills/kg-navigation.md</span></td>
-  <td>How a cold agent finds and loads the skill that governs its task.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/copy-out-materialized.md"><code>copy-out-materialized</code></a><br><span class="p">large-datasets/skills/copy-out-materialized.md</span></td>
+  <td>Materialized content is read-only.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/materialize-on-demand.md"><code>materialize-on-demand</code></a><br><span class="p">large-datasets/skills/materialize-on-demand.md</span></td>
+  <td>After bootstrap, a person asks for part of a remote subgraph to be held locally.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/materialize-remote.md"><code>materialize-remote</code></a><br><span class="p">large-datasets/skills/materialize-remote.md</span></td>
