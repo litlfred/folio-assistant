@@ -1,0 +1,51 @@
+# Files a GENERATOR owns outright — never hand-edited, always rewritten whole.
+#
+# Bean `folio-assistant-1swy`. Measured 2026-09-24 over three days:
+#
+#   106 commits  cat-harness/docs/cat-harness/docs-auto/index/index.html
+#    45 commits  cat-harness/docs/glossary/index.md            (1.5 MB)
+#    18 commits  cat-harness/test/results/audit-coverage.qa-results.json
+#
+# Merging one branch cost THREE rounds on one of them in a single sitting. Every
+# concurrent pull request pays a resolution round on a file that is regenerated
+# from the whole corpus anyway, and every review carries a 1.5 MB diff nobody
+# reads.
+#
+# ## Two attributes, both portable — no `git config` required
+#
+# `linguist-generated=true`  GitHub collapses it in review, so the diff stops
+#                            burying the change somebody is actually reviewing.
+# `-diff -merge`             git stops attempting a line-by-line merge on a file
+#                            no human edits. The conflict is then ONE clean
+#                            conflict to resolve by regenerating, rather than
+#                            markers buried inside a megabyte.
+#
+# A merge driver that auto-resolved would need `git config merge.*.driver`, which
+# is per-checkout: it would work here and nowhere else, including CI. Deliberately
+# not that.
+#
+# ## Why this is safe, and it rests on a checked fact rather than on care
+#
+# All three are gated in CI — `check:glossary`, `docs:auto:check` and
+# `audit:coverage:require-all`. A resolution that takes the wrong side therefore
+# CANNOT SHIP: it reddens, and the repair is one regeneration command. Without
+# those gates this entry would be a way to lose work quietly.
+#
+# ## What is deliberately NOT here, and it is the whole discipline
+#
+# **Not `cat-harness/test/results/**`**, though 840 generated files live there.
+# `kg-audit` reads its own sidecars back — `readAttestations(sidecarPath(r))` —
+# so a `kg-qa` sidecar carries adjudications that an earlier run or a person
+# recorded. It is not purely generated, and `-merge` on one would discard an
+# attestation with nothing said. `audit-coverage.qa-results.json` is named
+# individually for exactly that reason: its producer reads the committed file
+# only to compare for staleness, and writes a fresh document every time.
+#
+# So the test of whether a file belongs here is NOT "is it generated" but
+# **"does its producer carry anything forward from the existing file"**. A glob
+# over a generated directory is how the wrong answer gets in.
+# `scripts/tests/gitattributes.test.ts` holds that line.
+
+cat-harness/docs/glossary/index.md                      linguist-generated=true -diff -merge
+cat-harness/docs/cat-harness/docs-auto/**               linguist-generated=true -diff -merge
+cat-harness/test/results/audit-coverage.qa-results.json linguist-generated=true -diff -merge
