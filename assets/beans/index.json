@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 344,
+      "count": 345,
       "unit": "beans"
     }
   },
@@ -4727,6 +4727,20 @@
       "updatedAt": "2026-09-20T18:48:38Z",
       "preview": "Owner, 2026-09-20, verbatim — this is the largest architectural statement in\nthe session and paraphrasing it would lose the parts that constrain the design:\n\n> these avatars should aslso be the default display background for their\n> corresponding docs/ (ghpages) rendering, on which panels and folios and what\n> not renders. kindof like the shared miro board background... the harness\n> instnace disp",
       "file": "beans/defs/folio-assistant-yj32--harness-as-interface-a-harness-instances-default-r.md"
+    },
+    {
+      "id": "folio-assistant-ymsu",
+      "title": "kg:detangle:check CANNOT FAIL inside bun run gates — bun test repairs the sidecar 1140 lines earlier in the same run",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T18:38:34Z",
+      "updatedAt": "2026-09-25T18:38:34Z",
+      "preview": "Measured 2026-09-25, while establishing whether PR #1348 still had anything to\nfix. It is the ROOT CAUSE of #1348's own subject: the detangle staleness that\nbroke `main` was invisible to `bun run gates` and surfaced only because a test\nrun left the working tree dirty.\n\n## The mechanism\n\n`bun run gates` runs 152 gates in order. Gate 1 is `bun test`. Somewhere in that\nsuite the detangle **writer** r",
+      "file": "beans/defs/folio-assistant-ymsu--kgdetanglecheck-cannot-fail-inside-bun-run-gates-b.md"
     },
     {
       "id": "folio-assistant-yo4m",
