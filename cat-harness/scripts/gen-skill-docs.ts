@@ -252,6 +252,12 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   workflow: "Workflow & process (workflow)",
   "graph-management": "Graph management (graph-management)",
   theming: "Theming (theming)",
+  // Keyed by basename: a package subdirectory of the declared `skills/`,
+  // like `theming` above. Bean `6bhf`, owner 2026-09-25 — "bean as
+  // ceybeesquity sub KG in tools ... consolidate". The heading names the
+  // BOUNDARY axis rather than a list of attacks, because that is the split
+  // the package is built on and a reader meeting it here should see which.
+  security: "Security — values crossing a boundary (security)",
   "folio-document-adapter": "Document adapter (folio-document-adapter)",
   "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
   "authoring-math": "Mathematical authoring (authoring-math)",
