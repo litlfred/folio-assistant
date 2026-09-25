@@ -19,7 +19,7 @@ One user request to classify: is it a feature request (a platform capability cha
 | `text` | string | **yes** | The request as the user wrote it — an issue title and body, or a chat turn. (minLength: 1) |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/crdm-detect/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/crdm-detect/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/crdm-detect/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/crdm-detect/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -32,4 +32,4 @@ The verdict on one request. `fires` is the decision; `categories` and `excluded`
 | `excluded` | boolean | **yes** | True when an exclusion applied (the request matched a signal but is not a feature request, e.g. a content edit). An excluded request does not fire. |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/crdm-detect/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/crdm-detect/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/crdm-detect/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/crdm-detect/output.schema.json){: .fa-edit-source }
