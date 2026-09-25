@@ -57,10 +57,23 @@ entry's alternative ("somebody establishes this was a one-off GitHub delivery
 failure") is now closed off.
 
 `9132c5ee7a4` was pushed to `claude/fix-detangle-sidecar-065p`, the open head of
-PR #1348, at **19:02:55Z**. **No workflow fired for it** — not
-`code-quality-gates`, not `jsonld-gen-check`, not `feature-staging`. The latest
-run of every workflow stayed on the previous SHA, `e82eb541c47`, for **14
-minutes**, until a later commit was pushed.
+PR #1348, at **19:02:55Z**. **No workflow fired for it.** The latest run of every
+workflow stayed on the previous SHA, `e82eb541c47`, for **14 minutes**, until a
+later commit was pushed.
+
+**Two workflows were DUE and neither fired** — stated precisely, because "no
+workflow fired" and "no workflow was due" are the two readings this bean exists
+to keep apart, and a count of workflows is worthless without their path filters:
+
+| workflow | due for this push? | fired |
+|---|---|---|
+| `code-quality-gates` | **yes** — its `on:` block carries no `paths:` filter, by design | no |
+| `feature-staging` | **yes** — the push touched `cat-harness/docs/**` (4 files) and `cat-harness/skills/**` (1) | no |
+| `jsonld-gen-check` | **no** — matched none of its 15 paths | n/a |
+
+I first wrote this entry naming all three as "did not fire". That was an
+overclaim: the third was never due. Corrected before the entry was merged. Two
+due and zero fired is the stronger statement anyway, because it is checkable.
 
 Ruled out the same way as #1241, and the checks all came back the same:
 
@@ -76,12 +89,18 @@ Ruled out the same way as #1241, and the checks all came back the same:
 This is what #1241 could not supply, and it narrows the cause considerably.
 At **19:13:37Z**, ten minutes into the silence, a push to a *different* open PR
 branch (`claude/0uu2-declare-deploy-tools`, PR #1327) fired **three** workflows
-within seconds — `code-quality-gates`, `jsonld-gen-check` and
-`feature-staging`, all created at `19:13:37`.
+within seconds — `code-quality-gates`, `jsonld-gen-check` and `feature-staging`,
+all created at `19:13:37`.
+
+All three were genuinely due there, checked the same way rather than assumed:
+that push carried 633 files, of which 62 match `cat-harness/scripts/**`, 201
+match `cat-harness/docs/**` and 8 match `cat-harness/content/**/*.ts`. So the
+control is **3 due / 3 fired** against the failure's **2 due / 0 fired**.
 
 | | push at 19:02:55 | control push at 19:13:37 |
 |---|---|---|
 | branch | `claude/fix-detangle-sidecar-065p` (PR #1348) | `claude/0uu2-declare-deploy-tools` (PR #1327) |
+| workflows DUE (by path filter) | 2 | 3 |
 | workflows fired | **0** | **3**, within seconds |
 | ref on remote afterwards | yes | yes |
 
