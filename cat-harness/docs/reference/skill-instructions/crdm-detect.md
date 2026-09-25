@@ -244,7 +244,7 @@ that the *record* is collaborative, not that the *work* pauses.
 
 ## Related work first
 
-When a requirement is **initiated or updated** in chat, find the related work before anything else. That means beans, issues and open PRs, each categorized and summarized, followed by one question to the user about whether and how to coordinate. The procedure is [`related-work-coordination`](../folio-core/related-work-coordination.md), and `crdm-issue-linking.bpmn` calls it as `Process_RelatedWork` (issue #1023).
+When a requirement is **initiated or updated** in chat, find the related work before anything else. That means beans, issues and open PRs, each categorized and summarized, followed by one question to the user about whether and how to coordinate. The procedure is [`related-work-coordination`](related-work-coordination.md), and `crdm-issue-linking.bpmn` calls it as `Process_RelatedWork` (issue #1023).
 {% endraw %}
 
 ## Processes that run this skill

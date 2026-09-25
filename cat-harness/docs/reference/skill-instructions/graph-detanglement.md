@@ -100,7 +100,7 @@ skill is about it.
 The sub-graph carries its own declaration, its own namespace, its own published
 artefact. `bootstrap/` is the demonstrated case: its own declaration, its
 own `bootstrap:` namespace — the prefix IS the stub, see
-[`kg-export`](../folio-core/kg-export.md) §"A prefix is the stub" — its own
+[`kg-export`](kg-export.md) §"A prefix is the stub" — its own
 graph document.
 
 ### 4. Extract

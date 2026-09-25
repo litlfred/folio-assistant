@@ -100,7 +100,7 @@ search*. Those are different, and only the first is a fact about the folio.
   measured, and where this rendering stops.
 - `library-ingestion`, `document-intake` — how the corpus this reads gets
   there.
-- [`literature-search`](../../cat-harness/skills/folio-core/literature-search.md)
+- [`literature-search`](literature-search.md)
   — searching for sources not yet held, which is the other direction.
 {% endraw %}
 
