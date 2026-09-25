@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 338,
+      "count": 344,
       "unit": "beans"
     }
   },
@@ -1086,7 +1086,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T15:38:03Z",
-      "updatedAt": "2026-09-25T15:38:03Z",
+      "updatedAt": "2026-09-25T16:43:37Z",
       "preview": "## Body added by a gate fix, not by this bean's author\n\n**This is not the author's scoping.** `check:bean-bodies` was red on `main`\nwith `[empty-body]: \"todo\" with front matter and nothing else — a sibling\nreading the store learns nothing about it`, and `check:bean-parents` was red\nbecause this bean carried no `parent:`. Both were fixed here as part of\nclearing `main`'s red gates, on the owner's \"",
       "file": "beans/defs/folio-assistant-7e59--ingest-decision-making-methodologies-skill-takes-d.md"
     },
@@ -2129,6 +2129,20 @@
       "file": "beans/defs/folio-assistant-fgkb--smart-base-clear-qouuploads-once-the-bytes-have-a.md"
     },
     {
+      "id": "folio-assistant-fx5r",
+      "title": "The PR endpoint keeps serving a merged PR's pre-merge view, and merge_pull_request reports success on it",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T18:09:14Z",
+      "updatedAt": "2026-09-25T18:09:14Z",
+      "preview": "## What happened, 2026-09-25\n\nI reported merging PR #1317. **It had been merged an hour earlier, by somebody\nelse.** Every check I made before saying so came from the PR endpoint, and the\nPR endpoint was serving a view from before the merge — with nothing marking it\nstale.\n\n## The measurements, in the order they misled me\n\nPR #1317's true state, read later from the same endpoint:\n\n```\nstate=closed",
+      "file": "beans/defs/folio-assistant-fx5r--the-pr-endpoint-keeps-serving-a-merged-prs-pre-mer.md"
+    },
+    {
       "id": "folio-assistant-fz39",
       "title": "DOCUMENT SITE: Markdown tables render as raw pipe text — build-document-site has no GFM (needs remark-gfm; owner decides)",
       "status": "completed",
@@ -2213,6 +2227,20 @@
       "file": "beans/defs/folio-assistant-gpdo--compiled-artefact-caching-olean-for-mathlib-and-th.md"
     },
     {
+      "id": "folio-assistant-gr0r",
+      "title": "A link into the bean store breaks when the bean is ARCHIVED — the path moves, nothing re-points it",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:21:47Z",
+      "updatedAt": "2026-09-25T17:47:29Z",
+      "preview": "Found 2026-09-25 while closing `mi97`'s bean-store box.\n\n`docs/translation-support.md` links four beans. Three are in `beans/defs/`;\n`folio-assistant-p2en` is `completed` and lives in `beans/defs/archive/`, so\nthe link written when it was open now points at nothing.\n\n**This is not a typo, it is a shape.** Completing a bean MOVES its file, and\nevery reference to that file — from a document, an issu",
+      "file": "beans/defs/folio-assistant-gr0r--a-link-into-the-bean-store-breaks-when-the-bean-is.md"
+    },
+    {
       "id": "folio-assistant-h1wq",
       "title": "JUDGE the four typed-only kinds: health, todos, interaction, issue-marks",
       "status": "completed",
@@ -2281,6 +2309,20 @@
       "updatedAt": "2026-09-24T00:49:16Z",
       "preview": "Part of s4sp (plan B3b). The 22 skills with contracts name them in front matter (input:/output:, instance path or https IRI); scripts/skill-contracts.ts is the one reader for check-tools, kg-export and kg-audit. schemaRef removed (22 JSON, schema, interface). check-tools compares JSON types of shared-name ports (mistypedContracts). kg-audit: skill-contract-resolves (critical), skill-contract-claim",
       "file": "beans/defs/folio-assistant-hj9d--b3b-1168-a-skill-names-its-inputoutput-contracts-c.md"
+    },
+    {
+      "id": "folio-assistant-hloc",
+      "title": "gen-skill-docs flattens packages but leaves 120 non-skill links addressing the source layout",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:21:48Z",
+      "updatedAt": "2026-09-25T16:22:33Z",
+      "preview": "Measured 2026-09-25, after `mi97` took `check:subgraphs`' unresolved-link count\nin `docs/` from **246** to **120**.\n\nThe 120 that remain are NOT published-tree addresses, which is what the\n`siteResolved` bucket assumes of them. Classified by target:\n\n| target kind | count |\n|---|---|\n| directory or generated path | 33 |\n| `.md` | 32 |\n| `.html` | 19 |\n| `.bpmn` | 17 |\n| `.ts` | 12 |\n| `.json` | 4 ",
+      "file": "beans/defs/folio-assistant-hloc--gen-skill-docs-flattens-packages-but-leaves-120-no.md"
     },
     {
       "id": "folio-assistant-hs08",
@@ -2812,7 +2854,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T17:06:16Z",
-      "updatedAt": "2026-09-20T17:06:37Z",
+      "updatedAt": "2026-09-25T16:21:36Z",
       "preview": "Surfaced 2026-09-20 by declaring `docs/` as a graph directory — 241 markdown\nfiles that were, until then, invisible to every declaration-driven consumer.\n`check:subgraphs` walked them for the first time and found 171 links that do\nnot resolve in the source tree.\n\nThey are NOT one problem. Measured, by trying each repair against disk:\n\n| shape | count | example |\n|---|---|---|\n| one `../` too many ",
       "file": "beans/defs/folio-assistant-mi97--audit-the-171-unresolved-links-in-docs-23-carry-on.md"
     },
@@ -3369,16 +3411,30 @@
     {
       "id": "folio-assistant-r8br",
       "title": "BLOCKER: pdf-images classifies browser-print nav icons as figures, so 7 documents cannot be promoted",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:36:29Z",
-      "updatedAt": "2026-09-21T14:02:42Z",
+      "updatedAt": "2026-09-25T16:36:33Z",
       "preview": "Seven of the nine agent-skill documents are staged and cannot be promoted.\nThey fail exactly one requirement — `image-descriptions` — and the images in\nquestion are not figures.\n\n## Measured 2026-09-20\n\n`Agent Skills — Google Antigravity Docs`, a **four-page** browser print:\n\n- **104 images, all classified `figure`**\n- page 1 alone carries 26\n- coverage of the first three: **0.000183, 0.000183, 0.",
       "file": "beans/defs/folio-assistant-r8br--blocker-pdf-images-classifies-browser-print-nav-ic.md"
+    },
+    {
+      "id": "folio-assistant-ramz",
+      "title": "check-context-emission scans GITIGNORED directories, so local residue fails a test about the repository",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:02:11Z",
+      "updatedAt": "2026-09-25T16:21:36Z",
+      "preview": "Found 2026-09-25 by a `goal-review` sweep, by causing it rather than reading it.\n\n`bun test` on a clean checkout of `main` reported **1 failure**:\n\n    (fail) the real corpus > every spoken prefix is bound and every own prefix is a stub\n    + \"count\": 145,\n    + \"example\": \"cat-harness/ingest-staging/agent-skills---google-antigravity-docs/manifest.jsonld\",\n    + \"prefix\": \"folio\",\n\n`cat-harness/in",
+      "file": "beans/defs/folio-assistant-ramz--check-context-emission-scans-gitignored-directorie.md"
     },
     {
       "id": "folio-assistant-rdy0",
@@ -3659,6 +3715,20 @@
       "updatedAt": "2026-09-20T15:07:23Z",
       "preview": "Owner, 2026-09-20, answering the four options put to them — first \"2+ 2\",\ncorrected immediately to:\n\n> 2+3 + recomend....\n\nand, in the same breath:\n\n> recommendatio on what to do based on curent state of where harness go to in\n> its intialzaiton. would also have harness health check badges.\n\n## What was chosen\n\n**Option 2 AND option 3, together**, plus a third thing neither option had:\n\n| part | w",
       "file": "beans/defs/folio-assistant-supn--harness-cards-become-todos-outstanding-work-a-next.md"
+    },
+    {
+      "id": "folio-assistant-syrl",
+      "title": "check-subgraphs prints '23 carry one ../ too many' as a STRING LITERAL, not a measurement",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:02:11Z",
+      "updatedAt": "2026-09-25T16:21:36Z",
+      "preview": "`cat-harness/scripts/check-subgraphs.ts:382` prints:\n\n> NOT a clean bill either — bean `mi97` audits them, and 23 carry one `../`\n> too many.\n\n**That 23 is a string literal.** It was measured once, on 2026-09-20, and\nwritten into the message. The check re-measures the TOTAL every run (it read\n171 that day and reads **246** today) but the 23 never moves, so the output\ncannot tell a reader whether a",
+      "file": "beans/defs/folio-assistant-syrl--check-subgraphs-prints-23-carry-one-too-many-as-a.md"
     },
     {
       "id": "folio-assistant-t3n8",
@@ -4405,6 +4475,20 @@
       "updatedAt": "2026-09-23T20:57:53Z",
       "preview": "_2026-09-19T00:23:43Z_ — OWNER, 2026-09-19: 'kg viewer needs to be translated too'. The viewer (scripts/kg-viewer.ts, merged in #307) emits ~30 English UI strings inline in generated HTML and JS: the facet heading 'Kind', 'Nodes', the search placeholder, 'Select a node.', 'No node matches.', 'none', 'No links to or from this node.', 'referenced by', the undeclared-property warning sentence, the co",
       "file": "beans/defs/folio-assistant-xcyh--the-kg-viewer-must-be-translated.md"
+    },
+    {
+      "id": "folio-assistant-xd1g",
+      "title": "11 root-rooted scans have no gitignore awareness — ramz's sibling audit, answered",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:21:48Z",
+      "updatedAt": "2026-09-25T16:22:33Z",
+      "preview": "`ramz`'s third box, asked and answered 2026-09-25.\n\n`ramz` fixed ONE scanner: `check-context-emission` walked the filesystem behind\na hand-written denylist and swept 145 gitignored documents as repository\ncontent. It was found by accident — a clean checkout failing a test about code\nnobody had touched — so the bean asked *\"which others?\"*.\n\n**Eleven**, under `cat-harness/scripts/`, each walking fr",
+      "file": "beans/defs/folio-assistant-xd1g--11-root-rooted-scans-have-no-gitignore-awareness-r.md"
     },
     {
       "id": "folio-assistant-xeer",
