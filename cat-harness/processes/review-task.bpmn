@@ -3,9 +3,9 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
                   id="Definitions_ReviewTask"
-                  targetNamespace="http://folio-assistant.dev/bpmn/review">
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
   <!-- ═══════════════════════════════════════════════════════════
        Review task — the GENERIC entry, and the reason the two
@@ -36,24 +36,27 @@
   <bpmn:process id="Process_Review" name="Review task" isExecutable="false">
     <bpmn:documentation>The generic review position: classify what changed, descend into the review that fits it, consolidate what comes back, and accept or send back.
 
-You are in this process for any change under review. It is a DISPATCHER — the actor takes on the inner lane's role for the call path only — which is why prose and code can both be reviewed without either reviewer having to know the other's criteria. A change that is both goes through both.
+You are in this process for any change under review. It is a DISPATCHER — the actor takes on the inner lane's role for the call path only — which is why prose and code can both be reviewed without either reviewer having to know the other's criteria. A change that is both — prose and the code it describes — takes a branch of its own, which reviews the two against each other; the gateway is exclusive and takes exactly one branch, so the earlier wording, that such a change goes through both, described a route the diagram could not take (issue #1042).
 
 The accept-or-send-back decision lives here and nowhere beneath it. The subprocesses produce findings; this is the only lane entitled to turn findings into an outcome, and keeping that single makes "who decided" answerable.</bpmn:documentation>
 
     <bpmn:laneSet id="LaneSet_Review">
       <bpmn:lane id="Lane_Reviewer" name="Reviewer / SME">
         <bpmn:documentation>Makes exactly one decision on its own — what changed, at Task_ClassifyChange — and for everything after that descends into a subprocess, taking on the narrative- or code-reviewer role for that call path only rather than carrying both statically. A change that is both visits both subprocesses in turn, and neither role widens the other.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_ChangeToReview</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ClassifyChange</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Kind</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_NarrativeReview</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Call_CodeReview</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_NarrativeCodeReview</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Join</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Consolidate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Reviewed</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_EditorDecides" name="Editors + authoring agents">
         <bpmn:documentation>Kept a separate lane on purpose, holding the one activity this diagram gives it: the reviewer who classified and judged the change is never the party that accepts it, so consolidated findings cross a lane boundary before anything is decided on them.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="editor"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_EditorDecides</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -66,10 +69,12 @@ The accept-or-send-back decision lives here and nowhere beneath it. The subproce
         makes on its own: everything after it is made inside a subprocess by
         the role that lane binds.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="semantic-review-scoping"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="semantic-review-scoping"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:exclusiveGateway id="GW_Kind" name="Prose, code,&#10;or both?"/>
+    <bpmn:exclusiveGateway id="GW_Kind" name="Prose, code,&#10;or both?">
+      <bpmn:documentation>What changed decides which review it gets, from Task_ClassifyChange's scoping. Prose alone goes to narrative review and code nodes alone to code node review. A change touching BOTH SIDES OF A DECLARED PAIR — a diagram and the workflow it implements, a skill and the code beside it — goes to the pair review, which is the only branch that reads the two against each other. Exclusive, so exactly one branch is taken.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
 
     <bpmn:callActivity id="Call_NarrativeReview" name="Narrative review" calledElement="Process_NarrativeReview">
       <bpmn:documentation>
@@ -85,6 +90,14 @@ The accept-or-send-back decision lives here and nowhere beneath it. The subproce
       </bpmn:documentation>
     </bpmn:callActivity>
 
+    <bpmn:callActivity id="Call_NarrativeCodeReview" name="Prose and the code&#10;it describes" calledElement="Process_NarrativeCodeReview">
+      <bpmn:documentation>
+        Descend into Process_NarrativeCodeReview: judge what the pair checks
+        could not settle (a stale pair, a false or undetermined claim), and
+        send a disagreement with a checker to adjudication. Issue #1042, stage C.
+      </bpmn:documentation>
+    </bpmn:callActivity>
+
     <bpmn:exclusiveGateway id="GW_Join"/>
 
     <bpmn:task id="Task_Consolidate" name="Consolidate findings">
@@ -92,7 +105,7 @@ The accept-or-send-back decision lives here and nowhere beneath it. The subproce
         One report from however many subprocesses ran. Findings are advice: a
         reviewer cannot accept the change.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="content-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-review"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:task id="Task_EditorDecides" name="Accept, or send back">
@@ -100,7 +113,7 @@ The accept-or-send-back decision lives here and nowhere beneath it. The subproce
         The editor's lane, kept separate on purpose: the reviewer who judged the
         change is not the position that accepts it.
       </bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="content-validate"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-validate"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:endEvent id="End_Reviewed" name="Decision&#10;recorded"/>
@@ -109,7 +122,9 @@ The accept-or-send-back decision lives here and nowhere beneath it. The subproce
     <bpmn:sequenceFlow id="F_R2" sourceRef="Task_ClassifyChange" targetRef="GW_Kind"/>
     <bpmn:sequenceFlow id="F_R3" name="prose" sourceRef="GW_Kind" targetRef="Call_NarrativeReview"/>
     <bpmn:sequenceFlow id="F_R4" name="code nodes" sourceRef="GW_Kind" targetRef="Call_CodeReview"/>
+    <bpmn:sequenceFlow id="F_R10" name="prose and the code it describes" sourceRef="GW_Kind" targetRef="Call_NarrativeCodeReview"/>
     <bpmn:sequenceFlow id="F_R5" sourceRef="Call_NarrativeReview" targetRef="GW_Join"/>
+    <bpmn:sequenceFlow id="F_R11" sourceRef="Call_NarrativeCodeReview" targetRef="GW_Join"/>
     <bpmn:sequenceFlow id="F_R6" sourceRef="Call_CodeReview" targetRef="GW_Join"/>
     <bpmn:sequenceFlow id="F_R7" sourceRef="GW_Join" targetRef="Task_Consolidate"/>
     <bpmn:sequenceFlow id="F_R8" sourceRef="Task_Consolidate" targetRef="Task_EditorDecides"/>
@@ -135,10 +150,13 @@ The accept-or-send-back decision lives here and nowhere beneath it. The subproce
         <dc:Bounds x="480" y="195" width="50" height="50"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="S_Call_NarrativeReview" bpmnElement="Call_NarrativeReview">
-        <dc:Bounds x="590" y="110" width="180" height="80"/>
+        <dc:Bounds x="590" y="92" width="180" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="S_Call_CodeReview" bpmnElement="Call_CodeReview">
-        <dc:Bounds x="590" y="250" width="180" height="80"/>
+        <dc:Bounds x="590" y="272" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Call_NarrativeCodeReview" bpmnElement="Call_NarrativeCodeReview">
+        <dc:Bounds x="590" y="182" width="180" height="76"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="S_GW_Join" bpmnElement="GW_Join" isMarkerVisible="true">
         <dc:Bounds x="830" y="195" width="50" height="50"/>
@@ -159,16 +177,22 @@ The accept-or-send-back decision lives here and nowhere beneath it. The subproce
         <di:waypoint x="440" y="220"/><di:waypoint x="480" y="220"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="E_F_R3" bpmnElement="F_R3">
-        <di:waypoint x="505" y="195"/><di:waypoint x="505" y="150"/><di:waypoint x="590" y="150"/>
+        <di:waypoint x="505" y="195"/><di:waypoint x="505" y="132"/><di:waypoint x="590" y="132"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="E_F_R4" bpmnElement="F_R4">
-        <di:waypoint x="505" y="245"/><di:waypoint x="505" y="290"/><di:waypoint x="590" y="290"/>
+        <di:waypoint x="505" y="245"/><di:waypoint x="505" y="312"/><di:waypoint x="590" y="312"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="E_F_R5" bpmnElement="F_R5">
-        <di:waypoint x="770" y="150"/><di:waypoint x="855" y="150"/><di:waypoint x="855" y="195"/>
+        <di:waypoint x="770" y="132"/><di:waypoint x="855" y="132"/><di:waypoint x="855" y="195"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="E_F_R6" bpmnElement="F_R6">
-        <di:waypoint x="770" y="290"/><di:waypoint x="855" y="290"/><di:waypoint x="855" y="245"/>
+        <di:waypoint x="770" y="312"/><di:waypoint x="855" y="312"/><di:waypoint x="855" y="245"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_R10" bpmnElement="F_R10">
+        <di:waypoint x="530" y="220"/><di:waypoint x="590" y="220"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_R11" bpmnElement="F_R11">
+        <di:waypoint x="770" y="220"/><di:waypoint x="830" y="220"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="E_F_R7" bpmnElement="F_R7">
         <di:waypoint x="880" y="220"/><di:waypoint x="930" y="220"/>

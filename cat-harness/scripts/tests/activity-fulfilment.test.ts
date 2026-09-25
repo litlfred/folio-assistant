@@ -16,7 +16,7 @@
  * application"; a `serviceTask` "uses some sort of service … a Web service or
  * an automated application", with no human in the loop. So the constraint is
  * DERIVED for 247 activities in this corpus without a line of new markup, and
- * `<folio:fulfilment/>` exists only for the step where the derived answer is
+ * `<cat-harness.processes:fulfilment/>` exists only for the step where the derived answer is
  * wrong.
  *
  * An abstract `bpmn:Task` and a call activity assert **nothing**, and that is
@@ -25,9 +25,9 @@
  *
  * ## Why the reason is required at LOAD time
  *
- * `<folio:fulfilment/>` can SILENCE a finding, and the cheapest way to make
+ * `<cat-harness.processes:fulfilment/>` can SILENCE a finding, and the cheapest way to make
  * `activity-fulfilment-kind` pass is to widen `kinds` until it does. Same rule
- * as `<folio:no-skill reason>`: a reasonless exemption does not parse, so the
+ * as `<cat-harness.processes:no-skill reason>`: a reasonless exemption does not parse, so the
  * whole diagram records `unknown` instead of quietly passing, and silencing the
  * criterion costs more than satisfying it.
  */
@@ -42,7 +42,7 @@ import { loadProcessModel } from "../../src/workflow/process-model";
 function diagram(taskType: string, ext: string): string {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="D" targetNamespace="urn:x">
   <bpmn:process id="Process_F" name="F" isExecutable="false">
     <bpmn:startEvent id="S"><bpmn:outgoing>F1</bpmn:outgoing></bpmn:startEvent>
@@ -69,11 +69,11 @@ async function load(taskType: string, ext: string) {
   }
 }
 
-describe("<folio:fulfilment/>", () => {
+describe("<cat-harness.processes:fulfilment/>", () => {
   test("a declaration with kinds and a reason is read onto the node", async () => {
     const m = await load(
       "task",
-      `<folio:fulfilment kinds="person agent" reason="a person or an agent drafts this; a pipeline cannot." />`,
+      `<cat-harness.processes:fulfilment kinds="person agent" reason="a person or an agent drafts this; a pipeline cannot." />`,
     );
     expect(m.nodes.get("T")!.fulfilment).toEqual({
       kinds: ["person", "agent"],
@@ -85,7 +85,7 @@ describe("<folio:fulfilment/>", () => {
     // The attribute is a string either way, so a one-element list must not be
     // a different shape from a two-element one — that asymmetry is where a
     // consumer starts special-casing.
-    const m = await load("task", `<folio:fulfilment kinds="system" reason="a fixed program." />`);
+    const m = await load("task", `<cat-harness.processes:fulfilment kinds="system" reason="a fixed program." />`);
     expect(m.nodes.get("T")!.fulfilment!.kinds).toEqual(["system"]);
   });
 
@@ -97,8 +97,8 @@ describe("<folio:fulfilment/>", () => {
   test("a reasonless exemption does not load", async () => {
     // The whole point. If this merely warned, it would be the cheap way to
     // green and nobody would ever read it.
-    await expect(load("task", `<folio:fulfilment kinds="person" />`)).rejects.toThrow(/carries no reason/);
-    await expect(load("task", `<folio:fulfilment kinds="person" reason="   " />`)).rejects.toThrow(
+    await expect(load("task", `<cat-harness.processes:fulfilment kinds="person" />`)).rejects.toThrow(/carries no reason/);
+    await expect(load("task", `<cat-harness.processes:fulfilment kinds="person" reason="   " />`)).rejects.toThrow(
       /carries no reason/,
     );
   });
@@ -106,12 +106,26 @@ describe("<folio:fulfilment/>", () => {
   test("an unknown actor kind does not load", async () => {
     // Accepted and ignored, it would silently widen the allowed set to nothing
     // in particular and the criterion would pass over a claim nobody made.
-    await expect(load("task", `<folio:fulfilment kinds="robot" reason="why" />`)).rejects.toThrow(
+    await expect(load("task", `<cat-harness.processes:fulfilment kinds="robot" reason="why" />`)).rejects.toThrow(
       /unknown actor kind/,
     );
   });
 
   test("a declaration naming no kinds does not load", async () => {
-    await expect(load("task", `<folio:fulfilment reason="why" />`)).rejects.toThrow(/names no kinds/);
+    await expect(load("task", `<cat-harness.processes:fulfilment reason="why" />`)).rejects.toThrow(/names no kinds/);
+  });
+});
+
+// `<cat-harness.processes:no-call reason>` (bean `ooq3`) follows the same load-time rule: it
+// silences `activity-calls-skill-process`, so it must not arrive reasonless.
+describe("<cat-harness.processes:no-call reason>", () => {
+  test("a stated reason is carried on the node", async () => {
+    const m = await load("task", `<cat-harness.processes:no-call reason="one check out of a larger review." />`);
+    expect(m.nodes.get("T")!.noCallReason).toBe("one check out of a larger review.");
+  });
+
+  test("a reasonless declaration does not load", async () => {
+    await expect(load("task", `<cat-harness.processes:no-call />`)).rejects.toThrow(/no-call\/> carries no reason/);
+    await expect(load("task", `<cat-harness.processes:no-call reason="  " />`)).rejects.toThrow(/carries no reason/);
   });
 });

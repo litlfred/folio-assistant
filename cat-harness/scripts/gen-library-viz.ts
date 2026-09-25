@@ -47,11 +47,14 @@
  *   bun run library:viz          # write
  *   bun run library:viz:check    # fail if either artefact is stale
  */
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { fragment as folioMountFragment } from "./folio-mount.ts";
 import { basename, dirname, join, relative, sep } from "node:path";
 
-import { readLibraryGraph, type LibraryGraph } from "./library-graph.ts";
+import { readLibraryGraph, type LibraryGraph, type LibraryBlock,
+  readEntryBlocks,
+} from "./library-graph.ts";
+import { tally } from "./summaries.ts";
 import { scanLibraryRefs, type RefSource } from "./library-refs.ts";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import { readDeclaration } from "../schemas/cat-harness.ts";
@@ -59,6 +62,7 @@ import { directoriesForGraph, instanceRootsIn, repoRootFor, siteDirFor } from ".
 import { directoryByVisualisationRef } from "./graph-tiles.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 import { itemState } from "./gen-uploads-viz.ts";
+import { makeEmit, type ViewerNav } from "./viewer-page.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const REPO_ROOT = repoRootFor(ROOT);
@@ -138,6 +142,31 @@ export function viewerHtml(dataHref: string, scope = "", mount = ""): string {
 <title>Library — the L1 corpus</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23276749'/%3E%3Crect x='3.5' y='3' width='3' height='10' fill='white'/%3E%3Crect x='7.5' y='3' width='2' height='10' fill='white'/%3E%3Crect x='10.5' y='4' width='2' height='9' fill='white'/%3E%3C/svg%3E">
 <style>
+/* The block content panel — bean lrmo. Tokens only, so it follows the light
+   and dark themes above rather than hardcoding either. */
+#blocks details > summary { cursor: pointer; }
+#blocks .block-body { margin: .4rem 0 .2rem; }
+#blocks .block-body pre {
+  white-space: pre-wrap; word-break: break-word; margin: 0;
+  padding: .55rem .7rem; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 6px; font-size: 12.5px; line-height: 1.45; max-height: 22rem; overflow: auto;
+}
+#blocks .block-body .note { margin: .35rem 0 0; font-size: 11.5px; color: var(--muted); }
+/* EXTRACT AND AGENT SUMMARY, SIDE BY SIDE -- owner, 2026-09-24: "the extract
+   of a node is shown, but no agentic summary". Beside, never instead: the
+   extract is the source's words and the summary is an agent's account of
+   them, so a reader must be able to hold one against the other. Two columns
+   where there is room, stacked on a phone, extract first either way. */
+#blocks td { white-space: normal; vertical-align: top; }
+#blocks td.bt { min-width: 15rem; }
+#blocks .pair { display: grid; grid-template-columns: 1fr; gap: .6rem; }
+@media (min-width: 760px) { #blocks .pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+#blocks .pair > div { min-width: 0; }
+#blocks .lbl { margin: 0 0 .3rem; font-size: 11.5px; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .04em; }
+#blocks .sum { padding: .55rem .7rem; border: 1px dashed var(--line); border-radius: 6px;
+  font-size: 13px; line-height: 1.5; }
+#blocks .sum p { margin: .35rem 0 0; }
 :root {
   --bg:#fff; --fg:#17191c; --muted:#5b6168; --line:#d9dde2; --panel:#f6f7f9;
   --accent:#276749; --accent-soft:#e6f2ec; --warn:#8a5300; --warn-soft:#fdf3e0;
@@ -204,6 +233,16 @@ tbody tr:hover { background:var(--panel); }
 h2 { font-size:.95rem; margin:24px 16px 4px; }
 p.note { color:var(--muted); font-size:.82rem; margin:0 16px 8px; }
 .wrap { overflow:auto; }
+/* THE BOOK'S AVATAR, first in its row -- bean zrvt, issue #1006. A fixed box
+   so a row does not reflow when the cover arrives, and a glyph of the same
+   size when there is no picture, so "no cover" never looks like a broken one. */
+.lib-ava { display:inline-flex; align-items:center; justify-content:center;
+  width:34px; height:46px; margin-right:8px; vertical-align:middle; flex:0 0 auto;
+  border:1px solid var(--line); background:var(--panel); overflow:hidden; }
+.lib-ava img { width:100%; height:100%; object-fit:cover; display:block; }
+.lib-ava svg { width:22px; height:22px; fill:none; stroke:var(--muted); stroke-width:1.6; }
+td.lib-first { white-space:nowrap; }
+.card .lib-ava { width:56px; height:76px; }
 </style>
 </head>
 <body>
@@ -222,6 +261,7 @@ p.note { color:var(--muted); font-size:.82rem; margin:0 16px 8px; }
 <main>
   <section id="listing" class="wrap"></section>
   <section id="desktop" hidden></section>
+  <section id="blocks" class="wrap" hidden aria-live="polite"></section>
   <h2>Uploads — the queue feeding this</h2>
   <p class="note">A source sitting here reads as <strong>absent</strong> to every consumer while the file is on disk.
     Queues are counted per declaring instance and never merged.</p>
@@ -236,6 +276,32 @@ var DATA_HREF = "${dataHref}";
    facts written N+1 times, free to disagree the moment one is regenerated. */
 var SCOPE = "${scope}";
 function inScope(x){ return !SCOPE || x.instance === SCOPE; }
+/* THE SITE ROOT, derived from the projection's own relative address rather
+   than declared -- the page is served at more than one depth, and DATA_HREF
+   is already the one path that is right at every one of them. */
+var SITE_ROOT = new URL(DATA_HREF.slice(0, DATA_HREF.length - "assets/library/index.json".length), location.href).pathname;
+/* An entry's avatar URL, or "". The projection carries a SITE-ROOT path
+   (library-graph.ts avatarOf), absent when there is no picture or the site
+   does not serve it; nothing is guessed here either. */
+function avatarUrl(e){
+  var h = e.avatar && typeof e.avatar.href === "string" ? e.avatar.href : "";
+  return h.charAt(0) === "/" ? SITE_ROOT + h.slice(1) : "";
+}
+var BOOK_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>';
+/* A cover that fails to load falls back to the glyph. ONE capturing listener
+   rather than an inline onerror per image: 'error' does not bubble, and an
+   inline handler is a script-src relaxation this site does not make. */
+document.addEventListener("error", function(ev){
+  var t = ev.target;
+  if (t && t.tagName === "IMG" && t.parentNode && t.parentNode.classList &&
+      t.parentNode.classList.contains("lib-ava")) t.parentNode.innerHTML = BOOK_SVG;
+}, true);
+function avatarHtml(e){
+  var u = avatarUrl(e);
+  return '<span class="lib-ava">' + (u
+    ? '<img src="' + esc(u) + '" alt="" loading="lazy">'
+    : BOOK_SVG) + "</span>";
+}
 function $(i){ return document.getElementById(i); }
 function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){
   return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
@@ -274,7 +340,7 @@ function uploadState(e){
 }
 
 var COLS = [
-  { k:"id",       t:"slug",     n:false, f:function(e){ return '<span class="slug">'+esc(e.id)+"</span>"; } },
+  { k:"id",       t:"slug",     n:false, f:function(e){ return avatarHtml(e) + '<span class="slug">'+esc(e.id)+"</span>"; } },
   { k:"title",    t:"title",    n:false, f:function(e){ return esc(e.title); } },
   { k:"instance", t:"instance", n:false, f:function(e){ return '<span class="pill">'+esc(e.instance)+"</span>"; } },
   { k:"rung",     t:"rung",     n:false, f:function(e){ return '<span class="pill '+(e.rung==="none"?"warn":"ok")+'">'+esc(e.rung)+"</span>"; } },
@@ -343,10 +409,15 @@ function renderList(){
        declare, so nothing to drift -- the folio-mount's argument for
        deriving its root, applied one level in. */
     var href = location.pathname + "#" + encodeURIComponent(key);
+    /* data-fa-pullout-host puts the pull-out control in the FIRST cell.
+       It used to land in the last one, which on a table wider than the
+       screen is past its right edge -- the owner could not find a way onto
+       the glass at all (issue #1006). */
     return '<tr data-fa-library-item="' + esc(key) + '"' +
       ' data-fa-library-href="' + esc(href) + '"' +
-      ' data-fa-library-title="' + esc(e.title || e.id) + '">' + COLS.map(function(c){
-      return "<td"+(c.n?' class="num"':"")+">" + (c.f ? c.f(e) : esc(e[c.k])) + "</td>";
+      ' data-fa-library-avatar="' + esc(avatarUrl(e)) + '"' +
+      ' data-fa-library-title="' + esc(e.title || e.id) + '">' + COLS.map(function(c, i){
+      return "<td"+(c.n?' class="num"':i===0?' class="lib-first" data-fa-pullout-host':"")+">" + (c.f ? c.f(e) : esc(e[c.k])) + "</td>";
     }).join("") + "</tr>";
   }).join("") || '<tr><td colspan="'+COLS.length+'"><p class="empty">Nothing matches.</p></td></tr>';
   $("listing").innerHTML = h + "</tbody></table>";
@@ -356,12 +427,20 @@ function renderDesk(){
   var r = rows();
   $("desktop").innerHTML = r.map(function(e){
     var o = ocrState(e), u = uploadState(e);
-    return '<article class="card"><div class="spine"></div>' +
-      "<h3>"+esc(e.title)+"</h3>" +
+    /* The SAME three attributes the listing row carries, so a card is a
+       library item too and the folio's pull-out finds it in either view. */
+    var key = e.instance + "/" + e.id;
+    return '<article class="card" data-fa-library-item="' + esc(key) + '"' +
+      ' data-fa-library-href="' + esc(location.pathname + "#" + encodeURIComponent(key)) + '"' +
+      ' data-fa-library-avatar="' + esc(avatarUrl(e)) + '"' +
+      ' data-fa-library-title="' + esc(e.title || e.id) + '"><div class="spine"></div>' +
+      '<div data-fa-pullout-host style="display:flex;gap:8px;align-items:flex-start">' + avatarHtml(e) +
+      "<h3>"+esc(e.title)+"</h3></div>" +
       '<div class="slug">'+esc(e.instance)+" / "+esc(e.id)+"</div>" +
       '<div class="rows">' +
         "<span>sections</span><b>"+e.sections+"</b>" +
         "<span>blocks</span><b>"+e.blocks+"</b>" +
+        (e.summaries && e.summaries.prose ? "<span>summarised</span><b>"+e.summaries.summarised+" / "+e.summaries.prose+"</b>" : "") +
         "<span>images</span><b>"+e.images+"</b>" +
         "<span>pages</span><b>"+(e.pageStart==null?"—":e.pageStart+"–"+e.pageEnd)+"</b>" +
         "<span>words</span><b>"+e.words.toLocaleString()+"</b>" +
@@ -436,6 +515,146 @@ function honourAnchor(){
     row.setAttribute("data-fa-anchored", "1");
     row.scrollIntoView({ block: "center" });
   }
+  /* The graph of the thing the reader just opened — bean 7nvr. Driven off the
+     anchor rather than a click so a shared URL lands on the same view. */
+  loadBlocks(known.id);
+}
+
+/* THE BLOCK GRAPH OF ONE ENTRY, fetched only when a reader opens one.
+   Bean 7nvr.
+
+   The index carries a COUNT of blocks; this is what they are. It is a
+   separate fetch because the corpus holds 1715 blocks over about a megabyte
+   of JSON-LD against a 44 KB index, so inlining would multiply the cost of
+   the page that answers "what is in here" to serve a question asked about
+   one entry at a time.
+
+   THREE OUTCOMES, like honourAnchor above. The file loads and the blocks are
+   listed; the file loads and the entry genuinely has none, which is a
+   determined answer and says so; or the fetch fails, which is reported as a
+   failure rather than rendered as an empty document. An entry with no blocks
+   and an entry we could not read must never look the same. */
+function blocksHref(id){
+  var dir = DATA_HREF.slice(0, DATA_HREF.lastIndexOf("/") + 1);
+  return dir + "entries/" + encodeURIComponent(id) + ".json";
+}
+function renderBlocks(id, data, err){
+  var el = $("blocks");
+  el.hidden = false;
+  if (err) {
+    el.innerHTML = '<h2>Blocks</h2><p class="empty">Could not read the block graph for ' +
+      esc(id) + ' \u2014 ' + esc(err) + '. This is a failure to read, not an empty document.</p>';
+    return;
+  }
+  var bs = (data && data.blocks) || [];
+  if (!bs.length) {
+    el.innerHTML = '<h2>Blocks</h2><p class="empty">' + esc(id) +
+      ' has no blocks. Nothing failed \u2014 the entry carries none.</p>';
+    return;
+  }
+  /* THE DRAIN, for this entry -- counted over the rows below, so the line and
+     the table cannot disagree. Advisory: a backlog is work nobody has done
+     yet, not a defect. */
+  var sums = bs.filter(function(b){ return b.summary; }).map(function(b){ return b.summary.status; });
+  var prose = sums.filter(function(x){ return x !== "empty" && x !== "unreadable"; }).length;
+  var done = sums.filter(function(x){ return x === "draft" || x === "confirmed"; }).length;
+  var drain = prose ? '<p class="note">Agent summaries: <b>' + done + '</b> of ' + prose +
+    ' prose block(s) summarised, <b>' + (prose - done) + '</b> still in the queue. ' +
+    'Summaries are drafted by an agent a few at a time and confirmed only by a person.</p>' : '';
+  el.innerHTML = '<h2>Blocks \u2014 ' + esc(id) + ' <span class="note">(' + bs.length +
+    ', in page order)</span></h2>' + drain + '<table><thead><tr>' +
+    '<th>page</th><th>kind</th><th>types</th><th>title</th><th>narrative / summary</th></tr></thead><tbody>' +
+    bs.map(function(b){
+      /* BOTH types, never one. A block is dual-typed so a DoCO reader gets
+         something without knowing our vocabulary, and showing only ours
+         would hide the half this project did not invent. */
+      var pages = b.pageStart == null ? '\u2014'
+        : (b.pageEnd != null && b.pageEnd !== b.pageStart ? b.pageStart + '\u2013' + b.pageEnd : String(b.pageStart));
+      /* A narrative state is three-valued and none of them is an error:
+         not-authored means nobody has written one, which is a fact rather
+         than a gap. Rendered as plain text for that reason. */
+      var nar = b.summary ? summaryBadge(b.summary)
+        : b.narrative == null ? '\u2014' : esc(b.narrative);
+      /* THE CONTENT IS BEHIND A NATIVE <details> — bean lrmo.
+         The owner opened this view and said "i expected to be able to see
+         narrative content of extracted node": a row carrying only a state
+         says a description exists without saying what it is.
+
+         <details> rather than a scripted panel because it expands, collapses
+         and takes focus from the keyboard with no JavaScript at all, which is
+         one less thing to get wrong and one less thing to test. gjli.
+
+         TRUNCATION IS DECLARED, never inferred from length. A reader who
+         cannot tell a short section from a cut one is being shown a claim the
+         data does not support. */
+      var title = esc(b.title || '\u2014');
+      var body;
+      if (b.content) {
+        var extract = '<pre>' + esc(b.content) + '</pre>' +
+          (b.truncated ? '<p class="note">Excerpt \u2014 the first 600 characters. The section file holds the rest.</p>' : '');
+        body = '<details><summary>' + title + '</summary><div class="block-body">' +
+          (b.summary
+            ? '<div class="pair"><div><p class="lbl">Extract</p>' + extract + '</div>' +
+              '<div><p class="lbl">Agent summary</p>' + summaryPanel(b.summary) + '</div></div>'
+            : extract) +
+          '</div></details>';
+      } else {
+        /* No content is a DETERMINED answer for a page-scan or an image with
+           no description, and is said plainly rather than left blank. */
+        body = title + ' <span class="note">(no content carried)</span>';
+      }
+      return '<tr><td class="num">' + esc(pages) + '</td><td>' + esc(b.kind) +
+        '</td><td>' + esc((b.types || []).join(' + ')) + '</td><td class="bt">' + body +
+        '</td><td>' + nar + '</td></tr>';
+    }).join("") + '</tbody></table>';
+}
+/* A BLOCK SUMMARY'S STATE, in words. Owner, 2026-09-24. Every state is said
+   as text rather than colour alone, and none is styled as an error: "not yet
+   summarised" is the drain's backlog, which is expected and slow on purpose.
+   A draft names its MODEL, because "a model wrote this" without which one is
+   the provenance gap schemas/attribution.ts closes. */
+function summaryLabel(s){
+  var d = s.draftedBy;
+  switch (s.status) {
+    case "draft":
+      return { cls: "info", t: d && d.kind === "agent"
+        ? "agent draft (model " + (d.model || "unknown") + ")"
+        : "draft by " + (d ? d.id : "unknown") };
+    case "confirmed": return { cls: "ok", t: "confirmed by " + (s.confirmedBy || "a person") };
+    case "stale": return { cls: "warn", t: "stale: source changed" };
+    case "rejected": return { cls: "warn", t: "rejected \u2014 back in the queue" };
+    case "empty": return { cls: "", t: "no text to summarise" };
+    case "unreadable": return { cls: "warn", t: "text unreadable" };
+    default: return { cls: "", t: "not yet summarised" };
+  }
+}
+function summaryBadge(s){
+  var l = summaryLabel(s);
+  return '<span class="pill ' + l.cls + '">' + esc(l.t) + '</span>';
+}
+function summaryPanel(s){
+  var why = {
+    "not-summarised": "No agent has summarised this block yet. The queue is drained a few blocks at a time.",
+    "empty": "The block holds no text, so there is nothing to summarise.",
+    "unreadable": "The block names a text file that could not be read."
+  }[s.status];
+  var who = s.draftedBy
+    ? "Drafted by " + s.draftedBy.kind + " " + s.draftedBy.id +
+      (s.draftedBy.model ? ", model " + s.draftedBy.model : "") + (s.draftedAt ? ", " + s.draftedAt : "") + ". " +
+      (s.status === "confirmed" ? "Confirmed by " + (s.confirmedBy || "a person") + "."
+        : s.status === "stale" ? "The block's text has changed since; this summary may no longer match it."
+        : s.status === "rejected" ? "Rejected by a person: " + (s.rejectionReason || "no reason recorded") + "."
+        : "Not yet confirmed by a person.")
+    : "";
+  return '<div class="sum">' + summaryBadge(s) +
+    (s.text ? '<p>' + esc(s.text) + '</p>' : '<p>' + esc(why || "") + '</p>') +
+    (who ? '<p class="note">' + esc(who) + '</p>' : '') + '</div>';
+}
+function loadBlocks(id){
+  fetch(blocksHref(id), {cache: "no-store"})
+    .then(function(r){ if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(function(d){ renderBlocks(id, d, null); })
+    .catch(function(e){ renderBlocks(id, null, String(e && e.message || e)); });
 }
 
 function setView(v){
@@ -465,6 +684,17 @@ fetch(DATA_HREF).then(function(r){
     return '<span class="badge q"><b>'+q.uningested+"</b> uningested in <code>"+esc(q.dir)+
       "</code> <span style=\\"color:var(--muted)\\">of "+q.total+"</span></span>";
   }).join("");
+  /* THE SUMMARY DRAIN'S BACKLOG, for the entries this page shows. Advisory,
+     like every drain here: styled as a count, never as a failure. Absent
+     when the projection carries no count -- nobody counted is not zero. */
+  var counted = scoped.filter(function(e){ return e.summaries; });
+  if (counted.length) {
+    var sb = counted.reduce(function(n,e){ return n + e.summaries.backlog; }, 0);
+    var sp = counted.reduce(function(n,e){ return n + e.summaries.prose; }, 0);
+    var sd = counted.reduce(function(n,e){ return n + e.summaries.draft; }, 0);
+    $("badges").innerHTML += '<span class="badge"><b>' + sb + "</b> of " + sp +
+      " prose block(s) not yet summarised" + (sd ? ", <b>" + sd + "</b> agent draft(s) awaiting a person" : "") + "</span>";
+  }
   if (G.refScan) {
     var none = scoped.filter(function(e){ return e.refCount === 0; }).length;
     $("badges").innerHTML += '<span class="badge"><b>'+G.refScan.filesRead+
@@ -502,17 +732,47 @@ ${mount}
 }
 
 let stale = 0;
-function emit(path: string, content: string): void {
+/**
+ * The shared viewer `emit` — the navbar comes with the write (bean `edx7`).
+ *
+ * `emit` writes what it is given; `emitPage` is the same write with the rail,
+ * and takes the nav per call because a SUBJECT page lists that subject's
+ * graphs while the index lists this instance's. Both are facts this generator
+ * already holds, and neither is parsed back out of a path it just composed.
+ */
+const emit = makeEmit({ check, onStale: () => { stale++; } });
+const emitPage = (nav: ViewerNav) => makeEmit({ check, onStale: () => { stale++; }, nav });
+
+/** `emit` for a binary file: same check-or-write contract, compared byte for byte. */
+function emitBytes(path: string, content: Buffer): void {
   if (check) {
-    const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
-    if (current === content) return;
+    if (existsSync(path) && readFileSync(path).equals(content)) return;
     console.error(`  ✗ ${path} ${existsSync(path) ? "is stale" : "is missing"}`);
     stale++;
     return;
   }
+  if (existsSync(path) && readFileSync(path).equals(content)) return;
   mkdirSync(dirname(path), { recursive: true });
   writeFileSync(path, content);
   console.log(`  ✓ ${path}`);
+}
+
+/**
+ * Avatar copies under `avatarRoot/<instance>/` that no entry names — this
+ * generator's own stale output (bean `cw35`). `wanted` holds absolute paths.
+ * The directory is written by this generator alone, which is what makes a
+ * file in it that nothing names safe to call an orphan.
+ */
+export function orphanAvatars(avatarRoot: string, wanted: ReadonlySet<string>): string[] {
+  const out: string[] = [];
+  for (const inst of existsSync(avatarRoot) ? readdirSync(avatarRoot) : []) {
+    const d = join(avatarRoot, inst);
+    for (const f of existsSync(d) ? readdirSync(d) : []) {
+      const abs = join(d, f);
+      if (!wanted.has(abs)) out.push(abs);
+    }
+  }
+  return out.sort();
 }
 
 if (import.meta.main) {
@@ -674,11 +934,78 @@ if (import.meta.main) {
     scoped[id] = entries(g.entries.filter((e) => e.instance === subject).length);
   }
 
+  // Each entry's blocks are read ONCE, before the index is written, because
+  // the index now carries the summary drain's counts (owner, 2026-09-24:
+  // "slowly drain") and those are a fact about the blocks. The per-entry
+  // files below reuse the same reading, so the count on the index and the
+  // rows a reader opens cannot disagree.
+  const blocksOf = new Map<string, LibraryBlock[]>();
+  for (const e of g.entries) {
+    // A withheld entry (bean `cw35`) publishes no verbatim text.
+    const blocks = readEntryBlocks(join(repoRoot, e.dir), { verbatim: !e.withheld });
+    blocksOf.set(e.id, blocks);
+    e.summaries = tally(blocks.flatMap((b) => (b.summary ? [b.summary] : [])));
+  }
+
   emit(join(dataDir, "index.json"), JSON.stringify(projection(g, scoped), null, 2) + "\n");
-  emit(join(pageDir, "index.html"), viewerHtml(dataHref, "", folioMount));
+
+  // ── PER-ENTRY BLOCK GRAPHS (bean `7nvr`) ──────────────────────────────
+  //
+  // One file per entry, fetched only when a reader opens that entry.
+  //
+  // NOT folded into `index.json`, and the numbers are the argument: the corpus
+  // holds 1715 blocks over roughly a megabyte of JSON-LD, against a 44 KB
+  // index. Inlining them would multiply the cost of the page that answers
+  // "what is in here" by twenty-five, to serve the question "what is in THIS
+  // one" — which a reader asks about one entry at a time, if at all.
+  //
+  // The library JSON-LD is not published to the site (checked: no
+  // `library/<id>/manifest.jsonld` under the built tree), so the viewer cannot
+  // simply fetch the source. A projection is the only thing it can read.
+  for (const e of g.entries) {
+    const blocks = blocksOf.get(e.id) ?? [];
+    // An entry with no blocks still gets a file. The alternative is a 404 the
+    // viewer has to tell apart from a network failure, and "this entry has no
+    // blocks" is a determined answer that deserves to be served as one.
+    emit(
+      join(dataDir, "entries", `${e.id}.json`),
+      JSON.stringify({ $schema: "folio-library-entry/v1", id: e.id, blocks }, null, 2) + "\n",
+    );
+  }
+
+  // ── AVATARS (bean `zrvt`) ─────────────────────────────────────────────
+  //
+  // Each entry's picture, COPIED under the site so it resolves wherever the
+  // committed tree is served — the instance mount exists only on the built
+  // site. `--check` compares BYTES, so a cover regenerated upstream and not
+  // re-copied here is stale, never silently old.
+  for (const e of g.entries) {
+    if (!e.avatar) continue;
+    emitBytes(join(site, e.avatar.href.slice(1)), readFileSync(join(repoRoot, e.avatar.src)));
+  }
+  // AVATAR ORPHANS (bean `cw35`). A copy the graph no longer names stays
+  // committed AND published — the 2026-09-24 audit found both refused covers
+  // still served from here after their entries were withheld. This directory
+  // is written by this generator alone, so a file in it that no entry names
+  // is its own stale output: pruned on a write, a finding under `--check`.
+  {
+    const avatarRoot = join(site, "assets", "library", "avatars");
+    const wanted = new Set(g.entries.flatMap((e) => (e.avatar ? [join(site, e.avatar.href.slice(1))] : [])));
+    for (const abs of orphanAvatars(avatarRoot, wanted)) {
+      if (check) {
+        console.error(`  ✗ ${abs} is an orphan avatar — no entry names it`);
+        stale++;
+        continue;
+      }
+      rmSync(abs);
+      console.log(`  ✗ pruned orphan avatar ${abs}`);
+    }
+  }
+  const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
+  emitPage(nav)(join(pageDir, "index.html"), viewerHtml(dataHref, "", folioMount));
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject, folioMount));
+    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject, folioMount));
   }
 
 

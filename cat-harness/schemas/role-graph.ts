@@ -75,11 +75,13 @@
  * no tool could answer "which skills does this task's performer have" and no
  * check could find a lane nobody had defined.
  *
- * A role therefore declares the lane names it **binds** ({@link RoleDef.lanes},
- * exact match). That resolves the existing corpus without editing twenty BPMN
- * files, and it makes the *next* unbound lane a finding rather than a silence.
- * A diagram may also bind explicitly with `<folio:role ref="…"/>` on the lane,
- * which wins over name matching — see {@link laneRoleRef}.
+ * A LANE therefore names the role it binds, with `<bootstrap.processes:role ref="…"/>` —
+ * see {@link laneRoleRef}. The role does not list its lanes: a role is the
+ * general node and a lane the dependent one, and a general node never names its
+ * users (`data-modelling` step 8; owner, 2026-09-23, #1168). Until then roles
+ * carried a `lanes[]` of exact lane names, and about 140 lanes bound only by
+ * that name match; every one was migrated to an explicit ref, so an unbound
+ * lane is a finding rather than a silence.
  *
  * ## Three states
  *
@@ -97,10 +99,12 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { kgNodeLabelShape } from "./kg-node";
 import { join } from "node:path";
 import { z } from "zod";
+import { ODRL_ACTIONS } from "./odrl";
 
 import { NS_PREFIXES, termIri } from "./namespaces";
 import { ACTOR_KINDS, type ActorKind } from "./skill-package";
 import { NETWORK_REACHES, type NetworkReach } from "./cat-harness";
+import { SkillNameSchema } from "./tool-types";
 
 /** Directory, relative to the `kg` graph root, holding the role declaration. */
 export const ROLE_GRAPH_DIR = "roles";
@@ -192,7 +196,7 @@ export const MECHANICAL_KINDS: readonly ActorKind[] = ACTOR_KINDS.filter((k) => 
  *
  * `undefined` rather than `ACTOR_KINDS` so a caller can tell "every kind is
  * allowed" from "nothing was asserted" — the third state this repository
- * insists on everywhere else. A declared `<folio:fulfilment/>` overrides it.
+ * insists on everywhere else. A declared `<cat-harness.processes:fulfilment/>` overrides it.
  */
 export function fulfilmentKindsForBpmnType(bpmnType: string): readonly ActorKind[] | undefined {
   if (bpmnType === "bpmn:UserTask") return JUDGEMENT_KINDS.filter((k) => k === "person");
@@ -225,10 +229,10 @@ export interface ActorDef {
 
 /** A role — a BPMN swimlane, as a declared object. */
 export interface RoleDef {
-  /** Stable id. Referenced by `<folio:role ref>` and by `inherits`. */
+  /** Stable id. Referenced by `<bootstrap.processes:role ref>` and by `inherits`. */
   id: string;
   /**
-   * Display text. Not used for matching — {@link RoleDef.lanes} is.
+   * Display text. Not used for matching: a lane binds by `<bootstrap.processes:role ref>`.
    *
    * `title` and `description` rather than `name` and `summary`: they are the
    * two labels EVERY knowledge-graph node carries (`schemas/kg-node.ts`), and a
@@ -260,15 +264,6 @@ export interface RoleDef {
    */
   actorKinds: ActorKind[];
   /**
-   * Exact BPMN lane names this role binds, across every diagram.
-   *
-   * A list rather than one name because the corpus spells one position several
-   * ways and normalising sixty lane strings in twenty diagrams is a separate,
-   * riskier change than declaring the synonyms. New diagrams should use
-   * `<folio:role ref>` and need not add a name here.
-   */
-  lanes: string[];
-  /**
    * Who this reader IS, in prose — the persona an author writes for and a QA
    * reviewer checks against.
    *
@@ -285,26 +280,11 @@ export interface RoleDef {
    * that contradicts its lane is worse than none — it looks authoritative.
    */
   persona?: string;
-  /**
-   * The voice to address this reader in.
-   *
-   * Named here rather than inferred, because it does not follow from the
-   * persona: the same reader is addressed differently in a normative standard
-   * and in a tutorial. The authoring agent picks the voice from here; the QA
-   * agent judges against the same string rather than against its own taste,
-   * which is what makes a voice finding reviewable instead of an opinion.
-   */
-  voice?: string;
-  /**
-   * What this reader is actually trying to do — the cases the content has to
-   * serve.
-   *
-   * Guides both agents in the direction a persona alone cannot: an author
-   * knows which questions to answer, and a QA reviewer can ask whether the
-   * page answers them. "Is this well written" is unanswerable; "does this let
-   * a reviewer find what changed since they last looked" is not.
-   */
-  useCases?: string[];
+  // No `voice` and no `useCases` (#1168, B2). Both are DEPENDENTS of the
+  // role: a voice is addressed TO a reader, and a story is told AS one. Each
+  // now points here — a voice profile by `activeIn.roles`, a user story by
+  // `role` in `scenarios/stories.json` — so the role names neither, and a new
+  // voice or story is added without editing the role (data-modelling step 8).
   /** Skills available to an actor in this role, before inheritance. */
   skills: string[];
   /** Roles this one IS-A. Skills are unioned transitively; cycles rejected. */
@@ -356,6 +336,10 @@ export interface RoleGraph {
   actors?: ActorDef[];
 }
 
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
 export const ActorDefSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1),
@@ -364,13 +348,15 @@ export const ActorDefSchema = z.object({
   roles: z.array(z.string()).optional(),
 });
 
+/**
+ * @general — a node others depend on: it points only at other general nodes,
+ * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
+ */
 export const RoleDefSchema = z.object({
   // Declared in the Zod shape as well as the interface: a field TypeScript
   // accepts and Zod strips is written by an author, type-checks, and vanishes
   // (bean `zdrf`).
   persona: z.string().optional(),
-  voice: z.string().optional(),
-  useCases: z.array(z.string()).optional(),
   id: z.string().min(1),
   // Required here, though `kgNodeLabelShape` makes both optional in general: a
   // role nobody can name or describe is a lane nobody can fill, and `kg-audit`
@@ -379,13 +365,12 @@ export const RoleDefSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
   actorKinds: z.array(z.enum(ACTOR_KINDS)).min(1),
-  lanes: z.array(z.string()).default([]),
   /**
    * Skills available to an actor in this role, before inheritance.
    *
    * @ref SkillDefinitionSchema
    */
-  skills: z.array(z.string()).default([]),
+  skills: z.array(SkillNameSchema).default([]),
   /**
    * Roles this one IS-A, outermost last. Static composition, not the scoped
    * subprocess stack.
@@ -417,6 +402,25 @@ export const RoleDefSchema = z.object({
   // declaration that silently means less than it says is worse than one that
   // refuses to load and names the key.
 }).strict();
+
+/**
+ * A pointer AT a role, from whatever depends on one — a voice addressed to
+ * that reader, a user story told as them.
+ *
+ * The dependent holds this; the role holds nothing back (data-modelling step
+ * 8). `instance` is the declared NAME of the instance whose role graph
+ * declares the role, absent for the pointer's own instance — a name, never a
+ * path, as `VoiceRuleSourceSchema.instance` spells it.
+ *
+ * @ref RoleDefSchema
+ */
+export const RoleRefSchema = z
+  .object({
+    instance: z.string().min(1).optional(),
+    role: z.string().min(1),
+  })
+  .strict();
+export type RoleRef = z.infer<typeof RoleRefSchema>;
 
 export const RoleGraphSchema = z.object({
   name: z.string().min(1),
@@ -614,7 +618,20 @@ function actorReachOf(raw: Record<string, unknown>, path: string): NetworkReach 
   return raw.reach as NetworkReach;
 }
 
-export function readActors(actorsDir: string): LoadedActor[] {
+function grantsFor(grants: ReadonlyMap<string, readonly string[]> | undefined, id: string): string[] | undefined {
+  const g = grants?.get(id);
+  return g ? [...g] : undefined;
+}
+
+/**
+ * Read the actor directory.
+ *
+ * `grants` supplies each actor's permissions from the ODRL policies
+ * ({@link readPolicyGrants} in `schemas/odrl.ts`, issue #1180). An actor file
+ * that still carries its own `permissions` list keeps it: that is an
+ * unmigrated downstream registry, and reading it is better than dropping it.
+ */
+export function readActors(actorsDir: string, grants?: ReadonlyMap<string, readonly string[]>): LoadedActor[] {
   if (!existsSync(actorsDir)) return [];
   const out: LoadedActor[] = [];
   for (const f of readdirSync(actorsDir).filter((f) => f.endsWith(".json")).sort()) {
@@ -632,7 +649,9 @@ export function readActors(actorsDir: string): LoadedActor[] {
       description: typeof raw.description === "string" ? raw.description : undefined,
       roles: Array.isArray(raw.roles) ? (raw.roles as string[]) : undefined,
       capabilities: Array.isArray(raw.capabilities) ? (raw.capabilities as string[]) : undefined,
-      permissions: Array.isArray(raw.permissions) ? (raw.permissions as string[]) : undefined,
+      permissions: Array.isArray(raw.permissions)
+        ? (raw.permissions as string[])
+        : grantsFor(grants, String(raw.id ?? f.slice(0, -5))),
       reach: actorReachOf(raw, p),
       path: p,
       looksLikeRole: Array.isArray(raw.inherits) && raw.inherits.length > 0,
@@ -723,19 +742,19 @@ export function resolveRoleStack(graph: RoleGraph, path: string[]): RoleStack {
 /**
  * The role a BPMN lane binds.
  *
- * `explicitRef` — the lane's own `<folio:role ref="…"/>` — wins when present,
- * because a diagram that has said which role it means must not be second-
- * guessed by a string table. Falling back to exact lane-name matching is what
- * lets the existing corpus resolve at all.
+ * Only the lane's own `<bootstrap.processes:role ref="…"/>` binds it. There is no fallback
+ * to matching the lane's display name against the roles: that fallback needed
+ * a `lanes[]` on every role, which is a general node naming its users
+ * (`data-modelling` step 8, #1168). `laneName` is kept for callers' sake and
+ * no longer consulted.
  */
 export function roleForLane(
   graph: RoleGraph,
   laneName: string | undefined,
   explicitRef?: string,
 ): RoleDef | undefined {
-  if (explicitRef) return findRole(graph, explicitRef);
-  if (!laneName) return undefined;
-  return graph.roles.find((r) => r.lanes.includes(laneName));
+  void laneName;
+  return explicitRef ? findRole(graph, explicitRef) : undefined;
 }
 
 /**
@@ -768,8 +787,37 @@ export type LaneBinding =
   /** Nothing matched and nothing was declared. The finding. */
   | { readonly kind: "unbound" };
 
+/**
+ * The graph is REQUIRED — bean `7go7`, the owner's ruling 2026-09-23.
+ *
+ * It was `RoleGraph | undefined`, and with no graph every lane carrying a
+ * `roleRef` came back `dangling`. Measured on this corpus: 183 of 184 lanes
+ * bind and 44 carry an explicit ref, so one unreadable file rendered as 44
+ * broken references that were all fine — a sweep that could not look reporting
+ * findings rather than reporting that it could not look. The `dh4f` shape.
+ *
+ * Three shapes were on the table (see the bean). The owner chose this one over
+ * a sixth `ungraphed` kind, and the reason it is the stronger choice is that
+ * **a caller with no graph cannot ask the question, which is the honest
+ * answer** — the binding of a lane is not a fact that exists in the absence of
+ * a role registry. A sixth kind would have let a consumer keep asking and then
+ * forget to handle the reply.
+ *
+ * ## The premise the bean gave for NOT fixing it was false
+ *
+ * `7go7` said a local guard "would make the viewer and the audit disagree
+ * about whether a lane is bound". It would not have. `kg-audit.ts` ALREADY
+ * branches on `!graph` and overwrites `role-ref-resolves`, `lane-binds-role`
+ * and five more with `unknown` — *"No role graph is a state the audit can be
+ * in, and it is not a pass."* So the audit never published a `dangling`
+ * verdict in that state; it computed one and discarded it. The consumer that
+ * disagreed with the audit was the VIEWER, which took the verdict verbatim.
+ *
+ * Checked before writing this, because the bean's reasoning was the only thing
+ * standing between the defect and a one-line fix, and it was wrong.
+ */
 export function laneBinding(
-  graph: RoleGraph | undefined,
+  graph: RoleGraph,
   lane: { name?: string; roleRef?: string; performerVaries?: boolean },
 ): LaneBinding {
   // Checked FIRST, and before the graph is consulted at all: a lane that says
@@ -779,19 +827,12 @@ export function laneBinding(
     return { kind: "contradictory", ref: lane.roleRef };
   }
   if (lane.performerVaries) return { kind: "variable" };
-  const role = graph ? roleForLane(graph, lane.name, lane.roleRef) : undefined;
+  const role = roleForLane(graph, lane.name, lane.roleRef);
   if (role) return { kind: "bound", role };
   // A dangling `ref` is reported as itself rather than as "unbound", because
   // the fix differs: one is a typo to correct, the other a binding to add.
   if (lane.roleRef) return { kind: "dangling", ref: lane.roleRef };
   return { kind: "unbound" };
-}
-
-/** Every lane name any role binds — the denominator for a coverage report. */
-export function boundLaneNames(graph: RoleGraph): Set<string> {
-  const s = new Set<string>();
-  for (const r of graph.roles) for (const l of r.lanes) s.add(l);
-  return s;
 }
 
 // ── Graph projection ────────────────────────────────────────────
@@ -805,7 +846,6 @@ export function toJsonLd(graph: RoleGraph): Record<string, unknown> {
     "@context": {
       ...NS_PREFIXES,
       skills: termIri("hasSkill"),
-      lanes: termIri("bindsLane"),
       inherits: termIri("isA"),
       roles: termIri("declaresRole"),
     },
@@ -817,7 +857,6 @@ export function toJsonLd(graph: RoleGraph): Record<string, unknown> {
       title: r.title,
       description: r.description,
       actorKinds: r.actorKinds,
-      lanes: r.lanes,
       skills: r.skills,
       ...(r.inherits?.length ? { inherits: r.inherits.map((i) => ({ "@id": `#${i}` })) } : {}),
     })),
@@ -886,6 +925,14 @@ export interface PermissionDef {
   /** Display text and the sentence under it — `schemas/kg-node.ts`, like every node. */
   title: string;
   description: string;
+  /**
+   * The broader actions this one is part of: another action here, or one of
+   * ODRL's common vocabulary (`schemas/odrl.ts#ODRL_ACTIONS`). This is what
+   * makes the vocabulary an ODRL profile (issue #1180): a permission to a
+   * broader action permits every action included in it. Required and
+   * non-empty, so every action has a way up to `odrl:use`.
+   */
+  includedIn: string[];
 }
 
 export interface PermissionVocabulary {
@@ -897,6 +944,7 @@ export const PermissionDefSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1),
   description: z.string().min(1),
+  includedIn: z.array(z.string().min(1)).min(1),
 });
 
 export const PermissionVocabularySchema = z.object({
@@ -925,6 +973,15 @@ export function readPermissions(kgRoot: string): PermissionVocabulary | undefine
   for (const perm of parsed.data.permissions) {
     if (ids.has(perm.id)) throw new Error(`${p}: permission id "${perm.id}" is declared twice.`);
     ids.add(perm.id);
+  }
+  // Every `includedIn` resolves, to an action here or to ODRL's own. A dangling
+  // one would cut an action off from everything granted above it.
+  for (const perm of parsed.data.permissions) {
+    for (const up of perm.includedIn) {
+      if (!ids.has(up) && !(up in ODRL_ACTIONS)) {
+        throw new Error(`${p}: "${perm.id}" is includedIn "${up}", which is neither declared here nor an ODRL action.`);
+      }
+    }
   }
   return parsed.data;
 }

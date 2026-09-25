@@ -36,12 +36,18 @@
  * definition, naming each one.
  *
  * @module scripts/ns-export
+ * @covers cat-harness
+ *
+ * @conformsTo w3c-owl2
+ * @conformsTo w3c-rdf
+ * @conformsTo w3c-rdfs
+ * @conformsTo w3c-skos
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 import { BASE_GRAPH_KINDS, repoRootFor } from "../schemas/cat-harness.js";
-import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer } from "../schemas/namespaces.js";
+import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer, termIri } from "../schemas/namespaces.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
   CLASS_GLOSSES,
@@ -174,6 +180,7 @@ const GRAPH_KIND_LAYERS: Readonly<Record<string, TermLayer>> = {
   todos: "core",
   "todo-items": "core",
   "todo-feedback": "core",
+  "review-verdicts": "core",
 };
 
 /** The graph kinds' own summaries — read, never restated. */
@@ -337,6 +344,9 @@ export function buildVocabulary(
       notation: "skos:notation",
       title: "dcterms:title",
       inScheme: { "@id": "skos:inScheme", "@type": "@id" },
+      // Declared, not left bare: a JSON-LD processor DROPS an undeclared key,
+      // and this one was on all 159 terms (bean vigi, found by expanding).
+      layer: termIri("layer"),
     },
     "@id": docIri,
     // In `--exact` mode this document IS the layer's concept scheme (see

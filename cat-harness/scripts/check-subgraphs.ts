@@ -29,12 +29,15 @@
  * Usage:
  *   bun run subgraphs            # the tree and the entanglement report
  *   bun run check:subgraphs      # same, non-zero only if something is unreadable
+ *
+ * @covers cat-harness
  */
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { Glob } from "bun";
 
 import {
+  isDerivedGraph,
   isPublishedGraphKind,
   isRenderable,
   owningDirectory,
@@ -115,6 +118,34 @@ export interface SubgraphReport {
    * skip — which this module already refuses two paragraphs up.
    */
   siteResolved: Array<{ from: string; fromDir: string; target: string }>;
+  /**
+   * Links inside a DERIVED graph that do not resolve — the source document's
+   * own, not ours.
+   *
+   * Third bucket for the same reason `siteResolved` is the second: the
+   * directory stays in scope and one class of link is routed out of
+   * `dangling`. A derived graph is machine-produced FROM a source, so a
+   * markdown link inside it is whatever the derivation carried across. An
+   * ingested page of the Claude Platform Docs prints `./REFERENCE.md` and
+   * `./FORMS.md` inside an EXAMPLE of a skill directory; those were never
+   * edges in this graph, and there is nothing to repoint.
+   *
+   * **The rule already existed one layer down, and this check was simply not
+   * applying it.** `schemas/cat-harness.ts` says of the `derived` layer that
+   * *"a QA finding against a derived section is a finding against its
+   * GENERATOR, not against the corpus, and it sends a reviewer to fix the
+   * wrong file"*. That is exactly what happened on 2026-09-23: five ingested
+   * documents produced 12 findings, every one asking somebody to edit a
+   * transcription of a document this project did not write.
+   *
+   * **Repointing them would be worse than a waste.** Editing an extracted
+   * section to satisfy a checker breaks the one promise a library entry
+   * makes — that it says what the source said. Same reason `uses[]` is never
+   * populated from Lean and a narrative is never invented.
+   *
+   * Counted and printed, never asserted, exactly as `siteResolved` is.
+   */
+  derivedLinks: Array<{ from: string; fromDir: string; target: string }>;
   /** Files that could not be read — the third state. */
   unreadable: string[];
   /**
@@ -126,7 +157,7 @@ export interface SubgraphReport {
    * moved to `fsh-guts/`, which is `scope: "repository"` and therefore sits
    * OUTSIDE this instance — and `owningDirectory` compares in the instance's
    * path space, so every repository-scoped directory was skipped without a
-   * word. `bootstrap/skills/`, `smart-kg/` and `uploads/` are skipped the
+   * word. `bootstrap/skills/` and `uploads/` are skipped the
    * same way.
    *
    * Skipping retired content is defensible; skipping it SILENTLY is not,
@@ -195,6 +226,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
   const tree = subgraphTree(dirs);
   const edges: CrossEdge[] = [];
   const dangling: SubgraphReport["dangling"] = [];
+  const derivedLinks: SubgraphReport["derivedLinks"] = [];
   const unreadable: string[] = [];
   const notExamined: string[] = [];
   const exempt: string[] = [];
@@ -253,7 +285,14 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
         if (!existsSync(resolved)) {
           // A renderable graph addresses the PUBLISHED tree, not this one.
           const renderable = owner.graphKinds.some((g) => isRenderable(g));
-          (renderable ? siteResolved : dangling).push({
+          // A DERIVED graph's links came from the SOURCE document rather than
+          // from an author here — see `derivedLinks`. Tested after
+          // `renderable` only because no kind is currently both; if one ever
+          // is, addressing the published tree is the more specific claim and
+          // should win.
+          const derived = owner.graphKinds.some((g) => isDerivedGraph(g));
+          const bucket = renderable ? siteResolved : derived ? derivedLinks : dangling;
+          bucket.push({
             from: relative(root, file),
             fromDir: owner.id,
             target,
@@ -274,12 +313,12 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
       notExamined.push(`${dir.id} (${dir.path})`);
     }
   }
-  return { tree, edges, dangling, exempt, siteResolved, unreadable, notExamined, scanned };
+  return { tree, edges, dangling, derivedLinks, exempt, siteResolved, unreadable, notExamined, scanned };
 }
 
 if (import.meta.main) {
   const check = process.argv.includes("--check");
-  const { tree, edges, dangling, exempt, siteResolved, unreadable, notExamined, scanned } =
+  const { tree, edges, dangling, derivedLinks, exempt, siteResolved, unreadable, notExamined, scanned } =
     scanSubgraphs(ROOT);
 
   console.log(`Subgraphs  (${scanned} markdown node(s) attributed to a declared directory)\n`);
@@ -341,6 +380,23 @@ if (import.meta.main) {
       "  Not a finding: a renderable graph addresses the PUBLISHED tree, where the\n" +
         "  site build resolves `api/`, `*.html` and generated pages. NOT a clean bill\n" +
         "  either — bean `mi97` audits them, and 23 carry one `../` too many.",
+    );
+  }
+
+  if (derivedLinks.length > 0) {
+    const byDir = new Map<string, number>();
+    for (const l of derivedLinks) byDir.set(l.fromDir, (byDir.get(l.fromDir) ?? 0) + 1);
+    console.log(
+      `\n· ${derivedLinks.length} link(s) in DERIVED graph(s) do not resolve in the source tree:`,
+    );
+    for (const [id, n] of [...byDir].sort((a, b) => b[1] - a[1])) console.log(`    ${id}: ${n}`);
+    console.log(
+      "  Not a finding: a derived graph is machine-produced FROM a source, so a link\n" +
+        "  inside it is the SOURCE document's — an ingested page printing `./FORMS.md`\n" +
+        "  inside an example was never an edge here. Repointing one would edit a\n" +
+        "  transcription to satisfy a checker, which breaks the only promise a library\n" +
+        "  entry makes. NOT a clean bill either: a link a GENERATOR mangled would land\n" +
+        "  here too, and telling those apart needs the generator, not this sweep.",
     );
   }
 

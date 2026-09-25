@@ -39,12 +39,24 @@
  * written as a pass.
  *
  * @module scripts/kg-audit
+ * @covers processes, scenarios, skills, tools, cat-harness — the graph kinds
+ *   `KG_SUBJECT_GRAPH_KINDS` maps its seven subject kinds onto
  */
 
 import { createHash } from "node:crypto";
+import { parse as parseYaml } from "yaml";
+import { defaultGraphKinds } from "../schemas/graph-kind-registry.js";
+import { contractFile, contractRefProblem, skillContracts } from "./skill-contracts.js";
+import { checkTestRuns } from "./test-run-conformance.js";
+import { processArrowFindings, schemaArrowFindings } from "./arrow-direction.js";
+import { classifyName, diagramProse, generalDeclarationProse, namedFiles } from "./prose-names.js";
+import { readSchemaGraph } from "./schema-graph.js";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
 import { tools } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
+import { docsLayers } from "./compose-docs.js";
+import { PAIR_CRITERION, discoverPairs, evaluatePairs, readAttestations } from "./prose-code-pairs.js";
+import { claimsEntry, judgePair, rootScripts } from "./pair-claims.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
@@ -82,7 +94,9 @@ import {
   type RoleGraph,
   type LoadedActor,
 } from "../schemas/role-graph.js";
-import { loadProcessModel, isActivity, type ProcessModel } from "../src/workflow/process-model.js";
+import { ANYONE, ODRL_ACTIONS, readPolicies, readPolicyGrants } from "../schemas/odrl.js";
+import { loadProcessModel, isActivity, isDecision, indistinctBranches, type ProcessModel } from "../src/workflow/process-model.js";
+import { reachability } from "../src/workflow/reachability.js";
 import { raciBreaches, raciRowsOf, type RaciBreachKind } from "./raci-chart.js";
 import { loadDecisionTable, possibleOutcomes } from "../src/workflow/decision-table.js";
 import {
@@ -94,8 +108,9 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
-import { repoRootFor, DECLARATION_SUFFIX, resolveDirectories } from "../schemas/cat-harness.js";
+import { repoRootFor, DECLARATION_SUFFIX, instanceDirectoryForGraph, resolveDirectories } from "../schemas/cat-harness.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
+import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
 
 const ENGINE_VERSION = "1";
 
@@ -159,6 +174,9 @@ const WORKFLOW_DIR = ownDirectoryById(root, "processes", "processes");
 // reasoning as `WORKFLOW_DIR` — the role graph moved out of the skills tree
 // on 2026-09-21 and a path-less subject needs a sidecar home.
 const SCENARIO_DIR = ownDirectoryById(root, "scenarios", "scenarios");
+// declared-path-literal: the convention fallback, at the call site, as for
+// `SCENARIO_DIR`. The ODRL policies (issue #1180) are their own graph kind.
+const POLICY_DIR = ownDirectoryById(root, "policies", "policies");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
 const KG_ROOT = join(root, "skills");
 const ACTOR_DIR = join(repoRootFor(root), ".claude", "skills", "actors");
@@ -235,6 +253,46 @@ async function loadProcesses(): Promise<LoadedProcess[]> {
   return out;
 }
 
+// ── Documentation surface ───────────────────────────────────────
+
+/**
+ * What a reader can reach: the base docs layer's rendered diagrams, and the
+ * text of every page in every layer, read once per run.
+ *
+ * `undefined` when no docs layer is declared, which `process-diagram-published`
+ * records as `unknown` — the third state. Treating "could not look" as "shown
+ * nowhere" would fail every diagram in an instance that publishes elsewhere;
+ * treating it as "shown" would be the clean run over nothing (`dh4f`).
+ */
+interface DocsSurface {
+  /** Absolute directory `render:bpmn` writes SVGs into. */
+  svgDir: string;
+  /** Every page's text, concatenated — searched for `workflows/<stem>.svg`. */
+  pages: string;
+}
+
+function docsSurface(): DocsSurface | undefined {
+  let layers;
+  try {
+    layers = docsLayers(resolve(root, "..")).layers;
+  } catch {
+    return undefined;
+  }
+  const base = layers.find((l) => !l.repositoryScoped);
+  if (!base) return undefined;
+  const texts: string[] = [];
+  const walk = (dir: string): void => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      if (e.name.startsWith("_site") || e.name === "node_modules" || e.name === "vendor") continue;
+      const p = join(dir, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (/\.(md|html)$/.test(e.name)) texts.push(readFileSync(p, "utf-8"));
+    }
+  };
+  for (const l of layers) walk(l.dir);
+  return { svgDir: join(base.dir, "assets", "img", "workflows"), pages: texts.join("\n") };
+}
+
 // ── Per-process criteria ────────────────────────────────────────
 
 async function auditProcess(
@@ -242,6 +300,9 @@ async function auditProcess(
   graph: RoleGraph | undefined,
   skills: Set<string>,
   processIds: Set<string>,
+  /** Basenames of every loadable diagram — a skill of the same name OWNS that process. */
+  processStems: Set<string> = new Set(),
+  docs?: DocsSurface,
 ): Promise<KgQaReport> {
   const rel = relative(root, p.file);
   const hash = sha256(readFileSync(p.file, "utf-8"));
@@ -257,6 +318,7 @@ async function auditProcess(
   const noLane: KgFinding[] = [];
   const skillNotCarried: KgFinding[] = [];
   const unresolvedCall: KgFinding[] = [];
+  const undocumented: KgFinding[] = [];
   const calls = activities.filter((n) => n.calledElement !== undefined);
 
   // Lane ids whose role is declared `actedUpon` — a store or an external
@@ -286,7 +348,7 @@ async function auditProcess(
       }
     }
     // A call activity is implemented by the process it calls, not by a skill.
-    // Demanding a `<folio:skill ref>` of it asks the diagram to name a second,
+    // Demanding a `<bootstrap.processes:skill ref>` of it asks the diagram to name a second,
     // redundant implementation — and the one that matters is checked by
     // `call-activity-resolves` below, so the exemption leaves no gap.
     //
@@ -299,7 +361,7 @@ async function auditProcess(
     // Three declared exemptions, and each one is READ from a declaration
     // rather than inferred: an `actedUpon` lane (nothing performs it), a
     // `judgementOnly` lane (somebody performs it, but no procedure yields the
-    // answer), and `<folio:no-skill reason>` on the activity itself. Because
+    // answer), and `<cat-harness.processes:no-skill reason>` on the activity itself. Because
     // every legitimate case now SAYS SO, what is left is a real gap — which is
     // what lets this criterion gate instead of staying advisory.
     if (
@@ -312,8 +374,8 @@ async function auditProcess(
       noSkill.push({
         where: n.id,
         detail:
-          `"${n.name}" names no skill. Give it <folio:skill ref="…"/>, or, if none could exist, ` +
-          `declare <folio:no-skill reason="…"/> saying why.`,
+          `"${n.name}" names no skill. Give it <bootstrap.processes:skill ref="…"/>, or, if none could exist, ` +
+          `declare <cat-harness.processes:no-skill reason="…"/> saying why.`,
       });
     }
     if (n.calledElement !== undefined && !processIds.has(n.calledElement)) {
@@ -325,6 +387,48 @@ async function auditProcess(
       });
     }
     if (!n.lane) noLane.push({ where: n.id, detail: `"${n.name}" sits in no lane, so no role — and therefore no actor — performs it.` });
+    if (!n.documentation) {
+      undocumented.push({ where: n.id, detail: `"${n.name}" carries no <bpmn:documentation>, so its page shows a name and nothing more.` });
+    }
+  }
+
+  // A skill that owns a same-named process, named by exactly ONE plain step
+  // here. Several steps naming it are using its know-how, not calling it —
+  // see the criterion's note in `schemas/kg-qa.ts`.
+  const stem = basename(p.file, ".bpmn");
+  const namers = new Map<string, typeof activities>();
+  for (const n of activities) {
+    for (const ref of new Set(n.skills)) {
+      if (ref === stem || !processStems.has(ref)) continue;
+      namers.set(ref, [...(namers.get(ref) ?? []), n]);
+    }
+  }
+  const shouldCall: KgFinding[] = [];
+  for (const [ref, ns] of namers) {
+    // A declared `<cat-harness.processes:no-call reason>` is the recorded judgement that this
+    // step uses the skill without being its process — `n/a` for that step.
+    if (ns.length !== 1 || ns[0].calledElement !== undefined || ns[0].noCallReason !== undefined) continue;
+    shouldCall.push({
+      where: ns[0].id,
+      detail:
+        `"${ns[0].name}" names skill "${ref}", which owns ${ref}.bpmn, but is a plain task. Make it a ` +
+        `<bpmn:callActivity calledElement="…"> so the diagram descends into that process, or declare ` +
+        `<cat-harness.processes:no-call reason="…"/> saying why it only uses the skill.`,
+    });
+  }
+
+  // Published: an SVG exists AND some page embeds it.
+  let published: KgCriterionEntry;
+  if (!docs) {
+    published = { result: "unknown", findings: [{ where: "—", detail: "no docs layer is declared, so no page could be searched." }] };
+  } else if (!existsSync(join(docs.svgDir, `${stem}.svg`))) {
+    published = entry([{ where: m.id, detail: `no rendered diagram at ${stem}.svg — run \`bun run render:bpmn\`.` }]);
+  } else {
+    published = entry(
+      docs.pages.includes(`workflows/${stem}.svg`)
+        ? []
+        : [{ where: m.id, detail: `${stem}.svg is rendered but no docs page shows it — run \`bun run processes:viz\`.` }],
+    );
   }
 
   // Lanes → roles.
@@ -335,7 +439,20 @@ async function auditProcess(
   /** ...and those that declared one alongside a `ref`, which cannot be both. */
   const contradictoryPerformer: KgFinding[] = [];
   const laneRole = new Map<string, string>(); // lane id → role id
+  // Skipped entirely with no graph, rather than computed and discarded.
+  //
+  // The `!graph` branch below already overwrote every one of these criteria
+  // with `unknown` — so this loop's verdicts were thrown away, and bean `7go7`
+  // records what that cost: `laneBinding` used to accept an undefined graph
+  // and answer `dangling` for all 44 ref-bearing lanes in this corpus. The
+  // audit was protected from that by the overwrite; the VIEWER, which takes
+  // the verdict verbatim, was not. Making the parameter required (owner's
+  // ruling, 2026-09-23) turned the discard into a skip and forced the viewer
+  // to have its own answer.
   for (const lane of m.lanes) {
+    // `break` rather than a cast: it narrows `graph` for the rest of the body,
+    // and skipping is what the overwrite below already meant.
+    if (!graph) break;
     // One decision, in `laneBinding`, so the rule is testable without running
     // this script — which matters because the case it exists for
     // (`log-message.bpmn`'s `Actor`) is in a NESTED instance this audit does
@@ -355,7 +472,7 @@ async function auditProcess(
       case "contradictory":
         contradictoryPerformer.push({
           where: lane.id,
-          detail: `lane "${lane.name ?? lane.id}" declares BOTH <folio:role ref="${b.ref}"/> and variable="true". A lane that names a role has not got a varying performer; drop whichever is wrong.`,
+          detail: `lane "${lane.name ?? lane.id}" declares BOTH <bootstrap.processes:role ref="${b.ref}"/> and variable="true". A lane that names a role has not got a varying performer; drop whichever is wrong.`,
         });
         break;
       case "variable":
@@ -364,13 +481,13 @@ async function auditProcess(
         // else, and so a sidecar shows the declaration rather than silence.
         variablePerformer.push({
           where: lane.id,
-          detail: `lane "${lane.name ?? lane.id}" declares <folio:role variable="true"/> — its performer varies by design, so it binds no role and that is the answer rather than a gap.`,
+          detail: `lane "${lane.name ?? lane.id}" declares <bootstrap.processes:role variable="true"/> — its performer varies by design, so it binds no role and that is the answer rather than a gap.`,
         });
         break;
       case "unbound":
         unboundLane.push({
           where: lane.id,
-          detail: `lane "${lane.name ?? lane.id}" matches no declared role. Add the name to a role's \`lanes\` in scenarios/roles.json, bind it with <folio:role ref="…"/>, or — if its performer genuinely varies — declare that with <folio:role variable="true"/>.`,
+          detail: `lane "${lane.name ?? lane.id}" matches no declared role. Add the name to a role's \`lanes\` in scenarios/roles.json, bind it with <bootstrap.processes:role ref="…"/>, or — if its performer genuinely varies — declare that with <bootstrap.processes:role variable="true"/>.`,
         });
         break;
     }
@@ -423,17 +540,39 @@ async function auditProcess(
       // exactly backwards.
       if (role.actorKinds.some((k) => allowed.includes(k))) continue;
       const how = n.fulfilment
-        ? `<folio:fulfilment/> on the step allows ${allowed.join(", ")} (${n.fulfilment.reason})`
+        ? `<cat-harness.processes:fulfilment/> on the step allows ${allowed.join(", ")} (${n.fulfilment.reason})`
         : `a ${n.type.replace("bpmn:", "")} is performed by ${allowed.join(" or ")}`;
       wrongKind.push({
         where: n.id,
         detail:
           `"${n.name}" — ${how}, but its lane's role "${roleId}" admits only ${role.actorKinds.join(", ")}. ` +
           `Either the task type is wrong, the lane is wrong, or the step really does admit that kind — ` +
-          `in which case say so with <folio:fulfilment kinds="…" reason="…"/>.`,
+          `in which case say so with <cat-harness.processes:fulfilment kinds="…" reason="…"/>.`,
       });
     }
   }
+
+  // DECISIONS — diverging exclusive gateways. Merges, forks and joins decide
+  // nothing, so `isDecision` leaves them out; see the criteria's notes in
+  // `schemas/kg-qa.ts` for the measurement behind both.
+  const decisions = [...m.nodes.values()].filter(isDecision);
+  const undocumentedDecision: KgFinding[] = decisions
+    .filter((n) => !n.documentation)
+    .map((n) => ({
+      where: n.id,
+      detail:
+        `"${n.name}" carries no <bpmn:documentation>, so its page shows the question and not what answers it ` +
+        `— who decides, from what evidence, and what each branch commits the process to.`,
+    }));
+  const indistinct: KgFinding[] = decisions.flatMap((n) =>
+    indistinctBranches(m, n).map((b) => ({
+      where: b.flowId,
+      detail:
+        b.problem === "unnamed"
+          ? `a branch out of "${n.name}" (${n.id}) has no name, so a reader cannot tell which answer takes it.`
+          : `a branch out of "${n.name}" (${n.id}) is labelled "${b.label}", as is a sibling — the two cannot be told apart.`,
+    })),
+  );
 
   // Gateways computing their branch from a DMN table.
   const decisionRefs = [...m.nodes.values()].filter((n) => n.decisionRef);
@@ -540,6 +679,14 @@ async function auditProcess(
         : unresolvedCall.length
           ? { result: "unknown" as KgResult, findings: unresolvedCall }
           : { result: "pass" as KgResult, findings: [] },
+    "process-diagram-published": published,
+    "activity-documented": entry(undocumented, activities.length > 0),
+    "activity-calls-skill-process": entry(shouldCall, activities.length > 0),
+    // `n/a` for a diagram with no decision — a linear process has nothing to
+    // document here, which is not the same as having documented it.
+    "gateway-documented": entry(undocumentedDecision, decisions.length > 0),
+    "gateway-branches-named": entry(indistinct, decisions.length > 0),
+    ...reachabilityCriteria(m),
   };
   if (!graph) {
     // No role graph is a state the audit can be in, and it is not a pass.
@@ -559,6 +706,24 @@ async function auditProcess(
     }
   }
   return report("process", m.id, rel, hash, criteria);
+}
+
+
+
+/**
+ * `node-reachable` and `node-has-exit`, from the shared walk.
+ *
+ * The walk is in `src/workflow/reachability.ts` so it can be tested without
+ * importing this script, which runs at load. `preStart` is deliberately not a
+ * criterion: a node gating an entry point is correct, and reporting it would
+ * make a modelling decision a permanent finding.
+ */
+function reachabilityCriteria(m: ProcessModel): Record<string, KgCriterionEntry> {
+  const r = reachability(m);
+  return {
+    "node-reachable": entry(r.unreachable),
+    "node-has-exit": entry(r.noExit),
+  };
 }
 
 // ── Per-decision criteria ───────────────────────────────────────
@@ -595,7 +760,7 @@ async function auditDecisions(
     for (const id of ids) {
       const ref = `${f}#${id}`;
       if (!referenced.has(ref)) {
-        findings.push({ where: id, detail: `decision "${ref}" is referenced by no gateway in processes/. Either wire it with <folio:decision ref="decisions/${ref}"/> or delete it.` });
+        findings.push({ where: id, detail: `decision "${ref}" is referenced by no gateway in processes/. Either wire it with <cat-harness.processes:decision ref="decisions/${ref}"/> or delete it.` });
         continue;
       }
       try {
@@ -897,15 +1062,21 @@ function auditRoles(
   processes: LoadedProcess[],
   actors: LoadedActor[],
   skills: Set<string>,
+  stories: UserStoryGraph | undefined,
+  storiesPath: string,
 ): KgQaReport[] {
-  const hash = sha256(readFileSync(graphPath, "utf-8"));
+  // Both files: `role-has-story` reads the stories, which point at the role
+  // (#1168), so a story added or removed changes a role's verdict without
+  // touching roles.json.
+  const hash = sha256(
+    readFileSync(graphPath, "utf-8") + (existsSync(storiesPath) ? readFileSync(storiesPath, "utf-8") : ""),
+  );
+  const toldAs = new Set((stories?.stories ?? []).filter((s) => s.role.instance === undefined).map((s) => s.role.role));
   const rel = relative(root, graphPath);
 
-  const corpusLanes = new Set<string>();
   const explicitRefs = new Set<string>();
   for (const p of processes) {
     for (const lane of p.model?.lanes ?? []) {
-      if (lane.name) corpusLanes.add(lane.name);
       if (lane.roleRef) explicitRefs.add(lane.roleRef);
     }
   }
@@ -919,11 +1090,12 @@ function auditRoles(
     const badParents = (r.inherits ?? [])
       .filter((i) => !declared.has(i))
       .map((i) => ({ where: i, detail: `role "${r.id}" inherits "${i}", which is not declared.` }));
-    const usedLanes = r.lanes.filter((l) => corpusLanes.has(l));
-    const bindsSomething = usedLanes.length > 0 || explicitRefs.has(r.id);
+    // A lane binds a role by its own `<bootstrap.processes:role ref>`; the role lists no lanes
+    // (data-modelling step 8, #1168).
+    const bindsSomething = explicitRefs.has(r.id);
     const laneFindings: KgFinding[] = bindsSomething
       ? []
-      : [{ where: r.id, detail: `role "${r.id}" binds no lane in any diagram — nothing can enter it. Either a lane name has drifted, or the role is dead.` }];
+      : [{ where: r.id, detail: `role "${r.id}" is bound by no lane's <bootstrap.processes:role ref> in any diagram — nothing can enter it. Either a lane lost its ref, or the role is dead.` }];
 
     const criteria: Record<string, KgCriterionEntry> = {
       "role-skills-resolve": entry(badSkills),
@@ -937,19 +1109,16 @@ function auditRoles(
               ? []
               : [{ where: r.id, detail: `role "${r.id}" has no persona — an author has nobody to write for.` }],
           ),
-      "role-declares-voice": !readsProse(r)
+      // No `role-declares-voice`: a voice points at the role it addresses
+      // (`activeIn.roles`), and the voices graph is a DEPENDENT instance's, so
+      // this instance cannot see it — `check:voices` reports which roles no
+      // voice addresses, from the side that can (#1168, B2).
+      "role-has-story": !readsProse(r)
         ? entry([], false)
         : entry(
-            r.voice && r.voice.trim().length > 0
+            toldAs.has(r.id)
               ? []
-              : [{ where: r.id, detail: `role "${r.id}" declares no voice — authoring and QA would each pick their own.` }],
-          ),
-      "role-has-use-cases": !readsProse(r)
-        ? entry([], false)
-        : entry(
-            (r.useCases ?? []).length > 0
-              ? []
-              : [{ where: r.id, detail: `role "${r.id}" declares no use cases — nothing says what this reader came to do.` }],
+              : [{ where: r.id, detail: `no user story in scenarios/stories.json is told as role "${r.id}" — nothing says what this reader came to do.` }],
           ),
       // `actedUpon` lanes are stores, not participants — the work plan, the
       // corpus, the publish target. Asking which actor fills the corpus is not
@@ -1027,7 +1196,7 @@ function auditRoles(
  * `satisfiedBy` and three `derivedFrom` refs pointed at nothing.
  *
  * They are `critical` rather than `major` for the same reason a dangling
- * `<folio:skill ref>` is: a reader following the reference gets nothing. The
+ * `<bootstrap.processes:skill ref>` is: a reader following the reference gets nothing. The
  * grading check is `major` — an ungraded statement is still readable, it just
  * cannot be conformance-tested.
  */
@@ -1039,7 +1208,7 @@ interface LoadedRequirement {
     id?: string;
     derivedFrom?: string[];
     actors?: string[];
-    statements?: { key?: string; conformance?: string; actors?: string[]; satisfiedBy?: { kind?: string; ref?: string }[] }[];
+    statements?: { key?: string; conformance?: string; actors?: string[] }[];
   };
 }
 
@@ -1058,23 +1227,216 @@ function readRequirements(): LoadedRequirement[] {
   return out;
 }
 
-function auditRequirements(
-  reqs: LoadedRequirement[],
-  skills: Set<string>,
-  actors: LoadedActor[],
-): KgQaReport[] {
-  const capabilities = new Set<string>();
-  if (existsSync(CAPABILITY_DIR)) {
-    for (const f of readdirSync(CAPABILITY_DIR)) {
-      if (f.endsWith(".json")) capabilities.add(f.slice(0, -5));
+/**
+ * Every value of a list-valued front-matter key across the skill files, with
+ * the file that declares it. A front matter that does not parse is skipped:
+ * that is `check:skill-front-matter`'s finding, not this one's.
+ */
+function frontMatterLists(key: string): { value: string; from: string }[] {
+  const out: { value: string; from: string }[] = [];
+  const line = new RegExp(`^${key}:`, "m");
+  for (const file of skillFiles()) {
+    const fm = /^---\n([\s\S]*?)\n---/.exec(readFileSync(file, "utf-8"));
+    if (!fm || !line.test(fm[1]!)) continue;
+    let parsed: unknown;
+    try {
+      parsed = parseYaml(fm[1]!);
+    } catch {
+      continue;
+    }
+    const values = (parsed as Record<string, unknown>)[key];
+    for (const v of Array.isArray(values) ? values : []) out.push({ value: String(v), from: relative(root, file) });
+  }
+  return out;
+}
+
+/**
+ * The `graph-kinds:` a skill names that are not registered kinds (#1168, B3).
+ * The skill says which kinds it reads; the kind names no skill.
+ */
+function unknownSkillGraphKinds(): KgFinding[] {
+  return frontMatterLists("graph-kinds")
+    .filter(({ value }) => !defaultGraphKinds.has(value))
+    .map(({ value, from }) => ({ where: from, detail: `names graph kind "${value}", which is not registered.` }));
+}
+
+/**
+ * A skill's `input:`/`output:` that is malformed or names a local file that is
+ * not there (#1168, B3b). An external https IRI is not fetched here.
+ */
+function brokenSkillContracts(): KgFinding[] {
+  const out: KgFinding[] = [];
+  for (const c of skillContracts(root).values()) {
+    for (const io of ["input", "output"] as const) {
+      const ref = c[io];
+      if (ref === undefined) continue;
+      const shape = contractRefProblem(ref);
+      const file = contractFile(root, ref);
+      if (shape) out.push({ where: c.from, detail: `${io}: ${ref} — ${shape}.` });
+      else if (file !== undefined && !existsSync(file)) {
+        out.push({ where: c.from, detail: `${io}: ${ref} — no such file in this instance.` });
+      }
     }
   }
+  return out;
+}
+
+/**
+ * A contract file no skill names (#1168, B3b). The skill points at its
+ * contract, so a contract nothing points at is specified for nobody.
+ */
+function unclaimedSkillContracts(): KgFinding[] {
+  // declared-path-literal: the conventional fallback when no declaration names the directory
+  const dir = join(instanceDirectoryForGraph(root, "schemas") ?? join(root, "schemas"), "skills");
+  if (!existsSync(dir)) return [];
+  const claimed = new Set<string>();
+  for (const c of skillContracts(root).values()) {
+    for (const ref of [c.input, c.output]) if (ref !== undefined) claimed.add(ref);
+  }
+  const out: KgFinding[] = [];
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    if (!e.isDirectory()) continue;
+    for (const f of readdirSync(join(dir, e.name))) {
+      if (!f.endsWith(".schema.json")) continue;
+      const ref = relative(root, join(dir, e.name, f));
+      if (!claimed.has(ref)) out.push({ where: ref, detail: `no skill names ${ref} as its input or output.` });
+    }
+  }
+  return out;
+}
+
+/**
+ * Every arrow from a general node, checked against the rule that the
+ * dependent holds the pointer (#1168, B5). `unknown` when the schema graph
+ * cannot be read: a check over nothing is not a pass.
+ */
+function arrowDirection(): KgCriterionEntry {
+  const graph = readSchemaGraph(root);
+  if (graph === null) {
+    return { result: "unknown", findings: [{ where: "—", detail: "no schemas directory to read `@general` declarations from." }] };
+  }
+  const perFile = workflowFiles(root)
+    .filter((f) => f.endsWith(".bpmn"))
+    .map((f) => processArrowFindings(relative(root, f), readFileSync(f, "utf-8")));
+  // Zero extension elements across every diagram means the reader matched
+  // nothing — the prefix-drift failure this check has already had once — so
+  // it is `unknown`, never a clean run.
+  if (perFile.reduce((n, r) => n + r.examined, 0) === 0) {
+    return { result: "unknown", findings: [{ where: "—", detail: "no BPMN extension element was found in any diagram, so the process half checked nothing." }] };
+  }
+  return entry([...schemaArrowFindings(graph), ...perFile.flatMap((r) => r.findings)]);
+}
+
+/**
+ * Do the files a general node's PROSE names still exist (bean `epbt`)?
+ *
+ * Advisory. Prose may name a dependent as explanation — the owner kept that
+ * on 2026-09-24 — but it cannot notice a rename, so a path whose directory is
+ * here and whose file is not is listed. A bare name nothing here carries is
+ * undetermined (an output, a folio's file, an example) and never a finding.
+ */
+function proseNamesResolve(): KgCriterionEntry {
+  const repo = repoRootFor(root);
+  const ls = Bun.spawnSync(["git", "ls-files"], { cwd: repo });
+  if (ls.exitCode !== 0) {
+    return { result: "unknown", findings: [{ where: "—", detail: "`git ls-files` failed, so a bare file name cannot be looked up." }] };
+  }
+  const basenames = new Set(new TextDecoder().decode(ls.stdout).split("\n").map((f) => f.split("/").pop()!));
+  // Every instance's root, not only this one: `materialize-remote.bpmn`
+  // names `schemas/materialization.ts`, which is folio-assistant-core's, and
+  // prose spells a sibling instance's path from that instance's root.
+  const roots = [
+    repo,
+    root,
+    ...readdirSync(repo, { withFileTypes: true })
+      .filter((e) => e.isDirectory() && !e.name.startsWith(".") && e.name !== "node_modules")
+      .map((e) => join(repo, e.name)),
+  ];
+  const texts: { where: string; prose: string }[] = workflowFiles(root)
+    .filter((f) => f.endsWith(".bpmn"))
+    .map((f) => ({ where: relative(root, f), prose: diagramProse(readFileSync(f, "utf-8")) }));
+  const graph = readSchemaGraph(root);
+  const generalModules = new Set((graph?.decls ?? []).filter((d) => d.general).map((d) => d.module));
+  for (const m of generalModules) {
+    for (const d of generalDeclarationProse(readFileSync(join(repo, m), "utf-8"))) {
+      texts.push({ where: `${m}#${d.name}`, prose: d.prose });
+    }
+  }
+  let named = 0;
+  const findings: KgFinding[] = [];
+  for (const t of texts) {
+    for (const n of namedFiles(t.prose)) {
+      named++;
+      if (classifyName(n, roots, basenames) === "missing") {
+        findings.push({ where: t.where, detail: `names \`${n}\`: its directory is here and the file is not — renamed, moved, or never written.` });
+      }
+    }
+  }
+  // Zero names over every general node is a reader that matched nothing.
+  if (named === 0) {
+    return { result: "unknown", findings: [{ where: "—", detail: "no file name was found in any general node's prose, so nothing was checked." }] };
+  }
+  return entry(findings);
+}
+
+/**
+ * The recorded test runs, followed to the skill each names and on to that
+ * skill's contract (#1168, B4). Three criteria rather than one, because
+ * "could not check" is a different finding from "checked and wrong".
+ */
+function testRunCriteria(skills: Set<string>): Record<string, KgCriterionEntry> {
+  // declared-path-literal: the conventional fallback when no declaration names the directory
+  const r = checkTestRuns(root, ownDirectoryById(root, "qa", "test/results"), skills);
+  const any = r.runs > 0;
+  return {
+    "test-run-skill-resolves": entry(r.unresolved, any),
+    "test-run-conforms": entry(r.nonconforming, any),
+    "test-run-checkable": entry(r.unchecked, any),
+  };
+}
+
+/** One declared `satisfies` ref, and who declared it. */
+interface Satisfier {
+  /** `req:<requirement>#<statement key>`. */
+  ref: string;
+  /** The declaring file, repo-relative — a skill `.md` or a capability `.json`. */
+  from: string;
+}
+
+/**
+ * Every `satisfies` ref a skill or capability declares (#1168, B3).
+ *
+ * The satisfier holds the pointer; the requirement statement names nobody. A
+ * skill declares it in its front matter, a capability in its JSON.
+ */
+function readSatisfiers(): Satisfier[] {
+  const out: Satisfier[] = frontMatterLists("satisfies").map(({ value, from }) => ({ ref: value, from }));
+  if (existsSync(CAPABILITY_DIR)) {
+    for (const f of readdirSync(CAPABILITY_DIR)) {
+      if (!f.endsWith(".json")) continue;
+      const path = join(CAPABILITY_DIR, f);
+      const refs = (JSON.parse(readFileSync(path, "utf-8")) as { satisfies?: unknown }).satisfies;
+      for (const r of Array.isArray(refs) ? refs : []) out.push({ ref: String(r), from: relative(root, path) });
+    }
+  }
+  return out;
+}
+
+function auditRequirements(
+  reqs: LoadedRequirement[],
+  actors: LoadedActor[],
+  satisfiers: Satisfier[],
+): KgQaReport[] {
   const actorIds = new Set(actors.map((a) => a.id));
   const reqIds = new Set(reqs.map((r) => r.id));
 
   return reqs.map((r) => {
-    const hash = sha256(readFileSync(r.path, "utf-8"));
-    const satisfied: KgFinding[] = [];
+    const mine = satisfiers.filter((s) => s.ref.startsWith(`${r.id}#`)).sort((x, y) => (x.ref + x.from).localeCompare(y.ref + y.from));
+    // The requirement file AND the satisfiers that name it: a skill that
+    // starts or stops satisfying a statement changes this verdict without
+    // touching the requirement.
+    const hash = sha256(readFileSync(r.path, "utf-8") + JSON.stringify(mine));
+    const unsatisfied: KgFinding[] = [];
     const badActors: KgFinding[] = [];
     const ungraded: KgFinding[] = [];
 
@@ -1089,15 +1451,11 @@ function auditRequirements(
       for (const a of st.actors ?? []) {
         if (!actorIds.has(a)) badActors.push({ where: `${r.id}/${key}`, detail: `binds actor "${a}", which the registry does not declare.` });
       }
-      for (const sb of st.satisfiedBy ?? []) {
-        const ref = sb.ref ?? "";
-        const ok = sb.kind === "skill" ? skills.has(ref) : sb.kind === "capability" ? capabilities.has(ref) : true;
-        if (!ok) {
-          satisfied.push({
-            where: `${r.id}/${key}`,
-            detail: `is satisfiedBy ${sb.kind} "${ref}", which does not exist — the thing claimed to discharge this statement cannot be opened.`,
-          });
-        }
+      if (!mine.some((s) => s.ref === `${r.id}#${key}`)) {
+        unsatisfied.push({
+          where: `${r.id}/${key}`,
+          detail: `no skill or capability declares \`satisfies: ${r.id}#${key}\` — nothing is recorded as discharging this statement.`,
+        });
       }
     }
     const badParents = (r.raw.derivedFrom ?? [])
@@ -1105,13 +1463,24 @@ function auditRequirements(
       .map((d) => ({ where: r.id, detail: `derives from "${d}", which is not a declared requirement.` }));
 
     const criteria: Record<string, KgCriterionEntry> = {
-      "requirement-satisfied-by-resolves": entry(satisfied),
+      "requirement-statement-satisfied": entry(unsatisfied, (r.raw.statements ?? []).length > 0),
       "requirement-actors-resolve": entry(badActors),
       "requirement-derived-from-resolves": entry(badParents, (r.raw.derivedFrom ?? []).length > 0),
       "requirement-statements-graded": entry(ungraded, (r.raw.statements ?? []).length > 0),
     };
     return report("requirement", r.id, relative(root, r.path), hash, criteria);
   });
+}
+
+/** The satisfies refs that name no declared requirement statement. */
+function danglingSatisfies(reqs: LoadedRequirement[], satisfiers: Satisfier[]): KgFinding[] {
+  const declared = new Set(reqs.flatMap((r) => (r.raw.statements ?? []).map((st) => `${r.id}#${st.key ?? ""}`)));
+  return satisfiers
+    .filter((s) => !declared.has(s.ref))
+    .map((s) => ({
+      where: s.from,
+      detail: `declares \`satisfies: ${s.ref}\`, which is not a declared requirement statement — the claim cannot be checked against anything.`,
+    }));
 }
 
 // ── Graph roll-up ───────────────────────────────────────────────
@@ -1318,6 +1687,8 @@ function auditGraph(
   processes: LoadedProcess[],
   actors: LoadedActor[],
   skills: Set<string>,
+  stories: UserStoryGraph | undefined,
+  badSatisfies: KgFinding[],
 ): KgQaReport {
   const reachable = manifestSkills();
   for (const s of servableSkills()) reachable.add(s);
@@ -1424,6 +1795,27 @@ function auditGraph(
 
   const declaredPerms = new Set((readPermissions(KG_ROOT)?.permissions ?? []).map((p) => p.id));
   const badPerms: KgFinding[] = [];
+  // The ODRL side (issue #1180): every rule's action is declared (or ODRL's
+  // own), and every assignee is an actor or `folio:anyone`. A rule naming an
+  // actor that does not exist grants nothing, silently; a rule naming an
+  // undeclared action cannot be placed in the includedIn graph at all.
+  const actorIds = new Set(actors.map((a) => a.id));
+  for (const policy of readPolicies(POLICY_DIR).values()) {
+    for (const rule of [...policy.permission, ...policy.prohibition]) {
+      if (!declaredPerms.has(rule.action) && !(rule.action in ODRL_ACTIONS)) {
+        badPerms.push({
+          where: policy.uid,
+          detail: `policy ${policy.uid} names action "${rule.action}", which skills/permissions/permissions.json does not declare.`,
+        });
+      }
+      if (rule.assignee !== ANYONE && !actorIds.has(rule.assignee)) {
+        badPerms.push({
+          where: policy.uid,
+          detail: `policy ${policy.uid} assigns "${rule.action}" to "${rule.assignee}", which is not a declared actor.`,
+        });
+      }
+    }
+  }
   for (const a of actors) {
     for (const perm of a.permissions ?? []) {
       if (!declaredPerms.has(perm)) {
@@ -1531,6 +1923,29 @@ function auditGraph(
       "actor-capabilities-resolve": entry(badCaps),
       "actor-permissions-resolve": entry(badPerms),
       "actor-is-not-a-role": entry(roleish),
+      // A story points at its role (#1168); a story whose role is not declared
+      // is told as nobody. Only this instance's roles are judged — see
+      // `danglingStoryRoles`.
+      "story-role-resolves": !stories
+        ? entry([], false)
+        : graph
+        ? entry(
+            danglingStoryRoles(stories, graph).map((st) => ({
+              where: st.id,
+              detail: `user story "${st.id}" is told as role "${st.role.role}", which the role graph does not declare.`,
+            })),
+          )
+        : { result: "unknown", findings: [{ where: "—", detail: "no role graph to resolve story roles against." }] },
+      // A skill or capability claiming a requirement statement that is not
+      // declared (#1168, B3). The statement names no satisfier, so this is
+      // the only place a mistyped claim can be caught.
+      "satisfies-resolves": entry(badSatisfies),
+      "skill-graph-kinds-resolve": entry(unknownSkillGraphKinds()),
+      "skill-contract-resolves": entry(brokenSkillContracts()),
+      ...testRunCriteria(skills),
+      "arrow-direction": arrowDirection(),
+      "prose-names-resolve": proseNamesResolve(),
+      "skill-contract-claimed": entry(unclaimedSkillContracts()),
       "nested-instance-audited": entry(unreadNestedInstances()),
     },
   );
@@ -1581,7 +1996,7 @@ const asJson = args.includes("--json");
 
 const auditorHash = sha256(readFileSync(join(root, "scripts", "kg-audit.ts"), "utf-8"));
 const skills = knownSkills(root);
-const actors = readActors(ACTOR_DIR);
+const actors = readActors(ACTOR_DIR, readPolicyGrants(POLICY_DIR));
 
 let graph: RoleGraph | undefined;
 let graphError: string | undefined;
@@ -1618,14 +2033,27 @@ if (graphError) {
 const processes = await loadProcesses();
 const reports: KgQaReport[] = [];
 const processIds = new Set(processes.flatMap((p) => (p.model ? [p.model.id] : [])));
-for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds));
+const processStems = new Set(processes.flatMap((p) => (p.model ? [basename(p.file, ".bpmn")] : [])));
+const docs = docsSurface();
+for (const p of processes) reports.push(await auditProcess(p, graph, skills, processIds, processStems, docs));
 reports.push(...(await auditDecisions(processes)));
-if (graph) {
-  reports.push(...auditRoles(graph, roleGraphPath, processes, actors, skills));
+const storiesPath = join(SCENARIO_DIR, USER_STORIES_FILENAME);
+let stories: UserStoryGraph | undefined;
+try {
+  stories = readUserStories(SCENARIO_DIR);
+} catch (e) {
+  console.error(`Could not read the user stories: ${e instanceof Error ? e.message : String(e)}`);
+  console.error("This is NOT a pass. Nothing was audited against stories.");
+  process.exit(2);
 }
-reports.push(...auditRequirements(readRequirements(), skills, actors));
+if (graph) {
+  reports.push(...auditRoles(graph, roleGraphPath, processes, actors, skills, stories, storiesPath));
+}
+const requirements = readRequirements();
+const satisfiers = readSatisfiers();
+reports.push(...auditRequirements(requirements, actors, satisfiers));
 reports.push(...auditSkills());
-reports.push(auditGraph(graph, processes, actors, skills));
+reports.push(auditGraph(graph, processes, actors, skills, stories, danglingSatisfies(requirements, satisfiers)));
 reports.push(...auditTools());
 
 // Write or compare.
@@ -1732,6 +2160,27 @@ if (!check) {
   const moved = relocateSidecars(root, targets);
   for (const m of moved) {
     console.log(`  → moved ${m.from}\n      to ${m.to}  (${m.identity} relocated)`);
+  }
+}
+
+// ── Declared prose ↔ code pairs (bean `cuxx`, issue #1042).
+//
+// Evaluated here rather than inside auditProcess/auditSkills because it is the
+// one criterion that READS the previous sidecar: its baseline is carried across
+// runs, the way a block-qa reviewer entry is. Done before the write loop so
+// `--check` regenerates the same text the writer would.
+{
+  const repoRoot = resolve(root, "..");
+  const scripts = rootScripts(repoRoot);
+  for (const r of reports) {
+    if (r.subject.kind !== "process" && r.subject.kind !== "skill") continue;
+    const pairs = discoverPairs(r.subject, root, repoRoot);
+    const { entry: e, attestations } = evaluatePairs(pairs, readAttestations(sidecarPath(r)), repoRoot);
+    r.criteria[PAIR_CRITERION] = e;
+    // Stage A (bean `ca4a`): what the prose says about the code, where it can be checked.
+    r.criteria["prose-claims-resolve"] = claimsEntry(pairs.flatMap((p) => judgePair(repoRoot, p, scripts)));
+    r.totals = tally(r.criteria);
+    if (attestations.length) r.pair_attestations = attestations;
   }
 }
 

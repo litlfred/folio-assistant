@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/graph-management/graph-detanglement.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/graph-management/graph-detanglement.md) — do not edit here.
+> Generated from [`cat-harness/skills/graph-management/graph-detanglement.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/graph-management/graph-detanglement.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/graph-management/graph-detanglement.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/graph-management/graph-detanglement.md){: .fa-edit-source }
 
 {% raw %}
 # Graph detanglement — the practice, not the migration
@@ -44,7 +44,20 @@ message:
 > wrong — **check the target's layer before the importer's** — or the import
 > is."
 
-Same rule, two scales, two vocabularies. **Prune, merge, or factor into a
+**At knowledge-graph scale** — [`kg-detangle.ts`](kg-detangle.ts), beside this skill (`bun run kg:detangle`), over the
+instance stack each `<instance>.json` declares in `needs`.
+
+The repository and knowledge-graph scales share ONE verdict function,
+`schemas/layer-direction.ts` (bean `j79e`). An edge is **wrong-direction**
+exactly when its target layer is not among what the source layer declares it
+may reach — `ALLOWED` for repos, `needs` plus itself for instances — and no
+reasoned permit names it. An instance with no `needs` is **undetermined**,
+reported in its own column, never read as clean. The function stops at
+direction: whether an allowed edge is a *restatement* or *essential* is the
+adjudicator's call, so those edges stay `unclassified` with the verdict as
+their basis.
+
+Same rule, three scales, two vocabularies. **Prune, merge, or factor into a
 third** are the only three moves, and "the classification is wrong" is the
 fourth possibility the block-scale version does not have because a block's
 chapter is not in doubt the way a module's layer is.
@@ -67,9 +80,10 @@ against its own directory, **so the whole graph relocates by moving one
 folder**.
 
 The worked example is in the tree and belongs to a repository that does not
-exist yet: `smart-kg/methodologies/grade.md`, declared at repository scope in
-`cat-harness/cat-harness.json`, whose own entry says *"separated so the extraction
-is literal — `smart-kg/` lifts out whole"*.
+exist yet: `smart-base/methodologies/diig.md`, declared at repository scope in
+`cat-harness/cat-harness.json` so that the directory lifts out whole with
+`smart-base`. (The example was `smart-kg/methodologies/grade.md` until
+2026-09-24, when GRADE became a skill plus code lists — bean `wg7r`.)
 
 **Declaring is cheap and extracting is expensive, which is the point.** The
 `methodology` graph kind is defined by exactly this property: *"extractable
@@ -85,7 +99,9 @@ skill is about it.
 
 The sub-graph carries its own declaration, its own namespace, its own published
 artefact. `bootstrap/` is the demonstrated case: its own declaration, its
-own `bs:` namespace, its own graph document.
+own `bootstrap:` namespace — the prefix IS the stub, see
+[`kg-export`](../folio-core/kg-export.md) §"A prefix is the stub" — its own
+graph document.
 
 ### 4. Extract
 
@@ -239,8 +255,8 @@ too low — an `export {}` block the grep pattern missed, which `tsc` caught."*
 
 And the same failure once more, from a sibling session two days later, stated
 in its most compact form yet: *"describing a mechanism from its name and its
-position in a diagram, then reasoning about what it needs. `--payload
-<file.json>` settled in one line what three proposals had guessed at. A name
+position in a diagram, then reasoning about what it needs. `--payload <file.json>`
+settled in one line what three proposals had guessed at. A name
 says what something is for; an argument list says what it does."*
 
 That is move 9 and move 12 with the cost attached. Three proposals were made
@@ -270,6 +286,9 @@ auto-dischargeable — they rename things and ripple through every reference.
 
 ## Related
 
+- [`graph-rendering`](graph-rendering.md) — drawing the graph being
+  partitioned, with each group's detangle numbers beside it. The UML overview
+  pages show them per sub-graph.
 - `placement.md` — the sibling SOP, for where a NEW node goes. Same shape:
   numbered steps, a stop, a closing checklist.
 - `covered-is-not-reachable` — the reachability half, and the rule that
@@ -281,4 +300,17 @@ auto-dischargeable — they rename things and ripple through every reference.
   repository's own five-repo cut, including the Phase II per-repo gate.
 - `scripts/repo-partition.ts` — the instrument. Its comment prose is where much
   of the above was recorded first.
+- `schemas/layer-direction.ts` — the one wrong-direction verdict both
+  `check:partition` and `kg:detangle` call.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[A sub-graph wants to leave](../../processes/graph-detanglement.html)**.
+
+<img src="../../assets/img/workflows/graph-detanglement.svg" alt="BPMN diagram: A sub-graph wants to leave" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [A sub-graph wants to leave](../../processes/graph-detanglement.html) | 1 &#183; Declare in place&#10;(nothing moves); 2a &#183; Measure &#8212; unassigned&#10;column FIRST; 2b &#183; Prune, merge, factor&#10;&#8212; or the classification is wrong; 3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact; 4 &#183; Extract &#8212; a directory move,&#10;not a file-by-file sift |
+

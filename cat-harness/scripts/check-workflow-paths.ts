@@ -174,6 +174,7 @@
  * would see.
  *
  * @module scripts/check-workflow-paths
+ * @covers none — .github/workflows/ is not a declared graph kind
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { isAbsolute, join, resolve } from "node:path";
@@ -222,10 +223,11 @@ export const FOLIO_PATHS: FolioPath[] = [
   // declares `folio/` holding the `folio` graph, and there is no `content`
   // entry anywhere in it.
   //
-  // The rename has NOT reached `scripts/init-folio.ts`, which still
-  // scaffolds `content/<slug>/` and `content/schema/`, nor these workflows.
-  // That gap is bean `52dz`'s open half and the owner's call; it is not
-  // settled by an exemption table.
+  // Bean `52dz` (owner, 2026-09-24) moved the QA and Lean workflows that
+  // `cd content` into the `folio_init` templates, pointed at `folio/`, and
+  // their entries (`pipeline/qa-sweep.ts`, `scripts/lean-build-all.sh`) left
+  // this table with them. What remains is `publish.yml`, the workflow folios
+  // CALL, whose `cd content` is the caller's layout.
   //
   // They stay exempt rather than becoming failures for one reason: the
   // verdict here is about whether a PATH RESOLVES, and a retired path in a
@@ -259,13 +261,6 @@ export const FOLIO_PATHS: FolioPath[] = [
     reason: "invoked with `--cwd content`, the retired root",
   },
   {
-    match: "pipeline/qa-sweep.ts",
-    reason:
-      "`cd content` plus a hardcoded folio argument " +
-      "(`quantum-observable-universe`) — a retired root AND a named folio " +
-      "this repository does not carry",
-  },
-  {
     match: "content/pipeline/latex-overfull-report.ts",
     reason:
       "reads a FOLIO's `main.log`, inside `publish.yml` — the ONE workflow " +
@@ -288,17 +283,8 @@ export const FOLIO_PATHS: FolioPath[] = [
   //
   // Five shell scripts that were invisible to this check until the verb was
   // added. None is platform rot; all five are FOLIO-facing, and each would
-  // be made worse by the obvious fix.
-  {
-    match: "scripts/lean-build-all.sh",
-    reason:
-      "`lean-build-sidecar.yml` builds a FOLIO's papers — the same job names " +
-      "`content/unital-groebner-bases/lean/lakefile.toml`, which is `qou`'s " +
-      "tree — so `scripts/` is the folio's root. `cat-harness/scripts/" +
-      "lean-build-all.sh` DOES exist here, a different file sharing the " +
-      "basename, so repointing it would be the wrong fix that looks right — " +
-      "the same trap `pipeline/build.ts` above records",
-  },
+  // be made worse by the obvious fix. (Four since `52dz`: `lean-build-all.sh`
+  // went with `lean-build-sidecar.yml` into the `folio_init` templates.)
   {
     match: "scripts/build-gmp.sh",
     reason:
@@ -670,15 +656,9 @@ export interface FolioWorkDir {
   reason: string;
 }
 
+// `content` left this table under bean `52dz` (2026-09-24): its only matches
+// were `qa-sweep` and `lean-build`, which moved to the `folio_init` templates.
 export const FOLIO_WORKDIRS: FolioWorkDir[] = [
-  {
-    match: "content",
-    reason:
-      "the folio tree. `qa-sweep` and `lean-build` are the two workflows " +
-      "`AGENTS.md` already names as failing by design here — the platform " +
-      "carries no folio. Matches `content/quantum-observable-universe/lean` " +
-      "too, which is the same absence one level down",
-  },
   {
     // declared-path-literal: a value this repo MATCHES against workflow text, not a path it reads. No declaration answers it — the workflows own the spelling.
     match: "folio-assistant/computations",

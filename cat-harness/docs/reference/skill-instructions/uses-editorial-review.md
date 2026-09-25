@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/uses-editorial-review.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/uses-editorial-review.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/uses-editorial-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/uses-editorial-review.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/uses-editorial-review.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/uses-editorial-review.md){: .fa-edit-source }
 
 {% raw %}
 # `uses[]` Editorial Review
@@ -308,3 +308,10 @@ read that other block first. Record the reasoning in the sidecar
 | `proof-simplifier` | Extracts shared lemmas; new blocks need `uses[]` entries authored, not derived |
 | `prepare-merge` | Runs the `uses` axis as part of the content gates |
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Narrative review](../../processes/review-narrative.html) | Review the editorial dependencies |
+

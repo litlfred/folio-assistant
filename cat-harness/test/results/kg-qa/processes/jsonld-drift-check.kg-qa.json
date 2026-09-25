@@ -5,7 +5,7 @@
     "id": "Process_JsonLdDrift",
     "path": "processes/jsonld-drift-check.bpmn"
   },
-  "source_hash": "sha256:72fc714252b1e7ac7420bdd9ea474b8571400482c8bb71155223ea9c72525c49",
+  "source_hash": "sha256:7b26ce2ed7f94fab872830acaee99f8f4085fe929017a4f5ed98b4ec6f110dee",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,12 +66,58 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 16,
     "fail": 0,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/jsonld-drift-check.bpmn",
+      "code": ".github/workflows/jsonld-gen-check.yml",
+      "prose_hash": "7b26ce2ed7f9",
+      "code_hash": "b9a596fb65da",
+      "by": "baseline"
+    }
+  ]
 }

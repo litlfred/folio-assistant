@@ -3,6 +3,8 @@
  * Every INSTANTIATED harness has an avatar of its own — the instance axis.
  *
  * @module scripts/check-avatar-instances
+ * @covers cat-harness — the instance axis: it enumerates the instances each declaration names
+ *   and asks which has no avatar of its own
  *
  * ## Why this exists, and what it cost not to
  *
@@ -74,9 +76,21 @@ import { repoRootFor } from "../schemas/cat-harness.js";
  */
 const REPO = repoRootFor(resolve(import.meta.dir, ".."));
 
-/** Why an instantiated harness may carry no mark of its own. */
+/**
+ * Why an instantiated harness may carry no mark of its own.
+ *
+ * `who-iris` LEFT THIS LIST on 2026-09-23, and the exemption's own rule is
+ * what removed it: an entry naming an instance that has since declared an
+ * avatar fails, and this check reported exactly that before anyone noticed.
+ *
+ * The reason it carried — *"its mark is not this repository's to choose"* —
+ * was about the LOGO, and the owner has now separated the two: *"no logo on
+ * who-iris icon (for now). just WHO blue"*. Using an organisation's published
+ * colour with a neutral glyph is not inventing its identity, which is what the
+ * exemption existed to prevent. `smart-trust` still carries art of its own and
+ * is unaffected either way.
+ */
 export const EXEMPT: Readonly<Record<string, string>> = {
-  "who-iris": "a content library replicating WHO's identity — its mark is not this repository's to choose",
   "smart-trust": "a content library replicating WHO's identity — its mark is not this repository's to choose",
 };
 

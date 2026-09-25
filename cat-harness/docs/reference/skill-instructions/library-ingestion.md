@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/library-ingestion.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/library-ingestion.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/library-ingestion.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/library-ingestion.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/library-ingestion.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/library-ingestion.md){: .fa-edit-source }
 
 {% raw %}
 # Library ingestion
@@ -105,9 +105,9 @@ of declaring one: navigable without being held.
 2026-09-19 over the four entries in `library/`:
 
 - `toc_source: outline` → `pdf-structure` (`9789241548960-eng`, 250 sections)
-- `toc_source: none`, `text_source: text-layer` → `pdf-pages` (`milnorlink`,
+- `toc_source: none`, `source.text_source: embedded` → `pdf-pages` (`milnorlink`,
   `wpr-rdo-2020-003-eng`)
-- `toc_source: none`, `text_source: ocr` → `pdf-ocr` then `pdf-pages --from-ocr`
+- `toc_source: none`, `source.text_source: ocr` → `pdf-ocr` then `pdf-pages --from-ocr`
   (`who-pub-tps-931`)
 
 ## An inferred chapter tree is refused, not guessed
@@ -136,11 +136,12 @@ is never rendered as one that was.
 ```
 library/<bib-slug>/
   structure.json     "$schema": "pdf-structure/v1" — doc_id, toc_source,
-                     granularity, text_source, sections[], structure_note,
-                     source{} (see below)
+                     granularity, sections[], structure_note,
+                     source{} (see below; source.text_source says embedded|ocr)
   sections/          one Markdown file per section, front matter + body
   blocks/            the block projection consumers read
   manifest.jsonld    @id, @type folio:SourceDocument, contains[], provenance
+  summaries.json     agent summaries of prose blocks, a QA sidecar (see below)
   ocr/               page-NNN.txt, only where the source was scanned
 ```
 
@@ -155,7 +156,9 @@ Every rung writes `source` on `structure.json`, from the single definition in
 `scripts/_tech_meta.py`: `file`, full 64-hex `sha256`, `bytes`, `mtime` (the
 SOURCE's, UTC to the second — not the ingest time, because what tells you a
 re-fetch got something new is the file changing), `mimetype_sniffed` and
-`mimetype_source`. `pdf-structure` adds `pages`, `text_source` and `extractor`.
+`mimetype_source`. Both rungs add `text_source`, `embedded` or `ocr`: ONE field and ONE
+vocabulary for where the section text came from (issue #1121; `pdf-pages` used to write a
+top-level `text-layer`). `pdf-structure` also adds `pages` and `extractor`.
 
 **The mimetype is sniffed from the leading bytes and never falls back to the
 extension.** An extension is a claim by whoever named the file; the magic bytes
@@ -278,6 +281,20 @@ union across sheets, and it is the field a `grep` for a column name lands in —
 without it a dataset is stored but not findable, and a failed search is
 indistinguishable from the dataset not having that column.
 
+**The record is real JSON-LD, and so is `contents.jsonld`** (bean `yh6u`).
+Both used to be named `.jsonld` with an `@id` and no `@context`, so a JSON-LD
+processor dropped every key they wrote. Both arms now emit the published
+content context (the URL lives once, in `scripts/_content_context.py`, pinned
+to `CONTENT_CONTEXT_URL` by a test), and every key is a declared term. The
+facts a consumer queries across documents — `format`, the counts,
+`header_vocabulary` — are real terms; the nested structures that are ours —
+`sheets`, `entries`, the technical metadata, the `narrative` — are `@json`
+literals, **because that is how their nulls survive**: `rows: null` means
+"could not be counted" and `narrative.text: null` means "nobody has written
+one", and JSON-LD drops a null anywhere else. Records written before this
+carry no `@context`; the schemas accept that, since folio repositories hold
+them.
+
 **Stdlib only** (`zipfile` + `xml.etree`, `csv`). This repository declares no
 Python dependencies — no `requirements.txt`, and CI installs only `ruff` — so a
 tool needing openpyxl would pass locally and fail there. Everything this arm
@@ -335,6 +352,118 @@ failing it would make an unreviewed queue indistinguishable from a broken arm.
 A null `rows`/`columns` is likewise not an empty sheet: `shape_source` says
 whether the shape was read, counted, or `undetermined`.
 
+### Summarising prose blocks — a QA sidecar, drained slowly
+
+Owner, 2026-09-24: *"on library/ page, the extract of a node is shown, but no
+agentic summary"*, and on scope: *"Make as QA sidecar as part of general doc
+ingestion to slowly drain."*
+
+**The block stays verbatim.** A prose block is the source's text,
+`provenance: "ingested"`, and re-ingestion regenerates it. A summary is an
+agent's account of that text, so it lives beside the blocks in
+`library/<slug>/summaries.json` (`folio-block-summaries/v1`,
+`schemas/block-summary.ts`): one record per block, holding `block`, `source`
+(the section file), `source_hash` and a `narrative`. That narrative is the
+state machine above, not a second one: `draft`, `confirmed` by a person only,
+`rejected` with a reason, and an agent author must name its model.
+
+**`source_hash` makes a changed source read as STALE.** It is the sha256 of
+the section text the summariser was shown (`proseBody`). Re-ingest a document
+and any section whose text moved puts its summary back in the queue, marked
+stale. `bun run narratives` shows it and refuses to confirm it.
+
+**The queue is derived, so nothing enqueues.** Every prose block in every
+declared library is in it until it has a current draft or confirmation. A
+rejected draft is back in it, and its rejection reason travels with it.
+
+```sh
+bun run summaries                                   # the backlog, per entry
+bun run summaries:next -- --n 5 [--entry <slug>]    # next K blocks WITH their text, as JSON
+bun run summaries:record -- drafts.json             # write drafts; validated, all or nothing
+```
+
+`drafts.json` is `{drafted_by: {kind: "agent", id, model, session}, drafted_at,
+drafts: [{block, source_hash, text}]}`, with `source_hash` echoed from
+`summaries:next`. `record` refuses a state other than `draft`, a hash that no
+longer matches, and a block that already has a current summary.
+
+**Drain K at a time during ingestion work**, not all at once: a thousand
+unreviewed drafts at once is a buried reviewer. Write 1–3 sentences in your
+own words, from the block's text only, adding nothing from outside it. If the
+extraction put the wrong text under a heading, summarise what is there and say
+so. The backlog is reported by `check:l1-complete` (`block-summaries`) and on
+the library page. It is advisory, never a gate. What the gate does fail is a
+sidecar that does not parse, names another entry, or holds a record for a block
+or source that is not there.
+
+### Describing a document's images — and why it is an ARM, not a step you run
+
+`pdf-images.py` classifies by geometry, which answers exactly one question: is
+this image the whole page, or something on it. It cannot tell a logo from a
+chart. The finer roles come from LOOKING, and that judgement is **data** —
+`<library>/image-verdicts.json`, one entry per image, reviewable line by line.
+
+```sh
+bun run ingest uploads/FILE.pdf --library <lib>   # stage; reports what is unmet
+# look at ingest-staging/<doc-id>/images/, write the verdicts into
+# <lib>/image-verdicts.json, then:
+bun run ingest uploads/FILE.pdf --library <lib>   # re-stage: the arm applies them
+bun run ingest uploads/FILE.pdf --library <lib> --promote
+```
+
+**Re-running `ingest` is the second step, not a separate apply command**, and
+that is the whole design rather than a convenience. Bean `8suc`:
+
+- `--promote` refuses an entry whose `image-descriptions` requirement is unmet;
+- both writers of a narrative — `apply-image-verdicts.ts` and `narratives.ts` —
+  resolved their targets through `directoriesForGraph(root, "library")`.
+
+So a document with describable images could not be promoted without
+descriptions, and could not be given descriptions without being promoted. A
+cycle, and every staged document sat in it. It went unnoticed because every
+entry carrying applied verdicts predated the gate, so the tool always found
+it — the path that fails was the one nothing had walked.
+
+**Applying by hand works exactly once.** `pdf-images.py` opens the sidecar with
+`"w"` — no existence check, no merge — so the next `ingest` overwrites the
+descriptions, and overwrites them *quietly*: the file still parses and still
+validates, it simply has no narratives in it any more. Running the application
+as the fourth arm, **after** `pdf-images.py`, makes a re-run RE-APPLY instead —
+the sidecar is rebuilt from the PDF and the committed judgement is laid back
+over it.
+
+`--staging <entry-dir> --library <lib-dir>` is available directly if you need
+it, and `--library` is **required**: a staging directory does not say which
+library a document is being promoted into (`v1hw` — a queue does not determine
+a library). An absent verdicts file exits **0**, because the first ingest
+necessarily runs before anybody has looked at the images; `image-descriptions`
+is the gate that refuses, not that script. An *orphaned* verdict — one naming
+an image the sidecar does not have — still fails, in either mode.
+
+Every narrative it writes lands as `draft`. Only a person confirms one.
+
+#### Reading a figure: the text layer is not the figure
+
+Two findings from `xeg6`, both of which would have shipped as descriptions:
+
+**A diverging axis's SIGN cannot be read from the text layer.** `get_text`
+returned `0.2 0.4 0.6` below the zero of a `Delta Pass Rate` bar with **no
+sign at any codepoint** — matplotlib draws U+2212 as a vector path, so the
+minus exists in the rendering and not in the text. Rendering the region showed
+`-0.2 -0.4 -0.6` plainly. A verdict trusting the extraction would have called
+a `-0.6` endpoint `+0.6`.
+
+**And the direction is a fact about the axis, not about the colours.** The
+recorded inspection said a bar ran *"blue low to red high"*. Its ticks said
+`Pass Rate`, `1.0` at the top in dark blue: blue was HIGH. A reader given the
+original sentence reads every heatmap in the paper inverted — **worse than no
+description**, because a missing one is visibly missing.
+
+So: render the region and read the ticks. Two images that look alike need the
+same check each — the same record called three bars one repeated legend when
+the third was a different, signed scale, and it had the disconfirming datum
+(5188 bytes against 5167 twice) already written down beside the claim.
+
 ### An `.xlsx` IS a zip, and that broke the archive routing
 
 The magic bytes of an OOXML or ODF document say `application/zip`, which is
@@ -375,3 +504,11 @@ only from a layer above it: a wrong-direction dependency, and after the split
 - [`bib-qa`](bib-qa.md) — auditing what is already in `library/`
 - `processes/document-ingestion.bpmn` — the process this sits inside
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Content acquisition](../../processes/content-acquisition.html) | Route it, and watch the queue |
+| [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | Prose blocks enter the summary queue |
+

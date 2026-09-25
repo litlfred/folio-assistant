@@ -50,6 +50,7 @@
  *       2 could not determine.
  *
  * @module scripts/check-methodology-evidence
+ * @covers methodology, library
  */
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
@@ -57,7 +58,11 @@ import { fileURLToPath } from "node:url";
 import { parse as parseYaml } from "yaml";
 
 import { directoriesForGraph } from "../schemas/cat-harness.ts";
-import { MethodologyFrontMatterSchema, METHODOLOGY_SCHEMA_TAG } from "../schemas/methodology.ts";
+import {
+  MethodologyFrontMatterSchema,
+  METHODOLOGY_SCHEMA_TAG,
+  type MethodologyFrontMatter,
+} from "../schemas/methodology.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
 /**
@@ -88,7 +93,7 @@ export interface EvidenceReport {
 }
 
 /** Every `.md` under every directory declaring a `methodology` graph. */
-function methodologyFiles(root: string): string[] {
+export function methodologyFiles(root: string): string[] {
   const out: string[] = [];
   for (const dir of directoriesForGraph(root, "methodology")) {
     if (!existsSync(dir)) continue;
@@ -137,8 +142,85 @@ export function resolveEvidence(root: string, ref: string): string | undefined {
   return undefined;
 }
 
+/**
+ * One methodology node, read once — valid or not.
+ *
+ * ## Why this exists as its own export
+ *
+ * `checkMethodologyEvidence` walks the graph, parses each node's front matter,
+ * validates it, and then keeps only `name`, `origin` and `evidence`, because a
+ * report is all it was asked for. A VIEWER needs the rest: `title` and
+ * `applies-when` are what make a page a view of the graph rather than a second
+ * listing of its findings.
+ *
+ * The alternative was a second walk in the generator, and that is the failure
+ * this repository keeps paying for. Bean `zw4a` states it for the adjacent
+ * case: *"a second traversal is a second answer … free to disagree with the
+ * first."* Here the two answers would be about which files are in the graph at
+ * all — the one thing a viewer and its gate must not differ on.
+ *
+ * So the walk is here, both consumers read it, and the subdirectory rule it
+ * carries (`x4v4`: a methodology owning `crdm/` declares that subdirectory
+ * itself, so `methodologyFiles` does not recurse) is stated once.
+ */
+export interface MethodologyNode {
+  /** Path relative to `root`, spelled as every finding spells it. */
+  readonly node: string;
+  /** Parsed and valid front matter, present only when `state` is `ok`. */
+  readonly front?: MethodologyFrontMatter;
+  /**
+   * WHY there is no `front`, when there is none.
+   *
+   * `untagged` is not a defect — a README sitting in the graph directory is
+   * untagged and correct. `invalid` is. Collapsing the two would make a
+   * malformed node and an index file look alike, which is exactly the
+   * distinction this script's own two buckets already keep.
+   */
+  readonly state: "ok" | "untagged" | "invalid";
+  /** For `untagged` and `invalid`, what is wrong. */
+  readonly detail?: string;
+}
+
+/** Every methodology node in the graph, parsed once, valid or not. */
+export function methodologyNodes(root = INSTANCE_ROOT): MethodologyNode[] {
+  const out: MethodologyNode[] = [];
+  for (const f of methodologyFiles(root)) {
+    const node = relative(root, f);
+    const fm = frontMatterOf(readFileSync(f, "utf-8"));
+
+    if (fm === undefined || !fm.includes(METHODOLOGY_SCHEMA_TAG)) {
+      // NOT an invalid methodology — it may legitimately be a README or an
+      // index sitting in the directory. It is still reported, because a node
+      // nobody tagged is a node no consumer of the graph can see, which is the
+      // same silence a declared-but-absent directory produces.
+      out.push({ node, state: "untagged", detail: `carries no \`$schema: ${METHODOLOGY_SCHEMA_TAG}\`` });
+      continue;
+    }
+
+    let parsed: unknown;
+    try {
+      parsed = parseYaml(fm);
+    } catch (e) {
+      out.push({ node, state: "invalid", detail: `front matter is not valid YAML: ${(e as Error).message}` });
+      continue;
+    }
+
+    const v = MethodologyFrontMatterSchema.safeParse(parsed);
+    if (!v.success) {
+      out.push({
+        node,
+        state: "invalid",
+        detail: v.error.issues.map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`).join("; "),
+      });
+      continue;
+    }
+
+    out.push({ node, state: "ok", front: v.data });
+  }
+  return out;
+}
+
 export function checkMethodologyEvidence(root = INSTANCE_ROOT): EvidenceReport {
-  const files = methodologyFiles(root);
   const r: EvidenceReport = {
     undetermined: directoriesForGraph(root, "methodology").length === 0,
     nodes: 0,
@@ -150,39 +232,19 @@ export function checkMethodologyEvidence(root = INSTANCE_ROOT): EvidenceReport {
   };
   if (r.undetermined) return r;
 
-  for (const f of files) {
-    const node = relative(root, f);
-    const text = readFileSync(f, "utf-8");
-    const fm = frontMatterOf(text);
-
-    if (fm === undefined || !fm.includes(METHODOLOGY_SCHEMA_TAG)) {
-      // NOT counted as an invalid methodology — it may legitimately be a
-      // README or an index sitting in the directory. It is reported because a
-      // node nobody tagged is a node no consumer of the graph can see, which
-      // is the same silence a declared-but-absent directory produces.
-      r.untagged.push({ node, detail: `carries no \`$schema: ${METHODOLOGY_SCHEMA_TAG}\`` });
+  for (const n of methodologyNodes(root)) {
+    const node = n.node;
+    if (n.state === "untagged") {
+      r.untagged.push({ node, detail: n.detail ?? "" });
       continue;
     }
-
-    let parsed: unknown;
-    try {
-      parsed = parseYaml(fm);
-    } catch (e) {
-      r.invalid.push({ node, detail: `front matter is not valid YAML: ${(e as Error).message}` });
-      continue;
-    }
-
-    const v = MethodologyFrontMatterSchema.safeParse(parsed);
-    if (!v.success) {
-      r.invalid.push({
-        node,
-        detail: v.error.issues.map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`).join("; "),
-      });
+    if (n.state === "invalid") {
+      r.invalid.push({ node, detail: n.detail ?? "" });
       continue;
     }
 
     r.nodes += 1;
-    const { name, evidence, origin } = v.data;
+    const { name, evidence, origin } = n.front!;
 
     if (evidence === undefined || evidence.length === 0) {
       r.noEvidence.push({

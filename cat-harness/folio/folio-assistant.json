@@ -1,0 +1,23 @@
+{
+  "id": "folio-assistant",
+  "summary": "The repository, acting as an initialized instance",
+  "comment": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
+  "createdAt": "2026-09-23T06:12:38.717Z",
+  "anchor": {
+    "kind": "page",
+    "page": "index"
+  },
+  "tags": {
+    "roles": [],
+    "processes": [],
+    "tasks": [],
+    "identities": [],
+    "references": [],
+    "artefacts": []
+  },
+  "$schema": "folio-landing-sticky/v1",
+  "theme": "engineer",
+  "links": [],
+  "contributedBy": "folio-assistant",
+  "declaredIn": "folio-assistant.json"
+}

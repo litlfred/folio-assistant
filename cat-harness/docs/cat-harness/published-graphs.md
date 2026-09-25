@@ -39,11 +39,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `cat-harness`
 
-4 of 4 published.
+3 of 3 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/cat-harness/schemas/cat-harness/' | relative_url }})
-- [detangle]({{ '/cat-harness/schemas/detangle/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }})
 - [large-datasets]({{ '/cat-harness/schemas/large-datasets/' | relative_url }})
 
@@ -55,6 +54,17 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [WHO IRIS]({{ '/cat-harness/catalogue/who-iris/' | relative_url }})
 
 ### `code`
+
+0 of 5 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
+- folio-assistant-core — *declared, not published*
+- large-datasets — *declared, not published*
+- smart-trust — *declared, not published*
+- WHO IRIS — *declared, not published*
+
+### `code-list`
 
 0 of 1 published.
 {: .fa-hx-dim }
@@ -72,10 +82,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `external-schema`
 
-0 of 1 published.
+1 of 1 published.
 {: .fa-hx-dim }
 
-- C@T Harness — *declared, not published*
+- [C@T Harness]({{ '/external-schemas/' | relative_url }})
 
 ### `fhir-artifact-index`
 
@@ -103,11 +113,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `glossary`
 
-1 of 2 published.
+1 of 1 published.
 {: .fa-hx-dim }
 
-- Bootstrap — *declared, not published*
-- [C@T Harness]({{ '/glossary/' | relative_url }})
+- [folio-assistant-core]({{ '/glossary/' | relative_url }})
 
 ### `health`
 
@@ -132,13 +141,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `library`
 
-4 of 5 published.
+6 of 6 published.
 {: .fa-hx-dim }
 
 - [agent-skills]({{ '/cat-harness/library/agent-skills/' | relative_url }})
 - [C@T Harness]({{ '/cat-harness/library/cat-harness/' | relative_url }})
+- [folio-assistant-core]({{ '/cat-harness/library/folio-assistant-core/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/library/folio-assistant-sci/' | relative_url }})
-- SMART Base — *declared, not published*
+- [SMART Base]({{ '/cat-harness/library/smart-base/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/library/who-iris/' | relative_url }})
 
 ### `memory`
@@ -150,10 +160,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `methodology`
 
-0 of 2 published.
+1 of 3 published.
 {: .fa-hx-dim }
 
-- C@T Harness — *declared, not published*
+- [C@T Harness]({{ '/methodologies/' | relative_url }})
+- folio-assistant-core — *declared, not published*
 - SMART Base — *declared, not published*
 
 ### `models`
@@ -163,22 +174,43 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - Bootstrap — *declared, not published*
 
+### `policies`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
+
 ### `processes`
 
-1 of 3 published.
+1 of 4 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
 - [C@T Harness]({{ '/processes/' | relative_url }})
+- folio-assistant-core — *declared, not published*
 - SMART Base — *declared, not published*
+
+### `proposals`
+
+1 of 1 published.
+{: .fa-hx-dim }
+
+- [C@T Harness]({{ '/proposals/' | relative_url }})
 
 ### `qa`
 
-1 of 2 published.
+1 of 1 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/qa/' | relative_url }})
-- detangle — *declared, not published*
+
+### `requirements`
+
+1 of 1 published.
+{: .fa-hx-dim }
+
+- [C@T Harness]({{ '/requirements/' | relative_url }})
 
 ### `scenarios`
 
@@ -190,13 +222,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `schemas`
 
-5 of 6 published.
+3 of 4 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
-- [bootstrap-tools]({{ '/cat-harness/schemas/bootstrap-tools/' | relative_url }})
 - [C@T Harness]({{ '/cat-harness/schemas/cat-harness/' | relative_url }})
-- [detangle]({{ '/cat-harness/schemas/detangle/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }})
 - [large-datasets]({{ '/cat-harness/schemas/large-datasets/' | relative_url }})
 
@@ -206,11 +236,19 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
-- [C@T Harness]({{ '/cat-harness/docs-auto/index/skills/bootstrap-render/' | relative_url }})
+- [C@T Harness]({{ '/cat-harness/docs-auto/index/skills/large-datasets-skills/' | relative_url }})
 - FHIR IG Harness — *declared, not published*
-- kg-navigation — *declared, not published*
+- folio-assistant-core — *declared, not published*
 - large-datasets — *declared, not published*
 - WHO IRIS — *declared, not published*
+
+### `swimlane-glossary`
+
+1 of 2 published.
+{: .fa-hx-dim }
+
+- Bootstrap — *declared, not published*
+- [C@T Harness]({{ '/swimlane-glossary/' | relative_url }})
 
 ### `themes`
 
@@ -243,6 +281,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - Bootstrap — *declared, not published*
 - [C@T Harness]({{ '/translation-status/' | relative_url }})
+
+### `uml`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
 
 ### `uploads`
 

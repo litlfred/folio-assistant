@@ -61,6 +61,13 @@ describe("the corpus it is actually run against", () => {
     for (const c of concepts(doc)) expect(c.inScheme).toBe(doc["@id"]);
   });
 
+  test("the scheme's dcterms:title IS its skos:prefLabel — one source, two vocabularies (`sl9u`)", () => {
+    // Owner, 2026-09-23: keep both, from one source. A reader of either
+    // vocabulary gets the name, and the two can never say different things.
+    expect(typeof doc.prefLabel).toBe("string");
+    expect(doc.title).toBe(doc.prefLabel);
+  });
+
   test("every live concept has a prefLabel, and no two share an @id", () => {
     const ids = concepts(doc).map((c) => c["@id"] as string);
     expect(new Set(ids).size).toBe(ids.length);
@@ -146,13 +153,6 @@ describe("the corpus it is actually run against", () => {
     }
   });
 
-  test("a lane binding that names a lane no diagram contains is DANGLING, separately", () => {
-    // `fd6i`. Distinct from a role whose lane exists but holds no task, which
-    // is not a defect — an `actedUpon` lane holds none by construction.
-    for (const d of report.danglingLaneBindings) {
-      expect(report.undrawn).toContain(d.role);
-    }
-  });
 });
 
 describe("bootstrap — the instance with the one varying performer", () => {

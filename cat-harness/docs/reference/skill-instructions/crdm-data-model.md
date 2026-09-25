@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/crdm/crdm-data-model.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/crdm/crdm-data-model.md) — do not edit here.
+> Generated from [`cat-harness/skills/crdm/crdm-data-model.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-data-model.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/crdm/crdm-data-model.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/crdm/crdm-data-model.md){: .fa-edit-source }
 
 {% raw %}
 # CRDM — the data-modelling phase
@@ -84,3 +84,14 @@ is `placement`'s question and the folio's choice. This phase requires only
 that the artefact is **declared**, so the next phase can read it rather than
 be told about it.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[CRDM data model](../../processes/crdm-data-model.html)**.
+
+<img src="../../assets/img/workflows/crdm-data-model.svg" alt="BPMN diagram: CRDM data model" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [CRDM data model](../../processes/crdm-data-model.html) | Identify entities from the BPA and requirements; Relations and cardinalities, both ways; Confirm the entities are the ones meant; Confirm the cardinalities; Declare the model where a tool can read it |
+

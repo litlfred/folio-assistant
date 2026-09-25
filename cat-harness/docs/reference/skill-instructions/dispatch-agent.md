@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/dispatch-agent.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/dispatch-agent.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/dispatch-agent.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/dispatch-agent.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/dispatch-agent.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/dispatch-agent.md){: .fa-edit-source }
 
 {% raw %}
 # /dispatch-agent — parallel dispatch with a live 2-minute status heartbeat
@@ -192,8 +192,8 @@ notifications arrive on their own. Pick 120 s because the user asked for
 ### 3c. Nudging a silent agent
 
 If an agent shows `(no progress block yet)` for > 3 min, or its step
-counter hasn't advanced across two heartbeats, `SendMessage(to:
-<agentId>, ...)` with a one-line nudge: *"Emit a fresh ⟦PROGRESS⟧ block
+counter hasn't advanced across two heartbeats,
+`SendMessage(to: <agentId>, ...)` with a one-line nudge: *"Emit a fresh ⟦PROGRESS⟧ block
 with the live tail of whatever is running."* An agent that has genuinely
 hung (evicted oleans, ENOSPC) will surface it as a BLOCKER once nudged.
 
@@ -232,3 +232,10 @@ When an agent emits `⟦DONE⟧` (or the harness notifies completion):
 - **Wrong cadence** — 5-minute or "when I remember" ticks when the user
   asked for 2 minutes. Honor the literal cadence.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Getting started](../../processes/getting-started.html) | Import what, where, and who does it |
+

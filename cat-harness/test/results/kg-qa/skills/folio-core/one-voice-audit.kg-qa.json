@@ -5,7 +5,7 @@
     "id": "one-voice-audit",
     "path": "skills/folio-core/one-voice-audit.md"
   },
-  "source_hash": "35b254f1a429",
+  "source_hash": "eefe356e5a88",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
@@ -16,7 +16,7 @@
       "findings": [
         {
           "where": "skills/folio-core/one-voice-audit.md",
-          "detail": "307 lines; p75 of the skill corpus is 279."
+          "detail": "313 lines; p75 of the skill corpus is 279."
         }
       ]
     },
@@ -27,12 +27,20 @@
     "skill-no-repeated-heading": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
     "pass": 3,
     "fail": 1,
-    "n/a": 0,
+    "n/a": 2,
     "unknown": 0
   }
 }

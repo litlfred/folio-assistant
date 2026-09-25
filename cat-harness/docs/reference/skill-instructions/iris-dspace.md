@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`../who-iris/skills/iris-dspace.md`](https://github.com/litlfred/folio-assistant/blob/main/../who-iris/skills/iris-dspace.md) — do not edit here.
+> Generated from [`who-iris/skills/iris-dspace.md`](https://github.com/litlfred/folio-assistant/blob/main/who-iris/skills/iris-dspace.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../who-iris/skills/iris-dspace.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/who-iris/skills/iris-dspace.md){: .fa-edit-source }
 
 {% raw %}
 # IRIS, DSpace and Dublin Core

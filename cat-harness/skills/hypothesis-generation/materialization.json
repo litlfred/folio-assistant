@@ -1,0 +1,543 @@
+{
+  "$schema": "folio-remote-skill/v1",
+  "skill": "hypothesis-generation",
+  "package": "claude-scientific-skills",
+  "repo": "https://github.com/K-Dense-AI/claude-scientific-skills",
+  "ref": "49c6e97775eaa18ba791bebe23162a70ae601c18",
+  "wrapper": "remote-packages/claude-scientific-skills.json",
+  "note": "Somebody else's bytes, pinned. Do not edit in place: change the pin in the wrapper and re-run `bun run sync:remote-skills`.",
+  "files": [
+    {
+      "id": "hypothesis-generation/LICENSE",
+      "name": "LICENSE",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/LICENSE.md"
+        },
+        "localPath": "skills/hypothesis-generation/LICENSE",
+        "bytes": 1068,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "09b02a3c9df3053c55531d503357a9c7cde275970e6c3ceaa1ddf5f0e90b40c1"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/assets/evidence_ledger_template.csv",
+      "name": "assets/evidence_ledger_template.csv",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/assets/evidence_ledger_template.csv"
+        },
+        "localPath": "skills/hypothesis-generation/assets/evidence_ledger_template.csv",
+        "bytes": 581,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "1ec5cc4ada96e05041c67865bcdfd3bb0a4f7cc92f24ca1ce7a826028a41d3de"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/assets/falsification_controls_template.json",
+      "name": "assets/falsification_controls_template.json",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/assets/falsification_controls_template.json"
+        },
+        "localPath": "skills/hypothesis-generation/assets/falsification_controls_template.json",
+        "bytes": 5880,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "beea4e2be3b5abdad1014934a7c2fe1f9f00f07b3270119cfeb8134a94603e26"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/assets/hypothesis_record_template.json",
+      "name": "assets/hypothesis_record_template.json",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/assets/hypothesis_record_template.json"
+        },
+        "localPath": "skills/hypothesis-generation/assets/hypothesis_record_template.json",
+        "bytes": 13768,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "73f080a6696c415f228b38100bb7b0f6bc89ad2c7997bf50d62b585b0bc8fe0c"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/assets/operationalization_template.json",
+      "name": "assets/operationalization_template.json",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/assets/operationalization_template.json"
+        },
+        "localPath": "skills/hypothesis-generation/assets/operationalization_template.json",
+        "bytes": 2208,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "36ecdbd91c022554e60db646b548f5694d8409277a5b15fdf309d86f8c1e3070"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/assets/prediction_rival_matrix_template.csv",
+      "name": "assets/prediction_rival_matrix_template.csv",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/assets/prediction_rival_matrix_template.csv"
+        },
+        "localPath": "skills/hypothesis-generation/assets/prediction_rival_matrix_template.csv",
+        "bytes": 1638,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "ccf6cb53c048a9f4d60788a8ec73c5d683ec549dab7df95b30282f6c0963653a"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/assets/preregistration_scaffold_template.md",
+      "name": "assets/preregistration_scaffold_template.md",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/assets/preregistration_scaffold_template.md"
+        },
+        "localPath": "skills/hypothesis-generation/assets/preregistration_scaffold_template.md",
+        "bytes": 5005,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "570314aa6669b935a5c1fd91a0e55ef7035d219a23cc6703ddece0f6fbdd6f5d"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/assets/search_boundary_template.json",
+      "name": "assets/search_boundary_template.json",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/assets/search_boundary_template.json"
+        },
+        "localPath": "skills/hypothesis-generation/assets/search_boundary_template.json",
+        "bytes": 1114,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "b885d4e252c0df7010d8fca3dab7e3fef49e9f386b7a1b15240531ce374bf6ec"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/assets/source_ledger.csv",
+      "name": "assets/source_ledger.csv",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/assets/source_ledger.csv"
+        },
+        "localPath": "skills/hypothesis-generation/assets/source_ledger.csv",
+        "bytes": 12750,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "185f563d213a2254d3f9280bb12f7d1ff332c5e7e77f15b4839ca5f9a9d7740c"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/hypothesis-generation.md",
+      "name": "hypothesis-generation.md",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/SKILL.md"
+        },
+        "localPath": "skills/hypothesis-generation/hypothesis-generation.md",
+        "bytes": 15725,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "8153fdc33e0a4cd012109931c6a822c0e0afe206769e1af3e7a3d07ea37e1137"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/references/causal_inference_and_claims.md",
+      "name": "references/causal_inference_and_claims.md",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/references/causal_inference_and_claims.md"
+        },
+        "localPath": "skills/hypothesis-generation/references/causal_inference_and_claims.md",
+        "bytes": 7777,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "37fba9d9d72414fcb342faa231944b4dbc5ce3255f552482ea8298cf0909b0a4"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/references/concepts_and_workflow.md",
+      "name": "references/concepts_and_workflow.md",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/references/concepts_and_workflow.md"
+        },
+        "localPath": "skills/hypothesis-generation/references/concepts_and_workflow.md",
+        "bytes": 7341,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "a86a8f464fb555212e79bf13e307f3c129e9c853069856eb3c93c3c8a60bb7fc"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/references/ethics_safety_and_ai.md",
+      "name": "references/ethics_safety_and_ai.md",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/references/ethics_safety_and_ai.md"
+        },
+        "localPath": "skills/hypothesis-generation/references/ethics_safety_and_ai.md",
+        "bytes": 9891,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "f89c8c85cab8a84b0ac0c0e402942e596bbd66f293ebb7597217e1514cdffbe9"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/references/experimental_design_patterns.md",
+      "name": "references/experimental_design_patterns.md",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/references/experimental_design_patterns.md"
+        },
+        "localPath": "skills/hypothesis-generation/references/experimental_design_patterns.md",
+        "bytes": 9765,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "83c0c75c7b1edadc92e4ae23607624277c19955fc6a71ee0313b6efc51e4e939"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/references/hypothesis_quality_criteria.md",
+      "name": "references/hypothesis_quality_criteria.md",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/references/hypothesis_quality_criteria.md"
+        },
+        "localPath": "skills/hypothesis-generation/references/hypothesis_quality_criteria.md",
+        "bytes": 8035,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "12698b549f77a6ee64807b959093f39628fe3d47aa9a00a9b235681bf0b09269"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/references/literature_search_strategies.md",
+      "name": "references/literature_search_strategies.md",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/references/literature_search_strategies.md"
+        },
+        "localPath": "skills/hypothesis-generation/references/literature_search_strategies.md",
+        "bytes": 8046,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "2a34fa0645f854093aea2d867059bae563c795f1935ba4b9c6d494bdc389fdcb"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/references/preregistration_and_open_science.md",
+      "name": "references/preregistration_and_open_science.md",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/references/preregistration_and_open_science.md"
+        },
+        "localPath": "skills/hypothesis-generation/references/preregistration_and_open_science.md",
+        "bytes": 6721,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "fd4f7ffe03d419bfd8b1b104637f508b9dad5ae868afc5c9307bb868f3920b16"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/references/security_validation.md",
+      "name": "references/security_validation.md",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/references/security_validation.md"
+        },
+        "localPath": "skills/hypothesis-generation/references/security_validation.md",
+        "bytes": 3650,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "39dffd9c0878e8da5fe2511678b4f69fab95143c17a4915f56033cb111c35572"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/references/source_ledger.md",
+      "name": "references/source_ledger.md",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/references/source_ledger.md"
+        },
+        "localPath": "skills/hypothesis-generation/references/source_ledger.md",
+        "bytes": 7410,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "ff41a6f5e1d365eafdf6be130cf40733653587b6ec51be19ce0294df44d93919"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/references/tool_reference.md",
+      "name": "references/tool_reference.md",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/references/tool_reference.md"
+        },
+        "localPath": "skills/hypothesis-generation/references/tool_reference.md",
+        "bytes": 8070,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "db305bec51a46a67c5d21baa47e2854110f0a3901f525ec7c9a7fe120b9d9c8b"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/scripts/_common.py",
+      "name": "scripts/_common.py",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/scripts/_common.py"
+        },
+        "localPath": "skills/hypothesis-generation/scripts/_common.py",
+        "bytes": 14234,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "a1e1390b9bac9440d5038ebe22705420c8831d669c90c9dcbc6647c2cd494e90"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/scripts/audit_evidence_ledger.py",
+      "name": "scripts/audit_evidence_ledger.py",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/scripts/audit_evidence_ledger.py"
+        },
+        "localPath": "skills/hypothesis-generation/scripts/audit_evidence_ledger.py",
+        "bytes": 12069,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "18fc0a947fec34ea573eb824f540ce6ccb351aed5e08fc80ae476c2150aef2bb"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/scripts/check_falsification_controls.py",
+      "name": "scripts/check_falsification_controls.py",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/scripts/check_falsification_controls.py"
+        },
+        "localPath": "skills/hypothesis-generation/scripts/check_falsification_controls.py",
+        "bytes": 16477,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "e56f67b92d15c93cbe9eb1b9fb89253239b6ac81328fb56fc96d9e2c3ec3ba32"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/scripts/check_operationalization.py",
+      "name": "scripts/check_operationalization.py",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/scripts/check_operationalization.py"
+        },
+        "localPath": "skills/hypothesis-generation/scripts/check_operationalization.py",
+        "bytes": 8086,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "efc093f4b58b23e095238e60badef04d34dfb012b7958e1326a1f7d58ed5edd6"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/scripts/generate_preregistration_scaffold.py",
+      "name": "scripts/generate_preregistration_scaffold.py",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/scripts/generate_preregistration_scaffold.py"
+        },
+        "localPath": "skills/hypothesis-generation/scripts/generate_preregistration_scaffold.py",
+        "bytes": 14349,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "f953e3af468cb69ebbba3ff9f3dbba3846a52e557698c03f78972e0b41fb5ba8"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/scripts/lint_causal_claims.py",
+      "name": "scripts/lint_causal_claims.py",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/scripts/lint_causal_claims.py"
+        },
+        "localPath": "skills/hypothesis-generation/scripts/lint_causal_claims.py",
+        "bytes": 6809,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "561186e71f7c0b573f7ba45ef0009460c1398048929ed55fad53a65cda56dafe"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/scripts/validate_hypothesis_schema.py",
+      "name": "scripts/validate_hypothesis_schema.py",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/scripts/validate_hypothesis_schema.py"
+        },
+        "localPath": "skills/hypothesis-generation/scripts/validate_hypothesis_schema.py",
+        "bytes": 38955,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "63bc1b7752d20042c2845ecb2457448ec8e2d9bc8fe1337003b222f8f4620608"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    },
+    {
+      "id": "hypothesis-generation/scripts/validate_prediction_matrix.py",
+      "name": "scripts/validate_prediction_matrix.py",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://github.com/K-Dense-AI/claude-scientific-skills/blob/49c6e97775eaa18ba791bebe23162a70ae601c18/skills/hypothesis-generation/scripts/validate_prediction_matrix.py"
+        },
+        "localPath": "skills/hypothesis-generation/scripts/validate_prediction_matrix.py",
+        "bytes": 9815,
+        "purpose": "archival",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "3888802496f4e6ece5955b4fe28d6b2e6d810c5107ce6ca45ebbd70acceed317"
+        },
+        "materializedAt": "2026-09-24T12:45:04.935Z",
+        "upstreamVersion": "49c6e97775eaa18ba791bebe23162a70ae601c18"
+      }
+    }
+  ]
+}

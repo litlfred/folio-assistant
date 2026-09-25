@@ -177,14 +177,70 @@ export function escapedTagsIn(page: string, html: string): EscapedTag[] {
   return found;
 }
 
+/** One markdown table that reached the page as a paragraph of pipes. */
+export interface LeakedTable {
+  /** Path of the page, relative to the built tree. */
+  page: string;
+  /** The header row as it reads on the page, trimmed. */
+  excerpt: string;
+}
+
+/**
+ * A markdown table's DELIMITER row, as it reads once kramdown has given up on it.
+ *
+ * Kramdown's typographic pass turns `---` into an em dash, so on the page the
+ * row is `|—|—|—|—|` rather than `|---|---|`. Both spellings are accepted,
+ * plus the `&mdash;` entity and the `:---:` alignment colons, because which one
+ * a build emits is the converter's choice and not a fact to rely on.
+ */
+const DELIMITER_CELL = String.raw`\s*:?(?:-{3,}|—|&mdash;|&#8212;):?\s*`;
+const DELIMITER_ROW = new RegExp(String.raw`^[ \t]*\|(?:${DELIMITER_CELL}\|){2,}[ \t]*$`, "gm");
+
+/**
+ * Find markdown tables that were printed as text.
+ *
+ * ## The failure this exists for — bean `7w1a`
+ *
+ * The methodologies page shipped with its whole selection table as a paragraph
+ * of pipes: a truncated cell cut a code span open, the stray backtick paired
+ * with one in a later cell, and kramdown stopped reading the block as a table.
+ * Every source-side test was green, because the SOURCE was a well-formed table
+ * except for one backtick, and the column test counts pipes. Only the built
+ * page shows it — the same lesson as the escaped `<article>`, one syntax over.
+ *
+ * A delimiter row is never prose. Inside `<code>`/`<pre>` it is a document
+ * SHOWING a table's source, so those regions are blanked first, as above.
+ */
+export function leakedTablesIn(page: string, html: string): LeakedTable[] {
+  const found: LeakedTable[] = [];
+  const scannable = blankCodeRegions(html);
+  let m: RegExpExecArray | null;
+  DELIMITER_ROW.lastIndex = 0;
+  while ((m = DELIMITER_ROW.exec(scannable)) !== null) {
+    // The header row is the line above the delimiter: that is what a reader
+    // would recognise, and what names the table in a report.
+    const before = html.slice(0, m.index).split("\n");
+    const header = (before[before.length - 2] ?? "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+    found.push({ page, excerpt: header.slice(0, 110) });
+  }
+  return found;
+}
+
 /** Scan a built tree. */
-export function checkEscapedMarkup(siteDir: string): { pages: number; found: EscapedTag[] } {
+export function checkEscapedMarkup(siteDir: string): {
+  pages: number;
+  found: EscapedTag[];
+  leakedTables: LeakedTable[];
+} {
   const pages = htmlPages(siteDir);
   const found: EscapedTag[] = [];
+  const leakedTables: LeakedTable[] = [];
   for (const p of pages) {
-    found.push(...escapedTagsIn(relative(siteDir, p), readFileSync(p, "utf-8")));
+    const html = readFileSync(p, "utf-8");
+    found.push(...escapedTagsIn(relative(siteDir, p), html));
+    leakedTables.push(...leakedTablesIn(relative(siteDir, p), html));
   }
-  return { pages: pages.length, found };
+  return { pages: pages.length, found, leakedTables };
 }
 
 function main(): void {
@@ -201,7 +257,7 @@ function main(): void {
     process.exit(2);
   }
 
-  const { pages, found } = checkEscapedMarkup(siteDir);
+  const { pages, found, leakedTables } = checkEscapedMarkup(siteDir);
   if (pages === 0) {
     // Vacuity guard: a green run over zero pages reads as coverage that is not
     // there, which is the whole failure mode this script was written after.
@@ -210,6 +266,15 @@ function main(): void {
     process.exit(2);
   }
 
+  if (leakedTables.length > 0) {
+    console.error(`✗ ${leakedTables.length} markdown table(s) printed as text across ${pages} page(s):\n`);
+    for (const t of leakedTables) console.error(`    · ${t.page}  ${t.excerpt}`);
+    console.error(
+      "\nThe converter did not read these as tables, so the reader sees rows of pipes. The usual\n" +
+        "cause is one cell that leaves a code span open — an odd number of backticks on the row —\n" +
+        "or a pipe inside a cell that is not escaped. Look at the source row, then the built page.\n",
+    );
+  }
   if (found.length > 0) {
     console.error(`✗ ${found.length} escaped block tag(s) across ${pages} page(s):\n`);
     const byPage = new Map<string, EscapedTag[]>();
@@ -227,7 +292,8 @@ function main(): void {
     );
     process.exit(1);
   }
-  console.log(`✓ no escaped block-level markup across ${pages} page(s)`);
+  if (leakedTables.length > 0) process.exit(1);
+  console.log(`✓ no escaped block-level markup and no table printed as text across ${pages} page(s)`);
 }
 
 if (import.meta.main) main();

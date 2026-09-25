@@ -17,7 +17,7 @@
 import { describe, expect, test } from "bun:test";
 import { resolve } from "node:path";
 
-import { owningDirectory, resolveDirectories, subgraphTree } from "../../schemas/cat-harness.ts";
+import { isDerivedGraph, owningDirectory, resolveDirectories, subgraphTree } from "../../schemas/cat-harness.ts";
 import { scanSubgraphs } from "../check-subgraphs.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
@@ -52,11 +52,13 @@ describe("subgraph containment is derived from declared paths", () => {
   });
 
   test("a repository-scoped directory is not a child of an instance-relative one", () => {
-    // `smart-kg/methodologies/` is repository-scoped so the extraction is
+    // `smart-base/methodologies/` is repository-scoped so the extraction is
     // literal. Reading it as a child of `methodologies/` would be wrong on
-    // the path AND on the intent.
+    // the path AND on the intent. (The example was `smart-kg/methodologies/`
+    // until it was removed, bean `wg7r`.)
     const tree = subgraphTree(dirs);
-    for (const r of tree) expect(r.children).not.toContain("smart-kg-methodologies");
+    for (const r of tree) expect(r.children).not.toContain("smart-base-methodologies");
+    expect(dirs.find((d) => d.id === "smart-base-methodologies"), "the scoped entry did not resolve — vacuous").toBeDefined();
   });
 
   // The real declaration no longer nests anything, so the two properties
@@ -113,6 +115,38 @@ describe("the entanglement report", () => {
     // And the corpus itself is clean — stated as its own assertion so that
     // "clean" and "not computed" can never be the same passing test.
     expect(probe.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
+  });
+
+  test("a DERIVED graph's unresolved links are never dangling", () => {
+    // A library section is machine-produced FROM a source document, so a
+    // markdown link inside it is whatever the derivation carried across. Five
+    // documents ingested on 2026-09-23 printed `./REFERENCE.md`, `./FORMS.md`
+    // and `./advanced.md` inside EXAMPLES of a skill directory — 12 findings,
+    // every one asking somebody to edit a transcription of a document this
+    // project did not write.
+    //
+    // `schemas/cat-harness.ts` already said so of the `derived` layer — *"a QA
+    // finding against a derived section is a finding against its GENERATOR,
+    // not against the corpus, and it sends a reviewer to fix the wrong file"*
+    // — and this check simply was not applying it.
+    //
+    // Asserted as an INVARIANT rather than a count. `derivedLinks.length > 0`
+    // would be the same trap the test above documents: it would fail the day
+    // somebody drains it, punishing the fix. This holds whether the corpus
+    // carries twelve or none.
+    // Same call shape as `scanSubgraphs` itself — it takes an instance CHAIN,
+    // not a path, and passing the root produced a `chain.find is not a
+    // function` rather than a wrong answer.
+    const dirs = resolveDirectories([{ name: "(local)", root: ROOT, own: true }]);
+    const derivedIds = new Set(
+      dirs.filter((d) => d.graphKinds.some((g) => isDerivedGraph(g))).map((d) => d.id),
+    );
+    expect(derivedIds.size, "no derived directory is declared, so this proves nothing").toBeGreaterThan(0);
+
+    // Nothing from a derived directory may be reported as dangling …
+    expect(report.dangling.filter((d) => derivedIds.has(d.fromDir))).toEqual([]);
+    // … and everything in the derived bucket must come from one.
+    expect(report.derivedLinks.filter((d) => !derivedIds.has(d.fromDir))).toEqual([]);
   });
 
   test("CRDM's relocations left no broken links behind — both of them", () => {
@@ -174,11 +208,11 @@ describe("repository-scoped directories are attributed", () => {
   });
 
   test("the x4v4 separation survives the change", () => {
-    // Making scoped paths attributable must NOT make `smart-kg/methodologies/`
+    // Making scoped paths attributable must NOT make `smart-base/methodologies/`
     // read as a child of `methodologies/` — that separation is deliberate and
     // was settled in bean `x4v4`. This is the trap the bean named in advance.
     for (const r of report.tree) {
-      expect(r.children).not.toContain("smart-kg-methodologies");
+      expect(r.children).not.toContain("smart-base-methodologies");
     }
     // The positive half USED to be `methodologies` → [methodology-crdm,
     // methodology-raci]. Both declarations went on 2026-09-22.
@@ -190,7 +224,7 @@ describe("repository-scoped directories are attributed", () => {
     // child" mean something. The tree is non-empty again since `main`
     // declared `test/` as a `code` graph, but this test does not depend on
     // that either way.
-    const scoped = dirs.find((d) => d.id === "smart-kg-methodologies");
+    const scoped = dirs.find((d) => d.id === "smart-base-methodologies");
     expect(scoped, "the repository-scoped entry did not resolve — the check above is vacuous").toBeDefined();
     expect(Array.isArray(report.tree), "containment was not computed at all").toBe(true);
   });

@@ -25,6 +25,8 @@
  * reader of the declaration can open. The site serves `docs/` AS its root, so
  * the same file is at `/assets/…` once published. The conversion happens here,
  * once, rather than in the Liquid template where it would be invisible.
+ *
+ * @covers docs
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
@@ -34,7 +36,8 @@ import { instanceDeclarationFilename, readDeclaration, siteDirFor } from "../sch
 import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
 import { graphTiles, withTileCounts } from "./graph-tiles.js";
 import { readTileCounts, type TileCount } from "../schemas/tile-count.js";
-import { harnessTiles } from "./harness-tiles.js";
+import { harnessTiles, instanceDirs } from "./harness-tiles.js";
+import { harnessPanel, skillPageIn } from "./harness-panel.js";
 import { siteLinks } from "./site-links.js";
 
 
@@ -235,13 +238,33 @@ function scanTileCounts(assetsDir: string): Map<string, TileCount> {
 }
 
 const links = siteLinks(decl, repoUrl);
-const allHarnesses = harnessTiles(
+const instanceNames = readdirSync(REPO_ROOT, { withFileTypes: true })
+  .filter((d) => d.isDirectory() && !d.name.startsWith(".") && d.name !== "node_modules")
+  .map((d) => d.name)
+  .sort();
+const allHarnesses = harnessTiles(REPO_ROOT, ROOT, instanceNames);
+
+/**
+ * THE HARNESSES CONFIG PANEL's data (issue #1146): every declaration here, its
+ * properties and their edit skills, and the associated harnesses. Same file,
+ * same gate, for the reason `harnesses` gives below.
+ */
+const tileOrder = (n: string): number => {
+  const i = allHarnesses.findIndex((t) => t.name === n);
+  return i < 0 ? allHarnesses.length : i;
+};
+const instantiatedHere = new Set(allHarnesses.filter((t) => t.instantiated).map((t) => t.name));
+const config = harnessPanel(
+  instanceDirs(REPO_ROOT, instanceNames).flatMap((dir) => {
+    const d = readDeclaration(dir);
+    return d ? [{ dir, decl: d, instantiated: instantiatedHere.has(d.name) }] : [];
+  })
+    // The sidebar's order, so the panel's groups read like the dividers.
+    .sort((a, b) => tileOrder(a.decl.name) - tileOrder(b.decl.name)),
   REPO_ROOT,
-  ROOT,
-  readdirSync(REPO_ROOT, { withFileTypes: true })
-    .filter((d) => d.isDirectory() && !d.name.startsWith(".") && d.name !== "node_modules")
-    .map((d) => d.name)
-    .sort(),
+  repoUrl,
+  "main",
+  skillPageIn(join(ROOT, siteDirFor(ROOT))),
 );
 
 /**
@@ -251,17 +274,44 @@ const allHarnesses = harnessTiles(
  * literal is a join nobody can test.
  */
 function navbarRow(
-  harnesses: readonly { name: string; navbarIcons?: string[]; visualisations?: { kind: string; path?: string | null }[] }[],
+  harnesses: readonly {
+    name: string;
+    navbarIcons?: string[];
+    visualisations?: { kind: string; within?: string; path?: string | null; note?: string; stagingOnly?: true }[];
+  }[],
   self: string | undefined,
   siteLinkList: readonly { id: string; path?: string; url?: string }[],
-): { icons: string[]; hrefs: Record<string, string>; folders: { kind: string; path?: string }[] } | null {
+): {
+  icons: string[];
+  hrefs: Record<string, string>;
+  /** WHY an icon has no href, keyed by icon id — see the `notes` note below. */
+  notes: Record<string, string>;
+  folders: { kind: string; within?: string; path?: string; note?: string; stagingOnly?: true }[];
+} | null {
   const mine = harnesses.find((h) => h.name === self);
   // UNDETERMINED -> `null`, never `{icons: []}`. "Nobody decided" and "show
   // none" are different answers and the template must be able to tell them
   // apart; `[]` here would report every un-migrated instance as deliberate.
   if (!mine || mine.navbarIcons === undefined) return null;
   const byKind = new Map((mine.visualisations ?? []).map((v) => [v.kind, v.path ?? undefined]));
+  const noteByKind = new Map(
+    (mine.visualisations ?? []).flatMap((v) => (v.note ? [[v.kind, v.note] as const] : [])),
+  );
   const hrefs: Record<string, string> = {};
+  /**
+   * WHY a declared icon has no destination, in the words a reader sees.
+   *
+   * SEPARATE FROM `hrefs` because they are answers to different questions and
+   * an icon has exactly one of them: a slot either goes somewhere or owes an
+   * explanation. Merging them into one map keyed by id would make "no entry"
+   * mean both "resolved to nothing" and "was never declared".
+   *
+   * The wording is `harness-tiles.ts`'s, carried rather than composed — see
+   * `HarnessVisualisation.note`, which computes it where the FOUR inert states
+   * are already told apart. A string minted here would be the fifth wording
+   * for four states, which is the defect that type's docstring already names.
+   */
+  const notes: Record<string, string> = {};
   for (const icon of mine.navbarIcons) {
     // `kg` is a SITE link rather than a graph of its own -- it is the viewer
     // over the whole instance, which is why `siteLinks` owns it and the
@@ -280,6 +330,13 @@ function navbarRow(
     // converting one path is two answers, and the one further from the source
     // is the one that goes stale.
     if (at) hrefs[icon] = at;
+    else {
+      const why = icon === "kg" ? undefined : noteByKind.get(icon);
+      // `close` and `launcher` drive controls on the page and are MEANT to have
+      // no href, so they owe no explanation. An entry for them would make the
+      // client render "no viewer yet" on a working button.
+      if (why && icon !== "close" && icon !== "launcher") notes[icon] = why;
+    }
   }
   // THIS INSTANCE'S OWN CONTROLLED FOLDERS — owner: *"next on navbar then is
   // is library docs/ and other controlled folders"*. Resolved here beside the
@@ -291,10 +348,30 @@ function navbarRow(
   // is a finding, and dropping it answers "where is qa" with silence.
   // Paths come through as `harness-tiles.ts` minted them -- see the note
   // above on why this no longer rewrites anything.
-  const folders = (mine.visualisations ?? []).map((v) =>
-    v.path ? { kind: v.kind, path: v.path } : { kind: v.kind },
-  );
-  return { icons: [...mine.navbarIcons], hrefs, folders };
+  //
+  // AND WITH ITS NOTE. Owner ruling, recorded in #1036: a declared graph with
+  // no viewer is SHOWN, inert and LABELLED, and the label says WHICH case it
+  // is — `flh4` separates "declares none" from "declares one that does not
+  // resolve", and `inertNote` words four states in all.
+  //
+  // This row carried none of that until 2026-09-23. A reader got `opacity:
+  // 0.35`, a strikethrough and a `title` tooltip reading "declared, with no
+  // published viewer" — one wording for four states, in a channel a keyboard
+  // or screen-reader user never reaches. `gjli`: the state belongs in TEXT.
+  //
+  // `stagingOnly` RIDES ALONG WITH THE PATH, and it has to: a withheld page's
+  // `path` resolves against the SOURCE tree, so it is present and correct and
+  // the link is still dead on the canonical deploy. The client decides, since
+  // only the page knows which deploy it is on.
+  // `within` RIDES ALONG TOO (issue #1164): a sub-graph is drawn inside its
+  // parent's row, folded, by every client — one answer to where it sits.
+  const folders = (mine.visualisations ?? []).map((v) => {
+    const within = v.within ? { within: v.within } : {};
+    return v.path
+      ? { kind: v.kind, ...within, path: v.path, ...(v.stagingOnly ? { stagingOnly: true as const } : {}) }
+      : { kind: v.kind, ...within, ...(v.note ? { note: v.note } : {}) };
+  });
+  return { icons: [...mine.navbarIcons], hrefs, notes, folders };
 }
 
 const payload = {
@@ -375,6 +452,7 @@ const payload = {
    * look like navigation.
    */
   navbar: navbarRow(allHarnesses, decl?.name, links),
+  config,
 };
 const next = `${JSON.stringify(payload, null, 2)}\n`;
 const current = existsSync(OUT) ? readFileSync(OUT, "utf-8") : "";

@@ -5,7 +5,7 @@
     "id": "Process_MaterializeRemote",
     "path": "processes/materialize-remote.bpmn"
   },
-  "source_hash": "sha256:063c6b91b9d189da777a989e2f104f6b60de499010608f8941398bcfccffd783",
+  "source_hash": "sha256:9c503847030d2c75fd7483696c6946cb170288c9051335c9c9e763815450d18b",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -64,31 +64,67 @@
       "findings": [
         {
           "where": "Task_Restrictions",
-          "detail": "\"RESTRICTIONS unknown is an answer, not a green light\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"RESTRICTIONS unknown is an answer, not a green light\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
         },
         {
           "where": "Task_Copyright",
-          "detail": "\"COPYRIGHT per bitstream, and for the derived work\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"COPYRIGHT per bitstream, and for the derived work\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
         },
         {
           "where": "Task_Retention",
-          "detail": "\"RETENTION what expires this copy\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"RETENTION what expires this copy\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
         },
         {
           "where": "Task_SourceLoss",
-          "detail": "\"SOURCE LOSS what survives if the origin goes\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"SOURCE LOSS what survives if the origin goes\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
         }
       ]
     },
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 14,
     "fail": 1,
-    "n/a": 7,
+    "n/a": 9,
     "unknown": 0
   }
 }

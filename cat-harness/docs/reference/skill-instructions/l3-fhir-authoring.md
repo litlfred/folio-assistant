@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/authoring-who-smart-guidelines/l3-fhir-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/authoring-who-smart-guidelines/l3-fhir-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/l3-fhir-authoring.html).
+> Generated from [`cat-harness/skills/authoring-who-smart-guidelines/l3-fhir-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-who-smart-guidelines/l3-fhir-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/l3-fhir-authoring.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/authoring-who-smart-guidelines/l3-fhir-authoring.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring-who-smart-guidelines/l3-fhir-authoring.md){: .fa-edit-source }
 
 {% raw %}
 # l3-fhir-authoring
@@ -78,3 +78,11 @@ artefacts a change touches rather than the whole IG. That is a build
 optimisation, not a validation shortcut: the full publisher build in that same
 diagram is what the release is cut from.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Incremental IG build](../../processes/ig-incremental-build.html) | SUSHI on the restricted tank |
+| [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | Map L2 → L3; Author FSH profiles; SUSHI compile → FHIR JSON |
+

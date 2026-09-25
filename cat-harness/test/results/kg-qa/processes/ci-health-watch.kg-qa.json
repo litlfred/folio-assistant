@@ -5,7 +5,7 @@
     "id": "Process_CiHealth",
     "path": "processes/ci-health-watch.bpmn"
   },
-  "source_hash": "sha256:6e74bfe0c3da83987081cdc888260bae80f84a745d2a5e9ddb7f2a71ee4d1544",
+  "source_hash": "sha256:0ab519e08abe25172abac1ec8224fba4483c1303ede7cb48f92754bf767948cd",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -83,12 +83,58 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
+    "pass": 15,
     "fail": 1,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/ci-health-watch.bpmn",
+      "code": ".github/workflows/ci-health.yml",
+      "prose_hash": "0ab519e08abe",
+      "code_hash": "13257f52fe55",
+      "by": "baseline"
+    }
+  ]
 }

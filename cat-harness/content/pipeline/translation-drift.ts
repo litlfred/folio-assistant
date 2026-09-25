@@ -35,6 +35,7 @@
  * reason — an exemption nobody can review is one somebody added to get green.
  *
  * @module content/pipeline/translation-drift
+ * @covers translation-sources
  */
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -174,15 +175,15 @@ export interface KnownDrift {
  * guessing: the first measurement in this bean was wrong, and a wrong
  * translation is far harder to notice than a wrong count.
  */
-export const KNOWN_DRIFT: KnownDrift[] = (["ar", "es", "fr", "ru", "zh"] as const).map((locale) => ({
-  translation: `${locale}/index`,
-  since: "2026-09-20",
-  reason:
-    'the English landing page gained a section — "Four things, in order" — ' +
-    "and no translation followed. Every other section is present and in order",
-  sourceShape: "1,2,2,2,2,2",
-  translationShape: "1,2,2,2,2",
-}));
+/*
+ * EMPTY as of 2026-09-23, and that is the goal state, not a lapse. It held five
+ * entries (`ar|es|fr|ru|zh/index`, since 2026-09-20): the English landing page
+ * gained "Four things, in order" and no translation followed. The owner chose
+ * "translate now" on bean `alox`, the section went into all five, and the
+ * entries came out in the same commit — the "every KNOWN_DRIFT entry still
+ * describes drift that EXISTS" test requires exactly that.
+ */
+export const KNOWN_DRIFT: KnownDrift[] = [];
 
 export type Severity = "error" | "unreadable";
 

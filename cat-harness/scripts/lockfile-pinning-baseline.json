@@ -1,10 +1,7 @@
 {
-  "_comment": "Install steps that deliberately resolve UNPINNED. Four are the documented fallback branch of a presence guard, which emits ::warning:: when it takes them — failing on those would make the honest branch unreachable. A DEGRADING pin is never baselined: the failure it swallows is the one it exists to raise, and no instance of that is defensible. Keyed by command rather than line number, so an unrelated step added above does not churn the file. Refresh with --write-baseline.",
+  "_comment": "Install steps that deliberately resolve UNPINNED. Some are the documented fallback branch of a presence guard (four were, until bean `52dz` moved three of them into the folio_init templates), which emits ::warning:: when it takes them — failing on those would make the honest branch unreachable. A DEGRADING pin is never baselined: the failure it swallows is the one it exists to raise, and no instance of that is defensible. Keyed by command rather than line number, so an unrelated step added above does not churn the file. Refresh with --write-baseline.",
   "known": [
-    "blueprint.yml: (cd content && bun install)",
     "discoverability-docs.yml: bun install || npm install",
-    "lean-build.yml: (cd content && bun install)",
-    "lean_ci.yml: (cd content && bun install)",
     "publish.yml: (cd content && bun install)",
     "publish.yml: bun install || npm install"
   ]

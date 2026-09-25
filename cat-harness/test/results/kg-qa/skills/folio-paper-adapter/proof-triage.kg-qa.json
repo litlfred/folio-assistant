@@ -27,12 +27,30 @@
     "skill-no-repeated-heading": {
       "result": "pass",
       "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 3,
+    "pass": 4,
     "fail": 1,
-    "n/a": 0,
+    "n/a": 1,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/proof-triage.md",
+      "code": "cat-harness/skills/folio-paper-adapter/proof-triage.ts",
+      "prose_hash": "2dce2f0c0d28",
+      "code_hash": "44fab3b52fa6",
+      "by": "baseline"
+    }
+  ]
 }

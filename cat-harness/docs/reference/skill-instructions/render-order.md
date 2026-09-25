@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/render-order.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/render-order.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/render-order.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/render-order.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/render-order.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/render-order.md){: .fa-edit-source }
 
 {% raw %}
 # Render order — flattening a dependency hierarchy, and the two stages
@@ -26,7 +26,7 @@ subtly different and none tested.
 
 | | |
 |---|---|
-| the rules + the flattener | `cat-harness/scripts/dependency-order.ts` |
+| the rules + the flattener | `cat-harness/schemas/dependency-order.ts` |
 | the pipeline that uses it | `cat-harness/scripts/render-pipeline.ts` |
 | see the order without running it | `bun run render:order` |
 | run it | `bun run render` |

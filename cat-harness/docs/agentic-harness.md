@@ -2,6 +2,8 @@
 layout: default
 title: Agentic harness
 nav_order: 5
+documents:
+  - interaction
 lang: en
 available_locales: ["en"]
 ---
@@ -176,9 +178,9 @@ switches context.
 
 Workflow processing here is a **spectrum, not a switch**, and the harness is
 already at four different points on it without ever having named the axis:
-`folio:policy enforcement` decides whether a step that is not enabled is
+`cat-harness.processes:policy enforcement` decides whether a step that is not enabled is
 refused or merely noted; `relaxable="false"` decides whether a package may
-negotiate a base step away; `folio:decision` decides whether a branch is
+negotiate a base step away; `cat-harness.processes:decision` decides whether a branch is
 computed from a table rather than chosen; and the commit-boundary gate refuses
 the write by something that is not the agent.
 
@@ -189,8 +191,8 @@ fully agentic on the first and fully deterministic on the third: the commit
 boundary is exactly that, an agent deciding freely and a hook refusing the
 write regardless.
 
-A gateway now says which it is. `<folio:decision>` means a table computes it
-and a hand-supplied outcome is refused; `<folio:judgement reason="…">` means
+A gateway now says which it is. `<cat-harness.processes:decision>` means a table computes it
+and a hand-supplied outcome is refused; `<cat-harness.processes:judgement reason="…">` means
 somebody's call, with the reason required. Before that marker, "no table
 because this is a judgement" and "no table because nobody wrote one" were
 indistinguishable — and `bun run check:workflow-refs` now prints the three-way
@@ -205,6 +207,54 @@ each claim marked as measured, decided or hypothesis, is
 [`deterministic-and-agentic`](reference/skill-instructions/deterministic-and-agentic.html).
 Read it as an agenda: there is more hypothesis in it than measurement, and it
 says so.
+
+## BPMN execution: one skill, two engines
+{: #bpmn-execution data-fa-label="sec:harness-bpmn_execution" }
+
+[✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/bpmn-execution.md){: .fa-node-edit title="Edit content/docs/agentic-harness/bpmn-execution.md" } <span class="fa-qa-badges"><span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
+
+The owner, 2026-09-23, naming the skill this spectrum is about:
+
+> **BPMN Execution Skill:** given a Process, Context, State and Role, utilize
+> one or more Skills in order to execute a Task.
+
+![BPMN execution, from deterministic to agentic. A colour bar runs from "deterministic" (blue, left: managed agent execution of a single task) to "agentic" (green, right: agents across most or all tasks). Left, under a gear-and-engine icon: "BPMN Execution Tool: one of any open-source BPMN engines, state and swimlanes strictly enforced", over a flat swimlane diagram of the folio lifecycle with one sticky note, one bean cluster, a person and a cat-robot beside the lanes. Right, under a cat-robot icon: "BPMN Execution Tool: agentic swarm with ungoverned state. Agents 'relax' swimlanes, mitigated by mechanical + agentic QA/QC reports", over the same diagram tilted in perspective, beans scattered across every lane and many cat-robots beneath it.](assets/img/bpmn-execution-spectrum.webp)
+
+**One skill, two kinds of Tool.** The skill is the same at both ends: take the
+process, the context, the current state and the role, pick the skills, and do
+the task. What changes is the **Tool** that runs it, and a Tool is swappable
+behind a skill in the way every other Tool here is.
+
+| | deterministic end | agentic end |
+|---|---|---|
+| **Tool** | any open-source BPMN 2.0 engine | an agentic swarm |
+| **Scope of an agent** | one task at a time, handed to it by the engine | most or all tasks |
+| **State** | held by the engine, strictly | ungoverned: the swarm holds it |
+| **Swimlanes** | enforced: only the lane's role may perform its task | relaxed: an agent may act across lanes |
+| **What keeps it honest** | the engine refuses a step before it happens | mechanical + agentic QA/QC reports find it after it happened |
+
+**The two ends differ in *when* a rule is checked, not in *which* rule.** The
+same process, the same roles and the same permissions govern both. The engine
+checks them **before** a task starts and refuses; the swarm acts and a QA/QC
+report checks them **after**, from the record of what was done. That only works
+if the rules and the record are data a report can read, which is the case for
+[W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) as the permission language
+and [W3C PROV-O](https://www.w3.org/TR/prov-o/) as the execution log (owner,
+2026-09-23; the schema this implies is the
+[actors, ODRL and PROV-O proposal](proposals/odrl-prov-actor-model.html)).
+
+**Most real runs sit between the ends**, and per task rather than per process:
+the [previous section](#deterministic-and-agentic) already counts which
+gateways are computed and which are judgement calls. A signing step can be
+engine-enforced inside an otherwise agentic run, and that is a property of the
+task, not of the whole diagram.
+
+**Partly built.** No BPMN engine is wired in. The mechanical QA/QC report
+now exists: `bun run prov:qaqc` writes each workflow instance's history as a
+PROV-O log and re-checks every step against the ODRL policies, advisory
+(issue #1180, step 5; the `task-authorization` skill). The agentic QA/QC
+report does not exist yet. The rest of this section names the target so the
+proposal has something to be measured against.
 
 ## Feature-request workflow (CRDM)
 {: #feature-request-workflow data-fa-label="sec:harness-feature_request_workflow" }

@@ -7,7 +7,6 @@ export const leanProofReview: SkillDefinition = {
   requiredCapabilities: [
     { capabilityId: "lean-toolchain", degradation: "fallback" },
   ],
-  mcpServices: ["lean-lsp"],
   routingPatterns: ["review.*lean", "check.*proof", "audit.*lean"],
   tags: ["lean", "review", "proof"],
 };

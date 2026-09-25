@@ -54,13 +54,15 @@ import { join } from "node:path";
 
 import {
   type CatHarnessDeclaration,
+  type TileSurface as CatHarnessTileSurface,
   type Visualisation,
   showsOn,
+  TILE_SURFACES,
   visualisationsOf,
 } from "../schemas/cat-harness.js";
 
-/** Where a tile may appear. A visualisation that says nothing appears on both. */
-export type TileSurface = "navbar" | "board";
+/** Where a tile may appear. A visualisation that says nothing appears on every surface. */
+export type TileSurface = CatHarnessTileSurface;
 
 /** One tile, ready for a template. */
 export interface GraphTile {
@@ -225,7 +227,7 @@ export function graphTiles(
         directory: d.id,
         title: v.title,
         ref: v.ref,
-        surfaces: (["navbar", "board"] as const).filter((s) => showsOn(v, s)),
+        surfaces: TILE_SURFACES.filter((s) => showsOn(v, s)),
         ...(siteDirFromRepoRoot === undefined
           ? {}
           : (() => {
@@ -350,7 +352,6 @@ export function withTileCounts(
  *
  * | subject | declared directory id |
  * |---|---|
- * | `bootstrap-tools` | `bootstrap-tools-schemas` |
  * | `detangle` | `detangle-schemas` |
  * | `large-datasets` | `large-datasets-schemas` |
  * | **`folio-assistant-core`** | **`folio-assist-core-schemas`** |

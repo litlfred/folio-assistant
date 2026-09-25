@@ -13,7 +13,7 @@ in headless Chromium and writes `docs/assets/img/workflows/<diagram>.svg`. If
 the sandbox ships a Chromium that does not match the pinned Playwright build,
 point at it with `CHROMIUM_PATH=/path/to/chrome`.
 
-When you add an activity, add its `<folio:skill ref="…"/>` extension (and
-`<folio:bean store="beans/"/>` if it touches the work plan) and the matching
+When you add an activity, add its `<bootstrap.processes:skill ref="…"/>` extension (and
+`<cat-harness.processes:bean store="beans/"/>` if it touches the work plan) and the matching
 row in the tables above — the diagram and the skill list drifting apart is the
 failure this page exists to prevent.

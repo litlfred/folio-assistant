@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-methodology-evidence.ts",
-    "script_hash": "bb11995d0d26"
+    "script_hash": "d15217f6e46f"
   },
   "subject": {
     "kind": "corpus",
     "id": "methodologies"
   },
-  "updated_at": "2026-09-22T22:35:29.767Z",
+  "updated_at": "2026-09-24T13:29:15.208Z",
   "families": {
     "evidence-unresolved": {
       "summary": "An `evidence:` reference naming a bib-slug no declared library holds. WORSE than declaring none: it reads as an ingested source in every listing, so a reader who does not open it is told the citation resolves. Fails by default, unlike a missing `evidence` field, because a broken pointer is not an open question about whether to adopt something.",
@@ -40,14 +40,14 @@
           "detail": "cites an origin (Michael Nygard, \"Documenting Architecture Decisions\" (2011), for the ADR form; MADR (githu…) with no ingested source"
         },
         {
+          "node": "methodologies/rasci.md",
+          "name": "rasci",
+          "detail": "cites an origin (**NOT ESTABLISHED FROM ANY SOURCE HELD HERE, and that is stated rather than guessed.** RAS…) with no ingested source"
+        },
+        {
           "node": "../smart-base/methodologies/diig.md",
           "name": "diig",
           "detail": "cites an origin (World Health Organization, International Telecommunication Union and the United Nations Fo…) with no ingested source"
-        },
-        {
-          "node": "../smart-kg/methodologies/grade.md",
-          "name": "grade",
-          "detail": "cites an origin (The GRADE Working Group (gradeworkinggroup.org); Evidence-to-Decision frameworks per Alons…) with no ingested source"
         }
       ]
     },

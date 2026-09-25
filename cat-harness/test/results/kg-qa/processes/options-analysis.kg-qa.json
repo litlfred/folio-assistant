@@ -5,7 +5,7 @@
     "id": "Process_OptionsAnalysis",
     "path": "processes/options-analysis.bpmn"
   },
-  "source_hash": "sha256:9cb597457fd8a31996884d64a9e7ccdc47fa49030b7b4472f20f61d670adb3cf",
+  "source_hash": "sha256:1c80153d3d91bf062b199bfac0648c8f4e00f19f67b5d9babcc16dc6c0c91c8a",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -71,12 +71,48 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
+    "pass": 13,
     "fail": 1,
-    "n/a": 8,
+    "n/a": 10,
     "unknown": 0
   }
 }

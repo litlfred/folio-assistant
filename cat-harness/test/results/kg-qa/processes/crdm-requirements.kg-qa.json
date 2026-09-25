@@ -5,7 +5,7 @@
     "id": "Process_CRDM",
     "path": "processes/crdm-requirements.bpmn"
   },
-  "source_hash": "sha256:47da78023aece0dcbe2818d14412f5b4d679d2d5a082b4dbfd6c975b7ee32798",
+  "source_hash": "sha256:f9f1a0ab286827a5ec48af02ab411346b439ef199e67618bf0cd4d465ea285a8",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,12 +66,48 @@
     "call-activity-resolves": {
       "result": "pass",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
+    "pass": 15,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 9,
     "unknown": 0
   }
 }

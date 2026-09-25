@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/content-lifecycle/content-publish.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-publish.md) — do not edit here. Typed contract: [schema reference](../skills/content-publish.html).
+> Generated from [`cat-harness/skills/content-lifecycle/content-publish.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/content-lifecycle/content-publish.md) — do not edit here. Typed contract: [schema reference](../skills/content-publish.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/content-lifecycle/content-publish.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/content-lifecycle/content-publish.md){: .fa-edit-source }
 
 {% raw %}
 # Content Publication
@@ -38,3 +38,16 @@ Package, version, and publish approved content.
 - Publication URL
 - Updated version in development branch
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a document](../../processes/authoring-a-document.html) | 9 · Publish |
+| [Authoring a paper](../../processes/authoring-a-paper.html) | 9 · Publish |
+| [Content Change and Review](../../processes/content-change-review.html) | Rebuild main site |
+| [Content lifecycle](../../processes/content-lifecycle.html) | Draft, review and publish (calls a sub-process) |
+| [Draft, review and publish](../../processes/draft-to-publication.html) | Build the draft publication; Authorise the release; Version, tag and publish |
+| [Incremental IG build](../../processes/ig-incremental-build.html) | Deploy the preview site; Deploy the site [content-publish] |
+| [L3 FHIR IG pipeline](../../processes/l3-fhir-pipeline.html) | Publish the IG site |
+

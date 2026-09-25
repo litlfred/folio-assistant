@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/tabular-metadata.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/tabular-metadata.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/tabular-metadata.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/tabular-metadata.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/tabular-metadata.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/tabular-metadata.md){: .fa-edit-source }
 
 {% raw %}
 # Tabular metadata — CSVW, annotated, and honest about what it could not read
@@ -36,14 +36,48 @@ that assumption three ways:
 So three `fac:` terms, and **only** these three: `fac:anchor` (sheet, cell, row,
 column), `fac:headerRow`, `fac:extent`.
 
-> **They are annotations ON a valid CSVW document, never a replacement for
-> one.** A reader with a standard CSVW parser ignores the `fac:` keys and still
-> gets a correct table description. That property is the entire reason for
-> adopting a standard rather than inventing a schema, so it is **tested**
-> (`csvwOnly()` in `schemas/tabular-csvw.ts`) rather than asserted.
+> **The record is JSON; the CSVW is derived from it.** The annotations live in
+> `tabular.csvw.json` — plain JSON, deliberately not `.jsonld` — and
+> `toCsvw()` in `schemas/tabular-csvw.ts` produces the genuine CSVW metadata
+> document from it: the CSVW `@context`, CSVW's own keys, nothing of ours at
+> any level. A standard reader is handed that document and gets a correct
+> table description. That property is the entire reason for adopting a
+> standard rather than inventing a schema, so it is **tested** — the export is
+> walked key by key against `CSVW_KEYS` — rather than asserted.
 
 Adding a fourth `fac:` term is the moment to stop and ask whether CSVW really
 cannot express it. Usually it can.
+
+### Why JSON and not JSON-LD — bean `792y`
+
+This section used to claim the record WAS a valid CSVW document that a
+standard parser would read while ignoring the `fac:` keys. It was not. The
+record had no `@context`, so a CSVW parser rejects it, and a JSON-LD processor
+keeps only the `fac:` keys, read as IRIs in a URI scheme called `fac`. No
+spelling of the prefix fixes that inside CSVW, whose metadata documents may
+put only `@language` and `@base` in a local context — see
+[`kg-export`](kg-export.md) §"A prefix is the stub".
+
+The owner chose (2026-09-23) between three answers:
+
+| | the record | the cost |
+|---|---|---|
+| **chosen** | JSON; CSVW DERIVED by `toCsvw()` | the annotations are not linked data |
+| full-IRI terms | real CSVW, annotations as ~12 flattened IRI terms, each defined in the vocabulary | JSON-LD drops `null`, so a DETERMINED null — a CSV has no sheet — becomes indistinguishable from "never recorded" |
+| our own context | JSON-LD with a context binding our prefix | a CSVW reader still rejects it |
+
+Two facts decided it. **Nothing reads the annotations as linked data** — the
+graph projection reads `anchor.sheet` from the JSON — and
+[`directory-conventions`](directory-conventions.md) says to generate as many
+renderings as have a consumer, and no more. And **the three-state rule below
+needs `null` to mean something**, which RDF cannot keep. If a consumer ever
+needs placement as linked data, the full-IRI answer is the one to revisit,
+and its cost is already written down here.
+
+**The `fac:` in the key names is a JSON name, not a prefix.** It marks our
+fields apart from CSVW's in the file. It is safe exactly because the file is
+not JSON-LD — rename the file back to `.jsonld` and it dangles again, which
+`check:context-emission` would then catch.
 
 ## "As best as can" means three states, never two
 

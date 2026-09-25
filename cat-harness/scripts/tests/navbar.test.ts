@@ -23,6 +23,8 @@ import {
   injectNavbar,
   navbarCss,
   navbarHtml,
+  navbarRegionsHtml,
+  type NavGroup,
   type NavbarModel,
 } from "../lib/navbar.js";
 import { injectRail, railModel } from "../lib/harness-rail.js";
@@ -35,11 +37,16 @@ import {
   renderNavbarGeometryCss,
   withGeometry,
 } from "../gen-navbar-geometry-css.js";
-import { publishedUrlOf } from "../harness-tiles.js";
+import { publishedUrlOf, solveCrop } from "../harness-tiles.js";
 import { instanceRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 import { declaredGraphs, toRootFor, visualiserHref } from "../mount-instance-docs.js";
 
-const model: NavbarModel = {
+// Typed WITH its middle region, because this fixture is a mounted page's
+// navbar and a mounted page always has one. `graphs` became optional for the
+// Jekyll surface, where the theme's own `<nav id="site-nav">` owns that
+// region; saying so here keeps the tests below asserting on a present group
+// rather than guarding a case this fixture does not have.
+const model: NavbarModel & { graphs: NavGroup } = {
   instance: "who-iris",
   root: { href: "../who-iris/", label: "who-iris", icon: "◆", current: true },
   graphs: {
@@ -378,8 +385,15 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     declaredGraphs("who-iris", new Map(Object.entries(linked))).map((i) => i.label);
 
   it("lists every kind the instance declares, not only the published ones", () => {
-    // Six declared: library, catalogue, uploads, skills, themes, docs.
-    expect(kinds()).toEqual(["catalogue", "docs", "library", "skills", "themes", "uploads"]);
+    // SEVEN declared, and the seventh arrived by this test doing its job.
+    // `code` joined on 2026-09-23 when `who-iris/scripts/` was declared under
+    // bean `ylj7` — `gen-iris-pages.ts` and the catalogue checker had been
+    // sitting in no declared directory while every OTHER graph in this
+    // instance was declared. The list grew because the instance did, which is
+    // what "every kind the instance declares" is for; pinning it at six would
+    // have made the assertion a statement about 2026-09-22 rather than about
+    // the declaration.
+    expect(kinds()).toEqual(["catalogue", "code", "docs", "library", "skills", "themes", "uploads"]);
   });
 
   it("links exactly the kinds it was told are published", () => {
@@ -389,6 +403,9 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     // non-link. `harness-tiles`: declared and not rendered is a GAP.
     expect(got.filter((i) => i.href === undefined).map((i) => i.label)).toEqual([
       "catalogue",
+      // `code` is declared and publishes no page — which is exactly the state
+      // this assertion exists to keep visible, rather than a gap to hide.
+      "code",
       "library",
       "skills",
       "themes",
@@ -405,8 +422,8 @@ describe("every declared graph reaches the navbar, linked or not", () => {
       "who-iris",
       new Map([["docs", "../docs/who-iris/"]]),
       new Map([
-        ["catalogue", "no viewer yet"],
-        ["themes", "staging only"],
+        ["catalogue", { note: "no viewer yet" }],
+        ["themes", { note: "staging only" }],
       ]),
     );
     expect(got.find((i) => i.label === "catalogue")?.note).toBe("no viewer yet");
@@ -426,9 +443,41 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     const got = declaredGraphs(
       "who-iris",
       new Map([["docs", "../docs/who-iris/"]]),
-      new Map([["docs", "no viewer yet"]]),
+      new Map([["docs", { note: "no viewer yet" }]]),
     );
     expect(got.find((i) => i.label === "docs")?.note).toBeUndefined();
+  });
+
+  it("links a kind whose viewer the HANDLER published — `pk2s`", () => {
+    // The defect: who-iris's `catalogue` drew as a grey row over a page that
+    // exists. `cat-harness/catalogue/who-iris/index.html` is 23,534 bytes on
+    // `gh-pages`, measured 2026-09-23 — the rail was losing a working link.
+    //
+    // The mount table cannot see it. `mountable()` requires an `index.html`
+    // in the instance's own directory, and `who-iris/catalogue/` holds DATA.
+    // The page that renders it is the cat-harness HANDLER's, and a handler's
+    // viewer is never a mount.
+    const got = declaredGraphs(
+      "who-iris",
+      new Map([["docs", "../docs/who-iris/"]]),
+      new Map([["catalogue", { href: "../cat-harness/catalogue/who-iris/" }]]),
+    );
+    expect(got.find((i) => i.label === "catalogue")?.href).toBe("../cat-harness/catalogue/who-iris/");
+    // And it is a LINK, so it owes no explanation.
+    expect(got.find((i) => i.label === "catalogue")?.note).toBeUndefined();
+  });
+
+  it("the MOUNT TABLE wins where it has an answer — the owner's order, not a tie-break", () => {
+    // *"cliking shoud go to folio view, not the schema viweer."* A mount is
+    // the instance presenting itself; the handler's viewer is cat-harness's
+    // default rendering of the same graph. Both exist for `library`, and the
+    // instance's own route is the one a reader gets.
+    const got = declaredGraphs(
+      "who-iris",
+      new Map([["library", "../who-iris/"]]),
+      new Map([["library", { href: "../cat-harness/library/who-iris/" }]]),
+    );
+    expect(got.find((i) => i.label === "library")?.href).toBe("../who-iris/");
   });
 
   it("returns EMPTY for an instance that declares nothing readable", () => {
@@ -700,5 +749,222 @@ describe("a coverage path is a SOURCE file, not a URL — `publishedUrlOf`", () 
         .map((v) => `${h.name}:${v.kind} -> ${v.path}`),
     );
     expect(offenders).toEqual([]);
+  });
+});
+
+describe("the crop is ONE sum, and two renderers do it", () => {
+  /**
+   * `solveCrop` solves a declared `avatarRegion` for the Jekyll sidebar, where
+   * the consumer is Liquid; `mark()` solves the same region inline for a
+   * mounted page. The arithmetic is `603s`'s and it is written out twice,
+   * which is the shape that let the navbar widths be stated twice with a test
+   * per copy — both green, and disagreeing (`sjic`).
+   *
+   * Nothing here says the arithmetic is RIGHT; `schemas/avatar-region.test.ts`
+   * owns the declaration and this file's other tests own the markup. What it
+   * says is that the two surfaces cannot drift apart silently, which is the
+   * failure neither of those would notice.
+   */
+  const regions = [
+    // who-iris: the WHO emblem cut out of a 581x178 emblem-and-wordmark.
+    { x: 0, y: 0, w: 0.3064, h: 1 },
+    { x: 0, y: 0, w: 1, h: 1 },
+    { x: 0.25, y: 0.46, w: 0.5, h: 0.5 },
+    // A third that divides badly on purpose: 1/0.3 is not representable, and
+    // agreement has to survive the rounding rather than dodge it.
+    { x: 0.1, y: 0.1, w: 0.3, h: 0.3 },
+  ];
+
+  /** What the rail actually writes, read back off its own markup. */
+  function railCrop(r: { x: number; y: number; w: number; h: number }) {
+    const html = navbarHtml({
+      instance: "x",
+      root: { href: "./", label: "x", avatar: { src: "m.svg", region: r } },
+      graphs: { label: "Graphs", items: [] },
+      harnesses: { label: "Harnesses", items: [] },
+    });
+    const style = /style="(width:[^"]+)"/.exec(html)?.[1] ?? "";
+    const num = (k: string) => Number(new RegExp(k + ":([-0-9.]+)%").exec(style)?.[1]);
+    return { width: num("width"), height: num("height"), left: num("left"), top: num("top") };
+  }
+
+  for (const r of regions) {
+    it(`agrees on ${JSON.stringify(r)}`, () => {
+      expect(railCrop(r)).toEqual(solveCrop(r));
+    });
+  }
+
+  it("the whole image is the identity crop, not a no-op that skips the branch", () => {
+    // A renderer that treated w=h=1 as "no crop" would agree with the other by
+    // accident on every other case and diverge on this one.
+    expect(solveCrop({ x: 0, y: 0, w: 1, h: 1 })).toEqual({
+      width: 100,
+      height: 100,
+      left: 0,
+      top: 0,
+    });
+  });
+});
+
+/**
+ * `sjic`'s last box — ONE renderer for a Jekyll page and a mounted page, with
+ * the difference DECLARED rather than branched on.
+ *
+ * Three differences are declared, and each has a test here that fails if the
+ * declaration stops being honoured. What is NOT tested is the absence of a
+ * fourth: that is what `navbarHtml` delegating to `navbarRegionsHtml` is for,
+ * since there is then no second copy of the region order to disagree.
+ */
+describe("the two surfaces differ by DECLARATION, not by branch", () => {
+  it("the wrapper is the only thing `navbarHtml` adds", () => {
+    // If this ever stops holding, the two surfaces have grown a second
+    // difference that nothing declares — which is the defect `sjic` is about.
+    expect(navbarHtml(model)).toBe(
+      `<nav class="fa-nav" aria-label="folio-assistant">${navbarRegionsHtml(model)}</nav>`,
+    );
+  });
+
+  it("a mounted page's markup is UNCHANGED by the extension", () => {
+    // The 46 generated viewer pages and every mount are gated on their own
+    // bytes. A model that declares none of the new fields must render exactly
+    // what it rendered before, or this is a rewrite wearing a refactor's name.
+    const html = navbarHtml(model);
+    expect(html).toContain('<input type="checkbox" class="fa-nav-open" id="fa-nav-open">');
+    expect(html).toContain('<div class="fa-nav-graphs">');
+    expect(html).not.toContain("fa-nav-row");
+    expect(html).not.toContain("relative_url");
+  });
+
+  describe("hrefs — resolved, or wrapped in Jekyll's filter", () => {
+    it("`liquid` wraps every href and every avatar src", () => {
+      // Both, and the `src` is the one that was missed before: `68au` is every
+      // graph tile in the navbar 404ing because an href was composed without
+      // the baseurl, and an avatar is composed the same way.
+      const m: NavbarModel = {
+        instance: "who-iris",
+        hrefs: "liquid",
+        graphs: {
+          label: "Graphs",
+          items: [{ href: "/library/", label: "Library", avatar: { src: "/assets/a.png" } }],
+        },
+      };
+      const html = navbarRegionsHtml(m);
+      expect(html).toContain(`href="{{ '/library/' | relative_url }}"`);
+      expect(html).toContain(`src="{{ '/assets/a.png' | relative_url }}"`);
+    });
+
+    it("a row with no destination gains no filter", () => {
+      // A dead row has no href to wrap. Emitting `relative_url` around nothing
+      // would render a link to the site root, which is `pb04` exactly: a dead
+      // link invites a click and then reads as a broken site.
+      const m: NavbarModel = {
+        instance: "who-iris",
+        hrefs: "liquid",
+        graphs: { label: "Graphs", items: [{ label: "qa", note: "no viewer yet" }] },
+      };
+      const html = navbarRegionsHtml(m);
+      expect(html).toContain("fa-nav-dead");
+      expect(html).not.toContain("relative_url");
+    });
+
+    it("resolved is the default, so no caller has to say so", () => {
+      const m: NavbarModel = {
+        instance: "who-iris",
+        graphs: { label: "Graphs", items: [{ href: "../library/", label: "Library" }] },
+      };
+      expect(navbarRegionsHtml(m)).toContain('href="../library/"');
+    });
+  });
+
+  describe("the middle region is ABSENT when another navigation owns it", () => {
+    it("no `graphs` renders no graphs region — not an empty one", () => {
+      // The Jekyll theme renders its own `<nav id="site-nav">` page tree in
+      // this slot. An empty disclosure there would be a second, emptier answer
+      // to the same question.
+      const m: NavbarModel = { instance: "folio-assistant", home: { href: "/", label: "Home" } };
+      const html = navbarRegionsHtml(m);
+      expect(html).not.toContain("fa-nav-graphs");
+      expect(html).toContain("fa-nav-bottom");
+    });
+  });
+
+  describe("the open control is rendered once per PAGE, not once per copy", () => {
+    it("`labels` renders the labels and not the input", () => {
+      // just-the-docs includes its footer extension point twice per page by
+      // design. With the input in both, `id="fa-nav-open"` appeared twice on
+      // 429 of 1,283 built pages (`uknu`).
+      const m: NavbarModel = { instance: "folio-assistant", openControl: "labels" };
+      const html = navbarRegionsHtml(m);
+      expect(html).not.toContain('type="checkbox"');
+      // The labels still point at the input the FIRST copy rendered, which is
+      // the whole mechanism: one control, operated from both copies.
+      expect(html).toContain('for="fa-nav-open"');
+      expect(html).toContain("fa-nav-close");
+      expect(html).toContain("fa-nav-head");
+    });
+
+    it("`input` is the default, so an injected rail needs no declaration", () => {
+      const m: NavbarModel = { instance: "who-iris" };
+      expect(navbarRegionsHtml(m)).toContain('<input type="checkbox"');
+    });
+  });
+});
+
+/**
+ * The rows the Jekyll sidebar has rendered since `603s` and this rail never
+ * has. Until now they were the largest difference between the two surfaces —
+ * `sjic`: *"two implementations of one navbar, disagreeing about whether a
+ * reader can reach a graph."*
+ */
+describe("a harness row carries its own graphs and its own control", () => {
+  const harness: NavbarModel = {
+    instance: "folio-assistant",
+    harnesses: {
+      label: "Harnesses",
+      collapsible: true,
+      items: [
+        {
+          href: "/who-iris/",
+          label: "who-iris",
+          action: {
+            data: "data-fa-harness-config",
+            value: "who-iris",
+            label: "Configuration of who-iris",
+            glyph: "⚙︎",
+          },
+          children: [
+            { href: "/who-iris/library/", label: "library" },
+            { label: "qa", note: "declared, no viewer" },
+          ],
+        },
+      ],
+    },
+  };
+
+  it("the children are reachable, and the dead one still says why", () => {
+    const html = navbarRegionsHtml(harness);
+    expect(html).toContain('href="/who-iris/library/"');
+    expect(html).toContain("declared, no viewer");
+  });
+
+  it("the control is a SIBLING of the link, never inside it", () => {
+    // A control nested in a link is two targets a keyboard cannot tell apart.
+    // Asserted on the markup rather than trusted to review, because the nested
+    // form also renders and looks identical.
+    const html = navbarRegionsHtml(harness);
+    const a = html.indexOf('<a href="/who-iris/"');
+    const close = html.indexOf("</a>", a);
+    const button = html.indexOf("<button", a);
+    expect(button).toBeGreaterThan(close);
+  });
+
+  it("a row with neither gains no wrapper", () => {
+    // The wrapper exists for the row+control line. Emitting it unconditionally
+    // would change the markup of every existing rail for no reason.
+    const plain: NavbarModel = {
+      instance: "who-iris",
+      graphs: { label: "Graphs", items: [{ href: "../x/", label: "x" }] },
+    };
+    expect(navbarRegionsHtml(plain)).not.toContain("fa-nav-row");
   });
 });

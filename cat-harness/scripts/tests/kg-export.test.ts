@@ -23,7 +23,7 @@
 import { describe, expect, test } from "bun:test";
 import { readRoleGraph } from "../../schemas/role-graph.ts";
 import { join, resolve } from "node:path";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 
@@ -442,7 +442,9 @@ describe("kg export", () => {
     // string-manipulate or infer a rule to follow a link. So the preview→
     // canonical relation is written out per node, not left derivable.
     const preview = await buildExport({ baseUrl: "https://example.invalid/fa/STAGING/demo" });
-    const canonical = await buildExport();
+    // The shared fixture IS the canonical export; building it again here put
+    // this test at ~5.2 s alone, over bun's timeout (bean `w82m`).
+    const canonical = EXPORT;
 
     expect(Array.isArray(preview["@type"])).toBe(true);
     expect(preview["@type"]).toContain(termIri("PreviewGraph"));
@@ -476,27 +478,30 @@ describe("kg export", () => {
 });
 
 describe("source provenance — what the graph was generated FROM", () => {
+  // Read off the shared canonical export: each of these once rebuilt it, and
+  // one rebuild costs about bun's 5 s per-test timeout on a session container
+  // (bean `w82m`). Provenance is fixed per checkout, so one build answers all.
   // `generatedAt` says WHEN the export ran, which does not identify what it
   // ran over: two graphs differing in content are indistinguishable from two
   // runs of the same content, and a consumer holding a published .jsonld has
   // no way back to the tree that produced it.
 
-  test("the commit SHA is carried, unabbreviated", async () => {
-    const d = await buildExport();
+  test("the commit SHA is carried, unabbreviated", () => {
+    const d = EXPORT;
     expect(d.sourceCommitSha).toMatch(/^[0-9a-f]{40}$/);
   });
 
-  test("it is the commit this checkout is actually on", async () => {
+  test("it is the commit this checkout is actually on", () => {
     const head = spawnSync("git", ["rev-parse", "HEAD"], {
       cwd: resolve(import.meta.dir, "../.."),
       encoding: "utf-8",
     }).stdout.trim();
-    const d = await buildExport();
+    const d = EXPORT;
     expect(d.sourceCommitSha).toBe(head);
   });
 
-  test("the commit is a dereferenceable IRI, typed prov:wasDerivedFrom", async () => {
-    const d = await buildExport();
+  test("the commit is a dereferenceable IRI, typed prov:wasDerivedFrom", () => {
+    const d = EXPORT;
     expect(d.sourceCommit).toContain(d.sourceCommitSha);
     expect(d.sourceCommit).toMatch(/^https:\/\/(github|gitlab)\.com\/.+\/commit\//);
     const ctx = d["@context"] as Record<string, { "@id"?: string; "@type"?: string }>;
@@ -504,13 +509,13 @@ describe("source provenance — what the graph was generated FROM", () => {
     expect(ctx.sourceCommit?.["@type"]).toBe("@id");
   });
 
-  test("the commit's own time is distinct from the export's", async () => {
-    const d = await buildExport();
+  test("the commit's own time is distinct from the export's", () => {
+    const d = EXPORT;
     expect(d.sourceCommitAt).toBeDefined();
     expect(d.sourceCommitAt).not.toBe(d.generatedAt);
   });
 
-  test("a dirty tree is a typed flag, NOT a `problems` entry", async () => {
+  test("a dirty tree is a typed flag, NOT a `problems` entry", () => {
     // A SHA reported from a tree with uncommitted changes names a commit that
     // does not contain what was exported, so the flag rides beside the SHA
     // rather than suppressing it. It stays out of `problems`, whose contract
@@ -518,23 +523,23 @@ describe("source provenance — what the graph was generated FROM", () => {
     // state of a developer's machine, and putting it there would make
     // `problems: []` fail on every local run and train the reader to ignore
     // the field that reports real failures.
-    const d = await buildExport();
+    const d = EXPORT;
     expect(typeof d.sourceTreeDirty).toBe("boolean");
     expect(d.problems.some((p) => /uncommitted|dirty/i.test(p))).toBe(false);
   });
 
-  test("an absent SHA carries its own reason, not a placeholder", async () => {
-    const d = await buildExport();
+  test("an absent SHA carries its own reason, not a placeholder", () => {
+    const d = EXPORT;
     // Exactly one of the two is present — a consumer never has to infer why a
     // field is missing, and never parses a placeholder as a commit.
     expect(Boolean(d.sourceCommitSha) !== Boolean(d.sourceCommitUnavailable)).toBe(true);
   });
 
-  test("every provenance term is declared in @context", async () => {
+  test("every provenance term is declared in @context", () => {
     // An undeclared term is dropped on expansion, so a field present in the
     // JSON would be absent from the RDF — the graph would silently lose its
     // own provenance.
-    const d = await buildExport();
+    const d = EXPORT;
     const ctx = d["@context"] as Record<string, unknown>;
     for (const k of ["sourceCommit", "sourceCommitSha", "sourceCommitAt", "sourceTreeDirty"]) {
       expect(ctx[k]).toBeDefined();
@@ -698,14 +703,14 @@ describe("a Role comes from the registry as well as from a lane", () => {
   });
 
   test("the registry view joins the lane view rather than replacing it", () => {
-    // Two nodes per role, joined by `bindsLane`: one carrying what the role
-    // IS, one per lane it is bound to carrying where it acts. The join is
-    // only worth having if it resolves — which is what `danglingLinks`
-    // checks, and what the `log` role failed until the lane set was read.
+    // Two kinds of node, joined by `bindsRole` ON THE LANE: the registry node
+    // carries what the role IS, each lane node where it acts. The lane holds
+    // the pointer, not the role (#1168). The join is only worth having if it
+    // resolves, which is what the `log` lane failed until the lane set was read.
     const log = registry.find((r) => r.name === "log")!;
-    expect(log.bindsLane).toHaveLength(1);
-    const ids = new Set(EXPORT["@graph"].map((n) => n["@id"]));
-    for (const lane of log.bindsLane as string[]) expect(ids.has(lane)).toBe(true);
+    const binding = EXPORT["@graph"].filter((n) => n.bindsRole === log["@id"]);
+    expect(binding.length).toBeGreaterThanOrEqual(1);
+    expect(log.bindsLane).toBeUndefined();
     expect(log.hasSkill).toContain(
       EXPORT["@graph"].find((n) => String(n["@id"]).endsWith("#skill/activity-log"))!["@id"],
     );
@@ -769,63 +774,48 @@ describe("a package's id is declared, not derived from its path", () => {
     expect(ids.length).toBe(new Set(ids).size);
   });
 
-  // WITNESS RETARGETED 2026-09-21, from `bootstrap` to
-  // `bootstrap-render`, and the reason is worth more than the change.
+  // WITNESS RETARGETED TWICE, and the second time is the lesson landing.
   //
-  // These three guarded `packageIdFor`'s rule — an id comes from the
-  // manifest's `name`, never from the directory basename — by asserting it of
-  // the one package in the corpus that exercised it. The owner's `pve3`
-  // ruling ("neither") removed `bootstrap/skills/` from this instance's
-  // declared directories, so that package is no longer in this graph and the
-  // witness went with it.
+  // These three guard `packageIdFor`'s rule — an id comes from the manifest's
+  // `name`, never from the directory basename — against the real corpus. The
+  // witness was `bootstrap` until the `pve3` ruling removed it from this
+  // graph, then `bootstrap-render` (directory `tools/`) until bean `n350`
+  // consolidated that package into `bootstrap/skills/` on 2026-09-23.
   //
-  // Deleting them would have deleted a live contamination guard along with
-  // the witness. `bootstrap/tools/` is still declared here and has the
-  // same shape — basename `tools`, manifest `bootstrap-render` — so the
-  // RULE is still witnessed against the real corpus rather than a fixture.
-  //
-  // The directory was `render/` until 2026-09-22 and the witness SURVIVED the
-  // move, which is the point the paragraph above is making: the rule is
-  // "manifest over basename", and it is now witnessed by a basename that
-  // suggests an entirely different graph kind. A stronger example than the
-  // one it replaced, and it cost nothing because the id did not move.
-  //
-  // The lesson, since this is the second time a corpus witness has been lost
-  // to a declaration change: a test that asserts a RULE through one named
-  // example dies with that example. Where `packageIdFor` can be called
-  // directly against a root, prefer that.
-  test("`bootstrap-render` is named by its manifest, not by its directory", () => {
-    // Its directory is `bootstrap/tools/`, basename `tools`. The
-    // manifest says `bootstrap-render`. Exactly the case the basename rule
-    // got wrong.
-    const p = packages().find((x) => String(x["@id"]).endsWith("#package/bootstrap-render"));
+  // It is now `large-datasets`: directory `large-datasets/skills/`, basename
+  // `skills`, manifest `large-datasets`. (It was `kg-navigation` until bean
+  // `byql` folded that one into `cat-harness/skills/kg-navigation/`, where the
+  // basename IS the name and the test would no longer discriminate.) Same shape, and a witness the root
+  // graph carries for its own reasons rather than by a declaration made for
+  // one package. The members are READ from its manifest rather than listed,
+  // so adding a skill there is not a test edit.
+  const WITNESS = "large-datasets";
+  const witness = () => packages().find((x) => String(x["@id"]).endsWith(`#package/${WITNESS}`));
+
+  test("a package is named by its manifest, not by its directory", () => {
+    const p = witness();
     expect(p, `packages present: ${packages().map((x) => x["name"]).join(", ")}`).toBeDefined();
-    expect(p!["name"]).toBe("bootstrap-render");
-    expect(String(p!["path"])).toContain("bootstrap/tools");
+    expect(p!["name"]).toBe(WITNESS);
+    expect(String(p!["path"])).toContain("large-datasets/skills");
     // And the basename is NOT what it is called — the assertion the rule is
     // actually about, which naming the package alone does not make.
-    expect(p!["name"]).not.toBe("tools");
+    expect(p!["name"]).not.toBe("skills");
   });
 
   test("its members are that package's own skills and nothing else", () => {
-    // Listed rather than counted, because what the collision produced was a
-    // member from ANOTHER package — a count would have gone on passing while
-    // one name was swapped for another.
-    const p = packages().find((x) => String(x["@id"]).endsWith("#package/bootstrap-render"))!;
-    expect(membersOf(String(p["@id"])).sort()).toEqual([
-      "skill/bootstrap-graph-emission",
-      "skill/bootstrap-graph-publication",
-    ]);
+    // Against the manifest, because what the collision produced was a member
+    // from ANOTHER package — a count would have gone on passing while one
+    // name was swapped for another.
+    const manifest = JSON.parse(
+      readFileSync(join(import.meta.dir, "../../..", "large-datasets", "skills", "package-manifest.json"), "utf8"),
+    ) as { skills: string[] };
+    expect(membersOf(String(witness()!["@id"])).sort()).toEqual(manifest.skills.map((k) => `skill/${k}`).sort());
   });
 
   test("`corpus-grep` is NOT among them — the contamination the merge caused", () => {
     // The sharpest assertion here, because it is the one that was false and
-    // that every other signal called healthy. `corpus-grep` lived in
-    // `src/skills/`, which declared no package at all; since #760 it lives in
-    // `skills/folio-core/` and is listed in that package's manifest. Either
-    // way it is not bootstrap's, which is what this pins.
-    const p = packages().find((x) => String(x["@id"]).endsWith("#package/bootstrap-render"))!;
-    expect(membersOf(String(p["@id"]))).not.toContain("skill/corpus-grep");
+    // that every other signal called healthy. `corpus-grep` is folio-core's.
+    expect(membersOf(String(witness()!["@id"]))).not.toContain("skill/corpus-grep");
   });
 
   test("a directory with NO manifest falls back to its basename, and says so", () => {
@@ -921,7 +911,7 @@ describe("exporting ANOTHER instance's graph", () => {
 
   test("a Tool satisfying a sibling's skill links into the SIBLING's document", async () => {
     // The edge `pve3` created: the skills live in bootstrap so an
-    // Initiator can read them with nothing installed, the Tool nodes live here
+    // Bootstrapping Agent can read them with nothing installed, the Tool nodes live here
     // because a Tool is cat-harness's vocabulary (`gn4l`).
     const { buildExport } = await import("../kg-export.js");
     const e = await buildExport({ baseUrl: BASE });

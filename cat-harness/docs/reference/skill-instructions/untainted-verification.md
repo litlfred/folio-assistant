@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/untainted-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/untainted-verification.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/untainted-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/untainted-verification.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/untainted-verification.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/untainted-verification.md){: .fa-edit-source }
 
 {% raw %}
 # Untainted verification — the producer never writes the verdict
@@ -159,3 +159,10 @@ fencing it and saying so is the honest move.
   parties, so recording works the same for two subagents, two API calls, or two
   people.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Adjudication](../../processes/adjudication.html) | Dispatch with adjudicator_sees — never the artefact |
+

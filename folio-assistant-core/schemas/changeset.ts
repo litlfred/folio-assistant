@@ -59,6 +59,8 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
+import { remark } from "remark";
+import remarkHtml from "remark-html";
 import { z } from "zod";
 
 import { walkBlocks } from "../../cat-harness/content/pipeline/qa-utils.js";
@@ -78,7 +80,7 @@ export const BlockAtSchema = z.object({
   file: z.string(),
   kind: z.string(),
   /**
-   * The section listing it: `<manifest dir>::<section label | title | #n>`.
+   * The section listing it: `{manifest dir}::{section label | title | #n}` (written with braces: angle brackets here were published as an escaped HTML `section` tag and failed the site build).
    * Absent when no manifest lists the block — an orphan, which is itself
    * worth a reviewer's attention and is not guessed at.
    */
@@ -139,6 +141,8 @@ interface Snap extends BlockAt {
   label: string;
   manifestHash: string;
   proseHash?: string;
+  /** Absolute path of the prose sidecar, when there is one. Never serialised. */
+  mdPath?: string;
   renamedFrom: string[];
 }
 
@@ -235,6 +239,7 @@ export function snapshot(root: string): Map<string, Snap> {
       ...(at ? { section: at.section, index: at.index } : {}),
       manifestHash: manifestFingerprint(src),
       proseHash: b.md && existsSync(b.md) ? sha(readFileSync(b.md, "utf-8")) : undefined,
+      mdPath: b.md && existsSync(b.md) ? b.md : undefined,
       renamedFrom: parseManifestStringArray(src, "renamedFrom"),
     });
   }
@@ -401,6 +406,61 @@ export interface ComputeOptions {
  * changes", and returning an empty set for it would read as a clean review.
  */
 export function computeChangeSet(opts: ComputeOptions): ChangeSet {
+  return computeWithText(opts, false).changeset;
+}
+
+// ── The text of what changed, for the review page's renderers ───
+
+export const CHANGESET_TEXT_SCHEMA = "folio-changeset-text/v1" as const;
+
+/** One side of one block: its source prose, and that prose rendered. */
+export const BlockSideTextSchema = z.object({
+  /** The Markdown source, exactly as committed. */
+  prose: z.string(),
+  /** The same, rendered by the platform's Markdown renderer. */
+  html: z.string(),
+});
+
+/**
+ * `changeset-text.json`: the prose of every block the ChangeSet lists, on each
+ * side that has it. Bean `d903`.
+ *
+ * ## Why a second file, not a field on the ChangeSet
+ *
+ * The ChangeSet is what changed. It is small, read by the PR comment and the
+ * heat map, and hashes stand in for content. The diff renderers need the
+ * content itself, which is larger by orders of magnitude and needed by one
+ * page. Keeping it separate keeps every other reader of the ChangeSet cheap.
+ *
+ * ## Only what the ChangeSet lists
+ *
+ * Unchanged blocks are not carried. A block without a prose sidecar has no
+ * entry side: its change is to the manifest, and the renderers say so rather
+ * than showing an empty diff.
+ *
+ * Keyed by the HEAD label, or the base label for a removed block. A renamed
+ * block's base side is read under its old label and filed under the new one,
+ * so a renderer never has to follow the rename itself.
+ */
+export const ChangeSetTextSchema = z.object({
+  $schema: z.literal(CHANGESET_TEXT_SCHEMA),
+  blocks: z.record(
+    z.string(),
+    z.object({ base: BlockSideTextSchema.optional(), head: BlockSideTextSchema.optional() }),
+  ),
+});
+export type ChangeSetText = z.infer<typeof ChangeSetTextSchema>;
+
+const renderProse = (md: string): string => String(remark().use(remarkHtml, { sanitize: false }).processSync(md));
+
+function sideText(s: Snap | undefined): z.infer<typeof BlockSideTextSchema> | undefined {
+  if (!s?.mdPath) return undefined;
+  const prose = readFileSync(s.mdPath, "utf-8");
+  return { prose, html: renderProse(prose) };
+}
+
+/** Both documents from ONE pair of materialised trees, so the text matches the ChangeSet exactly. */
+export function computeWithText(opts: ComputeOptions, withText: boolean): { changeset: ChangeSet; text?: ChangeSetText } {
   const repoRoot = resolve(opts.repoRoot);
   const folio = opts.folio.replace(/\/+$/, "") || ".";
   const baseRef = opts.base ?? "origin/main";
@@ -411,8 +471,10 @@ export function computeChangeSet(opts: ComputeOptions): ChangeSet {
   const b = materialise(repoRoot, baseCommit, folio);
   const h = headRef === WORKTREE ? { dir: join(repoRoot, folio), cleanup: () => {} } : materialise(repoRoot, headCommit!, folio);
   try {
-    const { summary, changes } = compareSnapshots(snapshot(b.dir), snapshot(h.dir));
-    return ChangeSetSchema.parse({
+    const baseSnap = snapshot(b.dir);
+    const headSnap = snapshot(h.dir);
+    const { summary, changes } = compareSnapshots(baseSnap, headSnap);
+    const changeset = ChangeSetSchema.parse({
       $schema: CHANGESET_SCHEMA,
       folio,
       base: { ref: baseRef, commit: baseCommit },
@@ -420,6 +482,15 @@ export function computeChangeSet(opts: ComputeOptions): ChangeSet {
       summary,
       changes,
     });
+    if (!withText) return { changeset };
+    // Read now, while both trees exist: the base tree is removed below.
+    const blocks: ChangeSetText["blocks"] = {};
+    for (const c of changes) {
+      const base = c.change === "added" ? undefined : sideText(baseSnap.get(c.change === "changed" ? (c.from ?? c.label) : c.label));
+      const head = c.change === "removed" ? undefined : sideText(headSnap.get(c.label));
+      if (base || head) blocks[c.label] = { ...(base ? { base } : {}), ...(head ? { head } : {}) };
+    }
+    return { changeset, text: ChangeSetTextSchema.parse({ $schema: CHANGESET_TEXT_SCHEMA, blocks }) };
   } finally {
     b.cleanup();
     h.cleanup();
@@ -437,17 +508,22 @@ if (import.meta.main) {
   if (args.includes("--help") || !opt("folio")) {
     console.log(
       "usage: bun run folio-assistant-core/schemas/changeset.ts --folio <path> " +
-        "[--repo <dir>] [--base origin/main] [--head <ref>|worktree] [--out <file>]",
+        "[--repo <dir>] [--base origin/main] [--head <ref>|worktree] [--out <file>] [--text-out <file>]",
     );
     process.exit(args.includes("--help") ? 0 : 2);
   }
   const repoRoot = resolve(opt("repo") ?? process.cwd());
-  const cs = computeChangeSet({
-    repoRoot,
-    folio: relative(repoRoot, resolve(repoRoot, opt("folio")!)) || ".",
-    base: opt("base"),
-    head: opt("head"),
-  });
+  const textOut = opt("text-out");
+  const { changeset: cs, text } = computeWithText(
+    {
+      repoRoot,
+      folio: relative(repoRoot, resolve(repoRoot, opt("folio")!)) || ".",
+      base: opt("base"),
+      head: opt("head"),
+    },
+    textOut !== undefined,
+  );
+  if (textOut && text) writeFileSync(textOut, JSON.stringify(text) + "\n");
   const json = JSON.stringify(cs, null, 2) + "\n";
   const out = opt("out");
   if (out) writeFileSync(out, json);

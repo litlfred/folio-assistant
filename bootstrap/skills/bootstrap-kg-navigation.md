@@ -3,16 +3,8 @@ name: bootstrap-kg-navigation
 description: >
   Read and navigate a knowledge graph with nothing installed — no MCP server,
   no tools, no harness. The first skill bootstrap hands you, because the second
-  step of the handoff cannot be followed without it.
-
-  Named `bootstrap-` rather than `kg-navigation` because `skills/folio-core/`
-  carries a skill of that bare name which assumes the harness IS installed.
-  Both resolvers preferred core's and dropped this one silently, so a cold
-  agent following bootstrap's README step 1 was served instructions written
-  for a repository it does not have — the exact failure bootstrap exists to
-  prevent, arrived at by a name collision rather than a missing file. Bean
-  `v3se`; measured 2026-09-20: `skill_fetch` resolves over PACKAGES and
-  bootstrap is not one, so this body was reachable by neither route.
+  step of the handoff cannot be followed without it. Named `bootstrap-` so it
+  cannot be confused with a navigation Skill of a Harness that is installed.
 consulted: true
 ---
 
@@ -45,9 +37,10 @@ reading:
 
 1. **Read the repository's declaration.** If there is none, this repository is not
    an instance yet, and that is the case bootstrap exists for.
-2. **Find the entry whose `graphs` name the kind you want.** For skills,
-   workflows and roles that kind is `cat-harness`. The entry's `path` is
-   relative to the instance root.
+2. **Find the entry whose `graphKinds` name the kind you want.** In
+   bootstrap they are named for what they hold: `skills`, `processes`,
+   `scenarios` (the Roles) and `schemas`. The entry's `path` is relative to
+   the declaration.
 3. **Read the files in that directory.** A markdown file declaring `name:` and
    `description:` in front matter is a **skill** — its body is the instruction
    you were looking for. A file declaring `$schema:` is stating that it is
@@ -73,9 +66,10 @@ looks exactly like a clean result.
 
 ## What this skill is NOT
 
-It is not the content model. A folio, a block, a voice, a profile and a QA
-verdict are all concepts of the harness you have not loaded yet, and a
-description of them here would be a second one, free to disagree with the first.
+It does not describe what a Harness above bootstrap holds, such as its content
+or its checks. Those are concepts of the Harness you have not loaded yet, and
+a description of them here would be a second one, free to disagree with the
+first.
 
 If you find yourself needing one of them to finish bootstrap, **that is a sign
 the boundary is in the wrong place** — say so rather than importing the

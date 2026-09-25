@@ -5,7 +5,7 @@
     "id": "Process_DIIG",
     "path": "../smart-base/methodologies/processes/diig-investment-path.bpmn"
   },
-  "source_hash": "sha256:16ea2bdb3b18f364c0579e9c97ee3144b307d4e8448e44cee9cdf7150ff3ccdb",
+  "source_hash": "sha256:370452ffe7ee402d26b550a0efa4b9d8732ce21ba30e5db48a459d0e95aac522",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,12 +66,48 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 14,
     "fail": 0,
-    "n/a": 8,
+    "n/a": 10,
     "unknown": 0
   }
 }

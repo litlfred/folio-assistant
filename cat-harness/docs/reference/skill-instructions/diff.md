@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/diff.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/diff.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/diff.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/diff.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/diff.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/diff.md){: .fa-edit-source }
 
 {% raw %}
 # Diff — Content Block Change Report
@@ -95,6 +95,13 @@ review page never disagree:
     `renamedFrom`. A relabel WITHOUT `renamedFrom` shows as removed + added,
     and the `id-stable` QA criterion fails it. Point that out; do not
     paper over it.
+
+**Once the branch is pushed, link the review page as well.** The folio's
+staging preview publishes this same ChangeSet as `changeset.json` and renders
+it at `STAGING/<slug>/review/`: before and after for every block, the heat
+map, and the outline. Give that URL next to the table. It is the one a
+reviewer can open without a local server, and it shows the same changes in
+the same words, because it reads the same file.
 
 Rendered-asset changes (re-rendered or new SVGs) are not in the ChangeSet.
 Report them separately from `rendered[]` hashes, as before.

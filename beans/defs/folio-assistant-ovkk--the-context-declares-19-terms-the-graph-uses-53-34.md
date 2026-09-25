@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ovkk
 title: The @context declares 19 terms; the graph uses 53 — 3461 property occurrences are dropped by any JSON-LD processor
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-19T00:07:39Z
-updated_at: 2026-09-19T05:53:12Z
+updated_at: 2026-09-23T19:25:46Z
 parent: folio-assistant-zzmr
 ---
 
@@ -70,3 +70,9 @@ shipping a lossy graph. The same rule `problems[]` has always followed.
    dropped on expansion exactly as the node properties were. Whether the
    export's self-report belongs in RDF is a different question from this bean's,
    but it should be asked rather than inherited.
+
+## Summary of Changes
+
+Closed 2026-09-23 **on evidence, not authorship**, in the owner's "go through remaining beans" sweep. A read-only check against `main` called it landed, and it was re-verified before closing:
+
+`kg-export.ts` declares the terms that were used but undeclared (`hasCapability`, `requiresCapability`, `sourceKind`) and removed the denormalised properties. An undeclared term is now fatal at graph level and at the document root, and the export runs in the publish workflows. Residues 1 and 2 were split off by this bean itself; residue 3 is checked.

@@ -1,5 +1,7 @@
 ---
 name: swimlane-glossary
+graph-kinds:
+  - swimlane-glossary
 ---
 
 # Swimlane Glossary Skill
@@ -38,13 +40,29 @@ converge, so do not merge them on your own initiative.
 
 This is the rule most likely to be got wrong, because the issue's own
 wording (*"a bpmn diagram swimlane has title/description"*) points the
-other way. Measured over the corpus, 2026-09-21:
+other way.
+
+**Re-derive these before quoting them** — `bun run check:lane-documentation`
+for the lane count, `bun run glossary:export` for the rest. They are a
+*dated observation*, not a property of the corpus, and this table has already
+gone stale twice: it read **157 task-containing lanes** measured 2026-09-21,
+and the check reported **182** on 2026-09-23 and **186** on 2026-09-24. Bean
+`lqo9` carries the same 157 and drifted with it, which is a bean and a skill
+agreeing and both being wrong — the case neither one can catch by being
+compared with the other.
+
+*Dated observation, 2026-09-21, kept as provenance and not as a current
+figure:*
 
 | | |
 |---|---|
-| task-containing lanes | 157 |
+| task-containing lanes | 157 *(186 on 2026-09-24)* |
 | distinct lane names | 85 |
 | distinct roles those names resolve to | **36** |
+
+**The ARGUMENT is what survives, and it does not depend on the numbers:** far
+more lane names than roles, so a concept per lane name duplicates
+`roles.json`. That holds at any scale the corpus reaches.
 
 `build-pipeline` is named ten ways — *"CI/CD Pipeline"*, *"Scheduled log
 sweep"*, *"Graph audit (system)"*, six more. A concept per lane name
@@ -86,7 +104,7 @@ and produces a string no catalogue contains.
 A concept's `@id` is the IRI `kg-export` already mints for that role
 (`makeIri(docIri, "role", id)`), imported rather than re-spelled. The
 graph's `performedBy` links point at exactly those IRIs; a parallel
-`cat:reviewer` would leave the glossary unjoinable with the graph it
+`cat-harness:reviewer` would leave the glossary unjoinable with the graph it
 describes.
 
 ## The ledger is the memory, and it is the only durable part
@@ -97,7 +115,9 @@ delete a role and its concept simply stops appearing, which is what
 alike ([`deletion-requires-confirmation`](deletion-requires-confirmation.md)),
 so the one non-derivable fact — **this term was once minted** — is
 committed at `<instance>/glossary/glossary-ledger.json`, declared as
-graph kind `glossary` (`holds: "state"`).
+graph kind `swimlane-glossary` (`holds: "state"`; renamed from `glossary` on
+2026-09-23, when that name went to core's glossary kind; see
+[`glossary-terms`](glossary-terms.md), whose `glossary/` page reads this ledger as one source).
 
 Three rules for it:
 
@@ -111,7 +131,8 @@ Three rules for it:
 
 **Usages are not ledgered**, deliberately: a usage is an occurrence,
 regenerated wholesale, while a concept is a term somebody may have cited.
-Ledgering 157 occurrences buries the records that matter.
+Ledgering every occurrence — 157 when this was written, 186 today — buries
+the records that matter.
 
 ## Run it once per instance — never widen the scan
 
@@ -130,7 +151,7 @@ re-introduces the leak `instance-graph-isolation.test.ts` exists to stop
   an `actedUpon` lane holds none by construction.
 - **A lane whose binding is dangling, contradictory or unbound.**
 
-A lane declaring `<folio:role variable="true"/>` is none of these. It
+A lane declaring `<bootstrap.processes:role variable="true"/>` is none of these. It
 emits a concept with a scope note and **no definition**, which is true —
 see [`role-model`](role-model.md) and bean `ug4r`. `laneBinding()` is the
 only route from a lane to a concept for exactly this reason: `variable`

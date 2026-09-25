@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/deletion-requires-confirmation.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/deletion-requires-confirmation.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/deletion-requires-confirmation.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/deletion-requires-confirmation.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/deletion-requires-confirmation.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/deletion-requires-confirmation.md){: .fa-edit-source }
 
 {% raw %}
 # Deletion requires explicit confirmation
@@ -248,3 +248,14 @@ nothing.
 - [ ] Does any code you wrote remove something as a side effect? Say so in the
       code, and check a person chose it.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Actor and role administration](../../processes/actor-role-administration.html) | Retire an actor — never delete one |
+| [Board: relocate content to the trashcan](../../processes/board-relocate.html) | Name what will move, and where it lands; Say what moved and where it went |
+| [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Remove the preview AND append `removed` — one commit; Check the slug's SHAPE and that the confirmation repeats it; Re-evaluate liveness AT REMOVAL TIME; Remove it AND append `removed` — one commit; Repeat the slug, exactly, to confirm |
+| [A sub-graph wants to leave](../../processes/graph-detanglement.html) | Report what would move&#10;&#8212; sizes, and what breaks; Authorise the extraction |
+| [Is the repository itself healthy?](../../processes/repository-health-watch.html) | Run the health checks,&#10;keeping the report either way |
+

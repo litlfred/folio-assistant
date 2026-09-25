@@ -5,7 +5,7 @@
     "id": "Process_RepoHealth",
     "path": "processes/repository-health-watch.bpmn"
   },
-  "source_hash": "sha256:c53305bcea55d04b0ad107a4a45f297d70c1fe7e5c84cd4fa4d9b5c616c3ebed",
+  "source_hash": "sha256:8a203d5ba4711dfaba1cf0bc0d2438598c9d43c8d49586783088b9c706cacfcb",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -83,12 +83,58 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
+    "pass": 15,
     "fail": 1,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/repository-health-watch.bpmn",
+      "code": ".github/workflows/health-check.yml",
+      "prose_hash": "8a203d5ba471",
+      "code_hash": "c918a2bce35f",
+      "by": "baseline"
+    }
+  ]
 }

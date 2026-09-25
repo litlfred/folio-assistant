@@ -3,6 +3,8 @@
  * Materialized content is READ-ONLY, and this is what enforces it.
  *
  * @module cat-harness/scripts/check-materialized-fixity
+ * @covers computed — it follows every node whose `materialization.state` is `materialized`,
+ *   which is a property of NODES rather than of kinds
  *
  * ## The rule, in the owner's words
  *
@@ -86,6 +88,13 @@ export interface MaterializedRecord {
   readonly abs?: string;
   readonly algorithm?: string;
   readonly digest?: string;
+  /**
+   * The whole materialization object as the corpus wrote it. Carried so a
+   * second reader (`cache-index.ts`, bean `54rk`) gets `bytes`, `purpose`,
+   * `materializedAt` and `expiresAt` from THIS walk rather than writing its
+   * own, which would be a second answer to "where are the records".
+   */
+  readonly record?: Readonly<Record<string, unknown>>;
 }
 
 export type Verdict =
@@ -175,6 +184,7 @@ export function materializationsIn(doc: unknown, source: string, inheritedId?: s
         ...(typeof m.localPath === "string" ? { localPath: m.localPath } : {}),
         ...(typeof fx.algorithm === "string" ? { algorithm: fx.algorithm } : {}),
         ...(typeof fx.digest === "string" ? { digest: fx.digest } : {}),
+        record: m,
       });
     }
     for (const [k, child] of Object.entries(o)) {

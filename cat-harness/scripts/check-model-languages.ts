@@ -3,6 +3,7 @@
  * A model declared without a checked language list is a FINDING, not a default.
  *
  * @module scripts/check-model-languages
+ * @covers models
  *
  * Bean `46uh`. The owner: *"should clarify each new model added to bootstrap
  * which of the preferred languages ... especially if human validated"*.
@@ -42,7 +43,7 @@ import {
   parseModelRegistry,
   validatedLanguages,
   type ModelEntry,
-} from "../../bootstrap/schemas/model-registry.js";
+} from "../schemas/model-registry.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "..");

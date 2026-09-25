@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/swot-analysis.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/swot-analysis.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/swot-analysis.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/swot-analysis.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/swot-analysis.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/swot-analysis.md){: .fa-edit-source }
 
 {% raw %}
 # Running a SWOT scan
@@ -79,3 +79,14 @@ a SWOT would be ceremony in front of it.
 - `processes/swot-analysis.bpmn` — the executable process
 - `processes/options-analysis.bpmn` — where the candidates go next
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[SWOT situation analysis](../../processes/swot-analysis.html)**.
+
+<img src="../../assets/img/workflows/swot-analysis.svg" alt="BPMN diagram: SWOT situation analysis" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [SWOT situation analysis](../../processes/swot-analysis.html) | Name the subject and the level; Scan the environment opportunities and threats; Scan the subject strengths and weaknesses; Pool knowledge across participants; Record what did not classify cleanly; Cross the axes into SO, WO, ST, WT |
+

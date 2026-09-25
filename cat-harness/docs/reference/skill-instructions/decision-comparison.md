@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/decision-comparison.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/decision-comparison.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/decision-comparison.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/decision-comparison.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/decision-comparison.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/decision-comparison.md){: .fa-edit-source }
 
 {% raw %}
 # The comparison goes BEFORE the question, not inside the options
@@ -118,3 +118,10 @@ doing, say why the obvious alternative loses, and proceed.
 **one in full and give a count for the rest**. A full comparison is what "in
 full" means. The rest get a number, never a row from a table they cannot see.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [CRDM Phases 2–4 — BPA and requirements](../../processes/crdm-requirements-definition.html) | Phase 4a: Compare the viable options |
+

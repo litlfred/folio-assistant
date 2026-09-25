@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/workflow/session-context.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/workflow/session-context.md) — do not edit here.
+> Generated from [`cat-harness/skills/workflow/session-context.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/session-context.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/workflow/session-context.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/session-context.md){: .fa-edit-source }
 
 {% raw %}
 # Session context
@@ -29,6 +29,19 @@ Shape: `schemas/session-context.ts`. Graph kind: `session-state`, layer
 `state` — a session writes its own record as it goes, which is exactly what
 [`content-context-and-state-graphs`](../folio-core/content-context-and-state-graphs.md)
 means by live state.
+
+## The fields — read them off the schema, never off this page
+
+`SessionContextSchema` in `schemas/session-context.ts` is authoritative. This
+description said *"the six fields"* until 2026-09-24, by which point there were
+**eight** — `waitingOn` and `$schema` had joined `id`, `actor`, `startedAt`,
+`updatedAt`, `open`, `claimed`. Bean `s8mo` carried the same "six" and drifted
+with it, so the bean and this skill agreed with each other and both disagreed
+with the code, which is the one shape comparing them cannot catch.
+
+No count is given here on purpose. A field list in prose beside a Zod object is
+a second answer to a question the schema already answers, and it is wrong the
+first time somebody adds a field.
 
 ## `actor` is required, and it is the point of the record
 
@@ -130,3 +143,10 @@ writes one. The state machine is bean `3nfv`, and declaring a directory before
 anything fills it is the defect where a consumer scans nothing and reports a
 clean run.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Session state machine](../../processes/session-state-machine.html) | Establish who is acting; Open the session record; Refresh `updatedAt` only; Write what changed; Close the session |
+

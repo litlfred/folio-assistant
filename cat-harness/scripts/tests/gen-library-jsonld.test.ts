@@ -117,7 +117,7 @@ describe("extracted claims become typed blocks", () => {
   test("kind and type survive", () => {
     const thm = parse("blocks/thm-sec-001-01.jsonld");
     expect(thm.kind).toBe("theorem");
-    expect(thm["@type"]).toEqual(["folio:Theorem", "doco:Section"]);
+    expect(thm["@type"]).toEqual(["folio-assistant-core:Theorem", "doco:Section"]);
   });
 
   test("a claim's statement is written as its own text file", () => {
@@ -202,7 +202,7 @@ describe("which ingest rung an entry is on — bean `p67i`", () => {
   });
 
   test("the CSVW record puts it there too, for when eief's extractors land", () => {
-    expect(ingestRungOf(has("tabular.csvw.jsonld"))).toBe("tabular");
+    expect(ingestRungOf(has("tabular.csvw.json"))).toBe("tabular");
   });
 
   test("neither input is a DETERMINED `none`, not an unreadable one", () => {

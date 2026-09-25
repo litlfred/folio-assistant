@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/bean-coordination.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/bean-coordination.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/bean-coordination.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/bean-coordination.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/bean-coordination.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/bean-coordination.md){: .fa-edit-source }
 
 {% raw %}
 > **This is the skill `skill_fetch` serves.** A stub of the same name
@@ -199,6 +199,38 @@ what makes them the shared substrate.
 An **unclaimed** bean is fair game for any session; a claimed one is not.
 Respect sibling claims. Agents create and set `in-progress`; they do not take
 over the work another session is mid-flight on.
+
+### Complete it in the PR's own last commit (bean `4d22`)
+
+**Mark the bean `completed` in the last commit of the PR that does its work.**
+Do not wait for the merge.
+
+The natural order loses it. The PR merges, the agent then commits the bean's
+completion to the branch, then re-branches from the new `main`
+(`git checkout -B <branch> origin/main`). That completion commit was never in
+any PR, so it is orphaned: the bean still reads open on `main`, and the next
+session's ready-list offers finished work. Measured twice on 2026-09-22
+(`ebvl`, `7ofc`), each caught only because somebody noticed.
+
+The completion cannot ride its own PR *after* the merge, because then there is
+no PR left to carry it. So it rides the PR *before*, as its last commit,
+asserting `completed` a few minutes before the merge makes it true. That is the
+lesser error: if the PR is abandoned, the bean reads done on a branch that never
+lands, and `main` never saw it. Practised on 2026-09-23 for eight beans in a
+row with no orphan.
+
+Two things that follow:
+
+- The `## Done when` items are ticked in that same commit, with the evidence,
+  so the bean on `main` shows *why* it is complete, not just that it is.
+- A bean whose Done-when is not yet all met **stays open** in that commit, with
+  a note saying what is left. Completing it to avoid an orphan would be the
+  opposite error.
+
+`bun run beans:landed` reports what slipped through: open, non-epic beans named
+in a merged PR's title on `main`, those with every Done-when item ticked listed
+first. It reports and never closes; closing is still on evidence, per the next
+section.
 
 ## Closing a bean whose work has already landed (STRICT)
 
@@ -543,3 +575,11 @@ downstream repo, update that repo's ownership note and close the tracking beans.
   Beans ≠ sidecars. Do **not** convert QA / witness queue items into individual
   beans (see todo-manager.md disambiguation block).
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Agent bean lifecycle](../../processes/bean-lifecycle.html) | Leave it alone (coordinate instead); Claim it (status: in-progress); Record the blocker and hand back |
+| [Code change and review](../../processes/code-change-review.html) | Claim the work item |
+

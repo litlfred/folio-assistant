@@ -1,0 +1,1438 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2602.12670v4",
+ "source": {
+  "file": "2602.12670v4.pdf",
+  "sha256": "e987ebc3f0084a1ffc8acbca58259e33120b95fcef3876abfad060e169cf210b",
+  "bytes": 1769852,
+  "pages": 42,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-22T17:58:06Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2602.12670",
+   "version": "4",
+   "primary_class": "cs.AI",
+   "stamp_date": "14 Jun 2026"
+  },
+  "doi": null,
+  "title": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
+  "authors_raw": "Xiangyi Li1,*, Yimin Liu1,2,*, Wenbo Chen3,*,\u2020, Bingran You1,4,*, Zonglin Di5,\u2021",
+  "title_lines": [
+   "SkillsBench: Benchmarking How Well Agent Skills",
+   "Work Across Diverse Tasks"
+  ],
+  "abstract": "Agent Skills are structured packages of procedural knowledge that augment large language model (LLM) agents at inference time. Despite rapid adoption, there is no standard way to measure whether they actually help. We present SKILLSBENCH, a benchmark whose current inventory contains 87 tasks across 8 domains paired with curated Skills and deterministic verifiers. Our latest aggregate evaluation runs the 87-task benchmark under matched no-Skills and curated-Skills conditions for 18 model\u2013harness configurations. Curated Skills raise the average pass rate from 33.9% to 50.5% (+16.6 percentage points; 25.5% normalized gain), with configuration-level gains ranging from +4.1 to +25.7 pp. Focused Skills with at most three modules outperform larger or exhaustive bundles, and smaller models with Skills can match larger models without them. SKILLSBENCH establishes paired evaluation as the foundation for rigorous measurement of Skill efficacy on agentic, expertise-heavy work. Skills applications Agent Harness Operating Systems Models CPUs Gemini 3.1 Flash Lite (OH) MiniMax M2.7 (OH) GPT-5.4 Mini (OH) Grok 4.3 (OH) DeepSeek V4 Flash (OH) Claude Sonnet 4.6 (OH) Gemini 3.5 Flash (OH) DeepSeek V4 Pro (OH) Gemini 3.1 Pro (OH) MiniMax M3 (OH) Claude Opus 4.7 (OH) Kimi K2.6 (OH) Claude Opus 4.8 (OH) GLM 5.1 (OH) Gemini 3.1 Pro (GCLI) Claude Opus 4.7 (CC) GPT-5.5 (Codex) GPT-5.5 (OH) 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 Resolution Rate No Skills Skill Lift OpenAI Anthropic Google DeepSeek Moonshot Zhipu MiniMax xAI Skills applications Agent Harness Operating Systems Models CPUs Figure 1: Agent architecture stack and resolution rates across 18 model\u2013harness configurations on 87 SkillsBench tasks. Each bar stacks the no-Skills baseline and curated-Skills lift; open/filled interval markers denote 95% CIs for the baseline/total. Bars are ordered by Curated-Skills pass rate and colored by model family. Harness abbreviations: OH = OpenHands, CC = Claude Code, GCLI = Gemini CLI. 1BenchFlow, 2OSU,",
+  "docinfo": {
+   "Title": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
+   "Author": "Xiangyi Li; Yimin Liu; Wenbo Chen; Bingran You; Zonglin Di; Yifeng He; Shenghan Zheng; Kyoung Whan Choe; Jiankai Sun; Shuyi Wang; Chujun Tao; Binxu Li; Xuandong Zhao; Hejia Geng; Xiaojun Wu; Junwei Zhou; Xiaokun Chen; Hanwen Xing; Yubo Li; Qunhong Zeng; Di Wang; Yuanli Wang; Roey Ben Chaim; Penghao Jiang; Haotian Shen; Luyang Kong; Xinyi Liu; Runhui Wang; Xuanqing Liu; Jiachen Li; Xin Lan; Yueqian Lin; Wengao Ye; Junwei He; Songlin Li; Yue Zhang; Yipeng Gao; Yijiang Li; Ze Ma; Liqiang Jing; Tianyu Wang; Kaixin Li; Yiqi Xue; Haoran Lyu; Yizhuo He; Yuchen Tian; Shutong Wu; Bowei Wang; Yixuan Gao; Bo Chen; Litong Liu; Sikai Cheng; Jiajun Bao; Shuaicheng Tong; Shuwen Xu; Terry Yue Zhuo; Tinghan Ye; Qi Qi; Miao Li; Longtai Liao; Zelin Tan; Chang Shi; Xilin Tang; Srinath Tankasala; Boqin Yuan; Yaoyao Qian; Jianhong Tu; Chenguang Wang; Yizhou Sun; Wei Wang; Aaron Taylor; Ziyue Yang; Changkun Guan; Zhikang Dong; Xinyu Zhang; Steven Dillmann; Han-chung Lee; Dawn Song",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:a6404ea)"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Background",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "SkillsBench",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Experiment",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Results",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Skills Efficacy Across Model\u2013Harness Combinations",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Main Results",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Domain-Level Analysis",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Task-Level Analysis",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Discussion",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Limitations and Future Work",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Related Work",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Skill Ecosystem Analysis",
+   "page": 13,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Data Collection",
+   "page": 13,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Skill Characteristics",
+   "page": 13,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Quality Indicators",
+   "page": 14,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Implications for Benchmark Design",
+   "page": 15,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Task Specification and Review Process",
+   "page": 15,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Task Directory Structure",
+   "page": 15,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Task Configuration (task.md Frontmatter)",
+   "page": 16,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Verification Infrastructure",
+   "page": 16,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "PR Review Process",
+   "page": 16,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Contributor Checklist",
+   "page": 17,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Maintainer Review Policy",
+   "page": 17,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Automated CI Pipeline",
+   "page": 17,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Benchmark Report Template",
+   "page": 17,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Review Lifecycle",
+   "page": 18,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Task Quality Criteria",
+   "page": 18,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "The task.md Task Standard",
+   "page": 18,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Document Structure",
+   "page": 19,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Controlled Metadata Vocabulary",
+   "page": 19,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Explicit Network Policy",
+   "page": 19,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Verifier Strategies",
+   "page": 19,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Experimental Setup Details",
+   "page": 20,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Setup overview",
+   "page": 20,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Model and Harness Configurations",
+   "page": 20,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Harness Descriptions",
+   "page": 20,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Agent Interface",
+   "page": 21,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Skill Structure",
+   "page": 21,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Self-Generated Skills Condition",
+   "page": 21,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Why self-generated Skills underperform: trajectory audit",
+   "page": 23,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Software and Model Versions",
+   "page": 23,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Container Environment",
+   "page": 24,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Inference Configuration",
+   "page": 24,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Experiment Orchestration",
+   "page": 24,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Task-Level Results",
+   "page": 24,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Skill Design Factors",
+   "page": 28,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Skill Quantity",
+   "page": 28,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Skill Complexity",
+   "page": 28,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Failure Modes when Skills Hurt",
+   "page": 28,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Skill-Author Patterns Audit",
+   "page": 28,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Confidence Interval Calculation",
+   "page": 29,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Complete Task List",
+   "page": 29,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Comprehensive Results Summary",
+   "page": 29,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Auxiliary Failure-Mode Snapshot",
+   "page": 30,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Task-Level Case Studies",
+   "page": 31,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Success Case Studies",
+   "page": 31,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Qualitative Failure Examples",
+   "page": 32,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Tasks With Largest Skills Impact",
+   "page": 32,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Skill Invocation Rate",
+   "page": 33,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Token, Cost, and Time Efficiency",
+   "page": 33,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Token Usage and Cost by Configuration",
+   "page": 34,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Outcome and Runtime Diagnostics",
+   "page": 34,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Cost-Performance Tradeoff",
+   "page": 35,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Time\u2013Performance Tradeoff",
+   "page": 35,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "SkillsBench Construction Details",
+   "page": 36,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Skill Definition and Boundary",
+   "page": 36,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Task Package",
+   "page": 36,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Community Submission Model",
+   "page": 37,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Contributing Principles",
+   "page": 37,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Automated Validation",
+   "page": 37,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Human Review",
+   "page": 37,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Leakage Prevention",
+   "page": 38,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Benchmark Composition",
+   "page": 38,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Domain Taxonomy and Per-Task Mapping",
+   "page": 38,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Experimental Protocol Details",
+   "page": 42,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Model\u2013Harness Configurations",
+   "page": 42,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Skills Conditions",
+   "page": 42,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Execution Protocol",
+   "page": 42,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Scoring",
+   "page": 42,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 3918,
+   "n_words": 554
+  },
+  {
+   "id": "sec-000-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 1831,
+   "n_words": 281
+  },
+  {
+   "id": "sec-001-skillsbench",
+   "number": null,
+   "title": "SkillsBench",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 962,
+   "n_words": 121
+  },
+  {
+   "id": "sec-002-background",
+   "number": null,
+   "title": "Background",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 5,
+   "n_chars": 7829,
+   "n_words": 1138
+  },
+  {
+   "id": "sec-003-experiment",
+   "number": null,
+   "title": "Experiment",
+   "level": 1,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 2320,
+   "n_words": 323
+  },
+  {
+   "id": "sec-004-results",
+   "number": null,
+   "title": "Results",
+   "level": 1,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 139,
+   "n_words": 18
+  },
+  {
+   "id": "sec-005-skills-efficacy-across-modelharness-combinations",
+   "number": null,
+   "title": "Skills Efficacy Across Model\u2013Harness Combinations",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 133,
+   "n_words": 18
+  },
+  {
+   "id": "sec-006-main-results",
+   "number": null,
+   "title": "Main Results",
+   "level": 3,
+   "page_start": 5,
+   "page_end": 7,
+   "n_chars": 5912,
+   "n_words": 939
+  },
+  {
+   "id": "sec-007-domain-level-analysis",
+   "number": null,
+   "title": "Domain-Level Analysis",
+   "level": 3,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 601,
+   "n_words": 77
+  },
+  {
+   "id": "sec-008-task-level-analysis",
+   "number": null,
+   "title": "Task-Level Analysis",
+   "level": 3,
+   "page_start": 7,
+   "page_end": 8,
+   "n_chars": 1930,
+   "n_words": 263
+  },
+  {
+   "id": "sec-009-discussion",
+   "number": null,
+   "title": "Discussion",
+   "level": 1,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 2090,
+   "n_words": 286
+  },
+  {
+   "id": "sec-010-limitations-and-future-work",
+   "number": null,
+   "title": "Limitations and Future Work",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 1678,
+   "n_words": 215
+  },
+  {
+   "id": "sec-011-related-work",
+   "number": null,
+   "title": "Related Work",
+   "level": 1,
+   "page_start": 8,
+   "page_end": 9,
+   "n_chars": 2515,
+   "n_words": 358
+  },
+  {
+   "id": "sec-012-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 13,
+   "n_chars": 11624,
+   "n_words": 1587
+  },
+  {
+   "id": "sec-013-skill-ecosystem-analysis",
+   "number": null,
+   "title": "Skill Ecosystem Analysis",
+   "level": 1,
+   "page_start": 13,
+   "page_end": 13,
+   "n_chars": 525,
+   "n_words": 68
+  },
+  {
+   "id": "sec-014-data-collection",
+   "number": null,
+   "title": "Data Collection",
+   "level": 2,
+   "page_start": 13,
+   "page_end": 13,
+   "n_chars": 1838,
+   "n_words": 276
+  },
+  {
+   "id": "sec-015-skill-characteristics",
+   "number": null,
+   "title": "Skill Characteristics",
+   "level": 2,
+   "page_start": 13,
+   "page_end": 14,
+   "n_chars": 2950,
+   "n_words": 427
+  },
+  {
+   "id": "sec-016-quality-indicators",
+   "number": null,
+   "title": "Quality Indicators",
+   "level": 2,
+   "page_start": 14,
+   "page_end": 15,
+   "n_chars": 1336,
+   "n_words": 223
+  },
+  {
+   "id": "sec-017-implications-for-benchmark-design",
+   "number": null,
+   "title": "Implications for Benchmark Design",
+   "level": 2,
+   "page_start": 15,
+   "page_end": 15,
+   "n_chars": 921,
+   "n_words": 121
+  },
+  {
+   "id": "sec-018-task-specification-and-review-process",
+   "number": null,
+   "title": "Task Specification and Review Process",
+   "level": 1,
+   "page_start": 15,
+   "page_end": 15,
+   "n_chars": 442,
+   "n_words": 64
+  },
+  {
+   "id": "sec-019-task-directory-structure",
+   "number": null,
+   "title": "Task Directory Structure",
+   "level": 2,
+   "page_start": 15,
+   "page_end": 16,
+   "n_chars": 505,
+   "n_words": 74
+  },
+  {
+   "id": "sec-020-task-configuration-taskmd-frontmatter",
+   "number": null,
+   "title": "Task Configuration (task.md Frontmatter)",
+   "level": 2,
+   "page_start": 16,
+   "page_end": 16,
+   "n_chars": 534,
+   "n_words": 83
+  },
+  {
+   "id": "sec-021-verification-infrastructure",
+   "number": null,
+   "title": "Verification Infrastructure",
+   "level": 2,
+   "page_start": 16,
+   "page_end": 16,
+   "n_chars": 770,
+   "n_words": 117
+  },
+  {
+   "id": "sec-022-pr-review-process",
+   "number": null,
+   "title": "PR Review Process",
+   "level": 2,
+   "page_start": 16,
+   "page_end": 17,
+   "n_chars": 946,
+   "n_words": 131
+  },
+  {
+   "id": "sec-023-contributor-checklist",
+   "number": null,
+   "title": "Contributor Checklist",
+   "level": 2,
+   "page_start": 17,
+   "page_end": 17,
+   "n_chars": 649,
+   "n_words": 89
+  },
+  {
+   "id": "sec-024-maintainer-review-policy",
+   "number": null,
+   "title": "Maintainer Review Policy",
+   "level": 2,
+   "page_start": 17,
+   "page_end": 17,
+   "n_chars": 1028,
+   "n_words": 140
+  },
+  {
+   "id": "sec-025-automated-ci-pipeline",
+   "number": null,
+   "title": "Automated CI Pipeline",
+   "level": 2,
+   "page_start": 17,
+   "page_end": 17,
+   "n_chars": 675,
+   "n_words": 93
+  },
+  {
+   "id": "sec-026-benchmark-report-template",
+   "number": null,
+   "title": "Benchmark Report Template",
+   "level": 2,
+   "page_start": 17,
+   "page_end": 18,
+   "n_chars": 672,
+   "n_words": 91
+  },
+  {
+   "id": "sec-027-review-lifecycle",
+   "number": null,
+   "title": "Review Lifecycle",
+   "level": 2,
+   "page_start": 18,
+   "page_end": 18,
+   "n_chars": 687,
+   "n_words": 94
+  },
+  {
+   "id": "sec-028-task-quality-criteria",
+   "number": null,
+   "title": "Task Quality Criteria",
+   "level": 2,
+   "page_start": 18,
+   "page_end": 18,
+   "n_chars": 608,
+   "n_words": 83
+  },
+  {
+   "id": "sec-029-the-taskmd-task-standard",
+   "number": null,
+   "title": "The task.md Task Standard",
+   "level": 1,
+   "page_start": 18,
+   "page_end": 19,
+   "n_chars": 1912,
+   "n_words": 268
+  },
+  {
+   "id": "sec-030-verifier-strategies",
+   "number": null,
+   "title": "Verifier Strategies",
+   "level": 2,
+   "page_start": 19,
+   "page_end": 19,
+   "n_chars": 120,
+   "n_words": 19
+  },
+  {
+   "id": "sec-031-document-structure",
+   "number": null,
+   "title": "Document Structure",
+   "level": 2,
+   "page_start": 19,
+   "page_end": 19,
+   "n_chars": 889,
+   "n_words": 133
+  },
+  {
+   "id": "sec-032-controlled-metadata-vocabulary",
+   "number": null,
+   "title": "Controlled Metadata Vocabulary",
+   "level": 2,
+   "page_start": 19,
+   "page_end": 19,
+   "n_chars": 694,
+   "n_words": 97
+  },
+  {
+   "id": "sec-033-explicit-network-policy",
+   "number": null,
+   "title": "Explicit Network Policy",
+   "level": 2,
+   "page_start": 19,
+   "page_end": 20,
+   "n_chars": 1926,
+   "n_words": 267
+  },
+  {
+   "id": "sec-034-experimental-setup-details",
+   "number": null,
+   "title": "Experimental Setup Details",
+   "level": 1,
+   "page_start": 20,
+   "page_end": 20,
+   "n_chars": 66,
+   "n_words": 10
+  },
+  {
+   "id": "sec-035-setup-overview",
+   "number": null,
+   "title": "Setup overview",
+   "level": 2,
+   "page_start": 20,
+   "page_end": 20,
+   "n_chars": 1545,
+   "n_words": 228
+  },
+  {
+   "id": "sec-036-model-and-harness-configurations",
+   "number": null,
+   "title": "Model and Harness Configurations",
+   "level": 2,
+   "page_start": 20,
+   "page_end": 20,
+   "n_chars": 91,
+   "n_words": 13
+  },
+  {
+   "id": "sec-037-harness-descriptions",
+   "number": null,
+   "title": "Harness Descriptions",
+   "level": 2,
+   "page_start": 20,
+   "page_end": 21,
+   "n_chars": 1613,
+   "n_words": 229
+  },
+  {
+   "id": "sec-038-agent-interface",
+   "number": null,
+   "title": "Agent Interface",
+   "level": 2,
+   "page_start": 21,
+   "page_end": 21,
+   "n_chars": 188,
+   "n_words": 22
+  },
+  {
+   "id": "sec-039-skill-structure",
+   "number": null,
+   "title": "Skill Structure",
+   "level": 2,
+   "page_start": 21,
+   "page_end": 21,
+   "n_chars": 459,
+   "n_words": 64
+  },
+  {
+   "id": "sec-040-self-generated-skills-condition",
+   "number": null,
+   "title": "Self-Generated Skills Condition",
+   "level": 2,
+   "page_start": 21,
+   "page_end": 23,
+   "n_chars": 4344,
+   "n_words": 654
+  },
+  {
+   "id": "sec-041-why-self-generated-skills-underperform-trajector",
+   "number": null,
+   "title": "Why self-generated Skills underperform: trajectory audit",
+   "level": 3,
+   "page_start": 23,
+   "page_end": 23,
+   "n_chars": 3176,
+   "n_words": 464
+  },
+  {
+   "id": "sec-042-software-and-model-versions",
+   "number": null,
+   "title": "Software and Model Versions",
+   "level": 2,
+   "page_start": 23,
+   "page_end": 24,
+   "n_chars": 910,
+   "n_words": 111
+  },
+  {
+   "id": "sec-043-container-environment",
+   "number": null,
+   "title": "Container Environment",
+   "level": 2,
+   "page_start": 24,
+   "page_end": 24,
+   "n_chars": 428,
+   "n_words": 68
+  },
+  {
+   "id": "sec-044-inference-configuration",
+   "number": null,
+   "title": "Inference Configuration",
+   "level": 2,
+   "page_start": 24,
+   "page_end": 24,
+   "n_chars": 411,
+   "n_words": 58
+  },
+  {
+   "id": "sec-045-experiment-orchestration",
+   "number": null,
+   "title": "Experiment Orchestration",
+   "level": 2,
+   "page_start": 24,
+   "page_end": 24,
+   "n_chars": 445,
+   "n_words": 70
+  },
+  {
+   "id": "sec-046-task-level-results",
+   "number": null,
+   "title": "Task-Level Results",
+   "level": 1,
+   "page_start": 24,
+   "page_end": 28,
+   "n_chars": 10969,
+   "n_words": 942
+  },
+  {
+   "id": "sec-047-skill-design-factors",
+   "number": null,
+   "title": "Skill Design Factors",
+   "level": 1,
+   "page_start": 28,
+   "page_end": 28,
+   "n_chars": 186,
+   "n_words": 29
+  },
+  {
+   "id": "sec-048-skill-quantity",
+   "number": null,
+   "title": "Skill Quantity",
+   "level": 2,
+   "page_start": 28,
+   "page_end": 28,
+   "n_chars": 323,
+   "n_words": 55
+  },
+  {
+   "id": "sec-049-skill-complexity",
+   "number": null,
+   "title": "Skill Complexity",
+   "level": 2,
+   "page_start": 28,
+   "page_end": 28,
+   "n_chars": 362,
+   "n_words": 55
+  },
+  {
+   "id": "sec-050-failure-modes-when-skills-hurt",
+   "number": null,
+   "title": "Failure Modes when Skills Hurt",
+   "level": 2,
+   "page_start": 28,
+   "page_end": 28,
+   "n_chars": 1318,
+   "n_words": 177
+  },
+  {
+   "id": "sec-051-skill-author-patterns-audit",
+   "number": null,
+   "title": "Skill-Author Patterns Audit",
+   "level": 2,
+   "page_start": 28,
+   "page_end": 29,
+   "n_chars": 958,
+   "n_words": 118
+  },
+  {
+   "id": "sec-052-confidence-interval-calculation",
+   "number": null,
+   "title": "Confidence Interval Calculation",
+   "level": 1,
+   "page_start": 29,
+   "page_end": 29,
+   "n_chars": 481,
+   "n_words": 78
+  },
+  {
+   "id": "sec-053-complete-task-list",
+   "number": null,
+   "title": "Complete Task List",
+   "level": 1,
+   "page_start": 29,
+   "page_end": 29,
+   "n_chars": 185,
+   "n_words": 27
+  },
+  {
+   "id": "sec-054-comprehensive-results-summary",
+   "number": null,
+   "title": "Comprehensive Results Summary",
+   "level": 1,
+   "page_start": 29,
+   "page_end": 30,
+   "n_chars": 2897,
+   "n_words": 472
+  },
+  {
+   "id": "sec-055-auxiliary-failure-mode-snapshot",
+   "number": null,
+   "title": "Auxiliary Failure-Mode Snapshot",
+   "level": 2,
+   "page_start": 30,
+   "page_end": 31,
+   "n_chars": 1456,
+   "n_words": 227
+  },
+  {
+   "id": "sec-056-task-level-case-studies",
+   "number": null,
+   "title": "Task-Level Case Studies",
+   "level": 1,
+   "page_start": 31,
+   "page_end": 31,
+   "n_chars": 204,
+   "n_words": 27
+  },
+  {
+   "id": "sec-057-success-case-studies",
+   "number": null,
+   "title": "Success Case Studies",
+   "level": 2,
+   "page_start": 31,
+   "page_end": 32,
+   "n_chars": 2619,
+   "n_words": 333
+  },
+  {
+   "id": "sec-058-qualitative-failure-examples",
+   "number": null,
+   "title": "Qualitative Failure Examples",
+   "level": 2,
+   "page_start": 32,
+   "page_end": 32,
+   "n_chars": 2961,
+   "n_words": 401
+  },
+  {
+   "id": "sec-059-tasks-with-largest-skills-impact",
+   "number": null,
+   "title": "Tasks With Largest Skills Impact",
+   "level": 2,
+   "page_start": 32,
+   "page_end": 33,
+   "n_chars": 1082,
+   "n_words": 141
+  },
+  {
+   "id": "sec-060-skill-invocation-rate",
+   "number": null,
+   "title": "Skill Invocation Rate",
+   "level": 1,
+   "page_start": 33,
+   "page_end": 33,
+   "n_chars": 1331,
+   "n_words": 196
+  },
+  {
+   "id": "sec-061-token-cost-and-time-efficiency",
+   "number": null,
+   "title": "Token, Cost, and Time Efficiency",
+   "level": 1,
+   "page_start": 33,
+   "page_end": 34,
+   "n_chars": 786,
+   "n_words": 126
+  },
+  {
+   "id": "sec-062-token-usage-and-cost-by-configuration",
+   "number": null,
+   "title": "Token Usage and Cost by Configuration",
+   "level": 2,
+   "page_start": 34,
+   "page_end": 34,
+   "n_chars": 1565,
+   "n_words": 262
+  },
+  {
+   "id": "sec-063-outcome-and-runtime-diagnostics",
+   "number": null,
+   "title": "Outcome and Runtime Diagnostics",
+   "level": 2,
+   "page_start": 34,
+   "page_end": 35,
+   "n_chars": 1028,
+   "n_words": 150
+  },
+  {
+   "id": "sec-064-cost-performance-tradeoff",
+   "number": null,
+   "title": "Cost-Performance Tradeoff",
+   "level": 2,
+   "page_start": 35,
+   "page_end": 35,
+   "n_chars": 1496,
+   "n_words": 228
+  },
+  {
+   "id": "sec-065-timeperformance-tradeoff",
+   "number": null,
+   "title": "Time\u2013Performance Tradeoff",
+   "level": 2,
+   "page_start": 35,
+   "page_end": 36,
+   "n_chars": 1608,
+   "n_words": 275
+  },
+  {
+   "id": "sec-066-skillsbench-construction-details",
+   "number": null,
+   "title": "SkillsBench Construction Details",
+   "level": 1,
+   "page_start": 36,
+   "page_end": 36,
+   "n_chars": 391,
+   "n_words": 55
+  },
+  {
+   "id": "sec-067-skill-definition-and-boundary",
+   "number": null,
+   "title": "Skill Definition and Boundary",
+   "level": 2,
+   "page_start": 36,
+   "page_end": 36,
+   "n_chars": 1492,
+   "n_words": 207
+  },
+  {
+   "id": "sec-068-task-package",
+   "number": null,
+   "title": "Task Package",
+   "level": 2,
+   "page_start": 36,
+   "page_end": 37,
+   "n_chars": 986,
+   "n_words": 131
+  },
+  {
+   "id": "sec-069-community-submission-model",
+   "number": null,
+   "title": "Community Submission Model",
+   "level": 2,
+   "page_start": 37,
+   "page_end": 37,
+   "n_chars": 445,
+   "n_words": 57
+  },
+  {
+   "id": "sec-070-contributing-principles",
+   "number": null,
+   "title": "Contributing Principles",
+   "level": 2,
+   "page_start": 37,
+   "page_end": 37,
+   "n_chars": 1096,
+   "n_words": 149
+  },
+  {
+   "id": "sec-071-automated-validation",
+   "number": null,
+   "title": "Automated Validation",
+   "level": 2,
+   "page_start": 37,
+   "page_end": 37,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-072-human-review",
+   "number": null,
+   "title": "Human Review",
+   "level": 2,
+   "page_start": 37,
+   "page_end": 38,
+   "n_chars": 1748,
+   "n_words": 232
+  },
+  {
+   "id": "sec-073-leakage-prevention",
+   "number": null,
+   "title": "Leakage Prevention",
+   "level": 2,
+   "page_start": 38,
+   "page_end": 38,
+   "n_chars": 937,
+   "n_words": 134
+  },
+  {
+   "id": "sec-074-benchmark-composition",
+   "number": null,
+   "title": "Benchmark Composition",
+   "level": 2,
+   "page_start": 38,
+   "page_end": 38,
+   "n_chars": 550,
+   "n_words": 81
+  },
+  {
+   "id": "sec-075-domain-taxonomy-and-per-task-mapping",
+   "number": null,
+   "title": "Domain Taxonomy and Per-Task Mapping",
+   "level": 2,
+   "page_start": 38,
+   "page_end": 42,
+   "n_chars": 5160,
+   "n_words": 590
+  },
+  {
+   "id": "sec-076-experimental-protocol-details",
+   "number": null,
+   "title": "Experimental Protocol Details",
+   "level": 1,
+   "page_start": 42,
+   "page_end": 42,
+   "n_chars": 95,
+   "n_words": 15
+  },
+  {
+   "id": "sec-077-scoring",
+   "number": null,
+   "title": "Scoring",
+   "level": 2,
+   "page_start": 42,
+   "page_end": 42,
+   "n_chars": 13,
+   "n_words": 3
+  },
+  {
+   "id": "sec-078-modelharness-configurations",
+   "number": null,
+   "title": "Model\u2013Harness Configurations",
+   "level": 2,
+   "page_start": 42,
+   "page_end": 42,
+   "n_chars": 769,
+   "n_words": 109
+  },
+  {
+   "id": "sec-079-skills-conditions",
+   "number": null,
+   "title": "Skills Conditions",
+   "level": 2,
+   "page_start": 42,
+   "page_end": 42,
+   "n_chars": 549,
+   "n_words": 78
+  },
+  {
+   "id": "sec-080-execution-protocol",
+   "number": null,
+   "title": "Execution Protocol",
+   "level": 2,
+   "page_start": 42,
+   "page_end": 42,
+   "n_chars": 1806,
+   "n_words": 266
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 81,
+  "toc_inferred_entries": 0,
+  "sections": 82,
+  "chars_total": 127637
+ }
+}

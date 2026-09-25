@@ -2,6 +2,10 @@
 name: interaction-modality
 description: Establish how to talk to the person in front of you before deciding what to say — audio, ordinary chat, selectable options for limited hand function, large-type for low vision, plain language — and hold that choice durably so every later session and sibling agent honours it. Covers the accessibility rules a conversational agent can actually keep, the settings surface in the published site, and how to drive a question set from DMN so the SAME logic serves every modality. Use at first contact with a new user, when a user reports difficulty answering, whenever a question is about to be asked, and before any long free-text prompt.
 user_invocable: true
+satisfies:
+  - "req:agent-workflow#context-before-question"
+graph-kinds:
+  - interaction
 ---
 
 # /interaction-modality — ask in a form the person can answer
@@ -232,7 +236,7 @@ The same decision, askable:
 >    Nothing here has to change, and the collision is solved where collisions
 >    actually happen.
 > 2. **In this repository itself** — rename every skill file. That touches the
->    package manifests, every `<folio:skill ref>` in the BPMN diagrams, two doc
+>    package manifests, every `<bootstrap.processes:skill ref>` in the BPMN diagrams, two doc
 >    generators and every cross-reference between skill bodies. It is the kind
 >    of change that is painful to reverse.
 >
@@ -345,19 +349,40 @@ So the posture is:
    kind. Write the object, render the prose, then offer the selection.
 3. **Gating is revisited on EVIDENCE, not on a date.**
 
-> **The condition: twelve real decision records.** `bun run health` reports
-> `bean-decision-records` — beans carrying a `## Options` section — and it read
-> **7** on 2026-09-20. At twelve, a person can read them and answer the question
-> the schema cannot answer about itself: does this shape fit the decisions this
-> repository actually has?
+> **The condition: twelve RENDERED decision records.** `bun run health` reports
+> **`bean-rendered-decision-records`** — beans whose decision actually went
+> through {@link renderDecision}, detected from the five-row table it emits. At
+> twelve, a person can read them and answer the question the schema cannot
+> answer about itself: does this shape fit the decisions this repository
+> actually has?
 
-**The counter is the one that already existed**, and deliberately so. Adding a
-second store of decision objects would have created a parallel count free to
-disagree with `bean-store`'s — the `beans`/`todos` confusion one level along. So
-a decision worth keeping goes into the **bean it belongs to**, under
-`## Options`, where `madr.md`'s two-option floor and
-`bean-thin-decision-records` already govern it. `renderDecision` composes the
-chat message; the bean keeps the record.
+*Superseded, kept as provenance and NOT as the condition:* this said
+**`bean-decision-records`** — beans carrying an `## Options` heading — reading
+**7** on 2026-09-20. **Corrected 2026-09-21 on the owner's ruling** (*"C —
+require `renderDecision`, then revisit"*, bean `hajp`, [#645](https://github.com/litlfred/folio-assistant/issues/645)).
+The two metrics count different populations: `bean-decision-records` had grown
+7 → 10 in a day **without anyone adopting anything**, because this store writes
+considered-options sections as ordinary practice, while
+`bean-rendered-decision-records` stood at **1** — `hajp` itself. So the old
+condition would have reached twelve on schedule and delivered **none** of the
+evidence the deferral was granted to buy, which is evidence about whether
+`DecisionRequestSchema` is too narrow, and only a decision that went through it
+can supply that. `checks.test.ts` states the distinction it missed: *"an
+`## Options` heading is NOT a rendered decision"*.
+
+**Two things the correction does not change.** The counter is still a
+**health metric over `beans/`**, not a second store: a parallel store of
+decision objects would be a count free to disagree with `bean-store`'s — the
+`beans`/`todos` confusion one level along. And the record still goes in the
+**bean it belongs to**, under `## Options`, where `madr.md`'s two-option floor
+and `bean-thin-decision-records` already govern it. `renderDecision` composes
+the chat message; the bean keeps the record.
+
+**The unit is BEANS, not decisions**, and whoever reads this at the revisit
+needs to know it: `hasRenderedDecision` is a per-bean boolean, so a bean
+carrying five rendered decisions contributes **one**. Twelve therefore means
+twelve different beans. Recorded rather than changed, because moving the unit
+without moving the number is a silent re-calibration (bean `hajp`).
 
 **A deferral with no trigger is not a deferral**, which is the defect class this
 whole section is about: it is a rule with no home, indistinguishable a month

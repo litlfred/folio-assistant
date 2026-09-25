@@ -5,7 +5,7 @@
     "id": "Process_L2Dak",
     "path": "processes/l2-dak-authoring.bpmn"
   },
-  "source_hash": "sha256:26c552d02ee79f93150ceca622b482429f4a72d25d146911c8c8cbffb4abe96f",
+  "source_hash": "sha256:1d56154d6a266c9f173f5a668353c0cf685ed647aca5d5d01b480ea029991a6c",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,12 +66,48 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
+    "pass": 15,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 9,
     "unknown": 0
   }
 }

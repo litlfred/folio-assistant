@@ -32,13 +32,16 @@
  * literal restated here would be a sixth instance of the same mistake.
  *
  * Exit 0 clean · 1 a finding · 2 could not determine, which is never a pass.
+ *
+ * @covers qa
  */
+import { noteAbsent, splitDeclared } from "./lib/declared-presence.ts";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { tools } from "../tools/index.ts";
-import { TabularCsvwSchema } from "../schemas/tabular-csvw.ts";
+import { TABULAR_CSVW_FILENAME, TabularCsvwSchema } from "../schemas/tabular-csvw.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -133,7 +136,9 @@ function run(): number {
   // documents, and scanning one of three libraries would report every stub in
   // the other two as expired-nowhere — a clean run over the documents that
   // actually carry them.
-  const libs = directoriesForGraph(ROOT, "library").filter((d) => existsSync(d));
+  // Declared-but-absent is REPORTED, not dropped (bean `95ir`).
+  const { present: libs, absent } = splitDeclared(directoriesForGraph(ROOT, "library"));
+  noteAbsent(absent, "a library");
   if (libs.length === 0) {
     console.error("Could not resolve a `library` directory. This is NOT a pass.");
     return 2;
@@ -157,7 +162,7 @@ function run(): number {
   const findings = stubFindings(
     entries,
     (dir) => {
-      const f = join(dir, "tabular.csvw.jsonld");
+      const f = join(dir, TABULAR_CSVW_FILENAME);
       return existsSync(f) ? readFileSync(f, "utf-8") : undefined;
     },
     (id) => stubbed.has(id),
@@ -166,7 +171,7 @@ function run(): number {
   for (const f of findings) console.log(`  ${f.severity.padEnd(11)} ${f.detail}`);
 
   const blocking = findings.filter((f) => f.severity !== "stub");
-  const withRecords = entries.filter((d) => existsSync(join(d, "tabular.csvw.jsonld"))).length;
+  const withRecords = entries.filter((d) => existsSync(join(d, TABULAR_CSVW_FILENAME))).length;
   console.log();
   console.log(
     `  ${entries.length} entry/entries scanned, ${withRecords} with a tabular record, ` +

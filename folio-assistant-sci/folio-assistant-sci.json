@@ -1,6 +1,7 @@
 {
   "_comment": "The SCIENCE folio instance, staged as a top-level directory ahead of becoming its own repository -- the same pattern as who-iris/ and folio-assistant-core/. Owner, 2026-09-20: 'milnor goes in f-a-sci library/, move all 4 and fix fallout'. It exists because `milnorlink` is source material for mathematics and has nothing to do with the WHO IRIS catalogue, so sending it to who-iris/ alongside the three IRIS items would have put one thing in a place named for another. Bean r1lz. DECLARE ONLY WHAT EXISTS, per the dh4f rule: every entry here is a directory that is present.",
   "name": "folio-assistant-sci",
+  "version": "0.1.0",
   "description": "Scientific source material used by folios that formalise mathematics — one document today.",
   "assets": [
     {
@@ -28,9 +29,7 @@
         "library"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md",
-        "skill": "library-ingestion"
+        "visualiser": "cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html"
       }
     },
     {
@@ -38,13 +37,11 @@
       "path": "skills/voices/",
       "dependents": "reproduce",
       "description": "The `milnor` voice skill — a mathematics-exposition voice derived from the exemplar paper, as `voice.json` (12 rules, each citing what it was read from) beside `SKILL.md`. It lived in the PLATFORM until 2026-09-21, which meant cat-harness shipped voice CONTENT while claiming to hold none; the owner settled that it belongs to the science layer, the instance that derived it. Under `skills/` because a voice is a skill. Declared HERE rather than in `folio-assistant-sci.config.json`: #727 split the two, and a directory is something this instance IS rather than how it behaves when a folio loads it.",
-      "graphs": [
+      "graphKinds": [
         "voices"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/voices/folio-assistant-sci/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md",
-        "skill": "voice-authoring-guidance"
+        "visualiser": "cat-harness/docs/cat-harness/voices/folio-assistant-sci/index.html"
       }
     }
   ]

@@ -7,7 +7,7 @@ pages: 187-187
 pdf_page: 12
 source_pdf: milnorlink.pdf
 source_sha256: 7644abb4d24b46d8
-text_source: text-layer
+text_source: embedded
 granularity: page
 ---
 LINK 

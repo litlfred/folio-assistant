@@ -63,7 +63,7 @@ import {
  * shared with `harness.json`. This is a convenience for callers wanting
  * the todo-specific subset, never a second source of truth.
  */
-export const TODO_NODE_KINDS = ["todo-items", "todo-feedback"] as const;
+export const TODO_NODE_KINDS = ["todo-items", "todo-feedback", "review-verdicts"] as const;
 export type TodoNodeKind = (typeof TODO_NODE_KINDS)[number];
 
 export const TodoGraphNodeSchema = GraphNodeDirectorySchema;

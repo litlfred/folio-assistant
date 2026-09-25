@@ -28,7 +28,7 @@
  *
  * - `folio-tabular-records/v1` (`tabular.jsonld`) — what `tabular-records.py`
  *   writes today, and the only one anything actually produces;
- * - `folio-tabular-csvw/v1` (`tabular.csvw.jsonld`) — CSVW, from `eief`, whose
+ * - `folio-tabular-csvw/v1` (`tabular.csvw.json` — JSON, not JSON-LD; bean `792y`) — CSVW, from `eief`, whose
  *   extractors are **stubbed on purpose**, so nothing writes it yet.
  *
  * {@link tabularShapeOf} reduces either to the little that a manifest needs.
@@ -150,7 +150,7 @@ export function buildTabularNodes(
       path: `blocks/${bId}.jsonld`,
       content: node({
         "@id": bIri,
-        "@type": ["folio:Block", "doco:Table"],
+        "@type": ["folio-assistant-core:Block", "doco:Table"],
         kind: "table",
         label: sheet.name || bId,
         // The header vocabulary IS the findable surface — `p67i`: "a grep for
@@ -192,7 +192,7 @@ export function buildTabularNodes(
     path: "manifest.jsonld",
     content: node({
       "@id": opts.iri("manifest"),
-      "@type": ["folio:SourceDocument"],
+      "@type": ["folio-assistant-core:SourceDocument"],
       title: opts.title,
       contains: containedByManifest,
       provenance: "ingested",

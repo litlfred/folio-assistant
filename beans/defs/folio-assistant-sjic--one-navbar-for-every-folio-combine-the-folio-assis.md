@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T21:26:39Z
-updated_at: 2026-09-22T21:28:43Z
+updated_at: 2026-09-24T12:00:07Z
 parent: folio-assistant-p5wm
 ---
 
@@ -107,6 +107,32 @@ branches.
 is a courtesy to whoever reads the bean next, not a lock. If #791 reaches the
 renderer first, it wins and this bean should be re-scoped rather than merged
 against.
+
+## CLAIMED — 2026-09-24, session_01VDGHtziYnxbEkZEcNBz2PD, issue #1260
+
+**The gate the 2026-09-21 claim set has opened.** That claim ordered the work
+by layer and put one piece last, with a reason:
+
+> | the Jekyll sidebar's switch to the renderer | **after #791 lands** | `nav_footer_custom.html` is where we would collide, so it is the last thing to move, not the first |
+
+**#791 has landed.** So has `603s`'s avatar/theme region, which was the other
+half of that ruling. The deferred piece is now the only one left, and it is
+this bean's last unchecked box.
+
+Taking it on the owner's word, immediately after #1231 (`oi1y`) merged as
+`6c8db922` and `0cd72780` — which is what makes it worth doing now rather than
+later: that issue spent two days measuring railed pages and got six of seven
+instruments wrong, every one of them because there are two navigations and
+`docs-ui.css` styles the theme's using `fa-nav-*` names.
+
+**Not re-deriving what `osyc` already measured.** The shared component exists
+and `harness-rail.ts` is a thin adapter over it, verified by import. What is
+missing is the one consumer that never switched: `nav_footer_custom.html`
+composes 392 lines of its own markup and calls no renderer.
+
+**A claim announces rather than reserves until the PR exists.** #1238 is open
+in the navbar on the "what a harness knows and does not hold" half; that is
+`603s`'s subject, not this one, and if it reaches these lines first it wins.
 
 ## Not in scope here, recorded so it is not lost
 
@@ -288,3 +314,7 @@ to make. Both are bigger than anything in #959 and neither is blocked.
 **Everything the owner asked for on 2026-09-21 and 2026-09-22 is built and
 green** (`gates --all`, 128/128 incl. 459 browser tests). The gap is between
 "the same navbar" and "one navbar", and it is stated rather than closed.
+
+## Note, 2026-09-23 — left to stream 2, by the owner's choice
+
+While going through beans, the owner chose **"Leave to stream 2"**. The one open item, switching the Jekyll sidebar to the renderer, follows `603s`, which is in #1133 (`claude/stream-2-goal2-surface`). This bean unblocks when #1133 merges. It is not claimed from here.

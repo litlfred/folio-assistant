@@ -48,6 +48,31 @@
  * and that does not change.
  */
 import { type TermLayer, termLayer } from "./vocabulary";
+// The VALUES live in a code list, not here (owner, 2026-09-23: "list of codes
+// and corresponding narrative desc and source should be part of a
+// node/asset"). Each code there carries what the namespace names and where
+// the decision came from; this module only names them for callers. A static
+// JSON import rather than the declaration resolver, because `cat-harness.ts`
+// imports this module and the resolver lives there — reaching back would be a
+// cycle. `check:code-lists` validates the file against its schema.
+// READ, not `import`ed: Node's ESM loader (Playwright runs under it) refuses a
+// JSON import without `with { type: "json" }`, and this repository's
+// `module: ES2022` cannot spell that attribute. Bun accepted the bare import,
+// so every local run passed while the e2e job could not load the module.
+import { readFileSync } from "node:fs";
+
+const ownNamespaces = JSON.parse(
+  readFileSync(new URL("../code-lists/own-namespaces.json", import.meta.url), "utf-8"),
+) as { codes: { code: string; value?: string }[] };
+
+/** One of our namespaces, by its code in `code-lists/own-namespaces.json`. */
+export function ownNamespace(code: string): string {
+  const c = ownNamespaces.codes.find((x) => x.code === code);
+  if (c?.value === undefined) {
+    throw new Error(`code-lists/own-namespaces.json has no namespace "${code}" — this module cannot name it`);
+  }
+  return c.value;
+}
 
 /**
  * The namespace that WAS — kept only so the vocabulary document can name the
@@ -58,7 +83,7 @@ import { type TermLayer, termLayer } from "./vocabulary";
  * document that CARRIES all three vocabularies, which is a different thing
  * from a namespace terms hang off.
  */
-export const LEGACY_FOLIO_NS = "https://litlfred.github.io/folio-assistant/ns#";
+export const LEGACY_FOLIO_NS = ownNamespace("legacy-folio");
 
 /**
  * One namespace per LAYER, because a term belongs to whatever declares it.
@@ -81,9 +106,9 @@ export const LEGACY_FOLIO_NS = "https://litlfred.github.io/folio-assistant/ns#";
  * that after separation each namespace is already the IRI its own instance
  * publishes at and nothing has to move a second time.
  */
-export const CAT_BOOTSTRAP_NS = "https://litlfred.github.io/folio-assistant/bootstrap/ns#";
-export const CAT_HARNESS_NS = "https://litlfred.github.io/folio-assistant/cat-harness/ns#";
-export const CORE_NS = "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#";
+export const CAT_BOOTSTRAP_NS = ownNamespace("cat-bootstrap");
+export const CAT_HARNESS_NS = ownNamespace("cat-harness");
+export const CORE_NS = ownNamespace("folio-assistant-core");
 
 /**
  * The XML namespace our BPMN EXTENSION elements bind to — `folio:skill`,
@@ -107,7 +132,7 @@ export const CORE_NS = "https://litlfred.github.io/folio-assistant/folio-assista
  * three layer namespaces, so every IRI this project mints is under a domain
  * it controls.
  */
-export const FOLIO_BPMN_NS = "https://litlfred.github.io/folio-assistant/bpmn";
+export const FOLIO_BPMN_NS = ownNamespace("folio-bpmn");
 
 /**
  * The spelling that was never ours, kept so a gate can NAME it rather than
@@ -119,17 +144,161 @@ export const FOLIO_BPMN_NS = "https://litlfred.github.io/folio-assistant/bpmn";
  * this, the drift read as two undeclared external specifications and the
  * finding told the reader to go and write records for them.
  */
-export const LEGACY_FOLIO_BPMN_NS = "http://folio-assistant.dev/bpmn";
+export const LEGACY_FOLIO_BPMN_NS = ownNamespace("legacy-folio-bpmn");
+
+/**
+ * The `targetNamespace` every diagram under `processes/` declares: the
+ * namespace its processes, and so every `calledElement` naming them, live in.
+ *
+ * A different object again from {@link FOLIO_BPMN_NS}: that is the namespace
+ * our extension ELEMENTS are in; this one is the diagram's IDENTITY. Bean
+ * `rtrg`, measured 2026-09-23: 47 diagrams declared this IRI, 4
+ * `https://folio-assistant.dev/workflows`, and 15 one per diagram under
+ * `http://folio-assistant.dev/bpmn/`, a domain this project does not own.
+ *
+ * **One shared namespace, not one per diagram (owner, 2026-09-23).** BPMN
+ * types `calledElement` as a QName, so a call is resolved against a namespace
+ * and not only an id. With one namespace, every call in the corpus names a
+ * process in the caller's own namespace; the split left 12 call edges crossing
+ * namespaces with no `<bpmn:import>` between them, which a conformant tool
+ * cannot resolve. It is also the IRI every existing `<bpmn:import namespace>`
+ * already used. Nothing in this repository resolved a QName against it, so the
+ * change was invisible here and only a standards tool would have noticed.
+ *
+ * Bootstrap's diagrams use `…/bootstrap/workflows` on purpose: a different
+ * instance, so a different set of process ids.
+ */
+export const WORKFLOWS_NS = ownNamespace("workflows");
+
+/** The `@base` emitted content documents resolve relative ids against — ours, and not a vocabulary. */
+export const FOLIO_BASE = ownNamespace("folio-base");
+
+/**
+ * Every IRI this project mints, active or retired — the whole
+ * `own-namespaces` code list. A reconciler asks this, not a hand list, whether
+ * a namespace is OURS (spelt one way) or an external one (needs a record).
+ */
+export const OWN_NAMESPACE_VALUES: readonly string[] = ownNamespaces.codes.flatMap((c) =>
+  c.value === undefined ? [] : [c.value],
+);
 
 /** Every XML namespace this project mints for itself. */
-export const OWN_XML_NAMESPACES = [FOLIO_BPMN_NS, LEGACY_FOLIO_BPMN_NS] as const;
+/**
+ * The namespace of the BPMN extension elements BOOTSTRAP declares for its own
+ * diagrams — `skill`, `role`, `precondition` — written with the prefix of the
+ * declaring Subgraph, `bootstrap.processes:` (owner, 2026-09-24, bean `12s9`
+ * stage 2). `<stub>/<subgraph>/ns#`, like every other vocabulary address here.
+ * Its definition is data in bootstrap itself, `processes/ns.jsonld`, which the
+ * site publishes at this address.
+ */
+export const BOOTSTRAP_PROCESSES_NS = ownNamespace("bootstrap-processes");
 
-/** The prefixes those namespaces bind to in a `@context`. */
+/**
+ * The namespace of the BPMN extension elements CAT-HARNESS declares — every
+ * one bootstrap does not: `bean`, `policy`, `adjudication`, `raci`, … —
+ * written `cat-harness.processes:` (bean `12s9` stage 3). Defined by
+ * `cat-harness/processes/ns.jsonld`, which the site publishes here.
+ */
+export const CAT_HARNESS_PROCESSES_NS = ownNamespace("cat-harness-processes");
+
+export const OWN_XML_NAMESPACES = [FOLIO_BPMN_NS, BOOTSTRAP_PROCESSES_NS, CAT_HARNESS_PROCESSES_NS, LEGACY_FOLIO_BPMN_NS] as const;
+
+/**
+ * The XML namespaces our BPMN extension ELEMENTS are recognised in — by
+ * ADDRESS, never by the prefix a diagram happens to bind (bean `12s9`).
+ *
+ * Until 2026-09-24 every reader matched the literal text `folio:` —
+ * `$type === "folio:bean"` in `process-model.ts`, and raw-XML regexes in five
+ * scripts. XML compares a namespace by its URI, and a prefix is only a local
+ * abbreviation, so a diagram binding `bootstrap.processes:` to this very
+ * address would have parsed without error while every Skill, Role and decision
+ * in it was silently ignored. The owner's ruling that a prefix names the
+ * Subgraph that declares the element (`bootstrap.processes:`) is unreachable
+ * until nothing depends on the prefix, which is what this list is for.
+ *
+ * Two addresses on purpose, one per declaring Subgraph. The single address
+ * {@link FOLIO_BPMN_NS} was here too until 2026-09-24 and is now RETIRED, like
+ * {@link LEGACY_FOLIO_BPMN_NS} before it: no diagram in the owner's
+ * repositories binds it (the last, ihris, moved in litlfred/ihris#24), so an
+ * element under it is no longer ours, and `external-schemas` reports a diagram
+ * that still binds it as drift.
+ */
+export const OWN_BPMN_EXTENSION_NAMESPACES: readonly string[] = [BOOTSTRAP_PROCESSES_NS, CAT_HARNESS_PROCESSES_NS];
+
+/**
+ * The prefix our extension elements are normalised to once parsed, whatever
+ * prefix the diagram wrote — so `$type === "folio:skill"` keeps meaning "our
+ * `skill` element" and not "an element somebody spelt `folio:skill`".
+ */
+export const CANONICAL_EXTENSION_PREFIX = "folio";
+
+/** True when `uri` is one of {@link OWN_BPMN_EXTENSION_NAMESPACES}. */
+export function isOwnExtensionNamespace(uri: string | undefined): boolean {
+  return uri !== undefined && OWN_BPMN_EXTENSION_NAMESPACES.includes(uri);
+}
+
+/**
+ * The prefixes a diagram's TEXT binds to our extension namespaces, read from
+ * its `xmlns:` declarations — for the readers that scan raw XML rather than
+ * parse it.
+ *
+ * `[]` when it binds none, so such a reader finds nothing rather than guessing
+ * `folio`: a document that never declared our namespace has none of our
+ * elements, whatever it spells.
+ */
+export function ownExtensionPrefixes(xml: string): string[] {
+  const out = new Set<string>();
+  for (const m of xml.matchAll(/\bxmlns:([A-Za-z_][\w.-]*)\s*=\s*"([^"]*)"/g)) {
+    if (isOwnExtensionNamespace(m[2])) out.add(m[1]!);
+  }
+  return [...out];
+}
+
+/**
+ * A pattern matching the opening `<p:local` of one of our extension elements,
+ * where `p` is any prefix `xml` binds to our namespaces, followed by `rest`
+ * (regex source, appended verbatim).
+ *
+ * Matches nothing when the document binds none of our namespaces.
+ */
+export function ownElementPattern(xml: string, local: string, rest = "", flags = "g"): RegExp {
+  const prefixes = ownExtensionPrefixes(xml).map((p) => p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  if (prefixes.length === 0) return new RegExp("(?!)", flags);
+  return new RegExp(`<(?:${prefixes.join("|")}):${local}\\b${rest}`, flags);
+}
+
+/**
+ * The prefixes those namespaces bind to in a `@context` — and each prefix IS
+ * the declaring instance's stub.
+ *
+ * Owner, 2026-09-23: "prefix -> match stub". Each namespace above is already
+ * `<canonical>/<stub>/ns#`, so the path segment, the stub and the prefix are
+ * now ONE word in three places instead of three words that must agree. They
+ * were `bs`, `cat` and `fac` until then, and the cost of three spellings was
+ * measured rather than argued (bean `zaqn`): `CONTENT_CONTEXT` renamed its
+ * binding from `folio` to `fac` and kept writing twenty terms as `folio:…`,
+ * so every content term in 1,737 committed documents expanded to an IRI in a
+ * URI scheme called `folio` — well-formed, meaningless, and joined with
+ * nothing. An abbreviation is a second name, and a second name is where the
+ * two drift.
+ *
+ * `check-context-emission.ts` enforces both halves: a prefix a document USES
+ * must be bound, and a binding onto one of our own namespaces must be spelt
+ * as that namespace's stub.
+ */
 export const NS_PREFIXES = {
-  bs: CAT_BOOTSTRAP_NS,
-  cat: CAT_HARNESS_NS,
-  fac: CORE_NS,
+  bootstrap: CAT_BOOTSTRAP_NS,
+  "cat-harness": CAT_HARNESS_NS,
+  "folio-assistant-core": CORE_NS,
 } as const;
+
+/** One of our own prefixes — each the stub of the instance declaring it. */
+export type NsPrefix = keyof typeof NS_PREFIXES;
+
+/** The instance stub a namespace of ours names — the segment before `/ns#`. */
+export function stubOfNamespace(ns: string): string | undefined {
+  return /\/([^/]+)\/ns#$/.exec(ns)?.[1];
+}
 
 /** The namespace a layer's terms hang off. */
 export function namespaceForLayer(layer: TermLayer): string {
@@ -137,8 +306,8 @@ export function namespaceForLayer(layer: TermLayer): string {
 }
 
 /** The prefix a layer's terms are written with. */
-export function prefixForLayer(layer: TermLayer): "bs" | "cat" | "fac" {
-  return layer === "bootstrap" ? "bs" : layer === "core" ? "fac" : "cat";
+export function prefixForLayer(layer: TermLayer): NsPrefix {
+  return layer === "bootstrap" ? "bootstrap" : layer === "core" ? "folio-assistant-core" : "cat-harness";
 }
 
 /**

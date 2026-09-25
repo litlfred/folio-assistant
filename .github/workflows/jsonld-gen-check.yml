@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/jsonld-drift-check.bpmn
 # Generated-file drift gate for the JSON-LD projection of content blocks.
 #
 # Each content block is authored as `<block>.ts` and published as a generated
@@ -81,6 +82,11 @@ on:
       - 'cat-harness/scripts/gen-jsonld-context.ts'
       - 'cat-harness/ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'
+  # The merge queue — bean `nytj`; see code-quality-gates.yml for why. A
+  # merge_group event takes NO `paths:` filter, so in the queue this runs on
+  # every entry: about fifteen seconds, and a required check that did not
+  # report would stall the queue rather than skip.
+  merge_group:
   workflow_dispatch:
 
 permissions:
@@ -88,6 +94,7 @@ permissions:
 
 jobs:
   drift-check:
+    # bpmn-node: Start_Change
     name: .jsonld siblings in sync with .ts manifests
     runs-on: ubuntu-latest
     steps:

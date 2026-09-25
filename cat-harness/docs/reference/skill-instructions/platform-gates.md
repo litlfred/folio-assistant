@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/platform-gates.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/platform-gates.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/platform-gates.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/platform-gates.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/platform-gates.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/platform-gates.md){: .fa-edit-source }
 
 {% raw %}
 # The platform's own gates — run what CI will run
@@ -334,3 +334,11 @@ renamed or restructured and the reader needs fixing — not the gate list.
 | [`prepare-merge`](prepare-merge.md) | the pre-merge recipe, which runs these plus content-type gates |
 | [`ci-health`](ci-health.md) | whether the workflows themselves are working — a different question |
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Code change and review](../../processes/code-change-review.html) | Run the platform's own gates |
+| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | Lean: no bare&#10;`import Mathlib` (HARD); Python: unused and&#10;wildcard imports (HARD); TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD); End-to-end +&#10;accessibility (HARD); Rust wildcard imports&#10;(WARN-ONLY); Dependency advisories&#10;(WARN-ONLY) |
+

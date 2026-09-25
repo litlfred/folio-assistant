@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/activity-log.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/activity-log.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/activity-log.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/activity-log.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/activity-log.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/activity-log.md){: .fa-edit-source }
 
 {% raw %}
 # Activity log — what an agent did, kept out of the graph
@@ -111,11 +111,11 @@ exactly the leak the section below warns about, and **an absent field is
 stronger than a warning.** The same caution applies to `command` itself: a
 command line carries its own arguments, and `--token=…` is a command line.
 
-## Turning it on — `<folio:log capture="on"/>` on the process
+## Turning it on — `<cat-harness.processes:log capture="on"/>` on the process
 
 Owner: *"need explicit like (capture log when agent runs this workflow)."*
 That is a declaration on the **process**, parsed at load and **throwing on a
-value the engine cannot honour**, exactly as `<folio:bean op>` does. A diagram
+value the engine cannot honour**, exactly as `<cat-harness.processes:bean op>` does. A diagram
 asking for a mode that does not exist must not load and quietly log nothing —
 worse here than elsewhere, because the missing artefact *is* the record.
 
@@ -240,3 +240,14 @@ them.
 - **A substitute for the turn report.** The log is for a later reader; the
   report is for the person in the room now.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Agent activity log](../../processes/activity-log.html)**.
+
+<img src="../../assets/img/workflows/activity-log.svg" alt="BPMN diagram: Agent activity log" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [Agent activity log](../../processes/activity-log.html) | Log task-start; Log a message or an error; Log task-end; Persist the log to the data store; Report the capture state; Discard one entry by id; Discard all entries, or a whole session |
+

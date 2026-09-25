@@ -5,7 +5,7 @@
     "id": "Process_Translation",
     "path": "processes/translation-workflow.bpmn"
   },
-  "source_hash": "sha256:03e8d79ea380c2f8d318d228ec10b0e9ba27aa523324763f5bcca9edaa8230cf",
+  "source_hash": "sha256:395520e9131ee63b4ee5ae4a892b2f330e37f0f696a7505d337bbee82f1d2a5b",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -64,14 +64,50 @@
       "findings": []
     },
     "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
       "result": "n/a",
       "findings": []
     }
   },
   "totals": {
-    "pass": 8,
+    "pass": 16,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 8,
     "unknown": 0
   }
 }

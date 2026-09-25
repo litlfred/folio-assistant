@@ -159,6 +159,17 @@ theme's `backdrop` is sticky-scoped today, and making it the docs page ground is
 a different CSS surface and possibly a different crop set, since a sticky's crop
 is chosen for a CARD.
 
+**One of this milestone's open questions was asked and answered 2026-09-22.**
+*"Which subgraphs are 'display' subgraphs?"* — open on both `603s` and `yj32` —
+shrank to one real decision once the existing mechanism was measured
+(`coverage.visualiser`, `visualisationsOf`, and `showsOn(v, "navbar" | "board")`
+already decide which graphs display and where). **The owner ruled: a declared
+graph with NO viewer is SHOWN, inert and labelled**, over omitting it and over
+linking it to a generic listing. Recorded on `603s` and `yj32`; the
+accessibility obligation it carries (`gjli` — an inert row must not read as a
+control, and the label must distinguish `flh4`'s two cases) is recorded with
+it.
+
 **Withdrawn from this list:**
 
 | withdrawn | why |
@@ -194,6 +205,45 @@ right. These go to the owner with a **page** link, never the site root.
 | #955 | `clean`, 7/7 checks green | **Shipped round 1 alone**, marked ready for review 2026-09-22 with reasons on the PR. Round 1 is requirement 2's prerequisite, not a half of it: `min-height: 0` is what makes the square hold, and this PR's own §3 says the square and the scroll are ONE mechanism. Requirement 2 stays open on `624f`. **Not merged** — that is the owner's. |
 | #959 | draft, `unstable` | Bean `sjic`, **under this milestone**, mid-flight by a sibling session on the navbar — which is `603s`'s surface. Not touched: `bean-coordination` obligation 3. It reports `avatarRegion` (from `603s`) as **declared and consumed by nothing**, and the two navbars' widths disagreeing while both test suites were green. Coordinate here rather than opening anything parallel. |
 | #229 | stale since 09-18, `mergeable: unknown` | Its own body says *"Do NOT merge — this PR exists only for the staging preview."* Disposition is the owner's; queued as a question, not closed unilaterally. |
+
+## Coordination with `sjic`, and where the navbar actually stands — 2026-09-22
+
+Stream `10uc`. **The navbar surface is clear: nothing is mid-flight on it.**
+PR #959 (`sjic`) merged 2026-09-23T09:28Z after eight rounds, 44 files; PR #791
+(`603s`'s avatar/theme region) merged 2026-09-21. No open PR names the navbar
+or `603s`.
+
+**Most of `603s` is built.** Verified by building the site rather than by
+reading the generator — three of its four remaining items were already done and
+the bean had not been touched since 2026-09-20. Only **local-vs-remote**
+remains open. Details and measurements are on `603s`.
+
+### Two things handed BACK to the owner rather than decided here
+
+**1. `sjic`'s last Done-when is a choice between two routes, and it says so.**
+*"One renderer produces the navbar for a Jekyll page and for a mounted page,
+with the difference DECLARED rather than branched on"* is still open after
+#959. The sidebar now shares the geometry and the behaviour, so the two cannot
+disagree about a width — but *"cannot disagree" is not "one renderer"*. The
+bean names the two ways to close it — a build step emitting the sidebar's
+markup into `_includes/generated/`, or overriding the theme's `sidebar.html` —
+and records that it *"already refuses the second for a placement; for the whole
+sidebar it is a different trade and is the owner's to make."* Both are bigger
+than anything in #959, and **neither is blocked**.
+
+**2. `sjic`'s gap 6 has no subject, and the subject is `603s`'s.** The
+`avatarRegion` crop mechanism is built and tested — but *"which card belongs to
+which harness is an assignment nobody has made"*. The seven crops sit on
+`landing-*-card` art whose names are roles and topics (engineer, analyst,
+architecture), while every instance's `icon` is a different image. The mapping
+is an authoring judgement, not a derivation. **Not guessed.**
+
+### And a third, measured here
+
+**8 of 19 instances declare no `needs`**, so dependency ordering — which works
+— has nothing to order 42 % of the stack by. They render in an undetermined
+alphabetical block with a finding each, which is correct behaviour rather than
+a bug. Authoring them is a claim about the layer stack.
 
 ## Done when
 

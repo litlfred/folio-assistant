@@ -5,7 +5,7 @@
     "id": "Process_FeatureStaging",
     "path": "processes/feature-staging.bpmn"
   },
-  "source_hash": "sha256:363a0d0c5cde3d861d61cb91467b559b10f2653b7373e4389f04095d2ab9bbc4",
+  "source_hash": "sha256:7ea553b86eff4f264cf106d51fa2ec2d125139fa12a9768f1304e1fedbeeb0b8",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -101,19 +101,65 @@
       "findings": [
         {
           "where": "H_Confirm",
-          "detail": "\"Repeat the slug, exactly, to confirm\" — a ServiceTask is performed by agent or system, but its lane's role \"user\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"Repeat the slug, exactly, to confirm\" — a ServiceTask is performed by agent or system, but its lane's role \"user\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
         }
       ]
     },
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
+    "pass": 15,
     "fail": 2,
     "n/a": 7,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/feature-staging.bpmn",
+      "code": ".github/workflows/feature-staging.yml",
+      "prose_hash": "7ea553b86eff",
+      "code_hash": "df24d472051f",
+      "by": "baseline"
+    }
+  ]
 }

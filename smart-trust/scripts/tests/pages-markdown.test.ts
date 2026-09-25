@@ -150,9 +150,45 @@ describe("the pages carry no theme CSS of their own", () => {
     });
   }
 
-  it("the style block is small enough to read in one screen", () => {
+  /**
+   * The AUTHORED half stays small — and this used to be a bare line count over
+   * the whole block.
+   *
+   * That count was a PROXY for the property above: nobody has quietly
+   * reintroduced a theme. `ajx9` then added one **on purpose** — the WHO IG's
+   * chrome, ingested from its template chain — and the block went 12 -> 77.
+   * Raising the number to 80 would have kept the test green while retiring the
+   * thing it was for, since a future hand-written theme would fit under 80 just
+   * as comfortably.
+   *
+   * So the proxy is replaced by what it stood for. The chrome is identifiable
+   * because it is SCOPED, every line of it under `CHROME_SCOPE`, and the split
+   * below is the same fact the scoping buys at runtime: what is not scoped is
+   * what somebody typed here, and that is what must stay readable.
+   */
+  it("the hand-written half of the style block is still small enough to read in one screen", () => {
     const css = /<style>([\s\S]*?)<\/style>/.exec(indexSrc)?.[1] ?? "";
-    expect(css.trim().split("\n").length).toBeLessThanOrEqual(12);
+    const authored = css
+      .trim()
+      .split("\n")
+      .filter((l) => !l.includes(".st-ig") && l.trim() !== "" && !/^\s*(--|\}|[-\w]+\s*:)/.test(l));
+    expect(authored.length).toBeLessThanOrEqual(12);
+  });
+
+  /**
+   * The ingested chrome NEVER escapes its scope.
+   *
+   * This is the rule that makes mirroring somebody else's palette safe at all.
+   * The IG Publisher can put WHO's colours on `:root` because every document it
+   * builds is the IG's; ours are folio pages that carry a mirror, and one
+   * unscoped `:root` block would repaint the whole site the moment a reader
+   * opened a single artefact page.
+   */
+  it("every mirrored declaration is scoped — no bare :root anywhere", () => {
+    for (const [label, src] of pages) {
+      const css = /<style>([\s\S]*?)<\/style>/.exec(src)?.[1] ?? "";
+      expect(`${label}: ${/(^|[\s,}]):root\s*\{/.test(css)}`).toBe(`${label}: false`);
+    }
   });
 });
 
@@ -291,4 +327,70 @@ describe("materialization state is stated, never implied by styling", () => {
       expect(body(src)).not.toMatch(/\bdisabled\b/);
     });
   }
+});
+
+/**
+ * The LEFT-HAND NAV, and the conflation that emptied it.
+ *
+ * `shell` took `depth = 0 | 1`, and one number carried two different facts: a
+ * CATEGORY page and an ARTEFACT page both passed `1`, so the `nav_exclude`
+ * written for the 674 leaves swept out the category pages with them. The
+ * sidebar showed exactly ONE smart-trust row — the index — and the structure
+ * the index is grouped by was invisible in the one place a reader navigates
+ * from.
+ *
+ * Asserted on the RENDERED front matter rather than on the `NavRole` values,
+ * for the reason the two defects above are: just-the-docs reads the page, not
+ * the generator, and `parent` matches `title` BY STRING. A test on the type
+ * would pass while the sidebar flattened.
+ */
+describe("left-hand nav — three roles, one per page kind", () => {
+  const fm = (page: string): string => page.slice(0, page.indexOf("\n---", 4) + 4);
+  const readDoc = (rel: string): string => readFileSync(join(DOCS, rel), "utf-8");
+
+  it("the index CARRIES children", () => {
+    const f = fm(indexSrc);
+    expect(f).toContain("has_children: true");
+    expect(f).not.toContain("nav_exclude");
+    expect(f).not.toContain("parent:");
+  });
+
+  it("a category page is a LISTED child, named against the index's exact title", () => {
+    const name = categoryFiles[0];
+    expect(name).toBeDefined();
+    const f = fm(readDoc(join("category", name!)));
+    // The parent string must be the index's own `title`, byte for byte —
+    // just-the-docs matches a child to its parent by that string, so a
+    // re-titled index orphans every section and the sidebar quietly flattens.
+    const indexTitle = /title: (.+)/.exec(fm(indexSrc))![1]!;
+    expect(f).toContain(`parent: ${indexTitle}`);
+    expect(f).toMatch(/nav_order: \d+/);
+    // The whole point: a section is NOT excluded.
+    expect(f).not.toContain("nav_exclude");
+  });
+
+  it("an artefact page stays EXCLUDED — 674 leaves would bury the sidebar", () => {
+    const f = fm(readFileSync(join(ARTIFACTS, "CodeSystem-Actors.md"), "utf-8"));
+    expect(f).toContain("nav_exclude: true");
+    expect(f).not.toContain("has_children");
+    expect(f).not.toContain("parent:");
+  });
+
+  /**
+   * Falsifies the fix in the other direction: if `nav_exclude` ever returns to
+   * the category pages, this fails rather than the sidebar silently emptying —
+   * which is how the original defect survived, since an empty sidebar section
+   * looks exactly like a folio that has none.
+   */
+  it("no category page is nav-excluded, and every artefact page is", () => {
+    expect(categoryFiles.length).toBeGreaterThan(0);
+    for (const c of categoryFiles) {
+      expect(fm(readFileSync(join(CATEGORIES, c), "utf-8"))).not.toContain("nav_exclude");
+    }
+    const leaves = artifactFiles.slice(0, 25);
+    expect(leaves.length).toBeGreaterThan(0);
+    for (const a of leaves) {
+      expect(fm(readFileSync(join(ARTIFACTS, a), "utf-8"))).toContain("nav_exclude: true");
+    }
+  });
 });

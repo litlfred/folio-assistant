@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/literature-search.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/literature-search.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/literature-search.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/literature-search.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/literature-search.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/literature-search.md){: .fa-edit-source }
 
 {% raw %}
 # Literature search — finding the source a citation points at
@@ -156,3 +156,10 @@ repeating the usual story as fact.
 - [`bean-blocking`](bean-blocking.md) — recording outcome 2 so it does not read
   as abandoned
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Options analysis](../../processes/options-analysis.html) | Check the selected methodology's evidence base |
+

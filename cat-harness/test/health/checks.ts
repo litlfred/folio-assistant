@@ -167,6 +167,16 @@ export interface BeanEvidence {
    * above does: a missing measurement is not a measured zero.
    */
   doneWhen?: DoneWhenState;
+  /**
+   * The bean this one is a child of, from its `parent:` front matter.
+   *
+   * `undefined` means a ROOT bean — one nothing parents — which is a real and
+   * common answer, not a missing measurement. Nothing here distinguishes it
+   * from a probe that predates the field, and nothing needs to: the only
+   * consumer asks whether a bean HAS live children, and a bean with no
+   * children answers that the same either way.
+   */
+  parent?: string;
 }
 
 export interface TodoEvidence {
@@ -582,7 +592,11 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
         `of GitHub's 1 GB Pages limit — the main site shares that budget.`,
       action:
         "Ask which previews are still under review, then have the owner add `staging:cleanup` to the " +
-        "PRs whose previews are finished with. Do not remove any preview without that label.",
+        "OPEN PRs whose previews are finished with — the label is read from the " +
+        "`pull_request_target: closed` payload, so it works only while the PR can still close with it " +
+        "attached (bean `7umv`). A preview whose PR is already closed is removed by a " +
+        "`feature-staging.yml` dispatch instead; `staging-preview-orphans` lists those with the exact " +
+        "inputs. Do not remove any preview without one of the two.",
     });
   } else if (total > STAGING_WARN_BYTES) {
     findings.push({
@@ -598,7 +612,8 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
         `over the ${formatBytes(STAGING_WARN_BYTES)} warning point.`,
       action:
         "Report the list below to the owner and ask which are finished with. Removal is by adding " +
-        "`staging:cleanup` to that PR — never by this sweep, and never on an agent's own initiative.",
+        "`staging:cleanup` to that PR WHILE IT IS STILL OPEN, or a `feature-staging.yml` dispatch once " +
+        "it has closed (bean `7umv`) — never by this sweep, and never on an agent's own initiative.",
     });
   }
   return settle(id, summary, STAGING_SIZE_THRESHOLDS, measurements, findings);
@@ -862,11 +877,30 @@ export function stagingOrphanCheck(ctx: HealthContext): HealthCheckResult {
     summary:
       `\`STAGING/${j.preview.slug}\` (${formatBytes(j.preview.bytes)}, ${j.preview.files} files) — ` +
       `${j.liveness.evidence}.`,
+    // THE LABEL CANNOT REACH AN ORPHAN, so it is not offered here — bean
+    // `7umv`. `feature-staging.yml` says why, in its own words: `cleanup`
+    // fires on `pull_request_target: closed` and reads the labels from THAT
+    // event's payload, and "being findable as an orphan REQUIRES the pull
+    // request to be closed already — so the event has fired, the job has run,
+    // and the label was absent. Labelling afterwards fires nothing" (bean
+    // `w2g5`). The condition that puts a preview in THIS list is the same
+    // condition that has already spent its one chance to read a label.
+    //
+    // This action used to name the label FIRST and the dispatch as an
+    // alternative. Measured cost, 2026-09-23: the owner read it, applied
+    // `staging:cleanup` to both orphaned slugs, and nothing happened —
+    // 201.2 MB still on the publish branch. An action whose first option
+    // cannot work for the finding it is attached to is the `o5qj` shape, and
+    // this one spends somebody else's effort rather than just failing to
+    // clear.
     action:
       `Ask the owner whether the review of \`${j.preview.slug}\` is finished. Nothing here removes it. ` +
-      "Removal is `feature-staging.yml`: the `staging:cleanup` label while the pull request is still open, " +
-      `or a \`workflow_dispatch\` with \`cleanup_slug: ${j.preview.slug}\` and \`cleanup_confirm: ${j.preview.slug}\`, ` +
-      "which re-runs these same liveness signals and refuses if any of them has come back. Leaving it is a " +
+      "Removal is a `feature-staging.yml` `workflow_dispatch` with " +
+      `\`cleanup_slug: ${j.preview.slug}\` and \`cleanup_confirm: ${j.preview.slug}\`, ` +
+      "which re-runs these same liveness signals and refuses if any of them has come back. " +
+      "THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the " +
+      "`pull_request_target: closed` payload, and a preview is only findable as an orphan once that " +
+      "event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a " +
       "valid answer.",
   }));
   return settle(id, summary, ORPHAN_THRESHOLDS, measurements, findings);
@@ -1020,7 +1054,17 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
       "rather than a decision. MINOR, not major, because this maps analytical debt rather than corpus " +
       "integrity; a thin record misleads a future reader, it does not break a consumer. Measured " +
       "2026-09-20: 2 decision records in the store, 0 of them thin — so this locks in a property the " +
-      "store already has rather than demanding work.",
+      "store already has rather than demanding work. " +
+      "THE COUNTER READ ONE MARKDOWN FORM UNTIL BEAN `vq8g`, and was wrong in BOTH DIRECTIONS. " +
+      "Re-measured 2026-09-23 across the 12 records the store had grown to: `j6t3` and `xgd8` " +
+      "enumerate their options as bold paragraphs (`**A. …**`) and counted ZERO, while carrying FIVE " +
+      "options each against the typical three — so the two most developed analyses in the corpus were " +
+      "the two reported empty, against an action that says to DROP THE SECTION. `dhvf` enumerates four " +
+      "options as `### A —` subheadings over Pro/Con/Cost bullets and counted TEN. MADR is the " +
+      "authority and it is FORMAT-AGNOSTIC — \"at least two, every one real\", never a markdown list — " +
+      "so the detector changed rather than the beans: three forms are recognised and the most " +
+      "structured one present wins, never summed (summing `dhvf` gives 14 for 4). After the fix: " +
+      "dhvf 10 -> 4, j6t3 0 -> 5, xgd8 0 -> 5, the other nine unchanged at 3, and 0 records thin.",
   },
   {
     metric: "bean-self-declared-done",
@@ -1066,7 +1110,20 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
       "72 hours because a claim is meant to become visible at the FIRST commit " +
       "(`continual-progress` invariant 1), sessions are container-scoped and reclaimed, and three days " +
       "spans a weekend without firing on one. It is deliberately far below the 14-day abandonment " +
-      "threshold and answers a different question, so both are reported.",
+      "threshold and answers a different question, so both are reported. " +
+      "ONE PART OF THE OFFLINE HALF WAS ALSO WRONG, and bean `thux` fixed it: a bean worked through " +
+      "its CHILDREN is quiet on its own file by design, because nothing touches the parent while they " +
+      "move — so it accrued hours for doing exactly what it is for, and the finding named no action a " +
+      "person could take, since refreshing it means editing a file for no reason (`o5qj` one check " +
+      "over). A claim with a child whose own file moved inside this window is therefore excused, and " +
+      "counted under `bean-quiet-claims-parenting-live-work` rather than dropped. Measured 2026-09-23 " +
+      "on the real store: 39 quiet claims became 31, with 8 excused. It is keyed on PARENTHOOD rather " +
+      "than on `type: epic` — the relation carries the argument, and `type` is a label a bean sets " +
+      "about itself while `parent` is a fact another bean asserts about it. A parent ALL of whose " +
+      "children are also quiet still fires, which is the discrimination: `bzyu` had 8 open children " +
+      "and none moving. The UPPER BOUND sentence above still stands for the network half, which this " +
+      "check still cannot see; a sweep of all 298 unmerged branches and 20 open pull requests the same " +
+      "day found 7 more of the 39 live that way, and none of that is computable from the store.",
   },
   {
     metric: "bean-resolved-inline",
@@ -1114,7 +1171,35 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
     if (bucket) bucket.push(b);
     else byTitle.set(key, [b]);
   }
-  const dupGroups = [...byTitle.values()].filter((g) => g.length > 1);
+  // A DUPLICATE IS A GROUP WITH MORE THAN ONE **LIVE** MEMBER — bean `o5qj`.
+  //
+  // This used to keep any bucket with two members in it, whatever their status,
+  // which made the finding UNCLEARABLE BY ITS OWN ACTION. That action says to
+  // set the loser to `scrapped` and never to delete it; a scrapped bean was
+  // still a member, so the group survived the remedy. Measured: `qa1p` was
+  // scrapped at 2026-09-22T08:58:46Z naming `2yyh` as the survivor, and the
+  // 2026-09-23T06:58:47Z sweep — 22 hours later — reported the pair unchanged.
+  // The only state that WOULD have cleared it is `beans delete`, which the
+  // action forbids and `deletion-requires-confirmation` forbids again, so the
+  // check asked for a state it treated as unchanged and rejected the one state
+  // that satisfied it. `major` with no tolerance band, on #860, which closes
+  // only when every check is clean — so one unclearable finding pins that issue
+  // open and every other finding on it goes stale with it (`1xhc`).
+  //
+  // `scrapped` ADJUDICATES; `completed` DOES NOT. What the threshold's basis is
+  // about is accidental duplicates polluting the plan — the `qou` re-run that
+  // made 14,688 of them. A bean scrapped with a note naming its survivor is a
+  // duplicate somebody RULED ON, and is the record the skill asks for. An open
+  // bean duplicating finished work is still a real duplicate, so a `completed`
+  // member keeps counting.
+  const live = (b: BeanEvidence): boolean => b.status !== "scrapped";
+  const titleGroups = [...byTitle.values()].filter((g) => g.length > 1);
+  const dupGroups = titleGroups.filter((g) => g.filter(live).length > 1);
+  // REPORTED, NEVER SILENTLY DROPPED. Without this measurement "no duplicate
+  // was ever created" and "every duplicate was adjudicated" read identically,
+  // which is `dh4f` — and it is the same argument `bean-claimed` makes below
+  // for a count nothing thresholds.
+  const adjudicatedDupGroups = titleGroups.filter((g) => g.filter(live).length <= 1);
   const open = beans.filter((b) => OPEN_BEAN_STATUSES.has(b.status));
   const resolved = beans.filter((b) => RESOLVED_BEAN_STATUSES.has(b.status));
   // `undefined` means NO options section, which is a bean recording work rather
@@ -1130,12 +1215,68 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   // Quiet, not abandoned — see BEAN_QUIET_HOURS. The already-stale ones are
   // excluded so one bean does not produce two findings saying the same thing
   // at two timescales; the 14-day finding is the stronger claim and wins.
+  //
+  // AN EPIC IS ALIVE THROUGH ITS CHILDREN — bean `thux`, measured 2026-09-23.
+  //
+  // This check reads one signal, `updated_at` on the bean's own file, and for
+  // a task that is the right signal. For an EPIC it is the wrong one: an epic
+  // is worked by its children, and nothing touches the parent's file while
+  // they move. So an epic accrued quiet hours for doing exactly what an epic
+  // does, and the finding had no action a person could take — refreshing it
+  // means editing a file for no reason, which is `o5qj`'s shape one check
+  // over.
+  //
+  // Measured on the real store the day this landed: of 39 quiet claims, FIVE
+  // were epics with children carrying a live signal — `1xhc` with 8 of them
+  // while reported quiet for 100 hours, `ahvw` with 8, `1swy` and `0lmb` with
+  // 2 each, `8jt6` with 1. `bzyu` was the one epic genuinely quiet (8 open
+  // children, none live) and it still reports, which is the discrimination
+  // this exists for.
+  //
+  // A CHILD IS "MOVING" BY THE SAME CLOCK, and deliberately so. The network
+  // signals — an open pull request naming the bean, an unmerged branch
+  // touching it — are the ones this check has never had and still does not:
+  // `bean-quiet-claims`' own basis calls its count an UPPER BOUND for exactly
+  // that reason, and that sentence stays true. What is removed here is only
+  // the part answerable from the store itself.
+  //
+  // KEYED ON PARENTHOOD, NOT ON `type: epic`. The relation is what carries the
+  // argument — a bean worked through its children is quiet for a reason,
+  // whatever it calls itself — and `type` is a label a bean sets about itself
+  // while `parent` is a fact another bean asserts about it. Keying on the
+  // label would also have to decide what `feature` means, which this check has
+  // no business ruling on. Measured consequence: the network sweep that
+  // motivated this found FIVE epics with live children, and this store-local
+  // rule excuses EIGHT claimed beans. The two numbers answer different
+  // questions and neither corrects the other — network liveness of a child
+  // against a child's file having moved.
+  const movedRecently = (b: BeanEvidence): boolean => {
+    const h = hoursBetween(ctx.now, b.updatedAt);
+    return h !== undefined && h <= BEAN_QUIET_HOURS;
+  };
+  const liveChildren = new Set(
+    beans.filter((b) => b.parent !== undefined && movedRecently(b)).map((b) => b.parent!),
+  );
   const quiet = claimed
     .map((b) => ({ bean: b, hours: hoursBetween(ctx.now, b.updatedAt) }))
     .filter(
       (x): x is { bean: BeanEvidence; hours: number } =>
-        x.hours !== undefined && x.hours > BEAN_QUIET_HOURS && !stale.some((s) => s.bean.id === x.bean.id),
+        x.hours !== undefined &&
+        x.hours > BEAN_QUIET_HOURS &&
+        !stale.some((s) => s.bean.id === x.bean.id) &&
+        !liveChildren.has(x.bean.id),
     );
+  // REPORTED, NEVER SILENTLY SUBTRACTED. Without this, "no claim went quiet"
+  // and "the quiet ones were all parents of moving work" read identically —
+  // `dh4f`, and the same argument `bean-duplicate-title-groups-adjudicated`
+  // makes above. It counts CLAIMED beans only, so it is a subset of the
+  // denominator the finding already prints.
+  const quietButParenting = claimed.filter(
+    (b) =>
+      liveChildren.has(b.id) &&
+      !stale.some((s) => s.bean.id === b.id) &&
+      (hoursBetween(ctx.now, b.updatedAt) ?? 0) > BEAN_QUIET_HOURS,
+  );
 
   // A CLAIM THAT ITS OWN CRITERIA SAY IS FINISHED — bean `fkjo`.
   //
@@ -1160,6 +1301,12 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
     { metric: "bean-open", value: open.length, unit: "count", command: cmd },
     { metric: "bean-resolved-inline", value: resolved.length, unit: "count", command: cmd },
     { metric: "bean-duplicate-title-groups", value: dupGroups.length, unit: "count", command: cmd },
+    {
+      metric: "bean-duplicate-title-groups-adjudicated",
+      value: adjudicatedDupGroups.length,
+      unit: "count",
+      command: cmd,
+    },
     { metric: "bean-stale-in-progress", value: stale.length, unit: "count", command: cmd },
     // The DENOMINATOR, reported so the next number is legible. "12 quiet" means
     // nothing without it; "12 of 60 claimed" is a finding a person can act on,
@@ -1167,6 +1314,12 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
     // from 43.
     { metric: "bean-claimed", value: claimed.length, unit: "count", command: cmd },
     { metric: "bean-quiet-claims", value: quiet.length, unit: "count", command: cmd },
+    {
+      metric: "bean-quiet-claims-parenting-live-work",
+      value: quietButParenting.length,
+      unit: "count",
+      command: cmd,
+    },
     // REPORTED EVEN THOUGH NOTHING THRESHOLDS IT, and that is the point. The
     // finding below can only fire on a bean this count includes, so a detector
     // that stops matching — a heading respelled, the regex narrowed — shows up
@@ -1211,10 +1364,19 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   ];
   const findings: HealthFinding[] = [];
   for (const g of dupGroups) {
+    // THE LIVE ONES, because those are what the action touches. Listing a
+    // scrapped sibling here would send a reader to adjudicate a bean somebody
+    // already adjudicated; its existence is said separately, so the group's
+    // history is not lost either.
+    const alive = g.filter(live);
+    const settled = g.length - alive.length;
     findings.push({
       metric: "bean-duplicate-title-groups",
       severity: "major",
-      summary: `${g.length} beans share the title "${g[0].title}": ${g.map((b) => b.id).join(", ")}.`,
+      summary:
+        `${alive.length} beans share the title "${g[0].title}": ` +
+        `${alive.map((b) => b.id).join(", ")}` +
+        (settled > 0 ? ` (${settled} more already \`scrapped\`).` : "."),
       action:
         "Keep the earliest, and set each of the others to `scrapped` with a note naming the one that " +
         "survives. Never `beans delete` — a scrapped bean records a considered rejection, a deleted one " +

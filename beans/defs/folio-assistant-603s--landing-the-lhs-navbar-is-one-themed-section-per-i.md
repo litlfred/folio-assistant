@@ -241,15 +241,97 @@ territory and is now visible rather than theoretical.
 
 ## What is still THIS bean, after the slice
 
-- [ ] **Dependency ordering.** This slice sorts by name with the declared
-      footer last; the ask says *"do their rendering (in depdendcy ordering)"*.
-      `harness.config.json` carries dependencies and is a different file from
-      `harness.json` — the ordering wants it read.
-- [ ] **Collapsed = info, opened = docs navigation.** A tile is one target
-      today; the ask has two states.
-- [ ] **The display panel** showing an instance's named display subgraphs.
+- [x] **Dependency ordering.** **Built.** `orderTiles` runs
+      `flattenDependencies` over each instance's declared `needs`, reversed so
+      the foundation is at the bottom, with cycles and dangling names falling
+      back to alphabetical rather than blanking the navbar.
+      **This item's stated route was wrong and is corrected below** — `needs`
+      is on the DECLARATION, not in `<name>.config.json`.
+- [x] **Collapsed = info, opened = docs navigation.** **Built** — `<details>`
+      rather than a JS disclosure, so it is keyboard-operable and announces
+      its own state.
+- [x] **The display panel** showing an instance's named display subgraphs.
+      **Built**, and it carries the 2026-09-22 inert-and-labelled ruling.
 - [ ] **A tab for materialised local subgraphs and declared remote graphs**,
-      and opening content indicating local or remote.
+      and opening content indicating local or remote. **Still open, and it is
+      the only one of the four that is.** No remote/local mechanism exists:
+      `remote` appears three times in `docs-ui.js` and not at all in
+      `harness-tiles.ts`.
+
+---
+
+## VERIFIED ON A RENDERED PAGE, 2026-09-22 — three of these four were already built
+
+Stream `10uc` (GOAL 2), session_01SrFVoXeLER715HHQQaK22u. The list above had
+been untouched since 2026-09-20 while `sjic`/#959 and its successors built
+most of it. **That is `k59d`'s defect inside this bean** — the third instance
+this stream has found today, after `p5wm`'s path and `hfkl`'s ruling.
+
+**Verified by BUILDING the site (`bun run preview:site`) and reading the
+output**, not from the generator's JSON and not from a green gate set. That
+distinction is this milestone's own rule and it earned its keep here: two of
+the checks below can only be made on rendered HTML.
+
+### Dependency ordering — the mechanism works; 8 of 19 instances feed it nothing
+
+The live spine, read from the generated model:
+
+    bootstrap → cat-harness → folio-assistant-core → fhir-harness ‖
+    folio-assistant → smart-base → smart-ig ‖ smart-dak ‖ smart-l1 →
+    smart-trust ‖ smart-immunizations
+
+**Measured: 8 of 19 instances declare no `needs`** — `who-iris`, `detangle`,
+`agent-skills`, `kg-navigation`, `large-datasets`, `who-style-guide`,
+`bootstrap-tools`, `folio-assistant-sci`. Each carries the finding *"declares
+no `needs`, so its place in the stack is alphabetical rather than derived"* and
+sits in an undetermined block above the spine — which is the right behaviour
+(`orderTiles` refuses to assert a layer nobody declared; absent is not `[]`).
+
+So this item is **half-delivered in a way neither state captures**: the
+ordering is correct, and **42 % of instances have nothing for it to order by.**
+Authoring those eight is a claim about the layer stack, not a refactor, and it
+is the owner's. **Not guessed here.**
+
+**And this item's own route was wrong.** It said *"`harness.config.json`
+carries dependencies and is a different file from `harness.json` — the ordering
+wants it read."* `needs` is on the **declaration** (`<name>.json`). The
+`dependencies` key in `folio-assistant.config.json` is a different vocabulary
+for a different thing (`{folioAssistant: [{name, path}]}`, one instance only).
+An implementer following this bean would have read the wrong file.
+
+### The display panel, and the inert ruling holding in the real DOM
+
+Counted in the built `index.html`: **34 inert rows** — 18 *"no viewer yet"*,
+14 *"no viewer by design"*, 2 *"staging only"*. **Zero are `<a>`**, which is
+the `gjli` obligation recorded with the ruling and the one claim that cannot
+be checked from the generator, since the element is chosen in the template.
+
+### One thing to know before editing the wording — and my first reading of it was wrong
+
+*"staging only"* is spelled in **three** places: `inertNote`
+(`harness-tiles.ts:456`), `nav_footer_custom.html:282`, and
+`docs-ui.js:8121`.
+
+I first read this as `inertNote`'s dead branch being reached by a different
+speller — contradicting its docstring's *"reached by NOTHING"*. **That was
+wrong, and the docstring is right.** They are two different states:
+
+| | condition | who words it |
+|---|---|---|
+| `inertNote("staging-only")` | a declared viewer that is staging-only **and does not resolve** | `harness-tiles.ts`, tested |
+| the rendered `fsh-guts` row | a viewer that **has a `path`**, is staging-only, on a canonical build | `nav_footer_custom.html`, a literal |
+
+The data confirms it: `fsh-guts` carries `path` **and** `stagingOnly: true` and
+**no `note`**, so `inertNote`'s branch genuinely never fires here, exactly as
+measured.
+
+**What is left is smaller and still real:** two distinct states share three
+words, and the copy a reader actually sees is an untested literal in a
+template, while the copy with two unit tests is on a path production never
+takes. Changing `inertNote`'s wording would alter nothing visible. That is the
+two-spellers class `inertNote` was extracted to end, one surface short.
+Recorded rather than fixed: `nav_footer_custom.html` is `sjic`'s file and this
+is a judgement about wording, not a defect to sweep.
 
 ---
 
@@ -394,3 +476,78 @@ stream's and are untouched.
 **Still open on this bean, and unchanged:** what a "display subgraph" is, where
 `.fa-landing-board` fits, and the 2026-09-22 common expanding nav element from
 issue #851. Question 1 was the blocking one.
+
+---
+
+## OWNER RULING, 2026-09-22 — a declared graph with NO viewer is SHOWN, inert and labelled
+
+Asked by stream `10uc` (GOAL 2) as the one decision that was next, with the
+three options and their costs compared. Session
+https://claude.ai/code/session_01SrFVoXeLER715HHQQaK22u
+
+**The owner chose: show it, inert and labelled.** A greyed row saying the graph
+exists and has no viewer yet — over omitting it (the default the code would
+have inherited) and over linking it to a generic listing.
+
+### What the question had shrunk to, and why
+
+The open question read *"Which subgraphs are 'display' subgraphs? Every
+declared `graphs` entry, or an opt-in subset?"* **Most of that was already
+built**, and measuring it first is what left one real decision:
+
+| already there | where |
+|---|---|
+| a directory declares its viewers | `coverage.visualiser` |
+| one bare string or a list, normalised in ONE place | `visualisationsOf()`, `cat-harness/schemas/cat-harness.ts:985` |
+| **which surface a visualisation appears on** | `showsOn(v, "navbar" \| "board")`, `:995` — the `surfaces` field |
+| a declared viewer that does not resolve, as a DIFFERENT defect from none | `flh4`, reported by `check:instance-render` |
+| a finding when a declared graph owes a viewer and has none | `2krx`, with `renderExemption` for bootstrap |
+
+So "which subgraphs display" is answered **by the declaration**, and `[]` is,
+in the schema's own words, *"a real answer and a different one from 'declares a
+visualiser that does not resolve'"*. The only thing the declaration could not
+answer is what a READER SEES in that real-answer case — which is not
+hypothetical: `uploads` and `library` are declared today with no renderer, and
+`folio-assist-core` declares none of the four directories at all.
+
+### Why this option, in the repository's own words
+
+`harness-tiles.ts:558` already argues it, about this exact case:
+
+> *staying silent would hide a working viewer behind a rule, which is how
+> "declared and not rendered" and "rendered and not declared" both end up
+> **invisible**.*
+
+Omitting the row is that invisibility moved into the navbar — a reader cannot
+tell *"no viewer yet"* from *"no such graph"*. The generic-listing option was
+priced and rejected in the asking: it is a new renderer, and it would make
+"has a viewer" meaningless, **silencing `2krx`** because everything would then
+have one.
+
+### What the implementer owes, and it is an accessibility obligation
+
+`gjli` is the standing rule, and it binds here specifically:
+
+> **An inert row must not read as a control.** It is not a disabled button and
+> it is not a link with nothing behind it. A greyed thing that takes focus and
+> does nothing is worse than an omitted one, because it costs a keyboard or
+> screen-reader user an interaction to discover it is dead.
+
+So: not focusable, not a `<a>` or `<button>`, and its *state* carried in text
+an assistive technology reads — not in colour alone, which would also fail the
+contrast measurement every other surface here pays.
+
+**And the label says WHICH of the two it is.** `flh4`'s distinction is
+load-bearing: a graph that declares **no** viewer and a graph that declares one
+that **does not resolve** are different defects with different remedies. A row
+that renders both as "no viewer" throws that away at the last step, after two
+gates went to the trouble of telling them apart.
+
+### What this does NOT settle
+
+The **`surfaces`** field already decides navbar-versus-board per visualisation.
+This ruling is about a graph with no visualisation at all; it does not change
+what a declared-and-resolving viewer does, and it does not make any graph
+appear on a surface its declaration excludes.
+
+**This is this bean's open question 2** — *"What is a 'display subgraph'? Every declared `graphs` entry, or an opt-in subset?"* — closed. Question 1 (which file marks an instance) was closed earlier the same day. Still open: where `.fa-landing-board` fits, and issue #851's common expanding nav element.

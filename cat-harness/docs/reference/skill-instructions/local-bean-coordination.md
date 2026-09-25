@@ -11,7 +11,7 @@ parent: Skill instructions
 
 {% raw %}
 > **This is a stub, not the skill.** The skill is
-> [Bean Coordination (folio-core)](bean-coordination.html), from `skills/folio-core`,
+> [Bean Coordination (folio-core)](bean-coordination.html), from `cat-harness/skills/folio-core`,
 > which is what `skill_fetch` serves. Read that one; this page exists
 > only so an old link still lands somewhere truthful.
 
@@ -37,3 +37,11 @@ got to, was ported into the servable copy first; nothing was dropped. Bean
 Same discipline as `CLAUDE.md` and `GEMINI.md`: one source of truth, thin
 pointers to it. Do not re-add content here — edit the skill.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Agent bean lifecycle](../../processes/bean-lifecycle.html) | Leave it alone (coordinate instead); Claim it (status: in-progress); Record the blocker and hand back |
+| [Code change and review](../../processes/code-change-review.html) | Claim the work item |
+

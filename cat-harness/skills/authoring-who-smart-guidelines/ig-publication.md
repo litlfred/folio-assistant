@@ -1,3 +1,8 @@
+---
+input: schemas/skills/ig-publication/input.schema.json
+output: schemas/skills/ig-publication/output.schema.json
+---
+
 # ig-publication
 
 > Skill id: `ig-publication` · Package: `authoring-who-smart-guidelines` ·

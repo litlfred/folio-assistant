@@ -5,7 +5,7 @@
     "id": "Process_VoiceReview",
     "path": "processes/voice-review.bpmn"
   },
-  "source_hash": "sha256:64134e6d97df5af6851a9754c6b8f6dcb1b3f1a816e69ad54efa7b10b1a7b26d",
+  "source_hash": "sha256:167a5df41111afe723fbe62d34d4c7933b9691e168a5b8df66f20a5038221570",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -64,14 +64,50 @@
       "findings": []
     },
     "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
       "result": "n/a",
       "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 15,
     "fail": 0,
-    "n/a": 8,
+    "n/a": 9,
     "unknown": 0
   }
 }

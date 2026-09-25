@@ -5,6 +5,13 @@ description: >
   issue tracker. Track implementation progress, open tasks, missing
   artifacts, and blocked items across a session.
 allowed-tools: Read Grep Glob TodoWrite AskUserQuestion
+satisfies:
+  - "req:agent-workflow#work-is-visible"
+graph-kinds:
+  - beans
+  - board-positions
+  - boards
+  - todos
 ---
 
 # Session Task Manager (`beans`)
@@ -426,7 +433,7 @@ skills to explain in context of larger process."*
 
 | | **a per-activity op** | **a periodic sweep** |
 |---|---|---|
-| what it is | a step inside one process — a fourth `<folio:bean op>` beside `claim`, `note`, `resolve` | a scheduled run over the whole store |
+| what it is | a step inside one process — a fourth `<cat-harness.processes:bean op>` beside `claim`, `note`, `resolve` | a scheduled run over the whole store |
 | the question it answers | *is **this item's** work over?* | *is **the store** still readable?* |
 | what decides | the process reaching a step that means completion | a uniform, process-independent criterion — `completed` or `scrapped` |
 | what the archive then records | **why** — "archived because the release shipped" | **when** — "archived in the sweep of that date" |
@@ -466,7 +473,7 @@ asked for the sweep by hand.
 
 **Neither disposition is built yet**, and the first question is which —
 bean `folio-assistant-m8gz`, analysis in
-`fsh-guts/proposals/bean-archiving-in-bpmn.md`. Until then archiving is the
+`cat-harness/docs/proposals/bean-archiving-in-bpmn.md`. Until then archiving is the
 owner's word and `beans archive`, run deliberately. Note the CLI prints
 `.beans/archive/` but honours `path:` from `.beans.yml`; here that means
 `beans/defs/archive/`.

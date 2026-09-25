@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/kg-export.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/kg-export.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/kg-export.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/kg-export.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/kg-export.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/kg-export.md){: .fa-edit-source }
 
 {% raw %}
 # KG export — publishing the graph as linked data, not as a page
@@ -104,6 +104,94 @@ Four questions, in this order. The worked call for each term is in
 **No `canonicalUrl` and no `--base-url` → no absolute IRIs**, reported in
 `problems[]` rather than papered over. A fabricated absolute base is the same
 failure as a fabricated link.
+
+## Every key is a declared term — in content documents too
+
+Rule 5 above, applied to CONTENT (bean `yh6u`): in every document on the
+published content context, a plain key must be a declared term, or a JSON-LD
+processor drops it without a word. Measured before the check existed: 8
+undeclared keys across 392 committed figure blocks — every agent-drafted figure
+narrative was being dropped. `bun run check:context-emission` now fails on one.
+
+It does **not** descend into a value typed `@json`. Such a value is a JSON
+literal by declaration: its inner keys are data, not properties. That is the
+right home for a nested structure that is ours rather than linked data, and
+**the only way its nulls survive** — the three-state rule lives in them.
+
+**A path is a literal, never an `@id`.** A document-relative path coerced to
+`@id` resolves against the context's `@base`, not against the document, and so
+names a location the file is not at. `text` did exactly that on all 1,323
+committed prose blocks — `../sections/x.md` became a well-formed link to
+nowhere — until bean `589f` made it, `leanSource` and `file` literals.
+`check:context-emission` now fails if a file path sits under any `@id` term.
+
+**The upgrade rule** (owner, 2026-09-23, chosen for the least drift): a path
+term becomes a link — `@type: @id` with ABSOLUTE IRIs minted by the one
+function that mints block IRIs — when, and only when, the files it names are
+SERVED at a URL an instance declares. Until then a link is a promise nothing
+keeps, and a literal is the honest record: one reading, resolved by our tools
+against the file that carries it.
+
+## A prefix is the stub — and a prefix that is spoken must be bound
+
+Owner, 2026-09-23: *"prefix -> match stub"*. Each of our namespaces is
+`<canonical>/<stub>/ns#`, so the prefix bound to it is **that same word**:
+
+| namespace | prefix |
+|---|---|
+| `…/bootstrap/ns#` | `bootstrap` |
+| `…/cat-harness/ns#` | `cat-harness` |
+| `…/folio-assistant-core/ns#` | `folio-assistant-core` |
+
+One word in three places — path segment, stub, prefix — instead of three
+words that must agree. `NS_PREFIXES` in `schemas/namespaces.ts` is the one
+list; `stubOfNamespace()` reads the stub back off an IRI. The abbreviations
+`bs`, `cat` and `fac` were retired the same day, for a measured reason
+rather than taste.
+
+**Why an abbreviation is a defect waiting to happen (bean `zaqn`).** The
+content `@context` renamed its binding from `folio` to `fac` and kept writing
+twenty terms as `folio:…`. **An unbound prefix is not an error to a JSON-LD
+processor**: it reads `folio` as a URI SCHEME, so `folio:Definition` expanded
+to an absolute IRI that is well-formed, means nothing, and joins with nothing
+— in 1,737 committed documents. Every gate was green, for two reasons worth
+remembering:
+
+- a `--check` drift gate compares the generated copy with its SOURCE, and the
+  source was wrong the same way — **a drift gate proves agreement, never
+  correctness**;
+- `check:context-emission` asked only whether each *bound* prefix is spoken.
+  The converse — is each *spoken* prefix bound? — is the direction that
+  corrupts data, and nothing asked it.
+
+**The two rules, and what enforces them** — `bun run check:context-emission`,
+in CI (`code-quality-gates.yml`), over every committed `.jsonld`:
+
+1. **Spoken ⇒ bound.** A compact IRI used as a KEY or an `@type` value must
+   have its prefix bound in that document's context — inline, or the
+   published one by URL, or an array of both. The published context's own
+   term targets are checked too, whether or not a document uses them. Plain
+   string VALUES are not read as CURIEs: `label: "def:foo"` is an authored
+   label, which is exactly the hazard `schemas/jsonld.ts` opens with.
+2. **Own namespace ⇒ stub spelling.** A binding onto a `…/<stub>/ns#`
+   namespace of ours must be spelt `<stub>`, and `<stub>` must be declared by
+   an instance (`<stub>/<stub>.json`).
+
+A context URL the check cannot resolve is **"could not determine"**, counted
+and listed — never read as clean.
+
+**Checking a fix: expand, don't read.** A compact IRI looks right to a human
+whether or not it is bound. The evidence that closes a prefix defect is a
+document run through a JSON-LD processor, with **zero** expanded IRIs outside
+`http(s):`.
+
+**Where a prefix cannot be bound at all, a different spelling is never the
+answer.** CSVW metadata allows only `@language` and `@base` in its local
+context, so the `fac:` keys in [`tabular-metadata`](tabular-metadata.md)
+dangled under ANY prefix. The two real answers are absolute IRIs, or not being
+JSON-LD at all. Bean `792y` took the second: the record became plain JSON and
+the CSVW document is derived from it. **A file whose extension says `.jsonld`
+is making a claim** — a processor will read every colon-key in it as an IRI.
 
 ## `fsh-guts` NEVER reaches a published graph
 
@@ -268,11 +356,12 @@ worth a pipeline. What makes the export worth having is the relations that
 already exist on disk and that **no tool surfaces**:
 
 - **activity → skill.** Every BPMN activity may carry
-  `<folio:skill ref="…"/>`, so the export can say which process step is
+  `<bootstrap.processes:skill ref="…"/>`, so the export can say which process step is
   implemented by which skill.
 - **activity → role.** A BPMN lane is the role that performs the step.
 - **skill → package**, and a skill's **two facets**: its instruction body
-  (`<name>.md`) and its I/O contract (`schemas/skills/<name>/`).
+  (`<name>.md`) and the I/O contract it names in its front matter
+  (`input:`/`output:`, usually `schemas/skills/<name>/`).
 
 That last one is the one to understand before editing the exporter. **A name
 may have an instruction body, an I/O contract, or both — they are facets of one
@@ -357,3 +446,10 @@ publish.
 > It is also uncommitted and published nowhere. The two coexist; only one is
 > the graph.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [KG to public portal](../../processes/kg-to-portal.html) | Serialize to JSON-LD |
+

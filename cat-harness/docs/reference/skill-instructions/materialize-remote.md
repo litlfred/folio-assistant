@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`../large-datasets/skills/materialize-remote.md`](https://github.com/litlfred/folio-assistant/blob/main/../large-datasets/skills/materialize-remote.md) — do not edit here.
+> Generated from [`large-datasets/skills/materialize-remote.md`](https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/materialize-remote.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/../large-datasets/skills/materialize-remote.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/large-datasets/skills/materialize-remote.md){: .fa-edit-source }
 
 {% raw %}
 # Materializing remote content
@@ -93,3 +93,16 @@ never re-download.
 over its dependencies **before** gating, because the size being gated is the
 closure's, not the request's.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Materialize remote content — the shared subprocess](../../processes/materialize-remote.html)**.
+
+<img src="../../assets/img/workflows/materialize-remote.svg" alt="BPMN diagram: Materialize remote content — the shared subprocess" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [Materialize remote content — the shared subprocess](../../processes/materialize-remote.html) | Declare the purpose: working or archival; ENUMERATE + SUBSET against the source descriptor; SIZE what fraction, and what the whole would cost; RESTRICTIONS unknown is an answer, not a green light; COPYRIGHT per bitstream, and for the derived work; RETENTION what expires this copy; SOURCE LOSS what survives if the origin goes; Fetch, and record fixity; Declare the node `materialized`; Leave it `referenced`, record why |
+| [Refresh materialized remote content](../../processes/refresh-materialized.html) | ARCHIVAL verify fixity — never re-fetch; WORKING what changed upstream; What changed LOCALLY since; Adjudicate the conflict (calls a sub-process); Reconcile the two by hand; Re-materialize, re-asking the five gates — and record the new fixity; Keep the local edit, and re-pin so it stops being asked; Record the conflict, decide nothing, and do NOT re-pin |
+| [Sample import into a structured data store](../../processes/sample-import.html) | Materialize remote content (the five gates) (calls a sub-process); Refresh materialized content (calls a sub-process) |
+
