@@ -226,11 +226,12 @@
                 "jurisdiction-endpoint",
                 "none"
               ]
+            },
+            "state": {
+              "type": "string",
+              "const": "draft"
             }
-          },
-          "required": [
-            "host"
-          ]
+          }
         },
         "topology": {
           "type": "object",
@@ -350,7 +351,8 @@
                                 "type": "string",
                                 "enum": [
                                   "navbar",
-                                  "board"
+                                  "board",
+                                  "glass"
                                 ]
                               }
                             },
@@ -378,14 +380,6 @@
                         }
                       }
                     ]
-                  },
-                  "docs": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "skill": {
-                    "type": "string",
-                    "minLength": 1
                   },
                   "serialisations": {
                     "type": "string",
@@ -477,6 +471,47 @@
               "id",
               "url",
               "graphKinds"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "associatedHarnesses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "repository": {
+                "type": "string",
+                "format": "uri"
+              },
+              "declarationUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "relation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "url"
             ],
             "additionalProperties": false
           }
@@ -657,6 +692,14 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
         }
       },
       "required": [
@@ -670,8 +713,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/dependabot-npm_and_yarn-cat-harness-schemas-block-qa-schema-typescript-7.0.2/cat-harness.jsonld",
   "staging": {
     "branch": "dependabot/npm_and_yarn/cat-harness/schemas/block-qa-schema/typescript-7.0.2",
-    "sha": "663715cd186da4fd337a2195ba0ddf87b27760f4",
+    "sha": "15eb4a6fa79a736025a1df439ef7c6c94a90d367",
     "pr": "914/merge",
-    "run": "35823462648"
+    "run": "36170533021"
   }
 }
