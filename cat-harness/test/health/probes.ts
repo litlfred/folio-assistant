@@ -29,7 +29,7 @@
 
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join, relative, resolve } from "node:path";
 
 import {
   BEAN_GRAPH_FILE,
@@ -757,6 +757,31 @@ export function countConsideredOptions(text: string): number | undefined {
     else if (OPTION_ITEM.test(lines[i]!)) counts.item++;
   }
   return counts.subheading > 0 ? counts.subheading : counts.enumerated > 0 ? counts.enumerated : counts.item;
+}
+
+/**
+ * The bean-defs directory, RELATIVE to the repository root, from the
+ * declaration — or `undefined` when it cannot be read.
+ *
+ * Exported for `scripts/check-quiet-claim-liveness.ts`, which needs the path as
+ * a **git pathspec** rather than as a directory to read. `check:declared-paths`
+ * is what asked for it: that script had `"beans/defs"` as a literal, and the
+ * ratchet's remedy is "read the declaration, or mark the site with a reason".
+ * Reading it is the better half of that choice — a marked literal still goes
+ * stale silently when `beans/beans.json` moves the store, which it already did
+ * once (`.beans/` to `beans/`, 2026-09-18).
+ */
+export function beanDefsDirRelative(repoRoot: string): string | undefined {
+  const found = declaredDir(
+    repoRoot,
+    DEFAULT_BEAN_GRAPH_ROOT,
+    BEAN_GRAPH_FILE,
+    (raw) => parseBeanGraph(raw),
+    (g) => beanNodeOfKind(g as never, "bean-defs"),
+    DEFAULT_BEAN_GRAPH,
+  );
+  if ("reason" in found) return undefined;
+  return relative(repoRoot, found.dir) || ".";
 }
 
 export function probeBeans(repoRoot: string): Probe<BeanEvidence[]> {
