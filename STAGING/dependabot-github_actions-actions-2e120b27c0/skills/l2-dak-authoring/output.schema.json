@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/skills/l2-dak-authoring/output.schema.json",
+  "title": "L2 DAK Authoring Output",
+  "description": "Output schema for L2 DAK authoring.",
+  "type": "object",
+  "required": [
+    "artifacts",
+    "status"
+  ],
+  "properties": {
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "type"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "bpmn",
+              "dmn",
+              "spreadsheet",
+              "markdown",
+              "fsh"
+            ]
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "ready-for-review",
+        "approved"
+      ]
+    },
+    "validationIssues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "dependabot/github_actions/actions-2e120b27c0",
+    "sha": "16dbb1d0d9fd74ea7863135d670787866d41d91c",
+    "pr": "1337/merge",
+    "run": "36096101230"
+  }
+}

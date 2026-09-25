@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/skills/l3-fhir-authoring/output.schema.json",
+  "title": "L3 FHIR Authoring Output",
+  "description": "Output schema for L3 FHIR IG authoring.",
+  "type": "object",
+  "required": [
+    "fshFiles",
+    "sushiResult"
+  ],
+  "properties": {
+    "fshFiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "resourceType"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "resourceId": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "sushiResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "success",
+            "warnings",
+            "errors"
+          ]
+        },
+        "resourceCount": {
+          "type": "integer"
+        },
+        "errorCount": {
+          "type": "integer"
+        },
+        "warningCount": {
+          "type": "integer"
+        }
+      }
+    },
+    "generatedResources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "dependabot/github_actions/actions-2e120b27c0",
+    "sha": "16dbb1d0d9fd74ea7863135d670787866d41d91c",
+    "pr": "1337/merge",
+    "run": "36096101230"
+  }
+}

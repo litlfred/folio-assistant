@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/skills/content-feedback/input.schema.json",
+  "title": "Content Feedback Input",
+  "description": "Input schema for feedback collection and triage.",
+  "type": "object",
+  "required": [
+    "source"
+  ],
+  "properties": {
+    "source": {
+      "type": "string",
+      "enum": [
+        "github-issues",
+        "survey",
+        "implementation-report",
+        "clinical-review"
+      ],
+      "description": "Source of feedback."
+    },
+    "publishedVersion": {
+      "type": "string",
+      "description": "Version the feedback relates to."
+    },
+    "feedbackItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "description"
+        ],
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "major",
+              "minor",
+              "enhancement"
+            ]
+          },
+          "component": {
+            "type": "string"
+          },
+          "reporter": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "dependabot/github_actions/actions-2e120b27c0",
+    "sha": "16dbb1d0d9fd74ea7863135d670787866d41d91c",
+    "pr": "1337/merge",
+    "run": "36096101230"
+  }
+}
