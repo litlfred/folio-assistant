@@ -341,5 +341,5 @@ renamed or restructured and the reader needs fixing — not the gate list.
 | process | step(s) that name it |
 |---|---|
 | [Code change and review](../../processes/code-change-review.html) | Run the platform's own gates |
-| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | Lean: no bare `import Mathlib` (HARD); Python: unused and wildcard imports (HARD); TypeScript: tests, lint, types, and ~30 repository gates (HARD); End-to-end + accessibility (HARD); Rust wildcard imports (WARN-ONLY); Dependency advisories (WARN-ONLY); Skill-registration chain (UNMASKED) |
+| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | Lean: no bare `import Mathlib` (HARD); Python: unused and wildcard imports (HARD); TypeScript: lint, types and tests (HARD); End-to-end + accessibility (HARD); Rust wildcard imports (WARN-ONLY); Dependency advisories (WARN-ONLY); Repository gates (HARD); Skill-registration chain (UNMASKED) |
 

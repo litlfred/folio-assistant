@@ -14,7 +14,7 @@ parent: Skill instructions
 # RACI — involvement, over the graph that already exists
 
 **The method is not in this file.** It is the `raci` node in the `methodology`
-graph — [`methodologies/raci.md`](../../methodologies/raci.md) — which carries
+graph — [`methodologies/raci.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/raci.md) — which carries
 the four letters, the exactly-one-Accountable constraint, and what RACI is not
 for. This file carries how *this platform* applies it. That split is
 `methodology-adoption`'s: a skill names the methodology it follows, and the

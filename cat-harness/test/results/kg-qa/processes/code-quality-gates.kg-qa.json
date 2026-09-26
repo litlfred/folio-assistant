@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "processes/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:1e7ecd6c57f80c2fa6c15cc8d3e9687bd951fd703ce1cbf8ba3decc7b7b245a8",
+  "source_hash": "sha256:ebeb3ec8000f43c5356ea3d89362f8d02d4da635c8a78a7e41b99ef748a0c1b3",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -83,6 +83,10 @@
           "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
         },
         {
+          "where": "Task_RepositoryGates",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
           "where": "Task_SkillChain",
           "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
         }
@@ -129,13 +133,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/code-quality-gates.yml",
-          "detail": ".github/workflows/code-quality-gates.yml changed since cat-harness/processes/code-quality-gates.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -143,8 +142,8 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 2,
+    "pass": 16,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   },
@@ -153,8 +152,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/code-quality-gates.bpmn",
       "code": ".github/workflows/code-quality-gates.yml",
-      "prose_hash": "1e7ecd6c57f8",
-      "code_hash": "9ab16443daca",
+      "prose_hash": "ebeb3ec8000f",
+      "code_hash": "fabd7cd09ef4",
       "by": "baseline"
     }
   ]

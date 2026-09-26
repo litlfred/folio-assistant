@@ -65,7 +65,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { gitCorpus } from "./git-corpus.ts";
+import { gitCorpus } from "../schemas/git-corpus.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");

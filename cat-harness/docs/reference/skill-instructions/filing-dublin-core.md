@@ -17,7 +17,7 @@ This is the **librarian's** half of intake, not the ingestion engine's. A file
 lands in `uploads/`; describing *what it is* is filing, and deriving structure
 from it is `library-ingestion`. Keeping those apart is why `uploads/` and
 `library/` are two stages rather than one directory
-([`uploads-and-library-are-two-stages-of-one-pipeline`](../../content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md)).
+([`uploads-and-library-are-two-stages-of-one-pipeline`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md)).
 
 ## The line, and it is drawn by the vocabulary
 

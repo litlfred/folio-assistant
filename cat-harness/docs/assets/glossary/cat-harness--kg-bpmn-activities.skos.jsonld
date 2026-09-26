@@ -1312,6 +1312,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_repositorygates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Repository gates (HARD)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 `bun run` invocations in all. A SEPARATE job from Task_TypeScript since bean `om30`: they were one job in which `bun test` came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on `main` meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is `xom7` at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. `bun run gates` derives its list from BOTH jobs, so the local set still cannot drift from CI's."
+        }
+      ],
+      "skos:notation": "Task_RepositoryGates",
+      "dcterms:source": "cat-harness/processes/code-quality-gates.bpmn#Task_RepositoryGates",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_rust",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1344,7 +1364,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Runs the five `--check` commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, docs:auto:check, kg:audit:check, kg:detangle:check. A SEPARATE job rather than a step in Task_TypeScript, and that is the whole point of drawing it: every one of the five is already a step there, but all of them run after `bun test`, which executes the kg-audit and detangle WRITERS and so repairs two of the artefacts before their checks read them (bean `ymsu`). This job never runs `bun test`, so it is the only place those five are read against the tree as checked out. Measured 2026-09-26: 13s, and green on a clean tree. Drawn beside Task_Advisories rather than inside Task_TypeScript for a second reason — a red step placed BEFORE `bun test` would skip the 45 gates behind it, turning one named failure into forty-five unevaluated ones. Bean `v625` for why the chain needs a command at all; `fjwi` for the placement measurement."
+          "@value": "Runs the five `--check` commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, docs:auto:check, kg:audit:check, kg:detangle:check. A SEPARATE job rather than steps in Task_RepositoryGates, and that separation is the whole gate: every one of the five is also a step there, but all of them run after `bun test`, which executes the kg-audit and detangle WRITERS and so repairs two of the artefacts before their checks read them (bean `ymsu`). This job never runs `bun test`, so it is the only place those five are read against the tree as checked out. Its first CI run earned the place: it went red on `kg:detangle:check` and the cause was `kg-detangle.ts` counting 1214 files of a gitignored `node_modules/` as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of `bun test` either: measured on main's run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans `v625`, `fjwi`."
         }
       ],
       "skos:notation": "Task_SkillChain",
@@ -1359,12 +1379,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TypeScript: tests, lint, types, and ~30 repository gates (HARD)"
+          "@value": "TypeScript: lint, types and tests (HARD)"
         }
       ],
       "skos:definition": [
         {
-          "@value": "bun test, lint, tsc --noEmit, then the repository gates (workflow refs, lane and process documentation, kg:audit:check, detangle, skills, …). `bun run gates` derives its list from this job, so it is the local way to run the same set before pushing."
+          "@value": "Three checks and nothing else: `bun run lint`, `tsc --noEmit`, then `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Order inside the job is load-bearing rather than stylistic: Actions stops a job at its first failing step, so `bun test` — red on `main` by the owner's decision — runs LAST, with nothing behind it to mask. While it ran first, lint and typecheck did not execute on `main` at all."
         }
       ],
       "skos:notation": "Task_TypeScript",

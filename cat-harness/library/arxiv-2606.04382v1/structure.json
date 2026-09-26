@@ -1,0 +1,494 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2606.04382v1",
+ "source": {
+  "file": "2606.04382v1.pdf",
+  "sha256": "da73a6e55e0d9c9c2a4188066a7d0c308ef0d6ff0695b982c6a13b7877774a6b",
+  "bytes": 163814,
+  "pages": 13,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-24T19:21:15Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2606.04382",
+   "version": "1",
+   "primary_class": "cs.DL",
+   "stamp_date": "3 Jun 2026"
+  },
+  "doi": null,
+  "title": "LCSHBench: A Multilingual, Consensus-Grounded Benchmark for Library of Congress Subject Heading Assignment",
+  "authors_raw": "Kwok Leong Tang",
+  "title_lines": [
+   "LCSHBench: A Multilingual, Consensus-Grounded Benchmark for",
+   "Library of Congress Subject Heading Assignment"
+  ],
+  "abstract": "Automated subject cataloging assigns controlled- vocabulary headings to bibliographic records, but LCSH has no standard public benchmark. We intro- duce LCSHBench: 22,346 books in 15 languages from the openly licensed Harvard, Columbia, and Prince- ton catalogs. Records enter only when at least two independent cataloging agencies assigned LCSH; we release per-catalog provenance plus union and unani- mous answer views. A concordance study of 465,187 works cataloged by all three libraries shows why this design matters: libraries usually agree on the under- lying topic (93.3% share a concept-level heading) but often differ in exact expression (39.4% have identical heading sets). LCSHBench therefore scores both ex- act and concept matches, with set and rank metrics broken down by language and heading type, across open-vocabulary generation and full-vocabulary re- trieval. As a first demonstration, a low-rank fine-tune of a 300M on-device embedder improves cross-lingual retrieval and beats a 3,072-dimensional hosted em- bedder on development exact recall@200 (0.659 vs 0.623). The language panel shows the gain is not uni- form, and held-out-test and end-to-end confirmation remain future work.",
+  "docinfo": {
+   "Title": "LCSHBench: A Multilingual, Consensus-Grounded Benchmark for Library of Congress Subject Heading Assignment",
+   "Author": "Kwok Leong Tang",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:a6404ea)"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Literature review",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "What a ``subject'' is: subject analysis and aboutness",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "How much do catalogers agree? Inter-indexer consistency",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Automated subject indexing",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Large language models for subject cataloging",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Benchmarks in adjacent vocabularies",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Methodology",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "The two tasks",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Consensus ground truth",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Inter-cataloger concordance: an objective core and a subjective surface",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Sources and matching",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Extraction, provenance filtering, and typing",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Consensus views and cleaning",
+   "page": 6,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Balancing and splits",
+   "page": 6,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Composition",
+   "page": 6,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Contamination",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Metrics",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Baselines and experimental setup",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Fine-tuning the on-device embedder",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Findings",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "First-stage retrieval",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Generation and selection",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "The metric panel is necessary",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Discussion",
+   "page": 10,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Limitations and future work",
+   "page": 11,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 11,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Data and code availability",
+   "page": 12,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Use of generative AI",
+   "page": 12,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1350,
+   "n_words": 192
+  },
+  {
+   "id": "sec-000-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 3391,
+   "n_words": 516
+  },
+  {
+   "id": "sec-001-literature-review",
+   "number": null,
+   "title": "Literature review",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 2338,
+   "n_words": 362
+  },
+  {
+   "id": "sec-002-automated-subject-indexing",
+   "number": null,
+   "title": "Automated subject indexing",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 3681,
+   "n_words": 544
+  },
+  {
+   "id": "sec-003-methodology",
+   "number": null,
+   "title": "Methodology",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-004-the-two-tasks",
+   "number": null,
+   "title": "The two tasks",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 1478,
+   "n_words": 237
+  },
+  {
+   "id": "sec-005-consensus-ground-truth",
+   "number": null,
+   "title": "Consensus ground truth",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 5,
+   "n_chars": 4444,
+   "n_words": 714
+  },
+  {
+   "id": "sec-006-sources-and-matching",
+   "number": null,
+   "title": "Sources and matching",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 6,
+   "n_chars": 2749,
+   "n_words": 425
+  },
+  {
+   "id": "sec-007-consensus-views-and-cleaning",
+   "number": null,
+   "title": "Consensus views and cleaning",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 721,
+   "n_words": 104
+  },
+  {
+   "id": "sec-008-balancing-and-splits",
+   "number": null,
+   "title": "Balancing and splits",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 844,
+   "n_words": 133
+  },
+  {
+   "id": "sec-009-composition",
+   "number": null,
+   "title": "Composition",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 7,
+   "n_chars": 1011,
+   "n_words": 157
+  },
+  {
+   "id": "sec-010-contamination",
+   "number": null,
+   "title": "Contamination",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 1110,
+   "n_words": 172
+  },
+  {
+   "id": "sec-011-metrics",
+   "number": null,
+   "title": "Metrics",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 8,
+   "n_chars": 3316,
+   "n_words": 549
+  },
+  {
+   "id": "sec-012-baselines-and-experimental-setup",
+   "number": null,
+   "title": "Baselines and experimental setup",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 1000,
+   "n_words": 140
+  },
+  {
+   "id": "sec-013-generation-and-selection",
+   "number": null,
+   "title": "Generation and selection",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 124,
+   "n_words": 19
+  },
+  {
+   "id": "sec-014-fine-tuning-the-on-device-embedder",
+   "number": null,
+   "title": "Fine-tuning the on-device embedder",
+   "level": 3,
+   "page_start": 8,
+   "page_end": 9,
+   "n_chars": 2019,
+   "n_words": 326
+  },
+  {
+   "id": "sec-015-findings",
+   "number": null,
+   "title": "Findings",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-016-first-stage-retrieval",
+   "number": null,
+   "title": "First-stage retrieval",
+   "level": 2,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 2204,
+   "n_words": 330
+  },
+  {
+   "id": "sec-017-the-metric-panel-is-necessary",
+   "number": null,
+   "title": "The metric panel is necessary",
+   "level": 2,
+   "page_start": 9,
+   "page_end": 10,
+   "n_chars": 2631,
+   "n_words": 395
+  },
+  {
+   "id": "sec-018-discussion",
+   "number": null,
+   "title": "Discussion",
+   "level": 1,
+   "page_start": 10,
+   "page_end": 11,
+   "n_chars": 2075,
+   "n_words": 330
+  },
+  {
+   "id": "sec-019-limitations-and-future-work",
+   "number": null,
+   "title": "Limitations and future work",
+   "level": 1,
+   "page_start": 11,
+   "page_end": 11,
+   "n_chars": 2884,
+   "n_words": 442
+  },
+  {
+   "id": "sec-020-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 11,
+   "page_end": 12,
+   "n_chars": 1545,
+   "n_words": 238
+  },
+  {
+   "id": "sec-021-data-and-code-availability",
+   "number": null,
+   "title": "Data and code availability",
+   "level": 1,
+   "page_start": 12,
+   "page_end": 12,
+   "n_chars": 618,
+   "n_words": 81
+  },
+  {
+   "id": "sec-022-use-of-generative-ai",
+   "number": null,
+   "title": "Use of generative AI",
+   "level": 1,
+   "page_start": 12,
+   "page_end": 13,
+   "n_chars": 4696,
+   "n_words": 656
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 29,
+  "toc_inferred_entries": 0,
+  "sections": 24,
+  "chars_total": 46235
+ }
+}

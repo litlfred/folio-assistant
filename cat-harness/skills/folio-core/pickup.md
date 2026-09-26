@@ -77,6 +77,12 @@ For each PR number, in a single message issue parallel calls:
 
 - `pull_request_read get` → `head.ref` (the REAL branch), `title`,
   `body` (checklist), `base.ref`, `mergeable_state`, `state`.
+  **Act on `mergeable_state` only when it reads `dirty`.** Bean `fx5r`
+  measured this endpoint serving a merged PR's PRE-MERGE view for 45
+  minutes, so `clean` and `unknown` can both be describing a PR that is
+  already gone; `unknown` additionally means *not computed yet* rather
+  than *cannot be determined* (`h2s9`). For "has this landed?", ask git:
+  `git merge-base --is-ancestor origin/<head> origin/<base>`.
 - `pull_request_read get_check_runs` → CI state.
 - `pull_request_read get_reviews` and `get_review_comments` → review
   bodies + inline threads (these are often rate-limited; tolerate

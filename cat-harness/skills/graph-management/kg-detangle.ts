@@ -32,10 +32,10 @@
  * @module skills/graph-management/kg-detangle
  * @covers cat-harness, skills
  */
-import { readdirSync, readFileSync, existsSync, mkdirSync, writeFileSync } from "fs";
-import { gitCorpus } from "../../scripts/git-corpus.js";
+import { readdirSync, readFileSync, statSync, existsSync, mkdirSync, writeFileSync } from "fs";
 import { join, relative, resolve, dirname } from "path";
 import { detangleResultsDir, sidecarFor, sidecarPathFor, staleFields } from "../../schemas/detangle-sidecar.ts";
+import { gitCorpus } from "../../schemas/git-corpus.ts";
 import {
   DEFAULT_THRESHOLDS,
   measure,
@@ -79,56 +79,99 @@ const EXT = /\.(md|bpmn|dmn|json|ts)$/;
 const CONVENTIONAL = new Set(["README", "AGENTS"]);
 
 /**
- * The files under {@link dir} that git accounts for, filtered to node kinds.
- *
- * ASKED OF GIT, NEVER OF THE DISK, and that is a fix rather than a style
- * choice. This was a bare `readdirSync` recursion, which made a PINNED
- * measurement depend on what happened to be lying in the working tree.
- *
- * Measured 2026-09-26, and it is why the new `skill-registration-chain` job
- * was red on its first CI run while every local run was green:
- *
- * | `cat-harness/schemas` | `size` |
- * |---|---|
- * | fresh checkout (CI) | **227** |
- * | this author's container, after a gate ran `bun install` in a publishable subpackage | **1441** |
- *
- * The 1214 extra "nodes" were `cat-harness/schemas/block-qa-schema/node_modules/`
- * — 2719 files, gitignored, one machine's residue reported as this
- * repository's graph. A measurement that moves when you install
- * devDependencies cannot be pinned, and the committed sidecar had the polluted
- * number in it.
- *
- * `git-corpus.ts`'s own docblock already names this exact failure (`rsi6`) and
- * says `xd1g` counted **11** scanners walking a root with no gitignore
- * awareness, the rule wanting stating once rather than copying eleven times.
- * This was one of the eleven.
- *
- * `--others --exclude-standard` keeps a NEW, not-yet-committed node in the
- * graph — the corpus is what git accounts for, not what it has recorded — so
- * authoring a skill and measuring before committing it still works.
- *
- * REFUSES rather than falling back. A silent fall back to the filesystem is
- * how the pollution arrived, and `undefined` from `gitCorpus` means git could
- * not answer, which is never the same as an empty directory (`dh4f`). `ROOT`
- * is this repository, never a temp fixture, so there is no legitimate case
- * here for the third state.
+ * A bare filesystem descent. Kept ONLY as the fallback for when git cannot
+ * answer — see {@link corpusOf}, which is what callers use.
  */
-function walk(dir: string): string[] {
-  if (!existsSync(dir)) return [];
-  const corpus = gitCorpus(dir);
-  if (corpus === undefined) {
-    console.error(
-      `UNDETERMINED: git could not list files under ${dir}.\n` +
-        "This is not an empty directory and not a pass — nothing was measured. " +
-        "A pinned measurement must not be taken from a filesystem walk; see this " +
-        "function's note and scripts/git-corpus.ts.",
-    );
-    process.exit(2);
+function walk(dir: string, out: string[] = []): string[] {
+  if (!existsSync(dir)) return out;
+  for (const e of readdirSync(dir)) {
+    if (e.startsWith(".")) continue;
+    const p = join(dir, e);
+    if (statSync(p).isDirectory()) walk(p, out);
+    else if (EXT.test(e)) out.push(p);
   }
-  return corpus.filter(
-    (p) => EXT.test(p) && !relative(dir, p).split("/").some((seg) => seg.startsWith(".")),
-  );
+  return out;
+}
+
+/** True when any segment of `rel` is dot-prefixed, as {@link walk} skipped. */
+function hasDotSegment(rel: string): boolean {
+  return rel.split("/").some((seg) => seg.startsWith("."));
+}
+
+/**
+ * The nodes of one scanned directory — asked of git, not of the disk.
+ *
+ * ## Why this is not a bare walk any more
+ *
+ * A bare walk skips dot-prefixed entries and nothing else, so it counts
+ * whatever happens to be on the machine. On 2026-09-26 that stopped being
+ * theoretical: `check:published-packages` (bean `rsi6`) runs `bun install`
+ * inside `cat-harness/schemas/block-qa-schema`, and the moment it did, this
+ * scan's answer for `cat-harness/schemas` went from **227** to **1441** —
+ * 1214 files of a dependency tree and a build directory, counted as
+ * knowledge-graph nodes and pinned into a committed sidecar, which
+ * `gen-uml-overview` then republished as `1441 | 0.96 | 25 | 4`.
+ *
+ * Measured four ways on one tree, with this module's own `EXT`: bare walk
+ * 1441, excluding `node_modules/` 228, also excluding `dist/` 227,
+ * `git ls-files` 227.
+ *
+ * **The sharp part is that it was order-dependent WITHIN a single run.** That
+ * install happens at line 823 of `code-quality-gates.yml` and
+ * `kg:detangle:check` at line 663, so a runner measures 227 while a developer
+ * container that has already run the gate set measures 1441 — and the two
+ * disagree about a number that is committed. A measurement whose value depends
+ * on which gate ran first is not a measurement of the repository.
+ *
+ * This was the THIRTEENTH instance of `xd1g`'s class and the first outside
+ * `scripts/`, which is why that bean's survey — a syntactic filter over
+ * `scripts/*.ts` — could not have found it.
+ *
+ * ## `undefined` is not `[]`
+ *
+ * {@link gitCorpus} returns `undefined` when git could not answer and `[]` when
+ * git looked and there is nothing. Collapsing them is the `dh4f` shape —
+ * reporting a clean corpus nobody read.
+ *
+ * But there are **three** cases here, not two, because `gitCorpus` also answers
+ * `undefined` for a directory that is not there — and an absent directory is a
+ * DETERMINED empty, not an unknown. Found immediately: `SCAN` still names
+ * `cat-harness/src/skills`, which #760 removed, so the first version of this
+ * function reported *"git could not enumerate 1 directory"* about a directory
+ * whose answer is perfectly known. That is a could-not-determine manufactured
+ * out of a fact, which is as bad as the reverse.
+ *
+ * So:
+ *
+ *   absent      -> `[]`, and recorded in {@link absentScanTargets}. A declared
+ *                  scan target that does not exist is `dh4f` itself — a
+ *                  consumer scanning nothing and reporting a clean run over it
+ *                  — so it is REPORTED rather than silently skipped, and left
+ *                  for a person to remove from `SCAN`.
+ *   git refused -> a bare {@link walk}, recorded in {@link corpusFallbacks},
+ *                  because a measurement pinned from a bare walk counts
+ *                  whatever is on the machine and must be legible as such.
+ *   git answers -> that list, filtered to {@link EXT} and to the dot-prefix
+ *                  rule `walk` applied.
+ *
+ * Neither is a failure. `gates` must stay runnable where git cannot be asked,
+ * and a stale `SCAN` entry is a person's edit, not this script's to make.
+ */
+const corpusFallbacks: string[] = [];
+const absentScanTargets: string[] = [];
+
+function corpusOf(dir: string): string[] {
+  const shown = relative(ROOT, dir) || dir;
+  if (!existsSync(dir)) {
+    absentScanTargets.push(shown);
+    return [];
+  }
+  const listed = gitCorpus(dir);
+  if (listed === undefined) {
+    corpusFallbacks.push(shown);
+    return walk(dir);
+  }
+  return listed.filter((abs) => EXT.test(abs) && !hasDotSegment(relative(dir, abs)));
 }
 
 const nodes: DetangleNode[] = [];
@@ -137,7 +180,7 @@ const byId = new Map<string, string>(); // id -> absolute path
 const byName = new Map<string, string[]>();
 
 for (const { path, groupDepth } of SCAN) {
-  for (const abs of walk(join(ROOT, path))) {
+  for (const abs of corpusOf(join(ROOT, path))) {
     const id = relative(ROOT, abs);
     const group = id.split("/").slice(0, groupDepth).join("/");
     nodes.push({ id, group });
@@ -436,6 +479,22 @@ if (process.argv.includes("--json")) {
   console.log(JSON.stringify({ thresholds: DEFAULT_THRESHOLDS, results, dangling }, null, 2));
 } else {
   console.log(`\nDetangle — ${nodes.length} nodes, ${edges.length} edges, ${dangling.length} dangling\n`);
+  // Stated rather than silent: a measurement pinned from a bare walk counts
+  // whatever is on the machine, which is the defect `corpusOf` exists for. A
+  // reader must be able to tell which kind of number they are looking at.
+  if (corpusFallbacks.length > 0) {
+    console.log(
+      `  ? git could not enumerate ${corpusFallbacks.length} scanned directory(ies); a bare walk was used, so`,
+    );
+    console.log("    their counts may include untracked residue: " + corpusFallbacks.join(", "));
+    console.log("");
+  }
+  if (absentScanTargets.length > 0) {
+    console.log(`  ? ${absentScanTargets.length} declared scan target(s) do not exist, so nothing was measured`);
+    console.log("    for them — a determined empty, not an unknown. Remove from SCAN or create: ");
+    console.log("    " + absentScanTargets.join(", "));
+    console.log("");
+  }
   console.log(
     "  " +
       ["group".padEnd(40), "size".padStart(5), "coh".padStart(6), "in".padStart(5), "out".padStart(6), "grps".padStart(5), "dir".padStart(6), "enf".padStart(4), "prose".padStart(6), "wdir".padStart(5), "undet".padStart(6), "role".padEnd(13), "verdict"].join(" "),

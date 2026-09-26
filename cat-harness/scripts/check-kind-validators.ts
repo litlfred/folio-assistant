@@ -27,7 +27,7 @@
 import { BASE_GRAPH_KINDS } from "../schemas/cat-harness.js";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 
-import { gitCorpus } from "./git-corpus.ts";
+import { gitCorpus } from "../schemas/git-corpus.ts";
 import { join, relative } from "node:path";
 
 import { directoriesForGraph, instanceRootsIn } from "../schemas/cat-harness.js";
