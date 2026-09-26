@@ -1,11 +1,11 @@
 ---
 # folio-assistant-oqdr
 title: Bootstrap diagrams' SVGs are published but rendered by nothing since the split
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-24T17:52:19Z
-updated_at: 2026-09-24T17:52:19Z
+updated_at: 2026-09-26T09:51:47Z
 parent: folio-assistant-vke6
 ---
 
@@ -18,3 +18,5 @@ Seen 2026-09-24 while deriving subprocess links (bean `xl55`): `initialize-harne
 
 ## Done when
 Bootstrap's diagrams are rendered and checked (by render-bpmn over every instance, as gen-processes-viz already does with `instanceRoots`), or their SVGs move to bootstrap's own site layer; and the owner has decided about `bootstrap.svg`.
+
+_2026-09-26T09:51:47Z_ — Claimed by claude/oqdr-render-bootstrap-diagrams — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
