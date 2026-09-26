@@ -8,11 +8,11 @@
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-26T18:11:19.349Z",
+  "updated_at": "2026-09-26T20:01:59.229Z",
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 44 of 44 declared kind(s), 164 gate(s), 69 criteria.",
-      "count": 44,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 45 of 45 declared kind(s), 165 gate(s), 69 criteria.",
+      "count": 45,
       "entries": [
         {
           "kind": "bean-defs",
@@ -21,6 +21,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run check:bean-archive",
             "bun run check:bean-blocks",
             "bun run check:bean-bodies",
             "bun run check:bean-front-matter",
@@ -43,6 +44,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run check:bean-archive",
             "bun run check:bean-bodies",
             "bun run check:bean-front-matter",
             "bun run check:bean-issue-links",
@@ -227,7 +229,6 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
-            "bun run cat-harness/scripts/gen-docs-pages.ts --check",
             "bun run cat-harness/scripts/gen-schema-docs.ts --check",
             "bun run check:agent-entry-links",
             "bun run check:agents-xref",
@@ -245,6 +246,7 @@
             "bun run check:wireframes",
             "bun run docs:auto:check",
             "bun run docs:harness:check",
+            "bun run docs:pages:check",
             "bun run gen:jsonld:check",
             "bun run handler:index:check",
             "bun run landing:data:check",
@@ -653,6 +655,16 @@
           "hasFiles": false
         },
         {
+          "kind": "session-survey",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": true,
+          "hasFiles": false
+        },
+        {
           "kind": "skills",
           "state": "covered",
           "directories": [
@@ -913,12 +925,13 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 11,
+      "count": 12,
       "entries": [
         {
           "kind": "bean-defs",
           "criteria": 0,
           "gates": [
+            "bun run check:bean-archive",
             "bun run check:bean-blocks",
             "bun run check:bean-bodies",
             "bun run check:bean-front-matter",
@@ -972,6 +985,11 @@
           "gates": []
         },
         {
+          "kind": "session-survey",
+          "criteria": 0,
+          "gates": []
+        },
+        {
           "kind": "todo-feedback",
           "criteria": 0,
           "gates": []
@@ -996,10 +1014,10 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 164 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 165 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }
   },
-  "total": 55
+  "total": 57
 }

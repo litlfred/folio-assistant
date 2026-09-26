@@ -276,10 +276,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T18:14:24.050Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f988c26bc96de855a20907edfe397c8f43c56f24",
-  "sourceCommitSha": "f988c26bc96de855a20907edfe397c8f43c56f24",
-  "sourceCommitAt": "2026-09-26T18:11:46Z",
+  "generatedAt": "2026-09-26T20:04:48.760Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f02582fe224fe68df4efa25c7d16d351fd62d9ec",
+  "sourceCommitSha": "f02582fe224fe68df4efa25c7d16d351fd62d9ec",
+  "sourceCommitAt": "2026-09-26T20:02:08Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -293,8 +293,8 @@
     "Role": 148,
     "ProcessNode": 862,
     "Tool": 104,
-    "Schema": 125,
-    "GraphKind": 34,
+    "Schema": 126,
+    "GraphKind": 35,
     "Directory": 44,
     "Asset": 3
   },
@@ -1384,7 +1384,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/goal-review.md",
-      "instructionLines": 236,
+      "instructionLines": 276,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2143,7 +2143,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 623,
+      "instructionLines": 655,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3056,7 +3056,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 1066,
+      "instructionLines": 1067,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -20651,7 +20651,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#process/Process_L1Gate/node/Task_RoundTrip",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Round-trip translation QA",
+      "name": {
+        "@value": "QA de traduction aller-retour",
+        "@language": "fr"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#process/Process_L1Gate",
@@ -22293,7 +22296,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_Extract",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Extract structure",
+      "name": {
+        "@value": "Extraire la structure",
+        "@language": "fr"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#process/Process_Ingestion",
@@ -22359,7 +22365,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_IngestTheme",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Ingest the theme",
+      "name": {
+        "@value": "Ingérer le thème",
+        "@language": "fr"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#process/Process_Ingestion",
@@ -22381,7 +22390,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_BuildKg",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Build the L1 knowledge graph",
+      "name": {
+        "@value": "Construire le graphe de connaissances L1",
+        "@language": "fr"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#process/Process_Ingestion",
@@ -22404,7 +22416,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_Gate",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "L1 completeness gate",
+      "name": {
+        "@value": "Porte de complétude L1",
+        "@language": "fr"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#process/Process_Ingestion",
@@ -26773,7 +26788,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#process/Process_HumanTranslation/node/Task_RoundTripQA",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Round-trip translation QA",
+      "name": {
+        "@value": "QA de traduction aller-retour",
+        "@language": "fr"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#process/Process_HumanTranslation",
@@ -41927,6 +41945,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/session-context"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#schema/session-survey",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "session-survey",
+      "title": "A PUBLISHED SURVEY of a commit window — so the next session reads it instead",
+      "module": "schemas/session-survey.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/session-survey"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#schema/site-indexes",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "site-indexes",
@@ -42538,6 +42565,14 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#BeanDefsGraph",
       "renderable": false,
       "summary": "Work items — one Markdown file each, in the layout the `beans` CLI reads. Authored and edited by people and agents."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/session-survey",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "session-survey",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SessionSurveyGraph",
+      "renderable": false,
+      "summary": "Published surveys of a commit window — one JSON file each, carrying `\"$schema\": \"folio-session-survey/v1\"` and the window's two edge commits, so a later session can compute what it is NOT covered for instead of re-deriving the whole range (bean `6ptx`)."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/workflow-state",
