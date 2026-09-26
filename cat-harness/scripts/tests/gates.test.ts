@@ -86,7 +86,13 @@ describe("the gates come from the workflow, not from a list", () => {
     // So a local failure and a CI failure are findable by the same string.
     const g = loadGates(ROOT).find((x) => x.command === "bun run ns:check");
     expect(g?.step).toBe("namespace vocabulary is complete");
-    expect(g?.job).toBe("typescript");
+    // `gates`, not `typescript`, since bean `m5gx` split the registered gates
+    // into a job of their own — they were unreachable behind a red `bun test`.
+    // This assertion is the same hardcode-drift `FAST_JOBS` had, one layer out:
+    // it pins a job NAME, so it fails the moment a gate legitimately moves.
+    // Kept rather than loosened — the point is that a gate's job is findable,
+    // and a test that silently tolerated the move would tell a reader nothing.
+    expect(g?.job).toBe("gates");
   });
 });
 

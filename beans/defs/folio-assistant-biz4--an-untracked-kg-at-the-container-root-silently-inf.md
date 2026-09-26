@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-26T11:26:16Z
-updated_at: 2026-09-26T11:26:36Z
+updated_at: 2026-09-26T12:42:23Z
 parent: folio-assistant-1xhc
 ---
 
@@ -81,3 +81,61 @@ the time.
 
 That `_kg/` should be deleted — `deletion-requires-confirmation` applies, and
 nobody has established what it is. Reported, not removed.
+
+
+## ESCALATION 2026-09-26: the polluted value has reached `main`, and it cost me a wrong commit
+
+This bean was filed as "a local measurement is wrong in this container". Both
+halves of that are now too weak.
+
+### It is on the default branch
+
+    git show origin/main:.../cat-harness/schemas.detangle.json  →  "size": 1443
+
+Earlier the same day the committed value was **229** and only this container's
+working tree produced 1443. Within roughly ninety minutes `main` carried 1443.
+Nobody decided that: a session ran the writer in a polluted checkout and
+committed what it produced, which is exactly what this bean predicted and did
+not say loudly enough. The clean-worktree value is **229**.
+
+### I then committed a polluted value MYSELF, with a confident wrong argument
+
+Working `m5gx`, two detangle sidecars came back dirty and I reasoned:
+
+> both move by exactly +1 — `processes` outbound 499→500, `folio-core` inbound
+> 521→522. `Task_Gates` carries `<skill ref="platform-gates"/>`, which is one
+> new edge from processes to skills/folio-core. That is NOT the biz4
+> pollution, whose signature is entirely different (schemas 229→1443).
+
+Every sentence there is checkable and the conclusion was still wrong. The
+clean worktree computes `folio-core` inbound **521** — unchanged from `main`.
+The `+1` was pollution, and the "signature" I used to rule pollution out was a
+rationalisation that happened to fit.
+
+**The lesson is not "check the signature more carefully."** A plausible delta
+is exactly what pollution looks like when it is small. The only thing that
+distinguishes them is a CLEAN WORKTREE, and I had already written that in this
+bean before ignoring it because the number looked explainable.
+
+### It cannot be verified in this container at all
+
+With the clean values copied in, `kg:detangle:check` STILL fails here: the
+check recomputes, and the recomputation is polluted. So this gate is
+structurally unverifiable in any checkout with a stray `_kg/`, in both
+directions — it fails on correct data and passes on wrong data.
+
+## Done when — REVISED
+
+[ ] `main`'s `cat-harness/schemas.detangle.json` is corrected from 1443 to the
+    clean-worktree value, and whoever committed it is told why, so the same
+    checkout does not re-commit it.
+[ ] Establish WHAT WRITES `_kg/`. Still unknown, still not deleted —
+    `deletion-requires-confirmation`.
+[ ] The detanglers skip gitignored directories, or state why they must not.
+    `gitCorpus` exists for this and four scanners already use it.
+[ ] Verified by BREAKING it: recreate `_kg/`, confirm the count inflates, then
+    confirm the fixed scanner ignores it.
+[ ] A guard that a committed measurement matches a CLEAN recomputation, because
+    the failure mode here is a wrong number that looks right — and this bean
+    now has two recorded instances of a reader accepting one, including its own
+    author.

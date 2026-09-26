@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: code-quality-gates\n"
-"POT-Creation-Date: 2026-09-24T17:33:06.909Z\n"
+"POT-Creation-Date: 2026-09-26T12:40:52.213Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,34 +14,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: processes/code-quality-gates.bpmn:44
+#: processes/code-quality-gates.bpmn:45
 #. Diagram label
 msgid "All six,&#10;in parallel"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:110
+#: processes/code-quality-gates.bpmn:121
 #. Diagram label
 msgid "Any HARD&#10;gate red?"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:111
+#: processes/code-quality-gates.bpmn:122
 #. Diagram element documentation
 msgid "Asked once every parallel gate has joined: did any gate marked HARD fail? `no` is mergeable; `yes` blocks the merge. Warn-only gates do not decide this branch."
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:94
+#: processes/code-quality-gates.bpmn:104
 #. Diagram element documentation
 msgid "Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner's ruling on bean `j41m` — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. `.github/dependabot.yml` is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot's schedule."
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:119
+#: processes/code-quality-gates.bpmn:130
 #. Diagram label
 msgid "Blocked"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:70
+#: processes/code-quality-gates.bpmn:72
 #. Diagram element documentation
-msgid "bun test, lint, tsc --noEmit, then the repository gates (workflow refs, lane and process documentation, kg:audit:check, detangle, skills, …). `bun run gates` derives its list from this job, so it is the local way to run the same set before pushing."
+msgid "bun test, lint, tsc --noEmit. The repository gates it used to carry are now Task_Gates: they were unreachable behind a red `bun test`, because Actions stops a job at its first failing step. This task's old name claimed \"~30 repository gates\" where the real number was 153 — a count in prose, wrong five-fold, in the label a reader trusts most."
 msgstr ""
 
 #: processes/code-quality-gates.bpmn:24
@@ -49,67 +49,77 @@ msgstr ""
 msgid "CI/CD Pipeline"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:93
+#: processes/code-quality-gates.bpmn:103
 #. Diagram label
 msgid "Dependency advisories&#10;(WARN-ONLY)"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:77
+#: processes/code-quality-gates.bpmn:87
 #. Diagram label
 msgid "End-to-end +&#10;accessibility (HARD)"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:54
+#: processes/code-quality-gates.bpmn:80
+#. Diagram element documentation
+msgid "Every registered repository gate — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, declared paths, generated-artefact drift, and the rest. `bun run gates` derives its list from the jobs that install no browser, so it is the local way to run the same set before pushing. Split from Task_TypeScript for bean `m5gx`: while these shared a job with `bun test`, a red test left 45 of 50 steps unreachable and 149 gate commands reporting nothing on every PR — and the Actions UI marked them `skipped`, which reads as deliberate rather than as a job that died. Splitting is correct rather than merely cheaper: no step in the job declared an `id`, referenced `steps.*`, or was conditional, so nothing depended on what stayed behind. It costs 11 seconds of duplicated setup."
+msgstr ""
+
+#: processes/code-quality-gates.bpmn:56
 #. Diagram element documentation
 msgid "Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently."
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:78
+#: processes/code-quality-gates.bpmn:88
 #. Diagram element documentation
 msgid "Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR."
 msgstr ""
 
 #: processes/code-quality-gates.bpmn:25
 #. Diagram element documentation
-msgid "Joins all six jobs before asking anything, then GW_Hard asks specifically about the four HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the five-are-not-four asymmetry actually bites."
+msgid "Joins EVERY job before asking anything, then GW_Hard asks specifically about the HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, and that asymmetry is the point. Counted from the lane rather than stated here: the numbers this sentence used to carry went stale the moment `Task_Gates` was split out of `Task_TypeScript` (bean `m5gx`)."
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:53
+#: processes/code-quality-gates.bpmn:55
 #. Diagram label
 msgid "Lean: no bare&#10;`import Mathlib` (HARD)"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:116
+#: processes/code-quality-gates.bpmn:127
 #. Diagram label
 msgid "Mergeable"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:134
+#: processes/code-quality-gates.bpmn:145
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:41
+#: processes/code-quality-gates.bpmn:42
 #. Diagram label
 msgid "Pull request, push to main,&#10;or dispatch"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:61
+#: processes/code-quality-gates.bpmn:63
 #. Diagram label
 msgid "Python: unused and&#10;wildcard imports (HARD)"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:86
+#: processes/code-quality-gates.bpmn:79
+#. Diagram label
+msgid "Registered gates&#10;(HARD)"
+msgstr ""
+
+#: processes/code-quality-gates.bpmn:96
 #. Diagram element documentation
 msgid "Report non-test `use …::*;` in tools/**/*.rs, excluding `use super::*;`. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs."
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:62
+#: processes/code-quality-gates.bpmn:64
 #. Diagram element documentation
 msgid "ruff F401 (unused) and F403 (wildcard) imports over the Python trees that exist, then the Python tests. A tree that is absent is dropped rather than passed to ruff, and an empty set says SKIP — a missing path must not be swallowed as a pass."
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:85
+#: processes/code-quality-gates.bpmn:95
 #. Diagram label
 msgid "Rust wildcard imports&#10;(WARN-ONLY)"
 msgstr ""
@@ -124,12 +134,12 @@ msgstr ""
 msgid "The gates a change must pass before it can merge"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:69
+#: processes/code-quality-gates.bpmn:71
 #. Diagram label
-msgid "TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD)"
+msgid "TypeScript: tests,&#10;lint, types (HARD)"
 msgstr ""
 
-#: processes/code-quality-gates.bpmn:135
+#: processes/code-quality-gates.bpmn:146
 #. Diagram label
 msgid "yes"
 msgstr ""
