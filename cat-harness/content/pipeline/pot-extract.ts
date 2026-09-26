@@ -65,16 +65,53 @@ const MD_LIQUID_OUTPUT_RE = /\{\{\s*(.*?)\s*\}\}/gs;
 
 // ── Structural patterns ─────────────────────────────────────────
 
-const MD_FRONT_MATTER_DELIM = /^---\s*$/;
-const MD_HEADING_RE = /^(#{1,6}\s+)(.+)$/;
-const MD_CODE_FENCE_RE = /^(`{3,}|~{3,})/;
-const MD_HTML_SKIP_OPEN_RE = /<(style|script|pre)\b/i;
-const MD_HTML_CLOSE_TAG_RE = /<\/(\w+)\s*>/i;
-const MD_HLINE_RE = /^[-*_]{3,}\s*$/;
-const MD_TABLE_SEP_RE = /^\|[-| :]+\|?\s*$/;
-const MD_LIST_ITEM_RE = /^(\s*(?:[-*+]|\d+\.)\s+)(.*)/;
-const MD_BLOCKQUOTE_RE = /^(>+\s?)(.*)/;
-const MD_KRAMDOWN_ATTR_RE = /^\{[:%][^}]*\}\s*$/;
+/**
+ * The markdown constructs this pipeline recognises, shared with `po-inject.ts`.
+ *
+ * **Exported because the injecting half declared its own copies.** What the
+ * extractor treats as a construct and what the injector treats as a construct
+ * are the same question, so two answers can disagree — and one already had:
+ * `MD_CODE_FENCE_RE` was byte-identical in both modules until `ig4a` changed one
+ * side, and a grep was the only thing between that and a round trip whose halves
+ * parsed differently. Bean `wlyg`.
+ *
+ * Nine of the ten were identical when they moved, so this is **hygiene, not a bug
+ * fix**, and it is worth doing now for a specific reason: `lvk9` changes
+ * {@link MD_LIST_ITEM_RE} and {@link MD_BLOCKQUOTE_RE}, and doing that against two
+ * copies means doing it twice, in the copy nobody is watching.
+ *
+ * Proven a pure move rather than asserted to be one: extraction over all 618
+ * files of `cat-harness/docs`, and `injectMarkdown` over every real (catalogue,
+ * source) pair, are byte-identical before and after.
+ */
+export const MD_FRONT_MATTER_DELIM = /^---\s*$/;
+export const MD_HEADING_RE = /^(#{1,6}\s+)(.+)$/;
+/**
+ * A fenced code block's delimiter.
+ *
+ * **Exported because `po-inject.ts` had its own copy of it.** One fact in two
+ * places is free to drift, and this one had: `ig4a` fixed the anchor here, and
+ * the injector's copy would have kept the old one.
+ *
+ * **What that divergence was NOT.** The first version of this comment said the
+ * injector would substitute into an indented code block and corrupt the command.
+ * That was asserted, then measured, and it is false: with the old anchor the
+ * injector substitutes nothing inside an indented fence, for prose or for code
+ * (`derive-po.test.ts` §"the two halves ... agree"). Something else already
+ * protects it. So this consolidation is hygiene rather than a bug fix, and saying
+ * otherwise would have made a stronger claim than the evidence carries.
+ *
+ * The `^` is matched against the STRIPPED line at both call sites, not the raw
+ * one — see the comment at the fence branch in {@link extractMarkdown}.
+ */
+export const MD_CODE_FENCE_RE = /^(`{3,}|~{3,})/;
+export const MD_HTML_SKIP_OPEN_RE = /<(style|script|pre)\b/i;
+export const MD_HTML_CLOSE_TAG_RE = /<\/(\w+)\s*>/i;
+export const MD_HLINE_RE = /^[-*_]{3,}\s*$/;
+export const MD_TABLE_SEP_RE = /^\|[-| :]+\|?\s*$/;
+export const MD_LIST_ITEM_RE = /^(\s*(?:[-*+]|\d+\.)\s+)(.*)/;
+export const MD_BLOCKQUOTE_RE = /^(>+\s?)(.*)/;
+export const MD_KRAMDOWN_ATTR_RE = /^\{[:%][^}]*\}\s*$/;
 /**
  * The kramdown directive that CONSUMES the block it attaches to.
  *
@@ -93,8 +130,72 @@ const MD_KRAMDOWN_ATTR_RE = /^\{[:%][^}]*\}\s*$/;
  */
 const MD_KRAMDOWN_CONSUMING_RE = /^\{:\s*toc\s*\}$/;
 
-/** Minimum character length for a string to be considered translatable. */
-const MD_MIN_TEXT_LEN = 3;
+/**
+ * Is there anything here a translator can act on?
+ *
+ * **A count of LETTERS, not of characters, and the difference is not cosmetic.**
+ * This was `text.length >= 3` until 2026-09-26, which made translatability a
+ * property of the locale's script rather than of the content. Bean `6b8u`.
+ *
+ * The mechanism, on a real cell of `docs/installation.md` — after
+ * {@link cleanMarkdownText} strips the code spans:
+ *
+ * | | cell | residue | extracted at `length >= 3`? |
+ * |---|---|---|---|
+ * | source | `` `pandoc`, `ripgrep` `` | `", "` (2 chars) | no |
+ * | `ar` | `` `pandoc`، و`ripgrep` `` | `"، و"` (3 chars) | **yes** |
+ *
+ * The Arabic comma and the conjunction are a correct localisation, and they
+ * pushed a code-only cell over a threshold English sat under — so an identical
+ * 4x7 table yielded 66 constructs in `ar` against 65 in English. It ran the
+ * other way for dense scripts: `否` is one character and was dropped where
+ * `non` and `нет` were kept, which is why `zh` measured short on all five of
+ * the pages `derive-po.ts` tried to align.
+ *
+ * ## Why two letters, measured rather than chosen
+ *
+ * Four candidates, scored over `cat-harness/docs/` (618 files) on two things:
+ * how many of the 25 (page, locale) pairs align by count AND kind, and how many
+ * msgids contain **no letter at all** — a string offered to a translator with
+ * nothing in it to translate.
+ *
+ * | predicate | aligned | msgids | letterless |
+ * |---|---|---|---|
+ * | `length >= 3` (what this replaces) | 7/25 | 45320 | **432** |
+ * | `>= 1` letter | 9/25 | 45458 | 0 |
+ * | **`>= 2` letters** | **10/25** | 45288 | **0** |
+ * | `>= 1` letter and `>= 2` non-space | 9/25 | 45419 | 0 |
+ *
+ * Two letters wins on both measures at once, and the letterless column is the
+ * one that settles it: the old rule put **432** msgids with no letter in them
+ * into this corpus's catalogues, and every candidate here removes all of them.
+ *
+ * **It is not primarily an alignment fix, and the first account of it said
+ * otherwise.** That account inferred "9 of the 18 refusals are extractor
+ * artefacts" by stitching together a count measurement and a kind measurement
+ * taken separately. Measured directly on the thing that matters — count and
+ * kind together — this predicate plus the fence fix takes alignment from 7/25
+ * to **10/25**. Three more, not nine. The remaining 15 are `7x8o`.
+ *
+ * `\p{L}` rather than `[A-Za-z]` for the obvious reason, and `u` because
+ * without it the property escape is a syntax error rather than a silent
+ * mismatch.
+ */
+export function isTranslatable(text: string): boolean {
+  let letters = 0;
+  for (const ch of text) {
+    if (/\p{L}/u.test(ch) && ++letters >= MD_MIN_TEXT_LETTERS) return true;
+  }
+  return false;
+}
+
+/**
+ * How many letters make a string worth a translator's attention.
+ *
+ * Named and separate so the measurement above has something to refer to, and so
+ * a later change has to argue with the table rather than edit a bare `2`.
+ */
+const MD_MIN_TEXT_LETTERS = 2;
 
 /** Prefix for Liquid output variables in gettext brace format. */
 const LQD_PREFIX = "lqd_";
@@ -148,6 +249,35 @@ export function cleanMarkdownText(text: string): string {
 
 // ── POT entry ───────────────────────────────────────────────────
 
+/**
+ * What KIND of markdown construct an entry came from.
+ *
+ * Added for `derive-po.ts` (issue #206), which aligns an already-translated
+ * page against its source to recover a `.po` catalogue. Alignment is positional,
+ * so it needs a way to be REFUSED when the two sides are not the same shape —
+ * and a count match is not that. Measured 2026-09-26: of the 25 uncatalogued
+ * (page, locale) pairs, 9 matched by count, and a count match does not rule out
+ * two adjacent constructs having swapped. The kind sequence does.
+ *
+ * Not emitted into the `.pot` — `formatPot` ignores it, so the on-disk format is
+ * unchanged and every existing catalogue still parses.
+ */
+export type PotEntryKind =
+  // From markdown prose — the five constructs `extractMarkdown` recognises.
+  | "heading"
+  | "paragraph"
+  | "list-item"
+  | "blockquote"
+  | "table-cell"
+  // Not markdown at all. Named rather than made optional, so a new producer has
+  // to DECIDE — the rule this repository applies to graph kinds, where "a kind
+  // that has not decided does not compile". An optional field would let a
+  // producer stay silent, and `derive-po.ts` would then align against entries
+  // whose shape it cannot check.
+  | "bpmn-label"
+  | "manifest-title"
+  | "ui-string";
+
 /** A single translatable entry extracted from a source file. */
 export interface PotEntry {
   /** Source file path (relative to content root). */
@@ -156,6 +286,8 @@ export interface PotEntry {
   line: number;
   /** The msgid — the cleaned source string to translate. */
   msgid: string;
+  /** Which construct it came from — see {@link PotEntryKind}. */
+  kind: PotEntryKind;
   /** Published/context URL for Weblate (optional). */
   contextUrl?: string;
   /** Optional translator comment. */
@@ -186,20 +318,52 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
   let codeFence: string | null = null;
   let inHtmlBlock = false;
   let htmlCloseTag = "";
-  const paragraphLines: Array<{ lineno: number; text: string }> = [];
+  /**
+   * The multi-line construct currently being accumulated.
+   *
+   * **Paragraphs were accumulated and list items and blockquotes were not**, so a
+   * msgid's identity depended on where the author pressed return — and a wrapped
+   * list item's continuation line fell through to the paragraph accumulator, so it
+   * came out as a `paragraph`. Wrong count and wrong KIND from one cause. Bean
+   * `lvk9`.
+   *
+   * The cost was not the count. A translator was handed one sentence as two
+   * msgids, with a `**` span opening in the first and closing in the second:
+   * neither half can be rendered, and no word order differing from English is
+   * expressible at all.
+   *
+   * One accumulator for all three kinds, because the alternative is three copies
+   * of the same flush logic and `wlyg` is this file's evidence for what duplicated
+   * parsing rules do.
+   */
+  type PendingKind = "paragraph" | "list-item" | "blockquote";
+  let pending:
+    | {
+        kind: PendingKind;
+        lines: Array<{ lineno: number; text: string }>;
+        /** For a list item, the column its content starts at — see {@link continuesItem}. */
+        contentCol: number;
+        /** For a blockquote, how many `>` deep it is. A change in depth is a new quote. */
+        depth: number;
+      }
+    | null = null;
 
-  const flushParagraph = () => {
-    if (paragraphLines.length === 0) return;
-    const raw = paragraphLines.map((p) => p.text).join(" ");
+  /**
+   * Emit the accumulated construct as ONE entry, at the line it started on.
+   *
+   * `cleanMarkdownText` runs on the JOINED text rather than per line, which is the
+   * half that fixes the split `**` span: an emphasis run opened on one line and
+   * closed on the next is a single span once the lines are joined, and nothing
+   * else can make it one.
+   */
+  const flushPending = (): void => {
+    if (pending === null) return;
+    const raw = pending.lines.map((p) => p.text).join(" ");
     const text = cleanMarkdownText(raw);
-    if (text.length >= MD_MIN_TEXT_LEN) {
-      entries.push({
-        source,
-        line: paragraphLines[0].lineno,
-        msgid: text,
-      });
+    if (isTranslatable(text)) {
+      entries.push({ source, line: pending.lines[0].lineno, msgid: text, kind: pending.kind });
     }
-    paragraphLines.length = 0;
+    pending = null;
   };
 
   /**
@@ -215,6 +379,40 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
    * placeholder would otherwise leak its second line, and the directive's
    * semantics do not care how many there are.
    */
+  /**
+   * Does this line continue the list item being accumulated?
+   *
+   * **Indentation, not line adjacency.** The rule that measured this defect's
+   * reach merged any entry sitting on the immediately next line, and it
+   * over-merged — in `wireframes/fsh-guts/intent.md` it joined two unrelated
+   * sentences. What markdown actually says is that a continuation is INDENTED
+   * under the marker and ends at a blank line or the next block, so that is what
+   * this tests.
+   *
+   * Indented-at-all rather than `>= contentCol`: a continuation one space shy of
+   * the content column is still unambiguously a continuation, while an
+   * UNINDENTED line is exactly the case that must not be swallowed — it is the
+   * following paragraph. (`contentCol` is kept on `pending` because a stricter
+   * rule may want it, and because it documents what the marker was.)
+   *
+   * Every other block construct is excluded explicitly. A list of exclusions is
+   * the wrong shape in general, but here each one is a branch that appears ABOVE
+   * this point in the loop, so omitting one would mean a construct silently
+   * absorbed into a list item's msgid.
+   */
+  const continuesItem = (line: string, stripped: string): boolean =>
+    pending?.kind === "list-item" &&
+    stripped !== "" &&
+    /^\s/.test(line) &&
+    !MD_LIST_ITEM_RE.test(line) &&
+    !MD_HEADING_RE.test(line) &&
+    !MD_BLOCKQUOTE_RE.test(line) &&
+    !MD_HLINE_RE.test(stripped) &&
+    !MD_TABLE_SEP_RE.test(stripped) &&
+    !MD_KRAMDOWN_ATTR_RE.test(stripped) &&
+    !MD_CODE_FENCE_RE.test(stripped) &&
+    !(stripped.startsWith("|") && stripped.endsWith("|"));
+
   let listRunStart: number | null = null;
   /** Blank lines do not end a list run — a loose list has them between items. */
   const endListRun = (): void => {
@@ -232,7 +430,15 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
     // direction: it means the items stay in the catalogue, which is today's
     // behaviour, whereas failing to end one would let a `{:toc}` further down
     // the page delete a list nobody asked it to touch.
-    if (stripped !== "" && !MD_LIST_ITEM_RE.test(line) && !MD_KRAMDOWN_ATTR_RE.test(stripped)) {
+    // A CONTINUATION of the item above is part of that item, so it does not end
+    // the run either — missing this would let a `{:toc}` stop consuming a list
+    // whose last item happened to be wrapped.
+    if (
+      stripped !== "" &&
+      !MD_LIST_ITEM_RE.test(line) &&
+      !MD_KRAMDOWN_ATTR_RE.test(stripped) &&
+      !continuesItem(line, stripped)
+    ) {
       endListRun();
     }
 
@@ -249,13 +455,20 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
     }
 
     // --- Fenced code blocks ---
-    const fenceMatch = line.match(MD_CODE_FENCE_RE);
+    // `stripped`, not `line`: an INDENTED fence is the ordinary way to put a code
+    // block inside a list item, and anchoring at column 0 meant those were never
+    // recognised — their bodies were extracted as prose. Bean `ig4a`. Measured
+    // over 618 files: 74 msgids removed (code offered as prose, 48 of them a bare
+    // fence run) and 16 ADDED — real sentences that had been swallowed, because
+    // a column-0 opening fence whose closing fence was indented kept the parser
+    // `inCodeBlock` until the next column-0 fence.
+    const fenceMatch = stripped.match(MD_CODE_FENCE_RE);
     if (fenceMatch) {
       if (!inCodeBlock) {
-        flushParagraph();
+        flushPending();
         inCodeBlock = true;
         codeFence = fenceMatch[1];
-      } else if (codeFence && line.startsWith(codeFence[0].repeat(codeFence.length))) {
+      } else if (codeFence && stripped.startsWith(codeFence[0].repeat(codeFence.length))) {
         inCodeBlock = false;
         codeFence = null;
       }
@@ -275,7 +488,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
     const openMatch = stripped.match(MD_HTML_SKIP_OPEN_RE);
     if (openMatch) {
       const tagName = openMatch[1].toLowerCase();
-      flushParagraph();
+      flushPending();
       const closeMatch = stripped.match(MD_HTML_CLOSE_TAG_RE);
       if (closeMatch && closeMatch[1].toLowerCase() === tagName) {
         continue;
@@ -287,58 +500,72 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
 
     // --- Blank line: end of paragraph ---
     if (!stripped) {
-      flushParagraph();
+      flushPending();
       continue;
     }
 
     // --- Headings ---
     const headingMatch = line.match(MD_HEADING_RE);
     if (headingMatch) {
-      flushParagraph();
+      flushPending();
       const text = cleanMarkdownText(headingMatch[2]);
-      if (text.length >= MD_MIN_TEXT_LEN) {
-        entries.push({ source, line: lineno, msgid: text });
+      if (isTranslatable(text)) {
+        entries.push({ source, line: lineno, msgid: text, kind: "heading" });
       }
       continue;
     }
 
     // --- Horizontal rules / table separators (skip) ---
     if (MD_HLINE_RE.test(stripped) || MD_TABLE_SEP_RE.test(stripped)) {
-      flushParagraph();
+      flushPending();
       continue;
     }
 
     // --- List items ---
     const listMatch = line.match(MD_LIST_ITEM_RE);
     if (listMatch) {
-      flushParagraph();
+      // Flush BEFORE capturing `listRunStart`, so the index is where this run
+      // begins rather than where the preceding paragraph still sat unflushed.
+      flushPending();
       if (listRunStart === null) listRunStart = entries.length;
-      const text = cleanMarkdownText(listMatch[2].trim());
-      if (text.length >= MD_MIN_TEXT_LEN) {
-        entries.push({ source, line: lineno, msgid: text });
-      }
+      pending = {
+        kind: "list-item",
+        lines: [{ lineno, text: listMatch[2].trim() }],
+        contentCol: listMatch[1].length,
+        depth: 0,
+      };
       continue;
     }
 
     // --- Blockquote lines ---
     const bqMatch = line.match(MD_BLOCKQUOTE_RE);
     if (bqMatch) {
-      flushParagraph();
-      const text = cleanMarkdownText(bqMatch[2]);
-      if (text.length >= MD_MIN_TEXT_LEN) {
-        entries.push({ source, line: lineno, msgid: text });
+      const depth = (bqMatch[1].match(/>/g) ?? []).length;
+      const content = bqMatch[2];
+      if (content.trim() === "") {
+        // A bare `>` is a paragraph break INSIDE the quote, not decoration —
+        // joining across it would merge two quoted paragraphs into one msgid.
+        flushPending();
+        continue;
       }
+      if (pending?.kind === "blockquote" && pending.depth === depth) {
+        pending.lines.push({ lineno, text: content });
+        continue;
+      }
+      // A change of depth is a different quote, so it does not continue this one.
+      flushPending();
+      pending = { kind: "blockquote", lines: [{ lineno, text: content }], contentCol: 0, depth };
       continue;
     }
 
     // --- Table rows: extract cell content ---
     if (stripped.startsWith("|") && stripped.endsWith("|")) {
-      flushParagraph();
+      flushPending();
       const cells = stripped.slice(1, -1).split("|");
       for (const cell of cells) {
         const text = cleanMarkdownText(cell.trim());
-        if (text.length >= MD_MIN_TEXT_LEN) {
-          entries.push({ source, line: lineno, msgid: text });
+        if (isTranslatable(text)) {
+          entries.push({ source, line: lineno, msgid: text, kind: "table-cell" });
         }
       }
       continue;
@@ -346,7 +573,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
 
     // --- Kramdown / Jekyll attribute lists (skip) ---
     if (MD_KRAMDOWN_ATTR_RE.test(stripped)) {
-      flushParagraph();
+      flushPending();
       // A CONSUMING directive takes its block with it. `{:toc}` replaces the
       // list above with a generated table of contents, so that list's text is
       // a placeholder no reader ever sees — and offering it to a translator
@@ -360,12 +587,18 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
       continue;
     }
 
-    // --- Paragraph continuation ---
-    paragraphLines.push({ lineno, text: stripped });
+    // --- Continuation of a list item, else paragraph ---
+    if (continuesItem(line, stripped)) {
+      pending!.lines.push({ lineno, text: stripped });
+      continue;
+    }
+    if (pending !== null && pending.kind !== "paragraph") flushPending();
+    pending ??= { kind: "paragraph", lines: [], contentCol: 0, depth: 0 };
+    pending.lines.push({ lineno, text: stripped });
   }
 
-  // Flush any remaining paragraph
-  flushParagraph();
+  // Flush whatever construct was still being accumulated at EOF.
+  flushPending();
 
   return entries;
 }
@@ -386,6 +619,7 @@ export function extractFromManifest(
       source: sourcePath,
       line: 1,
       msgid: manifest.title,
+      kind: "manifest-title",
       comment: manifest.kind
         ? `Title of ${manifest.kind} block "${manifest.label}"`
         : `Title of block "${manifest.label}"`,

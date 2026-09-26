@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1428 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1439 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1608 terms and is 872 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1619 terms and is 878 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1608</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1619</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -10564,6 +10564,83 @@ ValidatorRef.module <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Module path, relative to &#123;@link ValidatorRef.instance}'s root, or to the resolving one.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/kind-validator.ts"><code>cat-harness/schemas/kind-validator.ts#ValidatorRef.module</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-labels.vectorfigurepageschema.captioncandidates" data-fa-state="extracted" data-fa-gloss="">
+VectorFigurePageSchema.captionCandidates <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Verbatim line-start `Fig.`/`Figure` matches on the page, table-of-contents entries removed. A lower bound, and it deliberately includes cross-references — plural, and never asserted to be the page's figure.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-labels.ts"><code>cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.captionCandidates</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-labels.vectorfigurepageschema.drawings" data-fa-state="extracted" data-fa-gloss="">
+VectorFigurePageSchema.drawings <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Vector drawing operations MuPDF reports on the page. Reported, never graded.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-labels.ts"><code>cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.drawings</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-labels.vectorfigurepageschema.page" data-fa-state="extracted" data-fa-gloss="">
+VectorFigurePageSchema.page <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>1-based, matching `DocumentImage`'s `basis.page` so the two join.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-labels.ts"><code>cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.page</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-labels.vectorfigurepageschema.rasterimagesonpage" data-fa-state="extracted" data-fa-gloss="">
+VectorFigurePageSchema.rasterImagesOnPage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Raster images the page also places.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-labels.ts"><code>cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.rasterImagesOnPage</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-labels.vectorfigurepageschema.rotation" data-fa-state="extracted" data-fa-gloss="">
+VectorFigurePageSchema.rotation <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The page's rotation in degrees, as the PDF declares it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-labels.ts"><code>cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.rotation</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-labels.vectorlabelschema.bbox" data-fa-state="extracted" data-fa-gloss="">
+VectorLabelSchema.bbox <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The line's rectangle **in the visible frame** — rotation already applied.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-labels.ts"><code>cat-harness/schemas/vector-labels.ts#VectorLabelSchema.bbox</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-labels.vectorlabelschema.fonts" data-fa-state="extracted" data-fa-gloss="">
+VectorLabelSchema.fonts <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Font names on the line's spans, deduplicated and sorted.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-labels.ts"><code>cat-harness/schemas/vector-labels.ts#VectorLabelSchema.fonts</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-labels.vectorlabelschema.intersectsdrawing" data-fa-state="extracted" data-fa-gloss="">
+VectorLabelSchema.intersectsDrawing <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Whether this block's rectangle intersects any vector drawing's.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-labels.ts"><code>cat-harness/schemas/vector-labels.ts#VectorLabelSchema.intersectsDrawing</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-labels.vectorlabelschema.sizes" data-fa-state="extracted" data-fa-gloss="">
+VectorLabelSchema.sizes <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Point sizes on the line's spans, deduplicated and sorted ascending.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-labels.ts"><code>cat-harness/schemas/vector-labels.ts#VectorLabelSchema.sizes</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-labels.vectorlabelschema.text" data-fa-state="extracted" data-fa-gloss="">
+VectorLabelSchema.text <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The line's text: its spans concatenated, since a span break is a style change and not a word break.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-labels.ts"><code>cat-harness/schemas/vector-labels.ts#VectorLabelSchema.text</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--vector-labels.vectorlabelssidecarschema.pages" data-fa-state="extracted" data-fa-gloss="">
+VectorLabelsSidecarSchema.pages <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>`null` is could-not-determine and is NOT an empty list.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vector-labels.ts"><code>cat-harness/schemas/vector-labels.ts#VectorLabelsSidecarSchema.pages</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--review-verdict.verdictingestresult.malformed" data-fa-state="extracted" data-fa-gloss="">
 VerdictIngestResult.malformed <span class="fa-gloss-status">candidate, extracted</span>

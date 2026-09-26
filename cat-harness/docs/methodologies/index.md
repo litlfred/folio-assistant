@@ -25,8 +25,8 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>11</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>6</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>13</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>8</b><span>with the source held here</span></div>
 <div class="mv-stat"><b>5</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>3</b><span>instance(s) declaring the graph</span></div>
 </div>
@@ -39,6 +39,7 @@ agent picks by resemblance, which is why the schema requires the field.
 
 | methodology | applies when | origin held? | declared by |
 |---|---|---|---|
+| **[Consensus-grounded subject evaluation — independent indexers as the answer key, and a panel instead of one score](#consensus-grounded-subject-evaluation)**<br>`consensus-grounded-subject-evaluation` | **Judging how good a set of controlled-vocabulary assignments is, when qualified people would themselves disagree about the exact answer.** Use it to… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[DIIG — Digital Implementation Investment Guide](#diig)**<br>`diig` | Planning, costing and monitoring a DIGITAL HEALTH IMPLEMENTATION inside a health programme — from forming the team through to the budget and the moni… | <span class="mv-tag mv-cited">cited, not ingested</span> | `smart-base` |
 | **[DMN — Decision Model and Notation](#dmn)**<br>`dmn` | The criteria RECUR and the inputs are data. A gateway that must branch the same way on the same facts every time. Not for a one-off judgement — that… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[Doc-Researcher — parse for multiple granularities, then research iteratively against a sufficiency threshold](#doc-researcher)**<br>`doc-researcher` | **A question must be answered from documents this folio has ingested, and one retrieval pass will not do it.** Use it when the answer is spread acros… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-core` |
@@ -47,6 +48,7 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[MADR — Markdown Architectural Decision Records](#madr)**<br>`madr` | **Bean context** — the owner's binding, 2026-09-20. When a bean records a decision, this is the form. Not for the decision METHOD (see… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[RACI — who is involved in an activity, and in which of four ways](#raci)**<br>`raci` | **Who is involved in an activity, and how.** Use it when a process or a breakdown exists and the question is participation — who answers for this, wh… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[RASCI — RACI plus Supportive, for when doing the work and owning it come apart](#rasci)**<br>`rasci` | **Who is involved, when a role does the work without owning the deliverable.** Use it where a separate *Supportive* party is real — someone who contr… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
+| **[Skill-pipeline subject indexing — one policy-grounded stage per cognitive step, each output inspectable](#skill-pipeline-subject-indexing)**<br>`skill-pipeline-subject-indexing` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Specification-compiled agents — the control flow comes from the diagram, not from the model's plan](#specification-compiled-agents)**<br>`specification-compiled-agents` | **A process is already written down as a diagram, and something must now EXECUTE it.** Use it when the control flow is external and authored — a BPMN… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[SWOT — situation analysis over internal and external factors](#swot)**<br>`swot` | **Situation analysis, before a decision — never instead of one.** Use it to assemble what is true about a subject's internal attributes and its exter… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[WireGen: wireframing from a written design intent](#wiregen)**<br>`wiregen` | Designing a USER INTERFACE, for example a page layout, a navigation scheme or a visualiser, where the choice between candidate designs has to be revi… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
@@ -61,6 +63,21 @@ an open question, reported by `check:methodology-evidence` and gated by
 nothing. **Citation does not resolve** is neither: the node claims a source
 and the slug names nothing, which reads as evidence in every listing and is
 strictly worse than declaring none.
+
+### Consensus-grounded subject evaluation — independent indexers as the answer key, and a panel instead of one score
+
+<a id="consensus-grounded-subject-evaluation"></a>
+
+`consensus-grounded-subject-evaluation` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **Judging how good a set of controlled-vocabulary assignments is, when qualified people would themselves disagree about the exact answer.** Use it to evaluate a subject-indexing system, compare two of them, or decide whether one is good enough to draft for a human reviewer. It is also for any labelling task whose gold standard is expert judgement with a subjective surface. It answers *how to measure*. It does not answer *how to produce the assignment*, which is `skill-pipeline-subject-indexing`, a parallel node. Not for certainty of evidence behind a recommendation (`grade`), and not for choosing among options (`kepner-tregoe`). Not applicable where the answer is decidable, meaning a single correct output a checker can verify, because then there is no disagreement for a consensus to absorb.
+
+**Origin.** Kwok Leong Tang, "LCSHBench: A Multilingual, Consensus-Grounded Benchmark for Library of Congress Subject Heading Assignment" (arXiv:2606.04382v1), 2026. Open access, ingested whole and read before this node was written. The method is rendered from that paper. The parallel design it is contrasted with is the one used by the shared task the other ingested subject-indexing papers were entered in: D'Souza, Sadruddin, Israel, Begoin & Slawig, "SemEval-2025 Task 5: LLMs4Subjects — LLM-based Automated Subject Tagging for a National Technical Library's Open-Access Catalog" (arXiv:2504.07199v3), TIB Hannover. It was ingested and read too, so that design is described from its own text.
+
+**Ingested sources:**
+
+- `library/arxiv-2606.04382v1`
+- `library/arxiv-2504.07199v3`
 
 ### DIIG — Digital Implementation Investment Guide
 
@@ -173,6 +190,22 @@ these.
 **No ingested source.** The origin above names one; nothing in this
 checkout holds it. `literature-search` is the skill that closes one of
 these.
+
+### Skill-pipeline subject indexing — one policy-grounded stage per cognitive step, each output inspectable
+
+<a id="skill-pipeline-subject-indexing"></a>
+
+`skill-pipeline-subject-indexing` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **Assigning terms from a closed, rule-governed controlled vocabulary to a work: deciding what it is about and saying so in the vocabulary's own authorised form.** Use it when the vocabulary comes with a written policy manual (LCSH has the Subject Headings Manual; MeSH, AAT and FAST are the source's own named candidates) and an authority file that can be queried, and a wrong but plausible term would be acted on in cataloguing, retrieval or linking. It answers *how to produce the assignment*. It does not answer *how to tell whether an assignment is good*: that is `consensus-grounded-subject-evaluation`, which is a parallel node and is not folded into this one. Not for choosing between options (`kepner-tregoe`), a recurring decision rule (`dmn`), or making a model emit a rule instead of a result (`hybrid-llm-deterministic`); §"Against hybrid-llm-deterministic" explains why the last is a separate method and not this one's parent. Not for free keywording with no vocabulary to validate against, because the authority step is what the method rests on.
+
+**Origin.** Eric H. C. Chow, "A Skill-Based Agentic Pipeline for Library of Congress Subject Indexing" (arXiv:2605.03537v1), School of Humanities, The University of Hong Kong. Open access, ingested whole and read before this node was written. The method is rendered from that paper alone. Two parallel tracks, both entrants in SemEval-2025 Task 5, were ingested beside it and read so that §"The parallel tracks, and why they are not this node" rests on the papers and not on how Chow summarises them: Suominen, Inkinen & Lehtinen, "Annif at SemEval-2025 Task 5: Traditional XMTC augmented by LLMs" (arXiv:2504.19675v2), National Library of Finland; and Bayrami Asl Tekanlou et al., "Homa at SemEval-2025 Task 5: Aligning Librarian Records with OntoAligner for Subject Tagging" (arXiv:2504.21474v1).
+
+**Ingested sources:**
+
+- `library/arxiv-2605.03537v1`
+- `library/arxiv-2504.19675v2`
+- `library/arxiv-2504.21474v1`
 
 ### Specification-compiled agents — the control flow comes from the diagram, not from the model's plan
 
