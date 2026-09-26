@@ -115,48 +115,6 @@ export interface UncatalogedTranslation {
 }
 
 /**
- * The five docs pages published in ar/es/fr/ru/zh across #1371 and #1374,
- * `.po`-less, recorded 2026-09-26.
- *
- * **Composed rather than written out twenty-five times, and that is the point.**
- * One page-to-reason table and one locale list give one place to correct a
- * reason and one place to clear a page when its catalogues land. Twenty-five
- * near-identical literals would give twenty-five, which is how `es/…` and
- * `zh/agent-onboarding` above already diverged into a full reason and a
- * "same as" pointer.
- *
- * **Each reason is a MEASUREMENT.** The catalogue check and the structure
- * check sit in the same loop in {@link driftFor} and run independently of one
- * another, so a page missing its `.po` is still compared against its source.
- * On the run that produced these entries all twenty-five drew the catalogue
- * finding and **none** drew a structure finding, with `0 could not be read` —
- * so `sameStructure` held for every one. Structurally current, untracked.
- * That is not an assumption about a translation nobody here can read.
- *
- * Dated, because {@link UNCATALOGED}'s own docstring says these are a backlog
- * and an undated entry becomes policy. Whoever owns the translation work
- * clears them by adding the catalogues; nothing here says they should not exist.
- */
-const UN_LANGUAGE_PAGES_2026_09_26: readonly UncatalogedTranslation[] = (
-  [
-    ["accessibility", "#1374"],
-    ["content-types", "#1371"],
-    ["contributing", "#1374"],
-    ["getting-started", "#1371"],
-    ["installation", "#1371"],
-  ] as const
-).flatMap(([page, pr]) =>
-  (["ar", "es", "fr", "ru", "zh"] as const).map((locale) => ({
-    translation: `${locale}/${page}`,
-    since: "2026-09-26",
-    reason:
-      `published by ${pr} with no \`.po\`; its structure matches its source on the run that ` +
-      "recorded this, so it is current but untracked. A catalogue cannot be derived from a " +
-      "finished translation without inventing the segmentation",
-  })),
-);
-
-/**
  * Translations published with no catalogue, as of the date on each entry.
  *
  * These are a BACKLOG, not a policy. Anything not listed here must have a
@@ -175,7 +133,6 @@ export const UNCATALOGED: UncatalogedTranslation[] = [
     since: "2026-09-20",
     reason: "same as `es/agent-onboarding` — published, structurally current, no catalogue",
   },
-  ...UN_LANGUAGE_PAGES_2026_09_26,
 ];
 
 /** A translation known to have drifted, recorded rather than passed over. */
