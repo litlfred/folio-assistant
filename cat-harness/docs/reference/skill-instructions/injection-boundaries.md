@@ -93,15 +93,47 @@ somebody concluded it.
 > them, which is `path-containment`'s lesson in the same bean on the same day.
 > **Enumerate the band, not its examples.**
 
-**What it still does not read**, and this is a scope claim rather than a clean
-bill: `actions/github-script` `script:` blocks are JavaScript, and the same
-laundering reaches them — `const slug = '${{ steps.slug.outputs.slug }}';`
-appears twice in this corpus. Those two values are character-class constrained so
-neither closes that string today. Extending the scanner to a second language
-changes what the gate *claims* to read, and the scope line "`run:` blocks only"
-already conflicts with "`with:` is the remedy" at exactly one key, since
-`script:` lives under `with:`. Bean `j0zs` holds the decision, and **a recorded
-no is an acceptable outcome there while a silent no is not.**
+### `script:` blocks are the SECOND surface — decided yes (bean `j0zs`)
+
+`actions/github-script` runs JavaScript, and `${{ }}` is substituted into its
+source text the same way. The gate read `run:` only until 2026-09-26, on the
+reasoning that `with:` is where values are passed safely — and `script:` lives
+*under* `with:`, so the scope line and the remedy line collided at exactly one
+key. That collision was the question; **the measurement answered it.**
+
+**One position there is worse than any in bash.** Inside a template literal
+`${…}` is *evaluated*, so a value need not close a quote to become program:
+
+```
+git check-ref-format --branch 'a${process.exit(1)}b'   → LEGAL
+git check-ref-format --branch 'x`id`'                  → LEGAL
+git check-ref-format --branch 'x${7*7}'                → refused, for the `*`
+```
+
+`feature-staging.yml` interpolated the **raw fork branch name** into a template
+literal, in a step whose sibling two jobs down binds the same value to `env:` and
+explains why. So it was arbitrary JavaScript execution reachable by opening a
+fork PR, capped only by `pull_request`'s read-only token.
+
+> **And the remedy was already in the corpus, in the workflow next door.**
+> `folio-staging.yml` does the same job — comment the staging URL on the PR — and
+> has always written `const slug = process.env.SLUG` and
+> `` **Branch:** \`${process.env.BRANCH}\` ``. Two files doing one job, one
+> right and one wrong, and nothing checked which pattern a file used. That is
+> `1wef`'s lesson a third time, in the surface the gate had declared out of
+> scope: **a scope exclusion is a place defects collect, not a place they are
+> absent.**
+
+**The remedy differs, which is why it is a separate surface and not a wider
+regex.** A `script:` block is Node: bind on the step's `env:` and read
+`process.env.VAR`. Telling somebody to write `"$VAR"` in JavaScript is advice
+that does not apply, so the gate emits a different sentence, and `baselineKey`
+carries the surface — the same expression in the two surfaces is two decisions.
+
+**Position is deliberately NOT modelled.** Deciding whether an interpolation sits
+inside a template literal means tracking backticks across lines, and a detector
+that quietly missed the multi-line case would be worse than none. The bands grade
+the value, as everywhere; this section carries the position fact instead.
 
 ## Shell strings: pass an argv, not a sentence
 

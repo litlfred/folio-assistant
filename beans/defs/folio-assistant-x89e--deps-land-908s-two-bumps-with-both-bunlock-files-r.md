@@ -1,11 +1,11 @@
 ---
 # folio-assistant-x89e
 title: 'deps: land #908''s two bumps with both bun.lock files regenerated'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-26T13:41:12Z
-updated_at: 2026-09-26T14:45:43Z
+updated_at: 2026-09-26T16:58:15Z
 parent: folio-assistant-1xhc
 ---
 
@@ -19,7 +19,7 @@ Owner decision 2026-09-26: do the bump on a branch, regenerating both lockfiles,
 - [x] bun install --frozen-lockfile passes in both directories
 - [x] SDK consumers (chat.ts, mcp-server/server.ts) typecheck
 - [x] bun run gates: only the deliberate drift pair fails
-- [ ] PR merged; #908 closed by dependabot as superseded
+- [x] PR merged (#1407); #908 closed as superseded — by me on the owner's decision, because dependabot could not run Bun (bean on that filed)
 
 
 ## Findings while doing it (measured 2026-09-26)
@@ -33,3 +33,12 @@ Owner decision 2026-09-26: do the bump on a branch, regenerating both lockfiles,
 
 
 **Second round:** with the pointer parked, 1 of the 3 still failed, now with the whole bar visible (17 items instead of 3). Moving off a bar the browser already considered hovered starts its close transition, and the assertion ran mid-transition. `load()` now waits for every finite animation to finish, after two frames. Reproduced locally by simulating the start-hovered pointer (`mouse.move(5,5)` first): 1 failed without the wait, 44/44 passed with it.
+
+
+## Summary of Changes
+
+#1407 merged (fb62ecdae5c):
+- `@anthropic-ai/sdk` ^0.127.0 and `@playwright/test` 1.63.0, with both `bun.lock` files regenerated. The mcp-server lock was stale on main before this.
+- `navbar-row.e2e.ts` no longer depends on where the pointer starts. Playwright 1.63's Chromium starts it over the sidebar, so `load()` parks it and waits for the close transition.
+
+#1414 fixed main's CI, which had been blocking this. #908 was closed as superseded, and the sibling duplicate #1405 was told the same. Dependabot's own failure is tracked separately.

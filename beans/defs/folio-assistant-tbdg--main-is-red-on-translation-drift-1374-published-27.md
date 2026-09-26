@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T04:22:55Z
-updated_at: 2026-09-26T14:29:23Z
+updated_at: 2026-09-26T16:58:54Z
 parent: folio-assistant-1xhc
 ---
 
@@ -438,3 +438,32 @@ What this cost me: I measured the filesystem and treated that as the definition,
 when the fixture's premise is *nothing claims a translation of this page*, and a
 front-matter claim is a claim. The stricter test I added (17 → 16 candidates) felt
 like rigour and was checking the wrong predicate.
+
+## The set is now 36, not 27 — and the work that clears it is bean `m4s1`
+
+Two updates, 2026-09-26, both from the owner's decision to HOLD PR #1399 until
+the catalogues exist rather than merge over the red.
+
+**The count moved.** This bean records 27 over five pages (`accessibility`,
+`content-types`, `contributing`, `getting-started`, `installation`). Measured
+today: **36 over eight** — `agentic-harness`, `architecture`, `beans-and-todos`,
+`document-ingestion`, `evidence`, `publication-workflow`, `skills`, plus
+`getting-started` in `zh` alone. Four of the original five now have catalogues.
+
+So the set both GREW and SHRANK, and neither number should be quoted: derive it
+with `bun run translation:pot -- --json`, which reads the drift gate's own
+findings. A count in a bean is a claim that goes stale, and this one did within a
+day.
+
+**The templates now exist.** Every one of the 36 has a `.pot` at
+`translations/<locale>/<page>.pot`, and `translation:pot:check` runs in CI ahead
+of the drift check. Before today not one of these pages had a `.pot` OR a `.po`
+in any locale — so the work this bean describes could not have been handed to
+anybody, which is a fact worth having recorded against a bean that has been open
+since 2026-09-25.
+
+**Bean `m4s1`** now carries the request to author them, which nothing did. This
+bean, `ngxj` and `f6r1` between them describe the red accurately and completely,
+and **not one of them asks for the thing that clears it** — a subject can be
+thoroughly documented and still have no owner, and the documentation is what
+makes that hard to see.

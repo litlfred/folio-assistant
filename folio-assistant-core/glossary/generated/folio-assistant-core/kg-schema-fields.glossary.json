@@ -855,7 +855,7 @@
     {
       "id": "materialization.materializationschema.provenance",
       "prefLabel": "MaterializationSchema.provenance",
-      "definition": "WHERE THIS CAME FROM — see {@link ProvenanceSchema}.",
+      "definition": "WHERE THIS CAME FROM — see {@link SourceProvenanceSchema}.",
       "source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.provenance",
       "status": "candidate"
     },
@@ -864,48 +864,6 @@
       "prefLabel": "MaterializationSchema.purpose",
       "definition": "Why the bytes were taken. Required on anything materialized — the gates mean different things under each.",
       "source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.purpose",
-      "status": "candidate"
-    },
-    {
-      "id": "materialization.provenanceschema.local",
-      "prefLabel": "ProvenanceSchema.local",
-      "definition": "The original **in this repository** this was taken from.",
-      "source": "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema.local",
-      "status": "candidate"
-    },
-    {
-      "id": "materialization.provenanceschema.upstream",
-      "prefLabel": "ProvenanceSchema.upstream",
-      "definition": "The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not \"there is none\".",
-      "source": "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema.upstream",
-      "status": "candidate"
-    },
-    {
-      "id": "materialization.signatureschema.format",
-      "prefLabel": "SignatureSchema.format",
-      "definition": "How to interpret `value` — a media type or a named scheme.",
-      "source": "folio-assistant-core/schemas/materialization.ts#SignatureSchema.format",
-      "status": "candidate"
-    },
-    {
-      "id": "materialization.signatureschema.signer",
-      "prefLabel": "SignatureSchema.signer",
-      "definition": "Who signed, as a key identifier.",
-      "source": "folio-assistant-core/schemas/materialization.ts#SignatureSchema.signer",
-      "status": "candidate"
-    },
-    {
-      "id": "materialization.signatureschema.value",
-      "prefLabel": "SignatureSchema.value",
-      "definition": "The signature itself, or a URI that resolves to it.",
-      "source": "folio-assistant-core/schemas/materialization.ts#SignatureSchema.value",
-      "status": "candidate"
-    },
-    {
-      "id": "materialization.signatureschema.verifiedat",
-      "prefLabel": "SignatureSchema.verifiedAt",
-      "definition": "When it was last CHECKED against the signer's key — never when it was recorded. Same discipline as {@link FixitySchema.verifiedAt}.",
-      "source": "folio-assistant-core/schemas/materialization.ts#SignatureSchema.verifiedAt",
       "status": "candidate"
     },
     {

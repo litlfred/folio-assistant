@@ -541,6 +541,28 @@ jobs:
       - name: workflow BPMN coverage
         run: bun run check:workflow-coverage
 
+      # CURRENCY IS NOT VALIDITY, and this is the pair that proves it.
+      # `render:bpmn:check` asks whether the committed SVG is what the renderer
+      # produces. It was GREEN across 68 labels reading
+      # `Dependency advisories&#10;(WARN-ONLY)` in published diagrams, and
+      # correctly so — the renderer faithfully produced the wrong thing. This
+      # asks about the OUTPUT'S CONTENT, which is the question a reader has.
+      # Bean `li5y`.
+      #
+      # In the FAST SET, not beside `render:bpmn:check` in the e2e job, and that
+      # placement was corrected after measuring it: `render:bpmn:check` lives
+      # there because bpmn-js renders through a BROWSER. This check needs none —
+      # it reads committed SVG text — so putting it there bought cohesion and
+      # cost reach, since `bun run gates` is the fast set and would never have
+      # run it. A contributor editing a diagram runs that, not `--all`.
+      #
+      # A ratchet, not a gate on the whole corpus: six diagrams are already
+      # affected and fixing them is a sweep with a five-locale translation
+      # consequence. Known counts are baselined; a NEW file, or a baselined file
+      # GAINING a label, fails.
+      - name: no rendered label shows a character reference as literal text
+        run: bun run check:rendered-labels
+
       # Every Tool's `satisfies` names a skill that exists, and every io port
       # references a type the shared vocabulary declares. The schema can require
       # `satisfies` to be non-empty; it cannot know whether the names resolve,
@@ -872,6 +894,20 @@ jobs:
           # main for an unknown stretch while CI stayed green -- a gate no
           # workflow runs cannot fail, which is bean `xom7` one level down.
           bun run translate-kg-viewer:check
+          # Every uncatalogued page has a `.pot` for a translator to work from.
+          # BEFORE the drift check on purpose, and the ordering is measured:
+          # `translation:drift:check` is red on `main` BY DECISION (bean `ngxj`,
+          # issue #206) with 6 steps behind it in this job, so anything placed
+          # after it never runs. A gate in a permanently-skipped tail is the
+          # `1xhc` shape.
+          #
+          # This does NOT turn the drift check green and is not meant to: a
+          # `.pot` is the translator's input, a `.po` is their output, and 19 of
+          # 27 of those outputs are provably not derivable (bean `f6r1`). What it
+          # guards is that the input exists — measured 2026-09-26, not one of
+          # the 25 pages had a `.pot` OR a `.po` in any locale, so the campaign
+          # had nothing to be handed.
+          bun run translation:pot:check
           # Bean `07p7`: a published translation that has drifted from its
           # source is a section a reader cannot reach in their language.
           bun run translation:drift:check
@@ -1589,3 +1625,37 @@ jobs:
       # baseline it had never computed."
       - name: Known advisories against the resolved tree
         run: bun run check:dependency-advisories
+
+  skill-registration-chain:
+    # bpmn-node: Task_SkillChain
+    name: Skill-registration chain, unmasked (hard)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # THE ORIGINAL JUSTIFICATION IS GONE, and saying so is the point. This
+      # job was added because all six of these checks lived in the `typescript`
+      # job behind `bun test`, which runs the kg-audit and detangle WRITERS and
+      # repaired two artefacts before their checks read them (bean `ymsu`) --
+      # making this "the only place they are read against the tree as checked
+      # out". The `gates` job now runs all six and never runs `bun test`, so
+      # they are unmasked there. Measured 2026-09-26 on the merged tree.
+      #
+      # What survives, and why this is kept rather than deleted: ONE command a
+      # skill author runs (`bun run skill:register`) that regenerates and
+      # verifies the chain together, a committed QA sidecar recording which
+      # steps ran, and ONE named failure instead of six unrelated generated
+      # files -- which is bean `v625`'s actual complaint, and what the six
+      # separate steps cannot give.
+      #
+      # Its first CI run earned the place regardless: it went red on
+      # `kg:detangle:check` and the cause was 1214 files of a gitignored
+      # `node_modules/` counted as graph nodes, pinned in a committed sidecar.
+      - name: the registration chain is current, read unmasked
+        run: bun run skill:register:check
