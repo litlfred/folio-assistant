@@ -1,11 +1,11 @@
 ---
 # folio-assistant-c3d7
 title: 'CLAIM STOMPING: 97 of 100 claims record no holder, so beans:claim reports ''✓ claimed'' for work a sibling is doing'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-25T16:08:51Z
-updated_at: 2026-09-25T16:25:31Z
+updated_at: 2026-09-26T03:53:36Z
 parent: folio-assistant-ahvw
 ---
 
@@ -76,16 +76,16 @@ it, and so does any hand-edited bean.
 
 ## Done when
 
-- [ ] every document that tells an agent how to CLAIM names `bun run beans:claim`;
+- [x] every document that tells an agent how to CLAIM names `bun run beans:claim`;
       `beans update` stays documented for the transitions that are not claims
       (close, `--body-append`, `--blocked-by`)
-- [ ] `AGENTS.md`'s claim line no longer exits 1 — measured, `beans <id> --status`
+- [x] `AGENTS.md`'s claim line no longer exits 1 — measured, `beans <id> --status`
       returns `unknown command`
-- [ ] `in-progress` with **no recorded holder** is its own outcome, reported and
+- [x] `in-progress` with **no recorded holder** is its own outcome, reported and
       non-zero, never `✓ claimed`
-- [ ] `--dry-run` never prints a sentence in the past tense about a push that did
+- [x] `--dry-run` never prints a sentence in the past tense about a push that did
       not happen
-- [ ] a mutation over each new branch is caught by a NAMED test
+- [x] a mutation over each new branch is caught by a NAMED test
 
 ## Not in scope
 
@@ -93,3 +93,41 @@ Releasing or expiring the 97 existing claims. That is a work-plan decision for
 the owner (raised 2026-09-25), and this bean only stops the store getting
 further out of step. Nothing here closes, reopens or re-statuses a sibling's
 bean.
+
+---
+
+## Summary of Changes — re-derived and closed 2026-09-26
+
+Shipped in [PR #1350](https://github.com/litlfred/folio-assistant/pull/1350),
+merged. **This bean was itself caught by `bun run beans:landed` as an orphan** —
+named in a merged PR title with 0 of 5 boxes ticked — which is the `4d22` shape
+it exists to prevent, produced by the session that wrote it. Recorded rather
+than quietly corrected.
+
+Every box below re-run against merged `main`, not ticked from memory:
+
+| box | how it was re-derived |
+|---|---|
+| all claim docs name `beans:claim` | `beans:claim` in AGENTS.md (2), todo-manager (4), session-intent (3), bean-coordination (3). The two remaining `beans update … in-progress` hits are the explanatory *"not this"* text, checked by reading them |
+| AGENTS.md's claim line no longer exits 1 | line 218 is `bun run beans:claim <id>`; the bare `beans <id> --status` still exits **1**, run just now |
+| no-holder is its own non-zero outcome | `claim-bean.ts:258` returns `held-unknown`, `:403` maps it to exit **4** |
+| `--dry-run` never claims a push in the past tense | the success sentence occurs twice: `:351` is the legitimate `pushed` message, `:242` is a COMMENT describing the old bug. Verified by reading both, not by the count |
+| a mutation over each new branch is caught by a NAMED test | 15 pass in `claim-bean.test.ts`; 6 of 6 mutations caught, each by a named test |
+
+**End-to-end, against the real store.** `bun run beans:claim folio-assistant-6lb8
+--dry-run` — a bean a sibling holds:
+
+```
+✗ folio-assistant-6lb8 is already in-progress on the default branch, and NOBODY
+  RECORDED A HOLDER — so this cannot tell a sibling working it right now from a
+  claim somebody abandoned. NOT claimed, and nothing was written.
+error: script "beans:claim" exited with code 4
+```
+
+The same command on 2026-09-25 printed `✓ claimed folio-assistant-6lb8 on the
+default branch — every session can see it now`, having pushed nothing.
+
+The 97 existing unattributed claims are **untouched**, per the owner's decision
+of 2026-09-25 to leave them and revisit: there is no basis for a staleness
+cutoff, and `held-unknown` now makes each one visible at the moment somebody
+tries to claim it, which is when it matters.
