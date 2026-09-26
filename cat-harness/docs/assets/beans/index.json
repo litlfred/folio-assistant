@@ -1660,7 +1660,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T14:26:44Z",
-      "updatedAt": "2026-09-26T19:33:33Z",
+      "updatedAt": "2026-09-26T19:33:36Z",
       "preview": "Found while fixing an e2e fixture (bean `6bhf`, PR #1408), not while looking for\nit — so the measurement below is narrow on purpose and the sweep is part of the\nwork.\n\n## The contradiction\n\n`cat-harness/docs/crdm-methodology.md` declares\n\n    available_locales: [\"en\",\"fr\"]\n\nand there is **no `cat-harness/docs/fr/crdm-methodology.md`**. It is also absent\nfrom `docs/_data/translations.json`, which i",
       "file": "beans/defs/folio-assistant-9x01--available-locales-claims-a-locale-with-no-translat.md"
     },
@@ -2164,7 +2164,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T18:09:12Z",
-      "updatedAt": "2026-09-26T18:35:08Z",
+      "updatedAt": "2026-09-26T20:10:30Z",
       "preview": "Measured while fixing an unrelated finding (bean `9x01`), so the population below\nis exact and the recommendation is not.\n\n## What is unreachable\n\n`.github/workflows/code-quality-gates.yml`, job `gates`: **46 steps**, and the\nstep named *\"gates that were registered and never run\"* is **step 40**. A job\nstops at its first failing step, and that step's batch contains\n`translation:drift:check`, which",
       "file": "beans/defs/folio-assistant-cpss--six-gates-in-the-code-quality-job-cannot-fire-the.md"
     },
@@ -3605,14 +3605,14 @@
     {
       "id": "folio-assistant-o29r",
       "title": "EXTRACTION: cleanMarkdownText strips the underscores of LaTeX subscripts and snake_case identifiers — a translator receives a corrupted formula",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T14:43:40Z",
-      "updatedAt": "2026-09-26T16:56:25Z",
+      "updatedAt": "2026-09-26T19:54:35Z",
       "preview": "## The defect, minimally\n\n`MD_ITALIC_UNDER_RE` in `cat-harness/content/pipeline/pot-extract.ts` is\n\n    /(?<!_)_([^_]+)_(?!_)/g\n\nwith no word-boundary condition, so any two underscores in one extracted string\nare read as an `_emphasis_` span and both are deleted. Measured:\n\n| input | `cleanMarkdownText` gives | should be |\n|---|---|---|\n| `$a_1$ and $b_2$` | `$a1$ and $b2$` | unchanged |\n| `x_1 y_",
       "file": "beans/defs/folio-assistant-o29r--extraction-cleanmarkdowntext-strips-the-underscore.md"
     },

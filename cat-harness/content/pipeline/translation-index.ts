@@ -310,6 +310,53 @@ export function localesAvailableFor(
   return supportedLocales(instanceRoot).filter((l) => have.has(l));
 }
 
+/**
+ * The locales a reader can actually READ a page in — the same question
+ * {@link localesAvailableFor} answers, asked of the RENDERED corpus instead of
+ * the catalogue directory.
+ *
+ * `available_locales` is defined by `translation-manager.md` as *"which
+ * languages can I read this page in"*. The catalogue is not that question. A
+ * `.po` file is **intent to translate**; a rendered page is **availability**,
+ * and the two come apart in both directions:
+ *
+ *   - `crdm-methodology` had `translations/fr/crdm-methodology.po` — 25 lines,
+ *     one filled `msgstr`, its own header calling itself partial — and no
+ *     French page anywhere. It published `availableLocales: ["en","fr"]` as
+ *     JSON-LD, so the chain from *somebody started translating one block* to
+ *     *this page is available in French* had no step in it that checked
+ *     anything.
+ *   - Five pages (`agentic-harness`, `beans-and-todos`, `document-ingestion`,
+ *     `evidence`, `publication-workflow`) are rendered in all five target
+ *     locales with no catalogue for any of them, and stamped `["en"]`. That is
+ *     the same defect pointing the other way, and it is the more costly half:
+ *     a reader's language bar hid five translations that exist.
+ *
+ * Both were one cause — availability inferred from `existsSync` on a `.po`.
+ * Bean `9x01`.
+ *
+ * `sourceKey` is a {@link pageKey}, so the caller normalises once and this does
+ * not have to know about `baseurl` or permalink style. An unknown key yields
+ * the source locale alone, which is the honest answer for a page with no entry
+ * in the index: it exists in the language it was written in, and nothing says
+ * it exists in any other.
+ *
+ * This does **not** replace {@link localesAvailableFor}, and the difference is
+ * not cosmetic. `translation-qa-sweep.ts` asks which locales have catalogue
+ * material to QA — a question about `.po` files, correctly answered by the
+ * catalogue — so it keeps using that one. Two callers, two questions.
+ */
+export function localesReadableFor(
+  instanceRoot: string,
+  index: TranslationIndex,
+  sourceKey: string,
+): string[] {
+  const src = sourceLocale(instanceRoot);
+  const entry = index.pages[sourceKey];
+  const have = new Set<string>([src, ...Object.keys(entry?.translations ?? {})]);
+  return supportedLocales(instanceRoot).filter((l) => have.has(l));
+}
+
 /** The instance's content type, which decides which formats are translatable. */
 export function contentType(instanceRoot: string): string {
   const c = harnessConfig(instanceRoot).contentType;
