@@ -8,7 +8,7 @@
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-26T11:23:33.579Z",
+  "updated_at": "2026-09-26T11:05:51.971Z",
   "families": {
     "coverage-measured": {
       "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 44 of 44 declared kind(s), 160 gate(s), 68 criteria.",
@@ -226,6 +226,7 @@
           "gates": [
             "bun run cat-harness/scripts/gen-docs-pages.ts --check",
             "bun run cat-harness/scripts/gen-schema-docs.ts --check",
+            "bun run cat-harness/scripts/gen-skill-docs.ts --check",
             "bun run check:agent-entry-links",
             "bun run check:agents-xref",
             "bun run check:agents-xref:strict",
@@ -236,6 +237,7 @@
             "bun run check:folio-mount",
             "bun run check:glossary",
             "bun run check:instance-render",
+            "bun run check:stale-field-advice",
             "bun run check:viewer-backticks",
             "bun run check:viewer-nav",
             "bun run check:wireframes",
@@ -247,8 +249,7 @@
             "bun run readme:audit",
             "bun run readme:audit:root",
             "bun run readme:sync:check",
-            "bun run readme:sync:root:check",
-            "bun run skills:docs:check"
+            "bun run readme:sync:root:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -505,6 +506,7 @@
             "bun run check:lane-documentation",
             "bun run check:process-documentation",
             "bun run check:raci",
+            "bun run check:stale-field-advice",
             "bun run check:workflow-coverage",
             "bun run check:workflow-refs",
             "bun run check:xml-comments",
@@ -677,19 +679,19 @@
             "skill"
           ],
           "gates": [
+            "bun run cat-harness/scripts/gen-skill-docs.ts --check",
             "bun run check:agent-entry-links",
             "bun run check:agents-xref",
             "bun run check:agents-xref:strict",
             "bun run check:bean-restates-skill",
             "bun run check:remote-skills",
             "bun run check:skills",
+            "bun run check:stale-field-advice",
             "bun run check:tools",
             "bun run check:voice-skills",
             "bun run check:workflow-refs",
             "bun run kg:audit:check",
-            "bun run kg:detangle:check",
-            "bun run skill:register:check",
-            "bun run skills:docs:check"
+            "bun run kg:detangle:check"
           ],
           "typed": true,
           "hasFiles": true

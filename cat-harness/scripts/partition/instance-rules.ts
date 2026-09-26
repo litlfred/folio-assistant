@@ -400,6 +400,19 @@ export const RULES: Rule[] = [
       "schemas/property-skills.ts",          // declaration key → its edit skills (issue #1146)
       "schemas/dependency-order.ts",         // the ONE resolve-then-walk: flatten, ancestors, conflicts (bean `a1lq`)
       "schemas/layer-direction.ts",          // the ONE wrong-direction verdict, shared with kg-detangle (bean `j79e`)
+      // "what files does this REPOSITORY contain", asked of git rather than of
+      // the disk (beans `rsi6`, `xd1g`). Harness by its subject: the corpus it
+      // reports is a checkout's, and its whole point is that a folio's material
+      // and a machine's untracked residue are not the same set.
+      //
+      // It sat under `scripts/` until 2026-09-26 and moved here on the owner's
+      // ruling that a SKILL must not know about a script, and that a script
+      // belongs to `tools`. `kg-detangle.ts` is a skill-directory node and
+      // needs this rule, so leaving it in `scripts/` would have minted the
+      // first `skills/` -> `scripts/` edge in the repository (measured: zero
+      // such edges). Its neighbour above is the precedent rather than an
+      // analogy -- the same shape, shared by the same two callers.
+      "schemas/git-corpus.ts",
       "schemas/detangle.ts",                 // the detangle criterion — folded in from its own instance (bean `byql`)
       "schemas/detangle-sidecar.ts",         // what a detangle measurement pins (bean `byql`)
       "schemas/node-kind.ts",                // node kinds declare their parents; composed by that walk (bean `a1lq`)
@@ -811,6 +824,11 @@ export const RULES: Rule[] = [
       "scripts/check-agent-entry-links.ts",
       "scripts/check-command-paths.ts",
       "scripts/check-anchor-names.ts",
+      // Bean `fx5r`. Harness by subject: its table names FORGE fields whose
+      // served value goes stale, and a folio has no forge. It imports nothing
+      // but `node:fs` and `node:path`, and the advice it sweeps is this
+      // platform's skills and workflows.
+      "scripts/check-stale-field-advice.ts",
       // Its subject is the harness's OWN declaration filename — which file
       // names an instance — so it is harness by subject as well as by
       // dependency: it imports `schemas/cat-harness.js` for the constant and
@@ -883,12 +901,6 @@ export const RULES: Rule[] = [
       // a package. Its neighbour above reads the workflows; this one reads
       // what the workflows were failing to build.
       "scripts/check-published-packages.ts",
-      // "what files does this REPOSITORY contain", asked of git rather than of
-      // the disk (bean `rsi6`). Harness by its subject: the corpus it reports
-      // is a checkout's, and its whole point is that a folio's material and a
-      // machine's untracked residue are not the same set. Four scanners here
-      // shared a denylist-shaped version of this before it was one module.
-      "scripts/git-corpus.ts",
       // Which `.github/workflows/*.yml` carry a BPMN diagram — bean `7yvd`.
       // Harness by its subject: it reads THIS REPOSITORY's CI processes and
       // its knowledge graph, and a folio has neither of those as content.
