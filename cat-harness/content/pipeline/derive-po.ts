@@ -135,6 +135,13 @@ export interface Derivation {
   page: string;
   locale: string;
   entries: number;
+  /**
+   * Source constructs with no counterpart in the translation, emitted with an
+   * empty `msgstr`. Non-zero means the SOURCE grew after the translation was
+   * made — reported rather than hidden, because a reader deciding whether to
+   * trust this catalogue needs to know it is incomplete by construction.
+   */
+  untranslated: number;
   po: string;
 }
 
@@ -210,6 +217,61 @@ export function conflictingDuplicate(
   return undefined;
 }
 
+/**
+ * Align a translation against a source that has GROWN, or report that it cannot.
+ *
+ * Positional pairing assumes the two documents have the same shape. When a source
+ * gains constructs after its translation was made, that assumption fails at the
+ * insertion point and everything after it shifts — which is why five of this
+ * corpus's six remaining refusals were `installation`, each short by exactly the
+ * two Windows/Git Bash paragraphs `main` added on 2026-09-26.
+ *
+ * **That is not a translation defect, and refusing it outright was leaving work
+ * undone.** A catalogue whose source has grown is an ordinary, expressible thing:
+ * the constructs that were translated carry their translation, and the ones added
+ * since carry an empty `msgstr`, which is precisely what gettext's untranslated
+ * state means. Issue #206's *"official goes stale when its source changes"* is
+ * this case, and an empty `msgstr` is how a catalogue says so.
+ *
+ * Returns one entry per SOURCE construct: the matching translation, or `undefined`
+ * where the source has no counterpart.
+ *
+ * **Refuses unless every translated construct is matched.** A subsequence
+ * alignment is only sound in one direction — the translation must be a
+ * subsequence of the source, meaning things were ADDED to the source and nothing
+ * was dropped from the translation. If the translation has a construct the source
+ * does not, the two have diverged rather than drifted, and pairing what is left
+ * would be inventing an alignment rather than reading one.
+ *
+ * Greedy rather than a full LCS, and the guard is what makes that safe: a greedy
+ * walk over kinds finds a complete match whenever one exists for a true
+ * subsequence, and any incomplete walk is refused rather than patched up.
+ */
+export function alignGrownSource(
+  src: PotEntry[],
+  tr: PotEntry[],
+): Array<PotEntry | undefined> | undefined {
+  if (tr.length > src.length) return undefined;
+  const out: Array<PotEntry | undefined> = [];
+  let j = 0;
+  for (let i = 0; i < src.length; i += 1) {
+    if (j < tr.length && src[i].kind === tr[j].kind && src.length - i === tr.length - j) {
+      // The tails are the same length, so from here it is positional — taking a
+      // skip now would strand a translated construct with nowhere to go.
+      out.push(tr[j]);
+      j += 1;
+      continue;
+    }
+    if (j < tr.length && src[i].kind === tr[j].kind) {
+      out.push(tr[j]);
+      j += 1;
+      continue;
+    }
+    out.push(undefined);
+  }
+  return j === tr.length ? out : undefined;
+}
+
 /** Escape a string for a `.po` literal. */
 function poEscape(s: string): string {
   return s.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\n");
@@ -229,7 +291,7 @@ export function formatDerivedPo(
   page: string,
   locale: string,
   src: PotEntry[],
-  tr: PotEntry[],
+  tr: Array<PotEntry | undefined>,
   sourcePath: string,
 ): string {
   const name = LOCALE_NAMES[locale] ?? locale;
@@ -245,6 +307,14 @@ export function formatDerivedPo(
     "# point, not an authority. The alignment was accepted because the two",
     `# documents yield the same sequence of ${src.length} constructs; see the module`,
     "# docblock for what that does and does not establish.",
+    ...(tr.some((e) => e === undefined)
+      ? [
+          "#",
+          `# INCOMPLETE — ${tr.filter((e) => e === undefined).length} of these constructs`,
+          "# were added to the source AFTER this translation was made, and carry an empty",
+          "# msgstr. That is #206's stale-on-edit case; they need a translator, not a fix.",
+        ]
+      : []),
     "#",
     'msgid ""',
     'msgstr ""',
@@ -268,9 +338,19 @@ export function formatDerivedPo(
     const id = src[i].msgid;
     if (seen.has(id)) continue;
     seen.add(id);
+    const match = tr[i];
     out.push(`#: ${sourcePath}:${src[i].line}`);
-    out.push(`msgid "${poEscape(id)}"`);
-    out.push(`msgstr "${poEscape(tr[i].msgid)}"`);
+    if (match === undefined) {
+      // The source gained this construct after the translation was made. An
+      // empty `msgstr` is gettext's word for "not translated yet" — the honest
+      // record, and the one a translator's tooling already knows how to find.
+      out.push("#, fuzzy");
+      out.push(`msgid "${poEscape(id)}"`);
+      out.push('msgstr ""');
+    } else {
+      out.push(`msgid "${poEscape(id)}"`);
+      out.push(`msgstr "${poEscape(match.msgid)}"`);
+    }
     out.push("");
   }
   return out.join("\n");
@@ -335,6 +415,25 @@ export function derive(
         readFileSync(trPath, "utf-8"),
         `${relative(instanceRoot, docs) || "."}/${locale}/${page}.md`,
       );
+      if (tr.length < src.length) {
+        // The source may simply have GROWN since this was translated, which is
+        // alignable with the added constructs left untranslated. Tried before
+        // refusing, because refusing here was leaving five real catalogues unmade.
+        const grown = alignGrownSource(src, tr);
+        if (grown !== undefined) {
+          const clash = conflictingDuplicate(src, grown.map((e, i) => e ?? src[i]));
+          if (clash === undefined) {
+            derived.push({
+              page,
+              locale,
+              entries: src.length,
+              untranslated: grown.filter((e) => e === undefined).length,
+              po: formatDerivedPo(page, locale, src, grown, rel),
+            });
+            continue;
+          }
+        }
+      }
       if (tr.length !== src.length) {
         refused.push({
           page,
@@ -374,6 +473,7 @@ export function derive(
         page,
         locale,
         entries: src.length,
+        untranslated: 0,
         po: formatDerivedPo(page, locale, src, tr, rel),
       });
     }
@@ -443,7 +543,12 @@ export function formatReport(r: DeriveResult): string {
   out.push(`Derived ${r.derived.length} catalogue(s); refused ${r.refused.length}.`);
   out.push("");
   for (const d of r.derived) {
-    out.push(`  ✓ ${d.locale}/${d.page}  ${d.entries} entries`);
+    out.push(
+      `  ✓ ${d.locale}/${d.page}  ${d.entries} entries` +
+        (d.untranslated > 0
+          ? `  (${d.untranslated} added to the source since — empty msgstr)`
+          : ""),
+    );
   }
   if (r.refused.length > 0) {
     out.push("");

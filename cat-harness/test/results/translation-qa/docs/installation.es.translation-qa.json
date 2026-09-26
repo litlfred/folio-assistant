@@ -1,22 +1,22 @@
 {
   "$schema": "translation-qa/v1",
-  "label": "trans:ar/installation",
+  "label": "trans:es/installation",
   "block": "Installation",
-  "locale": "ar",
+  "locale": "es",
   "paths": {
     "md": "docs/installation.md"
   },
-  "po": "translations/ar/installation.po",
+  "po": "translations/es/installation.po",
   "source_hashes": {
     "md": "3bb9822d5c2e",
-    "po": "9d4431082602"
+    "po": "f6686891b422"
   },
   "criteria": {
     "translation-coverage": [
       {
         "field_hash": {
           "md": "3bb9822d5c2e",
-          "po": "9d4431082602"
+          "po": "f6686891b422"
         },
         "result": "warn",
         "reviewer": {
@@ -27,7 +27,7 @@
           "script_hash": "2cae133afe47",
           "script_commit_sha": "92d79fc7e591fbcdc33c7239860a59ff8788b4cb"
         },
-        "reviewed_at": "2026-09-26T13:23:04.007Z",
+        "reviewed_at": "2026-09-26T13:23:04.202Z",
         "reviewed_sha": "958e36d78401346339bde34cc5b82c75c018414a",
         "severity": "minor",
         "metrics": {
@@ -42,7 +42,7 @@
       {
         "field_hash": {
           "md": "3bb9822d5c2e",
-          "po": "9d4431082602"
+          "po": "f6686891b422"
         },
         "result": "pass",
         "reviewer": {
@@ -53,7 +53,7 @@
           "script_hash": "2cae133afe47",
           "script_commit_sha": "92d79fc7e591fbcdc33c7239860a59ff8788b4cb"
         },
-        "reviewed_at": "2026-09-26T13:23:04.018Z",
+        "reviewed_at": "2026-09-26T13:23:04.219Z",
         "reviewed_sha": "958e36d78401346339bde34cc5b82c75c018414a",
         "metrics": {
           "checked": 56,
@@ -61,15 +61,16 @@
           "missing_strict": 0,
           "missing_acronyms": 0,
           "glossary_broken": 0,
-          "glossary_resolved": 0
-        }
+          "glossary_resolved": 2
+        },
+        "notes": "2 further acronym(s) are absent verbatim and the glossary accounts for each: WHO — the glossary marks it localised, so an absent verbatim form is expected; WHO — the glossary marks it localised, so an absent verbatim form is expected."
       }
     ],
     "translation-not-echo": [
       {
         "field_hash": {
           "md": "3bb9822d5c2e",
-          "po": "9d4431082602"
+          "po": "f6686891b422"
         },
         "result": "warn",
         "reviewer": {
@@ -80,17 +81,17 @@
           "script_hash": "2cae133afe47",
           "script_commit_sha": "92d79fc7e591fbcdc33c7239860a59ff8788b4cb"
         },
-        "reviewed_at": "2026-09-26T13:23:04.028Z",
+        "reviewed_at": "2026-09-26T13:23:04.234Z",
         "reviewed_sha": "958e36d78401346339bde34cc5b82c75c018414a",
         "severity": "minor",
         "metrics": {
-          "echoed": 10,
+          "echoed": 11,
           "translated": 56
         },
-        "notes": "10 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+        "notes": "11 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
       }
     ],
     "translation-semantic-roundtrip": []
   },
-  "updated_at": "2026-09-26T13:23:04.030Z"
+  "updated_at": "2026-09-26T13:23:04.236Z"
 }

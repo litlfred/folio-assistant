@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T08:56:25Z
-updated_at: 2026-09-26T10:14:10Z
+updated_at: 2026-09-26T13:21:47Z
 parent: folio-assistant-bzyu
 ---
 
@@ -135,3 +135,49 @@ is worse than an unticked one.
 
 That disposition wants doing **once**, together with `ig4a`'s removals and
 `lvk9`'s 3785, rather than rewriting every catalogue three times.
+
+
+### 2026-09-26, later — the fix is INCOMPLETE for CJK, measured
+
+A letter count fixed the Arabic asymmetry and left the Chinese one. `是` (yes) and
+`否` (no) are **one character, one letter**, so they are dropped — while their
+English counterparts `yes` and `no`, at three and two letters, are kept. A count
+of letters is not script-neutral either when a script's words are one character
+long.
+
+Found as the cause of the last remaining `translation-drift` finding.
+`docs/zh/getting-started.md` has **20** table cells dropped by `isTranslatable`,
+and while most are correctly dropped (`—`, `→`, `5`, `1–4`, `/`), `是` and `否`
+are words.
+
+### The obvious fix over-corrects, so it is NOT shipped
+
+Candidate: accept any string containing an ideograph (`\p{Script=Han}`,
+Hiragana, Katakana, Hangul), else require two letters. Measured over
+`cat-harness/docs`:
+
+| | aligned /25 | msgids | letterless |
+|---|---|---|---|
+| `>= 2` letters (current) | 19 | 40939 | 0 |
+| `>= 2` letters OR `>= 1` ideograph | **19** | 40945 | 0 |
+
+**Alignment does not move**, and on the pair it was meant to fix it swaps one
+misalignment for another: `zh/getting-started` goes from source 149 / zh 145 to
+source 149 / zh **150** — short by 4 becomes long by 1.
+
+So chasing construct counts with threshold tweaks trades one misalignment for
+another, and that is the finding rather than the candidate rule. Recorded rather
+than shipped: the 6 msgids it would add are real words a translator should see, so
+the rule is arguably right ON ITS MERITS and should be decided on those merits
+rather than on an alignment number it does not improve.
+
+Note what the asymmetry does and does not cost: msgids come from the SOURCE, so a
+dropped `是` never reaches a translator's worklist. Its only effect is on
+CONSTRUCT COUNTING, which is to say on alignment — which is why it surfaced here
+and nowhere else.
+
+### Adds to "Done when"
+
+- [ ] decide the one-character-word case on its merits — a single Han character is
+      a word where a single Latin letter is not — with the measurement above
+      recorded, and NOT justified by alignment, which it does not improve

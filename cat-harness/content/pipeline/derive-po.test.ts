@@ -13,7 +13,15 @@ import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync } from "nod
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 
-import { derive, write, formatReport, firstKindDivergence, formatDerivedPo, LOCALE_NAMES } from "./derive-po.ts";
+import {
+  derive,
+  write,
+  formatReport,
+  firstKindDivergence,
+  formatDerivedPo,
+  alignGrownSource,
+  LOCALE_NAMES,
+} from "./derive-po.ts";
 import { extractMarkdown, MD_CODE_FENCE_RE } from "./pot-extract.ts";
 import { SITE_DIR } from "./translation-index.ts";
 
@@ -73,14 +81,30 @@ describe("a faithful translation is derivable", () => {
 });
 
 describe("it REFUSES rather than guesses", () => {
-  it("a different construct count is refused, with both counts named", () => {
+  it("a SHORTER translation is no longer refused outright — it aligns as a grown source", () => {
+    // This asserted `count-differs` until `alignGrownSource` landed, and the old
+    // contract was too strict: a translation shorter than its source may simply
+    // predate constructs the source gained, which is alignable with those left
+    // untranslated. Here the source's heading, paragraph and two list items
+    // against a translated heading and paragraph — the list items are unmatched.
     const short = ["# Titre un", "", "Un paragraphe de prose suffisamment long."].join("\n");
     const { root, cleanup } = fixture(SRC, { fr: short });
+    const r = derive(root, ["page"], ["fr"]);
+    expect(r.refused).toEqual([]);
+    expect(r.derived).toHaveLength(1);
+    expect(r.derived[0].untranslated).toBe(2);
+    cleanup();
+  });
+
+  it("...but a translation whose SHAPE differs is still refused, with both counts named", () => {
+    // The case the old assertion was reaching for, and it still holds: shorter
+    // AND not a subsequence, so no alignment can be read off it.
+    const wrongShape = ["# Titre un", "", "| a cell here | and another |"].join("\n");
+    const { root, cleanup } = fixture(SRC, { fr: wrongShape });
     const r = derive(root, ["page"], ["fr"]);
     expect(r.derived).toEqual([]);
     expect(r.refused[0].reason).toBe("count-differs");
     expect(r.refused[0].detail).toContain("4");
-    expect(r.refused[0].detail).toContain("2");
     cleanup();
   });
 
@@ -555,5 +579,65 @@ describe("a msgid does not depend on where the author pressed return (`lvk9`)", 
   it("a change of quote depth starts a new entry", () => {
     const md = "> Outer quote text here.\n>> Inner quote text here.";
     expect(extractMarkdown(md, "x")).toHaveLength(2);
+  });
+});
+
+
+describe("a source that GREW since its translation is still alignable", () => {
+  // Five of the six refusals left after `lvk9` were one cause and it was not the
+  // translators: `installation` x 5 locales, each short by exactly the two
+  // Windows/Git Bash paragraphs `main` added on 2026-09-26, after those
+  // translations landed. Refusing them was leaving five real catalogues unmade —
+  // a catalogue whose source has grown is an ordinary thing, and an empty
+  // `msgstr` is gettext's own word for it. Issue #206 calls this stale-on-edit.
+  const kinds = (ks: string[]) => ks.map((k, i) => ({ source: "x", line: i + 1, msgid: `m${i}`, kind: k })) as never;
+
+  it("pairs around an inserted construct and leaves it unmatched", () => {
+    const src = kinds(["heading", "paragraph", "paragraph", "list-item"]);
+    const tr = kinds(["heading", "paragraph", "list-item"]);
+    const out = alignGrownSource(src, tr);
+    expect(out).toBeDefined();
+    expect(out!.map((e) => (e === undefined ? null : e.msgid))).toEqual(["m0", "m1", null, "m2"]);
+  });
+
+  it("REFUSES when the translation has a construct the source does not", () => {
+    // The direction that is not sound. A subsequence alignment only works one
+    // way: things ADDED to the source, nothing DROPPED from the translation. If
+    // the translation carries something the source lacks, the two have diverged
+    // rather than drifted, and pairing the remainder would be inventing an
+    // alignment instead of reading one.
+    const src = kinds(["heading", "paragraph"]);
+    const tr = kinds(["heading", "table-cell"]);
+    expect(alignGrownSource(src, tr)).toBeUndefined();
+  });
+
+  it("refuses a translation LONGER than its source", () => {
+    expect(alignGrownSource(kinds(["heading"]), kinds(["heading", "paragraph"]))).toBeUndefined();
+  });
+
+  it("an identical shape aligns positionally, with nothing unmatched", () => {
+    const src = kinds(["heading", "paragraph"]);
+    const out = alignGrownSource(src, kinds(["heading", "paragraph"]));
+    expect(out!.some((e) => e === undefined)).toBe(false);
+  });
+
+  it("the five installation catalogues carry exactly 2 untranslated entries each", () => {
+    // Against the real corpus, and the number is the claim: those two are the
+    // paragraphs `main` added. If it ever reads other than 2, either the source
+    // moved again or the alignment is pairing something it should not.
+    const root = resolve(import.meta.dir, "..", "..");
+    const r = derive(root, ["installation"], LOCALES_ALL);
+    expect(r.derived).toHaveLength(5);
+    for (const d of r.derived) expect(d.untranslated).toBe(2);
+  });
+
+  it("an incomplete catalogue SAYS SO in its header, and marks the entry fuzzy", () => {
+    // A catalogue that is incomplete by construction must not read as complete.
+    const root = resolve(import.meta.dir, "..", "..");
+    const po = derive(root, ["installation"], ["fr"]).derived[0].po;
+    expect(po).toContain("INCOMPLETE");
+    expect(po).toContain("added to the source AFTER this translation was made");
+    expect(po).toContain("#, fuzzy");
+    expect(po).toContain('msgstr ""');
   });
 });

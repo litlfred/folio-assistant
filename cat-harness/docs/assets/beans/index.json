@@ -958,7 +958,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T08:56:25Z",
-      "updatedAt": "2026-09-26T10:14:10Z",
+      "updatedAt": "2026-09-26T13:21:47Z",
       "preview": "Found while deriving `.po` catalogues for #206 (bean `tbdg`). Measured\n2026-09-26 on `main` + this branch.\n\n`MD_MIN_TEXT_LEN = 3` in `content/pipeline/pot-extract.ts` gates every one of the\nfour emission paths (heading, paragraph, list-item, blockquote, table-cell). It is\na minimum in **characters**, used as a proxy for \"is there translatable text\nhere\". A character count is not script-neutral, so",
       "file": "beans/defs/folio-assistant-6b8u--extraction-md-min-text-len-is-a-threshold-in-chara.md"
     },
@@ -1310,7 +1310,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T08:57:09Z",
-      "updatedAt": "2026-09-26T10:17:05Z",
+      "updatedAt": "2026-09-26T13:22:34Z",
       "preview": "Found while deriving `.po` catalogues for #206 (bean `tbdg`). Measured\n2026-09-26.\n\n`derive-po.ts` refuses 18 of 25 (page, locale) pairs because the published\ntranslation does not have the same SHAPE as its source. **9 of those 18 are\nartefacts of the extractor** (beans `6b8u` and `ig4a`) and disappear once the\nthreshold is script-neutral. These are the **other 9**, which are still mismatched\nwith",
       "file": "beans/defs/folio-assistant-7x8o--translations-9-published-pages-carry-less-than-the.md"
     },

@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T08:57:09Z
-updated_at: 2026-09-26T10:17:05Z
+updated_at: 2026-09-26T13:22:34Z
 parent: folio-assistant-bzyu
 blocked_by:
     - folio-assistant-lvk9
@@ -149,3 +149,55 @@ silent.
 Also note **"may carry"** rather than "carry": with `lvk9` unlanded, the 8 are
 *not established* as a content problem at all. They are what is left over after
 three extractor defects, and the next measurement may shrink them again.
+
+
+## 2026-09-26 — this bean is down to ONE pair, and it is not what the title said
+
+`derive-po.ts` now aligns a translation against a source that **grew** since it was
+made: the translated constructs carry their translations, the ones added since
+carry an empty `msgstr` and a `#, fuzzy` marker, and the header says
+**INCOMPLETE** with the count. That is gettext's own record for untranslated, and
+#206's stale-on-edit case expressed rather than refused.
+
+`translation:drift:check`: **25 → 1**. Derived 24 of 25.
+
+The five `installation` pairs are catalogued with exactly **2** untranslated
+entries each, verified to be the two paragraphs `main` added on 2026-09-26 — not
+merely counted: the untranslated msgids read *"The platform's shell scripts are
+bash. On Windows they run under Git Bash…"* and *"Anything the … needs … must be on
+the Windows …"*.
+
+### The one that remains, and why it is refused rather than forced
+
+`zh/getting-started` — source 149 constructs, translation 145 — and the
+subsequence alignment **refuses** it, which is the design working: the translation
+carries a construct the source does not, so the two have DIVERGED rather than
+drifted, and pairing the remainder would be inventing an alignment.
+
+Diagnosed as far as measurement takes it, and the answer is that it is not one
+cause: `docs/zh/getting-started.md` has 20 table cells dropped by
+`isTranslatable`, of which `是` and `否` are real words dropped for being one
+character (bean `6b8u`, which records this as its own incompleteness). Making the
+predicate CJK-aware takes this pair from **short by 4 to long by 1** — so it is
+not the fix, and threshold tweaks trade one misalignment for another here.
+
+### What survives of this bean's original claim
+
+The title said *"9 published pages carry LESS than their source"*. Resolved:
+
+| | pairs |
+|---|---|
+| were extractor defects (`6b8u`, `ig4a`, `lvk9`) | most |
+| were the SOURCE growing after translation | 5 |
+| remain, genuinely divergent and needing a person | **1** |
+
+So the answer to "do these translations carry less than their source" is: **one
+page might, and the rest was our own pipeline.** That is the opposite of what this
+bean asserted, and the correction is the useful part.
+
+### Still not mine to decide
+
+Whether `zh/getting-started` is corrected, re-translated, or recorded — #206
+reserves translation adjudication to a human, and an agent re-translating a page to
+clear the last gate finding would manufacture exactly the sign-off the issue
+protects. **Blocked on the owner**, with one pair named rather than nine.
