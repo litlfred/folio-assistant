@@ -105,6 +105,40 @@ Neither check closes the window. Both are cheap, and the second catches the case
 that matters most in practice — a sibling minutes ahead of you who already has a
 PR up.
 
+### The trigger is STARTING WORK, not claiming — and that distinction cost a merge
+
+**Measured 2026-09-26, bean `tuvg`.** These checks are written above as what you
+do *before you claim*, and an agent that is not claiming anything therefore
+never runs them. That is not a hypothetical reading; it is what happened:
+
+A session already held `tuvg` and was executing an owner instruction on one
+cause inside it. No new bean, so no claim, so neither check fired. Sibling PR
+**#1381 was open and doing the identical work** — 25 `UNCATALOGED` records —
+and a `--search` for it would have returned it in one call. The duplicate
+merged first, which then made the *innocent* PR fail
+`translation-drift.test.ts:154` (*"no page is recorded TWICE"*) on 52 entries.
+It had to be reverted out of `main` an hour later.
+
+So the trigger is wider than a claim:
+
+> **Run the open-PR check before you start work on a topic — not only before
+> you claim a bean.** A cause inside a bean you already hold, a fix an owner
+> just asked for, a gate you are about to unbreak: each is a unit of work a
+> sibling can already have a PR up for, and none of them involves claiming
+> anything.
+
+The search term follows from that. Keyed on a bean id it finds nothing when the
+work has no bean of its own, which was this case — the sibling's bean (`0xfe`)
+existed only on an unpushed branch. **Search the subject as well as the id**:
+the file you are about to edit, the gate you are about to turn green, the
+symbol you are about to add. #1381's title said *"Record the 25 uncatalogued
+translations"*; nothing about `tuvg` would have matched it, and `UNCATALOGED`
+would have.
+
+And a second-order caution, because it inverts who pays: a duplicate-detecting
+test punishes **whoever merges second**, not whoever duplicated. Merging first
+does not mean you were first.
+
 ### `bun run beans:claim <id>` closes it — when the remote lets it
 
 **The window is closable and there is now a tool for it.** `scripts/claim-bean.ts`
