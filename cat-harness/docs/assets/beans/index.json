@@ -3423,14 +3423,14 @@
     {
       "id": "folio-assistant-mi97",
       "title": "Audit the 171 unresolved links in docs/ — 23 carry one ../ too many from the cat-harness move",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T17:06:16Z",
-      "updatedAt": "2026-09-25T16:21:36Z",
+      "updatedAt": "2026-09-26T17:58:04Z",
       "preview": "Surfaced 2026-09-20 by declaring `docs/` as a graph directory — 241 markdown\nfiles that were, until then, invisible to every declaration-driven consumer.\n`check:subgraphs` walked them for the first time and found 171 links that do\nnot resolve in the source tree.\n\nThey are NOT one problem. Measured, by trying each repair against disk:\n\n| shape | count | example |\n|---|---|---|\n| one `../` too many ",
       "file": "beans/defs/folio-assistant-mi97--audit-the-171-unresolved-links-in-docs-23-carry-on.md"
     },
