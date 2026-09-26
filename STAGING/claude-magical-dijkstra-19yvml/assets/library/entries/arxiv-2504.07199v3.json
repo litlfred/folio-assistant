@@ -1,0 +1,367 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2504.07199v3",
+  "blocks": [
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-000-introduction.md",
+      "narrative": null,
+      "content": "Subject classification within library systems in-\nvolves organizing books and resources based on\ntheir content and subject matter to facilitate easy re-\ntrieval and access. Automated methods for classify-\ning scientific texts include Springer Nature’s CSO\nclassifier (Salatino et al., 2019), which uses syn-\ntactic and semantic analysis to categorize papers\nbased on the Computer Science Ontology (CSO)\nusing abstracts, titles, and keywords. Other ap-\nproaches have utilized citation metadata for classifi-\ncation (Mahdi and Joorabchi, 2011), while research\nlike New Mexico State University’s applica",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "SemEval-2025 Task 5: LLMs4Subjects - LLM-based Automated Subject\nTagging for a National Technical Library’s Open-Access Catalog\nJennifer D’Souza, Sameer Sadruddin, Holger Israel, Mathias Begoin, and Diana Slawig\nTIB Leibniz Information Centre for Science and Technology, Hannover, Germany\n{firstname.lastname}@tib.eu\nAbstract\nWe\npresent\nSemEval-2025\nTask\n5:\nLLMs4Subjects,\na shared task on auto-\nmated subject tagging for scientific and\ntechnical records in English and German using\nthe GND taxonomy. Participants developed\nLLM-based systems to recommend top-k\nsubjects, evaluated through quantitativ",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Background",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-001-background.md",
+      "narrative": null,
+      "content": "About TIB. TIB – the Leibniz Information Cen-\ntre for Science and Technology and University Li-\nbrary – promotes free access to knowledge, infor-\nmation sharing, and open scientific publications\nand data. As Germany’s national library for science\nand technology, including Architecture, Chemistry,\nComputer Science, Mathematics, and Physics, it\nmaintains a globally unique collection, including\naudiovisual media and research data.\nAbout the TIBKAT Open-access Subset. A sub-\nset of TIB’s collection—including bibliographic\ndata in science and technology from its library cata-\nlog (TIBKAT Data), met",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Source Dataset",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-002-source-dataset.md",
+      "narrative": null,
+      "content": "We queried the TIBKAT service to restrict its\nmetadata to records containing abstracts and\nGND subject indexing.\nThe query is fully\nreproducible via this persistent search link.\nIt\nreturned 189,665 records at the time of dataset\ncreation. The TIB open-access catalog spans nine\nmedia types: Book (136,434), Thesis (31,859),\nConference (12,212), Report (6,711), Article\n(2,080), Collection (188), AudioVisualDocument\n(167), Periodical (57), and Chapter (11), detailed\nin Appendix A. Using the langdetect3 Python\nlibrary, we identified 48 languages. The top five\nwere German (108,637), English (76,735)",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "How are subject annotations obtained?",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-003-how-are-subject-annotations-obtained.md",
+      "narrative": null,
+      "content": "Subject annotations in the TIB catalog are\ncontinuously created by a dedicated team of\n1https://www.dnb.de/EN/gnd\n2The\nGND\nis\navailable\nfor\ndownload\nat\nhttps:\n//www.dnb.de/EN/Professionell/Metadatendienste/\nDatenbezug/Gesamtabzuege/gesamtabzuege_node.html.\n3https://pypi.org/project/langdetect/\n4Reflecting the real-world nature of the corpus, many\nrecords contain mixed-language content and are not reliably\nclassifiable under a single language.\n2\nstatistics\nlang\nArticle\nBook\nConference\nReport\nThesis\nnum. records\nen\n1,042/253\n26,966/17,669\n3,619/2,840\n1,275/896\n3,452/2,506\nde\n6/5\n33,401/12,528\n2,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Shared Task Description and Dataset",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-004-shared-task-description-and-dataset.md",
+      "narrative": null,
+      "content": "The LLMs4Subjects shared task challenged partic-\nipants to develop LLM-based systems for recom-\nmending relevant subjects from the GND taxonomy\nto annotate TIB technical records. Given a record’s\ntitle and abstract as input, systems were expected\nto generate a customizable top-k ranked list of rel-\nevant GND subjects. Since the dataset included\nrecords in both English and German, systems were\nrequired to support bilingual semantic processing.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Dataset Collections",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-005-dataset-collections.md",
+      "narrative": null,
+      "content": "4.1\nDataset Collections\nall-subjects.5\nThis dataset comprises the full\nTIBKAT open-source collection, with predefined\nsplits: 81,937 records for training and 13,666 for\ndevelopment. A detailed dataset overview is avail-\n5https://github.com/jd-coderepos/\nllms4subjects/tree/main/shared-task-datasets/\nTIBKAT/all-subjects\nable in the shared task repository. Participants also\nreceived the accompanying GND subject taxon-\nomy,6 which included 204,739 subjects, with cover-\nage and distribution frequencies published online.\nDue to the large dataset size (>100,000 records),\nparticipants could opt for a",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Dataset Format and Statistics",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-006-dataset-format-and-statistics.md",
+      "narrative": null,
+      "content": "Both datasets were released in JSON-LD for-\nmat and include metadata such as title, type, ab-\nstract, and authors. The key attribute for the task,\ndcterms:subject, holds the GND subject head-\nings assigned to each record. Example records are\navailable in English here and in German here. Ta-\nble 1 provides a detailed dataset breakdown. Books\nwere the most common record type in both lan-\nguage collections, with each record annotated with\nan average of 3 to 7 subjects.\n6https://github.com/jd-coderepos/\nllms4subjects/blob/main/shared-task-datasets/\nGND/dataset/GND-Subjects-all.json\n7https://github",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Task Setup",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-007-task-setup.md",
+      "narrative": null,
+      "content": "The shared task offered multiple communica-\ntion channels: a dedicated website,9 a Google\nGroup for FAQs,\nand direct email support\n(llms4subjects@gmail.com). The organizing team\nincluded two Computer Scientists and three TIB\nsubject specialists who supported participants\nthroughout. The task timeline spanned four months,\nfrom October 2024 to January 2025. A Declaration\nof Interest for Participation (DIP) survey initially\nrecorded 33 teams; of these, 14 teams submitted\nsystem outputs, and 12 also contributed system de-\nscription papers to the SemEval workshop. The\nnext section summarizes their",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Shared Task Participant Systems",
+      "pageStart": 4,
+      "pageEnd": 8,
+      "target": "../sections/sec-008-shared-task-participant-systems.md",
+      "narrative": null,
+      "content": "The participant systems are described with a focus\non their key methodological contributions. Teams\nare listed in alphabetical order of their names. An\noverview of the systems is provided in Table 2.\n1. Annif (Suominen et al., 2025) The key ideas\nin this system’s subject tagging approach were:\n1) Traditional extreme multi-label text clas-\nsification (XMTC) implemented in the Annif\ntoolkit (2022) – Using Omikuji Bonsai (Khanda-\ngale et al., 2020), a tree-based machine learning\napproach; MLLM (Maui-like (Medelyan, 2009)\nLexical Matching), a lexical matching algorithm;\nand XTransformer, a transfo",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Shared Task Leaderboard Results",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-009-shared-task-leaderboard-results.md",
+      "narrative": null,
+      "content": "In this shared task, we provided two leaderboards:\n1) quantitative results and 2) qualitative results.\nQuantitative Metrics. System performance was\nevaluated using average precision@k, recall@k,\nand F1-score@k at multiple cutoffs (k = 5, 10,\n15, ..., 50). These metrics were chosen as sub-\nject tagging was treated as a bag-of-words among\napplicable subjects, making precision, recall, and\nF1-score more suitable. Given the dataset struc-\nture of the LLMs4Subjects shared task, evaluation\nscores were released at varying levels of granular-\nity: (1) language-level, separately for en and de, (2)\nreco",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Quantitative Evaluations",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-010-quantitative-evaluations.md",
+      "narrative": null,
+      "content": "The primary evaluation metric was recall, with the\noverall leaderboard ranking based on average recall\nscores across k values from 5 to 50. For practical\nuse by subject specialists, systems should predict\nrelevant subjects at lower k values, ideally between\n5 and 10, with a maximum of 20. Table 3 presents\nthe results for both collections: all-subjects and\ntib-core. The top teams consistently predicted over\nhalf of the subject annotations in both collections.\n10https://github.com/jd-coderepos/\nllms4subjects/blob/main/shared-task-eval-script/\nllms4subjects-evaluation.py\n11https://sites.google.co",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Qualitative Evaluations",
+      "pageStart": 8,
+      "pageEnd": 10,
+      "target": "../sections/sec-011-qualitative-evaluations.md",
+      "narrative": null,
+      "content": "We now turn to the qualitative manual evaluations\nfrom the shared task’s evaluation phase.\nTable 4 shows results for both qualitative evalua-\ntion cases. Based on subject librarian assessments,\nboth Y (correct) and I (irrelevant but technically\ncorrect) labels were counted as correct in case 1,\nwhile only Y was considered correct in case 2. The\ntop 4 teams ranked consistently across both cases,\nwith minor changes among the remaining teams.\nCase 1 accounts for situations where models pre-\ndicted multiple semantically similar subjects as\ntop-ranked, leading to generally higher precision\nscores.",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discussion",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/sec-012-discussion.md",
+      "narrative": null,
+      "content": "To\nestablish\na\nreference\npoint\nfor\nthe\nLLMs4Subjects\nshared\ntask,\nwe\ndeveloped\na baseline system using OpenAI’s GPT-4o\nvia the Assistant API.14 Two assistants were\nconfigured—one for all-subjects and another for\n13The silp_nlp team output was not evaluated qualitatively\nas it was submitted after the deadline.\n14https://platform.openai.com/docs/\napi-reference/assistants\ntib-core—each equipped with the respective GND\nsubject taxonomies stored in OpenAI’s vector\nstores. For each TIBKAT record, the assistants\nembedded the title and abstract and queried the\nvector store to retrieve 50 GND subjects.",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 10,
+      "pageEnd": 13,
+      "target": "../sections/sec-013-conclusion.md",
+      "narrative": null,
+      "content": "SemEval-2025 Task 5: LLMs4Subjects presented\nthe first evaluation of LLMs for GND-based sub-\nject indexing in bilingual (German/English) techni-\ncal library records, combining quantitative metrics\nwith expert assessments. The task revealed four\nkey takeaways: multilingual models and training\ndata outperformed monolingual ones (RQ1, RQ2);\nsynthetic data and retrieval-augmented pipelines\nimproved performance, underscoring the value\nof data diversity and system design (RQ3); and\nsmaller, well-engineered systems often rivaled\nlarge instruction-tuned LLMs, highlighting trade-\noffs between scale and",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "TIBKAT media types",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "target": "../sections/sec-014-tibkat-media-types.md",
+      "narrative": null,
+      "content": "Book: A comprehensive written work published as\na volume or a series of volumes.\nThesis: A document submitted in support of can-\ndidature for an academic degree or professional\nqualification, presenting the author’s research and\nfindings.\nConference: Proceedings or collections of papers\npresented at academic conferences or symposiums.\nReport: Detailed and systematic accounts of re-\nsearch findings, often prepared for a specific audi-\nence or purpose.\nArticle: A written composition on a specific topic,\nusually intended for publication in a journal or mag-\nazine. Collection: A curated assembly o",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "TIBKAT Language Distribution",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "target": "../sections/sec-015-tibkat-language-distribution.md",
+      "narrative": null,
+      "content": "There are 48 different languages in the TIBKAT\nwith abstracts. Their distributions are listed below.\nde (German): 108637; en (English): 76735; fr\n(French): 1741; id (Indonesian): 945; es (Spanish):\n311; it (Italian): 294; nl (Dutch): 167; da (Danish):\n129; sq (Albanian): 100; ro (Romanian): 93; ca\n(Catalan): 86; fi (Finnish): 80; so (Somali): 67;\nsv (Swedish): 65; no (Norwegian): 50; unknown\n(Unknown): 41; tl (Tagalog): 31; et (Estonian): 24;\npt (Portuguese): 16; sw (Swahili (macrolanguage)):\n15; pl (Polish): 15; hr (Croatian): 12; lt (Lithua-\nnian): 10; hu (Hungarian): 10; af (Afrikaans): 10;",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Additional details about the GND",
+      "pageStart": 13,
+      "pageEnd": 14,
+      "target": "../sections/sec-016-additional-details-about-the-gnd.md",
+      "narrative": null,
+      "content": "At\nTIB,\nthe\nGND\nis\nused\nas\nfollows.\nThe\nsubject\nspecialists\nare\nusually\nus-\ning\nonline\nservices\nlike\nGND-Explorer\n(https://explore.gnd.network/) or OGND\n(https://swb.bsz-bw.de/) for searching the\nGND. There you can also restrict to Sachbe-\ngriff/Topical term (saz), which is the term class\nwe are using for subject indexing (there are some\nadditional term classes used, like geographical\nterms (swg), but to start topical terms (saz)\nshould be sufficient).\nNew terms are added\nin a cooperative process and are searchable as\nsoon as they passed a review process. For more\ngeneral details you can also",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Pilot Task",
+      "pageStart": 14,
+      "pageEnd": 14,
+      "target": "../sections/sec-017-pilot-task.md",
+      "narrative": null,
+      "content": "At TIB, ANNIF has been used in production code\nsince the start of 2024 for the use case of assign-\ning items from the TIB portal discovery system to\none or several subject facets. The TIB portal em-\nploys a multi-stage algorithm to attribute a record\nto one of the 28 TIB’s different subjects, viz. Ar-\nchitecture, Civil Engineering, Biochemistry, Biol-\nogy, Chemistry, Chemical Engineering, Electrical\nEngineering, Energy Technology, Educational Sci-\nence, Earth Sciences, History, Information Technol-\nogy, Literary Studies and Linguistics, Mechanical\nEngineering, Mathematics, Medical Technology,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}
