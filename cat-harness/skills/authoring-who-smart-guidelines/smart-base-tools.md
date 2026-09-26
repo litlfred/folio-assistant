@@ -38,7 +38,7 @@ code.
 
 ```sh
 export SMART_BASE_HOME=/path/to/smart-base       # default: /opt/smart-base
-python3 scripts/smart-base-transform.py --check
+python3 cat-harness/scripts/smart-base-transform.py --check
 ```
 
 `--check` exits non-zero and names what is missing. Without a checkout the
@@ -53,10 +53,10 @@ are the inverse of.
 
 ```sh
 # BPMN → FHIR Shorthand
-python3 scripts/smart-base-transform.py bpmn2fsh <file.bpmn|dir> -o OUTDIR
+python3 cat-harness/scripts/smart-base-transform.py bpmn2fsh <file.bpmn|dir> -o OUTDIR
 
 # DMN → HTML
-python3 scripts/smart-base-transform.py dmn2html <file.dmn|dir> -o OUTDIR
+python3 cat-harness/scripts/smart-base-transform.py dmn2html <file.dmn|dir> -o OUTDIR
 ```
 
 Omit `-o` for a dry run that reports counts and writes nothing.
