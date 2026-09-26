@@ -269,14 +269,14 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T03:36:04.581Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f5456796ea2a54ef482e4a4e921ee55313629d94",
-  "sourceCommitSha": "f5456796ea2a54ef482e4a4e921ee55313629d94",
-  "sourceCommitAt": "2026-09-26T05:33:56+02:00",
+  "generatedAt": "2026-09-26T03:59:15.066Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/778fae27e04e380b8de9dddfc5bdf56ea72983b5",
+  "sourceCommitSha": "778fae27e04e380b8de9dddfc5bdf56ea72983b5",
+  "sourceCommitAt": "2026-09-26T05:56:18+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 264,
+    "Skill": 270,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
@@ -764,6 +764,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-needs-assessment",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "crdm-needs-assessment",
+      "title": "Phase 1 — Needs assessment (detail)",
+      "description": "Facilitate Phase 1 (Needs Assessment) of the CRDM requirements workflow. Guide the BA through stakeholder identification, source material gathering, and synthesising a domain-language needs statement. Post to the GitHub issue and iterate until the BA confirms the need is correctly captured.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm"
+      ],
+      "instructionsPath": "skills/crdm/crdm-needs-assessment.md",
+      "instructionLines": 114,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-workflow",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "crdm-requirements-workflow",
@@ -772,7 +788,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-requirements-workflow.md",
-      "instructionLines": 419,
+      "instructionLines": 480,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -789,6 +805,38 @@
       ],
       "instructionsPath": "skills/crdm/crdm-data-model.md",
       "instructionLines": 84,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-impact-analysis",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "crdm-impact-analysis",
+      "title": "Phase 4 — Impact analysis (detail)",
+      "description": "Guide for CRDM Phase 4 — Impact Analysis and Migration Planning. Systematic scan across 7 dimensions: schema, pipeline, adapter, folio, skill, migration, and test/documentation impact. Produces a structured assessment for posting to the GitHub issue.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm"
+      ],
+      "instructionsPath": "skills/crdm/crdm-impact-analysis.md",
+      "instructionLines": 135,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-template",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "crdm-requirements-template",
+      "title": "Phase 3 — Requirements definition (detail)",
+      "description": "Guide and template for CRDM Phase 3 — Requirements Definition. Helps the agent structure requirements from conversation using a REQ-### format with acceptance criteria, priority, and traceability.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm"
+      ],
+      "instructionsPath": "skills/crdm/crdm-requirements-template.md",
+      "instructionLines": 124,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4236,6 +4284,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-review-process",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "code-review-process",
+      "title": "Code review process — from PR to release approval",
+      "description": "Where code review sits in the release lifecycle. Review types, who reviews what, how feedback maps to beans, and the path from review to approval to release. Works with prepare-merge-auto for mechanics and release-lifecycle for the broader flow.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/code-review-process.md",
+      "instructionLines": 73,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-state-machine",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "session-state-machine",
@@ -4285,6 +4349,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-lifecycle",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "release-lifecycle",
+      "title": "Release lifecycle — process and policy",
+      "description": "Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases. Applies to code releases, paper publications, and project milestones. Complements package-release (which handles the mechanics of cutting a release) with the process and policy layer.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/release-lifecycle.md",
+      "instructionLines": 115,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/workflow-state",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "workflow-state",
@@ -4295,6 +4375,22 @@
       ],
       "instructionsPath": "skills/workflow/workflow-state.md",
       "instructionLines": 128,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-freshness",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "branch-freshness",
+      "title": "Branch freshness — stay current with main",
+      "description": "Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan. Prevents stale assumptions, merge conflicts, and duplicated work — especially after session restarts, long idle periods, or heavy sibling activity on main.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/branch-freshness.md",
+      "instructionLines": 113,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -40744,8 +40840,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "f5456796ea2a54ef482e4a4e921ee55313629d94",
+    "sha": "778fae27e04e380b8de9dddfc5bdf56ea72983b5",
     "pr": "main",
-    "run": "36215198351"
+    "run": "36216328999"
   }
 }
