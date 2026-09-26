@@ -187,12 +187,12 @@ can act. An in-progress bean nobody is progressing reads as active work.</bpmn:d
 
       <bpmndi:BPMNShape id="Start_DurableWork_di" bpmnElement="Start_DurableWork"><dc:Bounds x="220" y="190" width="36" height="36"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_CheckExists_di" bpmnElement="Task_CheckExists"><dc:Bounds x="300" y="168" width="150" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="GW_Exists_di" bpmnElement="GW_Exists"><dc:Bounds x="490" y="183" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Exists_di" bpmnElement="GW_Exists" isMarkerVisible="true"><dc:Bounds x="490" y="183" width="50" height="50"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Create_di" bpmnElement="Task_Create"><dc:Bounds x="580" y="108" width="150" height="70"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="GW_Owner_di" bpmnElement="GW_Owner"><dc:Bounds x="620" y="253" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Owner_di" bpmnElement="GW_Owner" isMarkerVisible="true"><dc:Bounds x="620" y="253" width="50" height="50"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Claim_di" bpmnElement="Task_Claim"><dc:Bounds x="780" y="168" width="150" height="80"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Work_di" bpmnElement="Task_Work"><dc:Bounds x="970" y="168" width="160" height="80"/></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="GW_Outcome_di" bpmnElement="GW_Outcome"><dc:Bounds x="1170" y="183" width="50" height="50"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Outcome_di" bpmnElement="GW_Outcome" isMarkerVisible="true"><dc:Bounds x="1170" y="183" width="50" height="50"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Complete_di" bpmnElement="Task_Complete"><dc:Bounds x="1270" y="98" width="160" height="70"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Scrap_di" bpmnElement="Task_Scrap"><dc:Bounds x="1270" y="188" width="160" height="70"/></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_RecordBlocker_di" bpmnElement="Task_RecordBlocker"><dc:Bounds x="1270" y="278" width="160" height="70"/></bpmndi:BPMNShape>
