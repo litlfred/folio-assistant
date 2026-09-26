@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T11:06:36Z
-updated_at: 2026-09-26T11:17:36Z
+updated_at: 2026-09-26T11:42:38Z
 parent: folio-assistant-1xhc
 ---
 
@@ -85,3 +85,39 @@ Reported on #1361 with this patch.
 [ ] `bunx tsc --noEmit` exits 0 on `main`
 [ ] whichever way it goes, the reason the glob and the nested package disagree is
     written down where the next person adding a nested package will meet it
+
+
+
+## And CI cannot see it either — a second masking layer, measured
+
+Run `36238697037` on `75150734ca`, the `TypeScript — tests, lint, types (hard)` job:
+
+    step 5  Install dependencies   success
+    step 6  bun test               FAILURE   (main's translation:drift, 1 of 11939)
+    step 7  bun run lint           skipped
+    step 8  tsc --noEmit           skipped
+    …       47 further gate steps  skipped
+
+**So `tsc` never runs in CI while `bun test` is red**, and `bun test` is red on
+`main` for an unrelated reason (the 25 uncatalogued translations, bean `ngxj`).
+The typecheck error this bean is about is therefore invisible in CI *and* invisible
+to `bun test`, for two different reasons:
+
+| runner | why it cannot see the defect |
+|---|---|
+| `bun test` | the file is a `vitest` suite bun's runner does not pick up — 11894 pass over a tree whose typecheck is broken |
+| `tsc` in CI | skipped, because an earlier step in the same job failed |
+
+That is why this belongs under `1xhc` rather than beside it. The parent's claim is
+*a gate that does not fire is indistinguishable from one that passed*; here the
+gate that WOULD fire is skipped by a sequential job, so a real typecheck failure
+sits behind an unrelated red indefinitely. It would surface only on the day the
+drift test goes green — as a surprise, on somebody else's PR.
+
+**Not proposing the fix for that**, because reordering or decoupling 50 gate steps
+in one job is a CI-shape decision, and bean `m5gx` (*"one red test at step 5 masks
+149 gate commands in CI"*, from `main`) already owns exactly this subject. Noted
+here as evidence for it rather than as a second answer to it.
+
+Measured 2026-09-26 by reading the job's step list, not inferred from the
+conclusion.
