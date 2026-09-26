@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T09:20:19Z
-updated_at: 2026-09-26T13:08:39Z
+updated_at: 2026-09-26T14:44:44Z
 parent: folio-assistant-bzyu
 blocked_by:
     - folio-assistant-wlyg
@@ -96,17 +96,19 @@ line each with a measured effect in both directions, and this is a parser change
 
 ## Done when
 
-- [ ] a list item is one entry however it is wrapped, with continuation lines
+- [x] a list item is one entry however it is wrapped, with continuation lines
       recognised by indentation, ending at a blank line or the next marker
-- [ ] a blockquote is one entry per blockquote, not per line
-- [ ] MEASURED AFTER: no msgid is a clause fragment — specifically, no pair of
+- [x] a blockquote is one entry per blockquote, not per line
+- [x] MEASURED AFTER: no msgid is a clause fragment — specifically, no pair of
       adjacent msgids where the first opens a `**` span the second closes
-- [ ] MEASURED AFTER: re-wrapping a source paragraph, list item or blockquote
+- [x] MEASURED AFTER: re-wrapping a source paragraph, list item or blockquote
       changes NO msgid — the property that makes a catalogue survive an edit
 - [ ] the 3785 msgids this merges away are obsoleted in the existing `.po` files
       with tooling, not dropped
-- [ ] `7x8o` re-measured afterwards; expect 8 pairs or fewer to remain
-- [ ] checked against a folio other than this one — extraction is shared
+- [x] `7x8o` re-measured afterwards; expect 8 pairs or fewer to remain
+- [x] checked against a folio other than this one — extraction is shared.
+      `litlfred/qou`, 150 markdown files, pre-`lvk9` extractor vs now. It found
+      bean `o29r`, a pre-existing underscore defect `lvk9` widens.
 
 
 ### From bean `f6r1` — check the INJECT side too
@@ -190,3 +192,69 @@ sign-off, and leaving them would leave stale msgids in every one.
   ones it introduced, and that output is WRITTEN to disk by the
   `translation_inject` MCP tool. Measured: 3 blank lines in, 0 out. This is why
   `f6r1`'s round-trip control failed on known-good catalogues. Marked high.
+
+
+### Why this stays OPEN after #1369 merged
+
+Two Done-when items are genuinely not done, and I closed this bean prematurely
+before re-reading them:
+
+- **the 3785 msgids this merges away are not obsoleted** in the existing `.po`
+  files. They want doing ONCE, together with `6b8u`'s additions, `ig4a`'s
+  removals and `3mo4`'s when it lands — four rewrites of every catalogue would be
+  four chances to leave one stale.
+- **not checked against a folio other than this one.** Extraction is shared by
+  every instance, so a change this size has consequences I have only measured
+  here.
+
+The extract half is merged and measured; the corpus-wide bookkeeping is not.
+Closing on the first would have hidden the second.
+
+## The cross-folio check is done, and it found a defect
+
+`litlfred/qou` carries no `.po` at all, so "re-derive its catalogues and see
+what breaks" was not available. The check became the comparison this bean
+actually is: the extractor at `958e36d7840^` (`6b8u` + `ig4a` + `wlyg`, no
+hard-wrap merging) against the extractor now, over 150 of qou's markdown files.
+
+| class | count |
+|---|---|
+| msgids old to new | 17832 to 16022 |
+| unchanged | 14416 |
+| merges — what this bean intends | 1128, widest 12 old entries |
+| differ only by collapsed internal whitespace | 191 |
+| differ only by a stripped subscript underscore | 122 → bean `o29r` |
+| neither — inline-code gaps, `3mo4` territory | 165 |
+
+**The merging itself held.** 1128 merges over a corpus it was never tuned on,
+and not one joined two different constructs. The widest merge spans 12 old
+entries, which is a 12-line hard-wrapped paragraph re-joined — exactly the
+intent.
+
+**What it found instead is `o29r`**: `MD_ITALIC_UNDER_RE` has no intraword
+guard, so two underscores anywhere in one string are read as emphasis and both
+deleted. `$a_1$ and $b_2$` becomes `$a1$ and $b2$`; `snake_case_name` becomes
+`snakecasename`. This bean does not cause it — the minimal case needs no
+merging — but it widens the blast radius, because joining wrapped lines puts
+more subscripts into one string, and per-line cleaning happened to protect a
+subscript that was alone on its line. On a `paper` folio the corrupted artefact
+is a formula.
+
+That is the argument for this Done-when item existing. On this folio's own
+corpus the defect is nearly invisible; one repository of mathematical prose
+surfaced 122 instances.
+
+## Three harness corrections, recorded because each looked like a finding
+
+1. A wrap-invariance harness reported 95 violations. Its re-wrap put
+   `+ JSON-Schema` at the start of a line, which IS a markdown bullet — the
+   extractor was right.
+2. An over-merge regex reported 86 violations, firing on `proved in  + Lean`, a
+   double space left by a stripped code span.
+3. Comparing the outputs as SETS reported 3459 dropped msgids. A msgid corpus
+   is a MULTISET: `indexOf` consumed only the first `"Package"`, so the second
+   copy of a repeated table header read as dropped. Any corpus with tables
+   breaks a set-based comparison this way.
+
+None of the three was the extractor. A cross-corpus comparison needs its own
+harness checked as carefully as the thing it measures.

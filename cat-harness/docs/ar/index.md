@@ -1,19 +1,14 @@
 ---
 layout: default
-title: "الصفحة الرئيسية (AR)"
+title: مساعد الملف
 lang: ar
-# `lang` above is what makes this a translation -- nothing reads `fr` out of
-# the path. `nav_exclude` keeps it out of the statically built nav, and
-# `mountNavLocale` (docs/assets/js/docs-ui.js) puts it back in place of its
-# source when this locale is selected. There is no `nav_order`: it stands
-# where its source stands. skills/folio-core/translation-manager.md
 nav_exclude: true
-dir: rtl
 translation_status: unverified
 translation_source: index.md
-description: "folio-assistant — إطار عمل مهارات وكيل مستقل عن المحتوى."
 available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
+
+{% include landing.html %}
 
 # folio-assistant
 {: .fs-9 }
@@ -23,11 +18,21 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 لغوي كبير — الأوراق والكتب العلمية، وإرشادات منظمة الصحة العالمية SMART، وأدلة
 تطبيق FHIR — مدعوم بخادم MCP، وتحكم في الوصول قائم على الأدوار، ونموذج
 كائنات محتوى مصنف بالأنواع.
-{: .fs-6 .fw-300 dir="rtl" }
+{: .fs-6 .fw-300 }
 
+<!--
+  `View on GitHub` STAYS. The site-wide `aux_links` GitHub text was removed from
+  the chrome above every page (bean `udx8`, PR #352), and the obvious follow-up
+  is to delete this button for consistency. Do not. Put to the repo owner on
+  2026-09-19: this button is part of the landing page's own readme/description
+  note — authored content on one page, not chrome — and the forge remains
+  reachable from the navbar's Source tile regardless.
+-->
 [البدء](../getting-started.html){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [التثبيت](../installation.html){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [عرض على GitHub](https://github.com/litlfred/folio-assistant){: .btn .fs-5 .mb-4 .mb-md-0 }
+
+{% include harness_details.html %}
 
 ---
 
@@ -85,7 +90,7 @@ flowchart LR
 ## أنواع المحتوى المدعومة
 
 إن folio-assistant **قابل للتوسيع** — تتم معالجة كل نوع محتوى بواسطة
-محول محتوى وحزمة مهارات مطابقة. الأنواع المدعومة حاليًا:
+*محول* محتوى و*حزمة* مهارات مطابقة. الأنواع المدعومة حاليًا:
 
 | نوع المحتوى | المخرجات | حزمة المهارات |
 |-------------|----------|---------------|
@@ -94,7 +99,7 @@ flowchart LR
 | **أدلة تطبيق إرشادات منظمة الصحة العالمية SMART** | موارد FHIR للمستوى L3، وFSH، ومخرجات IG Publisher | [`authoring-who-smart-guidelines`](../content-types.html#who-smart-implementation-guides-l3) |
 | **أخرى** | قابل للتوسيع — أضف محولاً جديدًا + حزمة مهارات | [إضافة نوع محتوى](../guides/new-content-type.html) |
 
-تنطبق دورة الحياة الشاملة [`content-lifecycle`](../content-types.html#the-content-lifecycle)
+تنطبق الحزمة الشاملة [`content-lifecycle`](../content-types.html#the-content-lifecycle)
 (تخطيط → تأليف → تحقق → مراجعة → اختبار → نشر → ملاحظات → إحالة للتقاعد)
 على كل نوع محتوى.
 وينمذجها [مسار عمل النشر](../publication-workflow.html) بدقة —
@@ -110,30 +115,55 @@ flowchart LR
 - **[مسار عمل النشر](../publication-workflow.html)** — مخططات مسارات BPMN لعمليات التحرير والنشر: بوابة التحقق من التفاعل البشري الحاسوبي (HCI)، وتوزيع مهام المراجعة، وخطة العمل المشتركة.
 - **[توجيه الوكيل](../guides/agent-onboarding.html)** — تدريب تمهيدي لوكيل الذكاء الاصطناعي عند دمجه في ملف المحتوى: الخطوات الأولى، واكتشاف المهارات، ونموذج كائنات المحتوى، وملفات ضمان الجودة المرافقة (QA sidecars).
 - **[المهارات والأدوار](../skills.html)** — جميع المهارات والأدوار، وكيفية عملها مع النموذج اللغوي الكبير.
+- **[Beans والمهام (Beans and todos)](../beans-and-todos.html)** — خطة العمل المشتركة، ولماذا هي خاضعة لإدارة الإصدارات ومحفوظة في المستودع.
+- **[استيعاب الوثائق (Document ingestion)](../document-ingestion.html)** — مسار تحويل uploads/ إلى المصادر الأولية L1: استخراج البنية، وتوليد المحتوى المشتق، وبناء رسم المعرفة البياني L1، وبوابة الاكتمال.
+- **[الأدلة (Evidence)](../evidence.html)** — استرجاع الأدلة واستخراجها ومراجعتها من المصادر إلى الادعاءات.
 - **[مرجع مخططات المهارات](../reference/skills/)** — عقود المدخلات والمخرجات المُنشأة لكل مهارة.
 - **[مرجع واجهة برمجة تطبيقات TypeScript](../api/)** — نموذج كائنات المحتوى (`Block` و`Chapter` و`Paper`، وبناة الكائنات، وقيود Zod).
-- **[البنية الهندسية](../architecture.html)** — المحولات، وخادم MCP، والتحكم في الوصول القائم على الأدوار (RBAC)، ونموذج الكتل البرمجية.
+- **[البنية الهندسية](../architecture.html)** — المحولات، وخادم MCP، والتحكم في الوصول القائم على الأدوار (RBAC)، ونموذج الكتل.
+- **[The KGraph (رسم المعرفة البياني)](../kgraph.html)** — تصنيف الرسوم البيانية الفرعية، واتجاه المراجع، وكيفية تقسيم العمل بين المستودعات.
+- **[The Harness (منظومة الربط والتسخير)](../harness.html)** — التهيئة، وتتبع التبعيات، والالتزامات المترتبة على تسخير دليل ما.
+
+يستحق الاطلاع على مهارتين قبل قراءة الصفحات أعلاه، لأن كل ما عداهما يفترضهما مسبقًا:
+توجّه مهارة [`getting-started`](../reference/skill-instructions/getting-started.html)
+ما تحاول القيام به فعليًا، وتحدد مهارة [`placement`](../reference/skill-instructions/placement.html)
+الموضع الذي تنتمي إليه العقدة الجديدة قبل إنشائها.
 
 ## خريطة التوثيق
 
 ```mermaid
 flowchart TD
-    الرئيسية --> تثبيت[التثبيت]
-    الرئيسية --> بدء[البدء]
-    تثبيت --> بدء
-    بدء --> تدريب[درس تعليمي: كتابة ورقة بحثية]
-    بدء --> أنواع[أنواع المحتوى]
-    أنواع --> مهارات[المهارات والأدوار]
-    أنواع --> مسار["مسار عمل النشر<br/>(BPMN ذو مسارات)"]
-    أنواع --> أدلة[أدلة التأليف]
-    أدلة --> أوراق[الأوراق: Lean + LaTeX]
-    أدلة --> DAK[WHO SMART DAK / L2]
-    أدلة --> IG[WHO SMART IG / L3 FHIR]
-    أدلة --> جديد[إضافة نوع محتوى]
-    مهارات --> مخططات[مرجع المخططات]
-    أنواع --> مخططات
-    مخططات --> API[مرجع واجهة برمجة تطبيقات TypeScript]
-    الرئيسية --> بنية[البنية الهندسية]
+    Home[الرئيسية] --> Install[التثبيت]
+    Home --> GS[البدء]
+    Install --> GS
+    GS --> Tut[درس تعليمي: كتابة ورقة بحثية]
+    GS --> CT[أنواع المحتوى]
+    CT --> Skills[المهارات والأدوار]
+    CT --> WF["مسار عمل النشر<br/>مخططات مسارات BPMN"]
+    CT --> Guides[أدلة التأليف]
+    Guides --> Paper[الأوراق: Lean + LaTeX]
+    Guides --> DAK[WHO SMART DAK / L2]
+    Guides --> IG[WHO SMART IG / L3 FHIR]
+    Guides --> New[إضافة نوع محتوى]
+    Skills --> Ref[مرجع مخططات المهارات]
+    CT --> Ref
+    Ref --> API[مرجع واجهة برمجة تطبيقات TypeScript]
+    Home --> Arch[البنية الهندسية]
+
+    click Skills "skills.html" "Skills & roles"
+    click WF "publication-workflow.html" "Publication workflow (BPMN)"
+    click Install "installation.html" "Installation"
+    click GS "getting-started.html" "Getting started"
+    click Tut "guides/writing-a-paper.html" "Tutorial: writing a paper"
+    click CT "content-types.html" "Content types"
+    click Guides "guides/" "Authoring guides"
+    click Paper "guides/writing-a-paper.html" "Papers: Lean + LaTeX"
+    click DAK "guides/who-smart-dak.html" "WHO SMART DAK (L2)"
+    click IG "guides/who-smart-ig.html" "WHO SMART IG (L3 FHIR)"
+    click New "guides/new-content-type.html" "Add a content type"
+    click Ref "reference/skills/" "Skill schema reference"
+    click API "api/" "TypeScript API reference"
+    click Arch "architecture.html" "Architecture"
 ```
 
 > عقد الخريطة قابلة للنقر على موقع التوثيق.

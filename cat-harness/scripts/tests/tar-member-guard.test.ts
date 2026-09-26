@@ -36,9 +36,18 @@ function refusedForType(listing: string[]): string[] {
   return listing.filter((l) => !/^[-d]/.test(l));
 }
 
-/** The member name is everything after the fifth field. */
+/**
+ * The member name is everything after the time field.
+ *
+ * GNU tar:  `-rw-r--r-- root/root  2 2026-09-26 12:13 sub/a b c.tex`
+ *           — 5 whitespace-separated fields, then the name.
+ * BSD tar:  `-rw-r--r--  0 litlfred wheel  2 Sep 26 21:34 sub/a b c.tex`
+ *           — 8 fields (owner and group split, date is 3 tokens).
+ *
+ * Both end with `HH:MM name`, so we anchor on the time field.
+ */
 function memberNames(listing: string[]): string[] {
-  return listing.map((l) => l.replace(/^\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+/, ""));
+  return listing.map((l) => l.replace(/^.*?\d{1,2}:\d{2}\s+/, ""));
 }
 
 /** Traversal by spelling, which tar mostly but not entirely refuses itself. */

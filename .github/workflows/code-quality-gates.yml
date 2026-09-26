@@ -1052,6 +1052,14 @@ jobs:
           # `imagesForRole` is layout-keyed and a mark declares no layout.
           bun run check:image-roles
           bun run check:bean-parents
+          # Bean `e8m3`, on the owner's VIEW ruling. `beans/defs/archive/` held 631
+          # bean-defs while `beans/beans.json` declared it nowhere — the `dh4f`
+          # family INVERTED, and invisible to check:declared-dirs and
+          # check:harness-dirs by construction, because both compare declarations
+          # against disk and not the reverse. It also holds the invariant the
+          # ruling implies: an archived bean that is still open is work no count
+          # can see, which is the 35-bean defect e8m3 was filed over.
+          bun run check:bean-archive
           bun run check:bean-blocks
           # Bean `kpcl`, issue #956: `in-progress` stopped carrying information --
           # 99 claims, 77 untouched for a day or more. The obvious sweep assumes
