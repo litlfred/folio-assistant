@@ -2,6 +2,8 @@
 layout: default
 title: Accessibility
 nav_order: 11
+supported_locales: ["ar", "zh", "en", "fr", "ru", "es"]
+available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 # Accessibility
