@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T04:14:07Z
-updated_at: 2026-09-26T16:59:47Z
+updated_at: 2026-09-26T19:58:26Z
 parent: folio-assistant-d308
 ---
 
@@ -481,3 +481,58 @@ What is already proven, and worth not re-deriving: the bootstrap run reports **0
 criticals**, 693 pass / 11 fail / 284 n/a / 7 unknown, sidecars land under the
 instance's own tree, the root run stays byte-identical, and **0** files carry a
 `../` escape.
+
+
+## checkTools() now takes an instance root — third leak closed (2026-09-26, 19:5x)
+
+`checkTools()` had NO root parameter; `auditTools()` therefore audited
+cat-harness's Tool nodes as bootstrap's — **119** sidecars into an instance that
+declares no `tools` directory.
+
+**The fix was much smaller than the cost I banked it on.** `toolsOf(instanceRoot)`
+already existed in `tools/discover.ts`, and its docblock names this exact
+failure. Every caller passes no argument, so an optional parameter left the
+repo-wide `check:tools` CLI and its five tests untouched. Third time this
+session that "the cost is real" was the wrong reason to hand something over.
+
+Falsified both ways, control in the same throwaway worktree:
+
+| tree | tools/ sidecars | total | iwtn |
+|---|---|---|---|
+| root run, before and after | — | 547 unchanged | — |
+| bootstrap, un-patched | 119 | 135 | FAILS |
+| bootstrap, patched | **0** | 16 | still fails |
+
+**The anti-vacuity floor guarding this encoded the leak.** `kg-criterion-scope`
+asserted > 50 subjects, calibrated at 134 of which 119 were the leak — so fixing
+the leak failed the floor meant to guard the fix. Re-based on 10 from what
+bootstrap DECLARES (7 own skills + 3 diagrams), not from what a run reported.
+
+## The last box stays OPEN — a FOURTH leak, now measured
+
+`iwtn` narrowed from 16 findings to **2 lines naming one subject**,
+`smart-base-tools` in `bootstrap/test/results/kg-qa/scenarios/kg.kg-qa.json`:
+
+    knownSkills("./bootstrap")   30 skills, 23 of them cat-harness's
+    skill-in-role-or-process     23 findings
+
+Counts match, so this single leak explains the whole remainder. `smart-base-tools`
+lives at `cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md`
+and nothing under `bootstrap/` mentions it.
+
+It is in `knownSkills` — the canonical function with many consumers — so it is
+NOT the same size as the previous three, and unlike them it may be intentional:
+AGENTS.md says an instance INHERITS its dependencies' skills. Bootstrap is
+cat-harness's dependency, not the reverse, so inheriting upward looks wrong, but
+whether the overlay is meant to be directional is a design question rather than a
+defect I should settle inside a merge.
+
+## Done when
+
+- [x] `checkTools()` takes an instance root; bootstrap writes **0** `tools/`
+      sidecars; root run byte-identical across 547 sidecars
+- [ ] the FOURTH leak: whether `knownSkills(instance)` should return only that
+      instance's skills, or inherit its dependencies' — directional or not
+- [ ] THEN declare bootstrap's `qa` → `test/results/`, with the sidecars in the
+      same commit (`dh4f`)
+- [ ] only then the loop, and the zero-diagram question
