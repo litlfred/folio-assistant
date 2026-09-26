@@ -1,11 +1,11 @@
 ---
 # folio-assistant-fx5r
 title: The PR endpoint keeps serving a merged PR's pre-merge view, and merge_pull_request reports success on it
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-25T18:09:14Z
-updated_at: 2026-09-26T03:20:56Z
+updated_at: 2026-09-26T12:12:45Z
 parent: folio-assistant-1xhc
 ---
 
@@ -239,3 +239,26 @@ turns it red).
   declines to judge has to stay visible). There is no per-LINE exemption table:
   a line number is invalidated by the next paragraph inserted above it, and an
   exemption protecting a line that has moved protects the wrong text.
+
+
+## Summary of Changes — closed 2026-09-26
+
+All five `Done when` items are ticked and the evidence is on `main`, not on a
+branch: `git merge-base --is-ancestor` confirms both heads.
+
+| what | where it landed |
+|---|---|
+| the two UNKNOWN advice strings name `merged` and the merge ref | PR #1362 |
+| `prepare-merge` and `/watch` checked — already correct | measured, nothing to do |
+| refreshing CI documented as `workflow_dispatch`, not a push | PR #1362 |
+| `h2s9` cross-references this; a wrong error string is worse than an absent one | PR #1362 |
+| **the general rule** — `bun run check:stale-field-advice` | PR #1395 |
+
+The last one is the one a test could not close, and it found **two sites this
+bean had not**: `pickup.md:79`, the step-1 instruction for picking up a PR,
+naming the field with no caveat at all; and `prepare-merge.md:330`, approving
+and correct but silent on which values are worth believing. Both now say
+`dirty` only, and name this bean and `h2s9`.
+
+Closed on evidence rather than authorship, per `bean-coordination`
+§"Closing a bean whose work has already landed".
