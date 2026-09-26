@@ -3,8 +3,9 @@
 title: 'CATALOGUE DISCOVERY: derive-po held a list of five page names, so #1404''s four new pages took drift from 1 to 21 unseen'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-09-26T14:13:00Z
-updated_at: 2026-09-26T14:13:00Z
+updated_at: 2026-09-26T14:19:26Z
 parent: folio-assistant-bzyu
 ---
 
@@ -71,3 +72,43 @@ None is an agent's to resolve: #206 reserves translation adjudication to a human
       pays the next author. `do70` carries the author-side command; the merge-side
       gap is `nytj`
 - [ ] the four refusals are dispositioned by a person
+
+
+## The fifth recurrence arrived within the hour, and discovery absorbed it
+
+Predicted one turn earlier — *"until one lands I expect a fifth"* — and it landed
+before this PR was reviewed. Main published another translation batch: pages
+compared went **55 → 70** and `translation-drift` went **4 → 19**.
+
+**This time no code changed.** The tool discovered 13 pages × 5 locales, derived 59
+catalogues, wrote the 13 new ones and left 46 existing ones alone. Drift **19 → 6**.
+That is the difference between the fix and the list it replaced: the fourth
+recurrence needed a source edit, the fifth needed a command.
+
+## The `msgid-conflict` guard has now caught THREE real pairs
+
+Added because bean `f6r1` found the case in a pair where `count-differs` was
+masking it. It has since fired on data that did not exist when it was written:
+
+| pair | the string | the two translations |
+|---|---|---|
+| `zh/skills` | "Skills" | `技能` and `技能数` |
+| `ar/publication-workflow` | "Editor / author" | `المحرر / المؤلف` and **"Editor / author"** |
+| `zh/publication-workflow` | "Editor / author" | `编辑 / 作者` and **"Editor / author（编辑 / 作者）"** |
+
+The two `publication-workflow` rows are a translation-quality finding in their own
+right: the same string is translated in one place and **left in English** in
+another. A msgid-keyed `.po` cannot represent both, so these need `msgctxt` — and
+a person, not a derivation.
+
+## What `check:glossary` proved about the merge-side gap
+
+CI failed `Repository gates (hard)` on this PR's head for three stale glossary
+artefacts. Locally, on a clean tree, `check:glossary` **passed** — and it was in my
+gate run. Merging main reproduced the failure exactly, because main had added a
+skill.
+
+So the check passes on the head and fails on the merge, which is precisely `nytj`
+measured rather than argued. It also means my own `bun run gates` cannot be the
+last word before pushing while main moves this fast: the substantive evidence has
+to be the gate set run against the MERGE, and nothing here produces that.

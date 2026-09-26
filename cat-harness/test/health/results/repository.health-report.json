@@ -8,7 +8,7 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-09-26T14:13:23.882Z",
+  "updated_at": "2026-09-26T14:20:25.902Z",
   "verdict": "findings",
   "checks": [
     {
@@ -27,20 +27,20 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 1770258742,
+          "value": 2197615914,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 11,
+          "value": 13,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
       ],
       "findings": [
         {
-          "summary": "11 staging preview(s) total 1.65 GB, over the 500.0 MB warning point.",
+          "summary": "13 staging preview(s) total 2.05 GB, over the 500.0 MB warning point.",
           "metric": "staging-total-bytes",
           "severity": "major",
           "action": "Report the list below to the owner and ask which are finished with. Removal is by adding `staging:cleanup` to that PR WHILE IT IS STILL OPEN, or a `feature-staging.yml` dispatch once it has closed (bean `7umv`) — never by this sweep, and never on an agent's own initiative."
@@ -105,7 +105,7 @@
         },
         {
           "metric": "staging-live-count",
-          "value": 11,
+          "value": 13,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
@@ -149,44 +149,44 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 342125707,
+          "value": 343496309,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 3485231572,
+          "value": 3517210753,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 3422585856,
+          "value": 3452688384,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 69,
+          "value": 72,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 10.19,
+          "value": 10.24,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "Tracked content at HEAD is 326.3 MB, past the 250 MB early-warning point.",
+          "summary": "Tracked content at HEAD is 327.6 MB, past the 250 MB early-warning point.",
           "metric": "tracked-tree-bytes",
           "severity": "minor",
           "action": "Note it and re-measure next sweep. No action is due until it approaches 1 GB; this exists so the approach is visible rather than sudden."
         },
         {
-          "summary": "`.git` is 3.25 GB against 326.3 MB of tracked content — 10.2x, in 69 pack(s).",
+          "summary": "`.git` is 3.28 GB against 327.6 MB of tracked content — 10.2x, in 72 pack(s).",
           "metric": "git-dir-to-tree-ratio",
           "severity": "minor",
           "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
@@ -384,7 +384,7 @@
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-3025` has been `in-progress` with no change for 141 hours (\"folio-paper-adapter: 44 of 47 skills have no role — the package is unmodelled, not untriaged\") — 73 of 134 claims are quiet.",
+          "summary": "`folio-assistant-3025` has been `in-progress` with no change for 142 hours (\"folio-paper-adapter: 44 of 47 skills have no role — the package is unmodelled, not untriaged\") — 73 of 134 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
@@ -432,13 +432,13 @@
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-zlmp` has been `in-progress` with no change for 91 hours (\"Drain the wrong-direction import edges so the repo split can cut\") — 73 of 134 claims are quiet.",
+          "summary": "`folio-assistant-zlmp` has been `in-progress` with no change for 92 hours (\"Drain the wrong-direction import edges so the repo split can cut\") — 73 of 134 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-oh78` has been `in-progress` with no change for 127 hours (\"ISSUE DISCIPLINE assumes every change has an issue: 54 merges, 2 issue updates, and #558 has no bean link\") — 73 of 134 claims are quiet.",
+          "summary": "`folio-assistant-oh78` has been `in-progress` with no change for 128 hours (\"ISSUE DISCIPLINE assumes every change has an issue: 54 merges, 2 issue updates, and #558 has no bean link\") — 73 of 134 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
@@ -516,7 +516,7 @@
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-qrnz` has been `in-progress` with no change for 119 hours (\"SECOND IG: ingest smart-immunizations, and find out whether the artefact-index pipeline actually generalises\") — 73 of 134 claims are quiet.",
+          "summary": "`folio-assistant-qrnz` has been `in-progress` with no change for 120 hours (\"SECOND IG: ingest smart-immunizations, and find out whether the artefact-index pipeline actually generalises\") — 73 of 134 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
@@ -528,7 +528,7 @@
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-upgd` has been `in-progress` with no change for 76 hours (\"STREAM 1/3: GOAL 1 — the repo split and the KG''s own declaration (vuip + zzmr, 47 open beans)\") — 73 of 134 claims are quiet.",
+          "summary": "`folio-assistant-upgd` has been `in-progress` with no change for 77 hours (\"STREAM 1/3: GOAL 1 — the repo split and the KG''s own declaration (vuip + zzmr, 47 open beans)\") — 73 of 134 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
@@ -618,13 +618,13 @@
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-cflw` has been `in-progress` with no change for 175 hours (\"Generated artefacts collide: 218 sidecars rewritten by one auditor edit\") — 73 of 134 claims are quiet.",
+          "summary": "`folio-assistant-cflw` has been `in-progress` with no change for 176 hours (\"Generated artefacts collide: 218 sidecars rewritten by one auditor edit\") — 73 of 134 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-hs08` has been `in-progress` with no change for 91 hours (\"MIGRATION: the content/ -> folio/ rename has reached the declaration and NOTHING that reads a folio\") — 73 of 134 claims are quiet.",
+          "summary": "`folio-assistant-hs08` has been `in-progress` with no change for 92 hours (\"MIGRATION: the content/ -> folio/ rename has reached the declaration and NOTHING that reads a folio\") — 73 of 134 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
@@ -642,7 +642,7 @@
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-4kq7` has been `in-progress` with no change for 116 hours (\"Adopt github/spec-kit: spec-before-code gate, one spec template, specs as issue comments, change-size splitting\") — 73 of 134 claims are quiet.",
+          "summary": "`folio-assistant-4kq7` has been `in-progress` with no change for 117 hours (\"Adopt github/spec-kit: spec-before-code gate, one spec template, specs as issue comments, change-size splitting\") — 73 of 134 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
@@ -690,7 +690,7 @@
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-x4a6` has been `in-progress` with no change for 91 hours (\"Declare docs/ as the instance's renderable graph — core's folio registration reaches 31 of 31 readers, so the blocker is withdrawn\") — 73 of 134 claims are quiet.",
+          "summary": "`folio-assistant-x4a6` has been `in-progress` with no change for 92 hours (\"Declare docs/ as the instance's renderable graph — core's folio registration reaches 31 of 31 readers, so the blocker is withdrawn\") — 73 of 134 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
@@ -732,7 +732,7 @@
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-sa8y` has been `in-progress` with no change for 143 hours (\"QA WORDING: a graph-scoped finding worded absolutely sent a session to a wrong fix\") — 73 of 134 claims are quiet.",
+          "summary": "`folio-assistant-sa8y` has been `in-progress` with no change for 144 hours (\"QA WORDING: a graph-scoped finding worded absolutely sent a session to a wrong fix\") — 73 of 134 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
@@ -756,7 +756,7 @@
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-q2wm` has been `in-progress` with no change for 118 hours (\"RENDER SAFETY: declared XSS hints on tools and skills, lazy loading, and dynamic render from the graph\") — 73 of 134 claims are quiet.",
+          "summary": "`folio-assistant-q2wm` has been `in-progress` with no change for 119 hours (\"RENDER SAFETY: declared XSS hints on tools and skills, lazy loading, and dynamic render from the graph\") — 73 of 134 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
@@ -780,7 +780,7 @@
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-y1w9` has been `in-progress` with no change for 141 hours (\"MEMORY REACH: 113 skills are bound to no role or process, so nothing hands them to an agent\") — 73 of 134 claims are quiet.",
+          "summary": "`folio-assistant-y1w9` has been `in-progress` with no change for 142 hours (\"MEMORY REACH: 113 skills are bound to no role or process, so nothing hands them to an agent\") — 73 of 134 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/folio-core/bean-coordination.md` §\"A quiet claim\"."
