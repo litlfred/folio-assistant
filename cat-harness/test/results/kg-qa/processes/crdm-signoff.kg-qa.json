@@ -31,6 +31,27 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_AnnounceBranch",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_OfferKg",
+          "detail": "names skill \"kg-contribution-offer\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "BA_ChooseKg",
+          "detail": "names skill \"kg-contribution-offer\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_RecordKg",
+          "detail": "names skill \"placement\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -115,7 +136,7 @@
   },
   "totals": {
     "pass": 14,
-    "fail": 1,
+    "fail": 2,
     "n/a": 9,
     "unknown": 0
   }

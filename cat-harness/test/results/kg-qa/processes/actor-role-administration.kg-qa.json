@@ -31,6 +31,15 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_RetireActor",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -119,7 +128,7 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 1,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }

@@ -31,6 +31,43 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Brief",
+          "detail": "names skill \"opening-brief\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Declare",
+          "detail": "names skill \"graph-detanglement\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Measure",
+          "detail": "names skill \"graph-detanglement\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Move",
+          "detail": "names skill \"graph-detanglement\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Isolate",
+          "detail": "names skill \"graph-detanglement\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Propose",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Authorise",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Extract",
+          "detail": "names skill \"graph-detanglement\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "pass",
       "findings": []
@@ -106,7 +143,7 @@
   },
   "totals": {
     "pass": 16,
-    "fail": 0,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

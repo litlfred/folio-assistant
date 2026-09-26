@@ -31,6 +31,15 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Verify",
+          "detail": "names skill \"publish-verification\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -106,7 +115,7 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 0,
+    "fail": 1,
     "n/a": 9,
     "unknown": 0
   }

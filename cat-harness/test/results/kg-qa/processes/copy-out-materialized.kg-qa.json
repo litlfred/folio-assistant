@@ -31,6 +31,31 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_EditDirectly",
+          "detail": "names skill \"copy-out-materialized\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ReadSource",
+          "detail": "names skill \"copy-out-materialized\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Land",
+          "detail": "names skill \"copy-out-materialized\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RecordProvenance",
+          "detail": "names skill \"copy-out-materialized\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_VerifySourceUntouched",
+          "detail": "names skill \"copy-out-materialized\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -136,7 +161,7 @@
   },
   "totals": {
     "pass": 13,
-    "fail": 2,
+    "fail": 3,
     "n/a": 9,
     "unknown": 0
   }

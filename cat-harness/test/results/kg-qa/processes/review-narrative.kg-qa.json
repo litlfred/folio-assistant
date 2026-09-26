@@ -31,6 +31,35 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_ReadFindings",
+          "detail": "names skill \"content-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_AdjudicateVoice",
+          "detail": "names skill \"voice-editorial-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_AdjudicateVoice",
+          "detail": "names skill \"adjudication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_VoiceOverlay",
+          "detail": "names skill \"voice-overlay-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ReviewUses",
+          "detail": "names skill \"uses-editorial-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RecordFindings",
+          "detail": "names skill \"content-feedback\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -106,7 +135,7 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 0,
+    "fail": 1,
     "n/a": 9,
     "unknown": 0
   }
