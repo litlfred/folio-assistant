@@ -53,11 +53,11 @@ non-destructive move (`scrapped`, with reasons) is always available.
 
 | gate class | the rule it relaxes | waivable |
 |---|---|---|
-| `merge-to-main` | [`crdm-requirements-workflow`](../crdm/crdm-requirements-workflow.md) §Phase 6 — explicit confirmation before merging | yes |
+| `merge-to-main` | [`crdm-requirements-workflow`](crdm-requirements-workflow.md) §Phase 6 — explicit confirmation before merging | yes |
 | `bean-close` | [`bean-coordination`](bean-coordination.md) §"When you cannot re-derive it yourself" — the `ready-to-close` batch | yes |
 | `deletion` | [`deletion-requires-confirmation`](deletion-requires-confirmation.md) — report and wait | yes, **per artefact class**, never blanket |
 | `swarm-spawn` | [`swarm-management`](swarm-management.md) — asked every time, per swarm | yes, with the agent count and model level named in the quote |
-| `process-reentry` | [`process-state`](../workflow/process-state.md) — confirm before re-entering | yes |
+| `process-reentry` | [`process-state`](process-state.md) — confirm before re-entering | yes |
 | `issue-close` | [`issue-working`](issue-working.md) — an agent never closes an issue on its own say-so | yes; the waiver names the issues |
 | *bean deletion* | `AGENTS.md`, "never delete ANY bean" | **no — a prohibition, not a gate** |
 | *fabricating evidence* | anywhere a rule says re-derive rather than quote | **no** |

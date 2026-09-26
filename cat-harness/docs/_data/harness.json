@@ -146,7 +146,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 321,
+      "count": 357,
       "unit": "beans"
     },
     {
@@ -1136,12 +1136,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 1
+          "value": 2
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 1
+          "value": 2
         },
         {
           "id": "views",
@@ -1151,11 +1151,16 @@
       ],
       "visualisations": [
         {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "uploads",
           "path": "/cat-harness/uploads/folio-assistant/"
         }
       ],
       "findings": [
+        "folio-assistant: declares 1 graph(s) with no published viewer — code. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it."
       ],
       "navbarIcons": [
@@ -1400,7 +1405,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 46
+          "value": 47
         },
         {
           "id": "kinds",
@@ -2409,7 +2414,7 @@
           },
           {
             "key": "directories",
-            "summary": "1: uploads"
+            "summary": "2: uploads, root-tools"
           },
           {
             "key": "stickies",
@@ -2555,7 +2560,7 @@
           },
           {
             "key": "directories",
-            "summary": "44: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
+            "summary": "45: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
           },
           {
             "key": "associatedHarnesses",

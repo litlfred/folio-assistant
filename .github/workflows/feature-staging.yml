@@ -137,7 +137,7 @@ jobs:
     # its own `STAGING/<slug>/` with `keep_files: true`, so a re-clone picks up
     # whoever won and adds this branch's directory beside it.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.ref || inputs.branch || github.ref }}
 
@@ -999,7 +999,7 @@ jobs:
       # absorbing it. The three-attempt rebase loop is kept regardless: the
       # contention BETWEEN sessions is untouched, and is `yzsj`'s ground.
       - name: Check out the publish branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: gh-pages
           path: pages
@@ -1144,7 +1144,7 @@ jobs:
 
       - name: Comment staging URL on PR
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const slug = '${{ steps.slug.outputs.slug }}';
@@ -1215,7 +1215,7 @@ jobs:
       # defaults to the BASE branch — never the fork's head — which is the
       # whole reason that default matters in this job.
       - name: Check out the platform, to write the render log
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: source
 
@@ -1228,7 +1228,7 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Check out the publish branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: gh-pages
           path: pages
@@ -1428,7 +1428,7 @@ jobs:
 
       - name: Post retention notice (not confirmed)
         if: steps.check.outputs.confirmed == 'false'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const { owner, repo } = context.repo;
@@ -1531,7 +1531,7 @@ jobs:
           echo "Confirmed target: STAGING/$SLUG"
 
       - name: Check out the platform, for the liveness preflight
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # The preflight asks whether a branch is an ancestor of the default
           # branch, which a truncated history cannot answer. It says so rather
@@ -1556,7 +1556,7 @@ jobs:
         run: bun run cat-harness/scripts/staging-cleanup-preflight.ts --slug "$CLEANUP_SLUG"
 
       - name: Check out the publish branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: gh-pages
           path: pages

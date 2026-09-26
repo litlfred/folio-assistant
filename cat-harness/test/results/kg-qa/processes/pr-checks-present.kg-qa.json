@@ -117,8 +117,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/pr-checks-present.yml",
+          "detail": ".github/workflows/pr-checks-present.yml changed since cat-harness/processes/pr-checks-present.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -126,8 +131,8 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 1,
+    "pass": 14,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   },
@@ -137,8 +142,9 @@
       "prose": "cat-harness/processes/pr-checks-present.bpmn",
       "code": ".github/workflows/pr-checks-present.yml",
       "prose_hash": "470b15af76ff",
-      "code_hash": "fc09eec3e3e0",
-      "by": "baseline"
+      "code_hash": "29db2fa46226",
+      "by": "agent",
+      "reason": "The change is to the WORDING of one advice branch inside the comment body (the UNKNOWN mergeability case), aligning it with check-head-has-run.ts per bean fx5r. No step, gateway, lane or ordering changed: the diagram's five activities — ask per open PR whether HEAD has a run, ensure the label, open-or-edit the one tracking issue, comment once per (PR, head sha), close the issue when every head has a run — all still describe exactly what the workflow does. Re-read the diagram against the workflow to confirm rather than assuming."
     }
   ]
 }

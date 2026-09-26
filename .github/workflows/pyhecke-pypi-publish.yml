@@ -40,9 +40,9 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
 
@@ -80,7 +80,7 @@ jobs:
           "
 
       - name: Upload dist artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: pyhecke-dist-${{ steps.version.outputs.version }}
           path: tools/pyhecke/dist/
@@ -95,7 +95,7 @@ jobs:
       name: testpypi
       url: https://test.pypi.org/project/pyhecke/
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: pyhecke-dist-${{ needs.build.outputs.version }}
           path: dist/
@@ -117,7 +117,7 @@ jobs:
       name: pypi
       url: https://pypi.org/project/pyhecke/
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: pyhecke-dist-${{ needs.build.outputs.version }}
           path: dist/

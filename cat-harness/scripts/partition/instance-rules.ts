@@ -48,13 +48,43 @@ import type { PartitionSpec, PermittedEdge, Rule } from "./engine.js";
  */
 export type Repo = "harness" | "core" | "sci" | "kg" | "base" | "test";
 
-/** Display names, in dependency order (most depended-upon first). */
-export const REPOS: Array<{ id: Repo; name: string }> = [
-  { id: "harness", name: "agentic-harness" },
-  { id: "core", name: "folio-assist-core" },
-  { id: "sci", name: "folio-asst-sci" },
+/**
+ * Target repository names, in dependency order (most depended-upon first).
+ *
+ * ## `name` is the TARGET REPO; `instance` is where it is staged today
+ *
+ * These are two different facts and were one string until 2026-09-26, which
+ * is how they drifted. `name` is what the repository will be called when
+ * #223 cuts it. `instance` is the directory staging it in this pre-split
+ * checkout, and it must equal that directory's own declared `name` — the
+ * declaration is the source of truth, so `instance` is a POINTER to it, not
+ * a second copy. `partition-names.test.ts` holds them equal.
+ *
+ * `kg` carries no `instance` ON PURPOSE. `smart-kg` is a Phase III target
+ * for WHO L1 document and KG schemas that this checkout does not hold, so it
+ * has 0 modules. That is a target not yet staged, NOT a `dh4f`
+ * declared-but-absent defect, and the two must not be conflated: the first is
+ * a plan, the second is a consumer scanning nothing and reporting a clean run.
+ * `undefined` says "no instance yet"; it never means "the instance is missing".
+ *
+ * ## Why three of these were renamed
+ *
+ * `folio-assist-core` and `folio-asst-sci` were ABBREVIATIONS of the declared
+ * names — no decision behind "asst", just terser — and `agentic-harness`
+ * predates the owner's rename of the harness to `cat-harness`, which the
+ * declaration, the directory and `AGENTS.md` all already carry. Only the
+ * architecture docs and this table still said the old thing.
+ *
+ * The docs page `/agentic-harness.html` is NOT this name and was not touched:
+ * it documents the agent-user interaction model, which is a concept rather
+ * than a repository, and its slug is a published URL.
+ */
+export const REPOS: Array<{ id: Repo; name: string; instance?: string }> = [
+  { id: "harness", name: "cat-harness", instance: "cat-harness" },
+  { id: "core", name: "folio-assistant-core", instance: "folio-assistant-core" },
+  { id: "sci", name: "folio-assistant-sci", instance: "folio-assistant-sci" },
   { id: "kg", name: "smart-kg" },
-  { id: "base", name: "smart-base" },
+  { id: "base", name: "smart-base", instance: "smart-base" },
   { id: "test", name: "(test material)" },
 ];
 
@@ -834,6 +864,18 @@ export const RULES: Rule[] = [
       // its subject twice over: it reads THIS repository's workflows,
       // and what it runs are the harness's own generators.
       "scripts/check-ci-invocations.ts",
+      // Builds every package this REPOSITORY publishes to npm (bean `rsi6`).
+      // Harness by its subject: the thing it builds is this repository's own
+      // shipped artefact, and a folio publishes prose and proofs rather than
+      // a package. Its neighbour above reads the workflows; this one reads
+      // what the workflows were failing to build.
+      "scripts/check-published-packages.ts",
+      // "what files does this REPOSITORY contain", asked of git rather than of
+      // the disk (bean `rsi6`). Harness by its subject: the corpus it reports
+      // is a checkout's, and its whole point is that a folio's material and a
+      // machine's untracked residue are not the same set. Four scanners here
+      // shared a denylist-shaped version of this before it was one module.
+      "scripts/git-corpus.ts",
       // Which `.github/workflows/*.yml` carry a BPMN diagram — bean `7yvd`.
       // Harness by its subject: it reads THIS REPOSITORY's CI processes and
       // its knowledge graph, and a folio has neither of those as content.
@@ -1174,6 +1216,7 @@ export const RULES: Rule[] = [
       "scripts/check-instance-render.ts",   // can an instance render its own graph
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
+      "scripts/check-quiet-claim-liveness.ts", // the work plan's own state against the remote (bean `omki`)
       "scripts/skill-governance.ts",        // which skill governs a directory, read from the skills (#1168 B7b)
       "scripts/docs-declarations.ts",       // which page documents a directory, read from the pages (#1168 B7c)
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
@@ -1187,9 +1230,12 @@ export const RULES: Rule[] = [
       "scripts/check-module-scope-resolution.ts", // no module scope resolves the folio dir (bean `1hkj`)
       "scripts/check-python-deps.ts",       // the repo's own toolchain
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
+      "scripts/check-usage-paths.ts",       // a script's usage string names the script
       "scripts/render-pipeline.ts",         // WHICH renders run and in what order, read from the declarations
       "scripts/render-selection.ts",        // WHICH of them must re-run against a seed, and why (bean `9c34`). Harness machinery: it computes a decision and writes no page, so it belongs beside the pipeline rather than with the renderers
       "scripts/gates.ts",                   // the gate runner itself
+      "scripts/gate-tree-guard.ts",         // ...and which gate changed the tree under it (bean `ymsu`). Harness for the same reason the runner is: it asks a question only the runner is positioned to ask, since no gate can observe what another gate did
+      "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales (bean `v625`). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the five artefacts before their checks read them
       "scripts/check-merged.ts",            // the gate runner, on the merged tree (bean `nytj`)
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
       "scripts/gen-bootstrap-graph.ts", // writes bootstrap/bootstrap.jsonld

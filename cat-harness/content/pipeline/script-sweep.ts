@@ -9,7 +9,7 @@
  *
  * Usage:
  *
- *   bun run content/pipeline/script-sweep.ts [--dry-run] [--json]
+ *   bun run cat-harness/content/pipeline/script-sweep.ts [--dry-run] [--json]
  *                                            [--only ID[,ID]]
  *                                            [--filter REGEX]
  *

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9x9r
 title: check:head-has-run passes on ANY run naming the sha — two unrelated push runs satisfy it while the gate workflow never fired
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-24T19:38:43Z
-updated_at: 2026-09-24T19:51:29Z
+updated_at: 2026-09-25T18:14:49Z
 parent: folio-assistant-1xhc
 ---
 
@@ -91,3 +91,26 @@ The two candidates as they stood before the ruling, and their costs, are in
 Option 2 (match per-event only) is a strict subset of what shipped: it would
 have caught #1309's push-run case and **missed** #1222's dispatch case, and
 would still pass if the gate workflow were renamed or deleted.
+
+---
+
+## Evidence — re-derived 2026-09-25, closing
+
+Closed on **evidence, not authorship** (`bean-coordination` §"Closing a bean
+whose work has already landed"). Every box re-run here, from a checkout
+identical to `origin/main` at `d8c450b9a2` with a clean tree — not read off the
+notes above.
+
+| box | how it was re-derived |
+|---|---|
+| verdict names the workflow and the event | `bun run cat-harness/scripts/check-head-has-run.ts` printed `Code-quality gates  push  in_progress`, `JSON-LD generated-file drift  push  success`, `Docs site (GitHub Pages)  push  in_progress` — workflow, event, conclusion |
+| required / conditional / not-declared stay three states | same tool on a PR head earlier the same day: `✗ Code-quality gates  required` beside `? Atomic-mass generated-file drift  conditional (paths) — not judged` |
+| could-not-ask outranks both | `head-has-run.test.ts`, 22 pass — `cannot-ask` asserted for no remote, a 404 (*"not being ALLOWED to look is not an absence"*) and a 403; `workflow-events.test.ts` adds *"unreadable files are carried through to the caller, not swallowed"* |
+| synthetic trees, one real-tree test asserting a PROPERTY | `workflow-events.test.ts`, 20 pass. The real-tree test is *"at least one workflow is REQUIRED on pull_request"* — a property, as the box asks, not a count |
+
+Also observed on the clean checkout: with no open PR for the sha the tool says
+*"WHICH workflows should have run cannot be determined … nothing about them has
+been judged"* — the third state working, rather than a silent pass.
+
+Not mid-flight: landed 2026-09-25 via #1325, no branch on the remote names this bean.
+No box needs a person.
