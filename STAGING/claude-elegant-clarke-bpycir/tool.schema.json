@@ -33,8 +33,7 @@
               "type": "boolean",
               "const": true
             }
-          },
-          "additionalProperties": false
+          }
         },
         "invoke": {
           "type": "object",
@@ -55,8 +54,7 @@
               },
               "required": [
                 "tool"
-              ],
-              "additionalProperties": false
+              ]
             },
             "inProcess": {
               "type": "object",
@@ -72,15 +70,13 @@
               },
               "required": [
                 "module"
-              ],
-              "additionalProperties": false
+              ]
             },
             "manual": {
               "type": "boolean",
               "const": true
             }
-          },
-          "additionalProperties": false
+          }
         },
         "io": {
           "type": "object",
@@ -119,21 +115,20 @@
                         },
                         "required": [
                           "flag"
-                        ],
-                        "additionalProperties": false
+                        ]
                       },
                       {
                         "type": "object",
                         "properties": {
                           "positional": {
                             "type": "integer",
-                            "minimum": 0
+                            "minimum": 0,
+                            "maximum": 9007199254740991
                           }
                         },
                         "required": [
                           "positional"
-                        ],
-                        "additionalProperties": false
+                        ]
                       },
                       {
                         "type": "object",
@@ -145,8 +140,7 @@
                         },
                         "required": [
                           "stdin"
-                        ],
-                        "additionalProperties": false
+                        ]
                       }
                     ]
                   }
@@ -155,8 +149,7 @@
                   "name",
                   "schema",
                   "required"
-                ],
-                "additionalProperties": false
+                ]
               }
             },
             "outputs": {
@@ -179,24 +172,22 @@
                 "required": [
                   "name",
                   "schema"
-                ],
-                "additionalProperties": false
+                ]
               }
             }
           },
           "required": [
             "inputs",
             "outputs"
-          ],
-          "additionalProperties": false
+          ]
         },
         "satisfies": {
+          "minItems": 1,
           "type": "array",
           "items": {
             "type": "string",
             "minLength": 1
-          },
-          "minItems": 1
+          }
         },
         "alternativeTo": {
           "type": "array",
@@ -226,8 +217,7 @@
             "when",
             "limits",
             "cost"
-          ],
-          "additionalProperties": false
+          ]
         },
         "requires": {
           "type": "object",
@@ -247,8 +237,7 @@
             "network": {
               "type": "boolean"
             }
-          },
-          "additionalProperties": false
+          }
         },
         "maintains": {
           "type": "array",
@@ -271,8 +260,14 @@
             "required": [
               "source",
               "artefact"
-            ],
-            "additionalProperties": false
+            ]
+          }
+        },
+        "renders": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
           }
         }
       },
@@ -284,18 +279,16 @@
         "invoke",
         "io",
         "satisfies"
-      ],
-      "additionalProperties": false
+      ]
     }
   },
-  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-elegant-clarke-bpycir/tool.schema.json",
   "title": "Tool definition",
   "description": "One concrete way to exercise a skill. A skill states a capability generically; a Tool names the skills it satisfies and how to install and invoke it. Generated from schemas/tool.ts, which is authoritative.",
   "staging": {
     "branch": "claude/elegant-clarke-bpycir",
-    "sha": "08800b1fc4d7964948c33c97d7b3400ed0f69d65",
+    "sha": "809ad3ae1d5dc20e8b7b4d786a467d94cffe0559",
     "pr": "731/merge",
-    "run": "35722040862"
+    "run": "36236754388"
   }
 }
