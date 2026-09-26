@@ -560,6 +560,28 @@ export function buildContext(): Record<string, unknown> {
     // fatal on the first run — which is the guard working, and the reason the
     // field is not silently dropped by a JSON-LD processor instead.
     omitted: { "@id": termIri("omitted"), "@container": "@set" },
+    // `sourceLanguage` — present only on a PER-LOCALE document, written by
+    // `kg-locale-export.ts`, and it is the language of the document's UNTAGGED
+    // strings rather than of its content. That distinction is the whole reason
+    // it is a minted term and not `schema:inLanguage`: the wider web's term
+    // says what language the content is in, and for `cat-harness.fr.jsonld`
+    // the honest answer to that is French, while the answer this field gives
+    // is English. Two different questions, so borrowing the term would make
+    // every locale document assert something false to a consumer that
+    // understood it.
+    //
+    // Declared here, in the CORE's context, because a locale document carries
+    // the core's `@context` verbatim — `IDENTITY_KEYS` in the translating walk
+    // protects it, since rewriting a context repoints every property in the
+    // document. So there is one place terms are declared, and a locale
+    // document cannot drift from it.
+    //
+    // `lvw0`: it was written and never declared, and `undeclaredRootTerms` did
+    // not catch it because that guard ran against the core document only —
+    // the `staging` shape of #340 exactly, one file over. A JSON-LD processor
+    // dropped it, and `publish:verify` refused all four locale documents,
+    // which skipped the deploy.
+    sourceLanguage: { "@id": termIri("sourceLanguage") },
     //
     // `problems`, `undeclaredTerms`, `undeclaredSchemaModules` and
     // `danglingLinks` were declared here and are NOT any more — the document

@@ -39,7 +39,7 @@ off a variable.
 
 | boundary | the hazard | machinery | state |
 |---|---|---|---|
-| `${{ }}` → a `run:` block | the value is substituted into the script TEXT before bash parses it, so a quote is enough | `scripts/check-workflow-injection.ts` + baseline + 2 test files | **gated** (`1wef`) |
+| `${{ }}` → a `run:` block | the value is substituted into the script TEXT before bash parses it, so a quote is enough — and a step OUTPUT carries whatever the step put in it, so the gate resolves provenance rather than trusting the band | `scripts/check-workflow-injection.ts` + baseline + 2 test files | **gated** (`1wef`), `run:` blocks only — `script:` blocks are JS and unread |
 | an external id → a path | `join(base, external)` escapes the store; `mkdirSync` + `writeFileSync` make it a write primitive | [`path-containment`](path-containment.md), `src/core/safe-path.ts` | **guarded; narrowly gated** — `server-path-sinks.test.ts`, a source ratchet (`6bhf`) |
 | a shell string → a process | `execSync("cmd " + value)` gives the shell a program | [`injection-boundaries`](injection-boundaries.md) | partly (`execFileSync` at the fixed sites) |
 | an archive → a filesystem | a LINK member writes through to its target, which `..`-refusal does not cover | member-TYPE whitelist (`tar tvzf`, accept only `-` and `d`) at the one call site, `tar-member-guard.test.ts` against real archives | **closed at one site** (`6bhf`) |

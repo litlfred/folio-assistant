@@ -76,6 +76,19 @@ jobs:
         run: cd $PKG_DIR && bun install --frozen-lockfile
 
       - name: Pack tarball (generic core only)
+        # `steps.version.outputs.version` CARRIES the `workflow_dispatch` input
+        # verbatim (see the version step above: `VERSION="$INPUT_VERSION"`), so
+        # interpolating it into the script text below is the same injection the
+        # version step itself avoids — one hop later. Measured 2026-09-26, bean
+        # `6bhf`: a dispatch of `1.0";id;"` renders
+        # `mv *.tgz "folio-assistant-1.0";id;".tgz"` and runs `id`.
+        #
+        # `check-workflow-injection.ts` classified `steps.*.outputs` SAFE
+        # unconditionally and reported nothing. It now resolves the producing
+        # step, so this site is graded free text — which is why the value is
+        # bound here instead.
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
         run: |
           cd $PKG_DIR
           # `bun pm pack` — NOT `bun pack`, which is not a subcommand and so
@@ -101,7 +114,7 @@ jobs:
           # Renaming rather than interpolating the scope into the body keeps
           # the asset name a stable contract: it survives the package being
           # renamed again, which is exactly what just happened.
-          mv *.tgz "folio-assistant-${{ steps.version.outputs.version }}.tgz"
+          mv *.tgz "folio-assistant-$VERSION.tgz"
           ls -la *.tgz
 
       - name: Create GitHub Release
