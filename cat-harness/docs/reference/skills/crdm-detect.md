@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-schema-docs.ts — do not hand-edit; edit the schema
 title: CRDM Detect
 parent: Skill schema reference
 ---

@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Session Task Manager (`beans`)'
 parent: Skill instructions
 ---
