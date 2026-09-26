@@ -194,6 +194,12 @@ text, with its measurements, is in the commit message.
 
 ## Blocked on
 
+- **waits on:** bean `pve3` — both halves of bootstrap, or neither
+- **since:** 2026-09-21
+- **expires:** 2026-09-29 — a REVIEW date, not a takeover date; see the handoff
+- **handoff:** on expiry, check `pve3`'s status and re-derive. If it landed, this unblocks wholly; if it was scrapped, this one is scrapped with it.
+
+
 `pve3` — both halves of bootstrap, or neither. Nothing else.
 
 ---
