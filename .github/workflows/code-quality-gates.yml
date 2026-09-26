@@ -191,6 +191,19 @@ jobs:
             --exclude '**/_deprecated/**' \
             $targets
 
+      # THIS STEP IS FOR THIS REPOSITORY'S OWN SCRIPTS, NOT FOR PACKAGES IT
+      # PUBLISHES. A publishable package's Python tests run in the `typescript`
+      # job, under `bun run check:published-packages`, which discovers them
+      # from each package's `pyproject.toml` and installs that package's own
+      # `[project.optional-dependencies] test`.
+      #
+      # The split is not tidiness. This step runs each file as a BARE SCRIPT
+      # (`python3 "$t"`) and installs no pytest, so a pytest suite dropped into
+      # the glob below would define its test functions, execute none of them
+      # and exit 0 — reporting a pass it never computed. That is exactly what
+      # `cat-harness/schemas/block-qa-schema/tests/test_python.py` would have
+      # done, and why widening this glob was the WRONG repair for bean `1s5s`.
+      #
       # The Python tests under scripts/tests/ ran nowhere. run-tests.sh
       # delegates to `bun test`, which only collects `*.test.ts`, and no
       # workflow named them — so pdf-text-repair.test.py and
@@ -225,6 +238,18 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
+
+      # `check:published-packages`, below, is the one gate in this job that
+      # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
+      # beside its npm one, and a package this repository publishes has to
+      # work in both languages or neither. The gate installs that package's
+      # OWN declared test extras itself, so nothing about it is named here —
+      # but it cannot conjure an interpreter, and it treats an absent one as
+      # a FINDING rather than a skip, so this step is what keeps that finding
+      # from being the normal state. Bean `1s5s`.
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
