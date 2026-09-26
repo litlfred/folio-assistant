@@ -1,10 +1,11 @@
 ---
 # folio-assistant-ymsu
 title: kg:detangle:check CANNOT FAIL inside bun run gates — bun test repairs the sidecar 1140 lines earlier in the same run
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-25T18:38:34Z
+updated_at: 2026-09-26T03:24:20Z
 parent: folio-assistant-1xhc
 ---
 
@@ -129,3 +130,65 @@ and absence is the one this design made safe.
       predecessor have repaired its subject?"* and *"does it compare every field
       it writes?"* — this instance answers the second question wrongly and the
       first one fine
+
+## Clause 3 IMPLEMENTED and falsified, 2026-09-26
+
+`gates` now fails when one of its own gates changes the repository.
+`cat-harness/scripts/gate-tree-guard.ts` snapshots `git status --porcelain`
+between gates and attributes each change to the gate that made it; the runner
+refuses to print its clean line when any gate did.
+
+### The falsification, end to end
+
+`folio-core.detangle.json`'s `internal` set to `999` by hand, then:
+
+| | |
+|---|---|
+| `kg:detangle:check` **alone** | exit non-zero — `STALE … — internal` |
+| `kg:detangle:check` **inside `bun run gates`** (line 1215 of the run) | **passed**, over `internal: 999` |
+| the new guard | `✗ 1 gate(s) CHANGED THE REPOSITORY` → `bun test`, naming the exact sidecar |
+
+So the bean's central claim is now reproduced on demand rather than only
+remembered, and the blind spot it describes is closed by the runner rather than
+by any gate.
+
+### The direction that mattered, and would have been missed
+
+The change `bun test` made was a **revert**, not new dirt: the file was ` M`
+before gate 1 and CLEAN after it, because the writer put the correct value back.
+So the entry *disappeared* from porcelain.
+
+A guard asking *"did anything get dirtier?"* — the obvious first design — would
+have reported nothing here. It would have missed its own test case. `diffReadings`
+counts appearances, status transitions and disappearances for that reason, and
+the disappearing case has its own test.
+
+### Why it is safe as a HARD failure
+
+Measured before committing to it: a full `bun test` on a clean `main` left the
+tree **byte-identical**. A generator rewriting identical bytes does not appear in
+`git status`, so the guard is silent on a healthy tree and fires exactly when a
+committed artefact was stale.
+
+The predicate is a per-gate **delta**, never "the tree is dirty" — running
+`gates` on your own uncommitted work is the normal case, and a guard that failed
+on that would be switched off the same day.
+
+### Cost, measured rather than guessed
+
+`git status --porcelain` over this repository's 13,529 tracked files is **~29ms**
+(five runs: 29, 27, 29, 27, 29). 152 snapshots is **~4.4s**. That is what bought
+per-gate attribution instead of a single before/after pair — the difference
+between "the tree changed" and "gate 1 changed what gate 152 reads".
+
+### Not done here, and still open above
+
+Clause 1 — `bun test` should not run the detangle writer at all; a test needing
+that output should compute into a temp directory, as the profile-conformance
+tests already do. This guard makes that defect *visible and fatal*; it does not
+fix it. Clauses 2 and 4 and the `:check` sweep are likewise untouched.
+
+One limitation is documented in the module rather than defended against: a git
+operation performed WHILE the gates run moves what is being measured, so it
+would attribute an author's own `git add` to whichever gate was running. Commit
+before or after a run, not during.
