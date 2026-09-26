@@ -53,6 +53,19 @@
  * (a prefix added that should not have been) and `mi97` (23 links with one
  * `../` too many). This is 745 with one `../` too few.
  *
+ * Usage:
+ *   bun run translated-links:check   # non-zero if any translated page's link
+ *                                    # resolves at its SOURCE depth but not its own
+ *   bun run translated-links:fix     # prepend exactly one `../` to each, verified
+ *
+ * `docs` is the graph kind this audits — `cat-harness.json` declares `docs/`
+ * with `graphs: ["docs"]`, and the locale subtrees this walks are part of it.
+ * Declared rather than inferred: `audit:coverage:require-all` refused this
+ * gate for having no `@covers` line, which is `3srh` working — a gate that
+ * does not say what it audits makes every "unaudited" count an UPPER bound
+ * rather than a verdict, and a grep for coverage fails in both directions.
+ *
+ * @covers docs
  * @graphNode tool
  */
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
