@@ -264,6 +264,9 @@
     "omitted": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#omitted",
       "@container": "@set"
+    },
+    "sourceLanguage": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceLanguage"
     }
   },
   "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-bf5l-source-provenance/cat-harness.jsonld",
@@ -273,10 +276,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T14:16:46.371Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/aa6da01329f40b1dbfbac4bc27d80e84fabe0f24",
-  "sourceCommitSha": "aa6da01329f40b1dbfbac4bc27d80e84fabe0f24",
-  "sourceCommitAt": "2026-09-26T14:12:52Z",
+  "generatedAt": "2026-09-26T15:03:48.605Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d2d2741cc1b6de8bc356d28d6f8025125aec54fb",
+  "sourceCommitSha": "d2d2741cc1b6de8bc356d28d6f8025125aec54fb",
+  "sourceCommitAt": "2026-09-26T14:52:26Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -909,7 +912,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bf5l-source-provenance/cat-harness.jsonld#package/security"
       ],
       "instructionsPath": "skills/security/path-containment.md",
-      "instructionLines": 57,
+      "instructionLines": 101,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -921,12 +924,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "injection-boundaries",
       "title": "Injection — the value became program",
-      "description": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the existing gate covers, the one latent gap in its model, and the argv rule.",
+      "description": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the gate covers, why a step output carries a severity rather than having one, and the argv rule.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bf5l-source-provenance/cat-harness.jsonld#package/security"
       ],
       "instructionsPath": "skills/security/injection-boundaries.md",
-      "instructionLines": 53,
+      "instructionLines": 155,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3492,7 +3495,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bf5l-source-provenance/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/untrusted-input.md",
-      "instructionLines": 141,
+      "instructionLines": 152,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4440,7 +4443,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "latex-build-cache",
       "title": "LaTeX build performance — findings + what's safe",
-      "description": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`scripts/install-tex.sh`) and quick changed-chapter feature builds (`scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
+      "description": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`cat-harness/scripts/install-tex.sh`) and quick changed-chapter feature builds (`cat-harness/scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-bf5l-source-provenance/cat-harness.jsonld#package/folio-paper-adapter"
       ],
@@ -43574,8 +43577,8 @@
   ],
   "staging": {
     "branch": "claude/bf5l-source-provenance",
-    "sha": "7a0356e83e5dc1d7556e71837ad7f646b73164c4",
+    "sha": "3f87b6c6b2937e29f01d7efc40e3adfdd06ebe91",
     "pr": "1412/merge",
-    "run": "36247826077"
+    "run": "36250483959"
   }
 }
