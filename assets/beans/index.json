@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 357,
+      "count": 360,
       "unit": "beans"
     }
   },
@@ -133,6 +133,20 @@
       "updatedAt": "2026-09-24T06:22:01Z",
       "preview": "Owner, 2026-09-23: 'bootstrap/ should be its own subgraph.... in fact QA: in harness `<stub>/*.*` should be a subgraph.' The FIRST half only — which top-level directories are undeclared, and what each should become. The reference-direction half is a sibling session's.\n\nDeliverable is a SPLIT (declare / fold / remove / already-declared / not-mine), not a sweep. Implement only what the owner picks.\n",
       "file": "beans/defs/folio-assistant-0uu2--declaration-gap-every-top-level-directory-is-a-dec.md"
+    },
+    {
+      "id": "folio-assistant-0xfe",
+      "title": "GATE RED ON MAIN: 25 published translations carry no `.po` catalogue, compounding across three merges",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T06:44:45Z",
+      "updatedAt": "2026-09-26T06:47:24Z",
+      "preview": "`translation-drift`'s ratchet test — \"no NEW drift, and nothing unreadable\" —\nwas failing on `main`: 25 published translations served with no `.po` catalogue\nand no entry in `UNCATALOGED`.\n\n**Fixed on `main` by #1364, not by this bean.** Closed on evidence rather than\nauthorship, per `bean-coordination` §\"Closing a bean whose work has already\nlanded\" — the evidence is re-derived below rather than ",
+      "file": "beans/defs/folio-assistant-0xfe--gate-red-on-main-25-published-translations-carry-n.md"
     },
     {
       "id": "folio-assistant-0ytk",
@@ -983,12 +997,12 @@
       "title": "COORDINATION: eight sessions woke into the same 2435-commit gap and all eight re-surveyed it independently",
       "status": "todo",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T15:44:18Z",
-      "updatedAt": "2026-09-25T15:44:18Z",
+      "updatedAt": "2026-09-26T07:38:23Z",
       "preview": "## Measured 2026-09-25, from the session API\n\n`list_sessions` returned 30 sessions, of which **eight were RUNNING at the same\nminute** (15:38–15:39Z). Their own `task_summary` fields, verbatim:\n\n```\nrebasing from main; 2369 commits (PR #477→#1306); facts before plan\nreviewing PR #542 impact; fast-forward reset blocked; surveying origin/main\nre-fetching main after date change; will propose next ste",
       "file": "beans/defs/folio-assistant-6ptx--coordination-eight-sessions-woke-into-the-same-243.md"
     },
@@ -1443,14 +1457,14 @@
     {
       "id": "folio-assistant-9x9r",
       "title": "check:head-has-run passes on ANY run naming the sha — two unrelated push runs satisfy it while the gate workflow never fired",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T19:38:43Z",
-      "updatedAt": "2026-09-24T19:51:29Z",
+      "updatedAt": "2026-09-25T18:14:49Z",
       "preview": "Measured 2026-09-24, on PR #1309's head. The script printed a ✓, and the gate\nset had never fired.\n\n## The pass condition is strictly weaker than the defect it detects\n\n`runsForHead` asks the Actions API for every run whose `head_sha` is this\ncommit, and line 191 decides:\n\n```ts\nreturn runs.length > 0 ? { state: \"has-run\", runs } : { state: \"no-run\" };\n```\n\nAny run. Any workflow, any event. The he",
       "file": "beans/defs/folio-assistant-9x9r--checkhead-has-run-passes-on-any-run-naming-the-sha.md"
     },
@@ -1541,14 +1555,14 @@
     {
       "id": "folio-assistant-ajx9",
       "title": "WHO IG CHROME: the blue bar, DRAFT watermark and publish box, ingested from the template chain rather than transcribed",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:56:03Z",
-      "updatedAt": "2026-09-25T16:37:43Z",
+      "updatedAt": "2026-09-26T03:54:14Z",
       "preview": "Owner, 2026-09-23, chose \"All three, fetch HL7's base template\" and \"smart-base, inherited\".\n\nFinishes what 0818 left open: the WHO visual styling, a different question from the menu it shipped.\n\n## The template chain is three layers, and the three items do not come from one of them\n\n    smart-trust local-template  ->  who.template.root 0.5.0  ->  fhir.base.template 1.0.0\n\n- BLUE BAR is WHO's: --n",
       "file": "beans/defs/folio-assistant-ajx9--who-ig-chrome-the-blue-bar-draft-watermark-and-pub.md"
     },
@@ -2873,6 +2887,20 @@
       "file": "beans/defs/folio-assistant-lx2s--feature-branch-staging-under-gh-pages-issue-215.md"
     },
     {
+      "id": "folio-assistant-m1k4",
+      "title": "DUPLICATE manifest entry survives every gate — the uniqueness check uses a Set, which collapses it",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T08:05:18Z",
+      "updatedAt": "2026-09-26T08:54:33Z",
+      "preview": "Measured on `origin/main` at `0c5086db6c1`, 2026-09-26.\n\n`cat-harness/skills/workflow/package-manifest.json` lists **14** skills of which\n**13 are distinct**. `release-epic-planning` appears **twice**.\n\n    skills entries: 14 | distinct: 13\n    DUPLICATES: {'release-epic-planning': 2}\n\n## Why no gate sees it\n\n`scripts/tests/skill-manifest-coverage.test.ts:133`:\n\n    const listed = new Set(p.listed",
+      "file": "beans/defs/folio-assistant-m1k4--duplicate-manifest-entry-survives-every-gate-the-u.md"
+    },
+    {
       "id": "folio-assistant-m4xy",
       "title": "INGEST ARM: pdf-images recovers the raster layer, and WHO's real figures are vector",
       "status": "todo",
@@ -3633,6 +3661,20 @@
       "file": "beans/defs/folio-assistant-rq8s--a-session-blocked-on-the-owner-is-invisible-four-s.md"
     },
     {
+      "id": "folio-assistant-rsi6",
+      "title": "PUBLISHED PACKAGE, UNBUILT: block-qa-schema ships to npm and no gate built it — #914 merged green and broken",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T03:24:48Z",
+      "updatedAt": "2026-09-26T04:01:27Z",
+      "preview": "Measured 2026-09-26, by building the package rather than by reading about it.\n\n`@litlfred/block-qa-schema` is the **only** package in this repository that\nships to npm. It is named in no `.github/workflows/*.yml`, and the root\n`package.json` declares no `workspaces`, so its devDependencies had never been\ninstalled on a runner and its `build` and `test` scripts had never run. Its\n`node_modules/` di",
+      "file": "beans/defs/folio-assistant-rsi6--published-package-unbuilt-block-qa-schema-ships-to.md"
+    },
+    {
       "id": "folio-assistant-rtuo",
       "title": "State tags and badges fail colour contrast on the dark theme",
       "status": "todo",
@@ -3887,14 +3929,14 @@
     {
       "id": "folio-assistant-tbdg",
       "title": "main is RED on translation-drift: #1374 published 27 translated pages with no .po catalogue, and the backlog list is not the fix",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T04:22:55Z",
-      "updatedAt": "2026-09-26T04:22:55Z",
+      "updatedAt": "2026-09-26T08:50:20Z",
       "preview": "Measured 2026-09-26. `main` is RED on `translation-drift`, independently of\nanything else, and it is the SECOND of two unrelated breakages on `main` this\nmorning.\n\n## The failure, and that it is `main`'s\n\n```\n(fail) the real corpus — and the gate can actually fail > no NEW drift, and\n       nothing unreadable\nExpected 0, Received 27\n   error ar/accessibility: published with no `.po` catalogue and ",
       "file": "beans/defs/folio-assistant-tbdg--main-is-red-on-translation-drift-1374-published-27.md"
     },
@@ -4640,7 +4682,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T16:21:48Z",
-      "updatedAt": "2026-09-25T16:22:33Z",
+      "updatedAt": "2026-09-26T04:01:08Z",
       "preview": "`ramz`'s third box, asked and answered 2026-09-25.\n\n`ramz` fixed ONE scanner: `check-context-emission` walked the filesystem behind\na hand-written denylist and swept 145 gitignored documents as repository\ncontent. It was found by accident — a clean checkout failing a test about code\nnobody had touched — so the bean asked *\"which others?\"*.\n\n**Eleven**, under `cat-harness/scripts/`, each walking fr",
       "file": "beans/defs/folio-assistant-xd1g--11-root-rooted-scans-have-no-gitignore-awareness-r.md"
     },
