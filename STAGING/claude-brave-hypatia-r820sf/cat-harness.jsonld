@@ -273,14 +273,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T06:26:13.038Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/25447b1d216bcc01ece4c5e649f7281a27b519b9",
-  "sourceCommitSha": "25447b1d216bcc01ece4c5e649f7281a27b519b9",
-  "sourceCommitAt": "2026-09-26T06:23:44Z",
+  "generatedAt": "2026-09-26T07:14:07.861Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/16823ff99ca71d8ba2f3a0649f49c32a5095b915",
+  "sourceCommitSha": "16823ff99ca71d8ba2f3a0649f49c32a5095b915",
+  "sourceCommitAt": "2026-09-26T07:11:17Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 270,
+    "Skill": 271,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
@@ -806,7 +806,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-needs-assessment.md",
-      "instructionLines": 114,
+      "instructionLines": 113,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -856,7 +856,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-impact-analysis.md",
-      "instructionLines": 135,
+      "instructionLines": 134,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -873,7 +873,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-requirements-template.md",
-      "instructionLines": 124,
+      "instructionLines": 123,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4503,6 +4503,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/raci"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/release-epic-planning",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "release-epic-planning",
+      "title": "Release epic planning",
+      "description": "Plan and track releases using bean epics. Covers epic creation, story/task decomposition, release readiness tracking, and the relationship between epics and GitHub milestones. Applies to code releases, paper publications, and project milestones.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/release-epic-planning.md",
+      "instructionLines": 147,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-epic-planning"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/dmn-authoring",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "dmn-authoring",
@@ -4650,7 +4667,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/branch-freshness.md",
-      "instructionLines": 113,
+      "instructionLines": 112,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6188,6 +6205,9 @@
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/crdm-data-model",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/crdm-detect",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/crdm-impact-analysis",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/crdm-needs-assessment",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/crdm-requirements-template",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/crdm-requirements-workflow"
       ],
       "providesCapability": [],
@@ -6540,9 +6560,13 @@
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/bpmn-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/bpmn-processes",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/branch-freshness",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/code-review-process",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/deterministic-and-agentic",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/dmn-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/process-state",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/release-epic-planning",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/release-lifecycle",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/session-context",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/session-state-machine",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/specification-compiled-agents",
@@ -43457,8 +43481,8 @@
   ],
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "7d7b1d04fdde76a2fb392ba34341c1167531c5ed",
+    "sha": "446334d6043cc11edd2b0db30a7f6dda70739dac",
     "pr": "1364/merge",
-    "run": "36223627035"
+    "run": "36226017290"
   }
 }

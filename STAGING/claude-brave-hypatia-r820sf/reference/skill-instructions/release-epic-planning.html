@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(60)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(175)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(60) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(175) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(60) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(175) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(60) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(175) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Compute-author | folio-assistant</title>
+<title>Release epic planning | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Compute-author" />
+<meta property="og:title" content="Release epic planning" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Compute-author" />
+<meta property="twitter:title" content="Release epic planning" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -788,7 +788,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Compute-author</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Release epic planning</span></li>
   </ol>
 </nav>
 
@@ -797,106 +797,47 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/compute-author.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/folio-paper-adapter/compute-author.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/release-epic-planning.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/workflow/release-epic-planning.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/compute-author.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/release-epic-planning.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="compute-author-skill--read-before-writing-compute-code">
+<h1 id="release-epic-planning">
   
   
-    <a href="#compute-author-skill--read-before-writing-compute-code" class="anchor-heading" aria-labelledby="compute-author-skill--read-before-writing-compute-code"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Compute-author skill — read before writing compute code
+    <a href="#release-epic-planning" class="anchor-heading" aria-labelledby="release-epic-planning"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Release epic planning
   
   
 </h1>
     
-<h2 id="role">
+
+<p>A release epic groups all the work for a specific release version.
+This skill governs how to create, structure, and track them.</p>
+<h2 id="epic-structure">
   
   
-    <a href="#role" class="anchor-heading" aria-labelledby="role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Role
+    <a href="#epic-structure" class="anchor-heading" aria-labelledby="epic-structure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Epic structure
   
   
 </h2>
     
 
-<p>When you are about to <strong>author new compute</strong> (a script, or a native
-kernel it calls) or modify existing compute in a way that touches
-precision, performance, or derivation discipline — run this skill
-<strong>before</strong> any code change. This is the pre-work counterpart to
-<code class="language-plaintext highlighter-rouge">local/compute-audit</code> (post-hoc review). Both share a vocabulary; this
-one gates entry, that one gates exit.</p>
+<p>The beans hierarchy for a release:</p>
 
-<p><strong>Workflow precondition.</strong> Before writing the first line of compute,
-create a branch and open a PR; commit early and often (small structured
-commits cherry-pick cleanly).</p>
-<h2 id="when-to-use-this-skill">
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>epic: "Release v0.2.0"
+├── feature: "CRDM Phase 4b prioritization"
+│   ├── task: "Add Phase 4b to crdm-requirements-workflow.md"
+│   └── task: "Update phase table"
+├── feature: "Release lifecycle skills"
+│   ├── task: "Create release-lifecycle.md"
+│   ├── task: "Create code-review-process.md"
+│   └── task: "Create branch-freshness.md"
+└── bug: "Fix 7 BPMN isMarkerVisible attributes"
+    └── task: "Add isMarkerVisible to 5 files"
+</code></pre></div></div>
+<h3 id="bean-types-in-a-release-context">
   
   
-    <a href="#when-to-use-this-skill" class="anchor-heading" aria-labelledby="when-to-use-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to use this skill
-  
-  
-</h2>
-    
-
-<p>Whenever a request mentions: authoring/optimizing/porting/”make it
-faster”; precision / tolerance / “float vs exact” / arbitrary-precision;
-crossing a native↔script language boundary (FFI / extension module /
-round-trip); memory / cache / bottleneck / profile; cross-check /
-identity / residual / drift; or any pre-work question about which type /
-precision / boundary granularity to use, or whether a shortcut identity
-is safe. <strong>Anything performance-related is in-scope, even if the request
-looks small</strong> — a one-line “use a fast float here” change can break the
-precision floor.</p>
-<h2 id="0-canonical-references-read-these-first">
-  
-  
-    <a href="#0-canonical-references-read-these-first" class="anchor-heading" aria-labelledby="0-canonical-references-read-these-first"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §0. Canonical references (read these first)
-  
-  
-</h2>
-    
-
-<p>Maintain, per project, pointers to: the precision-goals doc (what the
-project’s precision targets mean and the conventions behind them); the
-derivation-discipline doc (the declared calibration inputs, the no
--fitting rule); <code class="language-plaintext highlighter-rouge">production-vs-exploratory-discipline.md</code> (where a
-candidate result goes — read BEFORE deciding whether it goes into a
-production script or stays in a probe); the current optimization
-roadmap; and the reference implementations for the project’s number
-kernels, exact-arithmetic types, and witness base.</p>
-<h3 id="01-sandbox--fresh-container-bootstrap">
-  
-  
-    <a href="#01-sandbox--fresh-container-bootstrap" class="anchor-heading" aria-labelledby="01-sandbox--fresh-container-bootstrap"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §0.1 Sandbox / fresh-container bootstrap
-  
-  
-</h3>
-    
-
-<p>A fresh container often ships <strong>neither</strong> the script-side deps <strong>nor</strong>
-the compiled native module. Do <strong>not</strong> declare a compute “blocked (no
-native module)” — it is almost always buildable in-place: install the
-core numeric deps, install the in-repo packages editable, then build the
-native module from source with the project’s build tool (the native
-toolchain usually ships in the sandbox even when other toolchains are
-firewalled). The pure-script paths typically do NOT need the native
-module — only the large/slow producers do, and even those unblock after
-the in-place build. Build it before reporting a capability as
-unavailable.</p>
-<h2 id="1-precision-discipline-strict">
-  
-  
-    <a href="#1-precision-discipline-strict" class="anchor-heading" aria-labelledby="1-precision-discipline-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §1. Precision discipline (STRICT)
-  
-  
-</h2>
-    
-
-<p>Set the project’s precision floor (e.g. high-precision compute, slightly
-lower output) and obey it on every production path.</p>
-<h3 id="11-numeric-type-decision-table">
-  
-  
-    <a href="#11-numeric-type-decision-table" class="anchor-heading" aria-labelledby="11-numeric-type-decision-table"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §1.1 Numeric-type decision table
+    <a href="#bean-types-in-a-release-context" class="anchor-heading" aria-labelledby="bean-types-in-a-release-context"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Bean types in a release context
   
   
 </h3>
@@ -905,344 +846,229 @@ lower output) and obey it on every production path.</p>
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>To represent…</th>
-      <th>Use</th>
-      <th>Rationale</th>
+      <th>Type</th>
+      <th>Role in release</th>
+      <th>Granularity</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Exact integer</td>
-      <td>language <code class="language-plaintext highlighter-rouge">int</code> / big-integer type</td>
-      <td>exact, no precision issue</td>
+      <td><strong>epic</strong></td>
+      <td>The release itself</td>
+      <td>1 per release</td>
     </tr>
     <tr>
-      <td>Exact rational</td>
-      <td>a big-rational type</td>
-      <td>exact, required for identity checks at the target point</td>
+      <td><strong>feature</strong></td>
+      <td>A capability area / user story</td>
+      <td>1 per feature</td>
     </tr>
     <tr>
-      <td>Real at the precision floor</td>
-      <td>an arbitrary-precision float (pass the value as a <em>string</em>, never round to a machine float)</td>
-      <td>matches the floor</td>
+      <td><strong>task</strong></td>
+      <td>A single PR-sized implementation unit</td>
+      <td>1 per PR</td>
     </tr>
     <tr>
-      <td>Machine float</td>
-      <td><strong>only for cross-checking</strong>, clearly marked LOSSY</td>
-      <td>NEVER on the production critical path</td>
+      <td><strong>bug</strong></td>
+      <td>A defect fix included in the release</td>
+      <td>1 per fix</td>
+    </tr>
+    <tr>
+      <td><strong>milestone</strong></td>
+      <td>A session-scoped work container</td>
+      <td>Not release-scoped</td>
     </tr>
   </tbody>
 </table></div>
-
-<p><strong>Cross-check tolerance must match the floor.</strong> At N significant
-digits, a loose tolerance defeats the floor — set the cross-check bar at
-the floor’s precision, not at machine-float precision.</p>
-
-<p><strong>No lossy float casts of an exact expression in production.</strong> Convert
-via a decimal-string round-trip at the requested precision, or via the
-rational’s numerator/denominator when the value is rational.</p>
-<h3 id="12-calibration-discipline-strict">
+<h3 id="creating-the-hierarchy">
   
   
-    <a href="#12-calibration-discipline-strict" class="anchor-heading" aria-labelledby="12-calibration-discipline-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §1.2 Calibration discipline (STRICT)
+    <a href="#creating-the-hierarchy" class="anchor-heading" aria-labelledby="creating-the-hierarchy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Creating the hierarchy
   
   
 </h3>
     
 
-<p>Only the project’s <strong>declared calibration anchors</strong> are inputs; any
-compute that introduces a new free parameter calibrated against a
-measured observable is a hidden-extra-input violation and will be caught
-by <code class="language-plaintext highlighter-rouge">canonical-watcher</code>. Quantities derived from the anchors are derived,
-not calibrations.</p>
-<h3 id="13-no-fitting--numerology">
-  
-  
-    <a href="#13-no-fitting--numerology" class="anchor-heading" aria-labelledby="13-no-fitting--numerology"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §1.3 No fitting / numerology
-  
-  
-</h3>
-    
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1. Create the release epic</span>
+beans create <span class="s2">"Release v0.2.0"</span> <span class="nt">--type</span> epic
 
-<p>If your compute pattern-matches a numerical agreement, that is NOT a
-derivation. Either (a) derive the structural identity from the project’s
-foundations; (b) document the match as a falsifiability probe with an
-explicit probe/fit suffix in the script name + an audit-only witness; or
-(c) demote to a <code class="language-plaintext highlighter-rouge">remark</code> (interpretation, not claim). See
-<code class="language-plaintext highlighter-rouge">production-vs-exploratory-discipline.md</code> and <code class="language-plaintext highlighter-rouge">compute-audit.md</code>.</p>
-<h2 id="2-native--script-boundary-cost-when-to-cross">
-  
-  
-    <a href="#2-native--script-boundary-cost-when-to-cross" class="anchor-heading" aria-labelledby="2-native--script-boundary-cost-when-to-cross"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §2. Native ↔ script boundary cost (when to cross)
-  
-  
-</h2>
-    
+<span class="c"># 2. Create features under it</span>
+beans create <span class="s2">"CRDM Phase 4b prioritization"</span> <span class="nt">--type</span> feature
+beans update &lt;feature-id&gt; <span class="nt">--parent</span> &lt;epic-id&gt;
 
-<p>Crossing the native/script boundary has a fixed per-call cost. Per-fine
--grained calls are a loss: crossing the boundary millions of times costs
-more than any algorithmic savings.</p>
-<h3 id="21-granularity-decision-rule">
-  
-  
-    <a href="#21-granularity-decision-rule" class="anchor-heading" aria-labelledby="21-granularity-decision-rule"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §2.1 Granularity decision rule
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th style="text-align: right">Calls per work-unit</th>
-      <th>Net effect</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: right">1 (whole-unit compute returns a structured result)</td>
-      <td>trivial — go for it</td>
-    </tr>
-    <tr>
-      <td style="text-align: right">10s–100s</td>
-      <td>acceptable — boundary amortized</td>
-    </tr>
-    <tr>
-      <td style="text-align: right">1000s–10K</td>
-      <td>borderline — must measure</td>
-    </tr>
-    <tr>
-      <td style="text-align: right">1M+ (per-coefficient arithmetic op)</td>
-      <td><strong>FORBIDDEN — boundary dominates</strong></td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><strong>The right port granularity:</strong> port the WHOLE compute (build input,
-compute, return result) as a single boundary call. The script builds the
-input and reads the output; the native side does everything in between —
-not per-coefficient-multiplication.</p>
-<h3 id="23-ffi-marshalling-format">
-  
-  
-    <a href="#23-ffi-marshalling-format" class="anchor-heading" aria-labelledby="23-ffi-marshalling-format"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §2.3 FFI marshalling format
-  
-  
-</h3>
-    
-
-<p>For complex objects across the boundary, serialize as <strong>flat structured
-lists</strong> (no custom script-side objects on the native side; no
-binary-serialization format unless you’ve measured the alternative). A
-decimal-string representation of big integers/rationals preserves
-arbitrary precision across the boundary.</p>
-<h2 id="3-algebraic-preflight-discipline">
-  
-  
-    <a href="#3-algebraic-preflight-discipline" class="anchor-heading" aria-labelledby="3-algebraic-preflight-discipline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §3. Algebraic-preflight discipline
-  
-  
-</h2>
-    
-
-<p>Before optimizing via a symmetry / shortcut identity, <strong>prove (or
-numerically falsify) the identity on the smallest non-trivial case
-first.</strong> Do NOT ship the shortcut until the identity is established.</p>
-<h3 id="31-preflight-protocol">
-  
-  
-    <a href="#31-preflight-protocol" class="anchor-heading" aria-labelledby="31-preflight-protocol"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §3.1 Preflight protocol
-  
-  
-</h3>
-    
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Decide which shortcut you want to exploit
-  ├ Step 1: write the identity in narrative
-  ├ Step 2: pick the smallest case where it's non-trivial
-  ├ Step 3: compute BOTH sides at the precision floor via the existing
-  │         (slow but correct) path
-  └ Step 4: check rel.diff &lt; the floor tolerance
-            ├ PASSES → repeat on the next case; if all pass → implement
-            └ FAILS  → STOP. Document the failure in a dated audit doc
-                       with the numerical witness. Investigate the
-                       convention / structure. Do NOT ship the shortcut.
+<span class="c"># 3. Create tasks under features</span>
+beans create <span class="s2">"Add Phase 4b to workflow"</span> <span class="nt">--type</span> task
+beans update &lt;task-id&gt; <span class="nt">--parent</span> &lt;feature-id&gt;
 </code></pre></div></div>
 
-<p>Keep a project catalogue of <strong>common false identities</strong> (claimed
-symmetries that turn out to fail for coupled/non-trivial cases) so they
-are not re-shipped without proof.</p>
-<h3 id="33-formalize-first-probe-discipline-strict">
+<p><strong>Always check before creating</strong> — <code class="language-plaintext highlighter-rouge">beans create</code> is not idempotent.
+See <code class="language-plaintext highlighter-rouge">todo-manager.md</code> §”Check before you create”.</p>
+<h2 id="ordering-within-a-release">
   
   
-    <a href="#33-formalize-first-probe-discipline-strict" class="anchor-heading" aria-labelledby="33-formalize-first-probe-discipline-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §3.3 Formalize-first probe discipline (STRICT)
+    <a href="#ordering-within-a-release" class="anchor-heading" aria-labelledby="ordering-within-a-release"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Ordering within a release
   
   
-</h3>
+</h2>
     
 
-<p><strong>Too much time is lost chasing numerical rainbows that a one-line
-structural argument — or a small formal lemma — would have eliminated up
-front.</strong> Before launching a numerical search over a <em>hypothesis class</em>
-(a family of candidate closed forms, an integer-relation basis, an
-enumeration), STOP and ask whether a <strong>formalizable structural claim
-prunes the class first</strong>:</p>
+<p>Apply the <strong>Phase 4b formalize-first rule</strong> from <code class="language-plaintext highlighter-rouge">crdm-requirements-workflow.md</code>:</p>
 
 <ol>
-  <li><strong>State the hypothesis class</strong> you would probe.</li>
-  <li><strong>Find the structural invariant the whole class must satisfy</strong> —
-parity, a symmetry, a degree/anchor bound, search-space entropy vs
-available precision, a provable constraint.</li>
-  <li><strong>Formalize it</strong> — a formal lemma (even conditional / a stub + a
-reference citation), or a rigorous symbolic argument.</li>
-  <li><strong>Let the result narrow the probe:</strong> class refuted → do not run the
-scan; a property constrains it → probe only the surviving sub-class;
-brute-enumerate only what formalization cannot prune.</li>
+  <li>Structural/organizational work first</li>
+  <li>Process/policy formalization second</li>
+  <li>Implementation third</li>
+  <li>Visualization/UI last</li>
 </ol>
 
-<p><strong>When NOT to formalize-first:</strong> if the formalization is harder than the
-probe AND the probe is cheap and decisive, just run the probe. This
-targets <em>wide / expensive</em> searches that a cheap structural argument
-would prune.</p>
-<h3 id="34-formalize-the-refutation">
+<p>Within the epic, number features by dependency order. The first feature
+completed should not depend on any later feature.</p>
+<h2 id="release-readiness">
   
   
-    <a href="#34-formalize-the-refutation" class="anchor-heading" aria-labelledby="34-formalize-the-refutation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §3.4 Formalize-the-refutation
+    <a href="#release-readiness" class="anchor-heading" aria-labelledby="release-readiness"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Release readiness
+  
+  
+</h2>
+    
+<h3 id="tracking-readiness">
+  
+  
+    <a href="#tracking-readiness" class="anchor-heading" aria-labelledby="tracking-readiness"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tracking readiness
   
   
 </h3>
     
 
-<p>The mirror of formalize-first: when a numerical probe <strong>refutes</strong> a
-candidate, do not let the refutation live only in prose + a witness —
-<strong>formalize the disproof</strong> (a formal lemma whose conclusion is the
-inequality at the witnessed point) so the dead candidate cannot be
-silently re-proposed. Pin the literals to the producing witness via the
-value-citation tag (<code class="language-plaintext highlighter-rouge">witnessed-values.md</code>); cite the witness in the
-lemma’s reference comment; file the disproof beside the conjecture it
-kills so a future agent grepping the candidate finds the refutation.
-This operationalises the “no Nth fit” rule from
-<code class="language-plaintext highlighter-rouge">production-vs-exploratory-discipline.md</code>: a refuted candidate becomes a
-machine-checked <code class="language-plaintext highlighter-rouge">≠</code>, not a prose warning.</p>
-<h2 id="4-native-port-patterns">
+<p>The beans visualizer (<code class="language-plaintext highlighter-rouge">&lt;base&gt;/beans/</code>) shows open beans grouped by epic.
+A release is ready when its epic shows <strong>0 open beans</strong>.</p>
+<h3 id="readiness-checklist">
   
   
-    <a href="#4-native-port-patterns" class="anchor-heading" aria-labelledby="4-native-port-patterns"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §4. Native-port patterns
+    <a href="#readiness-checklist" class="anchor-heading" aria-labelledby="readiness-checklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Readiness checklist
   
   
-</h2>
+</h3>
     
 
-<p>When porting script code to a native kernel, maintain a type-mapping
-cheat-sheet (script exact-rational → native big-rational; script
-big-integer → native big-integer; script arbitrary-precision float →
-native MPFR-style float for boundary evaluations only; structured script
-collections → native maps/vecs with deterministic iteration order).
-Don’t enable heavy optional build features (system-dep-pulling solvers)
-unless you specifically need them. Use the build tool’s <code class="language-plaintext highlighter-rouge">build</code> +
-install flow when no virtualenv is available (the <code class="language-plaintext highlighter-rouge">develop</code> flow may
-require one).</p>
-<h2 id="5-witness-emission-discipline">
-  
-  
-    <a href="#5-witness-emission-discipline" class="anchor-heading" aria-labelledby="5-witness-emission-discipline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §5. Witness-emission discipline
-  
-  
-</h2>
-    
-
-<p>Every compute script ships a <code class="language-plaintext highlighter-rouge">*.witness.json</code> via the project’s witness
-base. The witness must include: <code class="language-plaintext highlighter-rouge">name</code> / <code class="language-plaintext highlighter-rouge">description</code> / <code class="language-plaintext highlighter-rouge">computation</code>
-(match the docstring); <code class="language-plaintext highlighter-rouge">engine</code>; auto-populated <code class="language-plaintext highlighter-rouge">scriptFile</code> /
-<code class="language-plaintext highlighter-rouge">scriptHash</code> / <code class="language-plaintext highlighter-rouge">scriptCommitSha</code> / <code class="language-plaintext highlighter-rouge">computedAt</code> / <code class="language-plaintext highlighter-rouge">durationMs</code>;
-<code class="language-plaintext highlighter-rouge">parameters</code> (precision settings, etc.); <code class="language-plaintext highlighter-rouge">data</code>; structured <code class="language-plaintext highlighter-rouge">assertions</code>
-(each with computed / expected / tolerance / source); and an
-<code class="language-plaintext highlighter-rouge">auditOnly</code> marker if the script is research-grade. Emit any
-solver-specific structured outputs the project mandates.</p>
-<h2 id="6-ci--merge-etiquette">
-  
-  
-    <a href="#6-ci--merge-etiquette" class="anchor-heading" aria-labelledby="6-ci--merge-etiquette"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §6. CI / merge etiquette
-  
-  
-</h2>
-    
-
-<p>CI is billing — don’t churn commits; squash where possible. Combine
-related PRs. Follow the project branch-naming convention. Run the
-prepare-merge flow at the end; address review comments mechanically.
-Never claim a cross-check passes at a tolerance looser than the floor.</p>
-<h2 id="7-quick-gotchas">
-  
-  
-    <a href="#7-quick-gotchas" class="anchor-heading" aria-labelledby="7-quick-gotchas"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §7. Quick gotchas
-  
-  
-</h2>
-    
-
-<p>Maintain a per-project gotcha table (symptom → cause → fix). Recurring
-generic entries: a ~1e-7 drift between two methods ⇒ one path uses a
-machine float ⇒ switch to arbitrary-precision/exact; a cross-check that
-passes loose but fails tight ⇒ tolerance too loose ⇒ tighten to the
-floor; per-call boundary cost dominating ⇒ granularity too fine ⇒ port
-the whole compute; a silent 0-byte crash on a background run ⇒ re-launch
-unbuffered with logging.</p>
-<h2 id="8-pre-work-checklist-use-before-every-compute-change">
-  
-  
-    <a href="#8-pre-work-checklist-use-before-every-compute-change" class="anchor-heading" aria-labelledby="8-pre-work-checklist-use-before-every-compute-change"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §8. Pre-work checklist (use before every compute change)
-  
-  
-</h2>
-    
+<p>Before moving from draft to pre-release:</p>
 
 <ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Read the precision-goals doc and the derivation-discipline doc</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Identified which calibration anchor (if any) this compute touches</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Coefficient types are <strong>exact</strong> — no machine float in production</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />An equivalence cross-check at the floor vs the reference path is planned</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />If exploiting a shortcut: §3 algebraic preflight on the smallest case</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />If porting to native: granularity is whole-compute per boundary call (§2.1)</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Witness emission plan includes parameters, assertions, mandated solver outputs</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Long-compute scripts launch unbuffered + teed to a log</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Branch name follows the project convention; combined with related work on one PR</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All must-have features resolved (all child beans completed)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All should-have features either resolved or deferred to next release</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />CI green on main (<code class="language-plaintext highlighter-rouge">bun run gates</code>)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All changed BPMN diagrams re-rendered</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All changed docs pages regenerated</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Changelog written (see <code class="language-plaintext highlighter-rouge">release-lifecycle.md</code>)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />BA has reviewed accumulated changes</li>
 </ul>
+<h3 id="deferring-to-next-release">
+  
+  
+    <a href="#deferring-to-next-release" class="anchor-heading" aria-labelledby="deferring-to-next-release"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Deferring to next release
+  
+  
+</h3>
+    
 
-<p>If any box is unchecked, <strong>stop and resolve before writing code</strong>.</p>
-<h2 id="9-sibling-skills">
+<p>If a should-have or nice-to-have feature won’t make the release:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Move the feature bean to the next release epic</span>
+beans update &lt;feature-id&gt; <span class="nt">--parent</span> &lt;next-epic-id&gt;
+</code></pre></div></div>
+
+<p>Record the deferral reason in the bean body:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans update &lt;feature-id&gt; <span class="nt">--body-append</span> <span class="s2">"Deferred to v0.3.0: not blocking v0.2.0"</span>
+</code></pre></div></div>
+<h2 id="github-milestone-integration-optional">
   
   
-    <a href="#9-sibling-skills" class="anchor-heading" aria-labelledby="9-sibling-skills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §9. Sibling skills
+    <a href="#github-milestone-integration-optional" class="anchor-heading" aria-labelledby="github-milestone-integration-optional"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> GitHub milestone integration (optional)
+  
+  
+</h2>
+    
+
+<p>A GitHub milestone can mirror the release epic for stakeholder visibility:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create milestone</span>
+gh api repos/<span class="o">{</span>owner<span class="o">}</span>/<span class="o">{</span>repo<span class="o">}</span>/milestones <span class="nt">--method</span> POST <span class="se">\</span>
+  <span class="nt">-f</span> <span class="nv">title</span><span class="o">=</span><span class="s2">"v0.2.0"</span> <span class="nt">-f</span> <span class="nv">description</span><span class="o">=</span><span class="s2">"Release v0.2.0"</span>
+
+<span class="c"># Assign PRs to milestone</span>
+gh <span class="nb">pr </span>edit &lt;number&gt; <span class="nt">--milestone</span> <span class="s2">"v0.2.0"</span>
+</code></pre></div></div>
+
+<p>The milestone’s completion percentage gives stakeholders a progress view
+without needing access to the beans store.</p>
+<h2 id="cross-domain-applicability">
+  
+  
+    <a href="#cross-domain-applicability" class="anchor-heading" aria-labelledby="cross-domain-applicability"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Cross-domain applicability
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Domain</th>
+      <th>Epic title</th>
+      <th>Features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Code</strong></td>
+      <td>“Release v0.2.0”</td>
+      <td>Skills, schemas, pipeline changes</td>
+    </tr>
+    <tr>
+      <td><strong>Paper</strong></td>
+      <td>“Publication: Chapter 3 revision”</td>
+      <td>Section rewrites, figure updates</td>
+    </tr>
+    <tr>
+      <td><strong>Project</strong></td>
+      <td>“Deliverable: Phase 1 report”</td>
+      <td>Analysis sections, appendices</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The hierarchy and readiness tracking are identical.</p>
+<h2 id="rules">
+  
+  
+    <a href="#rules" class="anchor-heading" aria-labelledby="rules"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Rules
   
   
 </h2>
     
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">local/compute-audit</code> — post-hoc review (this skill is pre-work).</li>
-  <li><code class="language-plaintext highlighter-rouge">local/canonical-watcher</code> — catches hidden-input / numerology / fits.</li>
-  <li><code class="language-plaintext highlighter-rouge">local/compute-integration-watcher</code> — cross-layer wiring check.</li>
-  <li><code class="language-plaintext highlighter-rouge">local/prepare-merge</code> — merge workflow.</li>
+  <li><strong>One epic per release</strong> — if scope creeps, split the epic</li>
+  <li><strong>Features are independently reviewable</strong> — each can be a PR</li>
+  <li><strong>Tasks are PR-sized</strong> — one task, one PR, one review cycle</li>
+  <li><strong>Never close an epic without BA approval</strong> — the epic is the release</li>
+  <li><strong>Deferred features move to the next epic</strong> — they are not deleted</li>
 </ul>
-<h2 id="anti-patterns-this-skill-explicitly-rejects">
+<h2 id="cross-references">
   
   
-    <a href="#anti-patterns-this-skill-explicitly-rejects" class="anchor-heading" aria-labelledby="anti-patterns-this-skill-explicitly-rejects"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Anti-patterns this skill explicitly rejects
+    <a href="#cross-references" class="anchor-heading" aria-labelledby="cross-references"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Cross-references
   
   
 </h2>
     
 
 <ul>
-  <li>Writing compute without reading the references (§0).</li>
-  <li>Optimizing without a profile — profile first to find the real
-bottleneck.</li>
-  <li>Per-call boundary crossings — always port whole computes.</li>
-  <li>Machine float in production — the floor demands arbitrary precision.</li>
-  <li>Shortcut identities without algebraic preflight.</li>
-  <li>Inline external-data literals — always route through the registry.</li>
-  <li>A hidden extra calibration input.</li>
+  <li><a href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/reference/skill-instructions/release-lifecycle.html"><code class="language-plaintext highlighter-rouge">release-lifecycle</code></a> — semver, release types, changelog</li>
+  <li><a href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/reference/skill-instructions/code-review-process.html"><code class="language-plaintext highlighter-rouge">code-review-process</code></a> — review within release context</li>
+  <li><a href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/reference/skill-instructions/crdm-requirements-workflow.html"><code class="language-plaintext highlighter-rouge">../../skills/crdm/crdm-requirements-workflow.md</code></a> — Phase 4b ordering</li>
+  <li><a href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">../../skills/folio-core/todo-manager.md</code></a> — bean creation protocol</li>
+  <li><a href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">../../skills/folio-core/bean-coordination.md</code></a> — cross-session coordination</li>
 </ul>
 
           
