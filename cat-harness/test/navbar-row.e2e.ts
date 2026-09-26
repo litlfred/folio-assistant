@@ -209,6 +209,30 @@ async function load(
     r.fulfill({ contentType: "text/html", body: page(row, main, staging) }),
   );
   await p.goto("http://navbar.fixture/nav", { waitUntil: "load" });
+  // PARK THE POINTER, because "at rest" is a precondition this file asserts
+  // ~and never stated~. The sidebar is a 3.5rem strip against the left edge, so
+  // it CONTAINS the origin, and the strip opens on `:hover` — a pure-CSS
+  // mechanism with no script to wait for. A browser that starts its pointer at
+  // (0, 0) therefore renders the bar OPEN at load, and three tests here read
+  // that as the app being wrong.
+  //
+  // Found on 2026-09-26 by bumping `@playwright/test` 1.61.1 -> 1.63.0, whose
+  // `playwright install` fetches a newer Chromium: CI failed
+  // "NO text region is visible until the bar is opened" (3 labels, expected
+  // none), "the icon row STACKS at rest" (1 distinct top, expected 4) and
+  // "[x] is offered whenever the bar is OPEN" (visible, expected hidden) —
+  // while all 700 passed locally on the older pinned Chromium. One cause, three
+  // symptoms, and the app unchanged.
+  //
+  // Reproduced on the OLD browser by moving the pointer to (0, 0) before the
+  // assertion, which fails identically — so this is the mechanism rather than a
+  // guess about browser versions, and the fix is verified where the bug could
+  // not otherwise be seen.
+  //
+  // (600, 400) is outside the strip at every width this file uses (the viewport
+  // is asserted wider than 800). Tests that WANT the bar open call
+  // `page.hover(".side-bar")` themselves and are unaffected.
+  await p.mouse.move(600, 400);
   return { errors, console: logs };
 }
 
