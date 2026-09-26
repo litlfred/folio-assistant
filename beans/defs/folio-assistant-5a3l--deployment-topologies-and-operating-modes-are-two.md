@@ -190,3 +190,32 @@ baseline is its file to keep honest.
 
 **Nothing was closed, scrapped or deleted.** Only this epic's own claim about
 itself is corrected.
+
+---
+
+## Re-checked 2026-09-25 — stays open. An epic's boxes are not its children
+
+Reported by `bun run health` as *"`in-progress` with all 4 of its Done-when
+boxes ticked"*. The boxes are ticked. The epic is not done.
+
+**Measured on a clean checkout identical to `origin/main` at `d8c450b9a2`:**
+
+| | |
+|---|---|
+| beans declaring `parent: folio-assistant-5a3l` | **17** |
+| of those, still `todo` or `in-progress` | **15** |
+
+An epic's own `Done when` describes the work of **framing** the epic — here,
+settling that topologies and operating modes are two axes rather than one list.
+That framing is settled. Closing the epic would close the container of fifteen
+open items, and `beans roadmap` would stop showing them under it.
+
+This is a distinction the health sweep structurally cannot make: it reads boxes,
+and for an epic the boxes and the children answer different questions. Recording
+it here rather than filing a bean, because the sweep's job is to report and a
+person's job is to decide — which is what it did.
+
+**Expiry**: re-check when fewer than three children remain open, or on
+**2026-12-25**. Not sooner — fifteen open children is not a state that turns
+over in a month.
+

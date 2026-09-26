@@ -509,3 +509,79 @@ The rule that came out of it is on the skill now, and it is the only thing
 here worth carrying forward: **a test of the part is not a measurement of the
 whole.** Every unit test passed at every stage, and the page was wrong at
 every stage until the last.
+
+---
+
+## A measurement from another session — 2026-09-26, deployed previews
+
+_Not this bean's owner, and nothing here is resolved or re-statused. Added
+because two of the open `Done when` rows say the number "cannot be done from a
+checkout", and I had reason to read the deployed `STAGING/` tree for an
+unrelated reason (the owner asked whether anything was prunable). Read from
+`origin/gh-pages`, not from a working copy._
+
+### What `STAGING/` weighs today
+
+| | |
+|---|---|
+| previews | **13**, every one an unmerged branch — 0 orphans, 0 prunable |
+| summed file sizes | **1,884 MiB** |
+| main site (non-`STAGING`) | 309 MiB |
+| whole publish ref | 2,193 MiB |
+
+Four previews drained themselves between 2026-09-25 18:20 and 2026-09-26, with
+nothing prompting it: **17 → 13, 2,533 → 1,884 MiB.** So a single-instant
+reading of this directory overstates it — the store drains on PR close, and a
+measurement taken during a busy day catches previews whose PRs are about to
+close. Worth knowing before anyone treats a size finding as a standing fact.
+
+### This is NOT the confirming measurement, and it cannot be
+
+The `~77 MB` row asks for previews **deployed from code with causes 2 and 3
+fixed**. Those are deliberately untouched, so the tree I measured is the
+*before* picture for the remaining work, not a test of the projection. Stating
+that plainly because I nearly made the opposite mistake in the other direction:
+
+**I first read `~77 MB` as per-preview rather than as the total at 9 previews**,
+and computed from it that completing this bean would still leave the site 240
+MiB over GitHub's 1 GB — i.e. that the fix was necessary but not sufficient.
+That was wrong, and it is this bean's own rule biting the reader rather than the
+author: a figure can be real and attached to the wrong quantity. At 13 previews
+the model gives **~27.5 + 13×5 + 5 ≈ 97 MB**, which is not a dent in 1,884 MiB,
+it is the removal of it.
+
+### What the tree does independently confirm — the dedup premise holds
+
+The projection rests on one shared HTML copy. That mechanism is already working
+for whatever is identical, and can be measured now:
+
+| | |
+|---|---|
+| file entries under `STAGING/` | **38,407** |
+| distinct blobs | **12,138** |
+| entries that are duplicate content | **68.4 %** |
+| summed sizes | 1,884 MiB |
+| **distinct content** | **1,362 MiB** |
+
+So git already shares two thirds of the entries, and 522 MiB of the 1,884 is
+dedup happening today. The remaining gap is the per-page HTML that causes 2 and
+3 keep distinct by slug — which is the same thing this bean says, now with a
+number on how much of the store is already behaving as the projection assumes.
+
+### The export floor, restated with today's concurrency
+
+This bean's own caveat — *"the exports are a real floor, not duplication … at
+~18 concurrent previews they alone breach 100 MB"* — lands differently at 13:
+13 × ~5 MB ≈ 65 MB of legitimate per-preview content, before any HTML. That is
+the number the threshold's `basis` would have to state, and this bean already
+says the value is reconsidered *"by stating the floor in its basis, never by a
+prune policy."* Recorded here rather than acted on: the floor moves when causes
+2 and 3 land, so restating it now would pin it to the wrong model.
+
+### Left alone, deliberately
+
+No box ticked, no status changed, no threshold edited. The two deferred rows
+stay deferred — their reasoning (causes 2 and 3 are one change, the language
+switcher rebuilds hrefs from the baseurl, ~20 branches live in `docs/`) is
+sound and unaffected by anything above.
+
