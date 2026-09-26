@@ -239,18 +239,6 @@ jobs:
         with:
           bun-version: latest
 
-      # `check:published-packages`, below, is the one gate in this job that
-      # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
-      # beside its npm one, and a package this repository publishes has to
-      # work in both languages or neither. The gate installs that package's
-      # OWN declared test extras itself, so nothing about it is named here —
-      # but it cannot conjure an interpreter, and it treats an absent one as
-      # a FINDING rather than a skip, so this step is what keeps that finding
-      # from being the normal state. Bean `1s5s`.
-      - uses: actions/setup-python@v7
-        with:
-          python-version: "3.12"
-
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
@@ -266,6 +254,51 @@ jobs:
 
       - name: tsc --noEmit
         run: bunx tsc --noEmit -p tsconfig.json
+
+
+  # SPLIT OUT OF `typescript` — bean `m5gx`.
+  #
+  # `bun test` was step 5 of 50 with no `continue-on-error`, and Actions stops
+  # a job at its first failing step. So for as long as `main` carried a
+  # deliberate red there (the `t8g3` drift, #1384), **45 of 50 steps never
+  # executed and 149 distinct gate commands reported nothing, on every PR**.
+  #
+  # That is the `5rfy`/`1xhc` shape at scale: a gate that cannot fire is
+  # indistinguishable from one that passed. It was worse than invisible —
+  # the Actions UI marks the unreached steps `skipped`, which reads as a
+  # conditional deciding not to run them rather than as a job that died.
+  #
+  # Splitting is CORRECT and not merely cheaper: measured over the whole job,
+  # no step declares an `id`, none references `steps.*`, and none is
+  # conditional — so nothing here depended on anything left behind. The cost
+  # is the duplicated setup, measured at **11 seconds** (job 2s + checkout 7s
+  # + bun 1s + python 0s + install 1s) against 149 gates that had stopped
+  # running at all.
+  gates:
+    # bpmn-node: Task_Gates
+    name: Registered gates (hard)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # `check:published-packages`, below, is the one gate in this job that
+      # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
+      # beside its npm one, and a package this repository publishes has to
+      # work in both languages or neither. The gate installs that package's
+      # OWN declared test extras itself, so nothing about it is named here —
+      # but it cannot conjure an interpreter, and it treats an absent one as
+      # a FINDING rather than a skip, so this step is what keeps that finding
+      # from being the normal state. Bean `1s5s`.
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
 
       # The base workflow processes are strict; a content package may relax a
       # step only by declaring it with a reason, and never a step the BPMN marks

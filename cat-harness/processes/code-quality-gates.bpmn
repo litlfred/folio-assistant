@@ -22,13 +22,14 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_CodeQualityGates">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
-        <bpmn:documentation>Joins all six jobs before asking anything, then GW_Hard asks specifically about the four HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the five-are-not-four asymmetry actually bites.</bpmn:documentation>
+        <bpmn:documentation>Joins EVERY job before asking anything, then GW_Hard asks specifically about the HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, and that asymmetry is the point. Counted from the lane rather than stated here: the numbers this sentence used to carry went stale the moment `Task_Gates` was split out of `Task_TypeScript` (bean `m5gx`).</bpmn:documentation>
         <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Change</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Fork</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Lean</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Python</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_TypeScript</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Gates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_E2E</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Rust</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Advisories</bpmn:flowNodeRef>
@@ -49,6 +50,7 @@
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
       <bpmn:outgoing>Flow_14</bpmn:outgoing>
+      <bpmn:outgoing>Flow_16</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:task id="Task_Lean" name="Lean: no bare&amp;#10;`import Mathlib` (HARD)">
       <bpmn:documentation>Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently.</bpmn:documentation>
@@ -66,13 +68,21 @@
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="Task_TypeScript" name="TypeScript: tests, lint, types,&amp;#10;and ~30 repository gates (HARD)">
-      <bpmn:documentation>bun test, lint, tsc --noEmit, then the repository gates (workflow refs, lane and process documentation, kg:audit:check, detangle, skills, …). `bun run gates` derives its list from this job, so it is the local way to run the same set before pushing.</bpmn:documentation>
+    <bpmn:task id="Task_TypeScript" name="TypeScript: tests,&amp;#10;lint, types (HARD)">
+      <bpmn:documentation>bun test, lint, tsc --noEmit. The repository gates it used to carry are now Task_Gates: they were unreachable behind a red `bun test`, because Actions stops a job at its first failing step. This task's old name claimed "~30 repository gates" where the real number was 153 — a count in prose, wrong five-fold, in the label a reader trusts most.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Gates" name="Registered gates&amp;#10;(HARD)">
+      <bpmn:documentation>Every registered repository gate — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, declared paths, generated-artefact drift, and the rest. `bun run gates` derives its list from the jobs that install no browser, so it is the local way to run the same set before pushing. Split from Task_TypeScript for bean `m5gx`: while these shared a job with `bun test`, a red test left 45 of 50 steps unreachable and 149 gate commands reporting nothing on every PR — and the Actions UI marked them `skipped`, which reads as deliberate rather than as a job that died. Splitting is correct rather than merely cheaper: no step in the job declared an `id`, referenced `steps.*`, or was conditional, so nothing depended on what stayed behind. It costs 11 seconds of duplicated setup.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="platform-gates"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_16</bpmn:incoming>
+      <bpmn:outgoing>Flow_17</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Task_E2E" name="End-to-end +&amp;#10;accessibility (HARD)">
       <bpmn:documentation>Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR.</bpmn:documentation>
@@ -105,6 +115,7 @@
       <bpmn:incoming>Flow_9</bpmn:incoming>
       <bpmn:incoming>Flow_10</bpmn:incoming>
       <bpmn:incoming>Flow_15</bpmn:incoming>
+      <bpmn:incoming>Flow_17</bpmn:incoming>
       <bpmn:outgoing>Flow_11</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:exclusiveGateway id="GW_Hard" name="Any HARD&amp;#10;gate red?">
@@ -135,14 +146,16 @@
     <bpmn:sequenceFlow id="Flow_13" sourceRef="GW_Hard" targetRef="End_Fail" name="yes"/>
     <bpmn:sequenceFlow id="Flow_14" sourceRef="GW_Fork" targetRef="Task_Advisories"/>
     <bpmn:sequenceFlow id="Flow_15" sourceRef="Task_Advisories" targetRef="GW_Join"/>
+    <bpmn:sequenceFlow id="Flow_16" sourceRef="GW_Fork" targetRef="Task_Gates"/>
+    <bpmn:sequenceFlow id="Flow_17" sourceRef="Task_Gates" targetRef="GW_Join"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_CodeQualityGates">
     <bpmndi:BPMNPlane id="Plane_Process_CodeQualityGates" bpmnElement="Collaboration_Process_CodeQualityGates">
       <bpmndi:BPMNShape id="Shape_Participant_Process_CodeQualityGates" bpmnElement="Participant_Process_CodeQualityGates" isHorizontal="true">
-        <dc:Bounds x="60" y="60" width="1640" height="830"/>
+        <dc:Bounds x="60" y="60" width="1640" height="950"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Ci" bpmnElement="Lane_Ci" isHorizontal="true">
-        <dc:Bounds x="90" y="60" width="1610" height="720"/>
+        <dc:Bounds x="90" y="60" width="1610" height="840"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_Change" bpmnElement="Start_Change">
         <dc:Bounds x="122" y="332" width="36" height="36"/>
@@ -158,6 +171,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Task_TypeScript" bpmnElement="Task_TypeScript">
         <dc:Bounds x="550" y="310" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Gates" bpmnElement="Task_Gates">
+        <dc:Bounds x="550" y="790" width="180" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Task_E2E" bpmnElement="Task_E2E">
         <dc:Bounds x="550" y="430" width="180" height="80"/>
@@ -254,6 +270,16 @@
         <di:waypoint x="730" y="710"/>
         <di:waypoint x="890" y="710"/>
         <di:waypoint x="890" y="375"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_16" bpmnElement="Flow_16">
+        <di:waypoint x="390" y="375"/>
+        <di:waypoint x="390" y="830"/>
+        <di:waypoint x="550" y="830"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_17" bpmnElement="Flow_17">
+        <di:waypoint x="730" y="830"/>
+        <di:waypoint x="915" y="830"/>
+        <di:waypoint x="915" y="375"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

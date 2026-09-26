@@ -612,8 +612,29 @@ export function exemptionFor(command: string): StepExemption | undefined {
   return STEP_EXEMPTIONS.find((e) => command.includes(e.match));
 }
 
-/** Jobs whose steps need no browser — the inner loop. */
-const FAST_JOBS = new Set(["typescript"]);
+/**
+ * Does this job install a browser?
+ *
+ * DERIVED from the job's own steps, because a hardcoded list is a second
+ * answer to a question the workflow already answers — and this one had drifted
+ * from the sentence above it. `FAST_JOBS = new Set(["typescript"])` named ONE
+ * job while the comment said "jobs whose steps need no browser", which is a
+ * different and larger set.
+ *
+ * That drift was about to become a silent regression: bean `m5gx` splits the
+ * registered gates out of `typescript` into a job of their own, and a
+ * hardcoded name would have made `bun run gates` stop covering every one of
+ * them. {@link NoGatesFound} would NOT have caught it — `typescript` still
+ * yields `bun test`, `lint` and `tsc`, so the extraction finds commands and
+ * reads as a clean run over a set it silently shrank. The gate-that-cannot-
+ * fire shape, reintroduced by the change meant to remove it.
+ *
+ * `playwright install` is the discriminator rather than the job's name: it is
+ * what actually costs the 36 seconds and what actually requires Chromium.
+ */
+function installsBrowser(def: { steps?: { run?: string }[] }): boolean {
+  return (def.steps ?? []).some((s) => /playwright\s+install/.test(s.run ?? ""));
+}
 
 /** One runnable gate, with the job and step that ask for it. */
 export interface Gate {
@@ -638,7 +659,7 @@ export function gatesFrom(workflowText: string, opts: { all?: boolean } = {}): G
   };
   const out: Gate[] = [];
   for (const [job, def] of Object.entries(doc.jobs ?? {})) {
-    if (!opts.all && !FAST_JOBS.has(job)) continue;
+    if (!opts.all && installsBrowser(def)) continue;
     for (const step of def.steps ?? []) {
       if (!step.run) continue;
       // A step's `run` may hold several lines; each `bun …` line is its own
@@ -696,9 +717,9 @@ export interface ForeignStep {
 /**
  * Every `bun` step in every OTHER workflow, in file order.
  *
- * Jobs are not filtered by {@link FAST_JOBS} here: that set names jobs of the
- * gates workflow, and a job called `typescript` in another file is a different
- * job. Reading them all and classifying each is what keeps the two lists from
+ * Jobs are not filtered by {@link installsBrowser} here: that question is asked
+ * of the GATES workflow's jobs, and a job in another file is a different job.
+ * Reading them all and classifying each is what keeps the two lists from
  * drifting.
  */
 export function otherWorkflowSteps(root: string): ForeignStep[] {
@@ -1112,7 +1133,7 @@ if (import.meta.main) {
 
   const scope = all
     ? "every job, plus every locally-runnable step from the other workflows"
-    : `the fast set (${[...FAST_JOBS].join(", ")})`;
+    : `the fast set (every job that does not install a browser)`;
   console.log(`${gates.length} gate(s) — ${scope}\n`);
 
   // Reported on EVERY run, not only with `--list`: an unclassified step is a
