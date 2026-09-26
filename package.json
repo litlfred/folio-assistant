@@ -49,6 +49,8 @@
     "avatars:css": "bun run cat-harness/scripts/gen-avatars-css.ts",
     "avatars:css:check": "bun run cat-harness/scripts/gen-avatars-css.ts --check",
     "backfill:materialized-fixity": "bun run cat-harness/scripts/backfill-materialized-fixity.ts",
+    "bat:sync": "bash cat-harness/scripts/gen-bat-wrappers.sh",
+    "bat:sync:check": "bash cat-harness/scripts/gen-bat-wrappers.sh --check",
     "beans:claim": "bun run cat-harness/scripts/claim-bean.ts",
     "beans:fallback": "bun run cat-harness/scripts/beans-fallback.ts",
     "beans:landed": "bun run cat-harness/scripts/beans-landed.ts",

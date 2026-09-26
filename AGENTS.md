@@ -135,6 +135,8 @@ bun run readme:sync:check           # ...and fail if any is stale (for CI)
 bun run readme:sections             # list the sections a README can opt into
 bun run readme:audit                # verify the README's links still resolve
 bun run preview:site                # BUILD the docs site locally and look at a page
+bun run bat:sync                    # regenerate the Windows .bat wrapper beside each user-run .sh
+bun run bat:sync:check              # ...and fail if any is missing or stale (for CI)
 ```
 
 **`preview:site` exists because a green gate set is not a rendered page.** On
