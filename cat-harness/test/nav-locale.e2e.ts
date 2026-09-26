@@ -150,7 +150,7 @@ const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
     // `docs/fr/crdm-methodology.md` behind it — so it would be the one
     // candidate that asserts the very thing this fixture stands for the absence
     // of. The index is the authority here, but a page contradicting it is the
-    // wrong page to reason from, whichever of the two is wrong.
+    // wrong page to reason from, whichever of the two is wrong. Bean `9x01`.
     const claimed = /^available_locales:\s*(.+)$/m.exec(head)?.[1] ?? "";
     if (claimed.replace(/[["'\]\s]/g, "").split(",").filter((l) => l !== "" && l !== INDEX.sourceLocale).length > 0) {
       continue;
