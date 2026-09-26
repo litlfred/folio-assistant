@@ -493,32 +493,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/css/docs-ui.css?v=1790443547">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/css/docs-ui.css?v=1790448189">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/css/narrow-viewport.css?v=1790443547">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/css/narrow-viewport.css?v=1790448189">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/css/work-plan.css?v=1790443547">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/css/work-plan.css?v=1790448189">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/css/themes.css?v=1790443547">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/css/themes.css?v=1790448189">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/css/uml.css?v=1790443547">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/css/uml.css?v=1790448189">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/css/avatars.css?v=1790443547">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/css/avatars.css?v=1790448189">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -535,7 +535,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/js/docs-ui.js?v=1790443547" defer></script>
+<script src="/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/assets/js/docs-ui.js?v=1790448189" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -804,11 +804,11 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <blockquote>
   <p>Instalar es la parte fácil. Lo que debes ejecutar <strong>antes de hacer push</strong> es
-<a href="reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a> —
+<a href="../reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a> —
 que <code class="language-plaintext highlighter-rouge">bun test</code> pase no significa que los gates hayan pasado, y la lista se deriva del
 flujo de trabajo de CI en lugar de estar fijada por escrito. Si estás incorporando folio-assistant sobre
 un repositorio que ya existe, lee primero
-<a href="reference/skill-instructions/repo-conversion.html"><code class="language-plaintext highlighter-rouge">repo-conversion</code></a>.</p>
+<a href="../reference/skill-instructions/repo-conversion.html"><code class="language-plaintext highlighter-rouge">repo-conversion</code></a>.</p>
 </blockquote>
 <h2 id="requisitos-previos">
   
@@ -861,7 +861,7 @@ tiempo de ejecución y se pueden instalar bajo demanda.</p>
     <tr>
       <td>Java 21 + IG Publisher + SUSHI</td>
       <td>IGs SMART de la OMS (L3)</td>
-      <td>consulta la <a href="guides/who-smart-ig.html">guía de IG SMART de la OMS</a></td>
+      <td>consulta la <a href="../guides/who-smart-ig.html">guía de IG SMART de la OMS</a></td>
       <td><code class="language-plaintext highlighter-rouge">winget install EclipseAdoptium.Temurin.21.JDK</code>, luego la guía</td>
     </tr>
     <tr>
