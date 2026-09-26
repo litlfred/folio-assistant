@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T12:32:20Z
-updated_at: 2026-09-20T22:56:24Z
+updated_at: 2026-09-26T03:51:27Z
 parent: folio-assistant-yj32
 ---
 
@@ -551,3 +551,43 @@ what a declared-and-resolving viewer does, and it does not make any graph
 appear on a surface its declaration excludes.
 
 **This is this bean's open question 2** — *"What is a 'display subgraph'? Every declared `graphs` entry, or an opt-in subset?"* — closed. Question 1 (which file marks an instance) was closed earlier the same day. Still open: where `.fa-landing-board` fits, and issue #851's common expanding nav element.
+
+
+---
+
+## Item 4's PR was closed as superseded, 2026-09-26 — this bean stays open
+
+[PR #1238](https://github.com/litlfred/folio-assistant/pull/1238) ("the navbar
+says what a harness knows and does not hold") was closed by another session
+after measuring each of its parts against `main`. **The ask is not settled by
+that closure** — only that PR's implementation of it is.
+
+| #1238's part | where it is now |
+|---|---|
+| the tiles mechanism (`harness-tiles.ts`, test, skill, `kg-qa` sidecar) | on `main` |
+| `associated` / `remoteGraphs` modelling | on `main` and **stronger** — `schemas/cat-harness.ts` has `AssociatedHarness` + a strict schema, with 14 tests including four refusals the PR had none of |
+| the two-relations distinction | on `main`, `cat-harness.ts:1837`, in the same words |
+| per-tile `associated: []` normalisation | **nowhere** |
+
+### The one piece that is available if a consumer wants it
+
+The generator answering `[]` rather than `undefined` per tile, so an
+undeclared relation still renders a row. Its test named the reason: *"the empty
+group must be renderable"*.
+
+It was not carried over because its only consumer was the sidebar counts and
+viewer links, which `owt6` records the owner rejecting (issue #602: *"too much
+like a dashboard, i want them to be more like diverders"*). A field and a test
+with no caller is indistinguishable from a broken one, so it waits for a
+consumer rather than landing ahead of one.
+
+**If item 4 is picked up again**, the shape to build on is main's schema, not
+#1238's generator type — and the place the counts and links belong is
+`harness_details.html`, on the page a tab opens, which is where `owt6` put them.
+
+### Worth not re-deriving
+
+Main's schema keeping an undeclared `associatedHarnesses` as `undefined`
+(*"absent is legal, and stays absent"*) and #1238's generator answering `[]`
+are **not** in conflict — different layers, both right. Read as a contradiction
+on first pass, and it is not one.
