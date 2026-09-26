@@ -12,7 +12,7 @@ parent: Skill instructions
 {% raw %}
 # /repo-conversion — folio-assistant over a repo that already has a life
 
-Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn),
+Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html),
 `Task_ScanRepo` and `Task_ConfirmImport` (non-relaxable).
 Scanner: `bun run scripts/scan-repo-content.ts`.
 

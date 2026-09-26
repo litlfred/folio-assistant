@@ -57,7 +57,7 @@ placement.
 | 5 | May I claim it — is a sibling already on it? | [`bean-coordination`](bean-coordination.md) §"A claim is branch-local" |
 | 6 | Which directory, and what KIND of graph does it hold? | [`content-context-and-state-graphs`](content-context-and-state-graphs.md) and [`directory-conventions`](directory-conventions.md) |
 | 7 | Is this an adapter, a profile, or a visualiser? | [`content-profiles`](content-profiles.md), and [issue #764](https://github.com/litlfred/folio-assistant/issues/764) for the axis still open |
-| 8 | Does this belong in `AGENTS.md` or in a skill? | the banner atop [`AGENTS.md`](../../../AGENTS.md) — **always the skill** |
+| 8 | Does this belong in `AGENTS.md` or in a skill? | the banner atop [`AGENTS.md`](https://github.com/litlfred/folio-assistant/blob/main/AGENTS.md) — **always the skill** |
 | 9 | Is this a skill, or an agent's memory? | [`agent-memory`](agent-memory.md) |
 
 **Nine, and the count is here on purpose** where the repository's own rule is

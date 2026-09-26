@@ -77,7 +77,7 @@ be sitting in `uploads/` today. Three samples agreeing proves nothing about
 the fourth.
 
 This is the rule
-[`how-much-of-this-does-dublin-core-carry.md`](../../content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md)
+[`how-much-of-this-does-dublin-core-carry.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/content/docs/document-ingestion/how-much-of-this-does-dublin-core-carry.md)
 states for vocabularies, applied to an API: *settled against the published
 specifications rather than from memory.*
 

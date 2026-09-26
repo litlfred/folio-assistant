@@ -14,7 +14,7 @@ parent: Skill instructions
 
 The adoption **rules** are [`methodology-adoption`](methodology-adoption.md). This skill is the **operating order** for applying them when somebody shares a document and asks for its method to be used. The owner, 2026-09-23: *"update 'methodology source/paper' process to describe general process of what you are doing"*.
 
-**Worked case:** WireGen (arXiv:2312.07755) became [`methodologies/wiregen`](../../methodologies/wiregen.md). Issue #1023.
+**Worked case:** WireGen (arXiv:2312.07755) became [`methodologies/wiregen`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/wiregen.md). Issue #1023.
 
 ## Steps (one per process activity)
 

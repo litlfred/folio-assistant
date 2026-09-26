@@ -18,7 +18,7 @@ performing it. That split is `methodology-adoption`'s: a skill names the
 methodology it follows, and the method's own text lives once, so two skills
 quoting it cannot drift apart.
 
-Read [`methodologies/swot.md`](../../methodologies/swot.md) first — in
+Read [`methodologies/swot.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/swot.md) first — in
 particular §"What this platform adopts, and what it refuses". Ask the
 `methodology` graph for it rather than assuming the path.
 
@@ -72,7 +72,7 @@ a SWOT would be ceremony in front of it.
 
 ## Related
 
-- [`methodologies/swot.md`](../../methodologies/swot.md) — the method, its
+- [`methodologies/swot.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/swot.md) — the method, its
   contested origin, and its stated limitations
 - [`methodology-adoption`](methodology-adoption.md) — the selection question, and
   why methodologies are parallel rather than composable

@@ -20,7 +20,7 @@ DSpace, because that is the `source: null` defect bean `r1lz` was opened over:
 date.* Where this file and the record disagree, the record wins.
 
 The record itself is at
-[`catalogue/records/wpr-rdo-2020-003-eng.dc.json`](../catalogue/records/wpr-rdo-2020-003-eng.dc.json).
+[`catalogue/records/wpr-rdo-2020-003-eng.dc.json`](https://github.com/litlfred/folio-assistant/blob/main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json).
 The type is `folio-assistant-core/schemas/dublin-core.ts` — **generic**, because
 Dublin Core is ISO 15836 and DSpace is a platform; neither is WHO's. Only what
 IRIS *does with them* is here.
@@ -221,5 +221,5 @@ had been allowed to believe the placeholder.
 
 Enumeration cost, subsetting and the characterisation that decides whether IRIS
 may be cited at all are in
-[`large-datasets/sources/who-iris.json`](../../large-datasets/sources/who-iris.json).
+[`large-datasets/sources/who-iris.json`](https://github.com/litlfred/folio-assistant/blob/main/large-datasets/sources/who-iris.json).
 {% endraw %}

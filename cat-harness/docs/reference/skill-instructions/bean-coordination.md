@@ -65,7 +65,7 @@ Full cycle, as a diagram: [Beans and todos](https://litlfred.github.io/folio-ass
   working on?" display.
 - [`idle-backlog.md`](idle-backlog.md) — pull right-scoped beans while idle.
 
-**Install the CLI:** [`scripts/install-beans.sh`](../../scripts/install-beans.sh)
+**Install the CLI:** [`scripts/install-beans.sh`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/install-beans.sh)
 (idempotent; `go install github.com/hmans/beans@latest`).
 
 > **Ownership note.** The *generic* coordinator/orchestrator bean-coordination

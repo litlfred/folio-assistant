@@ -565,13 +565,84 @@ function flatPublishedNames(): Map<string, string> {
   return flat;
 }
 
+/** The instance's site root — what `../../` means from a published skill page. */
+const SITE_ROOT = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT));
+
+/**
+ * Where a link target publishes, or `undefined` if this cannot say.
+ *
+ * FOUR answers, in order, because a target can satisfy more than one and the
+ * most specific is the right one. Every branch RESOLVES against disk and looks
+ * the result up; none composes a path and hopes.
+ *
+ * `undefined` is a real answer and the most important one. It means the caller
+ * leaves the link exactly as written, so it stays a finding in
+ * `check:subgraphs` instead of becoming a plausible path that 404s. Bean
+ * `hloc`: "rewriting to something plausible is how a broken link becomes an
+ * undetectable one."
+ *
+ * Two of the four rules are NOT new here. `../../processes/<stem>.html` is
+ * what {@link processRows} already composes for a skill's own process, and the
+ * blob URL is what the source/edit banner already composes through
+ * {@link repoRelative} (bean `oe98`). Restating either would be a second
+ * answer free to disagree with the first.
+ */
+function publishedLocation(
+  baseDir: string,
+  target: string,
+  flat: ReadonlyMap<string, string>,
+): string | undefined {
+  const abs = resolve(baseDir, target);
+
+  // Outside this checkout — a dependency resolved from a sibling clone has no
+  // path in THIS repository, so it gets no link rather than a normalised one
+  // that 404s. `repoRelative` already draws that line; do not redraw it.
+  const rel = repoRelative(abs);
+  if (rel === undefined) return undefined;
+
+  // Broken at the SOURCE. Rewriting it would move a detectable defect into the
+  // generated tree and hide it; the source is where it wants fixing.
+  if (!existsSync(abs)) return undefined;
+
+  // 1. Another published skill — the flat page name, the `mi97` rule.
+  const skill = flat.get(abs);
+  if (skill !== undefined) return `${skill}.md`;
+
+  // 2. A process or decision diagram that publishes a page of its own. The
+  //    page is what a reader can read; the XML is not.
+  const diagram = /\.(bpmn|dmn)$/.exec(abs);
+  if (diagram !== null) {
+    const stem = basename(abs, diagram[0]);
+    if (existsSync(join(SITE_ROOT, "processes", `${stem}.md`))) {
+      return `../../processes/${stem}.html`;
+    }
+  }
+
+  // 3. A page already inside the site tree — address it site-relatively.
+  //    `.md` only: an asset under the site tree is served at its own path.
+  const fromSite = relative(SITE_ROOT, abs).split(sep).join("/");
+  if (!fromSite.startsWith("../")) {
+    return fromSite.endsWith(".md")
+      ? `../../${fromSite.slice(0, -".md".length)}.html`
+      : `../../${fromSite}`;
+  }
+
+  // 4. A repository file that publishes no page — `.ts`, `.py`, `.sh`,
+  //    `.json`, and the markdown under `methodologies/` and `content/docs/`
+  //    that this checked for rather than assumed: `docs/methodologies/` holds
+  //    only `index.md`, so those nine sources publish NOWHERE, and the bean's
+  //    instruction to give them a site-relative path would have composed nine
+  //    links to pages that do not exist.
+  return `https://github.com/litlfred/folio-assistant/blob/main/${rel}`;
+}
+
 function rebaseLinks(baseDir: string, text: string, flat: ReadonlyMap<string, string>): string {
   return text.replace(
-    /\]\((\.{0,2}[^)\s:]*?\.md)(#[^)\s]*)?\)/g,
+    /\]\((\.{0,2}[^)\s:]*?\.[A-Za-z0-9]+)(#[^)\s]*)?\)/g,
     (whole, target: string, anchor?: string) => {
       if (isAbsolute(target) || target.startsWith("#")) return whole;
-      const published = flat.get(resolve(baseDir, target));
-      return published === undefined ? whole : `](${published}.md${anchor ?? ""})`;
+      const published = publishedLocation(baseDir, target, flat);
+      return published === undefined ? whole : `](${published}${anchor ?? ""})`;
     },
   );
 }

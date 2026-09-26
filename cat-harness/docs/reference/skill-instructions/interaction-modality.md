@@ -12,7 +12,7 @@ parent: Skill instructions
 {% raw %}
 # /interaction-modality — ask in a form the person can answer
 
-Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn),
+Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html),
 `Task_DetectModality` and `Task_AskIntent`.
 Preferences: `interaction/interaction.json` (committed, read at session start).
 

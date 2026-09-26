@@ -1070,5 +1070,5 @@ gate that silently covers nothing and exits 0 is this repository's most
 expensive recurring defect (`xom7`, `dh4f`, `a6kl`).
 
 Full scheme, including what an instance's version means and what makes it go
-up: [`cat-harness/docs/proposals/instance-versioning.md`](../../docs/proposals/instance-versioning.md).
+up: [`cat-harness/docs/proposals/instance-versioning.md`](../../proposals/instance-versioning.html).
 {% endraw %}

@@ -27,9 +27,9 @@ Four objects, each with a home:
 | **Requirement** | a conformance obligation, **pointed at** by what discharges it: a skill or capability names the statement in `satisfies: req:<id>#<key>`. The requirement points at `actors` (who is bound) and `derivedFrom` (the broader requirement it specialises). | `skills/requirements/*.json` |
 | **Permission** | what an actor is **allowed to do**. Cross-cuts roles. A W3C ODRL 2.2 rule, scoped by Process, Task or Role when it needs to be (issue #1180). | actions: `skills/permissions/permissions.json`; who holds them: `policies/*.jsonld` |
 
-Schema: [`schemas/role-graph.ts`](../../schemas/role-graph.ts). Audit:
-[`scripts/kg-audit.ts`](../../scripts/kg-audit.ts), sidecar schema
-[`schemas/kg-qa.ts`](../../schemas/kg-qa.ts).
+Schema: [`schemas/role-graph.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts). Audit:
+[`scripts/kg-audit.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-audit.ts), sidecar schema
+[`schemas/kg-qa.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/kg-qa.ts).
 
 ### Not every skill is PERFORMED — `consulted: true`
 
@@ -573,7 +573,7 @@ group of something else is a one-line addition.
 The role graph is the substrate every diagram's lanes bind to. Changing it —
 adding an actor, opening a role, granting a permission, retiring a
 participant — is therefore a process like any other, and it is drawn:
-[`actor-role-administration.bpmn`](../../processes/actor-role-administration.bpmn),
+[`actor-role-administration.bpmn`](../../processes/actor-role-administration.html),
 in the `administrator` lane.
 
 **That was a question, not a deduction.** Until the owner answered it, there

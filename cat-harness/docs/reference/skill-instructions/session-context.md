@@ -52,7 +52,7 @@ derived from anything.**
 
 The machine keeping the session cannot infer it — the same reason the Logger
 cannot infer who wrote a log line, which is why
-[`log-message`](../../../bootstrap/skills/log-message.md) takes `actor` too. A
+[`log-message`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/log-message.md) takes `actor` too. A
 session record that cannot name its actor records that something is happening
 and nothing about **who is answerable for it**, which is the first question a
 sibling session needs answered before it touches the same bean.
@@ -128,7 +128,7 @@ and the parse is where it is enforced.
 session; this says who is working and where they are right now. Delete every
 session record and the plan is intact.
 
-**Not a log.** [`log-message`](../../../bootstrap/skills/log-message.md)
+**Not a log.** [`log-message`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/log-message.md)
 records what an actor DID at a moment, append-only. This is the current
 position, overwritten as it moves. A log tells you how you got here; this tells
 you where you are.

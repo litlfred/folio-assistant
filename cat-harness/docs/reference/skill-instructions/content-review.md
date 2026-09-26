@@ -36,7 +36,7 @@ Formal review and approval of validated content before publication.
 ## Outputs
 Findings and a decision — two things, not one. See
 [`decision-audit`](decision-audit.md) and
-[`schemas/qa-review.ts`](../../schemas/qa-review.ts).
+[`schemas/qa-review.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/qa-review.ts).
 
 - **Findings** — one per observation, each carrying the axis this reviewer can
   speak on: `blocking | suggestion | praise` for a person, `critical | major |

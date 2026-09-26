@@ -121,7 +121,7 @@ outside it now support the premise, **second-hand**: cited by the ingested
 source, not themselves ingested, so each is an attribution to check rather than
 a result this repository holds (`literature-search` §"Never fill the gap with
 recall"). Provenance for all three is
-[`hybrid-llm-deterministic`](../../methodologies/hybrid-llm-deterministic.md):
+[`hybrid-llm-deterministic`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/hybrid-llm-deterministic.md):
 
 - LLMs **can be distracted by irrelevant context** — Shi et al., ICML 2023.
 - Accuracy **drops on low-probability inputs even for deterministic tasks** —

@@ -36,11 +36,11 @@ and `beans/q-usage-watcher-ledger.md`.
 
 **Authoritative references**:
 
-- [AGENTS.md §7c — base-ring convention](../../../AGENTS.md) (generic
+- [AGENTS.md §7c — base-ring convention](https://github.com/litlfred/folio-assistant/blob/main/AGENTS.md) (generic
   `R` vs archimedean `ℝ`).
 - `notation-collisions.md` (in the FOLIO, not the platform)
   — base-ring convention notation row.
-- [`qa-checkers-q-usage.ts`](../../content/pipeline/qa-checkers-q-usage.ts)
+- [`qa-checkers-q-usage.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/content/pipeline/qa-checkers-q-usage.ts)
   — the checker implementation, with the chapter → expected-regime
   registry.
 
@@ -95,7 +95,7 @@ Chapters are partitioned into three groups in the implementation:
   documented in `CHAPTER_EXPECTED_REGIMES` in `qa-checkers-q-usage.ts`.
 
 The complete per-chapter map is in
-[`qa-checkers-q-usage.ts`](../../content/pipeline/qa-checkers-q-usage.ts)
+[`qa-checkers-q-usage.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/content/pipeline/qa-checkers-q-usage.ts)
 under `CHAPTER_EXPECTED_REGIMES`. To update a chapter's expected set,
 edit that registry — the watcher reads it directly, no extra wiring
 required.
@@ -320,9 +320,9 @@ bun run content/pipeline/q-usage-audit.ts --no-write --strict
   [`one-voice-integration-watcher`](one-voice-integration-watcher.md).
 - Skill for placement decisions:
   [`production-vs-exploratory-discipline`](production-vs-exploratory-discipline.md).
-- Checker source: [`content/pipeline/qa-checkers-q-usage.ts`](../../content/pipeline/qa-checkers-q-usage.ts).
-- CLI runner: [`content/pipeline/q-usage-audit.ts`](../../content/pipeline/q-usage-audit.ts).
+- Checker source: [`content/pipeline/qa-checkers-q-usage.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/content/pipeline/qa-checkers-q-usage.ts).
+- CLI runner: [`content/pipeline/q-usage-audit.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/content/pipeline/q-usage-audit.ts).
 - Criterion registry entries:
-  [`content/pipeline/qa-criteria-registry.ts`](../../content/pipeline/qa-criteria-registry.ts)
+  [`content/pipeline/qa-criteria-registry.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/content/pipeline/qa-criteria-registry.ts)
   (search for the `Q_USAGE` const array).
 {% endraw %}

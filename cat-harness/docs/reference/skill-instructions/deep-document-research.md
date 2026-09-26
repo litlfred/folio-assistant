@@ -96,7 +96,7 @@ search*. Those are different, and only the first is a fact about the folio.
 
 ## See also
 
-- [`doc-researcher`](../methodologies/doc-researcher.md) — the method, what it
+- [`doc-researcher`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/methodologies/doc-researcher.md) — the method, what it
   measured, and where this rendering stops.
 - `library-ingestion`, `document-intake` — how the corpus this reads gets
   there.

@@ -90,7 +90,7 @@ into it rather than re-installing.
 
 ## Running it here
 
-Building the site is [`preview:site`](../../scripts/preview-site.sh), whose
+Building the site is [`preview:site`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/preview-site.sh), whose
 header carries the two things that make a naive `bundle exec jekyll` fail
 in this repo. **It is not what CI builds** — CI uses the pinned
 `remote_theme`, this uses the gem — so read a *theme-chrome* question off

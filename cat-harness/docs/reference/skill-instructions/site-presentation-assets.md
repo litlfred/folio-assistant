@@ -88,7 +88,7 @@ a failure.
 - **Whether a rendered block LOOKS right** — that is a content question, and the
   rendering auditor's.
 - **How a link is spelled** —
-  [`link-style-raw-is-not-the-private-repo-answer`](../../../memory/link-style-raw-is-not-the-private-repo-answer.md).
+  [`link-style-raw-is-not-the-private-repo-answer`](https://github.com/litlfred/folio-assistant/blob/main/memory/link-style-raw-is-not-the-private-repo-answer.md).
 
 This skill is only about the direction of authority: **the graph decides, the
 stylesheet reports.**

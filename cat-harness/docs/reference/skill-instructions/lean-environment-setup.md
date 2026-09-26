@@ -177,7 +177,7 @@ that loads the skill. It now sits beside this file. Nothing was deleted.
 | what | where |
 |---|---|
 | FAST ROUTE, architecture, prerequisites, setup, Docker, no-Lean fallback, troubleshooting | **here** |
-| Mathlib cache 403 fallback — packing oleans, orphan branch, chunking | [`lean-environment-setup/mathlib-cache-fallback.md`](#part-mathlib-cache-fallback) |
+| Mathlib cache 403 fallback — packing oleans, orphan branch, chunking | [`lean-environment-setup/mathlib-cache-fallback.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/lean-environment-setup/mathlib-cache-fallback.md) |
 
 Go there only once the FAST ROUTE below has actually failed.
 

@@ -107,6 +107,6 @@ reason they are two code lists rather than one score.
 - **Never grade a single citation.** The body, per outcome.
 - **Never report a recommendation without its direction and strength.** One
   without the other is not a GRADE recommendation.
-- **Never table it in DMN.** See [`dmn`](../../methodologies/dmn.md) — tabling
+- **Never table it in DMN.** See [`dmn`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/dmn.md) — tabling
   asserts a repeatability the method denies.
 {% endraw %}

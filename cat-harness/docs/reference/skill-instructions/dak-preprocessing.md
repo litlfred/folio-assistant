@@ -74,7 +74,7 @@ names it. Both halves are what step 2 supplies.
 just-the-docs pipeline the navigation is derived from `sushi-config.yaml`
 directly and the pages are folio pages — we own both maps, so writing them back
 into somebody else's config to get them read again is a round trip through a
-tool we are removing. See [`ig-render-jekyll`](../../../fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md)
+tool we are removing. See [`ig-render-jekyll`](https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md)
 for what replaces it, and `kn0t` for the phasing.
 
 ## Two of these are authoring, not pre-processing

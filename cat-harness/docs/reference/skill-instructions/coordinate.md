@@ -101,7 +101,7 @@ have to keep resolving.
 | section | where |
 |---|---|
 | workflow rule, when to invoke, inputs | **here** — read before you start |
-| **Protocol §1–§11** — the eleven coordination steps | [`coordinate/protocol.md`](#part-protocol) |
+| **Protocol §1–§11** — the eleven coordination steps | [`coordinate/protocol.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/coordinate/protocol.md) |
 | output, anti-patterns, §11 STATUS.md, §12 same-goal coordination, related skills | **here** |
 
 **Coordinating:** read this file for whether and when, then `protocol.md` for how.

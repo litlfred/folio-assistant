@@ -24,8 +24,8 @@ remote content and lands it locally; `upstream-pins.json` exists because that
 copy goes stale. A materialisation and its refresh, in production, named
 neither.
 
-Diagrams: [`materialize-remote.bpmn`](../../cat-harness/processes/materialize-remote.bpmn)
-and [`refresh-materialized.bpmn`](../../cat-harness/processes/refresh-materialized.bpmn).
+Diagrams: [`materialize-remote.bpmn`](../../processes/materialize-remote.html)
+and [`refresh-materialized.bpmn`](../../processes/refresh-materialized.html).
 Schema: `folio-assistant-core/schemas/materialization.ts`. Nothing here restates
 either — where they disagree, the schema wins and this file is wrong.
 

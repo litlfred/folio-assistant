@@ -54,7 +54,7 @@ python skills/scientific-schematics/scripts/generate_schematic.py "GRADE evidenc
 ## Core Capabilities
 
 Seven capability areas, each with the questions to ask and what the answers imply, are in
-[references/core_capabilities.md](references/core_capabilities.md):
+[references/core_capabilities.md](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/scientific-critical-thinking/references/core_capabilities.md):
 
 1. **Methodology critique** — design, controls, confounding, and whether the method can
    answer the question asked.
@@ -65,12 +65,12 @@ Seven capability areas, each with the questions to ask and what the answers impl
 6. **Research design guidance** — how to strengthen a design before data collection.
 7. **Claim evaluation** — separating what was shown from what is being asserted.
 
-Per-topic detail is in [references/scientific_method.md](references/scientific_method.md),
-[references/common_biases.md](references/common_biases.md),
-[references/statistical_pitfalls.md](references/statistical_pitfalls.md),
-[references/evidence_hierarchy.md](references/evidence_hierarchy.md),
-[references/logical_fallacies.md](references/logical_fallacies.md), and
-[references/experimental_design.md](references/experimental_design.md).
+Per-topic detail is in [references/scientific_method.md](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/scientific-critical-thinking/references/scientific_method.md),
+[references/common_biases.md](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/scientific-critical-thinking/references/common_biases.md),
+[references/statistical_pitfalls.md](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/scientific-critical-thinking/references/statistical_pitfalls.md),
+[references/evidence_hierarchy.md](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/scientific-critical-thinking/references/evidence_hierarchy.md),
+[references/logical_fallacies.md](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/scientific-critical-thinking/references/logical_fallacies.md), and
+[references/experimental_design.md](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/scientific-critical-thinking/references/experimental_design.md).
 
 ## Application Guidelines
 
