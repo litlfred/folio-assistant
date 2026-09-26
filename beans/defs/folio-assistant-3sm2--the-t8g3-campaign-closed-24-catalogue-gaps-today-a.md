@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3sm2
 title: 'The t8g3 campaign closed 24 catalogue gaps today and opened 35: the drift gate cannot ratchet while it is held red'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-26T19:39:54Z
-updated_at: 2026-09-26T19:59:57Z
+updated_at: 2026-09-26T20:39:52Z
 parent: folio-assistant-bzyu
 ---
 
@@ -70,17 +70,8 @@ subject.
 - **Not adding `UNCATALOGED` entries.** #1364 merged 25, #1384 reverted them on the
   owner's instruction, and that remains #1374's author's call.
 
-## Done when
-
-- [x] the owner has chosen whether to gate the batches (a translated page may not
-      be published without its catalogue) or to keep clearing the backlog by hand —
-      **both, gate first**, 2026-09-26
-- [x] whichever is chosen, the count cannot grow silently while the gate is red —
-      `translation:catalogue:check`, ABOVE the drift batch
-- [x] the 35's segment alignment against their `.pot` is measured, so "derivable"
-      is a finding rather than an assumption in either direction — **29 of 35 carry
-      positive alignment evidence**, which inverts `f6r1`'s regime rather than
-      contradicting its measurement
+(The `## Done when` list for this bean is at the END of the file, ticked in place
+after the corrections below. One list, never two — `check:bean-bodies`.)
 
 ## The gate — `translation:catalogue:check`, 2026-09-26
 
@@ -196,3 +187,70 @@ belongs to whoever owns issue #206.
 What changed is only the input to that decision: the answer was *0 of 27
 demonstrated derivable*, and for this population it is **29 of 35 with positive
 alignment evidence**.
+
+## THE GATE IS GREEN, and my measurement's method had a blind spot — 2026-09-26 20:2x
+
+Merged main and re-measured. `translation:drift:check` now reports:
+
+    70 translation(s) compared, 0 NEWLY drifted, 0 could not be read,
+    0 drifted and recorded, 8 uncatalogued and recorded
+    ✓ no NEW drift
+
+**A sibling authored 30 of the 35 catalogues while this gate was being built**, and
+recorded the remaining 5 in `UNCATALOGED` with per-page reasons. So the owner's
+chosen route — make the drift gate green — is achieved, by them, not by this bean.
+Closed on evidence rather than authorship.
+
+Two consequences worth stating:
+
+- **`cpss`'s 103 masked gates are now unmasked.** The batch's third command was the
+  thing stopping it; with the drift green the rest of that `set -e` block runs for
+  the first time in as long as it stood red.
+- **This gate's value went up, not down.** It was built to stop the growth that made
+  the backlog unclearable; with the backlog cleared, it is what keeps it cleared.
+  A ratchet matters most immediately after somebody has done the work by hand.
+
+### MY MEASUREMENT WAS INSUFFICIENT, and their reasons say how
+
+The five remaining entries are `ar/architecture`, `ar/skills`,
+`ar/publication-workflow`, `zh/publication-workflow` and `zh/skills`. Two of those
+reasons are **`msgid-conflict`**:
+
+> `zh/skills` — "Skills" occurs more than once and is translated "技能" and "技能数"
+> at construct 89 … Needs `msgctxt`
+>
+> `zh/publication-workflow` — "Editor / author" is translated "编辑 / 作者" and
+> "Editor / author（编辑 / 作者）" at construct 298 … a msgid-keyed `.po` cannot hold both
+
+**Both were inside my "positive alignment evidence" set.** `zh/publication-workflow`
+measured `=368` and `zh/skills` measured `=146` — equal counts, anchors present, no
+off-by-one shift. My three tests were count, anchors and shift, and **none of them
+tests msgid UNIQUENESS**: a page can align perfectly, position for position, and
+still be impossible to store in a msgid-keyed catalogue because one source string
+appears twice with two different translations.
+
+So the honest correction to part 2:
+
+| I reported | actually |
+|---|---|
+| 29 of 35 with positive alignment evidence | 29 aligned, **of which at least 2 are not derivable anyway** |
+| 3 could not tell | unchanged |
+| 3 unequal count | unchanged |
+
+"Equal count is necessary, not sufficient" was the right instinct and I applied it
+one level too shallow: I tested that the pairing was sound and not that the RESULT
+could exist. The sibling's guard — added after `f6r1` found the same case masked by
+`count-differs` — is the test I should have run.
+
+**A measurement is only as strong as the failure modes it enumerates**, and mine
+enumerated three of four. That is worse than the count being stale, because a stale
+count announces itself and a missing failure mode does not.
+
+## Done when
+
+- [x] the owner has chosen whether to gate the batches or keep clearing by hand —
+      **both, gate first**, 2026-09-26
+- [x] the count cannot grow silently while the gate is red —
+      `translation:catalogue:check`, ABOVE the drift batch
+- [x] the 35's segment alignment is measured — done, and **corrected above**: the
+      method missed msgid uniqueness, so 2 of the 29 were misclassified

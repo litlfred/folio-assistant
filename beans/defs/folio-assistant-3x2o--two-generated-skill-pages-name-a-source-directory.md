@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3x2o
 title: Two generated skill pages name a source directory that does not exist — the oe98 banner bug recurs for remote stubs
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T10:44:49Z
-updated_at: 2026-09-26T10:45:07Z
+updated_at: 2026-09-26T20:02:44Z
 parent: folio-assistant-ahvw
 ---
 
@@ -71,3 +71,5 @@ links, so they are outside what that sweep resolves.
 
 `hloc`, which is about links in skill BODIES and is a different composer.
 Whether `skills/remote-packages` should be synced at all — bean `wlqd`.
+
+_2026-09-26T20:02:44Z_ — Claimed by claude/3x2o-remote-stub-banner — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

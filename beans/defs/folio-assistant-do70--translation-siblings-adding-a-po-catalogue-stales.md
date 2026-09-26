@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-26T10:05:01Z
-updated_at: 2026-09-26T10:38:02Z
+updated_at: 2026-09-26T18:42:37Z
 parent: folio-assistant-bzyu
 ---
 
@@ -160,3 +160,48 @@ This is the third correction on this bean, all three from trying to satisfy it.
 Left in sequence rather than rewritten into a clean account, because the sequence
 is the evidence for the last Done-when item: an order recorded in prose drifts, and
 mine drifted twice inside one session.
+
+
+## 2026-09-26 — measured again, and the `harness.json` case has a stated principle against it
+
+Hit on PR #1419 (`e8m3`). `docs:harness:check` red; established as `main`'s
+rather than the PR's by regenerating on **both** sides and diffing. The
+staleness is one line and byte-identical on pristine `origin/main` and on the
+branch:
+
+```diff
+       "id": "beans",
+-      "count": 394,
++      "count": 396,
+       "unit": "beans"
+```
+
+**It is the bean census.** That is why this row keeps coming back and why no
+feature PR can carry the fix: regenerating it inside one collides with every
+sibling doing the same, and it re-stales the next time anybody runs
+`beans create`.
+
+`AGENTS.md` already states the rule this violates, for a different artefact:
+
+> The file COUNTS are printed rather than recorded — a census moves on any
+> commit and a gate keyed on it is stale by default; `hasFiles` carries the
+> only thing it decides.
+
+`audit-coverage` was built that way on purpose. `harness.json` records the
+count instead, so it inherits exactly the staleness that design avoids. That
+suggests a **second route** alongside this bean's converging-chain remedy, and
+they are not alternatives — the chain makes the remedy discoverable, this makes
+one row stop needing a remedy at all:
+
+- for `harness.json`'s `count`, ask whether the number must be **recorded** or
+  merely **rendered**. A navbar badge can count at render time; if it can, the
+  field comes out and this row leaves the chain permanently.
+
+Not started, and not this PR's to decide: whether the badge may be computed at
+render time is a question about the docs site's build, not about beans.
+
+One thing the diff method is worth keeping for on its own: the checker's message
+says `docs/_data/harness.json`, but the file is at
+`cat-harness/docs/_data/harness.json`. A `git diff` on the path the error prints
+shows nothing, which reads as "no staleness" and is how I nearly closed this as
+a non-finding.

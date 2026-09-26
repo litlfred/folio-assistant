@@ -925,8 +925,26 @@ jobs:
       - name: generated docs pages are current
         run: bun run docs:pages:check
 
-      # ABOVE the drift batch DELIBERATELY, the fourth instance of that reason in
-      # this file — and this one is the sharpest, because the gate's whole subject
+      # ABOVE the drift batch DELIBERATELY, like the two steps directly above.
+      # A gate registered INSIDE that batch does not run at all: the batch is
+      # one `run: |` block under `set -e` holding 106 gates, and
+      # `translation:drift:check` is the THIRD of them, so the 103 after it have
+      # never executed on any PR or any push to `main`. Bean `cpss` carries the
+      # measurement; `check:workflow-injection` and
+      # `check:artefact-verification` are two of the 103, both landed the same
+      # day this was measured.
+      #
+      # That is the whole reason this gate is its own step. Satisfying
+      # `no check script is unrun` by appending to the batch would have
+      # registered it, reported it, and never run it — which is worse than not
+      # wiring it, because the PR would go green saying otherwise.
+      - name: every claimed locale has a page behind it
+        run: bun run check:available-locales
+
+      # ABOVE the drift batch DELIBERATELY, the FIFTH instance of that reason in
+      # this file — fourth at the time it was written, and main's
+      # `check:available-locales` directly above arrived in the same hour, which is
+      # why the ordinal is corrected here rather than left to read as measured — and this one is the sharpest, because the gate's whole subject
       # is that the drift gate cannot report growth in its own. Registered below
       # it, a check about the drift's silence would itself be silenced by it.
       #
@@ -1055,6 +1073,14 @@ jobs:
           # `imagesForRole` is layout-keyed and a mark declares no layout.
           bun run check:image-roles
           bun run check:bean-parents
+          # Bean `e8m3`, on the owner's VIEW ruling. `beans/defs/archive/` held 631
+          # bean-defs while `beans/beans.json` declared it nowhere — the `dh4f`
+          # family INVERTED, and invisible to check:declared-dirs and
+          # check:harness-dirs by construction, because both compare declarations
+          # against disk and not the reverse. It also holds the invariant the
+          # ruling implies: an archived bean that is still open is work no count
+          # can see, which is the 35-bean defect e8m3 was filed over.
+          bun run check:bean-archive
           bun run check:bean-blocks
           # Bean `kpcl`, issue #956: `in-progress` stopped carrying information --
           # 99 claims, 77 untouched for a day or more. The obvious sweep assumes

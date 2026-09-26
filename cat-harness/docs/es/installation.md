@@ -45,6 +45,7 @@ que redactas. La comprobación integrada de capacidades te indica qué falta.
 > **Solo se requiere Bun.** Cada una de las demás filas depende del tipo de contenido y se comprueba en
 > tiempo de ejecución, por lo que no instales nada más hasta que `check-deps` lo solicite.
 
+
 ## Clonar e instalar
 
 ```sh
@@ -68,6 +69,28 @@ cd folio-assistant
 
 Instala Bun y nada más — LaTeX, Lean, Java y el IG Publisher se mantienen
 por tipo de contenido, reportados por `check-deps` con sugerencias de instalación.
+
+Los scripts de shell de la plataforma son bash. En Windows se ejecutan bajo **Git Bash**,
+el cual es instalado por [Git para Windows](https://git-scm.com/download/win), por lo que `git`
+es el único prerrequisito adicional. Cada script que un usuario ejecuta manualmente o conecta a
+una configuración tiene un `.bat` a su lado — `cat-harness\scripts\install-beans.bat`,
+`cat-harness\scripts\start-folio-assistant.bat`, `cat-harness\scripts\git-hooks\install.bat`,
+`cat-harness\scripts\session-start-coord-sweep.bat` y así sucesivamente —, el cual localiza Git Bash
+(nunca el iniciador de WSL en `System32`) y ejecuta el `.sh` hermano con los mismos
+argumentos. Utilízalos desde `cmd.exe`, PowerShell, el Programador de tareas o una entrada de
+configuración de MCP:
+
+```bat
+cat-harness\scripts\install-beans.bat
+cat-harness\scripts\upload-to-uploads.bat https://example.org/guideline.pdf
+```
+
+Cualquier cosa que necesite el archivo `.sh` — `bun`, `curl`, `gh`, `elan` — debe estar en el
+`PATH` de Windows, ya que Git Bash lo hereda del proceso que lo llama. Los scripts que solo
+tienen sentido en un host Linux (`deploy/`, `install-tex.sh`, `setup-sage.sh`,
+`setup-singular.sh`) no tienen wrapper a propósito. La lista reside en
+`cat-harness/scripts/gen-bat-wrappers.sh`; `bun run bat:sync` regenera los wrappers
+y `bun run bat:sync:check` hace fallar la CI si falta alguno o está desactualizado.
 
 ### En Linux/macOS, también existe un script
 

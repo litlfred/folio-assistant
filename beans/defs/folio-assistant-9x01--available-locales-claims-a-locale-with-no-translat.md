@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9x01
 title: available_locales claims a locale with no translated page behind it, and nothing checks the two against each other
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T14:26:44Z
-updated_at: 2026-09-26T14:26:44Z
+updated_at: 2026-09-26T19:33:36Z
 parent: folio-assistant-bzyu
 ---
 
@@ -191,3 +191,5 @@ page. "Redefine" is right, and its blast radius is a stamped field on 24 pages, 
 published JSON-LD key, a generator, `po-resolve`, a badge computation and two e2e
 files. That is a decision about what the site promises its consumers, so it is
 recorded here and put to the owner rather than chosen.
+
+_2026-09-26T19:33:33Z_ — Claimed by claude/sleepy-babbage-ls90iz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

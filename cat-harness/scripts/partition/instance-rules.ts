@@ -499,6 +499,14 @@ export const RULES: Rule[] = [
       // declaration, so it knows which directories publish a site and
       // nothing at all about what any folio put in them.
       "scripts/check-translated-link-depth.ts",
+      // Whether a page's `available_locales` names a locale a reader can
+      // actually read it in (bean `9x01`). Harness by the same route as the two
+      // above: it resolves the site root from the declaration, builds the
+      // translation index from what the pages themselves declare (`lang` and
+      // `translation_source`), and compares a page's claim with that index. The
+      // CLAIM is structural — "is this readable in French" — so it says nothing
+      // about what any folio wrote in French.
+      "scripts/check-available-locales.ts",
       // Whether each methodology's cited `origin` resolves to an ingested
       // source. Harness for the same reason as the two above: it reads the
       // declaration for the `methodology` and `library` graphs and fans out
@@ -842,6 +850,12 @@ export const RULES: Rule[] = [
       // but `node:fs` and `node:path`, and the advice it sweeps is this
       // platform's skills and workflows.
       "scripts/check-stale-field-advice.ts",
+      // Bean `e8m3`. Harness by subject: it reads the declared `bean-defs` graph
+      // and the work plan is the harness's own, not any folio's content.
+      "scripts/check-bean-archive.ts",
+      // Bean `6ptx`. Harness by subject: a survey is of THIS repository's own
+      // commit history and work plan, which no folio has as content.
+      "scripts/survey.ts",
       // Its subject is the harness's OWN declaration filename — which file
       // names an instance — so it is harness by subject as well as by
       // dependency: it imports `schemas/cat-harness.js` for the constant and
