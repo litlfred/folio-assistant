@@ -90,8 +90,9 @@ main**), `docs:auto:check`.
 - [x] The six are in their package manifests and have reference pages.
 - [x] The retired `roles:` key is gone from the four that carried it.
 - [x] Every artefact the chain stales is regenerated.
-- [ ] The chain is written down somewhere an author adding a skill will find
-      it — or, better, one command performs it. Neither is in this change.
+- [x] The chain is written down somewhere an author adding a skill will find
+      it — or, better, one command performs it. **`bun run skill:register`**,
+      plus a pointer in `AGENTS.md`.
 - [ ] `translation:drift:check`'s 25, `check:glossary` and `docs:auto:check`
       are somebody's: all three are pre-existing and none is this bean's.
 
@@ -141,4 +142,78 @@ five-step tail still done by hand.
 Still an owner decision (where such a command lives, whether it hooks the
 commit boundary), so recorded rather than built. But the evidence side is now
 closed: this is not a hypothetical.
+
+---
+
+## 2026-09-26 — done, and THE CHAIN IN THIS BEAN WAS WRONG
+
+`bun run skill:register` performs it, verifies each step, and says what it
+deliberately will not do. `AGENTS.md` points at it. But the substantive
+correction is to this bean's own content.
+
+### The six steps recorded above are wrong in both directions
+
+Measured by experiment — a throwaway skill added to a green tree, each check
+run **individually**, against a baseline measured the same way:
+
+| this bean said | measurement |
+|---|---|
+| `gen-skill-docs` | ✅ in the chain |
+| `gen-docs-pages` | ❌ **NOT staled by adding a skill** |
+| `translation:index` | ❌ **NOT staled** |
+| `docs:harness` | ❌ **NOT staled** |
+| `state:visualizer` | ❌ **NOT staled** |
+| — | ✅ `glossary:page` — **missing from this bean** |
+| — | ✅ `docs:auto` — **missing** |
+| — | ✅ `kg:audit` — **missing** |
+| — | ✅ `kg:detangle` — **missing** |
+
+Four wrong, four missing, one right. The chain is five writers, not six, and
+only one of the six named here belongs to it.
+
+**How it went wrong:** every earlier version was written from memory of a
+session in which other things were also stale. `gen-docs-pages` and friends had
+gone red *in the same sessions*, for unrelated reasons, and were attributed
+here. `glossary:page` and `docs:auto` were already red on a red `main`, so they
+were filtered out as "not mine" — when adding a skill breaks them too. **On a
+dirty baseline you cannot attribute in either direction**, and every reading
+taken during this repository's red period was unreliable both ways.
+
+### `bun run gates` cannot derive this, which is why it stayed wrong
+
+The first experiment used `gates` and found four stale artefacts.
+`kg:audit:check` and `kg:detangle:check` were **green in it and red when run
+alone against the identical tree** — `bun test` runs those writers, so the
+artefacts are repaired before the checks execute. Bean `ymsu`'s blind spot,
+hiding two fifths of this chain.
+
+Running the checks in *sequence* perturbs too: a later sweep found
+`kg:audit:check` green again because something earlier in the loop wrote. Only
+an isolated run of one check against a known tree measures anything.
+
+### And the "order-sensitive" claim was attached to the wrong thing
+
+An earlier note here said the chain is order-sensitive. The five are **order-
+free** — verified by running them in reverse and re-checking. The ordering that
+was measured is real but belongs to `gen-docs-pages` → `docs:harness`, and
+neither is in this chain. A true fact about one pair, asserted about another.
+
+### The scaffold half needed nothing
+
+Zero skill files, zero templates and zero generators now carry `roles:`, so
+copy-paste has nothing to propagate and `check:retired-front-matter` catches
+reintroduction. Recorded rather than built.
+
+## Summary of Changes
+
+- `cat-harness/scripts/skill-register.ts` — the five writers, each with the
+  check that proves it landed and the reason it is in the chain. Verification
+  re-proves sufficiency at runtime rather than asserting coverage, so an
+  under-declared list cannot report false success. Vacuity guard included.
+- `skill:register` / `skill:register:check` in `package.json`.
+- `skill-register.test.ts` — 14 tests, both anti-regression directions
+  falsified: dropping `kg:audit` fails, re-adding `docs:harness` fails with a
+  message saying to measure rather than remember.
+- `AGENTS.md` — the pointer, with the warning not to re-derive through `gates`.
+- Idempotent: run on a clean tree, zero generated files change.
 

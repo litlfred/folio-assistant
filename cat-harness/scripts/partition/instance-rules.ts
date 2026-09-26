@@ -1222,6 +1222,7 @@ export const RULES: Rule[] = [
       "scripts/render-pipeline.ts",         // WHICH renders run and in what order, read from the declarations
       "scripts/render-selection.ts",        // WHICH of them must re-run against a seed, and why (bean `9c34`). Harness machinery: it computes a decision and writes no page, so it belongs beside the pipeline rather than with the renderers
       "scripts/gates.ts",                   // the gate runner itself
+      "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales (bean `v625`). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type
       "scripts/check-merged.ts",            // the gate runner, on the merged tree (bean `nytj`)
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
       "scripts/gen-bootstrap-graph.ts", // writes bootstrap/bootstrap.jsonld
