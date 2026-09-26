@@ -320,8 +320,17 @@ jobs:
         # `outputs.branch` is the RAW branch name — the slug is sanitised, the
         # branch is not — so it is attacker-controlled on a fork PR just as
         # `head.ref` is. Bound to env rather than interpolated.
+        #
+        # THE SLUG IS BOUND TOO, since 2026-09-26 (bean `6bhf`). It is sanitised
+        # — by a `sed` character class in ANOTHER STEP, which nothing checks. So
+        # "the slug is safe" was a hand-maintained property one edit from gone,
+        # which is the `tyyc` lesson this gate's own docblock quotes. Its
+        # producer also binds `inputs.branch`, a dispatch input, so
+        # `check-workflow-injection.ts` now grades it free text by provenance
+        # rather than trusting the id it came through.
         env:
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
         run: |
           # `short_sha`, `built_at` and `run_url` are DELIBERATELY ABSENT on a
           # staging build, and this is the second half of bean `g196`.
@@ -408,7 +417,7 @@ jobs:
           {
             echo "branch: \"${STAGING_BRANCH}\""
             echo "staging: true"
-            echo "staging_slug: \"${{ steps.slug.outputs.slug }}\""
+            echo "staging_slug: \"${STAGING_SLUG}\""
             echo "pr_number: \"${{ github.event.pull_request.number || '' }}\""
             echo "search_index: \"${SEARCH_STATE}\""
           } > cat-harness/docs/_data/build.yml
@@ -435,8 +444,12 @@ jobs:
       # sees is the repo's. The site DIRECTORY is `docs/<stub>` and that is a
       # separate question, answered by `siteDirFor`.
       - name: Configure Jekyll for staging subdirectory
+        # The slug is bound rather than interpolated — see `Stamp the build`
+        # above for why its sanitisation is not a reason to trust it here.
+        env:
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
         run: |
-          SLUG="${{ steps.slug.outputs.slug }}"
+          SLUG="$STAGING_SLUG"
           REPO="${{ github.event.repository.name }}"
           echo "" >> cat-harness/docs/_config.yml
           echo "# Auto-appended by feature-staging.yml" >> cat-harness/docs/_config.yml
@@ -632,6 +645,7 @@ jobs:
         if: steps.carry.outputs.api == 'yes'
         env:
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
         run: |
           npx --yes typedoc \
             --gitRevision "$STAGING_BRANCH" \
@@ -640,7 +654,7 @@ jobs:
             --readme none \
             --hideGenerator \
             --skipErrorChecking \
-            --name "folio-assistant API (staging: ${{ steps.slug.outputs.slug }})" \
+            --name "folio-assistant API (staging: $STAGING_SLUG)" \
             cat-harness/schemas/types.ts cat-harness/schemas/constraints.ts cat-harness/schemas/builders.ts \
             cat-harness/schemas/assistant-types.ts cat-harness/schemas/assistant-package.ts \
             cat-harness/schemas/assistant-workflow.ts cat-harness/schemas/formalization-types.ts \

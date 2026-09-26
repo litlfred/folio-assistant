@@ -329,7 +329,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [Injection](injection-boundaries.html) | `injection-boundaries` | — |  |
+| [Injection](injection-boundaries.html) | `injection-boundaries` | — |   run: \| |
 | [Path containment](path-containment.html) | `path-containment` | — | `src/core/safe-path.ts` is the implementation. This is when to reach for which, |
 | [Security](security.html) | `security` | — | > **This value came from outside. What may I do with it?** |
 
