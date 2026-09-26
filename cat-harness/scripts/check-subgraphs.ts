@@ -36,7 +36,7 @@ import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { Glob } from "bun";
 
-import { gitCorpus } from "./git-corpus.ts";
+import { gitCorpus } from "../schemas/git-corpus.ts";
 
 import {
   isDerivedGraph,
