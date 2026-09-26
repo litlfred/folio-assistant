@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/docs-ui.css?v=1790411125">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/docs-ui.css?v=1790411855">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/narrow-viewport.css?v=1790411125">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/narrow-viewport.css?v=1790411855">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/work-plan.css?v=1790411125">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/work-plan.css?v=1790411855">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/themes.css?v=1790411125">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/themes.css?v=1790411855">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/uml.css?v=1790411125">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/uml.css?v=1790411855">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/avatars.css?v=1790411125">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/avatars.css?v=1790411855">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/docs-ui.js?v=1790411125" defer></script>
+<script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/docs-ui.js?v=1790411855" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -918,6 +918,48 @@ gh <span class="nb">pr </span>list <span class="nt">--state</span> open <span cl
 <p>Neither check closes the window. Both are cheap, and the second catches the case
 that matters most in practice — a sibling minutes ahead of you who already has a
 PR up.</p>
+<h3 id="the-trigger-is-starting-work-not-claiming--and-that-distinction-cost-a-merge">
+  
+  
+    <a href="#the-trigger-is-starting-work-not-claiming--and-that-distinction-cost-a-merge" class="anchor-heading" aria-labelledby="the-trigger-is-starting-work-not-claiming--and-that-distinction-cost-a-merge"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The trigger is STARTING WORK, not claiming — and that distinction cost a merge
+  
+  
+</h3>
+    
+
+<p><strong>Measured 2026-09-26, bean <code class="language-plaintext highlighter-rouge">tuvg</code>.</strong> These checks are written above as what you
+do <em>before you claim</em>, and an agent that is not claiming anything therefore
+never runs them. That is not a hypothetical reading; it is what happened:</p>
+
+<p>A session already held <code class="language-plaintext highlighter-rouge">tuvg</code> and was executing an owner instruction on one
+cause inside it. No new bean, so no claim, so neither check fired. Sibling PR
+<strong>#1381 was open and doing the identical work</strong> — 25 <code class="language-plaintext highlighter-rouge">UNCATALOGED</code> records —
+and a <code class="language-plaintext highlighter-rouge">--search</code> for it would have returned it in one call. The duplicate
+merged first, which then made the <em>innocent</em> PR fail
+<code class="language-plaintext highlighter-rouge">translation-drift.test.ts:154</code> (<em>“no page is recorded TWICE”</em>) on 52 entries.
+It had to be reverted out of <code class="language-plaintext highlighter-rouge">main</code> an hour later.</p>
+
+<p>So the trigger is wider than a claim:</p>
+
+<blockquote>
+  <p><strong>Run the open-PR check before you start work on a topic — not only before
+you claim a bean.</strong> A cause inside a bean you already hold, a fix an owner
+just asked for, a gate you are about to unbreak: each is a unit of work a
+sibling can already have a PR up for, and none of them involves claiming
+anything.</p>
+</blockquote>
+
+<p>The search term follows from that. Keyed on a bean id it finds nothing when the
+work has no bean of its own, which was this case — the sibling’s bean (<code class="language-plaintext highlighter-rouge">0xfe</code>)
+existed only on an unpushed branch. <strong>Search the subject as well as the id</strong>:
+the file you are about to edit, the gate you are about to turn green, the
+symbol you are about to add. #1381’s title said <em>“Record the 25 uncatalogued
+translations”</em>; nothing about <code class="language-plaintext highlighter-rouge">tuvg</code> would have matched it, and <code class="language-plaintext highlighter-rouge">UNCATALOGED</code>
+would have.</p>
+
+<p>And a second-order caution, because it inverts who pays: a duplicate-detecting
+test punishes <strong>whoever merges second</strong>, not whoever duplicated. Merging first
+does not mean you were first.</p>
 <h3 id="bun-run-beansclaim-id-closes-it--when-the-remote-lets-it">
   
   
