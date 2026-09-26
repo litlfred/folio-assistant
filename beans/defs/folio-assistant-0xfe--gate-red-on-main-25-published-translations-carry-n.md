@@ -71,7 +71,8 @@ different line positions merge with no conflict — and it is caught here.
 - [x] every one of the 25 is recorded with a date and a reason naming what is missing
 - [x] `translation-drift.test.ts` green — 18 pass, 0 fail (was 17/1)
 - [x] the reason is a measurement: zero structure findings, verified via the independent structure check
-- [ ] `bun run gates` green, not `bun test` alone — RUNNING, not yet measured
+- [x] the gate set run against the MERGE commit, not `bun test` alone — CI on `e62f82bbd0`:
+      11738 pass / 5 fail, and `translation-drift` is **not** among the 5
 - [ ] #1370's session told to drop its five rather than extend, so the second merge does not duplicate
 - [ ] the catalogues themselves added, or these entries re-justified — **owner's, not this bean's**
 
@@ -83,3 +84,28 @@ Bisect above, re-measured on `772b14accd`. After recording:
 25). Intermediate state with only 20 recorded left exactly the 5
 `getting-started` findings, which is what established that a partial fix does
 not clear the gate.
+
+## CI, 2026-09-26 06:51Z — the gate this bean exists for passed
+
+`TypeScript — tests, lint, types (hard)` on `e62f82bbd0`: **11738 pass / 5 fail**.
+`translation-drift`'s ratchet is absent from the failures, measured on the merge
+of this head into `main` rather than only locally. The change works.
+
+The 5 that remain are #1365's set — the retired `roles:` key (two are one test
+file), 8 stale reference pages, 6 unlisted manifest entries, and the
+declared-directory guard as a knock-on. None touches
+`content/pipeline/translation-drift.ts`.
+
+**#1376 and #1381 are exactly complementary**, which is itself evidence each
+fixes what it claims and nothing more:
+
+| | failures |
+|---|---|
+| #1376 — fixes #1365's five | **1**, `translation-drift` |
+| #1381 — fixes `translation-drift` | **5**, #1365's set |
+
+Not porting #1376's 37 files here: that change was #1377, closed as a strict
+subset of #1376, and re-adding it would recreate a withdrawn duplicate in the
+one file category where two branches collide worst. Not spending the one
+re-run either — these five fail deterministically on pristine `origin/main` at
+both `ffe24b51cc` and `772b14accd`, so there is no suspected flake to confirm.
