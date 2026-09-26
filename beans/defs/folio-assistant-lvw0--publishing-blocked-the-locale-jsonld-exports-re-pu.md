@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lvw0
 title: 'PUBLISHING BLOCKED: the locale .jsonld exports re-publish the QA findings the core strips, and add an undeclared sourceLanguage'
-status: in-progress
+status: completed
 type: bug
 priority: critical
 created_at: 2026-09-26T13:57:48Z
-updated_at: 2026-09-26T14:00:18Z
+updated_at: 2026-09-26T14:33:46Z
 parent: folio-assistant-bzyu
 ---
 
