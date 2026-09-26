@@ -80,9 +80,9 @@ reports the edges that cross a boundary **in the wrong direction**.
 
 | proposed repo | modules | by rule | hand-triaged | by keyword | fell through |
 |---|---:|---:|---:|---:|---:|
-| `agentic-harness` | 58 | 43 | 15 | 0 | 0 |
-| `folio-assist-core` | **129** | 120 | 9 | 0 | 0 |
-| `folio-asst-sci` | 36 | 8 | 8 | 20 | 0 |
+| `cat-harness` | 58 | 43 | 15 | 0 | 0 |
+| `folio-assistant-core` | **129** | 120 | 9 | 0 | 0 |
+| `folio-assistant-sci` | 36 | 8 | 8 | 20 | 0 |
 | `smart-kg` | **0** | 0 | 0 | 0 | 0 |
 | `smart-base` | 4 | 1 | 0 | 3 | 0 |
 | *(test material)* | 114 | 110 | 0 | 4 | 0 |
@@ -120,10 +120,10 @@ than a floor:
 
 | importer | imports from | edges |
 |---|---|---:|
-| `agentic-harness` | `folio-assist-core` | **21** |
-| `folio-assist-core` | `folio-asst-sci` | **20** |
-| `agentic-harness` | `folio-asst-sci` | 3 |
-| `folio-assist-core` | `smart-base` | 2 |
+| `cat-harness` | `folio-assistant-core` | **21** |
+| `folio-assistant-core` | `folio-assistant-sci` | **20** |
+| `cat-harness` | `folio-assistant-sci` | 3 |
+| `folio-assistant-core` | `smart-base` | 2 |
 
 `bun run check:partition:edges` prints all 46 by name. The two large groups have
 different causes and different fixes.
@@ -139,10 +139,10 @@ It is the expected shape of the problem, and the most mechanical to fix.
 **harness → core (21)** is the more serious one. `src/core/feedback.ts`,
 `src/routes/feedback.ts`, `src/types.ts` and `schemas/assistant-types.ts` all
 import `schemas/types.ts` — the content-object model. That is the harness's
-defining constraint, [that it does not "do" anything](future-state.html#agentic-harness),
+defining constraint, [that it does not "do" anything](future-state.html#cat-harness),
 failing in practice: **a harness that imports the content model cannot be
-extracted from underneath core.** It makes `agentic-harness` harder to extract
-than `folio-asst-sci`, not easier, which is the opposite of the intuition that
+extracted from underneath core.** It makes `cat-harness` harder to extract
+than `folio-assistant-sci`, not easier, which is the opposite of the intuition that
 the most-depended-upon repo comes out first.
 
 **On the count's history.** The first run reported 33 cross-edges with 135
@@ -221,7 +221,7 @@ assumes a dependency can contribute skills and content.
 The docstring was, until this change, explicit that two things are **never**
 resolved from a dependency: schemas, and MCP tools — "always from the root
 folio-assistant". For a single-platform world that was a reasonable
-simplification. For the proposed split it was a blocker: `folio-asst-sci` exists
+simplification. For the proposed split it was a blocker: `folio-assistant-sci` exists
 to own the math block kinds, the paper adapter and `lean_build`, and a
 dependency able to contribute none of them can only ship prose.
 
