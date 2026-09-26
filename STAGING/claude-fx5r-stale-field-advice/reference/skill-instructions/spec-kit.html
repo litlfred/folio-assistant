@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(3)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(202)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(15) > ul > li:nth-child(3) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(202) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(15) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(15) > ul > li:nth-child(3) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(202) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list > li.nav-list-item:nth-child(3) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(202) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Future state | folio-assistant</title>
+<title>Spec Kit | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Future state" />
+<meta property="og:title" content="Spec Kit" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Future state" />
+<meta property="twitter:title" content="Spec Kit" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -787,8 +787,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <div class="main-content-wrap">
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-fx5r-stale-field-advice/architecture.html">Architecture</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Future state</span></li>
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-fx5r-stale-field-advice/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Spec Kit</span></li>
   </ol>
 </nav>
 
@@ -796,463 +796,260 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 class="no_toc" id="future-state--five-instances-one-dependency-mechanism">
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/spec-kit/spec-kit.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/spec-kit/spec-kit.md</code></a> — do not edit here.</p>
+
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/spec-kit/spec-kit.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="spec-kit--spec-driven-development">
   
   
-    <a href="#future-state--five-instances-one-dependency-mechanism" class="anchor-heading" aria-labelledby="future-state--five-instances-one-dependency-mechanism"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Future state — five instances, one dependency mechanism
+    <a href="#spec-kit--spec-driven-development" class="anchor-heading" aria-labelledby="spec-kit--spec-driven-development"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Spec Kit — spec-driven development
   
   
 </h1>
     
+<h2 id="origin">
+  
+  
+    <a href="#origin" class="anchor-heading" aria-labelledby="origin"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Origin
+  
+  
+</h2>
+    
 
-<ol id="markdown-toc">
-  <li><a href="#the-shape" id="markdown-toc-the-shape">The shape</a></li>
-  <li><a href="#the-five" id="markdown-toc-the-five">The five</a>    <ol>
-      <li><a href="#cat-harness" id="markdown-toc-cat-harness"><code class="language-plaintext highlighter-rouge">cat-harness</code></a></li>
-      <li><a href="#folio-assistant-core" id="markdown-toc-folio-assistant-core"><code class="language-plaintext highlighter-rouge">folio-assistant-core</code></a></li>
-      <li><a href="#folio-assistant-sci" id="markdown-toc-folio-assistant-sci"><code class="language-plaintext highlighter-rouge">folio-assistant-sci</code></a></li>
-      <li><a href="#smart-kg" id="markdown-toc-smart-kg"><code class="language-plaintext highlighter-rouge">smart-kg</code></a></li>
-      <li><a href="#smart-base" id="markdown-toc-smart-base"><code class="language-plaintext highlighter-rouge">smart-base</code></a></li>
-    </ol>
-  </li>
-  <li><a href="#the-kind-splits-the-issue-anticipates" id="markdown-toc-the-kind-splits-the-issue-anticipates">The kind-splits the issue anticipates</a></li>
-  <li><a href="#phase-iii-what-the-split-is-for" id="markdown-toc-phase-iii-what-the-split-is-for">Phase III: what the split is <em>for</em></a></li>
-</ol><hr />
+<p>github/spec-kit (GitHub, 2025), <a href="https://github.com/github/spec-kit">https://github.com/github/spec-kit</a>. Its
+<code class="language-plaintext highlighter-rouge">/speckit-*</code> command set, its specify → plan → tasks → implement → converge
+cycle, and its <code class="language-plaintext highlighter-rouge">templates/spec-template.md</code>. Rendered here from the upstream
+README and spec template, read 2026-09-21.</p>
+<h2 id="applies-when">
+  
+  
+    <a href="#applies-when" class="anchor-heading" aria-labelledby="applies-when"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Applies when
+  
+  
+</h2>
+    
+
+<p>A change to the PLATFORM’s own capability — a tool, a schema, a pipeline, a
+skill, a gate — raised by somebody building the tooling rather than by somebody
+writing a folio’s subject matter, and whose answer does not depend on what any
+folio says. Owner, 2026-09-21: <em>“spec-kit is specific to folio assistant feature
+development requests by tool developers not content developers (content
+agnostic, more scrum methodology process) for best practives of software
+development”</em>. NOT for work whose requirements come from stakeholders who must
+sign them off, and not for anything tied to a folio’s domain — that is <code class="language-plaintext highlighter-rouge">crdm</code>.</p>
+
+<p><strong>Adopted whole, 2026-09-21</strong>, on the owner’s decision (issue #730, option A):
+spec-kit sits <strong>beside</strong> <code class="language-plaintext highlighter-rouge">crdm</code> as a parallel track, not blended with it. External
+method, rendered faithfully. Where this text and the published method differ, the
+published method is right and this file is wrong.</p>
+
+<p>Its one-line claim, upstream’s words:</p>
 
 <blockquote>
-  <p><strong>This page is a proposal, not a description.</strong> The five repositories below
-come from <a href="https://github.com/litlfred/folio-assistant/issues/223">issue #223</a>;
-the mapping of today’s directories onto them is this document’s work, and
-every judgement call is marked as one. Nothing here has been built.</p>
+  <p>Define <strong>what and why</strong> before deciding <strong>how</strong> to build it.</p>
 </blockquote>
-<h2 id="the-shape">
+<h2 id="the-cycle">
   
   
-    <a href="#the-shape" class="anchor-heading" aria-labelledby="the-shape"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The shape
+    <a href="#the-cycle" class="anchor-heading" aria-labelledby="the-cycle"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The cycle
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">constitution</code> once per project, then per feature:</p>
+
+<p><strong>specify → plan → tasks → implement → converge</strong>, repeating <strong>implement →
+converge</strong> until converge reports <em>Converged</em>.</p>
+
+<p>Upstream installs these as skills:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>command</th>
+      <th>what it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-constitution</code></td>
+      <td>establishes project principles</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-specify</code></td>
+      <td>creates the specification from the request</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-plan</code></td>
+      <td>develops the technical implementation strategy</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-tasks</code></td>
+      <td>generates actionable work items</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-implement</code></td>
+      <td>guides the building</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-converge</code></td>
+      <td>validates completion against the artefacts</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Two extensions ship alongside: bug-fixing (<code class="language-plaintext highlighter-rouge">bug-assess</code> → <code class="language-plaintext highlighter-rouge">bug-fix</code> →
+<code class="language-plaintext highlighter-rouge">bug-test</code>, artefacts under <code class="language-plaintext highlighter-rouge">.specify/bugs/{slug}/</code>) and idea assessment
+(<code class="language-plaintext highlighter-rouge">assess-intake</code> → <code class="language-plaintext highlighter-rouge">assess-research</code> → <code class="language-plaintext highlighter-rouge">assess-define</code> → <code class="language-plaintext highlighter-rouge">assess-shape</code> →
+<code class="language-plaintext highlighter-rouge">assess-decide</code>, producing go / needs-clarification / kill, under
+<code class="language-plaintext highlighter-rouge">.specify/assessments/{slug}/</code>).</p>
+<h2 id="the-spec-template">
+  
+  
+    <a href="#the-spec-template" class="anchor-heading" aria-labelledby="the-spec-template"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The spec template
   
   
 </h2>
     
 
-<p>Five folio-assistant instances, composed through the
-<code class="language-plaintext highlighter-rouge">dependencies.folioAssistant</code> mechanism that
-<a href="current-state.html#the-mechanism-the-split-already-has">already exists</a>:</p>
+<p>Upstream’s <code class="language-plaintext highlighter-rouge">templates/spec-template.md</code>, in order. <strong>Mandatory</strong> where upstream
+marks it so:</p>
 
-<pre><code class="language-mermaid">flowchart TD
-    AH[cat-harness&lt;br/&gt;&lt;i&gt;Roles · Skills · Tools · BPMN&lt;/i&gt;&lt;br/&gt;does nothing itself]
-    CORE[folio-assistant-core&lt;br/&gt;&lt;i&gt;document/webpage schema + KG&lt;/i&gt;&lt;br/&gt;authoring · ingestion · render · QA]
-    SCI[folio-assistant-sci&lt;br/&gt;&lt;i&gt;Lean · LaTeX · proofs&lt;/i&gt;]
-    KG[smart-kg&lt;br/&gt;&lt;i&gt;WHO L1 document + KG schemas&lt;/i&gt;]
-    BASE[smart-base&lt;br/&gt;&lt;i&gt;L2–L3 skills · adaptation · OCL&lt;/i&gt;]
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>section</th>
+      <th>asks for</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>header</td>
+      <td>feature name, branch, creation date, status</td>
+    </tr>
+    <tr>
+      <td><strong>User Scenarios &amp; Testing</strong> <em>(mandatory)</em></td>
+      <td>prioritised independent journeys (P1, P2, …), each delivering standalone value, each with its rationale, an independent test approach, and Given-When-Then acceptance scenarios</td>
+    </tr>
+    <tr>
+      <td>Edge Cases</td>
+      <td>boundary conditions and error scenarios</td>
+    </tr>
+    <tr>
+      <td><strong>Requirements</strong> <em>(mandatory)</em></td>
+      <td>functional requirements <code class="language-plaintext highlighter-rouge">FR-001…</code>, plus key entities where data modelling applies</td>
+    </tr>
+    <tr>
+      <td><strong>Success Criteria</strong> <em>(mandatory)</em></td>
+      <td>measurable, <strong>technology-agnostic</strong> outcomes <code class="language-plaintext highlighter-rouge">SC-001…</code></td>
+    </tr>
+    <tr>
+      <td>Assumptions</td>
+      <td>the defaults taken where the request was silent</td>
+    </tr>
+  </tbody>
+</table></div>
 
-    CORE --&gt; AH
-    SCI --&gt; CORE
-    KG --&gt; CORE
-    BASE --&gt; KG
-
-    classDef harness fill:#1f3b52,stroke:#4a90c2,color:#fff
-    classDef core fill:#2d4a2b,stroke:#6aa84f,color:#fff
-    classDef leaf fill:#4a3b52,stroke:#a274c2,color:#fff
-    class AH harness
-    class CORE core
-    class SCI,KG,BASE leaf
-</code></pre>
-
-<p>Arrows read <strong>“depends on”</strong>. The tree is deliberately shallow and strictly
-acyclic — <code class="language-plaintext highlighter-rouge">resolveDependencyTree</code> has cycle detection, but a cycle here would
-mean the boundary is wrong, not that the resolver should cope.</p>
-<h2 id="the-five">
+<p><strong>Markers.</strong> <code class="language-plaintext highlighter-rouge">[NEEDS CLARIFICATION: …]</code> flags an ambiguity that must be resolved
+rather than guessed. <code class="language-plaintext highlighter-rouge">ACTION REQUIRED</code> marks a section that must be substantively
+completed before approval.</p>
+<h2 id="what-this-platform-adds-and-why-it-is-an-addition-rather-than-a-reading">
   
   
-    <a href="#the-five" class="anchor-heading" aria-labelledby="the-five"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The five
+    <a href="#what-this-platform-adds-and-why-it-is-an-addition-rather-than-a-reading" class="anchor-heading" aria-labelledby="what-this-platform-adds-and-why-it-is-an-addition-rather-than-a-reading"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this platform adds, and why it is an addition rather than a reading
   
   
 </h2>
     
-<h3 id="cat-harness">
-  
-  
-    <a href="#cat-harness" class="anchor-heading" aria-labelledby="cat-harness"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">cat-harness</code>
-  
-  
-</h3>
-    
 
-<p><strong>Authoritative for:</strong> how an agent and a human interact — Roles, Skills, Tools,
-and the BPMN processes that sequence them. Test and benchmarking infrastructure.
-Multi-model handling. Base infrastructure provisioning (OpenStack / Docker /
-self-sovereign compute). QA sidecar infrastructure.</p>
-
-<p><strong>The defining constraint: it does not “do” anything.</strong> It defines what a Skill
-<em>is</em>, what a Tool definition looks like as a KG node, how a Role scopes
-permissions, and how a workflow advances — and it ships no content type, no
-validator for any particular document, and no renderer. If a change to
-<code class="language-plaintext highlighter-rouge">cat-harness</code> would break only one content type, it belongs downstream.</p>
-
-<p>Its own content is <strong>self-documentation</strong>: what installs, how to add a new
-skill, how to add an MCP service. It is a Tool repo whose content is its manual.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>today</th>
-      <th>lands in</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">src/server.ts</code>, <code class="language-plaintext highlighter-rouge">src/core/{rbac,git,cache,logging}.ts</code></td>
-      <td><code class="language-plaintext highlighter-rouge">cat-harness</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">src/workflow/</code>, <code class="language-plaintext highlighter-rouge">src/tools/workflow.ts</code>, <code class="language-plaintext highlighter-rouge">processes/*.bpmn</code> (the three content-agnostic ones)</td>
-      <td><code class="language-plaintext highlighter-rouge">cat-harness</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">schemas/assistant-{package,types,workflow}.ts</code></td>
-      <td><code class="language-plaintext highlighter-rouge">cat-harness</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">src/tools/{check-deps,capabilities,skill-fetch,preferences,beans-prime}.ts</code></td>
-      <td><code class="language-plaintext highlighter-rouge">cat-harness</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">scripts/install-beans.sh</code>, <code class="language-plaintext highlighter-rouge">scripts/session-start-coord-sweep.sh</code>, <code class="language-plaintext highlighter-rouge">beans/</code> discipline</td>
-      <td><code class="language-plaintext highlighter-rouge">cat-harness</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">deploy/</code>, <code class="language-plaintext highlighter-rouge">Dockerfile</code>, <code class="language-plaintext highlighter-rouge">skills/framework/</code>, <code class="language-plaintext highlighter-rouge">skills/remote-packages/</code></td>
-      <td><code class="language-plaintext highlighter-rouge">cat-harness</code></td>
-    </tr>
-    <tr>
-      <td>QA <strong>sidecar infrastructure</strong> (the <code class="language-plaintext highlighter-rouge">*.qa.json</code> mechanism, axes, criterion registry <em>shape</em>)</td>
-      <td><code class="language-plaintext highlighter-rouge">cat-harness</code></td>
-    </tr>
-    <tr>
-      <td>QA <strong>criteria</strong> (what a good theorem or a good DAK looks like)</td>
-      <td>downstream, not here</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p>That last pair is the sharpest boundary in the whole split, and the easiest to
-get wrong. The harness owns <em>that</em> QA findings are sidecar JSON with severities
-and axes; it must not own <em>which</em> findings exist.</p>
-<h3 id="folio-assistant-core">
-  
-  
-    <a href="#folio-assistant-core" class="anchor-heading" aria-labelledby="folio-assistant-core"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">folio-assistant-core</code>
-  
-  
-</h3>
-    
-
-<p><strong>Authoritative for:</strong> the base, generic document / webpage / etc. schema and
-its knowledge graph; the authoring pipeline; base workflows; ingestion; and the
-rendering pipeline that takes a generic “paper” to PDF and to Just-the-Docs.</p>
-
-<p>This is the largest of the five and the one that inherits most of today’s repo.
-It is what the <code class="language-plaintext highlighter-rouge">document</code> profile and the <code class="language-plaintext highlighter-rouge">document</code> adapter already are, plus
-the pipeline that serves them.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>today</th>
-      <th>lands in</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">schemas/{types,constraints,builders,block-kinds}.ts</code>, <code class="language-plaintext highlighter-rouge">schemas/jsonld.ts</code>, <code class="language-plaintext highlighter-rouge">schemas/webpage.ts</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">adapters/document/</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content/pipeline/</code> minus the Lean/TeX files</td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content/pipeline/render-markdown.ts</code> + <code class="language-plaintext highlighter-rouge">document_render_{md,html,pdf}</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core</code></td>
-    </tr>
-    <tr>
-      <td>ingestion (<code class="language-plaintext highlighter-rouge">docs/document-ingestion.md</code> and its pipeline)</td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content/pipeline/readme-sections.ts</code>, <code class="language-plaintext highlighter-rouge">readme-links.ts</code>, <code class="language-plaintext highlighter-rouge">src/tools/readme-*.ts</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">skills/{folio-core,folio-document-adapter,content-lifecycle}/</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">translations/</code>, <code class="language-plaintext highlighter-rouge">schemas/translation.ts</code>, <code class="language-plaintext highlighter-rouge">src/tools/translation.ts</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">ui/</code>, <code class="language-plaintext highlighter-rouge">viewer/</code>, <code class="language-plaintext highlighter-rouge">blueprint/</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core</code> (<strong>judgement call</strong> — see below)</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><strong>Judgement call on the viewer.</strong> <code class="language-plaintext highlighter-rouge">ui/</code>, <code class="language-plaintext highlighter-rouge">viewer/</code> and <code class="language-plaintext highlighter-rouge">blueprint/</code> render the
-content-object model, which is core’s. But <code class="language-plaintext highlighter-rouge">blueprint/</code> is an interactive
-<em>graph</em> of a formal dependency structure, which is a scientific-authoring
-concern. Splitting the viewer by content type is plausible and probably wrong —
-more likely core owns a viewer with a registration point, and <code class="language-plaintext highlighter-rouge">folio-assistant-sci</code>
-registers into it. That mechanism does not exist today.</p>
-<h3 id="folio-assistant-sci">
-  
-  
-    <a href="#folio-assistant-sci" class="anchor-heading" aria-labelledby="folio-assistant-sci"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">folio-assistant-sci</code>
-  
-  
-</h3>
-    
-
-<p><strong>Authoritative for:</strong> the Lean, LaTeX and simulator content types, and the
-scientific-authoring skills. Per the issue, it depends <strong>only</strong> on
-<code class="language-plaintext highlighter-rouge">folio-assistant-core</code>.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>today</th>
-      <th>lands in</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>the seven <code class="language-plaintext highlighter-rouge">MATH_BLOCK_KINDS</code> in <code class="language-plaintext highlighter-rouge">schemas/block-kinds.ts</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">adapters/paper/</code> and <code class="language-plaintext highlighter-rouge">PaperContentAdapter</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci</code></td>
-    </tr>
-    <tr>
-      <td>the Lean lifecycle tools — <code class="language-plaintext highlighter-rouge">lean_setup</code> / <code class="language-plaintext highlighter-rouge">build</code> / <code class="language-plaintext highlighter-rouge">check</code> / <code class="language-plaintext highlighter-rouge">status</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">paper_render_pdf</code> / <code class="language-plaintext highlighter-rouge">paper_render_html</code> / <code class="language-plaintext highlighter-rouge">formula_render</code>, <code class="language-plaintext highlighter-rouge">latex/</code>, <code class="language-plaintext highlighter-rouge">scripts/render-tex/</code>, <code class="language-plaintext highlighter-rouge">scripts/docker-latex-build/</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">computations/</code>, <code class="language-plaintext highlighter-rouge">src/sage-mcp-server.py</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">schemas/{formalization-types,lean-packages,precision-scalar,refactor-strategy}.ts</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">skills/{authoring-math,folio-paper-adapter}/</code></td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci</code></td>
-    </tr>
-    <tr>
-      <td>witness/proof-status tooling, <code class="language-plaintext highlighter-rouge">scripts/lean-*</code> (16 files)</td>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci</code></td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><strong>This repo is the acid test for the dependency model</strong>, because it needs to
-contribute all three of: a <strong>block kind</strong> (a schema), an <strong>adapter</strong> (code), and
-<strong>MCP tools</strong> (<code class="language-plaintext highlighter-rouge">lean_build</code>). Until 2026-09-18 the dependency model resolved
-<a href="current-state.html#what-the-model-used-to-rule-out--resolved-2026-09-18">none of the three</a>,
-which made <code class="language-plaintext highlighter-rouge">folio-assistant-sci</code> unbuildable outright.
-<a href="migration-plan.html#01--make-the-dependency-model-able-to-carry-the-split--decided-and-built">Phase 0.1</a>
-has since been decided and built — load-time registration, with collisions
-refused rather than resolved by order — so the blocker is cleared. The acid
-test still stands: if a future change makes any of the three unreachable from a
-dependency again, this repo is the one that stops being buildable first.</p>
-<h3 id="smart-kg">
-  
-  
-    <a href="#smart-kg" class="anchor-heading" aria-labelledby="smart-kg"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">smart-kg</code>
-  
-  
-</h3>
-    
-
-<p><strong>Authoritative for:</strong> the WHO L1 document and knowledge-graph schemas, and the
-skills and QA checks that go with them.</p>
-
-<p>L1 is narrative guidance — the published guideline as a structured document. It
-is a <em>document</em> folio in the existing profile sense, with a WHO-specific schema
-layered on. It therefore depends on <code class="language-plaintext highlighter-rouge">folio-assistant-core</code> and not on
-<code class="language-plaintext highlighter-rouge">cat-harness</code> directly.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>today</th>
-      <th>lands in</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>WHO L1 document structure, <code class="language-plaintext highlighter-rouge">docs/guides/who-smart-dak.md</code> (L1 portions)</td>
-      <td><code class="language-plaintext highlighter-rouge">smart-kg</code></td>
-    </tr>
-    <tr>
-      <td>L1 QA criteria</td>
-      <td><code class="language-plaintext highlighter-rouge">smart-kg</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">skills/authoring-who-smart-guidelines/</code> (L1 portions)</td>
-      <td><code class="language-plaintext highlighter-rouge">smart-kg</code></td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><strong>This is the thinnest mapping on the page</strong>, because L1 is the least-built part
-of the current repo. Most WHO material here is L2 (DAK) and L3 (FHIR IG). The
-L1/L2 line needs drawing by someone with the WHO SMART Guidelines context before
-the split; this page should not invent it.</p>
-<h3 id="smart-base">
-  
-  
-    <a href="#smart-base" class="anchor-heading" aria-labelledby="smart-base"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">smart-base</code>
-  
-  
-</h3>
-    
-
-<p><strong>Authoritative for:</strong> SMART Guidelines skills, services and QA checks across
-L2–L3; adaptation skills; OCL skills.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>today</th>
-      <th>lands in</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">schemas/dak-blocks.ts</code>, the <code class="language-plaintext highlighter-rouge">dak</code> adapter’s kinds</td>
-      <td><code class="language-plaintext highlighter-rouge">smart-base</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content/pipeline/fsh-cone.ts</code>, FHIR/FSH tooling</td>
-      <td><code class="language-plaintext highlighter-rouge">smart-base</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">processes/l2-dak-authoring.bpmn</code>, <code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></td>
-      <td><code class="language-plaintext highlighter-rouge">smart-base</code></td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">docs/guides/who-smart-{dak,ig}.md</code>, <code class="language-plaintext highlighter-rouge">skills/authoring-who-smart-guidelines/</code> (L2–L3)</td>
-      <td><code class="language-plaintext highlighter-rouge">smart-base</code></td>
-    </tr>
-    <tr>
-      <td>the DAK translation extractors (PlantUML, ArchiMate, Excel, BPMN) from <a href="https://github.com/litlfred/folio-assistant/pull/237">PR #237</a></td>
-      <td><code class="language-plaintext highlighter-rouge">smart-base</code></td>
-    </tr>
-    <tr>
-      <td>OCL skills, adaptation skills</td>
-      <td><code class="language-plaintext highlighter-rouge">smart-base</code> (<strong>mostly not yet written</strong>)</td>
-    </tr>
-    <tr>
-      <td>DAK QA criteria (bean <code class="language-plaintext highlighter-rouge">sopq</code>, the WHO IG starter-kit SOPs)</td>
-      <td><code class="language-plaintext highlighter-rouge">smart-base</code></td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><code class="language-plaintext highlighter-rouge">smart-base</code> depends on <code class="language-plaintext highlighter-rouge">smart-kg</code> because an L2 DAK is an operationalisation of
-an L1 guideline: the DAK’s business processes cite L1 recommendations, so the L2
-tooling needs L1’s schema to resolve them.</p>
-<h2 id="the-kind-splits-the-issue-anticipates">
-  
-  
-    <a href="#the-kind-splits-the-issue-anticipates" class="anchor-heading" aria-labelledby="the-kind-splits-the-issue-anticipates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The kind-splits the issue anticipates
-  
-  
-</h2>
-    
+<p><strong>Upstream does not itself state a hard “no code without a spec” rule</strong>, and it
+does not claim its specs are executable. The gate is <em>ours</em>. It is stated here so
+that nobody later cites spec-kit as the authority for a rule spec-kit does not
+carry:</p>
 
 <blockquote>
-  <p><em>“some of these may need be split into their respective Tool, Test, etc repos
-to avoid mixing of concerns. e.g. <code class="language-plaintext highlighter-rouge">smart-kg-tools</code>”</em></p>
+  <p>No implementation work on a feature begins before a spec for it exists in the
+declared template and is posted to its governing issue.</p>
 </blockquote>
 
-<p>Applying the <a href="repo-taxonomy.html#splitting-a-mixed-repo">taxonomy’s splitting rule</a>
-— split when consumers or cadences differ — gives:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>candidate</th>
-      <th>split?</th>
-      <th>why</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">smart-kg</code> / <code class="language-plaintext highlighter-rouge">smart-kg-tools</code></td>
-      <td><strong>likely yes</strong></td>
-      <td>L1 guidance changes on WHO’s cadence; the tooling changes on the platform’s. Different reviewers entirely.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">smart-base</code> / <code class="language-plaintext highlighter-rouge">smart-base-tools</code></td>
-      <td><strong>likely yes</strong></td>
-      <td>same argument, and L2–L3 tooling (FSH, OCL, ArchiMate) is heavy and independently versioned</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-core</code></td>
-      <td><strong>no</strong></td>
-      <td>its schemas and its pipeline always change together; splitting gives two repos with one changelog</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">cat-harness</code></td>
-      <td><strong>no</strong></td>
-      <td>it is already a Tool repo whose content is its own manual</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci</code></td>
-      <td><strong>defer</strong></td>
-      <td>plausible later (<code class="language-plaintext highlighter-rouge">-sci-tools</code> for the Lean/LaTeX toolchain) but not before the extraction itself is proven</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p><strong>Test repos are additive, not extractions.</strong> No Test repo exists today
-(<a href="current-state.html#what-this-repo-is-authoritative-for-today">current state</a>),
-so <code class="language-plaintext highlighter-rouge">smart-base-test</code>, <code class="language-plaintext highlighter-rouge">folio-core-test</code> and the rest are Phase III work that
-builds something new, not Phase II work that moves something existing. Their
-defining requirement is the one from the taxonomy: <strong>test data assets must
-themselves be folio content types in the KG</strong>, so SME review of test data is the
-same workflow as SME review of anything else.</p>
-<h2 id="phase-iii-what-the-split-is-for">
+<p>Owner, 2026-09-21: <em>“ensure that the spec exists before anything is developed”</em>.</p>
+<h2 id="what-this-platform-refuses-with-reasons">
   
   
-    <a href="#phase-iii-what-the-split-is-for" class="anchor-heading" aria-labelledby="phase-iii-what-the-split-is-for"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase III: what the split is <em>for</em>
+    <a href="#what-this-platform-refuses-with-reasons" class="anchor-heading" aria-labelledby="what-this-platform-refuses-with-reasons"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this platform refuses, with reasons
   
   
 </h2>
     
 
-<p>The five repos are not the goal. The goal is that L4 (Consumer apps) and L5
-content can be built off <code class="language-plaintext highlighter-rouge">cat-harness</code> without inheriting a scientific
-paper’s LaTeX toolchain or a WHO guideline’s FHIR profile — so that a
-healthworker- or individual-facing workflow (immunizations is the issue’s
-example) composes exactly the three or four instances it needs.</p>
+<p><code class="language-plaintext highlighter-rouge">methodology-adoption</code> requires both halves stated — a silent omission
+misrepresents the standard.</p>
 
-<p>That is the test to hold the boundary against. If a new consumer-facing folio
-has to depend on <code class="language-plaintext highlighter-rouge">folio-assistant-sci</code> to get a working install, the split has not
-achieved anything.</p><hr />
+<ul>
+  <li><strong>The on-disk layout.</strong> Upstream keeps a spec at <code class="language-plaintext highlighter-rouge">specs/NNN-feature/spec.md</code>
+and its own state under <code class="language-plaintext highlighter-rouge">.specify/</code>. <strong>Not adopted.</strong> A spec instance here is a
+comment on its governing issue and goes nowhere near the knowledge graph, per
+<code class="language-plaintext highlighter-rouge">where-a-proposal-goes</code> — the owner’s standing rule of 2026-09-19, <em>“do not
+pollute the KG with SDLC churn”</em>. A spec is an argument about what to build,
+superseded the moment it is decided; it has the wrong lifetime for a permanent
+URL and needs none of translation, QA sidecars or link auditing. A <code class="language-plaintext highlighter-rouge">specs/</code>
+directory was drafted while adopting this and withdrawn before it was
+committed. The <strong>template</strong> is durable and belongs in the graph; an
+<strong>instance</strong> is not.
+<code class="language-plaintext highlighter-rouge">.specify/</code> is refused on a second ground as well: this repository’s
+dot-prefix guard rejects a dot-prefixed segment, which is why <code class="language-plaintext highlighter-rouge">.beans/</code> and
+<code class="language-plaintext highlighter-rouge">.harness/</code> were moved out in 2026-09.</li>
+  <li><strong>The <code class="language-plaintext highlighter-rouge">/speckit-*</code> command surface, as a surface.</strong> The <em>method</em> is adopted;
+the concrete command names are upstream’s packaging for tools that install
+slash commands. Adopting names this repository does not serve would be
+adoption by citation — the refusal <code class="language-plaintext highlighter-rouge">methodology-adoption</code> names second.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">constitution</code>, for now.</strong> This repository already has a constitution in
+everything but the name: <code class="language-plaintext highlighter-rouge">AGENTS.md</code>, the skills it points to, and the
+<code class="language-plaintext highlighter-rouge">req:*</code> conformance lattice. A second statement of principles would be a
+second answer to “what binds here”, free to disagree with the first. Revisit
+only if the two are ever reconciled into one.</li>
+</ul>
+<h2 id="against-crdm--parallel-never-blended">
+  
+  
+    <a href="#against-crdm--parallel-never-blended" class="anchor-heading" aria-labelledby="against-crdm--parallel-never-blended"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Against <code class="language-plaintext highlighter-rouge">crdm</code> — parallel, never blended
+  
+  
+</h2>
+    
 
-<p>Next: <a href="migration-plan.html">Migration plan</a> — how to get from one to five.</p>
+<p>Both answer <em>request → agreed requirements</em>. <code class="language-plaintext highlighter-rouge">methodology-adoption</code> is explicit
+that parallel means parallel: pick one per decision, name it, follow it. The
+discriminator is in each one’s <code class="language-plaintext highlighter-rouge">applies-when</code> above and in <code class="language-plaintext highlighter-rouge">crdm-detect</code>’s, and
+the ladder question that reaches them is in <code class="language-plaintext highlighter-rouge">methodology-adoption</code>.</p>
+
+<p>The short form, in the owner’s terms: <strong>who is asking, and does the answer depend
+on what a folio says?</strong> Tool developer, content-agnostic → here. Stakeholders who
+must sign it off, tied to WHO/IG subject matter → <code class="language-plaintext highlighter-rouge">crdm</code>.</p>
+<h2 id="refusals">
+  
+  
+    <a href="#refusals" class="anchor-heading" aria-labelledby="refusals"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Refusals
+  
+  
+</h2>
+    
+
+<ul>
+  <li><strong>Never blend this with <code class="language-plaintext highlighter-rouge">crdm</code>.</strong> A composite inherits neither one’s authority
+while claiming both.</li>
+  <li><strong>Never resolve a <code class="language-plaintext highlighter-rouge">[NEEDS CLARIFICATION]</code> by agent judgement.</strong>
+<code class="language-plaintext highlighter-rouge">req:agent-workflow</code> → <code class="language-plaintext highlighter-rouge">judgement-stays-human</code> (SHALL) applies unchanged: an
+agent does not record a human’s decision on their behalf. A marker silently
+closed is worse than one never raised, because it looks answered.</li>
+  <li><strong>Never let a spec reach adjudicated status with a marker open.</strong> Otherwise
+the marker becomes a way of appearing to ask without having asked.</li>
+  <li><strong>Never cite spec-kit for the spec-before-code gate.</strong> It is this platform’s
+addition, stated above.</li>
+</ul>
 
           
 
