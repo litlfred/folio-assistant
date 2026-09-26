@@ -1,11 +1,12 @@
 ---
 # folio-assistant-1s5s
 title: The published package's PYTHON half runs nowhere — CI's pytest job globs a directory that does not contain it
-status: todo
+status: in-progress
 type: task
-parent: folio-assistant-1xhc
+priority: normal
 created_at: 2026-09-26T09:13:49Z
-updated_at: 2026-09-26T09:14:15Z
+updated_at: 2026-09-26T09:54:40Z
+parent: folio-assistant-1xhc
 ---
 
 
@@ -53,12 +54,18 @@ installs and the TypeScript job does not.
 
 ## Done when
 
-- [ ] `tests/test_python.py` runs in CI, and its 17 tests are counted.
-- [ ] Verified by BREAKING it — a deliberately failing assertion turns the job
-      red — because a glob that matches nothing exits 0 and looks identical to
-      a suite that passed.
-- [ ] Whichever job owns it says so in a comment, so the next person adding a
-      publishable package knows where its tests are expected to run.
+- [x] `tests/test_python.py` runs in CI, and its tests are counted — **18**,
+      not the 17 this bean claimed; three are `@parametrize`d two ways.
+      Re-derived from `python3 -m pytest -q`, not quoted. They all pass, and
+      always would have: the suite was never broken, only unreachable.
+- [x] Verified by BREAKING it — three ways, since one break only exercises one
+      of the three ways this can read green over nothing. See §"Falsified" below.
+- [x] Whichever job owns it says so in a comment — BOTH do. The `typescript`
+      job's new `setup-python` step explains why a TypeScript job installs
+      Python; the `python` job's test step now opens by saying it is for this
+      repository's own scripts and NOT for published packages, which is where
+      the next person will look first and where the wrong repair suggests
+      itself.
 
 ## The second box `rsi6` carried, recorded and NOT actioned
 
@@ -67,3 +74,72 @@ it ships beside**: `block-qa-schema` pins `typescript ^7` while the root pins
 `^6`. That divergence is what made the `rsi6` breakage possible. It is a
 policy question — must a shipped package track the platform's toolchain, or is
 independence the point of publishing it? — and nobody has been asked.
+
+
+## The premise in this bean was WRONG, and it changed the answer
+
+This bean said shape 2 "needs pytest on the runner for that step, **which the
+Python job already installs**". It does not. Measured 2026-09-26 against
+`.github/workflows/code-quality-gates.yml`:
+
+- the `python-imports` job installs `ruff` and `requirements.txt` — grep for
+  `pytest` across the whole workflow file returns **nothing**;
+- its test step runs each file as a **bare script**: `python3 "$t"`;
+- `requirements.txt` is GENERATED from `schemas/python-deps.ts` (bean `68dt`)
+  and carries neither `pytest` nor `pydantic`.
+
+That does not merely make shape 1 inferior — it makes it **non-functional, in
+the exact way this bean exists to prevent**. `test_python.py` has no `__main__`
+runner and uses `pytest.raises` and `@pytest.mark.parametrize`. Run as
+`python3 test_python.py` it either dies on `import pytest` or — with pytest
+present — defines eighteen functions, executes **none**, and exits **0**.
+Widening the glob would have reported a pass it never computed: the `5rfy`
+gate-that-never-fires shape, which is what `rsi6` and `1s5s` are both about.
+
+So shape 2 was taken, and the reason is stronger than "probably right".
+
+## What landed
+
+- `check-published-packages.ts` now discovers `pyproject.toml` from the git
+  index alongside `package.json`. One directory shipping to both registries is
+  **two entries and two verdicts** — the halves fail independently, which is
+  this bean's own finding, so a single verdict would let the npm half vouch
+  for the Python one.
+- Nothing about a runner is hardcoded. A package declares pytest by carrying
+  `[tool.pytest.ini_options]`, and declares its test dependencies under
+  `[project.optional-dependencies] test`, which is what the gate installs. A
+  package declaring neither is reported, not guessed at.
+- PEP 621 has no `private` flag, so the Python exclusion honours the
+  `Private ::` classifier convention rather than inventing a field nobody writes.
+- An absent interpreter is a **FINDING, not a skip** — "python3 is not here"
+  and "the Python half passed" must never render identically.
+- `actions/setup-python@v7` added to the `typescript` job, where the gate runs.
+- 12 new tests at `cat-harness/scripts/tests/published-packages.test.ts` over
+  the discovery, with git-repo fixtures rather than a mocked `git ls-files` —
+  a mock would test the mock, and "what git accounts for" IS the contract.
+
+## Falsified
+
+Each break run against the real gate, then reverted and re-confirmed green:
+
+1. **A failing Python assertion** → exit 1; the assertion text is quoted in the
+   tail, `1 failed, 18 passed`.
+2. **pytest collects nothing** (tests file hidden) → exit 1, exit code **5**,
+   glossed in the output as `COLLECTED NO TESTS`. This is the `vitest run`
+   "No test files found" false-green in another costume — the one `rsi6` found
+   the hard way — so it is named rather than left as a bare exit code.
+3. **No `python3` on PATH** (run under a minimal PATH holding only bun/git/sh)
+   → exit 1, reported as `could not prepare`, not as a skip.
+
+And the tests were falsified too, since a test that cannot fail is the same
+defect one level up: breaking the `Private ::` exclusion fails exactly the
+`Private ::` test; replacing `git ls-files` with a filesystem walk fails
+exactly the `ramz`-rule test. Nothing else moved in either run.
+
+## Split out
+
+Bean `872t` — the Python half's **wheel build** is still unchecked, so the two
+halves are guarded unequally. Recorded rather than decided: it costs a second
+install on every PR, and the real argument for it is that the tests import from
+`pythonpath` rather than from the built wheel, so a wheel whose `force-include`d
+schema files went missing would pass every test there is.
