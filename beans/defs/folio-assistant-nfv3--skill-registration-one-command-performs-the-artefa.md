@@ -157,7 +157,7 @@ half-written skill the moment somebody ran it.
 
 `skill-register.ts` is a sibling's **merged** work. Deleting or absorbing it is
 not an agent's call —
-[`deletion-requires-confirmation`](deletion-requires-confirmation.md) — and two
+[`deletion-requires-confirmation`](../../cat-harness/skills/folio-core/deletion-requires-confirmation.md) — and two
 commands one letter apart is a defect that should be closed by a decision rather
 than by whoever pushes next. Both are green side by side, so nothing is broken
 while it waits.
