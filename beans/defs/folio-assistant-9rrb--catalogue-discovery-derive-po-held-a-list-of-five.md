@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T14:13:00Z
-updated_at: 2026-09-26T14:19:26Z
+updated_at: 2026-09-26T17:26:28Z
 parent: folio-assistant-bzyu
 ---
 
@@ -112,3 +112,37 @@ So the check passes on the head and fails on the merge, which is precisely `nytj
 measured rather than argued. It also means my own `bun run gates` cannot be the
 last word before pushing while main moves this fast: the substantive evidence has
 to be the gate set run against the MERGE, and nothing here produces that.
+
+## The drift gate is green, and how — owner decision 2026-09-26
+
+Page discovery took `translation:drift:check` from **36 findings on `main`** to
+**6 on this branch** (measured in a worktree at `origin/main`, not inferred).
+The remaining 6 are refusals by `derive-po.ts`: no catalogue can be DERIVED,
+because the published translation does not have the same shape as its source.
+
+Asked with all six named and four options. The owner chose: **record all 6 in
+`UNCATALOGED`, with reasons and today's date.**
+
+That is the gate's own documented third state, not a suppression. `UNCATALOGED`
+is declared in `translation-drift.ts` as *"a BACKLOG, not a policy"*, each entry
+carries a `since` *"so an entry cannot quietly become permanent"*, and a
+recorded pair still PRINTS on every run — as `uncatalogued and recorded`
+rather than `✗`. The run now reads `0 NEWLY drifted … 8 uncatalogued and
+recorded`, and all eight reasons are on screen.
+
+Each reason names WHAT differs, because a reason that does not cannot tell the
+next reader whether it has been fixed:
+
+| pair | recorded reason |
+|---|---|
+| `ar/architecture` | `count-differs`, 60 source constructs vs 61 |
+| `ar/skills` | `count-differs`, 146 vs 147 |
+| `zh/getting-started` | `count-differs`, 149 vs 145 — `7x8o`'s 20 dropped table cells |
+| `ar/publication-workflow` | `msgid-conflict` on "Editor / author" |
+| `zh/publication-workflow` | `msgid-conflict` on "Editor / author" |
+| `zh/skills` | `msgid-conflict` on "Skills" — 技能 vs 技能数 |
+
+**Not one was re-translated.** Issue #206 reserves translation adjudication to
+a human, so clearing a refusal by editing the translation would manufacture
+exactly the sign-off it protects. Three of the six need `msgctxt`, which is a
+format question rather than a translation one, and that is a separate change.
