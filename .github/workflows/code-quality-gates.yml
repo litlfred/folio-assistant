@@ -288,7 +288,8 @@ jobs:
     #
     # It was not hypothetical. `kg:detangle:check` sits in this block, and it is
     # the only instrument positioned to catch the defect `xd1g` fixed:
-    # `check:published-packages` (also in this block) runs `bun install` inside
+    # `check:published-packages` (also in this block) installs that package's own
+    # declared devDependencies into
     # `cat-harness/schemas/block-qa-schema`, so a runner reaching the detangle
     # check has no nested `node_modules` and measures the tracked corpus, while
     # any developer container has the install and agrees with the poisoned
