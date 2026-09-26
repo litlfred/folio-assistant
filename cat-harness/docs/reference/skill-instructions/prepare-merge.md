@@ -339,7 +339,14 @@ harness git instructions). Do not include the model identifier in the PR.
 
   So before calling a branch ready, and **before any merge**:
 
-  0. **Read `mergeable_state` FIRST.** If it is `dirty`, the PR conflicts with
+  0. **Read `mergeable_state` FIRST — and believe it only when it says
+     `dirty`.** `clean` and `unknown` are not evidence here: `fx5r` measured
+     the PR endpoint serving a merged PR's pre-merge view for 45 minutes, and
+     `unknown` means GitHub has not finished computing it (`h2s9`). `dirty` is
+     the one value worth acting on unilaterally, because its remedy — merging
+     the base in — costs nothing on a PR that did not need it.
+
+     If it is `dirty`, the PR conflicts with
      its base and that is very likely why nothing ran: this workflow is
      `on: pull_request:` with `actions/checkout@v4` and no `ref:`, so it checks
      out `refs/pull/N/merge` — the merge commit GitHub computes between head

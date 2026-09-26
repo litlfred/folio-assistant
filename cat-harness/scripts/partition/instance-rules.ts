@@ -803,6 +803,11 @@ export const RULES: Rule[] = [
       "scripts/check-agent-entry-links.ts",
       "scripts/check-command-paths.ts",
       "scripts/check-anchor-names.ts",
+      // Bean `fx5r`. Harness by subject: its table names FORGE fields whose
+      // served value goes stale, and a folio has no forge. It imports nothing
+      // but `node:fs` and `node:path`, and the advice it sweeps is this
+      // platform's skills and workflows.
+      "scripts/check-stale-field-advice.ts",
       // Its subject is the harness's OWN declaration filename — which file
       // names an instance — so it is harness by subject as well as by
       // dependency: it imports `schemas/cat-harness.js` for the constant and
