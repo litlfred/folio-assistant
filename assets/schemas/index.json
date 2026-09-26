@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 174,
+      "count": 175,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -1326,6 +1326,14 @@
       "name": "user-story",
       "graphNode": "schema",
       "summary": "User stories — what a reader acting in a role is trying to do.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/vector-labels.ts",
+      "instance": "cat-harness",
+      "name": "vector-labels",
+      "graphNode": "schema",
+      "summary": "The positioned TEXT on a page that declares a figure — bean `a8wy`, under",
       "isTest": false
     },
     {
@@ -33854,6 +33862,216 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/vector-labels.ts#BBoxSchema",
+      "name": "BBoxSchema",
+      "module": "cat-harness/schemas/vector-labels.ts",
+      "kind": "undetermined",
+      "note": "z.tuple([z.number(), z.number(), z.number(), z.number()])",
+      "doc": "A rectangle in PDF user space: `[x0, y0, x1, y1]`, origin top-left.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-labels.ts#VectorFigurePage",
+      "name": "VectorFigurePage",
+      "module": "cat-harness/schemas/vector-labels.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema",
+      "name": "VectorFigurePageSchema",
+      "module": "cat-harness/schemas/vector-labels.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "page",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false,
+          "doc": "1-based, matching `DocumentImage`'s `basis.page` so the two join."
+        },
+        {
+          "name": "rotation",
+          "type": "z.number().int()",
+          "optional": false,
+          "array": false,
+          "doc": "The page's rotation in degrees, as the PDF declares it."
+        },
+        {
+          "name": "drawings",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "Vector drawing operations MuPDF reports on the page. Reported, never graded."
+        },
+        {
+          "name": "rasterImagesOnPage",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "Raster images the page also places."
+        },
+        {
+          "name": "captionCandidates",
+          "type": "z.array(z.string()).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "Verbatim line-start `Fig.`/`Figure` matches on the page, table-of-contents"
+        },
+        {
+          "name": "labels",
+          "type": "z.array(VectorLabelSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vector-labels.ts#VectorLabelSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-labels.ts#VectorLabel",
+      "name": "VectorLabel",
+      "module": "cat-harness/schemas/vector-labels.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema",
+      "name": "VectorLabelSchema",
+      "module": "cat-harness/schemas/vector-labels.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "text",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The line's text: its spans concatenated, since a span break is a style change and not a word break."
+        },
+        {
+          "name": "bbox",
+          "type": "BBoxSchema",
+          "optional": false,
+          "array": false,
+          "doc": "The line's rectangle **in the visible frame** — rotation already applied."
+        },
+        {
+          "name": "intersectsDrawing",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "Whether this block's rectangle intersects any vector drawing's."
+        },
+        {
+          "name": "fonts",
+          "type": "z.array(z.string()).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "Font names on the line's spans, deduplicated and sorted."
+        },
+        {
+          "name": "sizes",
+          "type": "z.array(z.number()).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "Point sizes on the line's spans, deduplicated and sorted ascending."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vector-labels.ts#BBoxSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-labels.ts#VectorLabelsSidecar",
+      "name": "VectorLabelsSidecar",
+      "module": "cat-harness/schemas/vector-labels.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/vector-labels.ts#VectorLabelsSidecarSchema",
+      "name": "VectorLabelsSidecarSchema",
+      "module": "cat-harness/schemas/vector-labels.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(VECTOR_LABELS_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "doc_id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pages",
+          "type": "z.array(VectorFigurePageSchema).nullable()",
+          "optional": false,
+          "array": true,
+          "doc": "`null` is could-not-determine and is NOT an empty list."
+        },
+        {
+          "name": "undetermined_reason",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "VECTOR_LABELS_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/version-bump.ts#Bump",
       "name": "Bump",
       "module": "cat-harness/schemas/version-bump.ts",
@@ -44816,6 +45034,30 @@
       "kind": "field",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema",
+      "to": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema",
+      "via": "labels",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema",
+      "to": "cat-harness/schemas/vector-labels.ts#BBoxSchema",
+      "via": "bbox",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/vector-labels.ts#VectorLabelsSidecarSchema",
+      "to": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema",
+      "via": "pages",
+      "kind": "field",
+      "optional": false,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/version-bump.ts#SurfaceDiff",

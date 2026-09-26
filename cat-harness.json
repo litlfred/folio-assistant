@@ -269,10 +269,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T12:42:34.113Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e3264b4c64bb75117cb3d58595ad508e472572de",
-  "sourceCommitSha": "e3264b4c64bb75117cb3d58595ad508e472572de",
-  "sourceCommitAt": "2026-09-26T14:39:49+02:00",
+  "generatedAt": "2026-09-26T13:42:43.922Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9b76c0b96622a44db8a3ca762815d979c870bb55",
+  "sourceCommitSha": "9b76c0b96622a44db8a3ca762815d979c870bb55",
+  "sourceCommitAt": "2026-09-26T15:39:56+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -286,7 +286,7 @@
     "Role": 148,
     "ProcessNode": 861,
     "Tool": 101,
-    "Schema": 123,
+    "Schema": 124,
     "GraphKind": 34,
     "Directory": 44,
     "Asset": 3
@@ -870,7 +870,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security"
       ],
       "instructionsPath": "skills/security/path-containment.md",
-      "instructionLines": 57,
+      "instructionLines": 101,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -886,7 +886,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security"
       ],
       "instructionsPath": "skills/security/injection-boundaries.md",
-      "instructionLines": 53,
+      "instructionLines": 88,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1870,7 +1870,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/library-ingestion.md",
-      "instructionLines": 505,
+      "instructionLines": 545,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -39066,6 +39066,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vector-labels",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "vector-labels",
+      "title": "The positioned TEXT on a page that declares a figure — bean `a8wy`, under",
+      "module": "schemas/vector-labels.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/version-bump",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "version-bump",
@@ -40933,8 +40941,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "e3264b4c64bb75117cb3d58595ad508e472572de",
+    "sha": "9b76c0b96622a44db8a3ca762815d979c870bb55",
     "pr": "main",
-    "run": "36242630354"
+    "run": "36245923070"
   }
 }
