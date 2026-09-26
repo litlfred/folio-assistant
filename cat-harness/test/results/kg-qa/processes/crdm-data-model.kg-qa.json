@@ -31,6 +31,31 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Entities",
+          "detail": "names skill \"crdm-data-model\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Relations",
+          "detail": "names skill \"crdm-data-model\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "BA_ConfirmEntities",
+          "detail": "names skill \"crdm-data-model\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "S_ConfirmCardinality",
+          "detail": "names skill \"crdm-data-model\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Declare",
+          "detail": "names skill \"crdm-data-model\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -127,7 +152,7 @@
   },
   "totals": {
     "pass": 16,
-    "fail": 1,
+    "fail": 2,
     "n/a": 7,
     "unknown": 0
   }
