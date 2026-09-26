@@ -894,6 +894,20 @@ jobs:
           # main for an unknown stretch while CI stayed green -- a gate no
           # workflow runs cannot fail, which is bean `xom7` one level down.
           bun run translate-kg-viewer:check
+          # Every uncatalogued page has a `.pot` for a translator to work from.
+          # BEFORE the drift check on purpose, and the ordering is measured:
+          # `translation:drift:check` is red on `main` BY DECISION (bean `ngxj`,
+          # issue #206) with 6 steps behind it in this job, so anything placed
+          # after it never runs. A gate in a permanently-skipped tail is the
+          # `1xhc` shape.
+          #
+          # This does NOT turn the drift check green and is not meant to: a
+          # `.pot` is the translator's input, a `.po` is their output, and 19 of
+          # 27 of those outputs are provably not derivable (bean `f6r1`). What it
+          # guards is that the input exists — measured 2026-09-26, not one of
+          # the 25 pages had a `.pot` OR a `.po` in any locale, so the campaign
+          # had nothing to be handed.
+          bun run translation:pot:check
           # Bean `07p7`: a published translation that has drifted from its
           # source is a section a reader cannot reach in their language.
           bun run translation:drift:check
