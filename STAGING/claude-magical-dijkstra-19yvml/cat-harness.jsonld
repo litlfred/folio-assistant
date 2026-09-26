@@ -273,10 +273,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T12:27:53.756Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f7dd5953d4f3adb1b9745abee77607b8d9325377",
-  "sourceCommitSha": "f7dd5953d4f3adb1b9745abee77607b8d9325377",
-  "sourceCommitAt": "2026-09-26T12:25:53Z",
+  "generatedAt": "2026-09-26T12:51:02.920Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0c78aa288c0e7ab97b58e74d1ea342d72d34b0b9",
+  "sourceCommitSha": "0c78aa288c0e7ab97b58e74d1ea342d72d34b0b9",
+  "sourceCommitAt": "2026-09-26T12:48:28Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -286,9 +286,9 @@
     "Convention": 2,
     "SkillPackage": 20,
     "Process": 71,
-    "SequenceFlow": 908,
+    "SequenceFlow": 910,
     "Role": 148,
-    "ProcessNode": 860,
+    "ProcessNode": 861,
     "Tool": 101,
     "Schema": 124,
     "GraphKind": 34,
@@ -22814,8 +22814,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change"
       ],
-      "nodeCount": 12,
-      "flowCount": 16,
+      "nodeCount": 13,
+      "flowCount": 18,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates"
     },
@@ -22966,6 +22966,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Pull request, push to main,&#10;or dispatch",
@@ -22986,7 +23004,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "All six,&#10;in parallel",
+      "name": "All seven,&#10;in parallel",
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates",
@@ -23003,7 +23021,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_3",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_4",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork"
@@ -23055,7 +23074,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_TypeScript",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD)",
+      "name": "TypeScript: lint, types&#10;and tests (HARD)",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates",
@@ -23141,6 +23160,28 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Repository gates&#10;(HARD)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#skill/platform-gates"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "GW_Join",
@@ -23157,7 +23198,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_8",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_9",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_11"
@@ -43523,8 +43565,8 @@
   ],
   "staging": {
     "branch": "claude/magical-dijkstra-19yvml",
-    "sha": "8be5973563d8603a42a7572c6c9eca6b054574bb",
+    "sha": "b35c0e592c12c0e31eef2e610b55273225bae155",
     "pr": "1290/merge",
-    "run": "36241896421"
+    "run": "36243094637"
   }
 }

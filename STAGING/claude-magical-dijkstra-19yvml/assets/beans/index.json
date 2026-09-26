@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 376,
+      "count": 378,
       "unit": "beans"
     }
   },
@@ -21,6 +21,20 @@
       "updatedAt": "2026-09-24T17:45:58Z",
       "preview": "The Folio glass handle is fixed at the top and overlaps each page's heading, and at 390 px the glass's own first controls. Reserve space for it, or move it out of the reading flow.\n\nObserved on: `external-schemas`, `folio`, `library`, `navbar`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.\n\n## Done when\n\n- [x] No pag",
       "file": "beans/defs/folio-assistant-015u--the-fixed-folio-handle-covers-page-titles-and-cont.md"
+    },
+    {
+      "id": "folio-assistant-065p",
+      "title": "SWEEP TRAP: a stale local `main` ref makes every branch look like it carries unmerged beans",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T15:48:01Z",
+      "updatedAt": "2026-09-25T15:48:30Z",
+      "preview": "Found 2026-09-25 during a `/goal-review` sweep, by axis 4's own instruction —\n*\"Items that exist only on a branch … Sweep the open branches' stores too, or\nthe review is blind to the largest workstream.\"*\n\n## The trap\n\nThe natural way to write that comparison is the way the skill's prose implies:\n\n```sh\ngit diff --name-only --diff-filter=A main..origin/<branch> -- beans/defs/\n```\n\nIn this containe",
+      "file": "beans/defs/folio-assistant-065p--sweep-trap-a-stale-local-main-ref-makes-every-bran.md"
     },
     {
       "id": "folio-assistant-06e3",
@@ -3363,6 +3377,20 @@
       "file": "beans/defs/folio-assistant-oi3h--fsh-guts-visualiser-7-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-om30",
+      "title": "MAIN'S RED-BY-DECISION TEST MASKED 151 GATE INVOCATIONS, lint and tsc among them: bun test was step 2 of 47 with nothing continue-on-error — SPLIT, owner's choice",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T09:42:57Z",
+      "updatedAt": "2026-09-26T12:26:27Z",
+      "preview": "## What\n\n`main`'s `typescript` job fails at **step 2 of 47**, and GitHub Actions stops a job\nat its first failing step. So every later step in that job does not run — and on\n`main` that failure is red **by the owner's decision**, not by accident.\n\nMeasured on `.github/workflows/code-quality-gates.yml` at `74f27e4c7fb`:\n\n| | |\n|---|---|\n| `bun test` | step 2 (line 234) of the `typescript` job |\n| s",
+      "file": "beans/defs/folio-assistant-om30--mains-red-by-decision-test-masks-113-gate-invocati.md"
+    },
+    {
       "id": "folio-assistant-omki",
       "title": "QUIET CLAIMS, THE NETWORK HALF: the check's own basis calls its count an upper bound — supply the signal it cannot see",
       "status": "in-progress",
@@ -4218,7 +4246,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T01:37:44Z",
-      "updatedAt": "2026-09-23T01:37:44Z",
+      "updatedAt": "2026-09-26T09:18:41Z",
       "preview": "## What\n\nDependabot #910 and #914 raise `typescript` 6 → 7. The owner ruled *\"everything,\nincluding the TS 7 rewrite\"* (issue #956, 2026-09-22), with the stated escape:\n*if TS 7 ships no supported compiler-API equivalent, pin to 6 and say so.*\n\n**Neither branch of that ruling is what the measurement found.** An equivalent\nexists, it works, and its own package path says `unstable`.\n\n## Measured 202",
       "file": "beans/defs/folio-assistant-u2ol--typescript-7-the-compiler-api-exists-and-every-pat.md"
     },
@@ -4873,12 +4901,12 @@
       "title": "11 root-rooted scans have no gitignore awareness — ramz's sibling audit, answered",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T16:21:48Z",
-      "updatedAt": "2026-09-26T04:01:08Z",
+      "updatedAt": "2026-09-26T10:42:54Z",
       "preview": "`ramz`'s third box, asked and answered 2026-09-25.\n\n`ramz` fixed ONE scanner: `check-context-emission` walked the filesystem behind\na hand-written denylist and swept 145 gitignored documents as repository\ncontent. It was found by accident — a clean checkout failing a test about code\nnobody had touched — so the bean asked *\"which others?\"*.\n\n**Eleven**, under `cat-harness/scripts/`, each walking fr",
       "file": "beans/defs/folio-assistant-xd1g--11-root-rooted-scans-have-no-gitignore-awareness-r.md"
     },
