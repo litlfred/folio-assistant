@@ -25,7 +25,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 import { chromiumExecutable } from "./bpmn-render";
 import { checkXmlComments } from "./xml-comment-check";
-import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
+import { siteDirFor, repoRootFor, instanceRootsIn } from "../schemas/cat-harness.ts";
 import { processPresentations, processTarget } from "./process-presentations.js";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -46,23 +46,30 @@ const ROOT = resolve(import.meta.dir, "..");
  * fix, established twice: it re-introduces the 2026-09-19 leak of 88 references
  * that `instance-graph-isolation.test.ts` guards (`sa8y`).
  *
- * So bootstrap is listed as its own instance, the way
- * `check-workflow-refs.ts` already does. **Measured before the change, and this
- * was a live defect rather than a gap**: all three of bootstrap's SVGs existed
- * in this site's assets and were referenced by published pages under
- * `docs/processes/`, their sources all changed on 2026-09-24, and every SVG was
- * from 2026-09-20 — four days stale, with no gate able to say so, because
- * `render:bpmn:check` never named them.
+ * So the sources are the union over EVERY declared instance, via
+ * `instanceRootsIn`. **Measured before the change, and this was a live defect
+ * rather than a gap**: all three of bootstrap's SVGs existed in this site's
+ * assets and were referenced by published pages under `docs/processes/`, their
+ * sources all changed on 2026-09-24, and every SVG was from 2026-09-20 — four
+ * days stale, with no gate able to say so, because `render:bpmn:check` never
+ * named them.
+ *
+ * **`instanceRootsIn` rather than a two-element list naming bootstrap.** That is
+ * what this first had, and bean `oqdr` — open since 2026-09-24, which I failed to
+ * find — names the better shape: *"by render-bpmn over every instance, as
+ * gen-processes-viz already does with `instanceRoots`."* Measured: 16 instances,
+ * union of 74 diagrams, which is exactly what the hand-built pair produced, so
+ * nothing widens today. What changes is that a new instance is covered the day it
+ * declares itself, and no instance is named by a literal here — the same argument
+ * `check-declared-paths` makes about every other composed path.
  *
  * Output names are still the BASENAME, which is a latent collision if two
  * instances ever hold a diagram of the same name. Now that there are two
  * instances that is closer than it was, so {@link collidingBasenames} reports
  * it rather than leaving the caveat as prose.
  */
-const INSTANCES = [ROOT, join(repoRootFor(ROOT), "bootstrap")];
-
 function bpmnSources(): string[] {
-  return [...new Set(INSTANCES.flatMap((r) => workflowFiles(r)))]
+  return [...new Set(instanceRootsIn(repoRootFor(ROOT)).flatMap((r) => workflowFiles(r)))]
     .filter((f) => f.endsWith(".bpmn"))
     .sort();
 }
