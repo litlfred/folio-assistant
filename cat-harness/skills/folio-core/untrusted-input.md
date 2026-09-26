@@ -65,6 +65,17 @@ two steps later. The sanitised `slug` output beside it was safe; the `branch`
 output was the original value under a new name. **Sanitise at the boundary or
 carry it in `env` the whole way — never both, half each.**
 
+**And this paragraph went unchecked for four days while a gate was written
+against the opposite premise.** `check-workflow-injection.ts`, 2026-09-22,
+classified `steps.*.outputs` as safe *unconditionally*; a dispatch input reached
+a `mv` through a step output and the gate reported nothing, found 2026-09-26
+(bean `6bhf`). The gate now resolves the producing step, and it grades a
+sanitised output free text anyway — **narrower than the "Trusted" row above, on
+purpose**: a person may judge a `sed` sufficient, a gate cannot, and the remedy
+is one `env:` line either way. See
+[`injection-boundaries`](../security/injection-boundaries.md)
+§"`steps.*.outputs` is not a class".
+
 ### `pull_request_target` is where this stops being theoretical
 
 On `pull_request`, a fork PR gets a read-only token and no secrets, so an

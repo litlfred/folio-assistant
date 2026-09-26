@@ -13,10 +13,11 @@
  * skipped.
  */
 import { describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
+import { undeclaredRootTerms } from "../kg-export.ts";
 import {
   buildLocaleExports,
   catalogueFor,
@@ -254,6 +255,80 @@ describe("the real corpus — what it can still answer with zero translations", 
     expect(b.docs.size).toBe(knownLocales(HARNESS).length);
     expect(b.idDrift).toEqual([]);
   }, 180_000);
+
+  // ---- `lvw0` -----------------------------------------------------------
+  //
+  // These documents are PUBLISHED, and `publish:verify` on the built site was
+  // the first thing that noticed they were not publishable. Everything below
+  // asks the question here instead, where it costs a test run rather than a
+  // skipped deploy.
+
+  test("no locale document carries a root field its own @context omits", async () => {
+    const b = await buildLocaleExports({ allLocales: true });
+    // The finding list AND the documents, because the list is produced by the
+    // same walk it would have to be wrong about — a guard asserting only its
+    // own output cannot fail the way this one did.
+    expect(b.rootUndeclared).toEqual([]);
+    for (const [locale, doc] of b.docs) {
+      const ctx = (doc["@context"] ?? {}) as Record<string, unknown>;
+      const declared = new Set(Object.keys(ctx).filter((k) => !k.startsWith("@")));
+      const undeclared = Object.keys(doc).filter((k) => !k.startsWith("@") && !declared.has(k));
+      expect(undeclared, `${locale} carries undeclared root field(s)`).toEqual([]);
+    }
+  }, 180_000);
+
+  test("a locale document carries the QA findings the core strips — none of them", async () => {
+    // The 16 of `lvw0`'s 20. Named individually rather than counted, because
+    // `publishedDocument`'s job is these four fields and a count would pass
+    // while three of them came back.
+    const b = await buildLocaleExports({ allLocales: true });
+    expect(b.docs.size).toBeGreaterThan(0);
+    for (const [locale, doc] of b.docs) {
+      for (const f of ["undeclaredTerms", "undeclaredSchemaModules", "danglingLinks", "problems"]) {
+        expect(Object.keys(doc), `${locale} re-publishes ${f}`).not.toContain(f);
+      }
+    }
+  }, 180_000);
+
+  test("sourceLanguage IS carried, and IS declared", async () => {
+    // The other 4. Stripping it would also pass the test above, and would be
+    // wrong: the document has to say what language its untagged strings are
+    // in, which is the source language and not this locale.
+    const b = await buildLocaleExports({ allLocales: true });
+    for (const [locale, doc] of b.docs) {
+      expect(doc.sourceLanguage, `${locale} says nothing about its source language`).toBe(b.sourceLanguage);
+      const ctx = (doc["@context"] ?? {}) as Record<string, unknown>;
+      expect(Object.keys(ctx), `${locale}'s @context omits sourceLanguage`).toContain("sourceLanguage");
+    }
+  }, 180_000);
+
+  test("the guard can actually fail — a planted root field is reported", () => {
+    const ctx = { name: "x" } as Record<string, unknown>;
+    const doc = { "@context": ctx, "@id": "urn:x", name: "n", plantedRootField: 1 } as Record<string, unknown>;
+    expect(undeclaredRootTerms(doc, ctx)).toEqual(["plantedRootField"]);
+    expect(undeclaredRootTerms({ "@context": ctx, "@id": "urn:x", name: "n" }, ctx)).toEqual([]);
+  });
+
+  test("`buildLocaleExports` actually asks it — the CALL, not just the function", () => {
+    // Measured, not assumed. Deleting the guard's loop from
+    // `buildLocaleExports` left all three corpus tests above GREEN, because
+    // with the two fixes in place the documents really are clean and a
+    // `rootUndeclared` of `[]` is then indistinguishable from a guard that
+    // reports nothing. A guard whose removal no test notices is `1xhc`.
+    //
+    // WHAT THIS PROVES, exactly: that the call site still exists. It does not
+    // prove the call is reached, nor that its findings reach the exit code —
+    // the first needs a locale document with a planted root field, which this
+    // instance's content cannot produce, and the second is asserted by reading
+    // the CLI, where `bad > 0` exits before `mkdirSync`. Stated rather than
+    // implied, because a structural test that is read as an end-to-end one is
+    // worse than none.
+    const src = readFileSync(join(HARNESS, "scripts", "kg-locale-export.ts"), "utf-8");
+    const fn = src.slice(src.indexOf("export async function buildLocaleExports"));
+    expect(fn.length).toBeGreaterThan(0);
+    expect(fn).toContain("undeclaredRootTerms(");
+    expect(fn).toContain("rootUndeclared.push(");
+  });
 });
 
 describe("localeDocPath", () => {

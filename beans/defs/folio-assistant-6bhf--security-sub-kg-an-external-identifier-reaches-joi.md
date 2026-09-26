@@ -107,6 +107,11 @@ output can CARRY free text. Measured on this corpus — every `>> $GITHUB_OUTPUT
 write of a reason or title is a literal, so the classification is true of this
 repository today and is not a property of the class.
 
+> **That measurement was too narrow and the conclusion it reached was wrong.**
+> Re-measured 2026-09-26: it asked about a *reason* and a *title*, two members of
+> the free-text band, while the third — a `workflow_dispatch` input — was the one
+> being written. The laundering was **live**. See §"The `steps.*.outputs` box".
+
 ## Done when
 
 - [x] A shared `safeSegment` / containment module exists, and `resolveWithin` is
@@ -117,13 +122,15 @@ repository today and is not a property of the class.
 - [x] The tar extraction is contained, or its residual is written down where the
       call is — the residual was written down; it is now CLOSED instead, by a
       member-type whitelist
-- [ ] A gate finds an external value reaching a path join, so the property does
-      not drift back
+- [x] A gate finds an external value reaching a path join, so the property does
+      not drift back — `scripts/tests/server-path-sinks.test.ts` (13 tests) plus
+      `tar-member-guard.test.ts` (10, against real `tar`); 8 of the 13 fail
+      against the pre-fix server, verified by reverting the file. Merged #1396
 - [x] A `security` skill package exists and points at all of the above instead of
       the knowledge sitting in four unrelated files — **built by a sibling
       session**, 2026-09-26 10:34; extended here with today's findings
-- [ ] `steps.*.outputs` laundering is recorded on `1wef`'s gate as a known model
-      gap with its measurement
+- [x] `steps.*.outputs` laundering is **fixed** on `1wef`'s gate rather than
+      recorded — the gap was live, not latent. See below. PR #1408
 
 ## Re-measured 2026-09-26: three sinks were fixed and a fourth was missed
 
@@ -295,3 +302,84 @@ clear it and `bun run cat-harness/scripts/gen-uml-overview.ts` does: 320 files.
 **That is twice today the same gotcha cost a round**, and it is the #1348/#1365
 shape in miniature — the chain is longer than the file list suggests, and the
 `:check` variant is the only thing that says so.
+
+## The `steps.*.outputs` box, 2026-09-26 — the gap was live, not latent
+
+This box asked for a NOTE. Measuring first turned it into a fix.
+
+`release-folio-assistant.yml` bound `github.event.inputs.version` to
+`INPUT_VERSION`, read it as `"$INPUT_VERSION"` — correctly — and wrote it to
+`$GITHUB_OUTPUT`. A later step then interpolated
+`${{ steps.version.outputs.version }}` into
+
+    mv *.tgz "folio-assistant-${{ ... }}.tgz"
+
+so a dispatch of `1.0";id;"` renders `mv *.tgz "folio-assistant-1.0";id;".tgz"`
+and runs `id`. `classify()` returned `null`, so the gate reported nothing. **The
+step that handled the value correctly is the step that leaked it** — `env:`
+protects the step that binds, never the value's onward journey.
+
+### Why the first measurement missed it
+
+It asked whether any `>> $GITHUB_OUTPUT` wrote a **reason or a title**. It did
+not, and that was true. The free-text band has a third member, a dispatch input,
+and that was the one being written. **A measurement scoped to the instances an
+audit happened to name is exactly as narrow as a fix scoped to them** — which is
+this bean's other lesson, from `path-containment`, on the same day. Two sinks
+missed there, one band member missed here, same shape.
+
+### And it was already written down
+
+`skills/folio-core/untrusted-input.md` §"What counts as attacker-controlled" has
+listed *"anything derived from them — including a `steps.*.outputs.*` that merely
+passed one through"* since 2026-09-18, with a measured example from this corpus.
+The gate was written 2026-09-22 classifying `steps.*.outputs` safe
+unconditionally. So this is `1wef`'s own lesson one turn further round —
+*"somebody had understood this hazard exactly, nothing checked it"* — except that
+here the thing that failed to check it **was the check**. When a gate and a skill
+disagree, one of them is a claim nobody tested.
+
+### What landed
+
+`resolveProvenance` reads each step that writes `$GITHUB_OUTPUT`, takes the worst
+severity among the expressions it binds, and a consumption of that output
+inherits it — keyed `job.stepId`, since step outputs are job-scoped and two jobs
+may reuse an id. A job's `outputs:` block is followed one more hop, in a second
+pass, because `outputs:` conventionally sits above `steps:`. A finding names the
+producer, since the failing line's own expression looks harmless.
+
+A value bound ABOVE the step that writes it out — a workflow-level `env:`, in
+scope for every step, or a job-level one — is folded in too, in the same post-pass
+and for the same ordering reason. **It changes nothing on this corpus**: no such
+binding carries free text here, and none carries a constrained value that was not
+already counted through the step itself. So it is closed on the strength of four
+tests rather than of a finding, which is the point — recording it as "true today"
+is the exact mistake the rest of this section is about.
+
+Graded **free text, not constrained**, deliberately: `feature-staging.yml`
+reduces its slug to `[A-Za-z0-9._-]` with a `sed`, so that value cannot carry a
+payload — and recognising it would mean the gate deciding per site whether
+somebody's sanitiser was good enough. Refuse the shape, as the archive guard
+whitelists member types. Four sites took the one-line `env:` remedy, three of
+them slug consumptions whose own comments called the slug safe **because it was
+sanitised — in another step, by a `sed` nothing checked**.
+
+Verified: 4 free-text findings against the pre-fix tree (`git show HEAD:` into a
+temp dir), 0 after; **15** producers over the real corpus, 10 carrying free text,
+asserted as a test — an empty provenance map would return every step output to
+the safe band and the gate would go green **having asked nothing**.
+
+> **That count was 13/9 in the first commit and in #1408's body, and it was
+> measured before the job-output ordering fix landed.** `lake-cache-refresh.yml`
+> declares `outputs: matrix:` and `packages:` ABOVE its `steps:`, so the
+> single-pass resolver read them while `setup.read` was still unknown and
+> recorded neither. The failing test caught the bug; the census had already been
+> quoted. A number measured against an earlier build of the thing being measured
+> is not a smaller number, it is a different question.
+
+Out of scope and written down rather than silently skipped: `actions/github-script`
+`script:` blocks are JavaScript and unread, and `feature-staging.yml` has two
+`const slug = '${{ steps.slug.outputs.slug }}';`. Both values are
+character-class constrained, so neither closes that string today. Split into bean
+`j0zs` rather than absorbed here — the question is whether the gate should read a
+second language, which is a decision about its scope, not a missed sink.

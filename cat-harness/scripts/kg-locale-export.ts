@@ -110,7 +110,7 @@ import { basename, join, relative, resolve } from "node:path";
 import { parsePo } from "../content/pipeline/po-inject.js";
 import { readHarnessConfig } from "../schemas/harness-config.js";
 import { repoRootFor, resolveDirectories } from "../schemas/cat-harness.js";
-import { buildExport, exportIdentity } from "./kg-export.js";
+import { buildExport, exportIdentity, publishedDocument, undeclaredRootTerms } from "./kg-export.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -375,6 +375,23 @@ export interface LocaleBuild {
   readonly coreProblems: string[];
   /** Node `@id`s that differ between the core and any locale. UNDETERMINED is a finding. */
   readonly idDrift: string[];
+  /**
+   * Root-level fields of an emitted locale document that its own `@context`
+   * does not declare — `<locale>: <field>`, one entry each.
+   *
+   * The same question {@link undeclaredRootTerms} is fatal for in
+   * `kg-export.ts`, asked here because that guard structurally cannot see
+   * these documents: it runs against the core at the point the core is
+   * written, and a locale document is assembled in this file afterwards.
+   *
+   * `lvw0` is why it exists rather than why it is a good idea. `sourceLanguage`
+   * was written to this root and declared nowhere, and the first thing that
+   * noticed was `publish:verify` on the built site — after the export had
+   * been called clean, and with the deploy skipped as a result. A guard that
+   * covers one of two writers reports the covered one and says nothing about
+   * the other, which is indistinguishable from a pass.
+   */
+  readonly rootUndeclared: string[];
 }
 
 export async function buildLocaleExports(opts: {
@@ -384,10 +401,22 @@ export async function buildLocaleExports(opts: {
 } = {}): Promise<LocaleBuild> {
   const instanceRoot = resolve(opts.instanceRoot ?? ROOT);
   const id = exportIdentity({ baseUrl: opts.baseUrl, instanceRoot: opts.instanceRoot });
-  const core = (await buildExport({ baseUrl: opts.baseUrl, instanceRoot: opts.instanceRoot })) as unknown as Record<
-    string,
-    unknown
-  >;
+  // `publishedDocument`, NOT the raw export — these documents are PUBLISHED,
+  // so they carry what the core publishes and not what it computes. The four
+  // fields it strips (`undeclaredTerms`, `undeclaredSchemaModules`,
+  // `danglingLinks`, `problems`) are a QA reviewer's findings, relocated to
+  // `test/results/` by the owner's 2026-09-19 rule, and their `@context`
+  // terms were removed WITH them.
+  //
+  // `lvw0`: this read the raw export until 2026-09-26, so every locale
+  // document re-published four fields the context no longer declares, a
+  // JSON-LD processor dropped all four, and `publish:verify` refused the
+  // documents — 16 of its 20 findings, and the deploy skipped with them. The
+  // core was correct throughout: `kg-export.ts` was the function's only
+  // caller, so the projection existed and this path went around it.
+  const core = publishedDocument(
+    await buildExport({ baseUrl: opts.baseUrl, instanceRoot: opts.instanceRoot }),
+  ) as unknown as Record<string, unknown>;
   // `config.translation.defaultLocale`, NOT `config.defaultLocale` — `tsc`
   // caught the second spelling, and it would have been the `dh4f` shape: a
   // read of a field that is not there, reporting the fallback as if it had
@@ -406,6 +435,7 @@ export async function buildLocaleExports(opts: {
   const reports: LocaleReport[] = [];
   const docs = new Map<string, Record<string, unknown>>();
   const idDrift: string[] = [];
+  const rootUndeclared: string[] = [];
 
   for (const locale of locales) {
     const catalogue = catalogueFor(instanceRoot, locale);
@@ -424,9 +454,17 @@ export async function buildLocaleExports(opts: {
         idDrift.push(`${locale}: ${String(nid)}`);
       }
     }
+
+    // Against the document's OWN `@context`, not the core's — they are the
+    // same object today, and asserting that identity is not this check's job.
+    // If the walk ever stops copying the context verbatim, a document checked
+    // against a context it does not carry is checked against nothing.
+    for (const t of undeclaredRootTerms(doc, (doc["@context"] ?? {}) as Record<string, unknown>)) {
+      rootUndeclared.push(`${locale}: ${t}`);
+    }
   }
 
-  return { stub: id.stub, sourceLanguage, locales: reports, docs, coreProblems, idDrift };
+  return { stub: id.stub, sourceLanguage, locales: reports, docs, coreProblems, idDrift, rootUndeclared };
 }
 
 /** `<stub>.<locale>.jsonld`, beside the core document. */
@@ -468,8 +506,14 @@ if (import.meta.main) {
 
   for (const p of build.coreProblems) console.error(`  CORE REFERENCES A TRANSLATION: ${p}`);
   for (const d of build.idDrift) console.error(`  @id DRIFT: ${d}`);
+  for (const t of build.rootUndeclared) {
+    console.error(`  ROOT FIELD NOT IN THE @context, so a JSON-LD processor drops it: ${t}`);
+  }
+  if (build.rootUndeclared.length > 0) {
+    console.error("  Declare each in `buildContext` — see the DOCUMENT ROOT section there.");
+  }
 
-  const bad = build.coreProblems.length + build.idDrift.length;
+  const bad = build.coreProblems.length + build.idDrift.length + build.rootUndeclared.length;
   if (check) {
     if (bad === 0) {
       console.log(
