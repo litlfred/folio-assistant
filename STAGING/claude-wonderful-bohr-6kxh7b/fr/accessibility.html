@@ -493,32 +493,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/docs-ui.css?v=1790445326">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/docs-ui.css?v=1790449335">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/narrow-viewport.css?v=1790445326">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/narrow-viewport.css?v=1790449335">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/work-plan.css?v=1790445326">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/work-plan.css?v=1790449335">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/themes.css?v=1790445326">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/themes.css?v=1790449335">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/uml.css?v=1790445326">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/uml.css?v=1790449335">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/avatars.css?v=1790445326">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/avatars.css?v=1790449335">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -535,7 +535,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/js/docs-ui.js?v=1790445326" defer></script>
+<script src="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/js/docs-ui.js?v=1790449335" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -795,7 +795,7 @@ suivent la logique DMN et peuvent servir plusieurs modalités d’interaction ?<
 
 <p>Il s’avère qu’il s’agit de la même question posée par deux bouts différents, c’est pourquoi elles
 partagent la même page. La compétence qui l’implémente est
-<a href="reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality</code></a>.</p>
+<a href="../reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality</code></a>.</p>
 
 <ol id="markdown-toc">
   <li><a href="#1-le-problème-dont-il-est-question" id="markdown-toc-1-le-problème-dont-il-est-question">1. Le problème dont il est question</a></li>
@@ -1037,7 +1037,7 @@ effort pour rendre l’éditeur accessible ne peut s’y substituer.</p>
     </tr>
     <tr>
       <td>Les règles suivies par un agent lorsqu’il pose des questions</td>
-      <td><a href="reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality</code></a></td>
+      <td><a href="../reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality</code></a></td>
     </tr>
     <tr>
       <td>Contrôles destinés aux lecteurs sur ce site</td>
@@ -1214,9 +1214,9 @@ pourtant supérieur à n’importe quelle feuille de style.</li>
 
 <ul>
   <li><a href="getting-started.html">Premiers pas</a> — la table de décision d’intention en pratique</li>
-  <li><a href="reference/skill-instructions/interaction-modality.html">Compétence <code class="language-plaintext highlighter-rouge">interaction-modality</code></a></li>
+  <li><a href="../reference/skill-instructions/interaction-modality.html">Compétence <code class="language-plaintext highlighter-rouge">interaction-modality</code></a></li>
   <li><a href="publication-workflow.html">Flux de publication</a> — chaque processus au sein du dépôt</li>
-  <li><a href="proposals/workflow-state-in-beans.html">Options pour l’état du flux de travail dans beans</a></li>
+  <li><a href="../proposals/workflow-state-in-beans.html">Options pour l’état du flux de travail dans beans</a></li>
 </ul>
 
           

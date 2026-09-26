@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/docs-ui.css?v=1790445326">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/docs-ui.css?v=1790449335">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/narrow-viewport.css?v=1790445326">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/narrow-viewport.css?v=1790449335">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/work-plan.css?v=1790445326">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/work-plan.css?v=1790449335">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/themes.css?v=1790445326">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/themes.css?v=1790449335">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/uml.css?v=1790445326">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/uml.css?v=1790449335">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/avatars.css?v=1790445326">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/css/avatars.css?v=1790449335">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/js/docs-ui.js?v=1790445326" defer></script>
+<script src="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/js/docs-ui.js?v=1790449335" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -824,7 +824,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <img src="assets/img/workflows/content-lifecycle.svg" alt="单个 folio 周期的 BPMN 泳道图：项目经理进行规划，规划以 bean 的形式提供初始数据，针对每次提议的变更运行编辑和人机交互（HCI）验证，随后进行集成测试和 QA 全面检查，然后是草稿-审阅-发布；对反馈进行分类并记录为 bean，整个周期要么重复，要么将 folio 归档退役。" />
 </div>
 
-<p class="bpmn-source"><a href="https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn">BPMN 2.0 source</a> · <a href="assets/img/workflows/content-lifecycle.svg">full-size SVG</a></p>
+<p class="bpmn-source"><a href="https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn">BPMN 2.0 source</a> · <a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/img/workflows/content-lifecycle.svg">full-size SVG</a></p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -894,7 +894,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><strong>技能包：</strong> <code class="language-plaintext highlighter-rouge">folio-document-adapter</code> ·
 <strong>适配器：</strong> <code class="language-plaintext highlighter-rouge">document</code> ·
-<strong>指南：</strong> <a href="guides/writing-a-document.html">编写文档</a></p>
+<strong>指南：</strong> <a href="../guides/writing-a-document.html">编写文档</a></p>
 
 <p>结构化散文：卫生政策指南（比如 L1 指南）、标准、报告、手册、书籍章节。论文所具备的一切它都有，唯独缺少形式化层——因而也去掉了服务于形式化层的两条工具链。</p>
 
@@ -905,16 +905,16 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </ul>
 
 <p>相关的技能模式：
-<a href="reference/skills/document-authoring.html"><code class="language-plaintext highlighter-rouge">document-authoring</code></a>、
-<a href="reference/skills/document-structure.html"><code class="language-plaintext highlighter-rouge">document-structure</code></a>、
-<a href="reference/skills/normative-statements.html"><code class="language-plaintext highlighter-rouge">normative-statements</code></a>、
-<a href="reference/skills/document-publishing.html"><code class="language-plaintext highlighter-rouge">document-publishing</code></a>。</p>
+<a href="../reference/skills/document-authoring.html"><code class="language-plaintext highlighter-rouge">document-authoring</code></a>、
+<a href="../reference/skills/document-structure.html"><code class="language-plaintext highlighter-rouge">document-structure</code></a>、
+<a href="../reference/skills/normative-statements.html"><code class="language-plaintext highlighter-rouge">normative-statements</code></a>、
+<a href="../reference/skills/document-publishing.html"><code class="language-plaintext highlighter-rouge">document-publishing</code></a>。</p>
 
 <div class="bpmn-figure" id="figure-documents-policy-guidance">
   <img src="assets/img/workflows/authoring-a-document.svg" alt="文档创作的 BPMN 泳道图：作者进行规划，规划以 bean 的形式提供初始数据，智能体搭建 folio 脚手架并创作块，构建流水线在验证和渲染为 Markdown、HTML 及 PDF 之前检查声明的配置文件，最后由审阅者把关决定是否发布。" />
 </div>
 
-<p class="bpmn-source"><a href="https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn">BPMN 2.0 source</a> · <a href="assets/img/workflows/authoring-a-document.svg">full-size SVG</a></p>
+<p class="bpmn-source"><a href="https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn">BPMN 2.0 source</a> · <a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/img/workflows/authoring-a-document.svg">full-size SVG</a></p>
 <h3 id="carrying-a-normative-statement" data-fa-label="sec:content-types-carrying-a-normative-statement">
   
   
@@ -928,7 +928,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p>建议、要求或规则是读者所引述、实施者所追踪的块。它需要标签、稳定的标识以及在依赖图中的位置——<code class="language-plaintext highlighter-rouge">theorem</code>（定理）所拥有的一切——但它断然不是定理，因为没有任何东西去证明它。</p>
 
-<p>目前<strong>不存在作为一等公民的 <code class="language-plaintext highlighter-rouge">recommendation</code> 块类型</strong>。目前它的载体是一个带有标签和标题的 <code class="language-plaintext highlighter-rouge">prose</code> 块；<a href="reference/skill-instructions/normative-statements.html"><code class="language-plaintext highlighter-rouge">normative-statements</code></a> 技能阐明了该约定及其限制。早期在 <code class="language-plaintext highlighter-rouge">document-intake</code> 中的指导意见将指南建议映射到 <code class="language-plaintext highlighter-rouge">definition</code> 上——这早于当前这种内容类型，并且对文档 folio 而言是错误的，因为在文档 folio 中 <code class="language-plaintext highlighter-rouge">definition</code> 属于数学类型，且其 <code class="language-plaintext highlighter-rouge">lean</code> 字段是必填项。</p><hr />
+<p>目前<strong>不存在作为一等公民的 <code class="language-plaintext highlighter-rouge">recommendation</code> 块类型</strong>。目前它的载体是一个带有标签和标题的 <code class="language-plaintext highlighter-rouge">prose</code> 块；<a href="../reference/skill-instructions/normative-statements.html"><code class="language-plaintext highlighter-rouge">normative-statements</code></a> 技能阐明了该约定及其限制。早期在 <code class="language-plaintext highlighter-rouge">document-intake</code> 中的指导意见将指南建议映射到 <code class="language-plaintext highlighter-rouge">definition</code> 上——这早于当前这种内容类型，并且对文档 folio 而言是错误的，因为在文档 folio 中 <code class="language-plaintext highlighter-rouge">definition</code> 属于数学类型，且其 <code class="language-plaintext highlighter-rouge">lean</code> 字段是必填项。</p><hr />
 <h2 id="scientific-papers-books" data-fa-label="sec:content-types-scientific-papers-books">
   
   
@@ -942,7 +942,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><strong>技能包：</strong> <code class="language-plaintext highlighter-rouge">authoring-math</code> ·
 <strong>适配器：</strong> <code class="language-plaintext highlighter-rouge">paper</code> ·
-<strong>指南：</strong> <a href="guides/writing-a-paper.html">编写论文</a></p>
+<strong>指南：</strong> <a href="../guides/writing-a-paper.html">编写论文</a></p>
 
 <p>严谨的科学论文与专著，其中的散文和数学内容均有机器校验的 <strong>Lean 4</strong> 形式化作为后盾，并通过 <strong>LaTeX</strong> 进行排版渲染。</p>
 
@@ -1018,9 +1018,9 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <p>其中有两行值得进一步审视。<code class="language-plaintext highlighter-rouge">definition</code> 是整个划分中最明确的分水岭——它是唯一一个其 <code class="language-plaintext highlighter-rouge">lean</code> 字段为<em>必需</em>而非可选的类型，因此即便配置文件允许，文档 folio 也无法容纳它。而“共享”（<code class="language-plaintext highlighter-rouge">shared</code>）类型仍然<em>声明</em>了一个可选的 <code class="language-plaintext highlighter-rouge">lean</code>：类型系统允许了配置文件所禁止的内容，这正是为什么 <code class="language-plaintext highlighter-rouge">content_profile_check</code> 在“该类型是否被允许”之外还有第二条规则。</p>
 
 <p>相关的技能模式：
-<a href="reference/skills/latex-authoring.html"><code class="language-plaintext highlighter-rouge">latex-authoring</code></a>、
-<a href="reference/skills/lean-formalization.html"><code class="language-plaintext highlighter-rouge">lean-formalization</code></a>、
-<a href="reference/skills/proof-verification.html"><code class="language-plaintext highlighter-rouge">proof-verification</code></a>。</p><hr />
+<a href="../reference/skills/latex-authoring.html"><code class="language-plaintext highlighter-rouge">latex-authoring</code></a>、
+<a href="../reference/skills/lean-formalization.html"><code class="language-plaintext highlighter-rouge">lean-formalization</code></a>、
+<a href="../reference/skills/proof-verification.html"><code class="language-plaintext highlighter-rouge">proof-verification</code></a>。</p><hr />
 <h2 id="who-smart-guidelines-daks-l2" data-fa-label="sec:content-types-who-smart-guidelines-daks-l2">
   
   
@@ -1033,7 +1033,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <p><a href="https://github.com/litlfred/folio-assistant/edit/main/processes/l2-dak-authoring.bpmn" class="fa-node-edit" title="Edit processes/l2-dak-authoring.bpmn">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="who-smart-guidelines-daks-l2.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/qa/content-types/who-smart-guidelines-daks-l2.block.json" data-qa-index="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/qa/content-types/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="who-smart-guidelines-daks-l2.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/qa/content-types/who-smart-guidelines-daks-l2.kg.json" data-qa-index="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/qa/content-types/qa-index.json" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span></p>
 
 <p><strong>技能包：</strong> <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> ·
-<strong>指南：</strong> <a href="guides/who-smart-dak.html">创作 WHO SMART DAK</a></p>
+<strong>指南：</strong> <a href="../guides/who-smart-dak.html">创作 WHO SMART DAK</a></p>
 
 <p><strong>数字适应套件</strong>（Digital Adaptation Kit，简称 <strong>DAK</strong>）是 WHO 指南的 <em>L2</em>（机器可读，但独立于具体实现）表示。folio-assistant 负责创作以下 L2 制品：</p>
 
@@ -1046,16 +1046,16 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </ul>
 
 <p>相关的技能模式：
-<a href="reference/skills/l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></a>、
-<a href="reference/skills/bpmn-authoring.html"><code class="language-plaintext highlighter-rouge">bpmn-authoring</code></a>、
-<a href="reference/skills/dmn-authoring.html"><code class="language-plaintext highlighter-rouge">dmn-authoring</code></a>、
-<a href="reference/skills/terminology-management.html"><code class="language-plaintext highlighter-rouge">terminology-management</code></a>。</p>
+<a href="../reference/skills/l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></a>、
+<a href="../reference/skills/bpmn-authoring.html"><code class="language-plaintext highlighter-rouge">bpmn-authoring</code></a>、
+<a href="../reference/skills/dmn-authoring.html"><code class="language-plaintext highlighter-rouge">dmn-authoring</code></a>、
+<a href="../reference/skills/terminology-management.html"><code class="language-plaintext highlighter-rouge">terminology-management</code></a>。</p>
 
 <div class="bpmn-figure" id="figure-who-smart-guidelines-daks-l2">
   <img src="assets/img/workflows/l2-dak-authoring.svg" alt="L2 DAK 创作的 BPMN 泳道图：并行网关将人物画像、BPMN 流程、DMN 决策逻辑、数据字典和指标分流到业务分析师泳道，同时由术语专家进行绑定，随后临床领域专家（SME）的验证把关 DAK 的组装。" />
 </div>
 
-<p class="bpmn-source"><a href="https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn">BPMN 2.0 source</a> · <a href="assets/img/workflows/l2-dak-authoring.svg">full-size SVG</a></p><hr />
+<p class="bpmn-source"><a href="https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn">BPMN 2.0 source</a> · <a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/img/workflows/l2-dak-authoring.svg">full-size SVG</a></p><hr />
 <h2 id="who-smart-implementation-guides-l3" data-fa-label="sec:content-types-who-smart-implementation-guides-l3">
   
   
@@ -1068,7 +1068,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <p><a href="https://github.com/litlfred/folio-assistant/edit/main/processes/l3-fhir-pipeline.bpmn" class="fa-node-edit" title="Edit processes/l3-fhir-pipeline.bpmn">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="who-smart-implementation-guides-l3.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/qa/content-types/who-smart-implementation-guides-l3.block.json" data-qa-index="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/qa/content-types/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="who-smart-implementation-guides-l3.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/qa/content-types/who-smart-implementation-guides-l3.kg.json" data-qa-index="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/qa/content-types/qa-index.json" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span></p>
 
 <p><strong>技能包：</strong> <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> ·
-<strong>指南：</strong> <a href="guides/who-smart-ig.html">创作 WHO SMART IG</a></p>
+<strong>指南：</strong> <a href="../guides/who-smart-ig.html">创作 WHO SMART IG</a></p>
 
 <p><em>L3</em> 层将 L2 DAK 转换为可计算的 <strong>FHIR 实施指南</strong>（Implementation Guide）：</p>
 
@@ -1080,16 +1080,16 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </ul>
 
 <p>相关的技能模式：
-<a href="reference/skills/l3-fhir-authoring.html"><code class="language-plaintext highlighter-rouge">l3-fhir-authoring</code></a>、
-<a href="reference/skills/fhir-validation.html"><code class="language-plaintext highlighter-rouge">fhir-validation</code></a>、
-<a href="reference/skills/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a>、
-<a href="reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a>。</p>
+<a href="../reference/skills/l3-fhir-authoring.html"><code class="language-plaintext highlighter-rouge">l3-fhir-authoring</code></a>、
+<a href="../reference/skills/fhir-validation.html"><code class="language-plaintext highlighter-rouge">fhir-validation</code></a>、
+<a href="../reference/skills/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a>、
+<a href="../reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a>。</p>
 
 <div class="bpmn-figure" id="figure-who-smart-implementation-guides-l3">
   <img src="assets/img/workflows/l3-fhir-pipeline.svg" alt="L3 流水线的 BPMN 泳道图：将 L2 映射到 L3、编写 FSH、SUSHI 编译、针对 Profile 进行验证（失败时循环回到 FSH）、将发现的问题记录为 bean 的质控把关、IG Publisher 构建，以及发布 IG 站点。" />
 </div>
 
-<p class="bpmn-source"><a href="https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn">BPMN 2.0 source</a> · <a href="assets/img/workflows/l3-fhir-pipeline.svg">full-size SVG</a></p><hr />
+<p class="bpmn-source"><a href="https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn">BPMN 2.0 source</a> · <a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/img/workflows/l3-fhir-pipeline.svg">full-size SVG</a></p><hr />
 <h2 id="others-extending-folio-assistant" data-fa-label="sec:content-types-others-extending-folio-assistant">
   
   
@@ -1101,7 +1101,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><a href="https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/others-extending-folio-assistant.md" class="fa-node-edit" title="Edit content/docs/content-types/others-extending-folio-assistant.md">✎ Edit</a> <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="others-extending-folio-assistant.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/qa/content-types/others-extending-folio-assistant.block.json" data-qa-index="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/assets/qa/content-types/qa-index.json" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span></p>
 
-<p>新的内容类型是一等公民：添加一个内容<strong>适配器</strong>（adapter）和一个技能<strong>包</strong>（package），生命周期、RBAC 以及 MCP 底层管道即可直接获享。请参阅<a href="guides/new-content-type.html">添加内容类型</a>。</p>
+<p>新的内容类型是一等公民：添加一个内容<strong>适配器</strong>（adapter）和一个技能<strong>包</strong>（package），生命周期、RBAC 以及 MCP 底层管道即可直接获享。请参阅<a href="../guides/new-content-type.html">添加内容类型</a>。</p>
 
           
 
