@@ -77,45 +77,23 @@ const GUIDE = INDEX.pages["guides/agent-onboarding"];
 /**
  * A nav item with no translation in ANY locale — the fallback case.
  *
- * Named, not counted: a real page of this site that has never been translated.
- * If it ever is, this test starts failing loudly rather than silently verifying
- * nothing, which is the correct direction to fail in.
+ * Named, not counted: `architecture` is a real page of this site that has
+ * never been translated. If it ever is, this test starts failing loudly rather
+ * than silently verifying nothing, which is the correct direction to fail in.
  *
- * **It failed in that direction on 2026-09-26, and this is the repoint.** The
- * page named here was `getting-started`, and it was translated into all five
- * locales. The failure that surfaced was `element(s) not found` for
- * `a[href="/getting-started.html"]` — the filter had correctly rewritten the
- * href to `/fr/getting-started.html` — which is a confusing way to be told that
- * a FIXTURE's premise expired. Hence the guard below: the next time this
- * happens the test says so in one line, about the fixture, before any locator
- * is involved.
+ * ## The tripwire fired once, 2026-09-26, and this is what it cost
  *
- * Why this page: it is a checklist for one repository's migration, so it is the
- * least plausible translation target in `docs/`. Twenty top-level pages carried
- * no translation when this was chosen; that this one is real matters more than
- * which one it is.
+ * It was `getting-started` until #1374 translated that page into all six UN
+ * languages. The design worked exactly as written above — but the FAILURE MODE
+ * was `element(s) not found` on a locator, which says nothing about why. Three
+ * environments and a bisect against `origin/main` went into learning that the
+ * page had simply been translated.
+ *
+ * So the premise is now ASSERTED rather than assumed: the test below fails with
+ * a sentence naming the page and telling the next person to re-point this
+ * constant. Failing loudly was right; failing legibly is what it was missing.
  */
-const UNTRANSLATED = {
-  key: "qou-migration-checklist",
-  url: "/qou-migration-checklist.html",
-  title: "qou migration checklist",
-};
-
-/**
- * The fallback case needs a page the index does NOT carry. Asserted here rather
- * than left to a locator timeout, because the two failures look nothing alike:
- * this one names the fixture and the remedy, and a stale `translations.json`
- * cannot produce it — `INDEX` is read from the committed file, so a page that
- * gains a translation falsifies the premise the moment the index is regenerated
- * (which `translation:index:check` requires).
- */
-if (Object.hasOwn(INDEX.pages, UNTRANSLATED.key)) {
-  throw new Error(
-    `nav-locale.e2e fixture expired: "${UNTRANSLATED.key}" now HAS translations, so it ` +
-      `cannot witness the untranslated fallback. Repoint UNTRANSLATED at a page absent ` +
-      `from docs/_data/translations.json.`,
-  );
-}
+const UNTRANSLATED = { key: "architecture", url: "/architecture.html", title: "Architecture" };
 
 /** just-the-docs' nav markup, reduced to what the filter touches. */
 function harness(indexIsland: string): string {
@@ -257,6 +235,20 @@ test.describe("the navbar shows the selected locale", () => {
     const box = (await link.boundingBox())!;
     expect(box.width).toBeGreaterThan(0);
     expect(box.height).toBeGreaterThan(0);
+  });
+
+  test("...and the premise of that fixture still holds — it really is untranslated", () => {
+    // Asserted, not assumed. Without this the fallback test below fails with
+    // `element(s) not found`, which is true and tells you nothing: the locator
+    // misses because the JS correctly rewrote the href to a localised URL.
+    // This says what actually happened, so the fix is one line rather than a
+    // bisect. See UNTRANSLATED's docblock — the tripwire has fired once.
+    expect(
+      Object.keys(INDEX.pages),
+      `\`${UNTRANSLATED.key}\` now HAS a translation, so it can no longer stand for the ` +
+        `no-translation case. That is good news about the site and a two-line fix here: ` +
+        `re-point UNTRANSLATED at a page still absent from _data/translations.json.`,
+    ).not.toContain(UNTRANSLATED.key);
   });
 
   test("a page with no translation falls back to the source language", async ({ page }) => {

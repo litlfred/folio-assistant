@@ -55,7 +55,7 @@ reopens it.
 - [x] Both halves use the same instrument, so they cannot disagree
 - [x] The UNKNOWN branch is reserved for the probe genuinely failing, never
       for a value that merely has not been computed
-- [ ] Verified on the next scheduled run against a live PR, not asserted
+- [x] Verified on the next scheduled run against a live PR, not asserted
 
 
 ---
@@ -207,3 +207,34 @@ This bean's own remedy generalises and is the right one:
 `git ls-remote origin refs/pull/N/merge` here, `git merge-base --is-ancestor`
 there — **when a forge API and git disagree about git, git is the subject and
 the API is a cache.** Details and the full measurement table: `fx5r`.
+
+---
+
+## 2026-09-26 — verified on a live scheduled run, as the last item demanded
+
+Run **133** of `PRs without checks` ([36218768664](https://github.com/litlfred/folio-assistant/actions/runs/36218768664)),
+`event=schedule`, 04:45:19Z, conclusion **success**, against the live PR set.
+
+The workflow's own sweep at `pr-checks-present.yml:163` is
+
+```sh
+if ! merge_ref="$(git ls-remote origin "refs/pull/$pr/merge" 2>/dev/null)"; then
+```
+
+— the merge-ref probe, not `gh pr view --json mergeable`. So the third
+Done-when ("both halves use the same instrument") is confirmed **in the
+workflow as it actually ran**, not by reading the script it shares a bean with.
+
+It found one affected PR and reported `already told #1340 about 9cafca3dd`,
+so the idempotence mark works too. Step 9 ("Close the tracking issue when
+every head has a run") was correctly SKIPPED rather than run, because not
+every head had one.
+
+**This closes the bean's last item on evidence.** Closing is still the owner's
+call, not mine.
+
+## And it turned up what `fx5r` was still open on
+
+The workflow's UNKNOWN **advice string** had not been updated with the script's
+— see `fx5r`. The code agreed; the prose did not.
+

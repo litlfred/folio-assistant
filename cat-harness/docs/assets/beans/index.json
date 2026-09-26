@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 350,
+      "count": 349,
       "unit": "beans"
     }
   },
@@ -1399,20 +1399,6 @@
       "file": "beans/defs/folio-assistant-9scf--folio-visualiser-5-wireframe-findings.md"
     },
     {
-      "id": "folio-assistant-9v4m",
-      "title": "TEST INTERFERENCE: a profile-gate test fails in the full suite and passes in isolation on the same commit",
-      "status": "todo",
-      "type": "bug",
-      "priority": "",
-      "parent": "folio-assistant-1swy",
-      "blocking": [],
-      "blockedBy": [],
-      "createdAt": "2026-09-26T03:40:20Z",
-      "updatedAt": "2026-09-26T03:40:20Z",
-      "preview": "Measured 2026-09-26 on `985d0bada2a` (branch claude/brave-hypatia-r820sf, diff = two bean .md files only).\n\n## What happened\n\n`bun run gates` failed with ONE test failure:\n\n    (fail) the sweep's profile gate, end to end > a paper-only criterion is n/a'd in a document folio, under its OWN outcome [5769.02ms]\n\nThe same test, by name, **passes in isolation** — both with the branch's changes applied ",
-      "file": "beans/defs/folio-assistant-9v4m--test-interference-a-profile-gate-test-fails-in-the.md"
-    },
-    {
       "id": "folio-assistant-9wb0",
       "title": "PUBLICATION IS A STATE, NOT A BOOLEAN: every asset carries id + version and sits in draft; formal publication is an undefined process",
       "status": "in-progress",
@@ -2616,7 +2602,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T06:30:00Z",
-      "updatedAt": "2026-09-26T03:23:23Z",
+      "updatedAt": "2026-09-25T16:46:42Z",
       "preview": "Found 2026-09-21 by the `goal-review` sweep of 2026-09-20T19:00Z →\n2026-09-21T06:25Z (session_01AYHimvYMmf8h8e9fFN6dW5), independently by **two**\ndelegated agents reading two different milestones. An instruction gap.\n\n## Measured\n\n| milestone | what its own body advertises | what the store says |\n|---|---|---|\n| `p5wm` (GOAL 2) | critical path `b5f0 → 603s → hfkl → 2krx → (6lb8 ‖ ivfw + 5y4b) → pb",
       "file": "beans/defs/folio-assistant-k59d--milestone-critical-paths-go-stale-p5wm-and-yg29-bo.md"
     },
@@ -3887,20 +3873,6 @@
       "file": "beans/defs/folio-assistant-tr05--kg-modelling-dependents-point-at-the-general-node.md"
     },
     {
-      "id": "folio-assistant-tuvg",
-      "title": "MAIN IS RED: three crdm skills are in no package manifest and carry a retired roles: field",
-      "status": "todo",
-      "type": "bug",
-      "priority": "",
-      "parent": "folio-assistant-1xhc",
-      "blocking": [],
-      "blockedBy": [],
-      "createdAt": "2026-09-26T04:09:28Z",
-      "updatedAt": "2026-09-26T04:09:28Z",
-      "preview": "Measured 2026-09-26 on `origin/main` at `6840b14097b`. **This fails every open PR, not one.**\n\n## The two failures\n\nBoth name the same three files, added by main's commit `7edf7b7ed5a` (*\"feat: CRDM Phase 4b prioritization, SDLC/release skills, CRDM phase detail skills\"*):\n\n    cat-harness/skills/crdm/crdm-needs-assessment.md\n    cat-harness/skills/crdm/crdm-impact-analysis.md\n    cat-harness/skil",
-      "file": "beans/defs/folio-assistant-tuvg--main-is-red-three-crdm-skills-are-in-no-package-ma.md"
-    },
-    {
       "id": "folio-assistant-txut",
       "title": "REVIEW VISUALISER: a review/ page per folio showing what changed from main, grouped by the folio/ graph",
       "status": "in-progress",
@@ -4081,6 +4053,20 @@
       "updatedAt": "2026-09-22T10:24:29Z",
       "preview": "MEASURED 2026-09-22 on main at `f4de6c1e20`, clean tree, by running `bun run kg:export` and reading both committed sidecars back.\n\n`scripts/kg-export.ts` writes two `qa-results/v1` sidecars. Between them and the script actually in the tree there are **three different hashes for one script**:\n\n| file | committed `producer.script_hash` |\n|---|---|\n| `cat-harness/test/results/kg-export.qa-results.jso",
       "file": "beans/defs/folio-assistant-v556--two-kg-export-sidecars-carry-three-script-hashes-b.md"
+    },
+    {
+      "id": "folio-assistant-v625",
+      "title": "MAIN IS RED: six skills landed with no manifest entry and no reference page — one cause, four failing gates",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T05:10:48Z",
+      "updatedAt": "2026-09-26T05:11:00Z",
+      "preview": "placeholder",
+      "file": "beans/defs/folio-assistant-v625--main-is-red-six-skills-landed-with-no-manifest-ent.md"
     },
     {
       "id": "folio-assistant-v7bg",
@@ -4801,14 +4787,14 @@
     {
       "id": "folio-assistant-ymsu",
       "title": "kg:detangle:check CANNOT FAIL inside bun run gates — bun test repairs the sidecar 1140 lines earlier in the same run",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T18:38:34Z",
-      "updatedAt": "2026-09-25T18:38:34Z",
+      "updatedAt": "2026-09-26T04:54:43Z",
       "preview": "Measured 2026-09-25, while establishing whether PR #1348 still had anything to\nfix. It is the ROOT CAUSE of #1348's own subject: the detangle staleness that\nbroke `main` was invisible to `bun run gates` and surfaced only because a test\nrun left the working tree dirty.\n\n## The mechanism\n\n`bun run gates` runs 152 gates in order. Gate 1 is `bun test`. Somewhere in that\nsuite the detangle **writer** r",
       "file": "beans/defs/folio-assistant-ymsu--kgdetanglecheck-cannot-fail-inside-bun-run-gates-b.md"
     },
