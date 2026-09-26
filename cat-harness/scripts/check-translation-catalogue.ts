@@ -60,6 +60,7 @@
  * bun run translation:catalogue:check                 # against origin/main
  * bun run translation:catalogue:check -- --staged     # pre-commit
  * bun run translation:catalogue:check -- --since HEAD~5
+ * bun run translation:catalogue:check -- --base "$BASE_SHA"   # CI: no merge base needed
  * bun run translation:catalogue:check -- --warn       # report, exit 0
  * ```
  *
@@ -129,16 +130,38 @@ export function translationsByFile(
   return out.size === 0 ? undefined : out;
 }
 
-/** Files the change ADDS, repository-relative, or `undefined` if git would not say. */
-export function addedFiles(mode: { staged: true } | { since: string }): string[] | undefined {
+/**
+ * Files the change ADDS, repository-relative, or `undefined` if git would not say.
+ *
+ * ## Why there are two range modes and not one
+ *
+ * `since` uses THREE dots — what this side added since the merge base, not what
+ * the other side did. A two-dot range against a moving branch would report a file
+ * `main` added as this change's, and a gate about your own diff would then fail
+ * you for somebody else's commit.
+ *
+ * `base` uses TWO, and it exists because three dots **needs a merge base that a
+ * shallow clone does not have.** Measured on this gate's first CI run: the step
+ * fetched `main` at depth 200, the ref was created (`* [new branch] main ->
+ * origin/main`), and `origin/main...HEAD` still failed — the grafted history has
+ * no common ancestor to find, so the gate correctly exited 2 rather than passing
+ * blind.
+ *
+ * On a `pull_request` checkout `HEAD` is the merge commit, so it already CONTAINS
+ * the base. Then `merge-base(base, HEAD) == base`, which makes `base..HEAD` and
+ * `base...HEAD` the same set — and the two-dot form computes no merge base, so it
+ * works with the base fetched at depth 1. That is the one case where dropping a
+ * dot loses nothing, and it is why the mode is named for the thing it requires.
+ */
+export function addedFiles(
+  mode: { staged: true } | { since: string } | { base: string },
+): string[] | undefined {
   const args =
     "staged" in mode
       ? ["diff", "--name-only", "--diff-filter=A", "--cached"]
-      : // Three dots: what THIS side added since the merge base, not what the
-        // other side did. A two-dot range would report a file main added as
-        // this change's, and then a gate about your own diff would fail you
-        // for somebody else's commit.
-        ["diff", "--name-only", "--diff-filter=A", `${mode.since}...HEAD`];
+      : "base" in mode
+        ? ["diff", "--name-only", "--diff-filter=A", mode.base, "HEAD"]
+        : ["diff", "--name-only", "--diff-filter=A", `${mode.since}...HEAD`];
   try {
     // `stderr: "pipe"` so an unresolvable ref does not print git's own `fatal:`
     // over this gate's report. The refusal is already carried by `undefined`,
@@ -185,9 +208,15 @@ if (import.meta.main) {
   const warn = argv.includes("--warn");
   const staged = argv.includes("--staged");
   const sinceAt = argv.indexOf("--since");
+  const baseAt = argv.indexOf("--base");
   const since = sinceAt >= 0 ? argv[sinceAt + 1] : "origin/main";
+  const base = baseAt >= 0 ? argv[baseAt + 1] : undefined;
   if (sinceAt >= 0 && !since) {
     console.error("--since needs a ref");
+    process.exit(2);
+  }
+  if (baseAt >= 0 && !base) {
+    console.error("--base needs a ref");
     process.exit(2);
   }
 
@@ -200,17 +229,19 @@ if (import.meta.main) {
     process.exit(2);
   }
 
-  const added = addedFiles(staged ? { staged: true } : { since });
+  const added = addedFiles(staged ? { staged: true } : base ? { base } : { since });
   if (!added) {
     console.error(
       `could not determine: git would not list what this change adds ` +
-        `(${staged ? "--cached" : `${since}...HEAD`}). Fetch the base ref first.`,
+        `(${staged ? "--cached" : base ? `${base}..HEAD` : `${since}...HEAD`}). ` +
+        `A three-dot range needs a merge base a shallow clone may not have — ` +
+        `in CI pass \`--base <the PR's base sha>\` and fetch that commit.`,
     );
     process.exit(2);
   }
 
   const findings = uncatalogued(INSTANCE_ROOT, added, byFile);
-  const scope = staged ? "staged" : `${since}...HEAD`;
+  const scope = staged ? "staged" : base ? `${base}..HEAD` : `${since}...HEAD`;
 
   if (findings.length === 0) {
     console.log(

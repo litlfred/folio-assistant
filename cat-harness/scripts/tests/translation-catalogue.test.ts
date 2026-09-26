@@ -53,6 +53,28 @@ describe("addedFiles distinguishes `no additions` from `could not tell`", () => 
     const got = addedFiles({ since: "HEAD" });
     expect(Array.isArray(got)).toBe(true);
   });
+
+  // THE CI FIX, and the property it rests on. The gate's first CI run exited 2
+  // because a three-dot range needs a merge base that a shallow clone has not
+  // got. Two dots need none — and when HEAD already contains the base, which is
+  // true of a `pull_request` merge commit, the two forms are the SAME SET.
+  //
+  // Asserted here against this repository rather than argued in a comment,
+  // because "they agree" is the whole reason dropping a dot is safe.
+  test("two dots and three dots agree whenever HEAD contains the base", () => {
+    const contains =
+      addedFiles({ since: "HEAD" }) !== undefined &&
+      Bun.spawnSync(["git", "merge-base", "--is-ancestor", "origin/main", "HEAD"]).exitCode === 0;
+    if (!contains) return; // not a determined comparison here; the CI case is
+    const three = addedFiles({ since: "origin/main" });
+    const two = addedFiles({ base: "origin/main" });
+    expect(three).toBeDefined();
+    expect([...two!].sort()).toEqual([...three!].sort());
+  });
+
+  test("a base ref git cannot resolve is undefined, not an empty list", () => {
+    expect(addedFiles({ base: "no-such-base-3sm2" })).toBeUndefined();
+  });
 });
 
 describe("uncatalogued reports exactly the added translations with no catalogue", () => {

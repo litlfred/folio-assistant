@@ -975,9 +975,32 @@ jobs:
       # gate exits 2 — could not determine — which is red rather than a false
       # pass, on purpose (`nytj`): a gate that cannot run must not read as green.
       - name: a change may not publish a translation with no catalogue
+        env:
+          # BOUND, not interpolated into the `run:` body — bean `j0zs` hardened
+          # exactly this surface, and the rule there is to refuse the SHAPE rather
+          # than judge each value, even for something as inert as a SHA.
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
-          git fetch --no-tags --prune --depth=200 origin main || true
-          bun run translation:catalogue:check
+          # FIRST CI RUN FAILED HERE, exit 2, and the fix is in the range not the
+          # fetch. `--depth=200 origin main` created the ref — the log shows
+          # `* [new branch] main -> origin/main` — and `origin/main...HEAD` still
+          # could not resolve, because three dots need a merge base and a grafted
+          # shallow history has no common ancestor to find.
+          #
+          # On a `pull_request` checkout HEAD is the merge commit, so it already
+          # CONTAINS the base: `merge-base(base, HEAD) == base`, which makes
+          # `base..HEAD` the same SET as `base...HEAD` while computing no merge
+          # base at all. So fetch that one commit and pass `--base`.
+          #
+          # The `push` fallback keeps three dots against `main`, where the history
+          # is connected and the base is not handed to us.
+          if [ -n "$BASE_SHA" ]; then
+            git fetch --no-tags --depth=1 origin "$BASE_SHA"
+            bun run translation:catalogue:check -- --base "$BASE_SHA"
+          else
+            git fetch --no-tags --prune --depth=200 origin main || true
+            bun run translation:catalogue:check
+          fi
 
       - name: gates that were registered and never run
         run: |
