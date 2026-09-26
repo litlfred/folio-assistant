@@ -276,10 +276,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T19:54:39.365Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9c5caaf4aaf6d78620f6d1399986cbda9acec2b8",
-  "sourceCommitSha": "9c5caaf4aaf6d78620f6d1399986cbda9acec2b8",
-  "sourceCommitAt": "2026-09-26T19:52:53Z",
+  "generatedAt": "2026-09-26T19:59:56.906Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6324143837435e609f9374962a78d424fd98f619",
+  "sourceCommitSha": "6324143837435e609f9374962a78d424fd98f619",
+  "sourceCommitAt": "2026-09-26T19:58:02Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -20633,7 +20633,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#process/Process_L1Gate/node/Task_RoundTrip",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Round-trip translation QA",
+      "name": {
+        "@value": "QA de traduction aller-retour",
+        "@language": "fr"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#process/Process_L1Gate",
@@ -22275,7 +22278,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_Extract",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Extract structure",
+      "name": {
+        "@value": "Extraire la structure",
+        "@language": "fr"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#process/Process_Ingestion",
@@ -22341,7 +22347,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_IngestTheme",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Ingest the theme",
+      "name": {
+        "@value": "Ingérer le thème",
+        "@language": "fr"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#process/Process_Ingestion",
@@ -22363,7 +22372,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_BuildKg",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Build the L1 knowledge graph",
+      "name": {
+        "@value": "Construire le graphe de connaissances L1",
+        "@language": "fr"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#process/Process_Ingestion",
@@ -22386,7 +22398,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_Gate",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "L1 completeness gate",
+      "name": {
+        "@value": "Porte de complétude L1",
+        "@language": "fr"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#process/Process_Ingestion",
@@ -26755,7 +26770,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#process/Process_HumanTranslation/node/Task_RoundTripQA",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Round-trip translation QA",
+      "name": {
+        "@value": "QA de traduction aller-retour",
+        "@language": "fr"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#process/Process_HumanTranslation",
