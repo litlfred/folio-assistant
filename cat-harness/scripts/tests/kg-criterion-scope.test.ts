@@ -117,9 +117,23 @@ describe("the auditor acts on scope, measured by running it", () => {
     await p.exited;
 
     // It must have audited something — a run over nothing reports no criticals too.
+    //
+    // **The floor was 50 and that number was the defect it was blind to.** It
+    // was calibrated when a bootstrap run reported 134 subjects, of which 119
+    // were cat-harness's Tool nodes audited as bootstrap's, because
+    // `checkTools()` took no instance root. Threading one in dropped the count
+    // to 15 and this assertion failed — an anti-vacuity floor CALIBRATED ON A
+    // LEAKY MEASUREMENT encodes the leak, so fixing the leak breaks the floor
+    // that was supposed to guard the fix.
+    //
+    // 10 is re-based on what bootstrap actually declares, so it is checkable
+    // rather than observed: its 7 OWN skills (`knownSkills("./bootstrap")`
+    // returns 30, of which 23 are cat-harness's and pending on a fourth leak of
+    // the same class) plus its 3 diagrams. The floor still fails a run over
+    // nothing, which is the only thing it is for (bean `dh4f`).
     const subjects = /\((\d+) subjects,/.exec(out);
     expect(subjects, `no summary line in:\n${out.slice(0, 300)}`).not.toBeNull();
-    expect(Number(subjects![1])).toBeGreaterThan(50);
+    expect(Number(subjects![1])).toBeGreaterThan(10);
 
     expect(
       out.includes("CRITICAL"),

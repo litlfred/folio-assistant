@@ -56,7 +56,7 @@ import { processArrowFindings, schemaArrowFindings } from "./arrow-direction.js"
 import { classifyName, diagramProse, generalDeclarationProse, namedFiles } from "./prose-names.js";
 import { readSchemaGraph } from "./schema-graph.js";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
-import { tools } from "../tools/discover.js";
+import { tools, toolsOf } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
 import { docsLayers } from "./compose-docs.js";
 import { PAIR_CRITERION, discoverPairs, evaluatePairs, readAttestations } from "./prose-code-pairs.js";
@@ -1127,9 +1127,24 @@ function auditSkills(): KgQaReport[] {
  * artefact's presence is a fact about `_site/`, which does not exist here. The
  * finding names where the answer lives rather than pretending to be it.
  */
-function auditTools(): KgQaReport[] {
-  const check = checkTools();
-  const unresolved = unresolvedPaths();
+/**
+ * The Tool nodes of the instance under audit — the repository's at the root.
+ *
+ * **The third cross-instance leak, and the last of the three.** The other two
+ * were a `scope` declaration (repo actors judged against one instance's roles:
+ * 73 false criticals) and a one-line guard in `readSatisfiers` (repo
+ * capabilities against one instance's requirements: 3 more). This one was
+ * neither, because the criteria are RIGHT: the six `tool-*` criteria are
+ * correctly `instance`-scoped, and what was wrong is the set they read.
+ * `checkTools()` took no root at all, so `--instance ./bootstrap` audited
+ * cat-harness's 119 Tools as bootstrap's. Fixing it by reclassifying the
+ * criteria would have thrown away the legitimate instance half — the same
+ * mistake avoided in `readSatisfiers`, and the reason both fixes are in the
+ * DATA rather than in the classification.
+ */
+function auditTools(instance?: string): KgQaReport[] {
+  const check = checkTools(instance);
+  const unresolved = unresolvedPaths(instance);
 
   // Indexed by tool id once, rather than filtering each list per tool: seven
   // criteria over 69 tools is 483 scans of the same arrays otherwise.
@@ -1148,7 +1163,7 @@ function auditTools(): KgQaReport[] {
   const unreadable = new Set(check.unreadableContracts);
 
   const out: KgQaReport[] = [];
-  for (const t of tools()) {
+  for (const t of instance === undefined ? tools() : toolsOf(instance)) {
     const f = (rows: { detail: string }[] | undefined): KgFinding[] =>
       (rows ?? []).map((r) => ({ where: t.id, detail: r.detail }));
 
@@ -2235,7 +2250,7 @@ const satisfiers = readSatisfiers();
 reports.push(...auditRequirements(requirements, actors, satisfiers));
 reports.push(...auditSkills());
 reports.push(auditGraph(graph, processes, actors, skills, stories, danglingSatisfies(requirements, satisfiers)));
-reports.push(...auditTools());
+reports.push(...auditTools(INSTANCE_RUN ? root : undefined));
 
 // Write or compare.
 //
