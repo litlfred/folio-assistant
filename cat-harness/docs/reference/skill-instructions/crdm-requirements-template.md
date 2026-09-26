@@ -1,11 +1,15 @@
 ---
-name: crdm-requirements-template
-description: >
-  Guide and template for CRDM Phase 3 — Requirements Definition.
-  Helps the agent structure requirements from conversation using a
-  REQ-### format with acceptance criteria, priority, and traceability.
+layout: default
+title: 'Phase 3'
+parent: Skill instructions
 ---
 
+{: .note }
+> Generated from [`cat-harness/skills/crdm/crdm-requirements-template.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-requirements-template.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/crdm/crdm-requirements-template.md){: .fa-edit-source }
+
+{% raw %}
 # Phase 3 — Requirements definition (detail)
 
 This skill expands the Phase 3 summary in `crdm-requirements-workflow.md`.
@@ -119,4 +123,5 @@ PR (Phase 6)
 - [`crdm-requirements-workflow`](crdm-requirements-workflow.md) — Phase 3
 - [`crdm-impact-analysis`](crdm-impact-analysis.md) — Phase 4 follows this
 - [`crdm-detect`](crdm-detect.md) — detection
-- [`../../skills/folio-core/todo-manager.md`](../../skills/folio-core/todo-manager.md) — bean creation
+- [`../../skills/folio-core/todo-manager.md`](todo-manager.md) — bean creation
+{% endraw %}
