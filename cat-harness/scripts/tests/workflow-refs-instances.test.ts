@@ -29,10 +29,10 @@
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { basename, join, resolve } from "node:path";
 
 import { workflowFiles } from "../known-skills.js";
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.js";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..", "..");
 const REPO = repoRootFor(INSTANCE_ROOT);
@@ -104,4 +104,44 @@ describe("the checker, run as a command", () => {
     expect(Number(instances)).toBe(2);
     expect(Number(files)).toBe(expected);
   }, 120_000);
+});
+
+describe("render:bpmn covers the same two instances", () => {
+  /**
+   * Measured 2026-09-26, and this was a live defect rather than a gap: all three
+   * of bootstrap's SVGs already existed in `docs/assets/img/workflows/` and were
+   * referenced by published pages under `docs/processes/`, their sources all
+   * changed on 2026-09-24, and every SVG was from 2026-09-20. Four days stale on
+   * the published site, with no gate able to say so — `render:bpmn:check` judged
+   * 71 diagrams and named none of bootstrap's.
+   */
+  test("every bootstrap diagram has a rendered SVG in the site assets", () => {
+    // `siteDirFor`, never the literal `docs` — the site root has moved twice
+    // (beans `x4a6`, `wggr`) and `check:site-dir` refuses a hardcoded one. It
+    // caught this line, which is the gate doing exactly its job.
+    const assets = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "assets", "img", "workflows");
+    for (const f of diagrams(BOOTSTRAP)) {
+      const svg = join(assets, `${basename(f, ".bpmn")}.svg`);
+      expect(existsSync(svg), `${basename(svg)} is missing — run \`bun run render:bpmn\``).toBe(true);
+    }
+  });
+
+  /**
+   * The invariant `collidingBasenames` guards, asserted here instead of against
+   * that function directly.
+   *
+   * `render-bpmn.ts` cannot be imported: it has top-level `await`s that launch a
+   * browser and write files, so a test that imported it to reach one pure helper
+   * would render the whole corpus as a side effect — the unguarded-entry-point
+   * defect. Guarding that module is a worthwhile separate change; until then the
+   * property is checked from the same inputs the script uses, which fails on a
+   * real collision whether or not the script's own report fires.
+   */
+  test("no two diagrams across both instances share a basename", () => {
+    const all = [...diagrams(INSTANCE_ROOT), ...diagrams(BOOTSTRAP)];
+    const names = all.map((f) => basename(f, ".bpmn"));
+    const dupes = names.filter((n, i) => names.indexOf(n) !== i);
+    expect([...new Set(dupes)]).toEqual([]);
+    expect(all.length).toBeGreaterThan(10); // anti-vacuity
+  });
 });

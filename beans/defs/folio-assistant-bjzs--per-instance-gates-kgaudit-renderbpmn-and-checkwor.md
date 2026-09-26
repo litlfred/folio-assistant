@@ -146,10 +146,26 @@ exit 1 and names the path; restoring it gives exit 0.
 - [x] tests pin the property rather than the count — the expected diagram total
       is DERIVED from both instances, because a literal goes stale the day a
       diagram is added and teaches the next agent to edit the test
-- [ ] `render:bpmn` renders bootstrap's 3 diagrams. Small (`root` appears 4
-      times in a 297-line file) but it writes SVGs into the ROOT's site assets,
-      which is a placement question rather than a mechanical one, and the
-      basename-collision caveat its own docstring carries becomes live
+- [x] `render:bpmn` renders bootstrap's 3 diagrams. **And the placement was not
+      a question** — I raised it as one and it was already settled: all three
+      SVGs ALREADY existed in `docs/assets/img/workflows/`, referenced by
+      published pages under `docs/processes/`, and the root's site already
+      publishes bootstrap content (`docs/bootstrap/`,
+      `docs/uml/overview/bootstrap/`). Measuring took one command; asking would
+      have cost a round.
+
+      **It was a live defect, not a gap.** All three sources last changed
+      2026-09-24 and all three SVGs were from 2026-09-20 — four days stale on the
+      published site, with no gate able to say so, because `render:bpmn:check`
+      judged 71 diagrams and named none of bootstrap's. Now 74, and the three
+      re-rendered as CHANGED, which is what proves they were stale.
+
+      The basename-collision caveat its docstring carried as *"today there is one
+      such directory, so it is not a live defect"* is now evaluated:
+      `collidingBasenames` reports it and it is FATAL, because both readings are
+      wrong — in `--check` it compares one source against the other's picture, and
+      in a write run the later render silently overwrites the earlier. A published
+      page showing the WRONG process is worse than one showing none.
 - [ ] `kg:audit` audits each declared instance from its own root. **This is the
       expensive one and it is the owner's call, not an agent's**: `root` is a
       module-level constant referenced 76 times in a 2344-line file, with 9
