@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-26T11:18:55Z
+updated_at: 2026-09-26T14:04:42Z
 parent: folio-assistant-1xhc
 ---
 
@@ -384,3 +384,55 @@ mid-run. What changes is which number was right — 227 was, all along.
       confirm no committed artefact changes
 - [x] `kg:detangle:check` gives the same verdict on one commit in two
       environments — local and a fresh CI checkout now both compute 227
+
+
+## The cascade did not vanish with the job split — it shrank from 45 to 6, and MOVED
+
+Correcting a claim of mine from earlier today, before it is quoted. I wrote that
+`main`'s workflow split had eliminated the skip cascade. **Half right, and the
+half that is wrong is the half with a number in it.**
+
+Measured 2026-09-26 on the merged tree, by parsing the workflow:
+
+| | |
+|---|---|
+| `typescript` job | 6 steps, `bun test` is the LAST one |
+| steps skipped by a `bun test` failure | **0** — this part of the claim holds |
+| `gates` job | 48 steps |
+| `translation:drift:check` position | step **41** |
+| steps skipped when it fails | **6** |
+
+So the cascade is not gone. It is **six steps instead of forty-five**, and it now
+sits in a different job behind a different failure. A 45→6 reduction is a large
+improvement and worth having; "gone" is a different claim and it is false.
+
+### Why this matters beyond the arithmetic
+
+`main` carries `translation:drift:check` red BY DECISION (bean `ngxj`, issue
+#206). So on `main` today, six gates at the end of the `gates` job return no
+verdict, permanently, for the same structural reason the forty-five did. The
+remedy the split delivered is a smaller blast radius, not a fixed mechanism —
+nothing yet makes a failing step report the steps behind it as UNEVALUATED
+rather than as absent.
+
+One consequence is already visible on PR #1399: the accepted drift red now
+surfaces as **two** red checks with different names — `TypeScript` (the
+`no NEW drift` test) and `Repository gates (hard)` (the
+`translation:drift:check` script) — which is one root cause wearing two faces, a
+thing a reviewer has to be told rather than shown.
+
+### The useful side effect, and how it was verified
+
+`check:rendered-labels` is step **20** of that job, ahead of the drift check at
+41, so it runs. That its verdict is a PASS needs no separate query: GitHub runs
+steps in order and skips only after a failure, so the drift check reaching step
+41 is itself proof that every step before it passed. The position of the failure
+is the evidence.
+
+### Adds to "Done when"
+
+- [ ] a failing step's successors are reported as UNEVALUATED rather than
+      silently `skipped`. The split reduced the count; it did not make the third
+      state legible, which is this bean's and `1xhc`'s actual subject. MEASURED
+      AFTER: with one step red, the run's summary names how many gates returned
+      no verdict
