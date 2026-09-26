@@ -1272,6 +1272,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_gates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Registered gates&#10;(HARD)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every registered repository gate — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, declared paths, generated-artefact drift, and the rest. `bun run gates` derives its list from the jobs that install no browser, so it is the local way to run the same set before pushing. Split from Task_TypeScript for bean `m5gx`: while these shared a job with `bun test`, a red test left 45 of 50 steps unreachable and 149 gate commands reporting nothing on every PR — and the Actions UI marked them `skipped`, which reads as deliberate rather than as a job that died. Splitting is correct rather than merely cheaper: no step in the job declared an `id`, referenced `steps.*`, or was conditional, so nothing depended on what stayed behind. It costs 11 seconds of duplicated setup."
+        }
+      ],
+      "skos:notation": "Task_Gates",
+      "dcterms:source": "cat-harness/processes/code-quality-gates.bpmn#Task_Gates",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_lean",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1339,12 +1359,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD)"
+          "@value": "TypeScript: tests,&#10;lint, types (HARD)"
         }
       ],
       "skos:definition": [
         {
-          "@value": "bun test, lint, tsc --noEmit, then the repository gates (workflow refs, lane and process documentation, kg:audit:check, detangle, skills, …). `bun run gates` derives its list from this job, so it is the local way to run the same set before pushing."
+          "@value": "bun test, lint, tsc --noEmit. The repository gates it used to carry are now Task_Gates: they were unreachable behind a red `bun test`, because Actions stops a job at its first failing step. This task's old name claimed \"~30 repository gates\" where the real number was 153 — a count in prose, wrong five-fold, in the label a reader trusts most."
         }
       ],
       "skos:notation": "Task_TypeScript",

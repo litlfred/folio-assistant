@@ -11,13 +11,13 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 501 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 502 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 530 terms and is 404 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 531 terms and is 406 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">530</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">531</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -2797,6 +2797,13 @@ Regenerate the context, block,&amp;#10;library and site graphs &amp;#8212; and d
 <p>Run the five --check generators in one job — the JSON-LD context, block siblings, library nodes, site graph, then the label-resolution and emitter tests. Any committed .jsonld that differs from what its generator now produces fails the PR, because a stale generated file is still consulted.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/jsonld-drift-check.bpmn"><code>cat-harness/processes/jsonld-drift-check.bpmn#Task_Check</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_gates" data-fa-state="extracted" data-fa-gloss="">
+Registered gates&amp;#10;(HARD) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Every registered repository gate — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, declared paths, generated-artefact drift, and the rest. `bun run gates` derives its list from the jobs that install no browser, so it is the local way to run the same set before pushing. Split from Task_TypeScript for bean `m5gx`: while these shared a job with `bun test`, a red test left 45 of 50 steps unreachable and 149 gate commands reporting nothing on every PR — and the Actions UI marked them `skipped`, which reads as deliberate rather than as a job that died. Splitting is correct rather than merely cheaper: no step in the job declared an `id`, referenced `steps.*`, or was conditional, so nothing depended on what stayed behind. It costs 11 seconds of duplicated setup.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-quality-gates.bpmn"><code>cat-harness/processes/code-quality-gates.bpmn#Task_Gates</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_issue.call_relatedwork" data-fa-state="extracted" data-fa-gloss="">
 Related work: find, sort, ask <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3646,10 +3653,10 @@ Triage the failure: hold or fix forward <span class="fa-gloss-status">candidate,
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/publish-alert.bpmn"><code>cat-harness/processes/publish-alert.bpmn#U_Triage</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_typescript" data-fa-state="extracted" data-fa-gloss="">
-TypeScript: tests, lint, types,&amp;#10;and ~30 repository gates (HARD) <span class="fa-gloss-status">candidate, extracted</span>
+TypeScript: tests,&amp;#10;lint, types (HARD) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>bun test, lint, tsc --noEmit, then the repository gates (workflow refs, lane and process documentation, kg:audit:check, detangle, skills, …). `bun run gates` derives its list from this job, so it is the local way to run the same set before pushing.</p>
+<p>bun test, lint, tsc --noEmit. The repository gates it used to carry are now Task_Gates: they were unreachable behind a red `bun test`, because Actions stops a job at its first failing step. This task's old name claimed &quot;~30 repository gates&quot; where the real number was 153 — a count in prose, wrong five-fold, in the label a reader trusts most.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-quality-gates.bpmn"><code>cat-harness/processes/code-quality-gates.bpmn#Task_TypeScript</code></a></p>
 </dd>
 </dl>
