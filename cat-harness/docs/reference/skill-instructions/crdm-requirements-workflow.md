@@ -34,6 +34,7 @@ a real subprocess in its own file:
 | Link the work to an issue | `crdm-issue-linking.bpmn` | scan, then link or ask; never create without permission |
 | Phase 1 — needs | `crdm-needs.bpmn` | stakeholders, needs statement, loop until recognised |
 | Phases 2–4 — BPA + requirements | `crdm-requirements-definition.bpmn` | current workflow, requirements, impact, loop until approved |
+| Phase 4b — prioritization | *(inline in Phase 4 exit)* | dependency-order capability areas, formalize-first rule, BA confirms |
 | Phase 5 — beans + sign-off | `crdm-signoff.bpmn` | requirements become beans, BA signs off, branch announced |
 | Phase 6 — implement + acceptance | `crdm-deliver.bpmn` | implement, review increment, share MVP, take findings |
 | Close-out | `crdm-close.bpmn` | stakeholder sign-off, BA confirmation, then the close |
@@ -223,6 +224,66 @@ whole; per option is that same question once per row, so an agent that leaves
 the column empty is discarding work it has already done. And this phase breaks
 the rule more than any other, because the vocabulary it just built *feels*
 defined to the agent and is new to everybody else.
+## Phase 4b — Prioritization and dependency ordering
+
+**Input:** impact analysis complete, possibly multiple capability areas identified
+
+When a feature request decomposes into **more than one capability area** (as
+most non-trivial requests do), the agent must explicitly order them before
+creating beans. This is not optional — skipping it produces a flat bean list
+with no implementation sequence, and the first session that picks it up will
+either guess the order (often wrong) or ask the BA (wasting their time on a
+question the analysis already answered).
+
+### The prioritization protocol
+
+1. **Identify capability areas** — each is a coherent cluster of requirements
+   that can be implemented and reviewed independently. Name them.
+
+2. **Map dependencies** — draw the dependency graph:
+   - Does area A define concepts that area B assumes?
+   - Does area A produce artefacts that area B consumes?
+   - Does area A change structure that area B builds on?
+   If yes, A must precede B.
+
+3. **Apply the formalize-first rule** — within the dependency order:
+   - **Structural/organizational** work first (taxonomies, indexes, schemas)
+   - **Process/policy** formalization second (skills, workflows, conventions)
+   - **Implementation** third (code, pipelines, tools)
+   - **Visualization/UI** last (dashboards, pages, views)
+
+   This is not arbitrary — a visualization built before the process is
+   formalized will be rebuilt; a process formalized before the structure is
+   organized will reference the wrong paths.
+
+4. **Present the order to the BA** — as a dependency chain, not a list:
+   ```
+   Area 5 (structure) → Area 2 (process) → Area 3 (review) → Area 4 (planning) → Area 1 (visualization)
+   ```
+   With one sentence per arrow explaining **why** the dependency exists.
+
+5. **BA confirms or reorders** — the agent proposes, the BA decides. The BA
+   may override the dependency order (e.g. "I need the visualization first
+   even if it's throwaway") — that's a legitimate business decision, and
+   the agent records it as such rather than arguing.
+
+### What this step produces
+
+- A numbered list of capability areas in implementation order
+- A dependency rationale for each ordering decision
+- An estimate of scope per area (bean count)
+- A recommendation for which areas constitute the MVP release
+
+**Post to the issue** alongside the impact analysis. This becomes the
+input to Phase 5's bean creation — beans are created in dependency order,
+not in the order the BA mentioned them.
+
+### Cross-domain applicability
+
+This step applies identically to code features, paper milestones, and
+project deliverables. The formalize-first rule is domain-independent:
+a paper's structure (chapter order, block kinds) must precede its
+content (prose), which must precede its presentation (PDF layout).
 
 ## Phase 5 — Sign-off and bean creation
 

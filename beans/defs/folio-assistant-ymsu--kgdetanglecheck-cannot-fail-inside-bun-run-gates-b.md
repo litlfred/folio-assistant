@@ -1,10 +1,10 @@
 ---
 # folio-assistant-ymsu
 title: kg:detangle:check CANNOT FAIL inside bun run gates — bun test repairs the sidecar 1140 lines earlier in the same run
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-25T18:38:34Z
+updated_at: 2026-09-26T04:54:43Z
 parent: folio-assistant-1xhc
 ---
 
@@ -129,3 +129,5 @@ and absence is the one this design made safe.
       predecessor have repaired its subject?"* and *"does it compare every field
       it writes?"* — this instance answers the second question wrongly and the
       first one fine
+
+_2026-09-26T04:54:43Z_ — Claimed by claude/ymsu-gates-tree-guard — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

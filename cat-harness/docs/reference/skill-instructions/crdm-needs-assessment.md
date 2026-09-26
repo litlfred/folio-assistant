@@ -1,12 +1,15 @@
 ---
-name: crdm-needs-assessment
-description: >-
-  Facilitate Phase 1 (Needs Assessment) of the CRDM requirements workflow.
-  Guide the BA through stakeholder identification, source material gathering,
-  and synthesising a domain-language needs statement. Post to the GitHub issue
-  and iterate until the BA confirms the need is correctly captured.
+layout: default
+title: 'Phase 1'
+parent: Skill instructions
 ---
 
+{: .note }
+> Generated from [`cat-harness/skills/crdm/crdm-needs-assessment.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-needs-assessment.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/crdm/crdm-needs-assessment.md){: .fa-edit-source }
+
+{% raw %}
 # Phase 1 — Needs assessment (detail)
 
 This skill expands the Phase 1 summary in `crdm-requirements-workflow.md`.
@@ -109,4 +112,5 @@ stakeholders directly.
 
 - [`crdm-requirements-workflow`](crdm-requirements-workflow.md) — the parent workflow
 - [`crdm-detect`](crdm-detect.md) — what triggers this phase
-- [`../../skills/folio-core/todo-manager.md`](../../skills/folio-core/todo-manager.md) — bean management
+- [`../../skills/folio-core/todo-manager.md`](todo-manager.md) — bean management
+{% endraw %}
