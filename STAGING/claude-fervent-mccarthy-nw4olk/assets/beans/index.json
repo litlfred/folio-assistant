@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 344,
+      "count": 348,
       "unit": "beans"
     }
   },
@@ -137,14 +137,14 @@
     {
       "id": "folio-assistant-0ytk",
       "title": "CODE LISTS: closed sets of codes as SKOS nodes, each code with a definition and a source",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:29:49Z",
-      "updatedAt": "2026-09-23T19:29:49Z",
+      "updatedAt": "2026-09-25T16:37:09Z",
       "preview": "Owner, 2026-09-23, on the adjudication answers bean bvuk had written into diagrams as bare strings: \"we need an expandable option, not just declared in code. list of codes and corresponding narrative desc and source should be part of a node/asset. can we use existing tools for new Skills?\" Chosen: all of adjudication answers, JSON-LD namespaces (2j09), our own namespaces; published through the exi",
       "file": "beans/defs/folio-assistant-0ytk--code-lists-closed-sets-of-codes-as-skos-nodes-each.md"
     },
@@ -1520,7 +1520,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:56:03Z",
-      "updatedAt": "2026-09-23T20:15:41Z",
+      "updatedAt": "2026-09-25T16:37:43Z",
       "preview": "Owner, 2026-09-23, chose \"All three, fetch HL7's base template\" and \"smart-base, inherited\".\n\nFinishes what 0818 left open: the WHO visual styling, a different question from the menu it shipped.\n\n## The template chain is three layers, and the three items do not come from one of them\n\n    smart-trust local-template  ->  who.template.root 0.5.0  ->  fhir.base.template 1.0.0\n\n- BLUE BAR is WHO's: --n",
       "file": "beans/defs/folio-assistant-ajx9--who-ig-chrome-the-blue-bar-draft-watermark-and-pub.md"
     },
@@ -1719,6 +1719,20 @@
       "updatedAt": "2026-09-19T11:43:43Z",
       "preview": "Everything from a `.pot` template to a rendered page that declares its own\n`lang`, and the QA that says the rendering is right.\n\nThe through-line is that a translation is the SAME KIND of thing as the page it\ntranslates, differing by a field the file declares — never by its directory's\nname. These items are the parts of that claim that are not yet true: diagrams\nwhose labels never reach a catalogu",
       "file": "beans/defs/folio-assistant-bzyu--translation-the-gettext-pipeline-translated-render.md"
+    },
+    {
+      "id": "folio-assistant-c3d7",
+      "title": "CLAIM STOMPING: 97 of 100 claims record no holder, so beans:claim reports '✓ claimed' for work a sibling is doing",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:08:51Z",
+      "updatedAt": "2026-09-25T16:25:31Z",
+      "preview": "Found while acting on the owner's decision (2026-09-25) to *\"add the\nre-read-before-claim rule\"*. **The rule is already implemented** — `35nj` built\n`bun run beans:claim`, which reads the default branch first and has an\n`already-claimed` outcome that refuses and names the holder. This bean is the\nhole that makes it vacuous for almost the whole store.\n\n## Measured 2026-09-25, on `origin/main`\n\n| | ",
+      "file": "beans/defs/folio-assistant-c3d7--claim-stomping-97-of-100-claims-record-no-holder-s.md"
     },
     {
       "id": "folio-assistant-c4rz",
@@ -3379,6 +3393,20 @@
       "file": "beans/defs/folio-assistant-qh1s--lit-search-a-process-and-methodologies-for-organis.md"
     },
     {
+      "id": "folio-assistant-qj9a",
+      "title": "STAGING SIZE: the measurement is right and the SEVERITY is an unverifiable claim — critical predicts a failed publish, and nothing in this repo can observe enforcement",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T18:10:30Z",
+      "updatedAt": "2026-09-25T18:10:30Z",
+      "preview": "`health` reports `staging-preview-size` as **critical** while every deploy keeps\nsucceeding. I went looking for a wrong number and did not find one: **the\nmeasurement is sound.** What is wrong is one level up, in what `critical` is\nasserting.\n\n## Measured first-hand, 2026-09-25\n\nDirectly off the publish ref — `git ls-tree -r -l origin/gh-pages`, not the\ncheck's own report:\n\n| | files | size |\n|---",
+      "file": "beans/defs/folio-assistant-qj9a--staging-size-the-measurement-is-right-and-the-seve.md"
+    },
+    {
       "id": "folio-assistant-qrnz",
       "title": "SECOND IG: ingest smart-immunizations, and find out whether the artefact-index pipeline actually generalises",
       "status": "in-progress",
@@ -3817,6 +3845,20 @@
       "file": "beans/defs/folio-assistant-tfo1--ingestion-a-skill-that-takes-3-avatartheme-layouts.md"
     },
     {
+      "id": "folio-assistant-thsz",
+      "title": "PAGES REPORT: a cancellation share cannot tell coalescing from starvation, and it read as alarming to its own author",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:28:41Z",
+      "updatedAt": "2026-09-25T16:29:01Z",
+      "preview": "`3yi4` built the Pages section so somebody could ask *\"are the previews\nactually building?\"*. It reports the counts and deliberately grades no share —\nthere is no calibrated threshold for \"too many cancellations\", the same refusal\nthat stopped `6xaz` inventing a size threshold.\n\n**That refusal was right and it is not enough.** The number it prints is the\none a reader forms a judgement from anyway,",
+      "file": "beans/defs/folio-assistant-thsz--pages-report-a-cancellation-share-cannot-tell-coal.md"
+    },
+    {
       "id": "folio-assistant-tr05",
       "title": "KG MODELLING: dependents point at the general node; typed KG refs; skill I/O schemas (#1168)",
       "status": "in-progress",
@@ -4171,14 +4213,14 @@
     {
       "id": "folio-assistant-vxho",
       "title": "A test 14% under the default timeout is a gate that fails on a busy machine, not a red one",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T12:19:24Z",
-      "updatedAt": "2026-09-24T18:51:24Z",
+      "updatedAt": "2026-09-25T16:37:25Z",
       "preview": "Recorded 2026-09-24 while running `bun run gates` on a two-markdown-file diff.\n\n```\ncat-harness/schemas/viz-generators.test.ts:\n(fail) the readers agree with what the generators publish > a queue's\n       declared intake is ONE unit, not one per file it carries [5683.71ms]\n  ^ this test timed out after 5000ms.\n```\n\n**It is not a correctness failure and it was not the diff's.** The diff was two\nbea",
       "file": "beans/defs/folio-assistant-vxho--a-test-14-under-the-default-timeout-is-a-gate-that.md"
     },
@@ -4727,6 +4769,20 @@
       "updatedAt": "2026-09-20T18:48:38Z",
       "preview": "Owner, 2026-09-20, verbatim — this is the largest architectural statement in\nthe session and paraphrasing it would lose the parts that constrain the design:\n\n> these avatars should aslso be the default display background for their\n> corresponding docs/ (ghpages) rendering, on which panels and folios and what\n> not renders. kindof like the shared miro board background... the harness\n> instnace disp",
       "file": "beans/defs/folio-assistant-yj32--harness-as-interface-a-harness-instances-default-r.md"
+    },
+    {
+      "id": "folio-assistant-ymsu",
+      "title": "kg:detangle:check CANNOT FAIL inside bun run gates — bun test repairs the sidecar 1140 lines earlier in the same run",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T18:38:34Z",
+      "updatedAt": "2026-09-25T18:38:34Z",
+      "preview": "Measured 2026-09-25, while establishing whether PR #1348 still had anything to\nfix. It is the ROOT CAUSE of #1348's own subject: the detangle staleness that\nbroke `main` was invisible to `bun run gates` and surfaced only because a test\nrun left the working tree dirty.\n\n## The mechanism\n\n`bun run gates` runs 152 gates in order. Gate 1 is `bun test`. Somewhere in that\nsuite the detangle **writer** r",
+      "file": "beans/defs/folio-assistant-ymsu--kgdetanglecheck-cannot-fail-inside-bun-run-gates-b.md"
     },
     {
       "id": "folio-assistant-yo4m",
