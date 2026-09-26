@@ -1,0 +1,78 @@
+{
+  "tile": {
+    "qa": {
+      "count": 901,
+      "unit": "documents"
+    }
+  },
+  "$schema": "folio-qa-graph/v1",
+  "files": 901,
+  "families": [
+    {
+      "schema": "kg-qa/v1",
+      "files": 543,
+      "rollUpField": "totals",
+      "buckets": {
+        "pass": 3032,
+        "fail": 144,
+        "n/a": 1469,
+        "unknown": 10
+      }
+    },
+    {
+      "schema": "qa-witness/v1",
+      "files": 138,
+      "rollUpField": "counts",
+      "buckets": {
+        "fail": 1,
+        "warn": 12,
+        "pass": 2824,
+        "na": 3123,
+        "unknown": 8
+      }
+    },
+    {
+      "schema": "block-qa/v1",
+      "files": 122,
+      "rollUpField": null
+    },
+    {
+      "schema": "qa-results/v1",
+      "files": 45,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-detangle-sidecar/v1",
+      "files": 29,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-qa-index/v1",
+      "files": 13,
+      "rollUpField": null
+    },
+    {
+      "schema": "translation-qa/v1",
+      "files": 9,
+      "rollUpField": null
+    },
+    {
+      "schema": "folio-test-run/v1",
+      "files": 1,
+      "rollUpField": null
+    },
+    {
+      "schema": "viewer-nav-qa/v1",
+      "files": 1,
+      "rollUpField": "totals",
+      "buckets": {
+        "pages": 47,
+        "railed": 47,
+        "declined": 0,
+        "missing": 0
+      }
+    }
+  ],
+  "unclassified": 0,
+  "unreadable": 0
+}
