@@ -612,8 +612,21 @@ export function exemptionFor(command: string): StepExemption | undefined {
   return STEP_EXEMPTIONS.find((e) => command.includes(e.match));
 }
 
-/** Jobs whose steps need no browser — the inner loop. */
-const FAST_JOBS = new Set(["typescript"]);
+/**
+ * Jobs whose steps need no browser — the inner loop.
+ *
+ * **Two entries, not one, since bean `om30` split them, and the set is the
+ * reason the split was safe to make.** `loadGates` reads this workflow so the
+ * local gate set cannot drift from CI's; that guarantee is exactly what a job
+ * split threatens, because a job this set does not name contributes NOTHING and
+ * `bun run gates` would quietly shrink from 154 gates to 6 while still printing
+ * a confident pass. A subset of the gate set is not the gate set.
+ *
+ * `typescript` is lint, typecheck and `bun test`; `gates` is the 43 repository
+ * gate steps. Neither needs Chromium, which is the only question this set
+ * actually asks — `e2e` installs it, which is why `--all` exists.
+ */
+const FAST_JOBS = new Set(["typescript", "gates"]);
 
 /** One runnable gate, with the job and step that ask for it. */
 export interface Gate {

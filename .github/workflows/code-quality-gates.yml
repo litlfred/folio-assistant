@@ -239,6 +239,78 @@ jobs:
         with:
           bun-version: latest
 
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # ## Order matters here, and it is not stylistic
+      #
+      # Actions stops a job at its first failing step, so ANYTHING after a red
+      # step does not run. `bun test` is red on `main` by the owner's decision
+      # (the `t8g3` drift), and while it sat FIRST in this job, lint and
+      # typecheck were masked behind it — `main` had not been linted or
+      # typechecked in CI for as long as that test had been failing. Bean
+      # `om30`, whose split moved the 43 repository gates into their own job;
+      # this reordering is the same defect inside what remains.
+      #
+      # So the two checks that cannot fail for a reason outside their own
+      # subject go FIRST, and `bun test` goes LAST, with nothing behind it to
+      # mask. Adding a step to this job means adding it ABOVE `bun test`.
+
+      # Exits 0 on warnings by design; a non-zero exit means a rule that had
+      # been driven to zero has regressed.
+      - name: bun run lint
+        run: bun run lint
+
+      - name: tsc --noEmit
+        run: bunx tsc --noEmit -p tsconfig.json
+
+      # Each step is a separate gate so the Actions UI names the one that
+      # broke, rather than a single opaque "quality" failure. LAST on purpose —
+      # see the ordering note above.
+      - name: bun test
+        run: bun test
+
+
+
+  gates:
+    # bpmn-node: Task_RepositoryGates
+    name: Repository gates (hard)
+    #
+    # ## Why this is a SECOND job and not more steps in `typescript`
+    #
+    # Bean `om30`. `bun test` was step 2 of 47 here, and Actions stops a job at
+    # its first failing step. No step in the job carried `continue-on-error`, so
+    # while `main` carried its deliberate `t8g3` drift failure, the 45 steps
+    # after it — **113 `bun run` invocations** — did not execute at all. A gate
+    # that was never asked and a gate that passed look identical from outside,
+    # which is bean `xom7`'s defect one level down: at the STEP rather than the
+    # workflow.
+    #
+    # It was not hypothetical. `kg:detangle:check` sits in this block, and it is
+    # the only instrument positioned to catch the defect `xd1g` fixed:
+    # `check:published-packages` (also in this block) runs `bun install` inside
+    # `cat-harness/schemas/block-qa-schema`, so a runner reaching the detangle
+    # check has no nested `node_modules` and measures the tracked corpus, while
+    # any developer container has the install and agrees with the poisoned
+    # value. CI was the one place that disagreement was visible, and CI never
+    # got there. The committed number drifted 1441 -> 1442 unnoticed meanwhile.
+    #
+    # There is deliberately NO `needs: typescript`. The whole point is that a
+    # red test must not stop these from being asked; they are independent
+    # questions about the repository and the owner chose this split over
+    # `continue-on-error` precisely because it changes nothing about what is
+    # asserted — the drift still fails, in its own lane.
+    #
+    # Adding a gate step here rather than to `typescript` is the default now.
+    # `typescript` is the three checks its name promises; everything else is a
+    # repository gate and belongs in this job.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
       # `check:published-packages`, below, is the one gate in this job that
       # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
       # beside its npm one, and a package this repository publishes has to
@@ -251,21 +323,9 @@ jobs:
         with:
           python-version: "3.12"
 
+
       - name: Install dependencies
         run: bun install --frozen-lockfile
-
-      # Each step is a separate gate so the Actions UI names the one that
-      # broke, rather than a single opaque "quality" failure.
-      - name: bun test
-        run: bun test
-
-      # Exits 0 on warnings by design; a non-zero exit means a rule that had
-      # been driven to zero has regressed.
-      - name: bun run lint
-        run: bun run lint
-
-      - name: tsc --noEmit
-        run: bunx tsc --noEmit -p tsconfig.json
 
       # The base workflow processes are strict; a content package may relax a
       # step only by declaring it with a reason, and never a step the BPMN marks
