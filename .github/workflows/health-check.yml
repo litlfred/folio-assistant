@@ -72,7 +72,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # REQUIRED, and not an optimisation to shave off. `repository-size`
           # measures the pack a full-history clone downloads; a shallow one
@@ -125,7 +125,7 @@ jobs:
       # `if: always()` rather than a verdict filter for exactly that reason.
       - name: Keep the report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: repository-health-report
           path: test/health/results/repository.health-report.json
