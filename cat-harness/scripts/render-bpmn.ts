@@ -25,26 +25,48 @@ import { existsSync, readFileSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 import { chromiumExecutable } from "./bpmn-render";
 import { checkXmlComments } from "./xml-comment-check";
-import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
+import { siteDirFor, repoRootFor, instanceRootsIn } from "../schemas/cat-harness.ts";
 import { processPresentations, processTarget } from "./process-presentations.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 /**
- * The `.bpmn` sources, from EVERY directory the instance declares as holding
- * its knowledge graph — not from the literal `processes/`.
+ * The `.bpmn` sources, from EVERY instance in the repository — each one's
+ * declared knowledge-graph directories, via `workflowFiles` — not from the
+ * literal `processes/`, and not from this instance alone.
  *
  * `workflowFiles` returns absolute paths, so `file` below is already complete
  * and nothing joins it to a base. That is the point: a topical layout
  * (`bootstrap/processes/`, `crdm/workflows/`) is found without this script
  * knowing the layout exists.
  *
- * Output names are still the BASENAME, which is a latent collision if two
- * declared directories ever hold a diagram of the same name — today there is
- * one such directory, so it is not a live defect, and naming it here is
- * cheaper than a scheme nobody needs yet.
+ * Every instance, not just this one, since bean `oqdr` (2026-09-26): bootstrap
+ * is a separate instance, so `workflowFiles(ROOT)` never reached its three
+ * diagrams. Their SVGs sat in this site's `workflows/` rendered by nothing —
+ * `initialize-harness.svg` went ten source commits stale, still drawing the
+ * pre-rename role — and `render:bpmn:check`, which checks only what this
+ * function returns, could not see it. The same walk `audit-coverage` and
+ * `check-asset-roles` already do.
+ *
+ * Output names are the BASENAME, so two instances holding a diagram of the
+ * same name would silently overwrite one SVG with the other. That was
+ * "latent" while one directory fed this; with every instance feeding it, it
+ * is refused rather than trusted.
  */
 function bpmnSources(): string[] {
-  return workflowFiles(ROOT).filter((f) => f.endsWith(".bpmn")).sort();
+  const all = new Set<string>();
+  for (const inst of instanceRootsIn(repoRootFor(ROOT))) {
+    for (const f of workflowFiles(inst)) if (f.endsWith(".bpmn")) all.add(f);
+  }
+  const byName = new Map<string, string[]>();
+  for (const f of all) byName.set(basename(f), [...(byName.get(basename(f)) ?? []), f]);
+  const clashes = [...byName].filter(([, fs]) => fs.length > 1);
+  if (clashes.length > 0) {
+    throw new Error(
+      "render-bpmn: two diagrams would render to the same SVG name:\n" +
+        clashes.map(([n, fs]) => `  ${n}: ${fs.join(", ")}`).join("\n"),
+    );
+  }
+  return [...all].sort();
 }
 const OUT_DIR = join(ROOT, siteDirFor(ROOT), "assets/img/workflows");
 // `node_modules/` is a REPOSITORY artefact — it sits beside `package.json` and
