@@ -3330,7 +3330,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T09:42:57Z",
-      "updatedAt": "2026-09-26T11:22:09Z",
+      "updatedAt": "2026-09-26T11:44:19Z",
       "preview": "## What\n\n`main`'s `typescript` job fails at **step 2 of 47**, and GitHub Actions stops a job\nat its first failing step. So every later step in that job does not run — and on\n`main` that failure is red **by the owner's decision**, not by accident.\n\nMeasured on `.github/workflows/code-quality-gates.yml` at `74f27e4c7fb`:\n\n| | |\n|---|---|\n| `bun test` | step 2 (line 234) of the `typescript` job |\n| s",
       "file": "beans/defs/folio-assistant-om30--mains-red-by-decision-test-masks-113-gate-invocati.md"
     },
