@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T09:42:57Z
-updated_at: 2026-09-26T11:22:09Z
+updated_at: 2026-09-26T11:42:38Z
 parent: folio-assistant-1xhc
 ---
 
@@ -241,3 +241,56 @@ a pre-existing condition, not a new class. Not fixed — that is role modelling.
 nothing. **But the moment the merge queue in `nytj`'s last box is switched on, both
 names must be listed as required checks** — otherwise 150 gate invocations run and
 block nothing.
+
+
+## The full gate set, and a blind spot in the verification method itself
+
+Three pushes each surfaced one further failure. Cause: I picked the verification
+subset by hand each time — the same mistake AGENTS.md records about `bun run gates`.
+**A subset of the gate set is not the gate set**, and that applies to a list I compose
+as much as to one in a file.
+
+Run properly — whole set, throwaway worktree, no nested `block-qa-schema` residue:
+**5 of 156 failed**, tree guard **0 mutations**.
+
+| gate | whose |
+|---|---|
+| `bunx tsc --noEmit` (vitest in the sub-package) | main's — patch proposed, not pushed |
+| `bun test` > no NEW drift | main's — t8g3 |
+| `translation:drift:check` | main's — t8g3 |
+| `check:lockfile-pinning` | **mine** |
+| `docs:auto:check` | **mine** — TENTH artefact |
+
+### My prose declared an install
+
+`check:lockfile-pinning` hunts a `bun install` without `--frozen-lockfile` in workflow
+YAML, and matched a **comment** I had written to explain that very install. Reworded to
+name the effect instead of the command.
+
+Already a known class here rather than a quirk: `audit-coverage` records *"a docblock
+that documents a tag necessarily contains the tag"* as something it had to pay for.
+
+### A TENTH artefact, and a running tally
+
+`docs/cat-harness/docs-auto/index/processes/**`. `docs:auto` is a link in the
+registration chain, so `kg:audit`, `kg:detangle` and `gen-uml-overview` were re-run
+after it in order; all converged.
+
+Counts I have published on this change, each revised exactly once: **113 -> 151**
+invocations, **seven -> eight -> ten** artefacts. A chain discovered by breaking is a
+lower bound, every time — which is the argument for `bpmn:register` and against any
+prose list, including the ones above.
+
+### THE VERIFICATION TECHNIQUE HAS ITS OWN BLIND SPOT — record this
+
+The clean-worktree run also failed `FOLIO_ROOT detection > INSTANCE_ROOT is this
+platform checkout`. That test asserts the instance root IS the platform checkout, and
+a detached worktree under `/tmp` is not. In the real checkout: **4 pass, 0 fail**.
+
+So the technique that makes **residue-sensitive** gates honest makes **root-sensitive**
+ones lie. A failure it reports must be re-checked in place before being believed. I
+nearly reported this as a fourth finding.
+
+Both directions now have a named instance: a gate is wrong in a built container
+(detangle, 1441 vs 229) and wrong in a throwaway worktree (FOLIO_ROOT). Neither
+environment is the truth on its own, which is what `check:merged` is for.
