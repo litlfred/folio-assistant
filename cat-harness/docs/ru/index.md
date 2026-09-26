@@ -5,6 +5,7 @@ lang: ru
 nav_exclude: true
 translation_status: unverified
 translation_source: index.md
+description: "folio-assistant — фреймворк навыков агента, не зависящий от типа контента."
 available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
