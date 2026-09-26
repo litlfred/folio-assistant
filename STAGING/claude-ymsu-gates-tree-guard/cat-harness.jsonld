@@ -273,14 +273,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T03:49:26.135Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e7458eee35081d647a40eec6d78eedc4641adcab",
-  "sourceCommitSha": "e7458eee35081d647a40eec6d78eedc4641adcab",
-  "sourceCommitAt": "2026-09-26T03:47:10Z",
+  "generatedAt": "2026-09-26T06:58:47.265Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/79309668d49fb1043fd4bdb03f83fb435ecc557c",
+  "sourceCommitSha": "79309668d49fb1043fd4bdb03f83fb435ecc557c",
+  "sourceCommitAt": "2026-09-26T06:45:56Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 264,
+    "Skill": 271,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
@@ -797,6 +797,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/domain-fencing"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/crdm-needs-assessment",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "crdm-needs-assessment",
+      "title": "Phase 1 — Needs assessment (detail)",
+      "description": "Facilitate Phase 1 (Needs Assessment) of the CRDM requirements workflow. Guide the BA through stakeholder identification, source material gathering, and synthesising a domain-language needs statement. Post to the GitHub issue and iterate until the BA confirms the need is correctly captured.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#package/crdm"
+      ],
+      "instructionsPath": "skills/crdm/crdm-needs-assessment.md",
+      "instructionLines": 113,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-needs-assessment"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/crdm-requirements-workflow",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "crdm-requirements-workflow",
@@ -805,7 +822,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-requirements-workflow.md",
-      "instructionLines": 419,
+      "instructionLines": 480,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -828,6 +845,40 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-data-model"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/crdm-impact-analysis",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "crdm-impact-analysis",
+      "title": "Phase 4 — Impact analysis (detail)",
+      "description": "Guide for CRDM Phase 4 — Impact Analysis and Migration Planning. Systematic scan across 7 dimensions: schema, pipeline, adapter, folio, skill, migration, and test/documentation impact. Produces a structured assessment for posting to the GitHub issue.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#package/crdm"
+      ],
+      "instructionsPath": "skills/crdm/crdm-impact-analysis.md",
+      "instructionLines": 134,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-impact-analysis"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/crdm-requirements-template",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "crdm-requirements-template",
+      "title": "Phase 3 — Requirements definition (detail)",
+      "description": "Guide and template for CRDM Phase 3 — Requirements Definition. Helps the agent structure requirements from conversation using a REQ-### format with acceptance criteria, priority, and traceability.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#package/crdm"
+      ],
+      "instructionsPath": "skills/crdm/crdm-requirements-template.md",
+      "instructionLines": 123,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-template"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/crdm-detect",
@@ -4452,6 +4503,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/raci"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/release-epic-planning",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "release-epic-planning",
+      "title": "Release epic planning",
+      "description": "Plan and track releases using bean epics. Covers epic creation, story/task decomposition, release readiness tracking, and the relationship between epics and GitHub milestones. Applies to code releases, paper publications, and project milestones.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/release-epic-planning.md",
+      "instructionLines": 148,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-epic-planning"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/dmn-authoring",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "dmn-authoring",
@@ -4485,6 +4553,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/process-state"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/code-review-process",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "code-review-process",
+      "title": "Code review process — from PR to release approval",
+      "description": "Where code review sits in the release lifecycle. Review types, who reviews what, how feedback maps to beans, and the path from review to approval to release. Works with prepare-merge-auto for mechanics and release-lifecycle for the broader flow.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/code-review-process.md",
+      "instructionLines": 73,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-review-process"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/session-state-machine",
@@ -4539,6 +4624,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-authoring"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/release-lifecycle",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "release-lifecycle",
+      "title": "Release lifecycle — process and policy",
+      "description": "Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases. Applies to code releases, paper publications, and project milestones. Complements package-release (which handles the mechanics of cutting a release) with the process and policy layer.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/release-lifecycle.md",
+      "instructionLines": 115,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-lifecycle"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/workflow-state",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "workflow-state",
@@ -4554,6 +4656,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/workflow-state"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/branch-freshness",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "branch-freshness",
+      "title": "Branch freshness — stay current with main",
+      "description": "Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan. Prevents stale assumptions, merge conflicts, and duplicated work — especially after session restarts, long idle periods, or heavy sibling activity on main.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/branch-freshness.md",
+      "instructionLines": 112,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-freshness"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/deterministic-and-agentic",
@@ -6086,6 +6205,9 @@
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/crdm-data-model",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/crdm-detect",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/crdm-impact-analysis",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/crdm-needs-assessment",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/crdm-requirements-template",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/crdm-requirements-workflow"
       ],
       "providesCapability": [],
@@ -6438,9 +6560,12 @@
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/bpmn-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/bpmn-processes",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/branch-freshness",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/code-review-process",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/deterministic-and-agentic",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/dmn-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/process-state",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/release-lifecycle",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/session-context",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/session-state-machine",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-tree-guard/cat-harness.jsonld#skill/specification-compiled-agents",
@@ -43355,8 +43480,8 @@
   ],
   "staging": {
     "branch": "claude/ymsu-gates-tree-guard",
-    "sha": "65ca346b907eee79b5082de81776c7d57232c79e",
+    "sha": "42ffa7d2d8aa6abf19f1c57fee625868e789ca66",
     "pr": "1363/merge",
-    "run": "36215900801"
+    "run": "36225263703"
   }
 }
