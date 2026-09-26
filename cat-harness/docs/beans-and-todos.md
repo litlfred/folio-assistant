@@ -2,6 +2,9 @@
 layout: default
 title: Beans and todos
 nav_order: 6
+documents:
+  - beans
+  - todos
 lang: en
 available_locales: ["en"]
 ---
@@ -180,7 +183,7 @@ agent should be acting on.
 
 The rest of this page says what a bean **is**. This section says what the
 store currently **holds** — read live from
-[`/assets/beans/index.json`](../assets/beans/index.json), the projection
+[`/assets/beans/index.json`](assets/beans/index.json), the projection
 `gen-docs-pages.ts` writes from `beans/defs/` on every build, beside the todo
 index it has published for longer.
 
@@ -236,7 +239,7 @@ half of bean `v49e`. That join needs `beans/workflows/`, the declared
 <div class="fa-workplan" data-fa-workplan>
   <p class="fa-workplan-fallback">
     The live work-plan dashboard needs JavaScript. The projection it reads is
-    <a href="../assets/beans/index.json">a plain JSON file</a> and can be read
+    <a href="assets/beans/index.json">a plain JSON file</a> and can be read
     directly.
   </p>
 </div>

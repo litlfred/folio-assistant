@@ -138,6 +138,43 @@ describe("skill package manifests cover the package", () => {
     expect(unlisted).toEqual([]);
   });
 
+  test("no manifest lists a skill TWICE — the complement of coverage", () => {
+    // Bean `m1k4`. The coverage test above asks "is this skill listed?" and
+    // answers it with `new Set(p.listed)` — which is exactly right for that
+    // question and STRUCTURALLY CANNOT answer "is it listed once?", because
+    // the Set collapses the duplicate before the assertion runs. So this is
+    // the complement of the coverage question, not a widening of it.
+    //
+    // ## Both duplicates were created by MERGE COMMITS, and one was mine
+    //
+    // Measured on `main` 2026-09-26, by walking each file's history:
+    //
+    //   folio-core / decision-methodology-selector
+    //     7296cb442fe  added it (this session, porting a base-branch fix)
+    //     5286dea8ea7  added it (a sibling, same fix, same day)
+    //     9e6ddb41b7e  MERGE -> 2
+    //
+    //   workflow / release-epic-planning
+    //     1b962ab310c  added it (#1364)
+    //     11a2186b4d8  added it (#1383)
+    //     cf466e2ba8a  MERGE -> 2
+    //
+    // Two sessions each append the same correct entry; git appends both array
+    // elements; nothing rejects the result. The merge that produced the first
+    // one shipped in a commit claiming 152/154 gates and 700 e2e passing —
+    // true, and useless, because no gate could see it. That is why this test
+    // exists rather than a review habit.
+    const duplicated: string[] = [];
+    for (const p of packages()) {
+      const seen = new Set<string>();
+      for (const s of p.listed) {
+        if (seen.has(s)) duplicated.push(`${p.name}/${s}`);
+        else seen.add(s);
+      }
+    }
+    expect(duplicated.sort()).toEqual([]);
+  });
+
   test("no NEW manifest entry is missing its skill file", () => {
     const dangling: string[] = [];
     const known = knownSkills(join(import.meta.dir, "../.."));

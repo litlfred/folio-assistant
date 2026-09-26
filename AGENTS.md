@@ -215,8 +215,20 @@ cat-harness/scripts/install-beans.sh                 # install the CLI if missin
 beans prime                              # emit work-plan priming for agents
 beans list                               # current open items
 beans create "<title>"                   # open a work-plan item
-beans <id> --status in-progress          # claim an item
+bun run beans:claim <id>                 # claim an item
 ```
+
+**Two things were wrong with the line this replaces**, and the second matters
+more. It read `beans <id> --status in-progress`, which **exits 1 with
+`unknown command`** — measured. And `beans update <id> --status in-progress`,
+the working spelling, is **not how you claim**: it writes no holder note, so
+the claim is invisible to the `already-claimed` check that exists to protect
+it. Measured 2026-09-25: 97 of the 100 non-epic `in-progress` beans on `main`
+record no holder, and `beans:claim` answered "go ahead" for every one of them
+(bean `c3d7`).
+
+`beans update` stays correct for the transitions that are **not** claims —
+closing your own bean, `--body-append`, `--blocked-by`.
 
 **The discipline is in the skill, not here.**
 [`skills/folio-core/todo-manager.md`](cat-harness/skills/folio-core/todo-manager.md) carries
@@ -312,10 +324,11 @@ pair the Pages question needs — `cancelled` as a **third state**, and saying
 **whose** contention a cancellation was — and why the counts are reported but
 the share is not graded (bean `3yi4`).
 
-**Do not "fix" a dispatch-only workflow by dispatching it.** `qa-sweep` and
-`witness-refresh` fail by design in this repo: the first preflights on
-`content/package.json`, the second needs `folio-assistant/computations/`, and
-the platform carries no folio.
+**Do not "fix" a dispatch-only workflow by dispatching it.** `witness-refresh`
+fails by design in this repo: it needs `folio-assistant/computations/`, and the
+platform carries no folio. `qa-sweep` used to be the second example; since bean
+`52dz` it is a template in `cat-harness/templates/` that `folio_init` writes
+into a new folio, and no longer a workflow here.
 
 ## Repository health — the same shape, one level out
 
@@ -719,6 +732,17 @@ to spend the words: **do not start the topic.**
 - Watching a sibling PR — `/watch <pr|branch>` subscribes to a PR's CI / review /
   comment activity and follows through until it's merged or closed:
   `.claude/commands/watch.md`.
+- **Adding a skill? Run `bun run skill:register`.** Five artefacts go stale
+  when a skill is added, and each red one names a GENERATED file rather than
+  your skill, so the cause is invisible from the symptom. The command
+  regenerates all five and verifies each one, then tells you if a
+  package-manifest entry is still missing — the one step it deliberately does
+  not do for you, because which package a file belongs to is your assertion.
+  Bean `v625`: this was a documented list before it was a command, and the list
+  was wrong three times AND recurred forty minutes after being fixed.
+  **Do not re-derive the chain through `bun run gates`** — `bun test` runs two
+  of the five writers, so gates reports their artefacts current when they are
+  not (bean `ymsu`). Measure one check at a time.
 - User-facing docs site (README + install + guides + generated schema/API
   reference): `docs/` → published to <https://litlfred.github.io/folio-assistant/>
   by `.github/workflows/docs-site.yml`. Regenerate the generated references with

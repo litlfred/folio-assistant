@@ -101,9 +101,9 @@
  *   bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
  */
 import { cpSync, existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
-import { join, relative, resolve, sep } from "path";
+import { join, resolve } from "path";
 
-import { WithheldSchema } from "../schemas/withheld.js";
+import { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
 import { declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
 import { injectRail, type NavItem } from "./lib/harness-rail.js";
 
@@ -904,52 +904,9 @@ function mountable(): Mountable[] {
  * asserted without a filesystem: a routing rule tested only through `cpSync`
  * is a rule whose failing case nobody writes down.
  */
-/**
- * The name of the file a mounted directory may carry to say what must NOT be
- * published from it.
- *
- * Bean `cw35`: the mount copies a directory wholesale, so a publication whose
- * licence refuses redistribution (its catalogue gates say so) was still served
- * BY URL — its cover and extracted text — after every link to it was removed.
- * The platform cannot know an instance's licence rules and must not learn
- * them; the instance's own generator writes this list from its own data, and
- * the mount honours it for every instance alike.
- */
-export const WITHHELD_FILE = "withheld.json";
-
-/**
- * The paths (relative to `dir`) that must not be copied to the site.
- *
- * Absent file → nothing withheld. A file that is present but unreadable or
- * malformed THROWS: "could not tell what to withhold" must never become
- * "publish everything", which is the one failure this list exists to stop.
- */
-export function withheldPaths(dir: string): string[] {
-  const f = join(dir, WITHHELD_FILE);
-  if (!existsSync(f)) return [];
-  let raw: unknown;
-  try {
-    raw = JSON.parse(readFileSync(f, "utf-8"));
-  } catch (e) {
-    throw new Error(`${f} is not valid JSON (${(e as Error).message}) — refusing to mount rather than publish what it withholds`);
-  }
-  const parsed = WithheldSchema.safeParse(raw);
-  if (!parsed.success) {
-    throw new Error(
-      `${f} is not a valid folio-withheld/v1 list (${parsed.error.issues[0]?.message ?? "invalid"}) — ` +
-        `refusing to mount rather than publish what it withholds`,
-    );
-  }
-  return parsed.data.paths.map((p) => p.path.replace(/^\.?\/+/, "").replace(/\/+$/, ""));
-}
-
-/** A `cpSync` filter that drops every withheld path, and everything beneath it. */
-export function withheldFilter(dir: string, withheld: readonly string[]): (src: string) => boolean {
-  return (src) => {
-    const rel = relative(dir, src).split(sep).join("/");
-    return !withheld.some((w) => rel === w || rel.startsWith(`${w}/`));
-  };
-}
+// What a mounted directory must not publish — one reader, shared with the
+// library viewer, so the two surfaces cannot disagree (bean `cw35`).
+export { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
 
 export function resolve_<T extends { route: string }>(
   candidates: T[],

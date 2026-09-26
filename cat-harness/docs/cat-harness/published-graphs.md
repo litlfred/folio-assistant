@@ -55,11 +55,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `code`
 
-0 of 4 published.
+0 of 6 published.
 {: .fa-hx-dim }
 
 - C@T Harness — *declared, not published*
+- Folio Assistant — *declared, not published*
 - folio-assistant-core — *declared, not published*
+- large-datasets — *declared, not published*
 - smart-trust — *declared, not published*
 - WHO IRIS — *declared, not published*
 
@@ -190,12 +192,26 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - folio-assistant-core — *declared, not published*
 - SMART Base — *declared, not published*
 
+### `proposals`
+
+1 of 1 published.
+{: .fa-hx-dim }
+
+- [C@T Harness]({{ '/proposals/' | relative_url }})
+
 ### `qa`
 
 1 of 1 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/qa/' | relative_url }})
+
+### `requirements`
+
+1 of 1 published.
+{: .fa-hx-dim }
+
+- [C@T Harness]({{ '/requirements/' | relative_url }})
 
 ### `scenarios`
 

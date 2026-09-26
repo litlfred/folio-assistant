@@ -210,9 +210,17 @@ export function reportInstance(
     checked++;
 
     const { role, why } = laneRole(model, h.node, graph);
-    const actor = h.actor?.trim() || null;
-    // History records a name and nothing about how it was established.
-    const principal: Principal = actor ? { actor, authenticatedBy: "asserted" } : { actor: null, authenticatedBy: "none" };
+    // Since the engine went strict (bean `n2l9`), an entry recorded under a
+    // verdict carries the principal that verdict was computed for: the actor
+    // GitHub vouched for, not the name the caller typed (which may be a login).
+    // Re-check THAT. An entry without one records only a name, which is
+    // asserted and nothing more.
+    const actor = (h.authz ? h.authz.actor : h.actor?.trim()) || null;
+    const principal: Principal = h.authz
+      ? { actor: h.authz.actor, authenticatedBy: h.authz.authenticatedBy, account: h.authz.account }
+      : actor
+        ? { actor, authenticatedBy: "asserted" }
+        : { actor: null, authenticatedBy: "none" };
     const v = authorizeTask(ctx, { principal, process: model.id, task: h.node, ...(role ? { role } : {}) });
 
     if (!actor) add("no-actor", "no actor recorded; no prov:Activity emitted rather than an invented prov:agent");
@@ -230,7 +238,9 @@ export function reportInstance(
     }
 
     if (!actor || !role || policies.length === 0) return;
-    const activity = {
+    // The engine's own record, written as the step was recorded, is the
+    // authority when it exists; deriving one is for entries that predate it.
+    const activity = h.prov ?? {
       "@type": "prov:Activity" as const,
       "@id": `${id}#${i}`,
       "prov:startedAtTime": h.at,

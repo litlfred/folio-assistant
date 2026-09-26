@@ -44,6 +44,7 @@ classDiagram
       process [1] object
       outcome [1] map~any~
       cases [0..*] Case[]
+      requirements [0..*] string[]
       updated_at [1] string
     }
     class cat_harness_qa_qa_witness_v1["qa-witness/v1"] {
@@ -104,6 +105,8 @@ classDiagram
       enforcedBoundary [1] number
       recordedBoundary [1] number
       proseMentions [1] number
+      wrongDirection [1] number
+      undeterminedDirection [1] number
     }
     class cat_harness_qa_viewer_nav_qa_v1_Page["Page"] {
       <<json: ViewerNavQaSchema>>

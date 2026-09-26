@@ -26,6 +26,7 @@ package "fhir-harness/fhir-ig-tools" as pkg_fhir_harness_fhir_ig_tools <<tools>>
     selection [0..1] : object
     requires [0..1] : object
     maintains [0..*] : Maintain[]
+    renders [0..*] : string[]
   }
 }
 

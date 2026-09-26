@@ -28,10 +28,10 @@ jobs:
       image: emscripten/emsdk:latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Cache GMP/PARI build
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: folio-assistant/snappea-wasm/build/local
           key: wasm-deps-gmp6.2.1-pari2.13.2-${{ runner.os }}
@@ -54,7 +54,7 @@ jobs:
         run: cp src/index.js dist/ && cp src/index.d.ts dist/
 
       - name: Upload dist artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: snappea-wasm-dist
           path: folio-assistant/snappea-wasm/dist/
@@ -69,14 +69,14 @@ jobs:
         working-directory: folio-assistant/snappea-wasm
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
 
       - name: Download dist artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: snappea-wasm-dist
           path: folio-assistant/snappea-wasm/dist/
@@ -96,14 +96,14 @@ jobs:
         working-directory: folio-assistant/snappea-wasm
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
 
       - name: Download dist artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: snappea-wasm-dist
           path: folio-assistant/snappea-wasm/dist/
@@ -132,15 +132,15 @@ jobs:
         working-directory: folio-assistant/snappea-wasm
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Download dist artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: snappea-wasm-dist
           path: folio-assistant/snappea-wasm/dist/

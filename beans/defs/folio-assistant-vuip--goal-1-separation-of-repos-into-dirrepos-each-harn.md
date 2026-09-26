@@ -53,7 +53,146 @@ state until the owner says otherwise.
 wrong-direction edges**, re-measured on main at `4cdd77d7d8` with 0
 unassigned modules. The critical path is now `wggr` (invert the stub
 pattern for the workflow files, `skills/` and `schemas/`), then
-`b5f0` / `zkgs`, then `zmdo` (fork twice and prove an empty-repo bootstrap).
+`b5f0`, then `zmdo` (fork twice and prove an empty-repo bootstrap).
+
+**`zkgs` withdrawn from the path, 2026-09-25.** It sat beside `b5f0` as a
+joint second step and has been `completed` (and archived) since. Withdrawn
+rather than deleted, because a reader who remembers the old chain needs to
+find out what happened to the step rather than notice it is simply gone —
+the same reason `p5wm` keeps a withdrawal table. `wggr`, `b5f0` and `zmdo`
+were each re-checked against the store in the same pass and are all still
+open, so the rest of the chain stands.
+
+## Box 3 closes — re-derived 2026-09-26, and it was held open by a criterion it does not state
+
+The 2026-09-21 row called this *"substantially satisfied"*, which is not a
+measurement — and the word was doing real work: it hid that the three things
+the box **asks for** were all present, while a **fourth** thing it does not ask
+for was not.
+
+Each criterion checked by pointing at the artefact, five days and several
+thousand commits later:
+
+| criterion | artefact, verified present |
+|---|---|
+| a skill that governs them | `cat-harness/skills/folio-core/getting-started.md`, with `cat-harness/processes/getting-started.bpmn` |
+| a Tool node that performs them | `folio_init`, registered at `cat-harness/src/tools/folio-init.ts:59` — registration checked, not just the file's existence |
+| a test that fails when they do not run | `cat-harness/scripts/tests/init-folio.test.ts` — **30 tests, 0 fail, 235 assertions** |
+
+### The test is not vacuous, which is the only part worth arguing
+
+*"every file the layout needs, and no subject matter"* asserts against a
+**hardcoded list of 16 paths**, and checks each one twice: against the
+scaffolder's own reported `created` set **and** against the filesystem. So it
+fails if initiation stops writing any of them.
+
+That check mattered: this repository has already shipped a test whose
+membership condition WAS its assertion (`declared-paths.test.ts`, replaced with
+committed witnesses). A test over a list derived from what the code just did
+cannot fail. This one is not that shape.
+
+### The fourth criterion, and why it does not hold the box
+
+The 2026-09-21 record's real reservation was *"any single assertion BINDING the
+three"* — that the process should name the Tool performing it. **The box does
+not ask for that.** It asks for three artefacts and they exist.
+
+The binding is still not expressible: there is **no `tool` element** in the
+BPMN extension vocabulary today, re-checked. So that observation stands.
+
+**But the reason given for it does not.** The record argued the vocabulary was
+closed — *"an activity carries `<folio:skill ref>` and `<folio:bean op>` and
+nothing else"* — and that adding `folio:tool` would be inventing a term on a
+test's say-so. Measured today, the vocabulary carries **thirteen** element
+kinds across `bootstrap.processes:` and `cat-harness.processes:`:
+
+    skill 572   role 194   bean 86   policy 61   no 24   adjudication 24
+    judgement 11   fulfilment 11   raci 10   decision 10   log 6
+    precondition 4   convention 2
+
+The prefixes also changed (`folio:` → two namespaced vocabularies, bean `12s9`),
+so the record is stale in spelling as well as in substance. And `precondition`
+is the direct counter-example: it is a term `lv3j` asked for and that was
+subsequently added. **This repository does extend its BPMN vocabulary when a
+relation is real** — so "we do not add terms" is not why a tool binding is
+absent. Whether one is wanted is still a live design question for
+`bpmn-processes`, and it is still not this box's to answer.
+
+### A near-miss worth recording, because it was mine
+
+My first enumeration reported **zero** `bean` elements and I was about to file a
+regression: AGENTS.md and `bpmn-processes` both require one where an activity
+touches the work plan. The count was wrong — my character class allowed
+`[A-Za-z0-9._]` in a namespace prefix, and `cat-harness` **contains a hyphen**,
+so `<cat-harness.processes:bean>` never matched while
+`<bootstrap.processes:skill>` did. There are 86. The instrument was broken in a
+way that produced a clean, plausible, alarming number — the same shape this
+goal's sibling bean `k59d` is about, one layer down.
+
+**GOAL 1 now has ONE open box**: a new empty repository bootstrapping an
+instance, blocked on `zmdo` (`todo`), which is unchanged and re-checked.
+
+## Box 2 — the owner's ruling, 2026-09-25
+
+The re-measurement below left box 2 with a question the store could not answer:
+the box and `check:instance-config` disagreed about whether an instance with no
+config is a shortfall. Put to the owner as a selectable decision; the ruling,
+kept as chosen:
+
+> **Every config that exists is correct** — "the box means: any config present
+> sits at its instantiation root and is named for its instance."
+
+So the box asks about **naming and location, not coverage**, and an instance
+with no config is not outstanding work. That is exactly what the gate already
+enforces and reports green:
+
+```
+✓ every config is named after its instance, and no retired name survives
+```
+
+**Box 2 is therefore ticked**, on the gate's evidence rather than on this
+bean's say-so — re-derivable at any time by running it, which is the standard
+`bean-coordination` asks for when a box is closed.
+
+The rejected reading is recorded because it changes more than this bean: had
+the box meant *every instance must carry one*, 10 of 16 would be outstanding
+AND `check:instance-config` would have to start failing on a state it currently
+prints as legitimate. Nothing needs to change in the gate.
+
+**GOAL 1 now has two open boxes, not three**, and box 1 is still blocked on
+`zmdo`. Box 3 is NOT ticked here: the 2026-09-21 row calls it "substantially
+satisfied", which is not a measurement, and nobody has re-derived it. That is
+the next thing this milestone needs, and it is agent work rather than an owner
+decision.
+
+## RE-MEASURED 2026-09-25 — box 2, in the filename that now exists
+
+The 2026-09-21 row below reads *"12 instances declare `harness.json`; **one**
+has a `*.config.json`, and 11 have none"*. **`harness.json` no longer exists
+anywhere in this repository** — the declaration moved to `<name>.json` beside
+a `<name>.config.json` — so that row is a measurement in a vocabulary the tree
+has dropped, and its arithmetic cannot be re-derived to agree or disagree.
+
+Re-measured by running the repo's own gate rather than by counting files,
+because the gate is what decides the box:
+
+```
+bun run check:instance-config
+  → 16 instance(s) declared; 6 configs written; 10 declared with no config
+  → "(· = declared but no config written; a legitimate state.)"
+  → ✓ every config is named after its instance, and no retired name survives
+```
+
+So the box's premise has changed rather than its answer improving: **an
+instance with no config is not a deficiency** by the gate's own verdict, and
+"11 have none" was counting a legitimate state as a shortfall. What the box
+still needs is a decision about what it is asking — *every instance carries a
+config*, which the gate contradicts, or *every config that exists is at its
+instantiation root and named for it*, which is green today. That is the
+owner's to settle; it is not re-derivable from the store.
+
+**Not touched:** the `zmdo` blocker on box 1, which was re-checked and still
+holds — `zmdo` is `todo`.
 
 ## MEASURED, 2026-09-21 — where Goal 1 actually stands, and what blocks each box
 
@@ -122,7 +261,8 @@ done?" has an answer with a named blocker rather than a shrug.
 - [ ] A new, empty repository can say "bootstrap a litlfred/folio-assistant
       here" and get a working instance — `zmdo`'s acceptance test, and the
       goal's own falsifier
-- [ ] Each instantiation declares its config in one file at its own root
-- [ ] The initiation steps are skilled, tooled and tested: a skill that
+- [x] Each instantiation declares its config in one file at its own root —
+      **settled by the owner 2026-09-25**, see §"Box 2 — the owner's ruling"
+- [x] The initiation steps are skilled, tooled and tested: a skill that
       governs them, a Tool node that performs them, and a test that fails
-      when they do not run
+      when they do not run — **re-derived 2026-09-26**, see §"Box 3 closes"

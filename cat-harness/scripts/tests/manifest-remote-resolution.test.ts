@@ -173,10 +173,20 @@ describe("the reason the allowance was closed is still true", () => {
     // data, and the literal travelled with the data. Still three, still the
     // same three readers — the invariant this test states is unchanged and
     // the assertion was not weakened to absorb the move.
+    //
+    // FOUR since 2026-09-24 (issue #556, bean `wlqd`): the sixth reader this
+    // comment anticipated arrived, and it IS the sync —
+    // `scripts/sync-remote-skills.ts`. It still serves no body itself. It
+    // MATERIALIZES each declared skill as an ordinary local package, pinned and
+    // fixity-checked, and `skill_fetch` serves that package as it serves any
+    // other. So the allowance this file records as closed stays closed, for a
+    // better reason than before: a synced skill resolves as a LOCAL skill,
+    // and a remote declaration still resolves nothing on its own.
     expect(readers.sort()).toEqual([
       "scripts/kg-audit.ts",
       "scripts/known-skills.ts",
       "scripts/partition/instance-rules.ts",
+      "scripts/sync-remote-skills.ts",
     ]);
   });
 

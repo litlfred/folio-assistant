@@ -62,6 +62,9 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [CRDM](crdm-data-model.html) | `crdm-data-model` | — | **This skill says WHEN and WITH WHOM. It does not say how to model.** That is |
 | [Feature-request detection (CRDM trigger)](crdm-detect.html) | `crdm-detect` | [schema](../skills/crdm-detect.html) | Detect when a user request is a **feature request** (platform capability change) |
+| [Phase 4](crdm-impact-analysis.html) | `crdm-impact-analysis` | — | This skill expands the Phase 4 summary in `crdm-requirements-workflow.md`. |
+| [Phase 1](crdm-needs-assessment.html) | `crdm-needs-assessment` | — | This skill expands the Phase 1 summary in `crdm-requirements-workflow.md`. |
+| [Phase 3](crdm-requirements-template.html) | `crdm-requirements-template` | — | This skill expands the Phase 3 summary in `crdm-requirements-workflow.md`. |
 | [CRDM requirements workflow](crdm-requirements-workflow.html) | `crdm-requirements-workflow` | — | Once a feature request is detected (see `crdm-detect.md`), the agent follows |
 
 ## Platform core (folio-core)
@@ -104,6 +107,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Data modelling](data-modelling.html) | `data-modelling` | — | **One question, and everything else follows from it:** |
 | [A decision is not a finding, and neither is a substitute for the other](decision-audit.html) | `decision-audit` | — | A **finding** is an observation — a checker, an agent or a person saw something. |
 | [The comparison goes BEFORE the question, not inside the options](decision-comparison.html) | `decision-comparison` | — | [`interaction-modality`](interaction-modality.md) §4.1 fixes the *order* — |
+| [Decision methodology selector](decision-methodology-selector.html) | `decision-methodology-selector` | — | **Input**: a decision context — what is being decided, how many alternatives, |
 | [Deletion requires explicit confirmation](deletion-requires-confirmation.html) | `deletion-requires-confirmation` | — | **One rule, and it has no exceptions worth the word:** |
 | [Delivery Summary](delivery-summary.html) | `delivery-summary` | — | After completing a feature or edit (i.e., after pushing changes), provide: |
 | [Deployment & Auth](deployment-auth.html) | `deployment-auth` | — |  |
@@ -133,6 +137,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [idle-backlog](idle-backlog.html) | `idle-backlog` | — | Generalises a 5-minute idle-trigger / work-the-queue-while-idle policy that |
 | [Incremental render](incremental-render.html) | `incremental-render` | — | Owner, 2026-09-20, bean `9c34`: |
 | [Instance kinds](instance-kinds.html) | `instance-kinds` | — | Two different things are called a "kind" here, and a reader who conflates them |
+| [instance-publication](instance-publication.html) | `instance-publication` | — | > Skill id: `instance-publication` · Package: `folio-core` · Instance: |
 | [/integration-audit](integration-audit.html) | `integration-audit` | — | A maintenance command for the multi-axis QA-sidecar pipeline (`voice`, |
 | [/integration-backlog](integration-backlog.html) | `integration-backlog` | — | A workflow skill that turns each integration-watcher's open findings |
 | [/integration-watch](integration-watch.html) | `integration-watch` | — | A thin dispatcher in front of [`integration-watcher`](integration-watcher.md) |
@@ -158,6 +163,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [One-Voice Style Guide](one-voice-style-guide.html) | `one-voice-style-guide` | — | > **See also:** `one-voice-audit` is the mechanical sweep (greps for |
 | [Semantic Ontologist (Ambiguity Detection & Glossary)](ontologist.html) | `ontologist` | — |  |
 | [Opening brief](opening-brief.html) | `opening-brief` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
+| [Cutting a package release](package-release.html) | `package-release` | — | A **release** is a version number that one commit keeps from then on: a tag, |
 | [/pending-show](pending-show.html) | `pending-show` | — | Quick status display. Read-only. Run any time to answer "where am I?" |
 | [Pickup](pickup.html) | `pickup` | — | Continue work on existing open PRs with minimal wasted tokens. This skill |
 | [Placement](placement.html) | `placement` | — | **One question, answered before the first file exists:** |
@@ -262,8 +268,8 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Proof Editor (Coordinator)](proof-editor.html) | `proof-editor` | — |  |
 | [Proof Exposition Review](proof-exposition-review.html) | `proof-exposition-review` | — |  |
 | [Proof Gap Audit](proof-gap-audit.html) | `proof-gap-audit` | — |  |
-| [/proof-integration-watcher](proof-integration-watcher.html) | `proof-integration-watcher` | — | A concrete instance of [`local/integration-watcher`](../folio-core/integration-watcher.md). |
-| [Proof Narrative ↔ Lean Equivalence Audit](proof-narrative-lean-equivalence.html) | `proof-narrative-lean-equivalence` | — | > **Specialises [`narrative-asserts-code`](../folio-core/narrative-asserts-code.md)** |
+| [/proof-integration-watcher](proof-integration-watcher.html) | `proof-integration-watcher` | — | A concrete instance of [`local/integration-watcher`](integration-watcher.md). |
+| [Proof Narrative ↔ Lean Equivalence Audit](proof-narrative-lean-equivalence.html) | `proof-narrative-lean-equivalence` | — | > **Specialises [`narrative-asserts-code`](narrative-asserts-code.md)** |
 | [Proof Simplifier](proof-simplifier.html) | `proof-simplifier` | — | bun run content/pipeline/refactor-strategy.ts --lean 4.24.0 --applicable |
 | [Proof Status Tracking](proof-status-tracking.html) | `proof-status-tracking` | — |  |
 | [Proof Triage & Resolution](proof-triage.html) | `proof-triage` | — | [[require]] |
@@ -287,6 +293,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Graph detanglement](graph-detanglement.html) | `graph-detanglement` | — | > Skill id: `graph-detanglement` · Capability: `architecture` · Package: `graph-management` |
 | [Graph rendering: one set of rules for every drawn graph](graph-rendering.html) | `graph-rendering` | — | > Skill id: `graph-rendering` · Capability: `architecture` · Package: `graph-management` |
 
+## Synced from claude-scientific-skills (pinned, read-only)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
+
 ## Knowledge-graph navigation (tooled)
 
 | Skill | Id | Schema | Summary |
@@ -299,15 +311,25 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [RACI](raci.html) | `raci` | — | **The method is not in this file.** It is the `raci` node in the `methodology` |
 
-## Declared but not implemented here (stubs)
+## Synced from claude-scientific-skills (pinned, read-only)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [fhir-client-operations](fhir-client-operations.html) | `fhir-client-operations` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
-| [hypothesis-generation](hypothesis-generation.html) | `hypothesis-generation` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
-| [scientific-critical-thinking](scientific-critical-thinking.html) | `scientific-critical-thinking` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
-| [scientific-visualization](scientific-visualization.html) | `scientific-visualization` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
-| [smart-launch](smart-launch.html) | `smart-launch` | — | **This skill is declared, not implemented here.** Do not follow it as guidance; |
+| [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
+
+## Synced from claude-scientific-skills (pinned, read-only)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
+
+## Security — values crossing a boundary (security)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Injection](injection-boundaries.html) | `injection-boundaries` | — |  |
+| [Path containment](path-containment.html) | `path-containment` | — | `src/core/safe-path.ts` is the implementation. This is when to reach for which, |
+| [Security](security.html) | `security` | — | > **This value came from outside. What may I do with it?** |
 
 ## Theming (theming)
 
@@ -328,9 +350,13 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [bpmn-authoring](bpmn-authoring.html) | `bpmn-authoring` | [schema](../skills/bpmn-authoring.html) | > Skill id: `bpmn-authoring` · Package: `workflow` · |
 | [Processes are BPMN, and the diagrams are executable](bpmn-processes.html) | `bpmn-processes` | — | **The `.bpmn` file is the source of truth.** The rendered SVGs are generated — |
+| [Branch freshness](branch-freshness.html) | `branch-freshness` | — | A feature branch that drifts from `main` accumulates three kinds of debt: |
+| [Code review process](code-review-process.html) | `code-review-process` | — | Code review is a **quality gate**, not a release gate. It happens at the |
 | [The deterministic-to-agentic spectrum](deterministic-and-agentic.html) | `deterministic-and-agentic` | — | > **A spectrum of deterministic vs agentic BPMN state management / workflow |
 | [dmn-authoring](dmn-authoring.html) | `dmn-authoring` | [schema](../skills/dmn-authoring.html) | > Skill id: `dmn-authoring` · Package: `workflow` · |
 | [Process state](process-state.html) | `process-state` | — | An agent working a BPMN process holds **nested state**: a *task*, inside a |
+| [Release epic planning](release-epic-planning.html) | `release-epic-planning` | — | A release epic groups all the work for a specific release version. |
+| [Release lifecycle](release-lifecycle.html) | `release-lifecycle` | — | This skill governs **when and why** to create releases. For the **how** |
 | [Session context](session-context.html) | `session-context` | — | A **session** is one actor working, from the moment it picks up until it stops. |
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
 | [Specification-compiled agents](specification-compiled-agents.html) | `specification-compiled-agents` | — | Renders [`methodologies/specification-compiled-agents.md`](../../methodologies/specification-compile |

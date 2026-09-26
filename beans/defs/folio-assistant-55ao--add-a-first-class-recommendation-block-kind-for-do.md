@@ -3,8 +3,9 @@
 title: Add a first-class `recommendation` block kind for document folios
 status: todo
 type: task
+priority: normal
 created_at: 2026-08-28T15:04:51Z
-updated_at: 2026-08-28T15:04:51Z
+updated_at: 2026-09-23T22:39:31Z
 parent: folio-assistant-0lmb
 ---
 
@@ -83,3 +84,19 @@ not a one-line addition:
 It is worth doing when a real L1 folio starts and its authors hit the gap, not
 before. The interim carrier works, and question 2 in particular is much easier
 to answer against a corpus than in the abstract.
+
+## OWNER'S RULINGS, 2026-09-23 — and a pause on the third
+
+Put as one question each while going through the open beans:
+
+- **Build it, as a block kind plus a skill.** The owner chose "Block kind + skill": a `recommendation` kind in the content model, a skill for authoring one, and a BPMN step where it is drafted and reviewed.
+- **Q1, the label prefix: the FOLIO chooses.** The platform reserves none, which keeps the interim convention in `normative-statements.md`. A standards body's grammar is its own.
+- **Q2, strength: a reference to a SKOS vocabulary or value set.** It is not a closed enum and not free text. The field names a concept in a declared scheme, so each domain brings its own grading and the check is "resolves in the scheme". **Build on the sibling code-list work:** `claude/magical-archimedes-4qkfxp-codelists` adds `schemas/code-list.ts`, closed code lists authored as nodes and published as a `skos:ConceptScheme` with `notation`, `prefLabel`, `definition` and `dcterms:source`. A strength scheme is one of those. Do not mint a second mechanism.
+- **Q3, the relation to the DAK side's `health-intervention`: PAUSED.** The owner said *"needs stakeholder discussion"*.
+
+## Blocked
+
+- **waits on:** a stakeholder decision about how `recommendation` (generic, document adapter) relates to the DAK `health-intervention` (the L1 anchor). The options put were: link without merging, or treat them as one vocabulary. This bean says to settle that before minting a second vocabulary, so the build does not start.
+- **since:** 2026-09-23T22:45Z
+- **expires:** 14 days, then re-ask the owner whether the discussion has happened.
+- **handoff:** Q1 and Q2 are settled above. When Q3 is answered, build in this order: code-list scheme for strength, the block kind (about 30 files, listed above), the skill, then the BPMN step. Also update `content-profiles.md`, which says "deliberately no `recommendation` kind".

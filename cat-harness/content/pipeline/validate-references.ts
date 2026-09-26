@@ -12,9 +12,9 @@
  *   7. Orphan detection — entries not cited anywhere
  *
  * Usage:
- *   bun run pipeline/validate-references.ts
- *   bun run pipeline/validate-references.ts --strict   (exit 1 on warnings)
- *   bun run pipeline/validate-references.ts --fix      (auto-fix what's possible)
+ *   bun run cat-harness/content/pipeline/validate-references.ts
+ *   bun run cat-harness/content/pipeline/validate-references.ts --strict   (exit 1 on warnings)
+ *   bun run cat-harness/content/pipeline/validate-references.ts --fix      (auto-fix what's possible)
  *
  * @module content/pipeline/validate-references
  */

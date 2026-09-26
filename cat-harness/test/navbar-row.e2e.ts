@@ -72,7 +72,7 @@ type NavbarRow = {
   icons: string[];
   hrefs: Record<string, string>;
   notes?: Record<string, string>;
-  folders: { kind: string; path?: string; note?: string; stagingOnly?: true }[];
+  folders: { kind: string; within?: string; path?: string; note?: string; stagingOnly?: true }[];
 };
 const HARNESS = JSON.parse(readFileSync(join(ROOT, SITE, "_data/harness.json"), "utf8")) as {
   navbar: NavbarRow | null;
@@ -512,6 +512,9 @@ test.describe("the document index — the fixed top, about the page rather than 
     expect(order).toEqual([
       expect.stringContaining("site-header"),
       expect.stringContaining("fa-nav-icons"),
+      // The folio handle, IN the navbar under the icon row: owner,
+      // 2026-09-24, "folio handle on LHS on navbar".
+      expect.stringContaining("fa-glass-handle"),
       expect.stringContaining("fa-doc-index"),
       expect.stringContaining("fa-nav-middle"),
       expect.stringContaining("site-footer"),
@@ -588,6 +591,19 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     }
     return out;
   };
+
+  test("the folio handle sits under the icon row, so it never takes the ☰'s clicks", async ({ page }) => {
+    // Owner, 2026-09-24: "folio handle on LHS on navbar". Placed right under
+    // the header, the handle's position depended on the header's height while
+    // the ☰ is painted at a fixed offset, and in this fixture it took the ☰'s
+    // clicks. Under the icon row, the element built to clear the ☰, it cannot.
+    await load(page, CUSTOM);
+    await expect(page.locator(".side-bar > .fa-nav-icons + .fa-glass-handle")).toHaveCount(1);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-close").click();
+    await page.waitForTimeout(200);
+    await page.locator(".fa-nav-toggle").click({ timeout: 5000 });
+  });
 
   test("NO text region is visible until the bar is opened", async ({ page }) => {
     const { errors } = await load(page, CUSTOM);
@@ -964,5 +980,57 @@ test.describe("a page withheld from this deploy is not linked", () => {
     await page.hover(".side-bar");
     const row = page.locator(".fa-nav-folders__item", { hasText: "fsh-guts" });
     await expect(row.locator("a[href]")).toHaveAttribute("href", BASEURL + "/fsh-guts/");
+  });
+});
+
+test.describe("a sub-graph is drawn INSIDE its parent's row, folded — issue #1164", () => {
+  /* Owner, 2026-09-23: proposals live in *"a docs/proposals/ sub-graph
+   * declared sub-sub-graph (which starts closed in navbar, general
+   * behavior)"*. GENERAL: whatever carries `within`, not a case for docs. */
+  const NESTED: NavbarRow = {
+    icons: ["close"],
+    hrefs: {},
+    folders: [
+      // The children come FIRST in the data on purpose: the page must still
+      // find their parent's row.
+      { kind: "proposals", within: "docs", path: "/proposals/" },
+      { kind: "docs", path: "/docs/" },
+      { kind: "requirements", within: "docs", path: "/requirements/" },
+      { kind: "library", path: "/library/" },
+      // A parent that is not listed: the child stands on its own rather than
+      // vanishing.
+      { kind: "orphan", within: "nowhere", path: "/orphan/" },
+    ],
+  };
+
+  test("the children sit under their parent, in a disclosure that starts CLOSED", async ({ page }) => {
+    await load(page, NESTED);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-folders__heading").click();
+    const docs = page.locator(".fa-nav-folders__list > .fa-nav-folders__item", { hasText: /^docs/ });
+    const sub = docs.locator(":scope > .fa-nav-folders__sub");
+    await expect(sub).toHaveCount(1);
+    await expect(sub).not.toHaveAttribute("open", "");
+    await expect(sub.locator(".fa-nav-folders__item")).toHaveCount(2);
+    // Not also at the top level.
+    await expect(page.locator(".fa-nav-folders__list:not(.fa-nav-folders__list--sub) > .fa-nav-folders__item"))
+      .toHaveCount(3);
+    await sub.locator("summary").click();
+    await expect(sub).toHaveAttribute("open", "");
+    await expect(sub.locator('a[href]').first()).toHaveAttribute("href", BASEURL + "/proposals/");
+  });
+
+  test("a child whose parent is not listed stands on its own", async ({ page }) => {
+    await load(page, NESTED);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-folders__heading").click();
+    await expect(page.locator(".fa-nav-folders__list:not(.fa-nav-folders__list--sub) > .fa-nav-folders__item",
+      { hasText: "orphan" })).toHaveCount(1);
+  });
+
+  test("the LIVE data nests proposals and requirements under docs", () => {
+    const f = (LIVE?.folders ?? []);
+    expect(f.find((x) => x.kind === "proposals")?.within).toBe("docs");
+    expect(f.find((x) => x.kind === "requirements")?.within).toBe("docs");
   });
 });

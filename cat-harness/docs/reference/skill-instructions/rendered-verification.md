@@ -121,6 +121,15 @@ toggle is `jtd.setTheme(name)`. *A test that silently does nothing reports
 the old state as the new one.* Assert the switch landed (here: the sidebar
 background changed) before reading anything off it.
 
+And know what that toggle DOES: `setTheme` swaps the theme's first stylesheet,
+so for the moment the new file is in flight the page has no ground but the
+browser's white canvas. That was the owner's *"flashes white before goignt o
+dark mode"* (2026-09-24). A scheme check that only reads the SETTLED page
+cannot see it — hold the new sheet in flight with `page.route` and read the
+ground then, as `first-paint-scheme.e2e.ts` does. The rule itself lives in
+[`theme-artefacts`](theme-artefacts.md) §"The page ground: the
+first paint is DARK".
+
 ## The REAL build is reachable — take it off `gh-pages`
 
 The section above says to read a theme-chrome question off the staging

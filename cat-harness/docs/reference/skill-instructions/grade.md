@@ -13,7 +13,7 @@ parent: Skill instructions
 # grade
 
 > Skill id: `grade` · Package: `authoring-who-smart-guidelines` · The grading
-> SYSTEM that [`evidence-appraisal`](../content-lifecycle/evidence-appraisal.md)
+> SYSTEM that [`evidence-appraisal`](evidence-appraisal.md)
 > applies when a folio declares GRADE. Origin: the GRADE Working Group
 > (gradeworkinggroup.org); Evidence-to-Decision frameworks per Alonso-Coello et
 > al., *BMJ* 2016; WHO applies it through the *WHO Handbook for Guideline

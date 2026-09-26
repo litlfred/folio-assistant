@@ -432,6 +432,20 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 212,
     reads: "a page with a folded corner — documentation about the graph itself",
   },
+  proposals: {
+    // A lightbulb over a page — an idea argued on paper, not yet agreed.
+    // A sub-graph of `docs` (issue #1164), so it shares the page's outline.
+    glyph: "M12 3a5 5 0 00-3 9v2h6v-2a5 5 0 00-3-9zM10 17h4M10.5 20h3",
+    tone: 38,
+    reads: "a lightbulb — an idea being argued, not yet a promise",
+  },
+  requirements: {
+    // A page with two ticked lines — what was agreed, each line checkable.
+    // A proposal is MOVED here when its feature ships (issue #1164).
+    glyph: "M6 3h12v18H6zM9 8l1.5 1.5L13 7M9 14l1.5 1.5L13 13M15 8h1M15 14h1",
+    tone: 148,
+    reads: "a page of ticked lines — what the harness promises, each checkable",
+  },
   interaction: {
     // A speech bubble with a tick inside — a preference that has been STATED,
     // so nobody has to ask again. The tick is the point: this file exists so

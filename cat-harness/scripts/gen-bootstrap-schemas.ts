@@ -63,6 +63,10 @@ import {
 } from "../schemas/discussion.ts";
 import { BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "../schemas/graph.ts";
 import { ModelRegistrySchema } from "../schemas/model-registry.ts";
+import {
+  REQUIREMENT_JSON_SCHEMA_CONDITIONALS,
+  RequirementSchema,
+} from "../schemas/requirement.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const check = process.argv.includes("--check");
@@ -152,6 +156,19 @@ const TARGETS = [
       "Which languages a model is good at, and whether a person checked. Only `human-validated` is ever acted on, and only a person can grant it.",
     schema: ModelRegistrySchema,
     conditionals: [] as readonly unknown[],
+    terms: {} as Readonly<Record<string, string>>,
+  },
+  {
+    // What a harness, or something built with one, must do (issue #1164).
+    // Bootstrap publishes it because a harness states its requirements before
+    // anything above bootstrap has loaded; the Zod is in cat-harness (FR-7, 319n).
+    file: "schemas/requirement.schema.json",
+    id: "https://litlfred.github.io/folio-assistant/bootstrap/schemas/requirement.schema.json",
+    title: "Requirement",
+    description:
+      "What a harness, or something built with one, must do, said so it can be checked: a titled set of numbered statements, each with a level (SHALL, SHOULD, MAY, SHALL NOT) and one sentence. A test run points at a statement as `req:<slug>#<key>`; the requirement does not list its tests. Statement keys are unique within a requirement.",
+    schema: RequirementSchema,
+    conditionals: REQUIREMENT_JSON_SCHEMA_CONDITIONALS as readonly unknown[],
     terms: {} as Readonly<Record<string, string>>,
   },
 ] as const;

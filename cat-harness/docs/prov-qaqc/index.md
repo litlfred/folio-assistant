@@ -18,26 +18,26 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ## Totals
 
-5 instance(s), 61 step(s) checked, 61 `prov:Activity` emitted, 86 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
+6 instance(s), 66 step(s) checked, 66 `prov:Activity` emitted, 70 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
 
 | finding | count | means |
 |---|---|---|
 | `no-actor` | 0 | the entry names nobody; no activity is emitted, because `prov:agent` is required and would have to be invented |
 | `no-role` | 0 | the node's lane binds no role; no activity is emitted, because `ProvActivitySchema` requires `prov:hadRole` (PROV-O itself does not) |
-| `undeclared-actor` | 11 | the actor is not declared in `.claude/skills/actors/` |
-| `not-eligible` | 1 | the actor's `roles` do not include the role the lane binds |
-| `unknown` | 61 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
+| `undeclared-actor` | 1 | the actor is not declared in `.claude/skills/actors/` |
+| `not-eligible` | 0 | the actor's `roles` do not include the role the lane binds |
+| `unknown` | 55 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
 | `deny` | 0 | an ODRL policy prohibits `perform-task` here |
 | `authz-disagrees` | 0 | the verdict recorded in the entry's `authz` differs from the one recomputed now |
 | `node-not-in-model` | 4 | the entry names a node its process model does not have |
-| `source-moved` | 9 | the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's |
+| `source-moved` | 10 | the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's |
 | `source-missing` | 0 | the `.bpmn` the instance recorded is gone and no diagram with that name and process id exists; nothing in it can be checked |
 
 ## By instance
 
 ### code-change-review--consolidation-956
 
-8 step(s) checked, 8 `prov:Activity` emitted, 9 finding(s). Source: `cat-harness/processes/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--consolidation-956.prov.jsonld' | relative_url }})
+8 step(s) checked, 8 `prov:Activity` emitted, 7 finding(s). Source: `cat-harness/processes/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--consolidation-956.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
@@ -47,8 +47,6 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `code-change-review--consolidation-956` | 4 | `Task_Diagnose` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_Diagnose as authoring-agent |
 | `code-change-review--consolidation-956` | 5 | `Task_Implement` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_Implement as authoring-agent |
 | `code-change-review--consolidation-956` | 6 | `Task_Review` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_Review as code-reviewer |
-| `code-change-review--consolidation-956` | 7 | `Task_PrepareMerge` | `undeclared-actor` | "litlfred" is not a declared actor |
-| `code-change-review--consolidation-956` | 7 | `Task_PrepareMerge` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_PrepareMerge as authoring-agent |
 | `code-change-review--consolidation-956` | 8 | `Task_PrepareMerge` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_PrepareMerge as authoring-agent |
 
 ### code-change-review--issue-1015-prefix-is-stub
@@ -69,7 +67,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ### code-change-review--issue-1190-bean-restates-skill
 
-6 step(s) checked, 6 `prov:Activity` emitted, 7 finding(s). Source: `cat-harness/processes/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--issue-1190-bean-restates-skill.prov.jsonld' | relative_url }})
+6 step(s) checked, 6 `prov:Activity` emitted, 5 finding(s). Source: `cat-harness/processes/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--issue-1190-bean-restates-skill.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
@@ -78,17 +76,14 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `code-change-review--issue-1190-bean-restates-skill` | 3 | `Task_Implement` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_Implement as authoring-agent |
 | `code-change-review--issue-1190-bean-restates-skill` | 4 | `Task_RunGates` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_RunGates as authoring-agent |
 | `code-change-review--issue-1190-bean-restates-skill` | 5 | `Task_AddressReview` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_AddressReview as authoring-agent |
-| `code-change-review--issue-1190-bean-restates-skill` | 6 | `Task_PrepareMerge` | `undeclared-actor` | "litlfred" is not a declared actor |
-| `code-change-review--issue-1190-bean-restates-skill` | 6 | `Task_PrepareMerge` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_PrepareMerge as authoring-agent |
 
 ### crdm--folio-assistant-6lb8
 
-28 step(s) checked, 28 `prov:Activity` emitted, 46 finding(s). Sources: `cat-harness/methodologies/crdm/processes/crdm-requirements.bpmn`, `cat-harness/methodologies/crdm/processes/crdm-data-model.bpmn`, `cat-harness/methodologies/crdm/processes/crdm-issue-linking.bpmn`, `cat-harness/methodologies/crdm/processes/crdm-needs.bpmn`, `cat-harness/methodologies/crdm/processes/crdm-requirements-definition.bpmn`, `cat-harness/methodologies/crdm/processes/crdm-signoff.bpmn`. [PROV JSON-LD]({{ '/assets/prov/crdm--folio-assistant-6lb8.prov.jsonld' | relative_url }})
+28 step(s) checked, 28 `prov:Activity` emitted, 31 finding(s). Sources: `cat-harness/methodologies/crdm/processes/crdm-requirements.bpmn`, `cat-harness/methodologies/crdm/processes/crdm-data-model.bpmn`, `cat-harness/methodologies/crdm/processes/crdm-issue-linking.bpmn`, `cat-harness/methodologies/crdm/processes/crdm-needs.bpmn`, `cat-harness/methodologies/crdm/processes/crdm-requirements-definition.bpmn`, `cat-harness/methodologies/crdm/processes/crdm-signoff.bpmn`. [PROV JSON-LD]({{ '/assets/prov/crdm--folio-assistant-6lb8.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
 | `crdm--folio-assistant-6lb8` | (instance) | `Process_CRDM` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-requirements.bpmn does not exist; read cat-harness/processes/crdm-requirements.bpmn, which defines Process_CRDM |
-| `crdm--folio-assistant-6lb8` | 1 | `BA_Submit` | `not-eligible` | claude may act as authoring-agent, code-reviewer, not as business-analyst |
 | `crdm--folio-assistant-6lb8` | 1 | `BA_Submit` | `unknown` | no policy grants perform-task for Process_CRDM/BA_Submit as business-analyst |
 | `crdm--folio-assistant-6lb8` | 2 | `A_Detect` | `unknown` | no policy grants perform-task for Process_CRDM/A_Detect as authoring-agent |
 | `crdm--folio-assistant-6lb8` | 3 | `GW_Feature` | `unknown` | no policy grants perform-task for Process_CRDM/GW_Feature as authoring-agent |
@@ -103,12 +98,6 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `crdm--folio-assistant-6lb8/Call_DataModel` | (instance) | `Process_CRDM_DataModel` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-data-model.bpmn does not exist; read cat-harness/processes/crdm-data-model.bpmn, which defines Process_CRDM_DataModel |
 | `crdm--folio-assistant-6lb8/Call_DataModel` | 1 | `A_Entities` | `unknown` | no policy grants perform-task for Process_CRDM_DataModel/A_Entities as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_DataModel` | 2 | `A_Relations` | `unknown` | no policy grants perform-task for Process_CRDM_DataModel/A_Relations as authoring-agent |
-| `crdm--folio-assistant-6lb8/Call_DataModel` | 3 | `BA_ConfirmEntities` | `undeclared-actor` | "litlfred" is not a declared actor |
-| `crdm--folio-assistant-6lb8/Call_DataModel` | 3 | `BA_ConfirmEntities` | `unknown` | no policy grants perform-task for Process_CRDM_DataModel/BA_ConfirmEntities as business-analyst |
-| `crdm--folio-assistant-6lb8/Call_DataModel` | 4 | `S_ConfirmCardinality` | `undeclared-actor` | "litlfred" is not a declared actor |
-| `crdm--folio-assistant-6lb8/Call_DataModel` | 4 | `S_ConfirmCardinality` | `unknown` | no policy grants perform-task for Process_CRDM_DataModel/S_ConfirmCardinality as stakeholder |
-| `crdm--folio-assistant-6lb8/Call_DataModel` | 5 | `GW_Model` | `undeclared-actor` | "litlfred" is not a declared actor |
-| `crdm--folio-assistant-6lb8/Call_DataModel` | 5 | `GW_Model` | `unknown` | no policy grants perform-task for Process_CRDM_DataModel/GW_Model as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_DataModel` | 6 | `A_Declare` | `unknown` | no policy grants perform-task for Process_CRDM_DataModel/A_Declare as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_Issue` | (instance) | `Process_CRDM_Issue` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-issue-linking.bpmn does not exist; read cat-harness/processes/crdm-issue-linking.bpmn, which defines Process_CRDM_Issue |
 | `crdm--folio-assistant-6lb8/Call_Issue` | 1 | `A_ScanIssues` | `unknown` | no policy grants perform-task for Process_CRDM_Issue/A_ScanIssues as authoring-agent |
@@ -117,32 +106,36 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `crdm--folio-assistant-6lb8/Call_Needs` | (instance) | `Process_CRDM_Needs` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-needs.bpmn does not exist; read cat-harness/processes/crdm-needs.bpmn, which defines Process_CRDM_Needs |
 | `crdm--folio-assistant-6lb8/Call_Needs` | 1 | `A_Stakeholders` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Stakeholders as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_Needs` | 2 | `A_Synthesise` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Synthesise as authoring-agent |
-| `crdm--folio-assistant-6lb8/Call_Needs` | 3 | `BA_ReviewNeeds` | `undeclared-actor` | "litlfred" is not a declared actor |
-| `crdm--folio-assistant-6lb8/Call_Needs` | 3 | `BA_ReviewNeeds` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/BA_ReviewNeeds as business-analyst |
-| `crdm--folio-assistant-6lb8/Call_Needs` | 4 | `S_ConfirmNeeds` | `undeclared-actor` | "litlfred" is not a declared actor |
-| `crdm--folio-assistant-6lb8/Call_Needs` | 4 | `S_ConfirmNeeds` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/S_ConfirmNeeds as stakeholder |
 | `crdm--folio-assistant-6lb8/Call_Needs` | 5 | `GW_Needs` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/GW_Needs as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_Requirements` | (instance) | `Process_CRDM_Requirements` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-requirements-definition.bpmn does not exist; read cat-harness/processes/crdm-requirements-definition.bpmn, which defines Process_CRDM_Requirements |
 | `crdm--folio-assistant-6lb8/Call_Requirements` | 1 | `A_MapWorkflow` | `unknown` | no policy grants perform-task for Process_CRDM_Requirements/A_MapWorkflow as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_Requirements` | 2 | `A_DefineReqs` | `unknown` | no policy grants perform-task for Process_CRDM_Requirements/A_DefineReqs as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_Requirements` | 3 | `A_CompareOptions` | `unknown` | no policy grants perform-task for Process_CRDM_Requirements/A_CompareOptions as authoring-agent |
-| `crdm--folio-assistant-6lb8/Call_Requirements` | 4 | `BA_ReviewReqs` | `undeclared-actor` | "litlfred" is not a declared actor |
-| `crdm--folio-assistant-6lb8/Call_Requirements` | 4 | `BA_ReviewReqs` | `unknown` | no policy grants perform-task for Process_CRDM_Requirements/BA_ReviewReqs as business-analyst |
-| `crdm--folio-assistant-6lb8/Call_Requirements` | 5 | `S_ApproveReqs` | `undeclared-actor` | "litlfred" is not a declared actor |
-| `crdm--folio-assistant-6lb8/Call_Requirements` | 5 | `S_ApproveReqs` | `unknown` | no policy grants perform-task for Process_CRDM_Requirements/S_ApproveReqs as stakeholder |
 | `crdm--folio-assistant-6lb8/Call_Requirements` | 6 | `GW_Reqs` | `unknown` | no policy grants perform-task for Process_CRDM_Requirements/GW_Reqs as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_Signoff` | (instance) | `Process_CRDM_Signoff` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-signoff.bpmn does not exist; read cat-harness/processes/crdm-signoff.bpmn, which defines Process_CRDM_Signoff |
 | `crdm--folio-assistant-6lb8/Call_Signoff` | 1 | `A_CreateBeans` | `unknown` | no policy grants perform-task for Process_CRDM_Signoff/A_CreateBeans as authoring-agent |
 
+### crdm--folio-assistant-b94c
+
+5 step(s) checked, 5 `prov:Activity` emitted, 7 finding(s). Source: `cat-harness/methodologies/crdm/workflows/crdm-requirements.bpmn`. [PROV JSON-LD]({{ '/assets/prov/crdm--folio-assistant-b94c.prov.jsonld' | relative_url }})
+
+| instance | entry | node | finding | detail |
+|---|---|---|---|---|
+| `crdm--folio-assistant-b94c` | (instance) | `Process_CRDM` | `source-moved` | cat-harness/methodologies/crdm/workflows/crdm-requirements.bpmn does not exist; read cat-harness/processes/crdm-requirements.bpmn, which defines Process_CRDM |
+| `crdm--folio-assistant-b94c` | 1 | `BA_Submit` | `undeclared-actor` | "costateixeira" is not a declared actor |
+| `crdm--folio-assistant-b94c` | 1 | `BA_Submit` | `unknown` | no policy grants perform-task for Process_CRDM/BA_Submit as business-analyst |
+| `crdm--folio-assistant-b94c` | 2 | `A_Detect` | `unknown` | no policy grants perform-task for Process_CRDM/A_Detect as authoring-agent |
+| `crdm--folio-assistant-b94c` | 3 | `GW_Feature` | `unknown` | no policy grants perform-task for Process_CRDM/GW_Feature as authoring-agent |
+| `crdm--folio-assistant-b94c` | 4 | `Call_Issue` | `unknown` | no policy grants perform-task for Process_CRDM/Call_Issue as authoring-agent |
+| `crdm--folio-assistant-b94c` | 5 | `Call_Needs` | `unknown` | no policy grants perform-task for Process_CRDM/Call_Needs as authoring-agent |
+
 ### crdm--issue-607-kg-to-cdn-portal
 
-10 step(s) checked, 10 `prov:Activity` emitted, 15 finding(s). Sources: `cat-harness/methodologies/crdm/processes/crdm-requirements.bpmn`, `cat-harness/methodologies/crdm/processes/crdm-issue-linking.bpmn`, `cat-harness/methodologies/crdm/processes/crdm-needs.bpmn`. [PROV JSON-LD]({{ '/assets/prov/crdm--issue-607-kg-to-cdn-portal.prov.jsonld' | relative_url }})
+10 step(s) checked, 10 `prov:Activity` emitted, 11 finding(s). Sources: `cat-harness/methodologies/crdm/processes/crdm-requirements.bpmn`, `cat-harness/methodologies/crdm/processes/crdm-issue-linking.bpmn`, `cat-harness/methodologies/crdm/processes/crdm-needs.bpmn`. [PROV JSON-LD]({{ '/assets/prov/crdm--issue-607-kg-to-cdn-portal.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
 | `crdm--issue-607-kg-to-cdn-portal` | (instance) | `Process_CRDM` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-requirements.bpmn does not exist; read cat-harness/processes/crdm-requirements.bpmn, which defines Process_CRDM |
-| `crdm--issue-607-kg-to-cdn-portal` | 1 | `BA_Submit` | `undeclared-actor` | "litlfred" is not a declared actor |
-| `crdm--issue-607-kg-to-cdn-portal` | 1 | `BA_Submit` | `unknown` | no policy grants perform-task for Process_CRDM/BA_Submit as business-analyst |
 | `crdm--issue-607-kg-to-cdn-portal` | 2 | `A_Detect` | `unknown` | no policy grants perform-task for Process_CRDM/A_Detect as authoring-agent |
 | `crdm--issue-607-kg-to-cdn-portal` | 3 | `GW_Feature` | `unknown` | no policy grants perform-task for Process_CRDM/GW_Feature as authoring-agent |
 | `crdm--issue-607-kg-to-cdn-portal` | 4 | `Call_Issue` | `unknown` | no policy grants perform-task for Process_CRDM/Call_Issue as authoring-agent |
@@ -153,8 +146,6 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | (instance) | `Process_CRDM_Needs` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-needs.bpmn does not exist; read cat-harness/processes/crdm-needs.bpmn, which defines Process_CRDM_Needs |
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | 1 | `A_Stakeholders` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Stakeholders as authoring-agent |
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | 2 | `A_Synthesise` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Synthesise as authoring-agent |
-| `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | 3 | `BA_ReviewNeeds` | `undeclared-actor` | "litlfred" is not a declared actor |
-| `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | 3 | `BA_ReviewNeeds` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/BA_ReviewNeeds as business-analyst |
 
 ## Regenerate
 

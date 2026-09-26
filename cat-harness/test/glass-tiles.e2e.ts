@@ -251,6 +251,33 @@ test.describe("the Settings tile", () => {
     await expect(card.locator("img")).toHaveCount(0);
   });
 
+  test("the glass is jewelled per theme, and High contrast stays plain", async ({ page }) => {
+    // Owner, 2026-09-24: "Mix, per theme". Each glass theme paints its own
+    // purple pattern behind the cards; the usability theme paints none.
+    await open(page);
+    const pattern = () =>
+      page.locator(layer).evaluate((n) => getComputedStyle(n, "::before").backgroundImage);
+    expect(await pattern()).toContain("conic-gradient"); // amethyst facets, the default
+    await page.click('[data-fa-glass-chrome="glass-settings"]');
+    await page.check("#fa-glass-theme-rose");
+    await expect(page.locator(layer)).toHaveAttribute("data-fa-glass-theme", "rose");
+    expect(await pattern()).toContain("repeating-conic-gradient"); // the leaded rose
+    await page.check("#fa-glass-theme-leaded");
+    await expect(page.locator(layer)).toHaveAttribute("data-fa-glass-theme", "leaded");
+    expect(await pattern()).toContain("linear-gradient");
+    await page.check("#fa-glass-theme-contrast");
+    expect(await pattern()).toBe("none");
+  });
+
+  test("the pattern follows the reader's opacity", async ({ page }) => {
+    await open(page);
+    const op = () => page.locator(layer).evaluate((n) => Number(getComputedStyle(n, "::before").opacity));
+    const at20 = await op();
+    await page.click('[data-fa-glass-chrome="glass-settings"]');
+    await page.click('button[aria-label="More opaque"]');
+    expect(await op()).toBeGreaterThan(at20);
+  });
+
   test("the default can be restored in one press", async ({ page }) => {
     await open(page);
     await page.click('[data-fa-glass-chrome="glass-settings"]');

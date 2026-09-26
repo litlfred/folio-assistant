@@ -47,6 +47,8 @@
  * @covers uml
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+
+import { gitCorpus } from "./git-corpus.ts";
 import { dirname, join, relative, resolve } from "node:path";
 import type { z } from "zod";
 
@@ -274,14 +276,6 @@ function drawFamily(
     }
   } else if (f.state === "external") {
     acc.classes.push({ id: safeId(`${prefix}_${f.tag}`), title: f.spec, source: `ext: ${f.spec}`, kind, attrs: [] });
-  } else if (f.state === "untyped") {
-    acc.classes.push({
-      id: safeId(`${prefix}_${f.tag}`),
-      title,
-      source: `untyped: written by ${f.writtenBy}`,
-      kind,
-      attrs: [remark(`no schema declared, shape is whatever ${f.writtenBy} writes`)],
-    });
   } else {
     section.undetermined.push({ kind: `${kind} ${f.tag}`, reason: f.reason });
   }
@@ -293,8 +287,37 @@ function tagsUnder(dir: string): Set<string> {
 }
 
 /** The JSON files under `dir`, grouped by the `$schema` tag each carries. */
+/**
+ * The `$schema`-tagged JSON nodes under {@link dir}, by tag.
+ *
+ * **Asked of git, not of the disk** — the fourth scanner in this repository to
+ * need that said out loud, and the third to need it on one day (bean `rsi6`,
+ * after `ramz` and `xd1g`). A bare walk descends into any untracked subtree a
+ * declared directory happens to contain, and a publishable package's
+ * `node_modules/` holds thousands of `.json` files with `$schema` tags that
+ * are facts about other projects.
+ *
+ * The `statSync` in the fallback is guarded because a DANGLING SYMLINK threw
+ * `ENOENT` here and killed the whole generator, which then produced no
+ * overview at all rather than an overview missing one file.
+ */
 function filesByTag(dir: string): Map<string, string[]> {
   const out = new Map<string, string[]>();
+  const record = (p: string): void => {
+    try {
+      const tag = (JSON.parse(readFileSync(p, "utf8")) as { $schema?: unknown })?.$schema;
+      if (typeof tag === "string") out.set(tag, [...(out.get(tag) ?? []), p]);
+    } catch {
+      // not a node
+    }
+  };
+
+  const listed = gitCorpus(dir, ["*.json"]);
+  if (listed !== undefined) {
+    for (const p of listed) record(p);
+    return out;
+  }
+
   const walkDir = (d: string): void => {
     let entries: string[];
     try {
@@ -304,7 +327,13 @@ function filesByTag(dir: string): Map<string, string[]> {
     }
     for (const e of entries) {
       const p = join(d, e);
-      if (statSync(p).isDirectory()) walkDir(p);
+      let isDir: boolean;
+      try {
+        isDir = statSync(p).isDirectory();
+      } catch {
+        continue; // dangling symlink: not readable is not a reason to stop
+      }
+      if (isDir) walkDir(p);
       else if (p.endsWith(".json")) {
         try {
           const tag = (JSON.parse(readFileSync(p, "utf8")) as { $schema?: unknown })?.$schema;
@@ -748,8 +777,7 @@ async function main(): Promise<void> {
   const jobs = jobsFor(pumls);
   const svgs = new Set(jobs.map((j) => j.svg));
   const existing = [...walk(UML_ROOT), ...walk(DOCS_ROOT), ...walk(SVG_ROOT)];
-  // Only this generator's own kinds of output count as orphans.
-  const orphans = existing.filter((p) => !files.has(p) && !svgs.has(p) && /\.(puml|mmd|md|svg)$/.test(p));
+  const orphans = umlOrphans(existing, files, svgs);
 
   if (check) {
     const stale = [...files].filter(([p, text]) => !existsSync(p) || readFileSync(p, "utf8") !== text).map(([p]) => p);
@@ -776,6 +804,16 @@ async function main(): Promise<void> {
     }
     console.log(`rendered ${r.rendered} SVG(s) under ${relative(REPO, SVG_ROOT)}`);
   }
+}
+
+/**
+ * Files under the generator's roots that this run does not write: the pages
+ * and diagrams of an instance or section that no longer exists (bean `ghgn`).
+ * Only this generator's own kinds of output count, so a file a person put
+ * there is never an orphan.
+ */
+export function umlOrphans(existing: readonly string[], written: ReadonlyMap<string, string> | ReadonlySet<string>, svgs: ReadonlySet<string>): string[] {
+  return existing.filter((p) => !written.has(p) && !svgs.has(p) && /\.(puml|mmd|md|svg)$/.test(p));
 }
 
 if (import.meta.main) await main();

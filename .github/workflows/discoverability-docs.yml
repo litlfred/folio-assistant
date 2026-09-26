@@ -43,7 +43,7 @@ jobs:
     # scrapped in favour of #300 but keeping this disagreement on the record)
     # and merged without it being seen.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: dtolnay/rust-toolchain@stable
 
@@ -116,9 +116,9 @@ jobs:
     # scrapped in favour of #300 but keeping this disagreement on the record)
     # and merged without it being seen.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
 
@@ -198,7 +198,7 @@ jobs:
     # scrapped in favour of #300 but keeping this disagreement on the record)
     # and merged without it being seen.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -207,7 +207,13 @@ jobs:
       - name: Install + run TypeDoc
         working-directory: cat-harness
         run: |
-          bun install || npm install
+          # Pinned 2026-09-26 (salvaged from #1040, bean u9r9). This step was an
+          # unpinned install with an npm fallback; `setup-bun` above has already
+          # installed bun, so the fallback was a runtime degradation that resolved
+          # unpinned behind a green step. No fallback: a pin that falls back
+          # swallows the failure it exists to raise. The old command is described
+          # rather than quoted because check:lockfile-pinning keys on command text.
+          bun install --frozen-lockfile
           # Use TypeDoc to document the schemas/ exports + adapters/paper/schemas/
           npx --yes typedoc@0.28.20 \
             --out ../_site/schema-docs \

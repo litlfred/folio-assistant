@@ -109,8 +109,8 @@ content, no server:
 Both Tools serve the same nodes. Neither is the skill: *knowing that a fallback
 exists* is the capability, and an agent that only knows the MCP route is an
 agent that stops when the server is absent. See
-[`skills-and-tools`](../folio-core/skills-and-tools.md) for why that distinction is enforced
-rather than merely preferred, and [`directory-conventions`](../folio-core/directory-conventions.md)
+[`skills-and-tools`](skills-and-tools.md) for why that distinction is enforced
+rather than merely preferred, and [`directory-conventions`](directory-conventions.md)
 for the declaration's schema and the full list of graph kinds.
 
 ## Not everything under the path is a skill

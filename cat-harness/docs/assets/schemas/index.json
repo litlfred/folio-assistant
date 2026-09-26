@@ -10,7 +10,7 @@
       "unit": "modules"
     },
     "large-datasets-schemas": {
-      "count": 3,
+      "count": 5,
       "unit": "modules"
     }
   },
@@ -543,6 +543,14 @@
       "graphNode": "undeclared",
       "summary": "A minimal valid declaration, extended per test.",
       "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/intake.ts",
+      "instance": "cat-harness",
+      "name": "intake",
+      "graphNode": "schema",
+      "summary": "An intake record — what one capture put into `uploads/<doc>/`, and where it",
+      "isTest": false
     },
     {
       "module": "cat-harness/schemas/interaction.ts",
@@ -1566,6 +1574,23 @@
       "name": "artifact-store",
       "graphNode": "schema",
       "summary": "Where a large build artifact goes — and why it is never \"a GitHub Release\".",
+      "isTest": false
+    },
+    {
+      "module": "large-datasets/schemas/id-lookup.test.ts",
+      "instance": "large-datasets",
+      "name": "id-lookup.test",
+      "graphNode": "none",
+      "reason": "a test",
+      "summary": "The prefix-sharded identifier lookup — bean `folio-assistant-4pm8`.",
+      "isTest": true
+    },
+    {
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "instance": "large-datasets",
+      "name": "id-lookup",
+      "graphNode": "schema",
+      "summary": "A prefix-sharded identifier lookup for nodes a folio REFERENCES but does not",
       "isTest": false
     },
     {
@@ -5849,13 +5874,6 @@
           "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
         },
         {
-          "name": "publishable",
-          "type": "boolean",
-          "optional": true,
-          "array": false,
-          "doc": "Is this instance PUBLISHED for consumers outside this repository?"
-        },
-        {
           "name": "id",
           "type": "string",
           "optional": true,
@@ -5997,13 +6015,6 @@
           "optional": true,
           "array": true,
           "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
-        },
-        {
-          "name": "publishable",
-          "type": "z.boolean().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Is this instance PUBLISHED for consumers outside this repository?"
         },
         {
           "name": "id",
@@ -6529,8 +6540,16 @@
         {
           "name": "host",
           "type": "PublicationHost",
-          "optional": false,
-          "array": false
+          "optional": true,
+          "array": false,
+          "doc": "WHAT KIND of host serves the renderings. Optional: absent is a third"
+        },
+        {
+          "name": "state",
+          "type": "\"draft\"",
+          "optional": true,
+          "array": false,
+          "doc": "WHAT STATE this instance's publication is in. `draft`, always, today."
         }
       ],
       "extendsNames": [],
@@ -6563,8 +6582,14 @@
       "fields": [
         {
           "name": "host",
-          "type": "z.enum(PUBLICATION_HOSTS)",
-          "optional": false,
+          "type": "z.enum(PUBLICATION_HOSTS).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "state",
+          "type": "z.literal(\"draft\").optional()",
+          "optional": true,
           "array": false
         }
       ],
@@ -6817,20 +6842,6 @@
           "optional": true,
           "array": false,
           "doc": "The page that renders this subgraph, **relative to the REPOSITORY root**"
-        },
-        {
-          "name": "docs",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}."
-        },
-        {
-          "name": "skill",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The skill that governs it, by NAME rather than by path, so no base applies."
         },
         {
           "name": "serialisations",
@@ -10931,8 +10942,7 @@
       "fields": [],
       "extendsNames": [],
       "values": [
-        "undecided",
-        "internal",
+        "no-uri",
         "unresolved",
         "unreadable"
       ],
@@ -16287,6 +16297,183 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/intake.ts#DateTime",
+      "name": "DateTime",
+      "module": "cat-harness/schemas/intake.ts",
+      "kind": "zod-scalar",
+      "doc": "ISO 8601 date-time, the offset optional. A capture tool that recorded local",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/intake.ts#Intake",
+      "name": "Intake",
+      "module": "cat-harness/schemas/intake.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/intake.ts#IntakeFileSchema",
+      "name": "IntakeFileSchema",
+      "module": "cat-harness/schemas/intake.ts",
+      "kind": "zod-object",
+      "doc": "One file the capture delivered.",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the file is: `publication`, `full-item-record`, `item-page`, `upload`…"
+        },
+        {
+          "name": "role",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What it is FOR here: `original-bitstream`, `metadata-source`, `webpage-theme-source`, `none`."
+        },
+        {
+          "name": "note",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [
+        "ArchiveEntrySchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/archive-contents.ts#ArchiveEntrySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/intake.ts#IntakeSchema",
+      "name": "IntakeSchema",
+      "module": "cat-harness/schemas/intake.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(INTAKE_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "doc_id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The upload directory's name."
+        },
+        {
+          "name": "item",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The catalogue node this capture is of, by its `id` (`item/<uuid>`)."
+        },
+        {
+          "name": "record",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The Dublin Core record describing it, relative to this file."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A title — only for a capture nothing else describes."
+        },
+        {
+          "name": "_comment",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Authored context for a person reading the file."
+        },
+        {
+          "name": "source",
+          "type": "IntakeSourceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "files",
+          "type": "z.array(IntakeFileSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/intake.ts#IntakeFileSchema",
+        "cat-harness/schemas/intake.ts#IntakeSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "INTAKE_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/intake.ts#IntakeSourceSchema",
+      "name": "IntakeSourceSchema",
+      "module": "cat-harness/schemas/intake.ts",
+      "kind": "zod-object",
+      "doc": "Where the capture came from, and when.",
+      "fields": [
+        {
+          "name": "capturedAt",
+          "type": "DateTime",
+          "optional": false,
+          "array": false,
+          "doc": "The capture moment — not when this record was written."
+        },
+        {
+          "name": "capturedBy",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Who or what captured it."
+        }
+      ],
+      "extendsNames": [
+        "ProvenanceSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/intake.ts#DateTime"
+      ],
+      "unresolved": [],
+      "external": [
+        "ProvenanceSchema",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/interaction.ts#InteractionNode",
       "name": "InteractionNode",
       "module": "cat-harness/schemas/interaction.ts",
@@ -17447,7 +17634,7 @@
       "name": "NodeSchemaResolution",
       "module": "cat-harness/schemas/kind-validator.ts",
       "kind": "type-alias",
-      "doc": "One `$schema` family of a kind, resolved. Four states, and the two in the",
+      "doc": "One `$schema` family of a kind, resolved. A TypeScript shape is READABLE",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -23548,6 +23735,13 @@
           "doc": "Absent means the reference scan did not run — a third state, not \"none\"."
         },
         {
+          "name": "withheld",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why the entry is withheld (bean `cw35`/`mkao`): no avatar, no verbatim excerpt."
+        },
+        {
           "name": "avatar",
           "type": "z.object({ href: z.string(), src: z.string(), source: z.enum([\"cover\", \"figure\"]) }).strict().optional()",
           "optional": true,
@@ -29481,6 +29675,13 @@
           "optional": true,
           "array": true,
           "doc": "Published artefacts this Tool is authoritative for. See"
+        },
+        {
+          "name": "renders",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The graph KINDS this Tool draws a viewer for — one page per declared"
         }
       ],
       "extendsNames": [],
@@ -34384,6 +34585,13 @@
           "doc": "just-the-docs nav front matter."
         },
         {
+          "name": "documents",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "What this page documents: graph kinds (`library`), or one directory as"
+        },
+        {
           "name": "parent",
           "type": "string",
           "optional": true,
@@ -38622,6 +38830,189 @@
       "exported": true
     },
     {
+      "id": "large-datasets/schemas/id-lookup.ts#IdEntry",
+      "name": "IdEntry",
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "kind": "interface",
+      "doc": "One referenced node, as the lookup returns it.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "`kind/local`, lower-case, as the catalogue names the node."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Where the node is held: the source's own page for it."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "large-datasets/schemas/id-lookup.ts#IdLookupManifest",
+      "name": "IdLookupManifest",
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "large-datasets/schemas/id-lookup.ts#IdLookupManifestSchema",
+      "name": "IdLookupManifestSchema",
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(ID_LOOKUP_MANIFEST_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The corpus this indexes, by its instance name."
+        },
+        {
+          "name": "selection",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Which nodes, and from where. A count with no statement of what was counted cannot be checked."
+        },
+        {
+          "name": "budgetBytes",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "entryCount",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "namespaces",
+          "type": "z.record(z.string().regex(NAMESPACE), NamespaceIndexSchema)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "large-datasets/schemas/id-lookup.ts#NamespaceIndexSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "ID_LOOKUP_MANIFEST_SCHEMA_TAG",
+        "NAMESPACE",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "large-datasets/schemas/id-lookup.ts#NamespaceIndexSchema",
+      "name": "NamespaceIndexSchema",
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "prefixLength",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "entryCount",
+          "type": "z.number().int().positive()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "shards",
+          "type": "z.array(z.string().min(1)).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "Every shard file in this namespace, relative to it. A prefix not listed has no entries, so no request is needed to say so."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "large-datasets/schemas/id-lookup.ts#Shard",
+      "name": "Shard",
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "large-datasets/schemas/id-lookup.ts#ShardSchema",
+      "name": "ShardSchema",
+      "module": "large-datasets/schemas/id-lookup.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "prefix",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "entries",
+          "type": "z.array(z.tuple([z.string().min(1), z.string().min(1), z.string().url()])).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "`[id, title, url]`, sorted by id. Arrays rather than objects: the keys would be most of the bytes."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "large-datasets/schemas/source-descriptor.ts#Availability",
       "name": "Availability",
       "module": "large-datasets/schemas/source-descriptor.ts",
@@ -39692,7 +40083,7 @@
       "to": "cat-harness/schemas/cat-harness.ts#PublicationHost",
       "via": "host",
       "kind": "field",
-      "optional": false,
+      "optional": true,
       "array": false
     },
     {
@@ -41227,6 +41618,38 @@
       "from": "cat-harness/schemas/ig-menu.ts#IgMenuSchema",
       "to": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema",
       "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/intake.ts#IntakeFileSchema",
+      "to": "cat-harness/schemas/archive-contents.ts#ArchiveEntrySchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/intake.ts#IntakeSchema",
+      "to": "cat-harness/schemas/intake.ts#IntakeFileSchema",
+      "via": "files",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/intake.ts#IntakeSchema",
+      "to": "cat-harness/schemas/intake.ts#IntakeSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/intake.ts#IntakeSourceSchema",
+      "to": "cat-harness/schemas/intake.ts#DateTime",
+      "via": "capturedAt",
       "kind": "field",
       "optional": false,
       "array": false
@@ -44339,6 +44762,14 @@
       "from": "folio-assistant-core/schemas/review-verdict.ts#VerdictTag",
       "to": "folio-assistant-core/schemas/review-verdict.ts#ReviewVerdictValue",
       "via": "verdict",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "large-datasets/schemas/id-lookup.ts#IdLookupManifestSchema",
+      "to": "large-datasets/schemas/id-lookup.ts#NamespaceIndexSchema",
+      "via": "namespaces",
       "kind": "field",
       "optional": false,
       "array": false

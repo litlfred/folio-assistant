@@ -2,6 +2,9 @@
 layout: default
 title: Document ingestion
 nav_order: 7
+documents:
+  - uploads
+  - library
 lang: en
 available_locales: ["en"]
 ---

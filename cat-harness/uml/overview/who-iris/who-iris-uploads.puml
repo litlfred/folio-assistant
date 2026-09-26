@@ -33,11 +33,28 @@ package "who-iris/who-iris-uploads" as pkg_who_iris_who_iris_uploads <<uploads>>
     assets [0..*] : Asset[]
     omitted [0..*] : Omitted[]
   }
-  class "folio-intake/v1" as who_iris_who_iris_uploads_folio_intake_v1 <<untyped: written by scripts/library-graph.ts>> #f4f4f1 {
-    //no schema declared, shape is whatever scripts/library-graph.ts writes//
+  class "File" as who_iris_who_iris_uploads_folio_intake_v1_File <<json: IntakeSchema>> #f4f4f1 {
+    path [1] : string
+    bytes [0..1] : integer
+    sha256 [0..1] : string | null
+    mimetype_sniffed [0..1] : string | null
+    type [1] : string
+    role [1] : string
+    note [0..1] : string
+  }
+  class "folio-intake/v1" as who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1 <<json: IntakeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-intake/v1'
+    doc_id [1] : string
+    item [0..1] : string
+    record [0..1] : string
+    title [0..1] : string
+    _comment [0..1] : string
+    source [1] : object
+    files [0..*] : File[]
   }
 }
 
 who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Asset : assets
 who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Omitted : omitted
+who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" who_iris_who_iris_uploads_folio_intake_v1_File : files
 @enduml
