@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { siteDirFor } from "../schemas/cat-harness.ts";
@@ -109,9 +109,24 @@ const GUIDE = INDEX.pages["guides/agent-onboarding"];
  *    translations, so "untranslated" then means *absent from the index*, and
  *    the fixture is a real page of this site the index does not list.
  *
- * `architecture` is the sibling's choice, kept over this branch's equivalent
- * `agentic-harness`: both are untranslated and neither is better, so the one
- * already on `main` wins and the next merge has one less thing to reconcile.
+ * ## Case 2 is DERIVED now too, because naming it expired twice
+ *
+ * `architecture` was the hand-picked case-2 fixture, chosen over
+ * `agentic-harness` on the reasoning that main's copy wins a merge. Bean `t8g3`
+ * then translated **both** — batch 4 on 2026-09-26 — so the name rotted inside
+ * the same day, for the third time in this fixture's life and the second for the
+ * same reason. A fallback that has to be re-chosen every time the corpus grows
+ * is not a fallback; it is a scheduled failure with a comment on it.
+ *
+ * So case 2 scans the site directory for a real page the index does not list:
+ * top-level, carrying a `title:`, not `nav_exclude: true`, first in sorted order
+ * so two runs agree. `index.md` is excluded because it IS indexed, under the
+ * empty key, and only its filename says otherwise.
+ *
+ * And it THROWS rather than falling back when the corpus has no such page. That
+ * state is real news — every page of the site translated — and it must not reach
+ * the browser half as a locator that mysteriously misses, which is precisely the
+ * illegible failure the two sessions above each paid for once.
  */
 const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
   const indexed = Object.entries(INDEX.pages).find(
@@ -121,8 +136,35 @@ const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
     const [key, v] = indexed;
     return { key, url: v.sourceUrl, title: v.sourceTitle };
   }
-  // Case 2. A real page of this site, deliberately one the index does not list.
-  return { key: "architecture", url: "/architecture.html", title: "Architecture" };
+  // Case 2. A real page of this site the index does not list — derived, so the
+  // next translation batch cannot expire it.
+  const dir = join(ROOT, SITE);
+  for (const f of readdirSync(dir).sort()) {
+    if (!f.endsWith(".md") || f === "index.md") continue;
+    const key = f.slice(0, -3);
+    if (key in INDEX.pages) continue;
+    const head = readFileSync(join(dir, f), "utf8").slice(0, 2000);
+    if (/^nav_exclude:\s*true\s*$/m.test(head)) continue;
+    // And it must not CLAIM a locale either. `crdm-methodology` is absent from
+    // the index and declares `available_locales: ["en","fr"]` with no
+    // `docs/fr/crdm-methodology.md` behind it — so it would be the one
+    // candidate that asserts the very thing this fixture stands for the absence
+    // of. The index is the authority here, but a page contradicting it is the
+    // wrong page to reason from, whichever of the two is wrong. Bean `9x01`.
+    const claimed = /^available_locales:\s*(.+)$/m.exec(head)?.[1] ?? "";
+    if (claimed.replace(/[["'\]\s]/g, "").split(",").filter((l) => l !== "" && l !== INDEX.sourceLocale).length > 0) {
+      continue;
+    }
+    const title = /^title:\s*(.+)$/m.exec(head)?.[1].trim().replace(/^["']|["']$/g, "");
+    if (title === undefined || title === "") continue;
+    return { key, url: `/${key}.html`, title };
+  }
+  throw new Error(
+    "no untranslated page left in the corpus: every indexed page has translations AND every " +
+      "top-level page is indexed. That is news about the site, not a broken test — the " +
+      "no-translation fallback now has nothing to stand for, so decide what this test should " +
+      "assert instead rather than re-pointing a fixture.",
+  );
 })();
 
 /** just-the-docs' nav markup, reduced to what the filter touches. */

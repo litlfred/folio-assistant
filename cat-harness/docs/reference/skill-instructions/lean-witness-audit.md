@@ -69,7 +69,7 @@ python3 witness_base.py check-stale my-computation.witness.json
 python3 witness_base.py check-all
 
 # Unified audit (Lean + Python)
-bun run scripts/witness-audit.ts
+bun run cat-harness/scripts/witness-audit.ts
 ```
 
 ### Legacy witness migration
