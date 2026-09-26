@@ -217,6 +217,20 @@ async function load(
   // a precondition these tests set, not one a browser revision decides.
   const vp = p.viewportSize();
   if (vp) await p.mouse.move(vp.width - 5, vp.height - 5);
+  // Moving away from a bar the browser already considered hovered STARTS its
+  // close transition. Asserting "at rest" while that runs sees a half-closed
+  // bar, which was the one failure left after the pointer was parked. So
+  // wait for every running animation or transition to finish, after two
+  // frames so a transition the move just queued is already registered.
+  await p.evaluate(async () => {
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    // An infinite animation (a spinner) never finishes, so it is left out:
+    // only something that ends can be waited for.
+    const settling = document
+      .getAnimations()
+      .filter((a) => a.effect?.getTiming().iterations !== Infinity);
+    await Promise.all(settling.map((a) => a.finished.catch(() => undefined)));
+  });
   return { errors, console: logs };
 }
 

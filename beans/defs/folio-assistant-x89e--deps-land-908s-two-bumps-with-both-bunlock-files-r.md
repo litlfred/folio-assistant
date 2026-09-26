@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T13:41:12Z
-updated_at: 2026-09-26T14:37:59Z
+updated_at: 2026-09-26T14:45:43Z
 parent: folio-assistant-1xhc
 ---
 
@@ -30,3 +30,6 @@ Owner decision 2026-09-26: do the bump on a branch, regenerating both lockfiles,
 
 
 **E2E finding (2026-09-26):** with Playwright 1.63, CI downloads Chromium revision 1228. On it, three `navbar-row.e2e.ts` "at rest" tests found the sidebar already open, as if hovered: on this PR, 3 failed; on the sibling duplicate #1405, 1 failed. The same main without the bump passed (#1408). The fix parks the pointer in the far corner inside the tests' `load()` helper, so "no hover" is a stated precondition. No test was skipped or weakened. It could not be reproduced locally, because this container's "1228" is a symlink to 1194, so CI is the check.
+
+
+**Second round:** with the pointer parked, 1 of the 3 still failed, now with the whole bar visible (17 items instead of 3). Moving off a bar the browser already considered hovered starts its close transition, and the assertion ran mid-transition. `load()` now waits for every finite animation to finish, after two frames. Reproduced locally by simulating the start-hovered pointer (`mouse.move(5,5)` first): 1 failed without the wait, 44/44 passed with it.
