@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/docs-ui.css?v=1790445955">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/docs-ui.css?v=1790447854">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/narrow-viewport.css?v=1790445955">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/narrow-viewport.css?v=1790447854">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/work-plan.css?v=1790445955">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/work-plan.css?v=1790447854">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/themes.css?v=1790445955">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/themes.css?v=1790447854">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/uml.css?v=1790445955">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/uml.css?v=1790447854">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/avatars.css?v=1790445955">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/avatars.css?v=1790447854">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/docs-ui.js?v=1790445955" defer></script>
+<script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/docs-ui.js?v=1790447854" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -840,7 +840,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 утверждало тридцать девять против пятидесяти пяти.</p>
 
 <p>Число в тексте — это утверждение; производный индекс — это доказательство. Поэтому само число
-находится в <a href="cat-harness/docs-auto/index/processes/">производном индексе процессов</a>, который
+находится в <a href="../cat-harness/docs-auto/index/processes/">производном индексе процессов</a>, который
 генерируется из объявления командой <code class="language-plaintext highlighter-rouge">bun run docs:auto</code>, проверяется в CI и не может разойтись
 с диаграммами, которые он подсчитывает. <strong>Задача этой страницы — та половина информации,
 которую невозможно сгенерировать автоматически</strong>: для чего предназначен каждый процесс, в какой
@@ -888,11 +888,11 @@ Bean <code class="language-plaintext highlighter-rouge">pve3</code> фиксир
   <tbody>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">bootstrap/workflows/bootstrap.bpmn</code></td>
-      <td>Агента направили на репозиторий, и ему ничего не известно. Является ли это уже экземпляром — загрузить его — или нет, и в таком случае чем он должен стать? Единственный ввод — <strong>ссылка на экземпляр</strong>; тип harness, граф знаний и голос считываются из объявления <em>этого</em> экземпляра. См. <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md"><code class="language-plaintext highlighter-rouge">bootstrap/README.md</code></a> и <a href="proposals/bootstrap.html">предложение</a></td>
+      <td>Агента направили на репозиторий, и ему ничего не известно. Является ли это уже экземпляром — загрузить его — или нет, и в таком случае чем он должен стать? Единственный ввод — <strong>ссылка на экземпляр</strong>; тип harness, граф знаний и голос считываются из объявления <em>этого</em> экземпляра. См. <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md"><code class="language-plaintext highlighter-rouge">bootstrap/README.md</code></a> и <a href="../proposals/bootstrap.html">предложение</a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">bootstrap/workflows/initialize-harness.bpmn</code></td>
-      <td>Агента направили на репозиторий, и ему ничего не известно. <strong>Единственный процесс в bootstrap, который ЗАПУСКАЕТ актор</strong> — агент начальной загрузки (Bootstrapping Agent), прочитавший <code class="language-plaintext highlighter-rouge">bootstrap/README.md</code>, находится на начальном событии и ему больше неоткуда начать. Три дорожки: Bootstrapping Agent, Инициатор (Requestor) и Хранилище данных графа знаний (Knowledge Graph Data Store). См. <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md"><code class="language-plaintext highlighter-rouge">bootstrap/README.md</code></a> и <a href="proposals/bootstrap.html">предложение</a></td>
+      <td>Агента направили на репозиторий, и ему ничего не известно. <strong>Единственный процесс в bootstrap, который ЗАПУСКАЕТ актор</strong> — агент начальной загрузки (Bootstrapping Agent), прочитавший <code class="language-plaintext highlighter-rouge">bootstrap/README.md</code>, находится на начальном событии и ему больше неоткуда начать. Три дорожки: Bootstrapping Agent, Инициатор (Requestor) и Хранилище данных графа знаний (Knowledge Graph Data Store). См. <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md"><code class="language-plaintext highlighter-rouge">bootstrap/README.md</code></a> и <a href="../proposals/bootstrap.html">предложение</a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">bootstrap/workflows/discussion.bpmn</code></td>
@@ -959,27 +959,27 @@ Bean <code class="language-plaintext highlighter-rouge">pve3</code> фиксир
     <tr>
       <td><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></td>
       <td>Документы и нормативные руководства</td>
-      <td><a href="guides/writing-a-document.html">Написание документа</a></td>
+      <td><a href="../guides/writing-a-document.html">Написание документа</a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></td>
       <td>Научные статьи и книги</td>
-      <td><a href="guides/writing-a-paper.html#the-end-to-end-workflow">Написание статьи</a></td>
+      <td><a href="../guides/writing-a-paper.html#the-end-to-end-workflow">Написание статьи</a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></td>
       <td>Комплект цифровой адаптации ВОЗ (WHO SMART Guidelines DAK, L2)</td>
-      <td><a href="guides/who-smart-dak.html#the-l2-artifacts">Создание WHO SMART DAK</a></td>
+      <td><a href="../guides/who-smart-dak.html#the-l2-artifacts">Создание WHO SMART DAK</a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></td>
       <td>Руководство по внедрению ВОЗ (WHO SMART Implementation Guide, L3)</td>
-      <td><a href="guides/who-smart-ig.html#the-l3-pipeline">Создание WHO SMART IG</a></td>
+      <td><a href="../guides/who-smart-ig.html#the-l3-pipeline">Создание WHO SMART IG</a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">ig-incremental-build.bpmn</code></td>
       <td>WHO SMART IG (L3) — дорожка сборки, инкрементальная по конусу зависимостей (предложено)</td>
-      <td><a href="guides/who-smart-ig.html#making-the-build-incremental">Инкрементальная сборка</a> · <a href="proposals/ig-incremental-build-overview.html">обзор</a></td>
+      <td><a href="../guides/who-smart-ig.html#making-the-build-incremental">Инкрементальная сборка</a> · <a href="proposals/ig-incremental-build-overview.html">обзор</a></td>
     </tr>
   </tbody>
 </table></div>
@@ -997,7 +997,7 @@ Bean <code class="language-plaintext highlighter-rouge">pve3</code> фиксир
   <tbody>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code></td>
-      <td>Поступил запрос на функцию. Как он превращается в согласованные требования и кто утверждает результат? Внешний процесс; его шесть фаз — это действия-вызовы (call activities), описанные ниже. См. <a href="crdm-methodology.html">Методология CRDM</a></td>
+      <td>Поступил запрос на функцию. Как он превращается в согласованные требования и кто утверждает результат? Внешний процесс; его шесть фаз — это действия-вызовы (call activities), описанные ниже. См. <a href="../crdm-methodology.html">Методология CRDM</a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">crdm-issue-linking.bpmn</code></td>
@@ -1692,37 +1692,37 @@ bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--staged<
     <tr>
       <td>Резервирование или создание bean</td>
       <td>План работы</td>
-      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+      <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
     </tr>
     <tr>
       <td>Подготовка черновика изменения блока</td>
       <td>Агент создания контента</td>
-      <td><a href="reference/skills/content-author.html"><code class="language-plaintext highlighter-rouge">content-author</code></a></td>
+      <td><a href="../reference/skills/content-author.html"><code class="language-plaintext highlighter-rouge">content-author</code></a></td>
     </tr>
     <tr>
       <td>Проверки схемы и ограничений</td>
       <td>Механическая валидация</td>
-      <td><a href="reference/skills/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
+      <td><a href="../reference/skills/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
     </tr>
     <tr>
       <td>Синтаксис, орфография и ссылки</td>
       <td>Механическая валидация</td>
-      <td><a href="reference/skills/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
+      <td><a href="../reference/skills/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
     </tr>
     <tr>
       <td>Рубежи сборки и QA</td>
       <td>Механическая валидация</td>
-      <td><a href="reference/skills/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a></td>
+      <td><a href="../reference/skills/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a></td>
     </tr>
     <tr>
       <td>Рецензирование изменения агентом</td>
       <td>Немеханическая валидация</td>
-      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+      <td><a href="../reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
     </tr>
     <tr>
       <td>Рецензирование человеком / экспертом (SME)</td>
       <td>Немеханическая валидация</td>
-      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+      <td><a href="../reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
     </tr>
     <tr>
       <td>Сведение замечаний в отчет</td>
@@ -1732,7 +1732,7 @@ bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--staged<
     <tr>
       <td>Фиксация замечаний в bean</td>
       <td>План работы</td>
-      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+      <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
     </tr>
     <tr>
       <td>Ознакомление с замечаниями</td>
@@ -1742,7 +1742,7 @@ bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--staged<
     <tr>
       <td>Доработка предлагаемого изменения</td>
       <td>Агент создания контента</td>
-      <td><a href="reference/skills/content-author.html"><code class="language-plaintext highlighter-rouge">content-author</code></a></td>
+      <td><a href="../reference/skills/content-author.html"><code class="language-plaintext highlighter-rouge">content-author</code></a></td>
     </tr>
     <tr>
       <td>Фиксация в корпусе (Commit)</td>
@@ -1752,18 +1752,18 @@ bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--staged<
     <tr>
       <td>Закрытие или повторное открытие bean</td>
       <td>План работы</td>
-      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+      <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
     </tr>
   </tbody>
 </table></div>
 
 <p>Специфичные для предметной области проверки зависят от <code class="language-plaintext highlighter-rouge">content-validate</code> / <code class="language-plaintext highlighter-rouge">content-test</code>
 в соответствии с типом контента:
-<a href="reference/skills/lean-formalization.html"><code class="language-plaintext highlighter-rouge">lean-formalization</code></a> и
-<a href="reference/skills/proof-verification.html"><code class="language-plaintext highlighter-rouge">proof-verification</code></a> для научных статей,
-<a href="reference/skills/fhir-validation.html"><code class="language-plaintext highlighter-rouge">fhir-validation</code></a> и
-<a href="reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a> для руководств по внедрению (IG),
-<a href="reference/skills/latex-authoring.html"><code class="language-plaintext highlighter-rouge">latex-authoring</code></a> для рендеринга.</p><hr />
+<a href="../reference/skills/lean-formalization.html"><code class="language-plaintext highlighter-rouge">lean-formalization</code></a> и
+<a href="../reference/skills/proof-verification.html"><code class="language-plaintext highlighter-rouge">proof-verification</code></a> для научных статей,
+<a href="../reference/skills/fhir-validation.html"><code class="language-plaintext highlighter-rouge">fhir-validation</code></a> и
+<a href="../reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a> для руководств по внедрению (IG),
+<a href="../reference/skills/latex-authoring.html"><code class="language-plaintext highlighter-rouge">latex-authoring</code></a> для рендеринга.</p><hr />
 <h2 id="from-corpus-to-published-folio" data-fa-label="sec:publication-workflow-from-corpus-to-published-folio">
   
   
@@ -1813,17 +1813,17 @@ bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--staged<
     <tr>
       <td>Открытие или резервирование bean релиза</td>
       <td>План работы</td>
-      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+      <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
     </tr>
     <tr>
       <td>Сборка черновика публикации</td>
       <td>Корпус + конвейер сборки</td>
-      <td><a href="reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a></td>
+      <td><a href="../reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a></td>
     </tr>
     <tr>
       <td>Выполнение контрольных рубежей QA публикации</td>
       <td>Корпус + конвейер сборки</td>
-      <td><a href="reference/skills/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a> · <a href="reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a></td>
+      <td><a href="../reference/skills/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a> · <a href="../reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a></td>
     </tr>
     <tr>
       <td>Редактирование и валидация HCI</td>
@@ -1833,37 +1833,37 @@ bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--staged<
     <tr>
       <td>Распространение черновика</td>
       <td>Менеджер публикации</td>
-      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+      <td><a href="../reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
     </tr>
     <tr>
       <td>Рецензирование черновика публикации</td>
       <td>Группа рецензирования</td>
-      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+      <td><a href="../reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
     </tr>
     <tr>
       <td>Клиническое / научное утверждение</td>
       <td>Профильные эксперты (SME)</td>
-      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+      <td><a href="../reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
     </tr>
     <tr>
       <td>Создание beans для запросов на изменение</td>
       <td>План работы</td>
-      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a> · <a href="reference/skills/content-feedback.html"><code class="language-plaintext highlighter-rouge">content-feedback</code></a></td>
+      <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a> · <a href="../reference/skills/content-feedback.html"><code class="language-plaintext highlighter-rouge">content-feedback</code></a></td>
     </tr>
     <tr>
       <td>Авторизация выпуска</td>
       <td>Руководитель программы</td>
-      <td><a href="reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a></td>
+      <td><a href="../reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a></td>
     </tr>
     <tr>
       <td>Присвоение версии, тегирование и публикация</td>
       <td>Менеджер публикации</td>
-      <td><a href="reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a> · <a href="reference/skills/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a></td>
+      <td><a href="../reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a> · <a href="../reference/skills/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a></td>
     </tr>
     <tr>
       <td>Закрытие beans релиза</td>
       <td>План работы</td>
-      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+      <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
     </tr>
   </tbody>
 </table></div>
@@ -1958,7 +1958,7 @@ bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--staged<
 Зарезервируйте bean перед началом работы и никогда не закрывайте чужой bean.</li>
   <li><strong>Команда <code class="language-plaintext highlighter-rouge">beans create</code> не идемпотентна.</strong> Проверяйте наличие существующего bean по точному
 заголовку перед созданием нового — защитный механизм и инцидент, послуживший поводом для него,
-описаны в <a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a>.</li>
+описаны в <a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a>.</li>
   <li><strong>Beans — это не вспомогательные файлы (sidecars).</strong> Автоматически генерируемые очереди (файлы QA <code class="language-plaintext highlighter-rouge">*.qa.json</code>,
 файлы-свидетели, очереди наблюдателей) остаются обычным JSON; они никогда не превращаются в beans.</li>
 </ul><hr />
@@ -1978,7 +1978,7 @@ bun run &lt;platform&gt;/scripts/check-corpus-gate.ts <span class="nt">--staged<
 <strong>делать</strong>, не является свойством его роли: это правило ODRL в <code class="language-plaintext highlighter-rouge">policies/</code>, и
 перед выполнением каждой задачи исполнитель BPMN проверяет, что актор аутентифицирован,
 соответствует роли дорожки, имеет права согласно политике и допущен к работе с данным
-контентом (<a href="../skills/folio-core/task-authorization.md"><code class="language-plaintext highlighter-rouge">task-authorization</code></a>,
+контентом (<a href="../../skills/folio-core/task-authorization.md"><code class="language-plaintext highlighter-rouge">task-authorization</code></a>,
 issue #1207).</p>
 <h3 id="people" data-fa-label="sec:publication-workflow-people">
   
@@ -2181,12 +2181,12 @@ bun run render:bpmn:check
       <td>Граф навигации</td>
     </tr>
     <tr>
-      <td><a href="guides/new-content-type.html">Добавление типа контента</a> — «Что вы предоставляете»</td>
+      <td><a href="../guides/new-content-type.html">Добавление типа контента</a> — «Что вы предоставляете»</td>
       <td>Mermaid</td>
       <td>То, что вы передаете, а не то, что вы делаете</td>
     </tr>
     <tr>
-      <td><a href="guides/writing-a-paper.html">Написание статьи</a> — сессия Lean</td>
+      <td><a href="../guides/writing-a-paper.html">Написание статьи</a> — сессия Lean</td>
       <td>Mermaid <code class="language-plaintext highlighter-rouge">sequenceDiagram</code></td>
       <td>Протокол взаимодействия между вами, ассистентом и MCP-сервером. Эквивалент в BPMN — взаимодействие с потоками сообщений — добавил бы формализма, не добавив смысла</td>
     </tr>
@@ -2209,8 +2209,8 @@ bun run render:bpmn:check
 <ul>
   <li><a href="content-types.html">Типы контента</a> — линейный жизненный цикл и то, что создает каждый тип</li>
   <li><a href="skills.html">Навыки и роли</a> — каждый навык и каждая роль, а также их взаимодействие с LLM</li>
-  <li><a href="reference/skills/">Справочник схем навыков</a> — типизированный ввод/вывод для каждого навыка</li>
-  <li><a href="guides/agent-onboarding.html">Адаптация агента</a> — ориентация для агента, подключенного к фолио</li>
+  <li><a href="../reference/skills/">Справочник схем навыков</a> — типизированный ввод/вывод для каждого навыка</li>
+  <li><a href="../guides/agent-onboarding.html">Адаптация агента</a> — ориентация для агента, подключенного к фолио</li>
 </ul>
 
           

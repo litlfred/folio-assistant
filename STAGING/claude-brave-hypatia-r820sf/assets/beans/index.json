@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 400,
+      "count": 404,
       "unit": "beans"
     }
   },
@@ -365,12 +365,12 @@
       "title": "CI RELIABILITY: a gate that does not fire is indistinguishable from one that passed",
       "status": "in-progress",
       "type": "epic",
-      "priority": "",
+      "priority": "normal",
       "parent": "",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T11:43:44Z",
-      "updatedAt": "2026-09-19T11:58:51Z",
+      "updatedAt": "2026-09-26T18:34:06Z",
       "preview": "A gate that does not fire is indistinguishable from one that passed.\n\nThat is `xom7`'s lesson one layer up, and every item here is an instance:\n`3pqn` (a PR that opens with zero checks looks exactly like one whose checks\nare green), `dzl3` (playwright fails before any test body runs), `t373`\n(`readme:audit` is in no workflow at all, and `main` carried eight dead links),\n`bgle` (a guard that enumer",
       "file": "beans/defs/folio-assistant-1xhc--ci-reliability-a-gate-that-does-not-fire-is-indist.md"
     },
@@ -653,6 +653,20 @@
       "updatedAt": "2026-09-24T13:08:48Z",
       "preview": "`bun run audit:coverage` (bean `xutg`) reports coverage per declared graph kind\nfrom `@covers` lines gates carry in their own module docblocks. 118 scripts\ndeclare; **10 gates have not said**, measured 2026-09-24:\n\n- `check:agents-claims`\n- `check:context-emission`\n- `check:image-roles`\n- `check:avatar-instances`\n- `check:asset-roles`\n- `check:retired-front-matter`\n- `check:wireframes`\n- `check:pa",
       "file": "beans/defs/folio-assistant-3srh--ten-gates-have-not-declared-covers-so-every-audit.md"
+    },
+    {
+      "id": "folio-assistant-3vc1",
+      "title": "A nested bun install makes root tsc report 12 errors that CI does not have — and it is the only way to fix a stale nested lockfile",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T17:25:05Z",
+      "updatedAt": "2026-09-26T17:25:05Z",
+      "preview": "## The trap, measured 2026-09-26\n\n`cat-harness/adapters/mcp-server/bun.lock` was stale against its own manifest, so\nfixing it means `bun install` **in that directory** — there is no other way to\nregenerate a lockfile. That install creates a 56 MB\n`cat-harness/adapters/mcp-server/node_modules`, and from that moment the ROOT\n`bunx tsc --noEmit` reports **12 errors across 3 files under\n`cat-harness/a",
+      "file": "beans/defs/folio-assistant-3vc1--a-nested-bun-install-makes-root-tsc-report-12-erro.md"
     },
     {
       "id": "folio-assistant-3x2o",
@@ -1737,14 +1751,14 @@
     {
       "id": "folio-assistant-ahab",
       "title": "Translated pages carry 225 unresolved links — 43 distinct, five near-copies each, and the English sources do not carry them",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T10:40:05Z",
-      "updatedAt": "2026-09-26T16:56:28Z",
+      "updatedAt": "2026-09-26T17:29:28Z",
       "preview": "Found 2026-09-26 while re-deriving `hloc`'s premise. `hloc` records the `docs/`\nunresolved-link count as **120** after `mi97` took it from 246. Re-measured\ntoday with `scanSubgraphs()` it is **340** — higher than the pre-`mi97` figure.\n\nThat is not an `mi97` regression. It is a different population, and it splits:\n\n| source | links |\n|---|---|\n| translated pages — `docs/{ar,es,fr,ru,zh}/` | **225*",
       "file": "beans/defs/folio-assistant-ahab--translated-pages-carry-225-unresolved-links-43-dis.md"
     },
@@ -2325,6 +2339,20 @@
       "file": "beans/defs/folio-assistant-dv8v--b6b-1168-the-9-writtenby-families-get-zod-schemas.md"
     },
     {
+      "id": "folio-assistant-dx5j",
+      "title": "Nothing indexes a defect to the beans and PRs describing it — three duplicate-work collisions in one window",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T14:32:59Z",
+      "updatedAt": "2026-09-26T15:25:37Z",
+      "preview": "## What was measured, 2026-09-26\n\nThree duplicate-work collisions in one working window, each found only because\nsomebody happened to read a sibling's PR:\n\n| defect | named as | and also as | how it was found |\n|---|---|---|---|\n| CI's gates job masked its own steps | `om30` (#1390) | `m5gx` (#1401) | #1401 opened a near file-for-file duplicate ~3h after #1390 |\n| the fast gate set was hardcoded |",
+      "file": "beans/defs/folio-assistant-dx5j--nothing-indexes-a-defect-to-the-beans-and-prs-desc.md"
+    },
+    {
       "id": "folio-assistant-e8m3",
       "title": "ARCHIVING IS A THIRD TERMINAL PATH, and it bypasses the scrapped-with-reasons rule",
       "status": "todo",
@@ -2519,6 +2547,20 @@
       "updatedAt": "2026-09-20T16:47:53Z",
       "preview": "**In one sentence:** every staging preview stores a full ~37.5 MB copy of the\nsite because three per-preview facts are baked into all ~530 pages, so git's\ncontent-hash deduplication has nothing to grip — and moving those facts into one\nsmall data file read in the browser would turn 530 differing files into one.\n[View this bean](https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio",
       "file": "beans/defs/folio-assistant-g196--every-preview-stores-a-full-copy-of-the-site-becau.md"
+    },
+    {
+      "id": "folio-assistant-g5o5",
+      "title": "kg-skills glossary stale on main since 2c295f8ac06 — and CI reads the MERGE, which is why no local probe saw it",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T14:02:57Z",
+      "updatedAt": "2026-09-26T14:28:14Z",
+      "preview": "## What was measured, 2026-09-26, on PR #1405\n\nCI step 15 of the `gates` job — `glossary page and SKOS` — failed on `ba7af05f6a1`:\n\n    ✗ stale: cat-harness/docs/glossary/skills/index.md\n    ✗ stale: cat-harness/docs/assets/glossary/cat-harness--kg-skills.skos.jsonld\n    ✗ stale: folio-assistant-core/glossary/generated/cat-harness/kg-skills.glossary.json\n    Run `bun run glossary:page` and commit ",
+      "file": "beans/defs/folio-assistant-g5o5--checkglossary-calls-kg-skills-stale-in-ci-and-curr.md"
     },
     {
       "id": "folio-assistant-ga3q",
@@ -2987,14 +3029,14 @@
     {
       "id": "folio-assistant-k3tw",
       "title": "GATE RED ON MAIN: docs/_data/translations.json is stale — the batch PRs add locale pages without regenerating the index",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T13:56:51Z",
-      "updatedAt": "2026-09-26T13:56:51Z",
+      "updatedAt": "2026-09-26T14:36:43Z",
       "preview": "## What is red\n\n`bun test cat-harness/content/pipeline/translation-index.test.ts`\n→ `this repository's own corpus > the committed index is up to date and valid`\n\n```\nexpect(r.state, `run: bun run translation:index`).toBe(\"ok\")\nExpected: \"ok\"   Received: \"stale\"\n```\n\nIt runs inside the `TypeScript — tests, lint, types (hard)` job, so every open\nPR's merged tree is red on it, on top of the `t8g3` dr",
       "file": "beans/defs/folio-assistant-k3tw--gate-red-on-main-docs-datatranslationsjson-is-stal.md"
     },
@@ -3640,7 +3682,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T09:42:57Z",
-      "updatedAt": "2026-09-26T12:26:27Z",
+      "updatedAt": "2026-09-26T14:46:46Z",
       "preview": "## What\n\n`main`'s `typescript` job fails at **step 2 of 47**, and GitHub Actions stops a job\nat its first failing step. So every later step in that job does not run — and on\n`main` that failure is red **by the owner's decision**, not by accident.\n\nMeasured on `.github/workflows/code-quality-gates.yml` at `74f27e4c7fb`:\n\n| | |\n|---|---|\n| `bun test` | step 2 (line 234) of the `typescript` job |\n| s",
       "file": "beans/defs/folio-assistant-om30--mains-red-by-decision-test-masks-113-gate-invocati.md"
     },
@@ -5218,7 +5260,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T16:21:48Z",
-      "updatedAt": "2026-09-26T11:19:41Z",
+      "updatedAt": "2026-09-26T18:17:15Z",
       "preview": "`ramz`'s third box, asked and answered 2026-09-25.\n\n`ramz` fixed ONE scanner: `check-context-emission` walked the filesystem behind\na hand-written denylist and swept 145 gitignored documents as repository\ncontent. It was found by accident — a clean checkout failing a test about code\nnobody had touched — so the bean asked *\"which others?\"*.\n\n**Eleven**, under `cat-harness/scripts/`, each walking fr",
       "file": "beans/defs/folio-assistant-xd1g--11-root-rooted-scans-have-no-gitignore-awareness-r.md"
     },
@@ -5305,6 +5347,20 @@
       "updatedAt": "2026-09-24T18:01:44Z",
       "preview": "From the `v048` roast, objection 5. Placed under `kupb` by the owner, 2026-09-24.\n\n**Measured:** `sample-import.bpmn` loads and renders, with skills and roles bound, but `beans/workflows/` holds **no** instance of it or of `materialize-remote`, no `.ts` file names it, and the three worked items arrived as owner uploads, not through it. `hfwl`'s Done-when asked only for a diagram, a skill and a ren",
       "file": "beans/defs/folio-assistant-xlg2--run-the-sample-import-one-real-end-to-end-instance.md"
+    },
+    {
+      "id": "folio-assistant-xm31",
+      "title": "om30 residual masking MEASURED: five gate failures on main that CI has never reported",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T14:46:29Z",
+      "updatedAt": "2026-09-26T14:48:54Z",
+      "preview": "`om30` recorded a KNOWN LIMIT rather than implying it: the gates-job split took\nthe masked region from 45 steps to 6, not to 0, and \"local evidence says all six\npass today\" was explicitly a fact about that day's tree rather than a property of\nthe arrangement.\n\nThat fact has expired, and here is the measurement.\n\n## What is masked today, and how it was established\n\nmain's `Repository gates` job sto",
+      "file": "beans/defs/folio-assistant-xm31--om30-residual-masking-measured-five-gate-failures.md"
     },
     {
       "id": "folio-assistant-xp72",
@@ -5470,7 +5526,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T18:38:34Z",
-      "updatedAt": "2026-09-26T15:15:42Z",
+      "updatedAt": "2026-09-26T18:36:04Z",
       "preview": "Measured 2026-09-25, while establishing whether PR #1348 still had anything to\nfix. It is the ROOT CAUSE of #1348's own subject: the detangle staleness that\nbroke `main` was invisible to `bun run gates` and surfaced only because a test\nrun left the working tree dirty.\n\n## The mechanism\n\n`bun run gates` runs 152 gates in order. Gate 1 is `bun test`. Somewhere in that\nsuite the detangle **writer** r",
       "file": "beans/defs/folio-assistant-ymsu--kgdetanglecheck-cannot-fail-inside-bun-run-gates-b.md"
     },

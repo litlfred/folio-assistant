@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/docs-ui.css?v=1790445955">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/docs-ui.css?v=1790447854">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/narrow-viewport.css?v=1790445955">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/narrow-viewport.css?v=1790447854">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/work-plan.css?v=1790445955">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/work-plan.css?v=1790447854">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/themes.css?v=1790445955">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/themes.css?v=1790447854">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/uml.css?v=1790445955">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/uml.css?v=1790447854">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/avatars.css?v=1790445955">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/avatars.css?v=1790447854">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/docs-ui.js?v=1790445955" defer></script>
+<script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/docs-ui.js?v=1790447854" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -880,37 +880,37 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <tbody>
     <tr>
       <td><strong>التأليف (paper)</strong></td>
-      <td><a href="../processes/authoring-a-paper.bpmn"><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></a></td>
+      <td><a href="../../processes/authoring-a-paper.bpmn"><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></a></td>
       <td>يطلب المستخدم تأليف محتوى في folio من نوع paper</td>
     </tr>
     <tr>
       <td><strong>التأليف (document)</strong></td>
-      <td><a href="../processes/authoring-a-document.bpmn"><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></a></td>
+      <td><a href="../../processes/authoring-a-document.bpmn"><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></a></td>
       <td>يطلب المستخدم تأليف محتوى في folio من نوع document</td>
     </tr>
     <tr>
       <td><strong>دورة حياة المحتوى</strong></td>
-      <td><a href="../processes/content-lifecycle.bpmn"><code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code></a></td>
+      <td><a href="../../processes/content-lifecycle.bpmn"><code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code></a></td>
       <td>ينتقل المحتوى عبر التحقق → التصيير → النشر</td>
     </tr>
     <tr>
       <td><strong>استيعاب المستندات</strong></td>
-      <td><a href="../processes/document-ingestion.bpmn"><code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code></a></td>
+      <td><a href="../../processes/document-ingestion.bpmn"><code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code></a></td>
       <td>يُسقط المستخدم ملفًا في <code class="language-plaintext highlighter-rouge">uploads/</code></td>
     </tr>
     <tr>
       <td><strong>من المسودة إلى النشر</strong></td>
-      <td><a href="../processes/draft-to-publication.bpmn"><code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code></a></td>
+      <td><a href="../../processes/draft-to-publication.bpmn"><code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code></a></td>
       <td>ينتقل المحتوى من مسودة إلى منشور</td>
     </tr>
     <tr>
       <td><strong>متطلبات CRDM</strong></td>
-      <td><a href="../processes/crdm-requirements.bpmn"><code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code></a></td>
+      <td><a href="../../processes/crdm-requirements.bpmn"><code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code></a></td>
       <td>يكتشف الوكيل طلب ميزة</td>
     </tr>
     <tr>
       <td><strong>استرجاع الأدلة</strong></td>
-      <td><a href="../processes/evidence-retrieval.bpmn"><code class="language-plaintext highlighter-rouge">evidence-retrieval.bpmn</code></a></td>
+      <td><a href="../../processes/evidence-retrieval.bpmn"><code class="language-plaintext highlighter-rouge">evidence-retrieval.bpmn</code></a></td>
       <td>يبحث الوكيل عن أدلة لدعم ادعاء</td>
     </tr>
   </tbody>
@@ -1007,7 +1007,7 @@ BPMN الخاصة به. وتُبلغ كل جولة عن الـ bean الجاري
     </tr>
     <tr>
       <td><strong>طلب ميزة</strong></td>
-      <td>طلب قدرة جديدة للمنصة (انظر <a href="../skills/crdm/crdm-detect.md">crdm-detect</a>)</td>
+      <td>طلب قدرة جديدة للمنصة (انظر <a href="../../skills/crdm/crdm-detect.md">crdm-detect</a>)</td>
       <td>سير عمل متطلبات CRDM</td>
     </tr>
     <tr>
@@ -1043,7 +1043,7 @@ BPMN الخاصة به. وتُبلغ كل جولة عن الـ bean الجاري
 
 <p>يقع الحد الفاصل الحرج للتصنيف بين <strong>تأليف المحتوى</strong> و<strong>طلب ميزة</strong>.
 وتوفر مهارة <code class="language-plaintext highlighter-rouge">crdm-detect</code>
-(<a href="../skills/crdm/crdm-detect.md"><code class="language-plaintext highlighter-rouge">skills/crdm/crdm-detect.md</code></a>)
+(<a href="../../skills/crdm/crdm-detect.md"><code class="language-plaintext highlighter-rouge">skills/crdm/crdm-detect.md</code></a>)
 إشارات الاكتشاف التفصيلية. والقاعدة التلخيصية هي:</p>
 
 <blockquote>
@@ -1135,7 +1135,7 @@ BPMN الخاصة به. وتُبلغ كل جولة عن الـ bean الجاري
 مسارات العمل الفرعية في ظل طبقة محكومة من السياق والذكريات؛ هذه ثلاثة
 أسئلة يمكن لهذا المستودع طرحها الآن ولم يجب عليها بعد. وجدول الأعمال، مع
 تمييز كل ادعاء بأنه مقيس (measured) أو مقطوع به (decided) أو فرضية (hypothesis)، موجود في
-<a href="reference/skill-instructions/deterministic-and-agentic.html"><code class="language-plaintext highlighter-rouge">deterministic-and-agentic</code></a>.
+<a href="../reference/skill-instructions/deterministic-and-agentic.html"><code class="language-plaintext highlighter-rouge">deterministic-and-agentic</code></a>.
 اقرأه كجدول أعمال: ففيه من الفرضيات أكثر مما فيه من القياس،
 وهو يقر بذلك صراحة.</p>
 <h2 id="bpmn-execution" data-fa-label="sec:harness-bpmn_execution">
@@ -1156,7 +1156,7 @@ BPMN الخاصة به. وتُبلغ كل جولة عن الـ bean الجاري
 مهارة واحدة أو أكثر من أجل تنفيذ مهمة (Task).</p>
 </blockquote>
 
-<p><img src="assets/img/bpmn-execution-spectrum.webp" alt="تنفيذ BPMN، من الحتمي إلى الوكيلي. يمتد شريط ألوان من &quot;حتمي&quot; (أزرق، يسار: تنفيذ مدار بواسطة وكيل لمهمة واحدة) إلى &quot;وكيلي&quot; (أخضر، يمين: وكلاء عبر معظم أو كل المهام). على اليسار، تحت أيقونة ترس ومحرك: &quot;أداة تنفيذ BPMN: أحد محركات BPMN مفتوحة المصدر، مع فرض صارم للحالة ومسارات السباحة&quot;، فوق مخطط مسارات سباحة مسطح لدورة حياة folio مع ملاحظة لاصقة واحدة، ومجموعة beans واحدة، وشخص وروبوت قط بجانب المسارات. على اليمين، تحت أيقونة روبوت قط: &quot;أداة تنفيذ BPMN: سرب وكيل ذو حالة غير محكومة. يقوم الوكلاء بـ 'تخفيف' مسارات السباحة، مع تخفيف الأثر عبر تقارير ضمان/مراقبة جودة ميكانيكية + وكيلة&quot;، فوق المخطط ذاته مائلاً في المنظور، مع انتشار beans عبر كل مسار والعديد من روبوتات القطط تحته." /></p>
+<p><img src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/img/bpmn-execution-spectrum.webp" alt="تنفيذ BPMN، من الحتمي إلى الوكيلي. يمتد شريط ألوان من &quot;حتمي&quot; (أزرق، يسار: تنفيذ مدار بواسطة وكيل لمهمة واحدة) إلى &quot;وكيلي&quot; (أخضر، يمين: وكلاء عبر معظم أو كل المهام). على اليسار، تحت أيقونة ترس ومحرك: &quot;أداة تنفيذ BPMN: أحد محركات BPMN مفتوحة المصدر، مع فرض صارم للحالة ومسارات السباحة&quot;، فوق مخطط مسارات سباحة مسطح لدورة حياة folio مع ملاحظة لاصقة واحدة، ومجموعة beans واحدة، وشخص وروبوت قط بجانب المسارات. على اليمين، تحت أيقونة روبوت قط: &quot;أداة تنفيذ BPMN: سرب وكيل ذو حالة غير محكومة. يقوم الوكلاء بـ 'تخفيف' مسارات السباحة، مع تخفيف الأثر عبر تقارير ضمان/مراقبة جودة ميكانيكية + وكيلة&quot;، فوق المخطط ذاته مائلاً في المنظور، مع انتشار beans عبر كل مسار والعديد من روبوتات القطط تحته." /></p>
 
 <p><strong>مهارة واحدة، ونوعان من الأدوات.</strong> المهارة هي نفسها عند كلا الطرفين: أخذ
 العملية، والسياق، والحالة الراهنة والدور، واختيار المهارات، وأداء
@@ -1208,7 +1208,7 @@ BPMN الخاصة به. وتُبلغ كل جولة عن الـ bean الجاري
 <a href="https://www.w3.org/TR/odrl-model/">W3C ODRL 2.2</a> كلغة للأذونات
 و<a href="https://www.w3.org/TR/prov-o/">W3C PROV-O</a> كسجل للتنفيذ (المالك،
 2026-09-23؛ والمخطط الذي يقتضيه هذا هو
-<a href="proposals/odrl-prov-actor-model.html">مقترح الجهات الفاعلة وODRL وPROV-O</a>).</p>
+<a href="../proposals/odrl-prov-actor-model.html">مقترح الجهات الفاعلة وODRL وPROV-O</a>).</p>
 
 <p><strong>تقع معظم عمليات التشغيل الحقيقية بين الطرفين</strong>، ويكون ذلك على مستوى المهمة بدلاً من مستوى العملية ككل:
 فالقسم <a href="#deterministic-and-agentic">السابق</a> يحصي بالفعل أي
@@ -1236,7 +1236,7 @@ BPMN الخاصة به. وتُبلغ كل جولة عن الـ bean الجاري
 <p>عندما يُصنف طلب على أنه طلب ميزة، يدخل الوكيل في
 <strong>سير عمل متطلبات CRDM</strong>
 (<a href="https://litlfred.github.io/folio-assistant/crdm-methodology.html">التوثيق الكامل</a>،
-و<a href="../processes/crdm-requirements.bpmn">BPMN</a>).</p>
+و<a href="../../processes/crdm-requirements.bpmn">BPMN</a>).</p>
 
 <p>يعد سير عمل طلبات الميزات هو الموضع الذي تقدم فيه وثيقة إطار العمل هذه أكبر
 فائدة، لأنها تصف سلوكًا كان ضمنيًا في السابق. فبينما وُثقت مسارات عمل
@@ -1251,7 +1251,7 @@ BPMN الخاصة به. وتُبلغ كل جولة عن الـ bean الجاري
 </h3>
     
 
-<p>يوجد منطق الاكتشاف في <a href="../skills/crdm/crdm-detect.md"><code class="language-plaintext highlighter-rouge">skills/crdm/crdm-detect.md</code></a>.
+<p>يوجد منطق الاكتشاف في <a href="../../skills/crdm/crdm-detect.md"><code class="language-plaintext highlighter-rouge">skills/crdm/crdm-detect.md</code></a>.
 ثلاثة سيناريوهات:</p>
 
 <p><strong>جلسة جديدة، والطلب الأول هو ميزة:</strong>
@@ -1508,7 +1508,7 @@ folio-assistant نفسه. قبل أن أقوم ببناء أي شيء، اسمح
     <tr>
       <td>بروتوكول Bean</td>
       <td><code class="language-plaintext highlighter-rouge">todo-manager.md</code>، و<code class="language-plaintext highlighter-rouge">bean-coordination.md</code></td>
-      <td><a href="../skills/folio-core/"><code class="language-plaintext highlighter-rouge">skills/folio-core/</code></a></td>
+      <td><a href="../../skills/folio-core/"><code class="language-plaintext highlighter-rouge">skills/folio-core/</code></a></td>
     </tr>
     <tr>
       <td>انضباط التثبيت وطلبات السحب</td>
@@ -1518,37 +1518,37 @@ folio-assistant نفسه. قبل أن أقوم ببناء أي شيء، اسمح
     <tr>
       <td>اكتشاف طلبات الميزات</td>
       <td><code class="language-plaintext highlighter-rouge">crdm-detect.md</code></td>
-      <td><a href="../skills/crdm/crdm-detect.md"><code class="language-plaintext highlighter-rouge">skills/crdm/crdm-detect.md</code></a></td>
+      <td><a href="../../skills/crdm/crdm-detect.md"><code class="language-plaintext highlighter-rouge">skills/crdm/crdm-detect.md</code></a></td>
     </tr>
     <tr>
       <td>سير عمل متطلبات CRDM</td>
       <td><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow.md</code></td>
-      <td><a href="../skills/crdm/crdm-requirements-workflow.md"><code class="language-plaintext highlighter-rouge">skills/crdm/crdm-requirements-workflow.md</code></a></td>
+      <td><a href="../../skills/crdm/crdm-requirements-workflow.md"><code class="language-plaintext highlighter-rouge">skills/crdm/crdm-requirements-workflow.md</code></a></td>
     </tr>
     <tr>
       <td>تأليف المحتوى (paper)</td>
       <td>مهارات authoring-math</td>
-      <td><a href="../skills/authoring-math/"><code class="language-plaintext highlighter-rouge">skills/authoring-math/</code></a></td>
+      <td><a href="../../skills/authoring-math/"><code class="language-plaintext highlighter-rouge">skills/authoring-math/</code></a></td>
     </tr>
     <tr>
       <td>تأليف المحتوى (document)</td>
       <td>مهارات folio-document-adapter</td>
-      <td><a href="../skills/folio-document-adapter/"><code class="language-plaintext highlighter-rouge">skills/folio-document-adapter/</code></a></td>
+      <td><a href="../../skills/folio-document-adapter/"><code class="language-plaintext highlighter-rouge">skills/folio-document-adapter/</code></a></td>
     </tr>
     <tr>
       <td>دورة حياة المحتوى</td>
       <td>مهارات content-lifecycle</td>
-      <td><a href="../skills/content-lifecycle/"><code class="language-plaintext highlighter-rouge">skills/content-lifecycle/</code></a></td>
+      <td><a href="../../skills/content-lifecycle/"><code class="language-plaintext highlighter-rouge">skills/content-lifecycle/</code></a></td>
     </tr>
     <tr>
       <td>استيعاب المستندات</td>
       <td><code class="language-plaintext highlighter-rouge">docs-generation.md</code></td>
-      <td><a href="../skills/folio-core/docs-generation.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/docs-generation.md</code></a></td>
+      <td><a href="../../skills/folio-core/docs-generation.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/docs-generation.md</code></a></td>
     </tr>
     <tr>
       <td>الإرسال والتنسيق</td>
       <td><code class="language-plaintext highlighter-rouge">dispatch-agent.md</code>، و<code class="language-plaintext highlighter-rouge">coordinate.md</code></td>
-      <td><a href="../skills/folio-core/"><code class="language-plaintext highlighter-rouge">skills/folio-core/</code></a></td>
+      <td><a href="../../skills/folio-core/"><code class="language-plaintext highlighter-rouge">skills/folio-core/</code></a></td>
     </tr>
     <tr>
       <td>أنواع المحتوى والمحولات</td>
@@ -1558,7 +1558,7 @@ folio-assistant نفسه. قبل أن أقوم ببناء أي شيء، اسمح
     <tr>
       <td>تأليف مخططات BPMN</td>
       <td>مهارة <code class="language-plaintext highlighter-rouge">bpmn-authoring</code></td>
-      <td><a href="../skills/folio-core/"><code class="language-plaintext highlighter-rouge">skills/folio-core/</code></a></td>
+      <td><a href="../../skills/folio-core/"><code class="language-plaintext highlighter-rouge">skills/folio-core/</code></a></td>
     </tr>
   </tbody>
 </table></div>
