@@ -460,17 +460,17 @@ offline verification of citation correctness. Once a paper is in
 
 | Tool | Purpose |
 |------|---------|
-| `scripts/gen-bib-papers-list.py` | Scan `content/schema/references.ts` for entries with publicly-downloadable URLs (arxiv, numdam, archive.org, OEIS, faculty pages); emit `scripts/bib-papers-list.txt` |
+| `cat-harness/scripts/gen-bib-papers-list.py` | Scan `content/schema/references.ts` for entries with publicly-downloadable URLs (arxiv, numdam, archive.org, OEIS, faculty pages); emit `scripts/bib-papers-list.txt` |
 | `scripts/bib-papers-list.txt` | Generated list, one entry per line: `<url>\|<target>\|<description>` |
-| `scripts/upload-bib-papers.sh` | Read the list, download each file (idempotent by file existence), commit per-paper to a fresh `claude/upload-bib-papers-<utc-ymd>` branch via SSH; optional `--pr` to auto-open PR |
+| `cat-harness/scripts/upload-bib-papers.sh` | Read the list, download each file (idempotent by file existence), commit per-paper to a fresh `claude/upload-bib-papers-<utc-ymd>` branch via SSH; optional `--pr` to auto-open PR |
 | `scripts/upload-to-uploads.sh` | Single-file intake for ad-hoc additions (manual sources, scans, guidelines etc.) |
 
 Run from any clone with network access:
 
 ```bash
-python3 scripts/gen-bib-papers-list.py     # regenerate the list
-bash scripts/upload-bib-papers.sh --dry-run # preview
-bash scripts/upload-bib-papers.sh --pr      # download + commit + push + open PR
+python3 cat-harness/scripts/gen-bib-papers-list.py     # regenerate the list
+bash cat-harness/scripts/upload-bib-papers.sh --dry-run # preview
+bash cat-harness/scripts/upload-bib-papers.sh --pr      # download + commit + push + open PR
 ```
 
 The script uses `git push --force-with-lease` so re-runs after a fix
@@ -526,7 +526,7 @@ on a normal-network machine). The new services are an
 accelerator, not a replacement.
 
 **Local CLI wrapper for both paths**: a CLI such as
-`scripts/bib-mcp-cli.py` can drive the same `paper-search-mcp` /
+`cat-harness/adapters/bib-mcp-cli.py` can drive the same `paper-search-mcp` /
 `pyalex` libraries as a normal Python CLI — no MCP server needed.
 Designed to run from a normal-network machine when the sandbox
 allowlist blocks arxiv/openalex/scholar:
@@ -537,26 +537,26 @@ pip install paper-search-mcp pyalex
 pip install playwright && playwright install chromium  # for scholar-snapshot
 
 # Status — probes network, lists what's possible:
-scripts/bib-mcp-cli.py status
+cat-harness/adapters/bib-mcp-cli.py status
 
 # Backfill URLs for no-URL entries (dry-run by default):
-scripts/bib-mcp-cli.py backfill-urls          # propose
-scripts/bib-mcp-cli.py backfill-urls --apply  # write to references.ts
+cat-harness/adapters/bib-mcp-cli.py backfill-urls          # propose
+cat-harness/adapters/bib-mcp-cli.py backfill-urls --apply  # write to references.ts
 
 # Download missing arxiv PDFs:
-scripts/bib-mcp-cli.py download --apply
+cat-harness/adapters/bib-mcp-cli.py download --apply
 
 # Enrich DOI-only entries with OpenAlex canonical metadata:
-scripts/bib-mcp-cli.py enrich-doi --apply
+cat-harness/adapters/bib-mcp-cli.py enrich-doi --apply
 
 # Capture HTTP 'as-viewed-on' evidence pages (HTML/PDF + SHA-256):
-scripts/bib-mcp-cli.py snapshot --apply
+cat-harness/adapters/bib-mcp-cli.py snapshot --apply
 
 # Capture Google Scholar / Books preview PDFs via headless Chromium:
-scripts/bib-mcp-cli.py scholar-snapshot --apply
+cat-harness/adapters/bib-mcp-cli.py scholar-snapshot --apply
 
 # Run all of the above in dry-run mode:
-scripts/bib-mcp-cli.py audit
+cat-harness/adapters/bib-mcp-cli.py audit
 ```
 
 Each subcommand is idempotent: re-running skips entries already

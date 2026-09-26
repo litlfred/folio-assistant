@@ -36,12 +36,52 @@
  * |---|---|---|
  * | **free text** | `pull_request.title`, `.body`, `comment.body`, a dispatch input | **FAIL** — unbounded, and a quote is all it takes |
  * | **constrained** | `pull_request.number`, `head_ref`, `repository.name` | reported, baselined; a ref or an integer cannot carry a quote |
- * | **safe** | `github.workspace`, `steps.*.outputs`, `matrix.*`, `secrets.*` | not reported |
+ * | **safe** | `github.workspace`, `matrix.*`, `secrets.*` | not reported |
  *
  * `head_ref` is in the middle band on purpose. Git refuses a ref containing a
  * space, a quote or a semicolon, so it cannot carry this payload — but it is
  * attacker-chosen on a fork PR, so it is reported rather than ignored. Calling
  * it safe would be asserting a property of git that this gate does not check.
+ *
+ * ## `steps.*.outputs` is not a class — it is a PIPE (bean `6bhf`, 2026-09-26)
+ *
+ * The table above listed `steps.*.outputs` as safe **unconditionally** until
+ * 2026-09-26, and that was not a property of the expression: a step output
+ * holds whatever the step put in it. A step that binds a free-text value to
+ * `env:` correctly, reads it as `"$VAR"` correctly, and then writes it to
+ * `$GITHUB_OUTPUT` has laundered free text into the band this gate does not
+ * report.
+ *
+ * **It was live in this repository, not latent.** `release-folio-assistant.yml`
+ * bound `github.event.inputs.version` to `INPUT_VERSION`, wrote it out as the
+ * `version` output, and a later step interpolated
+ * `${{ steps.version.outputs.version }}` into `mv *.tgz "folio-assistant-….tgz"`.
+ * A dispatch of `1.0";id;"` renders `mv *.tgz "folio-assistant-1.0";id;".tgz"`
+ * and runs `id`. The gate reported nothing, and the step that handled the value
+ * correctly is the one that leaked it.
+ *
+ * **What this file measured before, and why that was the wrong measurement.**
+ * The finding was first recorded as a latent gap, on the evidence that *"every
+ * `>> $GITHUB_OUTPUT` write of a reason or title is a literal"*. True — and it
+ * asked about two members of the free-text band while a third, the dispatch
+ * input, was the one being written. A measurement over the instances an audit
+ * happened to name is the same defect as a fix aimed at them; `6bhf` paid for
+ * that lesson twice in one day, once here and once in `path-containment`.
+ *
+ * So provenance is resolved rather than assumed: `resolveProvenance` reads each
+ * step that writes `$GITHUB_OUTPUT`, takes the worst severity among the
+ * expressions that step binds, and a consumption of that step's output inherits
+ * it. Keyed by `job.stepId`, because step outputs are job-scoped and two jobs
+ * may use the same id. A job's `outputs:` block is followed one more hop, so
+ * `needs.<job>.outputs.<name>` inherits the same taint.
+ *
+ * **Graded free text, not constrained, and deliberately so.** `feature-staging.yml`
+ * reduces its slug to `[A-Za-z0-9._-]` with a `sed`, so that value genuinely
+ * cannot carry a payload — and recognising that here would mean this gate
+ * deciding, per site, whether somebody's sanitiser was good enough. It refuses
+ * the shape instead, the way the archive guard whitelists member types rather
+ * than enumerating the hostile ones: the remedy is one `env:` line either way,
+ * and the three slug sites took it.
  *
  * ## What it does NOT claim
  *
@@ -99,6 +139,23 @@ export interface Injection {
   line: number;
   expression: string;
   severity: Severity;
+  /** Set when the severity came from the PRODUCING step rather than the expression. */
+  via?: string;
+}
+
+/**
+ * What each step output and job output CARRIES, keyed `job.stepId` / `job.outputName`.
+ *
+ * Empty is a perfectly good answer and means every output in the file is built
+ * from values this gate does not grade — not that the question went unasked.
+ */
+export type Provenance = Map<string, Severity>;
+
+/** `constrained` loses to `free-text`: an output carries the worst thing in it. */
+function worse(a: Severity | null, b: Severity | null): Severity | null {
+  if (a === "free-text" || b === "free-text") return "free-text";
+  if (a === "constrained" || b === "constrained") return "constrained";
+  return null;
 }
 
 /**
@@ -128,13 +185,199 @@ export function yieldsOnlyLiterals(expression: string): boolean {
   return branches.every((b) => /^'[^']*'$/.test(b) || /^"[^"]*"$/.test(b) || /^(true|false|\d+)$/.test(b));
 }
 
-/** Classify one expression. `null` means it is not attacker-influenced at all. */
-export function classify(expression: string): Severity | null {
+/**
+ * Classify one expression, resolving `steps.*`/`needs.*` through `prov` when given.
+ *
+ * With no `prov` a step output is unclassified, which is what it is on its own:
+ * the expression text says nothing about what the step wrote. The caller that
+ * HAS read the file supplies provenance; the two-argument form is the honest
+ * one and the one the scanner uses.
+ */
+export function classify(expression: string, prov?: Provenance, job = ""): Severity | null {
   // A comparison yielding constants never puts the value in the script text.
   if (yieldsOnlyLiterals(expression)) return null;
   if (FREE_TEXT.some((re) => re.test(expression))) return "free-text";
   if (CONSTRAINED.some((re) => re.test(expression))) return "constrained";
+  if (prov) {
+    for (const [key, sev] of resolveReferences(expression, prov, job)) {
+      void key;
+      return sev;
+    }
+  }
   return null;
+}
+
+/**
+ * Which producers an expression reads, and what each of them carries.
+ *
+ * Returned as pairs rather than one severity so a finding can name the STEP
+ * that leaked — "free text via `job.version`" is actionable where "free text"
+ * alone sends the reader looking at the wrong line.
+ */
+export function resolveReferences(
+  expression: string,
+  prov: Provenance,
+  job: string,
+): Array<[string, Severity]> {
+  const out: Array<[string, Severity]> = [];
+  for (const m of expression.matchAll(/\bsteps\.([A-Za-z0-9_-]+)\.outputs\.[A-Za-z0-9_-]+/g)) {
+    const sev = prov.get(`${job}.${m[1]}`);
+    if (sev) out.push([`${job}.${m[1]}`, sev]);
+  }
+  for (const m of expression.matchAll(/\bneeds\.([A-Za-z0-9_-]+)\.outputs\.([A-Za-z0-9_-]+)/g)) {
+    const sev = prov.get(`${m[1]}.${m[2]}`);
+    if (sev) out.push([`${m[1]}.${m[2]}`, sev]);
+  }
+  return out;
+}
+
+/**
+ * Read one workflow's step and job outputs, and say what each one carries.
+ *
+ * Indentation-scoped for the same reason `scanWorkflows` is: this gate's output
+ * is "this file, this line", and a YAML parser hands back a resolved tree with
+ * the line numbers gone.
+ *
+ * A step counts as a PRODUCER when it writes `$GITHUB_OUTPUT` at all — the
+ * alternative is matching which variable reaches which `echo`, and a guard that
+ * has to parse shell to be right is a guard that is wrong quietly. Over-tainting
+ * costs an `env:` line; under-tainting costs what `release-folio-assistant.yml`
+ * cost.
+ */
+export function resolveProvenance(lines: string[]): Provenance {
+  const prov: Provenance = new Map();
+  let job = "";
+  let stepId = "";
+  let stepIndent = -1;
+  let writesOutput = false;
+  let carried: Severity | null = null;
+  let outputsIndent = -1;
+  // A value can be bound ABOVE the step that writes it out: a workflow-level
+  // `env:` is in scope for every step in the file, a job-level one for every
+  // step in the job. Measured 2026-09-26: no such binding carries free text in
+  // this corpus — which is precisely the sort of "true today" this gate was just
+  // caught RECORDING rather than closing, so it is closed. Applied in a post-pass
+  // because an `env:` block may sit below the steps it reaches.
+  let workflowEnv: Severity | null = null;
+  const jobEnv = new Map<string, Severity>();
+  const producers: Array<[string, string]> = [];
+  let envIndent = -1;
+  let envScope: "workflow" | "job" | null = null;
+
+  const flush = () => {
+    // Recorded whatever it carries, because a job-level `env:` may taint it and
+    // that is not known yet. The map still gets the step's OWN severity now, so
+    // a chained producer read later in the walk resolves.
+    if (stepId && writesOutput) {
+      producers.push([job, stepId]);
+      if (carried) prov.set(`${job}.${stepId}`, carried);
+    }
+    stepId = "";
+    writesOutput = false;
+    carried = null;
+  };
+
+  // A job's `outputs:` block conventionally sits ABOVE its `steps:`, so its
+  // referents are unknown on the pass that reads them. Collected here, resolved
+  // after. Two passes rather than one, because guessing the file's order is how
+  // a resolver reads clean over a file written the other way round.
+  const jobOutputs: Array<[string, string, string]> = [];
+
+  lines.forEach((line) => {
+    const stripped = line.trimStart();
+    if (stripped === "" || stripped.startsWith("#")) return;
+    const indent = line.length - stripped.length;
+
+    // A job header: two spaces in, under `jobs:`.
+    const jobHeader = indent === 2 ? /^([A-Za-z0-9_-]+):\s*$/.exec(stripped) : null;
+    if (jobHeader) {
+      flush();
+      job = jobHeader[1];
+      outputsIndent = -1;
+      stepIndent = -1;
+      envIndent = -1;
+      envScope = null;
+      return;
+    }
+
+    // An `env:` block ABOVE the steps — workflow-wide at indent 0, job-wide at 4.
+    if (stripped === "env:" && (indent === 0 || indent === 4)) {
+      flush();
+      envIndent = indent;
+      envScope = indent === 0 ? "workflow" : "job";
+      return;
+    }
+    if (envIndent >= 0) {
+      if (indent <= envIndent) {
+        envIndent = -1;
+        envScope = null;
+      } else {
+        for (const m of line.matchAll(/\$\{\{([^}]*)\}\}/g)) {
+          const sev = classify(m[1].trim(), prov, job);
+          if (envScope === "workflow") workflowEnv = worse(workflowEnv, sev);
+          else {
+            const merged = worse(jobEnv.get(job) ?? null, sev);
+            if (merged) jobEnv.set(job, merged);
+          }
+        }
+        return;
+      }
+    }
+
+    // A job-level `outputs:` block maps a name onto a step output.
+    if (indent === 4 && /^outputs:\s*$/.test(stripped)) {
+      flush();
+      outputsIndent = indent;
+      return;
+    }
+    if (outputsIndent >= 0) {
+      if (indent <= outputsIndent) outputsIndent = -1;
+      else {
+        const kv = /^([A-Za-z0-9_-]+):\s*(.+)$/.exec(stripped);
+        if (kv) jobOutputs.push([job, kv[1], kv[2]]);
+        return;
+      }
+    }
+
+    // A new step, or the end of the one we were in.
+    if (/^- /.test(stripped)) {
+      flush();
+      stepIndent = indent;
+    } else if (stepIndent >= 0 && indent <= stepIndent) {
+      flush();
+      stepIndent = -1;
+      return;
+    }
+    if (stepIndent < 0) return;
+
+    const idLine = /^(?:- )?id:\s*(\S+)\s*$/.exec(stripped);
+    if (idLine) stepId = idLine[1].replace(/^["']|["']$/g, "");
+    if (line.includes("$GITHUB_OUTPUT")) writesOutput = true;
+    for (const m of line.matchAll(/\$\{\{([^}]*)\}\}/g)) {
+      carried = worse(carried, classify(m[1].trim(), prov, job));
+    }
+  });
+  flush();
+
+  // Fold in what was bound above each producing step, now that every `env:` in
+  // the file has been read.
+  for (const [owner, id] of producers) {
+    const inherited = worse(worse(prov.get(`${owner}.${id}`) ?? null, jobEnv.get(owner) ?? null), workflowEnv);
+    if (inherited) prov.set(`${owner}.${id}`, inherited);
+  }
+
+  for (const [owner, name, value] of jobOutputs) {
+    let sev: Severity | null = null;
+    for (const m of value.matchAll(/\$\{\{([^}]*)\}\}/g)) {
+      sev = worse(sev, classify(m[1].trim(), prov, owner));
+    }
+    // One map holds both step ids and job output names, so `job.x` is ambiguous
+    // if a job has a step `id: x` AND an output `x`. Merged with `worse` rather
+    // than overwritten: an ambiguous key may over-report, never under-report.
+    const merged = worse(prov.get(`${owner}.${name}`) ?? null, sev);
+    if (merged) prov.set(`${owner}.${name}`, merged);
+  }
+  return prov;
 }
 
 /**
@@ -150,11 +393,16 @@ export function scanWorkflows(dir: string = WORKFLOWS): Injection[] {
   for (const f of readdirSync(dir)) {
     if (!/\.ya?ml$/.test(f)) continue;
     const lines = readFileSync(join(dir, f), "utf-8").split("\n");
+    // Provenance first: a consumption cannot be graded before its producer is
+    // known, and a producer may sit below its consumer in the file.
+    const prov = resolveProvenance(lines);
+    let job = "";
     let inRun = false;
     let runIndent = 0;
     lines.forEach((line, i) => {
       const stripped = line.trimStart();
       const indent = line.length - stripped.length;
+      if (indent === 2 && /^[A-Za-z0-9_-]+:\s*$/.test(stripped)) job = stripped.replace(/:\s*$/, "");
       if (inRun && stripped !== "" && indent <= runIndent) inRun = false;
       const isRun = /^-?\s*run:\s*\|?/.test(stripped) && stripped.includes("run:");
       const haystack = isRun ? stripped.split("run:")[1] ?? "" : inRun ? line : "";
@@ -164,8 +412,10 @@ export function scanWorkflows(dir: string = WORKFLOWS): Injection[] {
       }
       for (const m of haystack.matchAll(/\$\{\{([^}]*)\}\}/g)) {
         const expression = m[1].trim();
-        const severity = classify(expression);
-        if (severity) out.push({ workflow: f, line: i + 1, expression, severity });
+        const severity = classify(expression, prov, job);
+        if (!severity) continue;
+        const via = resolveReferences(expression, prov, job)[0]?.[0];
+        out.push({ workflow: f, line: i + 1, expression, severity, ...(via ? { via } : {}) });
       }
     });
   }
@@ -222,6 +472,11 @@ if (import.meta.main) {
   let bad = false;
   for (const i of free) {
     console.log(`  ✗ ${i.workflow}:${i.line} — FREE TEXT in a \`run:\` block: \`${i.expression}\``);
+    if (i.via) {
+      // Naming the producer matters more here than anywhere else: the
+      // expression on this line looks harmless, and the leak is elsewhere.
+      console.log(`      It CARRIES free text — written by \`${i.via}\`, which binds a free-text value.`);
+    }
     console.log("      A quote closes the surrounding string and the rest executes.");
     console.log("      Pass it through `env:` and read \"$VAR\" — bash then sees a value, not source.");
     bad = true;

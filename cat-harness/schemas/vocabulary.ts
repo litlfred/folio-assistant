@@ -465,15 +465,16 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   sourceCommitAt: { gloss: "When that commit was made." },
   sourceTreeDirty: { gloss: "Whether the working tree had uncommitted changes when the export ran." },
   sourceCommitUnavailable: { gloss: "That the commit could not be determined — never rendered as clean." },
-  // Per-locale documents only (`kg-locale-export.ts`). It is the language of
-  // the document's UNTAGGED strings, NOT of its content — for a French
-  // document the second answer is French and the first is English, which is
-  // why `kg-export.ts` mints this rather than borrowing `schema:inLanguage`.
-  sourceLanguage: {
-    gloss:
-      "The language a per-locale document's UNTAGGED strings are in — its " +
-      "SOURCE language, not the locale it was translated into.",
-  },
+  // On a PER-LOCALE document only. It is the language of the document's
+  // UNTAGGED strings, not of its content: for `cat-harness.fr.jsonld` the
+  // content is French while this field says English. That is why the term is
+  // minted rather than borrowed from `schema:inLanguage`, and the gloss has to
+  // carry the distinction or a reader resolves the wrong one.
+  //
+  // Arrived with #1410's publishing fix, which declared it in `buildContext()`
+  // and glossed it nowhere — so `ns:check` refused it, exactly as it refused the
+  // staging terms below. Third time this shape: minting a term is two edits.
+  sourceLanguage: { gloss: "The language a locale document's untagged strings are in — its SOURCE language, not the language it was translated into." },
 
   // ── Staging provenance ───────────────────────────────────────────────
   //
