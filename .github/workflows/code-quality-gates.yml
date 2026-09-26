@@ -886,6 +886,28 @@ jobs:
       # needing "a translation toolchain not installed on this runner"; both
       # run clean on a bare checkout, measured 2026-09-20, and both are wired
       # below. A reason nothing checks is free to stop being true.
+      # `ahab`: a translated page sits one directory deeper than the page it
+      # was translated from, and 745 of its links did not move with it. That
+      # is invisible to `check:subgraphs` BY DESIGN — `docs/` is renderable,
+      # so a link it cannot resolve here goes to the counted-never-asserted
+      # bucket, where `architecture.md -> api/` legitimately lives.
+      #
+      # The control that separates them only exists for a translated page:
+      # the same link, read from its SOURCE page's directory. 745 resolved
+      # there and 30 did not, and the 30 are the ones a blanket rewrite would
+      # have broken.
+      #
+      # ABOVE the drift gate DELIBERATELY. It was first registered below it,
+      # beside `translation index is current`, and CI showed what that costs:
+      # steps 43-49 read `skipped` because a job stops at its first failing
+      # step, and step 42 is red on main by the owner's decision. A gate in
+      # that region is registered and can never fire — `1xhc` — and this one
+      # would have been born that way, in a change whose own subject is a
+      # check that could not report. `om30` is the precedent and this is the
+      # same mistake one job over.
+      - name: translated pages' links resolve at their own depth
+        run: bun run translated-links:check
+
       - name: gates that were registered and never run
         run: |
           set -e
