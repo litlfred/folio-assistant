@@ -44,20 +44,41 @@ symptom.
 A clean 5 x 5 grid: `accessibility`, `content-types`, `contributing`,
 `getting-started`, `installation` x `ar`, `es`, `fr`, `ru`, `zh`.
 
-## Why recording was the right remedy, and not generating catalogues
+## The owner decided AGAINST recording, and this bean argued the wrong way
 
-All 25 were **catalogue** findings. **Zero were structure findings** — measured,
-not assumed: `driftFor` runs the structure check independently of the catalogue
-check in the same loop, so every page was compared against its source and
-`sameStructure` held. Only the `.po` was absent.
+**Superseded 2026-09-26 by the owner's decision, which I could not see while
+writing the section this replaces.** Recorded here rather than quietly deleted,
+because the argument was made confidently and in public (PR #1381) and a reader
+who saw it needs to meet the correction in the same place.
 
-`UNCATALOGED`'s own docstring settles it: a catalogue "cannot be derived from a
-finished translation without inventing the segmentation". The two
-`agent-onboarding` entries already there were precedent for exactly this.
+The owner chose to ask the `t8g3` campaign for the actual `.po` catalogues
+rather than record their absence — bean `ngxj`, 48-hour expiry. Two sibling
+sessions carry it verbatim:
 
-This remains a BACKLOG, not a policy. Every entry on `main` carries a date so
-it cannot quietly become permanent, and the translation owner clears them by
-adding the catalogues. **That work is still open and is not this bean's.**
+> DO NOT add UNCATALOGED entries to go green — documented as a BACKLOG not a
+> policy, 2→29 retires a working gate
+
+#1364 merged the 25 entries on the owner's instruction; #1384 reverted them on
+the owner's instruction once the collision was shown. `UNCATALOGED` is back to
+its original 2 and `main` is **deliberately red** on this gate while the
+catalogues are requested via issue #206.
+
+### What I got wrong, precisely
+
+I argued that recording was the correct remedy and that generating catalogues
+was not, citing the registry's own docstring — "a catalogue cannot be derived
+from a finished translation without inventing the segmentation". That quotation
+is accurate and the inference from it was reasonable.
+
+**It was still the wrong move, for a reason the quotation cannot settle.** 2
+recorded absences → 27 changes what the gate MEANS: from "published
+translations are catalogued" to "we noted that they are not". At that volume
+the BACKLOG/policy distinction stops holding, which is the objection the
+docstring does not raise about itself. And whether to retire a working gate is
+not a question a registry's comment answers — it is the owner's.
+
+The measurement was sound; the remedy was mine to propose and not to decide,
+and the PR body asserted it as settled.
 
 ## Evidence for closing
 
@@ -65,7 +86,7 @@ Re-derived on `main` at `617609dcd3`, in the real checkout:
 
 | | |
 |---|---|
-| `translation-drift.test.ts` on `main` | **18 pass / 0 fail** |
+| `translation-drift.test.ts` on `main` @ `617609dcd3` | 18 pass / 0 fail — **no longer true**; see below |
 | `main`'s `UNCATALOGED` keys vs the set measured here | **identical** — `diff` empty, 27 entries (2 pre-existing + 25) |
 | `check:retired-front-matter`, `check:glossary`, `docs:auto:check`, `check:ci-invocations`, `kg:detangle:check`, `gen-skill-docs --check` | all exit 0 |
 | `bun test` on `main` | 11741 pass / 2 fail, and **both failures are a worktree artefact** — `INSTANCE_ROOT is this platform checkout` and `every instance is found` fail only when run from a git worktree at another path; both pass in the real checkout |
@@ -94,3 +115,34 @@ does not cover.
 No code. The `UNCATALOGED` change this bean was opened to make was landed
 independently by #1364 while it was being written, verified byte-identical, so
 it was dropped rather than merged as a no-op. What lands is this record.
+
+## Correction, 2026-09-26 07:5x — `main` is red again, by choice
+
+The "Evidence for closing" above was measured at `617609dcd3` and is now stale.
+`#1384` (commit `e9f30a78c1`, merged by the owner 07:45) reverted the 25
+entries as a pure 161-line deletion, so at `0c5086db6c`:
+
+| | |
+|---|---|
+| `UNCATALOGED` entries | **2** — back to the original |
+| `translation-drift.test.ts` on `main` | **17 pass / 1 fail**, the same 25-finding 5x5 grid |
+
+So my report that "`main` is green" held for roughly forty minutes and is
+false now. The gate is red **deliberately**, as the state the owner chose to
+sit in while issue #206 is asked for the real catalogues. It is not a defect
+and not to be "fixed" by re-adding entries — least of all from this branch.
+
+This bean stays `completed`: what it closes on is the BISECT, which is
+unaffected by which remedy was chosen. The 25 findings, the three merges that
+compounded them and the gate that fired each time are all still exactly as
+measured.
+
+## The cross-session cost, which is the durable finding
+
+#1384 counts this as the sixth duplication in one window and **the first to
+reach `main` and need undoing**. For my part it was the ninth in this session,
+and this one no amount of checking the PR list would have caught: the decision
+lived in bean `ngxj` on no pushed ref, readable only inside two other
+sessions' check-in prompts. `tuvg` carries the open item — a way for one
+session to see another's open question before the owner answers it, since the
+owner cannot be the only place two sessions meet.
