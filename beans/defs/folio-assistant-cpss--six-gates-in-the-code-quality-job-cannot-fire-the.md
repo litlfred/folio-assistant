@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cpss
-title: 'SIX gates in the code-quality job cannot fire: the deliberately-red drift batch is step 40 of 46 and a job stops at its first failure'
+title: '108 checks in the code-quality job cannot fire: the deliberately-red drift gate is the 3rd of 106 in one `set -e` batch'
 status: todo
 type: bug
 priority: high
 created_at: 2026-09-26T18:09:12Z
-updated_at: 2026-09-26T18:09:12Z
+updated_at: 2026-09-26T18:35:08Z
 parent: folio-assistant-1xhc
 ---
 
@@ -94,3 +94,70 @@ five gates that are not mine is the owner's call, not a side effect of a bean ab
 - [ ] A gate refuses a NEW step registered below a known-red one, or the
       convention is written where somebody adding a step will read it
 - [ ] falsified by breaking: registering a step below the red one must be caught
+
+
+---
+
+## Correction, 2026-09-26 18:40Z: it is not six, it is **one hundred and eight**
+
+This bean counted the **steps** after the failing one. That was the smaller half
+of the defect, and I published the smaller number twice — on this bean and in a
+comment on #1420, where I wrote that the batch *"runs eleven gates"*. Both were
+wrong, and wrong in the direction that makes the problem look survivable.
+
+**The failing step is itself a batch of 106 gates under `set -e`, and the
+deliberately-red one is the THIRD.**
+
+Measured on `4c86165bdd`, `.github/workflows/code-quality-gates.yml`:
+
+| fact | line | value |
+|---|---|---|
+| step `gates that were registered and never run` begins | 928 | — |
+| `set -e` | 930 | no `set +e`, no `\|\| true`, no `if`, no `continue-on-error` anywhere in the block |
+| `bun run` invocations in the step, all at indent 10 | 931–1418 | **106** |
+| `bun run translation:drift:check` | 952 | the **3rd** of the 106 |
+| invocations after it, which cannot execute | 955–1418 | **103** |
+
+So the unreachable surface is **103 gates inside the step, plus the 5 whole
+steps after it** — 108 checks, not 6. The five steps were only ever the tail of
+it.
+
+### Two of the 103 were shipped TODAY, by me, into a place they can never run
+
+- **`check:workflow-injection`** (line 1185) — the `${{ }}`-into-shell scanner
+  built and merged today across #1408 and #1415. `grep -rn` over
+  `.github/workflows/`: **one** call site, and it is line 1185. The scanner has
+  never executed in CI, on any PR or any push to `main`.
+- **`check:artefact-verification`** (line 1184) — red on `main` itself until
+  `4c86165bdd` declared `translated-links:check`. CI never reported that red and
+  cannot report the fix; the repair is verified **locally only** (`exit 0`,
+  measured 18:33Z). A sibling session found the same red the same way, by
+  running `bun run gates` by hand.
+
+That is the cost stated without an analogy: **a gate merged into this batch is a
+gate that does not run, and its author gets a green PR saying otherwise.** The
+existing entry's example — a stale `translations.json` hand-fixed after CI went
+green — was one gate's worth of that. This is the general case.
+
+### Why the recommendation gets stronger rather than changing
+
+Still the same fix: split `translation:drift:check` out of the batch and make it
+the **last step in the job**. The argument no longer rests on the five steps
+being valuable, which was arguable — it rests on the batch being the place gates
+get registered. `ot9a` wired 106 gates here precisely because they were declared
+and run by nowhere, and `no check script is unrun` pushes every new gate into
+this step to satisfy it. So the masked region is not a backwater: **it is the
+default destination**, and it is downstream of a check that is red by decision.
+
+A second measure worth considering alongside, not instead of: the step's own
+name is not a diagnosis. 106 commands under one name means a red tells the
+reader nothing about which gate failed, which is why the failing member had to
+be identified by running candidates by hand — twice today, by two sessions.
+
+### Provenance
+
+Every number above is from `grep`/`sed` over the committed file at
+`4c86165bdd`, counted rather than read off prose, after a control pass for
+error suppression and conditionals that found none. The CI side is job
+`108460536992` (run `36262379984`): step #45 fails, its log ends at
+`translation:drift:check` exit 1, and steps #46–#50 are `skipped`.
