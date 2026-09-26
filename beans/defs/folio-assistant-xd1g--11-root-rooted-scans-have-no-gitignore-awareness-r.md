@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-26T11:19:41Z
+updated_at: 2026-09-26T18:17:15Z
 parent: folio-assistant-ahvw
 ---
 
@@ -290,3 +290,70 @@ The duplicate fixes converged too — that PR called `gitCorpus` and REFUSED
 here only because the choice is real: a fallback that is documented and reached
 only when git cannot answer is not the silent one that caused this.
 
+
+## `kg-audit.ts` IS one of the disk-walking scanners — measured, with the files named
+
+2026-09-26, found while diagnosing a CI failure on PR #1425. Recorded with an
+important caveat attached, below, because the obvious conclusion turned out to be
+wrong.
+
+`kg-audit.ts` builds its page corpus with a bare `readdirSync` walk that excludes
+only three names — `_site`, `node_modules`, `vendor`:
+
+    if (e.name.startsWith("_site") || e.name === "node_modules" || e.name === "vendor") continue;
+
+**A name list cannot be complete, and this one is not.** Measured in this
+container against `git ls-files --others --ignored --exclude-standard`: SIX
+gitignored `.md` / `.html` files exist here that a fresh checkout does not have,
+and not one of them matches an excluded name —
+
+    _kg/cat-harness/index.html
+    _kg/fixtures/cat-harness/index.html
+    _kg/fixtures/folio-assistant/index.html
+    _kg/folio-assistant-i18n-fixture/index.html
+    _kg/folio-assistant/index.html
+    cat-harness/schemas/block-qa-schema/.pytest_cache/README.md
+
+All six are read and concatenated into `pages`, which every criterion asking
+"is this mentioned on a page?" is evaluated against. So that corpus is
+environment-dependent, which is this bean's subject exactly.
+
+There is a second bare walk in the same file, `skillFiles()`, not yet measured.
+
+### The caveat, and it is the part that matters
+
+**This is NOT established as the cause of the CI failure I was chasing**, and I
+nearly recorded it as one. The mechanism fit perfectly — red in CI, green in this
+container, a disk walk reading six files CI cannot see. I wrote the `gitCorpus`
+fix and ran the writer, and **not one sidecar changed.** The only diff was
+`kg-qa.manifest.json`'s `script_hash`, which moved because I had edited the
+script.
+
+So the six files demonstrably affect nothing in today's corpus. What the fix buys
+is that they CANNOT start affecting it — a latent environment dependence rather
+than a live one, which is worth fixing and is not worth claiming as a diagnosis.
+
+Two reproductions were needed to get to that: this container clean, and a
+pristine `git clone` of the exact commit with `bun install --frozen-lockfile` and
+nothing else. Both exit 0. That second one is the measurement this bean should
+insist on generally — "green on my machine" is worth nothing when the whole
+subject is the machine.
+
+### The fix, written and held back
+
+`gitCorpus(repoRoot, ["*.md", "*.html"])`, with a predicate that drops a file
+only when it is under the repository AND git does not list it — so a layer in a
+SIBLING checkout (`docsLayers` can return one) is kept rather than silently
+dropped, and `undefined` from `gitCorpus` keeps everything, because git being
+unable to answer is not an empty answer.
+
+Held out of PR #1425 rather than tacked onto it: it belongs to this bean on its
+own merits, not to that PR on a coincidence.
+
+### Adds to "Done when"
+
+- [x] `kg-audit.ts` identified as a disk-walking scanner, with the six files it
+      wrongly reads NAMED rather than described
+- [ ] the `gitCorpus` fix for it lands, on its own change. MEASURED AFTER: the
+      six files are present and no sidecar differs from a pristine clone's
+- [ ] `skillFiles()` in the same file — the second bare walk, not yet measured
