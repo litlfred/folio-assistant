@@ -443,22 +443,6 @@ export function formatAge(minutes: number): string {
  */
 export const STAGING_WARN_BYTES = 500 * MB;
 
-/**
- * Three-quarters of the documented Pages ceiling.
- *
- * UNCHANGED by the 100 → 500 MB move, and the gap between them is now 250 MB
- * rather than 650 MB. That is deliberate: `critical` is a property of the
- * PLATFORM (a Pages build over 1 GB does not publish) while the warning point
- * is a property of this repository's working style, so only one of them moves
- * when the retention policy does.
- *
- * At this point the previews alone occupy most of the budget the main site
- * also has to fit inside, and the next deploy is the one that fails outright.
- * `critical` rather than `major` because something is about to be LOST: a
- * Pages build that exceeds the limit does not publish, so the site stops
- * updating.
- */
-export const STAGING_CRITICAL_BYTES = 750 * MB;
 
 /**
  * How recently a branch must have been committed to for its preview to count
@@ -541,35 +525,6 @@ const STAGING_SIZE_THRESHOLDS: HealthThreshold[] = [
       "See STAGING_WARN_BYTES for the per-page addressing sources and bean `xxku` for the " +
       "flushable-container framing.",
   },
-  {
-    metric: "staging-total-bytes",
-    value: STAGING_CRITICAL_BYTES,
-    unit: "bytes",
-    severity: "critical",
-    basis:
-      "Three-quarters of GitHub's documented 1 GB Pages limit. Past here the previews occupy most " +
-      "of the budget the main site must also fit inside. " +
-      "THIS BASIS USED TO PREDICT A CONSEQUENCE IT HAS NO INSTRUMENT FOR, and bean `qj9a` " +
-      "measured it false in practice. It said: \"the next deploy is the one that fails to publish — " +
-      "so something is about to be lost, which is what `critical` means on this scale.\" That is a " +
-      "claim about GITHUB'S ENFORCEMENT, and nothing in this repository can observe it. Measured " +
-      "2026-09-25 off the publish ref itself (`git ls-tree -r -l origin/gh-pages`): the served tree " +
-      "is 2.67 GB over 50,511 files, of which `STAGING/` is 2.37 GB and the main site 0.30 GB. It " +
-      "crossed 1 GB on 2026-09-23 and has stayed above continuously, while every deploy kept " +
-      "succeeding. So the MEASUREMENT is sound and the prediction is not: past the documented limit " +
-      "by 2.7x, nothing had been lost. " +
-      "WHAT A GREEN DEPLOY ACTUALLY PROVES is that the push to `gh-pages` succeeded. Serving is " +
-      "GitHub's side of the line, so a green `docs-site.yml` run neither confirms nor refutes this " +
-      "threshold — it is evidence about the PUSH. Reading it as evidence about publishing is the " +
-      "mistake `qj9a` made before it measured, and it is recorded here because the next reader will " +
-      "reach for the same green checkmark. " +
-      "SO THIS SEVERITY IS NOW ABOUT THE DOCUMENTED LIMIT AND NOTHING ELSE: past three-quarters of " +
-      "a published ceiling GitHub states, with enforcement UNOBSERVED from here. The action names a " +
-      "person because only a person can open the served site — every route an agent has is refused " +
-      "by egress policy (the site itself, `/repos/:o/:r/pages`, and `/pages/builds`), which is bean " +
-      "`7s52` from the other side. Until something observes the served site, no check here may say " +
-      "a publish is about to fail.",
-  },
 ];
 
 /**
@@ -585,8 +540,9 @@ const STAGING_SIZE_THRESHOLDS: HealthThreshold[] = [
 export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
   const id = "staging-preview-size";
   const summary =
-    "The review previews under `STAGING/` on the publish branch have grown past what a " +
-    "GitHub Pages site can carry alongside the main site.";
+    "How much of the publish branch the review previews occupy, against the owner's budget for " +
+    "them. It MEASURES and makes no claim about publishing: whether the served site is accepted " +
+    "by GitHub is `pages-publish-health`'s subject, and bean `qj9a` is why the two are apart.";
   if (ctx.staging.state === "unknown") {
     return unknownResult(id, summary, STAGING_SIZE_THRESHOLDS, ctx.staging.reason);
   }
@@ -598,34 +554,18 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
   ];
   const findings: HealthFinding[] = [];
 
-  // Deliberately ordered critical-first and `else`-chained: one breach, not
-  // two. A total over 750 MB is also over 100 MB, and reporting both would
-  // make the count of findings a function of how many thresholds happen to be
-  // declared rather than of what is wrong.
-  if (total > STAGING_CRITICAL_BYTES) {
-    findings.push({
-      metric: "staging-total-bytes",
-      severity: "critical",
-      summary:
-        `${ev.previews.length} staging preview(s) total ${formatBytes(total)}, past three-quarters ` +
-        `of GitHub's DOCUMENTED 1 GB Pages limit — the main site shares that budget. Whether that ` +
-        `limit is ENFORCED is not observed here: see this threshold's basis, and bean qj9a.`,
-      action:
-        "FIRST, HAVE A PERSON OPEN THE SERVED SITE — bean `qj9a`. This finding is about a documented " +
-        "ceiling, not an observed failure. Every route an agent has to the served site is refused by " +
-        "egress policy (the site itself, `/repos/:o/:r/pages`, `/pages/builds`), and a green " +
-        "`docs-site.yml` run is evidence that the PUSH succeeded rather than that Pages served it. So " +
-        "the first question is whether anything is actually wrong, and only a person can answer it. " +
-        "IF SOMETHING IS WRONG, or if the owner wants the store drained regardless: ask which previews " +
-        "are still under review, then have the owner add `staging:cleanup` to the OPEN PRs whose " +
-        "previews are finished with — the label is read from the `pull_request_target: closed` payload, " +
-        "so it works only while the PR can still close with it attached (bean `7umv`). A preview whose " +
-        "PR is already closed is removed by a `feature-staging.yml` dispatch instead; " +
-        "`staging-preview-orphans` lists those with the exact inputs. Do not remove any preview without " +
-        "one of the two. Per-preview SIZE remains the lever `tebu` established, and the total has grown " +
-        "3x since it landed, so size alone has not held the line at this concurrency.",
-    });
-  } else if (total > STAGING_WARN_BYTES) {
+  // ONE THRESHOLD, since bean `qj9a` split this check. There used to be a
+  // second at 750 MB whose whole justification was a publish consequence —
+  // "the next deploy is the one that fails to publish" — and nothing in this
+  // repository can observe GitHub's enforcement. That argument, and the
+  // documented-ceiling number it rested on, moved to `pages-publish-health`,
+  // which owns the serving question. A threshold belongs with its argument.
+  //
+  // What remains is the owner's own number, and it is a BUDGET rather than a
+  // cliff: 500 MB, set 2026-09-20 ("set stagfing to 500mb. drain if branches
+  // merged"). Being over it is worth telling a person about whatever GitHub
+  // does.
+  if (total > STAGING_WARN_BYTES) {
     findings.push({
       metric: "staging-total-bytes",
       severity: "major",
@@ -1561,6 +1501,114 @@ const TODO_THRESHOLDS: HealthThreshold[] = [
  * the alternative is adding it on the day it is already too late, which is the
  * whole of bean `xom7`.
  */
+/**
+ * How many instruments this repository has for OBSERVING its published site.
+ *
+ * Bean `qj9a` split this out of `staging-preview-size`, which had been carrying
+ * a threshold whose entire justification was a publish consequence — *"the next
+ * deploy is the one that fails to publish, so something is about to be lost"* —
+ * over a question nothing here can answer. Rewording that basis fixed the
+ * sentence; this check is what stops the sentence drifting back, because the
+ * claim now has nowhere to live except a check that must first establish it can
+ * see.
+ *
+ * ## Its subject is the INSTRUMENT, not the site — and that is forced
+ *
+ * The obvious design is a check whose subject is "is the published site
+ * healthy", reporting `unknown` until something can look. **That would break the
+ * whole health family**, and the mechanism is {@link healthVerdict}: one
+ * `unknown` takes the ENTIRE report to `unknown`, which leaves the tracking
+ * issue untouched and exits 2. `health-check.yml`'s own comment says what that
+ * is worth — *"the whole verdict goes to `unknown` — correctly, and uselessly"*.
+ * A permanently blind check would therefore make the daily sweep permanently
+ * useless, and every other check's verdict unreadable behind it.
+ *
+ * So the subject is narrowed to something DETERMINABLE: does an instrument
+ * exist? That is answerable today (it does not), so this reports a `finding`
+ * with an action, and it never reports `unknown` about its own subject. The
+ * reframing is not a dodge — it is the more useful question, because it
+ * ratchets toward the probe instead of restating a gap.
+ *
+ * ## Measured 2026-09-26 — every route refused
+ *
+ * | route | result |
+ * |---|---|
+ * | `GET https://litlfred.github.io/folio-assistant/` | `connect_rejected`, egress policy |
+ * | the same for a `STAGING/<slug>/` page | `connect_rejected` |
+ * | `GET /repos/:o/:r/pages` | every field `null` |
+ * | `GET /repos/:o/:r/pages/builds` | "not permitted through this proxy" |
+ * | `actions/workflows/pages-build-deployment/runs` | `total_count` absent |
+ *
+ * **And a green deploy is not an observation.** `docs-site.yml` going green
+ * proves the push to `gh-pages` succeeded; serving is GitHub's side of the
+ * line. That distinction is the one `qj9a` got wrong before it measured, and it
+ * is why "CI is green" cannot be counted as an instrument here.
+ */
+export const PAGES_INSTRUMENTS_REQUIRED = 1;
+
+export const PAGES_PUBLISH_THRESHOLDS: HealthThreshold[] = [
+  {
+    metric: "pages-serving-instruments",
+    value: PAGES_INSTRUMENTS_REQUIRED,
+    unit: "count",
+    severity: "major",
+    basis:
+      "ONE is the floor, not a calibration: a claim about the published site needs at least one way " +
+      "to look at it, and zero ways is the state bean `qj9a` measured. `major` rather than " +
+      "`critical` because nothing is being lost — GitHub's documented 1 GB Pages limit was exceeded " +
+      "continuously from 2026-09-23 (1.46 GB) to at least 2026-09-26 (2.67 GB served, measured off " +
+      "`origin/gh-pages`) with every deploy succeeding, so if the ceiling is enforced at all it is " +
+      "not enforced as a hard refusal on push. WHETHER IT IS ENFORCED REMAINS UNKNOWN and is exactly " +
+      "what an instrument would settle; until one exists, no check here may say a publish is about " +
+      "to fail. `critical` on this scale means something is about to be lost, and asserting that " +
+      "again without an instrument is the defect this check was split out to prevent.",
+  },
+];
+
+export function pagesPublishHealthCheck(_ctx: HealthContext): HealthCheckResult {
+  const id = "pages-publish-health";
+  const summary =
+    "Whether this repository can OBSERVE its own published site. It deliberately does not judge " +
+    "the site — see this module's note on why a check whose subject is unobservable would take " +
+    "the whole report to `unknown`, correctly and uselessly.";
+
+  // Zero, and a LITERAL rather than a probe, deliberately. A probe that tries
+  // the network and fails would report `unknown` — the state this check exists
+  // to avoid — and would make a daily sweep depend on an egress policy it
+  // cannot influence. When an instrument lands it registers itself here, and
+  // the count becomes a fact about the repository rather than about one run's
+  // connectivity.
+  const instruments = 0;
+  const measurements: HealthMeasurement[] = [
+    {
+      metric: "pages-serving-instruments",
+      value: instruments,
+      unit: "count",
+      command: "none registered — see PAGES_PUBLISH_THRESHOLDS",
+    },
+  ];
+  const findings: HealthFinding[] =
+    instruments >= PAGES_INSTRUMENTS_REQUIRED
+      ? []
+      : [
+          {
+            metric: "pages-serving-instruments",
+            severity: "major",
+            summary:
+              "Nothing in this repository can observe the published site, so no check may claim a " +
+              "publish is failing or about to fail.",
+            action:
+              "Build the probe, and build it in CI rather than here: every route from an agent's " +
+              "container is refused by egress policy, so it cannot be written or tested locally. It " +
+              "needs to fetch the published site and record HTTP status and served size, then " +
+              "register itself as the instrument this check counts. Until then, a person opening " +
+              "the site is the only observation available, and `staging-preview-size` reports the " +
+              "owner's budget without claiming anything about serving.",
+          },
+        ];
+  return settle(id, summary, PAGES_PUBLISH_THRESHOLDS, measurements, findings);
+}
+
 export function todoStoreCheck(ctx: HealthContext): HealthCheckResult {
   const id = "todo-store";
   const summary = "The human todo store: how many items are open, and whether any have gone stale.";
@@ -1620,8 +1668,17 @@ export const HEALTH_CHECKS: readonly {
 }[] = [
   {
     id: "staging-preview-size",
-    summary: "Total size of the `STAGING/` review previews on the publish branch (owner's 100 MB warning).",
+    summary:
+      "Total size of the `STAGING/` review previews on the publish branch, against the owner's " +
+      "budget. Measurement only — the serving question is `pages-publish-health`.",
     run: stagingSizeCheck,
+  },
+  {
+    id: "pages-publish-health",
+    summary:
+      "Whether anything here can observe the published site. Split from `staging-preview-size` " +
+      "(bean `qj9a`) so a claim about publishing has to establish it can see first.",
+    run: pagesPublishHealthCheck,
   },
   {
     id: "staging-preview-orphans",

@@ -108,7 +108,7 @@ run the row's `mvp` commands. For the theme:
 rm -rf _kg _site
 bun test                              # unit tests
 CI=1 bunx playwright test             # a11y, action tiles, sidebar panels, qa panel
-bun run scripts/site-links.ts --site ./_site   # every navbar tile resolves in the BUILT site
+bun run cat-harness/scripts/site-links.ts --site ./_site   # every navbar tile resolves in the BUILT site
 ```
 
 `site-links.ts` is the one that earns its place here: it checks the tiles
