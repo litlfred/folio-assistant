@@ -2,6 +2,7 @@
 # folio-assistant-tvf8
 title: 'STALE OPEN PRs: three untouched 4-8 days, and #229''s ''clean'' merge would RESURRECT a path main deleted'
 status: in-progress
+parent: folio-assistant-ahvw
 type: task
 created_at: 2026-09-26T10:32:05Z
 updated_at: 2026-09-26T10:32:05Z
