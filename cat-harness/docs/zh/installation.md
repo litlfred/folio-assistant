@@ -17,11 +17,11 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 > 安装只是相对容易的一半。在**推送之前**需要运行的是
-> [`platform-gates`](reference/skill-instructions/platform-gates.html) ——
+> [`platform-gates`](../reference/skill-instructions/platform-gates.html) ——
 > `bun test` 通过并不代表关卡通过，而且关卡列表是从 CI
 > 工作流中派生出来的，而非写死的规程。如果你是在已有仓库之上搭建
 > folio-assistant，请先阅读
-> [`repo-conversion`](reference/skill-instructions/repo-conversion.html)。
+> [`repo-conversion`](../reference/skill-instructions/repo-conversion.html)。
 
 ## 前置要求
 
@@ -33,7 +33,7 @@ folio-assistant 运行在 [Bun](https://bun.sh) 之上，并通过 MCP 连接到
 | Git + git-lfs | 内容仓库 | `apt install git git-lfs` | `winget install Git.Git GitHub.GitLFS` |
 | LaTeX (`latexmk`, `texlive`) | 渲染论文 | `apt install texlive-full latexmk biber` | `winget install MiKTeX.MiKTeX` |
 | Lean 4 (via `elan`) | 形式化论文 | `curl …/elan-init.sh \| sh -s -- -y` | 参见 [elan 发布页面](https://github.com/leanprover/elan/releases) |
-| Java 21 + IG Publisher + SUSHI | WHO SMART IG（L3） | 参见 [WHO SMART IG 指南](guides/who-smart-ig.html) | `winget install EclipseAdoptium.Temurin.21.JDK`，然后参见指南 |
+| Java 21 + IG Publisher + SUSHI | WHO SMART IG（L3） | 参见 [WHO SMART IG 指南](../guides/who-smart-ig.html) | `winget install EclipseAdoptium.Temurin.21.JDK`，然后参见指南 |
 | `pandoc`, `ripgrep` | 转换、搜索 | `apt install pandoc ripgrep` | `winget install JohnMacFarlane.Pandoc BurntSushi.ripgrep.MSVC` |
 
 你不需要安装上述所有工具——只需安装你所创作的内容类型所需要的工具。内置的能力探测工具会告知你缺少什么。
