@@ -48,9 +48,9 @@
  * that nothing else changed.
  *
  * Usage:
- *   bun run content/pipeline/fsh-cone.ts <ig-root> [--top N] [--csv out.csv]
- *   bun run content/pipeline/fsh-cone.ts <ig-root> --changed input/fsh/a.fsh,input/cql/B.cql
- *   bun run content/pipeline/fsh-cone.ts <ig-root> --history 400
+ *   bun run cat-harness/content/pipeline/fsh-cone.ts <ig-root> [--top N] [--csv out.csv]
+ *   bun run cat-harness/content/pipeline/fsh-cone.ts <ig-root> --changed input/fsh/a.fsh,input/cql/B.cql
+ *   bun run cat-harness/content/pipeline/fsh-cone.ts <ig-root> --history 400
  *
  * `--changed` prints the forward cone of everything declared in those files
  * (what to rebuild) and the backward cone as files (what to check out).
@@ -669,7 +669,7 @@ if (import.meta.main) {
   const args = process.argv.slice(2);
   const root = args.find((a) => !a.startsWith("--"));
   if (!root) {
-    console.error("usage: bun run content/pipeline/fsh-cone.ts <ig-root> [--top N] [--csv out.csv] [--changed f1,f2,…]");
+    console.error("usage: bun run cat-harness/content/pipeline/fsh-cone.ts <ig-root> [--top N] [--csv out.csv] [--changed f1,f2,…]");
     process.exit(2);
   }
   const opt = (name: string): string | undefined => {

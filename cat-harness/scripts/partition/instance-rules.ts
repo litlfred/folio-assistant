@@ -1188,6 +1188,7 @@ export const RULES: Rule[] = [
       "scripts/check-module-scope-resolution.ts", // no module scope resolves the folio dir (bean `1hkj`)
       "scripts/check-python-deps.ts",       // the repo's own toolchain
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
+      "scripts/check-usage-paths.ts",       // a script's usage string names the script
       "scripts/render-pipeline.ts",         // WHICH renders run and in what order, read from the declarations
       "scripts/render-selection.ts",        // WHICH of them must re-run against a seed, and why (bean `9c34`). Harness machinery: it computes a decision and writes no page, so it belongs beside the pipeline rather than with the renderers
       "scripts/gates.ts",                   // the gate runner itself

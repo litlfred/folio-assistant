@@ -10,13 +10,13 @@
  *
  * Usage:
  *
- *   bun run pipeline/qa-staleness.ts \
+ *   bun run cat-harness/content/pipeline/qa-staleness.ts \
  *     content/quantum-observable-universe/organic-chemistry
  *
- *   bun run pipeline/qa-staleness.ts \
+ *   bun run cat-harness/content/pipeline/qa-staleness.ts \
  *     content/quantum-observable-universe --json
  *
- *   bun run pipeline/qa-staleness.ts \
+ *   bun run cat-harness/content/pipeline/qa-staleness.ts \
  *     content/quantum-observable-universe --criteria voice-status-leak,wall-side-correct
  *
  * Exit code 0 always (informational). Use `--ci` to exit 1 when any

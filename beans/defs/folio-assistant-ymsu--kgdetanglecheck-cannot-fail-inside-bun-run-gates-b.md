@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-26T03:24:20Z
+updated_at: 2026-09-26T04:54:43Z
 parent: folio-assistant-1xhc
 ---
 
@@ -192,3 +192,5 @@ One limitation is documented in the module rather than defended against: a git
 operation performed WHILE the gates run moves what is being measured, so it
 would attribute an author's own `git add` to whichever gate was running. Commit
 before or after a run, not during.
+
+_2026-09-26T04:54:43Z_ — Claimed by claude/ymsu-gates-tree-guard — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
