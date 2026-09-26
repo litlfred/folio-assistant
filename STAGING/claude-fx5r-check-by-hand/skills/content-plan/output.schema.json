@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fx5r-check-by-hand/skills/content-plan/output.schema.json",
+  "title": "Content Plan Output",
+  "description": "Output schema for content planning.",
+  "type": "object",
+  "required": [
+    "plan"
+  ],
+  "properties": {
+    "plan": {
+      "type": "object",
+      "required": [
+        "projectName",
+        "sprints",
+        "team"
+      ],
+      "properties": {
+        "projectName": {
+          "type": "string"
+        },
+        "sprints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "number": {
+                "type": "integer"
+              },
+              "startDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "endDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "goals": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "team": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "actorId": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "responsibilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/fx5r-check-by-hand",
+    "sha": "c61164e5139f7ed8547b4635bdd19907ada39a3b",
+    "pr": "1362/merge",
+    "run": "36215872244"
+  }
+}
