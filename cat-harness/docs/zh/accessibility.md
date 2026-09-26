@@ -16,7 +16,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 1. 此处对于残障支持有哪些选项，最佳实践又是什么？
 2. 有哪些选项可以将智能体的问答强制转化为遵循 DMN 逻辑并能服务于多种交互模态的引导式提问？
 
-事实证明，这是从两个不同角度提出的同一个问题，这也是它们共享同一个页面的原因。具体实现的技能为 [`interaction-modality`](reference/skill-instructions/interaction-modality.html)。
+事实证明，这是从两个不同角度提出的同一个问题，这也是它们共享同一个页面的原因。具体实现的技能为 [`interaction-modality`](../reference/skill-instructions/interaction-modality.html)。
 
 1. TOC
 {:toc}
@@ -89,7 +89,7 @@ ATAG Part B 值得重点关注，因为这是内容平台能够唯独提供的�
 | | 位置 |
 |---|---|
 | 面向智能体的偏好设置，已提交，在会话启动时读取 | `interaction/interaction.json`，由 `scripts/session-start-coord-sweep.sh` 呈现 |
-| 智能体在提问时遵循的规则 | [`interaction-modality`](reference/skill-instructions/interaction-modality.html) |
+| 智能体在提问时遵循的规则 | [`interaction-modality`](../reference/skill-instructions/interaction-modality.html) |
 | 本站点上面向读者的控制项 | 侧边栏标头中的齿轮图标——更大字号、更高对比度、带下划线的链接、减少动效 |
 | 无需询问即可遵循减少动效偏好 | `prefers-reduced-motion` 媒体查询，并作为面板默认值的种子 |
 
@@ -150,6 +150,6 @@ ATAG Part B 值得重点关注，因为这是内容平台能够唯独提供的�
 ## 另请参阅
 
 - [入门指南](getting-started.html) — 使用中的意图决策表
-- [`interaction-modality` 技能](reference/skill-instructions/interaction-modality.html)
+- [`interaction-modality` 技能](../reference/skill-instructions/interaction-modality.html)
 - [发布工作流](publication-workflow.html) — 仓库中的各项流程
-- [在 beans 中管理工作流状态的选项](proposals/workflow-state-in-beans.html)
+- [在 beans 中管理工作流状态的选项](../proposals/workflow-state-in-beans.html)

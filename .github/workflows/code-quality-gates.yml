@@ -1468,6 +1468,19 @@ jobs:
       - name: translation index is current
         run: bun run translation:index:check
 
+      # `ahab`: a translated page sits one directory deeper than the page it
+      # was translated from, and 745 of its links did not move with it. That
+      # is invisible to `check:subgraphs` BY DESIGN — `docs/` is renderable,
+      # so a link it cannot resolve here goes to the counted-never-asserted
+      # bucket, where `architecture.md -> api/` legitimately lives.
+      #
+      # The control that separates them only exists for a translated page:
+      # the same link, read from its SOURCE page's directory. 745 resolved
+      # there and 30 did not, and the 30 are the ones a blanket rewrite would
+      # have broken.
+      - name: translated pages' links resolve at their own depth
+        run: bun run translated-links:check
+
   # ── End-to-end, including the accessibility gate ────────────────────
   #
   # `bunx playwright test` ran in NO workflow before this job. Twenty-nine e2e

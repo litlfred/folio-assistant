@@ -327,6 +327,8 @@
     "translation:block-qa:check": "bun run cat-harness/content/pipeline/translation-block-qa.ts --check",
     "translation:drift:check": "bun run cat-harness/content/pipeline/translation-drift.ts",
     "translation:index": "bun run cat-harness/content/pipeline/translation-index.ts",
+    "translated-links:check": "bun run cat-harness/scripts/check-translated-link-depth.ts --check",
+    "translated-links:fix": "bun run cat-harness/scripts/check-translated-link-depth.ts",
     "translation:index:check": "bun run cat-harness/content/pipeline/translation-index.ts --check",
     "translation:status": "bun run cat-harness/scripts/gen-translation-status.ts",
     "translation:status:check": "bun run cat-harness/scripts/gen-translation-status.ts --check",

@@ -13,7 +13,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 Эта страница представляет собой полный перечень всех **навыков** и **ролей** в folio-assistant
 и объясняет, как они взаимодействуют с LLM. С типизированным контрактом ввода/вывода
-для каждого навыка можно ознакомиться в [Справочнике схем навыков](reference/skills/).
+для каждого навыка можно ознакомиться в [Справочнике схем навыков](../reference/skills/).
 
 1. TOC
 {:toc}
@@ -39,14 +39,14 @@ flowchart TD
 1. **Навык (Skill)** — документированная, ограниченная схемой единица работы (например,
    `lean-formalization`). Агент обнаруживает навыки с помощью MCP-инструмента
    `skill_list` и загружает инструкции навыка через `skill_fetch`. Каждый навык имеет
-   типизированный [контракт ввода/вывода](reference/skills/).
+   типизированный [контракт ввода/вывода](../reference/skills/).
 2. **Пакет навыков (Skill package)** — группа связанных навыков, которая также объявляет свои
    зависимости от среды выполнения и Docker (`package-manifest.json`).
 3. **Роль (действующее лицо / actor)** — *в качестве кого* выступает агент. **Действующее лицо (actor)** принимает
    **роль (role)** в соответствии с дорожкой BPMN, в которой оно действует. То, что действующему лицу
    разрешено **делать**, определяется политикой W3C ODRL в `policies/`, а не свойством роли. Перед каждой
    задачей исполнитель проверяет аутентификацию, назначение роли, политику и доступ к контенту
-   ([`task-authorization`](reference/skill-instructions/task-authorization.html));
+   ([`task-authorization`](../reference/skill-instructions/task-authorization.html));
    HTTP-маршруты запрашивают те же политики через `src/core/rbac.ts`.
 4. **Возможность (Capability)** — конкретная способность окружения (например, `latex-compiler`,
    `lean-toolchain`). Навыки требуют наличия возможностей; инструмент `check_dependencies` проверяет
@@ -70,8 +70,8 @@ flowchart TD
 | Уровень | Расположение | Статус |
 |---------|--------------|--------|
 | **Определение** (роли, требуемые возможности, требования, шаблоны маршрутизации, этапы жизненного цикла, ссылка на схему) | `.claude/skills/local/<skill>.json` | ✅ все 22 навыка создания контента — валидированы в CI с помощью `scripts/validate-skills.ts` |
-| **Типизированный контракт** (JSON Schema ввода/вывода) | `schemas/skills/<skill>/` | ✅ все 22 — см. [справочник](reference/skills/) |
-| **Тело инструкций** (текстовое руководство, загружаемое LLM) — ознакомьтесь с ними в справочнике [Инструкции к навыкам](reference/skill-instructions/) | `skills/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ навыки жизненного цикла, агента, платформенного набора и **folio-document-adapter**; ⏳ **тексты инструкций для authoring-math / authoring-who-smart-guidelines находятся в разработке (TBD)** (эти пакеты поставляют манифест + определения JSON) |
+| **Типизированный контракт** (JSON Schema ввода/вывода) | `schemas/skills/<skill>/` | ✅ все 22 — см. [справочник](../reference/skills/) |
+| **Тело инструкций** (текстовое руководство, загружаемое LLM) — ознакомьтесь с ними в справочнике [Инструкции к навыкам](../reference/skill-instructions/) | `skills/content-lifecycle/*.md`, `skills/folio-*-adapter/*.md`, `src/skills/*.md` | ✅ навыки жизненного цикла, агента, платформенного набора и **folio-document-adapter**; ⏳ **тексты инструкций для authoring-math / authoring-who-smart-guidelines находятся в разработке (TBD)** (эти пакеты поставляют манифест + определения JSON) |
 | **Пакет** (зависимости среды выполнения/Docker) | `skills/<package>/package-manifest.json` | ✅ все четыре пакета |
 
 Таким образом, *да, навыки существуют* — в виде структурированных определений и типизированных схем,
@@ -86,31 +86,31 @@ flowchart TD
 
 | Навык | Этап | Назначение |
 |-------|------|------------|
-| [`content-plan`](reference/skills/content-plan.html) | plan | Определение границ, команда, график, управление (governance) |
-| [`content-author`](reference/skills/content-author.html) | author | Создание структурированных артефактов |
-| [`content-validate`](reference/skills/content-validate.html) | validate | Проверка схемы и ограничений |
-| [`content-review`](reference/skills/content-review.html) | review | Официальное рецензирование и утверждение |
-| [`content-test`](reference/skills/content-test.html) | test | Сквозной контроль качества (E2E QA) / успешная сборка («зеленый» билд) |
-| [`content-publish`](reference/skills/content-publish.html) | publish | Рендеринг и развертывание |
-| [`content-feedback`](reference/skills/content-feedback.html) | feedback | Сбор и триаж обратной связи |
+| [`content-plan`](../reference/skills/content-plan.html) | plan | Определение границ, команда, график, управление (governance) |
+| [`content-author`](../reference/skills/content-author.html) | author | Создание структурированных артефактов |
+| [`content-validate`](../reference/skills/content-validate.html) | validate | Проверка схемы и ограничений |
+| [`content-review`](../reference/skills/content-review.html) | review | Официальное рецензирование и утверждение |
+| [`content-test`](../reference/skills/content-test.html) | test | Сквозной контроль качества (E2E QA) / успешная сборка («зеленый» билд) |
+| [`content-publish`](../reference/skills/content-publish.html) | publish | Рендеринг и развертывание |
+| [`content-feedback`](../reference/skills/content-feedback.html) | feedback | Сбор и триаж обратной связи |
 | `content-retire` | retire | Вывод из эксплуатации / архивация |
 
 ### Документы и нормативные руководства: `folio-document-adapter`
 
 | Навык | Назначение |
 |-------|------------|
-| [`document-authoring`](reference/skills/document-authoring.html) | Создание и редактирование блоков в текстовом фолио (prose folio) |
-| [`document-structure`](reference/skills/document-structure.html) | Главы и разделы — добавление, удаление, изменение порядка |
-| [`normative-statements`](reference/skills/normative-statements.html) | Формулирование рекомендаций, требований или правил |
-| [`document-publishing`](reference/skills/document-publishing.html) | Markdown → HTML / PDF, без TeX |
+| [`document-authoring`](../reference/skills/document-authoring.html) | Создание и редактирование блоков в текстовом фолио (prose folio) |
+| [`document-structure`](../reference/skills/document-structure.html) | Главы и разделы — добавление, удаление, изменение порядка |
+| [`normative-statements`](../reference/skills/normative-statements.html) | Формулирование рекомендаций, требований или правил |
+| [`document-publishing`](../reference/skills/document-publishing.html) | Markdown → HTML / PDF, без TeX |
 
 ### Статьи и книги: `authoring-math`
 
 | Навык | Назначение |
 |-------|------------|
-| [`lean-formalization`](reference/skills/lean-formalization.html) | Формализация утверждений и доказательств в Lean 4 |
-| [`latex-authoring`](reference/skills/latex-authoring.html) | Создание документов LaTeX |
-| [`proof-verification`](reference/skills/proof-verification.html) | Верификация доказательств, аудит `sorry` и аксиом |
+| [`lean-formalization`](../reference/skills/lean-formalization.html) | Формализация утверждений и доказательств в Lean 4 |
+| [`latex-authoring`](../reference/skills/latex-authoring.html) | Создание документов LaTeX |
+| [`proof-verification`](../reference/skills/proof-verification.html) | Верификация доказательств, аудит `sorry` и аксиом |
 | `scientific-visualization` | Рисунки и диаграммы |
 | `hypothesis-generation` | Формулирование гипотез и направлений исследований |
 | `scientific-critical-thinking` | Критическое (состязательное) рецензирование аргументов |
@@ -119,14 +119,14 @@ flowchart TD
 
 | Навык | Назначение |
 |-------|------------|
-| [`l2-dak-authoring`](reference/skills/l2-dak-authoring.html) | Артефакты L2 DAK (словарь данных и др.) |
-| [`l3-fhir-authoring`](reference/skills/l3-fhir-authoring.html) | Ресурсы L3 FHIR через FSH |
-| [`bpmn-authoring`](reference/skills/bpmn-authoring.html) | Бизнес-процессы BPMN 2.0 |
-| [`dmn-authoring`](reference/skills/dmn-authoring.html) | Таблицы решений DMN |
-| [`terminology-management`](reference/skills/terminology-management.html) | Системы кодирования / наборы значений |
-| [`fhir-validation`](reference/skills/fhir-validation.html) | Валидация на соответствие профилям FHIR |
-| [`ig-publication`](reference/skills/ig-publication.html) | Сборка и публикация IG |
-| [`quality-control`](reference/skills/quality-control.html) | Рубежи контроля качества (QA gates) |
+| [`l2-dak-authoring`](../reference/skills/l2-dak-authoring.html) | Артефакты L2 DAK (словарь данных и др.) |
+| [`l3-fhir-authoring`](../reference/skills/l3-fhir-authoring.html) | Ресурсы L3 FHIR через FSH |
+| [`bpmn-authoring`](../reference/skills/bpmn-authoring.html) | Бизнес-процессы BPMN 2.0 |
+| [`dmn-authoring`](../reference/skills/dmn-authoring.html) | Таблицы решений DMN |
+| [`terminology-management`](../reference/skills/terminology-management.html) | Системы кодирования / наборы значений |
+| [`fhir-validation`](../reference/skills/fhir-validation.html) | Валидация на соответствие профилям FHIR |
+| [`ig-publication`](../reference/skills/ig-publication.html) | Сборка и публикация IG |
+| [`quality-control`](../reference/skills/quality-control.html) | Рубежи контроля качества (QA gates) |
 
 ### Навыки агента и платформы (`src/skills`)
 
@@ -171,7 +171,7 @@ issue [#27](https://github.com/litlfred/folio-assistant/issues/27)). Они не
 навыках были обобщены. Каждый набор поставляется с файлом `package-manifest.json`.
 
 > **Схемы** навыков (типизированный ввод/вывод для навыков создания контента) генерируются
-> в [Справочнике схем навыков](reference/skills/) — они никогда не расходятся с тем,
+> в [Справочнике схем навыков](../reference/skills/) — они никогда не расходятся с тем,
 > что проверяет фреймворк.
 
 ---
@@ -255,8 +255,8 @@ MCP-инструмент `check_dependencies` проверяет их налич
 ## См. также
 
 - [Процесс публикации](publication-workflow.html) — дорожки BPMN: какой навык выполняется на каждом шаге и кто принимает решения
-- [Инструкции к навыкам](reference/skill-instructions/) — текстовые руководства, загружаемые LLM
-- [Справочник схем навыков](reference/skills/) — типизированный ввод/вывод для каждого навыка
+- [Инструкции к навыкам](../reference/skill-instructions/) — текстовые руководства, загружаемые LLM
+- [Справочник схем навыков](../reference/skills/) — типизированный ввод/вывод для каждого навыка
 - [Типы контента](content-types.html) — какие навыки использует каждый тип контента
 - [Архитектура](architecture.html) — RBAC, адаптеры и MCP-сервер
 - [Начало работы](getting-started.html) — запуск вашего первого навыка
