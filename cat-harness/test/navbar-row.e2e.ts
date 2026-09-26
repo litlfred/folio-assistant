@@ -183,6 +183,72 @@ function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADIN
 }
 
 /**
+ * Wait until the sidebar has stopped MOVING, however long its stylesheet says
+ * that takes.
+ *
+ * ## Why a wait is needed at all
+ *
+ * The strip animates, and these tests read the DOM the instant the call before
+ * them returns. Measured on this fixture: `.side-bar` itself carries 0.4s
+ * transitions, and `fa-site-title`, `fa-glass-handle__label`, `fa-doc-index`,
+ * `fa-nav-folders` and `site-nav` carry 0.12s. A read taken immediately samples
+ * values mid-flight, and WHICH elements it catches depends on how the run was
+ * scheduled.
+ *
+ * That is what the evidence showed rather than a guess about slow runners: the
+ * same assertion failed in two CI runs naming DIFFERENT elements — first
+ * `SPAN: x`, `fa-harness-tab__label`, `fa-harness-graph__link`; then
+ * `fa-nav-folders__link`, `fa-nav-folders__note`, `A`. A deterministic
+ * difference between browsers would name the same ones both times; a varying
+ * set is a race.
+ *
+ * ## Two halves, and the second was found by fixing the first
+ *
+ * Waiting at rest made the at-rest assertions honest and broke
+ * "every one of them comes back on hover", which had waited a flat 250ms after
+ * `page.hover`. Measured on the reopen: `.fa-harness-tab__label` reports
+ * `opacity: 0` with `--fa-nav-text: 1` at +250ms, gets its box at +300ms and
+ * only reaches 0.94 at +350ms. So 250ms was never the hover animation's
+ * length — it was enough only because the strip had never fully CLOSED, and
+ * reopening from closed is the slower path. The same helper therefore serves
+ * both directions, which is also why it is one function and not two constants.
+ *
+ * ## How it decides
+ *
+ * The floor is DERIVED FROM THE CSS, so it follows the stylesheet instead of
+ * going stale beside it, and it costs nothing on a fixture with no transitions.
+ * Then `getAnimations({ subtree: true })` — the browser's own list of running
+ * transitions — is polled to empty, which is what gives a slow machine more
+ * time without anyone tuning a number for it. The CSS floor comes FIRST for a
+ * reason: the label above starts its transition ~50ms late, and an empty
+ * animation list cannot tell "finished" from "not started yet".
+ */
+async function settleNav(p: import("@playwright/test").Page): Promise<void> {
+  const settleMs = await p.evaluate(() => {
+    const bar = document.querySelector(".side-bar");
+    if (!bar) return 0;
+    const longest = (v: string) =>
+      Math.max(0, ...v.split(",").map((x) => (parseFloat(x) || 0) * 1000));
+    let ms = 0;
+    for (const n of [bar, ...Array.from(bar.querySelectorAll("*"))]) {
+      const cs = getComputedStyle(n);
+      ms = Math.max(ms, longest(cs.transitionDuration) + longest(cs.transitionDelay));
+    }
+    return Math.ceil(ms);
+  });
+  if (settleMs > 0) await p.waitForTimeout(settleMs + 50);
+  await p.waitForFunction(
+    () => {
+      const bar = document.querySelector(".side-bar");
+      if (!bar) return true;
+      return bar.getAnimations({ subtree: true }).length === 0;
+    },
+    undefined,
+    { timeout: 5000 },
+  );
+}
+
+/**
  * Load a fixture and hand back everything the page said on the way up.
  *
  * `pageerror` is the one that matters: an exception in `init()` produces a
@@ -233,6 +299,7 @@ async function load(
   // is asserted wider than 800). Tests that WANT the bar open call
   // `page.hover(".side-bar")` themselves and are unaffected.
   await p.mouse.move(600, 400);
+  await settleNav(p);
   return { errors, console: logs };
 }
 
@@ -646,7 +713,7 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     // would look correct in the screenshot that prompted this.
     await load(page, CUSTOM);
     await page.hover(".side-bar");
-    await page.waitForTimeout(250);
+    await settleNav(page);
     const shown = (await page.evaluate(visibleText)).join(" | ");
     for (const region of ["fa-site-title", "fa-doc-index__heading", "fa-nav-folders__heading",
                           "fa-harness-tabs__heading", "fa-harness-tab__label", "fa-nav-home__label"]) {
@@ -695,7 +762,7 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     const rest = await tops();
     expect(new Set(rest).size).toBe(rest.length);
     await page.hover(".side-bar");
-    await page.waitForTimeout(250);
+    await settleNav(page);
     const open = await tops();
     expect(new Set(open).size).toBe(1);
   });
@@ -712,7 +779,7 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     await page.setViewportSize({ width: 1200, height: 500 });
     await load(page, CUSTOM);
     await page.hover(".side-bar");
-    await page.waitForTimeout(250);
+    await settleNav(page);
     const fits = await page.evaluate(() => {
       const box = document.querySelector(".fa-doc-index");
       const sum = document.querySelector(".fa-doc-index__heading");
@@ -736,7 +803,7 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     const barBottom = await page.locator(".side-bar").evaluate((n) => Math.round(n.getBoundingClientRect().bottom));
     expect(barBottom - (await homeBottom())).toBeLessThan(24);
     await page.hover(".side-bar");
-    await page.waitForTimeout(250);
+    await settleNav(page);
     expect(barBottom - (await homeBottom())).toBeLessThan(24);
   });
 });
