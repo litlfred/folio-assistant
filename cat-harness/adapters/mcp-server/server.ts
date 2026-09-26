@@ -44,6 +44,22 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { REPO_ROOT, BUILD_DIR, FEEDBACK_DIR, FEEDBACK_WORKTREE, MAIN_TEX, FOLIO_PORT, LIBRARY_DIRS, UPLOADS_DIR } from "./paths.js";
 import { safeSegment, joinSegments, realPathWithin, writableWithin } from "../../src/core/safe-path.js";
+
+/**
+ * An archive was REFUSED, as distinct from failing to be an archive.
+ *
+ * Bean `6bhf`. The tar path's `catch` swallowed both, so a tarball rejected for
+ * naming a path outside the upload directory fell through to "try as a single
+ * `.tex`" with nothing logged — a refusal rendered as a non-event, and
+ * indistinguishable from a file that simply was not a tarball. A distinct type
+ * is what lets the handler answer 422 for one and carry on for the other.
+ */
+class UnsafeArchive extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "UnsafeArchive";
+  }
+}
 import { executeGraphTool } from "./tools/graph.js";
 import {
   currentBranch, listBranches, fetchOrigin, isCurrentBranch,
@@ -3067,7 +3083,12 @@ These become clickable buttons so users don't have to type. Make them specific t
               // string: there is no shell to parse, so a filename can never be
               // program. Nothing here is attacker-controlled today; the point
               // is that it cannot become so by an edit elsewhere.
-              const members = execFileSync("tar", ["tzf", "source.tar.gz"], {
+              // `tvzf`, not `tzf`: the long form carries the member TYPE in the
+              // first character of the mode, and the type is what closes the
+              // residual named above. A symlink member is `l`, a hardlink `h`;
+              // both write through to wherever they point, so neither spelling
+              // check nor `--no-same-*` helps.
+              const listing = execFileSync("tar", ["tvzf", "source.tar.gz"], {
                 cwd: uploadDir,
                 timeout: 15000,
                 encoding: "utf-8",
@@ -3076,11 +3097,37 @@ These become clickable buttons so users don't have to type. Make them specific t
                 .split("\n")
                 .map((m) => m.trim())
                 .filter((m) => m.length > 0);
+              // A WHITELIST, not a blacklist: only a regular file (`-`) or a
+              // directory (`d`) may be in the archive. Enumerating the types to
+              // refuse means the next tar feature nobody thought about is
+              // admitted by default, and an arXiv e-print source has no
+              // legitimate need for a device, fifo or link member.
+              const badType = listing.filter((l) => !/^[-d]/.test(l));
+              if (badType.length > 0) {
+                throw new UnsafeArchive(
+                  `${badType.length} member(s) are not a regular file or directory ` +
+                    `(a link member writes through to its target), first ${JSON.stringify(badType[0].slice(0, 120))}`,
+                );
+              }
+              // The member name is everything after the FIFTH field. Measured
+              // against real GNU tar output rather than counted by eye, because
+              // the first attempt stripped six and silently ate the first word
+              // of every name — `sub/a b c.tex` became `b c.tex`, and the
+              // containment check below would then have run on a fabricated
+              // path. A name may contain spaces, so only the fixed-width prefix
+              // is removed:
+              //
+              //     -rw-r--r-- root/root  2 2026-09-26 12:13 sub/a b c.tex
+              //     \_______/ \_______/ \/ \________/ \___/ \___________/
+              //       mode      owner   size   date   time      name
+              const members = listing.map((l) => l.replace(/^\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+/, ""));
               const unsafe = members.filter(
                 (m) => m.startsWith("/") || m.split("/").includes("..") || m.includes("\0"),
               );
               if (unsafe.length > 0) {
-                throw new Error(`refusing archive: ${unsafe.length} member(s) name a path outside the upload directory, first ${JSON.stringify(unsafe[0])}`);
+                throw new UnsafeArchive(
+                  `${unsafe.length} member(s) name a path outside the upload directory, first ${JSON.stringify(unsafe[0])}`,
+                );
               }
               execFileSync("tar", ["xzf", "source.tar.gz", "--no-same-owner", "--no-same-permissions"], {
                 cwd: uploadDir,
@@ -3089,7 +3136,24 @@ These become clickable buttons so users don't have to type. Make them specific t
               const { readdirSync } = await import("fs");
               sourceFiles = readdirSync(uploadDir).filter(f => f.endsWith(".tex"));
               format = "latex";
-            } catch { /* tar extract failed — might be single file */ }
+            } catch (e) {
+              // A REFUSAL is not a format mismatch, and the bare `catch` that
+              // was here made them the same event: an archive rejected for
+              // naming a path outside the upload directory fell through to "try
+              // as a single .tex" with nothing said, so an operator could not
+              // tell a hostile archive from a file that simply was not a
+              // tarball. Three states, and this one was collapsing two of them.
+              if (e instanceof UnsafeArchive) {
+                log("import", `REFUSED archive for ${id}`, e.message);
+                return Response.json(
+                  { error: `refusing archive: ${e.message}` },
+                  { status: 422, headers: { "Access-Control-Allow-Origin": "*" } },
+                );
+              }
+              // Anything else really may be a single .tex rather than a tarball,
+              // which is the original intent — kept, but no longer silent.
+              log("import", `tar extract failed for ${id}, trying as a single file`, String(e).slice(0, 200));
+            }
             if (!sourceFiles.length) {
               // Try as single .tex file
               try {
