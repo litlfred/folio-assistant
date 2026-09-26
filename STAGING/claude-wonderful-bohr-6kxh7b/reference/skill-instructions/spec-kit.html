@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(121)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(202)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(121) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(202) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(121) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(202) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(121) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(202) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Lean Build Fix | folio-assistant</title>
+<title>Spec Kit | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Lean Build Fix" />
+<meta property="og:title" content="Spec Kit" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Lean Build Fix" />
+<meta property="twitter:title" content="Spec Kit" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -788,7 +788,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Lean Build Fix</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Spec Kit</span></li>
   </ol>
 </nav>
 
@@ -797,634 +797,258 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/lean-build-fix.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/folio-paper-adapter/lean-build-fix.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/spec-kit/spec-kit.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/spec-kit/spec-kit.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/lean-build-fix.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/spec-kit/spec-kit.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="lean-build-fix-skill">
+<h1 id="spec-kit--spec-driven-development">
   
   
-    <a href="#lean-build-fix-skill" class="anchor-heading" aria-labelledby="lean-build-fix-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lean Build Fix Skill
+    <a href="#spec-kit--spec-driven-development" class="anchor-heading" aria-labelledby="spec-kit--spec-driven-development"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Spec Kit — spec-driven development
   
   
 </h1>
     
-<h2 id="role">
+<h2 id="origin">
   
   
-    <a href="#role" class="anchor-heading" aria-labelledby="role"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Role
-  
-  
-</h2>
-    
-
-<p>Automate the iterative cycle of: build Lean project, diagnose errors,
-apply fixes, rebuild — until <code class="language-plaintext highlighter-rouge">lake build</code> passes with zero errors and
-zero fixable warnings.</p>
-<h2 id="when-to-use-this-skill">
-  
-  
-    <a href="#when-to-use-this-skill" class="anchor-heading" aria-labelledby="when-to-use-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to Use This Skill
+    <a href="#origin" class="anchor-heading" aria-labelledby="origin"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Origin
   
   
 </h2>
     
 
-<ul>
-  <li>“fix lean build errors”</li>
-  <li>“lean build is broken”</li>
-  <li>“lake build fails”</li>
-  <li>“fix build errors and warnings”</li>
-  <li>“make the lean build pass”</li>
-  <li>After Mathlib version bumps that introduce API renames</li>
-  <li>After bulk edits to <code class="language-plaintext highlighter-rouge">.lean</code> files that may have introduced syntax errors</li>
-</ul>
-<h2 id="prerequisite-working-lean-mcp">
+<p>github/spec-kit (GitHub, 2025), <a href="https://github.com/github/spec-kit">https://github.com/github/spec-kit</a>. Its
+<code class="language-plaintext highlighter-rouge">/speckit-*</code> command set, its specify → plan → tasks → implement → converge
+cycle, and its <code class="language-plaintext highlighter-rouge">templates/spec-template.md</code>. Rendered here from the upstream
+README and spec template, read 2026-09-21.</p>
+<h2 id="applies-when">
   
   
-    <a href="#prerequisite-working-lean-mcp" class="anchor-heading" aria-labelledby="prerequisite-working-lean-mcp"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Prerequisite: working Lean MCP
+    <a href="#applies-when" class="anchor-heading" aria-labelledby="applies-when"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Applies when
   
   
 </h2>
     
 
-<p>This skill assumes <code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code> returns real items, not
-timeouts. If your MCP queries return <code class="language-plaintext highlighter-rouge">success: false, items: []</code>
-(60 s timeout) OR <code class="language-plaintext highlighter-rouge">lake exe cache get</code> returns 403 on every shard,
-route to <strong><a href="/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/reference/skill-instructions/lean-environment-setup.html#mathlib-cache-403-fallback-proven-workaround"><code class="language-plaintext highlighter-rouge">lean-environment-setup</code> §”Mathlib cache 403 fallback”</a></strong>
-first — the proven workaround is a <code class="language-plaintext highlighter-rouge">git clone</code> of mathlib4 to a sibling
-directory plus a <code class="language-plaintext highlighter-rouge">git config --global url.insteadOf</code> redirect.
-Don’t start iterating blind — establish LSP feedback first.</p>
-<h2 id="lean-mcp-tools-paper-assistant">
+<p>A change to the PLATFORM’s own capability — a tool, a schema, a pipeline, a
+skill, a gate — raised by somebody building the tooling rather than by somebody
+writing a folio’s subject matter, and whose answer does not depend on what any
+folio says. Owner, 2026-09-21: <em>“spec-kit is specific to folio assistant feature
+development requests by tool developers not content developers (content
+agnostic, more scrum methodology process) for best practives of software
+development”</em>. NOT for work whose requirements come from stakeholders who must
+sign them off, and not for anything tied to a folio’s domain — that is <code class="language-plaintext highlighter-rouge">crdm</code>.</p>
+
+<p><strong>Adopted whole, 2026-09-21</strong>, on the owner’s decision (issue #730, option A):
+spec-kit sits <strong>beside</strong> <code class="language-plaintext highlighter-rouge">crdm</code> as a parallel track, not blended with it. External
+method, rendered faithfully. Where this text and the published method differ, the
+published method is right and this file is wrong.</p>
+
+<p>Its one-line claim, upstream’s words:</p>
+
+<blockquote>
+  <p>Define <strong>what and why</strong> before deciding <strong>how</strong> to build it.</p>
+</blockquote>
+<h2 id="the-cycle">
   
   
-    <a href="#lean-mcp-tools-paper-assistant" class="anchor-heading" aria-labelledby="lean-mcp-tools-paper-assistant"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lean MCP Tools (paper-assistant)
+    <a href="#the-cycle" class="anchor-heading" aria-labelledby="the-cycle"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The cycle
   
   
 </h2>
     
 
-<p>When the MCP server is available, <strong>prefer MCP tools over shell commands</strong>:</p>
+<p><code class="language-plaintext highlighter-rouge">constitution</code> once per project, then per feature:</p>
+
+<p><strong>specify → plan → tasks → implement → converge</strong>, repeating <strong>implement →
+converge</strong> until converge reports <em>Converged</em>.</p>
+
+<p>Upstream installs these as skills:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Old workflow</th>
-      <th>MCP tool</th>
-      <th>Why better</th>
+      <th>command</th>
+      <th>what it does</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">lake build</code> + parse output</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_build</code></td>
-      <td>Triggers build, returns structured result</td>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-constitution</code></td>
+      <td>establishes project principles</td>
     </tr>
     <tr>
-      <td>grep for errors in output</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code></td>
-      <td>Per-file structured errors/warnings</td>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-specify</code></td>
+      <td>creates the specification from the request</td>
     </tr>
     <tr>
-      <td>manual hover to check types</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_hover_info</code></td>
-      <td>Type info at any position</td>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-plan</code></td>
+      <td>develops the technical implementation strategy</td>
     </tr>
     <tr>
-      <td>grep Mathlib for API names</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_leansearch</code> / <code class="language-plaintext highlighter-rouge">lean_loogle</code></td>
-      <td>Semantic + type-signature search</td>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-tasks</code></td>
+      <td>generates actionable work items</td>
     </tr>
     <tr>
-      <td>edit-build-repeat</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_multi_attempt</code></td>
-      <td>Try multiple tactic alternatives in one call</td>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-implement</code></td>
+      <td>guides the building</td>
     </tr>
     <tr>
-      <td>manual axiom check</td>
-      <td><code class="language-plaintext highlighter-rouge">lean_verify</code></td>
-      <td>Axiom dependency audit</td>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-converge</code></td>
+      <td>validates completion against the artefacts</td>
     </tr>
   </tbody>
 </table></div>
-<h3 id="mcp-first-workflow">
-  
-  
-    <a href="#mcp-first-workflow" class="anchor-heading" aria-labelledby="mcp-first-workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> MCP-first workflow
-  
-  
-</h3>
-    
 
-<ol>
-  <li>Run <code class="language-plaintext highlighter-rouge">lean_build</code> to trigger a full build</li>
-  <li>Run <code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code> on each failing file to get structured errors</li>
-  <li>For each error, diagnose and fix (see error taxonomy below)</li>
-  <li>After fixing all errors in a file, run <code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code> on that
-file to verify before moving to the next</li>
-  <li>Once all files are clean, run <code class="language-plaintext highlighter-rouge">lean_build</code> to confirm full success</li>
-  <li>Address warnings (dupNamespace, unused variables) as a final pass</li>
-</ol>
-<h3 id="fallback-workflow-no-mcp">
+<p>Two extensions ship alongside: bug-fixing (<code class="language-plaintext highlighter-rouge">bug-assess</code> → <code class="language-plaintext highlighter-rouge">bug-fix</code> →
+<code class="language-plaintext highlighter-rouge">bug-test</code>, artefacts under <code class="language-plaintext highlighter-rouge">.specify/bugs/{slug}/</code>) and idea assessment
+(<code class="language-plaintext highlighter-rouge">assess-intake</code> → <code class="language-plaintext highlighter-rouge">assess-research</code> → <code class="language-plaintext highlighter-rouge">assess-define</code> → <code class="language-plaintext highlighter-rouge">assess-shape</code> →
+<code class="language-plaintext highlighter-rouge">assess-decide</code>, producing go / needs-clarification / kill, under
+<code class="language-plaintext highlighter-rouge">.specify/assessments/{slug}/</code>).</p>
+<h2 id="the-spec-template">
   
   
-    <a href="#fallback-workflow-no-mcp" class="anchor-heading" aria-labelledby="fallback-workflow-no-mcp"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Fallback workflow (no MCP)
-  
-  
-</h3>
-    
-
-<p>When the MCP server is unavailable, parse <code class="language-plaintext highlighter-rouge">lake build</code> output directly
-<strong>from the repo root</strong> (the root workspace builds all paper packages
-in one pass):</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lake build 2&gt;&amp;1                       <span class="c"># build every paper</span>
-lake build MyPaper 2&gt;&amp;1               <span class="c"># or just one library</span>
-</code></pre></div></div>
-
-<p>Per-paper <code class="language-plaintext highlighter-rouge">cd content/&lt;paper&gt;/lean &amp;&amp; lake build</code> still works, but the
-root workspace resolves cross-paper imports in a single pass and is the
-standardized entry point.</p>
-
-<p>Parse the output for lines matching:</p>
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">error:</code> — build-breaking errors (must fix)</li>
-  <li><code class="language-plaintext highlighter-rouge">warning:</code> — linter warnings (fix if possible)</li>
-  <li><code class="language-plaintext highlighter-rouge">Building</code> / <code class="language-plaintext highlighter-rouge">Built</code> / <code class="language-plaintext highlighter-rouge">Replayed</code> — progress indicators</li>
-</ul>
-<h2 id="error-taxonomy-and-fix-patterns">
-  
-  
-    <a href="#error-taxonomy-and-fix-patterns" class="anchor-heading" aria-labelledby="error-taxonomy-and-fix-patterns"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Error Taxonomy and Fix Patterns
+    <a href="#the-spec-template" class="anchor-heading" aria-labelledby="the-spec-template"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The spec template
   
   
 </h2>
     
-<h3 id="1-unknown-identifier--unknown-constant">
-  
-  
-    <a href="#1-unknown-identifier--unknown-constant" class="anchor-heading" aria-labelledby="1-unknown-identifier--unknown-constant"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Unknown identifier / Unknown constant
-  
-  
-</h3>
-    
 
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">Unknown identifier 'foo'</code> or <code class="language-plaintext highlighter-rouge">Unknown constant 'foo'</code></p>
-
-<p><strong>Diagnosis</strong>: API was renamed in Mathlib or Lean core.</p>
-
-<p><strong>Fix strategy</strong> (try in order):</p>
-<ol>
-  <li><strong>MCP search</strong>: <code class="language-plaintext highlighter-rouge">lean_leansearch</code> or <code class="language-plaintext highlighter-rouge">lean_loogle</code> with the type signature</li>
-  <li><strong>Common renames</strong> (check this table first):</li>
-</ol>
+<p>Upstream’s <code class="language-plaintext highlighter-rouge">templates/spec-template.md</code>, in order. <strong>Mandatory</strong> where upstream
+marks it so:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th>Old name</th>
-      <th>New name / workaround</th>
-      <th>Version</th>
+      <th>section</th>
+      <th>asks for</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Mathlib.Topology.ContinuousFunction.Basic</code></td>
-      <td><code class="language-plaintext highlighter-rouge">Mathlib.Topology.ContinuousMap.Basic</code></td>
-      <td>Mathlib 2024+</td>
+      <td>header</td>
+      <td>feature name, branch, creation date, status</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Mathlib.Geometry.Manifold.SmoothManifoldWithCorners</code></td>
-      <td><code class="language-plaintext highlighter-rouge">Mathlib.Geometry.Manifold.IsManifold.Basic</code></td>
-      <td>Mathlib 2024+</td>
+      <td><strong>User Scenarios &amp; Testing</strong> <em>(mandatory)</em></td>
+      <td>prioritised independent journeys (P1, P2, …), each delivering standalone value, each with its rationale, an independent test approach, and Given-When-Then acceptance scenarios</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Mathlib.CategoryTheory.Monoidal.Basic</code></td>
-      <td><code class="language-plaintext highlighter-rouge">Mathlib.CategoryTheory.Monoidal.Category</code></td>
-      <td>Mathlib 2024+</td>
+      <td>Edge Cases</td>
+      <td>boundary conditions and error scenarios</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">lt_div_iff</code> / <code class="language-plaintext highlighter-rouge">div_lt_iff</code></td>
-      <td><strong>Nonexistent</strong> — use <code class="language-plaintext highlighter-rouge">by_contra</code> + <code class="language-plaintext highlighter-rouge">div_mul_cancel₀</code> pattern (see below)</td>
-      <td>Lean 4.24</td>
+      <td><strong>Requirements</strong> <em>(mandatory)</em></td>
+      <td>functional requirements <code class="language-plaintext highlighter-rouge">FR-001…</code>, plus key entities where data modelling applies</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">div_lt_div_iff</code></td>
-      <td><strong>Nonexistent</strong> — same workaround</td>
-      <td>Lean 4.24</td>
+      <td><strong>Success Criteria</strong> <em>(mandatory)</em></td>
+      <td>measurable, <strong>technology-agnostic</strong> outcomes <code class="language-plaintext highlighter-rouge">SC-001…</code></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">unfold_let x</code></td>
-      <td><strong>Nonexistent</strong> — use <code class="language-plaintext highlighter-rouge">show &lt;expanded&gt; ...</code> to unfold local <code class="language-plaintext highlighter-rouge">set</code> defs</td>
-      <td>Lean 4.24</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">sq_pos_of_ne_zero _ h</code></td>
-      <td><code class="language-plaintext highlighter-rouge">sq_pos_of_ne_zero h</code> (no underscore arg)</td>
-      <td>Lean 4.24</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">List.Lex.cons x proof</code></td>
-      <td><code class="language-plaintext highlighter-rouge">List.Lex.cons proof</code> (element arg now implicit)</td>
-      <td>Lean 4.24</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">List.Lex.wellFounded</code></td>
-      <td><strong>Nonexistent</strong> — use <code class="language-plaintext highlighter-rouge">sorry</code> pending MCP search</td>
-      <td>Lean 4.24</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">pow_le_pow_left</code></td>
-      <td>varies by type</td>
-      <td>Mathlib 2024+</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">Finset.max'</code></td>
-      <td>varies</td>
-      <td>Mathlib 2024+</td>
+      <td>Assumptions</td>
+      <td>the defaults taken where the request was silent</td>
     </tr>
   </tbody>
 </table></div>
 
-<ol>
-  <li><strong>Suffix conventions</strong>: Try adding <code class="language-plaintext highlighter-rouge">₀</code> suffix (e.g., <code class="language-plaintext highlighter-rouge">one_lt_pow₀</code>,
-<code class="language-plaintext highlighter-rouge">pow_lt_one₀</code>, <code class="language-plaintext highlighter-rouge">div_mul_cancel₀</code>) — Mathlib uses <code class="language-plaintext highlighter-rouge">₀</code> for variants
-with weaker hypotheses</li>
-  <li><strong>Division bound workaround</strong> (when <code class="language-plaintext highlighter-rouge">lt_div_iff</code>/<code class="language-plaintext highlighter-rouge">div_lt_iff</code> don’t exist):</li>
-</ol>
-
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">-- To prove: a &lt; 1 / b  (given b &gt; 0)</span>
-<span class="k">have</span> <span class="n">key</span> : <span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="mi">1</span> := <span class="k">by</span> <span class="n">nlinarith</span><span class="cd">  -- prove multiplication form</span>
-<span class="n">by_contra</span> <span class="n">h</span><span class="o">;</span> <span class="n">push_neg</span> <span class="n">at</span> <span class="n">h</span><span class="cd">             -- assume 1/b ≤ a</span>
-<span class="k">have</span> : <span class="mi">1</span> <span class="o">≤</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span> :=<span class="cd">                   -- derive contradiction</span>
-  <span class="k">calc</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">b</span> <span class="o">*</span> <span class="n">b</span> := (<span class="n">div_mul_cancel</span><span class="err">₀</span> <span class="mi">1</span> (<span class="n">ne_of_gt</span> <span class="n">hb_pos</span>))<span class="o">.</span><span class="n">symm</span>
-    <span class="n">_</span> <span class="o">≤</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span> := <span class="n">mul_le_mul_of_nonneg_right</span> <span class="n">h</span> (<span class="n">le_of_lt</span> <span class="n">hb_pos</span>)
-<span class="n">linarith</span><span class="cd">                               -- contradicts key</span>
-</code></pre></div></div>
-
-<ol>
-  <li><strong><code class="language-plaintext highlighter-rouge">show</code> pattern for local <code class="language-plaintext highlighter-rouge">set</code> definitions</strong> (when <code class="language-plaintext highlighter-rouge">unfold_let</code> doesn’t exist):</li>
-</ol>
-
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">set</span> <span class="n">r</span> := <span class="n">vol</span> <span class="o">/</span> <span class="n">ratio</span>
-<span class="k">have</span> <span class="n">hr_pos</span> : <span class="n">r</span> <span class="o">&gt;</span> <span class="mi">0</span> := <span class="k">by</span>
-  <span class="k">show</span> <span class="n">vol</span> <span class="o">/</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="cd">        -- expand r to its definition</span>
-  <span class="n">apply</span> <span class="n">div_pos</span> <span class="o">&lt;;&gt;</span> <span class="n">positivity</span>
-</code></pre></div></div>
-
-<ol>
-  <li><strong>If unfound</strong>: Replace with <code class="language-plaintext highlighter-rouge">sorry</code> + bibliographic <code class="language-plaintext highlighter-rouge">-- Ref:</code> citation,
-noting the missing API in a comment</li>
-</ol>
-<h3 id="1b-import-ordering-and-hygiene">
+<p><strong>Markers.</strong> <code class="language-plaintext highlighter-rouge">[NEEDS CLARIFICATION: …]</code> flags an ambiguity that must be resolved
+rather than guessed. <code class="language-plaintext highlighter-rouge">ACTION REQUIRED</code> marks a section that must be substantively
+completed before approval.</p>
+<h2 id="what-this-platform-adds-and-why-it-is-an-addition-rather-than-a-reading">
   
   
-    <a href="#1b-import-ordering-and-hygiene" class="anchor-heading" aria-labelledby="1b-import-ordering-and-hygiene"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1b. Import ordering and hygiene
+    <a href="#what-this-platform-adds-and-why-it-is-an-addition-rather-than-a-reading" class="anchor-heading" aria-labelledby="what-this-platform-adds-and-why-it-is-an-addition-rather-than-a-reading"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this platform adds, and why it is an addition rather than a reading
   
   
-</h3>
+</h2>
     
 
-<p><strong>Imports must be at the very top of the file</strong>, before any content
-including <code class="language-plaintext highlighter-rouge">/-! ... -/</code> doc comments. Lean 4 rejects imports after
-non-import content:</p>
+<p><strong>Upstream does not itself state a hard “no code without a spec” rule</strong>, and it
+does not claim its specs are executable. The gate is <em>ours</em>. It is stated here so
+that nobody later cites spec-kit as the authority for a rule spec-kit does not
+carry:</p>
 
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">-- WRONG: doc comment before imports</span>
-<span class="o">/-!</span> <span class="o">#</span> <span class="n">Module</span> <span class="n">docs</span> <span class="o">-/</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">Real</span><span class="o">.</span><span class="n">Basic</span><span class="cd">
+<blockquote>
+  <p>No implementation work on a feature begins before a spec for it exists in the
+declared template and is posted to its governing issue.</p>
+</blockquote>
 
--- RIGHT: imports first, then doc comment</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">Real</span><span class="o">.</span><span class="n">Basic</span>
-<span class="o">/-!</span> <span class="o">#</span> <span class="n">Module</span> <span class="n">docs</span> <span class="o">-/</span>
-</code></pre></div></div>
-
-<p><strong>Ambiguous identifiers from <code class="language-plaintext highlighter-rouge">open</code></strong>: When two opened namespaces
-export the same name (e.g., <code class="language-plaintext highlighter-rouge">Foo.my_lemma</code> vs <code class="language-plaintext highlighter-rouge">Bar.my_lemma</code>), remove
-the less-needed namespace from <code class="language-plaintext highlighter-rouge">open</code> or qualify the ambiguous name.</p>
-
-<p><strong>Explicit Mathlib imports</strong>: Prefer explicit imports for Mathlib
-features used directly (tactics, types) rather than relying on
-transitive imports. This protects against upstream import changes:</p>
-
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">-- Defensive: import what you use</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Data</span><span class="o">.</span><span class="n">Nat</span><span class="o">.</span><span class="n">Prime</span><span class="o">.</span><span class="n">Basic</span><span class="cd">    -- for Nat.Prime</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Tactic</span><span class="o">.</span><span class="n">Omega</span><span class="cd">           -- for omega</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Tactic</span><span class="o">.</span><span class="n">Ring</span><span class="cd">            -- for ring</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Tactic</span><span class="o">.</span><span class="n">Linarith</span><span class="cd">        -- for linarith/nlinarith</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Tactic</span><span class="o">.</span><span class="n">NormNum</span><span class="cd">         -- for norm_num</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Tactic</span><span class="o">.</span><span class="n">Positivity</span><span class="cd">      -- for positivity</span>
-<span class="k">import</span> <span class="n">Mathlib</span><span class="o">.</span><span class="n">Tactic</span><span class="o">.</span><span class="n">FieldSimp</span><span class="cd">       -- for field_simp</span>
-</code></pre></div></div>
-<h3 id="2-unexpected-token--parse-errors">
+<p>Owner, 2026-09-21: <em>“ensure that the spec exists before anything is developed”</em>.</p>
+<h2 id="what-this-platform-refuses-with-reasons">
   
   
-    <a href="#2-unexpected-token--parse-errors" class="anchor-heading" aria-labelledby="2-unexpected-token--parse-errors"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Unexpected token / Parse errors
+    <a href="#what-this-platform-refuses-with-reasons" class="anchor-heading" aria-labelledby="what-this-platform-refuses-with-reasons"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this platform refuses, with reasons
   
   
-</h3>
+</h2>
     
 
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">unexpected token '⟨'; expected command</code></p>
-
-<p><strong>Common causes</strong>:</p>
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">cases with</code> destructuring</strong>: Lean 4’s <code class="language-plaintext highlighter-rouge">cases ... with | inr ⟨a, b⟩ =&gt;</code>
-does NOT support anonymous constructor patterns. Fix: use <code class="language-plaintext highlighter-rouge">rcases</code> instead.</li>
-</ul>
-
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">-- WRONG:</span>
-<span class="n">cases</span> <span class="n">h</span> <span class="k">with</span>
-<span class="o">|</span> <span class="n">inr</span> <span class="o">⟨</span><span class="n">heq</span>, <span class="n">hrest</span><span class="o">⟩</span> <span class="o">=&gt;</span> <span class="o">...</span><span class="cd">
-
--- RIGHT:</span>
-<span class="n">rcases</span> <span class="n">h</span> <span class="k">with</span> <span class="n">hrank</span> <span class="o">|</span> <span class="o">⟨</span><span class="n">heq</span>, <span class="n">hrest</span><span class="o">⟩</span>
-<span class="err">·</span> <span class="o">...</span>
-<span class="err">·</span> <span class="o">...</span>
-</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">methodology-adoption</code> requires both halves stated — a silent omission
+misrepresents the standard.</p>
 
 <ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">set_option ... in</code> placement</strong>: Must come BEFORE doc comments, not between
-<code class="language-plaintext highlighter-rouge">/-- ... -/</code> and the declaration.</li>
+  <li><strong>The on-disk layout.</strong> Upstream keeps a spec at <code class="language-plaintext highlighter-rouge">specs/NNN-feature/spec.md</code>
+and its own state under <code class="language-plaintext highlighter-rouge">.specify/</code>. <strong>Not adopted.</strong> A spec instance here is a
+comment on its governing issue and goes nowhere near the knowledge graph, per
+<code class="language-plaintext highlighter-rouge">where-a-proposal-goes</code> — the owner’s standing rule of 2026-09-19, <em>“do not
+pollute the KG with SDLC churn”</em>. A spec is an argument about what to build,
+superseded the moment it is decided; it has the wrong lifetime for a permanent
+URL and needs none of translation, QA sidecars or link auditing. A <code class="language-plaintext highlighter-rouge">specs/</code>
+directory was drafted while adopting this and withdrawn before it was
+committed. The <strong>template</strong> is durable and belongs in the graph; an
+<strong>instance</strong> is not.
+<code class="language-plaintext highlighter-rouge">.specify/</code> is refused on a second ground as well: this repository’s
+dot-prefix guard rejects a dot-prefixed segment, which is why <code class="language-plaintext highlighter-rouge">.beans/</code> and
+<code class="language-plaintext highlighter-rouge">.harness/</code> were moved out in 2026-09.</li>
+  <li><strong>The <code class="language-plaintext highlighter-rouge">/speckit-*</code> command surface, as a surface.</strong> The <em>method</em> is adopted;
+the concrete command names are upstream’s packaging for tools that install
+slash commands. Adopting names this repository does not serve would be
+adoption by citation — the refusal <code class="language-plaintext highlighter-rouge">methodology-adoption</code> names second.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">constitution</code>, for now.</strong> This repository already has a constitution in
+everything but the name: <code class="language-plaintext highlighter-rouge">AGENTS.md</code>, the skills it points to, and the
+<code class="language-plaintext highlighter-rouge">req:*</code> conformance lattice. A second statement of principles would be a
+second answer to “what binds here”, free to disagree with the first. Revisit
+only if the two are ever reconciled into one.</li>
 </ul>
-
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">-- WRONG:</span>
-<span class="o">/</span><span class="cd">-- Doc comment -/</span>
-<span class="k">set_option</span> <span class="n">linter</span><span class="o">.</span><span class="n">dupNamespace</span> <span class="n">false</span> <span class="n">in</span>
-<span class="n">abbrev</span> <span class="n">Foo</span> := <span class="n">Bar</span><span class="cd">
-
--- RIGHT:</span>
-<span class="k">set_option</span> <span class="n">linter</span><span class="o">.</span><span class="n">dupNamespace</span> <span class="n">false</span> <span class="n">in</span>
-<span class="o">/</span><span class="cd">-- Doc comment -/</span>
-<span class="n">abbrev</span> <span class="n">Foo</span> := <span class="n">Bar</span>
-</code></pre></div></div>
-<h3 id="3-type-mismatch">
+<h2 id="against-crdm--parallel-never-blended">
   
   
-    <a href="#3-type-mismatch" class="anchor-heading" aria-labelledby="3-type-mismatch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Type mismatch
+    <a href="#against-crdm--parallel-never-blended" class="anchor-heading" aria-labelledby="against-crdm--parallel-never-blended"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Against <code class="language-plaintext highlighter-rouge">crdm</code> — parallel, never blended
   
   
-</h3>
+</h2>
     
 
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">Type mismatch ... has type X but is expected to have type Y</code></p>
+<p>Both answer <em>request → agreed requirements</em>. <code class="language-plaintext highlighter-rouge">methodology-adoption</code> is explicit
+that parallel means parallel: pick one per decision, name it, follow it. The
+discriminator is in each one’s <code class="language-plaintext highlighter-rouge">applies-when</code> above and in <code class="language-plaintext highlighter-rouge">crdm-detect</code>’s, and
+the ladder question that reaches them is in <code class="language-plaintext highlighter-rouge">methodology-adoption</code>.</p>
 
-<p><strong>Fix strategy</strong>:</p>
-<ol>
-  <li>Read the full error to understand what type is expected vs provided</li>
-  <li>Check if a rewrite (<code class="language-plaintext highlighter-rouge">rw</code>, <code class="language-plaintext highlighter-rouge">▸</code>) can bridge the gap</li>
-  <li>Check if the wrong overload was selected (e.g., <code class="language-plaintext highlighter-rouge">ℕ</code> vs <code class="language-plaintext highlighter-rouge">ℝ</code> variant)</li>
-  <li>For <code class="language-plaintext highlighter-rouge">Prod.Lex.right</code>: requires equal first components — use <code class="language-plaintext highlighter-rouge">heq ▸</code> to
-rewrite before applying</li>
-</ol>
-<h3 id="4-unsolved-goals">
+<p>The short form, in the owner’s terms: <strong>who is asking, and does the answer depend
+on what a folio says?</strong> Tool developer, content-agnostic → here. Stakeholders who
+must sign it off, tied to WHO/IG subject matter → <code class="language-plaintext highlighter-rouge">crdm</code>.</p>
+<h2 id="refusals">
   
   
-    <a href="#4-unsolved-goals" class="anchor-heading" aria-labelledby="4-unsolved-goals"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Unsolved goals
+    <a href="#refusals" class="anchor-heading" aria-labelledby="refusals"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Refusals
   
   
-</h3>
+</h2>
     
 
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">unsolved goals ... ⊢ &lt;goal&gt;</code></p>
-
-<p><strong>Fix strategy</strong>:</p>
-<ol>
-  <li>Read the goal state carefully</li>
-  <li>Check if the issue is <code class="language-plaintext highlighter-rouge">≤</code> vs <code class="language-plaintext highlighter-rouge">&lt;</code> (strict vs non-strict) — a common
-source of <code class="language-plaintext highlighter-rouge">linarith</code> failures</li>
-  <li>Try tactic alternatives per the standard tactic table:</li>
-</ol>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Goal pattern</th>
-      <th>Try first</th>
-      <th>Then try</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Algebraic identity</td>
-      <td><code class="language-plaintext highlighter-rouge">ring</code></td>
-      <td><code class="language-plaintext highlighter-rouge">field_simp; ring</code></td>
-    </tr>
-    <tr>
-      <td>Non-negativity</td>
-      <td><code class="language-plaintext highlighter-rouge">positivity</code></td>
-      <td><code class="language-plaintext highlighter-rouge">linarith</code></td>
-    </tr>
-    <tr>
-      <td>Numeric</td>
-      <td><code class="language-plaintext highlighter-rouge">norm_num</code></td>
-      <td><code class="language-plaintext highlighter-rouge">linarith</code></td>
-    </tr>
-    <tr>
-      <td>Definitional</td>
-      <td><code class="language-plaintext highlighter-rouge">rfl</code></td>
-      <td><code class="language-plaintext highlighter-rouge">unfold ...; rfl</code></td>
-    </tr>
-    <tr>
-      <td>Diagram/naturality</td>
-      <td><code class="language-plaintext highlighter-rouge">aesop_cat</code></td>
-      <td><code class="language-plaintext highlighter-rouge">slice_lhs</code>/<code class="language-plaintext highlighter-rouge">slice_rhs</code></td>
-    </tr>
-    <tr>
-      <td>Monotonicity</td>
-      <td><code class="language-plaintext highlighter-rouge">gcongr</code></td>
-      <td>explicit lemma</td>
-    </tr>
-    <tr>
-      <td>Anything else</td>
-      <td><code class="language-plaintext highlighter-rouge">simp</code></td>
-      <td><code class="language-plaintext highlighter-rouge">aesop</code></td>
-    </tr>
-  </tbody>
-</table></div>
-
-<ol>
-  <li>If <code class="language-plaintext highlighter-rouge">gcongr</code> closes the goal completely, don’t add further tactics
-(check for “No goals to be solved” on the next line)</li>
-</ol>
-<h3 id="5-application-type-mismatch">
-  
-  
-    <a href="#5-application-type-mismatch" class="anchor-heading" aria-labelledby="5-application-type-mismatch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Application type mismatch
-  
-  
-</h3>
-    
-
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">Application type mismatch: The argument ... has type X but is
-expected to have type Y</code></p>
-
-<p><strong>Common causes</strong>:</p>
 <ul>
-  <li>Using a <code class="language-plaintext highlighter-rouge">ℕ</code>-specific lemma on <code class="language-plaintext highlighter-rouge">ℝ</code> (e.g., <code class="language-plaintext highlighter-rouge">pow_le_pow_left₀</code> is Nat-only)</li>
-  <li>Wrong arity or argument order after API rename</li>
-  <li>Need <code class="language-plaintext highlighter-rouge">le_of_lt</code> or <code class="language-plaintext highlighter-rouge">lt_of_le_of_lt</code> to convert between <code class="language-plaintext highlighter-rouge">&lt;</code> and <code class="language-plaintext highlighter-rouge">≤</code></li>
-</ul>
-<h3 id="6-tactic-made-no-progress">
-  
-  
-    <a href="#6-tactic-made-no-progress" class="anchor-heading" aria-labelledby="6-tactic-made-no-progress"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Tactic made no progress
-  
-  
-</h3>
-    
-
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">'simp' made no progress</code> or <code class="language-plaintext highlighter-rouge">'rw' made no progress</code></p>
-
-<p><strong>Fix</strong>: The expression is already in the target form, or the rewrite
-rule doesn’t match syntactically. Remove the non-progressing tactic or
-replace with a different approach.</p>
-<h3 id="7-no-goals-to-be-solved">
-  
-  
-    <a href="#7-no-goals-to-be-solved" class="anchor-heading" aria-labelledby="7-no-goals-to-be-solved"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. No goals to be solved
-  
-  
-</h3>
-    
-
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">No goals to be solved</code></p>
-
-<p><strong>Fix</strong>: A previous tactic closed the goal completely. Remove the
-subsequent tactic(s) that have nothing left to prove.</p>
-<h3 id="spurious-ℝ-specialisation-the-project-authoring-conventions">
-  
-  
-    <a href="#spurious-ℝ-specialisation-the-project-authoring-conventions" class="anchor-heading" aria-labelledby="spurious-ℝ-specialisation-the-project-authoring-conventions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Spurious ℝ-specialisation (the project authoring conventions)
-  
-  
-</h3>
-    
-
-<p><strong>Pattern</strong>: A categorical / algebraic identity is declared over <code class="language-plaintext highlighter-rouge">ℝ</code>
-without needing any archimedean operation (no <code class="language-plaintext highlighter-rouge">Real.sqrt</code>, <code class="language-plaintext highlighter-rouge">Real.rpow</code>,
-<code class="language-plaintext highlighter-rouge">Real.cos</code>, <code class="language-plaintext highlighter-rouge">Real.exp</code>, <code class="language-plaintext highlighter-rouge">Real.log</code>, no ordering predicate, no
-<code class="language-plaintext highlighter-rouge">linarith</code> / <code class="language-plaintext highlighter-rouge">positivity</code>). Build errors then cascade when a downstream
-consumer wants to instantiate the same identity over <code class="language-plaintext highlighter-rouge">ℚ</code>, <code class="language-plaintext highlighter-rouge">ℂ</code>, or a
-formal power series ring.</p>
-
-<p><strong>Fix</strong>: Refactor the declaration to use a generic type variable
-<code class="language-plaintext highlighter-rouge">{R : Type*}</code> with the weakest typeclass that admits the construction
-(<code class="language-plaintext highlighter-rouge">[CommRing R]</code>, <code class="language-plaintext highlighter-rouge">[Field R]</code>, <code class="language-plaintext highlighter-rouge">[GroupWithZero R]</code>, etc.). Concrete
-<code class="language-plaintext highlighter-rouge">ℝ</code>-evaluations live in a separate file (e.g. under an <code class="language-plaintext highlighter-rouge">evaluations/</code> or
-<code class="language-plaintext highlighter-rouge">observations/</code> subtree) that consumes the generic result via a
-<code class="language-plaintext highlighter-rouge">(R := ℝ)</code> instantiation.</p>
-
-<div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cd">-- Before — ℝ-specialised by accident</span>
-<span class="n">noncomputable</span> <span class="k">def</span> <span class="n">qBracket</span> (<span class="n">q</span> : <span class="err">ℝ</span>) (<span class="n">n</span> : <span class="o">ℕ</span>) : <span class="err">ℝ</span> :=
-  (<span class="n">q</span> <span class="err">^</span> <span class="n">n</span> <span class="o">-</span> <span class="n">q</span> <span class="err">^</span> (<span class="o">-</span>(<span class="n">n</span> : <span class="o">ℤ</span>))) <span class="o">/</span> (<span class="n">q</span> <span class="o">-</span> <span class="n">q</span><span class="o">⁻¹</span>)
-
-<span class="cd">-- After — generic</span>
-<span class="k">def</span> <span class="n">qBracket</span> <span class="err">{</span><span class="n">R</span> : <span class="kt">Type</span><span class="o">*</span><span class="err">}</span> [<span class="n">Field</span> <span class="n">R</span>] (<span class="n">q</span> : <span class="n">R</span>) (<span class="n">n</span> : <span class="o">ℕ</span>) : <span class="n">R</span> :=
-  (<span class="n">q</span> <span class="err">^</span> <span class="n">n</span> <span class="o">-</span> <span class="n">q</span> <span class="err">^</span> (<span class="o">-</span>(<span class="n">n</span> : <span class="o">ℤ</span>))) <span class="o">/</span> (<span class="n">q</span> <span class="o">-</span> <span class="n">q</span><span class="o">⁻¹</span>)
-</code></pre></div></div>
-
-<p>If the declaration <strong>does</strong> cross the archimedean wall, keep <code class="language-plaintext highlighter-rouge">ℝ</code> but
-document the specific archimedean construct in the docstring (e.g.
-<code class="language-plaintext highlighter-rouge">/-- … uses </code>Real.sqrt<code class="language-plaintext highlighter-rouge"> so this is ℝ-specific. -/</code>).</p>
-<h2 id="linter-warning-fixes">
-  
-  
-    <a href="#linter-warning-fixes" class="anchor-heading" aria-labelledby="linter-warning-fixes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Linter Warning Fixes
-  
-  
-</h2>
-    
-<h3 id="dupnamespace">
-  
-  
-    <a href="#dupnamespace" class="anchor-heading" aria-labelledby="dupnamespace"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> dupNamespace
-  
-  
-</h3>
-    
-
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">The namespace 'Foo' is duplicated in the declaration 'X.Foo.Foo'</code></p>
-
-<p><strong>Fix</strong>: When a structure/abbrev name matches its enclosing namespace
-(intentional), suppress with <code class="language-plaintext highlighter-rouge">set_option linter.dupNamespace false in</code>
-placed BEFORE the doc comment.</p>
-<h3 id="unused-variable">
-  
-  
-    <a href="#unused-variable" class="anchor-heading" aria-labelledby="unused-variable"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Unused variable
-  
-  
-</h3>
-    
-
-<p><strong>Pattern</strong>: <code class="language-plaintext highlighter-rouge">unused variable 'x'</code></p>
-
-<p><strong>Fix</strong>: Prefix with underscore: <code class="language-plaintext highlighter-rouge">x</code> → <code class="language-plaintext highlighter-rouge">_x</code></p>
-<h3 id="declaration-uses-sorry">
-  
-  
-    <a href="#declaration-uses-sorry" class="anchor-heading" aria-labelledby="declaration-uses-sorry"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Declaration uses sorry
-  
-  
-</h3>
-    
-
-<p><strong>Not a fix target</strong> — these are expected incomplete proofs with
-bibliographic citations. Only flag if the <code class="language-plaintext highlighter-rouge">sorry</code> lacks a <code class="language-plaintext highlighter-rouge">-- Ref:</code> comment.</p>
-<h2 id="iteration-protocol">
-  
-  
-    <a href="#iteration-protocol" class="anchor-heading" aria-labelledby="iteration-protocol"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Iteration Protocol
-  
-  
-</h2>
-    
-
-<ol>
-  <li><strong>Collect all errors</strong> from the build output before fixing anything</li>
-  <li><strong>Group by file</strong> — fix all errors in one file before moving to the next</li>
-  <li><strong>Fix errors before warnings</strong> — errors block the build; warnings don’t</li>
-  <li><strong>After each file’s fixes</strong>, verify with <code class="language-plaintext highlighter-rouge">lean_diagnostic_messages</code> (MCP)
-or a targeted rebuild</li>
-  <li><strong>Commit after each logical group</strong> of fixes with a descriptive message
-explaining what was broken and why</li>
-  <li><strong>Final full build</strong> to confirm zero errors</li>
-  <li><strong>Warning pass</strong> — address fixable warnings (dupNamespace, unused vars)</li>
-  <li><strong>Final commit and push</strong></li>
-</ol>
-<h2 id="commit-message-convention">
-  
-  
-    <a href="#commit-message-convention" class="anchor-heading" aria-labelledby="commit-message-convention"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Commit Message Convention
-  
-  
-</h2>
-    
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Fix Lean build errors: &lt;summary&gt;
-
-&lt;File&gt;:
-- &lt;old API/syntax&gt; → &lt;new API/syntax&gt; (&lt;reason&gt;)
-
-&lt;File&gt;:
-- &lt;description of fix&gt;
-</code></pre></div></div>
-<h2 id="checklist">
-  
-  
-    <a href="#checklist" class="anchor-heading" aria-labelledby="checklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checklist
-  
-  
-</h2>
-    
-
-<ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All <code class="language-plaintext highlighter-rouge">error:</code> lines from build output are resolved</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All fixable <code class="language-plaintext highlighter-rouge">warning:</code> lines are resolved</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No new <code class="language-plaintext highlighter-rouge">sorry</code> introduced without <code class="language-plaintext highlighter-rouge">-- Ref:</code> citation</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">lake build</code> passes with zero errors</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Changes committed with descriptive messages</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Changes pushed to the working branch</li>
+  <li><strong>Never blend this with <code class="language-plaintext highlighter-rouge">crdm</code>.</strong> A composite inherits neither one’s authority
+while claiming both.</li>
+  <li><strong>Never resolve a <code class="language-plaintext highlighter-rouge">[NEEDS CLARIFICATION]</code> by agent judgement.</strong>
+<code class="language-plaintext highlighter-rouge">req:agent-workflow</code> → <code class="language-plaintext highlighter-rouge">judgement-stays-human</code> (SHALL) applies unchanged: an
+agent does not record a human’s decision on their behalf. A marker silently
+closed is worse than one never raised, because it looks answered.</li>
+  <li><strong>Never let a spec reach adjudicated status with a marker open.</strong> Otherwise
+the marker becomes a way of appearing to ask without having asked.</li>
+  <li><strong>Never cite spec-kit for the spec-before-code gate.</strong> It is this platform’s
+addition, stated above.</li>
 </ul>
 
           

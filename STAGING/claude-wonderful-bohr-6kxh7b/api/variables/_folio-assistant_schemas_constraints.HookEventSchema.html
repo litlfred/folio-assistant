@@ -60,7 +60,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <li><a href="../modules/_folio-assistant_schemas_constraints.html">@folio-assistant/schemas/constraints</a></li>
 <li><a href="" aria-current="page">HookEventSchema</a></li></ul>
 <h1>Variable HookEventSchema<code class="tsd-tag">Const</code></h1></div>
-<div class="tsd-signature"><span class="tsd-kind-variable">HookEventSchema</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ZodEnum</span><span class="tsd-signature-symbol">&lt;</span><br/>    <span class="tsd-signature-symbol">{</span><br/>        <span class="tsd-kind-property">PostCommit</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;PostCommit&quot;</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">PostToolUse</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;PostToolUse&quot;</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">PreCommit</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;PreCommit&quot;</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">PreToolUse</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;PreToolUse&quot;</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">SessionStart</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;SessionStart&quot;</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">UserPromptSubmit</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;UserPromptSubmit&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+<div class="tsd-signature"><span class="tsd-kind-variable">HookEventSchema</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ZodEnum</span><span class="tsd-signature-symbol">&lt;</span><br/>    <span class="tsd-signature-symbol">{</span><br/>        <span class="tsd-kind-property">PostCommit</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;PostCommit&quot;</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">PostToolUse</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;PostToolUse&quot;</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">PreCommit</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;PreCommit&quot;</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">PreToolUse</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;PreToolUse&quot;</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">SessionStart</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;SessionStart&quot;</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">Stop</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;Stop&quot;</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">UserPromptSubmit</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;UserPromptSubmit&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 <div class="tsd-comment tsd-typography"><p>The lifecycle points a hook can bind to.</p>
 <p><code>PreToolUse</code> was MISSING until 2026-09-20 and its absence was not academic:
 <code>interaction-modality</code> §4.1 is a STRICT rule about how a question is put to
@@ -74,9 +74,21 @@ the instance cannot express, and it fails at the REGISTRY rather than at the
 hook — <code>.claude/settings.json</code> accepted the entry and the generated skill
 registry refused it. That is the right order (the gate caught it) and it is
 still a gap: the hook was live and unrepresentable at the same time.</p>
+<p><strong>It grew again on 2026-09-26, exactly as predicted above, and <code>Stop</code> is the
+addition.</strong> <code>interaction-modality</code> §4.1's three enforcement layers are each
+keyed on the agent CHOOSING to ask — a tool call, or a rendered schema — and
+the failure the owner named twice that day routes around all three: a closing
+paragraph of an ordinary turn that lists open decisions by name with none of
+their terms. No tool is called, so <code>PreToolUse</code> cannot see it; the turn is
+over, so nothing later can. <code>Stop</code> is the only point at which that paragraph
+exists and the turn has not yet been handed back.</p>
+<p>The paragraph above described the symptom precisely — live and
+unrepresentable — and that is what happened: the hook ran and the registry
+refused it. Worth keeping as evidence that the prediction was load-bearing
+rather than decorative.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/wonderful-bohr-6kxh7b/cat-harness/schemas/skill-package.ts#L87">skill-package.ts:87</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/wonderful-bohr-6kxh7b/cat-harness/schemas/skill-package.ts#L101">skill-package.ts:101</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

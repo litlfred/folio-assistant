@@ -273,22 +273,22 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T10:46:33.018Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b2fde610822cec44ddcbac99bcf5a010833b7f6d",
-  "sourceCommitSha": "b2fde610822cec44ddcbac99bcf5a010833b7f6d",
-  "sourceCommitAt": "2026-09-26T10:43:11Z",
+  "generatedAt": "2026-09-26T11:25:17.292Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9613780dbbaf4a09c8f7f29a6bbf036affd503bf",
+  "sourceCommitSha": "9613780dbbaf4a09c8f7f29a6bbf036affd503bf",
+  "sourceCommitAt": "2026-09-26T11:22:20Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 271,
+    "Skill": 272,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
-    "SkillPackage": 19,
+    "SkillPackage": 20,
     "Process": 71,
-    "SequenceFlow": 908,
+    "SequenceFlow": 910,
     "Role": 148,
-    "ProcessNode": 860,
+    "ProcessNode": 861,
     "Tool": 101,
     "Schema": 123,
     "GraphKind": 34,
@@ -885,11 +885,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "crdm-detect",
       "title": "Feature-request detection (CRDM trigger)",
+      "description": "Detect when a request needs requirements agreed before anything is built, and which of the two parallel requirements methodologies governs it.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-detect.md",
-      "instructionLines": 241,
+      "instructionLines": 281,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/skills/crdm-detect/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/skills/crdm-detect/output.schema.json",
       "hasInstructions": true,
@@ -2088,7 +2089,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 519,
+      "instructionLines": 542,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2680,7 +2681,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/methodology-adoption.md",
-      "instructionLines": 202,
+      "instructionLines": 233,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3204,7 +3205,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/bean-blocking.md",
-      "instructionLines": 71,
+      "instructionLines": 117,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4724,6 +4725,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/specification-compiled-agents"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#skill/spec-kit",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "spec-kit",
+      "title": "Spec Kit — spec-driven development",
+      "description": "Spec-driven development, adopted whole: define what and why before deciding how, and do not develop before a spec exists. Carries what this platform adopts and — separately, with reasons — what it refuses.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#package/spec-kit"
+      ],
+      "instructionsPath": "skills/spec-kit/spec-kit.md",
+      "instructionLines": 146,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/spec-kit"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#skill/normative-statements",
@@ -6575,6 +6593,22 @@
       "requiresCapability": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#package/spec-kit",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "spec-kit",
+      "version": "0.1.0",
+      "description": "Spec Kit — spec-driven development for platform feature work, adopted whole from github/spec-kit. A skill package, as CRDM became (skills/crdm/): placed here on the owner's decision of 2026-09-26 rather than as a methodologies/ subgraph, the shape removed on 2026-09-22. PARALLEL to crdm rather than composed with it: crdm governs stakeholder-facing WHO/IG work, spec-kit governs folio-assistant feature development by tool developers. Which applies is a question of who is asking and whether the answer depends on what a folio says; the question itself is in methodology-adoption's ladder, and the answers are in each methodology's applies-when.",
+      "path": "skills/spec-kit",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#skill/spec-kit"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/spec-kit"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#package/folio-document-adapter",
@@ -22780,8 +22814,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change"
       ],
-      "nodeCount": 12,
-      "flowCount": 16,
+      "nodeCount": 13,
+      "flowCount": 18,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates"
     },
@@ -22932,6 +22966,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "Pull request, push to main,&#10;or dispatch",
@@ -22952,7 +23004,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "All six,&#10;in parallel",
+      "name": "All seven,&#10;in parallel",
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates",
@@ -22969,7 +23021,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_3",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_4",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork"
@@ -23021,7 +23074,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_TypeScript",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD)",
+      "name": "TypeScript: lint, types&#10;and tests (HARD)",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates",
@@ -23107,6 +23160,28 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Repository gates&#10;(HARD)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#skill/platform-gates"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
       "name": "GW_Join",
@@ -23123,7 +23198,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_8",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_9",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_11"
@@ -43480,8 +43556,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-bohr-6kxh7b",
-    "sha": "8388268819a423f2bd433e9129d31b7dbf84679b",
+    "sha": "84a47bb4eeccdef53eb14682820a6cdbcc01294c",
     "pr": "1390/merge",
-    "run": "36236637763"
+    "run": "36238617415"
   }
 }
