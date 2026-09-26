@@ -272,10 +272,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T19:49:36.096Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/877aade245f9a79d1872af34fe38a704436e43fb",
-  "sourceCommitSha": "877aade245f9a79d1872af34fe38a704436e43fb",
-  "sourceCommitAt": "2026-09-26T21:46:41+02:00",
+  "generatedAt": "2026-09-26T19:55:38.199Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3c9cdf0df3ed099ffc3cc024e9135f37c68ad7a5",
+  "sourceCommitSha": "3c9cdf0df3ed099ffc3cc024e9135f37c68ad7a5",
+  "sourceCommitAt": "2026-09-26T21:53:26+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -19319,7 +19319,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate/node/Task_RoundTrip",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Round-trip translation QA",
+      "name": {
+        "@value": "Двусторонний контроль качества перевода",
+        "@language": "ru"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate",
@@ -20848,7 +20851,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_Extract",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Extract structure",
+      "name": {
+        "@value": "Извлечение структуры",
+        "@language": "ru"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
@@ -20911,7 +20917,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_IngestTheme",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Ingest the theme",
+      "name": {
+        "@value": "Загрузка темы оформления",
+        "@language": "ru"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
@@ -20932,7 +20941,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_BuildKg",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Build the L1 knowledge graph",
+      "name": {
+        "@value": "Построение графа знаний L1",
+        "@language": "ru"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
@@ -20954,7 +20966,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_Gate",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "L1 completeness gate",
+      "name": {
+        "@value": "Шлюз полноты L1",
+        "@language": "ru"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
@@ -25031,7 +25046,10 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HumanTranslation/node/Task_RoundTripQA",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Round-trip translation QA",
+      "name": {
+        "@value": "Двусторонний контроль качества перевода",
+        "@language": "ru"
+      },
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HumanTranslation",
