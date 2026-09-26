@@ -273,18 +273,18 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T10:12:15.559Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c39418e791c1eb8539f59a692301826d5d35d504",
-  "sourceCommitSha": "c39418e791c1eb8539f59a692301826d5d35d504",
-  "sourceCommitAt": "2026-09-26T10:09:39Z",
+  "generatedAt": "2026-09-26T11:25:51.675Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/75150734cae0b59f86f9d688275b36d243eae845",
+  "sourceCommitSha": "75150734cae0b59f86f9d688275b36d243eae845",
+  "sourceCommitAt": "2026-09-26T11:23:54Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 272,
+    "Skill": 273,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
-    "SkillPackage": 19,
+    "SkillPackage": 20,
     "Process": 71,
     "SequenceFlow": 908,
     "Role": 148,
@@ -885,11 +885,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "crdm-detect",
       "title": "Feature-request detection (CRDM trigger)",
+      "description": "Detect when a request needs requirements agreed before anything is built, and which of the two parallel requirements methodologies governs it.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-detect.md",
-      "instructionLines": 241,
+      "instructionLines": 281,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/skills/crdm-detect/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/skills/crdm-detect/output.schema.json",
       "hasInstructions": true,
@@ -2000,12 +2001,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "skill-registration",
       "title": "Adding a skill",
-      "description": "Adding a skill is never a one-file change. What a new skill file owes, the one command that performs all of it, why running that command once is not enough, and the two orphan directions it reports rather than fixes. Read this before adding, renaming or removing a skill.",
+      "description": "Adding a skill is never a one-file change. What a new skill file owes, the one command that performs the derived half, the one declaration it deliberately leaves to you, why running it once is not enough, and the two orphan directions it reports rather than fixes. Read this before adding, renaming or removing a skill.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/skill-registration.md",
-      "instructionLines": 97,
+      "instructionLines": 129,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2105,7 +2106,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 519,
+      "instructionLines": 542,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2697,7 +2698,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/methodology-adoption.md",
-      "instructionLines": 202,
+      "instructionLines": 233,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3221,7 +3222,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/bean-blocking.md",
-      "instructionLines": 71,
+      "instructionLines": 117,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4741,6 +4742,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/specification-compiled-agents"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/spec-kit",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "spec-kit",
+      "title": "Spec Kit — spec-driven development",
+      "description": "Spec-driven development, adopted whole: define what and why before deciding how, and do not develop before a spec exists. Carries what this platform adopts and — separately, with reasons — what it refuses.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#package/spec-kit"
+      ],
+      "instructionsPath": "skills/spec-kit/spec-kit.md",
+      "instructionLines": 146,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/spec-kit"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/normative-statements",
@@ -6593,6 +6611,22 @@
       "requiresCapability": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#package/spec-kit",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "spec-kit",
+      "version": "0.1.0",
+      "description": "Spec Kit — spec-driven development for platform feature work, adopted whole from github/spec-kit. A skill package, as CRDM became (skills/crdm/): placed here on the owner's decision of 2026-09-26 rather than as a methodologies/ subgraph, the shape removed on 2026-09-22. PARALLEL to crdm rather than composed with it: crdm governs stakeholder-facing WHO/IG work, spec-kit governs folio-assistant feature development by tool developers. Which applies is a question of who is asking and whether the answer depends on what a folio says; the question itself is in methodology-adoption's ladder, and the answers are in each methodology's applies-when.",
+      "path": "skills/spec-kit",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/spec-kit"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/spec-kit"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#package/folio-document-adapter",
@@ -43663,8 +43697,8 @@
   ],
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "b1a6bdf7144fb4d64e9c1e85a20a5134ab670f81",
+    "sha": "133fc38b75e96becbe3fdd71768bca5baf7a2303",
     "pr": "1361/merge",
-    "run": "36234946149"
+    "run": "36238697054"
   }
 }
