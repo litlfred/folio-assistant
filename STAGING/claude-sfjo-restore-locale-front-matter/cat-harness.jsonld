@@ -276,14 +276,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T19:59:53.542Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6324143837435e609f9374962a78d424fd98f619",
-  "sourceCommitSha": "6324143837435e609f9374962a78d424fd98f619",
-  "sourceCommitAt": "2026-09-26T19:58:02Z",
+  "generatedAt": "2026-09-26T20:42:00.668Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a70cb19eb2ae724d0e1448d4501bee5036d27a1e",
+  "sourceCommitSha": "a70cb19eb2ae724d0e1448d4501bee5036d27a1e",
+  "sourceCommitAt": "2026-09-26T20:40:09Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 272,
+    "Skill": 273,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
@@ -292,7 +292,7 @@
     "SequenceFlow": 912,
     "Role": 148,
     "ProcessNode": 862,
-    "Tool": 101,
+    "Tool": 104,
     "Schema": 126,
     "GraphKind": 35,
     "Directory": 44,
@@ -1998,6 +1998,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-heatmap"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/skill-registration",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "skill-registration",
+      "title": "Adding a skill",
+      "description": "Adding a skill is never a one-file change. What a new skill file owes, the one command that performs the derived half, the one declaration it deliberately leaves to you, why running it once is not enough, and the two orphan directions it reports rather than fixes. Read this before adding, renaming or removing a skill.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/skill-registration.md",
+      "instructionLines": 129,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skill-registration"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/glossary-build",
@@ -6220,7 +6237,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "crdm",
       "version": "0.1.0",
-      "description": "CRDM — the requirements methodology: how a feature request becomes agreed, signed-off requirements. Its three skills; its eight diagrams live in the instance's own `processes/`. RELOCATED 2026-09-22 from `methodologies/crdm/` on the owner's \"dont bury sub-graph assets\", which also brought this package into skill QA for the first time: bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so while these three sat under `methodologies/` they were silently outside it — and `check:skills` had never validated this manifest, which is why it was missing every field below.",
+      "description": "CRDM — the requirements methodology: how a feature request becomes agreed, signed-off requirements. Its six skills — three governing the methodology and three detailing a single phase (needs assessment, the requirements template, impact analysis); its eight diagrams live in the instance's own `processes/`. RELOCATED 2026-09-22 from `methodologies/crdm/` on the owner's \"dont bury sub-graph assets\", which also brought this package into skill QA for the first time: bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so while these three sat under `methodologies/` they were silently outside it — and `check:skills` had never validated this manifest, which is why it was missing every field below.",
       "path": "skills/crdm",
       "hasManifest": true,
       "declaresSkill": [
@@ -6370,6 +6387,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/one-voice-style-guide",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/ontologist",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/opening-brief",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/package-release",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/pending-show",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/pickup",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/placement",
@@ -6395,6 +6413,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/scientific-accuracy",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/session-intent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/skill-registration",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/surprise-to-corpus",
@@ -6427,8 +6446,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/watch",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/where-a-proposal-goes",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/where-does-this-go",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/wireframe-design-review",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/package-release"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/wireframe-design-review"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#capability/git-push",
@@ -36147,6 +36165,171 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/latex-overfull"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#tool/tex-snippet-validate",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "tex-snippet-validate",
+      "title": "TeX snippet validation (AST)",
+      "description": "Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/content/pipeline/validate-tex.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "paper",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/tool-types.schema.json#/$defs/Slug",
+            "description": "One folio by slug. Absent, every folio the content root holds.",
+            "required": false,
+            "arg": {
+              "flag": "--paper"
+            }
+          },
+          {
+            "name": "file",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A single `.md` block, for the narrow case.",
+            "required": false,
+            "arg": {
+              "flag": "--file"
+            }
+          },
+          {
+            "name": "compile",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/tool-types.schema.json#/$defs/Flag",
+            "description": "Also compile each snippet with pdflatex — needs a TeX distribution, which the base `requires` does NOT claim.",
+            "required": false,
+            "arg": {
+              "flag": "--compile"
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/tool-types.schema.json#/$defs/Flag",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          },
+          {
+            "name": "warningsLog",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Write a QA-compatible log to this path.",
+            "required": false,
+            "arg": {
+              "flag": "--warnings-log"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/tool-types.schema.json#/$defs/Text",
+            "description": "Per snippet, what will not compile. Run in the platform it reports `Files scanned: 0` and exits 1 — measured. That is a could-not-determine wearing a finding's exit code: this repository carries no folio, so there was nothing to scan. Read the scanned count before reading the verdict."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/latex-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/tex-snippet-validate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#tool/tex-source-audit",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "tex-source-audit",
+      "title": "TeX-source hazard audit",
+      "description": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/content/pipeline/audit-tex-source.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "strict",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/tool-types.schema.json#/$defs/Flag",
+            "description": "Exit 1 on any finding, for use as a gate.",
+            "required": false,
+            "arg": {
+              "flag": "--strict"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/tool-types.schema.json#/$defs/Text",
+            "description": "Hazards with file and line, plus a committed sidecar. Its refusal is the model of the pair: run where no folio exists it says `No .md files found … refusing to report success. This audits a FOLIO's content; folio-assistant is the platform.` — then exits 1, where 2 is the house value for could-not-determine. The MESSAGE is right and the exit code is not."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/latex-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/tex-source-audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#tool/headless-render-qc",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "headless-render-qc",
+      "title": "Headless render QC (Playwright)",
+      "description": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/headless-render-qc.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "screenshot",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/tool-types.schema.json#/$defs/Flag",
+            "description": "Save the screenshots as well as the verdict — which is the point when the reader is a person rather than a gate.",
+            "required": false,
+            "arg": {
+              "flag": "--screenshot"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/tool-types.schema.json#/$defs/Text",
+            "description": "Per block: rendered, or the failure. Needs a FOLIO's `build/viewer/paper.json` and its `folio-assistant/ui`, so it exits 1 with `No paper.json found` in the platform — could-not-determine, again spelled 1 rather than 2."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "chromium"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#skill/rendered-verification"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/headless-render-qc"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/cat-harness.jsonld#tool/lean-build",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "lean-build",
@@ -43636,8 +43819,8 @@
   ],
   "staging": {
     "branch": "claude/sfjo-restore-locale-front-matter",
-    "sha": "1d1ae7d2b48596e8741e3589110c5af2a98e71e9",
+    "sha": "dcdd448cf62380054cb015ad929d6c41a2a26072",
     "pr": "1430/merge",
-    "run": "36267866178"
+    "run": "36270320420"
   }
 }

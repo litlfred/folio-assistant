@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/css/docs-ui.css?v=1790452744">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/css/docs-ui.css?v=1790455272">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/css/narrow-viewport.css?v=1790452744">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/css/narrow-viewport.css?v=1790455272">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/css/work-plan.css?v=1790452744">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/css/work-plan.css?v=1790455272">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/css/themes.css?v=1790452744">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/css/themes.css?v=1790455272">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/css/uml.css?v=1790452744">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/css/uml.css?v=1790455272">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/css/avatars.css?v=1790452744">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/css/avatars.css?v=1790455272">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/js/docs-ui.js?v=1790452744" defer></script>
+<script src="/folio-assistant/STAGING/claude-sfjo-restore-locale-front-matter/assets/js/docs-ui.js?v=1790455272" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -805,9 +805,9 @@ is <code class="language-plaintext highlighter-rouge">satisfies</code>, and it r
 to do that</em>, never <em>this skill is a tool</em>.</p>
 
 <div class="tg-grid">
-<div class="tg-stat"><b>101</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>62</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>81</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>104</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>63</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>84</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>23</b><span>reachable over MCP</span></div>
 </div>
 <h2 id="how-they-are-invoked-and-installed">
@@ -831,7 +831,7 @@ to do that</em>, never <em>this skill is a tool</em>.</p>
   <tbody>
     <tr>
       <td><span class="tg-tag tg-shell">shell</span></td>
-      <td>81</td>
+      <td>84</td>
     </tr>
     <tr>
       <td><span class="tg-tag tg-inproc">inProcess</span></td>
@@ -858,7 +858,7 @@ to do that</em>, never <em>this skill is a tool</em>.</p>
   <tbody>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">none</code></td>
-      <td>92</td>
+      <td>95</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">cli</code></td>
@@ -875,7 +875,7 @@ to do that</em>, never <em>this skill is a tool</em>.</p>
 </h2>
     
 
-<p>Yes — all <strong>62</strong> skills named across <strong>101</strong> tools resolve to a
+<p>Yes — all <strong>63</strong> skills named across <strong>104</strong> tools resolve to a
 skill document in this checkout. A <code class="language-plaintext highlighter-rouge">satisfies</code> pointing at nothing would be a
 tool advertising a capability the graph cannot locate.</p>
 <h2 id="every-tool">
@@ -1086,6 +1086,13 @@ tool advertising a capability the graph cannot locate.</p>
       <td><span class="tg-tag tg-shell">shell</span></td>
       <td><code class="language-plaintext highlighter-rouge">document-intake</code></td>
       <td>2 in / 1 out</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">headless-render-qc</code><br />Headless render QC (Playwright)</td>
+      <td>Drive a folio’s built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with <code class="language-plaintext highlighter-rouge">--screenshot</code> to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering.</td>
+      <td><span class="tg-tag tg-shell">shell</span></td>
+      <td><code class="language-plaintext highlighter-rouge">rendered-verification</code></td>
+      <td>1 in / 1 out</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">ingest-extended</code><br />Ingest, with PDF and image extensions</td>
@@ -1414,6 +1421,20 @@ tool advertising a capability the graph cannot locate.</p>
       <td>STUB — not implemented. Would read a workbook into a CSVW TableGroup: one table per sheet, with the location CSVW cannot express (<code class="language-plaintext highlighter-rouge">fac:anchor</code>, <code class="language-plaintext highlighter-rouge">fac:headerRow</code>, <code class="language-plaintext highlighter-rouge">fac:extent</code>) carried as annotations on valid CSVW. A workbook is the case that motivates those terms: tables that do not start at A1, headers that are not row 1, several tables on one sheet.</td>
       <td><span class="tg-tag tg-manual">manual</span></td>
       <td><code class="language-plaintext highlighter-rouge">tabular-metadata</code></td>
+      <td>1 in / 1 out</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">tex-snippet-validate</code><br />TeX snippet validation (AST)</td>
+      <td>Parse every <code class="language-plaintext highlighter-rouge">tex</code> snippet in a folio’s blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to <code class="language-plaintext highlighter-rouge">latex-preflight</code>, which gates a main.tex before a compile, and to <code class="language-plaintext highlighter-rouge">latex-overfull</code>, which reads a log after one.</td>
+      <td><span class="tg-tag tg-shell">shell</span></td>
+      <td><code class="language-plaintext highlighter-rouge">latex-validation</code></td>
+      <td>5 in / 1 out</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">tex-source-audit</code><br />TeX-source hazard audit</td>
+      <td>Catch the source patterns that crash pdflatex but read as ordinary prose — a bare <code class="language-plaintext highlighter-rouge">_</code> or <code class="language-plaintext highlighter-rouge">^</code> in a bibliography field, <code class="language-plaintext highlighter-rouge">\|</code> inside a markdown table cell where it is also the column separator, a <code class="language-plaintext highlighter-rouge">$…$</code> span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion.</td>
+      <td><span class="tg-tag tg-shell">shell</span></td>
+      <td><code class="language-plaintext highlighter-rouge">latex-validation</code></td>
       <td>1 in / 1 out</td>
     </tr>
     <tr>
