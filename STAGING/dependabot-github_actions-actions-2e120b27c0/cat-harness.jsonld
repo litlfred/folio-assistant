@@ -273,26 +273,26 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-25T04:52:45.326Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e9c627eefd104e43e4bd3a89c6ce4cab5a20b651",
-  "sourceCommitSha": "e9c627eefd104e43e4bd3a89c6ce4cab5a20b651",
-  "sourceCommitAt": "2026-09-25T04:50:51Z",
+  "generatedAt": "2026-09-26T03:52:42.810Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bfe1ed46119dd76078dc0504f03277c2615a753d",
+  "sourceCommitSha": "bfe1ed46119dd76078dc0504f03277c2615a753d",
+  "sourceCommitAt": "2026-09-26T05:50:48+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 260,
+    "Skill": 270,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
-    "SkillPackage": 18,
+    "SkillPackage": 19,
     "Process": 71,
     "SequenceFlow": 908,
     "Role": 148,
     "ProcessNode": 860,
     "Tool": 101,
-    "Schema": 122,
+    "Schema": 123,
     "GraphKind": 34,
-    "Directory": 43,
+    "Directory": 44,
     "Asset": 3
   },
   "@graph": [
@@ -797,6 +797,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/domain-fencing"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/crdm-needs-assessment",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "crdm-needs-assessment",
+      "title": "Phase 1 — Needs assessment (detail)",
+      "description": "Facilitate Phase 1 (Needs Assessment) of the CRDM requirements workflow. Guide the BA through stakeholder identification, source material gathering, and synthesising a domain-language needs statement. Post to the GitHub issue and iterate until the BA confirms the need is correctly captured.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/crdm"
+      ],
+      "instructionsPath": "skills/crdm/crdm-needs-assessment.md",
+      "instructionLines": 114,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-needs-assessment"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/crdm-requirements-workflow",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "crdm-requirements-workflow",
@@ -805,7 +822,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-requirements-workflow.md",
-      "instructionLines": 419,
+      "instructionLines": 480,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -830,6 +847,40 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-data-model"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/crdm-impact-analysis",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "crdm-impact-analysis",
+      "title": "Phase 4 — Impact analysis (detail)",
+      "description": "Guide for CRDM Phase 4 — Impact Analysis and Migration Planning. Systematic scan across 7 dimensions: schema, pipeline, adapter, folio, skill, migration, and test/documentation impact. Produces a structured assessment for posting to the GitHub issue.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/crdm"
+      ],
+      "instructionsPath": "skills/crdm/crdm-impact-analysis.md",
+      "instructionLines": 135,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-impact-analysis"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/crdm-requirements-template",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "crdm-requirements-template",
+      "title": "Phase 3 — Requirements definition (detail)",
+      "description": "Guide and template for CRDM Phase 3 — Requirements Definition. Helps the agent structure requirements from conversation using a REQ-### format with acceptance criteria, priority, and traceability.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/crdm"
+      ],
+      "instructionsPath": "skills/crdm/crdm-requirements-template.md",
+      "instructionLines": 124,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-template"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/crdm-detect",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "crdm-detect",
@@ -846,6 +897,57 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-detect"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/path-containment",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "path-containment",
+      "title": "Path containment — two questions that look like one",
+      "description": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/security"
+      ],
+      "instructionsPath": "skills/security/path-containment.md",
+      "instructionLines": 57,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/path-containment"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/injection-boundaries",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "injection-boundaries",
+      "title": "Injection — the value became program",
+      "description": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the existing gate covers, the one latent gap in its model, and the argv rule.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/security"
+      ],
+      "instructionsPath": "skills/security/injection-boundaries.md",
+      "instructionLines": 53,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/injection-boundaries"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/security",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "security",
+      "title": "Security — one question, asked at every boundary",
+      "description": "The security sub-KG's entry point. What the boundaries are, which machinery already guards each one, and the single rule that unifies them — refuse, never repair. Read this before adding a check, so the answer that already exists is reused rather than rebuilt in a fourth place.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/security"
+      ],
+      "instructionsPath": "skills/security/security.md",
+      "instructionLines": 72,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/security"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/hypothesis-generation",
@@ -1566,7 +1668,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/session-intent.md",
-      "instructionLines": 257,
+      "instructionLines": 263,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2020,7 +2122,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 569,
+      "instructionLines": 589,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2359,7 +2461,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 529,
+      "instructionLines": 540,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2516,6 +2618,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/surprise-to-corpus"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/decision-methodology-selector",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "decision-methodology-selector",
+      "title": "Decision methodology selector",
+      "description": "Given a decision context, select the applicable methodology from the methodology graph. Reads the graph's applies-when declarations, matches them against the context, and returns the ranked applicable methods with rationale. Extends methodology-adoption's four-question protocol with quantitative method-selection criteria from the MCDM literature.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/decision-methodology-selector.md",
+      "instructionLines": 167,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-methodology-selector"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/ci-health",
@@ -4419,6 +4538,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/process-state"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/code-review-process",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "code-review-process",
+      "title": "Code review process — from PR to release approval",
+      "description": "Where code review sits in the release lifecycle. Review types, who reviews what, how feedback maps to beans, and the path from review to approval to release. Works with prepare-merge-auto for mechanics and release-lifecycle for the broader flow.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/code-review-process.md",
+      "instructionLines": 73,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-review-process"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/session-state-machine",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "session-state-machine",
@@ -4471,6 +4607,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-authoring"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/release-lifecycle",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "release-lifecycle",
+      "title": "Release lifecycle — process and policy",
+      "description": "Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases. Applies to code releases, paper publications, and project milestones. Complements package-release (which handles the mechanics of cutting a release) with the process and policy layer.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/release-lifecycle.md",
+      "instructionLines": 115,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-lifecycle"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/workflow-state",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "workflow-state",
@@ -4486,6 +4639,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/workflow-state"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/branch-freshness",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "branch-freshness",
+      "title": "Branch freshness — stay current with main",
+      "description": "Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan. Prevents stale assumptions, merge conflicts, and duplicated work — especially after session restarts, long idle periods, or heavy sibling activity on main.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/branch-freshness.md",
+      "instructionLines": 113,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-freshness"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/deterministic-and-agentic",
@@ -6026,6 +6196,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/security",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "security",
+      "version": "0.1.0",
+      "description": "The security sub-KG, split on WHERE A VALUE CROSSES A BOUNDARY rather than on attack name. The owner asked for it on 2026-09-25 — \"bean as ceybeesquity sub KG in tools. first is injection et. related skills already man y in folio and smart-base. consolidate\" — and chose scope 2+3: consolidate the scattered pieces AND audit every I/O site. The axis matters: an attack-name split (\"XSS\", \"path traversal\", \"command injection\") files one rule in three places, because the same value crossing the same boundary is all three depending on the sink. A boundary split asks the question a reader actually has at the call site: this value came from outside, what may I do with it? Every entry here existed before the package did and was stranded — `check-workflow-injection.ts` in scripts, `resolveWithin` in one server script, `translation_security.py` in the translation tooling, and the XSS rules in a bean. Beans `6bhf`, `1wef`, `fuzm`, `q2wm`.",
+      "path": "skills/security",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/security",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/path-containment",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/injection-boundaries"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#package/hypothesis-generation",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "hypothesis-generation",
@@ -6086,6 +6274,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/data-modelling",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/decision-audit",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/decision-comparison",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/decision-methodology-selector",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/deletion-requires-confirmation",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/delivery-summary",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/deployment-auth",
@@ -6198,7 +6387,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/where-a-proposal-goes",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/where-does-this-go",
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/wireframe-design-review",
-        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/package-release"
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/package-release",
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#skill/decision-methodology-selector"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#capability/git-push",
@@ -40603,6 +40793,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/dak"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#schema/decision-methodology-context",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "decision-methodology-context",
+      "title": "The context an agent provides when asking \"which decision methodology fits?\"",
+      "module": "schemas/decision-methodology-context.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/decision-methodology-context"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#schema/decision-request",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "decision-request",
@@ -43213,6 +43412,18 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-core-processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/cat-harness-deploy",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "cat-harness-deploy",
+      "path": "deploy/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/code"
+      ],
+      "description": "How a folio-assistant host is stood up and kept current: `provision.sh`, `deploy.sh`, `self-update.sh`, `docker-compose.yml`, `Caddyfile.template` and `GOOGLE_OAUTH_SETUP.md`. Reached from outside the graph today -- the `deploy-access` capability detects on `cat-harness/deploy/.env` -- which is exactly the shape of a directory no declaration-walking consumer could see. Its governing skill is `deployment-auth`, whose architecture diagram is of these files.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#directory/cat-harness-deploy",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-deploy"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-2e120b27c0/cat-harness.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
       "name": "agent-instructions",
@@ -43246,8 +43457,8 @@
   ],
   "staging": {
     "branch": "dependabot/github_actions/actions-2e120b27c0",
-    "sha": "16dbb1d0d9fd74ea7863135d670787866d41d91c",
+    "sha": "a2fb4a9018f55a404c02c1395c23697dd4db1452",
     "pr": "1337/merge",
-    "run": "36096101230"
+    "run": "36216059426"
   }
 }

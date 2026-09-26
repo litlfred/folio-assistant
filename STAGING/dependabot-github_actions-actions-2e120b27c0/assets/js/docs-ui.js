@@ -352,9 +352,13 @@
     // and a function that eats everything downstream of it is a trap for the
     // next one.
     //
-    // `null` is a VALID second argument -- it appends -- so the fallback is
-    // the correct placement rather than a bail-out.
-    if (insertTarget && insertTarget.parentNode !== mainContent) insertTarget = null;
+    // Fallback chain: badges container → first child (not `null` which
+    // appends at the end — the landing page's h1 is outside mainContent,
+    // so `null` put the bar at y=5519).
+    if (insertTarget && insertTarget.parentNode !== mainContent) {
+      var badges = mainContent.querySelector(".fa-translation-badges");
+      insertTarget = badges ? badges.nextSibling : mainContent.firstChild;
+    }
     mainContent.insertBefore(container, insertTarget);
   }
 
@@ -4497,6 +4501,50 @@
       });
   }
 
+  /**
+   * Where the handle lives: IN THE LEFT NAVBAR. Owner, 2026-09-24: *"folio
+   * handle on LHS on navbar"*.
+   *
+   * Fixed at the top centre, it sat over whatever a page put there: a
+   * viewer's h1 (bean `015u`) and a replica's INGESTED COPY banner (bean
+   * `269z`). Each fix moved the PAGE or the handle around the other; this
+   * gives the handle a place of its own, in the navigation every page
+   * already has.
+   *
+   *  - the harness rail (`.fa-nav`, standalone viewers and mounted pages):
+   *    at the top, right under the ☰ head;
+   *  - the theme's sidebar (`.side-bar`, just-the-docs pages): under its
+   *    icon row, or under the site header when the page has no row.
+   *
+   * A page with NEITHER keeps the old place, fixed at the top centre, so the
+   * glass is never unreachable. `fa-glass-handle--in-nav` is the only
+   * difference in styling, and it is set here, where the decision is made.
+   */
+  function placeHandle(handle) {
+    var railTop = document.querySelector(".fa-nav .fa-nav-top");
+    if (railTop) {
+      var head = railTop.querySelector(".fa-nav-head");
+      handle.classList.add("fa-glass-handle--in-nav");
+      if (head) head.insertAdjacentElement("afterend", handle);
+      else railTop.insertBefore(handle, railTop.firstChild);
+      return;
+    }
+    // In the theme's sidebar, AFTER the icon row when there is one. The ☰ is
+    // painted absolutely at a fixed offset, and the icon row is the element
+    // built to clear it; right after the header, the handle's position
+    // depended on the header's height and could land on the ☰ and take its
+    // clicks (measured in `navbar-row.e2e`). The row is mounted before the
+    // glass (`mountNavIconRow` runs first in `init`).
+    var sideRow = document.querySelector(".side-bar > .fa-nav-icons");
+    var siteHeader = document.querySelector(".side-bar > .site-header");
+    if (sideRow || siteHeader) {
+      handle.classList.add("fa-glass-handle--in-nav");
+      (sideRow || siteHeader).insertAdjacentElement("afterend", handle);
+      return;
+    }
+    document.body.appendChild(handle);
+  }
+
   var glassLayer = null;
   function mountGlass() {
     if (glassLayer && glassLayer.isConnected) return glassLayer;
@@ -4538,8 +4586,14 @@
       "aria-expanded": "false",
       "aria-label": "Pull down your folio",
       title: "Pull down your folio",
-    }, "▾ Folio");
-    document.body.appendChild(handle);
+    });
+    // A MARK and a LABEL, not one string: in a navbar strip at rest only
+    // marks show (the owner's "only icons/avatars so compat"), so the label
+    // must be separable from the ▾. The accessible name is the aria-label.
+    handle.appendChild(el("span", { class: "fa-glass-handle__mark", "aria-hidden": "true" }, "▾"));
+    handle.appendChild(document.createTextNode(" "));
+    handle.appendChild(el("span", { class: "fa-glass-handle__label" }, "Folio"));
+    placeHandle(handle);
 
     // The glass's own chrome, so an open glass is never `:empty`.
     var sheet = el("div", { class: "fa-glass-sheet", role: "region", "aria-label": "Your folio" });
