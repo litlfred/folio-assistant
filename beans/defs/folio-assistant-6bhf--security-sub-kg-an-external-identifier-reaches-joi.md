@@ -348,6 +348,14 @@ may reuse an id. A job's `outputs:` block is followed one more hop, in a second
 pass, because `outputs:` conventionally sits above `steps:`. A finding names the
 producer, since the failing line's own expression looks harmless.
 
+A value bound ABOVE the step that writes it out — a workflow-level `env:`, in
+scope for every step, or a job-level one — is folded in too, in the same post-pass
+and for the same ordering reason. **It changes nothing on this corpus**: no such
+binding carries free text here, and none carries a constrained value that was not
+already counted through the step itself. So it is closed on the strength of four
+tests rather than of a finding, which is the point — recording it as "true today"
+is the exact mistake the rest of this section is about.
+
 Graded **free text, not constrained**, deliberately: `feature-staging.yml`
 reduces its slug to `[A-Za-z0-9._-]` with a `sed`, so that value cannot carry a
 payload — and recognising it would mean the gate deciding per site whether
@@ -357,11 +365,21 @@ them slug consumptions whose own comments called the slug safe **because it was
 sanitised — in another step, by a `sed` nothing checked**.
 
 Verified: 4 free-text findings against the pre-fix tree (`git show HEAD:` into a
-temp dir), 0 after; 13 producers over the real corpus, 9 carrying free text,
+temp dir), 0 after; **15** producers over the real corpus, 10 carrying free text,
 asserted as a test — an empty provenance map would return every step output to
 the safe band and the gate would go green **having asked nothing**.
+
+> **That count was 13/9 in the first commit and in #1408's body, and it was
+> measured before the job-output ordering fix landed.** `lake-cache-refresh.yml`
+> declares `outputs: matrix:` and `packages:` ABOVE its `steps:`, so the
+> single-pass resolver read them while `setup.read` was still unknown and
+> recorded neither. The failing test caught the bug; the census had already been
+> quoted. A number measured against an earlier build of the thing being measured
+> is not a smaller number, it is a different question.
 
 Out of scope and written down rather than silently skipped: `actions/github-script`
 `script:` blocks are JavaScript and unread, and `feature-staging.yml` has two
 `const slug = '${{ steps.slug.outputs.slug }}';`. Both values are
-character-class constrained, so neither closes that string today.
+character-class constrained, so neither closes that string today. Split into bean
+`j0zs` rather than absorbed here — the question is whether the gate should read a
+second language, which is a decision about its scope, not a missed sink.

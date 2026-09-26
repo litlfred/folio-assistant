@@ -252,9 +252,26 @@ export function resolveProvenance(lines: string[]): Provenance {
   let writesOutput = false;
   let carried: Severity | null = null;
   let outputsIndent = -1;
+  // A value can be bound ABOVE the step that writes it out: a workflow-level
+  // `env:` is in scope for every step in the file, a job-level one for every
+  // step in the job. Measured 2026-09-26: no such binding carries free text in
+  // this corpus — which is precisely the sort of "true today" this gate was just
+  // caught RECORDING rather than closing, so it is closed. Applied in a post-pass
+  // because an `env:` block may sit below the steps it reaches.
+  let workflowEnv: Severity | null = null;
+  const jobEnv = new Map<string, Severity>();
+  const producers: Array<[string, string]> = [];
+  let envIndent = -1;
+  let envScope: "workflow" | "job" | null = null;
 
   const flush = () => {
-    if (stepId && writesOutput && carried) prov.set(`${job}.${stepId}`, carried);
+    // Recorded whatever it carries, because a job-level `env:` may taint it and
+    // that is not known yet. The map still gets the step's OWN severity now, so
+    // a chained producer read later in the walk resolves.
+    if (stepId && writesOutput) {
+      producers.push([job, stepId]);
+      if (carried) prov.set(`${job}.${stepId}`, carried);
+    }
     stepId = "";
     writesOutput = false;
     carried = null;
@@ -278,7 +295,33 @@ export function resolveProvenance(lines: string[]): Provenance {
       job = jobHeader[1];
       outputsIndent = -1;
       stepIndent = -1;
+      envIndent = -1;
+      envScope = null;
       return;
+    }
+
+    // An `env:` block ABOVE the steps — workflow-wide at indent 0, job-wide at 4.
+    if (stripped === "env:" && (indent === 0 || indent === 4)) {
+      flush();
+      envIndent = indent;
+      envScope = indent === 0 ? "workflow" : "job";
+      return;
+    }
+    if (envIndent >= 0) {
+      if (indent <= envIndent) {
+        envIndent = -1;
+        envScope = null;
+      } else {
+        for (const m of line.matchAll(/\$\{\{([^}]*)\}\}/g)) {
+          const sev = classify(m[1].trim(), prov, job);
+          if (envScope === "workflow") workflowEnv = worse(workflowEnv, sev);
+          else {
+            const merged = worse(jobEnv.get(job) ?? null, sev);
+            if (merged) jobEnv.set(job, merged);
+          }
+        }
+        return;
+      }
     }
 
     // A job-level `outputs:` block maps a name onto a step output.
@@ -315,6 +358,13 @@ export function resolveProvenance(lines: string[]): Provenance {
     }
   });
   flush();
+
+  // Fold in what was bound above each producing step, now that every `env:` in
+  // the file has been read.
+  for (const [owner, id] of producers) {
+    const inherited = worse(worse(prov.get(`${owner}.${id}`) ?? null, jobEnv.get(owner) ?? null), workflowEnv);
+    if (inherited) prov.set(`${owner}.${id}`, inherited);
+  }
 
   for (const [owner, name, value] of jobOutputs) {
     let sev: Severity | null = null;

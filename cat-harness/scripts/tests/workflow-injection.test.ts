@@ -278,3 +278,90 @@ describe("a step output CARRIES whatever the step put in it (bean `6bhf`)", () =
     expect(producers).toBeGreaterThan(0);
   });
 });
+
+describe("a value bound ABOVE the step still reaches its output", () => {
+  // No workflow- or job-level `env:` in this corpus carries free text, measured
+  // 2026-09-26. Closed rather than recorded, because recording a "true today"
+  // instead of closing it is the exact mistake this whole change came out of.
+  test("a WORKFLOW-level env taints a producer that binds nothing itself", () => {
+    const prov = resolveProvenance(
+      [
+        "env:",
+        "  T: ${{ github.event.inputs.tag }}",
+        "jobs:",
+        "  a:",
+        "    steps:",
+        "      - id: v",
+        "        run: |",
+        '          echo "x=$T" >> "$GITHUB_OUTPUT"',
+        "",
+      ].join("\n").split("\n"),
+    );
+    expect(prov.get("a.v")).toBe("free-text");
+  });
+
+  test("a JOB-level env taints that job's producer and NOT another job's", () => {
+    const prov = resolveProvenance(
+      [
+        "jobs:",
+        "  dirty:",
+        "    env:",
+        "      T: ${{ github.event.inputs.tag }}",
+        "    steps:",
+        "      - id: v",
+        "        run: |",
+        '          echo "x=$T" >> "$GITHUB_OUTPUT"',
+        "  clean:",
+        "    steps:",
+        "      - id: w",
+        "        run: |",
+        '          echo "x=3" >> "$GITHUB_OUTPUT"',
+        "",
+      ].join("\n").split("\n"),
+    );
+    expect(prov.get("dirty.v")).toBe("free-text");
+    expect(prov.has("clean.w")).toBe(false);
+  });
+
+  test("an env block BELOW the steps it reaches still taints them", () => {
+    // YAML has no required order, and a one-pass resolver would read this file
+    // clean while reading the same job written the other way round as a finding.
+    const prov = resolveProvenance(
+      [
+        "jobs:",
+        "  a:",
+        "    steps:",
+        "      - id: v",
+        "        run: |",
+        '          echo "x=$T" >> "$GITHUB_OUTPUT"',
+        "    env:",
+        "      T: ${{ inputs.tag }}",
+        "",
+      ].join("\n").split("\n"),
+    );
+    expect(prov.get("a.v")).toBe("free-text");
+  });
+
+  test("a step-level env is not mistaken for a job-level one", () => {
+    // `env:` at indent 8 belongs to the step; only 0 and 4 are the wider scopes.
+    const prov = resolveProvenance(
+      [
+        "jobs:",
+        "  a:",
+        "    steps:",
+        "      - id: v",
+        "        env:",
+        "          T: ${{ inputs.tag }}",
+        "        run: |",
+        '          echo "x=$T" >> "$GITHUB_OUTPUT"',
+        "      - id: w",
+        "        run: |",
+        '          echo "x=3" >> "$GITHUB_OUTPUT"',
+        "",
+      ].join("\n").split("\n"),
+    );
+    expect(prov.get("a.v")).toBe("free-text");
+    // `w` binds nothing and sits under no wider env — it must stay clean.
+    expect(prov.has("a.w")).toBe(false);
+  });
+});

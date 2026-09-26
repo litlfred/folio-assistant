@@ -91,9 +91,12 @@ somebody concluded it.
 **What it still does not read**, and this is a scope claim rather than a clean
 bill: `actions/github-script` `script:` blocks are JavaScript, and the same
 laundering reaches them — `const slug = '${{ steps.slug.outputs.slug }}';`
-appears twice in this corpus. Those two values are character-class constrained
-so neither closes that string today. Extending the scanner to a second language
-changes what the gate claims to read, so it is written down here instead.
+appears twice in this corpus. Those two values are character-class constrained so
+neither closes that string today. Extending the scanner to a second language
+changes what the gate *claims* to read, and the scope line "`run:` blocks only"
+already conflicts with "`with:` is the remedy" at exactly one key, since
+`script:` lives under `with:`. Bean `j0zs` holds the decision, and **a recorded
+no is an acceptable outcome there while a silent no is not.**
 
 ## Shell strings: pass an argv, not a sentence
 
