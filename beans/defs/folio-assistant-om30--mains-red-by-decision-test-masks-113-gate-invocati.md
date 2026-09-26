@@ -1,11 +1,11 @@
 ---
 # folio-assistant-om30
-title: 'MAIN''S RED-BY-DECISION TEST MASKS 113 GATE INVOCATIONS: bun test is step 2 of 47 and nothing is continue-on-error'
-status: todo
+title: 'MAIN''S RED-BY-DECISION TEST MASKED 151 GATE INVOCATIONS, lint and tsc among them: bun test was step 2 of 47 with nothing continue-on-error — SPLIT, owner''s choice'
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T09:42:57Z
-updated_at: 2026-09-26T10:43:11Z
+updated_at: 2026-09-26T11:22:09Z
 parent: folio-assistant-1xhc
 ---
 
@@ -168,3 +168,76 @@ One thing the merge added as evidence: `main`'s pinned value **rose from 1441 to
 tracks whatever the dependency tree holds, so it climbs whenever any session re-runs
 the writer in a container that has already installed `block-qa-schema`. A masked
 gate does not merely fail to catch a defect once; it lets the defect keep moving.
+
+
+## IMPLEMENTED on the owner's choice — split the job (2026-09-26)
+
+### First, a CORRECTION to this bean's own headline number
+
+It said **113** masked `bun run` invocations. The real figure is **151**, across the
+same 45 steps, identical on `14ec9dd446c` and on current `main`. My count used a line
+range whose end boundary a regex had put 25 lines early, so it cut off part of the
+job. **Wrong, not stale** — the title and the body both said 113, and so did a commit
+message, a PR comment and what I told the owner.
+
+And the 45 masked steps **include `bun run lint` and `tsc --noEmit`**. So `main` has
+not been linted or typechecked in CI for as long as the drift has been red. That is
+worse than this bean claimed, and it changed the fix: my first draft of the split left
+lint and tsc behind `bun test`, still masked. They run FIRST now and `bun test` runs
+**LAST**, with nothing behind it, and the ordering argument is written into the job.
+
+### The split
+
+`typescript` keeps exactly the three checks its name promises. A sibling job `gates`
+(*"Repository gates (hard)"*) takes the 43 gate steps — 150 `bun run` lines — with its
+own checkout/bun/python/install and deliberately **no `needs:`**.
+
+**Verified before pushing, because the point is to stop hiding failures rather than to
+reveal a heap of them.** 150 gate commands ran in a clean throwaway worktree with NO
+`bun test` first, in a checkout with no nested `block-qa-schema` residue — a runner's
+condition. **Exactly one failed:** `translation:drift:check`, the same t8g3 drift. The
+masked region is otherwise clean.
+
+`FAST_JOBS` had to learn the new job or `bun run gates` would have shrunk **154 -> 6**
+while printing a confident pass. A new test asserts both jobs contribute.
+
+### SEVEN derived artefacts from one .bpmn edit, in dependency order
+
+`# bpmn-node:` markers are validated, and I invented `Task_RepositoryGates` before it
+existed — `check:workflow-coverage` said DRIFTED. Adding the real seventh parallel
+branch then cascaded:
+
+    render:bpmn                docs/assets/img/workflows/code-quality-gates.svg
+    kg:audit                   test/results/kg-qa/processes/...kg-qa.json
+    gen-skill-docs             docs/reference/skill-instructions/platform-gates.md
+    processes:viz              docs/processes/code-quality-gates.md + index.md
+    translate-bpmn --extract   translations/{ar,es,fr,ru,zh}/processes/...pot
+    kg:detangle                two detangle sidecars
+    gen-uml-overview           two overview pages, which read those sidecars
+
+A **partial order**, not a set: the last two consume what the earlier ones write. Four
+rounds, each caught by a DIFFERENT instrument — `check:workflow-coverage`,
+`check:ci-invocations`, `processes-viz.test.ts`, `bpmn-pot-current.test.ts` — and none
+of them names a `.bpmn` file in its failure. **I shipped two instances of `ymsu`'s
+class inside the commit whose message was about that class.**
+
+`bun run skill:register` exists because the same was true of adding a skill. A
+`bpmn:register` of that shape is the obvious follow-up; **not built**, because whether
+seven steps deserve one command is the owner's call, and guessing is how the last such
+list came out wrong three times.
+
+### NOT clean, stated rather than buried
+
+`role-carries-activity-skill` gains a **seventh** finding: `Task_RepositoryGates needs
+skill "platform-gates", but its lane's role "build-pipeline" does not carry it.` All
+six sibling tasks already carry the identical finding, so this is one more instance of
+a pre-existing condition, not a new class. Not fixed — that is role modelling.
+`kg:audit:check` passes (not critical) and CI does not run `kg:audit:strict`.
+
+### ONLY THE OWNER CAN DO THIS ONE
+
+`gates` is a NEW check name. Nothing regresses today, because merges land with
+`TypeScript — tests, lint, types (hard)` red deliberately, so that check enforces
+nothing. **But the moment the merge queue in `nytj`'s last box is switched on, both
+names must be listed as required checks** — otherwise 150 gate invocations run and
+block nothing.
