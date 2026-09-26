@@ -925,6 +925,25 @@ jobs:
       - name: generated docs pages are current
         run: bun run docs:pages:check
 
+      # ABOVE the drift batch DELIBERATELY, the fourth instance of that reason in
+      # this file — and this one is the sharpest, because the gate's whole subject
+      # is that the drift gate cannot report growth in its own. Registered below
+      # it, a check about the drift's silence would itself be silenced by it.
+      #
+      # Measured 2026-09-26 (bean `3sm2`): the `t8g3` campaign closed 24 of the
+      # original 25 catalogue gaps that day and opened 35 new ones in two batches,
+      # so the count went 25 -> 36 while the gate that names it was red the whole
+      # time. A job stops at its first failing step, so no reviewer saw a NEW red.
+      #
+      # It reads the DIFF, so it needs the base ref: `actions/checkout` fetches
+      # shallowly and `origin/main` is not a ref until this fetch. Without it the
+      # gate exits 2 — could not determine — which is red rather than a false
+      # pass, on purpose (`nytj`): a gate that cannot run must not read as green.
+      - name: a change may not publish a translation with no catalogue
+        run: |
+          git fetch --no-tags --prune --depth=200 origin main || true
+          bun run translation:catalogue:check
+
       - name: gates that were registered and never run
         run: |
           set -e
