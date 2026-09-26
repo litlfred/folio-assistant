@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-26T14:43:40Z
-updated_at: 2026-09-26T14:44:08Z
+updated_at: 2026-09-26T14:47:23Z
 parent: folio-assistant-bzyu
 ---
 
@@ -96,3 +96,45 @@ Worth recording, because each manufactured findings that looked real:
 - [ ] the qou comparison re-run and the 122 class measured at 0
 - [ ] the catalogues already derived are re-derived, or their stale msgids
       obsoleted, ONCE together with `6b8u`, `ig4a`, `lvk9` and `3mo4`
+
+## Impact, measured — current extractor vs the same extractor with only the guard added
+
+Every other stage is identical, so each difference is attributable to that one
+regex and to nothing else.
+
+| corpus | files | msgids | corrupted | share | files affected |
+|---|---|---|---|---|---|
+| `folio-assistant/cat-harness/docs` | 654 | 46306 | **229** | 0.49 % | 69 |
+| `qou/docs` | 3038 | 211139 | **13251** | 6.28 % | 1725 |
+
+### On this platform it breaks IDENTIFIERS
+
+    now:  no policy grants perform-task for ProcessCodeChangeReview/TaskClaimBean
+    want: no policy grants perform-task for Process_CodeChangeReview/Task_ClaimBean
+
+Those are BPMN process and task ids. A msgid that mangles an id is a msgid a
+translator cannot round-trip, and `prov-qaqc/index.md` carries a run of them.
+
+### On a paper folio it breaks the MATHEMATICS, not just the spelling
+
+    now:  a scalar $\hat Vi$ per Hn(q) generator $\sigmai$, weighted by $w\lambda = dq(
+    want: a scalar $\hat V_i$ per H_n(q) generator $\sigma_i$, weighted by $w_\lambda = dq(
+
+    now:  the positive subspace $G^+ = \sum{\lambdai
+    want: the positive subspace $G^+ = \sum_{\lambda_i
+
+The second pair is the one that settles the severity. `\sum_{\lambda_i}` losing
+its underscores is not a subscript rendered flat — `\sum{\lambda i}` is a
+DIFFERENT expression, and `\sum{...}` is not valid LaTeX at all. So the
+corruption is not recoverable by a reader who knows the convention, and a
+translator working from the msgid cannot reconstruct what was meant.
+
+## An earlier measurement here was wrong, and the way it was wrong matters
+
+The first attempt at this table ran the emphasis regex over each RAW source
+line and reported 104 affected msgids in 29 pages, with
+`` `content_validate`, `qa_sweep` `` as its headline sample. That sample cannot
+be a finding: `MD_INLINE_CODE_RE` deletes backticked spans BEFORE the emphasis
+regex runs, so the pipeline had already removed the text it claimed was
+corrupted. Comparing the two full extractors is the only sound form of this
+measurement, because the regex under test sits in the middle of a pipeline.
