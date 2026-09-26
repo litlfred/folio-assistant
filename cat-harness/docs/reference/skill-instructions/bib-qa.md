@@ -35,7 +35,7 @@ beside this file. Nothing was deleted.
 | what | where |
 |---|---|
 | purpose, when to invoke, workflow, file layout, checklists, output format, the verification classes | **here** |
-| the QA tag vocabulary, per reference | [`bib-qa/qa-tags.md`](#part-qa-tags) — consult a row when tagging |
+| the QA tag vocabulary, per reference | [`bib-qa/qa-tags.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/bib-qa/qa-tags.md) — consult a row when tagging |
 
 ## When to Invoke
 
