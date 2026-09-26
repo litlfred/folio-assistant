@@ -77,46 +77,56 @@ const GUIDE = INDEX.pages["guides/agent-onboarding"];
 /**
  * A nav item with no translation in ANY locale — the fallback case.
  *
- * **This fixture was `getting-started`, then `architecture`, and each did exactly
- * what its own docblock promised.** The first note read: *"a real page of this site
- * that has never been translated. If it ever is, this test starts failing loudly
- * rather than silently verifying nothing, which is the correct direction to fail
- * in."* Bean `t8g3` translated `getting-started` on 2026-09-26; batch 4 the same
- * day translated `architecture`, its replacement. The design was right each time;
- * only the fixture expired.
+ * **This fixture was `getting-started`, and it did exactly what its own
+ * docblock promised.** That note read: *"a real page of this site that has
+ * never been translated. If it ever is, this test starts failing loudly rather
+ * than silently verifying nothing, which is the correct direction to fail in."*
+ * On 2026-09-26 bean `t8g3` translated it into six languages and the test
+ * failed. The design was right; only the fixture had expired.
  *
  * ## What the illegible failure cost — TWO sessions, independently
  *
- * The failure surfaced as `element(s) not found` on a locator, which says nothing
- * about why. A sibling session paid *"three environments and a bisect against
- * `origin/main`"* to learn the page had simply been translated; another paid a full
- * local e2e run and a comparison against main's latest CI.
+ * The failure surfaced as `element(s) not found` on a locator, which says
+ * nothing about why. A sibling session paid *"three environments and a bisect
+ * against `origin/main`"* to learn the page had simply been translated; this
+ * one paid a full local e2e run and a comparison against main's latest CI.
+ * Two people paying the same toll for the same missing sentence is the
+ * argument for the assertion in the test below, not the docblock's word for
+ * it — **main's copy of this file promises that sentence and its test body
+ * does not contain one**, which is how a fix gets believed and not made.
  *
- * ## Derived, not named — for BOTH cases
+ * ## Derived, not named
  *
- * 1. An indexed page carrying no translations. Preferred, because it is a page the
- *    generator has actually seen.
- * 2. When every indexed page is translated — true since the batches — no such
- *    entry exists. The index only records pages that HAVE translations, so
- *    "untranslated" then means *absent from the index*, and the fixture is a real
- *    page of this site the index does not list.
+ * `HOME` and `GUIDE` above are looked up in the real index; this was the one
+ * of the three still named by hand, which is why it is the one that rotted.
+ * Two cases:
  *
- * Case 2 was hand-picked and expired twice, so it is derived too: top-level,
- * carrying a `title:`, not `nav_exclude: true`, not claiming a non-source locale,
- * first in sorted order so two runs agree. `index.md` is excluded because it IS
- * indexed, under the empty key, and only its filename says otherwise.
+ * 1. An indexed page carrying no translations. Preferred, because it is a page
+ *    the generator has actually seen, and it self-heals: the moment such a page
+ *    exists this stops depending on any name at all.
+ * 2. When **every** indexed page is translated — true since `t8g3`, all seven
+ *    of them — no such entry exists. The index only records pages that HAVE
+ *    translations, so "untranslated" then means *absent from the index*, and
+ *    the fixture is a real page of this site the index does not list.
  *
- * **This derivation is ported verbatim from PR #1408** (`claude/sleepy-babbage-ls90iz`),
- * which reached it independently and got it right where this branch's first attempt
- * did not. That attempt checked the filesystem for `docs/<locale>/<page>.md` and so
- * selected `crdm-methodology` — which declares `available_locales: ["en","fr"]`
- * with no `docs/fr/crdm-methodology.md` behind it, making it the one candidate that
- * ASSERTS the very thing this fixture stands for the absence of. Porting rather than
- * keeping a worse version of the same idea, so the two branches cannot disagree.
+ * ## Case 2 is DERIVED now too, because naming it expired twice
+ *
+ * `architecture` was the hand-picked case-2 fixture, chosen over
+ * `agentic-harness` on the reasoning that main's copy wins a merge. Bean `t8g3`
+ * then translated **both** — batch 4 on 2026-09-26 — so the name rotted inside
+ * the same day, for the third time in this fixture's life and the second for the
+ * same reason. A fallback that has to be re-chosen every time the corpus grows
+ * is not a fallback; it is a scheduled failure with a comment on it.
+ *
+ * So case 2 scans the site directory for a real page the index does not list:
+ * top-level, carrying a `title:`, not `nav_exclude: true`, first in sorted order
+ * so two runs agree. `index.md` is excluded because it IS indexed, under the
+ * empty key, and only its filename says otherwise.
  *
  * And it THROWS rather than falling back when the corpus has no such page. That
- * state is real news — every page of the site translated — and it must not reach the
- * browser half as a locator that mysteriously misses.
+ * state is real news — every page of the site translated — and it must not reach
+ * the browser half as a locator that mysteriously misses, which is precisely the
+ * illegible failure the two sessions above each paid for once.
  */
 const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
   const indexed = Object.entries(INDEX.pages).find(
@@ -142,12 +152,7 @@ const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
     // of. The index is the authority here, but a page contradicting it is the
     // wrong page to reason from, whichever of the two is wrong. Bean `9x01`.
     const claimed = /^available_locales:\s*(.+)$/m.exec(head)?.[1] ?? "";
-    if (
-      claimed
-        .replace(/[["'\]\s]/g, "")
-        .split(",")
-        .filter((l) => l !== "" && l !== INDEX.sourceLocale).length > 0
-    ) {
+    if (claimed.replace(/[["'\]\s]/g, "").split(",").filter((l) => l !== "" && l !== INDEX.sourceLocale).length > 0) {
       continue;
     }
     const title = /^title:\s*(.+)$/m.exec(head)?.[1].trim().replace(/^["']|["']$/g, "");

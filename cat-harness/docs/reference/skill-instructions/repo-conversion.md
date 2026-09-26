@@ -15,7 +15,7 @@ parent: Skill instructions
 
 Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html),
 `Task_ScanRepo` and `Task_ConfirmImport` (non-relaxable).
-Scanner: `bun run scripts/scan-repo-content.ts`.
+Scanner: `bun run cat-harness/scripts/scan-repo-content.ts`.
 
 ## 0. The one rule
 
@@ -31,8 +31,8 @@ and a content package may not declare it away.
 ## 1. Scan — read-only, and honest about its limits
 
 ```sh
-bun run scripts/scan-repo-content.ts            # human-readable report
-bun run scripts/scan-repo-content.ts --json     # same, as facts
+bun run cat-harness/scripts/scan-repo-content.ts            # human-readable report
+bun run cat-harness/scripts/scan-repo-content.ts --json     # same, as facts
 ```
 
 It walks the working tree (respecting `.gitignore`) and sorts what it finds into

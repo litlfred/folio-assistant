@@ -51,7 +51,7 @@ flat-file issue tracker storing issues as markdown under `beans/`. Cloud
 sandboxes do **not** ship it, so reinstall on demand (Go ships in the sandbox):
 
 ```bash
-scripts/install-beans.sh          # idempotent; installs into a PATH dir
+cat-harness/scripts/install-beans.sh          # idempotent; installs into a PATH dir
 # equivalently, the one-liner it runs:
 GOBIN="$HOME/.local/bin" go install github.com/hmans/beans@latest
 ```
@@ -538,7 +538,7 @@ this skill by name never received them. Ported here as part of bean `tdmg`.
 - `scripts/session-start-coord-sweep.sh` — the CLI-independent session-start
   surface: fetches `origin/main` and summarises sibling branch activity. Works
   even when the `beans` CLI is absent.
-- `scripts/install-beans.sh` — provisions the CLI.
+- `cat-harness/scripts/install-beans.sh` — provisions the CLI.
 {% endraw %}
 
 ## Processes that run this skill
