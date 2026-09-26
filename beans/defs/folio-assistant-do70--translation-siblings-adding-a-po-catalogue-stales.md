@@ -1,10 +1,11 @@
 ---
 # folio-assistant-do70
-title: 'TRANSLATION SIBLINGS: adding a .po catalogue stales six generated artefacts and nothing names them — reuse skills:register''s converging chain'
+title: 'SIBLINGS: seven generated artefacts go stale when a catalogue or a BEAN changes, and no gate names its remedy — reuse skills:register''s converging chain'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-26T10:05:01Z
-updated_at: 2026-09-26T10:05:01Z
+updated_at: 2026-09-26T10:27:21Z
 parent: folio-assistant-bzyu
 ---
 
@@ -69,3 +70,42 @@ The merge-side gap — a gate passing on every PR head while `main` takes an
 unregistered artefact through a merge the gate never ran on the merged tree. #1361
 names it and leaves it open as `check:merged`, bean `nytj`. Same shape, one level
 up, and already recorded; this bean is the author-side command only.
+
+
+## Two corrections to this bean, from trying to satisfy it
+
+### It is SEVEN artefacts, and the seventh is not a translation artefact at all
+
+`docs/_data/harness.json` embeds a **bean count**. Creating this task's three
+beans took it 362 → 365 and turned `docs:harness:check` red, with nothing in the
+change touching a translation. So the edge is **bean → `harness.json`**, and it
+fires on every bean any session creates, not on catalogue changes.
+
+That widens the bean rather than confirming it: the author-side command this asks
+for cannot be `translation:register`, because the artefacts that go stale are not
+selected by what you changed. They are selected by what *reads* what you changed,
+and beans and catalogues are read by an overlapping set.
+
+### I nearly recorded an ordering cycle that is not there
+
+My first reading of the failure was that `gen-docs-pages` re-staled what
+`docs:harness` had just written — an ordering dependency, which is what the
+`skills:register` precedent had primed me to look for. **Measured: it does not.**
+Running `gen-docs-pages` alone leaves `docs:harness:check` green, and the whole set
+converged **after one pass** once the bean count was written. The red was my own
+bean edit, arriving after the previous regeneration.
+
+So the `#1361` finding that *"one pass is not a fixed point"* is real **there** and
+is NOT reproduced **here**. Kept as a design requirement for the command — assert
+convergence rather than assume it — but this bean must not cite a cycle it did not
+observe. The distinction matters because a tool built to break a cycle that does
+not exist would be justified by nothing.
+
+### What the evidence actually supports
+
+- seven generated artefacts, discovered one at a time from failing gates across
+  four full `bun run gates` runs;
+- **no gate names its remedy**, so the list is rebuilt from CI each time;
+- the dependency set is per-READER, not per-directory — which is why writing it
+  down as a list in a comment would be wrong, and why the last Done-when item asks
+  for it DERIVED or asserted.

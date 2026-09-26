@@ -63,13 +63,32 @@
  * cannot drift back.
  *
  * The 15 that still refuse are all `count-differs`; no pair diverges by kind any
- * more. A **third** extractor property is implicated in three of them and is
- * deliberately NOT fixed here: blockquotes are extracted one entry per LINE, so
- * the count depends on hard-wrap width, which no translator preserves.
- * Coalescing contiguous blockquote lines takes alignment to 13/25, unlocking
- * exactly `es`/`fr`/`ru` `installation`. Its own bean, because it changes what a
- * blockquote msgid IS and would rewrite existing catalogues' entries rather than
- * add and remove them.
+ * more. A **third** extractor property accounts for most of them and is
+ * deliberately NOT fixed here (bean `lvk9`): **list items and blockquotes are
+ * extracted one entry per LINE**, so how many entries a construct yields depends
+ * on where the author pressed return — and a wrapped list item's continuation
+ * falls through to the paragraph accumulator, so it is emitted as a `paragraph`.
+ * Wrong count and wrong kind from one cause. No translator preserves an English
+ * hard wrap.
+ *
+ * | | aligned |
+ * |---|---|
+ * | today | 10 / 25 |
+ * | + blockquotes coalesced | 13 / 25 |
+ * | + wrapped list items coalesced | **17 / 25** |
+ *
+ * It also settles what the remaining refusals are NOT. `es`, `ru` and `zh`
+ * `accessibility` diverge at the same three source indices and all land on
+ * exactly 117 — three locales agreeing to the entry is one cause, and it is this
+ * one. All three align once wrap is out of the way, so those pages were never
+ * short. Bean `7x8o` is corrected accordingly.
+ *
+ * Its own bean, for two reasons: it changes what a list-item or blockquote msgid
+ * IS, rewriting existing catalogues' entries rather than adding and removing
+ * them; and the rule used to MEASURE the 17/25 above over-merges (it joined two
+ * unrelated sentences in `wireframes/fsh-guts/intent.md`), so a correct fix needs
+ * indentation-aware continuation handling and 17/25 is a crude rule's reach
+ * rather than a promise.
  *
  * **The kind check is vindicated either way.** Whatever the cause, those two
  * pairs WERE misaligned, and a count-only check would have shipped them.

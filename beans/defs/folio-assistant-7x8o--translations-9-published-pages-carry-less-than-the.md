@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7x8o
-title: 'TRANSLATIONS: 9 published pages carry LESS than their source — zh short on all five, and es/ru accessibility short by the same 13'
+title: 'TRANSLATIONS: 8 pairs may carry less than their source — but 7 of the original 9 were the extractor''s hard wrap, not the translators (see lvk9)'
 status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T08:57:09Z
-updated_at: 2026-09-26T09:20:41Z
+updated_at: 2026-09-26T10:17:05Z
 parent: folio-assistant-bzyu
 blocked_by:
     - folio-assistant-lvk9
@@ -135,3 +135,17 @@ lands and the remainder is re-measured.
 before it: on the evidence so far, most of what looked like missing content is the
 extractor's wrap sensitivity, and re-translating against it would change good
 translations to match a defect.
+
+
+### Why the title changed
+
+It read *"9 published pages carry LESS than their source — zh short on all five,
+and es/ru accessibility short by the same 13"*. Both halves of that were refuted
+above, and a title is what a reader sees in `beans list` — leaving the refuted
+claim there while the correction sat 200 lines down would mean every listing
+asserted it. The old title is preserved in this paragraph so the change is not
+silent.
+
+Also note **"may carry"** rather than "carry": with `lvk9` unlanded, the 8 are
+*not established* as a content problem at all. They are what is left over after
+three extractor defects, and the next measurement may shrink them again.
