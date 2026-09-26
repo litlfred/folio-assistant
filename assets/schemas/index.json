@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 171,
+      "count": 172,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -350,6 +350,14 @@
       "graphNode": "schema",
       "summary": "depends-on.ts — `instance-versioning.md` §3.4's record, and the gaps it",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/detangle-sidecar.test.ts",
+      "instance": "cat-harness",
+      "name": "detangle-sidecar.test",
+      "graphNode": "undeclared",
+      "summary": "The direction counts are PINNED — bean `j79e`'s columns, `1xhc`'s gap.",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/detangle-sidecar.ts",
@@ -11433,6 +11441,20 @@
           "optional": false,
           "array": false,
           "doc": "Cross-group prose mentions. Neither a dependency nor a coupling."
+        },
+        {
+          "name": "wrongDirection",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Outbound edges `directionOf` called `wrong-direction` — the layering is inverted."
+        },
+        {
+          "name": "undeterminedDirection",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Outbound edges whose direction cannot be decided, because the source instance declares no `needs`. Not clean."
         }
       ],
       "extendsNames": [],
