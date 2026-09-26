@@ -838,6 +838,11 @@ export const RULES: Rule[] = [
       // authors.
       "scripts/bean-store-read.ts",
       "scripts/check-bean-bodies.ts",
+      // Same half again: it reads the declared `bean-defs` graph and asks
+      // whether a bean claiming a block carries the four fields that make the
+      // block readable — what it waits on, since, expires, handoff. Nothing in
+      // it is about any folio's subject matter; a folio has no beans to block.
+      "scripts/check-bean-blocks.ts",
       "scripts/check-bean-front-matter.ts",
       "scripts/check-stale-paths.ts",
       "scripts/check-bean-issue-links.ts",
