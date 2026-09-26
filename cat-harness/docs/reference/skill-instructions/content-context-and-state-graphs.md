@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/content-context-and-state-graphs.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/content-context-and-state-graphs.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/content-context-and-state-graphs.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/content-context-and-state-graphs.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/content-context-and-state-graphs.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/content-context-and-state-graphs.md){: .fa-edit-source }
 
 {% raw %}
 # Content, context and state graphs
@@ -250,7 +250,7 @@ the copy that drifted — it says so itself.
   and how a path resolves. This page is the axis; that one is the mechanism.
 - [`agent-memory`](agent-memory.md) — what a memory entry promises, and the
   injection budget. This page says what layer it is on.
-- [`process-state`](../workflow/process-state.md), [`bpmn-processes`](../workflow/bpmn-processes.md) —
+- [`process-state`](process-state.md), [`bpmn-processes`](bpmn-processes.md) —
   the largest writer of a live-state graph: a workflow instance is a token's
   position in a diagram that lives in a content graph.
 - [`todo-manager`](todo-manager.md), [`bean-coordination`](bean-coordination.md)

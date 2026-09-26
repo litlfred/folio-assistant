@@ -3,6 +3,7 @@
  * The reverse sweep: files on disk that no declaration names.
  *
  * @module scripts/check-undeclared-files
+ * @covers cat-harness
  *
  * `check-declared-assets.ts` walks **declared → disk**: it reports a declared
  * asset that is missing, a dead link, or one it could not check. Nothing walked

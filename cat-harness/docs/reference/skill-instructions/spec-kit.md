@@ -5,12 +5,31 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`methodologies/spec-kit/spec-kit.md`](https://github.com/litlfred/folio-assistant/blob/main/methodologies/spec-kit/spec-kit.md) — do not edit here.
+> Generated from [`cat-harness/skills/spec-kit/spec-kit.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/spec-kit/spec-kit.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/methodologies/spec-kit/spec-kit.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/spec-kit/spec-kit.md){: .fa-edit-source }
 
 {% raw %}
 # Spec Kit — spec-driven development
+
+## Origin
+
+github/spec-kit (GitHub, 2025), <https://github.com/github/spec-kit>. Its
+`/speckit-*` command set, its specify → plan → tasks → implement → converge
+cycle, and its `templates/spec-template.md`. Rendered here from the upstream
+README and spec template, read 2026-09-21.
+
+## Applies when
+
+A change to the PLATFORM's own capability — a tool, a schema, a pipeline, a
+skill, a gate — raised by somebody building the tooling rather than by somebody
+writing a folio's subject matter, and whose answer does not depend on what any
+folio says. Owner, 2026-09-21: *"spec-kit is specific to folio assistant feature
+development requests by tool developers not content developers (content
+agnostic, more scrum methodology process) for best practives of software
+development"*. NOT for work whose requirements come from stakeholders who must
+sign them off, and not for anything tied to a folio's domain — that is `crdm`.
+
 
 **Adopted whole, 2026-09-21**, on the owner's decision (issue #730, option A):
 spec-kit sits **beside** `crdm` as a parallel track, not blended with it. External

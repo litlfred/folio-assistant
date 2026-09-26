@@ -43,7 +43,10 @@
  *
  * **Three states, not two.** A `.pot` that is absent is STALE; one that
  * differs is STALE; one that cannot be READ is reported as such and fails,
- * never as a pass. "Could not determine" is never rendered green.
+ * never as a pass. "Could not determine" is never rendered green — and a run
+ * in which NO locale gates, so that no template was examined at all, exits 2
+ * rather than 0 (exit codes: 0 fresh, 1 stale/missing/orphaned, 2 nothing
+ * examined or nothing to do).
  *
  * ## What it gates on, and what it only reports
  *
@@ -70,13 +73,15 @@
  * Injection writes `translations/<locale>/processes/<name>.bpmn`. Rendering it
  * is `bun run render:bpmn` territory and is deliberately a separate step: the
  * renderer drives headless Chromium, and an extract/inject run should not.
+ *
+ * @covers processes, translation-sources
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolveDirectories } from "../schemas/cat-harness.js";
 import { workflowFiles } from "./known-skills.js";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { extractBpmn, injectBpmn } from "../content/pipeline/bpmn-translate.js";
-import { formatPot } from "../content/pipeline/pot-extract.js";
+import { formatPot, potWithoutTimestamp } from "../content/pipeline/pot-extract.js";
 import { parsePo } from "../content/pipeline/po-inject.js";
 
 /**
@@ -183,16 +188,8 @@ function potPathFor(file: string, loc: string): string {
   return join(TRANSLATIONS, loc, DIAGRAM_SUBDIR, `${basename(file, ".bpmn")}.pot`);
 }
 
-/**
- * A `.pot` with its creation timestamp blanked, for comparison only.
- *
- * Never written back: the header is real metadata a translator's tooling
- * reads. It is excluded from the COMPARISON because it is the one line that
- * changes on every run regardless of content.
- */
-function withoutTimestamp(text: string): string {
-  return text.replace(/^"POT-Creation-Date:.*$/m, '"POT-Creation-Date: <ignored>\\n"');
-}
+/** The comparison form of a template, shared with core's `glossary-pot` (see `potWithoutTimestamp`). */
+const withoutTimestamp = potWithoutTimestamp;
 
 /** Locales that already have a translations directory. */
 function knownLocales(): string[] {
@@ -218,6 +215,20 @@ if (wantCheck) {
   const gating = new Set(
     targets.filter((loc) => locale === loc || existsSync(join(TRANSLATIONS, loc, DIAGRAM_SUBDIR))),
   );
+
+  // THE THIRD STATE. With no gating locale the loop below examines nothing and
+  // would print "Every diagram has a current .pot" over zero comparisons —
+  // the `dh4f` shape, a clean run over nothing. That is "could not
+  // determine", so it exits 2, neither 0 (a claim of freshness nobody
+  // checked) nor 1 (a staleness nobody found). Bean `0hd6`.
+  if (gating.size === 0) {
+    console.log(
+      `  gating on: (none) — ${targets.join(", ")} carry no ${DIAGRAM_SUBDIR}/ tree, so no template was examined.\n` +
+        `\nNothing was checked. Opt a locale in with --locale <code>, or extract one with\n` +
+        `  bun run translate-bpmn --extract --locale <code>`,
+    );
+    process.exit(2);
+  }
 
   const missing: string[] = [];
   const stale: string[] = [];

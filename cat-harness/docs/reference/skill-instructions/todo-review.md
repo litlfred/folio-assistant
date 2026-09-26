@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/todo-review.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/todo-review.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/todo-review.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/todo-review.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/todo-review.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/todo-review.md){: .fa-edit-source }
 
 {% raw %}
 # Todo Review Skill
@@ -32,7 +32,7 @@ holds by reference or has materialized from somewhere else, the answer is not
 gives a reader nothing to annotate.
 
 The missing first step is
-[`copy-out-materialized`](../../../large-datasets/skills/copy-out-materialized.md)
+[`copy-out-materialized`](copy-out-materialized.md)
 (diagram:
 [`copy-out-materialized.bpmn`](../../processes/copy-out-materialized.bpmn)).
 The owner's framing, 2026-09-21:

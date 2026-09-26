@@ -152,29 +152,52 @@ describe("this repository's own instances", () => {
       "folio-assistant",
       "agent-skills",
       "bootstrap",
-      "bootstrap-tools",
       "cat-harness",
-      "detangle",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
       // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
       // `folio-assistant-sci` sorts after it. The list is the assertion, so
       // the swap is the visible half of the rename.
+      // Added 2026-09-22 with the owner's stack ruling
+      // (`core->fhir-harness->smart-base->siblings{smart-l1, smart-dak,
+      // smart-ig}`, issue #963). It is the BASE the note above is about: the
+      // bare FHIR IG pipeline, with no WHO, DAK or SMART assumption, which is
+      // what `nsbb` had been asking for since 2026-09-21. It sorts here rather
+      // than beside the `smart-*` entries because it is deliberately NOT one
+      // of them -- the WHO package may reference this layer and this layer may
+      // never reference the WHO package.
+      "fhir-harness",
       "folio-assistant-core",
       "folio-assistant-sci",
-      "kg-navigation",
       "large-datasets",
       // Added 2026-09-21 with the FHIR IG artefact-index ingest (issue #689).
       // It fired as designed, which is what this list is for: `smart-trust/`
       // declares a `harness.json` and is therefore an instance, sorting
-      // between `large-datasets` and `who-iris`. `smart-kg/` is NOT here and
-      // that is correct — it declares no `harness.json`, so it is a directory
-      // rather than an instance.
+      // between `large-datasets` and `who-iris`. A directory with no
+      // `harness.json` is not an instance and is correctly absent — `smart-kg/`
+      // was the example until it was removed (bean `wg7r`).
       // Added 2026-09-21 with the second ingested IG (bean qrnz). PROVISIONAL:
       // the owner has since ruled that a per-IG harness should not exist at all
       // (bean nsbb), so this entry and `smart-trust` below are both expected to
       // collapse into a `smart-base` instance. It is listed because it EXISTS
       // today, which is the only thing this assertion is about.
+      // Added 2026-09-22 (issue #877) -- `smart-base`, the instance `nsbb`
+      // called for. Listed here as well as in `schemas/cat-harness.test.ts`
+      // because the two assert different things: that discovery FINDS it,
+      // and that it RENDERS. The duplication is the deliberate cost noted
+      // above.
+      "smart-base",
+      // Added 2026-09-22 (issue #975) — the three siblings of the owner's
+      // stack ruling, `core->fhir-harness->smart-base->siblings{smart-l1,
+      // smart-dak, smart-ig}`. They were named in the ruling and in
+      // `smart-stack-layering` for a whole PR while no directory declared any
+      // of them, so the stack existed in prose and nowhere a consumer could
+      // read it. Each declares NO directories, deliberately: that is the
+      // `folio-assistant-core` precedent, because a declared-but-absent
+      // directory is the `dh4f` defect.
+      "smart-dak",
+      "smart-ig",
       "smart-immunizations",
+      "smart-l1",
       "smart-trust",
       "who-iris",
       "who-style-guide",

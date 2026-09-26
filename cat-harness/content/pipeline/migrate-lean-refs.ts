@@ -14,8 +14,8 @@
  * Idempotent: files already using `ref:` are left untouched.
  *
  * Usage:
- *   bun run content/pipeline/migrate-lean-refs.ts           # dry run
- *   bun run content/pipeline/migrate-lean-refs.ts --write   # apply
+ *   bun run cat-harness/content/pipeline/migrate-lean-refs.ts           # dry run
+ *   bun run cat-harness/content/pipeline/migrate-lean-refs.ts --write   # apply
  *
  * @module content/pipeline/migrate-lean-refs
  */

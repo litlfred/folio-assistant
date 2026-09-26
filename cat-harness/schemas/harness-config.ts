@@ -29,7 +29,7 @@
  * [`directory-conventions`](../skills/folio-core/directory-conventions.md)
  * §"Pinning a reference — a SHA may stage, only a version may publish" —
  * with `bun run check:published-refs` as its mechanical half. The full scheme
- * is `fsh-guts/proposals/instance-versioning.md`.
+ * is `cat-harness/docs/proposals/instance-versioning.md`.
  *
  * ## What gets resolved across dependencies
  *
@@ -69,6 +69,23 @@ import { z } from "zod";
 export interface FolioAssistantDependency {
   /** Display name of the dependency (e.g. "smart-base", "qou-platform"). */
   name: string;
+
+  /** Reverse-DNS package identity, stable forever. See the schema. */
+  id?: string;
+
+  /** WHAT is depended on — an exact version. See the schema; ranges are refused. */
+  version?: string;
+
+  /**
+   * Was this dependency DERIVED from the declaration's `needs` rather than
+   * authored in the config?
+   *
+   * Set by {@link dependenciesFromNeeds} and never written to a file. It is
+   * here so a consumer can tell a stated dependency from an inferred one —
+   * `check:needs-dependencies` reports on the difference, and a caller that
+   * could not tell them apart would report a derived edge as a declaration.
+   */
+  derivedFromNeeds?: boolean;
 
   /**
    * Local filesystem path to the dependency root. May be absolute or
@@ -133,6 +150,13 @@ export interface TranslationConfig {
 export interface HarnessConfig {
   /** Content type — "document" or "paper". */
   contentType?: string;
+  /**
+   * Static, interactive, or undetermined — the FOURTH axis (issue #764, O1).
+   *
+   * A plain string for the same reason `contentType` and `adapter` above are
+   * plain strings — see the schema field.
+   */
+  interactivity?: string;
   /** Adapter name — "document", "paper", or "dak". */
   adapter?: string;
   /** Path to the adapter module. */
@@ -159,8 +183,46 @@ export interface HarnessConfig {
 
 export const FolioAssistantDependencySchema = z.object({
   name: z.string().min(1),
+  /**
+   * The package identity — reverse-DNS, stable forever, never reused.
+   *
+   * SEPARATE FROM `name`, which is a display handle. An id is what an external
+   * consumer resolves; `instance-versioning.md` §3.2. Optional, because §3.1
+   * settles that most instances are NOT publishable and minting an id for one
+   * nothing outside resolves is ceremony with no reader.
+   */
+  id: z.string().min(1).optional(),
+  /**
+   * WHAT IS DEPENDED ON — the exact version, for computing the overlay.
+   *
+   * The owner, 2026-09-22, on consolidating the stack onto dependencies:
+   * *"i want to adopt the sushi/fhir IG(/npm?) versioning dependencies for
+   * computing overlays. SHAs are for provenance, digital signing, staging. we
+   * need both, different needs."*
+   *
+   * So this field and `ref`/`git` below are NOT two spellings of one thing and
+   * must not be collapsed into one: this says WHAT, they say HOW TO FETCH and
+   * WHICH BYTES. A dependency may carry both, and they answer different
+   * questions about it.
+   */
+  version: ExactVersionSchema.optional(),
   path: z.string().optional(),
   git: z.string().url().optional(),
+  /**
+   * HOW TO FETCH WHILE STAGING, and the provenance of the bytes — not what is
+   * depended on.
+   *
+   * A SHA is a perfectly good pin and a **useless published reference**: it
+   * names a commit in a repository a downstream consumer may not have, may not
+   * be able to fetch, and that FHIR's `dependsOn` has no field for. A published
+   * artefact carrying one is not a stricter pin, it is an unresolvable one —
+   * `instance-versioning.md` §3.3, enforced by `check:published-refs`.
+   *
+   * It DEFAULTS TO THE DEFAULT BRANCH when absent, which makes an unpinned
+   * dependency a different dependency on Tuesday with nothing saying so (bean
+   * `dhvf`). That is why `version` exists rather than this field being made
+   * stricter.
+   */
   ref: z.string().optional(),
   provides: z
     .array(z.enum(["skills", "content", "translations"]))
@@ -223,6 +285,39 @@ export type HarnessDirs = z.infer<typeof HarnessDirsSchema>;
 
 export const HarnessConfigSchema = z.object({
   contentType: z.string().optional(),
+  /**
+   * Is this folio's content static, or does it carry interfaces?
+   *
+   * The interactivity axis — issue #764, O1, settled by the owner
+   * 2026-09-22. Vocabulary and the full argument: `CONTENT_INTERACTIVITY`.
+   *
+   * Here rather than beside `graphKinds` because it is a fact about the
+   * CONTENT, which is what `contentType` and `adapter` next to it are also
+   * about. The visualiser axis went the other way, onto the directory, and
+   * the two placements are the axes' own difference rather than an
+   * inconsistency: interactivity describes what the content IS, a visualiser
+   * describes how a graph is SHOWN.
+   *
+   * ABSENT means nobody has said. The VALUE `"undetermined"` means somebody
+   * looked and could not decide — the owner ruled the boundary is
+   * *"not a 'pure' distinction. judgement"*, so that answer has to be
+   * expressible rather than collapsed into silence or into `static`.
+   *
+   * ## A STRING, not the enum, and the partition gate is why
+   *
+   * `check:partition` refuses `schemas/harness-config.ts` [agentic-harness]
+   * importing `schemas/block-kinds.ts` [folio-assist-core]: the harness may
+   * not depend on the content vocabulary. That is not an obstacle to route
+   * around — it is the same reason `contentType` and `adapter` directly
+   * above are `z.string()` rather than enums of `CONTENT_PROFILES` and
+   * `CONTENT_ADAPTERS`, which they name and do not import.
+   *
+   * So the vocabulary lives with the other content axes and the FOLIO layer
+   * is where a value is checked against it. Validating here would put the
+   * content's vocabulary in the harness, which is the boundary this
+   * repository is split along.
+   */
+  interactivity: z.string().optional(),
   adapter: z.string().optional(),
   adapterModule: z.string().optional(),
   contributes: z.string().optional(),
@@ -235,6 +330,7 @@ export const HarnessConfigSchema = z.object({
 
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { flattenDependencies as flattenSteps } from "./dependency-order";
 import {
   describeRepository,
   type ContentTypeDisagreement,
@@ -242,15 +338,29 @@ import {
   type ContentTypeRegistry,
 } from "./content-type";
 import {
+  ExactVersionSchema,
   instanceConfigFilename,
   findInstanceRoot,
   isKgOnlyDirectory,
   materialiseDirectories,
   ownDirectories,
+  instanceRootsIn,
   readDeclaration,
+  siblingScopeFor,
   resolveDirectories,
   type MaterialisedDirectory,
 } from "./cat-harness";
+/**
+ * Re-exported, not redefined.
+ *
+ * The rule it carries — exact versions, never ranges — binds BOTH a
+ * declaration's own `version` and a dependency's `version`, and those live in
+ * two modules. It is defined in the lower one ({@link ExactVersionSchema} in
+ * `cat-harness.ts`, which this module already imports) so the two cannot drift
+ * into two spellings of one constraint. This line keeps the name importable
+ * from here, where every existing caller looks for it.
+ */
+export { ExactVersionSchema };
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
@@ -276,8 +386,12 @@ export interface ResolvedDependency {
   rootPath: string;
   /** The dependency's own harness config (if present). */
   config: HarnessConfig | null;
-  /** Transitive dependencies (resolved recursively). */
-  transitive: ResolvedDependency[];
+  /**
+   * Absolute roots of this dependency's OWN dependencies. Edges, not a
+   * subtree: a diamond's shared node is one object reached twice, and a
+   * nested copy of it under each branch was how the old walk lost it.
+   */
+  needs: string[];
 }
 
 /**
@@ -489,71 +603,256 @@ export function resolveDependencyPath(
 }
 
 /**
- * Resolve the full dependency tree depth-first.
+ * The dependencies implied by an instance's declared `needs`, for edges whose
+ * target is an instance in this same checkout.
  *
- * Walks `harness.config.json` dependencies in listed order, resolving
- * each to a path and recursing into its own dependencies. Cycle
- * detection prevents infinite loops.
+ * ## Why this exists
  *
- * @param folioRoot - Absolute path to the folio root.
- * @param seen - Set of already-visited roots (for cycle detection).
- * @returns Array of resolved dependencies in depth-first order.
+ * The owner, 2026-09-22: *"can we consolidate needs etc -> dependencies?"*,
+ * then *"i want to adopt the sushi/fhir IG(/npm?) versioning dependencies for
+ * computing overlays. SHAs are for provenance, digital signing, staging. we
+ * need both, different needs."*
+ *
+ * Before this, `needs` and `dependencies` were two relations that nothing
+ * reconciled: `needs` drove `dependency-order`'s sort and `harness-tiles`'
+ * navbar spine, while the skill and content overlay read config
+ * `dependencies` — and **exactly one instance in the repository declared
+ * one**. So the whole `smart-*` stack had a correct navbar spine, a correct
+ * topological order, green gates, and **not one skill crossing a layer
+ * boundary**. `smart-trust` could not reach `ig-build-pipeline`, the skill
+ * governing how its own IG is built. Bean `5kn6`.
+ *
+ * That was invisible precisely because `needs` being right LOOKS like the
+ * stack being wired.
+ *
+ * ## The two tiers, and why a derived edge carries no version
+ *
+ * `instance-versioning.md` §3.3: a SHA may stage, only a version publishes.
+ * An edge between two instances in ONE checkout is a staging-tier reference —
+ * the consumer has the repository, so a path resolves it, and a version would
+ * be asserting a published identity that §3.1 says most instances should not
+ * have. So a derived dependency carries `path` and **no `version`**, and that
+ * is a statement rather than an omission: it is not publishable, and
+ * `check:published-refs` is what stops one reaching an external consumer.
+ *
+ * An edge to something OUTSIDE the checkout cannot be derived — a name gives
+ * no git URL and no version — so it stays authored in the config. That is the
+ * division of labour: **`needs` states the stack, the config states what a
+ * name cannot carry.**
+ *
+ * ## A name that resolves to nothing is REPORTED, never dropped
+ *
+ * It comes back in `unresolved`. Silently skipping it would make "this layer
+ * is external" and "this layer is misspelled" the same observation, and only
+ * one of them is fine.
  */
-export function resolveDependencyTree(
-  folioRoot: string,
-  seen: Set<string> = new Set(),
-): ResolvedDependency[] {
-  const absRoot = resolve(folioRoot);
-  if (seen.has(absRoot)) return []; // cycle
-  seen.add(absRoot);
+export function dependenciesFromNeeds(instanceRoot: string): {
+  dependencies: FolioAssistantDependency[];
+  unresolved: string[];
+} {
+  const abs = resolve(instanceRoot);
+  let needs: string[] = [];
+  try {
+    needs = readDeclaration(abs)?.needs ?? [];
+  } catch {
+    // A declaration that cannot be read is not this function's to diagnose;
+    // `readDeclaration`'s own callers throw on it. Here it means no derivation.
+    return { dependencies: [], unresolved: [] };
+  }
+  if (needs.length === 0) return { dependencies: [], unresolved: [] };
 
-  const config = readHarnessConfig(absRoot);
-  const deps = config?.dependencies?.folioAssistant ?? [];
-  const resolved: ResolvedDependency[] = [];
-
-  for (const dep of deps) {
-    const rootPath = resolveDependencyPath(absRoot, dep);
-    if (!rootPath) continue;
-
-    const depConfig = readHarnessConfig(rootPath);
-    const transitive = resolveDependencyTree(rootPath, seen);
-
-    resolved.push({
-      dependency: dep,
-      rootPath,
-      config: depConfig,
-      transitive,
-    });
+  // `siblingScopeFor`, NOT `repoRootFor`: this is a lookup of SIBLINGS by
+  // name, and `repoRootFor` is `dirname`, which climbs out of the checkout for
+  // the one instance declared at the repository root. That made the root
+  // instance's `needs` derive nothing while its authored edge still resolved —
+  // an overlay that looked like it worked and held one entry.
+  const repoRoot = siblingScopeFor(abs);
+  const byName = new Map<string, string>();
+  for (const root of instanceRootsIn(repoRoot)) {
+    try {
+      const n = readDeclaration(root)?.name;
+      if (n !== undefined) byName.set(n, root);
+    } catch {
+      // An unreadable sibling cannot be matched against; it is not an error
+      // here, and `check:declaration-filename` is what reports it.
+    }
   }
 
-  return resolved;
+  const dependencies: FolioAssistantDependency[] = [];
+  const unresolved: string[] = [];
+  for (const name of needs) {
+    const root = byName.get(name);
+    if (root === undefined) {
+      unresolved.push(name);
+      continue;
+    }
+    dependencies.push({ name, path: root, derivedFromNeeds: true });
+  }
+  return { dependencies, unresolved };
+}
+
+/** Something wrong with an instance's dependency graph. */
+export type InstanceGraphProblem =
+  | { kind: "missing"; from: string; name: string; detail: string }
+  | { kind: "cycle"; roots: string[]; detail: string };
+
+export interface InstanceGraph {
+  /**
+   * Every dependency the root reaches, EACH ONCE, deepest first and the root's
+   * direct dependencies last. The root itself is not in it.
+   */
+  order: ResolvedDependency[];
+  problems: InstanceGraphProblem[];
 }
 
 /**
- * Flatten the dependency tree into a depth-first ordered list.
+ * Resolve an instance's dependency graph COMPLETELY, then walk it.
  *
- * Transitive dependencies appear before the dependency that declared
- * them, so the overlay order is: deepest first, root last — meaning
- * the root's files override everything, which is the desired behavior
- * for skills and content overlay.
+ * The owner, 2026-09-23 (bean `a1lq`): *"once depedencies of (orderd)
+ * dependecy tree are full resolve, walk tree in order starting w/ deepest
+ * depenencies (bootstreap/)"*. Two passes, and the second is the platform's
+ * one flattener, `schemas/dependency-order.ts`, the same one the render
+ * pipeline and the harness tiles order with.
+ *
+ * ## What the single interleaved pass got wrong
+ *
+ * It recursed and built as it went, with one `seen` set shared across sibling
+ * branches as its cycle guard. So:
+ *
+ * - **a diamond read as a cycle.** A needs B and C, both need D: D resolved
+ *   under B and came back EMPTY under C, behind a comment saying `// cycle`;
+ * - **a real cycle was dropped just as silently**;
+ * - **a dependency that could not be found was skipped**, so "not in this
+ *   checkout" and "misspelled" were the same observation.
+ *
+ * None of that had fired, because no instance here needs two others. It fires
+ * on the first that does.
+ *
+ * ## Pass 1, resolve: every node once, keyed by absolute root
+ *
+ * A node is resolved the first time it is reached and reused after that,
+ * which is what makes a diamond ONE node. The memo is not a cycle guard; the
+ * flattener finds cycles, and names every instance in one.
+ *
+ * ## Pass 2, order: foundation first
+ *
+ * Ties break on the order dependencies were declared, depth-first — which for
+ * a chain (every instance here today) is exactly the order the old walk gave.
  */
-export function flattenDependencies(
-  tree: ResolvedDependency[],
-): ResolvedDependency[] {
-  const flat: ResolvedDependency[] = [];
-  for (const dep of tree) {
-    flat.push(...flattenDependencies(dep.transitive));
-    flat.push(dep);
+export function resolveInstanceGraph(folioRoot: string): InstanceGraph {
+  const root = resolve(folioRoot);
+  const nodes = new Map<string, ResolvedDependency>();
+  const needsOf = new Map<string, string[]>();
+  const declared: string[] = [];
+  const problems: InstanceGraphProblem[] = [];
+
+  const visit = (at: string): void => {
+    if (needsOf.has(at)) return;
+    const needs: string[] = [];
+    needsOf.set(at, needs);
+
+    const config = at === root ? readHarnessConfig(at) : nodes.get(at)!.config;
+    const authored = config?.dependencies?.folioAssistant ?? [];
+    // AUTHORED WINS ON NAME. A config entry can say what a derived one cannot —
+    // a git URL, a version, a `provides` narrowing — so letting derivation
+    // override it would silently widen a deliberately narrowed edge.
+    const authoredNames = new Set(authored.map((d) => d.name));
+    const fromNeeds = dependenciesFromNeeds(at);
+    const derived = fromNeeds.dependencies.filter((d) => !authoredNames.has(d.name));
+
+    // A `needs` NAME THAT RESOLVED TO NOTHING IS A PROBLEM, not an absence.
+    //
+    // `dependenciesFromNeeds` returns these in `unresolved` precisely so a
+    // caller can report them — its docblock says *"A name that resolves to
+    // nothing is REPORTED, never dropped"* — and this function used to throw
+    // the array away. The cost was measured on `main` at `80c18ac`: the
+    // repository root's `needs: ["folio-assistant-core"]` resolved to nothing,
+    // `problems` came back `[]`, and `check:instance-graph` printed *"19
+    // instance(s): every dependency resolves, no cycle"*. A gate asserting the
+    // opposite of the fact it was written to catch.
+    //
+    // Reported as `missing`, the same kind an unresolvable authored dependency
+    // gets, because the consequence is identical: that layer is absent from
+    // every overlay. An entry already named by `authored` is not reported —
+    // the config supplies what the name could not, which is the division of
+    // labour `dependenciesFromNeeds` documents.
+    for (const name of fromNeeds.unresolved) {
+      if (authoredNames.has(name)) continue;
+      problems.push({
+        kind: "missing",
+        from: at,
+        name,
+        detail: `\`${name}\`, named in ${at}'s \`needs\`, matches no instance in this checkout — its layer is absent from every overlay`,
+      });
+    }
+
+    for (const dep of [...derived, ...authored]) {
+      const found = resolveDependencyPath(at, dep);
+      if (!found) {
+        problems.push({
+          kind: "missing",
+          from: at,
+          name: dep.name,
+          detail: `\`${dep.name}\`, a dependency of ${at}, is not in this checkout — its layer is absent from every overlay`,
+        });
+        continue;
+      }
+      const abs = resolve(found);
+      needs.push(abs);
+      if (abs !== root && !nodes.has(abs)) {
+        nodes.set(abs, { dependency: dep, rootPath: found, config: readHarnessConfig(found), needs: [] });
+      }
+      visit(abs);
+    }
+    if (at !== root) nodes.get(at)!.needs = needs;
+    declared.push(at);
+  };
+  visit(root);
+
+  const { order, problems: orderProblems } = flattenSteps(
+    declared.map((id) => ({ id, needs: needsOf.get(id), fatal: true })),
+  );
+  for (const p of orderProblems) {
+    if (p.kind === "cycle") problems.push({ kind: "cycle", roots: p.ids, detail: p.detail });
   }
-  return flat;
+  return {
+    order: order.filter((s) => s.id !== root).map((s) => nodes.get(s.id)!),
+    problems,
+  };
 }
+
+/**
+ * The resolved dependencies, deepest first, for a caller that overlays them.
+ *
+ * The owner's ruling on a1lq, 2026-09-23: **a cycle throws, a missing
+ * dependency warns and the run continues without that layer**. A missing
+ * dependency is also what an uncloned git-URL dependency looks like in a
+ * partial checkout, and throwing there would stop sessions that work. It is
+ * not silent: the warning names it, and `check:instance-graph` fails on it, so
+ * it cannot merge unnoticed.
+ */
+export function orderedDependencies(folioRoot: string): ResolvedDependency[] {
+  const g = resolveInstanceGraph(folioRoot);
+  const cycles = g.problems.filter((p) => p.kind === "cycle");
+  if (cycles.length > 0) {
+    throw new Error(`dependency cycle under ${resolve(folioRoot)}:\n` + cycles.map((c) => `  ${c.detail}`).join("\n"));
+  }
+  for (const p of g.problems) {
+    const key = `${p.kind}:${p.detail}`;
+    if (warned.has(key)) continue;
+    warned.add(key);
+    console.warn(`⚠ ${p.detail}`);
+  }
+  return g.order;
+}
+const warned = new Set<string>();
 
 /**
  * The declaration chain for an instance: deepest dependency first, root last.
  *
  * This is the argument `resolveDirectories` in `schemas/cat-harness.ts` asks
  * for and documents ("callers usually get this from
- * `flattenDependencies(resolveDependencyTree(root))` plus the root itself") and
+ * `orderedDependencies(root)` plus the root itself") and
  * which, until now, nothing built — `resolveDirectories` had no caller outside
  * its own tests, the same gap `resolveSkillDirs` carries and this file's own
  * status table records. A resolver with no caller is a declaration nobody
@@ -561,12 +860,12 @@ export function flattenDependencies(
  * documents and declared in none.
  *
  * Root LAST so a root redeclaring an inherited id wins, matching the overlay
- * order `flattenDependencies` documents and `resolveDirectories` relies on.
+ * order `orderedDependencies` documents and `resolveDirectories` relies on.
  */
 export function declarationChain(
   folioRoot: string,
 ): Array<{ name: string; root: string; own?: boolean }> {
-  const flat = flattenDependencies(resolveDependencyTree(folioRoot));
+  const flat = orderedDependencies(folioRoot);
   const chain: Array<{ name: string; root: string; own?: boolean }> = flat.map(
     (d) => ({ name: d.dependency.name ?? d.rootPath, root: d.rootPath }),
   );
@@ -645,7 +944,7 @@ export function materialiseDeclaredDirectories(
 export function resolveSkillDirs(folioRoot: string): string[] {
   const dirs: string[] = [];
 
-  for (const dep of flattenDependencies(resolveDependencyTree(folioRoot))) {
+  for (const dep of orderedDependencies(folioRoot)) {
     if (dep.dependency.provides && !dep.dependency.provides.includes("skills")) {
       continue;
     }
@@ -671,8 +970,7 @@ export function resolveSkillDirs(folioRoot: string): string[] {
  * dependency first, root last.
  */
 export function resolveTranslationDirs(folioRoot: string): string[] {
-  const tree = resolveDependencyTree(folioRoot);
-  const flat = flattenDependencies(tree);
+  const flat = orderedDependencies(folioRoot);
   const dirs: string[] = [];
 
   for (const dep of flat) {
@@ -730,7 +1028,7 @@ export async function loadContributions<C extends { name: string }, S extends Co
   folioRoot: string,
   registry: S,
 ): Promise<S> {
-  const flat = flattenDependencies(resolveDependencyTree(folioRoot));
+  const flat = orderedDependencies(folioRoot);
 
   for (const dep of flat) {
     const spec = dep.config?.contributes;
@@ -823,8 +1121,8 @@ export interface ClosedRepositoryDescription {
  * `schemas/content-type.ts` reads a root and nothing else, on purpose: the
  * dependency resolver lives in THIS module, and importing it there would make
  * the type registry depend on the thing that should depend on it. So closure
- * is composed at the layer that already owns the walk — `resolveDependencyTree`
- * is three functions up — rather than the walk being pushed down.
+ * is composed at the layer that already owns the walk — `resolveInstanceGraph`
+ * is above it — rather than the walk being pushed down.
  *
  * ## Membership is ATTRIBUTED, never merged
  *
@@ -860,7 +1158,7 @@ export function describeRepositoryClosure(
   // Dependencies first, root last — the same depth-first order
   // `resolveSkillDirs` uses, so a reader comparing the two sees one traversal
   // rather than two conventions.
-  for (const dep of flattenDependencies(resolveDependencyTree(folioRoot))) {
+  for (const dep of orderedDependencies(folioRoot)) {
     visit(dep.rootPath, dep.dependency.name, false);
   }
   visit(resolve(folioRoot), "(root)", true);

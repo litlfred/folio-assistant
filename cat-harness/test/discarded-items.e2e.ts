@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { AxeBuilder } from "@axe-core/playwright";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -46,7 +47,7 @@ const DOCUMENT = {
       "@id": DOC_URL + "#a",
       name: "Deployment topologies and operating modes",
       nodeKind: "proposal",
-      sourcePath: "fsh-guts/proposals/deployment-topologies.md",
+      sourcePath: "cat-harness/docs/proposals/deployment-topologies.md",
       movedFrom: "docs/folio-assistant/proposals/deployment-topologies.md",
       movedOn: "2026-09-19",
       issue: "363",
@@ -69,8 +70,8 @@ const DOCUMENT = {
  * backtick anywhere ends the string and the file stops parsing. Its sibling
  * spec carries the same warning because it happened there.
  */
-function harness(src: string | null): string {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8">
+function harness(src: string | null, scheme: "light" | "dark" = "dark"): string {
+  return `<!doctype html><html lang="en" data-fa-scheme="${scheme}"><head><meta charset="utf-8"><title>Discarded items</title>
   ${src === null ? "" : `<meta name="fa-fsh-guts-src" content="${src}">`}
   <style>
   body { margin: 0; }
@@ -80,6 +81,7 @@ function harness(src: string | null): string {
   .site-header { width: 100%; max-height: 3.75rem; overflow: hidden; display: flex; align-items: center; }
   .site-title { flex: 1; }
   .site-nav { width: 100%; overflow-y: auto; }
+  .site-nav a { color: inherit; }
   ${CSS}
 </style></head><body>
   <div class="side-bar">
@@ -87,7 +89,7 @@ function harness(src: string | null): string {
     <nav class="site-nav"><a href="#">Home</a></nav>
   </div>
   <div class="main"><div class="main-header"></div><div class="main-content"><h1>x</h1></div></div>
-  <script>window.jtd = { theme: "dark",
+  <script>window.jtd = { theme: "${scheme}",
     getTheme: function () { return this.theme; },
     setTheme: function (t) { this.theme = t; } };<\/script>
   <script>${JS}<\/script>
@@ -268,4 +270,35 @@ test.describe("operable without a mouse", () => {
     await page.keyboard.press("Enter");
     await expect(page.locator(".fa-discarded-title")).toBeVisible();
   });
+});
+
+test.describe("contrast is measured, not assumed", () => {
+  /* The last of `7vhe`'s Done-when items. `a11y.e2e.ts` opens Settings, but
+   * its page publishes no `fa-fsh-guts-src`, so the control there is the
+   * "no document" branch and neither the list nor an opened item is ever on
+   * screen for axe to measure. A page-wide pass only measures what is ON the
+   * page — the lesson `rptk` recorded for the language view. So both views,
+   * both schemes, here where the document is stubbed. */
+  const TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
+  for (const scheme of ["light", "dark"] as const) {
+    for (const [state, openItem] of [["the list", false], ["an opened item", true]] as const) {
+      test(`no WCAG A/AA violations — ${state}, ${scheme}`, async ({ browser }) => {
+        const ctx = await browser.newContext({ colorScheme: scheme });
+        const page = await ctx.newPage();
+        await stub(page, DOCUMENT);
+        await page.setContent(harness(DOC_URL, scheme));
+        await openSettings(page);
+        await page.locator(".fa-discarded-open").click();
+        await expect(page.locator(".fa-discarded-item-name")).toHaveCount(2);
+        if (openItem) {
+          await page.locator(".fa-discarded-item-name").first().click();
+          await expect(page.locator(".fa-discarded-detail")).toBeVisible();
+        }
+        const { violations } = await new AxeBuilder({ page }).withTags([...TAGS]).analyze();
+        expect(violations.map((v) => `${v.id}: ` +
+          v.nodes.map((n) => n.failureSummary ?? n.html).join(" | "))).toEqual([]);
+        await ctx.close();
+      });
+    }
+  }
 });

@@ -5,7 +5,7 @@
     "id": "Process_ActorRoleAdministration",
     "path": "processes/actor-role-administration.bpmn"
   },
-  "source_hash": "sha256:fb5873d4cde1f7a11b8a6f34791d355eb055c8a8767067b4044ae90a6ae640c1",
+  "source_hash": "sha256:c4ae095f4853006eac6829b64d3059c01b107db818acff264c999b4a84427e25",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -79,12 +79,48 @@
     "call-activity-resolves": {
       "result": "pass",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
+    "pass": 15,
     "fail": 1,
-    "n/a": 6,
+    "n/a": 8,
     "unknown": 0
   }
 }

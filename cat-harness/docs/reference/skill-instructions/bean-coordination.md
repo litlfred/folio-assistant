@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/bean-coordination.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/bean-coordination.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/bean-coordination.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/bean-coordination.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/bean-coordination.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/bean-coordination.md){: .fa-edit-source }
 
 {% raw %}
 > **This is the skill `skill_fetch` serves.** A stub of the same name
@@ -105,6 +105,40 @@ Neither check closes the window. Both are cheap, and the second catches the case
 that matters most in practice — a sibling minutes ahead of you who already has a
 PR up.
 
+### The trigger is STARTING WORK, not claiming — and that distinction cost a merge
+
+**Measured 2026-09-26, bean `tuvg`.** These checks are written above as what you
+do *before you claim*, and an agent that is not claiming anything therefore
+never runs them. That is not a hypothetical reading; it is what happened:
+
+A session already held `tuvg` and was executing an owner instruction on one
+cause inside it. No new bean, so no claim, so neither check fired. Sibling PR
+**#1381 was open and doing the identical work** — 25 `UNCATALOGED` records —
+and a `--search` for it would have returned it in one call. The duplicate
+merged first, which then made the *innocent* PR fail
+`translation-drift.test.ts:154` (*"no page is recorded TWICE"*) on 52 entries.
+It had to be reverted out of `main` an hour later.
+
+So the trigger is wider than a claim:
+
+> **Run the open-PR check before you start work on a topic — not only before
+> you claim a bean.** A cause inside a bean you already hold, a fix an owner
+> just asked for, a gate you are about to unbreak: each is a unit of work a
+> sibling can already have a PR up for, and none of them involves claiming
+> anything.
+
+The search term follows from that. Keyed on a bean id it finds nothing when the
+work has no bean of its own, which was this case — the sibling's bean (`0xfe`)
+existed only on an unpushed branch. **Search the subject as well as the id**:
+the file you are about to edit, the gate you are about to turn green, the
+symbol you are about to add. #1381's title said *"Record the 25 uncatalogued
+translations"*; nothing about `tuvg` would have matched it, and `UNCATALOGED`
+would have.
+
+And a second-order caution, because it inverts who pays: a duplicate-detecting
+test punishes **whoever merges second**, not whoever duplicated. Merging first
+does not mean you were first.
+
 ### `bun run beans:claim <id>` closes it — when the remote lets it
 
 **The window is closable and there is now a tool for it.** `scripts/claim-bean.ts`
@@ -134,10 +168,30 @@ and removes it on every path including failure.
 |---|---|---|
 | `pushed` | 0 | on the default branch; every session sees it |
 | `already-claimed` | 0 | a sibling holds it, and is **named**. Nothing written — pick another item |
+| `held-unknown` | **4** | `in-progress` there, and **nobody recorded a holder**. Nothing written. It cannot tell a live sibling from a claim abandoned days ago, so it refuses and says so — read the bean and the open PR list before taking it |
 | `already-closed` | 0 | it is `completed` or `scrapped` there. **Not claimed, deliberately** — reviving finished work, and especially a `scrapped` bean whose whole purpose is recording a rejected approach, is a decision rather than a side effect of asking to claim |
 | `new-on-branch` | 0 | the bean is not on the default branch yet, so nobody can see it and there is nothing to race over. Claim locally and open the PR early |
 | `fell-back` | **3** | the push was REJECTED. The bean is **not** claimed anywhere a sibling can see — claim on your branch and open the PR at your first commit |
 | `unknown` | **2** | the default branch could not be read. **Never** "the bean is free" |
+
+**`held-unknown` is the case the store is mostly made of, and it used to be
+silent.** That arm returned `pushed` until bean `c3d7` — `heldBy === branch ||
+heldBy === undefined`, on the reading that both mean "ours, idempotent". They do
+not. The first is a determined answer; the second is *could not determine who
+holds it*, and it printed `✓ claimed … every session can see it now` having
+pushed nothing.
+
+It is not rare. Measured on `origin/main` 2026-09-25: of the **100** non-epic
+beans marked `in-progress`, **97 record no holder** — because `todo-manager.md`
+and `session-intent.md` told an agent to claim with
+`beans update <id> --status in-progress`, which writes no note. So the guard
+against claim-stomping answered "go ahead" for 97 % of what it was guarding.
+Both documents now name this tool; the code half is the third state, because
+the legacy claims and any hand-edited bean keep producing it.
+
+Its exit code is **4** and neither of its neighbours: not `0`, which
+`already-claimed` uses to say *pick another item* — this one cannot tell you
+even that; and not `2`, because the default branch was read perfectly well.
 
 **`fell-back` is the case to expect, not an edge case.** Whether the default
 branch accepts a direct push cannot be determined from inside an agent session:
@@ -199,6 +253,38 @@ what makes them the shared substrate.
 An **unclaimed** bean is fair game for any session; a claimed one is not.
 Respect sibling claims. Agents create and set `in-progress`; they do not take
 over the work another session is mid-flight on.
+
+### Complete it in the PR's own last commit (bean `4d22`)
+
+**Mark the bean `completed` in the last commit of the PR that does its work.**
+Do not wait for the merge.
+
+The natural order loses it. The PR merges, the agent then commits the bean's
+completion to the branch, then re-branches from the new `main`
+(`git checkout -B <branch> origin/main`). That completion commit was never in
+any PR, so it is orphaned: the bean still reads open on `main`, and the next
+session's ready-list offers finished work. Measured twice on 2026-09-22
+(`ebvl`, `7ofc`), each caught only because somebody noticed.
+
+The completion cannot ride its own PR *after* the merge, because then there is
+no PR left to carry it. So it rides the PR *before*, as its last commit,
+asserting `completed` a few minutes before the merge makes it true. That is the
+lesser error: if the PR is abandoned, the bean reads done on a branch that never
+lands, and `main` never saw it. Practised on 2026-09-23 for eight beans in a
+row with no orphan.
+
+Two things that follow:
+
+- The `## Done when` items are ticked in that same commit, with the evidence,
+  so the bean on `main` shows *why* it is complete, not just that it is.
+- A bean whose Done-when is not yet all met **stays open** in that commit, with
+  a note saying what is left. Completing it to avoid an orphan would be the
+  opposite error.
+
+`bun run beans:landed` reports what slipped through: open, non-epic beans named
+in a merged PR's title on `main`, those with every Done-when item ticked listed
+first. It reports and never closes; closing is still on evidence, per the next
+section.
 
 ## Closing a bean whose work has already landed (STRICT)
 
@@ -543,3 +629,11 @@ downstream repo, update that repo's ownership note and close the tracking beans.
   Beans ≠ sidecars. Do **not** convert QA / witness queue items into individual
   beans (see todo-manager.md disambiguation block).
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Agent bean lifecycle](../../processes/bean-lifecycle.html) | Leave it alone (coordinate instead); Claim it (status: in-progress); Record the blocker and hand back |
+| [Code change and review](../../processes/code-change-review.html) | Claim the work item |
+

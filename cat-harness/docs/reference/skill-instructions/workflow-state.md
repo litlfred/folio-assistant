@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/workflow/workflow-state.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/workflow/workflow-state.md) — do not edit here.
+> Generated from [`cat-harness/skills/workflow/workflow-state.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/workflow-state.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/workflow/workflow-state.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/workflow-state.md){: .fa-edit-source }
 
 {% raw %}
 # State in a running process
@@ -31,7 +31,7 @@ The `layer` column is not decoration — it says **what a step may do**. A step
 may write to a `state` graph; that is what state is for. **A step that writes
 to `context` is a defect**, not an update: memory changes when a human directs
 an authoring act, outside any instance.
-[`content-context-and-state-graphs`](../folio-core/content-context-and-state-graphs.md)
+[`content-context-and-state-graphs`](content-context-and-state-graphs.md)
 carries the axis; `processMayWrite()` is the predicate.
 
 ## The diagram is content and the instance is state, and that is the whole model
@@ -60,7 +60,7 @@ retroactively took a different path.
 to*. Those must be one answer or they diverge, and a work plan that disagrees
 with itself is worse than one that is merely coarse.
 
-The loop is closed by `<folio:bean op="…">` on an activity. **A bean-marked
+The loop is closed by `<cat-harness.processes:bean op="…">` on an activity. **A bean-marked
 step is not a step *about* the work plan — it IS the work-plan operation**, so
 completing the step performs it:
 
@@ -112,8 +112,8 @@ Before acting on an instance you did not start, ask what it is waiting on. A
 bean's status defaults to **non-blocking**; a real block carries what it waits
 on, since when, an **expiry** and a handoff — because a block with no expiry
 cannot be told from abandoned work.
-[`bean-blocking`](../folio-core/bean-blocking.md) carries that, and
-[`bean-coordination`](../folio-core/bean-coordination.md) carries the rule that
+[`bean-blocking`](bean-blocking.md) carries that, and
+[`bean-coordination`](bean-coordination.md) carries the rule that
 a claim **announces rather than reserves** until your PR exists.
 
 ## See also
@@ -122,8 +122,8 @@ a claim **announces rather than reserves** until your PR exists.
   advisory, the commit-boundary gate, DMN-backed gateways.
 - [`process-state`](process-state.md) — saying which process you are in, the
   five detectors for being out of process, and the recovery.
-- [`content-context-and-state-graphs`](../folio-core/content-context-and-state-graphs.md)
+- [`content-context-and-state-graphs`](content-context-and-state-graphs.md)
   — the layer each store sits on, and why memory is not writable by a step.
-- [`todo-manager`](../folio-core/todo-manager.md) — the work plan's own store.
+- [`todo-manager`](todo-manager.md) — the work plan's own store.
   A todo is a **person's** outstanding item and is not a second work plan.
 {% endraw %}

@@ -62,6 +62,18 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
      `<<<<<<<` / "changed in both" — that false-positives on files which
      legitimately contain those literals (docs about merge conflicts, test
      fixtures — this very skill tripped that check when it was first run).
+   - **A clean text merge is not a clean state.** `merge-tree` answers "do
+     the files conflict?", not "do the gates pass on the result?". Before
+     asking for a merge, run **`bun run check:merged`**: it builds the merge
+     with the current base in a throwaway worktree and runs the full
+     `bun run gates` there (exit 0 passes, 1 fails, 2 could not determine —
+     never read as clean). Bean `nytj`: three times on 2026-09-23 a
+     generated measurement was green on the branch, green on the base,
+     merged without a conflict, and stale on the result.
+   - The structural fix is GitHub's **merge queue**, which tests exactly the
+     commit that will land; the gating workflows carry `merge_group:` so it
+     works the moment the owner turns it on. Until then, `check:merged` is
+     the agent's half.
 5. **Green check.** Run the project's tests/build (here: `bun test`, plus
    `bun build <file> --target=bun` for type-checking touched files). Report
    **honestly**: distinguish failures you caused from pre-existing ones (diff the
@@ -88,13 +100,38 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
    `latexmk`**, which is the common case in a container. Exit 2 means the gate
    did **not run**; report it that way rather than folding it into a green,
    per the same honesty rule as the build above.
+   **For a branch that changes a folio's blocks, report review coverage.**
+   `content-change-review.bpmn`'s coverage gate (`GW_Covered`, table
+   `decisions/review-coverage-gate.dmn`) reads two counts. Report both in
+   the PR body, in the gate's own terms:
+   - **open defects**: review comments of kind `defect` still `open` or
+     `addressed`, from the preview's `review-comments.json`;
+   - **changed blocks with neither a verdict nor a waiver** on their current
+     version.
+
+   Both come from one command, the `folio-review-coverage` Tool (bean
+   `px0t`), run on the preview's published files:
+   `bun run <platform>/folio-assistant-core/scripts/review-coverage.ts
+   --changeset changeset.json --blocks blocks.json --comments
+   review-comments.json`. Quote its stderr summary. **If the preview has no
+   `review-comments.json`, or one with no `verdicts` field, write "not
+   measured"**, never 0. And never count resolved comments as coverage: a
+   resolved comment is not a reviewer's verdict on the block.
+
+   This REPORTS; it does not merge or refuse. The gate belongs to the review
+   process, and the committee decides the outcome. A prepare-merge that
+   passed a branch whose coverage it could not measure, without saying so,
+   would read as "reviewed".
 6. **Push** the feature branch (retry/backoff as in step 2):
    `git push -u origin <branch>`. Then **ask whether the push produced a run**:
    `bun run check:head-has-run`.
 
    This does not change what you do next — step 7 dispatches either way. It
    changes what you can honestly SAY. A push here can silently produce no run
-   at all (bean `3pqn`, observed three times), and a pull request showing zero
+   at all (beans `3pqn` and `yv4z`, **six observations** between 2026-09-19 and
+   2026-09-20 — this said "three times" until 2026-09-24, which is `3pqn`'s
+   original figure and understates how routine it is; §Guardrails
+   below carries them), and a pull request showing zero
    checks is indistinguishable from one whose checks have not started, so a
    reviewer cannot tell "CI is coming" from "CI is never coming". If the check
    reports **no run**, write that in the PR body alongside the dispatched run's

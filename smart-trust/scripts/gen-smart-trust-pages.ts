@@ -3,6 +3,7 @@
  * Render smart-trust's reader-facing pages from the artefact index.
  *
  * @module smart-trust/scripts/gen-smart-trust-pages
+ * @covers fhir-artifact-index
  *
  * ## Why this exists
  *
@@ -58,6 +59,21 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../../cat-harness/schemas/ig-menu.js";
+import {
+  IgChromeSchema,
+  chromeCss,
+  chromeFileFor,
+  tokenOf,
+  type IgChrome,
+} from "../../cat-harness/schemas/ig-chrome.js";
+import {
+  declarationPathIn,
+  directoriesForGraph,
+  instanceRootsIn,
+  repoRootFor,
+} from "../../cat-harness/schemas/cat-harness.js";
+
 import {
   FhirArtifactIndexSchema,
   materializationCensus,
@@ -70,7 +86,129 @@ import {
 
 const INSTANCE = resolve(import.meta.dir, "..");
 const INDEX = join(INSTANCE, "fhir-artifact-index", "index.json");
+/**
+ * The IG's OWN navigation, ingested from its `sushi-config.yaml`.
+ *
+ * OPTIONAL, and its absence is a third state rather than "this IG has no
+ * menu": `ingest-ig-menu.ts` needs the upstream source checkout, which is not
+ * on every machine. Absent → the menu sections are not written and the build
+ * SAYS so; it does not quietly render a site with no navigation and call it
+ * complete.
+ */
+const MENU = join(INSTANCE, "fhir-artifact-index", "menu.json");
 const OUT = join(INSTANCE, "docs");
+
+/**
+ * The instance that OWNS the WHO chrome.
+ *
+ * Named rather than walked to, and `schemas/ig-chrome.ts` §`chromeFileFor`
+ * carries why: `smart-trust` needs `smart-ig` while `smart-base` needs
+ * `fhir-harness`, so there is no `needs` path between them to walk. Widening
+ * the walk until one matched would settle a layering question — `nsbb`'s —
+ * inside a stylesheet loader.
+ */
+const CHROME_OWNER = "smart-base";
+
+/** The declaration's `name`, or `undefined` when a directory is not an instance. */
+function declaredName(root: string): string | undefined {
+  const decl = declarationPathIn(root);
+  if (decl === undefined) return undefined;
+  try {
+    return (JSON.parse(readFileSync(decl, "utf8")) as { name?: string }).name;
+  } catch {
+    // Unparseable is "could not determine", never "not smart-base": returning
+    // a name here would make a broken sibling silently supply the chrome.
+    return undefined;
+  }
+}
+
+/**
+ * The IG's chrome, ingested from its template chain — OPTIONAL, like the menu.
+ *
+ * Absent is a third state rather than "this IG has no chrome":
+ * `ingest-ig-chrome.ts` needs three upstream checkouts, which are on no CI
+ * runner. Absent -> the pages render without WHO's palette and the build SAYS
+ * so, rather than quietly shipping unstyled pages and calling them a mirror.
+ */
+function loadChrome(): IgChrome | undefined {
+  const file = chromeFileFor(repoRootFor(INSTANCE), CHROME_OWNER, {
+    instanceRootsIn,
+    declarationNameOf: declaredName,
+    directoriesForGraph: (root, graph) => directoriesForGraph(root, graph),
+    exists: existsSync,
+    join,
+  });
+  if (file === undefined) return undefined;
+  const parsed = IgChromeSchema.safeParse(JSON.parse(readFileSync(file, "utf8")));
+  if (!parsed.success) {
+    console.error(`the committed IG chrome does not validate — refusing to style from it:`);
+    for (const i of parsed.error.issues.slice(0, 5)) console.error(`  ${i.path.join(".")}: ${i.message}`);
+    process.exit(1);
+  }
+  return parsed.data;
+}
+
+const CHROME = loadChrome();
+
+/**
+ * Where the mirrored chrome applies.
+ *
+ * SCOPED, never `:root`. The IG Publisher can put WHO's palette on `:root`
+ * because every document it builds is the IG's; ours are folio pages that
+ * happen to carry a mirror, and a bare `:root` block would repaint the whole
+ * site the moment one of these pages loaded.
+ */
+const CHROME_SCOPE = ".st-ig";
+
+/**
+ * The IG's own status banner — the blue bar and, while it is a draft, the
+ * watermark.
+ *
+ * **The VALUES are WHO's; the MARKUP is ours, and the difference is the ask.**
+ * The owner wanted our pages to mirror the WHO IG *"except navar menu is now
+ * on LHS"* — so reproducing the template's Bootstrap `.navbar-inverse` would
+ * rebuild the very top bar that was moved. What is mirrored is the palette and
+ * the watermark; what is ours is a header element that consumes them.
+ *
+ * `#ig-status`'s class comes from the IG's OWN `status` (`draft` here), read
+ * from `sushi-config.yaml` by the ingest, exactly as the template's
+ * `fragment-pagebegin.html` does it. Nothing here decides that smart-trust is
+ * a draft.
+ */
+function igBanner(chrome: IgChrome): string {
+  const title = chrome.id;
+  const label = [chrome.version, chrome.status].filter(Boolean).join(" — ");
+  return [
+    `<div class="${CHROME_SCOPE.slice(1)}">`,
+    `  <div class="st-ig-bar"><a href="${esc(chrome.canonical)}">${esc(title)}</a></div>`,
+    `  <div id="ig-status" class="ig-status-${esc(chrome.status)}">`,
+    `    <p><span class="st-ig-title">WHO SMART Trust</span><br/><span>${esc(label)}</span></p>`,
+    `  </div>`,
+    `  <p id="publish-box">This page mirrors a published WHO Implementation Guide. ` +
+      `The authoritative version is at <a href="${esc(chrome.canonical)}">${esc(chrome.canonical)}</a>.</p>`,
+    `</div>`,
+  ].join("\n");
+}
+
+/**
+ * The chrome's stylesheet, plus the handful of rules OUR markup needs.
+ *
+ * `chromeCss` emits the ingested tokens and the mirrored rules. The three
+ * added here style elements the template has no equivalent of, and every
+ * colour in them is `var(--…)` off an ingested token rather than a literal —
+ * a hex typed here would be exactly the transcription this whole pipeline
+ * exists to avoid.
+ */
+function chromeStyles(chrome: IgChrome): string {
+  const bar = tokenOf(chrome, "--navbar-bg-color") ? "var(--navbar-bg-color)" : "currentColor";
+  const ink = tokenOf(chrome, "--ig-status-text-color") ? "var(--ig-status-text-color)" : "currentColor";
+  return (
+    chromeCss(chrome, CHROME_SCOPE) +
+    `${CHROME_SCOPE} .st-ig-bar{background:${bar};padding:.5rem .8rem;border-radius:4px 4px 0 0}\n` +
+    `${CHROME_SCOPE} .st-ig-bar a{color:#fff;font-weight:600;text-decoration:none}\n` +
+    `${CHROME_SCOPE} .st-ig-title{font-size:12pt;font-weight:bold;color:${ink}}\n`
+  );
+}
 
 const CHECK = process.argv.includes("--check");
 
@@ -86,6 +224,18 @@ function esc(s: string): string {
 /** A filesystem-safe page name for an artefact key (`ValueSet/Actors` -> `ValueSet-Actors`). */
 function pageName(a: FhirArtifact): string {
   return `${a.resourceType}-${a.id}`.replace(/[^A-Za-z0-9._-]/g, "_");
+}
+
+/**
+ * A category's own page name, sanitised the same way an artefact's is.
+ *
+ * Categories are free text out of the IG (`Requirements: Formal Requirements`,
+ * `Terminology: Value Sets`), so the colon and the spaces have to go before
+ * this is a filename. Uses `pageName`'s character class rather than a second
+ * one, because two sanitisers are two answers to "what is a safe name".
+ */
+function categoryName(label: string | undefined): string {
+  return (label ?? "Other").replace(/[^A-Za-z0-9._-]/g, "_");
 }
 
 /**
@@ -174,15 +324,77 @@ const CSS = `
  * `description` are the index's own, never typed here, which is the same rule
  * the rest of this generator follows.
  */
-function shell(title: string, description: string, body: string, depth = 0): string {
+/**
+ * Where a page sits in the LEFT-HAND NAV — three roles, not a depth number.
+ *
+ * It was `depth = 0 | 1`, and one number was carrying two different facts: a
+ * CATEGORY page and an ARTEFACT page both passed `1`, so the `nav_exclude`
+ * written for the 674 leaves swept out the 7 category pages with them. The
+ * sidebar showed exactly ONE smart-trust row — the index — and the structure
+ * this index is grouped by was invisible in the one place a reader navigates
+ * from.
+ *
+ * The comment that justified it was right about the leaves and wrong about the
+ * sections: *"674 artefacts would bury the sidebar's real structure"* — the
+ * categories ARE that structure. Two facts, two values, so the next person
+ * cannot accidentally exclude one by describing the other.
+ */
+type NavRole =
+  /** The front door. Carries the children. */
+  | { kind: "index" }
+  /** One of the 7 categories — a listed child of the index. */
+  | { kind: "section"; order: number }
+  /** One of the 674 artefacts. Excluded: a leaf per artefact buries the rest. */
+  | { kind: "leaf" };
+
+/**
+ * The index page's title, and the string a section names as its `parent`.
+ *
+ * just-the-docs matches a child to its parent BY TITLE, so these two cannot be
+ * written independently — one constant, referenced twice, or a re-titled index
+ * silently orphans all 7 sections and the sidebar quietly flattens.
+ */
+const INDEX_TITLE = "WHO SMART Trust — artefact index";
+
+function navFrontMatter(nav: NavRole): string[] {
+  switch (nav.kind) {
+    case "index":
+      return ["has_children: true"];
+    case "section":
+      return [`parent: ${yamlScalar(INDEX_TITLE)}`, `nav_order: ${nav.order}`];
+    case "leaf":
+      // Still excluded, and for the reason the original comment gave: 674
+      // leaves would bury the sidebar. Unchanged behaviour, now stated of the
+      // case it was actually meant for.
+      return ["nav_exclude: true"];
+  }
+}
+
+/**
+ * Whether a page carries the IG chrome.
+ *
+ * Owner, 2026-09-23, on the navbar: *"etc... common fixture unless explicty
+ * removed in harness visualtion."* The same rule governs the chrome, and it is
+ * a DEFAULT-ON parameter rather than a list of pages that opt in — the two are
+ * not the same thing. A list of opted-in pages makes every page added later
+ * silently bare, and nobody notices, because a missing fixture looks exactly
+ * like a page that was never meant to have one. Default-on inverts that: a
+ * page without the chrome had to say so.
+ */
+type ChromeChoice = "fixture" | "removed";
+
+function shell(
+  title: string,
+  description: string,
+  body: string,
+  nav: NavRole = { kind: "index" },
+  chrome: ChromeChoice = "fixture",
+): string {
   const fm = [
     "---",
     `title: ${yamlScalar(title)}`,
     `description: ${yamlScalar(description)}`,
-    // `nav_exclude` on the artefact pages: 674 artefacts would bury the
-    // sidebar's real structure under one instance's leaves. The index page is
-    // the front door and stays listed.
-    ...(depth === 0 ? [] : ["nav_exclude: true"]),
+    ...navFrontMatter(nav),
     "---",
     "",
   ].join("\n");
@@ -190,7 +402,13 @@ function shell(title: string, description: string, body: string, depth = 0): str
   // file no longer owns. It is now the handful of rules just-the-docs has no
   // opinion about; everything the theme already provides was removed rather
   // than overridden.
-  return `${fm}<style>${CSS}</style>\n\n${body.trim()}\n`;
+  // The chrome is mirrored only when it was actually ingested. Absent, the
+  // page renders as an ordinary folio page: a mirror nobody could build is
+  // reported by the build, never faked with a hand-typed palette.
+  const wearsChrome = chrome === "fixture" && CHROME !== undefined;
+  const style = wearsChrome ? `${CSS}\n${chromeStyles(CHROME!)}` : CSS;
+  const banner = wearsChrome ? `${igBanner(CHROME!)}\n\n` : "";
+  return `${fm}<style>${style}</style>\n\n${banner}${body.trim()}\n`;
 }
 
 /**
@@ -236,34 +454,35 @@ function indexPage(ix: FhirArtifactIndex): string {
       if (list.length > INLINE_LIMIT) {
         // Too many to inline; say so and say where they are, rather than
         // rendering a table nobody can read or silently dropping them.
+        // OVER THE INLINE LIMIT — the category gets its own page.
+        //
+        // This block used to read "None carries a DAK API sidecar, so none has
+        // an artefact page; they are reachable from the IG's own
+        // `artifacts.html`." Both halves stopped being true when every
+        // artefact started getting a page, and a sentence sending the reader
+        // upstream for pages this site now publishes is worse than no
+        // sentence. The owner's INLINE_LIMIT ruling still holds — the index
+        // came to 524KB with one category 90% of it — so the list moves to a
+        // page of its own rather than inline.
         return [
-          `<details>`,
+          `<details markdown="1">`,
           `<summary><strong>${esc(name)}</strong> — ${list.length}</summary>`,
           ``,
-          `${list.length} artefacts, too many to list here. None carries a DAK API sidecar,`,
-          `so none has an artefact page; they are reachable from the IG's own`,
-          `\`artifacts.html\`.`,
+          `${list.length} artefacts — too many to list here without the index becoming`,
+          `unreadable. Every one has its own page: **[browse all ${list.length}](./category/${categoryName(label)}.html)**.`,
           ``,
           `</details>`,
         ].join("\n");
       }
-      const rows = list.map((a) => {
-        const nm = a.title ?? a.name ?? a.id;
-        // `.html`, not a trailing slash. This site sets no `permalink`, so
-        // Jekyll's default emits `artifact/Name.html` -- a directory-style
-        // link would 404 on every one of the 19 artefact pages, and it would
-        // 404 only once BUILT, which no check on the source could see.
-        const linked = a.dak ? `[${mdCell(nm)}](./artifact/${pageName(a)}.html)` : mdCell(nm);
-        const canonical = a.canonical ? `\`${mdCell(a.canonical)}\`` : "*no canonical URL*";
-        return `| ${linked}<br>\`${mdCell(a.key)}\` | ${canonical} | ${mdCell(repLinks(a))} | ${stateTag(a)} |`;
-      });
+      // `markdown="1"`, or the table inside prints as rows of pipes. Kramdown
+      // does not parse Markdown inside an HTML block unless told to, so the
+      // whole artefact table shipped as raw text on the live index — found by
+      // `check:escaped-markup`'s leaked-table scan (bean `7w1a`, 2026-09-24).
       return [
-        `<details>`,
+        `<details markdown="1">`,
         `<summary><strong>${esc(name)}</strong> — ${list.length}</summary>`,
         ``,
-        `| Artefact | Canonical URL | Published as | Bytes |`,
-        `|---|---|---|---|`,
-        ...rows,
+        ...artifactTable(list, "."),
         ``,
         `</details>`,
       ].join("\n");
@@ -326,7 +545,7 @@ function indexPage(ix: FhirArtifactIndex): string {
   ].join("\n");
 
   return shell(
-    "WHO SMART Trust — artefact index",
+    INDEX_TITLE,
     `All ${ix.count} artefacts of the WHO SMART Trust IG ${ix.version ?? ""}, reconstructed from its published output.`,
     body,
   );
@@ -346,6 +565,68 @@ function indexPage(ix: FhirArtifactIndex): string {
  * corrupted one, and the corruption looks like a rendering bug rather than
  * like data.
  */
+/**
+ * The artefact table, shared by the index and by a category page.
+ *
+ * `base` is the prefix an `artifact/…` link needs from the page being written
+ * — `.` from `index.md`, `..` from `category/X.md`. Passed rather than derived
+ * so a third caller at a third depth cannot silently inherit the wrong one.
+ *
+ * **`.html`, never a trailing slash.** This site sets no `permalink`, so
+ * Jekyll's default emits `artifact/Name.html`; a directory-style link 404s on
+ * every row, and only once BUILT, which no check on the source can see. That
+ * defect shipped once already (issue #824) and the only test that catches it
+ * reads the href out of the page and resolves it back to a file.
+ */
+function artifactTable(list: FhirArtifact[], base: string): string[] {
+  return [
+    `| Artefact | Canonical URL | Published as | Bytes |`,
+    `|---|---|---|---|`,
+    ...list.map((a) => {
+      const nm = a.title ?? a.name ?? a.id;
+      const linked = `[${mdCell(nm)}](${base}/artifact/${pageName(a)}.html)`;
+      const canonical = a.canonical ? `\`${mdCell(a.canonical)}\`` : "*no canonical URL*";
+      return `| ${linked}<br>\`${mdCell(a.key)}\` | ${canonical} | ${mdCell(repLinks(a))} | ${stateTag(a)} |`;
+    }),
+  ];
+}
+
+/**
+ * One category, listed in full, for a category too large to inline.
+ *
+ * Exists so that "too many to list here" can point somewhere instead of
+ * pointing upstream. Before this, the 604-artefact `Other` bucket told the
+ * reader to go to the IG's own `artifacts.html` — a sentence that was true
+ * only while those artefacts had no pages here.
+ */
+/**
+ * `order` is the category's position in `byCategory`, passed in rather than
+ * derived here: the index page already iterates that map to build its own
+ * sections, so the sidebar and the page body are ordered by ONE traversal and
+ * cannot disagree about which category comes first.
+ */
+function categoryPage(ix: FhirArtifactIndex, label: string | undefined, list: FhirArtifact[], order: number): string {
+  const name = label ?? "Other";
+  const body = [
+    `[← all ${ix.count} artefacts](../)`,
+    ``,
+    `## ${name}`,
+    ``,
+    `${list.length} of the ${ix.count} artefacts in this IG. Listed here rather than on the`,
+    `index because a table this size makes the front page unreadable.`,
+    ``,
+    ...artifactTable(list, ".."),
+    ``,
+  ].join("\n");
+
+  return shell(
+    `${name} — WHO SMART Trust`,
+    `The ${list.length} WHO SMART Trust artefacts in the ${name} category, with canonical URLs and published representations.`,
+    body,
+    { kind: "section", order },
+  );
+}
+
 function mdCell(v: string): string {
   return v.replace(/\|/g, "\\|").replace(/\r?\n/g, " ");
 }
@@ -404,23 +685,88 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
         : "upstream, not held here"
     } |`,
     ``,
-    `## DAK API`,
-    ``,
-    `The four sidecars are published independently, so an absent one is a fact about the`,
-    `IG rather than a gap in this index.`,
-    ``,
-    `| Sidecar | Published at | Held locally |`,
-    `|---|---|---|`,
-    ...dakRows,
-    ``,
+    // The sidecar table is worth a screen when there ARE sidecars. On the 655
+    // artefacts with none it was four rows of "*not published for this
+    // artefact*", which is noise dressed as information — so the absence is
+    // stated in one line instead, and it is STATED rather than omitted,
+    // because a missing section reads as "nobody looked".
+    ...(a.dak
+      ? [
+          `## DAK API`,
+          ``,
+          `The four sidecars are published independently, so an absent one is a fact about the`,
+          `IG rather than a gap in this index.`,
+          ``,
+          `| Sidecar | Published at | Held locally |`,
+          `|---|---|---|`,
+          ...dakRows,
+          ``,
+        ]
+      : [
+          `## DAK API`,
+          ``,
+          `No DAK API sidecar is published for this artefact. That is a fact about the IG,`,
+          `not a gap in this index — sidecars are published per artefact, and`,
+          `${ix.artifacts.filter((x) => x.dak).length} of ${ix.count} carry one.`,
+          ``,
+        ]),
   ].join("\n");
 
   return shell(
     `${name} — WHO SMART Trust artefact`,
     `${a.key} in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars.`,
     body,
-    1,
+    { kind: "leaf" },
   );
+}
+
+/**
+ * One page per top-level menu group — which is how the IG's TOP BAR becomes a
+ * LEFT-HAND nav.
+ *
+ * The owner, 2026-09-23: *"navar menu is now on LHS"*. just-the-docs builds
+ * its sidebar from the PAGES in the collection, so an entry in it has to be a
+ * page; there is no per-folio hook for a bare external link. A page per group
+ * is therefore the mechanism, not a workaround — and it is the honest one,
+ * because each group genuinely has something to say: the list of its members
+ * and where they are published.
+ *
+ * **Every link points UPSTREAM, and that is not a shortfall.** These pages are
+ * published by the IG Publisher and this repository does not hold them — the
+ * gh-pages harvest kept 674 FHIR artefacts and none of the narrative pages
+ * (measured: 0 of 12 menu labels matched an artefact title). A page here that
+ * pretended to hold `system-actors.html` would be fabricating content; one
+ * that links to the canonical copy is a navigation aid, which is what a menu
+ * is.
+ */
+function menuGroupPage(menu: IgMenu, group: IgMenuGroup, order: number): string {
+  const rows = group.items.map((it) => `- [${mdCell(it.label)}](${menuHref(menu, it)})`);
+  const body = [
+    `[← all ${menu.groups.length} sections](../)`,
+    ``,
+    ...(group.items.length > 0
+      ? rows
+      : [
+          // A group the config declares with no children. Stated, because an
+          // empty list and a page that failed to render look the same.
+          `*${mdCell(group.label)} carries no sub-items in \`sushi-config.yaml\`.*`,
+        ]),
+    ``,
+    ...(group.href ? [`This section's own page: [${mdCell(group.label)}](${menuHref(menu, group)}).`, ``] : []),
+    `Published by the IG at \`${menu.canonical}\`. This repository holds the IG's`,
+    `artefacts, not its narrative pages, so every link above leaves for the canonical copy.`,
+  ].join("\n");
+  return shell(
+    `${group.label} — WHO SMART Trust`,
+    `The ${group.items.length} page(s) the WHO SMART Trust IG publishes under ${group.label}.`,
+    body,
+    { kind: "section", order },
+  );
+}
+
+/** A filename-safe slug, on the same rule `categoryName` uses. */
+function menuName(label: string): string {
+  return label.replace(/[^A-Za-z0-9._-]/g, "_");
 }
 
 // ── Build ──────────────────────────────────────────────────────────────
@@ -445,9 +791,44 @@ const pages = new Map<string, string>();
 // Jekyll to copy the file verbatim, which is the behaviour this change exists
 // to stop.
 pages.set("index.md", indexPage(ix));
+
+// EVERY artefact, not only the sidecar-bearing ones. The owner's call,
+// 2026-09-22: full parity with the Publisher's 673 artefact pages, against a
+// recommendation to render only the 70 conformance artefacts and leave the 604
+// Endpoint/Organization registry rows as index rows. Recorded because the
+// trade-off is real and the reasoning should not have to be reconstructed:
+// 454 of those 604 carry no `description`, so their pages are a title and four
+// upstream links.
 for (const a of ix.artifacts) {
-  if (!a.dak) continue;
   pages.set(join("artifact", `${pageName(a)}.md`), artifactPage(ix, a));
+}
+
+// A page for each category too large to inline, so "too many to list here"
+// points somewhere. Driven by the SAME `INLINE_LIMIT` comparison the index
+// makes — one threshold, read twice, rather than two that can disagree.
+// THE IG'S MENU, FIRST IN THE SIDEBAR — it is the IG's own ordering of itself,
+// and the artefact categories are this repository's view on top of it.
+let sectionOrder = 0;
+let menu: IgMenu | undefined;
+if (existsSync(MENU)) {
+  const m = IgMenuSchema.safeParse(JSON.parse(readFileSync(MENU, "utf8")));
+  if (!m.success) {
+    console.error("the committed IG menu does not validate — refusing to render nav from it:");
+    for (const i of m.error.issues.slice(0, 5)) console.error(`  ${i.path.join(".")}: ${i.message}`);
+    process.exit(1);
+  }
+  menu = m.data;
+  for (const group of menu.groups) {
+    sectionOrder += 1;
+    pages.set(join("menu", `${menuName(group.label)}.md`), menuGroupPage(menu, group, sectionOrder));
+  }
+}
+
+for (const [label, list] of byCategory(ix.artifacts)) {
+  if (list.length > INLINE_LIMIT) {
+    sectionOrder += 1;
+    pages.set(join("category", `${categoryName(label)}.md`), categoryPage(ix, label, list, sectionOrder));
+  }
 }
 
 function committed(): Map<string, string> {
@@ -489,5 +870,44 @@ if (CHECK) {
   const dak = dakOverlayCensus(ix.artifacts);
   console.log(`smart-trust/docs: ${pages.size} page(s)`);
   console.log(`  index over ${ix.count} artefacts in ${byCategory(ix.artifacts).size} categories`);
-  console.log(`  ${pages.size - 1} artefact page(s) — the DAK-covered ones (schema=${dak.schema})`);
+  // Counted from the page map, never as `pages.size - 1`. That expression was
+  // right while the index was the only non-artefact page and quietly became
+  // wrong the moment a category page joined it — it reported 675 artefact
+  // pages over a corpus of 674.
+  const artefactPages = [...pages.keys()].filter((k) => k.startsWith("artifact/")).length;
+  const categoryPages = [...pages.keys()].filter((k) => k.startsWith("category/")).length;
+  console.log(`  ${artefactPages} artefact page(s) — one per artefact; ${dak.schema} carry a DAK schema`);
+  console.log(`  ${categoryPages} category page(s) — categories over ${INLINE_LIMIT}, listed off the index`);
+  // THE MENU IS REPORTED EITHER WAY. An unreported page is a page nothing
+  // checks, and an absent menu reported as silence is indistinguishable from
+  // an IG that publishes no navigation — which this one plainly does.
+  if (menu) {
+    console.log(
+      `  ${menu.groups.length} menu section(s) — the IG's own top bar, ${menuItemCount(menu)} item(s), ` +
+        `from ${menu.source.path} @ ${menu.source.ref.slice(0, 8)}`,
+    );
+  } else {
+    console.log("  0 menu section(s) — COULD NOT DETERMINE: no menu.json.");
+    console.log("    Run `ingest-ig-menu.ts --source <ig-repo>`; this is not an IG without navigation.");
+  }
+  // THE CHROME, SAID OUT LOUD EITHER WAY. Its absence is the same third state
+  // the menu's is: unstyled pages and "we mirrored it" look identical from a
+  // build log that only mentions the chrome when it is there.
+  if (CHROME) {
+    const conflicted = CHROME.conflicts.length;
+    console.log(
+      `  chrome mirrored on every page — ${CHROME.tokens.length} token(s) over ` +
+        `${CHROME.layers.length} template layer(s), ${CHROME.rules.length} rule(s), status "${CHROME.status}"`,
+    );
+    for (const l of CHROME.layers) console.log(`    ${l.package} ${l.version} @ ${l.ref.slice(0, 8)}`);
+    if (conflicted > 0) {
+      console.log(`    ${conflicted} upstream defect(s) mirrored verbatim and recorded, not corrected:`);
+      for (const c of CHROME.conflicts) {
+        console.log(`      ${c.kind} ${c.token} — ${c.sites.map((x) => `${x.package}="${x.value}"`).join(" vs ")}`);
+      }
+    }
+  } else {
+    console.log("  chrome NOT applied — COULD NOT DETERMINE: no chrome.json.");
+    console.log("    Run `ingest-ig-chrome.ts --ig <ig> --layer <base> --layer <next>`; the pages are unstyled, not a mirror.");
+  }
 }

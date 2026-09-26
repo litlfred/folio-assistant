@@ -556,6 +556,14 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * rendering no icon — a missing favicon looks exactly like a slow one.
    */
   icon?: string;
+  /**
+   * Which icons this instance's navbar row shows — see `NavbarIconsSchema`.
+   *
+   * Three states: absent inherits, `[]` shows none, a list decides. The two
+   * empty-looking answers are deliberately different and must not be read
+   * through a truthiness test.
+   */
+  navbarIcons?: NavbarIcon[];
   /** The instance's name, e.g. `"agentic-harness"`. */
   name: string;
   /**
@@ -570,7 +578,9 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * the repository, so a reader who knows the repo knows the filename.
    *
    * Note the declaration file itself is **not** stub-named — it stays
-   * `harness.json`, exactly as `smart-base`'s config stays `dak.json`. A
+   * `harness.json`. (The analogy here was `smart-base`'s config "staying"
+   * `dak.json`; that config is ours and became `dak.config.json` on
+   * 2026-09-22, so it argues nothing either way now.) A
    * consumer must be able to find the config without already knowing the
    * repository's name; the artefacts it *describes* are free to be named.
    */
@@ -624,6 +634,8 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   directories: ContentDirectory[];
   /** Graphs known but not held — {@link RemoteGraph}. */
   remoteGraphs?: RemoteGraph[];
+  /** Harnesses this one is associated with and does not hold — {@link AssociatedHarness}. Issue #1146. */
+  associatedHarnesses?: AssociatedHarness[];
   /**
    * Sticky notes this layer contributes to the landing board.
    *
@@ -664,6 +676,73 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * than computed, and why it is optional.
    */
   needs?: string[];
+
+
+  /**
+   * The package identity — reverse-DNS, stable forever, never reused.
+   *
+   * `instance-versioning.md` §3.2. SEPARATE FROM {@link name}, which is the
+   * handle this repository resolves against, and from {@link stub}, which
+   * names published FILES. An id is what an EXTERNAL consumer depends on, and
+   * FHIR rule 1 is that the id is the identity and never changes while the
+   * version distinguishes snapshots of it.
+   *
+   * **HELD, pending the ONE-reference design.** The owner ruled on 2026-09-23
+   * that every asset carries an id, under
+   * `io.github.litlfred.folio-assistant.<name>`. It was minted into all 17
+   * declarations and then REMOVED, because the owner's next ruling contradicts
+   * writing it there at all:
+   *
+   * > i want simplest so if someone wants to bootstrap a different harness,
+   * > there is only one place to change. ONE PLACE.
+   * > fork would only edit bootstrap/README.md and change ONE reference there.
+   *
+   * A namespace written into 17 files is 17 places. So the id must be DERIVED
+   * from that single reference, and the reference does not exist yet —
+   * `bootstrap/README.md` today has zero outward references and its own tests
+   * enforce that. Bean `iwtn` owns creating it.
+   *
+   * Minting ids before then would bake the wrong scheme into artefacts the
+   * schema itself calls *stable forever, never reused*.
+   *
+   * `skills/folio-core/instance-publication.md` carries the namespace rule and
+   * why a mirror never takes its subject's identity.
+   */
+  id?: string;
+
+  /**
+   * The version, and it is an EXACT semver triple.
+   *
+   * No range syntax, ever (`instance-versioning.md` §2 rule 2). FHIR pins exact
+   * versions and `dependsOn` has no field a range fits, and aligning downstream
+   * is the owner's hard constraint rather than a preference — some instances
+   * here are consumed from outside this monorepo.
+   *
+   * `current` and `dev` are FHIR's pseudo-versions for "the latest CI build"
+   * (rule 3). Accepted here and barred from the published tier by
+   * `check:published-refs`, which is the same line §3.3 draws for a SHA.
+   *
+   * {@link canonicalUrl} already plays the `uri` role (rule 6) and the version
+   * deliberately does not appear in it: the canonical URL is stable ACROSS
+   * versions.
+   *
+   * **Universal, and enforced by the GATE rather than by this type.** Owner's
+   * ruling, 2026-09-23: *"all assets get a version"*. All 17 carry one, and
+   * `check:publishable` fails an instance without one.
+   *
+   * It is not `required` HERE because making it so breaks **376 tests across
+   * 20+ files** — every fixture that builds a declaration without it. A sweep
+   * that size hides a real regression among the noise, and the property asked
+   * for is delivered either way: the corpus is complete, and a new instance
+   * with no version does not pass.
+   *
+   * §3.1 originally REFUSED one unless `publishable: true`, on the premise
+   * that a version reads as a publication claim. It does not — a version
+   * distinguishes snapshots; whether anyone outside may depend on them is
+   * {@link publication}, a separate question.
+   * `skills/folio-core/instance-publication.md`.
+   */
+  version?: string;
 }
 
 /**
@@ -865,19 +944,32 @@ export const GraphNodeDirectorySchema = z.preprocess(acceptLegacyGraphsKey, Grap
  * existing declaration in this repository invalid on the commit that added the
  * field, which is the cost `dependents` already charged once.
  */
+/**
+ * The surfaces a tile can appear on.
+ *
+ * `glass` joined 2026-09-23 (bean `zrvt`, issue #1006) on the owner's words:
+ * *"where are the todo, fsh guts etc tiles on bottom of glass?"* That
+ * overrides `v0jv`'s earlier *"the tiles must NOT be projected onto the
+ * glass"*, and it is a SURFACE on the one declaration rather than a second
+ * list of glass tiles — `harness-tiles`: one declaration, per-surface
+ * visibility, never two registries.
+ */
+export const TILE_SURFACES = ["navbar", "board", "glass"] as const;
+export type TileSurface = (typeof TILE_SURFACES)[number];
+
 export const VisualisationSchema = z.object({
   /** The page that renders it, **relative to the REPOSITORY root** — see {@link SubgraphCoverageSchema.visualiser}. */
   ref: z.string().min(1),
   /** What a tile calls it. Absent falls back to the directory's id. */
   title: z.string().min(1).optional(),
   /**
-   * Where its tile appears. Absent means BOTH.
+   * Where its tile appears. Absent means EVERY surface in {@link TILE_SURFACES}.
    *
    * Q11, 2026-09-20: *one declaration, per-surface visibility.* A tile is
    * declared once and says where it shows — never two registries free to
    * disagree about what a tile is.
    */
-  surfaces: z.array(z.enum(["navbar", "board"])).nonempty().optional(),
+  surfaces: z.array(z.enum(TILE_SURFACES)).nonempty().optional(),
   /**
    * Whether this tile starts out of frame. Absent means shown.
    *
@@ -992,8 +1084,8 @@ export function visualisationsOf(
   return list.map((entry) => ({ ...entry, title: entry.title ?? directoryId }));
 }
 
-/** Does this visualisation's tile appear on this surface? Absent means both. */
-export function showsOn(v: Visualisation, surface: "navbar" | "board"): boolean {
+/** Does this visualisation's tile appear on this surface? Absent means every surface. */
+export function showsOn(v: Visualisation, surface: TileSurface): boolean {
   return v.surfaces === undefined || v.surfaces.includes(surface);
 }
 
@@ -1022,10 +1114,15 @@ export const SubgraphCoverageSchema = z.object({
    * behaviour rather than changing it.
    */
   visualiser: VisualiserDeclarationSchema.optional(),
-  /** The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}. */
-  docs: z.string().min(1).optional(),
-  /** The skill that governs it, by NAME rather than by path, so no base applies. */
-  skill: z.string().min(1).optional(),
+  // NO `docs`: the documentation page says what it documents — a
+  // `documents:` list in its front matter (generated pages get it from their
+  // WebPage manifest) or `<meta name="documents">` — #1168 B7c,
+  // `scripts/docs-declarations.ts`. A waiver is still `exempt.docs` below.
+  // NO `skill`: the governing skill is read from the SKILLS, whose front
+  // matter names the kinds (`graph-kinds:`) or the directory (`governs:`)
+  // they govern — #1168 B7b, `scripts/skill-governance.ts`. The directory
+  // named its skill until then, pointing at what depends on it. A waiver for
+  // a directory nobody governs on purpose is still `exempt.skill` below.
   /**
    * What produces this directory's SERIALISATIONS — `json`, `jsonld` and
    * `schema.json` at the directory's own URL.
@@ -1071,9 +1168,88 @@ export const SubgraphCoverageSchema = z.object({
 });
 export type SubgraphCoverage = z.infer<typeof SubgraphCoverageSchema>;
 
+/**
+ * How a graph is shown, and what can be done to it.
+ *
+ * Owner, 2026-09-21: *"folio is the only visualizer provided by cat-harness,
+ * document is its own object. they have semantic different meanings =>
+ * different visaluzation/operations/etc."*
+ *
+ * ONE MEMBER, and the count is the claim rather than an accident. A folio is
+ * a board: nodes start closed as avatars, stickies can be added, sub-graphs
+ * are held, and a layout layer is a diagram OF it rather than part of it
+ * (issue #764 §3, F1–F6). Nothing else cat-harness ships answers that
+ * description, and a second member added without that argument would make
+ * the axis a synonym for "renderer".
+ *
+ * DECLARED HERE, in the HARNESS layer, rather than beside the content axes
+ * in `block-kinds.ts` where the first draft put it. The owner's sentence is
+ * *"folio is the only visualizer provided by CAT-HARNESS"*: a visualiser is
+ * something the harness provides, while an adapter, a profile and an
+ * interactivity are facts about content. `check:partition` is what settled
+ * it — it refused `cat-harness.ts` [agentic-harness] importing
+ * `block-kinds.ts` [folio-assist-core], and reading that refusal as a
+ * misclassification rather than an obstacle produced the better placement.
+ *
+ * WHERE IT ATTACHES is per graph — issue #764, O2, settled 2026-09-22 — on
+ * {@link ContentDirectorySchema}, beside `graphKinds`. Per instance
+ * cannot distinguish the two graphs one folio shows (F2: the library and the
+ * working documents, and which one a node came from must stay visible); per
+ * node kind inverts F1, where a folio renders nodes of OTHER objects and a
+ * node kind does not choose its own chrome.
+ *
+ * NOT `coverage.visualiser`, which is a different question wearing a similar
+ * word: that names the PAGE THAT RENDERS a graph, while this classifies the
+ * graph. One field answering two questions is the defect this repository
+ * names most often, and half the reason `where-does-this-go` was written.
+ */
+export const VISUALISER_KINDS = ["folio"] as const;
+export type VisualiserKind = (typeof VISUALISER_KINDS)[number];
+
 const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
   dependents: DependentMaterialisationSchema,
   coverage: SubgraphCoverageSchema.optional(),
+  /**
+   * HOW this graph is shown, and what can be done to it.
+   *
+   * The visualiser axis, declared PER GRAPH — issue #764, O2, settled by the
+   * owner 2026-09-22. The vocabulary is `VISUALISER_KINDS` and the argument
+   * for its single member is there; this is where it attaches.
+   *
+   * ## Why here rather than on the instance or on a node kind
+   *
+   * Per instance cannot answer it. F2 of the spec: a folio shows the LIBRARY
+   * (static) and the WORKING documents, assets and artefacts (dynamic), and
+   * which of the two a node came from must stay visible — so the graph is
+   * already the unit carrying that provenance, and one answer per instance
+   * would flatten exactly the distinction the folio has to draw.
+   *
+   * Per node kind inverts F1, where a folio renders nodes of OTHER objects.
+   * A node kind choosing its own chrome would mean the thing being shown
+   * decides how, which is the relationship the spec exists to reverse.
+   *
+   * ## NOT `coverage.visualiser`, which is a different question
+   *
+   * That field names the PAGE THAT RENDERS this graph. This one says which
+   * visualiser's semantics and operations apply. They travel together and
+   * are not the same fact: a graph can have a published page and no folio
+   * semantics, and — once more than one visualiser exists — folio semantics
+   * and no page yet. One field answering two questions is the defect this
+   * repository names most often.
+   *
+   * ## ONE VALUE PER DIRECTORY, and what would change that
+   *
+   * A directory may list several `graphKinds`, so this is strictly coarser
+   * than "per graph" wherever that happens. It is one value today because
+   * `folio` is the only member, which makes the coarseness unobservable. The
+   * day two kinds in one directory need different visualisers, this becomes
+   * a map from graph kind to visualiser — a schema change with a migration,
+   * not a field to quietly reinterpret.
+   *
+   * ABSENT means not declared, never a default. A consumer that reads an
+   * absent value as `folio` is inventing a declaration.
+   */
+  visualisedAs: z.enum(VISUALISER_KINDS).optional(),
   /**
    * This directory holds MATERIALIZED content: readable, and not editable here.
    *
@@ -1199,9 +1375,10 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    *
    * ## Judgement applied: the methodologies take `analyst`, and nothing else does
    *
-   * `methodologies`, `methodology-crdm`, `methodology-raci` and
-   * `smart-kg-methodologies` — the four directories that hold or index a
-   * methodology. MADR and SDLC are named in the instruction and do not exist
+   * `methodologies` and `folio-assistant-core-methodologies` — the
+   * directories that hold a methodology and carry a theme. (`methodology-crdm`
+   * and `methodology-raci` went 2026-09-22; `smart-kg-methodologies` went
+   * 2026-09-24, bean `wg7r`, when GRADE became a skill plus code lists.) MADR and SDLC are named in the instruction and do not exist
    * yet; they inherit the answer when they are declared, which is the point of
    * writing it on the directory rather than per page.
    *
@@ -1297,7 +1474,7 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   // already has is the right one.
   { id: "tools", path: "tools/", dependents: "skip", graphKinds: ["tools"] },
   { id: "schemas", path: "schemas/", dependents: "skip", graphKinds: ["schemas", "cat-harness"] },
-  { id: "cat-harness", path: "skills/", dependents: "skip", graphKinds: ["skills"] },
+  { id: "skills", path: "skills/", dependents: "skip", graphKinds: ["skills"] },
   // THE CONVENTION, as of 2026-09-21: an instance's KGraph is five sibling
   // directories rather than one with subdirectories. `scenarios/` and
   // `processes/` were `skills/roles/` and `skills/workflows/`, found by
@@ -1359,11 +1536,42 @@ export const PUBLICATION_HOSTS = [
 export type PublicationHost = (typeof PUBLICATION_HOSTS)[number];
 
 export interface Publication {
-  host: PublicationHost;
+  /**
+   * WHAT KIND of host serves the renderings. Optional: absent is a third
+   * state — the deployment has not said, NOT `github-pages`.
+   */
+  host?: PublicationHost;
+  /**
+   * WHAT STATE this instance's publication is in. `draft`, always, today.
+   *
+   * **The discipline is in the skill, not here** —
+   * `skills/folio-core/instance-publication.md`. Owner's ruling, 2026-09-23:
+   * *"all assets get a version and are in 'draft' publication. formal
+   * publication process needs to be deinfed/neeeds tools/depends on
+   * instance."*
+   *
+   * A sibling of {@link host} rather than a field of its own, because they are
+   * two facets of ONE question — what serves this, and how far along it is.
+   * This field's own docblock already lists `canonicalUrl`, `publication.host`
+   * and `readme.linkStyle` as three questions that are easy to run together;
+   * a fourth top-level name would have been a fourth.
+   *
+   * A LITERAL UNION OF ONE, and that is the point: `"published"` fails to
+   * PARSE. Not accepted-and-reported — refused, because the process that would
+   * back it does not exist, and a gate that merely grumbles about an unbacked
+   * flag is a gate somebody switches off. Absent means `draft`.
+   *
+   * It replaced the top-level `publishable?: boolean`, whose three states
+   * could not express what was true: all 17 instances reported `undecided`
+   * while the answer was known for every one of them. A third state that
+   * cannot say what is the case is a missing value, not a third state.
+   */
+  state?: "draft";
 }
 
 export const PublicationSchema = z.object({
-  host: z.enum(PUBLICATION_HOSTS),
+  host: z.enum(PUBLICATION_HOSTS).optional(),
+  state: z.literal("draft").optional(),
 });
 
 /**
@@ -1615,6 +1823,63 @@ export interface RemoteGraph extends KgNodeLabels {
   graphKinds: GraphKind[];
 }
 
+/**
+ * A HARNESS this instance is associated with: another instance, with its own
+ * declaration, properties and graphs, that lives ELSEWHERE — its own repository
+ * and its own site. Issue #1146. Owner, 2026-09-23: *"we need a good mechanism for
+ * 'associated' harnessed KGs. it should be an optional list property of any
+ * harness inheriting cat-harness (including itself)"*, and **not** a
+ * `/folio-assistant/<name>/` publish: *"certainly not a materialized publish"*.
+ *
+ * ## Not a remote graph, not a dependency
+ *
+ * - {@link RemoteGraph} is a GRAPH known but not held: graph kinds at a URL. An
+ *   associated harness is an INSTANCE — a declaration of its own — so it is a
+ *   separate list, not a `RemoteGraph` with more fields.
+ * - It is **not** `needs`: it fixes no build order, adds nothing to the overlay,
+ *   resolves no skills, and nothing here is materialized. It is the fourth
+ *   relation beside depends (`needs`), references (`remoteGraphs`) and utilizes
+ *   (`dependencies`): **associated** — "this harness knows that one, and where".
+ *
+ * Rendering one needs no network: the config panel draws these fields as
+ * declared, marked remote. `url` is where a reader goes; `repository` is where
+ * its ✎ points (never this checkout's `origin`).
+ */
+export interface AssociatedHarness {
+  /** The associated harness's instance name, as ITS declaration gives it. Unique within this list. */
+  name: string;
+  /** Human title, as its declaration gives it. */
+  title?: string;
+  /** Where a reader goes: the harness's own published site. */
+  url: string;
+  /** Its source repository, where edits to it are made. */
+  repository?: string;
+  /** Its declaration file, when published at a stable URL. */
+  declarationUrl?: string;
+  /** How it relates to this harness, in a few words: e.g. `folio-of` (a folio on this platform). */
+  relation?: string;
+  /** One sentence a reader of the panel sees. */
+  note?: string;
+}
+
+/** The `name` grammar instance names already follow: lowercase, digits, hyphens. */
+const INSTANCE_NAME = /^[a-z0-9][a-z0-9-]*$/;
+
+export const AssociatedHarnessSchema = z
+  .object({
+    name: z.string().regex(INSTANCE_NAME),
+    title: z.string().min(1).optional(),
+    url: z.string().url(),
+    repository: z.string().url().optional(),
+    declarationUrl: z.string().url().optional(),
+    relation: z.string().min(1).optional(),
+    note: z.string().min(1).optional(),
+  })
+  // STRICT for the reason RemoteGraphSchema is: the declaration is parsed by a
+  // plain z.object that drops unknown keys, and a misspelt `repo` would vanish
+  // without a word and leave ✎ pointing nowhere.
+  .strict();
+
 export const RemoteGraphSchema = z
   .object({
     id: z.string().min(1),
@@ -1724,8 +1989,15 @@ export interface RenderExemption {
   /**
    * Where the instance IS reachable, since it renders nothing of its own.
    *
-   * Repository-relative, under the site-owning harness's site directory —
-   * the same shape `coverage.visualiser` and `coverage.docs` use.
+   * One of the instance's OWN files, relative to its own directory and
+   * inside it — e.g. `README.md`. The site build publishes the instance's
+   * files at `<base>/<stub>/` (`publish-instance-files.ts`), rendering `.md`
+   * as `.html`, and the tab links there.
+   *
+   * It was repository-relative, under the site-owning harness's site
+   * directory, until 2026-09-23. That made bootstrap, the floor of the stack,
+   * point at a page in the layer above it. Owner (bean iwtn): *"bootstrap is
+   * bootstrap"*.
    *
    * ## Why an exemption needs this at all
    *
@@ -1817,6 +2089,141 @@ export function renderExemptionProblems(
   return problems;
 }
 
+/**
+ * The navbar icon row — WHICH icons, declared per instance.
+ *
+ * Owner, 2026-09-22: *"[x] should be on the navbar w/ other icons, can make
+ * two lines avatar+name of harness/catalogue/sub-grrraph as approrirate, the
+ * second line are the icons. max is 6"*, and then, on where the list lives:
+ * *"should be in each harness config which are shown (so some could show
+ * none, but make this default in cat-harness that is inherited)."*
+ *
+ * ## A CLOSED set, not free strings
+ *
+ * Each id is an affordance the navbar knows how to render and where to point.
+ * A free string would let an instance name an icon nothing draws, and the
+ * failure would be a silent gap in a row capped at six — `pb04` one layer up
+ * from a dead link: a slot that renders nothing reads as a navbar that lost
+ * something.
+ *
+ * ## SIX, and the cap is the owner's
+ *
+ * Refused rather than truncated. Truncating drops whichever the instance
+ * listed last, silently, and an instance that declared seven has made a
+ * decision the navbar would then be overruling without saying so.
+ */
+export const NAVBAR_ICONS = ["close", "todos", "beans", "processes", "kg", "launcher"] as const;
+
+export type NavbarIcon = (typeof NAVBAR_ICONS)[number];
+
+export const NavbarIconsSchema = z
+  .array(z.enum(NAVBAR_ICONS))
+  .max(6, { message: "the navbar icon row holds at most 6 — the owner's cap" })
+  .refine((xs) => new Set(xs).size === xs.length, {
+    message: "an icon listed twice is two slots doing one job",
+  });
+
+/**
+ * Which icons an instance's navbar row shows, after inheritance.
+ *
+ * Owner: *"should be in each harness config which are shown (so some could
+ * show none, but make this default in cat-harness that is inherited)."*
+ *
+ * ## The walk is `needs`, because that is the inheritance this repo already has
+ *
+ * Nearest declaration wins: the instance itself, then its `needs` chain toward
+ * the foundation, breadth-first so a nearer layer beats a deeper one. It is
+ * the same direction `resolveSkillDirs` composes and the same spine `builtOn`
+ * documents — a second traversal would be a second answer to "what is this
+ * instance built on", free to disagree with the first.
+ *
+ * ## `[]` STOPS the walk; absent continues it
+ *
+ * An instance that declares `[]` has said "show none", and inheriting over
+ * that would overrule a decision it made. An instance that declares nothing
+ * has said nothing. The two are different answers and this function must not
+ * turn one into the other — which is why the guard is `!== undefined` rather
+ * than a truthiness test, the shape that collapses exactly this distinction.
+ *
+ * ## `undefined` is the THIRD state and callers must not render it as none
+ *
+ * Returned when neither the instance nor anything it needs has decided, and
+ * `floor` has not either. "Nobody has said" is not "nothing to show": a caller
+ * that draws an empty row for it reports an un-migrated instance as a
+ * deliberate one. Report it.
+ *
+ * @param name the instance to resolve
+ * @param declared every instance's own value, keyed by name — absent key and
+ *   `undefined` value both mean "did not declare"
+ * @param needs each instance's dependency names
+ * @param floor the instance whose list is the default when nothing else has
+ *   decided; `cat-harness` here, passed rather than named so this function
+ *   does not know which repository it is in
+ */
+export function resolveNavbarIcons(
+  name: string,
+  declared: ReadonlyMap<string, readonly NavbarIcon[] | undefined>,
+  needs: ReadonlyMap<string, readonly string[] | undefined>,
+  floor?: string,
+): readonly NavbarIcon[] | undefined {
+  const seen = new Set<string>();
+  const queue: string[] = [name];
+  while (queue.length > 0) {
+    const at = queue.shift()!;
+    // A `needs` cycle is somebody else's finding — `check:harness-dirs` and the
+    // dependency order own it. Here it must simply not hang.
+    if (seen.has(at)) continue;
+    seen.add(at);
+    const own = declared.get(at);
+    if (own !== undefined) return own;
+    for (const n of needs.get(at) ?? []) queue.push(n);
+  }
+  if (floor !== undefined && !seen.has(floor)) {
+    const f = declared.get(floor);
+    if (f !== undefined) return f;
+  }
+  return undefined;
+}
+
+/**
+ * An EXACT semver version. Ranges are refused.
+ *
+ * Rule 2 of `cat-harness/docs/proposals/instance-versioning.md` §2, and the one that
+ * matters most: **FHIR pins exact versions and has no way to express a range**,
+ * so a downstream that must align to FHIR cannot be handed `^1.2.0`. The
+ * constraint is alignment, and alignment is not a preference here — the owner
+ * called it a hard constraint on 2026-09-20 because some instances are
+ * consumed from outside this monorepo.
+ *
+ * `current` and `dev` are FHIR's pseudo-versions for "the latest CI build"
+ * (rule 3). They are deliberately accepted HERE and barred from the published
+ * tier by `check:published-refs`, which is the same line §3.3 draws for a SHA:
+ * a staging reference is fine in a checkout and unresolvable to an external
+ * consumer.
+ *
+ * ## It lives HERE, and is re-exported from `harness-config`
+ *
+ * Two fields carry this rule — a declaration's own `version` (§3.2) and a
+ * dependency's `version` (§3.3) — and they are in two modules. `harness-config`
+ * imports this one, so the constraint is defined in the lower of the two and
+ * re-exported from the upper. Defining it twice would make "no ranges" a rule
+ * that holds on whichever half somebody remembered.
+ */
+export const ExactVersionSchema = z
+  .string()
+  .min(1)
+  .refine(
+    (v) =>
+      v === "current" ||
+      v === "dev" ||
+      /^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/.test(v),
+    {
+      message:
+        "an exact semver version, `current` or `dev` — ranges (^, ~, >=, *, ||, x) cannot be expressed in FHIR's dependsOn and are refused",
+    },
+  );
+
+
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
@@ -1830,6 +2237,22 @@ export const CatHarnessDeclarationSchema = z.object({
    */
   assets: z.array(KgAssetSchema).optional(),
   icon: z.string().min(1).optional(),
+  /**
+   * Which icons this instance's navbar row shows.
+   *
+   * THREE STATES, and the third is the point. **Absent** means *inherit* —
+   * this instance has not decided, and the answer comes from its dependency
+   * stack with `cat-harness`'s list as the floor. **`[]`** means *show none*,
+   * which the owner asked for by name (*"some could show none"*). **A list**
+   * is this instance's own answer and overrides what it inherits.
+   *
+   * Absent and `[]` must not collapse into each other. They are the same
+   * failure `renderExemption` and the graph-kind declarations already guard:
+   * "nobody has said" rendered as "nothing to show" is a decision nobody made,
+   * and here it would make an un-migrated instance indistinguishable from one
+   * that deliberately wants a bare navbar.
+   */
+  navbarIcons: NavbarIconsSchema.optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   previewUrl: z.string().url().optional(),
@@ -1842,6 +2265,17 @@ export const CatHarnessDeclarationSchema = z.object({
    * graph has no directory.
    */
   remoteGraphs: z.array(RemoteGraphSchema).default([]),
+  /**
+   * Harnesses this one is associated with — see {@link AssociatedHarness}.
+   * `.optional()`, not `.default([])`: absent is "has not said", and a default
+   * would make the field required in the output type of every declaration.
+   * Names are unique, never also in `needs`, and never a harness in this
+   * checkout (that would be local, not associated) — refined below.
+   */
+  associatedHarnesses: z
+    .array(AssociatedHarnessSchema)
+    .refine((xs) => new Set(xs.map((x) => x.name)).size === xs.length, { message: "associatedHarnesses: a name appears twice" })
+    .optional(),
   stickies: z.array(StickyContributionSchema).optional(),
   renderExemption: RenderExemptionSchema.optional(),
   /**
@@ -1876,7 +2310,65 @@ export const CatHarnessDeclarationSchema = z.object({
    * in this schema, and a path would break the moment a directory moved.
    */
   needs: z.array(z.string().min(1)).optional(),
-});
+  /**
+   * The package identity an EXTERNAL consumer depends on — reverse-DNS.
+   *
+   * §3.2, separate from `name` (the handle this repository resolves against)
+   * and from `stub` (which names published FILES). FHIR rule 1: the id IS the
+   * identity, stable forever and never reused, while the version distinguishes
+   * snapshots of it.
+   *
+   * **HELD** pending `iwtn`'s ONE-reference design — see the interface field.
+   * An id derived from one place cannot be written into 17.
+   */
+  id: z.string().min(1).optional(),
+  /**
+   * The version — an exact semver triple, `current` or `dev`. Never a range.
+   *
+   * §3.2, constrained by {@link ExactVersionSchema}. `canonicalUrl` already
+   * plays FHIR's `uri` role and deliberately carries no version: the canonical
+   * URL is stable ACROSS versions.
+   *
+   * **Universal, gate-enforced** — see the interface field for why this is not
+   * required here: 376 fixtures. `check:publishable` is what fails an instance
+   * without one.
+   */
+  version: ExactVersionSchema.optional(),
+})
+  /**
+   * What the refinement still checks, now that `id` and `version` are required
+   * by the type and `publication` is a one-value union.
+   *
+   * The old refinement carried §3.1's conditional obligations in both
+   * directions — id and version REQUIRED under `publishable: true` and REFUSED
+   * otherwise. Both are gone: the owner's 2026-09-23 ruling makes them
+   * universal, so there is nothing conditional left to express, and
+   * `"published"` is refused by the literal union rather than by a check
+   * somebody could relax.
+   */
+  .superRefine((d, ctx) => {
+    // Issue #1146: an associated harness is referenced, never held. A name that
+    // is also in `needs` would make it both, and the overlay would load it.
+    const needs = new Set(d.needs ?? []);
+    (d.associatedHarnesses ?? []).forEach((a, i) => {
+      if (needs.has(a.name)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["associatedHarnesses", i, "name"],
+          message: `\`${a.name}\` is in \`needs\`: an associated harness is referenced, not loaded (issue #1146)`,
+        });
+      }
+    });
+    // `id` and `version` are REQUIRED BY THE TYPE now, so there is nothing
+    // conditional left to check about them. What replaced the old branches:
+    // §3.1 refused both unless `publishable: true`, and the owner's ruling of
+    // 2026-09-23 makes them universal. See
+    // `skills/folio-core/instance-publication.md`.
+    //
+    // `publication` is a literal union of one value, so `"published"` is
+    // refused by the type rather than here — deliberately, because a refusal
+    // in the schema cannot be switched off the way a gate can.
+  });
 
 /**
  * The stem every published artefact is named with: `stub` when declared,
@@ -1998,6 +2490,58 @@ export function siteDir(_d: Pick<CatHarnessDeclaration, "name" | "stub">): strin
  */
 export function repoRootFor(instanceRoot: string): string {
   return join(instanceRoot, "..");
+}
+
+/**
+ * The scope to resolve an instance's SIBLINGS in — `repoRootFor`, except when
+ * the instance root IS the repository root.
+ *
+ * ## Why {@link repoRootFor} is not enough, and is not wrong either
+ *
+ * `repoRootFor` is `dirname`, and says so. Its contract assumes an instance
+ * nested one level under the repository, which every instance here satisfies
+ * but one: **`folio-assistant` is declared AT the repository root.** For that
+ * one, `dirname` climbs out of the checkout, and a name lookup built on it
+ * sees no siblings at all.
+ *
+ * Measured on `main` at `80c18ac`, before this existed:
+ *
+ * ```
+ * repoRootFor("/home/user/folio-assistant")  -> "/home/user"
+ * instanceRootsIn("/home/user")              -> 1   (only folio-assistant)
+ * ```
+ *
+ * so the root instance's `needs: ["folio-assistant-core"]` derived **nothing**,
+ * and its overlay held one directory — the authored config edge, which does not
+ * go through the derivation. A broken resolver that returns one plausible entry
+ * is worse than one that returns none: it reads as a working overlay.
+ *
+ * ## The discriminator is "does this directory CONTAIN other instances"
+ *
+ * Asked in this module's own vocabulary rather than by probing for `.git`, for
+ * two reasons. A `.git` probe answers a question about version control when
+ * the question is about instance scope — a repository is not the only thing
+ * that can hold instances, and `init-folio` already builds trees that have no
+ * `.git` yet. And it keeps this testable over the throwaway trees the
+ * cross-instance tests use, which is where the sibling rules are falsified.
+ *
+ * So: if scanning `instanceRoot` finds an instance OTHER than itself, it is a
+ * container and it is the scope. Otherwise it is a leaf and its siblings live
+ * one level up, which is exactly {@link repoRootFor}'s assumption.
+ *
+ * **This does NOT replace `repoRootFor`.** That function answers "where does
+ * the REPOSITORY's own furniture live" — `.github/`, `package.json`, `beans/`
+ * — and for a nested instance the two agree. This one answers "where do I look
+ * up a sibling by name", and they differ only for the instance that is also
+ * the root. Collapsing them would make the repository-furniture question
+ * wrong for that same instance, in the other direction.
+ */
+export function siblingScopeFor(instanceRoot: string): string {
+  const abs = resolve(instanceRoot);
+  for (const found of instanceRootsIn(abs)) {
+    if (resolve(found) !== abs) return abs;
+  }
+  return repoRootFor(abs);
 }
 
 /**
@@ -2915,7 +3459,7 @@ function pathContains(outer: string, inner: string): boolean {
  *
  * Scope matters and is honoured: a `repository`-scoped entry and an
  * instance-relative one resolve against different roots, so they are
- * compared by ABSOLUTE path where one is available. `smart-kg/methodologies/`
+ * compared by ABSOLUTE path where one is available. `smart-base/methodologies/`
  * is repository-scoped precisely so it lifts out whole, and reading it as a
  * child of an instance-relative `methodologies/` would be wrong on both the
  * path and the intent.
@@ -2989,10 +3533,21 @@ export interface ResolvedDirectory extends ContentDirectory {
  *
  * `chain` runs deepest dependency first and the root last, so a root
  * redeclaring an inherited id wins. Callers usually get this from
- * `flattenDependencies(resolveDependencyTree(root))` plus the root itself;
+ * `orderedDependencies(root)` plus the root itself;
  * it is taken as a parameter rather than walked here so this module does not
  * depend on the dependency resolver, and so tests can state a chain directly.
  */
+/**
+ * Directory ids that were renamed, read as their new id so that a declaration
+ * written before the rename still overrides the entry it always meant.
+ *
+ * `cat-harness` → `skills`, 2026-09-23 (bean iwtn): a Subgraph's id is its own
+ * name within its Harness, and the Harness name is the qualifier
+ * (`bootstrap.skills`, `cat-harness.skills`), so a Subgraph named after a
+ * Harness named the wrong thing.
+ */
+export const RENAMED_DIRECTORY_IDS: Readonly<Record<string, string>> = { "cat-harness": "skills" };
+
 export function resolveDirectories(
   chain: Array<{ name: string; root: string; own?: boolean }>,
   registry: GraphKindRegistry = defaultGraphKinds,
@@ -3028,8 +3583,10 @@ export function resolveDirectories(
       if (dir.scope === "repository" && link.own !== true) continue;
       // Override by id, replacing in place so the inherited ORDER is kept: a
       // relocation should not reshuffle what a consumer scans first.
-      byId.set(dir.id, {
+      const id = RENAMED_DIRECTORY_IDS[dir.id] ?? dir.id;
+      byId.set(id, {
         ...dir,
+        id,
         declaredBy: decl.name,
         absPath: resolve(rootForScope(link.root, dir.scope), dir.path),
         own: link.own === true,
@@ -3583,6 +4140,9 @@ export function ownDirectories(
     .filter((dir) => dir.scope !== "repository" || link.own === true)
     .map((dir) => ({
       ...dir,
+      // Read a renamed id as its new one, as `resolveDirectories` does, or the
+      // two resolvers disagree about which default an old declaration overrides.
+      id: RENAMED_DIRECTORY_IDS[dir.id] ?? dir.id,
       declaredBy: decl.name,
       // THROUGH `rootForScope`, not `resolve(link.root, …)`. This function was
       // the third consumer of a declared path and the one that did not go
@@ -4386,6 +4946,56 @@ function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string 
   return resolve(base, d.path);
 }
 
+/**
+ * The sub-graphs a declared directory names FROM WITHIN — its nested
+ * declaration's entries, with paths rebased onto the instance root.
+ *
+ * Issue #1164, under the owner's #980 ruling: nesting is sanctioned when a
+ * node inside the outer directory labels what it holds (`docs/docs.json`,
+ * `beans/beans.json`). {@link declaredKinds} already reads those files for
+ * KINDS; this returns the ENTRIES, for a consumer that needs a sub-graph's
+ * path — the navbar's folders, `check:requirements`.
+ *
+ * Only the file the kind names (`declarationFile`) is read, not the
+ * directory-name fallbacks `declaredKinds` tries: a consumer taking a PATH
+ * from here must not take it from a file nobody declared. A file that does
+ * not parse is skipped here and reported by the check that owns it.
+ */
+export function nestedDirectories(
+  root: string,
+  decl: CatHarnessDeclaration,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> {
+  const out: Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> = [];
+  for (const d of decl.directories ?? []) {
+    const files = (d.graphKinds ?? [])
+      .map((g) => registry.get(g)?.declarationFile)
+      .filter((f): f is string => typeof f === "string");
+    for (const f of [...new Set(files)]) {
+      const p = join(declaredKindsEntryRoot(root, d), f);
+      if (!existsSync(p)) continue;
+      let nested: { directories?: Array<{ id?: string; path?: string; graphKinds?: string[]; description?: string }> };
+      try {
+        nested = JSON.parse(readFileSync(p, "utf-8"));
+      } catch {
+        continue;
+      }
+      const parent = d.path.replace(/\/+$/, "");
+      for (const nd of nested.directories ?? []) {
+        if (!nd.id || !nd.path) continue;
+        out.push({
+          id: `${d.id}/${nd.id}`,
+          path: `${parent}/${nd.path.replace(/^\.\//, "").replace(/\/+$/, "")}/`,
+          graphKinds: nd.graphKinds ?? [],
+          ...(nd.description ? { description: nd.description } : {}),
+          parentId: d.id,
+        });
+      }
+    }
+  }
+  return out;
+}
+
 // ── Core's kinds, registered ────────────────────────────────────
 //
 // THE WHOLE POINT OF THE LEAF, and the line that closes the `#464` class.
@@ -4420,3 +5030,6 @@ function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string 
 // no-ops. Two were NOT removed and are the mechanism rather than instances of
 // the problem: this import, and `schemas/test-preload.ts`.
 import "./folio-graph-kind.js";
+// Core's `glossary` kind, registered the same way and for the same reason
+// (issue: owner 2026-09-23, "put glossary into folio-assistant-core").
+import "./glossary-graph-kind.js";

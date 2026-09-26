@@ -151,6 +151,34 @@
   --fa-sticky-font-scale: 0.95;
 }
 
+/* Grumpy cyborg agents — Cloud cream and a harness teal, behind the cat on the sled and the four robot cats pulling it. */
+[data-fa-sticky-theme="grumpy-cyborg-agents"] {
+  --fa-sticky-surface: #fbf9ef;
+  --fa-sticky-ink: #1c2a24;
+  --fa-sticky-edge: #c5cdc3;
+  --fa-sticky-accent: #2f7a80;
+  --fa-sticky-scrim: rgba(251, 249, 239, 0.82);
+  --fa-sticky-min-width: 17rem;
+  --fa-sticky-padding: 0.7em 0.8em;
+  --fa-sticky-font-scale: 1;
+}
+
+/* Grumpy cyborg agents — mobile layout. A phone sticky is not a laptop one scaled down. */
+@media (max-width: 40rem) {
+  [data-fa-sticky-theme="grumpy-cyborg-agents"] {
+    --fa-sticky-min-width: 100%;
+    --fa-sticky-padding: 0.8em 0.9em;
+    --fa-sticky-font-scale: 1.05;
+  }
+}
+
+/* Grumpy cyborg agents — card layout, for a dense board. */
+[data-fa-sticky-theme="grumpy-cyborg-agents"][data-fa-sticky-layout="card"] {
+  --fa-sticky-min-width: 13rem;
+  --fa-sticky-padding: 0.6em 0.7em;
+  --fa-sticky-font-scale: 0.95;
+}
+
 /* CatBootstrap — Desert sand and sienna — the frontier at the start of the trail. */
 [data-fa-sticky-theme="bootstrap"] {
   --fa-sticky-surface: #f4f0e6;
@@ -286,6 +314,34 @@
 
 /* Grumpy cat, analyst — card layout, for a dense board. */
 [data-fa-sticky-theme="analyst"][data-fa-sticky-layout="card"] {
+  --fa-sticky-min-width: 13rem;
+  --fa-sticky-padding: 0.6em 0.7em;
+  --fa-sticky-font-scale: 0.95;
+}
+
+/* Grumpy cat, architecture — Cloud cream and a drafting slate, behind the cat with the rolled drawings. */
+[data-fa-sticky-theme="architecture"] {
+  --fa-sticky-surface: #fdfbf0;
+  --fa-sticky-ink: #1a372d;
+  --fa-sticky-edge: #a6aea8;
+  --fa-sticky-accent: #6a7c73;
+  --fa-sticky-scrim: rgba(253, 251, 240, 0.86);
+  --fa-sticky-min-width: 17rem;
+  --fa-sticky-padding: 0.7em 0.8em;
+  --fa-sticky-font-scale: 1;
+}
+
+/* Grumpy cat, architecture — mobile layout. A phone sticky is not a laptop one scaled down. */
+@media (max-width: 40rem) {
+  [data-fa-sticky-theme="architecture"] {
+    --fa-sticky-min-width: 100%;
+    --fa-sticky-padding: 0.8em 0.9em;
+    --fa-sticky-font-scale: 1.05;
+  }
+}
+
+/* Grumpy cat, architecture — card layout, for a dense board. */
+[data-fa-sticky-theme="architecture"][data-fa-sticky-layout="card"] {
   --fa-sticky-min-width: 13rem;
   --fa-sticky-padding: 0.6em 0.7em;
   --fa-sticky-font-scale: 0.95;

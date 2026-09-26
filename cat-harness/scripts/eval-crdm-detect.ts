@@ -8,7 +8,7 @@
  *
  * ## What this measures, and what it does not
  *
- * `methodologies/crdm/crdm-detect.md` is prose for a model to read. It lists
+ * `skills/crdm/crdm-detect.md` is prose for a model to read. It lists
  * five categories of phrasing plus an explicit "what is NOT a feature request"
  * list. This script implements the PHRASE SIGNALS mechanically. That makes it
  * a LOWER BOUND on an agent that also applies judgement — an agent can catch a
@@ -19,14 +19,16 @@
  * the skill fails. A low precision here is more damning, because a phrase that
  * fires on a bug report will push a model toward the wrong branch too.
  *
- * ## The ground truth is one annotator's, unblinded
+ * ## The ground truth: two annotators, and the owner's adjudication
  *
  * `scripts/eval/crdm-detect-corpus.json` carries all 27 issues in this
  * repository — the whole population, not a sample — each labelled with a
- * one-line reason. The labels were written by the same agent that wrote this
- * script, without a second annotator and without blinding. That is a real
- * weakness and is the first thing to fix before quoting these numbers as a
- * property of the skill rather than of this corpus.
+ * one-line reason. The first labels were written by the same agent that wrote
+ * this script, without blinding. On 2026-09-24 (bean `vjbl`) a fresh agent
+ * labelled a blinded copy (`eval-crdm-detect-blind.ts`) and agreed on 23/27,
+ * Cohen's kappa 0.62. The owner adjudicated the four disagreements, so the
+ * labels are now owner-adjudicated where the two raters differed. The second
+ * rater's labels are kept in `crdm-detect-second-annotator.json`.
  *
  * ## The signals are not in this file
  *
@@ -49,7 +51,7 @@ const verbose = process.argv.includes("--verbose");
 
 interface Item { number: number; title: string; isFeature: boolean; why: string; text: string }
 
-const SKILL = join(root, "methodologies/crdm/crdm-detect.md");
+const SKILL = join(root, "skills/crdm/crdm-detect.md");
 const skillExclusions = parseSkillExclusions(readFileSync(SKILL, "utf-8"));
 
 const corpus: Item[] = JSON.parse(
@@ -57,11 +59,15 @@ const corpus: Item[] = JSON.parse(
 );
 
 let tp = 0, fp = 0, tn = 0, fn = 0;
+// Every case, as the skill's contract names its input and output, so the run
+// can be checked against that contract (#1168, B4) rather than only counted.
+const cases: Array<{ input: { text: string }; output: ReturnType<typeof detect> }> = [];
 const misses: Item[] = [];
 const falseAlarms: Item[] = [];
 
 for (const item of corpus) {
   const v = detect(item.text);
+  cases.push({ input: { text: item.text }, output: v });
   if (item.isFeature && v.fires) tp++;
   else if (item.isFeature && !v.fires) { fn++; misses.push(item); }
   else if (!item.isFeature && v.fires) { fp++; falseAlarms.push(item); }
@@ -114,8 +120,8 @@ if (skillExclusions.judgementOnly.length) {
 console.log(
   `\nLOWER BOUND. This runs the phrase list only; the skill also asks for\n` +
     `judgement, which catches wording the list never anticipated. Ground truth\n` +
-    `is ONE annotator's, unblinded — fix that before quoting these as a\n` +
-    `property of the skill rather than of this corpus.`,
+    `is two annotators (kappa 0.62), with the owner adjudicating their\n` +
+    `disagreements (bean vjbl). It is still 27 issues, one repository.`,
 );
 
 // ─── The run is RECORDED, not only printed ──────────────────────────────────
@@ -135,12 +141,14 @@ console.log(
 const OUT = join(root, "test/results/crdm-detect-eval.test-run.json");
 const run = buildTestRun({
   root,
+  // The run names the skill it tests; the skill names no test (#1168, B4).
+  skill: "crdm-detect",
   subject: "crdm-detect phrase signals against the issue corpus",
   dataInputs: ["scripts/eval/crdm-detect-corpus.json"],
   processInputs: [
     "scripts/eval-crdm-detect.ts",
     "src/crdm/detect-signals.ts",
-    "methodologies/crdm/crdm-detect.md",
+    "skills/crdm/crdm-detect.md",
   ],
   outcome: {
     population: corpus.length,
@@ -152,6 +160,7 @@ const run = buildTestRun({
     recall: Number(recall.toFixed(4)),
     f1: Number(f1.toFixed(4)),
   },
+  cases,
 });
 
 // Same churn guard as `writeQaResult`: an unchanged run keeps its file and its

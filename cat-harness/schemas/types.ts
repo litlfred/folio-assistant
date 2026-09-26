@@ -24,12 +24,8 @@ export type {
   ActorKind,
   Conformance,
   DegradationStrategy,
-  ScriptRuntime,
-  ScriptPhase,
-  ValidatorScope,
   HookEvent,
   IdentitySource,
-  SatisfiedByKind,
   DependencyKind,
   LifecycleStage,
   RemoteSyncStrategy,
@@ -38,10 +34,8 @@ export type {
   CapabilityDefinition,
   SkillCapabilityRef,
   SkillDependency,
-  SkillScript,
-  SkillValidator,
   SkillDefinition,
-  SatisfiedByRef,
+  RequirementStatementRef,
   RequirementStatement,
   Requirement,
   SkillPackageRef,
@@ -397,6 +391,22 @@ export interface AuthorNote {
 export interface BlockBase {
   /** Label following project convention (e.g. "def:quantum-universe"). */
   label: string;
+  /**
+   * Labels this block was previously known by, oldest first.
+   *
+   * **A label is the block's identity** in the `folio/` graph: the content
+   * graph, a block-level diff against `main`, a review comment and a heat
+   * map all key on it. Changing a label without recording the old one reads
+   * as a removal plus an addition, and orphans every comment on the old id.
+   * Recording it here makes the rename a fact the pipeline can follow.
+   *
+   * Checked by two QA criteria (`qa-checkers-ids.ts`): `id-stable` fails a
+   * label that changed since the base ref without its old value listed here,
+   * and `id-unique` fails a block that takes a label another block lists
+   * here, because reusing a retired id re-attaches the old block's review
+   * history to an unrelated block.
+   */
+  renamedFrom?: string[];
   /** Optional display title. */
   title?: string;
   /**

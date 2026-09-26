@@ -20,6 +20,7 @@
  * to break it in each direction and be caught in each.
  */
 import { describe, expect, test } from "bun:test";
+import { spawnSync } from "node:child_process";
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -134,6 +135,37 @@ describe("an empty corpus is a FINDING, never a clean run", () => {
   test("the real repository HAS a corpus, so the suite above is not vacuous", () => {
     expect(contentDocuments().length).toBeGreaterThan(100);
   });
+
+  // Bean `ramz`. This walked the filesystem behind a hand-written denylist,
+  // so a gitignored directory the list did not name was swept as if it were
+  // repository content: 145 documents of one machine's ingestion residue
+  // failed `bun test` on a clean checkout of `main`.
+  //
+  // BOTH halves are asserted. A fix that returned nothing at all would pass
+  // the ignored half on its own, and "skip everything" is indistinguishable
+  // from "skip the right things" unless something still comes back.
+  test("the corpus is what GIT accounts for — ignored out, unstaged in", () => {
+    const root = mkdtempSync(join(tmpdir(), "ctxgit-"));
+    const git = (...args: string[]): void => {
+      const r = spawnSync("git", args, { cwd: root, encoding: "utf-8" });
+      expect(r.status, `git ${args.join(" ")}: ${r.stderr}`).toBe(0);
+    };
+    git("init", "-q");
+    writeFileSync(join(root, ".gitignore"), "staging/\n");
+    mkdirSync(join(root, "staging"), { recursive: true });
+    mkdirSync(join(root, "content"), { recursive: true });
+    const doc = JSON.stringify({ "@context": {}, "@type": "probe:Thing" });
+    writeFileSync(join(root, "staging", "residue.jsonld"), doc);
+    writeFileSync(join(root, "content", "tracked.jsonld"), doc);
+    git("add", "content/tracked.jsonld");
+    // Never staged, never ignored: part of the change under test, so the
+    // check has to see it. `--cached` alone would miss it.
+    writeFileSync(join(root, "content", "unstaged.jsonld"), doc);
+
+    const found = contentDocuments(root).map((f) => f.slice(root.length + 1)).sort();
+    expect(found).toEqual(["content/tracked.jsonld", "content/unstaged.jsonld"]);
+    rmSync(root, { recursive: true, force: true });
+  });
 });
 
 describe("the bound set is read from the context, not listed here", () => {
@@ -155,5 +187,176 @@ describe("the bound set is read from the context, not listed here", () => {
     const { bound, aliasPrefix } = prefixesOf(CTX);
     expect(bound.sort()).toEqual(["dcterms", "doco", "unused"]);
     expect(aliasPrefix.get("title")).toBe("dcterms");
+  });
+});
+
+// ── Bean `zaqn`: the direction that corrupts data ─────────────────────────
+//
+// A prefix SPOKEN and bound nowhere is not an error to a JSON-LD processor —
+// it reads the prefix as a URI scheme. So each test below breaks the corpus
+// and requires the check to see it, and the "clean" cases assert a non-empty
+// corpus first, for the reason at the top of this file.
+
+import { checkPrefixDeclaration, declaredStubs } from "../check-context-emission.ts";
+import { NS_PREFIXES, stubOfNamespace } from "../../schemas/namespaces.ts";
+
+const URL = "https://example.org/ctx.jsonld";
+const OWN = "https://litlfred.github.io/folio-assistant/some-instance/ns#";
+const STUBS = new Set(["some-instance"]);
+
+describe("a prefix that is spoken must be bound", () => {
+  test("an unbound prefix in @type is caught — the `folio:` defect", () => {
+    const root = corpus({ "a.jsonld": { "@context": URL, "@type": "folio:Definition" } });
+    const r = checkPrefixDeclaration(root, { doco: "http://purl.org/spar/doco/" }, URL, STUBS);
+    expect(r.documents).toBe(1);
+    expect(r.undeclared.map((u) => u.prefix)).toEqual(["folio"]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("an unbound prefix used as a KEY is caught", () => {
+    const root = corpus({ "a.jsonld": { "@context": { doco: "http://purl.org/spar/doco/" }, "fac:anchor": 1 } });
+    const r = checkPrefixDeclaration(root, {}, URL, STUBS);
+    expect(r.undeclared.map((u) => u.prefix)).toEqual(["fac"]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("the published context's own term targets are checked, with no document using them", () => {
+    const root = corpus({ "a.jsonld": { "@context": URL } });
+    const r = checkPrefixDeclaration(root, { fac: OWN.replace("some-instance", "x"), label: "folio:label" }, URL, STUBS);
+    expect(r.undeclared.map((u) => u.prefix)).toContain("folio");
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("a bound prefix, an absolute IRI and a CURIE-shaped LITERAL are all clean", () => {
+    const root = corpus({
+      "a.jsonld": {
+        "@context": [URL, { extra: "http://example.org/x#" }],
+        "@type": ["doco:Section", "extra:Thing", "http://example.org/Abs"],
+        // An authored label looks exactly like a CURIE and is not one.
+        label: "def:foo",
+      },
+    });
+    const r = checkPrefixDeclaration(root, { doco: "http://purl.org/spar/doco/", label: "doco:label" }, URL, STUBS);
+    expect(r.documents).toBe(1);
+    expect(r.undeclared).toEqual([]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("a context URL the check cannot resolve is the third state, never clean", () => {
+    const root = corpus({ "a.jsonld": { "@context": "https://elsewhere.example/ctx", "@type": "zz:Q" } });
+    const r = checkPrefixDeclaration(root, {}, URL, STUBS);
+    expect(r.documents).toBe(0);
+    expect(r.unresolved.count).toBe(1);
+    expect(r.unresolved.urls).toEqual(["https://elsewhere.example/ctx"]);
+    rmSync(root, { recursive: true, force: true });
+  });
+});
+
+describe("a prefix onto our own namespace is the declaring instance's stub", () => {
+  test("an abbreviation is caught, once, however many times the context is read", () => {
+    const root = corpus({ "a.jsonld": { "@context": { si: OWN }, "@type": "si:Thing" } });
+    const r = checkPrefixDeclaration(root, {}, URL, STUBS);
+    expect(r.misspelt).toEqual([{ prefix: "si", namespace: OWN, stub: "some-instance", where: "a.jsonld" }]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("the stub spelling is clean — and only if an instance declares that stub", () => {
+    const root = corpus({ "a.jsonld": { "@context": { "some-instance": OWN }, "@type": "some-instance:Thing" } });
+    expect(checkPrefixDeclaration(root, {}, URL, STUBS).misspelt).toEqual([]);
+    expect(checkPrefixDeclaration(root, {}, URL, new Set()).misspelt).toHaveLength(1);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("NS_PREFIXES: every key IS its namespace's stub, and a declared one", () => {
+    const stubs = declaredStubs();
+    expect(stubs.size).toBeGreaterThan(0);
+    for (const [prefix, ns] of Object.entries(NS_PREFIXES)) {
+      expect(stubOfNamespace(ns)).toBe(prefix);
+      expect(stubs.has(prefix)).toBe(true);
+    }
+  });
+});
+
+describe("the real corpus", () => {
+  test("every spoken prefix is bound and every own prefix is a stub", () => {
+    const r = checkPrefixDeclaration();
+    expect(r.documents).toBeGreaterThan(0);
+    expect(r.undeclared).toEqual([]);
+    expect(r.misspelt).toEqual([]);
+    expect(r.unresolved.count).toBe(0);
+  });
+});
+
+// ── Every plain key is a declared term — bean `yh6u` ──────────────────────
+
+import { checkDeclaredKeys } from "../check-context-emission.ts";
+
+describe("a key a content document writes must be a declared term", () => {
+  const C = { title: "dcterms:title", narrative: { "@id": "x:n", "@type": "@json" } } as Record<string, unknown>;
+  const U = "https://example.org/ctx.jsonld";
+
+  test("an undeclared key is caught — the 392-figure-narrative defect", () => {
+    const root = corpus({ "a.jsonld": { "@context": U, title: "t", drafted_by: { id: "x" } } });
+    const k = checkDeclaredKeys(root, C, U);
+    expect(k.documents).toBe(1);
+    expect(k.undeclared.map((u) => u.prefix).sort()).toEqual(["drafted_by", "id"]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("keys INSIDE a `@json` value are data, never flagged", () => {
+    const root = corpus({ "a.jsonld": { "@context": U, narrative: { text: null, drafted_by: { id: "x" } } } });
+    const k = checkDeclaredKeys(root, C, U);
+    expect(k.documents).toBe(1);
+    expect(k.undeclared).toEqual([]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("a document on another context is not this check's to judge", () => {
+    const root = corpus({ "a.jsonld": { "@context": "https://other.example/ctx", whatever: 1 } });
+    expect(checkDeclaredKeys(root, C, U).documents).toBe(0);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("the real corpus: every key declared, over a non-empty corpus", () => {
+    const k = checkDeclaredKeys();
+    expect(k.documents).toBeGreaterThan(0);
+    expect(k.undeclared).toEqual([]);
+  });
+});
+
+// ── A path is never an `@id` — bean `589f` ────────────────────────────────
+
+import { checkPathsAreNotLinks, looksLikePath } from "../check-context-emission.ts";
+
+describe("a file path under an `@id` term is caught", () => {
+  const U = "https://example.org/ctx.jsonld";
+  const LINKED = { text: { "@id": "x:text", "@type": "@id" }, uses: { "@id": "x:uses", "@type": "@id" } } as Record<string, unknown>;
+  const LITERAL = { text: { "@id": "x:text" }, uses: { "@id": "x:uses", "@type": "@id" } } as Record<string, unknown>;
+
+  test("the 589f shape — `../sections/x.md` under a coerced `text` — fails", () => {
+    const root = corpus({ "a.jsonld": { "@context": U, text: "../sections/sec-001-intro.md", uses: ["papers/p/blocks/def-a"] } });
+    const p = checkPathsAreNotLinks(root, LINKED, U);
+    expect(p.documents).toBe(1);
+    expect(p.undeclared.map((u) => u.prefix)).toEqual(["text"]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("the same value under a LITERAL `text` passes, and node ids never trip it", () => {
+    const root = corpus({ "a.jsonld": { "@context": U, text: "../sections/sec-001-intro.md", uses: ["papers/p/blocks/def-a"] } });
+    const p = checkPathsAreNotLinks(root, LITERAL, U);
+    expect(p.documents).toBe(1);
+    expect(p.undeclared).toEqual([]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  test("what counts as a path", () => {
+    for (const v of ["../sections/a.md", "./x", "thm-foo.md", "Proof.lean", "img.PNG"]) expect(looksLikePath(v)).toBe(true);
+    for (const v of ["library/doc/blocks/prose-sec-001", "papers/p/blocks/def-a", "https://example.org/x"]) expect(looksLikePath(v)).toBe(false);
+  });
+
+  test("the real corpus: no path under an `@id` term", () => {
+    const p = checkPathsAreNotLinks();
+    expect(p.documents).toBeGreaterThan(0);
+    expect(p.undeclared).toEqual([]);
   });
 });

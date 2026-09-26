@@ -6,7 +6,7 @@ classification determines which workflow the agent enters.
 | **Content authoring** | Write, edit, extend folio content (chapters, blocks, sections) | Authoring workflow (paper or document) |
 | **Content review** | Review, validate, provide feedback on existing content | Content lifecycle / editing-HCI workflow |
 | **Content ingestion** | Ingest a source document into the folio | Document ingestion workflow |
-| **Feature request** | Request new platform capability (see [crdm-detect](../../methodologies/crdm/crdm-detect.md)) | CRDM requirements workflow |
+| **Feature request** | Request new platform capability (see [crdm-detect](../skills/crdm/crdm-detect.md)) | CRDM requirements workflow |
 | **Information request** | Ask about the platform, content, or process | No workflow — answer directly |
 | **Tool invocation** | Run a specific tool (`content_validate`, `qa_sweep`, etc.) | No workflow — execute and report |
 | **Work-plan management** | Create, update, or query beans | No workflow — execute and report |
@@ -16,7 +16,7 @@ classification determines which workflow the agent enters.
 
 The critical classification boundary is between **content authoring** and
 **feature request**. The `crdm-detect` skill
-([`methodologies/crdm/crdm-detect.md`](../../methodologies/crdm/crdm-detect.md))
+([`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md))
 provides the detailed detection signals. The summary rule:
 
 > If implementing the request would require changes to **folio-assistant**

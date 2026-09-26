@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_UpstreamAdoption" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_UpstreamAdoption">
@@ -16,11 +17,12 @@ Reusable means the tenant-specific part is DATA. `upstream-pins.json` carries, p
 
 Shaped after `crdm-requirements.bpmn` because the question is the same one: something outside the repository wants to change what we ship, and the answer has to be a judgement somebody made on evidence rather than a merge that happened. The loop back into impact analysis is the MVP loop — findings the agent can fix are fixed on the same branch and re-evidenced, and only what remains reaches the decider.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="strict" />
+      <cat-harness.processes:policy enforcement="strict" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_UpstreamAdoption">
       <bpmn:lane id="Lane_Agent" name="Agent">
         <bpmn:documentation>Owns the whole MVP loop end to end except the two calls it cannot make: SF_UA_8 re-enters this lane's own A_Impact on a fixable finding rather than escalating, so a defect gets fixed and re-evidenced here before anyone outside the lane sees it, and Call_OptionsAnalysis sits here specifically because framing the options is not deciding among them — that judgement belongs to PM_Decide in a different lane entirely.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="authoring-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Adopt</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Scope</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Impact</bpmn:flowNodeRef>
@@ -32,16 +34,19 @@ Shaped after `crdm-requirements.bpmn` because the question is the same one: some
       </bpmn:lane>
       <bpmn:lane id="Lane_Build" name="CI/CD Pipeline">
         <bpmn:documentation>Produces evidence, not verdicts: Task_Gates going red does not end the process or loop by itself — "this version breaks us" is a finding the decider needs to see, not a reason for this lane to stop the run — and Task_Mvp exists so that finding is checked against a real deployed build rather than a description of one.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Mvp</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Gates</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Review" name="Reviewer / SME">
         <bpmn:documentation>Narrower than a general release review: the question is only whether what upstream-pins.json lists as bound still holds against the deployed MVP, not whether the new version is good on its own terms, and a finding here (GW_Findings) sends the run back to the Agent lane's own impact analysis rather than stopping it.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>R_Review</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Findings</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Publication" name="Publication manager">
         <bpmn:documentation>Holds the one call in this subprocess that policy marks unrelaxable: PM_Decide's lane admits a person only, because a pin change is not an edit to the corpus but a change to what the published artefact is BUILT FROM — the fact that puts this decision in the publication manager's lane rather than the editor's, which owns corpus changes elsewhere in this repository.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="publication-manager"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>PM_Decide</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Adopt</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -52,40 +57,42 @@ Shaped after `crdm-requirements.bpmn` because the question is the same one: some
 
 The changelog is the claim; `git diff --stat pinned..candidate` over those paths is the evidence.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="upstream-version-adoption"/>
-        <folio:bean op="claim"/>
+        <bootstrap.processes:skill ref="upstream-version-adoption"/>
+        <cat-harness.processes:bean op="claim"/>
       </bpmn:extensionElements>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="A_Impact" name="Impact analysis&#10;what of ours binds it">
       <bpmn:documentation>The half a changelog cannot supply, because upstream does not know what you reached into. Worked from the row's `binds` list in `upstream-pins.json`.
 
 For the theme: `docs/assets/js/docs-ui.js` MOVES the theme's own search markup into the action launcher and binds `.search`, `#search-input` and `.search-label`; `docs-ui.css` overrides `.side-bar`, `.site-header` and `.main-header`; three e2e specs assert the structure the theme emits. An upstream rename of any of those is not a build failure — it is a shipped feature that quietly stops working.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="upstream-version-adoption"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="upstream-version-adoption"/></bpmn:extensionElements>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Mvp" name="MVP: build the candidate&#10;on a staging branch">
       <bpmn:documentation>An MVP is a DEPLOYED BUILD, not a description of one. The pin is moved on a branch and `feature-staging.yml` publishes it under `STAGING/&lt;branch-slug&gt;/`, so the reviewer looks at the artefact rather than at a screenshot — the same argument the merge discipline makes about rendered work.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="feature-staging"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="feature-staging"/><cat-harness.processes:no-call reason="Moving the pin on a branch is the step; CI stages it on the pull_request event. A call activity would claim the engine drives CI."/></bpmn:extensionElements>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Gates" name="Run the row's gates&#10;tests &#183; e2e &#183; site-links">
       <bpmn:documentation>The `mvp` commands declared for this tenant. For the theme: `bun test`, `CI=1 bunx playwright test` (a11y, action tiles, sidebar panels, QA panel) and `scripts/site-links.ts --site ./_site`, which checks the navbar tiles against the BUILT site rather than against the attribute — the distinction that let a 404 ship unnoticed once already.
 
 A red gate is EVIDENCE, not an exit. It does not end the process and it does not loop by itself: "this version breaks us" is a finding the decider needs, not a reason to stop before they see it.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="content-test"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-test"/></bpmn:extensionElements>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="A_Evidence" name="Post the MVP evidence&#10;staging URL + gate results">
       <bpmn:documentation>Staging URL, gate results and the impact analysis, on the PR. Enough for the reviewer to answer without opening anything else.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="delivery-summary"/>
-        <folio:bean op="note"/>
+        <bootstrap.processes:skill ref="delivery-summary"/>
+        <cat-harness.processes:bean op="note"/>
       </bpmn:extensionElements>
     </bpmn:serviceTask>
     <bpmn:userTask id="R_Review" name="Review the MVP against&#10;what we bind to">
       <bpmn:documentation>A narrower question than "is the new version good": does everything in `binds` still hold, checked against the deployed page.
 
 A `userTask`, and the lane admits `person` and `agent` — a review agent is a legitimate reviewer here, and the separation that matters is the next lane's: a reviewer cannot accept.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="staging-review"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="staging-review"/></bpmn:extensionElements>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="GW_Findings" name="Findings we can fix?"/>
+    <bpmn:exclusiveGateway id="GW_Findings" name="Findings we can fix?">
+      <bpmn:documentation>The review of the upstream MVP against what we bind to: are there findings we can fix on our side? `yes` goes to impact analysis; `no` goes to the options analysis (adopt, hold or decline).</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:callActivity id="Call_OptionsAnalysis" name="Options analysis&#10;adopt &#183; hold &#183; decline" calledElement="Process_OptionsAnalysis">
       <bpmn:documentation>On the single edge into `PM_Decide`, and deliberately not earlier: the MVP build and its gates are HOW the options' costs are measured, so an analysis before `Task_Mvp` would weigh alternatives against no evidence. Everything the decider needs exists by the time the reviewer has finished and the fixable findings are fixed.
 
@@ -100,16 +107,18 @@ The publication manager rather than the editor because a pin is not a change to 
 
 Deliberately NOT a DMN-backed gateway. Every computed gateway in this repository reduces to arithmetic over tool output; this one weighs a rendering nobody can score against the cost of staying behind, and a table here would look authoritative without being so.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="decision-audit"/>
-        <folio:policy relaxable="false" />
+        <bootstrap.processes:skill ref="decision-audit"/>
+        <cat-harness.processes:policy relaxable="false" />
       </bpmn:extensionElements>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="GW_Adopt" name="Adopt?"/>
+    <bpmn:exclusiveGateway id="GW_Adopt" name="Adopt?">
+      <bpmn:documentation>The project manager's decision. `yes` moves the pin and opens the PR; `no` records the hold or the decline.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="A_ApplyPin" name="Move the pin&#10;and open the PR">
       <bpmn:documentation>The pin literal moves in the one file `upstream-pins.json` declares, and the PR body says what the version range changed in RENDERED output — the evidence, not just the verdict.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="prepare-merge"/>
-        <folio:bean op="resolve"/>
+        <bootstrap.processes:skill ref="prepare-merge"/>
+        <cat-harness.processes:bean op="resolve"/>
       </bpmn:extensionElements>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="A_RecordOutcome" name="Record the hold&#10;or the decline">
@@ -117,8 +126,8 @@ Deliberately NOT a DMN-backed gateway. Every computed gateway in this repository
 
 Either way the decision is written down before the process ends, and the bean is resolved from here: a run that stops at "we looked and said no" is as finished as one that moved the pin.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="upstream-version-adoption"/>
-        <folio:bean op="resolve"/>
+        <bootstrap.processes:skill ref="upstream-version-adoption"/>
+        <cat-harness.processes:bean op="resolve"/>
       </bpmn:extensionElements>
     </bpmn:serviceTask>
     <bpmn:endEvent id="End_Adopt" name="Decision recorded"/>

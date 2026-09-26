@@ -31,14 +31,15 @@
  * `kg-export` follows for `@id`, and for the same reason.
  *
  * @module scripts/harness-schema-export
+ * @covers schemas, cat-harness
  */
 import { writeFileSync, mkdirSync, readFileSync, readdirSync, existsSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { zodToJsonSchema } from "zod-to-json-schema";
+import { namedJsonSchema, toJsonSchema } from "../schemas/to-json-schema.ts";
 
 import { CatHarnessDeclarationSchema, artefactStub, readDeclaration, renderingPath, repoRootFor } from "../schemas/cat-harness.js";
-import { tools } from "../tools/index.js";
+import { tools } from "../tools/discover.js";
 import { ToolDefinitionSchema } from "../schemas/tool.js";
 import { TOOL_TYPES } from "../schemas/tool-types.js";
 import { stagingFields } from "./staging-stamp.js";
@@ -79,10 +80,7 @@ export function buildDeclarationSchema(opts: SchemaExportOptions = {}): Record<s
   const stub = decl ? artefactStub(decl) : (pkg.name ?? "instance");
   const base = (opts.baseUrl ?? decl?.canonicalUrl ?? "").replace(/\/+$/, "");
 
-  const schema = zodToJsonSchema(CatHarnessDeclarationSchema, {
-    name: "CatHarnessDeclaration",
-    $refStrategy: "none",
-  }) as Record<string, unknown>;
+  const schema = namedJsonSchema(CatHarnessDeclarationSchema, "CatHarnessDeclaration");
 
   return {
     ...schema,
@@ -111,7 +109,7 @@ export function buildToolTypes(opts: SchemaExportOptions = {}): Record<string, u
   const base = (opts.baseUrl ?? decl?.canonicalUrl ?? "").replace(/\/+$/, "");
   const defs: Record<string, unknown> = {};
   for (const [name, schema] of Object.entries(TOOL_TYPES)) {
-    defs[name] = zodToJsonSchema(schema, { $refStrategy: "none" });
+    defs[name] = toJsonSchema(schema);
   }
   return {
     $schema: "http://json-schema.org/draft-07/schema#",
@@ -128,10 +126,7 @@ export function buildToolTypes(opts: SchemaExportOptions = {}): Record<string, u
 export function buildToolSchema(opts: SchemaExportOptions = {}): Record<string, unknown> {
   const decl = readDeclaration(ROOT);
   const base = (opts.baseUrl ?? decl?.canonicalUrl ?? "").replace(/\/+$/, "");
-  const schema = zodToJsonSchema(ToolDefinitionSchema, {
-    name: "ToolDefinition",
-    $refStrategy: "none",
-  }) as Record<string, unknown>;
+  const schema = namedJsonSchema(ToolDefinitionSchema, "ToolDefinition");
   return {
     ...schema,
     ...(base ? { $id: renderingPath(base, "tool.schema.json") } : {}),

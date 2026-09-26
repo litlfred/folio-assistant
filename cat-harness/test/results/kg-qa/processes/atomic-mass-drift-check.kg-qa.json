@@ -5,7 +5,7 @@
     "id": "Process_AtomicMassDrift",
     "path": "processes/atomic-mass-drift-check.bpmn"
   },
-  "source_hash": "sha256:14cbfa6074619e9c6f2eca0234c7dc46cb06e87e737655f23b2df4a85d014a18",
+  "source_hash": "sha256:3bd617f16ee5d0edf654c1a4084b5ac006619f735839edd18d8b1d4a36c4157b",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,12 +66,58 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
+    "pass": 16,
     "fail": 0,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/atomic-mass-drift-check.bpmn",
+      "code": ".github/workflows/atomic-mass-gen-check.yml",
+      "prose_hash": "3bd617f16ee5",
+      "code_hash": "3de1de04af5a",
+      "by": "baseline"
+    }
+  ]
 }

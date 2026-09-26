@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/authoring-math/proof-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/authoring-math/proof-verification.md) — do not edit here. Typed contract: [schema reference](../skills/proof-verification.html).
+> Generated from [`cat-harness/skills/authoring-math/proof-verification.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-math/proof-verification.md) — do not edit here. Typed contract: [schema reference](../skills/proof-verification.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/authoring-math/proof-verification.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring-math/proof-verification.md){: .fa-edit-source }
 
 {% raw %}
 # proof-verification
@@ -74,3 +74,10 @@ the toolchain's call — it belongs to the editor, at
 `editing-hci-validation.bpmn`'s `Task_ReviewFindings`, which is marked
 `relaxable="false"` precisely so that no policy can route around it.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a paper](../../processes/authoring-a-paper.html) | 5 · Formalise in Lean |
+

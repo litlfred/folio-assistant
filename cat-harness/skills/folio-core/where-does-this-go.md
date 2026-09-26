@@ -6,6 +6,8 @@ description: >
   asking — so an agent who does not know a rule exists cannot look it up. One
   discriminating question per row, and the skill that owns the answer.
 allowed-tools: Read Grep Glob
+graph-kinds:
+  - code
 ---
 
 # Where does this go? — the question, then the skill that answers it
@@ -49,7 +51,7 @@ placement.
 | # | the question you are actually asking | who answers it |
 |---|---|---|
 | 1 | Is this a work item, a sign-off, or a code review? | [`issue-working`](issue-working.md) §"What an issue is *for*, against its neighbours" |
-| 2 | Is this feature work that needs a GitHub issue first? | [`crdm-detect`](../../methodologies/crdm/crdm-detect.md) §"Issue association" |
+| 2 | Is this feature work that needs a GitHub issue first? | [`crdm-detect`](../crdm/crdm-detect.md) §"Issue association" |
 | 3 | What TYPE of bean is it, and under which parent? | [`todo-manager`](todo-manager.md), and `check:bean-parents` enforces it |
 | 4 | Does a bean for this already exist? | [`todo-manager`](todo-manager.md) §"Check before you create" |
 | 5 | May I claim it — is a sibling already on it? | [`bean-coordination`](bean-coordination.md) §"A claim is branch-local" |

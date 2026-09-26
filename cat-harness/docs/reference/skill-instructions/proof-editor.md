@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-paper-adapter/proof-editor.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/proof-editor.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-paper-adapter/proof-editor.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/proof-editor.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/proof-editor.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/proof-editor.md){: .fa-edit-source }
 
 {% raw %}
 # Proof Editor (Coordinator)
@@ -211,7 +211,7 @@ If the author says "apply all" or "go ahead":
 - **Honest confidence**: if a specialist reports low confidence
   (< 0.7), surface that to the author — don't smooth it over.
 - **Link every finding** to a GitHub blob URL, per
-  [`turn-reporting`](../folio-core/turn-reporting.md) §"Asking for review means
+  [`turn-reporting`](turn-reporting.md) §"Asking for review means
   linking the artefact". Default to `.md` for block
   citations; include `.lean` sibling when the finding is Lean-specific.
 - **Downstream-consumer sync.** When a finding touches a proposition

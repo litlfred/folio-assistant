@@ -1,11 +1,11 @@
 ---
 # folio-assistant-j66n
 title: 'THEME INGESTION: a subprocess of document ingestion, and one Theme node with kind sticky|webpage|publication'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T08:02:10Z
-updated_at: 2026-09-20T08:02:10Z
+updated_at: 2026-09-23T12:00:00Z
 parent: folio-assistant-kupb
 ---
 
@@ -103,3 +103,123 @@ rules, and whether an arbitrary branded PDF does is the open question. Recorded
 in `every-workflow-in-the-repo.md` under the table, where a reader of the
 workflow page meets it.
 
+---
+
+## Wired 2026-09-23 — the gateway is answered, not computed
+
+Owner ruled **"human/agentic judgement at the gateway"** over a declared
+predicate. `ingest-theme.bpmn` is now a call activity of
+`document-ingestion.bpmn`, reached through `Gateway_ThemeSource` —
+*"A theme source? (author's judgement)"*.
+
+**The predicate is deliberately absent, and the diagram says why.** The
+alternative on offer was testable — a captured web deployment, or a document
+that STATES palette and typography rules — and it was refused for the reason
+the owner had already given when withdrawing `xffc`/`d3yq`: *"no formal
+role/theme mapping per se. that is authoring (human/agentic) decision/
+judgement."* An arbitrary branded PDF is not a theme source because a rule says
+so; it is not one because the author says it is not.
+
+**Why a gateway rather than a filter inside the subprocess.** `ingest-theme`
+starts at *"Theme source in hand"* and can refuse as incomplete. Routing every
+document into it would make *"this is not a theme"* and *"this theme is
+malformed"* the same refusal — and the second is a defect while the first is
+the normal case.
+
+### Placement, and the thing that nearly went wrong
+
+`Derive` → `Gateway_ThemeSource` → (yes) `CallActivity_IngestTheme` →
+`BuildKg`; (no) straight to `BuildKg`. It sits before the L1 build because a
+theme is derived content that has to reach the graph.
+
+**It stays in Lane_1 (Ingestion Engine).** The obvious way to make room was to
+drop the call activity below the main line, where `Task_OpenBean` sits — but
+that is **Lane_2, the shared work plan**, and filing a theme ingestion there
+would have said this is a write to the plan rather than the engine asking its
+author a question. So the 7 shapes right of x=940 were shifted +340 instead,
+and the pool and all four lanes widened to match. Lane_1's own documentation
+now says this.
+
+### Two gates caught what review would not have
+
+- **`check:lane-documentation`** and the interpretability test both failed:
+  the two new nodes had DI, flows and documentation, and **no
+  `<bpmn:flowNodeRef>`**. A node can be drawn, connected and rendered while
+  belonging to no lane — which is to say, to no ROLE.
+- Regeneration is not optional and is not one command: `render:bpmn`,
+  `translate-bpmn --extract` (**5 locales**, since a new label is a new
+  translatable string), `processes:viz`, `docs:auto`, `kg:audit`.
+
+### Verified on the rendering, not on the generator
+
+`bun run gates` 127/127, and the built SVG opened: viewBox widened to
+`155 75 2217 730`, all four new labels present, and the branch inside Lane_1's
+y-band (310–415 against 260–440). A green gate set is not a rendered page.
+
+### One thing fixed in passing
+
+`Task_OpenBean` carried `<folio:skill ref="todo-manager" />` **three times**.
+Reduced to one; nothing else about that task changed.
+
+### Still open on this bean
+
+The two themes themselves — `iris-web` (source already on disk in the IRIS
+capture) and `who-wpro-publication` (source is the style guide's own rules).
+This entry wires the process; it does not ingest them.
+
+## Summary of Changes — all four clauses met; closed 2026-09-23 on evidence
+
+**The "Still open on this bean" section above is wrong, and this bean already
+contained its own refutation.** It says the two themes are outstanding. Thirteen
+lines earlier the same body says:
+
+> | Two worked themes, each citing where every value came from | **done** — see below |
+
+Line 35 against line 164, in one file. The later section was written by the
+session that wired the call activity, from the true premise *"this entry wires
+the process; it does not ingest them"* — which says what that COMMIT did, not
+what the BEAN still needs. Correct about itself, wrong about the bean.
+
+Appended rather than edited out, on this repository's own precedent: the section
+is another session's, an append cannot collide, and a reader who finds the
+contradiction should be able to see how it was resolved rather than find one side
+silently deleted.
+
+### Re-measured on `main`, by running it
+
+| clause | state | evidence |
+|---|---|---|
+| `kind` on `ThemeSchema`, existing sticky themes unchanged and still valid | **done** | landed in #477 |
+| Two worked themes, `iris-web` and `who-wpro-publication`, each citing where every value came from | **done** | both ids present in `who-iris/themes/themes.ts`; `bun test who-iris/themes/themes.test.ts` → **25 pass, 0 fail**, which matches the count this bean recorded when they were built |
+| Every layout still required; a missing layout stays INVALID, never degraded | **done** | three tests, in the same file |
+| `ingest-theme.bpmn`, called from `document-ingestion.bpmn` | **done** | `CallActivity_IngestTheme` behind `Gateway_ThemeSource` (`b4fe919d`) |
+
+The tests are not a copy of the constants — `client-theme.css` is re-read out of
+the committed capture zip at test time and the style guide's values out of its
+ingested page text, so 25 passing is also a freshness check on the sources.
+
+### The fourth clause's open question is answered, and by the owner
+
+This bean recorded the wiring as *"a question rather than an omission"*: which
+artefacts are theme sources is a judgement nobody had made. Two rulings closed it:
+
+- **2026-09-22** — human/agentic judgement at the gateway, not a formal predicate.
+- **2026-09-23** — *"theme review to ingestion of graphical assets in context of
+  website or app design and determining graphical assets/UI"*, which settled
+  `9fdi` and bound `theme-ui-review` to `ingestion-agent`.
+
+`role-carries-activity-skill` now **passes** on both `ingest-theme.bpmn` and
+`document-ingestion.bpmn`.
+
+### What is NOT closed by this
+
+The two contradictions found in the style guide stay carried as data in
+`RECORDED_CONTRADICTIONS`, and `who-wpro-publication.palette.edge` stays flagged
+as the one value that is a CHOICE rather than a measurement. Neither was tidied
+away — a closed bean is not permission to drop the caveats it was careful about.
+
+`ingest-theme.kg-qa.json` still fails `gateway-documented` on `Gateway_Layouts`.
+Pre-existing, nothing to do with themes, tracked by `t3ad` in PR #1111 as one of
+70. Named so this close is not read as a clean sidecar.
+
+*Closed by stream 3/3 of the #956 consolidation — session_013vZiHGPug7PuHoMxRS82vw.*

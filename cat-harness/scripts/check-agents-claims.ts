@@ -3,6 +3,8 @@
  * The claims `AGENTS.md` makes ABOUT CODE are checked against the code.
  *
  * @module scripts/check-agents-claims
+ * @covers code — its subject is the CODE a prose claim asserts about — the symbols and paths it
+ *   names. `AGENTS.md` itself sits at the repository root and is a node of no declared graph
  *
  * Bean `77ex`. Two checks already cover `AGENTS.md` and neither covers this:
  * `check:agents-xref` verifies citations INTO it, `check:agent-entry-links`

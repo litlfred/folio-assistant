@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/session-intent.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/session-intent.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/session-intent.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/session-intent.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/session-intent.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/session-intent.md){: .fa-edit-source }
 
 {% raw %}
 # /session-intent — durable session intent + results
@@ -114,8 +114,13 @@ Three places, all required:
 naming your branch:
 
 ```sh
-beans update <id> --status in-progress
+bun run beans:claim <id>
 ```
+
+A claim goes through `beans:claim`, not `beans update`: it reads the default
+branch first, refuses a bean somebody else holds, and records a holder note the
+next session's check can read. `beans update` writes no such note, which is why
+97 of 100 current claims are invisible to that check (bean `c3d7`).
 
 then append a note to its body saying what you intend and where you got to.
 The bean is the durable record a sibling reads; there is no separate session
@@ -135,7 +140,8 @@ log to keep in step with it.
   `beans create "<Task>" --type task`
   `beans update <child-id> --parent <session-id>`
   `beans update <child-id> --status in-progress`
-If working on an existing bean, just run `beans update <id> --status in-progress --body-append "Claimed by <branch>"`
+If working on an existing bean, run `bun run beans:claim <id>` — not
+`beans update`, per the note above.
 
 **c. PR body** — at branch-open, the PR body must include:
 

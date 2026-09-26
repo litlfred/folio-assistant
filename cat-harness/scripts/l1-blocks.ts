@@ -39,6 +39,15 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
+// The generator's own naming, imported rather than restated. Bean `xwi8`: this
+// arm used to mint `prose-${section id}` — `prose-sec-001-introduction` — while
+// `gen-library-jsonld` mints `prose-sec-001` through `sectionKey()`, and only
+// the generator's names are what sections reference. Every document that went
+// through both writers therefore carried a second, unreferenced, byte-identical
+// copy of every prose block: 91 of them across four documents when measured
+// (2026-09-23). Two naming rules for one block is one rule too many.
+import { blockId, sectionKey } from "../content/pipeline/gen-library-jsonld.ts";
+
 /** The `@context` every ingested node already carries. Read from a sibling, never retyped. */
 const CONTEXT = "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld";
 
@@ -109,10 +118,11 @@ export function buildL1(dir: string, write = true): BuildResult {
   if (write) mkdirSync(blocksDir, { recursive: true });
 
   for (const s of declared) {
+    const bid = blockId("prose", sectionKey(s.id));
     const node = {
       "@context": CONTEXT,
-      "@id": `${base}/blocks/prose-${s.id}`,
-      "@type": ["folio:Prose", "doco:Section"],
+      "@id": `${base}/blocks/${bid}`,
+      "@type": ["folio-assistant-core:Prose", "doco:Section"],
       kind: "prose",
       title: s.title ?? s.id,
       ...(s.page_start != null ? { pageStart: s.page_start } : {}),
@@ -123,16 +133,31 @@ export function buildL1(dir: string, write = true): BuildResult {
       provenance: "ingested",
     };
     if (write) {
-      writeFileSync(join(blocksDir, `prose-${s.id}.jsonld`), `${JSON.stringify(node, null, 2)}\n`);
+      writeFileSync(join(blocksDir, `${bid}.jsonld`), `${JSON.stringify(node, null, 2)}\n`);
     }
   }
 
+  // A licence record is a finding somebody made by searching (issue #1023,
+  // `check:source-licence`), not something this arm can derive. Rewriting the
+  // manifest must carry it over, or re-running the arm silently turns
+  // "unknown after five places searched" into "nobody looked".
+  const manifestPath = join(dir, "manifest.jsonld");
+  let licence: unknown;
+  if (existsSync(manifestPath)) {
+    try {
+      licence = (JSON.parse(readFileSync(manifestPath, "utf-8")) as { meta?: { licence?: unknown } }).meta?.licence;
+    } catch {
+      licence = undefined;
+    }
+  }
   const manifest = {
     "@context": CONTEXT,
     "@id": `${base}/manifest`,
-    "@type": ["folio:SourceDocument"],
+    "@type": ["folio-assistant-core:SourceDocument"],
     title: st.doc_id,
-    contains: declared.map((s) => `${base}/sections/${s.id}`),
+    // The section NODE is `sections/sec-NNN` — the generator's name for it. The
+    // full section id names the `.md` file beside it, which is not a node.
+    contains: declared.map((s) => `${base}/sections/${sectionKey(s.id)}`),
     provenance: "ingested",
     meta: {
       doc_id: st.doc_id,
@@ -140,9 +165,10 @@ export function buildL1(dir: string, write = true): BuildResult {
       source_sha256: st.source?.sha256 ?? null,
       granularity: st.granularity ?? null,
       disposition: "ingested source material — attributed to its document, not folio content",
+      ...(licence !== undefined ? { licence } : {}),
     },
   };
-  if (write) writeFileSync(join(dir, "manifest.jsonld"), `${JSON.stringify(manifest, null, 2)}\n`);
+  if (write) writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
 
   return { docId: st.doc_id, blocks: declared.length, missing: [] };
 }

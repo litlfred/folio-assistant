@@ -5,15 +5,16 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/one-voice-style-guide.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/one-voice-style-guide.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/one-voice-style-guide.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/one-voice-style-guide.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/one-voice-style-guide.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/one-voice-style-guide.md){: .fa-edit-source }
 
 {% raw %}
-## The voice comes from the ROLE, not from this file
+## The voice is addressed TO the role, not carried by it
 
-Before writing or auditing a block, resolve its audience and read that role's
-`persona`, `voice` and `useCases` in `scenarios/roles.json`.
+Before writing or auditing a block, resolve its audience: the role, its
+`persona` in `scenarios/roles.json`, the voice profiles that address it, and
+the user stories told as it.
 
 **A block sits in a lane; the lane is a role; the role is who the prose is
 for.** The audience is not restated per block — copying it onto every block
@@ -22,24 +23,29 @@ is worse than none because it looks authoritative.
 
 ```ts
 import { readRoleGraph, roleForLane } from "./schemas/role-graph";
-const role = roleForLane(readRoleGraph("skills")!, laneName, explicitRef);
-role?.persona   // who this reader is
-role?.voice     // the register to address them in
-role?.useCases  // what they came to do
+import { loadVoices, voiceActiveIn } from "./schemas/voices";
+import { readUserStories } from "./schemas/user-story";
+const role = roleForLane(readRoleGraph("scenarios")!, laneName, explicitRef);
+role?.persona                                             // who this reader is
+loadVoices(core).filter((v) => voiceActiveIn(v, { role: role?.id })) // how to address them
+readUserStories("scenarios")?.stories.filter((s) => s.role.role === role?.id) // what they came to do
 ```
 
-**This file is the default, not the answer.** Where a role declares a `voice`,
-that wins. The guidance here applies when no role has been resolved.
+**This file is the default, not the answer.** Where a voice addresses the
+role, that wins. The guidance here applies when no role has been resolved.
 
-**Why the role carries the voice rather than this file inferring it.** Voice
+**Why a voice points at the role rather than this file inferring it.** Voice
 does not follow from persona: the same reader is addressed differently in a
-normative standard and in a tutorial. Naming it on the role is what lets the
-authoring agent and the QA agent judge against the *same* string — otherwise a
-voice finding is one agent's taste against another's, which is unreviewable.
+normative standard and in a tutorial. Declaring it as a voice profile bound to
+the role (`activeIn.roles`) is what lets the authoring agent and the QA agent
+judge against the *same* rule — otherwise a voice finding is one agent's taste
+against another's, which is unreviewable. The role names no voice and no story
+(#1168): each points at the role, so one is added without editing the role.
 
-`bun run kg:audit` reports a reader role missing any of the three
-(`role-has-persona`, `role-declares-voice`, `role-has-use-cases`). System,
-external and acted-upon roles are `n/a`: nothing in them reads prose.
+`bun run kg:audit` reports a reader role with no persona (`role-has-persona`)
+or no story told as it (`role-has-story`); `bun run check:voices` lists the
+roles with a persona that no voice addresses. System, external and acted-upon
+roles are `n/a`: nothing in them reads prose.
 # One-Voice Style Guide — Author Voice Profile
 
 > **See also:** `one-voice-audit` is the mechanical sweep (greps for

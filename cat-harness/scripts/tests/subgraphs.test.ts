@@ -15,10 +15,17 @@
  *    reading as a clean disconnection.
  */
 import { describe, expect, test } from "bun:test";
+import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { owningDirectory, resolveDirectories, subgraphTree } from "../../schemas/cat-harness.ts";
-import { scanSubgraphs } from "../check-subgraphs.ts";
+import {
+  isDerivedGraph,
+  owningDirectory,
+  resolveDirectories,
+  siteDirFor,
+  subgraphTree,
+} from "../../schemas/cat-harness.ts";
+import { overDeepLinks, scanSubgraphs } from "../check-subgraphs.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const dirs = resolveDirectories([{ name: "(local)", root: ROOT, own: true }]);
@@ -28,37 +35,68 @@ describe("subgraph containment is derived from declared paths", () => {
     expect(dirs.length, "no directories resolved").toBeGreaterThan(10);
   });
 
-  test("methodologies contains its methodologies, and nothing else claims them", () => {
-    const tree = subgraphTree(dirs);
-    const m = tree.find((r) => r.parent === "methodologies");
-    expect(m?.children).toEqual(["methodology-crdm", "methodology-raci", "methodology-spec-kit"]);
-    // Exactly one parent per child: two would make a node's owner ambiguous,
-    // which is the question this whole derivation exists to answer once.
-    for (const child of m?.children ?? []) {
-      expect(tree.filter((r) => r.children.includes(child)).length).toBe(1);
-    }
+  test("`methodologies/` nests nothing — the thing this branch actually achieved", () => {
+    // THIS ASSERTED A GLOBAL PROPERTY AND SHOULD NOT HAVE. Until 2026-09-22 it
+    // read `expect(subgraphTree(dirs)).toEqual([])` — "this instance nests
+    // nothing" — which was true the hour it was written and false by the next
+    // merge: `main` declared `test/` as a `code` graph (#963), so `test/` now
+    // contains the declared `test/results`, through no change of this branch's.
+    //
+    // An assertion any other branch can invalidate is not a regression guard,
+    // it is a tripwire on somebody else's work. The durable claim is the
+    // narrow one: the methodology subgraphs this branch un-buried stay
+    // un-buried. Corpus-wide nesting is `check:layout-norms`'s question, where
+    // it is a ratchet with a baseline rather than an absolute.
+    // Scoped to the id `methodologies` EXACTLY — this instance's own graph.
+    // A /methodolog/ substring also matches `smart-base-methodologies`, which
+    // `main` landed in #881 with a nested `smart-base-processes` inside it.
+    // That is a real finding, it is baselined in `check:layout-norms`, and it
+    // belongs to whoever owns smart-base — not to a test about this branch.
+    const nested = subgraphTree(dirs).flatMap((r) => [r.parent, ...r.children]);
+    expect(nested.filter((id) => id === "methodologies")).toEqual([]);
+    const methodologies = dirs.find((d) => d.id === "methodologies");
+    expect(methodologies, "the methodology graph did not resolve — the check above is vacuous").toBeDefined();
   });
 
   test("a repository-scoped directory is not a child of an instance-relative one", () => {
-    // `smart-kg/methodologies/` is repository-scoped so the extraction is
+    // `smart-base/methodologies/` is repository-scoped so the extraction is
     // literal. Reading it as a child of `methodologies/` would be wrong on
-    // the path AND on the intent.
+    // the path AND on the intent. (The example was `smart-kg/methodologies/`
+    // until it was removed, bean `wg7r`.)
     const tree = subgraphTree(dirs);
-    for (const r of tree) expect(r.children).not.toContain("smart-kg-methodologies");
+    for (const r of tree) expect(r.children).not.toContain("smart-base-methodologies");
+    expect(dirs.find((d) => d.id === "smart-base-methodologies"), "the scoped entry did not resolve — vacuous").toBeDefined();
   });
 
+  // The real declaration no longer nests anything, so the two properties
+  // below have no witness in this corpus. They are pinned against a SYNTHETIC
+  // pair instead of dropped: `subgraphTree` and `owningDirectory` are shared
+  // machinery that any instance may exercise, and deleting their only tests
+  // because this instance stopped nesting would retire a guard for a defect
+  // that is still reachable.
+  const NESTED = [
+    { id: "outer", path: "outer/", absPath: `${ROOT}/outer`, graphKinds: ["cat-harness"] },
+    { id: "inner", path: "outer/inner/", absPath: `${ROOT}/outer/inner`, graphKinds: ["cat-harness"] },
+  ];
+
   test("a node belongs to its DEEPEST subgraph, not to the outer one", () => {
-    // This IS the x4v4 defect in concrete form. Attributing a CRDM skill to
-    // `methodologies` makes every count computed from that sweep wrong.
-    expect(owningDirectory(dirs, "methodologies/crdm/crdm-detect.md")?.id).toBe("methodology-crdm");
-    expect(owningDirectory(dirs, "methodologies/kepner-tregoe.md")?.id).toBe("methodologies");
+    // This IS the x4v4 defect in concrete form: attributing an inner node to
+    // the outer graph makes every count computed from that sweep wrong.
+    expect(owningDirectory(NESTED, "outer/inner/node.md")?.id).toBe("inner");
+    expect(owningDirectory(NESTED, "outer/node.md")?.id).toBe("outer");
+    // ...and immediate containment only: with `a/`, `a/b/` and `a/b/c/` all
+    // declared, `a` has one child, not two.
+    const tree = subgraphTree(NESTED);
+    expect(tree.find((r) => r.parent === "outer")?.children).toEqual(["inner"]);
   });
 
   test("relative and absolute queries agree", () => {
     // The bug that made every probe answer "no owner" while looking healthy.
-    const rel = owningDirectory(dirs, "methodologies/crdm/crdm-detect.md");
-    const abs = owningDirectory(dirs, `${ROOT}/methodologies/crdm/crdm-detect.md`);
-    expect(rel?.id).toBe("methodology-crdm");
+    // Run against the REAL declaration, because that is where the absPath
+    // keying actually bit — a fixture would not have caught it.
+    const rel = owningDirectory(dirs, "methodologies/kepner-tregoe.md");
+    const abs = owningDirectory(dirs, `${ROOT}/methodologies/kepner-tregoe.md`);
+    expect(rel?.id).toBe("methodologies");
     expect(abs?.id).toBe(rel?.id);
   });
 });
@@ -86,11 +124,49 @@ describe("the entanglement report", () => {
     expect(probe.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
   });
 
-  test("CRDM's relocation left no broken links behind", () => {
-    // 13 were left by `g43o` and repaired when this check first surfaced
-    // them. This is the regression guard for that specific move.
-    const crdm = report.dangling.filter((d) => d.fromDir === "methodology-crdm");
+  test("a DERIVED graph's unresolved links are never dangling", () => {
+    // A library section is machine-produced FROM a source document, so a
+    // markdown link inside it is whatever the derivation carried across. Five
+    // documents ingested on 2026-09-23 printed `./REFERENCE.md`, `./FORMS.md`
+    // and `./advanced.md` inside EXAMPLES of a skill directory — 12 findings,
+    // every one asking somebody to edit a transcription of a document this
+    // project did not write.
+    //
+    // `schemas/cat-harness.ts` already said so of the `derived` layer — *"a QA
+    // finding against a derived section is a finding against its GENERATOR,
+    // not against the corpus, and it sends a reviewer to fix the wrong file"*
+    // — and this check simply was not applying it.
+    //
+    // Asserted as an INVARIANT rather than a count. `derivedLinks.length > 0`
+    // would be the same trap the test above documents: it would fail the day
+    // somebody drains it, punishing the fix. This holds whether the corpus
+    // carries twelve or none.
+    // Same call shape as `scanSubgraphs` itself — it takes an instance CHAIN,
+    // not a path, and passing the root produced a `chain.find is not a
+    // function` rather than a wrong answer.
+    const dirs = resolveDirectories([{ name: "(local)", root: ROOT, own: true }]);
+    const derivedIds = new Set(
+      dirs.filter((d) => d.graphKinds.some((g) => isDerivedGraph(g))).map((d) => d.id),
+    );
+    expect(derivedIds.size, "no derived directory is declared, so this proves nothing").toBeGreaterThan(0);
+
+    // Nothing from a derived directory may be reported as dangling …
+    expect(report.dangling.filter((d) => derivedIds.has(d.fromDir))).toEqual([]);
+    // … and everything in the derived bucket must come from one.
+    expect(report.derivedLinks.filter((d) => !derivedIds.has(d.fromDir))).toEqual([]);
+  });
+
+  test("CRDM's relocations left no broken links behind — both of them", () => {
+    // 13 were left by `g43o` (into `methodologies/crdm/`) and repaired when
+    // this check first surfaced them. CRDM moved AGAIN on 2026-09-22, into
+    // `skills/crdm/`, so this guard is re-keyed: `methodology-crdm` is no
+    // longer a declared id, and a filter on it would now match nothing and
+    // pass for the wrong reason — a guard that cannot fail, which is worse
+    // than one that is absent because it reads as coverage.
+    const crdm = report.dangling.filter((d) => d.from.includes("skills/crdm/"));
     expect(crdm.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
+    const raci = report.dangling.filter((d) => d.from.includes("skills/raci/"));
+    expect(raci.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
   });
 
   test("an illustrative placeholder is not counted as a broken link", () => {
@@ -139,13 +215,75 @@ describe("repository-scoped directories are attributed", () => {
   });
 
   test("the x4v4 separation survives the change", () => {
-    // Making scoped paths attributable must NOT make `smart-kg/methodologies/`
+    // Making scoped paths attributable must NOT make `smart-base/methodologies/`
     // read as a child of `methodologies/` — that separation is deliberate and
     // was settled in bean `x4v4`. This is the trap the bean named in advance.
     for (const r of report.tree) {
-      expect(r.children).not.toContain("smart-kg-methodologies");
+      expect(r.children).not.toContain("smart-base-methodologies");
     }
-    const m = report.tree.find((r) => r.parent === "methodologies");
-    expect(m?.children).toEqual(["methodology-crdm", "methodology-raci", "methodology-spec-kit"]);
+    // The positive half USED to be `methodologies` → [methodology-crdm,
+    // methodology-raci]. Both declarations went on 2026-09-22.
+    //
+    // The negative assertion above must not become vacuous, which it does the
+    // moment the tree is empty ("clean" and "not computed" must never be one
+    // passing test). So what is pinned is that the tree was COMPUTED and that
+    // the scoped entry RESOLVED — the two facts that make "it is nobody's
+    // child" mean something. The tree is non-empty again since `main`
+    // declared `test/` as a `code` graph, but this test does not depend on
+    // that either way.
+    const scoped = dirs.find((d) => d.id === "smart-base-methodologies");
+    expect(scoped, "the repository-scoped entry did not resolve — the check above is vacuous").toBeDefined();
+    expect(Array.isArray(report.tree), "containment was not computed at all").toBe(true);
+  });
+});
+
+describe("the `../` too many count is COMPUTED (bean `syrl`)", () => {
+  // The report carried this number as a STRING LITERAL for five days: "23
+  // carry one `../` too many", measured once on 2026-09-20 and printed
+  // unchanged beside a total that re-measured every run. When it was finally
+  // computed it read **27** — so the literal had been wrong for most of its
+  // life, and nothing could say so.
+  //
+  // Both halves are asserted, because a fix that returns nothing would pass
+  // the first on its own and would be indistinguishable from a clean corpus.
+  // ASKED, not spelled: `site-dir-single-answer` refuses a literal here, and
+  // it is right to — a test naming the output root by hand is one more place
+  // the answer can disagree with the declaration.
+  const siteDir = resolve(ROOT, siteDirFor(ROOT));
+
+  test("a target that resolves after dropping one `../` IS one", () => {
+    // From `docs/reference/skill-instructions/`, `../../skill-instructions/…`
+    // lands in `docs/` — nothing there — while dropping one `../` lands on
+    // the page's own directory, where `index.md` is.
+    const found = overDeepLinks(ROOT, [
+      {
+        from: "docs/reference/skill-instructions/x.md",
+        fromDir: "docs",
+        target: "../../skill-instructions/index.md",
+      },
+    ]);
+    expect(found.map((f) => f.repaired)).toEqual(["../skill-instructions/index.md"]);
+  });
+
+  test("a target that still does not resolve after dropping one is NOT", () => {
+    const found = overDeepLinks(ROOT, [
+      { from: "docs/x.md", fromDir: "docs", target: "../../no-such-directory/no-such-file.md" },
+    ]);
+    expect(found, "a repair is tested against disk, never inferred from shape").toEqual([]);
+  });
+
+  test("a target with no `../` at all is never one", () => {
+    const found = overDeepLinks(ROOT, [
+      { from: "docs/x.md", fromDir: "docs", target: "reference/index.md" },
+    ]);
+    expect(found).toEqual([]);
+  });
+
+  test("the real corpus carries none — the repair of `mi97` holds", () => {
+    // Falsifier for `mi97`, which said the count must fall to zero once the
+    // 27 were repaired. It is checkable ONLY because the number is live.
+    expect(existsSync(siteDir), `${siteDir} must exist or this asserts nothing`).toBe(true);
+    const { siteResolved } = scanSubgraphs(ROOT);
+    expect(overDeepLinks(ROOT, siteResolved).map((l) => `${l.from} -> ${l.target}`)).toEqual([]);
   });
 });

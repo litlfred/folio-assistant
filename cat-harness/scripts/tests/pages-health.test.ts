@@ -388,6 +388,85 @@ describe("renderPages — what it refuses to say", () => {
     expect(out).toContain("yzsj"); // the rest are pointed somewhere, not dropped
   });
 
+  // ── A cited bean's STATUS is read, never asserted (bean `xfyk`) ──────────
+  //
+  // This renderer used to state it outright — "which is a different fix and
+  // is not done" about `yzsj` — and the clause went stale the moment `yzsj`
+  // closed on 2026-09-21, sending the next reader to a finished 200-line
+  // bean. The comment beside it records fixing the POINTER (`6pfo` ->
+  // `yzsj`) and names the class: a reference inside printed output that
+  // resolves to the wrong thing. The pointer was fixed; the claim attached
+  // to it was hardcoded, so it drifted instead.
+  //
+  // Each test below pins one branch, and the point of each is a DIFFERENT
+  // honesty: a closed bean must not read as open, an unreadable store must
+  // not read as either, and a missing bean must be called out rather than
+  // silently rendered as fine.
+
+  const raced = {
+    health: { total: 10, success: 4, cancelled: 6, failure: 0, unsettled: 0 },
+    supersedes: [{ slug: "aaa", by: "1", superseded: "0", secondsApart: 9 }],
+  };
+
+  test("a SETTLED bean does not read as open — the `xfyk` defect itself", () => {
+    const out = renderPages(ok({ ...raced, citedBeans: { yzsj: { state: "read", status: "completed" } } }));
+    expect(out).toContain("`yzsj`, now `completed`");
+    expect(out).not.toContain("is not done");
+    // And it must say what that means for the reader, not just the status:
+    // cancellations past a shipped fix are new ground, not its residue.
+    expect(out).toContain("NEW ground");
+  });
+
+  test("`scrapped` counts as settled too — abandoned is not open", () => {
+    const out = renderPages(ok({ ...raced, citedBeans: { yzsj: { state: "read", status: "scrapped" } } }));
+    expect(out).toContain("now `scrapped`");
+    expect(out).toContain("NEW ground");
+  });
+
+  test("an OPEN bean still reads as work outstanding", () => {
+    // The original sentence was not wrong when written — it was wrong later.
+    // This branch keeps it correct for as long as it IS correct.
+    const out = renderPages(ok({ ...raced, citedBeans: { yzsj: { state: "read", status: "in-progress" } } }));
+    expect(out).toContain("is `in-progress`");
+    expect(out).toContain("a different fix");
+    expect(out).not.toContain("NEW ground");
+  });
+
+  test("an unreadable work plan is UNKNOWN — not open, not done", () => {
+    // The house rule. An unknown rendered as either answer is worse than the
+    // question, and this is the branch a fresh container actually takes.
+    const out = renderPages(
+      ok({ ...raced, citedBeans: { yzsj: { state: "unreadable", why: "no bean store in this instance" } } }),
+    );
+    expect(out).toContain("could not read the work plan");
+    expect(out).toContain("no bean store in this instance");
+    expect(out).toContain("not assumed either way");
+    expect(out).not.toContain("is not done");
+    expect(out).not.toContain("NEW ground");
+  });
+
+  test("NOBODY LOOKED renders the same as unreadable, not as a status", () => {
+    // `citedBeans` absent entirely — the shape every existing caller had
+    // before this change, and the one a new caller gets by forgetting.
+    const out = renderPages(ok(raced));
+    expect(out).toContain("could not read the work plan");
+    expect(out).not.toContain("is not done");
+  });
+
+  test("a citation resolving to NOTHING says so — beans are never deleted", () => {
+    const out = renderPages(ok({ ...raced, citedBeans: { yzsj: { state: "absent" } } }));
+    expect(out).toContain("no such bean");
+    expect(out).toContain("renamed or mistyped");
+  });
+
+  test("the clause wraps, because the watchdog commits this as markdown", () => {
+    // One long line reads fine in a terminal and raggedly in the committed
+    // report, which is the surface people actually read.
+    const out = renderPages(ok({ ...raced, citedBeans: { yzsj: { state: "read", status: "completed" } } }));
+    const long = out.split("\n").filter((l) => l.length > 90);
+    expect(long).toEqual([]);
+  });
+
   test("no self-supersede says so rather than going quiet", () => {
     // Silence would read as "not checked". This is the measurement that shows
     // `bm6d`'s fix holding, so it has to be stated when it is clean.
@@ -445,5 +524,131 @@ describe("renderPages — what it refuses to say", () => {
       ok({ window: { runs: 100, from: "2026-09-20T14:50:58Z", to: "2026-09-20T17:29:03Z" } }),
     );
     expect(out).toMatch(/Window:.*100 recent run/);
+  });
+});
+
+describe("coalescing or starvation — bean `thsz`", () => {
+  // The counts alone are ambiguous by a factor that matters. GitHub Pages runs
+  // ONE deployment per repository, so every push to the publish ref cancels the
+  // build in flight and the survivor publishes everything on the ref: during a
+  // busy hour most builds are cancelled BY DESIGN. The same share, when nothing
+  // is getting through, means the site is frozen.
+  //
+  // This section was measured leading its own author wrong: 78 cancelled
+  // against 21 succeeded read as a ten-hour outage, and the newest run before
+  // the quiet period had SUCCEEDED. The gap was nobody pushing.
+  const ok = (over: Partial<PagesReport> = {}): PagesReport => ({
+    health: { total: 10, success: 2, cancelled: 8, failure: 0, unsettled: 0 },
+    publishBranch: "gh-pages",
+    supersedes: [],
+    ...over,
+  });
+
+  test("newestSettled skips a run still in flight", () => {
+    // `latest` is `pages[0]`, which is routinely unsettled — it was in the run
+    // that produced this bean. Reading the newest outcome off it would answer
+    // "in progress" to a question that has an answer one row down.
+    const h = pagesHealth([
+      pages({ status: "in_progress", conclusion: null as unknown as string }),
+      pages({ conclusion: "cancelled", created_at: "2026-09-25T16:29:05Z" }),
+      pages({ conclusion: "success", created_at: "2026-09-25T16:10:26Z" }),
+    ]);
+    expect(h.latest?.status).toBe("in_progress");
+    expect(h.newestSettled?.conclusion).toBe("cancelled");
+    expect(h.lastSuccessAt).toBe("2026-09-25T16:10:26Z");
+  });
+
+  test("an unsettled run is never the last success, even if it claims one", () => {
+    // A surviving mutation found this untested: dropping the `completed` guard
+    // from `lastSuccessAt` changed nothing any test could see.
+    //
+    // The guard is not dead code, it is this module's standing rule — the
+    // tallies check `status !== "completed"` FIRST, so a conclusion on a run
+    // that has not settled is not a verdict. Applying that rule here and
+    // nowhere else would let a half-reported run set the "site is as of" time,
+    // which is the one number in the section a reader acts on.
+    const h = pagesHealth([
+      pages({ status: "in_progress", conclusion: "success", created_at: "2026-09-25T17:00:00Z" }),
+      pages({ conclusion: "success", created_at: "2026-09-25T16:10:26Z" }),
+    ]);
+    expect(h.lastSuccessAt).toBe("2026-09-25T16:10:26Z");
+    expect(h.success).toBe(1); // the in-flight one is unsettled, not a success
+    expect(h.unsettled).toBe(1);
+  });
+
+  test("a newest-settled SUCCESS says the share was coalescing", () => {
+    // The case that nearly produced a false outage report. Eight cancellations
+    // behind a green newest run are superseded builds whose content shipped in
+    // the survivor.
+    const out = renderPages(
+      ok({
+        health: {
+          total: 10, success: 2, cancelled: 8, failure: 0, unsettled: 0,
+          newestSettled: { name: PAGES_WORKFLOW, status: "completed", conclusion: "success", created_at: "2026-09-25T04:57:05Z" },
+          lastSuccessAt: "2026-09-25T04:57:05Z",
+        },
+      }),
+    );
+    expect(out).toContain("newest deployment to settle SUCCEEDED");
+    expect(out).toContain("coalescing, not failure");
+    expect(out).not.toContain("starvation rather than");
+  });
+
+  test("a newest-settled CANCELLATION names starvation and how far behind", () => {
+    const out = renderPages(
+      ok({
+        health: {
+          total: 10, success: 2, cancelled: 8, failure: 0, unsettled: 0,
+          newestSettled: { name: PAGES_WORKFLOW, status: "completed", conclusion: "cancelled", created_at: "2026-09-25T16:29:05Z" },
+          lastSuccessAt: "2026-09-25T16:10:26Z",
+        },
+      }),
+    );
+    expect(out).toContain("did NOT succeed");
+    expect(out).toContain("starvation");
+    // How far behind, so the reader can judge without another query.
+    expect(out).toContain("2026-09-25T16:10:26Z");
+  });
+
+  test("...and when nothing ever succeeded it says so rather than naming a time", () => {
+    // `lastSuccessAt` undefined is not "as of undefined". The stronger claim is
+    // available and is the one a reader needs.
+    const out = renderPages(
+      ok({
+        health: {
+          total: 10, success: 0, cancelled: 10, failure: 0, unsettled: 0,
+          newestSettled: { name: PAGES_WORKFLOW, status: "completed", conclusion: "cancelled", created_at: "2026-09-25T16:29:05Z" },
+        },
+      }),
+    );
+    expect(out).toContain("no deployment in this window succeeded at all");
+    expect(out).not.toMatch(/site is as of undefined/);
+  });
+
+  test("nothing settled yet is its own answer, not a verdict either way", () => {
+    // Deployments happened and none has concluded. Reading the share against
+    // no outcome is what this whole section exists to stop.
+    const out = renderPages(
+      ok({ health: { total: 3, success: 0, cancelled: 0, failure: 0, unsettled: 3 } }),
+    );
+    expect(out).toContain("has settled yet");
+    expect(out).toContain("not a verdict");
+    expect(out).not.toContain("SUCCEEDED");
+  });
+
+  test("it still grades no share and invents no staleness cutoff", () => {
+    // The `6xaz` refusal is not relaxed by any of the above. The new sentence
+    // is a FLOOR — did the newest settle green — which needs no calibration.
+    const out = renderPages(
+      ok({
+        health: {
+          total: 100, success: 21, cancelled: 78, failure: 0, unsettled: 1,
+          newestSettled: { name: PAGES_WORKFLOW, status: "completed", conclusion: "cancelled", created_at: "2026-09-25T16:29:05Z" },
+          lastSuccessAt: "2026-09-25T16:10:26Z",
+        },
+      }),
+    );
+    expect(out).not.toMatch(/\d+%/);
+    expect(out).not.toMatch(/more than \d+ (minutes|hours)|stale for \d+/);
   });
 });

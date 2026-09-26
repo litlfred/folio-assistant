@@ -3,9 +3,10 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_BoardOpenClose"
-                  targetNamespace="http://folio-assistant.dev/bpmn/board-open-close">
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
 
   <!-- ═══════════════════════════════════════════════════════════
        Opening and closing content on a board — folio-assistant
@@ -45,12 +46,12 @@ The rule the diagram exists to hold is the one about the way back: an action who
            step here would refuse a click. The base content processes gate;
            this one describes an interaction so that it can be reviewed and
            tested rather than living only in `docs-ui.js`. -->
-      <folio:policy enforcement="advisory"/>
+      <cat-harness.processes:policy enforcement="advisory"/>
     </bpmn:extensionElements>
 
     <bpmn:laneSet id="LaneSet_BoardOpenClose">
       <bpmn:lane id="Lane_Reader" name="Reader">
-        <bpmn:extensionElements><folio:role ref="user"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="user"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Board</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Act</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Board</bpmn:flowNodeRef>
@@ -62,7 +63,7 @@ The rule the diagram exists to hold is the one about the way back: an action who
            `role-model` sense. -->
       <bpmn:lane id="Lane_Renderer" name="Board renderer">
         <bpmn:documentation>Acts and decides nothing: the start, the gateway and the end all sit in the reader's lane, so every node here is downstream of a choice somebody else made. That split is the point — a renderer that chose what to open would put layout in charge of what the folio asserts.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="board-renderer"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="board-renderer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_RenderAvatars</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Open</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Raise</bpmn:flowNodeRef>
@@ -78,13 +79,15 @@ The rule the diagram exists to hold is the one about the way back: an action who
     </bpmn:startEvent>
 
     <bpmn:task id="A_RenderAvatars" name="Render every card as its avatar">
-      <bpmn:extensionElements><folio:skill ref="board-windows"/></bpmn:extensionElements>
+      <bpmn:documentation>Render every card as its avatar — the starting state. Each content kind controls its own avatar; the board decides only that nothing starts open.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="board-windows"/></bpmn:extensionElements>
       <bpmn:incoming>F_1</bpmn:incoming>
       <bpmn:incoming>F_Zoom2</bpmn:incoming>
       <bpmn:outgoing>F_2</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_Act" name="What did the reader do?">
+      <bpmn:documentation>Waits on the reader's next action on the board. Opening a card projects a window; selecting a window raises it; `[x]` closes a window back to its avatar; resizing the board re-resolves each kind's zoom threshold; leaving ends. Every branch but `leave` comes back here, which is what makes open and close a toggle.</bpmn:documentation>
       <bpmn:incoming>F_2</bpmn:incoming>
       <bpmn:incoming>F_Back</bpmn:incoming>
       <bpmn:outgoing>F_DoOpen</bpmn:outgoing>
@@ -95,29 +98,33 @@ The rule the diagram exists to hold is the one about the way back: an action who
     </bpmn:exclusiveGateway>
 
     <bpmn:task id="A_Open" name="Project a window onto the board">
-      <bpmn:extensionElements><folio:skill ref="board-windows"/></bpmn:extensionElements>
+      <bpmn:documentation>Project a window onto the board for the chosen card. A window is not the card grown large: it survives zooming out, and only [x] closes it. The frame is fixed ([x] always present, always in the same place); the kind fills in its declared controls.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="board-windows"/></bpmn:extensionElements>
       <bpmn:incoming>F_DoOpen</bpmn:incoming>
       <bpmn:outgoing>F_Opened</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_Raise" name="Raise the window the reader selected">
-      <bpmn:extensionElements><folio:skill ref="board-windows"/></bpmn:extensionElements>
+      <bpmn:documentation>Raise the selected window to the top. Selecting ANY part raises it, not just a title bar. Z-order is session-only by stated default: no z is written to the layout, so a raise is never a file write.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="board-windows"/></bpmn:extensionElements>
       <bpmn:incoming>F_DoRaise</bpmn:incoming>
       <bpmn:incoming>F_Opened</bpmn:incoming>
       <bpmn:outgoing>F_Raised</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_Close" name="Close the window back to its avatar">
-      <bpmn:extensionElements><folio:skill ref="board-windows"/></bpmn:extensionElements>
+      <bpmn:documentation>[x] closes the window back to its avatar. Only a person's [x] does this; a zoom-out never closes a window, or [x] and zooming become indistinguishable to the reader.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="board-windows"/></bpmn:extensionElements>
       <bpmn:incoming>F_DoClose</bpmn:incoming>
       <bpmn:outgoing>F_Closed</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_OfferWayBack" name="Leave a reachable way back">
+      <bpmn:documentation>Leave the way back reachable: the collapsed window becomes a control in its own position and focus moves to it — left alone, focus lands on &lt;body&gt; and the keyboard position is lost. An action whose inverse is not reachable is not a toggle (bean l4zi).</bpmn:documentation>
       <bpmn:extensionElements>
         <!-- NOT a courtesy step. Bean `l4zi`: closing without this is a
              delete with no confirmation wearing a toggle's clothes. -->
-        <folio:skill ref="board-windows"/>
+        <bootstrap.processes:skill ref="board-windows"/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_Closed</bpmn:incoming>
       <bpmn:outgoing>F_Back</bpmn:outgoing>
@@ -126,16 +133,18 @@ The rule the diagram exists to hold is the one about the way back: an action who
     <!-- ── The automatic half, which decides nothing ──────────── -->
 
     <bpmn:task id="A_ResolveThreshold" name="Resolve the kind's zoom threshold">
-      <bpmn:extensionElements><folio:skill ref="board-windows"/></bpmn:extensionElements>
+      <bpmn:documentation>Resolve the semantic-zoom threshold for each card's kind: the folio default unless the kind overrides it with a stated because. Return the source alongside the value, so a card that flipped too early can be traced to a decision or to a default.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="board-windows"/></bpmn:extensionElements>
       <bpmn:incoming>F_DoZoom</bpmn:incoming>
       <bpmn:outgoing>F_Zoom1</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="A_SwapToAvatar" name="Swap cards below the threshold; leave open windows alone">
+      <bpmn:documentation>Cards whose rendered width is strictly below the threshold swap to their avatar — automatic, driven by size. Open windows are left alone: semantic zoom and open/close are two mechanisms and must not be conflated.</bpmn:documentation>
       <bpmn:extensionElements>
         <!-- The sentence that keeps the two mechanisms apart, in the one
              place a renderer would otherwise conflate them. -->
-        <folio:skill ref="board-windows"/>
+        <bootstrap.processes:skill ref="board-windows"/>
       </bpmn:extensionElements>
       <bpmn:incoming>F_Zoom1</bpmn:incoming>
       <bpmn:outgoing>F_Zoom2</bpmn:outgoing>

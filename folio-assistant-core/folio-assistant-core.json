@@ -1,6 +1,7 @@
 {
   "_comment": "folio-assist-core — THE CONTENT LAYER, in folio-assistant-core/ per the owner (2026-09-20: \"use folio-assistant-core/\") — the DIRECTORY and the declared NAME are BOTH spelled out in full. They were briefly different -- directory `folio-assistant-core`, name `folio-assist-core` -- and this comment went on asserting the short name after the `name` field beside it had already been changed, so the file contradicted itself in adjacent lines. Corrected 2026-09-20. WHAT IS STILL SHORT, DELIBERATELY, IS THE LANDING CARD ID below: a card id is a PUBLISHED IDENTIFIER and does not move with a directory. `landing-sticky.test.ts` says so and bean `8xtj` records the cost of assuming the two are one string -- a session sweeping every spelling at once renamed the card by accident and had to put it back. Main created a folio-assistant-core/ stub the same day; the two were one instance under two paths, and instanceRoots is keyed on the declared name, so the stub and the populated one collided on one key and the stub won. Consolidated here, declared as a real instance on the owner's ruling of 2026-09-20 (\"Create f-a-core/ as a real instance now\"). It declared NO directories when it was created, deliberately, because the modules it would own were still interleaved under cat-harness/ and declaring a directory that is not there is the dh4f defect. They are NOT interleaved any more: bean frs5's branch wrote `schemas/` (dublin-core, catalogue, materialization, library-ref) and `folios/`, and they moved in here rather than staying under a SECOND directory declaring this same name. Two instances with one declared name is not a layout question: `instanceRoots` is keyed on the declared name, so the stub and the populated one were one key and the stub won. The original note read: the modules it will own are still interleaved with the harness's under cat-harness/, and declaring a directory that is not there is the dh4f defect — every consumer then scans nothing and reports a clean run over it. An instance that declares only what it has is honest; one that declares its target layout is a lie a gate cannot catch. scripts/repo-partition.ts is the machine-readable statement of what will move here.",
   "name": "folio-assistant-core",
+  "version": "0.1.0",
   "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph kind itself.",
   "assets": [
     {
@@ -21,10 +22,10 @@
   "_stickies_comment": "ONE card, because the owner's ruling is one card per harness: \"not all stickies should be cat harness they should be outputs (as if) each init harness ran ... each own intiaization sticky note to show sucess\". This layer takes the knowledge-graph overview, which was cat-harness's third card — content is this layer's subject, so the card that explains the sub-graphs belongs to it rather than to the platform that operates on them.",
   "stickies": [
     {
-      "_comment": "THEME: `library`, its own, per \"each harness hould have its own unique theme (by convention)\". The librarian reads: this layer is about what content IS and how it is organised. It is not cat-harness's hoodie and not bootstrap's cowboy. SCOPE is stated in the body rather than left to the reader, per \"also some guidance what is its scope\".",
+      "_comment": "THEME `grumpy-cat` since 2026-09-24, the plain grumpy cat in the sage hoodie, handed down from cat-harness when that harness took the sled art — the owner: \"use this for the cat-harness theme, the current plain grump cat them it is using should be for folio-assisnt-core\". It was `library` before that; the librarian theme stays in the registry for any note an author chooses it for. SCOPE is stated in the body rather than left to the reader, per \"also some guidance what is its scope\".",
       "id": "folio-assist-core",
       "order": 20,
-      "theme": "library",
+      "theme": "grumpy-cat",
       "summary": "What a folio is",
       "body": "The knowledge graph is four sub-graphs, and an instance declares which of them it holds.\n\n**Content** is what somebody authors and a reader reads — this layer's subject. **Skills** are the instructions an agent follows to do the work. **Processes** are the BPMN diagrams that say who does what, in which order, and where the gates are — they are executable, not illustrations. **Tools** are what an agent can call.\n\nGetting anything in is **acquisition**: unstructured and semi-structured sources arrive through `uploads/` or through the conversation, and are ingested into `library/`. It is a step rather than a graph kind of its own — there is no fifth directory to look for.\n\n**Scope:** the content model — what a folio IS. Not the skills and tools that operate on it, and not any particular folio's chapters.",
       "links": [
@@ -81,9 +82,7 @@
         "cat-harness"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md",
-        "skill": "schema-management"
+        "visualiser": "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html"
       }
     },
     {
@@ -96,6 +95,18 @@
       ]
     },
     {
+      "id": "glossary",
+      "path": "glossary/",
+      "dependents": "reproduce",
+      "description": "Core's glossary (owner, 2026-09-23: \"put glossary into folio-assistant-core\", \"part of general pracice w/ glossary/ page\"): folio-glossary/v1 documents, each a SKOS concept scheme of local terms linked to external SKOS concepts by exactMatch/closeMatch, plus external concepts listed as members without being copied. A whole external scheme is referenced through remoteGraphs with graphKinds [\"glossary\"]. `dependents: reproduce` so every folio built on core gets its own glossary/, which is what makes a glossary general practice rather than a harness feature. Rendered on the glossary/ page with the swimlane ledger (cat-harness's `swimlane-glossary`) as one more source; checked by `check:glossary`.",
+      "graphKinds": [
+        "glossary"
+      ],
+      "coverage": {
+        "visualiser": "cat-harness/docs/glossary/index.md"
+      }
+    },
+    {
       "id": "voices",
       "path": "skills/voices/",
       "dependents": "reproduce",
@@ -104,10 +115,63 @@
         "voices"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/voices/folio-assistant-core/index.html",
-        "docs": "cat-harness/docs/subgraph-viewers.md",
-        "skill": "voice-authoring-guidance"
+        "visualiser": "cat-harness/docs/cat-harness/voices/folio-assistant-core/index.html"
       }
+    },
+    {
+      "id": "core-tools",
+      "path": "tools/",
+      "dependents": "skip",
+      "description": "The content layer's Tool nodes. Declared 2026-09-22 with the first one, `folio-changeset` (bean jwox, epic q4jm), which exposes `schemas/changeset.ts`. Reached by the harness through tool auto-discovery (bean p0za, owner ruling 2026-09-22), never by an import: the harness may not import core, and a Tool node is a declaration loaded by path.",
+      "graphKinds": [
+        "tools"
+      ]
+    },
+    {
+      "id": "core-scripts",
+      "path": "scripts/",
+      "dependents": "skip",
+      "description": "The review-comment Tool and its move helper, with their tests beside them. Core declared its `schemas/`, its `folios/`, its `voices/` and its `tools/` and left `scripts/` undeclared, which is the `ylj7` shape: the directories that hold what is DESCRIBED were declared and the one holding what RUNS was not. Declared where it is: `review-comments.ts` is invoked by path from `folio-staging.yml`, so relocating it is an invocation surface `check:workflow-paths` would have to re-guard for nothing the declaration does not already buy.",
+      "graphKinds": [
+        "code"
+      ]
+    },
+    {
+      "id": "core-library",
+      "path": "library/",
+      "dependents": "skip",
+      "description": "L1 source content this LAYER owns — the publications core's own vocabulary is derived FROM, one `<bib-slug>/` per ingested document. Declared 2026-09-23 on the owner's ruling that Doc-Researcher (arXiv:2510.21603v1) is part of the f-a-c subgraph, and declared rather than borrowed for the reason `methodology-adoption` §4 gives: a method is placed by OWNERSHIP so that extraction is literal, and a paper core's methodology cites from another instance's library would not lift out with it. `ingest-document.ts` refuses to guess a destination when several are declared, which is what surfaced the absence. `dependents: skip` because these are THIS layer's sources; a downstream folio's library is its own and reproducing these would hand it somebody else's corpus.",
+      "graphKinds": [
+        "library"
+      ]
+    },
+    {
+      "id": "core-methodologies",
+      "theme": "analyst",
+      "path": "methodologies/",
+      "dependents": "skip",
+      "description": "The methodologies core adopts from its own corpus. Separate from `cat-harness/methodologies/` for the reason `smart-base-methodologies` is separate from both: a method belongs to the layer whose job it describes, so the directory lifts out with this instance and nothing else moves. Core's job, per this instance's AGENTS.md, is what a folio HOLDS, where it CAME FROM and how much is PRESENT — which is why a document-ingestion method is core's and not the harness's.",
+      "graphKinds": [
+        "methodology"
+      ]
+    },
+    {
+      "id": "core-skills",
+      "path": "skills/",
+      "dependents": "skip",
+      "description": "The skills core owns. `skills/voices/` is declared separately above as the `voices` kind: a voice partitions how prose READS and is a different graph from an instruction body, so the nesting is two kinds in one place rather than one kind declared twice.",
+      "graphKinds": [
+        "skills"
+      ]
+    },
+    {
+      "id": "core-processes",
+      "path": "processes/",
+      "dependents": "skip",
+      "description": "The BPMN core owns -- `deep-document-research`, Doc-Researcher's iterative loop as an executable process. A TOP-LEVEL directory rather than `methodologies/processes/`, which is where it was first put: `check:layout-norms` refused that as a package subdirectory of an already-declared graph, declaring the same directory twice. `smart-base` carries the nested shape and is baselined, but the harness's own diagrams live in a top-level `processes/` and so do these. That satisfies bean `g43o` -- `workflowDirs` resolves from a DECLARED directory -- without the double declaration, which is strictly better than baselining a third instance of a tolerated exception.",
+      "graphKinds": [
+        "processes"
+      ]
     }
   ],
   "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first.",

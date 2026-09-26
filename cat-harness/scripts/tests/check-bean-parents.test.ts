@@ -72,7 +72,7 @@ describe("every open bean belongs to an epic", () => {
     ]));
     expect(r.problems).toHaveLength(1);
     expect(r.problems[0]).toContain("a2");
-    expect(r.problems[0]).toContain("not an epic");
+    expect(r.problems[0]).toContain("not a milestone, epic or feature");
   });
 
   test("a CLOSED bean needs no parent — history is not back-filled", () => {
@@ -140,12 +140,135 @@ describe("every open bean belongs to an epic", () => {
       ["t2", "todo", "task", "t1"],
     ]));
     expect(bad.problems).toHaveLength(1);
-    expect(bad.problems[0]).toContain("not an epic or a milestone");
+    expect(bad.problems[0]).toContain("not a milestone, epic or feature");
   });
 
   test("the real corpus passes", () => {
     const r = checkBeanParents(repoRootFor(join(import.meta.dir, "../..")));
     expect({ orphans: r.problems }).toEqual({ orphans: [] });
     expect(r.open).toBeGreaterThan(50);
+  });
+});
+
+/*
+ * THE RULE IS REACHABLE — `itka`, issue #941.
+ *
+ * `check-bean-parents.ts` carried an epic-under-epic branch and built the set
+ * it ran over by filtering `ROOT_TYPES` out, so no `b` in the loop was ever an
+ * epic and the branch could not be taken. The summary printed it as verified.
+ *
+ * THE FIRST TEST HERE IS THE ONE THAT MATTERS, and it is written to fail if
+ * the exclusion is ever widened back: it asserts a FINDING rather than the
+ * absence of one, so it cannot pass vacuously the way the rule itself did.
+ */
+describe("an epic's parent is a milestone, not another epic", () => {
+  test("catches an epic parented to an epic — the rule the filter made unreachable", () => {
+    const r = checkBeanParents(
+      store([
+        ["ms1", "in-progress", "milestone", ""],
+        ["ep1", "in-progress", "epic", "ms1"],
+        ["ep2", "in-progress", "epic", "ep1"],
+      ]),
+    );
+    expect(r.problems).toHaveLength(1);
+    expect(r.problems[0]).toContain("ep2");
+    // The REQUIREMENT, not the old negation. This read "not another epic"
+    // until the rule was stated positively (owner's ruling, 2026-09-22); an
+    // assertion on one forbidden case is exactly what let `epic -> feature`
+    // through when `PARENT_TYPES` widened.
+    expect(r.problems[0]).toContain("is a `milestone`");
+  });
+
+  test("an epic under a milestone is fine", () => {
+    const r = checkBeanParents(
+      store([
+        ["ms1", "in-progress", "milestone", ""],
+        ["ep1", "in-progress", "epic", "ms1"],
+      ]),
+    );
+    expect(r.problems).toEqual([]);
+  });
+
+  /* THE EXCLUSION STILL DOES ITS JOB, which is the half a careless fix breaks:
+   * deleting it outright would demand a parent of every root. A root is not
+   * REQUIRED to carry one — it is only judged on the one it has. */
+  test("a root with no parent is still excused", () => {
+    const r = checkBeanParents(
+      store([
+        ["ms1", "in-progress", "milestone", ""],
+        ["ep1", "in-progress", "epic", ""],
+      ]),
+    );
+    expect(r.problems).toEqual([]);
+  });
+
+  /* `open` counts what sits BELOW the roots, and kept meaning that when the
+   * loop widened to include them. A count that silently changed definition
+   * would make every historical reading of this report wrong. */
+  test("the open count still excludes roots", () => {
+    const r = checkBeanParents(
+      store([
+        ["ms1", "in-progress", "milestone", ""],
+        ["ep1", "in-progress", "epic", "ms1"],
+        ["t1", "todo", "task", "ep1"],
+      ]),
+    );
+    expect(r.open).toBe(1);
+  });
+});
+
+/*
+ * `feature` IS A TIER — the owner's ruling, 2026-09-22 (`itka` finding 2,
+ * issue #941). `beans prime` states `milestone -> epic -> feature ->
+ * task/bug`; `PARENT_TYPES` omitted `feature` while this file's own header
+ * quoted that sentence, so the check cited the rule and contradicted it.
+ */
+describe("a feature may hold tasks, and still may not hold an epic", () => {
+  test("a task under a feature is accepted", () => {
+    const r = checkBeanParents(
+      store([
+        ["ms1", "in-progress", "milestone", ""],
+        ["ep1", "in-progress", "epic", "ms1"],
+        ["ft1", "in-progress", "feature", "ep1"],
+        ["t1", "todo", "task", "ft1"],
+      ]),
+    );
+    expect(r.problems).toEqual([]);
+  });
+
+  /* THE HOLE THE RULING OPENS, closed in the same change and pinned here.
+   *
+   * Widening `PARENT_TYPES` makes `epic -> feature` pass the type check, and
+   * the epic rule USED to read `p.type === "epic"` — testing one wrong parent
+   * out of the set rather than requiring the right one. That combination
+   * inverts the hierarchy: a goal's child hanging off one of its own
+   * grandchildren. Stated positively, it cannot be holed by a later addition.
+   */
+  test("an epic under a feature is still refused", () => {
+    const r = checkBeanParents(
+      store([
+        ["ms1", "in-progress", "milestone", ""],
+        ["ep1", "in-progress", "epic", "ms1"],
+        ["ft1", "in-progress", "feature", "ep1"],
+        ["ep2", "in-progress", "epic", "ft1"],
+      ]),
+    );
+    expect(r.problems).toHaveLength(1);
+    expect(r.problems[0]).toContain("ep2");
+    expect(r.problems[0]).toContain("is a `milestone`");
+  });
+
+  test("the message names the offending parent's type rather than guessing an article", () => {
+    // "is a epic" is what an article in a template gets you. The message
+    // reports the type in backticks so there is no article to get wrong.
+    const r = checkBeanParents(
+      store([
+        ["ms1", "in-progress", "milestone", ""],
+        ["ep1", "in-progress", "epic", "ms1"],
+        ["ep2", "in-progress", "epic", "ep1"],
+      ]),
+    );
+    expect(r.problems[0]).toContain("has type `epic`");
+    expect(r.problems[0]).not.toContain("is a epic");
   });
 });

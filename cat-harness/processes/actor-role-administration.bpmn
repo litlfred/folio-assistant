@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+<bpmn:definitions xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+ xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
                   id="Definitions_ActorRoleAdministration"
-                  targetNamespace="https://folio-assistant.dev/workflows"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="0.1.0">
 
   <!-- ═══════════════════════════════════════════════════════════════════
@@ -57,18 +58,18 @@ Retirement, never deletion. An actor id is referenced from commits, sidecars and
       <!-- STRICT, and declared (bean `folio-assistant-30hn`). The step under
            time pressure is the audit: the edit looks done when the file
            parses, and what it broke is a join three diagrams away. -->
-      <folio:policy enforcement="strict" />
+      <cat-harness.processes:policy enforcement="strict" />
       <!-- Capture ON. A permission grant is a STANDING decision — it keeps
            applying long after the session that made it — so who changed the
            closure, and when, is exactly the audit question. -->
-      <folio:log capture="on" />
+      <cat-harness.processes:log capture="on" />
     </bpmn:extensionElements>
 
     <bpmn:laneSet id="LaneSet_ActorRoleAdministration">
       <bpmn:lane id="Lane_Administrator" name="Administrator">
         <bpmn:documentation>All four administration verbs — add, assign, grant, retire — converge at Gateway_Changed onto the same CallActivity_CodeChangeReview, so no kind of substrate edit gets a lighter review path than another; and Gateway_AuditClean's 'no' branch (A13) loops back to this lane rather than ending the process, because whether a `major` finding holds the change is this lane's policy call, not something Task_RunKgAudit decides for it.</bpmn:documentation>
         <bpmn:extensionElements>
-          <folio:role ref="administrator" />
+          <bootstrap.processes:role ref="administrator" />
         </bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_AdminRequest</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_WhichChange</bpmn:flowNodeRef>
@@ -87,7 +88,7 @@ Retirement, never deletion. An actor id is referenced from commits, sidecars and
              nothing — `kg:audit` reports, and whether a `major` finding
              holds the change is the administrator's call one lane up. -->
         <bpmn:extensionElements>
-          <folio:role ref="build-pipeline" />
+          <bootstrap.processes:role ref="build-pipeline" />
         </bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_RunKgAudit</bpmn:flowNodeRef>
       </bpmn:lane>
@@ -109,7 +110,7 @@ Retirement, never deletion. An actor id is referenced from commits, sidecars and
     <bpmn:userTask id="Task_AddActor" name="Add an actor, and declare its kind">
       <bpmn:documentation>Human, agentic or mechanical. A userTask because the agentic/mechanical line is JUDGEMENT — role-model.md says so — and reading it wrong disqualifies the actor from every judgement task it exists to perform, silently.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="role-model" />
+        <bootstrap.processes:skill ref="role-model" />
       </bpmn:extensionElements>
       <bpmn:incoming>A02</bpmn:incoming>
       <bpmn:outgoing>A06</bpmn:outgoing>
@@ -118,7 +119,7 @@ Retirement, never deletion. An actor id is referenced from commits, sidecars and
     <bpmn:userTask id="Task_AssignRoles" name="Open or close a role to an actor">
       <bpmn:documentation>The join every other diagram depends on. An empty `roles` is a DETERMINED empty — it says the actor takes on none — and is not the same as an absent one, which asserts nothing.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="role-model" />
+        <bootstrap.processes:skill ref="role-model" />
       </bpmn:extensionElements>
       <bpmn:incoming>A03</bpmn:incoming>
       <bpmn:outgoing>A07</bpmn:outgoing>
@@ -127,7 +128,7 @@ Retirement, never deletion. An actor id is referenced from commits, sidecars and
     <bpmn:userTask id="Task_GrantOrRevoke" name="Grant or revoke a permission">
       <bpmn:documentation>A permission travels with the PARTICIPANT and cross-cuts every lane, so unlike a role it cannot be scoped by the diagram it is used in. Granting one is a standing decision, which is why this lane is person-only and why the log capture on this process is on.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="role-model" />
+        <bootstrap.processes:skill ref="role-model" />
       </bpmn:extensionElements>
       <bpmn:incoming>A04</bpmn:incoming>
       <bpmn:outgoing>A08</bpmn:outgoing>
@@ -136,8 +137,8 @@ Retirement, never deletion. An actor id is referenced from commits, sidecars and
     <bpmn:userTask id="Task_RetireActor" name="Retire an actor — never delete one">
       <bpmn:documentation>An actor id is referenced from roles, diagrams, beans and commits, so removing the file leaves every one of those unable to tell retirement from accident. Same rule, and the same reason, as a scrapped bean.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="deletion-requires-confirmation" />
-        <folio:skill ref="role-model" />
+        <bootstrap.processes:skill ref="deletion-requires-confirmation" />
+        <bootstrap.processes:skill ref="role-model" />
       </bpmn:extensionElements>
       <bpmn:incoming>A05</bpmn:incoming>
       <bpmn:outgoing>A09</bpmn:outgoing>
@@ -154,8 +155,8 @@ Retirement, never deletion. An actor id is referenced from commits, sidecars and
     <bpmn:callActivity id="CallActivity_CodeChangeReview" name="Branch, gates, PR and review&#10;[code-change-review]" calledElement="Process_CodeChangeReview">
       <bpmn:documentation>Called rather than restated. The mechanics of getting an edit reviewed and merged are not specific to the role graph, and a second description of them is a second thing free to disagree with the first.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="prepare-merge" />
-        <folio:skill ref="continual-progress" />
+        <bootstrap.processes:skill ref="prepare-merge" />
+        <bootstrap.processes:skill ref="continual-progress" />
       </bpmn:extensionElements>
       <bpmn:incoming>A10</bpmn:incoming>
       <bpmn:outgoing>A11</bpmn:outgoing>
@@ -164,7 +165,7 @@ Retirement, never deletion. An actor id is referenced from commits, sidecars and
     <bpmn:serviceTask id="Task_RunKgAudit" name="Audit the graph&#10;[kg:audit]">
       <bpmn:documentation>AFTER the change, not before. Every criterion here is a join — role to lane, actor to role, activity to skill — so what an administrative edit breaks is not in the file it edited. The sidecars under `test/results/kg-qa/` are committed for the reason a printed verdict is not: without them, "unbound since it was drawn" and "broken by this change" are indistinguishable.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="role-model" />
+        <bootstrap.processes:skill ref="role-model" />
       </bpmn:extensionElements>
       <bpmn:incoming>A11</bpmn:incoming>
       <bpmn:outgoing>A12</bpmn:outgoing>
@@ -213,7 +214,7 @@ Retirement, never deletion. An actor id is referenced from commits, sidecars and
         <bpmndi:BPMNLabel><dc:Bounds x="212" y="304" width="112" height="27" /></bpmndi:BPMNLabel>
         <dc:Bounds x="250" y="260" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Gateway_WhichChange" bpmnElement="Gateway_WhichChange">
+      <bpmndi:BPMNShape id="Shape_Gateway_WhichChange" bpmnElement="Gateway_WhichChange" isMarkerVisible="true">
         <bpmndi:BPMNLabel><dc:Bounds x="330" y="212" width="130" height="27" /></bpmndi:BPMNLabel>
         <dc:Bounds x="355" y="253" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -229,7 +230,7 @@ Retirement, never deletion. An actor id is referenced from commits, sidecars and
       <bpmndi:BPMNShape id="Shape_Task_RetireActor" bpmnElement="Task_RetireActor">
         <dc:Bounds x="480" y="380" width="150" height="70" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Gateway_Changed" bpmnElement="Gateway_Changed">
+      <bpmndi:BPMNShape id="Shape_Gateway_Changed" bpmnElement="Gateway_Changed" isMarkerVisible="true">
         <bpmndi:BPMNLabel><dc:Bounds x="670" y="212" width="110" height="27" /></bpmndi:BPMNLabel>
         <dc:Bounds x="700" y="253" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -239,7 +240,7 @@ Retirement, never deletion. An actor id is referenced from commits, sidecars and
       <bpmndi:BPMNShape id="Shape_Task_RunKgAudit" bpmnElement="Task_RunKgAudit">
         <dc:Bounds x="830" y="520" width="160" height="70" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Gateway_AuditClean" bpmnElement="Gateway_AuditClean">
+      <bpmndi:BPMNShape id="Shape_Gateway_AuditClean" bpmnElement="Gateway_AuditClean" isMarkerVisible="true">
         <bpmndi:BPMNLabel><dc:Bounds x="1085" y="212" width="90" height="27" /></bpmndi:BPMNLabel>
         <dc:Bounds x="1105" y="253" width="50" height="50" />
       </bpmndi:BPMNShape>

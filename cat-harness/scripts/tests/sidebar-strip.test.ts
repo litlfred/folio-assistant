@@ -17,9 +17,23 @@
  * defending the wrong design. Three of these assertions passed every
  * falsification and still had to go.
  *
- * The rendered result is NOT checked and cannot be: `remote_theme` resolves on
- * the runner, so the theme's compiled selectors are not in this checkout, and
- * the published site is refused at this environment's proxy.
+ * The rendered result is not checked HERE, but it is no longer true that it
+ * cannot be. `remote_theme` resolves on the runner, so the theme's compiled
+ * selectors are not in this checkout, and this environment's proxy refuses the
+ * published site over HTTP — but the STAGING PREVIEW IS COMMITTED TO
+ * `gh-pages`, and git reaches it:
+ *
+ *     git fetch origin gh-pages
+ *     git archive FETCH_HEAD:STAGING/<slug> | tar -x -C <dir>/<baseurl>/STAGING/<slug>
+ *
+ * Served at THAT path -- the pages address their assets under the staging
+ * baseurl, and mounting them anywhere else 404s every stylesheet while still
+ * rendering a page that a careless check calls a pass -- Playwright then drives
+ * the real CI build, theme and all. Demonstrated 2026-09-23 on bean `vfr8`:
+ * 10 stylesheets, 0 failed requests, 4 of 5 figures genuinely auto-expanded.
+ *
+ * These assertions stay a text check anyway, because a stylesheet invariant
+ * wants to fail in the fast gate set rather than behind a 90 MB extract.
  */
 import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -29,8 +43,15 @@ const REPO = resolve(import.meta.dir, "..", "..", "..");
 const read = (p: string) => readFileSync(join(REPO, p), "utf-8");
 
 const css = read("cat-harness/docs/assets/css/docs-ui.css");
-/** Inside `.side-bar` — where all three controls now live. */
-const inside = read("cat-harness/docs/_includes/nav_footer_custom.html");
+/**
+ * Inside `.side-bar` — where all three controls now live.
+ *
+ * The GENERATED include, not `nav_footer_custom.html`, since `sjic`: that
+ * template is now a single `{% include %}` and composes no markup, so reading
+ * it here would assert over a file with no controls in it and pass by being
+ * blind. The markup moved; the question this file asks did not.
+ */
+const inside = read("cat-harness/docs/_includes/generated/navbar-footer.html");
 /** Inside `.main` — which should carry none of them any more. */
 const outside = read("cat-harness/docs/_includes/footer_custom.html");
 
@@ -77,8 +98,61 @@ describe("at rest it is a strip, not an absence", () => {
     expect(ruleWith("width: var(--fa-nav-collapsed)")).toContain("align-items: flex-start");
   });
 
-  it("scrolls its CONTENTS, because the bar is fixed to the glass", () => {
-    expect(ruleWith("width: var(--fa-nav-collapsed)")).toContain("overflow-y: auto");
+  it("does NOT scroll as one box — the MIDDLE region does", () => {
+    // REPLACES an assertion that required `overflow-y: auto` on `.side-bar`
+    // itself. That was correct for the design it defended and is the defect
+    // now: one scroll box means the harness tabs and home scroll off the
+    // bottom with everything else, against the owner's *"KG libraries is a
+    // scrollable stacks between fixed top an bottom parts"*. This file's own
+    // header is about exactly this — a rigorous test defending the wrong
+    // design.
+    //
+    // MEASURED in Chromium at 1280x900 before the change: `.side-bar`
+    // scrollHeight 1200 against clientHeight 900, with `.site-nav` squeezed
+    // to 64px holding 944px of navigation.
+    expect(ruleWith("width: var(--fa-nav-collapsed)")).toContain("overflow: hidden");
+    expect(ruleWith("width: var(--fa-nav-collapsed)")).not.toContain("overflow-y: auto");
+  });
+
+  it("gives the middle the scroll, a FLOOR, and room to shrink", () => {
+    const nav = ruleWith("min-height: 8rem");
+    expect(nav).toContain("flex: 1 1 auto");
+    expect(nav).toContain("overflow-y: auto");
+  });
+
+  it("every other child is fixed, so neither edge region can scroll away", () => {
+    expect(ruleWith("flex: 0 0 auto")).toContain(".side-bar > *");
+  });
+
+  it("the two capped regions YIELD to that floor", () => {
+    // `0 1 auto`, not `0 0 auto`: each scrolls inside its own cap, so giving
+    // space back costs no reachability — while refusing to took the middle to
+    // 93px in a 900px column, measured with the document index open.
+    //
+    // Against the WHOLE stylesheet rather than `block`: the fixed bottom and
+    // the document index are their own sections, outside the strip slice this
+    // file otherwise reads. Comments stripped for the reason `block` strips
+    // them — a stylesheet that documents the declaration it avoids fails any
+    // test that greps for the declaration.
+    const whole = css.replace(/\/\*[\s\S]*?\*\//g, "");
+    const ruleIn = (needle: string): string => {
+      const at = whole.indexOf(needle);
+      expect({ needle, found: at > -1 }).toEqual({ needle, found: true });
+      return whole.slice(whole.slice(0, at).lastIndexOf("}") + 1, whole.indexOf("}", at) + 1);
+    };
+    for (const cap of ["max-height: 50%", "max-height: 25%"]) {
+      expect(ruleIn(cap)).toContain("flex: 0 1 auto");
+    }
+  });
+
+  it("the [x] anchors to the bar, not to a scroll that no longer exists", () => {
+    // `sticky; top: 0` lifted it to the top of `.side-bar`'s scroll, which
+    // worked only while `.side-bar` WAS the scroll container. It is painted
+    // from `.site-footer`, the last child, so a sticky one now sits at the
+    // BOTTOM of the navbar.
+    const close = ruleWith("width: 1.75rem");
+    expect(close).toContain("position: absolute");
+    expect(close).not.toContain("position: sticky");
   });
 
   it("is scoped above the theme's breakpoint, never applied to the phone", () => {
@@ -120,13 +194,22 @@ describe("three ways in, one way back", () => {
   });
 
   it("hides the ☰ once pinned — two controls for one state is one too many", () => {
-    expect(block).toContain(".side-bar:has(.fa-nav-open:checked) .fa-nav-toggle { display: none; }");
+    // BOTH vocabularies. `sjic` moved the sidebar's markup to `lib/navbar.ts`,
+    // which calls this control `.fa-nav-head`; the hand-written Liquid called
+    // it `.fa-nav-toggle`. One rule, two selectors — asserting only the old
+    // name would have passed while the renderer's control stayed visible.
+    expect(block).toContain(".side-bar:has(.fa-nav-open:checked) .fa-nav-toggle");
+    expect(block).toContain(".side-bar:has(.fa-nav-open:checked) .fa-nav-head");
+    expect(block).toContain("display: none;");
   });
 });
 
 describe("the controls live inside the sidebar now", () => {
   it("all three are in the sidebar's own include", () => {
-    for (const cls of ["fa-nav-open", "fa-nav-close", "fa-nav-toggle"]) {
+    // `fa-nav-head` is what the renderer calls the ☰; `fa-nav-toggle` was the
+    // hand-written name for the same control. The QUESTION — are all three
+    // controls painted from inside the sidebar — is unchanged.
+    for (const cls of ["fa-nav-open", "fa-nav-close", "fa-nav-head"]) {
       expect({ cls, present: inside.includes(cls) }).toEqual({ cls, present: true });
     }
   });
@@ -141,17 +224,47 @@ describe("the controls live inside the sidebar now", () => {
   it("both labels drive the same checkbox", () => {
     const id = /<input[^>]*class="fa-nav-open"[^>]*id="([^"]+)"/.exec(inside)?.[1];
     expect(id).toBeDefined();
-    expect([...inside.matchAll(new RegExp(`for="${id}"`, "g"))]).toHaveLength(2);
+    // PER RENDERED VARIANT. The generated include carries the canonical and
+    // staging renderings behind one Liquid conditional, so the file holds four
+    // and a PAGE receives two — measured on a real build: one `#fa-nav-open`.
+    const variants = inside.split("{%- else -%}");
+    expect(variants).toHaveLength(2);
+    for (const v of variants) {
+      expect([...v.matchAll(new RegExp(`for="${id}"`, "g"))]).toHaveLength(2);
+    }
   });
 
   it("the checkbox is focusable, not `display: none`", () => {
-    expect(ruleWith("left: -9999px")).not.toContain("display: none");
+    expect(ruleWith("clip-path: inset(50%)")).not.toContain("display: none");
+  });
+
+  it("and it is clipped in place, never parked off an edge (bean `2r2n`)", () => {
+    // `left: -9999px` is on the SCROLLABLE side of a right-to-left page: it
+    // made the Arabic onboarding guide 10,389px wide at a 390px viewport.
+    expect(block).not.toMatch(/left:\s*-9{3,}px/);
   });
 
   it("both controls have an accessible name — this is navigation", () => {
-    for (const cls of ["fa-nav-close", "fa-nav-toggle"]) {
+    for (const cls of ["fa-nav-close", "fa-nav-head"]) {
       const label = new RegExp(`<label[^>]*class="${cls}"[^>]*>([\\s\\S]*?)</label>`).exec(inside)?.[1] ?? "";
-      const named = label.includes("fa-sr-only") || label.includes("fa-nav-text");
+      // THE REQUIREMENT IS A NAME, not a particular class.
+      //
+      // `fa-sr-only` was the template's visually-hidden class and `fa-nav-sr`
+      // is the renderer's. But the renderer names its ☰ a third way, and the
+      // better one: `fa-nav-name` is REAL TEXT — the instance's name, beside
+      // the glyph, visible whenever the navbar is open. A visually-hidden span
+      // is what you reach for when there is no visible text to use; there is.
+      //
+      // Listing the mechanism rather than the property is how this test nearly
+      // taught the wrong lesson: it failed against a control that was named,
+      // and the first fix attempt was to hide that name with `display: none`
+      // — which would have removed it from the accessibility tree and left the
+      // control genuinely nameless, passing a test about naming.
+      const named =
+        label.includes("fa-sr-only") ||
+        label.includes("fa-nav-sr") ||
+        label.includes("fa-nav-text") ||
+        label.includes("fa-nav-name");
       expect({ cls, named }).toEqual({ cls, named: true });
     }
   });
@@ -205,5 +318,88 @@ describe("figures keep a white plate, with and without JavaScript", () => {
     // visible, not where the rule changes. A `prefers-color-scheme` guard here
     // would also miss this site, which sets its scheme explicitly.
     expect(figures).not.toContain("prefers-color-scheme");
+  });
+});
+
+/**
+ * The sidebar can always paint above `.main` — bean `vfr8`.
+ *
+ * The open nav OVERLAYS the page rather than pushing it: `.side-bar + .main`
+ * keeps `margin-left: var(--fa-nav-collapsed)` at every width, so the opened
+ * 16.5rem column sits on top of content that is still there. That only reads
+ * as a nav if the sidebar paints above `.main` — and the theme is against it,
+ * setting `.side-bar { z-index: 0 }` while `.main` is `position: relative`
+ * with `z-index: auto` and later in tree order, so `.main` wins on tie.
+ *
+ * `.side-bar:hover` answers that with `z-index: 100` and says so in a comment.
+ * What broke was a SECOND rule, added for an unrelated reason —
+ * `:root.fa-has-fullwidth .side-bar { z-index: auto }`, to let a panel escape
+ * over a full-bleed figure. At (0,3,0) against the hover rule's (0,2,0) it won
+ * the cascade in EVERY state, so on any page that auto-expands a figure the
+ * nav opened behind the page. Measured on `/document-ingestion.html`, which
+ * expands 4 of its 5 figures: `elementFromPoint` inside the opened column
+ * returned page content, not the nav.
+ *
+ * ## Why this is a text check and not a browser one
+ *
+ * The defect needs the THEME's stacking context to appear, and
+ * `remote_theme` resolves on the runner — the compiled selectors are not in
+ * this checkout, and every e2e spec here builds a fixture rather than a Jekyll
+ * site. The rendered result CAN be reached, by the gh-pages route this file's
+ * header now describes, and the fix was verified that way -- but a 90 MB
+ * extract and a browser do not belong in the fast gate set, and they check a
+ * PARTICULAR BUILD rather than the rule. What belongs here is the invariant
+ * the defect violated, over the stylesheet itself.
+ *
+ * ## What it does NOT claim
+ *
+ * Not that 100 is the right number, and not that the sidebar wins against
+ * every possible z-index in `.main` — both are rendering questions this check
+ * cannot reach. It claims one thing: no rule may leave `.side-bar` unable to
+ * rise above the page, which is what `auto` and any smaller value do.
+ */
+describe("no rule may stop the sidebar rising above `.main` (bean `vfr8`)", () => {
+  const css = read("cat-harness/docs/assets/css/docs-ui.css");
+
+  /** Declarations whose SUBJECT is `.side-bar`, not a descendant of it. */
+  const sidebarZRules = (): { selector: string; value: string }[] => {
+    const bare = css.replace(/\/\*[\s\S]*?\*\//g, "");
+    const out: { selector: string; value: string }[] = [];
+    for (const m of bare.matchAll(/([^{}]*)\{([^{}]*)\}/g)) {
+      const body = m[2]!;
+      const z = /(?<![\w-])z-index\s*:\s*([^;!}]+)/.exec(body);
+      if (!z) continue;
+      for (const sel of m[1]!.split(",")) {
+        const s = sel.trim();
+        if (!s) continue;
+        // The LAST compound decides the subject: `.side-bar .fa-nav-close`
+        // styles a descendant and is none of this check's business.
+        const last = s.split(/\s+|>(?![^(]*\))/).filter(Boolean).pop() ?? "";
+        if (/\.side-bar(?![\w-])/.test(last)) out.push({ selector: s, value: z[1]!.trim() });
+      }
+    }
+    return out;
+  };
+
+  it("every `z-index` on the sidebar itself is a number at or above the open-nav value", () => {
+    const rules = sidebarZRules();
+    // A sweep that matched nothing would pass silently — the `dh4f` shape in a
+    // test. Two rules are known to exist: the hover one and the full-width one.
+    expect(rules.length).toBeGreaterThanOrEqual(2);
+
+    const open = rules.find((r) => /:hover/.test(r.selector));
+    expect(open).toBeDefined();
+    const floor = Number(open!.value);
+    expect(Number.isFinite(floor)).toBe(true);
+
+    const offenders = rules.filter((r) => !Number.isFinite(Number(r.value)) || Number(r.value) < floor);
+    expect(offenders).toEqual([]);
+  });
+
+  it("`auto` in particular is refused — it is what the defect actually was", () => {
+    // Stated separately because `Number("auto")` is NaN and would be caught
+    // above by accident. This says the thing on purpose, so a future reader
+    // sees the exact value that broke it rather than inferring it.
+    expect(sidebarZRules().filter((r) => r.value === "auto")).toEqual([]);
   });
 });

@@ -28,6 +28,15 @@
 export interface FrontMatter {
   name?: string;
   description?: string;
+  /**
+   * The skill's input contract: an instance-relative path to a JSON Schema
+   * (`schemas/skills/<skill>/input.schema.json`) or an external `https://`
+   * IRI. The skill points at its contract (#1168, B3b) — nothing infers it
+   * from a directory name.
+   */
+  input?: string;
+  /** The skill's output contract, as {@link FrontMatter.input}. */
+  output?: string;
 }
 
 /**
@@ -48,6 +57,10 @@ export function frontMatter(text: string): FrontMatter {
   // `description: >` folds onto following indented lines.
   const desc = block.match(/^description:\s*(?:>[-+]?\s*\n((?:[ \t]+.*\n?)+)|(.+))$/m);
   if (desc) out.description = (desc[1] ?? desc[2] ?? "").split("\n").map((l) => l.trim()).join(" ").trim();
+  for (const key of ["input", "output"] as const) {
+    const m = block.match(new RegExp(`^${key}:\\s*(.+)$`, "m"));
+    if (m) out[key] = m[1].trim().replace(/^["']|["']$/g, "");
+  }
   return out;
 }
 

@@ -14,6 +14,8 @@ import { execFileSync } from "node:child_process";
 import { join, resolve } from "node:path";
 
 import { buildCatBootstrapDocument } from "../gen-bootstrap-graph.js";
+import { buildExport, publishedDocument } from "../kg-export.js";
+import { BootstrapGraphDocumentSchema } from "../../schemas/bootstrap-graph.js";
 import { isSkillMd } from "../known-skills.js";
 import {
   repoRootFor,
@@ -237,7 +239,7 @@ describe("what it contains, and what it admits it did not look at", () => {
     // the same count-vs-property failure as the skills above, and the count
     // was ALSO stating a rule it could not enforce. "One process" was never
     // the constraint; "one place to START" is. A sub-process is a second
-    // diagram and does not compete for being the thing an Initiator begins.
+    // diagram and does not compete for being the thing a Bootstrapping Agent begins.
     const doc = await buildCatBootstrapDocument();
     const counts = doc["counts"] as Record<string, number>;
     expect({
@@ -338,20 +340,18 @@ function processIds(doc: Record<string, unknown>): string[] {
  * clean run over it — the `dh4f` defect, verified by probe to fail here.
  */
 function skillFilesOnDisk(): string[] {
-  // TWO directories, named. `tools/` joined `skills/` with bean `hfkl`: it
-  // holds the skills governing bootstrap's own `.jsonld`/`.json` emission,
-  // which is the obligation bootstrap carries INSTEAD of a visualiser.
+  // ONE directory again, named. `tools/` (earlier `render/`) held the two
+  // skills governing bootstrap's own `.jsonld`/`.json` emission from bean
+  // `hfkl` until bean `n350` moved them into `skills/`: they are skills, the
+  // Tool that performs the emission is cat-harness's `kg-graph-export`, and the
+  // document's shape is `BootstrapGraphDocumentSchema`.
   //
-  // Adding it here is the axis working rather than a maintenance tax — the
-  // disk side names its directories on purpose, so a resolver that silently
-  // stopped seeing one would fail here instead of exporting an empty section.
-  //
-  // It was `render/` until 2026-09-22 and this list is STILL hardcoded on
+  // The list is STILL hardcoded on
   // purpose. Reading the declaration here would collapse the two axes into
   // one and the comparison below would compare the export against itself —
   // which is the whole defect this file exists to catch. The literal going
   // stale and failing loudly IS the mechanism, not a cost of it.
-  return ["skills", "tools"]
+  return ["skills"]
     .flatMap((name) => {
       const dir = join(CAT_BOOTSTRAP, name);
       return readdirSync(dir)
@@ -369,3 +369,37 @@ function diagramsOnDisk(): string[] {
     .map((f) => /<bpmn:process id="([^"]+)"/.exec(readFileSync(join(dir, f), "utf-8"))?.[1] ?? f)
     .sort();
 }
+
+describe("the document has a schema, and both builds satisfy it (bean n350)", () => {
+  // `renderExemption.owes` names this document. Until n350 it had no schema:
+  // its properties lived in the emission skill's prose and the code that read
+  // it cast `doc.problems as string[]`.
+  test("the published document — kg-export, the one publisher — parses", async () => {
+    const doc = publishedDocument(await buildExport({ instanceRoot: CAT_BOOTSTRAP }));
+    const r = BootstrapGraphDocumentSchema.safeParse(doc);
+    expect(r.success ? [] : r.error.issues).toEqual([]);
+  });
+
+  test("the published copy carries provenance; the @graph carries none (hwzu)", async () => {
+    // Owner, 2026-09-23: every published graph carries PROV provenance. The
+    // emission skill's rule is narrowed to the nodes: no node may carry a
+    // build timestamp or commit, so two builds of one tree agree on the graph.
+    const doc = publishedDocument(await buildExport({ instanceRoot: CAT_BOOTSTRAP })) as Record<string, unknown>;
+    expect("generatedAt" in doc).toBe(true);
+    expect("sourceCommit" in doc || "sourceCommitUnavailable" in doc).toBe(true);
+    const graph = JSON.stringify(doc["@graph"]);
+    for (const key of ["generatedAt", "sourceCommit", "sourceCommitSha", "sourceCommitAt"]) {
+      expect(graph.includes(`"${key}"`)).toBe(false);
+    }
+  });
+
+  test("the generator the four properties are tested against parses too", async () => {
+    const r = BootstrapGraphDocumentSchema.safeParse(await buildCatBootstrapDocument());
+    expect(r.success ? [] : r.error.issues).toEqual([]);
+  });
+
+  test("the two emission skills are in bootstrap's skills package", () => {
+    const manifest = JSON.parse(readFileSync(join(CAT_BOOTSTRAP, "skills", "package-manifest.json"), "utf8"));
+    expect(manifest.skills).toEqual(expect.arrayContaining(["bootstrap-graph-emission", "bootstrap-graph-publication"]));
+  });
+});

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-issue-linking\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.415Z\n"
+"POT-Creation-Date: 2026-09-23T20:28:09.018Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -14,67 +14,92 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: methodologies/crdm/processes/crdm-issue-linking.bpmn:15
+#: processes/crdm-issue-linking.bpmn:46
+#. Diagram element documentation
+msgid "A match was found: ask the person whether the requirements go on #NNN, then link the work there. The issue is where stakeholders sign off, so no phase proceeds without one."
+msgstr ""
+
+#: processes/crdm-issue-linking.bpmn:15
 #. Diagram label
 msgid "Agent"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-issue-linking.bpmn:33
+#: processes/crdm-issue-linking.bpmn:37
+#. Diagram element documentation
+msgid "Answered by the scan of open issues: does one already cover this work? `yes` links to it; `no` asks the BA to create or name one. The agent does not create an issue on its own."
+msgstr ""
+
+#: processes/crdm-issue-linking.bpmn:41
 #. Diagram element documentation
 msgid "Ask — never create. Creating an issue without the BA's permission is the thing this step exists to prevent."
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-issue-linking.bpmn:31
+#: processes/crdm-issue-linking.bpmn:39
 #. Diagram label
 msgid "Ask BA to create or link issue"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-issue-linking.bpmn:10
+#: processes/crdm-issue-linking.bpmn:10
 #. Diagram label
 msgid "CRDM — link the work to an issue"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-issue-linking.bpmn:13
+#: processes/crdm-issue-linking.bpmn:13
 #. Diagram element documentation
-msgid "Feature work must be linked to a GitHub issue. Scan before creating, and never create one without the BA's permission — an issue is the stakeholder's record, not the agent's scratchpad."
+msgid "Feature work must be linked to a GitHub issue. First find the related work (beans, issues, open PRs) and ask whether to coordinate; then scan before creating, and never create one without the BA's permission — an issue is the stakeholder's record, not the agent's scratchpad."
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-issue-linking.bpmn:30
+#: processes/crdm-issue-linking.bpmn:36
 #. Diagram label
 msgid "Issue found?"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-issue-linking.bpmn:37
+#: processes/crdm-issue-linking.bpmn:45
 #. Diagram label
 msgid "Link to existing issue"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-issue-linking.bpmn:43
+#: processes/crdm-issue-linking.bpmn:53
 #. Diagram label
 msgid "no"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-issue-linking.bpmn:25
+#: processes/crdm-issue-linking.bpmn:27
 #. Diagram label
 msgid "Phase begins"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-issue-linking.bpmn:40
+#: processes/crdm-issue-linking.bpmn:49
 #. Diagram label
 msgid "Phase complete"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-issue-linking.bpmn:26
+#: processes/crdm-issue-linking.bpmn:28
+#. Diagram label
+msgid "Related work: find, sort, ask"
+msgstr ""
+
+#: processes/crdm-issue-linking.bpmn:31
 #. Diagram label
 msgid "Scan open issues for match"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-issue-linking.bpmn:16
+#: processes/crdm-issue-linking.bpmn:33
+#. Diagram element documentation
+msgid "Search open issues, then recently closed ones, by title and body keywords for one this request belongs to. Requirements may span several issues; note every relevant one."
+msgstr ""
+
+#: processes/crdm-issue-linking.bpmn:16
 #. Diagram element documentation
 msgid "The only CRDM sub-diagram in this slice where the BA has no lane of its own: A_AskCreate is still an Agent-lane activity, so the permission this process exists to enforce is obtained out of band rather than modelled as a cross-lane handoff, unlike crdm-requirements-definition.bpmn and crdm-close.bpmn elsewhere in the same methodology."
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-issue-linking.bpmn:44
+#: processes/crdm-issue-linking.bpmn:29
+#. Diagram element documentation
+msgid "When the requirement is initiated or updated through a human-agent chat, search the beans and the repository's issues and open PRs for relevance, categorize and summarize them, and ask the user whether and how to coordinate. Judgement decides the categories; the user decides the coordination. Owner, 2026-09-23 (issue #1023)."
+msgstr ""
+
+#: processes/crdm-issue-linking.bpmn:54
 #. Diagram label
 msgid "yes"
 msgstr ""

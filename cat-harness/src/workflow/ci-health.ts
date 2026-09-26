@@ -295,6 +295,23 @@ export interface WorkflowHealth {
    */
   noRunsInWindow?: boolean;
   /**
+   * WHY there was no run — supplied by the caller, like {@link scheduled}.
+   *
+   * A `no-runs` row was reported as a bare count under the parenthetical
+   * *"(dispatch-only, or vendored for a folio)"*. Both halves are plausible
+   * and **neither was measured**, so the line could not distinguish 31 files
+   * that cannot fire from 30 that cannot and one that should have. A summary
+   * asserting a cause is the `1xhc` defect at the level of the report rather
+   * than the gate. Bean `kpcl`.
+   *
+   * Reading YAML is not this module's business — the same reason
+   * {@link AssessOptions.hasSchedule} is a callback — so the verdict arrives
+   * computed. Unset means the caller did not say, which is NOT
+   * `"undetermined"`: the first is "nobody asked", the second is "asked and
+   * could not tell".
+   */
+  noRunReason?: NoRunReason;
+  /**
    * This workflow fires on a `schedule:`.
    *
    * Supplied by the caller ({@link AssessOptions.hasSchedule}), because
@@ -414,6 +431,15 @@ export function byWorkflow(runs: RunSummary[]): Map<string, RunSummary[]> {
   return out;
 }
 
+/**
+ * Why a workflow file produced no run, as {@link WorkflowHealth.noRunReason}.
+ *
+ * Only `auto-triggered` is a defect: the workflow can fire on this branch and
+ * did not. `undetermined` is the third state this module applies everywhere —
+ * it is never folded into either of the benign two.
+ */
+export type NoRunReason = "dispatch-only" | "path-filtered" | "auto-triggered" | "undetermined";
+
 export interface AssessOptions {
   now?: Date;
   /**
@@ -492,6 +518,13 @@ export interface AssessOptions {
    * unset rather than guessed, on the same rule as every other predicate here.
    */
   hasSchedule?: (path: string) => boolean | undefined;
+  /**
+   * Why this workflow produced no run. See {@link WorkflowHealth.noRunReason}.
+   *
+   * Consulted only for a file with no runs. Omitting it keeps the previous
+   * output, which counted every such file under one unmeasured parenthetical.
+   */
+  noRunReason?: (path: string) => NoRunReason | undefined;
   /**
    * The outcome of a direct per-workflow request, for files the window missed.
    * See {@link WorkflowHealth.probe}. Omit it and no row claims to have been
@@ -590,6 +623,9 @@ export function assess(runs: RunSummary[], opts: AssessOptions = {}): WorkflowHe
       // Unknown stays unset. A row that cannot say whether it was expected to
       // run says nothing about it, rather than implying "dispatch-only".
       ...(opts.hasSchedule?.(wf.path) === true ? { scheduled: true } : {}),
+      // Unset when the caller supplied no predicate: "nobody asked" is not
+      // "asked and could not tell", and only the second is `undetermined`.
+      ...(opts.noRunReason?.(wf.path) ? { noRunReason: opts.noRunReason(wf.path) } : {}),
       ...(opts.probed?.(wf.path) ? { probe: opts.probed(wf.path) } : {}),
       ...youth(wf.path, opts, now),
     });
@@ -808,15 +844,30 @@ export function render(
 
   const unjudgedOther = health.filter((h) => h.noRunsInWindow && !h.scheduled);
   if (unjudgedOther.length > 0) {
-    // A count rather than a list. Most of these are folio-vendored,
-    // dispatch-only files the platform should never judge, and naming 35 of
-    // them every run is how a reader learns to skip the section. The count is
-    // what makes the ratio visible; `--markdown` readers who want the names
-    // have the file list.
+    /* A count rather than a list, BY CLASS. Most of these are folio-vendored,
+     * dispatch-only files the platform should never judge, and naming 35 of
+     * them every run is how a reader learns to skip the section — so the
+     * benign classes stay counts. What changed is that the classes are
+     * measured rather than asserted in a parenthetical, and the one class that
+     * IS a defect is named: a workflow that can fire here and did not. */
+    const by = (r: NoRunReason) => unjudgedOther.filter((h) => h.noRunReason === r).length;
+    const unsaid = unjudgedOther.filter((h) => h.noRunReason === undefined).length;
+    const parts = [
+      by("dispatch-only") ? `${by("dispatch-only")} cannot fire by themselves` : "",
+      by("path-filtered") ? `${by("path-filtered")} fire only on specific paths` : "",
+      by("undetermined") ? `${by("undetermined")} unreadable` : "",
+      unsaid ? `${unsaid} unclassified` : "",
+    ].filter(Boolean);
     lines.push(
       `- ℹ️ ${unjudgedOther.length} other workflow file(s) produced no run in ` +
-        `the window and are unjudged (dispatch-only, or vendored for a folio).`,
+        `the window and are unjudged` +
+        (parts.length ? `: ${parts.join(", ")}.` : "."),
     );
+    for (const h of unjudgedOther.filter((x) => x.noRunReason === "auto-triggered")) {
+      lines.push(
+        `- ⚠️ **${h.workflow}** — UNJUDGED: it can fire on this branch and produced no run. Not green.`,
+      );
+    }
   }
 
   const ok = health.filter(
@@ -885,7 +936,37 @@ export interface PagesHealth {
   failure: number;
   /** Queued, in flight, skipped, neutral — not yet a verdict of any kind. */
   unsettled: number;
+  /**
+   * The newest Pages run of any kind, settled or not.
+   *
+   * Routinely still in flight — it was in the run that produced bean `thsz` —
+   * which is exactly why it cannot answer "did the last deployment work?".
+   * {@link PagesHealth.newestSettled} is the one that can.
+   */
   latest?: RunSummary;
+  /**
+   * The newest Pages run that reached a CONCLUSION — and the field that lets a
+   * reader tell coalescing from starvation. Bean `thsz`.
+   *
+   * GitHub Pages has **one deployment per repository**, so every push to the
+   * publish ref cancels the build in flight and the survivor publishes
+   * everything on the ref. A high cancellation share is therefore the normal
+   * shape of a busy hour, and the same share means two opposite things:
+   *
+   * | this run | what the share means |
+   * |---|---|
+   * | `success` | coalescing — the site is current, and the cancellations behind it shipped their content in the survivor |
+   * | `cancelled` | **starvation** — nothing is getting through, and the site is as of the last success |
+   *
+   * The section reported 78 cancelled against 21 succeeded on 2026-09-25 and
+   * its own author read it as a ten-hour outage. It was not one: the newest run
+   * before a quiet period had SUCCEEDED, and the gap was nobody pushing. A
+   * number whose first reader takes the alarming meaning is not neutral
+   * reporting — it is `xom7` pointing the other way.
+   */
+  newestSettled?: RunSummary;
+  /** `created_at` of the newest successful deployment, when there is one. */
+  lastSuccessAt?: string;
 }
 
 /** Reduce the Pages runs the caller fetched. Pure; asks nothing. */
@@ -906,6 +987,14 @@ export function pagesHealth(runs: readonly RunSummary[]): PagesHealth {
     else if (NOT_A_VERDICT.has(r.conclusion ?? "")) h.unsettled++;
     else h.failure++;
   }
+  // Newest-first is how the API returns them, and `find` takes the first match
+  // — so this is the newest run that reached a conclusion, not merely any
+  // settled one. A run still in flight is skipped rather than counted as a
+  // verdict, which is the same rule the tallies above follow.
+  h.newestSettled = pages.find((r) => r.status === "completed");
+  h.lastSuccessAt = pages.find(
+    (r) => r.status === "completed" && r.conclusion === "success",
+  )?.created_at;
   return h;
 }
 
@@ -1008,6 +1097,71 @@ export function selfSupersedes(
  * can fail alone; one reason field would make a failure of one silence the
  * other, which is the `xom7` shape at the level of the report itself.
  */
+/**
+ * What is known about a bean this report CITES.
+ *
+ * Bean `xfyk`. This section used to state a cited bean's position outright —
+ * *"which is a different fix and is not done"* about `yzsj` — and that clause
+ * went stale the moment `yzsj` closed on 2026-09-21, sending the next reader
+ * to a finished 200-line bean. The comment a few lines below records fixing
+ * the *pointer* (`6pfo` -> `yzsj`) and names the class: **a reference inside
+ * printed output that resolves to the wrong thing**. The pointer was fixed;
+ * the CLAIM ATTACHED TO IT was left hardcoded, so it drifted instead.
+ *
+ * A bean's status lives in the work plan. A copy of it in a renderer is a
+ * second place for one fact, which is the arrangement `AGENTS.md` refuses for
+ * rules and which fails here for exactly the same reason. So the status is
+ * RESOLVED BY THE CALLER — `check-ci-health.ts`, which has a repository root —
+ * and this renderer stays a pure function of its report.
+ *
+ * Three states, because "could not read the work plan" is not "the bean is
+ * open", and neither is "no such bean".
+ */
+export type CitedBean =
+  /** Read from the store. `status` is the bean's own word, not an interpretation. */
+  | { state: "read"; status: string }
+  /** The id resolves to nothing. Beans are never deleted, so this is a typo or a rename. */
+  | { state: "absent" }
+  /** No readable bean store on this run. NOT rendered as either. */
+  | { state: "unreadable"; why: string };
+
+/** Statuses meaning the work is finished, one way or the other. */
+const SETTLED = new Set(["completed", "scrapped"]);
+
+/**
+ * How a citation reads, given what is known about the bean.
+ *
+ * Exported so a test can drive every branch without building a report, and
+ * because the phrasing IS the contribution: each branch has to be honest
+ * about a different thing.
+ */
+export function citationClause(id: string, bean: CitedBean | undefined): string[] {
+  // Returned as LINES, hand-wrapped like every other block in this renderer.
+  // One long string reads fine in a terminal and wraps raggedly in the
+  // markdown the watchdog commits, which is the surface this is read on.
+  if (bean === undefined || bean.state === "unreadable") {
+    const why = bean?.state === "unreadable" ? ` (${bean.why})` : "";
+    return [
+      `ref (\`${id}\`). This run could not read the work plan${why}, so`,
+      "whether that is still open is unknown here — not assumed either way.",
+    ];
+  }
+  if (bean.state === "absent") {
+    return [
+      `ref (\`${id}\`) — and this store holds no such bean, so the citation is`,
+      "stale. Beans are never deleted here, so it was renamed or mistyped.",
+    ];
+  }
+  if (SETTLED.has(bean.status)) {
+    return [
+      `ref (\`${id}\`, now \`${bean.status}\`). Cancellations continuing past that`,
+      "fix are NEW ground rather than its residue, and worth a fresh",
+      "measurement rather than a reread of a closed bean.",
+    ];
+  }
+  return [`ref (\`${id}\`), which is a different fix and is \`${bean.status}\`.`];
+}
+
 export interface PagesReport {
   /** Absent when {@link PagesReport.unreachable} says why. */
   health?: PagesHealth;
@@ -1026,6 +1180,12 @@ export interface PagesReport {
   commitsUnreachable?: string;
   /** The span the commits covered, for the same reason the CI window exists. */
   window?: Window;
+  /**
+   * Work-plan status of the beans this section names, resolved by the CALLER.
+   * Absent means nobody looked, which {@link citationClause} renders as an
+   * unknown rather than as either answer.
+   */
+  citedBeans?: Record<string, CitedBean>;
 }
 
 /**
@@ -1099,6 +1259,54 @@ export function renderPages(r: PagesReport): string {
       "",
     );
   }
+  // WHAT THE SHARE ABOVE MEANS — bean `thsz`.
+  //
+  // The counts alone are ambiguous by a factor that matters, and the ambiguity
+  // is not the reader's fault. GitHub Pages runs ONE deployment per repository,
+  // so every push to the publish ref cancels the build in flight and the
+  // survivor publishes everything on the ref: during a busy hour most builds
+  // are cancelled BY DESIGN and nothing is wrong. During starvation the same
+  // share means nothing is getting through at all.
+  //
+  // So the section answers it rather than leaving the reader to supply an
+  // interpretation — which it did until this, and the first reader to try
+  // supplied the alarming one and nearly reported an outage that was a quiet
+  // afternoon.
+  //
+  // A floor, not a threshold: "did the newest deployment to settle succeed?"
+  // needs no calibration, exactly as `oisv`'s empty-directory check does not.
+  // Nothing here grades the share, and nothing invents a staleness cutoff.
+  if (h.newestSettled === undefined) {
+    if (h.total > 0) {
+      lines.push(
+        "**No deployment in this window has settled yet**, so the share above is",
+        "not a verdict on anything — there is no newest outcome to read it against.",
+        "",
+      );
+    }
+  } else if (h.newestSettled.conclusion === "success") {
+    lines.push(
+      `**The newest deployment to settle SUCCEEDED** (${h.newestSettled.created_at}),`,
+      "so the published site reflects the publish ref as of that build. The",
+      "cancellations above are superseded builds whose content shipped in the one",
+      "that survived them — coalescing, not failure.",
+      "",
+    );
+  } else {
+    // Cancelled, failed, or any other non-success. Named rather than assumed.
+    const since =
+      h.lastSuccessAt === undefined
+        ? "and **no deployment in this window succeeded at all**"
+        : `and the site is as of ${h.lastSuccessAt}`;
+    lines.push(
+      `**The newest deployment to settle did NOT succeed** ` +
+        `(${h.newestSettled.conclusion ?? "no conclusion"}, ${h.newestSettled.created_at}),`,
+      `${since}. If pushes are still arriving, that is starvation rather than`,
+      "coalescing: nothing is reaching the published site. If the ref has simply",
+      "gone quiet, the next push settles it.",
+      "",
+    );
+  }
   if (r.commitsUnreachable) {
     lines.push(
       `_Could not read the publish branch's commits (${r.commitsUnreachable}), so_`,
@@ -1117,8 +1325,11 @@ export function renderPages(r: PagesReport): string {
     return lines.join("\n");
   }
   // WHOSE contention. `bm6d` fixed one workflow pushing twice; `yzsj` is
-  // several sessions racing for one ref, and is not fixed. A merged count
-  // cannot show whether the first fix held, which is why these are named.
+  // several sessions racing for one ref. A merged count cannot show whether
+  // the first fix held, which is why these are named.
+  //
+  // Neither status is stated here any more — see {@link citationClause}. This
+  // comment said `yzsj` "is not fixed" and was wrong from 2026-09-21.
   //
   // This cited `6pfo` until 2026-09-20, in four places across two files. It
   // does not fit: `6pfo` is "publish staging metadata as a KG graph", and all
@@ -1141,7 +1352,7 @@ export function renderPages(r: PagesReport): string {
   lines.push(
     "",
     "Cancellations NOT listed here are several sessions racing for the publish",
-    "ref (`yzsj`), which is a different fix and is not done.",
+    ...citationClause("yzsj", r.citedBeans?.yzsj),
     "",
   );
   return lines.join("\n");

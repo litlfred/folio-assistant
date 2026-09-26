@@ -86,9 +86,11 @@ describe("the live table", () => {
     // The subject was `src/skills/` until #760 folded it into
     // `skills/folio-core/`. THE TEST'S CLAIM IS UNCHANGED, which is the point:
     // the rule was never about that directory, so it is asserted here on a
-    // live subject instead. `kg-navigation/skills/` is basenamed `skills` and
-    // takes its instance's name, exactly as `src/skills/` did.
-    expect(discoverLocalPackages(ROOT)["kg-navigation"]).toContain("kg-navigation/skills");
+    // live subject instead. `bootstrap/skills/` is basenamed `skills` and
+    // takes its instance's name, exactly as `src/skills/` did. (The subject was
+    // `kg-navigation/skills/` until bean `byql` folded that instance into
+    // cat-harness as an ordinary `skills/kg-navigation/` package.)
+    expect(discoverLocalPackages(ROOT)["bootstrap"]).toContain("bootstrap/skills");
   });
 });
 
@@ -198,8 +200,8 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     // does not reach: it has one directly-held directory per instance, so
     // "named by its instance" and "named by first-wins" agree there.
     //
-    // `cat-harness` really declares four — `src/skills/`, `methodologies/crdm/`
-    // and `methodologies/raci/` — and until bean `1hvo`
+    // `cat-harness` really declares four — `src/skills/`, `skills/crdm/`
+    // and `skills/raci/` — and until bean `1hvo`
     // all four resolved to the name `folio-assistant` with the last winning.
     // Three packages were found and silently dropped: `kg:audit` reported six
     // `manifest-skill-exists` CRITICALs for theming and 27 MAJORs for CRDM
@@ -276,12 +278,35 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     // the skills LIVE rather than from who asked, so the nearest enclosing
     // declaration decides. If this goes red the change is a behaviour break.
     //
-    // The subject was `src/skills/` until #760 removed it. A title naming the
-    // expected STRING goes stale on a move that is not a behaviour change; one
-    // naming the RULE does not — which is why only the subject moved here.
-    // `bootstrap/tools/` is directly-held and not basenamed `skills`, so
-    // it reaches the same answer by rule 2 rather than rule 1: the sole
-    // directly-held directory takes its instance's name.
-    expect(discoverLocalPackages(ROOT)["bootstrap"]).toContain("bootstrap/tools");
+    // The subject was `src/skills/` until #760 removed it, then
+    // `bootstrap/tools/` until bean `n350` (2026-09-23) folded its two skills
+    // into `bootstrap/skills/` and removed the directory. A title naming the expected STRING
+    // goes stale on a move that is not a behaviour change; one naming the RULE
+    // does not — which is why only the subject moves.
+    //
+    // ## Why the subject moved again, and why it is NOT a behaviour break
+    //
+    // `needs` now derives the dependency overlay for edges inside one checkout
+    // (bean `5kn6`), so `bootstrap/skills/` became reachable from here where
+    // only `bootstrap/tools/` was before. That flips which rule applies:
+    // rule 2 (the SOLE directly-held directory takes the instance name) gave
+    // the name to `bootstrap/tools/` while it was alone; rule 1 (a directory
+    // basenamed `skills` IS the instance's own package) takes precedence now
+    // that the real one is in reach.
+    //
+    // The rule this test guards is unchanged and is the one in its title: a
+    // directly-held set is named by ITS instance, not by the caller's root.
+    // `bootstrap/skills/` resolves to `bootstrap` and not to `cat-harness`,
+    // which is the whole claim.
+    const live = discoverLocalPackages(ROOT);
+    expect(live["bootstrap"]).toContain("bootstrap/skills");
+
+    // AND NOTHING WAS DROPPED, which is the half worth asserting: the failure
+    // mode this naming rule exists against is a second directory being found
+    // and then silently losing its key — the `dh4f` shape one layer up.
+    // `bootstrap/tools/` no longer exists (n350), so no key may point at it.
+    expect(Object.values(live).some((p) => p.includes("bootstrap/tools"))).toBe(false);
+    const paths = Object.values(live);
+    expect(paths.length).toBe(new Set(paths).size);
   });
 });

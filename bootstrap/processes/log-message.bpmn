@@ -3,7 +3,7 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
                   id="Definitions_Process_LogMessage"
                   targetNamespace="https://litlfred.github.io/folio-assistant/bootstrap/workflows"
                   exporter="bootstrap" exporterVersion="1">
@@ -15,9 +15,9 @@
 
 It may be called OPTIONALLY from any task in any process — an actor logging what it is doing needs no permission — and a diagram may also REQUIRE it, which it says by drawing the call activity explicitly. The two are the same sub-process; the difference is whether the caller drew it.
 
-It lives in CAT_BOOTSTRAP rather than in the harness on purpose. CatBootstrap may not import the harness, so a logger defined upstream would be unusable by an Initiator — the actor with the most need to say what it is doing and the least machinery to do it with. Defined here, everything downstream inherits it.
+It lives in CAT_BOOTSTRAP rather than in the harness on purpose. CatBootstrap may not import the harness, so a logger defined upstream would be unusable by a Bootstrapping Agent — the actor with the most need to say what it is doing and the least machinery to do it with. Defined here, everything downstream inherits it.
 
-NO folio:bean, and isExecutable is false, for the same reasons as initialize-harness.</bpmn:documentation>
+NO work-plan element, and isExecutable is false, for the same reasons as initialize-harness.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_LogMessage">
       <bpmn:lane id="Lane_Actor" name="Actor">
         <!-- NO ROLE, DECLARED rather than merely absent (bean `ug4r`). The
@@ -29,7 +29,7 @@ NO folio:bean, and isExecutable is false, for the same reasons as initialize-har
              a prose comment in cat-bootstrap's roles.json, so no tool could
              tell it from a lane nobody got round to binding. -->
         <bpmn:documentation>Whichever process called this sub-process, composing the five required fields and nothing more. GW_Complete then refuses an incomplete message rather than logging it anyway, because a partial entry that reads as a whole one is worse than no entry at all.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role variable="true"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role variable="true"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_LogMessage</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Compose</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Complete</bpmn:flowNodeRef>
@@ -38,6 +38,7 @@ NO folio:bean, and isExecutable is false, for the same reasons as initialize-har
       </bpmn:lane>
       <bpmn:lane id="Lane_Logger" name="Logger">
         <bpmn:documentation>Records and decides nothing — the composing and the completeness judgement both happen in the Actor's lane before anything reaches here. In bootstrap the one destination available to it is the discussion the human actor is already in.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="logger"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_Record</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -46,7 +47,7 @@ NO folio:bean, and isExecutable is false, for the same reasons as initialize-har
 
     <bpmn:task id="A_Compose" name="Compose the message">
       <bpmn:documentation>Five required strings — timestamp, actor, process, task, message — and one optional markdown body. The five are required because each answers a question a reader of the log will otherwise have to guess, and a guessed answer in a log is worse than a missing one.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="log-message"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="log-message"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_Complete" name="All five present?"/>
@@ -54,7 +55,7 @@ NO folio:bean, and isExecutable is false, for the same reasons as initialize-har
     <bpmn:task id="A_Record" name="Record it where a
 person can read it">
       <bpmn:documentation>Performed by the Logger, which records and decides nothing. In bootstrap the one available destination is the discussion the human actor is already in.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="log-message"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="log-message"/></bpmn:extensionElements>
     </bpmn:task>
 
     <bpmn:endEvent id="End_Logged" name="Recorded"/>

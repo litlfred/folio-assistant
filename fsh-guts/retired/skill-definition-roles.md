@@ -1,3 +1,22 @@
+---
+$schema: folio-fsh-guts/v1
+title: "`SkillDefinition.roles` — retired"
+kind: retired
+bean: folio-assistant-y1w9
+movedOn: 2026-09-20
+summary: >-
+  The retired `SkillDefinition.roles` field, kept rather than deleted so a
+  reader can tell a considered removal from an accident.
+---
+
+<!-- Front matter added 2026-09-23. NOTHING HERE IS NEW: the bean and the date
+     were already asserted in the body and the heading below, and the file was
+     the sole fsh-guts node carrying neither as a readable field. It went
+     unasked because the provenance tests scanned `fsh-guts/proposals/` alone;
+     widening them to the whole tree is what surfaced it. Promoted rather than
+     invented — a fabricated provenance reads as evidence and is worse than
+     none, which is the rule those tests are written on. -->
+
 # `SkillDefinition.roles` — retired 2026-09-20
 
 Bean `folio-assistant-y1w9`. Companion to
@@ -54,9 +73,12 @@ Measured against the *right* registry the finding is different and worse.
 2. **`reader` is not a tier.** Eight declarations use it; `UserRole` has
    `viewer`. So even read as RBAC, 8 of 51 do not resolve.
 
-3. **No reader — and it looks like one exists.** `src/core/rbac.ts` is
+3. **No reader — and it looks like one exists.** *(Describes the code as it
+   was on 2026-09-20. Since issue #1207 the routes name an ODRL action and
+   `rbac.ts` asks the policies; `SkillDefinition.roles` is still read by
+   nothing.)* `src/core/rbac.ts` was
    entirely header-driven (`getUserRole` reads `x-user-role`), and every route
-   hardcodes its own minimum: `hasRole(req, "collaborator")` in
+   hardcoded its own minimum: `hasRole(req, "collaborator")` in
    `routes/relevance.ts`, `glossary.ts`, `feedback.ts`. **Nothing anywhere
    reads `SkillDefinition.roles`.** Searched: `src/`, `schemas/`, `scripts/`,
    `adapters/`, the MCP tool layer, and `skill-fetch`/`skill-list`.

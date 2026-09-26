@@ -26,7 +26,7 @@ import {
 } from "../../src/crdm/detect-signals.ts";
 
 const root = resolve(import.meta.dir, "../..");
-const skillPath = join(root, "methodologies/crdm/crdm-detect.md");
+const skillPath = join(root, "skills/crdm/crdm-detect.md");
 const skillMarkdown = readFileSync(skillPath, "utf-8");
 const skill = parseSkillExclusions(skillMarkdown);
 const skillCategories = parseSkillCategories(skillMarkdown);
@@ -120,7 +120,11 @@ describe("the detection patterns and the skill's prose agree", () => {
  * the trade*. Precision is an aggregate too, and it hides the same trade the
  * moment recall moves. A set does not.
  */
-const FALSE_ALARMS_BEFORE = [223, 222, 166];
+//
+// 2026-09-24 (bean `vjbl`): the owner adjudicated a blind second annotation and
+// relabelled #222 and #223 as feature requests, so they are true positives now
+// and no longer false alarms. #166 remains.
+const FALSE_ALARMS_BEFORE = [166];
 
 /** Kept as a second, weaker signal — never as the gate. */
 const PRECISION_FLOOR = 0.8;
@@ -145,16 +149,19 @@ describe("GUARD: widening detection must not cost a single true negative", () =>
     expect(now.filter((n) => !FALSE_ALARMS_BEFORE.includes(n))).toEqual([]);
   });
 
-  test("...and the guard has teeth — a rejected candidate trips it", () => {
-    // FALSIFICATION. `/\bproposal\b/i` unanchored catches the same two misses
-    // as `/^proposal:/im` and costs #187, which asks for a write-up OF a merged
-    // proposal rather than proposing anything. Without this test the anchoring
-    // is a comment; with it, removing the anchor fails a gate.
+  test("the anchor's old justification is GONE — recorded, not hidden", () => {
+    // This test used to FALSIFY the unanchored `/\bproposal\b/i`: it cost #187,
+    // then labelled not-a-feature. On 2026-09-24 the owner relabelled #187 a
+    // feature request (bean `vjbl`), so the unanchored pattern now adds NO
+    // false alarm and CATCHES #187, which the anchor misses. The anchor stays
+    // for now, because switching a detector to fit a 27-item eval set is
+    // tuning to the test, and the choice is the owner's. This pins the new
+    // fact, so the argument cannot quietly revert to the old one.
     const unanchored: Category[] = CATEGORIES.map((c) =>
       c.name === "self-declared-genre" ? { ...c, patterns: [/\bproposal\b/i, /\bdesign document\b/i] } : c,
     );
-    const now = measure(unanchored).falseAlarms;
-    expect(now.filter((n) => !FALSE_ALARMS_BEFORE.includes(n))).toEqual([187]);
+    expect(measure(unanchored).falseAlarms.filter((n) => !FALSE_ALARMS_BEFORE.includes(n))).toEqual([]);
+    expect(measure(unanchored).tp).toBe(measure().tp + 1);
   });
 
   test("the precision floor holds too — but it is not what rejected that candidate", () => {

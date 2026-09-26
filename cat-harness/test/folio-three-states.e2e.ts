@@ -460,3 +460,171 @@ const PROJECTION = join(SITE_ABS, "assets", "library", "index.json");
       .toHaveText("On your folio glass");
   });
 });
+
+test.describe("an asset's address is this page, anchored", () => {
+  /**
+   * Measured before choosing the shape: an ingested library document has NO
+   * published page of its own. Nothing writes one, and this viewer is the
+   * only thing that renders these entries at all — so there was no stale URL
+   * to fix, there was no URL.
+   *
+   * Owner, 2026-09-22: *"instance of what, harness or asset? harness OK.
+   * asset has too much drift"*. cat-harness owns this viewer, so the viewer
+   * IS the address, and the fragment names the asset.
+   */
+  const VIEW2 = join(SITE_ABS, "cat-harness", "library", "who-iris", "index.html");
+  const DATA2 = join(SITE_ABS, "assets", "library", "index.json");
+
+  const serveView = async (page: import("@playwright/test").Page, hash = "") => {
+    const html = readFileSync(VIEW2, "utf8");
+    const data = readFileSync(DATA2, "utf8");
+    await page.route("**/*", async (route) => {
+      const url = new URL(route.request().url());
+      if (url.pathname.endsWith("assets/css/docs-ui.css")) {
+        return route.fulfill({ status: 200, contentType: "text/css", body: CSS });
+      }
+      if (url.pathname.endsWith("assets/js/docs-ui.js")) {
+        return route.fulfill({ status: 200, contentType: "text/javascript", body: JS });
+      }
+      if (url.pathname.endsWith(".json")) {
+        return route.fulfill({ status: 200, contentType: "application/json", body: data });
+      }
+      return route.fulfill({ status: 200, contentType: "text/html", body: html });
+    });
+    await page.goto(`http://127.0.0.1:8080/cat-harness/library/who-iris/index.html${hash}`);
+    await page.waitForLoadState("networkidle");
+  };
+
+  test("a row's href is this page plus its own id", async ({ page }) => {
+    await serveView(page);
+    const row = page.locator("[data-fa-library-item]").first();
+    const key = await row.getAttribute("data-fa-library-item");
+    const href = await row.getAttribute("data-fa-library-href");
+    expect(href).toBe(`/cat-harness/library/who-iris/index.html#${encodeURIComponent(key!)}`);
+  });
+
+  test("and the glass carries it, so a pulled-out asset is reachable", async ({ page }) => {
+    // The whole point of the href: before this, an asset on the glass was
+    // named and went nowhere.
+    await serveView(page);
+    const row = page.locator("[data-fa-library-item]").first();
+    const key = await row.getAttribute("data-fa-library-item");
+    await row.locator(".fa-pullout").click();
+    await page.locator(".fa-glass-handle").click();
+    await expect(page.locator(`.fa-glass-asset[data-fa-asset="${key}"] a`)).toHaveCount(1);
+  });
+
+  test("arriving at the anchor SELECTS the row rather than landing at the top", async ({ page }) => {
+    const html = readFileSync(VIEW2, "utf8");
+    expect(html).toContain("honourAnchor");
+    const data = JSON.parse(readFileSync(DATA2, "utf8")) as { entries: Array<{ instance: string; id: string }> };
+    const mine = data.entries.find((e) => e.instance === "who-iris");
+    test.skip(!mine, "no who-iris entry in the projection to anchor to");
+    const key = `${mine!.instance}/${mine!.id}`;
+    await serveView(page, `#${encodeURIComponent(key)}`);
+    await expect(page.locator(`[data-fa-library-item="${key}"]`))
+      .toHaveAttribute("data-fa-anchored", "1");
+  });
+
+  test("an anchor for ANOTHER library's asset says so — the middle outcome", async ({ page }) => {
+    // A folio carries assets ACROSS libraries, so an anchor naming an asset
+    // this page does not scope is ordinary rather than exceptional. Showing
+    // an unfiltered table with no explanation would be the `pb04` shape: the
+    // link went somewhere, just not where it said.
+    const data = JSON.parse(readFileSync(DATA2, "utf8")) as { entries: Array<{ instance: string; id: string }> };
+    const other = data.entries.find((e) => e.instance !== "who-iris");
+    test.skip(!other, "projection holds only who-iris entries");
+    const key = `${other!.instance}/${other!.id}`;
+    await serveView(page, `#${encodeURIComponent(key)}`);
+    await expect(page.locator("#status")).toContainText("not shown on this page");
+    await expect(page.locator("#status")).toContainText(other!.instance);
+  });
+
+  test("no fragment at all changes nothing", async ({ page }) => {
+    await serveView(page);
+    await expect(page.locator("[data-fa-anchored]")).toHaveCount(0);
+  });
+});
+
+test.describe("the folio viewer page RUNS — not just 'the bytes are current'", () => {
+  /**
+   * `check:artefact-verification` exists for exactly this gap, and its own
+   * declaration names the precedent: *"library:viz:check was green while the
+   * page it generated could not run (PR #805)."*
+   *
+   * A staleness check regenerates and diffs. It cannot tell whether the page
+   * it blessed throws on load, fetches a projection that 404s, or renders an
+   * empty table over a graph that has nodes. Those are the consumer's
+   * questions and only a browser answers them. Bean `7ofc`.
+   */
+  const PAGE_F = join(SITE_ABS, "cat-harness", "folio", "index.html");
+  const DATA_F = join(SITE_ABS, "assets", "folio", "index.json");
+
+  const serveFolio = async (page: import("@playwright/test").Page, data?: string) => {
+    const html = readFileSync(PAGE_F, "utf8");
+    const body = data ?? readFileSync(DATA_F, "utf8");
+    await page.route("**/*", async (route) => {
+      const url = new URL(route.request().url());
+      if (url.pathname.endsWith("assets/css/docs-ui.css")) {
+        return route.fulfill({ status: 200, contentType: "text/css", body: CSS });
+      }
+      if (url.pathname.endsWith("assets/js/docs-ui.js")) {
+        return route.fulfill({ status: 200, contentType: "text/javascript", body: JS });
+      }
+      if (url.pathname.endsWith("folio/index.json")) {
+        if (body === "__404__") return route.fulfill({ status: 404, body: "nope" });
+        return route.fulfill({ status: 200, contentType: "application/json", body });
+      }
+      return route.fulfill({ status: 200, contentType: "text/html", body: html });
+    });
+    await page.goto("http://127.0.0.1:8080/cat-harness/folio/index.html");
+    await page.waitForLoadState("networkidle");
+  };
+
+  test("it loads with no console error and renders every node", async ({ page }) => {
+    const errors: string[] = [];
+    page.on("pageerror", (e) => errors.push(e.message));
+    await serveFolio(page);
+    const expected = (JSON.parse(readFileSync(DATA_F, "utf8")) as { nodes: unknown[] }).nodes.length;
+    await expect(page.locator("#nodes tbody tr")).toHaveCount(expected);
+    expect(errors, errors.join("\n")).toEqual([]);
+  });
+
+  test("the badge count equals the rows it shows", async ({ page }) => {
+    // `tis1`: a count nobody can see is a count nobody checks, and a badge
+    // also makes a WRONG count visible — which is how the voices tile was
+    // caught saying 5 over a graph of 6.
+    await serveFolio(page);
+    const rows = await page.locator("#nodes tbody tr").count();
+    await expect(page.locator("#badges")).toContainText(String(rows));
+  });
+
+  test("a declared-but-absent directory gets a ROW, not silence", async ({ page }) => {
+    // `dh4f`. Fed a projection naming a directory that is not present, the
+    // page must say so rather than omit it — a consumer that scans nothing
+    // and reports a clean run is the defect this repository keeps paying for.
+    await serveFolio(page, JSON.stringify({
+      directories: [{ dir: "somewhere/gone", present: false, nodes: 0 }],
+      nodes: [],
+    }));
+    await expect(page.locator("#dirs")).toContainText("somewhere/gone");
+    await expect(page.locator("#dirs .pill.warn")).toContainText("declared, absent");
+  });
+
+  test("an empty graph is NOT reported as a graph that could not load", async ({ page }) => {
+    await serveFolio(page, JSON.stringify({ directories: [], nodes: [] }));
+    await expect(page.locator("#nodes")).toContainText("not a graph that could not be read");
+  });
+
+  test("...and a projection that 404s says THAT instead — the third state", async ({ page }) => {
+    // The two are opposite facts and the page must not render them alike.
+    await serveFolio(page, "__404__");
+    await expect(page.locator("#nodes")).toContainText("could not be read");
+    await expect(page.locator("#nodes")).toContainText("not an empty folio");
+  });
+
+  test("and the reader's folio comes down on it", async ({ page }) => {
+    await serveFolio(page);
+    await expect(page.locator(".fa-glass-handle")).toBeVisible();
+  });
+});

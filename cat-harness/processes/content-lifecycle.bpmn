@@ -6,15 +6,16 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The <folio:skill> extension on an activity names the folio-assistant skill
-  that implements it; <folio:bean> marks a step that reads or writes the shared
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+  that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
   work plan in beans/.
 -->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_FolioLifecycle"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -30,19 +31,20 @@
       Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
       BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
       by `bun run render:bpmn` — never hand-edit the SVG.
-      The &lt;folio:skill&gt; extension on an activity names the folio-assistant skill
-      that implements it; &lt;folio:bean&gt; marks a step that reads or writes the shared
+      The &lt;bootstrap.processes:skill&gt; extension on an activity names the folio-assistant skill
+      that implements it; &lt;cat-harness.processes:bean&gt; marks a step that reads or writes the shared
       work plan in beans/.
     </bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="strict" />
+      <cat-harness.processes:policy enforcement="strict" />
       <!-- Capture ON: this is the process that ends in a write to the corpus, so
            what ran before that write is the audit question. -->
-      <folio:log capture="on" />
+      <cat-harness.processes:log capture="on" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_Lifecycle_LaneSet">
       <bpmn:lane id="Lane_ProgMgr" name="Programme manager">
         <bpmn:documentation>Opens and closes the cycle rather than running any of it: Task_Plan commits scope, team and artefacts before Lane_WorkPlan turns them into beans, and Task_Retire is reached only when Gateway_NextCycle finds nothing left to do — so this lane's second appearance is a judgement that the cycle is actually finished, not a step inside it.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="programme-manager"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_Initiative</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Plan</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_NextCycle</bpmn:flowNodeRef>
@@ -51,23 +53,28 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan — beans (shared by humans and agents)">
         <bpmn:documentation>Touched twice, not once: Task_SeedBeans converts the programme manager's plan into trackable work at the start, and Task_FeedbackBeans converts triaged reader feedback into more of it at the end, immediately before Gateway_NextCycle asks whether to go around again — so this lane is what makes the lifecycle a LOOP rather than a line, carrying what closed one cycle into what opens the next.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="work-plan"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_SeedBeans</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_FeedbackBeans</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Editors" name="Editors + authoring agents">
         <bpmn:documentation>The single re-entry point for every round the cycle contains — Gateway_NextCycle's 'yes' branch (H09) loops straight back here rather than to Task_Plan — so this lane runs once per proposed change, not once per cycle, and is where the accept decision on each of those changes is made before anything reaches the corpus-wide Task_Test.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="editor"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>CallActivity_Editing</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Qa" name="Validation and QA (mechanical + agents)">
         <bpmn:documentation>The corpus-wide check no single block's HCI validation gate can perform — cross-references, whole-folio build status, proof status and QA axes — sitting between the editor's accept and the publication manager's release, so a change that passed block-level review still has to clear folio-level checks before CallActivity_Publication ever runs.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="validation-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Test</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Review" name="Review team and SMEs">
         <bpmn:documentation>The only reviewing this lane does happens AFTER publication, not before it: Task_Feedback triages what implementers and readers report on the LIVE folio, by severity and scope, and that triage — not a fresh review — is what Task_FeedbackBeans turns into the next cycle's work.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="reviewer"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Feedback</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_PubMgr" name="Publication manager">
         <bpmn:documentation>The single point in the cycle where the corpus becomes public: reached only after Task_Test has cleared the whole folio, and its own outcome is what Task_Feedback then collects reactions to — so whatever this lane calls out to in draft-to-publication.bpmn is the last gate before readers see anything.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="publication-manager"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>CallActivity_Publication</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -77,7 +84,7 @@
     <bpmn:userTask id="Task_Plan" name="Plan scope, team, artifacts&#10;[content-plan]">
       <bpmn:documentation>Scope the work, identify artifacts and actors, form the team, set the timeline.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-plan" />
+        <bootstrap.processes:skill ref="content-plan" />
       </bpmn:extensionElements>
       <bpmn:incoming>H01</bpmn:incoming>
       <bpmn:outgoing>H02</bpmn:outgoing>
@@ -85,8 +92,8 @@
     <bpmn:task id="Task_SeedBeans" name="Seed the work plan&#10;[todo-manager]">
       <bpmn:documentation>The plan becomes beans. From here on, beans/ is the shared answer to &#x27;what is done, what is next&#x27; — for humans and agents alike.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="claim" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>H02</bpmn:incoming>
       <bpmn:outgoing>H03</bpmn:outgoing>
@@ -94,10 +101,9 @@
     <bpmn:callActivity id="CallActivity_Editing" name="Editing and HCI validation&#10;[content-author]" calledElement="Process_Editing">
       <bpmn:documentation>See editing-hci-validation.bpmn. Runs once per proposed change, not once per cycle.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:link href="publication-workflow.html#editing-and-the-hci-validation-gate" />
-        <folio:skill ref="content-author" />
-        <folio:skill ref="content-validate" />
-        <folio:skill ref="content-review" />
+        <bootstrap.processes:skill ref="content-author" />
+        <bootstrap.processes:skill ref="content-validate" />
+        <bootstrap.processes:skill ref="content-review" />
       </bpmn:extensionElements>
       <bpmn:incoming>H03</bpmn:incoming>
       <bpmn:incoming>H09</bpmn:incoming>
@@ -106,7 +112,7 @@
     <bpmn:serviceTask id="Task_Test" name="Integration test and QA sweep&#10;[content-test]">
       <bpmn:documentation>Corpus-wide checks that a single-block gate cannot make: cross-references, build green, proof status, QA axes across the whole folio.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-test" />
+        <bootstrap.processes:skill ref="content-test" />
       </bpmn:extensionElements>
       <bpmn:incoming>H04</bpmn:incoming>
       <bpmn:outgoing>H05</bpmn:outgoing>
@@ -114,9 +120,8 @@
     <bpmn:callActivity id="CallActivity_Publication" name="Draft, review and publish&#10;[content-publish]" calledElement="Process_Publication">
       <bpmn:documentation>See draft-to-publication.bpmn.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:link href="publication-workflow.html#from-corpus-to-published-folio" />
-        <folio:skill ref="content-review" />
-        <folio:skill ref="content-publish" />
+        <bootstrap.processes:skill ref="content-review" />
+        <bootstrap.processes:skill ref="content-publish" />
       </bpmn:extensionElements>
       <bpmn:incoming>H05</bpmn:incoming>
       <bpmn:outgoing>H06</bpmn:outgoing>
@@ -124,7 +129,7 @@
     <bpmn:userTask id="Task_Feedback" name="Triage published feedback&#10;[content-feedback]">
       <bpmn:documentation>Implementer and reader feedback on the published folio, triaged by severity and scope.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-feedback" />
+        <bootstrap.processes:skill ref="content-feedback" />
       </bpmn:extensionElements>
       <bpmn:incoming>H06</bpmn:incoming>
       <bpmn:outgoing>H07</bpmn:outgoing>
@@ -132,21 +137,23 @@
     <bpmn:task id="Task_FeedbackBeans" name="File feedback as beans&#10;[todo-manager]">
       <bpmn:documentation>Triaged feedback re-enters the work plan as beans, which is how the next cycle knows what it is for.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="todo-manager" />
-        <folio:skill ref="content-feedback" />
-        <folio:bean op="note" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <bootstrap.processes:skill ref="content-feedback" />
+        <cat-harness.processes:bean op="note" />
       </bpmn:extensionElements>
       <bpmn:incoming>H07</bpmn:incoming>
       <bpmn:outgoing>H08</bpmn:outgoing>
     </bpmn:task>
     <bpmn:exclusiveGateway id="Gateway_NextCycle" name="More content?">
+      <bpmn:documentation>Asked after feedback is filed as beans: is there more content to write for this folio? `yes` returns to editing and HCI validation; `no` retires or archives it.</bpmn:documentation>
       <bpmn:incoming>H08</bpmn:incoming>
       <bpmn:outgoing>H09</bpmn:outgoing>
       <bpmn:outgoing>H10</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:userTask id="Task_Retire" name="Retire or archive&#10;[content-retire]">
+      <bpmn:documentation>No more content is planned: deprecate the folio. Post a deprecation notice and timeline, update its status metadata, archive it, point references at any successor, and remove it from active publication. The programme manager decides; retirement archives rather than deletes.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="content-retire" />
+        <bootstrap.processes:skill ref="content-retire" />
       </bpmn:extensionElements>
       <bpmn:incoming>H10</bpmn:incoming>
       <bpmn:outgoing>H11</bpmn:outgoing>

@@ -134,8 +134,10 @@ describe("this instance's own kinds", () => {
     const r = await sweep(INSTANCE);
     expect(r.unresolvable).toEqual([]);
     expect(r.resolved.length + r.undeclared.length).toBeGreaterThan(0);
-    // `qa` is deliberately undeclared — its module exports interfaces only.
-    expect(r.undeclared).toContain("qa");
+    // `qa` has no kind-level validator — its families differ — so it is
+    // checked per `$schema` family instead (bean `rdkm`), never "undeclared".
+    expect(r.undeclared).not.toContain("qa");
+    expect(r.resolved).toContain("qa (per $schema family)");
   });
 });
 
@@ -168,5 +170,91 @@ describe("kindForPath", () => {
     const { kindForPath } = await import("../scripts/kg-validate");
     expect(kindForPath("/etc/passwd", "/tmp/x", [{ path: "a/", graphKinds: ["beans"] }]))
       .toBeUndefined();
+  });
+});
+
+describe("per-family node schemas (bean rdkm)", () => {
+  const HARNESS = resolve(import.meta.dir, "..");
+
+  test("qa names every family, and each resolves to a schema, a shape, or a recorded absence", async () => {
+    const { resolveNodeSchemas } = await import("./kind-validator");
+    const fams = await resolveNodeSchemas("qa", HARNESS);
+    expect(fams.map((f) => f.tag).sort()).toEqual([
+      "block-qa/v1", "folio-detangle-sidecar/v1", "folio-qa-index/v1", "folio-test-run/v1", "kg-qa/v1",
+      "qa-results/v1", "qa-witness/v1", "translation-qa/v1", "viewer-nav-qa/v1",
+    ]);
+    expect(fams.filter((f) => f.state === "unresolvable")).toEqual([]);
+    expect(fams.find((f) => f.tag === "kg-qa/v1")?.state).toBe("resolved");
+    expect(fams.find((f) => f.tag === "qa-witness/v1")?.state).toBe("shape");
+    // Typed since bean `dv8v` (#1168 B6b); it was the untyped example until then.
+    expect(fams.find((f) => f.tag === "folio-qa-index/v1")?.state).toBe("resolved");
+  });
+
+  test("a shape is read from source, fields and optionality included", async () => {
+    const { readShape } = await import("./kind-validator");
+    const dir = mkdtempSync(join(tmpdir(), "shape-"));
+    writeFileSync(join(dir, "m.ts"), "export interface Thing { id: string; note?: number }\n");
+    const r = readShape(dir, "m.ts#Thing");
+    expect(r).toEqual({
+      ref: { module: "m.ts", exportName: "Thing" },
+      fields: [
+        { name: "id", optional: false, type: "string" },
+        { name: "note", optional: true, type: "number" },
+      ],
+    });
+    expect(typeof readShape(dir, "m.ts#Missing")).toBe("string");
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("kg-validate routes a qa node by its $schema tag", async () => {
+    const { validatePath } = await import("../scripts/kg-validate");
+    const dir = join(HARNESS, "test", "results");
+    const { readdirSync, readFileSync, statSync } = await import("node:fs");
+    const find = (d: string, tag: string): string | undefined => {
+      for (const e of readdirSync(d)) {
+        const p = join(d, e);
+        if (statSync(p).isDirectory()) { const hit = find(p, tag); if (hit) return hit; continue; }
+        if (!p.endsWith(".json")) continue;
+        try {
+          if (JSON.parse(readFileSync(p, "utf8"))?.$schema === tag) return p;
+        } catch {
+          // not a node
+        }
+      }
+      return undefined;
+    };
+    const kg = find(dir, "kg-qa/v1");
+    expect(kg).toBeDefined();
+    expect((await validatePath(kg!, HARNESS)).state).toBe("valid");
+    const witness = find(dir, "qa-witness/v1");
+    expect(witness).toBeDefined();
+    const v = await validatePath(witness!, HARNESS);
+    expect(v.state).toBe("undetermined");
+  });
+});
+
+describe("instance-qualified references (bean quda)", () => {
+  test("`name:module#Export` resolves through the instance that declares the name", async () => {
+    const { parseValidatorRef, rootOf } = await import("./kind-validator");
+    expect(parseValidatorRef("folio-assistant-core:schemas/catalogue.ts#CatalogueSchema")).toEqual({
+      instance: "folio-assistant-core",
+      module: "schemas/catalogue.ts",
+      exportName: "CatalogueSchema",
+    });
+    const here = resolve(import.meta.dir, "..");
+    expect(rootOf("folio-assistant-core", here)).toBe(resolve(here, "..", "folio-assistant-core"));
+    expect(rootOf("no-such-instance", here)).toBeUndefined();
+    expect(rootOf(undefined, here)).toBe(here);
+  });
+
+  test("an escaping path is still refused — the name is the only way out", async () => {
+    const { parseValidatorRef } = await import("./kind-validator");
+    expect(() => parseValidatorRef("../folio-assistant-core/schemas/catalogue.ts#CatalogueSchema")).toThrow();
+  });
+
+  test("top-level `_` annotations are dropped before a node is checked", async () => {
+    const { stripAnnotations } = await import("./kind-validator");
+    expect(stripAnnotations({ _comment: "x", a: 1, b: { _keep: 2 } })).toEqual({ a: 1, b: { _keep: 2 } });
+    expect(stripAnnotations([1])).toEqual([1]);
   });
 });

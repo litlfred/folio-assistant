@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-paper-adapter/paper-importer.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/paper-importer.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-paper-adapter/paper-importer.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/paper-importer.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/paper-importer.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/paper-importer.md){: .fa-edit-source }
 
 {% raw %}
 # Paper Importer
@@ -15,10 +15,10 @@ parent: Skill instructions
 > **Bib human-review integration.** When importing a paper whose
 > results back a `references.ts` entry, place the formalisation in a **per-paper
 > Lean package** (wrap, don't duplicate, any overlap with the main paper's results)
-> and drive the ref's status through [`bib-human-review`](../folio-core/bib-human-review.md)
+> and drive the ref's status through [`bib-human-review`](bib-human-review.md)
 > (`source-in-repo` once the cited passage is identified → `validated` after
 > source-match + bib validation). The on-photo automation lives in
-> [`bib-photo-ingestion-watcher`](../folio-core/bib-photo-ingestion-watcher.md).
+> [`bib-photo-ingestion-watcher`](bib-photo-ingestion-watcher.md).
 
 ## Overview
 
@@ -65,7 +65,7 @@ allowlist) cannot reach `arxiv.org` / `api.openalex.org`; the MCP
 servers stay configured but fail soft. In those sessions, queue
 the actual fetch onto `scripts/upload-bib-papers.sh` running on a
 normal-network machine (handoff documented in
-[`bib-qa.md §Batch intake pipeline`](../folio-core/bib-qa.md#batch-intake-pipeline)).
+[`bib-qa.md §Batch intake pipeline`](bib-qa.md#batch-intake-pipeline)).
 
 All uploads are committed to the repo under `uploads/` for reprocessing.
 Metadata is stored in `uploads/<paper-id>/import-meta.json`:

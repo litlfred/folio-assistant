@@ -2,6 +2,8 @@
 layout: default
 title: Accessibility
 nav_order: 11
+supported_locales: ["ar", "zh", "en", "fr", "ru", "es"]
+available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 # Accessibility
@@ -190,7 +192,7 @@ Four ways to do this, in increasing order of ambition. Only the first is built.
 
 | option | what it is | cost |
 |---|---|---|
-| **A — decision-per-gateway** *(built)* | each ambiguous branch point in a BPMN carries `folio:decision`; the table returns the branch, `ask` included | no interview state machine — the *process* is the state. Cannot express "ask these four in any order" |
+| **A — decision-per-gateway** *(built)* | each ambiguous branch point in a BPMN carries `cat-harness.processes:decision`; the table returns the branch, `ask` included | no interview state machine — the *process* is the state. Cannot express "ask these four in any order" |
 | **B — a question set behind one gateway** | a `next-question.dmn` looping until it returns `none`; answers accumulate as facts | one more table and a fact store; the loop is the process's own, so nothing new executes |
 | **C — DMN-driven forms** | the same table renders a form on the site, not only a chat exchange | needs a fact schema and a renderer per modality; the table is unchanged |
 | **D — full DMN/BPMN interview engine** | sub-processes per topic, boundary events for "I changed my mind" | real engine work, and the FEEL subset would have to grow |

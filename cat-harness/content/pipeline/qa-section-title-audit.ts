@@ -39,15 +39,15 @@
  * colon are hard defects.
  *
  * Usage:
- *   bun run content/pipeline/qa-section-title-audit.ts             # all papers
- *   bun run content/pipeline/qa-section-title-audit.ts <paper>     # one paper
- *   bun run content/pipeline/qa-section-title-audit.ts --report-only   # never exit 1
- *   bun run content/pipeline/qa-section-title-audit.ts --max-len 64    # length budget
- *   bun run content/pipeline/qa-section-title-audit.ts --toc <chapter> # TOC tree + weights
+ *   bun run cat-harness/content/pipeline/qa-section-title-audit.ts             # all papers
+ *   bun run cat-harness/content/pipeline/qa-section-title-audit.ts <paper>     # one paper
+ *   bun run cat-harness/content/pipeline/qa-section-title-audit.ts --report-only   # never exit 1
+ *   bun run cat-harness/content/pipeline/qa-section-title-audit.ts --max-len 64    # length budget
+ *   bun run cat-harness/content/pipeline/qa-section-title-audit.ts --toc <chapter> # TOC tree + weights
  *   # record an agent title-coherence verdict (after --write-sidecar):
- *   bun run content/pipeline/qa-section-title-audit.ts --verdict \
+ *   bun run cat-harness/content/pipeline/qa-section-title-audit.ts --verdict \
  *       --chapter <paper>/<chapterDir> --list                         # show slots
- *   bun run content/pipeline/qa-section-title-audit.ts --verdict \
+ *   bun run cat-harness/content/pipeline/qa-section-title-audit.ts --verdict \
  *       --chapter <paper>/<chapterDir> --section <label|title> \
  *       --result <pass|revise|accept> [--reviewer <who>] [--note "why"]
  *   # add --thorough to either --write-sidecar or --verdict to gate
@@ -585,7 +585,8 @@ async function main(): Promise<void> {
   const soft = flags.filter((f) => !HARD.has(f.kind));
   console.log(`section-title audit: ${allNodes.length} titles across ${byChapter.size} chapters (max-len ${MAX_LEN})`);
   // An audit of nothing is a broken run, not a clean one — the rule
-  // `validateObjects` settled (bean `vald`). `section-title-audit.yml` calls
+  // `validateObjects` settled (bean `vald`). `section-title-audit.yml` (a
+  // `folio_init` template since bean `52dz`) calls
   // this a HARD GATE, and over an empty corpus it printed the three ✓ lines
   // below and exited 0, one line after saying "0 titles across 0 chapters".
   if (allNodes.length === 0) {

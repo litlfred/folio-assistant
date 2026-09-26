@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/authoring-math/latex-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/authoring-math/latex-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/latex-authoring.html).
+> Generated from [`cat-harness/skills/authoring-math/latex-authoring.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring-math/latex-authoring.md) — do not edit here. Typed contract: [schema reference](../skills/latex-authoring.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/authoring-math/latex-authoring.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring-math/latex-authoring.md){: .fa-edit-source }
 
 {% raw %}
 # latex-authoring
@@ -69,3 +69,10 @@ attempted** — not that it failed, and certainly not that it produced nothing
 because there was nothing to produce. `check-deps` is how you find out what the
 environment actually has; the capability is `latex-compiler`.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a paper](../../processes/authoring-a-paper.html) | 7 · Render PDF / HTML |
+

@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/content-lifecycle/content-retire.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-retire.md) — do not edit here.
+> Generated from [`cat-harness/skills/content-lifecycle/content-retire.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/content-lifecycle/content-retire.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/content-lifecycle/content-retire.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/content-lifecycle/content-retire.md){: .fa-edit-source }
 
 {% raw %}
 # Content Retirement
@@ -38,3 +38,10 @@ Deprecate and retire content that is no longer current or needed.
 - Updated redirects
 - Retirement record
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Content lifecycle](../../processes/content-lifecycle.html) | Retire or archive |
+

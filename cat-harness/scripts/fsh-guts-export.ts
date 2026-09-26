@@ -115,7 +115,7 @@ export interface FshGutsDir {
    * instance root and `relative(root, absPath)` came back `../fsh-guts`. That
    * went into `scans`, into every node's `sourcePath`, and into every `@id` —
    * whose sanitiser permits `.` and would have published
-   * `…/fsh-guts.jsonld#../fsh-guts/proposals/x.md`. A link-shaped value that
+   * `…/fsh-guts.jsonld#../docs/proposals/x.md`. A link-shaped value that
    * dereferences to nothing is the `blv9` shape, and it would have been minted
    * into a document whose whole job is to stay addressable.
    */
@@ -238,6 +238,12 @@ export function buildFshGutsExport(root: string = ROOT, baseUrl?: string): FshGu
       body: "schema:text",
       nodeCount: termIri("nodeCount"),
       scans: termIri("scans"),
+      // Declared, with its entries' two keys: a processor dropped the whole
+      // list when it was bare (bean vigi, found by expanding).
+      skipped: {
+        "@id": termIri("skipped"),
+        "@context": { path: termIri("sourcePath"), reason: "rdfs:comment" },
+      },
     },
     "@id": docIri,
     "@type": termIri("FshGutsGraph"),

@@ -5,7 +5,7 @@
     "id": "Process_BuildL1Kg",
     "path": "processes/ingest-build-l1-kg.bpmn"
   },
-  "source_hash": "sha256:eab57b88731f492cc70e2b85dfa84fe9ef166ddeca51727bb9c03d9208b337c9",
+  "source_hash": "sha256:256cb94fd063a20786446d9c04bbe4baf61b7de8be323b71a4d4b2262bed2f07",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -66,12 +66,48 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "n/a",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "n/a",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
+    "pass": 13,
     "fail": 0,
-    "n/a": 7,
+    "n/a": 11,
     "unknown": 0
   }
 }

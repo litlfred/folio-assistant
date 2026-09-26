@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/docs-site-publish.bpmn
 name: Docs site (GitHub Pages)
 
 # Builds and deploys the folio-assistant documentation site to GitHub Pages at
@@ -84,11 +85,15 @@ on:
       # fix. A suffix that moves twice in a day is not a thing to spell twice.
       - 'cat-harness/*.json'
       - 'bootstrap/*.json'
+      # Every file of bootstrap is published as it sits (`publish-instance-files.ts`,
+      # bean `iwtn`), so a change to any of them changes the site.
+      - 'bootstrap/**'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 
 permissions:
   contents: write  # required to push to the gh-pages branch
+  issues: write    # the publication manager's alert (bean vigi): one tracking issue
 
 concurrency:
   group: docs-site-${{ github.ref }}
@@ -96,6 +101,7 @@ concurrency:
 
 jobs:
   build-and-deploy:
+    # bpmn-node: Start_Push
     runs-on: ubuntu-latest
     # Serialise on the CONTENDED RESOURCE — `gh-pages` — not on the branch.
     #
@@ -116,7 +122,7 @@ jobs:
       group: gh-pages-push
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -412,6 +418,43 @@ jobs:
           bun run cat-harness/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir "./_site/${BOOT_STUB}"
           cp "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}-glossary.json"
 
+          # bootstrap's OWN files, as they sit, with each `.md` also rendered
+          # as `.html` -- bean `iwtn`, ruling 3. bootstrap renders nothing, so
+          # its `renderExemption.reachableAt` names its own `README.md`, and
+          # the navbar tab links to `<base>/bootstrap/README.html`. LAST, and
+          # it never overwrites: the graph's `.json` copy above has the same
+          # name as bootstrap's declaration, and the graph keeps that address.
+          bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}"
+          # bootstrap's diagram vocabulary at its extensionless address, which is
+          # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
+          # `.json` copy every rendering here carries for Pages.
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns"
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns.json"
+          # cat-harness's diagram vocabulary likewise (bean `12s9` stage 3). Its
+          # processes are not otherwise published, so it is copied from source.
+          mkdir -p "./_site/${STUB}/processes"
+          for f in ns ns.jsonld ns.json; do cp ./cat-harness/processes/ns.jsonld "./_site/${STUB}/processes/$f"; done
+
+          # THE HARNESS RAIL ON EVERY STANDALONE PAGE — bean `oi1y`, and it is
+          # here, after the line above, for a reason that cost a wrong claim.
+          #
+          # A page Jekyll copies through verbatim inherits no layout and so no
+          # sidebar. `mount-instance-docs.ts` rails the MOUNT ROUTES, and
+          # `viewer-page.ts` rails what the generators emit; everything else
+          # fell between them — 23 wireframe `as-is.html` pages with no
+          # navigation and no outward link at all, and bootstrap's 10.
+          #
+          # The first version called this from `mount-instance-docs.ts`, 142
+          # lines above, where bootstrap's pages DO NOT YET EXIST. It railed the
+          # wireframes (committed) and silently missed bootstrap (generated),
+          # and no unit test could see it because a fixture hands the pass a
+          # finished directory. Caught by counting the staged build.
+          #
+          # So: LAST, after every generator that writes a page. It is
+          # idempotent — `injectRail` refuses a page that already has one — so
+          # anything railed earlier is left byte-identical.
+          bun run cat-harness/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness
+
           # THE TRASHCAN, reachable BY NAME and by nothing else.
           #
           # The export above STRIPS `fsh-guts` from every graph it publishes,
@@ -495,6 +538,7 @@ jobs:
       # cannot fail, which is bean `ot9a` exactly. Found by that ratchet on its
       # first encounter with this step.
       - name: Every maintained artefact is in the published tree
+        id: artefacts
         run: bun run check:maintained-artefacts ./_site
 
       # No page carries a block-level tag as escaped TEXT.
@@ -559,6 +603,17 @@ jobs:
       # finding one means something earlier went wrong quietly.
       - name: Check the navbar tiles resolve against the built site
         run: bun run cat-harness/scripts/site-links.ts --root ./cat-harness --site ./_site
+
+      # VERIFY BEFORE DEPLOYING, AND BLOCK — bean `vigi`, owner 2026-09-23:
+      # "a set of post processing tools for verification that a failure
+      # triggers an alert to the publisher manager ... before deployment".
+      # `processes/publish-verification.bpmn`. The verifier set runs over the
+      # built tree; exit 1 (a finding) and exit 2 (could not tell) both stop
+      # the job here, so nothing below deploys, and the alert step at the end
+      # carries the report to the publication manager.
+      - name: Verify the export before deploying
+        id: verify
+        run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site --report "$RUNNER_TEMP/publish-verify.md"
 
       - name: Disable Jekyll on the published branch
         run: touch ./_site/.nojekyll
@@ -631,13 +686,14 @@ jobs:
       # fetch, reset, restore against the current contents, lay `_site` down,
       # commit, push.
       - name: Check out the publish branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: gh-pages
           path: pages
           persist-credentials: true
 
       - name: Publish to gh-pages
+        id: deploy
         env:
           SITE: ./_site
           STATE: ./.staging-restored.json
@@ -660,4 +716,64 @@ jobs:
       # the accepted cost — the alternative is the silence this bean exists to
       # retire.
       - name: Verify the staging previews survived the deploy
+        id: previews
         run: bun run cat-harness/scripts/restore-staging.ts --verify --state ./.staging-restored.json
+
+      # THE ONE ALERT — `processes/publish-alert.bpmn`. Owner, 2026-09-23:
+      # "every step post 'push the publish button' should be same". Any failure
+      # in this job — an incomplete export, the verifier set, the deploy, a lost
+      # preview — reaches the publication manager the same way: ONE tracking
+      # issue labelled with the role, opened on the first failure and COMMENTED
+      # on for each later one (an edit does not notify; a new failed publish is
+      # news). The next clean publish closes it. The role, not a person: no
+      # actor declares a GitHub account for `publication-manager`.
+      - name: Alert the publication manager
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ARTEFACTS: ${{ steps.artefacts.outcome }}
+          VERIFY: ${{ steps.verify.outcome }}
+          DEPLOY: ${{ steps.deploy.outcome }}
+          PREVIEWS: ${{ steps.previews.outcome }}
+        run: |
+          set -euo pipefail
+          gh label create publication-manager --color 5319E7 --description "The publication manager's alert: a step after the publish button failed" --force
+          {
+            echo "A publish of \`${GITHUB_SHA::8}\` failed after the publish button — [run]($RUN_URL)."
+            echo
+            echo "| step | outcome |"
+            echo "|---|---|"
+            echo "| every maintained artefact present | ${ARTEFACTS:-not reached} |"
+            echo "| verify the export before deploying | ${VERIFY:-not reached} |"
+            echo "| deploy to gh-pages | ${DEPLOY:-not reached} |"
+            echo "| staging previews survived | ${PREVIEWS:-not reached} |"
+            echo
+            if [ "${DEPLOY:-}" = "success" ]; then
+              echo "**The site DID deploy** — what failed is after it, and is live."
+            else
+              echo "**Nothing was deployed.** The live site is the previous publish."
+            fi
+            if [ -f "$RUNNER_TEMP/publish-verify.md" ]; then echo; cat "$RUNNER_TEMP/publish-verify.md"; fi
+            echo
+            echo "Triage: hold the release, or fix forward and publish again. The next clean publish closes this issue. \`processes/publish-alert.bpmn\`, bean \`vigi\`."
+          } > "$RUNNER_TEMP/alert.md"
+          existing=$(gh issue list --label publication-manager --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body-file "$RUNNER_TEMP/alert.md"
+            echo "commented on #$existing"
+          else
+            gh issue create --title "Publishing failed after the publish button" --label publication-manager --body-file "$RUNNER_TEMP/alert.md"
+          fi
+
+      - name: Close the publication manager's alert
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          existing=$(gh issue list --label publication-manager --state open --json number --jq '.[0].number // empty' || true)
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" --comment "Published cleanly in [this run]($RUN_URL). Closed by \`docs-site.yml\`."
+          fi

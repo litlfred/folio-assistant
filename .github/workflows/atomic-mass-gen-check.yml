@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/atomic-mass-drift-check.bpmn
 # Generated-file drift gate for QOU/AtomicMass.lean.
 #
 # AtomicMass.lean is generated from a canonical data table
@@ -31,17 +32,34 @@ permissions:
 
 jobs:
   drift-check:
+    # bpmn-node: Start_Change
     name: AtomicMass.lean in sync with data table
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
+
+      # The generator belongs to the qou folio, which is not in this platform
+      # repository since the split — only an edit to THIS file triggers the
+      # job here, and it then failed on a missing script (bean 2lzp). A
+      # determined absence is "not applicable", said as a notice, and never a
+      # quiet pass over a file that IS there.
+      - name: Is the folio's generator here?
+        id: present
+        run: |
+          if [ -f content/quantum-observable-universe/lean/scripts/gen_atomic_mass.py ]; then
+            echo "here=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Not applicable: the qou folio's atomic-mass generator is not in this repository, so there is nothing to check for drift."
+            echo "here=false" >> "$GITHUB_OUTPUT"
+          fi
 
       # HARD GATE: regenerate from the data table and diff against the
       # committed .lean. Exit 1 (with a unified diff) on any divergence.
       - name: Regenerate and check for drift
+        if: steps.present.outputs.here == 'true'
         run: |
           python3 content/quantum-observable-universe/lean/scripts/gen_atomic_mass.py --check

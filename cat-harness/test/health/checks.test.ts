@@ -124,6 +124,55 @@ describe("staging-preview-size", () => {
     expect(STAGING_CRITICAL_BYTES).toBeGreaterThan(STAGING_WARN_BYTES);
   });
 
+  it("the critical finding does NOT predict a failed publish — bean `qj9a`", () => {
+    // THE DEFECT THIS PINS, and it was live for two and a half days. The
+    // threshold's basis read: "the next deploy is the one that fails to publish
+    // — so something is about to be lost". That is a claim about GitHub's
+    // ENFORCEMENT, and nothing in this repository can observe it: the served
+    // site, `/repos/:o/:r/pages` and `/pages/builds` are all refused by egress
+    // policy. Measured 2026-09-25 off `origin/gh-pages` itself — 2.67 GB served,
+    // 2.7x the documented limit, crossed on 2026-09-23 — and nothing had been
+    // lost.
+    //
+    // Asserted on the TEXT because that is where the claim lives. A severity is
+    // a number and carries no argument; the basis is the argument, and this one
+    // was wrong in a way no type or count could catch.
+    const r = stagingSizeCheck(healthyContext({
+      staging: {
+        state: "ok",
+        value: {
+          branch: "present",
+          previews: [{ slug: "a", bytes: 777 * 1024 * 1024, files: 1 }],
+          command: "fixture",
+        },
+      },
+    }));
+    const f = r.findings[0];
+    expect(f.severity).toBe("critical");
+    // THE PREDICTION MUST NOT BE MADE where a reader acts — the summary and the
+    // action. This first version of the test also banned the phrase from the
+    // BASIS and failed, correctly: the basis QUOTES the old wording in order to
+    // record what was wrong, which is this repository's convention and is worth
+    // more than a clean grep. So the rule is about whether the claim is
+    // asserted, not whether the words occur.
+    const t = r.thresholds.find((x) => x.severity === "critical");
+    for (const text of [f.action, f.summary]) {
+      expect(text).not.toContain("about to be lost");
+      expect(text).not.toContain("the next deploy is the one that fails");
+    }
+    // In the basis the phrase may appear ONLY as a superseded quotation. If a
+    // later edit restores the prediction as the basis's own claim, the marker
+    // will be gone and this fails — which is the regression worth catching.
+    if ((t?.basis ?? "").includes("about to be lost")) {
+      expect(t?.basis).toContain("USED TO PREDICT");
+    }
+    // ...and the honest framing must be present rather than merely the wrong
+    // one absent: a check that said nothing at all would also pass the above.
+    expect(f.summary).toContain("DOCUMENTED");
+    expect(f.action).toContain("HAVE A PERSON OPEN THE SERVED SITE");
+    expect(t?.basis).toContain("NO INSTRUMENT FOR");
+  });
+
   it("a branch that was read and carries no previews is a determined `ok`", () => {
     const r = stagingSizeCheck(healthyContext({
       staging: { state: "ok", value: { branch: "present", previews: [], command: "fixture" } },
@@ -571,6 +620,124 @@ describe("bean-store", () => {
     ...o,
   });
 
+  // ── Bean `thux`: a claim worked through its CHILDREN is not quiet ─────
+  //
+  // `bean-quiet-claims` reads one signal — `updated_at` on the bean's own
+  // file — and for a task that is right. For a bean worked through its
+  // children nothing touches the parent while they move, so it accrued quiet
+  // hours for doing exactly what it is for, and the finding had no action:
+  // refreshing it means editing a file for no reason, which is `o5qj`'s shape
+  // one check over. Measured 2026-09-23: 39 quiet claims, 8 of them parenting
+  // work that had moved inside the window.
+  //
+  // `QUIET` is 72 hours; the fixture clock is 2026-09-19T12:00:00Z.
+  const longAgo = "2026-09-14T12:00:00Z"; // 120 h — quiet
+  const justNow = "2026-09-19T06:00:00Z"; // 6 h  — moving
+
+  it("a claim whose CHILD moved is not reported quiet", () => {
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "epic", status: "in-progress", updatedAt: longAgo }),
+          bean({ id: "kid", status: "in-progress", updatedAt: justNow, parent: "epic" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).not.toContain("bean-quiet-claims");
+  });
+
+  it("...but it is still COUNTED — `dh4f`", () => {
+    // "No claim went quiet" and "the quiet ones were parents of moving work"
+    // must not read the same. Nothing thresholds this.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "epic", status: "in-progress", updatedAt: longAgo }),
+          bean({ id: "kid", status: "in-progress", updatedAt: justNow, parent: "epic" }),
+        ],
+      },
+    }));
+    const m = r.measurements.find((x) => x.metric === "bean-quiet-claims-parenting-live-work");
+    expect(m?.value).toBe(1);
+    expect(r.measurements.find((x) => x.metric === "bean-quiet-claims")?.value).toBe(0);
+  });
+
+  it("a parent whose children are ALL quiet still fires — the discrimination", () => {
+    // `bzyu` on the real store: 8 open children, none moving. Without this the
+    // change would excuse every parent and the check would stop saying
+    // anything about the beans it exists for.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "epic", status: "in-progress", updatedAt: longAgo }),
+          bean({ id: "kid", status: "in-progress", updatedAt: longAgo, parent: "epic" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).toContain("bean-quiet-claims");
+    // Both of them: the child is quiet on its own account too.
+    expect(r.findings.filter((f) => f.metric === "bean-quiet-claims").length).toBe(2);
+  });
+
+  it("a CHILDLESS quiet claim is untouched by any of this", () => {
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [bean({ id: "lone", status: "in-progress", updatedAt: longAgo })],
+      },
+    }));
+    expect(metrics(r)).toEqual(["bean-quiet-claims"]);
+    expect(r.measurements.find((x) => x.metric === "bean-quiet-claims-parenting-live-work")?.value).toBe(0);
+  });
+
+  it("keyed on PARENTHOOD, not on `type: epic`", () => {
+    // The relation carries the argument; `type` is a label a bean sets about
+    // itself while `parent` is a fact another bean asserts about it. The
+    // fixture's parent has no type at all and is still excused.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "plain", status: "in-progress", updatedAt: longAgo }),
+          bean({ id: "kid", status: "todo", updatedAt: justNow, parent: "plain" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).not.toContain("bean-quiet-claims");
+  });
+
+  // ── Bean `7umv`: an action must name a mechanism that can reach its subject ──
+
+  it("the ORPHAN action does not offer the label, because it cannot reach an orphan", () => {
+    // `feature-staging.yml`'s `cleanup` reads labels from the
+    // `pull_request_target: closed` payload, and a preview is only findable as
+    // an orphan once that event has fired — so labelling afterwards fires
+    // nothing (bean `w2g5`). The action used to name the label FIRST.
+    // Measured cost: the owner applied it to both orphaned slugs and 201.2 MB
+    // stayed exactly where it was.
+    const r = stagingOrphanCheck(healthyContext({
+      staging: {
+        state: "ok",
+        value: { branch: "present", previews: [{ slug: "gone-branch", bytes: 99 * MB, files: 10 }], command: "fixture" },
+      },
+      openPrHeads: { state: "ok", value: [] },
+      branches: { state: "ok", value: { candidates: [], defaultBranch: "main", command: "fixture" } },
+    }));
+    expect(r.findings.length).toBeGreaterThan(0);
+    const action = r.findings[0].action!;
+    // The mechanism that WORKS is named, with the exact inputs.
+    expect(action).toContain("workflow_dispatch");
+    expect(action).toContain("cleanup_slug: gone-branch");
+    expect(action).toContain("cleanup_confirm: gone-branch");
+    // And the one that does not is named as not working, rather than omitted —
+    // a reader who has already tried it needs to know why it did nothing.
+    expect(action).toMatch(/DOES NOT WORK|does not work/);
+    expect(action).toContain("w2g5");
+  });
+
   it("fires `major` on a duplicate title — the 14,688-duplicate shape, at its leading edge", () => {
     const r = beanStoreCheck(healthyContext({
       beans: {
@@ -588,6 +755,82 @@ describe("bean-store", () => {
     // The action is `scrapped`, and it says outright not to delete.
     expect(r.findings[0].action).toContain("scrapped");
     expect(r.findings[0].action).toContain("Never `beans delete`");
+  });
+
+  // ── Bean `o5qj`: the finding must be clearable BY ITS OWN ACTION ──────
+  //
+  // The action says to scrap the loser and never to delete it. Before `o5qj`
+  // a scrapped bean stayed in its title group, so following the action left
+  // the `major` finding exactly as it was — measured on the real store:
+  // `qa1p` scrapped 2026-09-22T08:58:46Z naming `2yyh`, and the sweep 22 hours
+  // later reported the pair unchanged. The only state that cleared it was
+  // `beans delete`, which the action forbids.
+
+  it("STOPS firing once the loser is `scrapped` — the action is the remedy", () => {
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "aaaa", title: "Drain the exposition swarm" }),
+          bean({ id: "bbbb", title: "drain the exposition swarm", status: "scrapped" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).toEqual([]);
+  });
+
+  it("but an adjudicated group is still COUNTED — `dh4f`", () => {
+    // "No duplicate was ever created" and "every duplicate was resolved" must
+    // not read the same. Nothing thresholds this; it exists to be legible.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "aaaa", title: "Drain the exposition swarm" }),
+          bean({ id: "bbbb", title: "drain the exposition swarm", status: "scrapped" }),
+          bean({ id: "cccc", title: "Something else" }),
+        ],
+      },
+    }));
+    const m = r.measurements.find((x) => x.metric === "bean-duplicate-title-groups-adjudicated");
+    expect(m?.value).toBe(1);
+    expect(r.measurements.find((x) => x.metric === "bean-duplicate-title-groups")?.value).toBe(0);
+  });
+
+  it("`completed` is NOT adjudication — an open bean duplicating finished work still fires", () => {
+    // The threshold's basis is accidental duplicates polluting the plan. Work
+    // re-raised after it was done is exactly that, and `scrapped` is the one
+    // status that records somebody having RULED on the duplication.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "aaaa", title: "Drain the exposition swarm", status: "completed" }),
+          bean({ id: "bbbb", title: "drain the exposition swarm" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).toEqual(["bean-duplicate-title-groups"]);
+  });
+
+  it("a HALF-adjudicated group fires on what is left, and says the rest was settled", () => {
+    // Three created, one scrapped: two still need a ruling. Naming the scrapped
+    // one among them would send a reader to adjudicate a bean already
+    // adjudicated; dropping it silently would lose the group's history.
+    const r = beanStoreCheck(healthyContext({
+      beans: {
+        state: "ok",
+        value: [
+          bean({ id: "aaaa", title: "Drain the exposition swarm" }),
+          bean({ id: "bbbb", title: "drain the exposition swarm" }),
+          bean({ id: "cccc", title: "DRAIN THE EXPOSITION SWARM", status: "scrapped" }),
+        ],
+      },
+    }));
+    expect(metrics(r)).toEqual(["bean-duplicate-title-groups"]);
+    expect(r.findings[0].summary).toContain("aaaa, bbbb");
+    expect(r.findings[0].summary).not.toContain("cccc");
+    expect(r.findings[0].summary).toContain("1 more already `scrapped`");
   });
 
   it("fires on a decision record listing ONE option — MADR's refusal, made checkable", () => {

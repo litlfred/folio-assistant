@@ -1,0 +1,61 @@
+classDiagram
+  direction TB
+  namespace smart_base__voices {
+    class smart_base_voices_Source["Source"] {
+      <<json: VoiceProfileSchema>>
+      title [1] string
+      instance [0..1] string
+      libraryId [0..1] string
+      kgRef [0..1] string
+      url [0..1] string~uri~
+      year [0..1] integer
+    }
+    class smart_base_voices_Pattern["Pattern"] {
+      <<json: VoiceProfileSchema>>
+      regex [1] string
+      caseSensitive [0..1] boolean
+      message [1] string
+    }
+    class smart_base_voices_Terminology["Terminology"] {
+      <<json: VoiceProfileSchema>>
+      correct [1] string
+      incorrect [1] string | string[]
+      context [0..1] string
+    }
+    class smart_base_voices_Rule["Rule"] {
+      <<json: VoiceProfileSchema>>
+      id [1] string
+      title [1] string
+      description [1] string
+      category [1] enum(13)
+      severity [1] critical | major | minor
+      source [1] object
+      patterns [0..*] Pattern[]
+      terminology [0..*] Terminology[]
+      judgementOnly [0..1] boolean
+    }
+    class smart_base_voices_VoiceProfile["VoiceProfile"] {
+      <<json: VoiceProfileSchema>>
+      $schema [1] 'folio-voice/v1' | 'folio-voice-skill/v1'
+      id [1] string
+      title [1] string
+      description [1] string
+      sources [1..*] Source[]
+      rules [1..*] Rule[]
+      overlaySeverity [0..1] critical | major | minor
+      appliesTo [0..*] string[]
+      provenance [1] assertion | evidence | house
+      extends [0..1] object
+      activeIn [0..1] object
+      superseded [0..1] object
+    }
+  }
+  smart_base_voices_VoiceProfile *-- "1..*" smart_base_voices_Source : sources
+  smart_base_voices_Rule *-- "0..*" smart_base_voices_Pattern : patterns
+  smart_base_voices_Rule *-- "0..*" smart_base_voices_Terminology : terminology
+  smart_base_voices_VoiceProfile *-- "1..*" smart_base_voices_Rule : rules
+  cssClass "smart_base_voices_Source" fa_uml_kind_voices
+  cssClass "smart_base_voices_Pattern" fa_uml_kind_voices
+  cssClass "smart_base_voices_Terminology" fa_uml_kind_voices
+  cssClass "smart_base_voices_Rule" fa_uml_kind_voices
+  cssClass "smart_base_voices_VoiceProfile" fa_uml_kind_voices

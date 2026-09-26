@@ -44,6 +44,7 @@ describe("criterion 1 — both hashes, neither derivable from the other", () => 
     const root = fixture({ "corpus.json": "[1,2,3]", "runner.ts": "// a runner" });
     const run = buildTestRun({
       root,
+      skill: "s",
       subject: "s",
       dataInputs: ["corpus.json"],
       processInputs: ["runner.ts"],
@@ -64,6 +65,7 @@ describe("criterion 1 — both hashes, neither derivable from the other", () => 
     try {
       buildTestRun({
         root,
+        skill: "s",
         subject: "s",
         dataInputs: ["both.json"],
         processInputs: ["both.json", "runner.ts"],
@@ -88,9 +90,10 @@ describe("criterion 1 — both hashes, neither derivable from the other", () => 
     // the process basis, this fails here rather than at the next run.
     const run = buildTestRun({
       root: ROOT,
+      skill: "crdm-detect",
       subject: "crdm-detect phrase signals against the issue corpus",
       dataInputs: ["scripts/eval/crdm-detect-corpus.json"],
-      processInputs: ["scripts/eval-crdm-detect.ts", "methodologies/crdm/crdm-detect.md"],
+      processInputs: ["scripts/eval-crdm-detect.ts", "skills/crdm/crdm-detect.md"],
       outcome: {},
     });
     expect(run.data.hash).not.toBe(UNKNOWN_HASH);
@@ -127,6 +130,7 @@ describe("criterion 2 — an unchanged data set and process reproduce the hashes
     const mk = () =>
       buildTestRun({
         root,
+        skill: "s",
         subject: "s",
         dataInputs: ["c.json"],
         processInputs: ["r.ts"],
@@ -140,7 +144,7 @@ describe("criterion 3 — a deliberate change to either is detected", () => {
   test("changing the DATA moves the data hash and only the data hash", () => {
     const root = fixture({ "c.json": "[1]", "r.ts": "//" });
     const mk = () =>
-      buildTestRun({ root, subject: "s", dataInputs: ["c.json"], processInputs: ["r.ts"], outcome: {} });
+      buildTestRun({ root, skill: "s", subject: "s", dataInputs: ["c.json"], processInputs: ["r.ts"], outcome: {} });
     const before = mk();
     writeFileSync(join(root, "c.json"), "[1,2]");
     const after = mk();
@@ -152,7 +156,7 @@ describe("criterion 3 — a deliberate change to either is detected", () => {
     // that judged it has changed.
     const root = fixture({ "c.json": "[1]", "r.ts": "//" });
     const mk = () =>
-      buildTestRun({ root, subject: "s", dataInputs: ["c.json"], processInputs: ["r.ts"], outcome: {} });
+      buildTestRun({ root, skill: "s", subject: "s", dataInputs: ["c.json"], processInputs: ["r.ts"], outcome: {} });
     const before = mk();
     writeFileSync(join(root, "r.ts"), "// changed");
     const after = mk();
@@ -183,6 +187,7 @@ describe("`unknown` is a third state, not a value that matches itself", () => {
     // "reproduced" is the third-state defect in its purest form.
     const run: TestRun = {
       $schema: TEST_RUN_SCHEMA_ID,
+      skill: "s",
       subject: "s",
       data: { hash: UNKNOWN_HASH, inputs: ["x"] },
       process: { hash: UNKNOWN_HASH, inputs: ["y"] },
@@ -197,6 +202,7 @@ describe("`unknown` is a third state, not a value that matches itself", () => {
     // false it would pass, and prove nothing.
     const run: TestRun = {
       $schema: TEST_RUN_SCHEMA_ID,
+      skill: "s",
       subject: "s",
       data: { hash: "abc123abc123", inputs: ["x"] },
       process: { hash: "def456def456", inputs: ["y"] },
@@ -212,6 +218,7 @@ describe("the schema refuses what it cannot mean", () => {
     expect(() =>
       TestRunSchema.parse({
         $schema: TEST_RUN_SCHEMA_ID,
+        skill: "s",
         subject: "s",
         data: { hash: "a", inputs: [] },
         process: { hash: "b", inputs: ["y"] },

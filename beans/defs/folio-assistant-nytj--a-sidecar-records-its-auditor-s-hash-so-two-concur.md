@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nytj
-title: 'A sidecar records its auditor''s hash, so two concurrent PRs go green alone and red together'
-status: todo
+title: A sidecar records its auditor's hash, so two concurrent PRs go green alone and red together
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T00:26:19Z
-updated_at: 2026-09-19T01:18:43Z
+updated_at: 2026-09-23T13:26:05Z
 parent: folio-assistant-1swy
 ---
 
@@ -39,3 +39,88 @@ Two latent bugs fell out of the fix, both from indexing rather than naming. `STA
 Fixed in PR #319: the fixture is derived from the real sidecar with the criterion located BY ID, and a criterion that has vanished from the corpus throws by name, so "dropped" and "adjudicated" cannot both read as a pass.
 
 This one is NOT an argument for a merge queue, unlike instances 1-3. A merge queue would have caught it, since it tests the combined state, but the cheaper and more durable fix is the rule the file already half-knew: A VERDICT IS NOT A FIXTURE. Derive the state under test from the real artefact; never depend on the corpus being in it.
+
+_2026-09-23_ — **Decision (owner): both halves.** Instance 1 recurred three times today: `kg:detangle` / `kg:audit` measurements green on a PR, green on `main`, merged without a text conflict, stale on the result. The owner chose, over one alone:
+
+- **Merge queue support:** `merge_group:` on the two gating workflows (`code-quality-gates.yml`, `jsonld-gen-check.yml`), so GitHub tests EXACTLY the commit that will land. Neither reads `event_name`/`head_ref`, which a merge_group run leaves empty. Inert until the owner switches the queue on for `main` — a repository setting no agent can change.
+- **`bun run check:merged`** (Tool node `gates-merged`): the full gate set on the merged tree, in a throwaway worktree. Three outcomes; 2 = could not determine. Documented in `/prepare-merge` and its skill.
+
+Instances 4–7 (a writer and a reader disagreeing on a key) are not concurrency and were fixed case by case; they are out of scope here, as this bean's own notes argue.
+
+## Todo
+
+- [x] `merge_group:` on the two gating workflows
+- [x] `cat-harness/scripts/check-merged.ts` + `check:merged`; Tool node `gates-merged`; `/prepare-merge` skill and command
+- [x] falsified both ways: replaying the real pair (d0c91582 against main at 10:52, cc6548ef) fails EXACTLY 1 of 135 gates — `kg:detangle:check`, the real defect — exit 1; a clean control (current main against itself) passes 135/135, exit 0. The first replay also showed two false failures from path-sensitive tests (`folio-root.test.ts` requires the checkout directory be named `folio-assistant`); fixed by naming the worktree after the checkout, and re-proved.
+- [x] registered: partition rule; `covered-by` exemption (the merge queue is its CI counterpart). bun run gates 135/135; PR
+- [ ] owner switches on the merge queue for `main` (Settings → Rules/Branch protection → Require merge queue) — the owner's action, not an agent's
+
+_2026-09-26_ — **FIVE more instances in ~30 hours, and one of them makes a NEW
+argument for the single open box.** Appended by another session; not claimed, and
+nothing above altered — this bean is `in-progress` under its holder and the
+decision of 2026-09-23 is not reopened.
+
+## The instances
+
+| # | merge | what landed without its derived siblings |
+|---|---|---|
+| 1 | #1348's subject | nine artefacts from five merges (reference page, manifest entry, kg-qa sidecar, prov-qaqc, 2× detangle, 2× UML, 10× docs-auto, glossary) |
+| 2 | #1365 | seven skills — 8 stale reference pages, 6 missing manifest entries, 4 files carrying the retired `roles:` key |
+| 3 | #1374 | 27 translations with no `.po` catalogue, plus the `nav-locale.e2e` fallback fixture whose `UNTRANSLATED` page became translated |
+| 4 | #1373 | `release-epic-planning` — reference page, kg-qa sidecar, manifest entry, retired `roles:` |
+| 5 | #1337 | seven process kg-qa sidecars derived from the workflow YAML it bumps |
+
+Each was green-or-unevaluated on its own PR and red on `main`. That is this bean's
+sentence verbatim: **the state that breaks is the one neither party evaluates.**
+
+## The remedy already exists, and that is the actual finding
+
+`bun run check:merged` was written 2026-09-25 and does exactly this: the full gate
+set on the **merged** tree in a throwaway worktree, with a third state for
+could-not-determine. It is deliberately in no workflow, because the merge queue is
+its CI counterpart (`covered-by`), so it is reached only through `/prepare-merge`.
+
+**I merged four PRs on 2026-09-26 and ran `/prepare-merge` for none of them.** For
+#1337 I happened to do its job by hand — ran `bun run gates` on the merged tree,
+which caught a failure the PR's own CI had never seen — and only then discovered
+the tool that automates precisely that had existed for a day. So instance 5 is
+also a measurement of the tool being unreached rather than absent, which is this
+repository's other recurring shape and not one more gate's worth of work.
+
+## The new argument: instance 5's author is DEPENDABOT
+
+The 2026-09-23 decision has two halves. One of them **structurally cannot cover a
+bot PR**:
+
+| half | reaches a dependabot PR? |
+|---|---|
+| `bun run check:merged` via `/prepare-merge` | **no** — it is an agent-or-human action, and dependabot runs neither |
+| `merge_group:` on the gating workflows | **yes** — it tests the commit that will land, whoever authored it |
+
+#1337 bumped `uses:` pins across 33 workflow files. Those workflows are audited as
+**processes**, so seven `kg-qa` sidecars are a function of that YAML — and
+dependabot has no way to learn a repository convention. Its symptom was disguised
+too: CI failed *"IMPORTING one writes nothing — an entry point must be guarded"*,
+which reads like module hygiene; the test imports the module, the import runs the
+audit, the audit rewrites the stale sidecars, and the test reports a dirty tree.
+
+Every future workflow-version bump lands the same way. **So for bot-authored PRs
+the merge queue is not the better of the two halves, it is the only one that
+applies** — which is an argument for the open box that this bean did not have when
+the decision was taken, because at that point no instance had a non-human author.
+
+## What is NOT claimed here
+
+That the merge queue would have caught all five. Instances 2, 3 and 4 were single
+PRs whose own gates should have failed on their own base, so for those the question
+is why a red PR merged, which is a different defect and not this bean's. Instance 5
+is the clean case for the merge queue: the PR's CI could not see it, and its author
+cannot be asked to.
+
+## Adds to the Todo
+
+- [ ] instance 5's class is named in whatever the owner decides: a workflow-YAML
+      change has derived `kg-qa` process sidecars, and no bot can know that
+- [ ] MEASURED AFTER the queue is on: bump an action pin by hand, with the seven
+      sidecars left stale, and confirm the queue rejects it rather than `main`
+      discovering it

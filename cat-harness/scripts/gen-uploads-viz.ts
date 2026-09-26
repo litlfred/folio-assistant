@@ -83,8 +83,7 @@
  *   bun run uploads:viz          # write
  *   bun run uploads:viz:check    # fail if either artefact is stale
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { basename, join } from "node:path";
 
 import { readLibraryGraph, type UploadItem } from "./library-graph.ts";
 import { viewerPlacement } from "./gen-schema-viz.ts";
@@ -95,6 +94,7 @@ import {
   repoRootFor,
   siteDirFor,
 } from "../schemas/cat-harness.ts";
+import { makeEmit, type ViewerNav } from "./viewer-page.ts";
 
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
@@ -146,6 +146,10 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .pill.ingested{background:var(--ingbg);color:var(--ing)}
 .kind{color:var(--mut);font-size:.78rem}
 .empty{background:var(--card);border:1px dashed var(--line);border-radius:.5rem;padding:1.5rem;color:var(--mut)}
+.add{background:var(--card);border:1px solid var(--line);border-radius:.5rem;padding:.9rem 1.1rem;margin:1rem 0}
+.add h2{font-size:1rem;margin:0 0 .4rem}
+.add p{margin:.35rem 0;color:var(--mut);font-size:.9rem}
+.add pre{background:var(--bg);border:1px solid var(--line);border-radius:.35rem;padding:.55rem .7rem;overflow-x:auto;margin:.4rem 0;font-size:.85em}
 code{background:var(--card);padding:.05rem .3rem;border-radius:.25rem;font-size:.85em}
 </style>
 </head>
@@ -156,6 +160,7 @@ code{background:var(--card);padding:.05rem .3rem;border-radius:.25rem;font-size:
 reachable by the corpus checklist, which searches <code>library/</code> only — so a file
 waiting here makes a clean grep read as &ldquo;nobody has done this&rdquo;.</p>
 <div class="badges" id="badges"></div>
+<div id="add"></div>
 <div id="body"></div>
 </main>
 <script>
@@ -222,6 +227,44 @@ function render(){
     '<div class="badge"><b>'+total+'</b><span>queued units</span></div>' +
     '<div class="badge"><b>'+qs.length+'</b><span>queue(s)</span></div>';
 
+  // ── ADDING TO THE QUEUE — the owner's 2026-09-23 ruling: a COMMIT FROM A
+  // CHECKOUT. So the affordance is the path and the command, not a button: a
+  // published page cannot write to somebody's working tree, and a control
+  // that looked like it could would be the dead link pb04 forbids, one layer
+  // up.
+  //
+  // NO BACKTICKS IN THIS COMMENT. It sits inside the page template literal,
+  // and one here ends the string and turns the rest of the file into
+  // TypeScript — which is what happened on the first draft, failing at a line
+  // far from the mistake. The same warning is already written twice elsewhere
+  // in this repository, which is how I knew where to look.
+  //
+  // PER QUEUE, because there are three with different paths. A single
+  // hardcoded "put it in uploads/" would be wrong for two of them — the same
+  // defect as ingest's printed -o, which named one directory for two arms
+  // that wanted different ones (#1050).
+  //
+  // AND NO --library VALUE IS PRINTED, which is the part that had to be
+  // measured rather than assumed. A sibling convention (<instance>/library)
+  // looks obvious and the corpus contradicts it in ALL THREE queues:
+  // uploads/ has landed files in agent-skills (5) AND smart-base (7);
+  // cat-harness/uploads in cat-harness (5) AND folio-assistant-sci (1);
+  // who-iris/uploads in none at all, where the convention would have
+  // confidently said who-iris/library. A QUEUE HAS NO SINGLE DESTINATION —
+  // the choice is per document, which is exactly why ingest itself refuses to
+  // guess it. The page says the same thing the tool says.
+  $("add").innerHTML = qs.length === 0 ? "" :
+    '<div class="add"><h2>Adding a source</h2>' +
+    '<p>Sources are added by <b>committing them from a checkout</b> \u2014 this page shows the queue, it cannot write to it.</p>' +
+    qs.map(function(q){
+      return '<p>Into <code>' + q.dir + '/</code>:</p>' +
+        '<pre>cp YOUR-FILE.pdf ' + q.dir + '/\\n' +
+        'git add ' + q.dir + '/YOUR-FILE.pdf &amp;&amp; git commit\\n' +
+        'bun run ingest ' + q.dir + '/YOUR-FILE.pdf --library &lt;destination&gt;</pre>';
+    }).join("") +
+    '<p><code>--library</code> is <b>chosen, never derived</b>: files from one queue have been ingested into several libraries, so a queue does not determine a destination. <code>ingest</code> lists the declared ones and refuses to guess.</p>' +
+    '</div>';
+
   var rows = sorted();
   if (!rows.length) {
     // An empty queue is a DETERMINED answer and is not an error: nothing is
@@ -268,18 +311,17 @@ fetch(SRC).then(function(r){ return r.json(); }).then(function(d){
 `;
 }
 
-function emit(path: string, content: string): void {
-  if (check) {
-    const current = existsSync(path) ? readFileSync(path, "utf-8") : "";
-    if (current === content) return;
-    console.error(`  ✗ ${path} ${existsSync(path) ? "is stale" : "is missing"}`);
-    stale++;
-    return;
-  }
-  mkdirSync(dirname(path), { recursive: true });
-  writeFileSync(path, content);
-  console.log(`  ✓ ${path}`);
-}
+/**
+ * The shared viewer `emit` — the navbar comes with the write (bean `edx7`).
+ *
+ * `emit` writes what it is given; `emitPage` is the same write with the rail,
+ * and takes the nav per call because a SUBJECT page lists that subject's
+ * graphs while the index lists this instance's. Both are facts this generator
+ * already holds, and neither is parsed back out of a path it just composed.
+ */
+// No plain `emit` here: this generator writes pages and nothing else, so an
+// unused one would be dead code claiming a capability.
+const emitPage = (nav: ViewerNav) => makeEmit({ check, onStale: () => { stale++; }, nav });
 
 if (import.meta.main) {
   const repoRoot = repoRootFor(ROOT);
@@ -309,7 +351,8 @@ if (import.meta.main) {
   // ONE dataset rather than minting a second — see the header. The PAGE still
   // sits on the uploads route, so the tile opens a queue view.
   const { pageDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, "library");
-  emit(join(pageDir, "index.html"), viewerHtml(dataHref));
+  const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
+  emitPage(nav)(join(pageDir, "index.html"), viewerHtml(dataHref));
 
   // One page per SUBJECT — read from the QUEUES rather than from the declared
   // directory list, so a declared-but-empty uploads directory gets no page
@@ -317,7 +360,7 @@ if (import.meta.main) {
   const subjects = [...new Set(g.queues.map((q) => q.instance))].sort();
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, "library");
-    emit(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
+    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
   }
 
   if (!check) {

@@ -429,7 +429,11 @@ test.describe("kg viewer — with a catalogue", () => {
     // geometry.
     await page.goto(`${FIXTURE}?lang=qaa`);
     const parts = page.locator("#meta bdi");
-    expect(await parts.count()).toBeGreaterThan(1);
+    // Retrying, not a bare `count()`: the line is written inside the graph
+    // fetch's `.then`, so `goto` returns before it exists. The same race as
+    // the pressed-facet count below (d345255); reproduced by delaying the
+    // `.jsonld` route 900 ms — bare count 0, this green.
+    await expect(parts.nth(1)).toBeAttached();
     await expect(parts.first()).toHaveText(/^\d+ nodes$/);
 
     // In RTL the first part sits at the RIGHT, and the last to its left.
@@ -564,19 +568,32 @@ test.describe("kg viewer — a selected facet is always unselectable", () => {
     // pressed control — and the bean's failure state is precisely a group
     // with NONE, its selected button hidden while `All` reads false.
     const groups = ["#facets", "#subs"] as const;
-    const pressedIn = async (g: string) => page.locator(`${g} .facet[aria-pressed='true']`).count();
+    // RETRYING, not a bare `await …count()`. `kg-viewer.ts` draws the facets
+    // inside `fetch(DOC).then(…)`, so `page.goto` — which resolves on `load` —
+    // returns with ZERO pressed controls and the count samples before
+    // `drawGroup` has run. That is not this page's defect; it is the
+    // assertion's, and it is the only bare count in this file: every other
+    // test here either uses `toHaveCount` or a `.click()`, both of which wait.
+    //
+    // It went red in CI on 2026-09-23 while passing locally and on the base
+    // branch at the identical commit — a race lost rather than a behaviour
+    // changed, and lost here because this branch's export is bigger, so the
+    // fetch takes longer. Reproduced deterministically by delaying the
+    // `.jsonld` route 900 ms: bare count 0, `toHaveCount(1)` green on the same
+    // page. The property asserted is unchanged.
+    const pressedIn = (g: string) => page.locator(`${g} .facet[aria-pressed='true']`);
 
-    for (const g of groups) expect(await pressedIn(g), `${g} at rest`).toBe(1);
+    for (const g of groups) await expect(pressedIn(g), `${g} at rest`).toHaveCount(1);
     const all = await page.locator("#list li").count();
     expect(all).toBeGreaterThan(0);
 
     await page.locator("#facets .facet", { hasText: /^Tool\d+$/ }).click();
-    for (const g of groups) expect(await pressedIn(g), `${g} while filtered`).toBe(1);
+    for (const g of groups) await expect(pressedIn(g), `${g} while filtered`).toHaveCount(1);
 
     // The inverse is REACHABLE — the whole of `l4zi`. Clicking the pressed
     // control returns the full list rather than merely changing something.
     await page.locator("#facets .facet[aria-pressed='true']").click();
-    for (const g of groups) expect(await pressedIn(g), `${g} after undo`).toBe(1);
+    for (const g of groups) await expect(pressedIn(g), `${g} after undo`).toHaveCount(1);
     expect(await page.locator("#list li").count()).toBe(all);
   });
 });

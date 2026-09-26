@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/theming/theme-artefacts.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/theming/theme-artefacts.md) — do not edit here.
+> Generated from [`cat-harness/skills/theming/theme-artefacts.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theme-artefacts.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/theming/theme-artefacts.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/theming/theme-artefacts.md){: .fa-edit-source }
 
 {% raw %}
 # Per-artefact specialisation
@@ -75,7 +75,7 @@ Measured off a 5–10% grid overlay of each card, as fractions `x y w h`:
 | `landing-operations-card` | 0.17 0.475 0.27 0.27 |
 | `landing-engineer-card` | 0.00 0.40 0.46 0.46 |
 | `landing-analyst-card` | 0.05 0.48 0.36 0.36 |
-| `landing-architecture-card` | 0.00 0.36 0.46 0.46 |
+| `landing-architecture-card` | 0.02 0.38 0.44 0.44 |
 
 **Only CARD crops carry one.** The avatar is cut from the square crop; a box on
 the laptop or mobile art would be measured against a composition the frame
@@ -89,6 +89,55 @@ said so. **The schema cannot see a hat.** So:
 
     bun run avatar:crops     # every declared box, drawn on the card and clipped
     bun run theme:sheet      # every theme: palette, contrast, art, both regions
+
+## The page ground: the first paint is DARK
+
+The owner, 2026-09-24, verbatim:
+
+> *"when any page/foio-asst/cat-harness first loads if flashes white before
+> goignt o dark mode. instead it should deafult dark mode then turn to light
+> mode to prevent light flash in dark. update skils"*
+
+**The rule: the first frame of every published page is dark. A light page
+becomes light AFTER that, never the other way round, and a reader in dark
+mode never sees a light frame.** A dark frame before light is a blink; a white
+frame before dark is a flashbulb in a dark room — the asymmetry is the whole
+reason for the default.
+
+What that takes, on any page that picks its scheme on the client:
+
+1. **Decide the scheme before any stylesheet paints.** An inline, render-
+   blocking script in `<head>` sets `data-fa-scheme` on `<html>` from the
+   reader's stored choice (`fa-color-scheme`, the key `docs-ui.js` writes),
+   else `prefers-color-scheme`, else **dark**. On the Jekyll site this is the
+   `fa-first-paint` block at the top of `_includes/head_custom.html`, and it
+   also switches the theme's stylesheet while the head is still being parsed,
+   so a light reader is light from the first frame too.
+2. **Paint `html` dark from the very first CSS** (light only when the
+   attribute says light). A page ground that nothing paints is the browser's
+   WHITE canvas whenever the theme's sheet is missing — a slow CDN, or a swap.
+3. **Never swap a stylesheet the page is already painting with.**
+   `jtd.setTheme(name)` swaps just-the-docs' first stylesheet, and a swap
+   UNLOADS the sheet until the new file arrives. Applying a stored "dark" on
+   this dark-configured site swapped `-default.css` for `-dark.css` — the same
+   colours — on every load: that was the white flash, for every reader who had
+   ever pressed the toggle. `applyScheme` in `docs-ui.js` now asks
+   `jtdShows(name)` first.
+
+**How it is held:** `cat-harness/test/first-paint-scheme.e2e.ts` lifts the
+shipped snippet out of `head_custom.html`, holds the deferred bundle, and reads
+`html`'s computed background before the bundle runs; it holds the dark sheet in
+flight to prove no swap happens; and it checks a stored light choice ends up
+light. A page you add that emits its own `<head>` is covered by the same spec's
+"generated dashboards" block — add it there.
+
+**Pages that switch nothing with script cannot flash**, and do not need the
+snippet: the generated dashboards (`state-visualizer.ts`,
+`gen-translation-status.ts`) paint dark from their first CSS, and the viewers
+that follow `@media (prefers-color-scheme)` are decided by the browser before
+first paint. Do not give a dashboard the snippet as a tidy-up: it would switch
+ON `data-fa-scheme="light"` rules that were never finished (measured
+2026-09-24: 3–6 axe contrast failures per dashboard in light).
 
 ## Adding a surface
 

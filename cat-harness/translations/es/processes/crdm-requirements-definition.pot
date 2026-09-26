@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: crdm-requirements-definition\n"
-"POT-Creation-Date: 2026-09-21T19:02:57.417Z\n"
+"POT-Creation-Date: 2026-09-23T20:28:09.021Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -14,112 +14,122 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:19
+#: processes/crdm-requirements-definition.bpmn:20
 #. Diagram label
 msgid "Agent"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:75
+#: processes/crdm-requirements-definition.bpmn:78
 #. Diagram label
 msgid "Approve requirements"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:15
+#: processes/crdm-requirements-definition.bpmn:15
 #. Diagram label
 msgid "BA / Feature Requestor"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:77
+#: processes/crdm-requirements-definition.bpmn:82
 #. Diagram label
 msgid "BA approves?"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:36
+#: processes/crdm-requirements-definition.bpmn:39
 #. Diagram element documentation
 msgid "Business-process analysis here means reading the existing diagrams under processes/ and drawing the gap, so the skill that implements this step is the BPMN one."
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:10
+#: processes/crdm-requirements-definition.bpmn:10
 #. Diagram label
 msgid "CRDM Phases 2–4 — BPA and requirements"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:13
+#: processes/crdm-requirements-definition.bpmn:13
 #. Diagram element documentation
 msgid "Map the current workflow, then define the requirements and the impact they carry, and loop until approved. Same shape as Phase 1 and for the same reason: an unapproved requirement is a proposal."
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:20
+#: processes/crdm-requirements-definition.bpmn:21
 #. Diagram element documentation
 msgid "Owns Phases 2 through 4a end to end, but the revise loop (GW_Reqs' 'revise' branch) re-enters at A_DefineReqs rather than back at A_MapWorkflow — so mapping the current workflow is this lane's one-time fact-finding, done once per phase run, while defining requirements and comparing options is what gets redone against BA feedback until Lane_Stakeholders approves."
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:34
+#: processes/crdm-requirements-definition.bpmn:37
 #. Diagram label
 msgid "Phase 2: Map current workflow (BPA)"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:53
+#: processes/crdm-requirements-definition.bpmn:56
 #. Diagram element documentation
 msgid "Phase 4 often ends with a CHOICE rather than a plan, and this is the step that hands it over. Per option: what it does, its pro, its con, what it changes DOWNSTREAM, and how reversible it is — laid out where the rows can be read against each other, then one recommendation and a stated default. A step of its own rather than a line inside A_DefineReqs, because it has a different output and a different reader: the impact analysis is for the record, the comparison is the thing the BA answers from. Folding it in is how it gets skipped — the analysis feels finished, so the options go over as a list of names. Skipped legitimately when the analysis yields ONE viable approach. Do not manufacture alternatives to fill a table."
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:51
+#: processes/crdm-requirements-definition.bpmn:54
 #. Diagram label
 msgid "Phase 4a: Compare the viable options"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:33
+#: processes/crdm-requirements-definition.bpmn:36
 #. Diagram label
 msgid "Phase begins"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:78
+#: processes/crdm-requirements-definition.bpmn:85
 #. Diagram label
 msgid "Phase complete"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:41
+#: processes/crdm-requirements-definition.bpmn:44
 #. Diagram label
 msgid "Phases 3–4: Define requirements + impact"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:69
+#: processes/crdm-requirements-definition.bpmn:72
 #. Diagram label
 msgid "Review requirements and impact analysis"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:85
+#: processes/crdm-requirements-definition.bpmn:92
 #. Diagram label
 msgid "revise"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:28
+#: processes/crdm-requirements-definition.bpmn:30
 #. Diagram label
 msgid "Stakeholders"
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:71
+#: processes/crdm-requirements-definition.bpmn:80
+#. Diagram element documentation
+msgid "Stakeholders approve the requirements and impact analysis on the issue, or send them back for revision. Only their approval moves the work to sign-off; an agent never records an approval on a person's behalf."
+msgstr ""
+
+#: processes/crdm-requirements-definition.bpmn:74
 #. Diagram element documentation
 msgid "The BA reviews the formal requirements and the impact analysis the agent produced."
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:16
+#: processes/crdm-requirements-definition.bpmn:83
+#. Diagram element documentation
+msgid "The BA's answer to the requirements and impact. `revise` goes back to defining them; `yes` completes the phase."
+msgstr ""
+
+#: processes/crdm-requirements-definition.bpmn:16
 #. Diagram element documentation
 msgid "The one checkpoint between the agent's comparison and the stakeholders' sign-off: BA_ReviewReqs is where someone who can read the impact analysis on its own technical terms vouches for it, because Lane_Stakeholders reviews only at defined checkpoints and needs the requirement already in a form they can approve without re-deriving it."
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:29
+#: processes/crdm-requirements-definition.bpmn:31
 #. Diagram element documentation
 msgid "The verdict GW_Reqs reads to decide between ending the phase and sending A_DefineReqs around again — a narrower approval than crdm-close.bpmn's final feature sign-off, since what is being approved here is the REQUIREMENT model itself, not that the delivered feature satisfies it."
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:43
+#: processes/crdm-requirements-definition.bpmn:46
 #. Diagram element documentation
 msgid "Two skills, because this step is two things: the requirements come from the CRDM process, the impact half is a dependency question the content graph answers."
 msgstr ""
 
-#: methodologies/crdm/processes/crdm-requirements-definition.bpmn:86
+#: processes/crdm-requirements-definition.bpmn:93
 #. Diagram label
 msgid "yes"
 msgstr ""

@@ -72,9 +72,10 @@
  * declared but whose crops are missing, which `resolveThemeBackdrop` refuses
  * wholesale.
  *
- * Today: `grumpy-cat` (the sage hoodie) is cat-harness's, `bootstrap` (the
- * cowboy in the desert) is bootstrap's, `library` is folio-assist-core's, and
- * `engineer` is reserved for testing surfaces.
+ * Today: `grumpy-cyborg-agents` (the sage hoodie on a sled pulled by robot cats) is
+ * cat-harness's, `grumpy-cat` (the plain sage hoodie) is folio-assist-core's,
+ * `bootstrap` (the cowboy in the desert) is bootstrap's, and `engineer` is
+ * reserved for testing surfaces.
  *
  * ## Choosing a theme is an AUTHORING judgement — there is no mapping
  *
@@ -124,6 +125,8 @@
  * a geometry, not a licence to remove a non-colour channel.
  */
 import { z } from "zod";
+
+import { nodeKind } from "./node-kind.js";
 
 /**
  * The three layouts a theme must define.
@@ -758,6 +761,19 @@ export interface DeclaredImage {
    * above describes.
    */
   textRegion?: { x: number; y: number; w: number; h: number } | undefined;
+  /**
+   * The part of this image that IS the avatar, in fractions of it — `603s`.
+   *
+   * Structural for the same reason as `textRegion`, and declared per IMAGE
+   * rather than per role because the cat sits in a different place in every
+   * composition: the seven measured boxes share no two values.
+   *
+   * A consumer wanting an avatar wants the CARD layout, because
+   * `KgImageSchema` refuses a non-square box in PIXELS and only the square
+   * crop can satisfy that. Equal fractions on a landscape image are a box
+   * 1.78x wider than tall, and the clip scales width and height separately.
+   */
+  avatarRegion?: { x: number; y: number; w: number; h: number } | undefined;
 }
 
 /** What {@link resolveThemeBackdrop} found, so a caller can REPORT a gap. */
@@ -847,9 +863,23 @@ export const ThemedTodoFieldsSchema = z
       .string()
       .regex(/^[a-z][a-z0-9-]*$/, "a theme id is lowercase kebab-case")
       .optional(),
+    /**
+     * Which of the theme's three crops this sticky shows. ABSENT means the
+     * square `card` crop, on every screen — owner, 2026-09-24: *"i want sticky
+     * themes to by default use the square avatar layout but mostly faded, if
+     * not specified."* Absent rather than defaulted, for the same reason as
+     * `theme`: "the author chose card" and "nobody chose" stay distinguishable.
+     */
+    layout: z.enum(THEME_LAYOUTS).optional(),
   })
   .strict();
 export type ThemedTodoFields = z.infer<typeof ThemedTodoFieldsSchema>;
+
+/**
+ * `themed` as a mixin node kind: a parent a kind declares to carry a `theme`.
+ * No `$schema` of its own; it is a layer, not a file type (bean `a1lq`).
+ */
+export const ThemedKind = nodeKind("themed", [], ThemedTodoFieldsSchema.shape);
 
 /**
  * Every user-facing string a theme contributes, for extraction.

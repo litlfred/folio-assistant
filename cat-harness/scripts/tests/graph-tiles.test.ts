@@ -96,10 +96,11 @@ describe("a tile is derived from the DECLARATION", () => {
 });
 
 describe("surfaces: one declaration, per-surface visibility", () => {
-  test("absent means BOTH — a tile that states nothing is complete", () => {
+  test("absent means EVERY surface — a tile that states nothing is complete", () => {
     expect(graphTiles([dir("x", { visualiser: "x.html" })])[0]?.surfaces).toEqual([
       "navbar",
       "board",
+      "glass",
     ]);
   });
 
@@ -113,11 +114,11 @@ describe("surfaces: one declaration, per-surface visibility", () => {
     expect(tilesOn(tiles, "board").map((t) => t.directory)).toEqual(["board-only", "both"]);
   });
 
-  test("ONE declaration drives both surfaces — never two lists to disagree", () => {
+  test("ONE declaration drives every surface — never two lists to disagree", () => {
     // Q11. Two registries would be free to disagree about what a tile IS, and
     // the disagreement would be invisible.
     const tiles = graphTiles([dir("x", { visualiser: [{ ref: "a.html", title: "T" }] })]);
-    for (const s of ["navbar", "board"] as const) {
+    for (const s of ["navbar", "board", "glass"] as const) {
       expect(tilesOn(tiles, s)[0]?.title).toBe("T");
       expect(tilesOn(tiles, s)[0]?.ref).toBe("a.html");
     }

@@ -102,6 +102,8 @@
  */
 import { cpSync, existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
+
+import { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
 import { declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
 import { injectRail, type NavItem } from "./lib/harness-rail.js";
 
@@ -326,10 +328,38 @@ export function visualiserHref(visualiser: string, docsPrefix: string): string |
  * same kind (an override and its default), and a navbar that listed `library`
  * twice would be reporting the declaration's shape rather than the graph's.
  *
- * @param linked  href per kind for the kinds that ARE published, already
- *   relative to the page being rendered.
+ * A KIND WITH NO HREF SAYS WHY, when the site can tell it — see
+ * {@link publishedGraphs}. Greying the row was the whole of the signal until
+ * 2026-09-23, which made "declared and not built" a fact carried by contrast
+ * and by nothing else, on the one surface where the sidebar template at least
+ * had a `title`. Absent from `site` is the honest third state and renders as
+ * it always did: a grey row with no claim about why.
+ *
+ * ## TWO WITNESSES, AND THE MOUNT TABLE IS ASKED FIRST (`pk2s`)
+ *
+ * `linked` still wins wherever it has an answer, and that order is the
+ * owner's rather than a tie-break: a mount is the instance PRESENTING ITSELF
+ * (`/who-iris/`), and the handler's viewer is cat-harness's default rendering
+ * of the same graph (`/cat-harness/library/who-iris/`). *"cliking shoud go to
+ * folio view, not the schema viweer."*
+ *
+ * `site` is consulted only where the mount table is SILENT — and it is silent
+ * about every handler-published viewer by construction, because `mountable()`
+ * requires an `index.html` that a data directory does not have. That silence
+ * used to render as a grey row over a page that exists; two of who-iris's
+ * six kinds were in exactly that state. {@link publishedGraphs} carries the
+ * measurement.
+ *
+ * @param linked  href per kind from the MOUNT TABLE, already relative to the
+ *   page being rendered. The instance's own route, and preferred.
+ * @param site  what the published site knows for the kinds the mount table
+ *   says nothing about — a handler's href, or the reason there is none.
  */
-export function declaredGraphs(instanceDirName: string, linked: ReadonlyMap<string, string>): NavItem[] {
+export function declaredGraphs(
+  instanceDirName: string,
+  linked: ReadonlyMap<string, string>,
+  site: ReadonlyMap<string, GraphFallback> = new Map(),
+): NavItem[] {
   const decl = declarationPathIn(join(REPO, instanceDirName));
   if (decl === undefined || !existsSync(decl)) return [];
   let d: { directories?: { graphKinds?: string[] }[] };
@@ -347,8 +377,19 @@ export function declaredGraphs(instanceDirName: string, linked: ReadonlyMap<stri
     for (const kind of entry.graphKinds ?? []) {
       if (seen.has(kind)) continue;
       seen.add(kind);
-      const href = linked.get(kind);
-      out.push({ label: kind, icon: kind.slice(0, 1).toUpperCase(), ...(href ? { href } : {}) });
+      const fallback = site.get(kind);
+      const href = linked.get(kind) ?? fallback?.href;
+      // A row that opens owes no explanation, and `publishedGraphs` never
+      // returns both — but the guard stays, because `href` may come from the
+      // mount table while the note came from the site, and those two are not
+      // the pair that function makes exclusive.
+      const note = href ? undefined : fallback?.note;
+      out.push({
+        label: kind,
+        icon: kind.slice(0, 1).toUpperCase(),
+        ...(href ? { href } : {}),
+        ...(note ? { note } : {}),
+      });
     }
   }
   return out.sort((a, b) => a.label.localeCompare(b.label));
@@ -381,7 +422,100 @@ export function declaredGraphs(instanceDirName: string, linked: ReadonlyMap<stri
  *   href in `harness.json` is site-absolute and a mounted page is not at the
  *   root.
  */
-function instantiatedHarnesses(built: string, toRoot: string): NavItem[] | undefined {
+/** Where a kind opens, or why it does not. Never both — see the loop below. */
+export type GraphFallback = { href?: string; note?: string };
+
+/**
+ * WHAT THE PUBLISHED SITE KNOWS about each of an instance's declared kinds —
+ * where it opens, or why it does not.
+ *
+ * Read from the same `harness.json` {@link instantiatedHarnesses} reads, and
+ * for the same reason: `harness-tiles.ts` already separates staging-only,
+ * render-exempt, built-but-unreachable and nobody-built-it in order to word
+ * four different findings, and a table here would be a fifth answer free to
+ * disagree with those four. This function looks the answer up; it decides
+ * nothing.
+ *
+ * EMPTY, not `undefined`, when the file is missing or will not parse — and
+ * that is a deliberate difference from `instantiatedHarnesses`, which uses
+ * absence to make the caller omit a whole region. Here there is nothing to
+ * omit: the graph rows come from the DECLARATION and are rendered either way.
+ * A missing file costs the reasons, not the rows, and a row with no reason is
+ * exactly what this surface shipped until today.
+ *
+ * Keyed by kind within one instance, because that is how `declaredGraphs`
+ * asks. Two harnesses may both declare `library`, so the instance is part of
+ * the question and never assumed.
+ *
+ * ## Why it carries the HREF too, as of `pk2s`
+ *
+ * It read only the reasons until 2026-09-23, and the rail then greyed two
+ * rows this same file believed were published: who-iris's `catalogue` and
+ * `uploads`. Settled against `gh-pages` rather than against either
+ * generator — `cat-harness/catalogue/who-iris/index.html` is 23,534 bytes
+ * there and `cat-harness/library/who-iris/index.html` is 20,204 — so the
+ * rail was losing two WORKING links.
+ *
+ * **Neither producer was wrong.** They answer different questions, and the
+ * caller was asking the one that cannot see a handler's viewer:
+ *
+ * | producer | answers | `catalogue` |
+ * |---|---|---|
+ * | the mount table | did we copy this instance's own RENDERED directory? | no |
+ * | `harness-tiles` | is there a PUBLISHED VIEWER for this kind? | yes |
+ *
+ * `mountable()` requires an `index.html`, rightly — a directory with no
+ * rendered page has nothing to mount — and who-iris's `catalogue/`,
+ * `uploads/`, `skills/` and `themes/` have none, because they hold DATA. The
+ * page that renders who-iris's catalogue is the cat-harness HANDLER's, laid
+ * down by Jekyll at `/cat-harness/catalogue/who-iris/`. It is not a mount and
+ * can never become one, so the mount table is invisible to it by
+ * construction.
+ *
+ * That is the split `harness_details.html` already states in its own words:
+ * *"`/who-iris/` is who-iris presenting itself, `/library/who-iris/` is the
+ * cat-harness handler's default rendering of its library."* The rail's graph
+ * rows are meant to reach the second, and until now reached it only where a
+ * mount happened to coincide — which is the whole of why `library` linked and
+ * `catalogue` did not.
+ *
+ * **This is still not the hardcoded list the caller's comment forbids.**
+ * `harness.json` is generated and presence-checked; the rule it states — a
+ * kind gains a link the moment it gains a viewer — is the rule being kept
+ * here, against a witness that can actually see one.
+ */
+export function publishedGraphs(built: string, instanceName: string, toRoot: string): Map<string, GraphFallback> {
+  const out = new Map<string, GraphFallback>();
+  const prefix = publishedDocsPrefix(REPO, built);
+  if (prefix === undefined) return out;
+  const data = join(REPO, prefix, "_data", "harness.json");
+  if (!existsSync(data)) return out;
+  let d: { harnesses?: { name?: string; visualisations?: { kind?: string; path?: string; note?: string }[] }[] };
+  try {
+    d = JSON.parse(readFileSync(data, "utf-8"));
+  } catch {
+    return out;
+  }
+  const h = (d.harnesses ?? []).find((x) => x.name === instanceName);
+  for (const v of h?.visualisations ?? []) {
+    if (!v.kind) continue;
+    // EXACTLY ONE OF THE TWO, because they are the two halves of one answer:
+    // a kind either opens somewhere or owes a reason it does not. A row
+    // carrying both would be a working link captioned "no viewer yet", which
+    // is the stale-note case the previous guard was written for and which
+    // this shape makes unrepresentable rather than merely checked.
+    //
+    // The path is SITE-ABSOLUTE in `harness.json` and a mounted page is not at
+    // the root, so it is re-based exactly as `instantiatedHarnesses` re-bases
+    // a harness href. Composing it any other way here would be a second answer
+    // to "where does this page live".
+    if (v.path) out.set(v.kind, { href: `${toRoot}${v.path}` });
+    else if (v.note) out.set(v.kind, { note: v.note });
+  }
+  return out;
+}
+
+export function instantiatedHarnesses(built: string, toRoot: string): NavItem[] | undefined {
   // The site root is READ, never composed. `join(REPO, built, "docs", ...)`
   // was the first version and `check:declared-paths` refused it -- rightly,
   // and pointedly, because `publishedDocsPrefix` exists a few lines up in this
@@ -392,7 +526,7 @@ function instantiatedHarnesses(built: string, toRoot: string): NavItem[] | undef
   if (prefix === undefined) return undefined;
   const data = join(REPO, prefix, "_data", "harness.json");
   if (!existsSync(data)) return undefined;
-  let d: { harnesses?: { name?: string; label?: string; title?: string; href?: string | null; instantiated?: boolean; tone?: number; icon?: { src?: string; title?: string } | null }[] };
+  let d: { harnesses?: { name?: string; label?: string; title?: string; href?: string | null; instantiated?: boolean; tone?: number; icon?: { src?: string; title?: string; region?: { x: number; y: number; w: number; h: number } } | null }[] };
   try {
     d = JSON.parse(readFileSync(data, "utf-8"));
   } catch {
@@ -406,7 +540,16 @@ function instantiatedHarnesses(built: string, toRoot: string): NavItem[] | undef
       // A site-absolute href has to be re-based for a page that is not at the
       // root. `/who-iris/` from `/docs/who-iris/index.html` is `../../who-iris/`.
       const href = h.href ? `${toRoot}${h.href}` : undefined;
-      const avatar = h.icon?.src ? { src: `${toRoot}${h.icon.src}`, ...(h.icon.title ? { title: h.icon.title } : {}) } : undefined;
+      const avatar = h.icon?.src
+        ? {
+            src: `${toRoot}${h.icon.src}`,
+            ...(h.icon.title ? { title: h.icon.title } : {}),
+            // `603s`'s declared crop, when the icon image carries one.
+            // `harness-tiles.ts` puts it here; nothing in this file decides a
+            // box, which is the point of declaring it.
+            ...(h.icon.region ? { region: h.icon.region } : {}),
+          }
+        : undefined;
       return {
         label,
         ...(href ? { href } : {}),
@@ -512,7 +655,7 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
         linked.set(o.kind, `${toRoot}/${visual ?? `${o.route}/`}`);
       }
 
-      const links: NavItem[] = declaredGraphs(m.name, linked);
+      const links: NavItem[] = declaredGraphs(m.name, linked, publishedGraphs(built, m.name, toRoot));
 
       const harnesses = instantiatedHarnesses(built, toRoot);
       const before = readFileSync(file, "utf-8");
@@ -532,6 +675,163 @@ function injectRails<T extends { name: string; kind: string; route: string; visu
     }
   }
   return { injected, skipped, unpublished };
+}
+
+/**
+ * Pages the SITE publishes that Jekyll never laid out — bean `oi1y`.
+ *
+ * ## The gap, and why it is not the mount gap
+ *
+ * {@link injectRails} walks MOUNT ROUTES. A page that is neither a mount nor a
+ * generated viewer falls between both: Jekyll copies a committed `.html`
+ * through verbatim, so it inherits no layout and therefore no sidebar, and
+ * nothing else puts one on it.
+ *
+ * A wireframe directory is the clearest case, because it holds both halves:
+ * `as-is.html` beside `intent.md`, same subject, same directory. The `.md` is
+ * laid out and wears the theme's sidebar; the `.html` wears nothing — **no
+ * navigation and no outward link at all**, not even back to the wireframe it
+ * belongs to. Measured on the published site: 23 wireframe pages and 10 under
+ * `bootstrap/`.
+ *
+ * ## Why a pass and not 33 edits
+ *
+ * That is `edx7`'s argument, one directory over: hand-editing the committed
+ * files fixes today's 33 and leaves the 34th wireframe to forget. These are
+ * hand-authored — `check-wireframes.ts` validates them and writes nothing — so
+ * `edx7`'s `emit` fixture cannot reach them either. What is left is the
+ * mechanism this file already implements for mounts: inject after the build.
+ *
+ * ## The objection that a drawing should not wear real chrome
+ *
+ * Six of the 23 DRAW a sidebar as part of the mockup, which puts a real rail
+ * beside a drawn one — the shape of the IRIS-replica case, where folio
+ * chrome on a replica is the opposite of what a replica is for.
+ *
+ * It does not apply, and the repository settled it before this pass existed:
+ * `navbar/intent.md` also depicts and discusses the navbar, **and wears the
+ * theme sidebar**, and nobody has called that wrong. A replica impersonates
+ * somebody else's site; a wireframe is this site documenting itself, and the
+ * drawing is content inside the page rather than a claim about what the page
+ * is.
+ *
+ * ## Already-navigated pages are LEFT ALONE, and both navigations count
+ *
+ * A page carrying the theme's `<nav id="site-nav">` is not missing anything,
+ * and neither is one already carrying `<nav class="fa-nav">`. Conflating those
+ * two is what made the measurement behind this function wrong four times
+ * running: `docs-ui.css` styles the theme's sidebar with `fa-nav-*` class
+ * names, so a substring test for `fa-nav` reports a themed page as railed —
+ * and reports a page that merely MENTIONS `.fa-nav-toggle` in prose as railed
+ * too, which is what the navbar wireframe does.
+ */
+const NAVIGATED = /<nav class="fa-nav"|id="site-nav"/;
+
+/**
+ * Where this pass does NOT go — **empty, and that is the answer rather than an
+ * oversight**.
+ *
+ * `api/` held the only entry. TypeDoc's 1816 pages already carry a toolbar, a
+ * module list and a search dialog, so a second navigation there was a LAYOUT
+ * question rather than a missing-navigation defect, and it was kept out of the
+ * first pass so the question could be answered where a reviewer sees it.
+ *
+ * **It was answered by rendering, not by argument.** A real published TypeDoc
+ * page was railed locally and both versions opened in a browser at 1280px:
+ *
+ * | | harness rail | TypeDoc toolbar | horizontal scroll |
+ * |---|---|---|---|
+ * | before | — | x=0, w=1280 | none |
+ * | after | x=0, **w=56** | x=56, w=1224 | none |
+ *
+ * The rail renders as its 56px COLLAPSED STRIP and the toolbar reflows beside
+ * it; `scrollWidth` equals `innerWidth` in both, so nothing is pushed off the
+ * page. TypeDoc's module list keeps its own column to the right of the strip.
+ * Two navigations, neither obscuring the other.
+ *
+ * The constant stays rather than being deleted, because the NEXT family that
+ * needs excluding should find a documented place to say so and a test that
+ * makes the exclusion visible — which is what an empty array with this comment
+ * provides and a removed one does not.
+ */
+const NOT_THIS_PASS: readonly string[] = [];
+
+export function railStandalonePages(
+  siteAbs: string,
+  built: string,
+  instanceName: string,
+  mountRoutes: readonly string[],
+): { injected: number; alreadyNavigated: number; skipped: string[] } {
+  const skipped: string[] = [];
+  let injected = 0;
+  let alreadyNavigated = 0;
+
+  const owned = (rel: string): boolean =>
+    mountRoutes.some((r) => rel === r || rel.startsWith(`${r}/`)) ||
+    NOT_THIS_PASS.some((r) => rel === r || rel.startsWith(`${r}/`)) ||
+    rel === "STAGING" ||
+    rel.startsWith("STAGING/");
+
+  const walk = (dir: string): void => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      if (e.name.startsWith(".")) continue;
+      const abs = join(dir, e.name);
+      const rel = abs.slice(siteAbs.length + 1);
+      if (e.isDirectory()) {
+        if (!owned(rel)) walk(abs);
+        continue;
+      }
+      if (!e.name.endsWith(".html") || owned(rel)) continue;
+
+      const before = readFileSync(abs, "utf-8");
+      if (NAVIGATED.test(before)) {
+        alreadyNavigated++;
+        continue;
+      }
+      // `..` per directory the page sits under; the filename is not one.
+      const depth = rel.split("/").length - 1;
+      const toRoot = depth === 0 ? "." : new Array(depth).fill("..").join("/");
+      const links = declaredGraphs(instanceName, new Map(), publishedGraphs(built, instanceName, toRoot));
+      const harnesses = instantiatedHarnesses(built, toRoot);
+      const after = injectRail(before, {
+        instance: instanceName,
+        toRoot,
+        links,
+        ...(harnesses ? { harnesses } : {}),
+      });
+      if (after === undefined) {
+        skipped.push(rel);
+        continue;
+      }
+      writeFileSync(abs, after);
+      injected++;
+    }
+  };
+  if (existsSync(siteAbs)) walk(siteAbs);
+  return { injected, alreadyNavigated, skipped };
+}
+
+/**
+ * The routes the MOUNT pass owns, computed by the pipeline that owns them.
+ *
+ * `rail-standalone-pages.ts` must leave these alone, because {@link injectRails}
+ * has already railed them with a PER-INSTANCE model; a second rail there would
+ * carry the ROOT instance's graphs instead of the mounted instance's.
+ *
+ * It is derived rather than guessed, and the first version guessed. It took a
+ * directory in the site to be a mount when a same-named `<name>/<name>.json`
+ * existed in the repository — which is true of `bootstrap`, an instance that
+ * declares no renderable docs and is therefore **never mounted**. The guess
+ * excluded exactly the ten pages the pass was extended to reach.
+ *
+ * `mountable()` requires a rendered `index.html`, `withRoutes` assigns the
+ * route and `resolve_` refuses a collision. Asking them is one answer; a
+ * predicate over filenames is a second one, free to disagree.
+ */
+export function mountRoutes(built: string): string[] {
+  const found = mountable().filter((m) => !(m.name === built && m.kind === "docs"));
+  const { candidates } = withRoutes(found);
+  return resolve_(candidates).mounts.map((m) => m.route);
 }
 
 function mountable(): Mountable[] {
@@ -604,6 +904,10 @@ function mountable(): Mountable[] {
  * asserted without a filesystem: a routing rule tested only through `cpSync`
  * is a rule whose failing case nobody writes down.
  */
+// What a mounted directory must not publish — one reader, shared with the
+// library viewer, so the two surfaces cannot disagree (bean `cw35`).
+export { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
+
 export function resolve_<T extends { route: string }>(
   candidates: T[],
 ): { mounts: T[]; refused: (T & { ownedBy: string })[] } {
@@ -673,7 +977,11 @@ function main(): number {
   const { mounts, refused } = resolve_(candidates);
 
   for (const m of mounts) {
-    cpSync(m.dir, join(siteAbs, m.route), { recursive: true });
+    const withheld = withheldPaths(m.dir);
+    cpSync(m.dir, join(siteAbs, m.route), { recursive: true, filter: withheldFilter(m.dir, withheld) });
+    if (withheld.length) {
+      console.log(`  /${m.route}/: withheld ${withheld.length} path(s) named by its ${WITHHELD_FILE}: ${withheld.join(", ")}`);
+    }
   }
 
   // THE HARNESS'S OWN NAVIGATION, put back on pages Jekyll never sees.
@@ -718,8 +1026,23 @@ function main(): number {
     for (const f of railed.skipped.slice(0, 5)) console.log(`      ${f}`);
     if (railed.skipped.length > 5) console.log(`      … and ${railed.skipped.length - 5} more`);
   }
+  // {@link railStandalonePages} is NOT called here, and that is the fix rather
+  // than an omission. It runs from `rail-standalone-pages.ts` as a LAST step,
+  // because this script runs at line 284 of `docs-site.yml` while
+  // `publish-instance-files.ts` writes bootstrap's pages at line 426 — so a
+  // call here walks the site before ten of its subjects exist. Measured on a
+  // staged build: 23 wireframes railed, 10 bootstrap pages missed, and the
+  // fixture could not see it because a fixture is always finished.
+
   for (const m of mounts) {
-    console.log(`  ${m.dir.slice(REPO.length + 1)}  ->  /${m.route}/  (${countFiles(m.dir)} file(s))`);
+    // SOURCE count, said as such: since bean `cw35` a mount may withhold paths,
+    // and printing the source total beside the route read as "this many were
+    // published" (1,377 printed for a /who-iris/ that received 131).
+    const w = withheldPaths(m.dir).length;
+    console.log(
+      `  ${m.dir.slice(REPO.length + 1)}  ->  /${m.route}/  (${countFiles(m.dir)} file(s) in source` +
+        `${w ? `, ${w} withheld path(s) not copied` : ""})`,
+    );
   }
 
   if (refused.length) {

@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/content-lifecycle/content-author.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/content-lifecycle/content-author.md) — do not edit here. Typed contract: [schema reference](../skills/content-author.html).
+> Generated from [`cat-harness/skills/content-lifecycle/content-author.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/content-lifecycle/content-author.md) — do not edit here. Typed contract: [schema reference](../skills/content-author.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/content-lifecycle/content-author.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/content-lifecycle/content-author.md){: .fa-edit-source }
 
 {% raw %}
 # Content Authoring
@@ -56,3 +56,15 @@ nothing ran.
 - Authored content artifacts
 - Draft versions ready for validation
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Authoring a paper](../../processes/authoring-a-paper.html) | 4 · Author blocks |
+| [Content Change and Review](../../processes/content-change-review.html) | Edit narrative content blocks; Edit deterministic logic (if needed); Iterate on author feedback |
+| [Content lifecycle](../../processes/content-lifecycle.html) | Editing and HCI validation (calls a sub-process) |
+| [Draft, review and publish](../../processes/draft-to-publication.html) | Editing and HCI validation (calls a sub-process) |
+| [Editing and HCI validation](../../processes/editing-hci-validation.html) | Draft the block edit; Revise the proposed change |
+| [Evidence for a recommendation](../../processes/evidence-retrieval.html) | Frame the question as PICO; Attach the evidence to the recommendation |
+

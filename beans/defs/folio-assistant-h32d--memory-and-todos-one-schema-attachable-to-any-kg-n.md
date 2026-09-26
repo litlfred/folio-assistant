@@ -195,3 +195,23 @@ Avatars per kind, in and out of trash, in both schemes, are folio-assistant-4kj4
 
 Requirements capture here remains yours; I have not resolved or rewritten
 it.
+
+--------
+
+## 2026-09-24 — the decision above is SETTLED by evidence, not left open
+
+Re-measured before putting it to the owner:
+
+| subagent | now | role(s) |
+|---|---|---|
+| `ci-health-watcher` | a declared actor, `kind: system` | `build-pipeline`, `validation-pipeline` (owner, bean `29ij`: *"ci watchers are agents/mechanical roles that are part of the CI process"*) |
+| `platform-boundary-guard` | a declared actor, `kind: agent` | `code-reviewer` |
+| `content-pipeline-navigator` | **gone** from `.claude/agents/` | — |
+
+So option 1, "map onto existing roles", is what happened, one agent at a
+time, and no new roles were minted. There is nothing left to ask.
+
+**What is still undone is plumbing, not a decision:** `memoryForRoles`
+(`schemas/memory.ts`) still has **no caller**. The MEMORY.md generator scopes
+by agent, not by the roles the agent's actor takes on. Wiring it is the next
+unit of this bean.

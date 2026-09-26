@@ -5,7 +5,7 @@
     "id": "Process_ThemeUIReview",
     "path": "processes/theme-ui-review.bpmn"
   },
-  "source_hash": "sha256:c1a4afe345dd397d2769d2d6d5574d1ada8284a4b5fa3417b2fe24bdc82683da",
+  "source_hash": "sha256:5f54300442a3cb85a41cda529061e70632894f29bc7d46ad5e4ab4890e7177ef",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -52,29 +52,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_Inventory",
-          "detail": "needs skill \"theme-ui-review\", but its lane's role \"authoring-agent\" does not carry it."
-        },
-        {
-          "where": "A_Accessibility",
-          "detail": "needs skill \"theme-ui-review\", but its lane's role \"authoring-agent\" does not carry it."
-        },
-        {
-          "where": "A_Branding",
-          "detail": "needs skill \"theme-ui-review\", but its lane's role \"authoring-agent\" does not carry it."
-        },
-        {
-          "where": "A_Locales",
-          "detail": "needs skill \"theme-ui-review\", but its lane's role \"authoring-agent\" does not carry it."
-        },
-        {
-          "where": "A_RaiseFindings",
-          "detail": "needs skill \"theme-ui-review\", but its lane's role \"authoring-agent\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -87,12 +66,48 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
-    "n/a": 8,
+    "pass": 14,
+    "fail": 0,
+    "n/a": 10,
     "unknown": 0
   }
 }

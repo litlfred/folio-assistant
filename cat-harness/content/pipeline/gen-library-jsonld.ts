@@ -29,7 +29,7 @@
  *
  * ```
  * library/<doc-id>/
- *   tabular.jsonld          (input — or tabular.csvw.jsonld, once eief lands)
+ *   tabular.jsonld          (input — or tabular.csvw.json, once eief lands)
  *   manifest.jsonld         ← contains → sheets, OR → blocks for a CSV
  *   sheets/<key>.jsonld     ← grouping node, workbook only
  *   blocks/table-NNN.jsonld ← one per sheet, carrying the header vocabulary
@@ -59,11 +59,12 @@
  * deliberate act that `document-intake` Stage 4 describes.
  *
  * Usage:
- *   bun run content/pipeline/gen-library-jsonld.ts
- *   bun run content/pipeline/gen-library-jsonld.ts --check
- *   bun run content/pipeline/gen-library-jsonld.ts --doc <doc-id>
+ *   bun run cat-harness/content/pipeline/gen-library-jsonld.ts
+ *   bun run cat-harness/content/pipeline/gen-library-jsonld.ts --check
+ *   bun run cat-harness/content/pipeline/gen-library-jsonld.ts --doc <doc-id>
  *
  * @module content/pipeline/gen-library-jsonld
+ * @covers library, uploads
  */
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "fs";
@@ -74,6 +75,7 @@ import { findContentRepoRoot } from "./repo-root";
 import { directoriesForGraph } from "../../schemas/cat-harness.js";
 import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.ts";
 import { buildTabularNodes, tabularShapeOf } from "./tabular-nodes.ts";
+import { TABULAR_CSVW_FILENAME } from "../../schemas/tabular-csvw.ts";
 
 interface StructureSection {
   id: string;
@@ -178,6 +180,27 @@ export function buildDocumentNodes(
 
   const sectionIris: string[] = [];
 
+  // A figure belongs to the FIRST section whose page range contains it.
+  //
+  // Section ranges OVERLAP -- a section's `page_end` is the start page of the
+  // next one, inclusive -- so without this a figure is emitted once per
+  // containing section, every emission writing the SAME path with a different
+  // `derivedFrom`. Measured 2026-09-22 on `smart-base/library/9789240093362-eng/`
+  // (bean `imen`): page 71 falls inside FOUR sections, page 68 inside three,
+  // page 30 inside two. Last write won, and `--check` then reported the losers
+  // stale forever, because re-running reproduced the same race.
+  //
+  // It needed both an embedded outline (so sections have real ranges rather
+  // than one page each) and placed raster figures, and no entry had both until
+  // the WHO digital-health corpus arrived. The comment below on `page_end`
+  // shows the single-page case WAS considered; the overlapping one was not.
+  //
+  // FIRST rather than last, on the owner's ruling of 2026-09-22 (issue #877):
+  // it matches reading order, so a figure introduced at the end of a section
+  // stays with the section that introduced it. Last is what the race happened
+  // to land on and is not a reason.
+  const figureOwned = new Set<string>();
+
   for (const sec of sections) {
     const key = sectionKey(sec.id);
     const contained: string[] = [];
@@ -235,6 +258,10 @@ export function buildDocumentNodes(
     if (from !== undefined && to !== undefined) {
       for (let pg = from; pg <= to; pg++) {
         for (const img of figuresByPage.get(pg) ?? []) {
+          // An earlier section already claimed it; `sections` is in document
+          // order, so "already claimed" IS "first containing section".
+          if (figureOwned.has(img.id)) continue;
+          figureOwned.add(img.id);
           const bid = `figure-${img.id}`;
           contained.push(docIri(docId, `blocks/${bid}`));
           out.push({
@@ -284,7 +311,7 @@ export function buildDocumentNodes(
     path: "manifest.jsonld",
     content: node({
       "@id": docIri(docId, "manifest"),
-      "@type": ["folio:SourceDocument"],
+      "@type": ["folio-assistant-core:SourceDocument"],
       title: structure.metadata?.title ?? docId,
       contains: sectionIris,
       provenance: "ingested",
@@ -341,7 +368,7 @@ export type IngestRung = "paged" | "tabular" | "none";
  */
 export const RUNG_INPUT: ReadonlyArray<readonly [IngestRung, readonly string[]]> = [
   ["paged", ["structure.json"]],
-  ["tabular", ["tabular.jsonld", "tabular.csvw.jsonld"]],
+  ["tabular", ["tabular.jsonld", TABULAR_CSVW_FILENAME]],
 ];
 
 /**
@@ -488,7 +515,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
   if (rung === "tabular") {
     const record =
       readJson<Record<string, unknown>>(join(dir, "tabular.jsonld")) ??
-      readJson<Record<string, unknown>>(join(dir, "tabular.csvw.jsonld"));
+      readJson<Record<string, unknown>>(join(dir, TABULAR_CSVW_FILENAME));
     const shape = record ? tabularShapeOf(record) : undefined;
     // The record is there and we could not read it. Reporting an empty
     // document here would assert the dataset has no sheets, which is a claim
@@ -658,7 +685,7 @@ async function run(): Promise<number> {
         `\n${stale.length} library node(s) stale or missing:\n` +
           stale.slice(0, 20).map((s) => `  ${s}`).join("\n") +
           (stale.length > 20 ? `\n  … and ${stale.length - 20} more` : "") +
-          `\n\nRun: bun run content/pipeline/gen-library-jsonld.ts`,
+          `\n\nRun: bun run cat-harness/content/pipeline/gen-library-jsonld.ts`,
       );
       return 1;
     }

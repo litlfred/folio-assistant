@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/adjudication.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/adjudication.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/adjudication.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/adjudication.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/adjudication.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/adjudication.md){: .fa-edit-source }
 
 {% raw %}
 # Adjudication — judgement, when the mechanism ran out of facts
@@ -51,6 +51,62 @@ Which is the whole skill, in one lane's documentation, in one diagram, reachable
 only by somebody already reading that diagram. **The gap was never vocabulary.
 It was that nothing generalised the one statement of it**, so each new subject
 restated it and the eighth would have restated it again.
+
+## One judgement, six questions — and the split that followed
+
+**Measured 2026-09-23** (bean `bvuk`, [#1073](https://github.com/litlfred/folio-assistant/issues/1073)), and it changes how you call this process.
+
+`adjudication.bpmn` used to hold two things: the judgement, and three outcomes
+done about it — the finding stands, the criterion is scoped, a dispensation is
+granted. Six diagrams called it. **Only two asked a question those three
+answer**: the `review-narrative` and `voice-review` rows above. The other four
+ask whether a drift is real, whether a passage is acceptable, whether two
+entries agree, and *which side wins a conflict*. None of those has a criterion
+to scope or a dispensation to grant — and a `callActivity` runs the whole
+subprocess, so all four ran the outcome half anyway.
+
+**Two things worth carrying, because both were established by checking rather
+than reasoning:**
+
+- **No caller branched on the outcome, and none could.** Every one of the six
+  call activities has exactly one outgoing flow, and the process had one
+  settled end event: all three branches reconverged on `A_RecordEntry`. So the
+  mismatch was invisible in the callers' shape — a diagram asking "which side
+  wins" and one asking "does this finding stand" looked identical.
+- **Passing each caller its own codes could not fix it.** That was the first
+  proposal. The codes selected three different TASKS, so a caller handed
+  `local-wins` would have had it pointing at `A_ScopeCriterion`. **The branches
+  had to move, not the enum.**
+
+So the split is **at the judgement**:
+
+| what | where it lives | why there |
+|---|---|---|
+| entry condition, untainted dispatch, person-or-agent restriction | `adjudication.bpmn` | it must not vary, and restating it per caller is how it drifts |
+| the three QA-criterion outcomes, `A_RecordEntry`, the dispensation | `criterion-adjudication.bpmn` | it depends on what was asked |
+
+### What that means when you call it
+
+`A_Adjudicate` declares `<cat-harness.processes:adjudication defers="caller"/>` — it IS an
+adjudication and the permitted answers are yours. Declared rather than left as
+a missing `codes`, so a marker lost by accident and a deferral on purpose do
+not parse the same.
+
+- **Asking the QA-criterion question?** Call `Process_CriterionAdjudication`
+  and declare `<cat-harness.processes:adjudication accepts="stands scope dispensation"/>`. The
+  engine compares your list with what that process actually offers.
+- **Asking something else?** Call `Process_Adjudication` and declare
+  `<cat-harness.processes:adjudication codes="…"/>` on your own call activity, with your own
+  gateway coding the same set. The engine refuses a mismatch between the two,
+  and refuses a partly-coded gateway, which reads as complete.
+- **Declaring nothing** is legal and **reported** by `check:workflow-refs` —
+  the four callers above are in that state on purpose. What each should ask is
+  open, and guessing would make an undecided thing look checked.
+
+Whatever you ask, `A_RecordEntry`'s rule follows the outcome: **a judgement
+nobody wrote down is indistinguishable from a checker that was never run.** It
+is `relaxable="false"` wherever it lands, which is now with the caller that
+records, because the entry written depends on what was adjudicated.
 
 ## Two senses of the word, and only one is this
 
@@ -125,7 +181,7 @@ record the disagreement, lead with the judgement, keep the other entry.
 
 The outcome carries its reason. That mechanism already exists and is
 schema-backed — `block-qa/v1`'s multi-reviewer primitive, documented at length
-in [`q-usage-watcher`](../folio-paper-adapter/q-usage-watcher.md):
+in [`q-usage-watcher`](q-usage-watcher.md):
 
 - a `kind: "human"` entry with `result: "pass"` overrides the script's `fail`
   for the same criterion;
@@ -139,10 +195,13 @@ re-granted. So a dispensation never becomes precedent, and there is nothing to
 overturn later — the source moving overturns it.
 
 A dispensation with no `notes` is not a dispensation. It is an override
-somebody applied to get to green, and nobody can review it afterwards. This is
-the one step `adjudication.bpmn` marks `relaxable="false"`: **the judgement is
-free and the record is not**, because a judgement nobody wrote down is
-indistinguishable from a checker that was never run.
+somebody applied to get to green, and nobody can review it afterwards. So
+`A_Dispensation` is marked `relaxable="false"` — in
+**`criterion-adjudication.bpmn`**, with `A_RecordEntry`, since the 2026-09-23
+split; this paragraph said `adjudication.bpmn` until 2026-09-24, four sections
+after §"One judgement, six questions" had already recorded the move. **The
+judgement is free and the record is not**, because a judgement nobody wrote
+down is indistinguishable from a checker that was never run.
 
 ## Who adjudicates — a skill that spreads, an entitlement that does not
 
@@ -199,7 +258,7 @@ deliberately stops short of it.
 
 - [`untainted-verification`](untainted-verification.md) — the parties and what
   each is given. Adjudication is what happens when they disagree.
-- [`q-usage-watcher`](../folio-paper-adapter/q-usage-watcher.md) — the
+- [`q-usage-watcher`](q-usage-watcher.md) — the
   dispensation mechanism, documented where it was first applied.
 - [`code-node-review`](code-node-review.md), [`voice-editorial-review`](voice-editorial-review.md),
   [`voice-overlay-review`](voice-overlay-review.md) — the reviews that produce
@@ -207,3 +266,21 @@ deliberately stops short of it.
 - `schemas/block-qa.ts` — the reviewer kinds, and why a model's own claim is
   not the same kind of evidence as a person's.
 {% endraw %}
+
+## Processes that run this skill
+
+This skill has its own process: **[Adjudication](../../processes/adjudication.html)**.
+
+<img src="../../assets/img/workflows/adjudication.svg" alt="BPMN diagram: Adjudication" style="max-width:100%">
+
+| process | step(s) that name it |
+|---|---|
+| [Adjudication](../../processes/adjudication.html) | Adjudicate the disagreement |
+| [Content Change and Review](../../processes/content-change-review.html) | Adjudicate the disagreement (calls a sub-process) |
+| [Criterion adjudication](../../processes/criterion-adjudication.html) | Adjudicate the criterion disagreement (calls a sub-process); Scope the criterion so it stops applying here; Grant a dispensation, with its reason; Write the entry that LEADS — keeping the checker's beneath it |
+| [Ingestion subprocess — the L1 completeness gate](../../processes/ingest-l1-completeness-gate.html) | Adjudicate the flagged passage (calls a sub-process) |
+| [Refresh materialized remote content](../../processes/refresh-materialized.html) | Adjudicate the conflict (calls a sub-process) |
+| [Narrative review](../../processes/review-narrative.html) | Adjudicate the voice findings (calls a sub-process) |
+| [Translation Workflow](../../processes/translation-workflow.html) | Adjudicate flagged passage (human reviewer) (calls a sub-process) |
+| [Voice overlay review](../../processes/voice-review.html) | Adjudicate: prose, scope, or exception (calls a sub-process) |
+

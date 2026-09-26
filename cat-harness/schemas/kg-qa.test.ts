@@ -16,8 +16,10 @@ import {
   worstSeverity,
   type KgQaReport,
   KG_QA_RESULTS_DIR,
+  KG_SUBJECT_GRAPH_KINDS,
+  KG_SUBJECT_KINDS,
 } from "./kg-qa";
-import { repoRootFor } from "./cat-harness.js";
+import { defaultGraphKinds, repoRootFor } from "./cat-harness.js";
 
 describe("the criteria registry", () => {
   test("ids are unique", () => {
@@ -200,14 +202,22 @@ describe("requirements are the fifth node kind and only point", () => {
     expect(criteriaFor("requirement").length).toBeGreaterThan(0);
   });
 
-  test("a broken reference out of a requirement is critical, like any other", () => {
+  test("a broken reference out of a requirement, or INTO one, is critical like any other", () => {
+    // `satisfies-resolves` is the reference into a requirement: a skill or
+    // capability names the statement it discharges (#1168), so a dangling
+    // claim is caught from the claimant's side.
     for (const id of [
-      "requirement-satisfied-by-resolves",
+      "satisfies-resolves",
       "requirement-actors-resolve",
       "requirement-derived-from-resolves",
     ]) {
       expect(KG_CRITERIA_BY_ID[id]!.severity, id).toBe("critical");
     }
+  });
+
+  test("an unclaimed statement is minor coverage, not a broken reference", () => {
+    expect(KG_CRITERIA_BY_ID["requirement-statement-satisfied"]!.severity).toBe("minor");
+    expect(KG_CRITERIA_BY_ID["requirement-satisfied-by-resolves"]).toBeUndefined();
   });
 
   test("an ungraded statement is major, not critical — readable, just not testable", () => {
@@ -236,6 +246,10 @@ describe("requirements are the fifth node kind and only point", () => {
         // The grade is the reason a requirement is a requirement.
         expect(st.conformance, `${r.id}/${st.key} has no conformance grade`).toBeDefined();
         for (const a of st.actors ?? []) if (!actors.has(a)) bad.push(`${r.id}/${st.key} actor ${a}`);
+        // What satisfies a statement names it, never the reverse (#1168). The
+        // schema is not strict (authors keep `_comment` keys), so without this
+        // a re-added `satisfiedBy` would be stripped on parse and read by nobody.
+        if ("satisfiedBy" in st) bad.push(`${r.id}/${st.key} carries satisfiedBy — the satisfier declares \`satisfies\` instead`);
       }
     }
     expect(bad).toEqual([]);
@@ -245,5 +259,35 @@ describe("requirements are the fifth node kind and only point", () => {
     const { existsSync } = await import("node:fs");
     const { join } = await import("node:path");
     expect(existsSync(join(import.meta.dir, "..", "skills", "requirements", "agent-workflow.json"))).toBe(true);
+  });
+});
+
+describe("KG_SUBJECT_GRAPH_KINDS — the bridge to the graph-kind registry", () => {
+  test("every subject kind says which graph it inhabits", () => {
+    // `Record<KgSubjectKind, string>` makes this a type error rather than a
+    // test failure, which is the point; this asserts it at run time too,
+    // because a cast or a JSON round trip can defeat the type.
+    for (const k of KG_SUBJECT_KINDS) expect(KG_SUBJECT_GRAPH_KINDS[k]).toBeTruthy();
+  });
+
+  test("every named graph is one the registry knows", () => {
+    // Without this the map is free to name a graph that does not exist, and
+    // `audit-coverage` would emit a row about a kind nothing declares — a
+    // coverage claim over an empty set, which reads exactly like coverage.
+    const registered = new Set(defaultGraphKinds.names());
+    for (const [subject, graph] of Object.entries(KG_SUBJECT_GRAPH_KINDS)) {
+      expect(registered.has(graph), `${subject} names graph kind "${graph}", which is not registered`).toBe(true);
+    }
+  });
+
+  test("every criterion's subject kinds resolve to a graph", () => {
+    // `audit-coverage` counts criteria per GRAPH, by looking each criterion's
+    // `applies` up in this map. A subject kind missing from it would drop that
+    // criterion from every row silently — an under-count that reads as a gap.
+    for (const c of KG_CRITERIA) {
+      for (const s of c.applies) {
+        expect(KG_SUBJECT_GRAPH_KINDS[s], `criterion ${c.id} applies to "${s}", which names no graph`).toBeTruthy();
+      }
+    }
   });
 });

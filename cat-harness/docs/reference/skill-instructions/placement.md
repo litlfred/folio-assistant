@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/placement.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/placement.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/placement.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/placement.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/placement.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/placement.md){: .fa-edit-source }
 
 {% raw %}
 # Placement — decide where it goes before you write it
@@ -125,6 +125,8 @@ and is unreachable from the place that needs it.
 | the asset is | it files under |
 |---|---|
 | why a subsystem is shaped as it is — requirements, options, rulings | `<instance>/docs/architecture/`, with `parent: Architecture` in the front matter |
+| options for a decision not yet taken, with what each costs | `<instance>/docs/proposals/`, `kind: proposal`, and a row in its `index.md` |
+| what was FOUND — prior art, a survey, a measurement, a comparison — that informs a decision without proposing one | `<instance>/docs/research-and-analysis/`, `kind: research`, and a row in its `index.md` |
 | how a person does a task with it | `<instance>/docs/guides/` |
 | how to REACH a data source the content describes — endpoints, shapes, quirks | `<instance>/docs/`, beside the subject it serves |
 | what a declared thing IS, generated from source | `<instance>/docs/reference/` — **never hand-edited** |
@@ -181,7 +183,7 @@ resembles.
 | something a participant is or does | must the performer **know** it, or may the participant **do** it? | know → a **skill**, on the lane's role; do → a **permission**, on the actor |
 | a participant | does it persist across processes, or is it a position inside one? | persists → an **actor**; a position → a **role**, which is the BPMN swimlane |
 | a sequence of steps | does it have actors, activities and a control flow? | yes → **BPMN** under the workflows directory, not a Mermaid fence and not prose |
-| a branch at a gateway | is the answer **computed from facts**, or chosen by a person? | computed → a **DMN** table plus a `<folio:decision/>` ref; chosen → an ordinary gateway |
+| a branch at a gateway | is the answer **computed from facts**, or chosen by a person? | computed → a **DMN** table plus a `<cat-harness.processes:decision/>` ref; chosen → an ordinary gateway |
 | a durable fact for one agent | does it **govern**, or **summarise** what governs? | governs → a **skill**; summarises → a memory entry under the memory nodes |
 | subject matter | would a reader of one folio look for it? | yes → the **folio**, as data — never the platform |
 
@@ -334,3 +336,10 @@ content object:
 6. **Could not determine?** Stop. Ask in the Step 5 frame. Do not default to
    the repo you are in.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [CRDM Phase 5 — beans and sign-off](../../processes/crdm-signoff.html) | Run placement, and raise a bean for the authoring |
+

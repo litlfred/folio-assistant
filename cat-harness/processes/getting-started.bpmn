@@ -15,7 +15,7 @@
     new-content   is already in a folio, and meant a DOCUMENT, not a folio
     ask           the filesystem cannot tell, so the agent must
 
-  Gateway_Intent does NOT let the agent pick. It carries <folio:decision/>, so
+  Gateway_Intent does NOT let the agent pick. It carries <cat-harness.processes:decision/>, so
   the branch is computed by decisions/folio-intent.dmn from three facts, one of
   which is what the user actually said. `ask` is one of the outcomes the table
   can return — which is what makes asking obligatory rather than polite.
@@ -33,15 +33,16 @@
     Gateway_Intent       the triage itself; relaxing it restores the bug
     Task_ConfirmImport   nobody's files are moved or imported on inference
 
-  The <folio:skill> extension on an activity names the folio-assistant skill
-  that implements it; <folio:bean> marks a step that reads or writes the shared
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+  that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
   work plan in beans/.
 -->
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_GettingStarted"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -59,17 +60,19 @@
       Source of truth: this file. The SVG under docs/assets/img/workflows/ is
       generated from it by `bun run render:bpmn` — never hand-edit the SVG.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="strict" />
+      <cat-harness.processes:policy enforcement="strict" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_GettingStarted_LaneSet">
       <bpmn:lane id="Lane_User" name="User (person)">
         <bpmn:documentation>Answers the one question Gateway_Intent cannot compute for itself — "ask" is one of five outcomes decisions/folio-intent.dmn can return — and, only on the overlay path, three further questions a repo scan cannot answer on its own: what to import, where it goes, and who does the importing.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="user"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_AskToStart</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_AskIntent</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ConfirmImport</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Agent" name="Onboarding agent (system)">
         <bpmn:documentation>Every write in this diagram belongs to this lane, and each sits behind the non-relaxable read-first gate: nothing is created or scaffolded until Gateway_Intent has classified what was actually asked for, which is what stands between this lane and writing over somebody's existing project.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="onboarding-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_DetectModality</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReadFacts</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Intent</bpmn:flowNodeRef>
@@ -80,10 +83,12 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_WorkPlan" name="Work plan (beans)">
         <bpmn:documentation>Seeds one bean per top-level content object the author named, positioned after scaffolding but before the Pages probe — a work plan exists for a folio whose publication status is not yet known, rather than waiting on that answer.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="work-plan"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_SeedPlan</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Publish" name="Publish — GitHub Pages">
         <bpmn:documentation>Derives the URL and holds the three-way report that follows it: "live", "not-yet" and "unknown" are reached by exclusive branches of one DMN-computed gateway, and this lane is what keeps a failed probe from being reported as the softer "not-yet" it would be tempting to default to.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="publish-target"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_PagesBootstrap</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Live</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_ReportUrl</bpmn:flowNodeRef>
@@ -101,7 +106,7 @@
 modality">
       <bpmn:documentation>Before the first question is asked, establish HOW to ask it: audio, ordinary chat, selectable options for a user with limited hand function, large-type for low vision. A user who finds the questions unusable never reaches the rest of this diagram.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="interaction-modality" />
+        <bootstrap.processes:skill ref="interaction-modality" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
@@ -111,8 +116,8 @@ modality">
 facts">
       <bpmn:documentation>Mechanical, read-only: does a `&lt;name&gt;.config.json` declare a contentType, does the working tree hold somebody's existing project, and what has the user actually said. These are the three inputs to folio-intent.dmn. Non-relaxable: scaffolding without looking first is how a folio gets written over somebody's project.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:policy relaxable="false" />
-        <folio:skill ref="getting-started" />
+        <cat-harness.processes:policy relaxable="false" />
+        <bootstrap.processes:skill ref="getting-started" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:incoming>Flow_answer</bpmn:incoming>
@@ -123,8 +128,8 @@ facts">
 asking for?">
       <bpmn:documentation>Computed, not chosen. decisions/folio-intent.dmn returns one of five branches from statedIntent, isFolio and repoHasContent. Non-relaxable: this gateway IS the fix.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:policy relaxable="false" />
-        <folio:decision ref="decisions/folio-intent.dmn#Decision_FolioIntent" />
+        <cat-harness.processes:policy relaxable="false" />
+        <cat-harness.processes:decision ref="decisions/folio-intent.dmn#Decision_FolioIntent" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_ask</bpmn:outgoing>
@@ -138,8 +143,8 @@ asking for?">
 offered options">
       <bpmn:documentation>The question is presented as a short list of selectable options, never as free prose, and the list names the top-level content types the agent knows about. The answer becomes the statedIntent fact and the table is evaluated again — the user's answer is read as evidence, like any other fact.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="interaction-modality" />
-        <folio:skill ref="getting-started" />
+        <bootstrap.processes:skill ref="interaction-modality" />
+        <bootstrap.processes:skill ref="getting-started" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_ask</bpmn:incoming>
       <bpmn:outgoing>Flow_answer</bpmn:outgoing>
@@ -149,8 +154,8 @@ offered options">
 content worth importing">
       <bpmn:documentation>Read-only. Classifies candidates into library/ (external source) and content/ (authored here), and reports what it could not classify as its own bucket rather than forcing every file into one of the two.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="repo-conversion" />
-        <folio:skill ref="document-intake" />
+        <bootstrap.processes:skill ref="repo-conversion" />
+        <bootstrap.processes:skill ref="document-intake" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_overlay</bpmn:incoming>
       <bpmn:outgoing>Flow_scan</bpmn:outgoing>
@@ -160,9 +165,9 @@ content worth importing">
 and who does it">
       <bpmn:documentation>Three questions the scan cannot answer: import these or not; library or content for each group; leave the files where they are or reorganize to declutter. Plus whether to dispatch one ingestion agent or a small swarm. Non-relaxable: nobody's files are moved or imported on inference.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:policy relaxable="false" />
-        <folio:skill ref="repo-conversion" />
-        <folio:skill ref="dispatch-agent" />
+        <cat-harness.processes:policy relaxable="false" />
+        <bootstrap.processes:skill ref="repo-conversion" />
+        <bootstrap.processes:skill ref="dispatch-agent" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_scan</bpmn:incoming>
       <bpmn:outgoing>Flow_confirm</bpmn:outgoing>
@@ -172,7 +177,7 @@ and who does it">
 repository">
       <bpmn:documentation>Only on the new-repo branch, and only after the user has named it. An empty working directory is scaffolded in place instead.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="repo-conversion" />
+        <bootstrap.processes:skill ref="repo-conversion" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_newrepo</bpmn:incoming>
       <bpmn:outgoing>Flow_created</bpmn:outgoing>
@@ -188,7 +193,7 @@ authoring">
 (folio_init)">
       <bpmn:documentation>content/, uploads/, library/, the first manifests, &lt;slug&gt;.json and &lt;slug&gt;.config.json, the builder shim, AGENTS.md with its stubs, .mcp.json, the session-start hook and the beans store. Refuses rather than overwrites when a folio is already present.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="getting-started" />
+        <bootstrap.processes:skill ref="getting-started" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_addfolio</bpmn:incoming>
       <bpmn:incoming>Flow_confirm</bpmn:incoming>
@@ -199,8 +204,8 @@ authoring">
     <bpmn:serviceTask id="Task_SeedPlan" name="Seed the work plan">
       <bpmn:documentation>The first beans: what the author said they want to get started on, one bean per top-level content object they named.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="todo-manager" />
-        <folio:bean op="claim" />
+        <bootstrap.processes:skill ref="todo-manager" />
+        <cat-harness.processes:bean op="claim" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_seed</bpmn:incoming>
       <bpmn:outgoing>Flow_pages</bpmn:outgoing>
@@ -210,7 +215,7 @@ authoring">
 and derive the URL">
       <bpmn:documentation>scripts/pages-bootstrap.ts: derive the site URL from the git remote or &lt;name&gt;.config.json, report whether a publish workflow exists, and optionally probe until the site answers.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="getting-started" />
+        <bootstrap.processes:skill ref="getting-started" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_pages</bpmn:incoming>
       <bpmn:outgoing>Flow_probe</bpmn:outgoing>
@@ -220,7 +225,7 @@ and derive the URL">
 answering?">
       <bpmn:documentation>Computed from decisions/pages-live-gate.dmn. Three outcomes, and `unknown` is not a softer `not-yet`.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:decision ref="decisions/pages-live-gate.dmn#Decision_PagesLive" />
+        <cat-harness.processes:decision ref="decisions/pages-live-gate.dmn#Decision_PagesLive" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_probe</bpmn:incoming>
       <bpmn:outgoing>Flow_live</bpmn:outgoing>
@@ -232,7 +237,7 @@ answering?">
 live link">
       <bpmn:documentation>Confirmed live. The link is given as a link, and the author is told what is on it.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="getting-started" />
+        <bootstrap.processes:skill ref="getting-started" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_live</bpmn:incoming>
       <bpmn:outgoing>Flow_done1</bpmn:outgoing>
@@ -242,7 +247,7 @@ live link">
 will be">
       <bpmn:documentation>A measured 404. The author is told the address and that the first build has not landed there yet — which is useful, and is not the same as being told it is live.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="getting-started" />
+        <bootstrap.processes:skill ref="getting-started" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_notyet</bpmn:incoming>
       <bpmn:outgoing>Flow_done2</bpmn:outgoing>
@@ -252,7 +257,7 @@ will be">
 be confirmed">
       <bpmn:documentation>No URL, no probe, or a failed request. Reported as "could not check", never as "not yet" and never as "live".</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="getting-started" />
+        <bootstrap.processes:skill ref="getting-started" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_unknown</bpmn:incoming>
       <bpmn:outgoing>Flow_done3</bpmn:outgoing>
@@ -300,14 +305,14 @@ be confirmed">
       <bpmndi:BPMNShape id="Task_ConfirmImport_di" bpmnElement="Task_ConfirmImport"><dc:Bounds x="1080" y="115" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_DetectModality_di" bpmnElement="Task_DetectModality"><dc:Bounds x="330" y="260" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_ReadFacts_di" bpmnElement="Task_ReadFacts"><dc:Bounds x="520" y="260" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_Intent_di" bpmnElement="Gateway_Intent"><dc:Bounds x="730" y="275" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="600" y="345" width="140" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Intent_di" bpmnElement="Gateway_Intent" isMarkerVisible="true"><dc:Bounds x="730" y="275" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="600" y="345" width="140" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_ScanRepo_di" bpmnElement="Task_ScanRepo"><dc:Bounds x="880" y="350" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_CreateRepo_di" bpmnElement="Task_CreateRepo"><dc:Bounds x="880" y="440" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_HandOff_di" bpmnElement="EndEvent_HandOff"><dc:Bounds x="900" y="537" width="36" height="36" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Scaffold_di" bpmnElement="Task_Scaffold"><dc:Bounds x="1320" y="260" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_SeedPlan_di" bpmnElement="Task_SeedPlan"><dc:Bounds x="1560" y="605" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_PagesBootstrap_di" bpmnElement="Task_PagesBootstrap"><dc:Bounds x="1560" y="720" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_Live_di" bpmnElement="Gateway_Live"><dc:Bounds x="1790" y="735" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Live_di" bpmnElement="Gateway_Live" isMarkerVisible="true"><dc:Bounds x="1790" y="735" width="50" height="50" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_ReportUrl_di" bpmnElement="Task_ReportUrl"><dc:Bounds x="1900" y="720" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_ReportPending_di" bpmnElement="Task_ReportPending"><dc:Bounds x="1900" y="830" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_ReportUnknown_di" bpmnElement="Task_ReportUnknown"><dc:Bounds x="1900" y="940" width="150" height="80" /></bpmndi:BPMNShape>

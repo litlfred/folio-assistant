@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-paper-adapter/content-validation.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-paper-adapter/content-validation.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-paper-adapter/content-validation.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/content-validation.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-paper-adapter/content-validation.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/content-validation.md){: .fa-edit-source }
 
 {% raw %}
 # Content Validation Skill
@@ -78,7 +78,7 @@ kind (a numeric bound in a proposition, a constant in a conjecture, a
 calibration value in a definition, a quoted intermediate in a proof,
 etc.), flag it as drift risk and migrate it to `:val[name]`.  The
 `content/pipeline/codemod-val.ts` codemod handles bulk migration.
-See [`witnessed-values.md`](./witnessed-values.md) for full details.
+See [`witnessed-values.md`](witnessed-values.md) for full details.
 
 ### Level 3: LaTeX AST validation
 - Rendered LaTeX parses through unified-latex without errors

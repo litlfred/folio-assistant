@@ -3,8 +3,10 @@ name: workflow-state
 description: >
   Where a running process keeps what it knows, and which store answers which
   question. The three records a step may touch, the one it may not, what
-  `<folio:bean op>` actually performs, and why an instance and a bean must be
+  `<cat-harness.processes:bean op>` actually performs, and why an instance and a bean must be
   one answer rather than two.
+graph-kinds:
+  - workflow-state
 ---
 
 # State in a running process
@@ -57,7 +59,7 @@ retroactively took a different path.
 to*. Those must be one answer or they diverge, and a work plan that disagrees
 with itself is worse than one that is merely coarse.
 
-The loop is closed by `<folio:bean op="…">` on an activity. **A bean-marked
+The loop is closed by `<cat-harness.processes:bean op="…">` on an activity. **A bean-marked
 step is not a step *about* the work plan — it IS the work-plan operation**, so
 completing the step performs it:
 

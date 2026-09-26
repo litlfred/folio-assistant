@@ -1,8 +1,12 @@
 #!/usr/bin/env bun
 /**
- * Every prefix the published `@context` binds, counted against what emits it.
+ * Every prefix the published `@context` binds, counted against what emits it —
+ * and, since bean `zaqn`, every prefix a document SPEAKS checked against what
+ * binds it, with our own namespaces spelt as their instance stubs.
  *
  * @module scripts/check-context-emission
+ * @covers schemas — the thing graded is `CONTENT_CONTEXT` in `schemas/jsonld.ts`: a prefix it
+ *   binds that nothing emits, and a prefix a document speaks that it does not bind
  *
  * ## The defect, and why nothing broke
  *
@@ -49,7 +53,7 @@
  * that indistinguishable from an oversight — which is the whole shape of the
  * bug. So a forward declaration is declared, with a reason naming what would
  * emit it, in {@link FORWARD_DECLARED}. Reason required, same discipline as
- * `command-path-ok:` and `<folio:no-skill reason="…"/>`: silencing the check
+ * `command-path-ok:` and `<cat-harness.processes:no-skill reason="…"/>`: silencing the check
  * costs more than satisfying it, and the exempted set is REPORTED rather than
  * disappearing.
  *
@@ -57,10 +61,13 @@
  *   bun run cat-harness/scripts/check-context-emission.ts
  *   bun run cat-harness/scripts/check-context-emission.ts --json
  */
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+
+import { gitCorpus } from "./git-corpus.ts";
 import { join, resolve } from "node:path";
 
-import { CONTENT_CONTEXT } from "../schemas/jsonld.js";
+import { CONTENT_CONTEXT, CONTENT_CONTEXT_URL } from "../schemas/jsonld.js";
+import { stubOfNamespace } from "../schemas/namespaces.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -79,7 +86,7 @@ export const FORWARD_DECLARED: Readonly<Record<string, string>> = {
   doco: "document STRUCTURE — a paper's chapters, sections and figures, via BLOCK_KIND_TO_DOCO_TYPE. This instance is the platform and holds no folio, so no block is exported here. A folio emits it on its first `gen-block-jsonld` run.",
   deo: "discourse ELEMENTS — `deo:Introduction`, `deo:Conclusion` and the rest, on a paper's rhetorical blocks. Bound with `doco` as its companion vocabulary and waiting on the same thing: a folio with blocks.",
   oa: "Web Annotation — the shape a todo, a review note or a translation comment takes when it is published as an annotation on a block. `bzyu` and the todo-review workflow are where it lands.",
-  csvw: "tabular records. `tabular-csvw.ts` models table -> column -> datatype, and `csvwOnly()` emits CSVW-NATIVE KEYS that resolve through this context rather than `csvw:`-prefixed values — so this prefix may be spoken by alias already, and the count below says only that no literal CURIE carries it.",
+  csvw: "tabular records. `tabular-csvw.ts` models table -> column -> datatype; its record is plain JSON (`tabular.csvw.json`, bean `792y`) and `toCsvw()` derives a CSVW document carrying CSVW's OWN context, not this one. So nothing in this graph speaks `csvw:` yet — a folio whose table blocks link their CSVW description is what would.",
   skos: "the glossary — `lqo9` slice 1 shipped 135 `skos:Concept` nodes, but into the NAMESPACE document (`ns-export.ts`), which carries its own context rather than this one. A folio's glossary blocks are what emit it HERE.",
   // NO `fhir` ENTRY, and its removal is the check doing its job.
   //
@@ -96,11 +103,54 @@ export const FORWARD_DECLARED: Readonly<Record<string, string>> = {
   // prefix nothing emits is a claim the graph does not keep; a forward
   // declaration for a prefix that now emits is the same defect running the
   // other way, and it is the quieter one, because nothing breaks.
-  fac: "folio-assistant-core's own namespace. Core's terms describe CONTENT objects, and this instance holds none — the same reason `doco` and `deo` are here, one layer in.",
+  //
+  // NO `fac` ENTRY either, and its removal is the bean-`zaqn` finding. It was
+  // forward-declared as "Core's terms describe CONTENT objects, and this
+  // instance holds none" — while 1,737 committed documents were emitting
+  // core's terms under `folio:`, a prefix this context never bound. The
+  // emission count could not see them, because it counts BOUND prefixes; a
+  // prefix that is spoken and never bound is the other half of the question,
+  // which {@link checkPrefixDeclaration} now asks. The binding is spelt
+  // `folio-assistant-core` since that bean — the instance's stub.
 };
 
-/** Every `.jsonld` document in the tree, excluding build outputs. */
+/**
+ * Every `.jsonld` document in the REPOSITORY — asked of git, not of the disk.
+ *
+ * **The corpus of a repository is what git says it is.** Bean `ramz`: this
+ * walked the filesystem behind a hand-written denylist
+ * (`node_modules`, `_kg`, `_site`, `_docs`, `.git`) and therefore swept every
+ * gitignored path the list did not happen to name. On 2026-09-25 a clean
+ * checkout of `main` failed `bun test` on **145 documents** under
+ * `cat-harness/ingest-staging/` — gitignored, untracked, residue of one
+ * machine's ingestion five days earlier. The assertion is named *"the real
+ * corpus"*, and what it read was not the repository's.
+ *
+ * Two failures in one, and the second is the worse: a denylist is wrong
+ * whenever somebody adds an ignored directory it does not name (a false
+ * finding about code the contributor did not touch), and it cannot tell
+ * anybody WHICH set it read, so a pass over the wrong corpus reads exactly
+ * like a pass over the right one.
+ *
+ * `--cached --others --exclude-standard` is tracked files PLUS untracked ones
+ * git would not ignore. Not `--cached` alone: a `.jsonld` a contributor has
+ * just written and not yet staged is part of the change under test, and a
+ * check that cannot see it passes on the file it exists to examine.
+ *
+ * The git half is `gitCorpus`, shared rather than restated: `xd1g` counted 11
+ * scanners here walking a root with no gitignore awareness and said the rule
+ * wants stating once. It was copied a second time within a day of being
+ * written (bean `rsi6`, `check-subgraphs`), which settled the question.
+ *
+ * **Falls back to the walk, and says so**, when `repo` is not a git work tree
+ * — every test fixture is such a directory, and refusing there would trade a
+ * false finding for an unrunnable check. The fallback is the LOOSER set, so
+ * it can only over-report; could-not-determine is never rendered as clean.
+ */
 export function contentDocuments(repo = REPO): string[] {
+  const listed = gitCorpus(repo, ["*.jsonld"]);
+  if (listed !== undefined) return listed;
+
   const out: string[] = [];
   const skip = new Set(["node_modules", "_kg", "_site", "_docs", ".git"]);
   const walk = (dir: string): void => {
@@ -114,6 +164,7 @@ export function contentDocuments(repo = REPO): string[] {
   walk(repo);
   return out;
 }
+
 
 const curiePrefix = (s: string): string | undefined => {
   // An absolute IRI is not a CURIE, and `https:` would otherwise read as one.
@@ -196,12 +247,406 @@ export function checkContextEmission(repo = REPO, context = CONTENT_CONTEXT as R
   };
 }
 
+// ── The other direction: a prefix that is SPOKEN must be BOUND ──────────
+//
+// Bean `zaqn`. Everything above asks "is each bound prefix spoken?". Nothing
+// asked the converse, and the converse is the one that corrupts data: an
+// unbound prefix is not an error to a JSON-LD processor. `folio:Definition`
+// with no `folio` binding is read as an absolute IRI in a URI SCHEME called
+// `folio` — well-formed, meaningless, and joined with nothing. The published
+// content context did exactly that to twenty terms, across 1,737 committed
+// documents, with every gate green: the drift check compares the generated
+// copy with its source, and both were wrong the same way.
+
+/** Schemes an absolute IRI may legitimately carry — never read as a prefix. */
+export const IRI_SCHEMES: ReadonlySet<string> = new Set(["http", "https", "urn", "mailto", "data", "file", "tag"]);
+
+/** Our own namespaces live under this stem; a binding onto one must be spelt as its stub. */
+export const OWN_NS_STEM = "https://litlfred.github.io/folio-assistant/";
+
+export interface PrefixFinding {
+  readonly prefix: string;
+  readonly count: number;
+  /** The first document (repo-relative) or `@context` it was met in. */
+  readonly example: string;
+}
+
+export interface PrefixDeclarationReport {
+  /** Documents whose context could be resolved and was checked. */
+  readonly documents: number;
+  /**
+   * Documents naming a context by a URL this check cannot resolve — the third
+   * state. Reported and counted, never treated as clean: they were not read.
+   */
+  readonly unresolved: { count: number; urls: string[] };
+  /** Spoken as a key or an `@type`, bound nowhere in scope — the finding. */
+  readonly undeclared: PrefixFinding[];
+  /**
+   * A binding onto one of our own `…/<stub>/ns#` namespaces spelt as anything
+   * but `<stub>`, or naming a stub no instance declares. Owner, 2026-09-23:
+   * "prefix -> match stub".
+   */
+  readonly misspelt: { prefix: string; namespace: string; stub: string; where: string }[];
+}
+
+const isRecord = (v: unknown): v is Record<string, unknown> => !!v && typeof v === "object" && !Array.isArray(v);
+
+/**
+ * The stubs this repository's instances declare: `<dir>/<dir>.json` one level
+ * down, carrying `name` and optionally `stub`. The same convention
+ * `findDeclarationFile` matches on — a file agreeing with ITSELF.
+ */
+export function declaredStubs(repo = REPO): Set<string> {
+  const out = new Set<string>();
+  for (const e of readdirSync(repo, { withFileTypes: true })) {
+    if (!e.isDirectory() || e.name.startsWith(".")) continue;
+    const f = join(repo, e.name, `${e.name}.json`);
+    if (!existsSync(f)) continue;
+    try {
+      const d = JSON.parse(readFileSync(f, "utf-8")) as { name?: unknown; stub?: unknown };
+      if (d.name === e.name) out.add(typeof d.stub === "string" ? d.stub : e.name);
+    } catch {
+      // A declaration that does not parse is `check:declared-paths`'s finding.
+    }
+  }
+  return out;
+}
+
+/**
+ * Check both halves over the corpus and over the published context itself.
+ *
+ * Only KEYS and `@type` VALUES are read as CURIEs. A plain string value may
+ * legitimately look like one — `label: "def:foo"` is an authored label, not an
+ * IRI, which is the hazard `schemas/jsonld.ts` opens with — so reading values
+ * would invent findings, and a check that cries wolf is switched off.
+ */
+export function checkPrefixDeclaration(
+  repo = REPO,
+  context = CONTENT_CONTEXT as Record<string, unknown>,
+  contextUrl = CONTENT_CONTEXT_URL,
+  stubs: ReadonlySet<string> = declaredStubs(REPO),
+): PrefixDeclarationReport {
+  const undeclared = new Map<string, { count: number; example: string }>();
+  const misspelt: PrefixDeclarationReport["misspelt"] = [];
+  // One binding may be read more than once (a context repeated in nested
+  // nodes); one defect is reported once.
+  const seenMisspelt = new Set<string>();
+  const unresolvedUrls = new Set<string>();
+  let unresolvedCount = 0;
+  let documents = 0;
+
+  const note = (p: string, where: string): void => {
+    const e = undeclared.get(p);
+    if (e) e.count++;
+    else undeclared.set(p, { count: 1, example: where });
+  };
+
+  const unbound = (s: string, scope: ReadonlySet<string>): string | undefined => {
+    if (s.startsWith("@") || s.startsWith("_:")) return undefined;
+    const m = /^([A-Za-z][\w.-]*):(?!\/\/)/.exec(s);
+    if (!m) return undefined;
+    const p = m[1]!;
+    return IRI_SCHEMES.has(p.toLowerCase()) || scope.has(p) ? undefined : p;
+  };
+
+  // A context's own definitions: every term is in scope as a prefix, every
+  // compact target must be bound, and our namespaces must be spelt as stubs.
+  const checkContext = (ctx: Record<string, unknown>, where: string, scope: ReadonlySet<string>): void => {
+    for (const [k, v] of Object.entries(ctx)) {
+      if (k.startsWith("@")) continue;
+      const target = typeof v === "string" ? v : isRecord(v) && typeof v["@id"] === "string" ? v["@id"] : undefined;
+      if (target === undefined) continue;
+      if (target.startsWith(OWN_NS_STEM)) {
+        const stub = stubOfNamespace(target);
+        const key = `${where}\u0000${k}`;
+        if (stub && (k !== stub || !stubs.has(stub)) && !seenMisspelt.has(key)) {
+          seenMisspelt.add(key);
+          misspelt.push({ prefix: k, namespace: target, stub, where });
+        }
+        continue;
+      }
+      const p = unbound(target, scope);
+      if (p) note(p, `${where} (term \`${k}\`)`);
+    }
+  };
+
+  /** Merge a `@context` value into scope; `false` if part of it is unreadable. */
+  const extend = (c: unknown, scope: Set<string>, where: string, check = true): boolean => {
+    if (Array.isArray(c)) return c.map((x) => extend(x, scope, where, check)).every(Boolean);
+    if (typeof c === "string") {
+      if (c !== contextUrl) {
+        unresolvedUrls.add(c);
+        return false;
+      }
+      for (const k of Object.keys(context)) if (!k.startsWith("@")) scope.add(k);
+      return true;
+    }
+    if (isRecord(c)) {
+      for (const k of Object.keys(c)) if (!k.startsWith("@")) scope.add(k);
+      if (check) checkContext(c, where, scope);
+    }
+    return true;
+  };
+
+  const walk = (o: unknown, scope: Set<string>, where: string): void => {
+    if (Array.isArray(o)) return void o.forEach((x) => walk(x, scope, where));
+    if (!isRecord(o)) return;
+    let s = scope;
+    if ("@context" in o) {
+      s = new Set(scope);
+      extend(o["@context"], s, where);
+    }
+    for (const [k, v] of Object.entries(o)) {
+      if (k === "@context") continue;
+      if (!s.has(k)) {
+        const p = unbound(k, s);
+        if (p) note(p, where);
+      }
+      if (k === "@type" || k === "type") {
+        for (const t of Array.isArray(v) ? v : [v]) {
+          if (typeof t !== "string" || s.has(t)) continue;
+          const p = unbound(t, s);
+          if (p) note(p, where);
+        }
+      }
+      walk(v, s, where);
+    }
+  };
+
+  // The published context first: it is where bean `zaqn` started, and it is
+  // checked whether or not any document happens to use the broken term.
+  const own = new Set(Object.keys(context).filter((k) => !k.startsWith("@")));
+  checkContext(context, contextUrl, own);
+
+  for (const f of contentDocuments(repo)) {
+    let doc: unknown;
+    try {
+      doc = JSON.parse(readFileSync(f, "utf-8"));
+    } catch {
+      continue; // `kg:schema:check` owns malformed JSON-LD — see above.
+    }
+    const rel = f.startsWith(repo) ? f.slice(repo.length + 1) : f;
+    const top = isRecord(doc) ? doc["@context"] : undefined;
+    const probe = new Set<string>();
+    // A PROBE — does the context resolve? — so it reports nothing; the walk
+    // below reads the same context again and is where findings come from.
+    if (top !== undefined && !extend(top, probe, rel, false)) {
+      unresolvedCount++;
+      continue;
+    }
+    documents++;
+    walk(doc, new Set(), rel);
+  }
+
+  return {
+    documents,
+    unresolved: { count: unresolvedCount, urls: [...unresolvedUrls].sort() },
+    undeclared: [...undeclared].map(([prefix, e]) => ({ prefix, ...e })).sort((a, b) => b.count - a.count),
+    misspelt,
+  };
+}
+
+// ── Every plain KEY is a declared term — bean `yh6u` ─────────────────────
+//
+// `kg-export` rule 5 applied to CONTENT: a key that is neither a declared term
+// nor a compact/absolute IRI is not a property, and a JSON-LD processor DROPS
+// it without a word. Measured 2026-09-23 before this check existed: 8 such keys
+// across 392 committed figure blocks — every agent-drafted figure narrative.
+// The prefix check above could not see them, because they have no prefix.
+//
+// It does not descend into a `@json`-typed value: that is a JSON LITERAL by
+// declaration, its inner keys are data rather than properties, and reading them
+// as undeclared terms would condemn exactly the choice that keeps their nulls.
+
+export interface KeyDeclarationReport {
+  /** Documents that reference the published content context. */
+  readonly documents: number;
+  /** Plain keys that are not declared terms, with a count and an example. */
+  readonly undeclared: PrefixFinding[];
+}
+
+export function checkDeclaredKeys(
+  repo = REPO,
+  context = CONTENT_CONTEXT as Record<string, unknown>,
+  contextUrl = CONTENT_CONTEXT_URL,
+): KeyDeclarationReport {
+  const terms = new Set(Object.keys(context).filter((k) => !k.startsWith("@")));
+  const isJson = (k: string): boolean => {
+    const d = context[k];
+    return isRecord(d) && d["@type"] === "@json";
+  };
+  const found = new Map<string, { count: number; example: string }>();
+  let documents = 0;
+
+  const walk = (o: unknown, where: string): void => {
+    if (Array.isArray(o)) return void o.forEach((x) => walk(x, where));
+    if (!isRecord(o)) return;
+    for (const [k, v] of Object.entries(o)) {
+      if (k === "@context") continue;
+      if (k.startsWith("@")) {
+        walk(v, where);
+        continue;
+      }
+      // A compact or absolute IRI is the prefix check's business, not this one's.
+      if (k.includes(":")) {
+        walk(v, where);
+        continue;
+      }
+      if (!terms.has(k)) {
+        const e = found.get(k);
+        if (e) e.count++;
+        else found.set(k, { count: 1, example: where });
+      }
+      if (!isJson(k)) walk(v, where);
+    }
+  };
+
+  for (const f of contentDocuments(repo)) {
+    let doc: unknown;
+    try {
+      doc = JSON.parse(readFileSync(f, "utf-8"));
+    } catch {
+      continue;
+    }
+    const c = isRecord(doc) ? doc["@context"] : undefined;
+    const usesContent = c === contextUrl || (Array.isArray(c) && c.includes(contextUrl));
+    if (!usesContent) continue;
+    documents++;
+    walk(doc, f.startsWith(repo) ? f.slice(repo.length + 1) : f);
+  }
+  return {
+    documents,
+    undeclared: [...found].map(([prefix, e]) => ({ prefix, ...e })).sort((a, b) => b.count - a.count),
+  };
+}
+
+// ── A PATH is never an `@id` — bean `589f` ────────────────────────────────
+//
+// A document-relative path under an `@id`-coerced term is resolved by a
+// JSON-LD processor against `@base`, not against the document, and so names a
+// location the file is not at. That was `text` on 1,323 prose blocks. The fix
+// was to declare `text` and `leanSource` literals; this is what stops the next
+// term — or the old one, re-coerced — from doing it again.
+
+/** A value that is a file path rather than an IRI or a node id. */
+export function looksLikePath(v: string): boolean {
+  return v.startsWith("../") || v.startsWith("./") || /\.(md|lean|tex|png|jpe?g|svg|pdf|csv|xlsx)$/i.test(v);
+}
+
+export function checkPathsAreNotLinks(
+  repo = REPO,
+  context = CONTENT_CONTEXT as Record<string, unknown>,
+  contextUrl = CONTENT_CONTEXT_URL,
+): KeyDeclarationReport {
+  const idTerms = new Set(
+    Object.entries(context)
+      .filter(([k, v]) => !k.startsWith("@") && isRecord(v) && v["@type"] === "@id")
+      .map(([k]) => k),
+  );
+  const found = new Map<string, { count: number; example: string }>();
+  let documents = 0;
+  const walk = (o: unknown, where: string): void => {
+    if (Array.isArray(o)) return void o.forEach((x) => walk(x, where));
+    if (!isRecord(o)) return;
+    for (const [k, v] of Object.entries(o)) {
+      if (idTerms.has(k)) {
+        for (const x of Array.isArray(v) ? v : [v]) {
+          if (typeof x !== "string" || !looksLikePath(x)) continue;
+          const e = found.get(k);
+          if (e) e.count++;
+          else found.set(k, { count: 1, example: `${where}: ${x}` });
+        }
+      }
+      if (isRecord(context[k]) && (context[k] as Record<string, unknown>)["@type"] === "@json") continue;
+      walk(v, where);
+    }
+  };
+  for (const f of contentDocuments(repo)) {
+    let doc: unknown;
+    try {
+      doc = JSON.parse(readFileSync(f, "utf-8"));
+    } catch {
+      continue;
+    }
+    const c = isRecord(doc) ? doc["@context"] : undefined;
+    if (!(c === contextUrl || (Array.isArray(c) && c.includes(contextUrl)))) continue;
+    documents++;
+    walk(doc, f.startsWith(repo) ? f.slice(repo.length + 1) : f);
+  }
+  return {
+    documents,
+    undeclared: [...found].map(([prefix, e]) => ({ prefix, ...e })).sort((a, b) => b.count - a.count),
+  };
+}
+
+/** Print the path-under-`@id` half; return whether it failed. */
+function reportPaths(p: KeyDeclarationReport): boolean {
+  if (p.undeclared.length === 0) {
+    console.log("✓ no file path sits under an `@id`-coerced term");
+    return false;
+  }
+  console.error(`\n${p.undeclared.length} \`@id\` term(s) carry FILE PATHS — a processor resolves them against @base, to the wrong place:`);
+  for (const u of p.undeclared) console.error(`  ✗ ${u.prefix}  ×${u.count}  e.g. ${u.example}`);
+  console.error("\nDeclare the term a literal, or mint an absolute IRI for a file that is actually served (bean `589f`).");
+  return true;
+}
+
+/** Print the undeclared-key half; return whether it failed. */
+function reportKeys(k: KeyDeclarationReport): boolean {
+  console.log(`\nKey declaration — ${k.documents} content-context document(s) read`);
+  if (k.documents === 0) {
+    console.error("::error::key declaration: no content-context document read — a clean run over nothing is not clean");
+    return true;
+  }
+  if (k.undeclared.length > 0) {
+    console.error(`\n${k.undeclared.length} key(s) are not declared terms — a JSON-LD processor DROPS them:`);
+    for (const u of k.undeclared) console.error(`  ✗ ${u.prefix}  ×${u.count}  e.g. ${u.example}`);
+    console.error("\nDeclare each in CONTENT_CONTEXT (schemas/jsonld.ts), or nest it under an `@json` term if it is data rather than a property.");
+    return true;
+  }
+  console.log("✓ every key in every content-context document is a declared term");
+  return false;
+}
+
+/** Print the spoken-but-unbound half; return whether it failed. */
+function reportDeclaration(d: PrefixDeclarationReport): boolean {
+  console.log(`\nPrefix declaration — ${d.documents} document(s) read, ${d.unresolved.count} with a context this check cannot resolve`);
+  for (const u of d.unresolved.urls) console.warn(`  ? could not determine: ${u}`);
+  let failed = false;
+  if (d.undeclared.length > 0) {
+    failed = true;
+    console.error(`\n${d.undeclared.length} prefix(es) are SPOKEN and bound nowhere in scope:`);
+    for (const u of d.undeclared) console.error(`  ✗ ${u.prefix}:  ×${u.count}  e.g. ${u.example}`);
+    console.error("\nA JSON-LD processor reads an unbound prefix as a URI SCHEME: `folio:Definition` becomes an IRI that means nothing.");
+    console.error("Bind the prefix in the context, or write the term with its bound prefix.");
+  }
+  if (d.misspelt.length > 0) {
+    failed = true;
+    console.error(`\n${d.misspelt.length} binding(s) onto our own namespaces are not spelt as the instance's stub:`);
+    for (const m of d.misspelt) console.error(`  ✗ ${m.prefix} → ${m.namespace}  (want \`${m.stub}\`, a declared stub) in ${m.where}`);
+  }
+  if (d.documents === 0) {
+    failed = true;
+    console.error("\n::error::prefix declaration: no document could be read — a clean run over nothing is not clean");
+  }
+  if (!failed) console.log("✓ every spoken prefix is bound, and every own-namespace prefix is its stub");
+  return failed;
+}
+
 if (import.meta.main) {
   const r = checkContextEmission();
+  const d = checkPrefixDeclaration();
+  const k = checkDeclaredKeys();
+  const p = checkPathsAreNotLinks();
   if (process.argv.includes("--json")) {
-    console.log(JSON.stringify(r, null, 2));
-    process.exit(r.silent.length > 0 || r.documents === 0 ? 1 : 0);
+    console.log(JSON.stringify({ emission: r, declaration: d, keys: k, paths: p }, null, 2));
+    const declFailed = d.undeclared.length > 0 || d.misspelt.length > 0 || d.documents === 0;
+    const keysFailed = k.undeclared.length > 0 || k.documents === 0;
+    process.exit(r.silent.length > 0 || r.documents === 0 || declFailed || keysFailed || p.undeclared.length > 0 ? 1 : 0);
   }
+  if (reportDeclaration(d)) process.exitCode = 1;
+  if (reportKeys(k)) process.exitCode = 1;
+  if (reportPaths(p)) process.exitCode = 1;
 
   console.log(`Context emission — ${Object.keys(r.counts).length} bound prefix(es) over ${r.documents} document(s)`);
   for (const [p, n] of Object.entries(r.counts).sort((a, b) => b[1] - a[1])) {

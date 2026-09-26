@@ -1,11 +1,11 @@
 ---
 # folio-assistant-r279
 title: 'DECIDE: which transcription backend, and what CI pays for it'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T13:02:22Z
-updated_at: 2026-09-20T13:02:22Z
+updated_at: 2026-09-23T21:59:43Z
 parent: folio-assistant-slw1
 blocking:
     - folio-assistant-1r0p
@@ -59,3 +59,13 @@ Building the arm. `1r0p` carries that, and its `transcript/` output is already
 probed by `check:l1-complete` — a probe corrected on 2026-09-20 from
 `transcript.json`, a filename that could never have matched the directory
 `1r0p` says it writes.
+
+## Summary of Changes
+
+Closed 2026-09-23 **by the owner's ruling, which changed the question**. Asked which backend to adopt, the owner said: *"describe options as Tools fulfilling task but dont need to materialize"*. So nothing is chosen and nothing is installed. The candidates are declared as Tool nodes in `cat-harness/tools/index.ts`, each satisfying `library-ingestion`, each naming the other two in `alternativeTo`, and each recording `when`, `limits` and `cost`:
+
+- `transcribe-whisper-cpp`: offline, CPU, no Python. The default candidate.
+- `transcribe-faster-whisper`: Python, beside the PDF arms. Weights are fetched on first use.
+- `transcribe-vosk`: the lightest offline option, with lower accuracy.
+
+None is in `schemas/python-deps.ts`, `requirements.txt` or CI. The original Done-when items (choose one, declare it in python-deps, re-measure CI cost) are superseded, not skipped: they become `1r0p`'s first step when the first recording arrives. `check:tools` is green over the three nodes.

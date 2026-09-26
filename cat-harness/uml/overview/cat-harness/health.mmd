@@ -1,0 +1,54 @@
+classDiagram
+  direction TB
+  namespace cat_harness__health {
+    class cat_harness_health_Threshold["Threshold"] {
+      <<json: HealthReportSchema>>
+      metric [1] string
+      value [1] number
+      unit [1] string
+      basis [1] string
+      severity [1] critical | major | minor
+    }
+    class cat_harness_health_Measurement["Measurement"] {
+      <<json: HealthReportSchema>>
+      metric [1] string
+      value [1] number
+      unit [1] string
+      command [1] string
+    }
+    class cat_harness_health_Finding["Finding"] {
+      <<json: HealthReportSchema>>
+      summary [1] string
+      metric [0..1] string
+      severity [1] critical | major | minor
+      action [1] string
+    }
+    class cat_harness_health_Check["Check"] {
+      <<json: HealthReportSchema>>
+      id [1] string
+      state [1] ok | finding | unknown
+      summary [1] string
+      thresholds [0..*] Threshold[]
+      measurements [0..*] Measurement[]
+      findings [0..*] Finding[]
+      reason [0..1] string
+    }
+    class cat_harness_health_HealthReport["HealthReport"] {
+      <<json: HealthReportSchema>>
+      $schema [1] 'health-report/v1'
+      producer [1] object
+      subject [1] object
+      updated_at [1] string
+      verdict [1] clean | findings | unknown
+      checks [1..*] Check[]
+    }
+  }
+  cat_harness_health_Check *-- "0..*" cat_harness_health_Threshold : thresholds
+  cat_harness_health_Check *-- "0..*" cat_harness_health_Measurement : measurements
+  cat_harness_health_Check *-- "0..*" cat_harness_health_Finding : findings
+  cat_harness_health_HealthReport *-- "1..*" cat_harness_health_Check : checks
+  cssClass "cat_harness_health_Threshold" fa_uml_kind_health
+  cssClass "cat_harness_health_Measurement" fa_uml_kind_health
+  cssClass "cat_harness_health_Finding" fa_uml_kind_health
+  cssClass "cat_harness_health_Check" fa_uml_kind_health
+  cssClass "cat_harness_health_HealthReport" fa_uml_kind_health

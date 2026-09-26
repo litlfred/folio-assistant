@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`methodologies/crdm/crdm-detect.md`](https://github.com/litlfred/folio-assistant/blob/main/methodologies/crdm/crdm-detect.md) — do not edit here.
+> Generated from [`cat-harness/skills/crdm/crdm-detect.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-detect.md) — do not edit here. Typed contract: [schema reference](../skills/crdm-detect.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/methodologies/crdm/crdm-detect.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/crdm/crdm-detect.md){: .fa-edit-source }
 
 {% raw %}
 # Feature-request detection (CRDM trigger)
@@ -16,6 +16,14 @@ Detect when a user request is a **feature request** (platform capability change)
 rather than a **content request** (writing, editing, reviewing folio content).
 When a feature request is detected, the agent works through requirements rather
 than implementing directly.
+
+## Applies when
+
+Requirements that come from **stakeholders who must sign them off**, on work tied
+to a folio's domain — WHO SMART Guidelines, an IG, a programme's content. The
+requester is a content developer working through a BA, and the answer depends on
+what the folio says. **Not** for a platform capability change raised by somebody
+building the tooling with a content-agnostic answer — that is `spec-kit`.
 
 ## Which requirements methodology — the fork this detection now carries
 
@@ -28,7 +36,7 @@ whose.
 | | governs | requester | the answer depends on |
 |---|---|---|---|
 | **`crdm`** — this methodology | stakeholder-facing WHO/IG work: needs assessment, BPA, stakeholder sign-off | content developers, via a BA | a folio's subject matter |
-| **[`spec-kit`](../spec-kit/spec-kit.md)** | folio-assistant feature development; software-development best practice, closer to a scrum process | **tool developers** | nothing a folio says — **content-agnostic** |
+| **[`spec-kit`](spec-kit.md)** | folio-assistant feature development; software-development best practice, closer to a scrum process | **tool developers** | nothing a folio says — **content-agnostic** |
 
 The owner's words, 2026-09-21: *"CRDM stays for stkaeholder facing WHO/IG
 work…..spec-kit is specific to folio assistant feature development requests by
@@ -113,10 +121,15 @@ its sentences fall into.
 - "Proposal: …" as a document's OPENING line
 - "design document for …"
 
-Anchored to the opening line on purpose. A document that *mentions* a proposal
-is not one: #187 asks for a write-up of a merged proposal's changes and is not
-a feature request, while #199 IS that write-up. An unanchored `proposal` costs
-that distinction — measured, not supposed.
+Anchored to the opening line, and the reason has CHANGED. The anchor was
+chosen because an unanchored `proposal` also caught #187, a request to write
+up a merged proposal's changes, which was labelled *not* a feature request. On
+2026-09-24 the owner relabelled #187 a feature request, after a blind second
+annotation (bean `vjbl`): it is the change register for pipeline changes not
+yet built. Measured on the adjudicated corpus, the unanchored pattern now adds
+no false alarm and catches #187, which the anchor misses (recall 95.5% →
+100%). The anchor is kept until the owner decides, because changing a detector
+to fit its own 27-item eval set is tuning to the test.
 
 ## What is NOT a feature request
 
@@ -263,4 +276,15 @@ have to live with it.
 Nor does it mean stopping work to do paperwork first. `continual-progress`
 still holds — branch, commit, push, open the PR from commit #1. The point is
 that the *record* is collaborative, not that the *work* pauses.
+
+## Related work first
+
+When a requirement is **initiated or updated** in chat, find the related work before anything else. That means beans, issues and open PRs, each categorized and summarized, followed by one question to the user about whether and how to coordinate. The procedure is [`related-work-coordination`](related-work-coordination.md), and `crdm-issue-linking.bpmn` calls it as `Process_RelatedWork` (issue #1023).
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [CRDM requirements](../../processes/crdm-requirements.html) | Detect feature request (crdm-detect skill) |
+

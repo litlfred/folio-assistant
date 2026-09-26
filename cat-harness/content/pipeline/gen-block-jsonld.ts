@@ -30,11 +30,12 @@
  * that import is itself a validation step this must not displace.
  *
  * Usage:
- *   bun run content/pipeline/gen-block-jsonld.ts               # write
- *   bun run content/pipeline/gen-block-jsonld.ts --check       # CI gate
- *   bun run content/pipeline/gen-block-jsonld.ts --paper <dir>
+ *   bun run cat-harness/content/pipeline/gen-block-jsonld.ts               # write
+ *   bun run cat-harness/content/pipeline/gen-block-jsonld.ts --check       # CI gate
+ *   bun run cat-harness/content/pipeline/gen-block-jsonld.ts --paper <dir>
  *
  * @module content/pipeline/gen-block-jsonld
+ * @covers folio
  */
 
 import { folioDir } from "../../schemas/cat-harness.js";
@@ -285,7 +286,7 @@ async function run(): Promise<number> {
         `\n${stale.length} .jsonld sibling(s) are stale or missing:\n` +
           stale.slice(0, 40).map((s) => `  ${s}`).join("\n") +
           (stale.length > 40 ? `\n  … and ${stale.length - 40} more` : "") +
-          `\n\nRun: bun run content/pipeline/gen-block-jsonld.ts`,
+          `\n\nRun: bun run cat-harness/content/pipeline/gen-block-jsonld.ts`,
       );
       return 1;
     }

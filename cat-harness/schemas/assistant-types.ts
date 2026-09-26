@@ -24,12 +24,11 @@
  * │    ├──requiredCapabilities──▶ CapabilityDefinition.id          │
  * │    │     (with degradation: fail | warn | skip | fallback)     │
  * │    ├──dependsOn──▶ SkillDefinition | Requirement               │
- * │    └──implementation──▶ scripts, mcpServices, validators       │
+ * │    └──satisfies──▶ RequirementStatement (skill front matter)   │
  * │                                                                │
  * │  Requirement (FHIR R5–aligned)                                 │
  * │    ├──actors──▶ ActorDefinition.id                             │
- * │    └──statements[]                                             │
- * │         └──satisfiedBy──▶ Skill | Capability | Requirement     │
+ * │    └──statements[]  (named BY what satisfies them)             │
  * │                                                                │
  * └─────────────────────────────────────────────────────────────────┘
  * ```
@@ -39,7 +38,8 @@
  * The `Requirement` type mirrors the
  * [FHIR R5 Requirements](https://hl7.org/fhir/R5/requirements.html)
  * resource model: each requirement contains statements with conformance
- * verbs (SHALL/SHOULD/MAY) and `satisfiedBy` references. This enables
+ * verbs (SHALL/SHOULD/MAY). FHIR's `satisfiedBy` is the inverse of the
+ * `satisfies` a skill or capability declares, and is derived from it. This enables
  * cross-repository interoperability with WHO SMART Guidelines (smart-base).
  *
  * @module assistant-types
@@ -256,7 +256,7 @@ export interface CapabilityDefinition {
  *
  * **It can, exactly.** The diagram already carries it, executably:
  * `Gateway_SigningRoute` branches to `Task_HumanSign`, a `userTask`, in
- * `Lane_Human`, which binds `<folio:role ref="publication-manager"/>`. So
+ * `Lane_Human`, which binds `<bootstrap.processes:role ref="publication-manager"/>`. So
  * the fallback role is *the role of a lane holding a task only a person can
  * fill* — `fulfilmentKindsForBpmnType`, which the diagram's own
  * documentation already relies on to stop the air-gapped route quietly
@@ -322,32 +322,6 @@ export interface SkillDependency {
   kind: "skill" | "requirement";
   /** How strongly this dependency is required. */
   conformance: Conformance;
-}
-
-/**
- * A script that a skill can execute at different lifecycle phases.
- */
-export interface SkillScript {
-  /** Path to the script (relative to repo root). */
-  path: string;
-  /** Script runtime. */
-  runtime: "bash" | "python" | "typescript" | "bun";
-  /** When in the skill lifecycle to run this script. */
-  phase: "pre" | "execute" | "validate" | "post";
-  /** Additional CLI arguments. */
-  args?: string[];
-}
-
-/**
- * A validator that checks skill output correctness.
- */
-export interface SkillValidator {
-  id: string;
-  /** Path to the validator script. */
-  path: string;
-  runtime: "bash" | "python" | "typescript" | "bun";
-  /** What scope this validator checks. */
-  scope: "file" | "block" | "chapter" | "project";
 }
 
 /**
@@ -428,8 +402,9 @@ export interface SkillDefinition {
    * (`UserRole`), 3 were BPMN roles. Eight of the 51 were `reader`, which is
    * not a `UserRole` either; that tier is spelled `viewer`.
    *
-   * And nothing enforced any of it. `src/core/rbac.ts` is header-driven and
-   * every route hardcodes its own minimum, so a skill declaring
+   * And nothing enforced any of it. `src/core/rbac.ts` was header-driven and
+   * every route hardcoded its own minimum (it asks the ODRL policies since
+   * issue #1207), so a skill declaring
    * `roles: ["reader", "collaborator", "owner"]` beside a working RBAC module
    * read as gated and was not. That is why it was removed rather than left:
    * dead weight is cheap, but a false claim of enforcement is not.
@@ -445,12 +420,6 @@ export interface SkillDefinition {
   dependsOn?: SkillDependency[];
   /** Tools the agent is allowed to use when this skill is active. */
   allowedTools?: string[];
-  /** Scripts executed during skill lifecycle phases. */
-  scripts?: SkillScript[];
-  /** MCP service names this skill interacts with. */
-  mcpServices?: string[];
-  /** Validators that check skill output. */
-  validators?: SkillValidator[];
   /** Regex patterns for routing user requests to this skill. */
   routingPatterns?: string[];
   /** Searchable tags. */
@@ -470,13 +439,8 @@ export interface SkillDefinition {
    * `fsh-guts/scripts/` on 2026-09-20, so nothing reads this field now.
    */
   lifecycleStages?: LifecycleStage[];
-  /**
-   * Directory holding this skill's own JSON Schema files, relative to the repo
-   * root (e.g. `schemas/skills/content-author`). Also 18/18 on disk, also on
-   * the Zod schema, also missing here. Distinct from `schemas` above, which
-   * names TypeScript modules and types rather than a directory.
-   */
-  schemaRef?: string;
+  // No `schemaRef` (#1168, B3b): a skill names its contracts in its front
+  // matter (`input:`/`output:`), read by `scripts/skill-contracts.ts`.
 }
 
 // ---------------------------------------------------------------------------
@@ -484,23 +448,11 @@ export interface SkillDefinition {
 // ---------------------------------------------------------------------------
 
 /**
- * A reference to what satisfies a requirement statement.
- *
- * Mirrors FHIR R5 `Requirements.statement.satisfiedBy`.
- */
-export interface SatisfiedByRef {
-  /** What kind of thing satisfies this statement. */
-  kind: "skill" | "capability" | "requirement-statement";
-  /** ID of the satisfying skill, capability, or requirement-statement key. */
-  ref: string;
-}
-
-/**
  * A single testable statement within a requirement.
  *
- * Each statement has a conformance verb (SHALL/SHOULD/MAY) and
- * optional `satisfiedBy` references that trace to skills, capabilities,
- * or other requirement statements.
+ * Each statement has a conformance verb (SHALL/SHOULD/MAY). What satisfies
+ * it points at it — `satisfies: ["req:<id>#<key>"]` on a skill or capability
+ * — and the statement names none of them (#1168).
  *
  * @example
  * ```ts
@@ -509,7 +461,6 @@ export interface SatisfiedByRef {
  *   label: "Identity detection",
  *   conformance: "SHALL",
  *   requirement: "Detect user identity via git config or OAuth",
- *   satisfiedBy: [{ kind: "capability", ref: "git-read" }],
  * }
  * ```
  */
@@ -524,8 +475,6 @@ export interface RequirementStatement {
   requirement: string;
   /** Actors this statement applies to (defaults to parent's actors). */
   actors?: string[];
-  /** What satisfies this statement. */
-  satisfiedBy?: SatisfiedByRef[];
   /** Keys of other statements this one depends on. */
   dependsOn?: string[];
 }
@@ -537,7 +486,7 @@ export interface RequirementStatement {
  * Modeled after the
  * [FHIR R5 Requirements resource](https://hl7.org/fhir/R5/requirements.html):
  * each requirement has actors, statements with conformance verbs,
- * and traceability via `satisfiedBy` and `derivedFrom`.
+ * and traceability via `derivedFrom`; what satisfies a statement names it.
  *
  * @example
  * ```ts
@@ -550,7 +499,6 @@ export interface RequirementStatement {
  *     key: "REQ-SC-1",
  *     conformance: "SHALL",
  *     requirement: "sorry preceded by -- Ref: [key] <url>",
- *     satisfiedBy: [{ kind: "skill", ref: "formalizer" }],
  *   }],
  * };
  * ```

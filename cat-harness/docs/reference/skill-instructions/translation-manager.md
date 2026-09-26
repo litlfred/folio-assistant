@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/folio-core/translation-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/folio-core/translation-manager.md) — do not edit here.
+> Generated from [`cat-harness/skills/folio-core/translation-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/translation-manager.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/folio-core/translation-manager.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/translation-manager.md){: .fa-edit-source }
 
 {% raw %}
 # Translation manager
@@ -615,7 +615,7 @@ The WHO `smart-base` repository defines the formal actor
 `SGAuthoring.Skills.ReviewTranslations`.
 
 Follow the principle in
-[`smart-base-tools.md`](../authoring-who-smart-guidelines/smart-base-tools.md):
+[`smart-base-tools.md`](smart-base-tools.md):
 **load it; never vendor it.** The translation subsystem is invoked from the
 smart-base checkout, not copied.
 
@@ -701,3 +701,12 @@ When presenting translated content for review, use the `staging-review`
 skill to provide before/after URL comparison tables. See
 `schemas/staging.ts` for the `StagingComparison` schema.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Human Translation Workflow](../../processes/human-translation-workflow.html) | Identify content and target locale; Assign to qualified human translator; Check translation completeness; Request completion of remaining strings; Receive assignment and materials; Translate strings in preferred tool; Submit completed .po file; Review translation for accuracy; Return for correction with annotations; Sign off translation as official; Extract POT (translatable strings); Prepare domain glossary; Inject PO → translated Markdown; Round-trip translation QA; Append WHO disclaimer (if DAK); Write status.json (official) |
+| [Narrative review](../../processes/review-narrative.html) | Review the translation |
+| [Translation Workflow](../../processes/translation-workflow.html) | Extract translatable strings (POT generation); Produce translation (PO file); Inject translations (PO → Markdown); Round-trip translation QA (back-translate); Adjudicate flagged passage (human reviewer) (calls a sub-process); Edit the flagged passage and re-inject; Write status.json (unofficial); Sign off translation (human adjudicator); Write status.json (official); Check staleness (source hash) |
+

@@ -288,6 +288,28 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
     }),
 
     defineTool({
+      id: "user-auth",
+      title: "Who is asking, and what may they do",
+      description:
+        "User authentication and authorization (issue #1207). Asks GitHub for the caller's login and repository role, maps the role to a gateway actor, and answers from the ODRL policies — for an action, or for a BPMN step. Always states that GitHub's role covers the whole repository, not a sub-graph, node or query path.",
+      install: bundled,
+      invoke: inProcess("src/tools/auth.ts", "auth_whoami"),
+      io: {
+        inputs: [
+          { name: "actor", schema: t("Text"), required: false, description: "A declared actor the caller is acting as." },
+          { name: "action", schema: t("Text"), required: false, description: "An ODRL action to ask about, e.g. content-authoring." },
+          { name: "process", schema: t("Text"), required: false, description: "Process id, to scope the question or check a task." },
+          { name: "task", schema: t("Text"), required: false, description: "Node id; with process, runs the task-authorization check." },
+          { name: "role", schema: t("Text"), required: false, description: "The role the lane binds." },
+          { name: "target", schema: t("Text"), required: false, description: "The content acted on." },
+        ],
+        outputs: [{ name: "answer", schema: t("Markdown"), description: "Identity, GitHub role, ODRL grants and decisions, and what GitHub's grain cannot express." }],
+      },
+      satisfies: ["task-authorization", "deployment-auth"],
+      requires: { network: true },
+    }),
+
+    defineTool({
       id: "stakeholder-map",
       title: "Stakeholder map",
       description:
@@ -481,8 +503,10 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
         inputs: [
           { name: "instance", schema: t("InstanceId"), required: true, arg: { positional: 0 } },
           { name: "activity", schema: t("NodeId"), required: true, arg: { positional: 1 } },
+          { name: "actor", schema: t("Text"), required: false, description: "Who you say would perform it. Recorded only: strict mode authorizes the principal GitHub vouches for (issue #1207)." },
+          { name: "target", schema: t("Text"), required: false, description: "The content it would act on, for the access check." },
         ],
-        outputs: [{ name: "verdict", schema: t("Markdown"), description: "Permitted, refused with the reason, or advisory." }],
+        outputs: [{ name: "verdict", schema: t("Markdown"), description: "Permitted, refused with the reason, or advisory — and the task-authorization verdict." }],
       },
       satisfies: ["process-state"],
       requires: { network: false },
@@ -512,7 +536,8 @@ export function mcpTools(t: TypeIri): ToolDefinition[] {
             required: false,
             description: "Facts a DMN table is evaluated against. Structured, so it is never a command-line word.",
           },
-          { name: "actor", schema: t("Text"), required: false, description: "Who performed the step, for the audit record." },
+          { name: "actor", schema: t("Text"), required: false, description: "Who you say performed the step, written to the history. Authorization is decided on the principal GitHub vouches for, in strict mode (issue #1207)." },
+          { name: "target", schema: t("Text"), required: false, description: "The content the step acted on, for the access check." },
           // Free prose, and prose is not a command-line word — see
           // `tool-types` on why `Markdown` is excluded from INJECTION_SAFE.
           { name: "note", schema: t("Markdown"), required: false, arg: { stdin: true }, description: "Appended to the instance's bean." },

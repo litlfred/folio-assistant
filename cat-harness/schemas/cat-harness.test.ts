@@ -6,7 +6,7 @@
  * directories without restating them.
  */
 import { describe, it, test, expect, beforeAll, afterAll } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, writeFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, writeFileSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { readFileSync } from "node:fs";
@@ -187,6 +187,19 @@ describe("inheritance — the Phase 0.3 gate", () => {
     expect(kg).toHaveLength(1);
     expect(kg[0]!.path).toBe("graph/knowledge/");
     expect(kg[0]!.declaredBy).toBe("relocated");
+  });
+
+  it("a renamed id still overrides the entry it meant (cat-harness → skills, bean iwtn)", () => {
+    const root = mkdtempSync(join(tmpdir(), "renamed-id-"));
+    try {
+      mkdirSync(join(root, "old-skills"));
+      writeDeclaration(root, { name: "older", directories: [{ id: "cat-harness", path: "old-skills/", dependents: "skip", graphKinds: ["skills"] }] });
+      const dirs = resolveDirectories([{ name: "older", root, own: true }]);
+      expect(dirs.filter((d) => d.id === "cat-harness")).toEqual([]);
+      expect(dirs.filter((d) => d.id === "skills").map((d) => d.path)).toEqual(["old-skills/"]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 
   it("an override keeps the inherited position rather than reshuffling the scan order", () => {
@@ -590,14 +603,26 @@ describe("materialiseDirectories", () => {
     const ids = libraries.map((d) => d.id);
     expect(ids).toContain("library");
     expect(libraries.length).toBeGreaterThan(1);
-    // The platform's own library EXISTS and is EMPTY. It was absent for a few
-    // hours between `frs5` and the owner's ruling; `harness:dirs:check`
-    // reports a declared-but-missing directory, so re-declaring it required
-    // re-creating it. Emptiness is the assertion — existence is what the
-    // declaration demands, and holding nothing is what the platform rule does.
+    // The platform's own library EXISTS. It was absent for a few hours between
+    // `frs5` and the owner's 2026-09-20 ruling; `harness:dirs:check` reports a
+    // declared-but-missing directory, so re-declaring it required re-creating
+    // it.
+    //
+    // EMPTINESS WAS ALSO ASSERTED HERE UNTIL 2026-09-22, and is not any more.
+    // The owner's ruling that day — "they should be under <stub>/library and
+    // appear in the library visualizer for the harness. dont bury sub-graph
+    // assets" — puts the sources the harness's OWN methodologies cite in this
+    // directory, so an emptiness assertion would forbid what was asked for.
+    //
+    // The rule did not go away, it MOVED, and it moved rather than being
+    // copied: `folio-assistant-core/schemas/library-ref.test.ts` now asserts
+    // that every entry here is cited by a methodology node, which still fails
+    // the moment folio content appears and names the offending entry when it
+    // does. Restating it here would be the one-fact-in-two-places drift this
+    // schema's own comments keep paying for — and the weaker of the two copies
+    // would be this one.
     const own = libraries.find((d) => d.id === "library")!.absPath;
     expect(existsSync(own)).toBe(true);
-    expect(readdirSync(own).filter((f) => !f.startsWith("."))).toEqual([]);
   });
 });
 
@@ -661,11 +686,11 @@ describe("default directories — inherit the convention, declare only the devia
     writeDeclaration(inst, JSON.stringify({ name: "minimal" }));
 
     const d = resolveDirectories([{ name: "minimal", root: inst, own: true }]);
-    expect(d.map((x) => x.id).sort()).toEqual(["beans", "cat-harness", "tools"]);
+    expect(d.map((x) => x.id).sort()).toEqual(["beans", "skills", "tools"]);
     // `(default)` rather than the instance's name: a consumer can tell an
     // inherited convention from something this instance chose.
     expect(d.every((x) => x.declaredBy === "(default)")).toBe(true);
-    expect(d.find((x) => x.id === "cat-harness")!.path).toBe("skills/");
+    expect(d.find((x) => x.id === "skills")!.path).toBe("skills/");
   });
 
   it("a default whose directory is ABSENT is not seeded", () => {
@@ -689,11 +714,11 @@ describe("default directories — inherit the convention, declare only the devia
     mkdirSync(join(moved, "tools"), { recursive: true });
     writeDeclaration(moved, JSON.stringify({
         name: "relocated",
-        directories: [{ id: "cat-harness", path: "graph/knowledge/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
+        directories: [{ id: "skills", path: "graph/knowledge/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
       }));
     const d = resolveDirectories([{ name: "relocated", root: moved, own: true }]);
-    expect(d.find((x) => x.id === "cat-harness")!.path).toBe("graph/knowledge/");
-    expect(d.find((x) => x.id === "cat-harness")!.declaredBy).toBe("relocated");
+    expect(d.find((x) => x.id === "skills")!.path).toBe("graph/knowledge/");
+    expect(d.find((x) => x.id === "skills")!.declaredBy).toBe("relocated");
     // ...and the defaults it did NOT override are still there.
     expect(d.find((x) => x.id === "tools")!.declaredBy).toBe("(default)");
   });
@@ -1022,29 +1047,55 @@ describe("instanceRootsIn — discovered, never listed", () => {
       ".",
       "agent-skills",
       "bootstrap",
-      "bootstrap-tools",
       "cat-harness",
-      "detangle",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
       // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
       // `folio-assistant-sci` sorts after it. The list is the assertion, so
       // the swap is the visible half of the rename.
+      // Added 2026-09-22 with the owner's stack ruling
+      // (`core->fhir-harness->smart-base->siblings{smart-l1, smart-dak,
+      // smart-ig}`, issue #963). It is the BASE the note above is about: the
+      // bare FHIR IG pipeline, with no WHO, DAK or SMART assumption, which is
+      // what `nsbb` had been asking for since 2026-09-21. It sorts here rather
+      // than beside the `smart-*` entries because it is deliberately NOT one
+      // of them -- the WHO package may reference this layer and this layer may
+      // never reference the WHO package.
+      "fhir-harness",
       "folio-assistant-core",
       "folio-assistant-sci",
-      "kg-navigation",
       "large-datasets",
       // Added 2026-09-21 with the FHIR IG artefact-index ingest (issue #689).
       // It fired as designed, which is what this list is for: `smart-trust/`
       // declares a `harness.json` and is therefore an instance, sorting
-      // between `large-datasets` and `who-iris`. `smart-kg/` is NOT here and
-      // that is correct — it declares no `harness.json`, so it is a directory
-      // rather than an instance.
+      // between `large-datasets` and `who-iris`. A directory with no
+      // `harness.json` is not an instance and is correctly absent — `smart-kg/`
+      // was the example until it was removed (bean `wg7r`).
       // Added 2026-09-21 with the second ingested IG (bean qrnz). PROVISIONAL:
       // the owner has since ruled that a per-IG harness should not exist at all
       // (bean nsbb), so this entry and `smart-trust` below are both expected to
       // collapse into a `smart-base` instance. It is listed because it EXISTS
       // today, which is the only thing this assertion is about.
+      // Added 2026-09-22 (issue #877). This is the `smart-base` instance that
+      // `nsbb` called for, and its arrival is the FIRST half of what the note
+      // above predicted: the per-IG harnesses are expected to collapse into it.
+      // They have NOT collapsed yet and both are still listed, because this
+      // assertion is about what EXISTS today and nothing else. It holds the
+      // ingested WHO digital-health corpus, the DIIG methodology read out of
+      // it, and the voice derived from it -- KG assets, not the IG pipeline,
+      // which stays `nsbb`'s question.
+      "smart-base",
+      // Added 2026-09-22 (issue #975) — the three siblings of the owner's
+      // stack ruling, `core->fhir-harness->smart-base->siblings{smart-l1,
+      // smart-dak, smart-ig}`. They were named in the ruling and in
+      // `smart-stack-layering` for a whole PR while no directory declared any
+      // of them, so the stack existed in prose and nowhere a consumer could
+      // read it. Each declares NO directories, deliberately: that is the
+      // `folio-assistant-core` precedent, because a declared-but-absent
+      // directory is the `dh4f` defect.
+      "smart-dak",
+      "smart-ig",
       "smart-immunizations",
+      "smart-l1",
       "smart-trust",
       "who-iris",
       "who-style-guide",
@@ -1127,9 +1178,30 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
     const repo = resolve(import.meta.dir, "..", "..");
     const decl = readDeclaration(join(repo, "cat-harness"));
     const themed = (decl?.directories ?? []).filter((d) => d.theme !== undefined);
+    // TWO, not four, since 2026-09-22. `methodology-crdm` and
+    // `methodology-raci` were dropped when the owner's "dont bury sub-graph
+    // assets" moved their skills into `skills/` — a package subdirectory of
+    // the already declared `skills/` graph needs no entry of its own, and a
+    // second entry would declare one directory twice.
+    //
+    // The theme did not move with them, deliberately: `theme` is a property of
+    // a DIRECTORY in the declaration, and those two directories no longer
+    // exist as declared subjects. What remains themed is the graph that holds
+    // the methodology nodes — which is the right
+    // grain anyway, since `analyst` describes the methodologies rather than
+    // the skills that apply them.
+    //
+    // TWO since 2026-09-24, when `smart-kg-methodologies` went with GRADE
+    // becoming a skill (bean `wg7r`). `folio-assistant-core-methodologies`
+    // joined 2026-09-23 when core got a methodologies graph of its own
+    // (`doc-researcher`), and it takes `analyst` for the same reason
+    // `methodologies` does: the subject is a
+    // METHOD, and the theme describes methods rather than the layer that holds
+    // them. A second theme for core's copy would say the two graphs render
+    // differently, which nobody decided and which the pages do not do.
     expect(themed.map((d) => d.id).sort()).toEqual([
-      "methodologies", "methodology-crdm", "methodology-raci", "methodology-spec-kit",
-      "smart-kg-methodologies",
+      "folio-assistant-core-methodologies",
+      "methodologies",
     ]);
     for (const d of themed) expect(d.theme).toBe("analyst");
     expect(THEMES.map((t) => t.id)).toContain("analyst");

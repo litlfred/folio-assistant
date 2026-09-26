@@ -36,6 +36,7 @@
  * Exit: 0 clean (or no store), 1 a real defect, 2 could not check.
  *
  * @module folio-assistant/scripts/check-bean-bodies
+ * @covers bean-defs, beans
  */
 
 import { existsSync, readFileSync } from "node:fs";
@@ -61,6 +62,25 @@ import {
  * dataset"*, *"blocked on effort"* and four more, none of them a bean. So the
  * id must be **in a code span** and must be **id-shaped**: the store's
  * `id_length` is 4, with the instance prefix optional.
+ *
+ * ## The `not` escape is LINE-SCOPED, and a wrap defeats it
+ *
+ * The caller scans `body.split("\n")` one line at a time, so `\s+` in the
+ * `not` group can never span a newline. A withdrawal written as
+ *
+ * ```md
+ * ... and as of 2026-09-22 each is **not
+ * blocked on `68dt`** because it completed.
+ * ```
+ *
+ * reads correctly to a person and is reported as a live block, because the
+ * line the checker sees begins at `blocked on`. Hit while withdrawing the six
+ * dead blockers on 2026-09-22 — the fix is to keep `not blocked on \`id\``
+ * on ONE line, not to widen the pattern: making it multi-line would also let
+ * a `not` three paragraphs up silence a real assertion.
+ *
+ * The same scoping is why {@link insideQuotation} takes a line rather than
+ * the body, and it is deliberate there for the identical reason.
  */
 export const BLOCKER = /(not\s+)?blocked\s+on\s+(?:bean\s+)?`((?:[a-z0-9-]+-)?[a-z0-9]{4})`/gi;
 

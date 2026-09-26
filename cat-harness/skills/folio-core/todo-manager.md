@@ -5,6 +5,13 @@ description: >
   issue tracker. Track implementation progress, open tasks, missing
   artifacts, and blocked items across a session.
 allowed-tools: Read Grep Glob TodoWrite AskUserQuestion
+satisfies:
+  - "req:agent-workflow#work-is-visible"
+graph-kinds:
+  - beans
+  - board-positions
+  - boards
+  - todos
 ---
 
 # Session Task Manager (`beans`)
@@ -110,13 +117,22 @@ print(f"{len(m)} exact match(es)")
 [print(" ", b["id"], b["status"]) for b in m]' "$T"
 ```
 
-- **≥ 1 match** → do **not** create. Claim the existing bean instead:
-  `beans update <id> --status in-progress --body-append "Claimed by <branch>"`
-  — and note that the claim is **branch-local**: a sibling reading
-  `origin/main` sees `todo` until your PR exists, so it announces rather than
-  reserves. Also `git fetch origin main` and check the open PR list for the
-  bean id. Two sessions claimed one bean 61 s apart on 2026-09-19 and shipped
-  two PRs. [`bean-coordination.md` §"A claim is branch-local"](bean-coordination.md).
+- **≥ 1 match** → do **not** create. Claim the existing bean instead, with
+  **`bun run beans:claim <id>`** — which reads the default branch first, refuses
+  a bean a sibling holds or one already closed, and records a holder note so the
+  next session's check can see you.
+
+  **Not `beans update <id> --status in-progress`.** That is the older advice and
+  it is what this line used to say. It writes no holder note, so the claim is
+  invisible to `beans:claim`'s own `already-claimed` check — measured 2026-09-25,
+  97 of the 100 non-epic `in-progress` beans on `main` record no holder, and the
+  guard answered "go ahead" for all 97 (bean `c3d7`). Two sessions claimed one
+  bean 61 s apart on 2026-09-19 and shipped two PRs; that is the failure the tool
+  exists to stop, and routing around it puts it back.
+
+  Read the outcome — three of them are refusals, and `held-unknown` means it
+  could not tell a live sibling from an abandoned claim:
+  [`bean-coordination.md` §"`bun run beans:claim`"](bean-coordination.md).
 - **0 matches** → `beans create "$T" --type task`
 
 `--search` is a fuzzy Bleve query, so the exact-title comparison inside the
@@ -405,7 +421,9 @@ You can map out sequence blockers using:
 `beans update <id> --blocking <blocked-id>`
 
 **3. Updating Status & Adding Comments**
-- When starting work: `beans update <id> --status in-progress`
+- When starting work: `bun run beans:claim <id>` — a claim goes through the
+  claim tool, never through `beans update`, so it is visible to the next
+  session's check (bean `c3d7`)
 - When completed: `beans update <id> --status completed`
 - To add notes or discussion: `beans update <id> --body-append "Your note"`,
   or `--body-append -` with a heredoc when it runs to paragraphs. **Never
@@ -426,7 +444,7 @@ skills to explain in context of larger process."*
 
 | | **a per-activity op** | **a periodic sweep** |
 |---|---|---|
-| what it is | a step inside one process — a fourth `<folio:bean op>` beside `claim`, `note`, `resolve` | a scheduled run over the whole store |
+| what it is | a step inside one process — a fourth `<cat-harness.processes:bean op>` beside `claim`, `note`, `resolve` | a scheduled run over the whole store |
 | the question it answers | *is **this item's** work over?* | *is **the store** still readable?* |
 | what decides | the process reaching a step that means completion | a uniform, process-independent criterion — `completed` or `scrapped` |
 | what the archive then records | **why** — "archived because the release shipped" | **when** — "archived in the sweep of that date" |
@@ -466,7 +484,7 @@ asked for the sweep by hand.
 
 **Neither disposition is built yet**, and the first question is which —
 bean `folio-assistant-m8gz`, analysis in
-`fsh-guts/proposals/bean-archiving-in-bpmn.md`. Until then archiving is the
+`cat-harness/docs/proposals/bean-archiving-in-bpmn.md`. Until then archiving is the
 owner's word and `beans archive`, run deliberately. Note the CLI prints
 `.beans/archive/` but honours `path:` from `.beans.yml`; here that means
 `beans/defs/archive/`.

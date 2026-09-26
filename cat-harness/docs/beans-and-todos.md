@@ -2,6 +2,9 @@
 layout: default
 title: Beans and todos
 nav_order: 6
+documents:
+  - beans
+  - todos
 lang: en
 available_locales: ["en"]
 ---
@@ -128,7 +131,7 @@ Two different things can change a bean, and a step that confuses them will
 announce an effect it does not have.
 
 **The workflow engine** performs `claim`, `note` and `resolve` on a process
-instance's own bean when a step marked `<folio:bean op="…"/>` completes.
+instance's own bean when a step marked `<cat-harness.processes:bean op="…"/>` completes.
 `claim` sets `in-progress` and is idempotent; `note` appends; `resolve`
 completes the bean **only once the instance itself has completed**, because
 whether work is done is a judgement and a bean is not closed on someone else's
@@ -138,7 +141,7 @@ say-so.
 retitling, setting a blocker. The engine has no operation for any of these.
 
 This is not a hypothetical distinction. An activity in the CRDM diagram
-carried `<folio:bean action="create"/>` — `action`, where the engine reads
+carried `<cat-harness.processes:bean action="create"/>` — `action`, where the engine reads
 `op` — so it parsed as no operation at all. The step advertised that sign-off
 produced beans, performed nothing, and did so silently until somebody read the
 parser.
@@ -180,7 +183,7 @@ agent should be acting on.
 
 The rest of this page says what a bean **is**. This section says what the
 store currently **holds** — read live from
-[`/assets/beans/index.json`](../assets/beans/index.json), the projection
+[`/assets/beans/index.json`](assets/beans/index.json), the projection
 `gen-docs-pages.ts` writes from `beans/defs/` on every build, beside the todo
 index it has published for longer.
 
@@ -236,7 +239,7 @@ half of bean `v49e`. That join needs `beans/workflows/`, the declared
 <div class="fa-workplan" data-fa-workplan>
   <p class="fa-workplan-fallback">
     The live work-plan dashboard needs JavaScript. The projection it reads is
-    <a href="../assets/beans/index.json">a plain JSON file</a> and can be read
+    <a href="assets/beans/index.json">a plain JSON file</a> and can be read
     directly.
   </p>
 </div>

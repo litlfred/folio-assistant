@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  "Every changed block reviewed?" — GW_Covered in content-change-review.bpmn.
+  Bean `en2d`, epic `q4jm`.
+
+  The facts are counted over the edit-set's ChangeSet:
+
+    uncoveredBlocks  blocks the ChangeSet lists as added or changed that have
+                     NEITHER a verdict from a reviewer in a review lane NOR a
+                     waiver the review coordinator wrote a reason for (for
+                     example, a pure rename), on the block's CURRENT version.
+                     The engine reads a fact by name and does no arithmetic,
+                     so the `folio-review-coverage` Tool computes both counts
+                     (bean px0t) and the coordinator passes them in.
+    openDefects      review comments of kind `defect` still open or addressed
+
+  Covered means every changed block has either a verdict or a waiver, and no
+  defect is still open. Two things this table deliberately does NOT read:
+
+  - Resolved COMMENTS are not coverage. A block whose comments are all
+    resolved but that nobody gave a verdict on has not been reviewed, and the
+    heat map's `review-heatmap` skill says the same thing from the other side.
+  - Approval is not here. Coverage says the review is COMPLETE; whether the
+    change is ACCEPTED is GW_Approved, downstream, and it is the committee's.
+
+  Those are policy choices, in a table a coordinator can change without
+  touching code, which is the argument for putting them in DMN at all.
+-->
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             id="Definitions_ReviewCoverageGate"
+             name="Review coverage gate"
+             namespace="https://litlfred.github.io/folio-assistant/decisions">
+  <decision id="Decision_ReviewCoverageGate" name="Every changed block reviewed?">
+    <decisionTable id="Table_ReviewCoverageGate" hitPolicy="FIRST">
+      <input id="In_Uncovered" label="changed blocks with neither a verdict nor a waiver">
+        <inputExpression id="Expr_Uncovered" typeRef="number">
+          <text>uncoveredBlocks</text>
+        </inputExpression>
+      </input>
+      <input id="In_OpenDefects" label="open defect comments">
+        <inputExpression id="Expr_OpenDefects" typeRef="number">
+          <text>openDefects</text>
+        </inputExpression>
+      </input>
+      <output id="Out_Covered" name="outcome" typeRef="string" />
+
+      <rule id="Rule_Uncovered">
+        <description>A changed block nobody has given a verdict on, and nobody waived with a reason, means the review is not complete.</description>
+        <inputEntry id="IE_Uncovered_1"><text>&gt; 0</text></inputEntry>
+        <inputEntry id="IE_Uncovered_2"><text>-</text></inputEntry>
+        <outputEntry id="OE_Uncovered"><text>"no"</text></outputEntry>
+      </rule>
+      <rule id="Rule_OpenDefect">
+        <description>An open defect is unfinished review work, whatever the verdict count says.</description>
+        <inputEntry id="IE_OpenDefect_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_OpenDefect_2"><text>&gt; 0</text></inputEntry>
+        <outputEntry id="OE_OpenDefect"><text>"no"</text></outputEntry>
+      </rule>
+      <rule id="Rule_Covered">
+        <description>Every changed block has a verdict or a reasoned waiver, and no defect is open.</description>
+        <inputEntry id="IE_Covered_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_Covered_2"><text>-</text></inputEntry>
+        <outputEntry id="OE_Covered"><text>"yes"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

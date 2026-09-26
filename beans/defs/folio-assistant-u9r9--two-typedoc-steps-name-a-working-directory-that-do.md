@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-22T05:57:48Z
-updated_at: 2026-09-22T07:19:07Z
+updated_at: 2026-09-26T09:00:43Z
 parent: folio-assistant-1xhc
 ---
 
@@ -161,3 +161,157 @@ Two reasons it cannot see this, and they compound:
 2. Both TypeDoc steps run `npx typedoc` — not a script path — so `invokedPath` declines the line and the step is never examined at all.
 
 A step whose `working-directory` is absent fails 100 % of the time whatever it runs. This is `1xhc` one level up from where the bean looked: not a gate that does not fire, but a gate that fires, passes, and is structurally blind to the case. Tracked separately rather than folded in here, because it is a platform gate's gap and not this bean's two paths.
+
+---
+
+## 2026-09-22, stream 4 (`kpcl`) — the premise is now GATED, and the bean is owner-blocked rather than stale
+
+Picked up because this bean sits in the stale-claim sweep's candidate set —
+`in-progress`, untouched for a day, no open PR naming it. It is **not**
+abandoned. It is waiting on a decision only the owner can make, and it says so
+in prose that no date can expire. That is the sweep's falsifier confirmed on a
+real sample rather than argued: see `kpcl`.
+
+### `ai9u` landed the criterion while this bean was waiting for a dispatch
+
+`bun run check:workflow-paths` now runs a **second** criterion over the same
+parse — *every `working-directory` must EXIST* — and both of this bean's steps
+are in its output:
+
+```
+31 working-directory declaration(s): 4 resolve, 24 need a folio, 3 baselined, 0 missing, 0 undetermined
+· held  discoverability-docs.yml › schema-docs › Install + run TypeDoc: `folio-assistant` (missing) — baselined, still owed
+· held  publish.yml › schema-docs › TypeDoc generate: `folio-assistant` (missing) — baselined, still owed
+```
+
+**What that changes, stated narrowly.** It does not observe the failure, and it
+is not the dispatch §"What would settle it" asks for. What it does is make the
+premise **durable and regression-proof**: *the directory is missing* is now a
+gate's finding rather than one session's file read, it is listed on every run
+rather than re-derived, and the baseline may only shrink — so if somebody fixes
+the path, the entry goes stale and the gate says so. The third session's closing
+paragraph asked for exactly this to be tracked separately, and it was.
+
+The baseline also carries `lake-cache-refresh.yml`'s `${{ matrix.lake-root }}`
+as **undetermined**, which is the right third state for an expression a static
+reader cannot evaluate — not a pass.
+
+### What is still genuinely open, and why nobody can take it over
+
+`publish.yml` cannot be settled by a dispatch at all: its `schema-docs` carries
+`needs: content-pipeline`, which preflights `content/schema/references.ts`, and
+`content/` does not exist in the platform. A dispatch returns `skipped`, which
+is not an outcome. The third session established that and it holds.
+
+`discoverability-docs.yml` **can** be dispatched — its jobs carry no `needs:` —
+and that is the whole of the block: **all three of its jobs push to `gh-pages`
+via `peaceiris/actions-gh-pages@v4`, and the workflow has never run, not once.**
+Authorising the dispatch is authorising a publish from a workflow with no run
+history. That is not an agent's call to make, and it is not one an expiry can
+take over.
+
+## Blocked on
+
+- **waits on:** the owner's decision on `discoverability-docs.yml` — dispatch it
+  once to observe the TypeDoc step (which also authorises a first-ever
+  `gh-pages` publish from that workflow), or correct the `working-directory`
+  path without observing, or rule the workflow dormant and scrap the step.
+  `publish.yml` is not part of this: it returns `skipped`, not an outcome.
+- **since:** 2026-09-22T19:05Z
+- **expires:** 2026-09-29T19:05Z
+- **handoff:** a **re-ask date, not a takeover date** — no agent may authorise a
+  first publish from a never-run workflow. On expiry, re-raise it on #956 with
+  the three options above as selectable choices, move this date out, and say in
+  the bean that it was re-asked. Do **not** dispatch, and do **not** edit the
+  path: `check:workflow-paths` already holds the finding, so nothing is lost by
+  waiting and a dormant step turned live is a behaviour change nobody asked for.
+
+## Done when
+
+- [ ] Each workflow is dispatched once and the step's real outcome recorded —
+      **unachievable as written for `publish.yml`** (`needs: content-pipeline`
+      cannot pass in the platform, so a dispatch returns `skipped`). Live only
+      for `discoverability-docs.yml`, and owner-blocked above.
+- [ ] If it fails: the path is corrected and the two installs pinned in the
+      same change, and their baseline entries removed
+- [ ] If it succeeds: this bean is marked wrong, with what the checkout
+      actually produces written down so the next reader does not re-derive it
+- [x] The premise is gated rather than re-derived — `check:workflow-paths`
+      criterion 2 (`ai9u`) holds both steps as `missing — baselined, still
+      owed`, and the baseline may only shrink
+
+---
+
+## Settled 2026-09-22 on the owner's ruling — path corrected, NOT dispatched
+
+Owner, 2026-09-22, choosing *"Correct the path, no dispatch"* over dispatching
+the workflow to observe its real outcome. The alternative would have authorised
+a **first-ever `gh-pages` publish from a workflow with no run history**, all
+three of whose jobs push there — so the cheap fix and the risky observation were
+correctly separated.
+
+### What was wrong, verified rather than quoted
+
+| | |
+|---|---|
+| `.github/workflows/discoverability-docs.yml:208` | `working-directory: folio-assistant` |
+| `.github/workflows/publish.yml:568` | `working-directory: folio-assistant` |
+
+`folio-assistant/` **does not exist** in this checkout. `cat-harness/` does, and
+holds `schemas/`. Both corrected, and `npx typedoc` pinned to `typedoc@0.28.20`
+with `--yes`, which is the version npx resolves today — an unpinned `npx` in CI
+takes whatever is latest at run time, which is a different program on a
+different day.
+
+### A SECOND defect, found by running it rather than reading it
+
+The invocation exits **0** from `cat-harness`. That is what makes this worth
+writing down, because exit 0 is also what it would report if the step were
+documenting nothing at all.
+
+Both steps name **two** entry points: `schemas/` and `adapters/paper/schemas/`.
+**`cat-harness/adapters/paper/schemas/` does not exist** — the paper adapter
+holds `index.ts` and `tools/lean.ts` and no `schemas/` directory. Measured on
+the real run:
+
+```
+Found 0 errors and 231 warnings
+126 modules generated — every one from schemas/
+```
+
+Nothing from `adapters/paper/`. **TypeDoc accepts a missing entry point without
+failing**, so the step is green while silently producing less than its own
+command line claims, and its comment — *"document the schemas/ exports +
+adapters/paper/schemas/"* — describes output that does not exist. That is
+`1xhc`'s thesis at the level of a single argument: not a gate that fails to
+fire, but an argument that fails to resolve, reported as success.
+
+**NOT fixed here, deliberately.** Pointing the second entry at
+`adapters/paper/`, which does exist, would **add** documentation to a published
+site — a change to what readers receive, not a repair of a broken path. The
+owner ruled on the path. This is recorded for its own decision.
+
+### Done when
+
+- [x] `working-directory` corrected in both workflows, verified against the
+      filesystem rather than assumed
+- [x] `typedoc` pinned, so CI runs the same program twice
+- [x] The dead second entry point measured and recorded
+- [ ] The dead entry point decided: repoint at `adapters/paper/`, drop it, or
+      keep it with a comment saying it is aspirational — **the owner's, because
+      it changes published output**
+- [ ] Not dispatched, by ruling. Whoever dispatches first should know all three
+      jobs push to `gh-pages`
+
+
+
+## The two installs are pinned — 2026-09-26, salvaged from #1040
+
+#1040 carried this and went 590 commits stale; the owner chose to salvage its live parts into one new PR rather than resolve it. Both TypeDoc steps now run `bun install --frozen-lockfile` with **no** npm fallback, and both baseline entries are removed from `lockfile-pinning-baseline.json` (3 known → 1).
+
+Verified rather than carried over from #1040's text:
+- a frozen install **from `cat-harness/`** (the steps' `working-directory`) exits 0 on a clean worktree of `origin/main` — there is no `cat-harness/bun.lock`, bun walks up to the root one;
+- `check:lockfile-pinning`: 16 → 18 pinned, 3 → 1 deliberately unpinned, exit 0;
+- falsified: putting the old command back in `publish.yml` exits 1 with `NEW unpinned install: publish.yml: …`; restoring exits 0.
+
+The conditional box above (*"If it fails: … the two installs pinned"*) is left unticked on purpose: its condition is a dispatch the owner ruled out, so ticking it would claim an observation nobody made. The dead `adapters/paper/schemas/` entry point is still the owner's, untouched.

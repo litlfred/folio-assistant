@@ -32,6 +32,7 @@
  * |---|---|
  * | **chain** | an id **adjacent to an arrow** (`→` or `->`), in an open bean, whose status is closed |
  * | **numbered step** | a numbered list item under a heading naming a path/order/sequence |
+ * | **done-when** | an **unchecked** `- [ ]` clause naming a closed bean as a **precondition** |
  *
  * ## The two false-positive classes, measured and closed
  *
@@ -66,6 +67,7 @@
  * and this paragraph is how a reader knows.
  *
  * @module folio-assistant/scripts/check-stale-paths
+ * @covers bean-defs, beans
  */
 
 import { readFileSync } from "node:fs";
@@ -94,7 +96,7 @@ export interface StalePath {
   id: string;
   /** The closed beans its path routes through. */
   through: { id: string; status: string }[];
-  rule: "chain" | "numbered-step";
+  rule: "chain" | "numbered-step" | "done-when";
   line: string;
 }
 
@@ -214,6 +216,65 @@ export function shortId(id: string): string {
   return id.slice(id.lastIndexOf("-") + 1);
 }
 
+/**
+ * Words that put a reference in a PRECONDITION position — "once `x` is
+ * settled", "until `x` lands", "blocked on `x`".
+ *
+ * `(?![-\w])` on every one of them, and it is not defensive typing: **every**
+ * bean carries the literal heading "Done when" and most write "Done-when" in
+ * prose. Without the guard, `when` inside "Done-when" matched — and so did
+ * `done`, through the POST form — which put TWO false findings in the first
+ * measurement of this rule. Both looked plausible enough to ship.
+ */
+const DONE_WHEN_PRE =
+  String.raw`(?<![-\w])(?:once|until|after|when|blocked on|waits on|depends on|pending)(?![-\w])[^`+"`"+String.raw`]{0,40}`;
+/** ...and the mirror: "`x` is settled", "`x` fixed" — the reference first, its completion after. */
+const DONE_WHEN_POST =
+  String.raw`(?:'s)?\s+(?:is\s+)?(?:fixed|closes|closed|lands|landed|settled|answered|merged|done|exists|ships|shipped)(?![-\w])`;
+
+/**
+ * Is `ref` asserted, in this clause, as something still to come?
+ *
+ * The distinction the whole rule turns on. A Done-when clause naming a closed
+ * bean is stale only when it treats that bean as a PRECONDITION; a clause that
+ * acts ON one is correct prose. Measured over the store: 16 unchecked clauses
+ * name a closed bean, and **3** assert it as a precondition. The other 13 say
+ * things like *"`1hvo` and `7u3g` are re-read under that distinction"* — an
+ * instruction to go and read two finished beans, which is not a stale blocker
+ * by any reading.
+ */
+export function assertsPending(clause: string, ref: string): boolean {
+  const q = "`" + ref + "`";
+  const esc = q.replace(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`);
+  return (
+    new RegExp(DONE_WHEN_PRE + esc, "i").test(clause) ||
+    new RegExp(esc + DONE_WHEN_POST, "i").test(clause)
+  );
+}
+
+/**
+ * An unchecked Done-when clause starting at `i`, with its wrapped continuation.
+ *
+ * The clause ENDS at the next box, a blank line, a heading, or any line that
+ * dedents to the bullet's own column. Reading a fixed window instead — three
+ * lines, in the first draft — let one box borrow the next box's "once", which
+ * is how `zkgs` and `q2wn` were both reported against clauses that do not
+ * mention them as preconditions at all.
+ */
+export function doneWhenClause(lines: string[], i: number): string | undefined {
+  const line = lines[i]!;
+  const m = /^(\s*)[-*]\s+\[ \]/.exec(line);
+  if (m === null) return undefined; // checked boxes are not claims about what remains
+  const indent = m[1]!.length;
+  const buf = [line.trim()];
+  for (const next of lines.slice(i + 1)) {
+    if (next.trim() === "" || /^\s*[-*]\s+\[/.test(next) || next.startsWith("#")) break;
+    if (next.length - next.trimStart().length <= indent) break;
+    buf.push(next.trim());
+  }
+  return buf.join(" ");
+}
+
 export function stalePaths(beans: Bean[]): StalePath[] {
   const byId = new Map<string, Bean>();
   for (const b of beans) {
@@ -243,12 +304,32 @@ export function stalePaths(beans: Bean[]): StalePath[] {
         }
         continue;
       }
-      if (!underPathHeading(lines, i)) continue;
-      const through = [...line.matchAll(REF)]
-        .map((m) => closed(m[1]!))
+      if (underPathHeading(lines, i)) {
+        const through = [...line.matchAll(REF)]
+          .map((m) => closed(m[1]!))
+          .filter((x): x is Bean => x !== undefined)
+          .map((x) => ({ id: shortId(x.id), status: x.status }));
+        if (through.length > 0) {
+          out.push({ id: shortId(b.id), through, rule: "numbered-step", line: line.trim() });
+        }
+        continue;
+      }
+      // NOT `if (!underPathHeading) continue` — that guard sat here and made
+      // everything below it unreachable, so the done-when rule ran on no line
+      // at all and the check printed ✓. It was caught only because the rule had
+      // been measured independently first and was expected to report 3.
+      // An UNCHECKED Done-when box is structurally a claim about what remains,
+      // which is why it can be read at all where free prose cannot.
+      const clause = doneWhenClause(lines, i);
+      if (clause === undefined) continue;
+      const pending = [...new Set([...clause.matchAll(REF)].map((r) => r[1]!))]
+        .filter((r) => assertsPending(clause, r))
+        .map(closed)
         .filter((x): x is Bean => x !== undefined)
         .map((x) => ({ id: shortId(x.id), status: x.status }));
-      if (through.length > 0) out.push({ id: shortId(b.id), through, rule: "numbered-step", line: line.trim() });
+      if (pending.length > 0) {
+        out.push({ id: shortId(b.id), through: pending, rule: "done-when", line: clause });
+      }
     }
   }
   return out;
@@ -295,7 +376,8 @@ function formatReport(r: StalePathReport): string {
   out.push("  A path through finished work reads to the next agent as work still to do.");
   out.push("  Repaired by the bean's OWNER — see skills/folio-core/bean-blocking.md.");
   out.push("  Prose that merely MENTIONS a closed bean is not examined and is not a pass;");
-  out.push("  only an arrow chain and a numbered step under a path heading are read.");
+  out.push("  only an arrow chain, a numbered step under a path heading, and an UNCHECKED");
+  out.push("  Done-when clause that names one as a PRECONDITION are read.");
   return out.join("\n");
 }
 

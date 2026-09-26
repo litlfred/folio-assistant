@@ -5,9 +5,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/theming/site-presentation-assets.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/theming/site-presentation-assets.md) — do not edit here.
+> Generated from [`cat-harness/skills/theming/site-presentation-assets.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/site-presentation-assets.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/theming/site-presentation-assets.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/theming/site-presentation-assets.md){: .fa-edit-source }
 
 {% raw %}
 # Site presentation assets — the node is the source, the stylesheet is a rendering
@@ -48,7 +48,7 @@ invisible because the file looks authored.
 **3 — A published generated asset needs a Tool that `maintains` it.** Otherwise
 the provenance is unreachable: nothing can answer "which node produced this
 stylesheet", and the asset becomes the third case in
-[`covered-is-not-reachable`](../folio-core/covered-is-not-reachable.md) — a mechanism nobody
+[`covered-is-not-reachable`](covered-is-not-reachable.md) — a mechanism nobody
 can find. Declare the artefact by its **published** path, and check that
 something actually publishes it before claiming so.
 
@@ -84,7 +84,7 @@ a failure.
 
 ## What this skill does not cover
 
-- **Prose voice and tone** — [`one-voice-style-guide`](../folio-core/one-voice-style-guide.md).
+- **Prose voice and tone** — [`one-voice-style-guide`](one-voice-style-guide.md).
 - **Whether a rendered block LOOKS right** — that is a content question, and the
   rendering auditor's.
 - **How a link is spelled** —
@@ -101,7 +101,7 @@ skill and **no skill stated this capability**. The mechanism had existed for som
 time; the vocabulary had not.
 
 That is the third mismatch in
-[`covered-is-not-reachable`](../folio-core/covered-is-not-reachable.md), and it is invisible to
+[`covered-is-not-reachable`](covered-is-not-reachable.md), and it is invisible to
 `bun run tools:coverage` by construction: that tool enumerates **skills** and asks
 which lack Tools, so a capability nobody stated is absent from the list it walks.
 Bean `yean`.
@@ -110,3 +110,10 @@ The skill was written before the nodes, and deliberately names no script. A skil
 written to give a command somewhere to point is **a Tool with front matter**: it
 passes every check and teaches nothing.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Code node review](../../processes/review-code.html) | Review the schema definition node |
+

@@ -5,7 +5,7 @@
     "id": "Process_PrChecksPresent",
     "path": "processes/pr-checks-present.bpmn"
   },
-  "source_hash": "sha256:c0c8f333c0879097a5b3494969d0075bef5d47846051e3039bc6ab149bed7795",
+  "source_hash": "sha256:2796013c06269af561779acaf25607f27fbab48d61446a9414cba663ef961d4a",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -87,12 +87,59 @@
     "call-activity-resolves": {
       "result": "n/a",
       "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 6,
+    "pass": 15,
     "fail": 1,
     "n/a": 8,
     "unknown": 0
-  }
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/pr-checks-present.bpmn",
+      "code": ".github/workflows/pr-checks-present.yml",
+      "prose_hash": "2796013c0626",
+      "code_hash": "b167678d9c0e",
+      "by": "agent",
+      "reason": "The change is to the WORDING of one advice branch inside the comment body (the UNKNOWN mergeability case), aligning it with check-head-has-run.ts per bean fx5r. No step, gateway, lane or ordering changed: the diagram's five activities — ask per open PR whether HEAD has a run, ensure the label, open-or-edit the one tracking issue, comment once per (PR, head sha), close the issue when every head has a run — all still describe exactly what the workflow does. Re-read the diagram against the workflow to confirm rather than assuming."
+    }
+  ]
 }
