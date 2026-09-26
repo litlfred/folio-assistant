@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T09:42:57Z
-updated_at: 2026-09-26T11:44:19Z
+updated_at: 2026-09-26T12:26:27Z
 parent: folio-assistant-1xhc
 ---
 
@@ -352,3 +352,40 @@ now, so while `tsc` is red, `bun test` does not run at all. The ordering assumed
 and typecheck could not fail for reasons outside their own subject; `tsc` currently
 fails for exactly such a reason. Landing the one-line `tsconfig` exclude unmasks it,
 which is a second argument for that patch beyond tidiness.
+
+
+## CI END STATE, confirmed by name on `34af74d5bb9`
+
+**`typescript`** — `bun run lint` ✓, **`tsc --noEmit` ✓ (first time in this PR)**, then
+`bun test`: **11880 pass / 44 skip / 1 fail**, the one being `the real corpus — and the
+gate can actually fail > no NEW drift, and nothing unreadable`.
+
+**`gates`** — steps **1-41 green**, step **42** (`translation:drift:check`) red, 43-48
+skipped.
+
+Two jobs, one failure each, **both the same t8g3 drift**. Nothing in the branch is red
+for a reason of its own.
+
+### Five failures were hiding in the masked region — all named, all settled
+
+| hidden gate | whose | state |
+|---|---|---|
+| `tsc --noEmit` (vitest in block-qa-schema's tests) | main's | fixed on this branch |
+| `check:glossary` | mine | fixed |
+| `kg:audit:check` | mine | fixed |
+| `check:lockfile-pinning` | mine | fixed |
+| `docs:auto:check` | mine | fixed |
+
+That is the answer to this bean's original question — *"is any OTHER gate in there
+red?"* — and it is **five**, not zero and not one.
+
+### Two facts only CI could establish
+
+`tsc` green is the first CI evidence for the tsconfig patch; before this there was only
+a local run and a throwaway worktree. And `bun test` executing again matters beyond
+tidiness: the `check:bean-bodies` shadow-checklist defect earlier in this branch lives
+in `bun test`, and I found it by hand because CI could not.
+
+`detangle measurements are current` is **step 35 and PASSED** — the `xd1g` verification
+box, which was deliberately left unticked as *"a fix, not a verification"* because
+nothing could reach the check before the split existed.
