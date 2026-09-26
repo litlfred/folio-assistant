@@ -3,8 +3,9 @@
 title: 11 root-rooted scans have no gitignore awareness — ramz's sibling audit, answered
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-26T04:01:08Z
+updated_at: 2026-09-26T11:19:41Z
 parent: folio-assistant-ahvw
 ---
 
@@ -106,3 +107,58 @@ is what that caveat is worth in practice. The list is a floor. That question is 
 wants files git ignores, and this bean's second Done-when has always allowed a
 written reason instead of a fix.
 
+
+## A TWELFTH, and it was outside the directory this audit swept
+
+Found 2026-09-26, by CI rather than by looking: `cat-harness/skills/graph-management/kg-detangle.ts`.
+
+Its `walk()` was a bare `readdirSync` recursion with no gitignore awareness —
+the same shape as the eleven — but it is not under `cat-harness/scripts/`, which
+is where this bean enumerated. So the count was right for the directory it
+asked about and **the scope was the thing that was wrong**. A scanner is not
+defined by living in `scripts/`.
+
+### What it cost, which is more than the other eleven so far
+
+The detangler's output is a **pinned measurement**, committed under
+`test/results/detangle/`, so the pollution did not merely produce a noisy report
+— it was **committed as the graph's shape**:
+
+| `cat-harness/schemas` | `size` | `cohesion` |
+|---|---|---|
+| fresh checkout | **227** | 0.82 |
+| a container where a gate had run `bun install` in a publishable subpackage | 1441 | 0.96 |
+
+`cat-harness/schemas/block-qa-schema/node_modules/` — 2719 gitignored files —
+counted as graph nodes, and the 1441 was what `main` carried. Every reader of
+that sidecar, and the generated `docs/uml/overview/` pages that copy its
+numbers, had a six-fold overcount for `cat-harness/schemas`.
+
+It also made the check **unfalsifiable in the direction that matters**: green in
+any container where the subpackage had been built, red on a clean runner, and
+`kg:detangle:check` is step 37 of the `typescript` job — skipped behind main's
+accepted `bun test` red, so CI had never once evaluated it. The first thing that
+did was a new job deliberately built to run those checks without `bun test`
+(bean `v625`), and it was red on its first run.
+
+Fixed by calling `gitCorpus`, whose docblock already named the `rsi6` instance
+of exactly this. Local and CI now both compute 227.
+
+### The remedy this argues for, which is not "add one to the list"
+
+A list of scanner FILES goes stale the moment one moves or a new one is written
+elsewhere — this bean's own count is the demonstration. What is checkable is the
+inverse: **does any committed artefact change when a subpackage's
+devDependencies are installed?** That is one experiment over the whole corpus
+and needs no enumeration.
+
+### Adds to "Done when"
+
+- [ ] the sweep is re-scoped from `cat-harness/scripts/` to every
+      `readdirSync`/glob walk in the repository, wherever it lives. The
+      enumeration missed one, and the one it missed was the only one whose
+      output is committed
+- [ ] MEASURED AFTER, and this is the clause that does not rot: with every
+      publishable subpackage's devDependencies installed, run the full writer
+      set and confirm NO committed artefact differs from a clean checkout's.
+      Today `cat-harness/schemas.detangle.json` differs by 1214 nodes

@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-26T10:34:42Z
+updated_at: 2026-09-26T11:18:55Z
 parent: folio-assistant-1xhc
 ---
 
@@ -321,3 +321,66 @@ whose sidecar says 1441.
 - [ ] the spurious direction is covered too: after a `bun test`, no `:check`
       over a DOWNSTREAM artefact goes red on a tree that was clean before it.
       `uml:overview:check` is the measured instance
+
+
+## THE WITHDRAWAL ABOVE IS ITSELF WITHDRAWN — CI settled it, and the cause is a filesystem walk
+
+Same day, after the correction above. The §"CORRECTION … does not reproduce"
+block withdrew the six-stale-sidecar reading on the strength of three local runs
+exiting 0 over byte-identical committed bytes. **CI, on a fresh checkout of the
+same commit, agrees with the ORIGINAL reading.** Job 108392401874 on head
+`9549e285425`, the first thing that has ever evaluated `kg:detangle:check` in CI
+here — six STALE, the same six, the same axes.
+
+So the sequence was: right, then wrongly withdrawn, then right again. The cause
+makes all three consistent, and it is not this bean's masking mechanism.
+
+### The cause — `kg-detangle.ts`'s `walk` read the DISK
+
+| `cat-harness/schemas` | `size` |
+|---|---|
+| fresh checkout (CI) | **227** |
+| this container, after a gate ran `bun install` in a publishable subpackage | **1441** |
+| committed sidecar | 1441 |
+
+`cat-harness/schemas/block-qa-schema/node_modules/` — **2719 gitignored files**
+— were being counted as graph nodes. `walk()` was a bare `readdirSync`
+recursion, so the measurement moved when `check:published-packages` built that
+package. My first run happened BEFORE that install (saw 227, committed 1441 →
+stale, correct); my later runs happened after (saw 1441 == 1441 → current,
+also correct, over a polluted corpus).
+
+**The instrument changed under me, and the corpus never did.** That is why
+"same commit, same bytes, opposite verdicts" was a true observation with a false
+explanation: nothing about the committed tree varied, and nothing about
+`bun test`'s repair was involved either.
+
+Fixed by calling `gitCorpus` — which existed, and whose own docblock already
+named this failure (`rsi6`: *"the moment a gate installed a publishable
+package's devDependencies, it descended into `node_modules/`"*) and recorded
+that `xd1g` counted **11** such scanners. The detangler was one of the eleven.
+Local now computes CI's 227 and the check exits 0.
+
+### What this means for THIS bean, which is narrower than it looked
+
+Three of the instances recorded above are the masking mechanism — `bun test`
+repairing an artefact a later gate reads. **This one is not**, and conflating
+them would have been the error: it is an environment-dependent measurement, and
+the remedy is a corpus rule rather than test isolation. Filed here because the
+symptom was identical from the outside (a `:check` whose verdict could not be
+trusted) and because the previous entry pointed at this bean's mechanism as the
+suspected cause. Left in place so the next reader sees that the obvious
+explanation was wrong.
+
+The §"uml:overview manufactures a red" instance above **stands** and is
+independent: that one really was `bun test` writing 227 into the sidecar
+mid-run. What changes is which number was right — 227 was, all along.
+
+### Adds to "Done when"
+
+- [ ] the other TEN `xd1g` scanners are checked against `gitCorpus`, since one
+      of eleven being fixed leaves ten measurements that move with the disk.
+      MEASURED AFTER: install a subpackage's devDependencies, re-run each, and
+      confirm no committed artefact changes
+- [x] `kg:detangle:check` gives the same verdict on one commit in two
+      environments — local and a fresh CI checkout now both compute 227
