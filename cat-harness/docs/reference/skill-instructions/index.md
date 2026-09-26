@@ -127,7 +127,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Flushable containers](flushable-containers.html) | `flushable-containers` | — | **A flushable container is a named store whose whole point is that it keeps |
 | [`fsh-guts/`](fsh-guts.html) | `fsh-guts` | — | **Delete means relocate.** Nothing in this repository is removed with `rm` |
 | [Generalise the fix, then attack the generalisation](generalise-the-fix.html) | `generalise-the-fix` | — | A fix that repairs one instance and leaves its siblings is half a fix. A fix |
-| [/getting-started](getting-started.html) | `getting-started` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn). |
+| [/getting-started](getting-started.html) | `getting-started` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html). |
 | [Reading GitHub state](github-state-inspection.html) | `github-state-inspection` | — | > Skill id: `github-state-inspection` · Capability: `review` · Package: `folio-core` |
 | [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
 | [Glossary terms](glossary-terms.html) | `glossary-terms` | — | The owner, 2026-09-23: *"put glossary into folio-assistant-core"*, *"it should |
@@ -143,7 +143,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/integration-backlog](integration-backlog.html) | `integration-backlog` | — | A workflow skill that turns each integration-watcher's open findings |
 | [/integration-watch](integration-watch.html) | `integration-watch` | — | A thin dispatcher in front of [`integration-watcher`](integration-watcher.md) |
 | [integration-watcher (abstract parent)](integration-watcher.html) | `integration-watcher` | — | A concrete watcher (this skill's child) **watches incoming activity** |
-| [/interaction-modality](interaction-modality.html) | `interaction-modality` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn), |
+| [/interaction-modality](interaction-modality.html) | `interaction-modality` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html), |
 | [Working an issue](issue-working.html) | `issue-working` | — | Two rules. Both exist because **your view of an issue and everyone else's |
 | [Offering the knowledge graph](kg-contribution-offer.html) | `kg-contribution-offer` | — | Owner, 2026-09-20: *"update CRDM process that when a user is done with |
 | [KG export](kg-export.html) | `kg-export` | — | **`agentic-harness` has no renderer.** `folio` is the only `renderable` graph |
@@ -181,7 +181,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Render logging](render-logging.html) | `render-logging` | — | Owner, 2026-09-20: *"a specialised Logger skill for the gh-pages rendering |
 | [Render order](render-order.html) | `render-order` | — | Two things live here, and they are deliberately one skill: **the general |
 | [/rendered-verification](rendered-verification.html) | `rendered-verification` | — | [`continual-progress`](continual-progress.md) argues that **a human cannot |
-| [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn), |
+| [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html), |
 | [A falling-off retry rate, on every error](retry-backoff.html) | `retry-backoff` | — | Owner, 2026-09-20: **"as rule, use logarithmic fall-off on all errors. core |
 | [Review comments](review-comments.html) | `review-comments` | — | > Skill id: `review-comments` · Capability: `review` · Package: `folio-core` |
 | [Review heat map](review-heatmap.html) | `review-heatmap` | — | > Skill id: `review-heatmap` · Capability: `review` · Package: `folio-core` · Bean: `qbfi` · Epic: ` |
@@ -223,7 +223,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/watch](watch.html) | `watch` | — | A unified watcher that handles **branches** (poll `git ls-remote`) and |
 | [Where a proposal goes](where-a-proposal-goes.html) | `where-a-proposal-goes` | — | **A design proposal is a comment on the issue it is for.** Not a page in |
 | [Where does this go?](where-does-this-go.html) | `where-does-this-go` | — | > Skill id: `where-does-this-go` · Package: `folio-core` |
-| [Wireframe design review](wireframe-design-review.html) | `wireframe-design-review` | — | Method: [`wiregen`](../../methodologies/wiregen.md). Process: [`processes/wireframe-design-review.bp |
+| [Wireframe design review](wireframe-design-review.html) | `wireframe-design-review` | — | Method: [`wiregen`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/ |
 
 ## Document adapter (folio-document-adapter)
 
@@ -367,7 +367,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Release lifecycle](release-lifecycle.html) | `release-lifecycle` | — | This skill governs **when and why** to create releases. For the **how** |
 | [Session context](session-context.html) | `session-context` | — | A **session** is one actor working, from the moment it picks up until it stops. |
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
-| [Specification-compiled agents](specification-compiled-agents.html) | `specification-compiled-agents` | — | Renders [`methodologies/specification-compiled-agents.md`](../../methodologies/specification-compile |
+| [Specification-compiled agents](specification-compiled-agents.html) | `specification-compiled-agents` | — | Renders [`methodologies/specification-compiled-agents.md`](https://github.com/litlfred/folio-assista |
 | [State in a running process](workflow-state.html) | `workflow-state` | — | A process instance is not self-contained. It walks a diagram that lives |
 
 ## Content layer (folio-assistant-core)
