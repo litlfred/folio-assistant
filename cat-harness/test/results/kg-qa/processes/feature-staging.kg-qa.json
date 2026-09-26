@@ -158,8 +158,9 @@
       "prose": "cat-harness/processes/feature-staging.bpmn",
       "code": ".github/workflows/feature-staging.yml",
       "prose_hash": "d38ea6587f47",
-      "code_hash": "6ddd833a727e",
-      "by": "baseline"
+      "code_hash": "0c73493bf62e",
+      "by": "agent",
+      "reason": "Re-read the BPMN documentation against the workflow change (bean 6bhf): three steps gained an `env:` binding for `steps.slug.outputs.slug` and read \"$STAGING_SLUG\" instead of interpolating it. No step, gateway, lane, entry point or render-log write changed, so the drawn process and every prose claim about it — three entry points, two three-state gateways, the log written in the same commit as the removal, the single human confirmation — are unaffected."
     }
   ]
 }

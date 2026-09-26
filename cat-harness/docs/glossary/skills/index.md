@@ -941,7 +941,7 @@ incremental-render <span class="fa-gloss-status">candidate, extracted</span>
 injection-boundaries <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the existing gate covers, the one latent gap in its model, and the argv rule.</p>
+<p>Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the gate covers, why a step output carries a severity rather than having one, and the argv rule.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/security/injection-boundaries.md"><code>cat-harness/skills/security/injection-boundaries.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--instance-kinds" data-fa-state="extracted" data-fa-gloss="">
@@ -1075,7 +1075,7 @@ latex-authoring <span class="fa-gloss-status">candidate, extracted</span>
 latex-build-cache <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`scripts/install-tex.sh`) and quick changed-chapter feature builds (`scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.</p>
+<p>LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`cat-harness/scripts/install-tex.sh`) and quick changed-chapter feature builds (`cat-harness/scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/latex-build-cache.md"><code>cat-harness/skills/folio-paper-adapter/latex-build-cache.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--latex-validation" data-fa-state="extracted" data-fa-gloss="">
