@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T04:14:07Z
-updated_at: 2026-09-26T08:44:37Z
+updated_at: 2026-09-26T12:35:30Z
 parent: folio-assistant-d308
 ---
 
@@ -180,3 +180,106 @@ exit 1 and names the path; restoring it gives exit 0.
       root is NOT this bean's to reopen — `pve3` and `sa8y` both settled that it
       must not be
 
+
+
+--------
+
+## 2026-09-26T12:35Z — `--instance` works, and running it EXPOSED why the loop is not yet safe
+
+Claimed and worked. `kg-audit.ts` now takes `--instance ROOT`, spelled as
+`kg-locale-export.ts` spells it. **Two of this bean's premises were wrong in my
+favour and one problem it did not anticipate is the real blocker.**
+
+### The cost estimate was wrong, and the reason is worth keeping
+
+This bean said *"`root` × 76 across 2344 lines plus 9 derived `*_DIR` constants"*
+and I banked it as the owner's on grounds of expense. Measured: **the change is one
+assignment.** Everything derives from the single `const root` — the nine `*_DIR`
+constants, `knownSkills(root)`, and `sidecarPath`'s
+`dirname(join(root, subject.path))` — and nothing needs a *different* root
+part-way through a run, so pointing that constant elsewhere moves subject
+discovery and output together with no change at any other site.
+
+Two things fell out for free:
+
+- **`chq5` is already answered.** `kgQaSidecarPath` composes with `relative` and
+  handles an escaping subject explicitly (`escaped = rel.startsWith("..")`), so the
+  `../` concern is handled in the helper rather than needing an answer here.
+- **The sidecars land correctly.** Measured: `--instance ./bootstrap` wrote
+  `bootstrap/test/results/kg-qa/{processes,scenarios,skills}/*.kg-qa.json` — 134
+  subjects, 30 skills, 4 roles — and did **not** touch the root's sidecars. An
+  instance's audit as an artefact OF that instance, which is the `## Done when`
+  wording.
+
+### One real break, found and fixed
+
+    line 1998   sha256(readFileSync(join(root, "scripts", "kg-audit.ts")))
+
+The auditor hash resolved against the INSTANCE. For `--instance ./bootstrap` that
+is `bootstrap/scripts/kg-audit.ts`, which does not exist, so the run would have
+thrown before auditing anything. One constant was answering two questions; split
+into `AUDITOR_ROOT` (a fact about the program) and `root` (the instance under
+audit).
+
+### THE BLOCKER, and it would have shipped as 76 false criticals
+
+The bootstrap run reports **CRITICAL — 76 findings**, of which
+`graph:kg actor-roles-resolve` is **73**. Those are false.
+
+    ACTOR_DIR = join(repoRootFor(root), ".claude", "skills", "actors")
+
+`repoRootFor` returns the REPOSITORY root whatever the instance, so the actor set
+does not follow `--instance`. Measured: **36 repo-level actors judged against
+bootstrap's 4 roles**, so almost every actor names a role bootstrap's graph does
+not declare, and each becomes a critical.
+
+And the actor set being repo-level is **correct** — AGENTS.md declares Actor in
+`.claude/skills/actors/*.json` at the repository root, one set across instances,
+because an actor persists across processes while a role is a swimlane inside one.
+So the defect is not the path; it is that `actor-roles-resolve` compares a SHARED
+actor set against ONE instance's role graph, which is only a meaningful question
+at the root.
+
+**This is the shape kg-audit.ts argues against in its own docblock** — *"a finding
+nobody can act on … is a check somebody switches off"* (`readsProse`, on scoping
+`role-has-persona`). A per-instance run that emits 73 unactionable criticals is
+that, one level out.
+
+### Second blocker, smaller
+
+`bootstrap/test/` is an **undeclared directory**. The sidecars are correct and
+their home is not declared in `bootstrap/bootstrap.json`, so committing them would
+create a results graph no sweep reads — `dh4f` from the writing side, which is the
+same defect `#1399` just fixed in `writeReport` (`process.cwd()` writing a
+top-level `test/results/`).
+
+### So what is pushed, and what is not
+
+Pushed: the `--instance` flag, the `AUDITOR_ROOT` split, usage lines. Default
+behaviour byte-identical — `kg:audit:check` exits 0 and the only sidecar change is
+the manifest's own auditor hash, which necessarily moves when the auditor does.
+
+**Not pushed: any loop, any CI wiring, and bootstrap's sidecars.** Shipping the
+loop now would put 73 unactionable criticals in front of the next agent, and
+committing the sidecars would declare a graph nothing reads. The output this run
+produced was removed rather than left in the tree, because `audit:coverage` walks
+from the repository root with no gitignore awareness (`xd1g`).
+
+## Done when — revised against what was measured
+
+[x] the gate can run from another declared instance's root, sidecars under that
+    instance's own results directory
+[x] the auditor hash survives a non-auditor root
+[x] `instance-graph-isolation.test.ts` unaffected — this is a separate RUN, not a
+    wider walk; no directory was declared at the root
+[ ] **per-instance criteria are scoped**: a criterion whose subject is repo-level
+    (`actor-roles-resolve`, and any other reading `repoRootFor`) must be `n/a` in
+    an instance run rather than a finding. Needs a rule, not a patch — which
+    criteria are instance-scoped is a property of each criterion
+[ ] a nested instance DECLARES its results directory before its sidecars are
+    committed
+[ ] a zero-diagram instance's state is determined rather than absent (`dh4f`) —
+    untouched, and it only becomes live once a loop exists
+[ ] `nested-instance-audited` stops firing for an instance that IS audited —
+    cannot be tested until the loop lands; note it still fired (15) inside the
+    bootstrap run, which is itself suspect and unexamined

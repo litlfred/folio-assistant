@@ -33,6 +33,10 @@
  *   bun run kg:audit --check    fail on a `critical` finding, or on a stale sidecar
  *   bun run kg:audit --strict   ...and on `major` too
  *   bun run kg:audit --json     the full report set, for a tool
+ *   bun run kg:audit --instance ./bootstrap
+ *                               audit ANOTHER declared instance from its own
+ *                               root, writing its sidecars under its own
+ *                               results directory (bean `bjzs`)
  *
  * A diagram that will not load records `unknown` against every criterion,
  * including the critical ones, so it fails `--check`. `unknown` is never
@@ -134,7 +138,73 @@ function readsProse(r: { actedUpon?: boolean; actorKinds: string[] }): boolean {
   return !r.actedUpon && r.actorKinds.some((k) => k === "person" || k === "agent");
 }
 
-const root = resolve(import.meta.dir, "..");
+/**
+ * `--instance ROOT`, or undefined.
+ *
+ * Spelled as `kg-locale-export.ts` spells it, which is the established
+ * precedent in this repo (`kg:locale:bootstrap` is
+ * `--instance ./bootstrap`). A second spelling for the same idea is a second
+ * thing to remember.
+ *
+ * Not tested by import: this module runs its whole audit at module scope and
+ * writes sidecars, so importing it to reach one pure function would perform an
+ * audit as a side effect — the unguarded-entry-point defect
+ * `declared-directory-resolves.test.ts` guards. It is asserted end-to-end by
+ * spawning the script instead.
+ */
+function instanceArg(args: readonly string[]): string | undefined {
+  const i = args.indexOf("--instance");
+  return i >= 0 ? args[i + 1] : undefined;
+}
+
+/**
+ * The AUDITOR's own instance. Never the instance under audit.
+ *
+ * Split from {@link root} on 2026-09-26 (bean `bjzs`) because one constant was
+ * answering two questions, and exactly one line needed the difference: the
+ * auditor hash below read `join(root, "scripts", "kg-audit.ts")`, which for
+ * `--instance ./bootstrap` resolves to `bootstrap/scripts/kg-audit.ts` — a file
+ * that does not exist, so the run would have thrown before auditing anything.
+ * The hash is a fact about the PROGRAM, so it resolves against the program.
+ */
+const AUDITOR_ROOT = resolve(import.meta.dir, "..");
+
+/**
+ * The instance under audit — `--instance ROOT`, defaulting to the auditor's own.
+ *
+ * ## Why one assignment rather than a thread through 78 call sites
+ *
+ * Everything this script reads derives from here: the nine `*_DIR` constants
+ * below, `knownSkills(root)`, and `sidecarPath`'s
+ * `dirname(join(root, subject.path))`. So pointing this one constant at another
+ * declared instance moves the whole audit, its subject discovery AND its output,
+ * with no change at any other site. Bean `bjzs` estimated this as *"`root` × 76
+ * across 2344 lines plus 9 derived `*_DIR` constants"* and banked it as
+ * expensive; measured, the cost is this assignment plus the auditor-hash split
+ * above, because nothing needs a DIFFERENT root part-way through a run.
+ *
+ * ## Why the sidecars land correctly for free
+ *
+ * `kgQaSidecarPath(repoRoot, subjectDir, stem)` composes with `relative` and
+ * handles an escaping subject explicitly — `escaped = rel.startsWith("..")`. So
+ * bean `chq5`'s concern, that a `../` subject escapes the results tree, is
+ * answered inside that helper rather than needing an answer here, and each
+ * instance's findings land under its own results directory: an instance's audit
+ * is an artefact OF that instance, the same way its glossary is.
+ *
+ * ## What this deliberately does NOT do
+ *
+ * It does not declare a nested instance's directories at the root. That is the
+ * wrong fix established twice (`pve3`, `sa8y`) and guarded by
+ * `instance-graph-isolation.test.ts` after a live 2026-09-19 leak in which
+ * `findBpmnDirs` walked the filesystem and one export carried 88 references to
+ * another instance's process. Per-instance means a separate RUN, not a wider
+ * walk.
+ *
+ * Parsed here rather than beside `--check` at the bottom because the nine
+ * derived constants are evaluated at module scope, immediately below.
+ */
+const root = resolve(instanceArg(process.argv.slice(2)) ?? AUDITOR_ROOT);
 
 /**
  * THIS instance's own directory with `id`, or the convention if it declares none.
@@ -1994,7 +2064,7 @@ const check = args.includes("--check");
 const strict = args.includes("--strict");
 const asJson = args.includes("--json");
 
-const auditorHash = sha256(readFileSync(join(root, "scripts", "kg-audit.ts"), "utf-8"));
+const auditorHash = sha256(readFileSync(join(AUDITOR_ROOT, "scripts", "kg-audit.ts"), "utf-8"));
 const skills = knownSkills(root);
 const actors = readActors(ACTOR_DIR, readPolicyGrants(POLICY_DIR));
 
