@@ -1,0 +1,127 @@
+{
+  "$schema": "folio-graph-projection/v1",
+  "tile": {
+    "folio": {
+      "count": 5,
+      "unit": "stickies"
+    }
+  },
+  "directories": [
+    {
+      "dir": "cat-harness/folio",
+      "present": true,
+      "nodes": 5
+    }
+  ],
+  "nodes": [
+    {
+      "id": "bootstrap",
+      "summary": "Before you know what this repository is",
+      "theme": "bootstrap",
+      "anchor": "page:index",
+      "declaredIn": "bootstrap/bootstrap.json",
+      "links": [
+        {
+          "label": "bootstrap, in the source",
+          "href": "https://github.com/litlfred/folio-assistant/tree/main/bootstrap"
+        },
+        {
+          "label": "RTFM — the bootstrap docs",
+          "href": "https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md"
+        }
+      ],
+      "chars": 308,
+      "file": "cat-harness/folio/bootstrap.json"
+    },
+    {
+      "id": "cat-harness",
+      "summary": "computable adjudication and agentic test harness",
+      "theme": "grumpy-cyborg-agents",
+      "anchor": "page:index",
+      "declaredIn": "cat-harness/cat-harness.json",
+      "links": [
+        {
+          "label": "cat-harness, in the source",
+          "href": "https://github.com/litlfred/folio-assistant"
+        },
+        {
+          "label": "RTFM — the cat-harness docs",
+          "href": "/agentic-harness.html"
+        },
+        {
+          "label": "The work plan is where you say what you are doing",
+          "href": "/beans-and-todos.html"
+        },
+        {
+          "label": "Make your first folio",
+          "href": "/getting-started.html"
+        },
+        {
+          "label": "Know which kind of thing you are writing",
+          "href": "/content-types.html"
+        },
+        {
+          "label": "The documentation you will never read",
+          "href": "/guides/index.html"
+        }
+      ],
+      "chars": 409,
+      "file": "cat-harness/folio/cat-harness.json"
+    },
+    {
+      "id": "folio-assist-core",
+      "summary": "What a folio is",
+      "theme": "grumpy-cat",
+      "anchor": "page:index",
+      "declaredIn": "folio-assistant-core/folio-assistant-core.json",
+      "links": [
+        {
+          "label": "Content",
+          "href": "/content-types.html"
+        },
+        {
+          "label": "Skills",
+          "href": "/skills.html"
+        },
+        {
+          "label": "Processes",
+          "href": "/publication-workflow.html"
+        },
+        {
+          "label": "Tools",
+          "href": "/architecture.html"
+        },
+        {
+          "label": "Acquisition",
+          "href": "/document-ingestion.html"
+        },
+        {
+          "label": "RTFM — folio-assist-core",
+          "href": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/README.md"
+        }
+      ],
+      "chars": 812,
+      "file": "cat-harness/folio/folio-assist-core.json"
+    },
+    {
+      "id": "folio-assistant",
+      "summary": "The repository, acting as an initialized instance",
+      "theme": "engineer",
+      "anchor": "page:index",
+      "declaredIn": "folio-assistant.json",
+      "links": [],
+      "chars": 466,
+      "file": "cat-harness/folio/folio-assistant.json"
+    },
+    {
+      "id": "smart-trust",
+      "summary": "A published IG, read back as a graph",
+      "theme": "operations",
+      "anchor": "page:index",
+      "declaredIn": "smart-trust/smart-trust.json",
+      "links": [],
+      "chars": 134,
+      "file": "cat-harness/folio/smart-trust.json"
+    }
+  ]
+}
