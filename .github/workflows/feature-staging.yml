@@ -1159,10 +1159,31 @@ jobs:
       - name: Comment staging URL on PR
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v9
+        # A `script:` block is JavaScript, and `${{ }}` is substituted into its
+        # SOURCE TEXT before V8 parses it — so the hazard is the `run:` one in a
+        # different language, and one position here is worse than a shell's.
+        #
+        # `outputs.branch` is the RAW fork branch name (see `Determine staging
+        # slug`, which binds it to env for exactly this reason) and it was
+        # interpolated into a TEMPLATE LITERAL below, where `${…}` is EVALUATED.
+        # `git check-ref-format --branch` accepts `a${process.exit(1)}b` and
+        # accepts a backtick; it refuses `x${7*7}` only because of the `*`. So
+        # this was arbitrary JavaScript execution in the step, reachable by
+        # opening a fork PR — capped by `pull_request`'s read-only token, not by
+        # anything in the workflow. Bean `j0zs`.
+        #
+        # The remedy is NOT `"$VAR"`: this is Node, so the step's `env:` arrives
+        # as `process.env`. `folio-staging.yml`'s equivalent step has done it
+        # this way all along — the corpus held the defect and its own remedy side
+        # by side in two workflows doing the same job, and nothing checked which
+        # one a file used. `check-workflow-injection.ts` now reads `script:`.
+        env:
+          SLUG: ${{ steps.slug.outputs.slug }}
+          BRANCH: ${{ steps.slug.outputs.branch }}
         with:
           script: |
-            const slug = '${{ steps.slug.outputs.slug }}';
-            const sha = '${{ github.sha }}'.substring(0, 7);
+            const slug = process.env.SLUG;
+            const sha = context.sha.substring(0, 7);
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const url = `https://${owner}.github.io/${repo}/STAGING/${slug}/`;
@@ -1170,7 +1191,7 @@ jobs:
 
             **URL:** ${url}
             **Commit:** \`${sha}\`
-            **Branch:** \`${{ steps.slug.outputs.branch }}\`
+            **Branch:** \`${process.env.BRANCH}\`
 
             Every page carries a sage banner linking back to the branch, this PR, the issue it is for, the main site, and the build log.
 
@@ -1443,10 +1464,17 @@ jobs:
       - name: Post retention notice (not confirmed)
         if: steps.check.outputs.confirmed == 'false'
         uses: actions/github-script@v9
+        # Bound rather than interpolated even though this slug IS sanitised — by
+        # a `sed` in another step, which nothing checks. Same reasoning as the
+        # three `run:` sites in this file, and the gate grades a `script:` block
+        # by the same rule now: refuse the shape rather than judge each
+        # sanitiser. Bean `j0zs`.
+        env:
+          SLUG: ${{ steps.slug.outputs.slug }}
         with:
           script: |
             const { owner, repo } = context.repo;
-            const slug = '${{ steps.slug.outputs.slug }}';
+            const slug = process.env.SLUG;
             const pagesUrl = `https://${owner}.github.io/${repo}/STAGING/${slug}/`;
             const body = [
               '### 📌 Staging preview retained',

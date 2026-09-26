@@ -52,10 +52,89 @@ Three things differ and each is a decision:
 
 ## Done when
 
-- [ ] Decided, with reasons written down, whether the gate reads `script:` — a
-      recorded NO is an acceptable outcome, a silent no is not
-- [ ] If yes: the two `feature-staging.yml` sites either report and are fixed, or
-      the rule is narrow enough not to reach them and says why
-- [ ] `injection-boundaries` §"`steps.*.outputs` is not a class" loses its
-      out-of-scope paragraph, which currently carries this finding because there
-      was nowhere else to put it
+- [x] Decided, with reasons written down, whether the gate reads `script:` —
+      **YES**, and not on taste: the measurement found a live injection. See below
+- [x] ~~the two `feature-staging.yml` sites~~ — **there were not two**, see
+      §"The count in this bean was wrong". Both `script:` blocks in that file now
+      bind to `env:` and read `process.env`; the gate reports 2 free-text findings
+      against the pre-fix file and 0 after
+- [x] `injection-boundaries` loses its out-of-scope paragraph — replaced by
+      §"`script:` blocks are the SECOND surface — decided yes", and `security.md`'s
+      boundary row no longer says "`script:` blocks are JS and unread"
+
+## Decided 2026-09-26: YES — and the scope question turned out to hide a finding
+
+### The count in this bean was wrong
+
+The body above says "Two sites in this corpus" and names
+`const slug = '${{ steps.slug.outputs.slug }}'`. That came from grepping for a
+**spelling**. Enumerating the SHAPE — every `${{ }}` inside every `script:` block —
+gives **12 interpolations across 3 blocks in 3 workflows**: `feature-staging.yml`
+(3), `publish.yml` (7), and two further blocks with none.
+
+Second time in one day that grepping for a spelling undercounted a surface, after
+the tar member-name regex. **The shape is the unit, never the phrasing**, and this
+bean is now its own worked example: the bean that exists to enumerate a surface
+undercounted that surface in its opening paragraph.
+
+### The finding the count was hiding
+
+`feature-staging.yml` interpolated `steps.slug.outputs.branch` — the RAW fork
+branch name, not the sanitised slug — into a JavaScript **template literal**:
+
+    **Branch:** \`${{ steps.slug.outputs.branch }}\`
+
+Inside a template literal `${…}` is **evaluated**, so the value need not close a
+quote to become program. Measured with `git check-ref-format --branch`:
+
+| branch name | verdict |
+|---|---|
+| `a${process.exit(1)}b` | **LEGAL** |
+| `` x`id` `` | **LEGAL** |
+| `x${7*7}` | refused — for the `*`, not for the `${` |
+
+No fork guard on the job, which triggers on
+`pull_request: [opened, synchronize, reopened]`. So: arbitrary JavaScript execution
+in the step, reachable by opening a fork PR, capped by `pull_request`'s read-only
+token rather than by anything in the workflow. The same file's `Determine staging
+slug` step binds that exact value to `env:` and says in a comment that it is
+attacker-controlled. The `script:` block slipped.
+
+### The remedy was already in the corpus, in the workflow next door
+
+`folio-staging.yml` does the same job — comment the staging URL on the PR — and has
+always written `const slug = process.env.SLUG` and
+`` **Branch:** \`${process.env.BRANCH}\` ``. Two workflows doing one job, one
+right and one wrong, and **nothing checked which pattern a file used**. `1wef` a
+third time, in the surface the gate had declared out of scope:
+
+> **A scope exclusion is a place defects collect, not a place they are absent.**
+
+### Why it is a separate surface rather than a wider regex
+
+The three reasons the bean listed as "decisions" resolved like this:
+
+1. **The remedy differs** — confirmed, and it is the strongest of the three. A
+   `script:` block is Node: `env:` plus `process.env.VAR`. The gate emits a
+   different sentence, because `"$VAR"` in JavaScript is advice that does not apply.
+2. **The bands differ by position** — true, and deliberately NOT modelled. Telling
+   a template literal from a plain string means tracking backticks across lines,
+   and a detector that quietly missed the multi-line case would be worse than none.
+   The bands grade the value; the docblock carries the position fact.
+3. **`script:` lives under `with:`** — resolved by moving exactly that one key. An
+   ordinary `with:` input is still ungraded, and a test pins that.
+
+`baselineKey` now carries the surface, since one expression in two surfaces is two
+decisions. The baseline gained exactly one entry,
+`publish.yml (script): github.event.pull_request.base.ref`; the other six
+interpolations there are `filename-base`, which is `date -u` plus a short SHA.
+
+### Evidence
+
+- 2 free-text findings in `script:` blocks against the pre-fix `feature-staging.yml`
+  (`git show HEAD:` into a temp dir), including line 1173 `via stage.slug` — that
+  attribution only works because `6bhf`'s provenance pass grades the producer
+- 0 after; gate green with 8 `run:` and 1 `script:` constrained, all baselined
+- 28 tests, one asserting the **real corpus has a scanned `script:` block**: a
+  broken detector would otherwise make this entire surface silently green
+- `tsc` clean; BPMN prose re-read and attested
