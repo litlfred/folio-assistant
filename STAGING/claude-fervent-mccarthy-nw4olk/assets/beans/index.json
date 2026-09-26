@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 399,
+      "count": 401,
       "unit": "beans"
     }
   },
@@ -231,6 +231,20 @@
       "updatedAt": "2026-09-21T07:36:38Z",
       "preview": "FOUND 2026-09-21 while sweeping `a6kl`.\n\n`cat-harness/schemas/cat-harness.ts:2495` exports:\n\n    /** {@link findInstanceRoot}, throwing rather than returning `undefined`. */\n    export function instanceRootFor(start: string): string\n\n`cat-harness/scripts/check-l1-complete.ts:718` declares its own:\n\n    export function instanceRootFor(cwd: string): string | undefined\n\nThey are genuinely different f",
       "file": "beans/defs/folio-assistant-12ws--one-name-two-meanings-check-l1-complete-declares-a.md"
+    },
+    {
+      "id": "folio-assistant-197s",
+      "title": "Dependabot cannot run Bun here: 'could not run Bun … configuration error' on #908, and the npm ecosystem never touches bun.lock",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T16:58:15Z",
+      "updatedAt": "2026-09-26T16:58:15Z",
+      "preview": "Measured 2026-09-26.\n\n## What happened\n\n- At 15:26Z dependabot commented on #908: *\"Dependabot could not run Bun to update your dependencies due to a configuration error.\"* That came about 13 minutes after #1407 put the same bumps on main.\n- **This is not evidence of a defect in our config.** The same message appeared on 25–26 Sep across many unrelated repos with different setups. Examples: [bun-c",
+      "file": "beans/defs/folio-assistant-197s--dependabot-cannot-run-bun-here-could-not-run-bun-c.md"
     },
     {
       "id": "folio-assistant-1dre",
@@ -1021,14 +1035,14 @@
     {
       "id": "folio-assistant-6bhf",
       "title": "SECURITY SUB-KG: an external identifier reaches join() unvalidated in three HTTP handlers, and the containment helper that fixes it already exists in one script",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T16:38:20Z",
-      "updatedAt": "2026-09-26T11:14:23Z",
+      "updatedAt": "2026-09-26T14:31:39Z",
       "preview": "Owner, 2026-09-25, verbatim:\n\n> add lots of precautions/double checking/fails safe on rm -fr... is variable\n> there? injection hazard. that is needed on ALL I/O. bean as ceybeesquity sub\n> KG in tools. first is injection et. related skills already man y in folio and\n> smart-base. consolidate.\n\nOwner chose scope **2 + 3**: consolidate the scattered pieces **and** audit every\nI/O site. This bean is ",
       "file": "beans/defs/folio-assistant-6bhf--security-sub-kg-an-external-identifier-reaches-joi.md"
     },
@@ -1737,14 +1751,14 @@
     {
       "id": "folio-assistant-ahab",
       "title": "Translated pages carry 225 unresolved links — 43 distinct, five near-copies each, and the English sources do not carry them",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T10:40:05Z",
-      "updatedAt": "2026-09-26T10:40:21Z",
+      "updatedAt": "2026-09-26T16:56:28Z",
       "preview": "Found 2026-09-26 while re-deriving `hloc`'s premise. `hloc` records the `docs/`\nunresolved-link count as **120** after `mi97` took it from 246. Re-measured\ntoday with `scanSubgraphs()` it is **340** — higher than the pre-`mi97` figure.\n\nThat is not an `mi97` regression. It is a different population, and it splits:\n\n| source | links |\n|---|---|\n| translated pages — `docs/{ar,es,fr,ru,zh}/` | **225*",
       "file": "beans/defs/folio-assistant-ahab--translated-pages-carry-225-unresolved-links-43-dis.md"
     },
@@ -1891,14 +1905,14 @@
     {
       "id": "folio-assistant-bf5l",
       "title": "WRONG DIRECTION on main: cat-harness/schemas/intake.ts imports folio-assistant-core, and two of three checks cannot see it",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T04:01:42Z",
-      "updatedAt": "2026-09-26T04:01:42Z",
+      "updatedAt": "2026-09-26T13:50:15Z",
       "preview": "`cat-harness/schemas/intake.ts:28`:\n\n```ts\nimport { ProvenanceSchema } from \"../../folio-assistant-core/schemas/materialization.js\";\n```\n\n`cat-harness` declares `needs: ['bootstrap']`. `folio-assistant-core` declares\n`needs: ['cat-harness']`. So the code adds a **harness → core** edge against a\ndeclared **core → harness** dependency. The declarations alone have no cycle;\nthe declarations plus the ",
       "file": "beans/defs/folio-assistant-bf5l--wrong-direction-on-main-cat-harnessschemasintakets.md"
     },
@@ -1940,7 +1954,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T04:14:07Z",
-      "updatedAt": "2026-09-26T14:05:33Z",
+      "updatedAt": "2026-09-26T16:59:47Z",
       "preview": "Split out of `sa8y` 2026-09-26. It was `sa8y`'s last genuinely open item and the\nonly one of its four; the other three are done and `sa8y` closed on the wording\nfix that is its actual subject. It gets its own bean because it is a different\nsubject — `sa8y` is about a finding's **wording**, this is about a gate's\n**range** — and because a wording bean carrying an infrastructure item is how\n`sa8y` c",
       "file": "beans/defs/folio-assistant-bjzs--per-instance-gates-kgaudit-renderbpmn-and-checkwor.md"
     },
@@ -5147,6 +5161,20 @@
       "updatedAt": "2026-09-24T14:00:00Z",
       "preview": "Issue #1250.\n\nOwner, 2026-09-24:\n\n> on library/ page, the extract of a node is shown, but no agentic summary\n\nand, on scope:\n\n> Make as QA sidecar as part of general doc ingestion to slowly drain.\n\n## The design\n\n- `library/<slug>/summaries.json`, `folio-block-summaries/v1` (`schemas/block-summary.ts`): one record per prose block with `block`, `source`, `source_hash` (sha256 of the section text th",
       "file": "beans/defs/folio-assistant-x80s--ingest-agent-summaries-of-prose-blocks-a-qa-sideca.md"
+    },
+    {
+      "id": "folio-assistant-x89e",
+      "title": "deps: land #908's two bumps with both bun.lock files regenerated",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T13:41:12Z",
+      "updatedAt": "2026-09-26T16:58:15Z",
+      "preview": "#908 (dependabot, minor-and-patch group) bumps @anthropic-ai/sdk ^0.104.2 -> ^0.127.0 in the root and mcp-server manifests, and @playwright/test 1.61.1 -> 1.63.0 in the root. It changes package.json only, never bun.lock, so under --frozen-lockfile it cannot go green, and it conflicts with main. Two @dependabot commands posted through the GitHub MCP tool arrived defanged (with middle dots inserted)",
+      "file": "beans/defs/folio-assistant-x89e--deps-land-908s-two-bumps-with-both-bunlock-files-r.md"
     },
     {
       "id": "folio-assistant-x89g",

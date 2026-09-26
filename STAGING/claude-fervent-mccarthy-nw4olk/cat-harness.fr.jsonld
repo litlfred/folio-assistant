@@ -276,10 +276,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T15:23:16.584Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7e02bb56796b56826b5b0aa987415fea6e96a8d2",
-  "sourceCommitSha": "7e02bb56796b56826b5b0aa987415fea6e96a8d2",
-  "sourceCommitAt": "2026-09-26T15:13:56Z",
+  "generatedAt": "2026-09-26T17:32:06.459Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/17707ff674ca678e448663c46b07b2fbd2910eab",
+  "sourceCommitSha": "17707ff674ca678e448663c46b07b2fbd2910eab",
+  "sourceCommitAt": "2026-09-26T17:28:46Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -293,7 +293,7 @@
     "Role": 148,
     "ProcessNode": 861,
     "Tool": 104,
-    "Schema": 124,
+    "Schema": 125,
     "GraphKind": 34,
     "Directory": 44,
     "Asset": 3
@@ -929,7 +929,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#package/security"
       ],
       "instructionsPath": "skills/security/injection-boundaries.md",
-      "instructionLines": 155,
+      "instructionLines": 187,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -41901,6 +41901,15 @@
       "module": "schemas/skill-package.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/skill-package"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#schema/source-provenance",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "source-provenance",
+      "title": "WHERE BYTES CAME FROM — the source-side provenance pair, and a signature.",
+      "module": "schemas/source-provenance.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/source-provenance"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#schema/staging-preview",

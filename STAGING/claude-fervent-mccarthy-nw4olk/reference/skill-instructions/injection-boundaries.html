@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/docs-ui.css?v=1790436129">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/docs-ui.css?v=1790443831">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/narrow-viewport.css?v=1790436129">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/narrow-viewport.css?v=1790443831">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/work-plan.css?v=1790436129">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/work-plan.css?v=1790443831">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/themes.css?v=1790436129">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/themes.css?v=1790443831">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/uml.css?v=1790436129">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/uml.css?v=1790443831">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/avatars.css?v=1790436129">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/avatars.css?v=1790443831">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/docs-ui.js?v=1790436129" defer></script>
+<script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/docs-ui.js?v=1790443831" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -923,16 +923,55 @@ instances an audit happened to name is exactly as narrow as a fix scoped to
 them, which is <code class="language-plaintext highlighter-rouge">path-containment</code>’s lesson in the same bean on the same day.
 <strong>Enumerate the band, not its examples.</strong></p>
 </blockquote>
+<h3 id="script-blocks-are-the-second-surface--decided-yes-bean-j0zs">
+  
+  
+    <a href="#script-blocks-are-the-second-surface--decided-yes-bean-j0zs" class="anchor-heading" aria-labelledby="script-blocks-are-the-second-surface--decided-yes-bean-j0zs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">script:</code> blocks are the SECOND surface — decided yes (bean <code class="language-plaintext highlighter-rouge">j0zs</code>)
+  
+  
+</h3>
+    
 
-<p><strong>What it still does not read</strong>, and this is a scope claim rather than a clean
-bill: <code class="language-plaintext highlighter-rouge">actions/github-script</code> <code class="language-plaintext highlighter-rouge">script:</code> blocks are JavaScript, and the same
-laundering reaches them — <code class="language-plaintext highlighter-rouge">const slug = '${{ steps.slug.outputs.slug }}';</code>
-appears twice in this corpus. Those two values are character-class constrained so
-neither closes that string today. Extending the scanner to a second language
-changes what the gate <em>claims</em> to read, and the scope line “<code class="language-plaintext highlighter-rouge">run:</code> blocks only”
-already conflicts with “<code class="language-plaintext highlighter-rouge">with:</code> is the remedy” at exactly one key, since
-<code class="language-plaintext highlighter-rouge">script:</code> lives under <code class="language-plaintext highlighter-rouge">with:</code>. Bean <code class="language-plaintext highlighter-rouge">j0zs</code> holds the decision, and <strong>a recorded
-no is an acceptable outcome there while a silent no is not.</strong></p>
+<p><code class="language-plaintext highlighter-rouge">actions/github-script</code> runs JavaScript, and <code class="language-plaintext highlighter-rouge">${{ }}</code> is substituted into its
+source text the same way. The gate read <code class="language-plaintext highlighter-rouge">run:</code> only until 2026-09-26, on the
+reasoning that <code class="language-plaintext highlighter-rouge">with:</code> is where values are passed safely — and <code class="language-plaintext highlighter-rouge">script:</code> lives
+<em>under</em> <code class="language-plaintext highlighter-rouge">with:</code>, so the scope line and the remedy line collided at exactly one
+key. That collision was the question; <strong>the measurement answered it.</strong></p>
+
+<p><strong>One position there is worse than any in bash.</strong> Inside a template literal
+<code class="language-plaintext highlighter-rouge">${…}</code> is <em>evaluated</em>, so a value need not close a quote to become program:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git check-ref-format --branch 'a${process.exit(1)}b'   → LEGAL
+git check-ref-format --branch 'x`id`'                  → LEGAL
+git check-ref-format --branch 'x${7*7}'                → refused, for the `*`
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">feature-staging.yml</code> interpolated the <strong>raw fork branch name</strong> into a template
+literal, in a step whose sibling two jobs down binds the same value to <code class="language-plaintext highlighter-rouge">env:</code> and
+explains why. So it was arbitrary JavaScript execution reachable by opening a
+fork PR, capped only by <code class="language-plaintext highlighter-rouge">pull_request</code>’s read-only token.</p>
+
+<blockquote>
+  <p><strong>And the remedy was already in the corpus, in the workflow next door.</strong>
+<code class="language-plaintext highlighter-rouge">folio-staging.yml</code> does the same job — comment the staging URL on the PR — and
+has always written <code class="language-plaintext highlighter-rouge">const slug = process.env.SLUG</code> and
+<code class="language-plaintext highlighter-rouge">**Branch:** \`${process.env.BRANCH}\`</code>. Two files doing one job, one
+right and one wrong, and nothing checked which pattern a file used. That is
+<code class="language-plaintext highlighter-rouge">1wef</code>’s lesson a third time, in the surface the gate had declared out of
+scope: <strong>a scope exclusion is a place defects collect, not a place they are
+absent.</strong></p>
+</blockquote>
+
+<p><strong>The remedy differs, which is why it is a separate surface and not a wider
+regex.</strong> A <code class="language-plaintext highlighter-rouge">script:</code> block is Node: bind on the step’s <code class="language-plaintext highlighter-rouge">env:</code> and read
+<code class="language-plaintext highlighter-rouge">process.env.VAR</code>. Telling somebody to write <code class="language-plaintext highlighter-rouge">"$VAR"</code> in JavaScript is advice
+that does not apply, so the gate emits a different sentence, and <code class="language-plaintext highlighter-rouge">baselineKey</code>
+carries the surface — the same expression in the two surfaces is two decisions.</p>
+
+<p><strong>Position is deliberately NOT modelled.</strong> Deciding whether an interpolation sits
+inside a template literal means tracking backticks across lines, and a detector
+that quietly missed the multi-line case would be worse than none. The bands grade
+the value, as everywhere; this section carries the position fact instead.</p>
 <h2 id="shell-strings-pass-an-argv-not-a-sentence">
   
   
