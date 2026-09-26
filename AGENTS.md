@@ -724,6 +724,16 @@ to spend the words: **do not start the topic.**
   [`skills/folio-core/directory-conventions.md`](cat-harness/skills/folio-core/directory-conventions.md).
 - Migration plan + cross-repo coordination: `folio-assistant/docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
+- **Adding one is never a one-file change** — `bun run skills:register` performs
+  every declaration and derived artefact a skill owes and iterates the generators
+  until they agree; `skills:register:check` is the gate. **The discipline is in the
+  skill, not here** —
+  [`skill-registration`](cat-harness/skills/folio-core/skill-registration.md)
+  carries what a skill owes and why the feedback arrives on somebody else's PR,
+  why one pass over the chain is not a fixed point, why `roles:` keeps coming back,
+  and the two orphan directions the command reports rather than fixes. Seven merges
+  in three days each broke the gate set this way before the command existed
+  (bean `nfv3`).
 - Shipping a branch — `/prepare-merge [base]` runs the generic recipe plus this
   folio's **content-type-specific** gates (paper → content_validate / qa_sweep /
   proof_status / latex_preflight / lean_build; WHO IG → fhir-validation / QC),
