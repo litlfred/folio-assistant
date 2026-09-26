@@ -67,6 +67,10 @@ was left. `git log` on the file will say, and the answer decides the fix:
       make the new gate red
 - [ ] `nav-locale.e2e.ts`'s skip of locale-claiming candidates is revisited — it
       is a workaround and should say whether it still earns its place
+- [x] **finding 4 fixed**: `docs:pages` and `docs:pages:check` added, so the
+      command every generated page's banner names resolves. Guarded by
+      `scripts/tests/generated-banner-commands.test.ts` over the CORPUS rather
+      than one generator's source — 2 of its 3 tests fail without the entries
 
 ## Swept 2026-09-26 — the field is ACCURATE, and its name is what lies
 
@@ -135,6 +139,48 @@ source pages, because it tested only the FIRST path segment for a locale.
    (`code-quality-gates.yml:1377`). A reader who tries the documented command
    gets a non-zero exit and may conclude the guard is absent — the same shape as
    AGENTS.md's pre-split `scripts/` paths.
+
+### Sharper, 2026-09-26 — `availableLocales` is FILE EXISTENCE, not availability
+
+Finding 1 and finding 2 collapse into one defect, and it is provable from twenty
+lines of source. `po-resolve.ts:225` `availableLocales`:
+
+```ts
+const poFile = join(transDir, locale, `${sourceStem}.po`);
+if (existsSync(poFile)) {
+  locales.push(locale);
+}
+```
+
+**A locale is "available" iff a `.po` FILE EXISTS.** Not that any `msgstr` is
+filled. Not that the page renders in that locale. Not that the catalogue covers
+more than one string.
+
+And `translations/fr/crdm-methodology.po` is **25 lines with ONE translated
+entry**, whose own header says so:
+
+> Chapter-scoped: it currently covers the `overview` block and grows as the
+> page's other blocks are translated.
+
+So one translated string, in a catalogue that says it is partial, for a page with
+no French rendering at all, makes the live site publish
+`"availableLocales": ["en","fr"]` as structured data. **The chain from "somebody
+started translating one block" to "this page is available in French" has no step
+in it that checks anything.**
+
+### And this VOIDS the fix I proposed
+
+I offered, as the recommended option, to *"render the missing French page from its
+existing catalogue"*. That is not possible and I should have checked before
+offering it:
+
+- **No renderer exists.** Nothing under `cat-harness/scripts/` writes
+  `docs/<locale>/<page>.md` — searched. The translated pages in this corpus were
+  authored by agent sessions (`t8g3`, batches 4 and 5), not generated.
+- **There is nothing to render from.** One translated string is not a page.
+
+So the honest state is that the *only* mechanical fix in this bean was finding 4,
+and the substantive one is a semantics change nobody should make on my say-so.
 
 ### Why the remaining box is the owner's call, not mine
 
