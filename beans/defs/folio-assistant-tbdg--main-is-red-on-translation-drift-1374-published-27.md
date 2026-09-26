@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T04:22:55Z
-updated_at: 2026-09-26T11:23:13Z
+updated_at: 2026-09-26T14:29:23Z
 parent: folio-assistant-1xhc
 ---
 
@@ -337,3 +337,104 @@ This is the shape of `lvk9`'s stale-on-edit problem arriving early, from a
 different direction: a catalogue's msgids are a function of the source's wrapping
 AND of its content, and only the second kind of change should invalidate a
 translation.
+
+
+## 2026-09-26 — the e2e fallback fixture rotted a SECOND time, and is now derived
+
+This bean's open item read:
+
+> - [ ] the e2e fallback fixture is settled by its author — a different named page
+>       (and the clock accepted, with that stated) or a synthetic page inside
+>       `harness()` (and the corpus dependency removed)
+> - [ ] MEASURED AFTER: translating one more real page does not turn this test red
+
+It recorded the prediction that *"whichever of the 23 is picked, the test is red
+again the week that page is translated"*. **It was hours, not a week.** `main`
+translated `architecture` — the page a sibling session had named after
+`getting-started` rotted the same way — and `nav-locale.e2e.ts` went to 2 failed.
+
+Five translation batches landed on 2026-09-26. Any name picked here is a clock.
+
+### Why it was mine to fix rather than the author's
+
+`translation-drift`'s remedy work regenerates `docs/_data/translations.json`, and
+that file is in my PR's diff — it is what this test READS. So the failure is in
+something my change touches, which is the case the drive-to-green rules assign to
+the PR rather than leaving to the fixture's author.
+
+### Derived, on the docblock's own principle
+
+The fixture already derived **case 1** (an indexed page with no translations) and
+hard-coded **case 2**. Case 1 now finds nothing — since the batches, every indexed
+page has translations — so case 2 carried the whole fixture. It is now derived too:
+the first top-level source page, sorted, that the index does not list AND that no
+locale publishes.
+
+**Absence from the index is NOT the definition, and conflating them would have
+shipped a subtly wrong fixture.** Measured while writing it: `crdm-methodology` is
+absent from the index and has a `.po` catalogue — a catalogue and a published page
+are different artefacts, so the two questions come apart. The derivation checks the
+filesystem for `docs/<locale>/<page>.md` across the index's own locale list. The
+stricter test dropped one candidate, from 17 to 16, so it was catching something.
+
+The tripwire is kept and now fires only if the site runs out of untranslated
+top-level pages entirely — which would be real news rather than rot, and its
+message says the remedy then is a synthetic page inside `harness()`.
+
+### Verified in both directions
+
+    before the fix:  2 failed, 9 passed  — reproduced locally
+    after:          11 passed
+
+16 untranslated top-level pages remain, so the fixture self-heals 16 more times
+before anyone needs to think about it again.
+
+### Adds to "Done when"
+
+- [x] the e2e fallback fixture no longer depends on a named page — derived, and the
+      corpus dependency removed rather than the clock reset
+- [x] MEASURED AFTER: translating one more real page cannot turn this test red while
+      any untranslated top-level page remains (16 do)
+
+
+### CORRECTION, same hour — my derivation was subtly wrong, and I ported #1408's
+
+The fix recorded above picked **`crdm-methodology`**, and that is the one page in
+the corpus it should not have picked.
+
+`docs/crdm-methodology.md` declares:
+
+    lang: en
+    available_locales: ["en","fr"]
+
+with **no `docs/fr/crdm-methodology.md` behind it**. So the page ASSERTS a French
+translation. My derivation checked the filesystem for `docs/<locale>/<page>.md`,
+found none, and accepted it — which makes the fixture for "no translation in any
+locale" the single candidate that claims one.
+
+A sibling session (PR #1408, `claude/sleepy-babbage-ls90iz`) reached this fixture
+independently, hours earlier, and got it right. Their derivation excludes:
+
+- `index.md` — it IS indexed, under the empty key, and only its filename says
+  otherwise;
+- `nav_exclude: true` — the test needs a nav ITEM, and a page excluded from the
+  nav cannot be one;
+- any page **claiming** a non-source locale in `available_locales`, which is the
+  `crdm-methodology` case;
+- any page with no `title:`.
+
+Ported verbatim rather than keeping a worse version of the same idea, so the two
+branches cannot disagree about the fixture and whichever lands second is a no-op.
+It resolves to `detangle` (`title: Detangle`, `nav_order: 42`, no claimed
+locales), same as theirs. 11 tests pass.
+
+**Their reason for the exclusion is the part worth keeping**, and it is sharper
+than "check the filesystem": *the index is the authority, but a page contradicting
+it is the wrong page to reason from, whichever of the two is wrong.* The
+contradiction itself — a page claiming `fr` with no French page behind it — is
+their bean `9x01`, and neither of us fixed it here.
+
+What this cost me: I measured the filesystem and treated that as the definition,
+when the fixture's premise is *nothing claims a translation of this page*, and a
+front-matter claim is a claim. The stricter test I added (17 → 16 candidates) felt
+like rigour and was checking the wrong predicate.

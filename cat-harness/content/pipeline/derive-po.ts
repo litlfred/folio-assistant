@@ -111,12 +111,12 @@
  * translation — #206's own distinction, and the reason every catalogue written
  * here is marked unofficial in its header.
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 
 import { extractMarkdown, type PotEntry } from "./pot-extract.ts";
 import { catalogueFor } from "./translation-drift.ts";
-import { siteRoot } from "./translation-index.ts";
+import { siteRoot, sourceLocale, supportedLocales } from "./translation-index.ts";
 
 /** Why a pair could not be derived — never just "failed". */
 export interface Refusal {
@@ -481,6 +481,58 @@ export function derive(
   return { derived, refused };
 }
 
+/**
+ * Every (page, locale) this instance PUBLISHES a translation for.
+ *
+ * **The CLI hard-coded five page names, and that is why a translation batch needed
+ * a code edit to be catalogued.** PR #1404 published `architecture`,
+ * `beans-and-todos`, `evidence` and `skills` across five locales on 2026-09-26,
+ * `translation-drift` went from 1 finding to 21, and this tool could not see them.
+ * A list of pages in a script is a list that goes stale on somebody else's merge.
+ *
+ * Discovered instead: for each locale the instance DECLARES, every `.md` in that
+ * locale's directory which has a same-named source page beside the site root.
+ *
+ * **The locales come from `supportedLocales`, not from directory names.** My first
+ * version matched a two-or-three-letter directory name and picked up
+ * `wireframes/fsh-guts` as a locale — `fsh` plus a suffix fits that shape exactly.
+ * A locale is a declared vocabulary (`harness.config.json`'s
+ * `translation.supportedLocales`, defaulting to the six UN languages), so guessing
+ * it from the filesystem was inventing an answer the instance already gives. The
+ * source locale is excluded: it is the thing being translated FROM.
+ *
+ * Pages are still discovered from the filesystem, and that is the right split —
+ * which pages exist is a fact about the tree, while which locales count is a
+ * declaration.
+ */
+export function publishedPairs(
+  docs: string,
+  declaredLocales: readonly string[],
+  sourceLocale: string,
+): { pages: string[]; locales: string[] } {
+  const locales: string[] = [];
+  const pages = new Set<string>();
+  for (const locale of declaredLocales) {
+    if (locale === sourceLocale) continue;
+    let entries: string[];
+    try {
+      entries = readdirSync(join(docs, locale));
+    } catch {
+      continue; // The locale is declared but nothing is published in it yet.
+    }
+    let found = false;
+    for (const f of entries) {
+      if (!f.endsWith(".md")) continue;
+      const page = f.slice(0, -3);
+      if (!existsSync(join(docs, `${page}.md`))) continue;
+      pages.add(page);
+      found = true;
+    }
+    if (found) locales.push(locale);
+  }
+  return { pages: [...pages].sort(), locales: locales.sort() };
+}
+
 /** What {@link write} did, per catalogue. */
 export interface WriteResult {
   written: string[];
@@ -567,8 +619,13 @@ export function formatReport(r: DeriveResult): string {
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const root = new URL("../..", import.meta.url).pathname.replace(/\/$/, "");
-  const pages = ["accessibility", "content-types", "contributing", "getting-started", "installation"];
-  const locales = ["ar", "es", "fr", "ru", "zh"];
+  const docs = siteRoot(root);
+  if (docs === undefined) {
+    console.error(`No site root under ${root} — nothing declares a directory with a _config.yml.`);
+    process.exit(2);
+  }
+  const { pages, locales } = publishedPairs(docs, supportedLocales(root), sourceLocale(root));
+  console.log(`${pages.length} page(s) x ${locales.length} locale(s) published here: ${locales.join(", ")}\n`);
   const r = derive(root, pages, locales);
   console.log(formatReport(r));
   if (argv.includes("--write")) {
