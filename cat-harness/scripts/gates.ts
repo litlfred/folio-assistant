@@ -56,6 +56,14 @@ import { join, resolve } from "node:path";
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { parse } from "yaml";
 
+import {
+  diffReadings,
+  formatMutations,
+  formatUndetermined,
+  readTree,
+  type GateMutation,
+} from "./gate-tree-guard.js";
+
 // The REPOSITORY root. `GATES_WORKFLOW` is `.github/workflows/…`, which
 // belongs to the repository rather than to this instance, and the gates
 // themselves are npm scripts run from the repository root. This arrived from
@@ -1123,19 +1131,76 @@ if (import.meta.main) {
     process.exit(0);
   }
 
+  // ── Which gate changed the repository (bean `ymsu`) ────────────────────
+  //
+  // Snapshot the working tree between gates, so a gate that writes to the tree
+  // it is being judged on is attributed to ITSELF rather than discovered later
+  // as a mystery dirty file. `gate-tree-guard.ts` carries why this can only
+  // live here — no gate can observe what another gate did, which is the
+  // definition of the blind spot — and why the predicate is a per-gate DELTA
+  // rather than "the tree is dirty", since running gates on your own
+  // uncommitted work is the normal case.
+  //
+  // A failure to read the tree is carried as `undetermined` and reported, not
+  // thrown: `gates` has to stay runnable where the question cannot be asked.
+  const baseline = readTree(ROOT);
+  let seen: ReadonlyMap<string, string> | undefined = baseline.ok ? baseline.entries : undefined;
+  const undetermined: string[] = baseline.ok ? [] : formatUndetermined(baseline.why);
+  const mutations: GateMutation[] = [];
+
   const failed: { gate: Gate; why: string[] }[] = [];
   for (const g of gates) {
     process.stdout.write(`▸ ${g.command}\n`);
     const [cmd, ...args] = g.command.split(/\s+/);
     const r = await runTee(cmd!, args);
     if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
+
+    if (seen !== undefined) {
+      const now = readTree(ROOT);
+      if (!now.ok) {
+        // The baseline read fine and this one did not, so the question stops
+        // being answerable PART WAY THROUGH. Reported with the gate it stopped
+        // at, and the comparison is abandoned rather than continued against a
+        // snapshot that is now of unknown age.
+        undetermined.push(...formatUndetermined(`${now.why} (after \`${g.command}\`)`));
+        seen = undefined;
+      } else {
+        const changes = diffReadings(seen, now.entries);
+        if (changes.length > 0) mutations.push({ gate: g.command, changes });
+        seen = now.entries;
+      }
+    }
   }
 
   console.log("");
+  for (const line of undetermined) console.log(line);
+  if (undetermined.length) console.log("");
+  const mutationReport = formatMutations(mutations);
+  for (const line of mutationReport) console.log(line);
+  if (mutationReport.length) console.log("");
   if (failed.length === 0) {
-    console.log(`✓ ${gates.length} gate(s) pass — the ${all ? "whole" : "fast"} set.`);
-    if (!all) console.log("  `bun run gates --all` adds the browser jobs before you push.");
-    process.exit(0);
+    // Every gate passed AND nothing moved underneath them. Only this pair earns
+    // the clean line.
+    if (mutations.length === 0) {
+      console.log(`✓ ${gates.length} gate(s) pass — the ${all ? "whole" : "fast"} set.`);
+      if (!all) console.log("  `bun run gates --all` adds the browser jobs before you push.");
+      process.exit(0);
+    }
+    // `152 gate(s) pass` is TRUE here and it is the wrong thing to print: the
+    // gates that ran after the mutation were handed a repaired tree, so their
+    // passing is a verdict about a state the repository does not contain. The
+    // whole of bean `ymsu` is that this sentence was printed anyway, 152 times
+    // out of 152, over a value nobody had committed.
+    console.log(
+      `✗ every gate passed, and the run is NOT clean — ${mutations.length} gate(s) changed the tree.`,
+    );
+    console.log(
+      `  ${gates.length} verdict(s) above were reached against a tree that a gate had already`,
+    );
+    console.log(
+      `  repaired, so the later ones describe a state you have not committed. Details above.`,
+    );
+    process.exit(1);
   }
   console.log(`✗ ${failed.length} of ${gates.length} failed:`);
   for (const { gate, why } of failed) {
