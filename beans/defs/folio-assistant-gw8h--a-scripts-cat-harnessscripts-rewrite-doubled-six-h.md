@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-26T14:16:58Z
-updated_at: 2026-09-26T14:16:58Z
+updated_at: 2026-09-26T14:25:57Z
 ---
 
 ## Two red checks on `main`, in two different jobs, from one edit
@@ -73,3 +73,32 @@ So this is the whole of that rewrite's damage, not a sample of it.
 - [x] the three glossary artefacts regenerated
 - [x] no other instance of the doubled prefix under `skills/`
 - [ ] merged, so the gates after step 470 run again for every open PR
+
+
+## Correction, 2026-09-26 — the masking figure above is wrong
+
+"step ~470 of the Repository gates job's ~877 lines" is a YAML LINE NUMBER
+reported as an execution position. Measured properly, counting `- name:` steps
+within the job's region:
+
+    steps before 'glossary page and SKOS'   11
+    steps in the gates job                  38
+
+So it is **step 12 of about 38**, with about 26 following it rather than ~400
+lines. The conclusion survives — it is still the `om30` masking shape and still
+the argument for merging this ahead of what it unblocks — but the magnitude is
+smaller than published, and a reader checking the arithmetic would have found a
+line count where a step count was claimed.
+
+Kept rather than edited away, per `qook`: the wrong version is the part worth
+keeping, because the failure is the interesting bit — a `grep -n` offset read as
+position in a sequence is a category error, not a typo, and it will read as
+plausible again next time.
+
+## Also done, 2026-09-26
+
+`kg:audit:check` exited 1 on this branch and exits 0 after 7401c24a68d. Not
+checked before the PR opened, which was a real gap: editing a skill .md changes
+its `source_hash`, and a sidecar whose hash no longer matches its subject is
+stale by definition. 13 sidecars regenerated, of which 2 are this branch's
+(`document-intake`, `latex-build-cache`) and 11 were already stale on main.
