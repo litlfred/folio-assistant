@@ -50,7 +50,7 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
        alt="مخطط مسارات BPMN لدورة folio واحدة: يخطط مدير البرنامج، وتُزرع الخطة كـ beans، وتعمل عمليات التحرير والتحقق من التفاعل البشري الحاسوبي (HCI) لكل تغيير مقترح، ويتبع ذلك اختبار تكاملي ومسح لضمان الجودة، ثم المسودة-المراجعة-النشر؛ وتُفرز الملاحظات وتُسجل كـ beans، ثم إما أن تتكرر الدورة أو يُحال الـ folio إلى التقاعد.">
 </div>
 
-[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [ملف SVG بالحجم الكامل](assets/img/workflows/content-lifecycle.svg)
+[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [ملف SVG بالحجم الكامل](../assets/img/workflows/content-lifecycle.svg)
 {: .bpmn-source }
 
 | المرحلة | المهارة | ما يجري |
@@ -84,7 +84,7 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
 
 **حزمة المهارات:** `folio-document-adapter` ·
 **المحول:** `document` ·
-**الدليل الإرشادي:** [كتابة مستند](guides/writing-a-document.html)
+**الدليل الإرشادي:** [كتابة مستند](../guides/writing-a-document.html)
 
 نثر مهيكل: إرشادات السياسات الصحية (دليل إرشادي من المستوى L1، على سبيل المثال)، أو معيار،
 أو تقرير، أو كتيب، أو فصل من كتاب. كل ما تمثله الورقة البحثية، باستثناء الطبقة
@@ -103,17 +103,17 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
   أو ملف مجاور بامتداد `.lean`، وتعمل عند كل استدعاء لـ `content_validate`.
 
 مخططات المهارات ذات الصلة:
-[`document-authoring`](reference/skills/document-authoring.html)،
-[`document-structure`](reference/skills/document-structure.html)،
-[`normative-statements`](reference/skills/normative-statements.html)،
-[`document-publishing`](reference/skills/document-publishing.html).
+[`document-authoring`](../reference/skills/document-authoring.html)،
+[`document-structure`](../reference/skills/document-structure.html)،
+[`normative-statements`](../reference/skills/normative-statements.html)،
+[`document-publishing`](../reference/skills/document-publishing.html).
 
 <div class="bpmn-figure" id="figure-documents-policy-guidance">
   <img src="assets/img/workflows/authoring-a-document.svg"
        alt="مخطط مسارات BPMN لتأليف المستندات: يخطط المؤلف، وتُزرع الخطة كـ beans، وينشئ الوكيل هيكل الـ folio ويؤلف الكتل، ويتحقق خط أنابيب البناء من ملف التعريف المعلن قبل التحقق والتصيير إلى Markdown وHTML وPDF، بينما يتحكم المراجع في بوابة النشر.">
 </div>
 
-[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [ملف SVG بالحجم الكامل](assets/img/workflows/authoring-a-document.svg)
+[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [ملف SVG بالحجم الكامل](../assets/img/workflows/authoring-a-document.svg)
 {: .bpmn-source }
 
 ### حمل العبارات المعيارية
@@ -128,7 +128,7 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
 
 لا يوجد **نوع كتلة `recommendation` من الدرجة الأولى**. في الوقت الحالي، الحامل لها هو
 كتلة `prose` ذات تسمية وعنوان؛ وتوضح مهارة
-[`normative-statements`](reference/skill-instructions/normative-statements.html)
+[`normative-statements`](../reference/skill-instructions/normative-statements.html)
 هذا العرف وحدوده. وكانت الإرشادات السابقة في
 `document-intake` قد ربطت توصيات الأدلة الإرشادية بكتلة `definition` — وهو ما
 يسبق إنشاء نوع المحتوى هذا ويعد غير صحيح بالنسبة لـ folio المستند، حيث
@@ -143,7 +143,7 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
 
 **حزمة المهارات:** `authoring-math` ·
 **المحول:** `paper` ·
-**الدليل الإرشادي:** [كتابة ورقة بحثية](guides/writing-a-paper.html)
+**الدليل الإرشادي:** [كتابة ورقة بحثية](../guides/writing-a-paper.html)
 
 الأوراق والكتب العلمية الدقيقة حيث يُدعم النثر والرياضيات بصياغة
 رسمية يتم التحقق منها آليًا عبر **Lean 4** وتُصيَّر باستخدام **LaTeX**.
@@ -190,9 +190,9 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
 على قاعدة ثانية تتجاوز مجرد السؤال "هل هذا النوع مسموح به".
 
 مخططات المهارات ذات الصلة:
-[`latex-authoring`](reference/skills/latex-authoring.html)،
-[`lean-formalization`](reference/skills/lean-formalization.html)،
-[`proof-verification`](reference/skills/proof-verification.html).
+[`latex-authoring`](../reference/skills/latex-authoring.html)،
+[`lean-formalization`](../reference/skills/lean-formalization.html)،
+[`proof-verification`](../reference/skills/proof-verification.html).
 
 ---
 
@@ -202,7 +202,7 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/l2-dak-authoring.bpmn){: .fa-node-edit title="Edit processes/l2-dak-authoring.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="who-smart-guidelines-daks-l2.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/content-types/who-smart-guidelines-daks-l2.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="who-smart-guidelines-daks-l2.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/content-types/who-smart-guidelines-daks-l2.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 **حزمة المهارات:** `authoring-who-smart-guidelines` ·
-**الدليل الإرشادي:** [تأليف حزمة التكيف الرقمي (DAK) لإرشادات منظمة الصحة العالمية SMART](guides/who-smart-dak.html)
+**الدليل الإرشادي:** [تأليف حزمة التكيف الرقمي (DAK) لإرشادات منظمة الصحة العالمية SMART](../guides/who-smart-dak.html)
 
 تعد **حزمة التكيف الرقمي (Digital Adaptation Kit - DAK)** التمثيل من *المستوى L2*
 (المقروء آليًا، ولكنه محايد تجاه التنفيذ) لإرشادات منظمة الصحة العالمية. يتولى folio-assistant
@@ -215,17 +215,17 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
 - **شخصيات المستخدمين، والسيناريوهات، والمؤشرات، والمتطلبات**
 
 مخططات المهارات ذات الصلة:
-[`l2-dak-authoring`](reference/skills/l2-dak-authoring.html)،
-[`bpmn-authoring`](reference/skills/bpmn-authoring.html)،
-[`dmn-authoring`](reference/skills/dmn-authoring.html)،
-[`terminology-management`](reference/skills/terminology-management.html).
+[`l2-dak-authoring`](../reference/skills/l2-dak-authoring.html)،
+[`bpmn-authoring`](../reference/skills/bpmn-authoring.html)،
+[`dmn-authoring`](../reference/skills/dmn-authoring.html)،
+[`terminology-management`](../reference/skills/terminology-management.html).
 
 <div class="bpmn-figure" id="figure-who-smart-guidelines-daks-l2">
   <img src="assets/img/workflows/l2-dak-authoring.svg"
        alt="مخطط مسارات BPMN لتأليف DAK من المستوى L2: بوابة متوازية توزع شخصيات المستخدمين وعمليات BPMN ومنطق قرارات DMN وقاموس البيانات والمؤشرات عبر مسار محلل الأعمال جنبًا إلى جنب مع ارتباطات أخصائي المصطلحات، ثم يتحكم التحقق من جانب خبير الموضوع السريري (SME) في تجميع الـ DAK.">
 </div>
 
-[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn) · [ملف SVG بالحجم الكامل](assets/img/workflows/l2-dak-authoring.svg)
+[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn) · [ملف SVG بالحجم الكامل](../assets/img/workflows/l2-dak-authoring.svg)
 {: .bpmn-source }
 
 ---
@@ -236,7 +236,7 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/l3-fhir-pipeline.bpmn){: .fa-node-edit title="Edit processes/l3-fhir-pipeline.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="who-smart-implementation-guides-l3.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/content-types/who-smart-implementation-guides-l3.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="who-smart-implementation-guides-l3.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/content-types/who-smart-implementation-guides-l3.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 **حزمة المهارات:** `authoring-who-smart-guidelines` ·
-**الدليل الإرشادي:** [تأليف دليل تطبيق (IG) لإرشادات منظمة الصحة العالمية SMART](guides/who-smart-ig.html)
+**الدليل الإرشادي:** [تأليف دليل تطبيق (IG) لإرشادات منظمة الصحة العالمية SMART](../guides/who-smart-ig.html)
 
 تحوّل طبقة *المستوى L3* حزمة DAK من المستوى L2 إلى **دليل تطبيق FHIR** قابل للحوسبة:
 
@@ -247,17 +247,17 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
 - بوابات **مراقبة الجودة** (`quality-control`)
 
 مخططات المهارات ذات الصلة:
-[`l3-fhir-authoring`](reference/skills/l3-fhir-authoring.html)،
-[`fhir-validation`](reference/skills/fhir-validation.html)،
-[`ig-publication`](reference/skills/ig-publication.html)،
-[`quality-control`](reference/skills/quality-control.html).
+[`l3-fhir-authoring`](../reference/skills/l3-fhir-authoring.html)،
+[`fhir-validation`](../reference/skills/fhir-validation.html)،
+[`ig-publication`](../reference/skills/ig-publication.html)،
+[`quality-control`](../reference/skills/quality-control.html).
 
 <div class="bpmn-figure" id="figure-who-smart-implementation-guides-l3">
   <img src="assets/img/workflows/l3-fhir-pipeline.svg"
        alt="مخطط مسارات BPMN لخط أنابيب المستوى L3: تعيين L2 إلى L3، وتأليف FSH، والترجمة عبر SUSHI، والتحقق مقابل ملفات التعريف مع حلقة عودة إلى FSH عند الفشل، وبوابات مراقبة الجودة التي تسجل النتائج كـ beans، وبناء IG Publisher، ونشر موقع دليل التطبيق (IG).">
 </div>
 
-[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [ملف SVG بالحجم الكامل](assets/img/workflows/l3-fhir-pipeline.svg)
+[مصدر BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [ملف SVG بالحجم الكامل](../assets/img/workflows/l3-fhir-pipeline.svg)
 {: .bpmn-source }
 
 ---
@@ -270,4 +270,4 @@ _تم توليد هذه الصفحة من [`content/docs/content-types/`](https:
 أنواع المحتوى الجديدة مواطنون من الدرجة الأولى: أضف **محول** محتوى و**حزمة**
 مهارات، وستحصل على دورة الحياة، والتحكم في الوصول القائم على الأدوار (RBAC)،
 وتوصيلات خادم MCP تلقائيًا دون عناء. راجع
-[إضافة نوع محتوى](guides/new-content-type.html).
+[إضافة نوع محتوى](../guides/new-content-type.html).
