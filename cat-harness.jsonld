@@ -269,10 +269,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T04:09:40.776Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a0fbdc7ac759a41b1cce7a686d3655b5d3316691",
-  "sourceCommitSha": "a0fbdc7ac759a41b1cce7a686d3655b5d3316691",
-  "sourceCommitAt": "2026-09-26T06:06:47+02:00",
+  "generatedAt": "2026-09-26T06:27:09.769Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e5c8ace8efde24bb11be3dcd46f379465fc71de4",
+  "sourceCommitSha": "e5c8ace8efde24bb11be3dcd46f379465fc71de4",
+  "sourceCommitAt": "2026-09-26T08:24:36+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -773,7 +773,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-needs-assessment.md",
-      "instructionLines": 114,
+      "instructionLines": 113,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -820,7 +820,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-impact-analysis.md",
-      "instructionLines": 135,
+      "instructionLines": 134,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -836,7 +836,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-requirements-template.md",
-      "instructionLines": 124,
+      "instructionLines": 123,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4390,7 +4390,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
       ],
       "instructionsPath": "skills/workflow/branch-freshness.md",
-      "instructionLines": 113,
+      "instructionLines": 112,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5840,6 +5840,9 @@
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-data-model",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-detect",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-impact-analysis",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-needs-assessment",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-template",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/crdm-requirements-workflow"
       ],
       "providesCapability": [],
@@ -6184,9 +6187,12 @@
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-authoring",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-processes",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-freshness",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-review-process",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deterministic-and-agentic",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dmn-authoring",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/process-state",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-lifecycle",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-context",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-state-machine",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/specification-compiled-agents",
@@ -40840,8 +40846,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "a0fbdc7ac759a41b1cce7a686d3655b5d3316691",
+    "sha": "e5c8ace8efde24bb11be3dcd46f379465fc71de4",
     "pr": "main",
-    "run": "36216856048"
+    "run": "36223664262"
   }
 }

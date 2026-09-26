@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 348,
+      "count": 349,
       "unit": "beans"
     }
   },
@@ -4055,6 +4055,20 @@
       "file": "beans/defs/folio-assistant-v556--two-kg-export-sidecars-carry-three-script-hashes-b.md"
     },
     {
+      "id": "folio-assistant-v625",
+      "title": "MAIN IS RED: six skills landed with no manifest entry and no reference page — one cause, four failing gates",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T05:10:48Z",
+      "updatedAt": "2026-09-26T05:11:00Z",
+      "preview": "`main` was red in CI, and four of its seven failures had one cause: **six skill\nfiles existed with no package-manifest entry and no published reference page.**\n\n| file | manifest | reference page |\n|---|---|---|\n| `crdm/crdm-needs-assessment.md` | missing | missing |\n| `crdm/crdm-impact-analysis.md` | missing | missing |\n| `crdm/crdm-requirements-template.md` | missing | missing |\n| `workflow/code",
+      "file": "beans/defs/folio-assistant-v625--main-is-red-six-skills-landed-with-no-manifest-ent.md"
+    },
+    {
       "id": "folio-assistant-v7bg",
       "title": "TOOL 1/13: Task_Publish — publication & export (34 files, 19 entry points)",
       "status": "in-progress",
@@ -4773,14 +4787,14 @@
     {
       "id": "folio-assistant-ymsu",
       "title": "kg:detangle:check CANNOT FAIL inside bun run gates — bun test repairs the sidecar 1140 lines earlier in the same run",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T18:38:34Z",
-      "updatedAt": "2026-09-25T18:38:34Z",
+      "updatedAt": "2026-09-26T04:54:43Z",
       "preview": "Measured 2026-09-25, while establishing whether PR #1348 still had anything to\nfix. It is the ROOT CAUSE of #1348's own subject: the detangle staleness that\nbroke `main` was invisible to `bun run gates` and surfaced only because a test\nrun left the working tree dirty.\n\n## The mechanism\n\n`bun run gates` runs 152 gates in order. Gate 1 is `bun test`. Somewhere in that\nsuite the detangle **writer** r",
       "file": "beans/defs/folio-assistant-ymsu--kgdetanglecheck-cannot-fail-inside-bun-run-gates-b.md"
     },
