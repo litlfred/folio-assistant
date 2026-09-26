@@ -1,12 +1,12 @@
 ---
 # folio-assistant-bf5l
 title: 'WRONG DIRECTION on main: cat-harness/schemas/intake.ts imports folio-assistant-core, and two of three checks cannot see it'
-status: todo
+status: completed
 type: task
-created_at: 2026-09-26T04:01:42Z
 priority: high
+created_at: 2026-09-26T04:01:42Z
+updated_at: 2026-09-26T13:50:15Z
 parent: folio-assistant-1xhc
-updated_at: 2026-09-26T04:01:42Z
 ---
 
 
@@ -69,10 +69,14 @@ Two different concepts under one name is arguably the deeper defect here.
 
 ## Done when
 
-- [ ] The owner rules which of the four (or a fifth).
-- [ ] `kg:detangle` reports 0 wrong-direction, and the sidecar records it.
-- [ ] Whatever is chosen, the two `ProvenanceSchema` exports are either
-      reconciled or deliberately distinguished by name.
+- [x] The owner ruled 2026-09-26: **combine 1 + 2**, asking whether cat-harness
+      is a subgraph on core. Measurement answered the conditional the OTHER way
+      and excluded 3 — see below.
+- [x] `kg:detangle` reports 0 wrong-direction, and the sidecar records it.
+      Falsified: restoring the cross-instance import puts it back to 1.
+- [x] The two are deliberately distinguished by name:
+      `attribution.ts` keeps `ProvenanceSchema` (*who wrote this*),
+      the one that moved is `SourceProvenanceSchema` (*where the bytes came from*).
 
 ## Not claimed
 
@@ -94,8 +98,9 @@ options to exist as a record, so the prose table and the selection come from one
 object that cannot disagree with itself. Omitting it was my defect, named by the
 owner the same day.
 
-**Choice: not yet made. Awaiting the owner.** This section is updated with the
-choice and who made it when it is.
+**Choice: made 2026-09-26 by the owner — combine options 1 and 2. Option 3 was
+excluded by measurement after the ruling; see §"The ruling, and what measurement
+changed about it".**
 
 Which side of a harness→core import inversion moves. Today `cat-harness/schemas/intake.ts:28` imports `folio-assistant-core/schemas/materialization.js`, while `folio-assistant-core` declares that it depends on `cat-harness`. So the code points one way and the declarations point the other. Your answer decides whether a schema moves down into the harness, a file moves up into core, the declared layering changes, or a name collision is settled first — and until it is answered `kg:detangle` records `wrongDirection: 1` on main forever.
 
@@ -130,3 +135,49 @@ what was asked. To re-render or amend, rebuild the `DecisionRequest` against
 `cat-harness/schemas/decision-request.ts` — the schema has no optionals, so an
 option missing its `downstream` or `reversibility` will not parse.
 
+
+
+## The ruling, and what measurement changed about it — 2026-09-26
+
+The owner answered: *"combine 1 2 3 if cat-harness subgraph on core?"* — a
+conditional, so it was measured rather than assumed.
+
+**The conditional is false, in the useful direction.** `folio-assistant-core`
+declares `needs: ['cat-harness']`; `cat-harness` declares `needs: ['bootstrap']`.
+So cat-harness is the BASE and core is the subgraph sitting on it — not the
+reverse. Under that reading options 1 and 2 reinforce each other (a generic
+source pointer belongs in the base layer), and option 3 inverts.
+
+**Option 3 is excluded by measurement, not by taste.** `cat-harness` itself
+consumes the file option 3 would move out:
+
+| site | what it does |
+|---|---|
+| `cat-harness/adapters/document/intake-records.ts:26` | imports `../../schemas/intake.js` |
+| `cat-harness/schemas/graph-kind-registry.ts:1253` | registers `"folio-intake/v1"` against `schemas/intake.ts#IntakeSchema` |
+
+Moving `intake.ts` up would turn both into harness→core imports and point a
+validator path out of its instance — one wrong-direction edge traded for another.
+
+**I had overstated option 2's cost, and the correction is why it was the right
+pick.** The `## Options` table above says *"materialization.ts is 27 KB and the
+schema may not travel alone."* Measured: `ProvenanceSchema` there is a
+**3-field object**, its only dependency is `SignatureSchema` (same file, sole
+consumer itself), and it had exactly **two** consumers — `intake.ts` (the
+defect) and `MaterializationSchema.provenance`. ~50 lines moved, two call sites
+touched. The table's con was a guess dressed as a constraint, and it is left
+standing above rather than edited so the next reader can see that a cost in a
+decision record is a claim like any other.
+
+**The rename stopped being optional.** While the two `ProvenanceSchema`s sat in
+different instances the clash was survivable. Moving this one into `cat-harness`
+puts both in ONE instance, so one had to change — which is the argument for
+combining 1 and 2 that the owner's question reached independently.
+
+**Verified, both directions.** `kg:detangle`: `wrongDirection` **1 → 0**, and
+restoring the cross-instance import puts it back to **1**. `check:partition`
+reports `Wrong-direction edges: 0` **with the sabotage in place** — this bean's
+own title already said two of three checks cannot see it, and that is now
+re-confirmed independently rather than taken from the title. Making the blind
+checks see it is NOT done here and is not this bean's remaining scope; it wants
+its own bean.

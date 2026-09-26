@@ -10,7 +10,7 @@
  * |---|---|---|
  * | what the item IS (title, identifiers, handle, type, subject) | the Dublin Core record, `folio-dublin-core/v1` | `title` only when nothing else describes it |
  * | the item itself, its materialization and gates | the catalogue node, `folio-catalogue-node/v1` | the intake points at it (`item`) |
- * | where the capture came from | `ProvenanceSchema` (`upstream` / `local`) | `system` / `instance`: the upstream URL's host says it |
+ * | where the capture came from | `SourceProvenanceSchema` (`upstream` / `local`) | `system` / `instance`: the upstream URL's host says it |
  * | when and by whom | `capturedAt` as `folio-extraction/v1` means it — the capture moment | |
  * | each file's bytes | `ArchiveEntrySchema`'s `path` / `bytes` / `sha256` / `mimetype_sniffed` | |
  *
@@ -25,7 +25,7 @@
  */
 import { z } from "zod";
 
-import { ProvenanceSchema } from "../../folio-assistant-core/schemas/materialization.js";
+import { SourceProvenanceSchema } from "./source-provenance.ts";
 import { ArchiveEntrySchema } from "./archive-contents.js";
 
 export const INTAKE_SCHEMA_TAG = "folio-intake/v1";
@@ -39,7 +39,7 @@ const DateTime = z
   .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})?$/, "an ISO 8601 date-time");
 
 /** Where the capture came from, and when. */
-export const IntakeSourceSchema = ProvenanceSchema.extend({
+export const IntakeSourceSchema = SourceProvenanceSchema.extend({
   /** The capture moment — not when this record was written. */
   capturedAt: DateTime,
   /** Who or what captured it. */

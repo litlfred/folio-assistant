@@ -2323,7 +2323,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "WHERE THIS CAME FROM — see {@link ProvenanceSchema}."
+          "@value": "WHERE THIS CAME FROM — see {@link SourceProvenanceSchema}."
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.provenance",
@@ -2346,120 +2346,6 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.purpose",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/materialization.provenanceschema.local",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ProvenanceSchema.local"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The original **in this repository** this was taken from."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema.local",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/materialization.provenanceschema.upstream",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ProvenanceSchema.upstream"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not \"there is none\"."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema.upstream",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/materialization.signatureschema.format",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "SignatureSchema.format"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "How to interpret `value` — a media type or a named scheme."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/materialization.ts#SignatureSchema.format",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/materialization.signatureschema.signer",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "SignatureSchema.signer"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Who signed, as a key identifier."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/materialization.ts#SignatureSchema.signer",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/materialization.signatureschema.value",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "SignatureSchema.value"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The signature itself, or a URI that resolves to it."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/materialization.ts#SignatureSchema.value",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/materialization.signatureschema.verifiedat",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "SignatureSchema.verifiedAt"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "When it was last CHECKED against the signer's key — never when it was recorded. Same discipline as {@link FixitySchema.verifiedAt}."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/materialization.ts#SignatureSchema.verifiedAt",
       "skos:note": "candidate"
     },
     {
