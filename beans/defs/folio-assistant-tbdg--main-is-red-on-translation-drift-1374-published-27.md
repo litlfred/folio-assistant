@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T04:22:55Z
-updated_at: 2026-09-26T14:25:21Z
+updated_at: 2026-09-26T14:29:23Z
 parent: folio-assistant-1xhc
 ---
 
@@ -395,3 +395,46 @@ before anyone needs to think about it again.
       corpus dependency removed rather than the clock reset
 - [x] MEASURED AFTER: translating one more real page cannot turn this test red while
       any untranslated top-level page remains (16 do)
+
+
+### CORRECTION, same hour — my derivation was subtly wrong, and I ported #1408's
+
+The fix recorded above picked **`crdm-methodology`**, and that is the one page in
+the corpus it should not have picked.
+
+`docs/crdm-methodology.md` declares:
+
+    lang: en
+    available_locales: ["en","fr"]
+
+with **no `docs/fr/crdm-methodology.md` behind it**. So the page ASSERTS a French
+translation. My derivation checked the filesystem for `docs/<locale>/<page>.md`,
+found none, and accepted it — which makes the fixture for "no translation in any
+locale" the single candidate that claims one.
+
+A sibling session (PR #1408, `claude/sleepy-babbage-ls90iz`) reached this fixture
+independently, hours earlier, and got it right. Their derivation excludes:
+
+- `index.md` — it IS indexed, under the empty key, and only its filename says
+  otherwise;
+- `nav_exclude: true` — the test needs a nav ITEM, and a page excluded from the
+  nav cannot be one;
+- any page **claiming** a non-source locale in `available_locales`, which is the
+  `crdm-methodology` case;
+- any page with no `title:`.
+
+Ported verbatim rather than keeping a worse version of the same idea, so the two
+branches cannot disagree about the fixture and whichever lands second is a no-op.
+It resolves to `detangle` (`title: Detangle`, `nav_order: 42`, no claimed
+locales), same as theirs. 11 tests pass.
+
+**Their reason for the exclusion is the part worth keeping**, and it is sharper
+than "check the filesystem": *the index is the authority, but a page contradicting
+it is the wrong page to reason from, whichever of the two is wrong.* The
+contradiction itself — a page claiming `fr` with no French page behind it — is
+their bean `9x01`, and neither of us fixed it here.
+
+What this cost me: I measured the filesystem and treated that as the definition,
+when the fixture's premise is *nothing claims a translation of this page*, and a
+front-matter claim is a claim. The stricter test I added (17 → 16 candidates) felt
+like rigour and was checking the wrong predicate.

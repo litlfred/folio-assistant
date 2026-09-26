@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { siteDirFor } from "../schemas/cat-harness.ts";
@@ -77,41 +77,46 @@ const GUIDE = INDEX.pages["guides/agent-onboarding"];
 /**
  * A nav item with no translation in ANY locale — the fallback case.
  *
- * **This fixture was `getting-started`, and it did exactly what its own
- * docblock promised.** That note read: *"a real page of this site that has
- * never been translated. If it ever is, this test starts failing loudly rather
- * than silently verifying nothing, which is the correct direction to fail in."*
- * On 2026-09-26 bean `t8g3` translated it into six languages and the test
- * failed. The design was right; only the fixture had expired.
+ * **This fixture was `getting-started`, then `architecture`, and each did exactly
+ * what its own docblock promised.** The first note read: *"a real page of this site
+ * that has never been translated. If it ever is, this test starts failing loudly
+ * rather than silently verifying nothing, which is the correct direction to fail
+ * in."* Bean `t8g3` translated `getting-started` on 2026-09-26; batch 4 the same
+ * day translated `architecture`, its replacement. The design was right each time;
+ * only the fixture expired.
  *
  * ## What the illegible failure cost — TWO sessions, independently
  *
- * The failure surfaced as `element(s) not found` on a locator, which says
- * nothing about why. A sibling session paid *"three environments and a bisect
- * against `origin/main`"* to learn the page had simply been translated; this
- * one paid a full local e2e run and a comparison against main's latest CI.
- * Two people paying the same toll for the same missing sentence is the
- * argument for the assertion in the test below, not the docblock's word for
- * it — **main's copy of this file promises that sentence and its test body
- * does not contain one**, which is how a fix gets believed and not made.
+ * The failure surfaced as `element(s) not found` on a locator, which says nothing
+ * about why. A sibling session paid *"three environments and a bisect against
+ * `origin/main`"* to learn the page had simply been translated; another paid a full
+ * local e2e run and a comparison against main's latest CI.
  *
- * ## Derived, not named
+ * ## Derived, not named — for BOTH cases
  *
- * `HOME` and `GUIDE` above are looked up in the real index; this was the one
- * of the three still named by hand, which is why it is the one that rotted.
- * Two cases:
+ * 1. An indexed page carrying no translations. Preferred, because it is a page the
+ *    generator has actually seen.
+ * 2. When every indexed page is translated — true since the batches — no such
+ *    entry exists. The index only records pages that HAVE translations, so
+ *    "untranslated" then means *absent from the index*, and the fixture is a real
+ *    page of this site the index does not list.
  *
- * 1. An indexed page carrying no translations. Preferred, because it is a page
- *    the generator has actually seen, and it self-heals: the moment such a page
- *    exists this stops depending on any name at all.
- * 2. When **every** indexed page is translated — true since `t8g3`, all seven
- *    of them — no such entry exists. The index only records pages that HAVE
- *    translations, so "untranslated" then means *absent from the index*, and
- *    the fixture is a real page of this site the index does not list.
+ * Case 2 was hand-picked and expired twice, so it is derived too: top-level,
+ * carrying a `title:`, not `nav_exclude: true`, not claiming a non-source locale,
+ * first in sorted order so two runs agree. `index.md` is excluded because it IS
+ * indexed, under the empty key, and only its filename says otherwise.
  *
- * `architecture` is the sibling's choice, kept over this branch's equivalent
- * `agentic-harness`: both are untranslated and neither is better, so the one
- * already on `main` wins and the next merge has one less thing to reconcile.
+ * **This derivation is ported verbatim from PR #1408** (`claude/sleepy-babbage-ls90iz`),
+ * which reached it independently and got it right where this branch's first attempt
+ * did not. That attempt checked the filesystem for `docs/<locale>/<page>.md` and so
+ * selected `crdm-methodology` — which declares `available_locales: ["en","fr"]`
+ * with no `docs/fr/crdm-methodology.md` behind it, making it the one candidate that
+ * ASSERTS the very thing this fixture stands for the absence of. Porting rather than
+ * keeping a worse version of the same idea, so the two branches cannot disagree.
+ *
+ * And it THROWS rather than falling back when the corpus has no such page. That
+ * state is real news — every page of the site translated — and it must not reach the
+ * browser half as a locator that mysteriously misses.
  */
 const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
   const indexed = Object.entries(INDEX.pages).find(
@@ -121,50 +126,40 @@ const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
     const [key, v] = indexed;
     return { key, url: v.sourceUrl, title: v.sourceTitle };
   }
-  // Case 2. DERIVED, not named. A top-level source page of this site that the
-  // index does not list — so it has no translation in any locale, which is the
-  // definition this fixture needs.
-  //
-  // `architecture` was named here and was translated on 2026-09-26, which is the
-  // SECOND time this fixture rotted the same way (`getting-started` was the
-  // first). Five translation batches landed that day; any name picked here is a
-  // clock, and the docblock above already said so about case 1. So case 2 is
-  // derived on the same principle: the moment a page is translated, this simply
-  // picks another, and the tripwire below only fires if the site runs out of
-  // untranslated pages entirely — which would be real news rather than rot.
-  //
-  // Sorted, so two runs on one tree agree; a set iteration order would make the
-  // fixture depend on directory listing order and this test is a fixture's only
-  // reader.
-  const siteRoot = join(ROOT, SITE);
-  // Absence from the index is NOT the definition — the definition is that no
-  // locale publishes this page. Checked on disk rather than inferred, because an
-  // index that under-reports would hand this fixture a page that IS translated,
-  // and the test would then assert a fallback that should not happen. (Measured
-  // while writing this: `crdm-methodology` is absent from the index AND has a
-  // `.po` catalogue, which is a different artefact from a published page — so the
-  // two questions really do come apart.)
-  const untranslated = (key: string): boolean =>
-    !INDEX.locales.some((loc) => existsSync(join(siteRoot, loc, `${key}.md`)));
-  const candidate = readdirSync(siteRoot)
-    .filter((f) => f.endsWith(".md"))
-    .map((f) => f.slice(0, -3))
-    .filter((key) => !INDEX.pages[key] && untranslated(key))
-    .sort()[0];
-  if (candidate === undefined) {
-    throw new Error(
-      "every top-level page of this site is translated, so no fixture can stand for " +
-        "the no-translation case. That is good news about the site; this test now needs " +
-        "a synthetic page built inside `harness()` rather than a real one.",
-    );
+  // Case 2. A real page of this site the index does not list — derived, so the
+  // next translation batch cannot expire it.
+  const dir = join(ROOT, SITE);
+  for (const f of readdirSync(dir).sort()) {
+    if (!f.endsWith(".md") || f === "index.md") continue;
+    const key = f.slice(0, -3);
+    if (key in INDEX.pages) continue;
+    const head = readFileSync(join(dir, f), "utf8").slice(0, 2000);
+    if (/^nav_exclude:\s*true\s*$/m.test(head)) continue;
+    // And it must not CLAIM a locale either. `crdm-methodology` is absent from
+    // the index and declares `available_locales: ["en","fr"]` with no
+    // `docs/fr/crdm-methodology.md` behind it — so it would be the one
+    // candidate that asserts the very thing this fixture stands for the absence
+    // of. The index is the authority here, but a page contradicting it is the
+    // wrong page to reason from, whichever of the two is wrong. Bean `9x01`.
+    const claimed = /^available_locales:\s*(.+)$/m.exec(head)?.[1] ?? "";
+    if (
+      claimed
+        .replace(/[["'\]\s]/g, "")
+        .split(",")
+        .filter((l) => l !== "" && l !== INDEX.sourceLocale).length > 0
+    ) {
+      continue;
+    }
+    const title = /^title:\s*(.+)$/m.exec(head)?.[1].trim().replace(/^["']|["']$/g, "");
+    if (title === undefined || title === "") continue;
+    return { key, url: `/${key}.html`, title };
   }
-  const front = readFileSync(join(siteRoot, `${candidate}.md`), "utf8");
-  const titled = /^title:\s*(.+?)\s*$/m.exec(front.split("---")[1] ?? "");
-  return {
-    key: candidate,
-    url: `/${candidate}.html`,
-    title: (titled?.[1] ?? candidate).replace(/^["']|["']$/g, ""),
-  };
+  throw new Error(
+    "no untranslated page left in the corpus: every indexed page has translations AND every " +
+      "top-level page is indexed. That is news about the site, not a broken test — the " +
+      "no-translation fallback now has nothing to stand for, so decide what this test should " +
+      "assert instead rather than re-pointing a fixture.",
+  );
 })();
 
 /** just-the-docs' nav markup, reduced to what the filter touches. */
