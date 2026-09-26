@@ -128,7 +128,7 @@ per [`bib-qa.md §Batch intake pipeline`](../folio-core/bib-qa.md#batch-intake-p
 Convert raw format to `extracted-text.md`:
 
 **For PDFs, always start with
-[`cat-harness/scripts/pdf-extract.py`](../../cat-harness/scripts/pdf-extract.py)** — do not reach for a
+[`cat-harness/scripts/pdf-extract.py`](../../scripts/pdf-extract.py)** — do not reach for a
 Python PDF library directly. It walks a fallback ladder (`pdftotext` → `pypdf` →
 `pdfminer.six` → a zero-dependency content-stream extractor → OCR) and, when it
 cannot read a file, **tells you which rung failed and why** instead of returning
@@ -189,9 +189,9 @@ the corpus-grep checklist reads.
 
 | script | writes | notes |
 |---|---|---|
-| [`cat-harness/scripts/pdf-structure.py`](../../cat-harness/scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (title, authors, arXiv/DOI from the page-1 stamp), TOC from the PDF outline or inferred from heading patterns, per-section text split |
-| [`cat-harness/scripts/pdf-ocr.py`](../../cat-harness/scripts/pdf-ocr.py) | `library/<doc-id>/ocr/page-NNN.txt` | `pdftoppm -r 300 -png` then `tesseract`; per-page cache; script auto-detected via Tesseract's own OSD |
-| [`cat-harness/scripts/extract-candidates.py`](../../cat-harness/scripts/extract-candidates.py) | `library/<doc-id>/candidates.json` | pure regex, imports no PDF library; **proposals, never content** — nothing here writes to `content/` and nothing here creates Lean |
+| [`cat-harness/scripts/pdf-structure.py`](../../scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (title, authors, arXiv/DOI from the page-1 stamp), TOC from the PDF outline or inferred from heading patterns, per-section text split |
+| [`cat-harness/scripts/pdf-ocr.py`](../../scripts/pdf-ocr.py) | `library/<doc-id>/ocr/page-NNN.txt` | `pdftoppm -r 300 -png` then `tesseract`; per-page cache; script auto-detected via Tesseract's own OSD |
+| [`cat-harness/scripts/extract-candidates.py`](../../scripts/extract-candidates.py) | `library/<doc-id>/candidates.json` | pure regex, imports no PDF library; **proposals, never content** — nothing here writes to `content/` and nothing here creates Lean |
 
 ```bash
 python3 cat-harness/scripts/pdf-ocr.py FILE.pdf --outdir library/<doc-id>/   # only if scanned
