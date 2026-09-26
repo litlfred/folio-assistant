@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "processes/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:36dcc08f0ab9041ffb4940da3e5441aeccde566dea39d1b5846370945edc3161",
+  "source_hash": "sha256:1ee09cbd7f397277cee15ffd8d8c82da2a4e02330c917b4779de3fe49c4c2135",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -67,6 +67,10 @@
           "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
         },
         {
+          "where": "Task_Gates",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
           "where": "Task_E2E",
           "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
         },
@@ -121,13 +125,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/code-quality-gates.yml",
-          "detail": ".github/workflows/code-quality-gates.yml changed since cat-harness/processes/code-quality-gates.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -135,8 +134,8 @@
     }
   },
   "totals": {
-    "pass": 14,
-    "fail": 2,
+    "pass": 15,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   },
@@ -145,8 +144,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/code-quality-gates.bpmn",
       "code": ".github/workflows/code-quality-gates.yml",
-      "prose_hash": "36dcc08f0ab9",
-      "code_hash": "841831560b58",
+      "prose_hash": "1ee09cbd7f39",
+      "code_hash": "d7a882447b04",
       "by": "agent",
       "reason": "Re-read the process documentation against the yml change. The change adds one step, check:code-accounting, inside the TypeScript job. The prose's claim about that box is 'TypeScript IS ONE BOX STANDING FOR ROUGHLY THIRTY REPOSITORY GATES' and lists their families; a thirty-first gate of the same kind is what that sentence already describes, deliberately approximately, so the box's meaning does not move. Nothing about the six-job shape, the four-hard/two-warn asymmetry, continue-on-error or the lane changes: the new step is hard-failing inside an already-hard job, so it adds no warn-only mechanism to keep apart."
     }
