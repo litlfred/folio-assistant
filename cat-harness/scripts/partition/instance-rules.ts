@@ -1513,6 +1513,19 @@ export const RULES: Rule[] = [
       // which it reads, is core by the `schemas/` prefix. Arrived from `main`
       // and fell through every prefix.
       "scripts/check-voices.ts",
+      // CORE, by the same test and for the same stated reason: the subject is
+      // CONTENT. It asks whether a change publishes a TRANSLATED PAGE with no
+      // `.po` beside it, so both sides of the question are a folio's material —
+      // the page under the site root and the catalogue under `translations/`,
+      // which is core by its own prefix above.
+      //
+      // It reads `buildTranslationIndex`/`siteRoot` from
+      // `content/pipeline/translation-index.ts` and `catalogueFor`/`fileForUrl`
+      // from `content/pipeline/translation-drift.ts`, both core by the
+      // `content/pipeline/` prefix. Calling it harness would buy a
+      // wrong-direction edge for nothing — the mistake this block already
+      // records against `check-context-emission.ts`'s sibling (bean `3sm2`).
+      "scripts/check-translation-catalogue.ts",
       // Its other half: the rules are cited, AND the instruction body beside
       // them does not restate them uncited (bean `n8br`). Core for the same
       // reason — its subject is a voice, which is content an instance derived,
