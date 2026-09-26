@@ -112,3 +112,42 @@ keys. Whether one fix covers both is unmeasured — do not assume it.
       v0.12.0 at all. If it does NOT, the key is decorative and the real
       question is whether the JS fallback is the intended mechanism — in
       which case there is nothing to gate.
+
+## 2026-09-26, later — it is not a hypothetical. A sibling did it, within the hour.
+
+This bean warned that regenerating the stale artefact would COMMIT the loss and
+turn the gate green. Measured afterwards: that already happened.
+
+`877aade245f` on main — *"chore: regenerate stale docs-auto index and
+translation index"*. Counting the marker in the generated file
+`cat-harness/docs/cat-harness/docs-auto/index/docs/index.html`:
+
+| commit | `no description in the artefact` |
+|---|---|
+| `abee3acee29` (before) | 241 |
+| `origin/main` (after `877aade245f`) | **246** |
+
+Five, exactly the five locales. The gate is GREEN on main now, and it is green
+because the loss is recorded rather than because it was fixed. A later reader
+running `docs:auto:check` on main sees a clean run over a page that lost its
+descriptions.
+
+The commit is not careless: its subject says truthfully what it did, and the
+chain's own message told it to. **That is the point.** The remedy the tool
+recommends and the defect are the same keystroke, and nothing in the output
+distinguishes "the generator caught up" from "the generator recorded a
+regression".
+
+Restoring the source flips it back: regeneration on the merged tree now writes
+246 → 241 and `docs:auto:check` exits 0 with the descriptions PRESENT.
+
+### And a second trap, paid on this bean's own PR
+
+#1430's first CI run went red on `docs:auto:check` while the same commit was
+green locally. Cause: CI builds `refs/pull/N/merge`, the branch merged with
+CURRENT main; I had measured the branch TIP. Main had taken five new bean files
+and a batch of translations in between, and the generated index is derived from
+those. `nytj` — the merged state neither party evaluates.
+
+**Verifying a generated artefact on the branch tip is not verifying it.** Merge
+main first, then regenerate, then check.
