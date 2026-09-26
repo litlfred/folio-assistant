@@ -313,5 +313,5 @@ This skill has its own process: **[A sub-graph wants to leave](../../processes/g
 
 | process | step(s) that name it |
 |---|---|
-| [A sub-graph wants to leave](../../processes/graph-detanglement.html) | 1 &#183; Declare in place&#10;(nothing moves); 2a &#183; Measure &#8212; unassigned&#10;column FIRST; 2b &#183; Prune, merge, factor&#10;&#8212; or the classification is wrong; 3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact; 4 &#183; Extract &#8212; a directory move,&#10;not a file-by-file sift |
+| [A sub-graph wants to leave](../../processes/graph-detanglement.html) | 1 · Declare in place (nothing moves); 2a · Measure — unassigned column FIRST; 2b · Prune, merge, factor — or the classification is wrong; 3 · Isolate — own declaration, namespace, artefact; 4 · Extract — a directory move, not a file-by-file sift |
 

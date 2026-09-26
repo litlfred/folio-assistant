@@ -53,10 +53,10 @@
       </bpmn:lane>
     </bpmn:laneSet>
 
-    <bpmn:startEvent id="Start_Wants" name="Size, or a semantic&amp;#10;reason to separate">
+    <bpmn:startEvent id="Start_Wants" name="Size, or a semantic&#10;reason to separate">
       <bpmn:outgoing>G0</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="Task_Brief" name="Brief the topic before&amp;#10;touching anything">
+    <bpmn:task id="Task_Brief" name="Brief the topic before&#10;touching anything">
       <bpmn:documentation>What am I doing and why is it worth doing; what do I already know, with each measurement's provenance; how do I plan to do it and WHAT WOULD FALSIFY THE APPROACH. A falsifier that never fires is decoration &amp;#8212; this practice's own fired, took edges 5 to 12, and rewrote the plan.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="opening-brief"/>
@@ -66,7 +66,7 @@
       <bpmn:outgoing>G1</bpmn:outgoing>
     </bpmn:task>
 
-    <bpmn:task id="Task_Declare" name="1 &amp;#183; Declare in place&amp;#10;(nothing moves)">
+    <bpmn:task id="Task_Declare" name="1 · Declare in place&#10;(nothing moves)">
       <bpmn:documentation>A `&lt;name&gt;.json` entry with its `graphs[]` kinds. A sub-graph that owns its own layout gains a NESTED declaration whose paths resolve against its own directory, so the whole graph relocates by moving one folder.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="graph-detanglement"/>
@@ -74,7 +74,7 @@
       <bpmn:incoming>G1</bpmn:incoming>
       <bpmn:outgoing>G2</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Declared" name="Declared&amp;#10;in place?">
+    <bpmn:exclusiveGateway id="GW_Declared" name="Declared&#10;in place?">
       <bpmn:documentation>Computed, not chosen: decisions/subgraph-declared-gate.dmn (hit policy FIRST) over three inputs — the declaration parsed (`readable`), an entry present for the sub-graph, and every declared path exists. Unparseable goes to `unknown`, a fault rather than 'not yet', and stops the process. No entry, or a declared path that does not exist (bean `dh4f`), goes to `not yet`, back to Declare. Otherwise `declared`, on to Measure.</bpmn:documentation>
       <bpmn:extensionElements>
         <cat-harness.processes:decision ref="decisions/subgraph-declared-gate.dmn#Decision_SubgraphDeclaredGate"/>
@@ -85,7 +85,7 @@
       <bpmn:outgoing>G5</bpmn:outgoing>
     </bpmn:exclusiveGateway>
 
-    <bpmn:task id="Task_Measure" name="2a &amp;#183; Measure &amp;#8212; unassigned&amp;#10;column FIRST">
+    <bpmn:task id="Task_Measure" name="2a · Measure — unassigned&#10;column FIRST">
       <bpmn:documentation>`bun run check:partition`. Read the unassigned column before the edge count, and quote BOTH numbers rather than only the one that improved. The count rising when the measurement improves is correct: 43 to 49 when thirteen previously-unjudged edges were folded in.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="graph-detanglement"/>
@@ -104,7 +104,7 @@
       <bpmn:outgoing>G8</bpmn:outgoing>
       <bpmn:outgoing>G9</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:task id="Task_Move" name="2b &amp;#183; Prune, merge, factor&amp;#10;&amp;#8212; or the classification is wrong">
+    <bpmn:task id="Task_Move" name="2b · Prune, merge, factor&#10;— or the classification is wrong">
       <bpmn:documentation>The only four moves. Move the shared TARGET first and the importers after; check the target's layer before the importer's; a schema moves with its script. The fix is never an exemption, it is the right owner.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="graph-detanglement"/>
@@ -114,7 +114,7 @@
       <bpmn:outgoing>G7</bpmn:outgoing>
     </bpmn:task>
 
-    <bpmn:task id="Task_Isolate" name="3 &amp;#183; Isolate &amp;#8212; own declaration,&amp;#10;namespace, artefact">
+    <bpmn:task id="Task_Isolate" name="3 · Isolate — own declaration,&#10;namespace, artefact">
       <bpmn:documentation>Only once cross-edges measure zero: give the sub-graph its own declaration, its own namespace and its own published artefact, as bootstrap/ has (its own declaration, bs: namespace and graph document). Nothing moves yet; the sub-graph now stands alone in place.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="graph-detanglement"/>
@@ -122,7 +122,7 @@
       <bpmn:incoming>G9</bpmn:incoming>
       <bpmn:outgoing>G10</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Isolated" name="Stands&amp;#10;alone?">
+    <bpmn:exclusiveGateway id="GW_Isolated" name="Stands&#10;alone?">
       <bpmn:documentation>Computed by decisions/isolation-gate.dmn (hit policy FIRST) over three inputs: its own declaration with paths relative to itself, its own namespace with every minted term defined, and a published artefact of its own. Any one missing answers `not yet`, back to Isolate. All three answer `isolated`, on to reporting what would move and waiting for a person to authorise it. Zero edges alone is not isolation.</bpmn:documentation>
       <bpmn:extensionElements>
         <cat-harness.processes:decision ref="decisions/isolation-gate.dmn#Decision_IsolationGate"/>
@@ -132,7 +132,7 @@
       <bpmn:outgoing>G12</bpmn:outgoing>
     </bpmn:exclusiveGateway>
 
-    <bpmn:task id="Task_Propose" name="Report what would move&amp;#10;&amp;#8212; sizes, and what breaks">
+    <bpmn:task id="Task_Propose" name="Report what would move&#10;— sizes, and what breaks">
       <bpmn:documentation>The agent reports and waits. `deletion-requires-confirmation` is not a courtesy to waive: an agent never removes or relocates a durable artefact on its own initiative.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
@@ -149,11 +149,11 @@
       <bpmn:outgoing>G14</bpmn:outgoing>
       <bpmn:outgoing>G15</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:endEvent id="End_Declined" name="Stays where it is&amp;#10;&amp;#8212; declared, detangled, isolated">
+    <bpmn:endEvent id="End_Declined" name="Stays where it is&#10;— declared, detangled, isolated">
       <bpmn:incoming>G15</bpmn:incoming>
     </bpmn:endEvent>
 
-    <bpmn:task id="Task_Extract" name="4 &amp;#183; Extract &amp;#8212; a directory move,&amp;#10;not a file-by-file sift">
+    <bpmn:task id="Task_Extract" name="4 · Extract — a directory move,&#10;not a file-by-file sift">
       <bpmn:documentation>Only once edges are zero and the declaration stands alone: move the sub-graph out as one directory move, not a file-by-file sift. Its nested declaration resolves paths against its own directory, so moving the folder moves the graph. The five-point gate is in migration-plan.md Phase II.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="graph-detanglement"/>
@@ -165,7 +165,7 @@
     <bpmn:endEvent id="End_Extracted" name="Extracted">
       <bpmn:incoming>G16</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:endEvent id="End_Unknown" name="UNKNOWN &amp;#8212; stop.&amp;#10;Not &amp;#8220;not yet&amp;#8221;, not clean">
+    <bpmn:endEvent id="End_Unknown" name="UNKNOWN — stop.&#10;Not “not yet”, not clean">
       <bpmn:incoming>G3</bpmn:incoming>
       <bpmn:incoming>G5b</bpmn:incoming>
     </bpmn:endEvent>

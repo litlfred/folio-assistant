@@ -5,7 +5,7 @@
     "id": "Process_FeatureStaging",
     "path": "processes/feature-staging.bpmn"
   },
-  "source_hash": "sha256:d38ea6587f471f3ea1224092711466841c2556ff96ab8a5ce0466b7cd9c5c48c",
+  "source_hash": "sha256:5b4d0a4c0fa2faac62e2545ba279c319451993a7ed193647dff335ffc5d6251d",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -182,7 +182,7 @@
       "kind": "implements",
       "prose": "cat-harness/processes/feature-staging.bpmn",
       "code": ".github/workflows/feature-staging.yml",
-      "prose_hash": "d38ea6587f47",
+      "prose_hash": "5b4d0a4c0fa2",
       "code_hash": "0c73493bf62e",
       "by": "agent",
       "reason": "Re-read the BPMN documentation against the workflow change (bean 6bhf): three steps gained an `env:` binding for `steps.slug.outputs.slug` and read \"$STAGING_SLUG\" instead of interpolating it. No step, gateway, lane, entry point or render-log write changed, so the drawn process and every prose claim about it — three entry points, two three-state gateways, the log written in the same commit as the removal, the single human confirmation — are unaffected."

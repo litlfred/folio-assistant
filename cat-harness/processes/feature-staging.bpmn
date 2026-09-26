@@ -133,7 +133,7 @@
       <bpmn:incoming>Flow_18</bpmn:incoming>
       <bpmn:outgoing>Flow_12</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:serviceTask id="Task_Validate" name="Check the slug&#x27;s SHAPE and&#10;that the confirmation repeats it">
+    <bpmn:serviceTask id="Task_Validate" name="Check the slug's SHAPE and&#10;that the confirmation repeats it">
       <bpmn:documentation>Guarded three ways because a dispatch input is a DELETION TRIGGER. `workflow_dispatch` is available only to an actor with write access; the slug must match exactly the characters the sed pipeline can produce, with `.` and `..` refused by name; and the confirmation must repeat the slug, so a confirmation cannot be carried over from an earlier run against a different preview.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="deletion-requires-confirmation"/>

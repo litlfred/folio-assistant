@@ -5,7 +5,7 @@
     "id": "Process_UpstreamPinWatch",
     "path": "processes/upstream-pin-watch.bpmn"
   },
-  "source_hash": "sha256:bf239b52242bf71032d26f110b23090e359b3b6b98f7528fd883f5c8ed229e55",
+  "source_hash": "sha256:bb72f724e37d4ed88f9e61fe5877f36b0481d0067533243d7876a04e4a7beab8",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -125,13 +125,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/upstream-pins.yml",
-          "detail": ".github/workflows/upstream-pins.yml changed since cat-harness/processes/upstream-pin-watch.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -139,8 +134,8 @@
     }
   },
   "totals": {
-    "pass": 17,
-    "fail": 2,
+    "pass": 18,
+    "fail": 1,
     "n/a": 6,
     "unknown": 0
   },
@@ -149,8 +144,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/upstream-pin-watch.bpmn",
       "code": ".github/workflows/upstream-pins.yml",
-      "prose_hash": "bf239b52242b",
-      "code_hash": "a298c368d27b",
+      "prose_hash": "bb72f724e37d",
+      "code_hash": "01d0ff9cb716",
       "by": "baseline"
     }
   ]

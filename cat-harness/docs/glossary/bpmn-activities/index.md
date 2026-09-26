@@ -13,7 +13,7 @@ Candidate terms extracted from every BPMN task and call activity: `name` as the 
 
 From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 503 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 532 terms and is 408 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 532 terms and is 407 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -23,6 +23,13 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 
 <h2 id="letter-0-9">0–9</h2>
 <dl class="fa-gloss">
+<dt id="cat-harness--kg-bpmn-activities--process_graphdetanglement.task_declare" data-fa-state="extracted" data-fa-gloss="">
+1 · Declare in place (nothing moves) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A `&lt;name&gt;.json` entry with its `graphs[]` kinds. A sub-graph that owns its own layout gains a NESTED declaration whose paths resolve against its own directory, so the whole graph relocates by moving one folder.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/graph-detanglement.bpmn"><code>cat-harness/processes/graph-detanglement.bpmn#Task_Declare</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_plan" data-fa-state="extracted" data-fa-gloss="">
 1 · Plan the document [content-plan] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -36,13 +43,6 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <dd>
 <p>Scope the paper: chapters, the blocks each needs, what gets formalised.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/authoring-a-paper.bpmn"><code>cat-harness/processes/authoring-a-paper.bpmn#Task_Plan</code></a></p>
-</dd>
-<dt id="cat-harness--kg-bpmn-activities--process_graphdetanglement.task_declare" data-fa-state="extracted" data-fa-gloss="">
-1 &amp;#183; Declare in place&amp;#10;(nothing moves) <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>A `&lt;name&gt;.json` entry with its `graphs[]` kinds. A sub-graph that owns its own layout gains a NESTED declaration whose paths resolve against its own directory, so the whole graph relocates by moving one folder.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/graph-detanglement.bpmn"><code>cat-harness/processes/graph-detanglement.bpmn#Task_Declare</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_seedplan" data-fa-state="extracted" data-fa-gloss="">
 2 · Seed the work plan [todo-manager] <span class="fa-gloss-status">candidate, extracted</span>
@@ -59,18 +59,25 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/authoring-a-paper.bpmn"><code>cat-harness/processes/authoring-a-paper.bpmn#Task_SeedPlan</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_graphdetanglement.task_measure" data-fa-state="extracted" data-fa-gloss="">
-2a &amp;#183; Measure &amp;#8212; unassigned&amp;#10;column FIRST <span class="fa-gloss-status">candidate, extracted</span>
+2a · Measure — unassigned column FIRST <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>`bun run check:partition`. Read the unassigned column before the edge count, and quote BOTH numbers rather than only the one that improved. The count rising when the measurement improves is correct: 43 to 49 when thirteen previously-unjudged edges were folded in.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/graph-detanglement.bpmn"><code>cat-harness/processes/graph-detanglement.bpmn#Task_Measure</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_graphdetanglement.task_move" data-fa-state="extracted" data-fa-gloss="">
-2b &amp;#183; Prune, merge, factor&amp;#10;&amp;#8212; or the classification is wrong <span class="fa-gloss-status">candidate, extracted</span>
+2b · Prune, merge, factor — or the classification is wrong <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The only four moves. Move the shared TARGET first and the importers after; check the target's layer before the importer's; a schema moves with its script. The fix is never an exemption, it is the right owner.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/graph-detanglement.bpmn"><code>cat-harness/processes/graph-detanglement.bpmn#Task_Move</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_graphdetanglement.task_isolate" data-fa-state="extracted" data-fa-gloss="">
+3 · Isolate — own declaration, namespace, artefact <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Only once cross-edges measure zero: give the sub-graph its own declaration, its own namespace and its own published artefact, as bootstrap/ has (its own declaration, bs: namespace and graph document). Nothing moves yet; the sub-graph now stands alone in place.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/graph-detanglement.bpmn"><code>cat-harness/processes/graph-detanglement.bpmn#Task_Isolate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_scaffold" data-fa-state="extracted" data-fa-gloss="">
 3 · Scaffold the folio [folio_init] <span class="fa-gloss-status">candidate, extracted</span>
@@ -85,13 +92,6 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <dd>
 <p>Create the folio repository with `bun run init-folio` (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/authoring-a-paper.bpmn"><code>cat-harness/processes/authoring-a-paper.bpmn#Task_Scaffold</code></a></p>
-</dd>
-<dt id="cat-harness--kg-bpmn-activities--process_graphdetanglement.task_isolate" data-fa-state="extracted" data-fa-gloss="">
-3 &amp;#183; Isolate &amp;#8212; own declaration,&amp;#10;namespace, artefact <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Only once cross-edges measure zero: give the sub-graph its own declaration, its own namespace and its own published artefact, as bootstrap/ has (its own declaration, bs: namespace and graph document). Nothing moves yet; the sub-graph now stands alone in place.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/graph-detanglement.bpmn"><code>cat-harness/processes/graph-detanglement.bpmn#Task_Isolate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_paperauthoring.task_authorblocks" data-fa-state="extracted" data-fa-gloss="">
 4 · Author blocks [content-author] <span class="fa-gloss-status">candidate, extracted</span>
@@ -108,7 +108,7 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/authoring-a-document.bpmn"><code>cat-harness/processes/authoring-a-document.bpmn#Task_AuthorBlocks</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_graphdetanglement.task_extract" data-fa-state="extracted" data-fa-gloss="">
-4 &amp;#183; Extract &amp;#8212; a directory move,&amp;#10;not a file-by-file sift <span class="fa-gloss-status">candidate, extracted</span>
+4 · Extract — a directory move, not a file-by-file sift <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Only once edges are zero and the declaration stands alone: move the sub-graph out as one directory move, not a file-by-file sift. Its nested declaration resolves paths against its own directory, so moving the folder moves the graph. The five-point gate is in migration-plan.md Phase II.</p>
@@ -441,7 +441,7 @@ Ask who is acting <span class="fa-gloss-status">candidate, extracted</span>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/session-state-machine.bpmn"><code>cat-harness/processes/session-state-machine.bpmn#A_AskWhoIsActing</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_prcheckspresent.task_sweep" data-fa-state="extracted" data-fa-gloss="">
-Ask, per open PR, whether its&amp;#10;HEAD has a run &amp;#8212; skipping&amp;#10;heads younger than 15 min <span class="fa-gloss-status">candidate, extracted</span>
+Ask, per open PR, whether its HEAD has a run — skipping heads younger than 15 min <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Run check:prs-have-runs --min-age-minutes 15, writing the report file first. A head younger than 15 minutes legitimately has no run yet and is skipped. Exit 0 clean, 1 findings, 2 could not determine; an exit 1 with no report file is a crash and is treated as could-not-determine.</p>
@@ -571,7 +571,7 @@ Branding: does it read as this instance? <span class="fa-gloss-status">candidate
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/theme-ui-review.bpmn"><code>cat-harness/processes/theme-ui-review.bpmn#A_Branding</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_graphdetanglement.task_brief" data-fa-state="extracted" data-fa-gloss="">
-Brief the topic before&amp;#10;touching anything <span class="fa-gloss-status">candidate, extracted</span>
+Brief the topic before touching anything <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>What am I doing and why is it worth doing; what do I already know, with each measurement's provenance; how do I plan to do it and WHAT WOULD FALSIFY THE APPROACH. A falsifier that never fires is decoration &amp;#8212; this practice's own fired, took edges 5 to 12, and rewrote the plan.</p>
@@ -784,6 +784,27 @@ Close the session <span class="fa-gloss-status">candidate, extracted</span>
 <p>Records that the actor stopped. It does NOT resolve beans or complete instances: those outlive the session by design, and a machine that closed them on the way out would be asserting work finished because somebody went away.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/session-state-machine.bpmn"><code>cat-harness/processes/session-state-machine.bpmn#A_CloseSession</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_cihealth.task_close" data-fa-state="extracted" data-fa-gloss="">
+Close the tracking issue <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Clean: close the open ci-health issue, if any, saying why (main is clean). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ci-health-watch.bpmn"><code>cat-harness/processes/ci-health-watch.bpmn#Task_Close</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_prcheckspresent.task_close" data-fa-state="extracted" data-fa-gloss="">
+Close the tracking issue <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Clean: close the open pr-no-checks issue, if any, saying why (every open pull request's head now has a CI run). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/pr-checks-present.bpmn"><code>cat-harness/processes/pr-checks-present.bpmn#Task_Close</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_repohealth.task_close" data-fa-state="extracted" data-fa-gloss="">
+Close the tracking issue <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Clean: close the open repo-health issue, if any, saying why (every check ran and none had anything to report). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/repository-health-watch.bpmn"><code>cat-harness/processes/repository-health-watch.bpmn#Task_Close</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_upstreampinwatch.task_closeissue" data-fa-state="extracted" data-fa-gloss="">
 Close the tracking issue <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -797,27 +818,6 @@ Close the window back to its avatar <span class="fa-gloss-status">candidate, ext
 <dd>
 <p>[x] closes the window back to its avatar. Only a person's [x] does this; a zoom-out never closes a window, or [x] and zooming become indistinguishable to the reader.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/board-open-close.bpmn"><code>cat-harness/processes/board-open-close.bpmn#A_Close</code></a></p>
-</dd>
-<dt id="cat-harness--kg-bpmn-activities--process_cihealth.task_close" data-fa-state="extracted" data-fa-gloss="">
-Close the&amp;#10;tracking issue <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Clean: close the open ci-health issue, if any, saying why (main is clean). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ci-health-watch.bpmn"><code>cat-harness/processes/ci-health-watch.bpmn#Task_Close</code></a></p>
-</dd>
-<dt id="cat-harness--kg-bpmn-activities--process_prcheckspresent.task_close" data-fa-state="extracted" data-fa-gloss="">
-Close the&amp;#10;tracking issue <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Clean: close the open pr-no-checks issue, if any, saying why (every open pull request's head now has a CI run). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/pr-checks-present.bpmn"><code>cat-harness/processes/pr-checks-present.bpmn#Task_Close</code></a></p>
-</dd>
-<dt id="cat-harness--kg-bpmn-activities--process_repohealth.task_close" data-fa-state="extracted" data-fa-gloss="">
-Close the&amp;#10;tracking issue <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Clean: close the open repo-health issue, if any, saying why (every check ran and none had anything to report). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/repository-health-watch.bpmn"><code>cat-harness/processes/repository-health-watch.bpmn#Task_Close</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm.call_close" data-fa-state="extracted" data-fa-gloss="">
 Close-out <span class="fa-gloss-status">candidate, extracted</span>
@@ -848,7 +848,7 @@ Comment on the open issue, naming the step <span class="fa-gloss-status">candida
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/publish-alert.bpmn"><code>cat-harness/processes/publish-alert.bpmn#A_Comment</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_prcheckspresent.task_comment" data-fa-state="extracted" data-fa-gloss="">
-Comment ONCE per&amp;#10;(PR, head sha) <span class="fa-gloss-status">candidate, extracted</span>
+Comment ONCE per (PR, head sha) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Comment on each affected open PR once per (PR, head sha): a hidden marker carrying the sha is checked first, so a re-run on the same head stays silent and a new push can be reported again. A PR that is no longer open is skipped.</p>
@@ -1297,21 +1297,21 @@ Ensure the publication-manager label <span class="fa-gloss-status">candidate, ex
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/publish-alert.bpmn"><code>cat-harness/processes/publish-alert.bpmn#A_Label</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_cihealth.task_label" data-fa-state="extracted" data-fa-gloss="">
-Ensure the tracking&amp;#10;label exists <span class="fa-gloss-status">candidate, extracted</span>
+Ensure the tracking label exists <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Create the ci-health label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ci-health-watch.bpmn"><code>cat-harness/processes/ci-health-watch.bpmn#Task_Label</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_prcheckspresent.task_label" data-fa-state="extracted" data-fa-gloss="">
-Ensure the tracking&amp;#10;label exists <span class="fa-gloss-status">candidate, extracted</span>
+Ensure the tracking label exists <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Create the pr-no-checks label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/pr-checks-present.bpmn"><code>cat-harness/processes/pr-checks-present.bpmn#Task_Label</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_repohealth.task_label" data-fa-state="extracted" data-fa-gloss="">
-Ensure the tracking&amp;#10;label exists <span class="fa-gloss-status">candidate, extracted</span>
+Ensure the tracking label exists <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Create the repo-health label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict.</p>
@@ -2064,33 +2064,33 @@ Open or close a role to an actor <span class="fa-gloss-status">candidate, extrac
 <p>The join every other diagram depends on. An empty `roles` is a DETERMINED empty — it says the actor takes on none — and is not the same as an absent one, which asserts nothing.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/actor-role-administration.bpmn"><code>cat-harness/processes/actor-role-administration.bpmn#Task_AssignRoles</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_upstreampinwatch.task_trackissue" data-fa-state="extracted" data-fa-gloss="">
-Open or EDIT the one tracking issue <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>One issue, edited in place. GitHub's own failure mail is the channel that was already ignored thirty times, so this adds none: an edit does not notify, and a pin that stays behind for two months stays one unread item rather than nine.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/upstream-pin-watch.bpmn"><code>cat-harness/processes/upstream-pin-watch.bpmn#Task_TrackIssue</code></a></p>
-</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_cihealth.task_track" data-fa-state="extracted" data-fa-gloss="">
-Open or EDIT the one&amp;#10;tracking issue <span class="fa-gloss-status">candidate, extracted</span>
+Open or EDIT the one tracking issue <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Findings: EDIT the one open issue labelled ci-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ci-health-watch.bpmn"><code>cat-harness/processes/ci-health-watch.bpmn#Task_Track</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_prcheckspresent.task_track" data-fa-state="extracted" data-fa-gloss="">
-Open or EDIT the one&amp;#10;tracking issue <span class="fa-gloss-status">candidate, extracted</span>
+Open or EDIT the one tracking issue <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Findings: EDIT the one open issue labelled pr-no-checks if there is one, otherwise create it, with the sweep's report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/pr-checks-present.bpmn"><code>cat-harness/processes/pr-checks-present.bpmn#Task_Track</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_repohealth.task_track" data-fa-state="extracted" data-fa-gloss="">
-Open or EDIT the one&amp;#10;tracking issue <span class="fa-gloss-status">candidate, extracted</span>
+Open or EDIT the one tracking issue <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Findings: EDIT the one open issue labelled repo-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. The body states that nothing in it has been acted on.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/repository-health-watch.bpmn"><code>cat-harness/processes/repository-health-watch.bpmn#Task_Track</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_upstreampinwatch.task_trackissue" data-fa-state="extracted" data-fa-gloss="">
+Open or EDIT the one tracking issue <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>One issue, edited in place. GitHub's own failure mail is the channel that was already ignored thirty times, so this adds none: an edit does not notify, and a pin that stays behind for two months stays one unread item rather than nine.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/upstream-pin-watch.bpmn"><code>cat-harness/processes/upstream-pin-watch.bpmn#Task_TrackIssue</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.task_watchbranchci" data-fa-state="extracted" data-fa-gloss="">
 Open the branch-watch bean [watch] <span class="fa-gloss-status">candidate, extracted</span>
@@ -2777,7 +2777,7 @@ Refresh materialized content <span class="fa-gloss-status">candidate, extracted<
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sample-import.bpmn"><code>cat-harness/processes/sample-import.bpmn#Call_Refresh</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_atomicmassdrift.task_check" data-fa-state="extracted" data-fa-gloss="">
-Regenerate AtomicMass.lean&amp;#10;from the data table &amp;#8212; and diff <span class="fa-gloss-status">candidate, extracted</span>
+Regenerate AtomicMass.lean from the data table — and diff <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Run gen_atomic_mass.py --check: regenerate AtomicMass.lean from the data table and diff it against the committed file. Any divergence exits 1 with a unified diff and fails the PR — a Lean file that compiles must not carry numbers the table no longer produces.</p>
@@ -2791,7 +2791,7 @@ Regenerate every derived reference from its source <span class="fa-gloss-status"
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/docs-site-publish.bpmn"><code>cat-harness/processes/docs-site-publish.bpmn#Task_Regenerate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_jsonlddrift.task_check" data-fa-state="extracted" data-fa-gloss="">
-Regenerate the context, block,&amp;#10;library and site graphs &amp;#8212; and diff <span class="fa-gloss-status">candidate, extracted</span>
+Regenerate the context, block, library and site graphs — and diff <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Run the five --check generators in one job — the JSON-LD context, block siblings, library nodes, site graph, then the label-resolution and emitter tests. Any committed .jsonld that differs from what its generator now produces fails the PR, because a stale generated file is still consulted.</p>
@@ -2882,7 +2882,7 @@ Report the capture state <span class="fa-gloss-status">candidate, extracted</spa
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/activity-log.bpmn"><code>cat-harness/processes/activity-log.bpmn#A_ReportCaptureState</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_graphdetanglement.task_propose" data-fa-state="extracted" data-fa-gloss="">
-Report what would move&amp;#10;&amp;#8212; sizes, and what breaks <span class="fa-gloss-status">candidate, extracted</span>
+Report what would move — sizes, and what breaks <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The agent reports and waits. `deletion-requires-confirmation` is not a courtesy to waive: an agent never removes or relocates a durable artefact on its own initiative.</p>
@@ -3162,7 +3162,7 @@ Route it, and watch the queue <span class="fa-gloss-status">candidate, extracted
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-acquisition.bpmn"><code>cat-harness/processes/content-acquisition.bpmn#A_Route</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_cihealth.task_check" data-fa-state="extracted" data-fa-gloss="">
-Run check:ci-health,&amp;#10;WRITING the report file <span class="fa-gloss-status">candidate, extracted</span>
+Run check:ci-health, WRITING the report file <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check.</p>
@@ -3197,7 +3197,7 @@ Run the gates against the merge of head into base <span class="fa-gloss-status">
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-change-review.bpmn"><code>cat-harness/processes/code-change-review.bpmn#Task_RunCI</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_repohealth.task_check" data-fa-state="extracted" data-fa-gloss="">
-Run the health checks,&amp;#10;keeping the report either way <span class="fa-gloss-status">candidate, extracted</span>
+Run the health checks, keeping the report either way <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Run bun run health --out and upload the JSON report whatever the verdict — on unknown it is the only evidence of why the sweep went blind. Exit 0 clean, 1 gating findings, 2 could not check; exit 1 with no report is a crash. The checks report and never act: every finding names something a person does.</p>
