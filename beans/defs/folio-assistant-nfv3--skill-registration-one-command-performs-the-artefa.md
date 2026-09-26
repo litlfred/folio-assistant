@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nfv3
 title: 'SKILL REGISTRATION: one command performs the artefact chain, and a gate refuses a skill that arrives without it — 7 merges have paid for its absence'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-26T07:38:20Z
-updated_at: 2026-09-26T07:38:38Z
+updated_at: 2026-09-26T10:35:33Z
 parent: folio-assistant-1xhc
 ---
 
@@ -173,3 +173,91 @@ while it waits.
       `gates`-cannot-derive-it finding are the most valuable things either file
       contains
 
+
+
+--------
+
+## 2026-09-26, resolved: the owner chose main's name, and the merge found a defect in mine
+
+**`skill:register` survives; `skills:register` is gone.** Put to the owner as a
+three-option choice because retiring a command is removing a durable artefact
+(`deletion-requires-confirmation`), and they chose main's name on the reason that
+mattered: it was already on `main`, so every other session already calls it.
+Pushed as `a2985fdefe` + `ea126a6228`.
+
+### What crossed over, and the one thing that did not
+
+`skill-register.ts` keeps its name, its five measured steps and its docblock, and
+gains the three things this bean had built that it lacked:
+
+- **the CI gate** — `skill:register:check`, replacing `skills:register:check` in
+  `code-quality-gates.yml`. This is the load-bearing half. For four days the gate
+  was on the command that did NOT survive, and a documented obligation with no
+  gate is exactly what let seven merges repeat one defect.
+- **the dangling report** — a manifest entry with no file behind it, which
+  `kg:audit` calls `manifest-skill-exists` at severity critical.
+- **the retired-`roles:` strip.**
+
+**My manifest-write was dropped, deliberately** — the one place the consolidation
+took the OLDER design over the newer one. Their argument is better than mine:
+which package a file belongs to is the author's assertion, and *"a command that
+guessed it would register files someone was still drafting."* The command now
+names the file and the remedy instead.
+
+`register-skills.ts` and `register-skills.test.ts` are gone. The 19 tests merged
+into `skill-register.test.ts` beside the sibling's 6 — **30 pass**.
+
+### The merge found a real defect in MY version, and my own test installed it
+
+The chain verified `glossary:page` with `glossary:check`. Those are different
+programs:
+
+    check:glossary   folio-assistant-core/scripts/glossary-page.ts --check
+                     ← the checker for what `glossary:page` writes
+    glossary:check   cat-harness/scripts/glossary-export.ts --check
+                     ← the SKOS projection, unrelated
+
+So one of five pairings was a writer against an unrelated check. **The cause
+matters more than the fix.** My test asserted *every check ends in `:check`* —
+which looked like a property and is a naming convention this repository does not
+hold. `check:glossary` cannot satisfy it, so the assertion drove out the correct
+pairing and installed the wrong one. And it passed.
+
+Replaced by two assertions that hold by construction: no step verifies itself
+with its own writer, and no writer repeats. `missingScripts()` covers
+declaredness. **A convention test can enforce a defect** — worth carrying to the
+corpus if it recurs.
+
+That makes **four** wrong answers about this five-item list across two sessions
+(their three, my one). The docblock now states the count, because "measure it, do
+not recall it" has needed saying four times.
+
+### And I over-generalised the bean-link fix in the wrong direction
+
+Earlier today I qualified `](deletion-requires-confirmation.md)` to
+`](../../cat-harness/skills/folio-core/…)` in this bean, correct from
+`beans/defs/`. Writing the skill doc I reached for the qualified form again —
+and inside `skills/folio-core/`, where the two files are siblings, the BARE form
+is correct and the qualified one resolves to nothing. Same class as the original
+defect, opposite direction, caught before commit by checking the path rather
+than the pattern.
+
+### Verified
+
+    skill:register:check   exit 0 — 268 skills across 16 packages
+    falsified end-to-end   exit 1 on an undeclared skill, on a retired `roles:`,
+                           and on a dangling manifest entry; exit 0 restored
+    skill:register         chain converged, 5/5 checks green in isolation
+    bun test               11806 pass / 56 skip / 1 fail (main's drift, inherited)
+    tsc, eslint            clean
+    audit:coverage         require-all + strict exit 0 in a clean worktree;
+                           0 gates have NOT declared a kind
+
+## Done when (consolidation)
+
+[x] the two commands are one, under the name the owner chose
+[x] the gate follows the surviving name — it is the only thing making the
+    obligation binding
+[x] the dropped behaviour is dropped on an argument, recorded here, not by
+    accident of which file won
+[x] both suites merged rather than one discarded
