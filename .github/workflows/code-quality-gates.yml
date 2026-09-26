@@ -1373,8 +1373,20 @@ jobs:
       # What a red here means now: somebody added a node, renamed a block, ran
       # a first sweep, or moved a sidecar, and did not regenerate. A real
       # omission, every time.
+      # NAMED, not the long path, and that is the whole point of bean `9x01`
+      # finding 4: every page this generator writes carries a banner ending "and
+      # `docs:pages:check` fails on the difference", and that script did not
+      # exist — `bun run docs:pages:check` answered `Script not found` while this
+      # step ran the same guard by its path. The documented command and the
+      # enforced command are now ONE STRING, so neither can drift from the other.
+      #
+      # Adding the script alone was not enough: `gates.test.ts > no check script
+      # is unrun` then reported `docs:pages:check` as declared and run by no
+      # workflow — bean `ot9a`'s defect, which is what this job's "gates that
+      # were registered and never run" step exists for. Two guards, opposite
+      # directions, and only this line satisfies both.
       - name: generated docs pages are current
-        run: bun run cat-harness/scripts/gen-docs-pages.ts --check
+        run: bun run docs:pages:check
 
       # GATED, unlike the two projections below, and the difference is the
       # INPUT SET — which is the standard those two are excused against.

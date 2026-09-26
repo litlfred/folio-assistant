@@ -11,44 +11,55 @@
  * pages, in the line a reader consults precisely when they are unsure whether
  * they are allowed to edit the file in front of them.
  *
- * CI ran the guard the whole time by its long path (`code-quality-gates.yml`), so
- * nothing was unguarded; what was wrong was the instruction, which is worse in
- * one specific way. **An absent guard fails loudly the first time it is needed. A
- * guard whose documented name exits non-zero teaches the reader it does not
- * exist**, and the two available conclusions from there are to hand-edit the file
- * the banner forbids, or to commit a stale one.
+ * CI ran the guard the whole time by its long path, so nothing was unguarded;
+ * what was wrong was the instruction, which is worse in one specific way. **An
+ * absent guard fails loudly the first time it is needed. A guard whose documented
+ * name exits non-zero teaches the reader it does not exist**, and the two
+ * available conclusions from there are to hand-edit the file the banner forbids,
+ * or to commit a stale one. The workflow now invokes the NAMED script, so the
+ * documented command and the enforced command are one string.
  *
- * This is the same shape AGENTS.md paid for with its pre-split `scripts/`
- * prefixes: the two commands in the file a newcomer reads first both exited 1.
- * That was fixed as a one-off. This asserts the property instead.
+ * ## Three things this file got wrong first, all worth keeping
  *
- * ## Read from the COMMIT, not the working tree — and that is not a detail
+ * **1. It read the WORKING TREE.** It passed alone and failed in the suite — the
+ * `ymsu` signature, a test reading what another test writes. `bun test` runs files
+ * in parallel and this repository has tests that spawn generators in their WRITING
+ * form, so `docs/` is not stable for the duration of a run. Bean `bjzs` hit the
+ * same trap with bootstrap sidecars, in the same words: *"passed alone, failed in
+ * the suite"*. Measured against the exact tree CI evaluated, the COMMITTED content
+ * was clean — 654 files, 53 banners, zero missing commands — so the failure was
+ * entirely transient state. Hence `HEAD`, not the disk.
  *
- * The first version of this file walked `cat-harness/docs` on disk. It passed
- * alone and **failed in the suite**, which is the `ymsu` signature: a test that
- * reads what another test writes. `bun test` runs files in parallel and this
- * repository has tests that spawn generators in their WRITING form, so the real
- * `docs/` tree is not stable for the duration of a test run — the same trap bean
- * `bjzs` hit with bootstrap sidecars, recorded there as *"passed alone, failed in
- * the suite"*.
+ * **2. Adding the script made it "registered and never run".** `gates.test.ts >
+ * no check script is unrun` then reported `docs:pages:check` as declared and
+ * invoked by no workflow, which is bean `ot9a`'s defect — the one this job's
+ * "gates that were registered and never run" step exists for. Two guards pointing
+ * opposite ways, and only pointing the workflow at the named script satisfies
+ * both.
  *
- * So the population is `git ls-files` and the content is `git show HEAD:<path>`.
- * Nothing another test does to the working tree can reach either. **What this
- * gives up, stated rather than left implied:** an uncommitted banner change is not
- * checked until it is committed. That is the right trade for a property about
- * what the repository *publishes* — CI tests a commit, and a guard that is
- * occasionally wrong about the working tree is worth less than one that is never
- * wrong about the corpus.
+ * **3. It spawned 654 subprocesses AT IMPORT.** One `git show` per tracked page,
+ * at module scope, so merely importing this file cost ~3 seconds of process
+ * churn — concurrent with 521 other test files. A sibling test that passes alone
+ * went red in that suite at 19.7 s. `git grep` over `HEAD` answers the same
+ * question in **one** subprocess in 0.014 s, and it runs inside the test bodies
+ * rather than at import, so importing this module does nothing at all.
+ *
+ * The three are one lesson in three costumes: **a test is part of the system it
+ * measures.** Where it reads from, what it declares, and what it spends are all
+ * observable by everything else running beside it.
  *
  * ## Why over the CORPUS rather than over the generator's source
  *
  * Pinning the template literal in `gen-docs-pages.ts` would cover one generator,
- * and the banner convention is shared — `gen-docs-pages.ts:1514` already matches
- * on it to recognise its own output, and its comment says the marker is what
- * makes "ONE reader able to recognise all of them rather than a list of
- * spellings". A test over the written pages inherits that: a new generator
- * adopting the banner is covered on the day it lands, with nobody remembering to
- * add it here.
+ * and the banner convention is shared — that file already matches on it to
+ * recognise its own output, and says the marker is what makes "ONE reader able to
+ * recognise all of them rather than a list of spellings". A test over the written
+ * pages inherits that: a new generator adopting the banner is covered on the day
+ * it lands, with nobody remembering to add it here.
+ *
+ * **What this gives up, stated rather than implied:** an uncommitted banner change
+ * is not checked until it is committed. That is the right trade for a property
+ * about what the repository *publishes* — CI tests a commit.
  */
 import { describe, expect, test } from "bun:test";
 import { execFileSync } from "node:child_process";
@@ -57,59 +68,46 @@ import { join } from "node:path";
 
 const REPO = join(import.meta.dir, "..", "..", "..");
 
-const scripts: Record<string, string> = JSON.parse(
-  readFileSync(join(REPO, "package.json"), "utf-8"),
-).scripts;
-
-function git(...args: string[]): string {
-  return execFileSync("git", args, { cwd: REPO, encoding: "utf-8", timeout: 60_000 });
+/** Banner lines in `HEAD`, as `HEAD:<path>:<line>`. ONE subprocess. */
+function bannerLines(): string[] {
+  const out = execFileSync(
+    "git",
+    ["grep", "-n", "Do not hand-edit", "HEAD", "--", "cat-harness/docs/*.md", "cat-harness/docs/**/*.md"],
+    { cwd: REPO, encoding: "utf-8", timeout: 60_000 },
+  );
+  return out.split("\n").filter((l) => l.includes("<!--"));
 }
 
-/** Tracked markdown under the docs tree, as the COMMIT has it. */
-const tracked = git("ls-files", "--", "cat-harness/docs/*.md", "cat-harness/docs/**/*.md")
-  .split("\n")
-  .filter((p) => p.endsWith(".md"));
-
-/**
- * Banner lines, and the backticked `namespace:name` commands they name.
- *
- * Matched on "Do not hand-edit" rather than on any one generator's filename, so
- * the population is every generated page however it was produced.
- */
-const banners: Array<{ file: string; command: string }> = [];
-let bannerCount = 0;
-for (const file of tracked) {
-  let text: string;
-  try {
-    text = git("show", `HEAD:${file}`);
-  } catch {
-    // Tracked but not in HEAD — a staged addition. Not this test's business.
-    continue;
-  }
-  for (const line of text.split("\n")) {
-    if (!line.includes("<!--") || !line.includes("Do not hand-edit")) continue;
-    bannerCount += 1;
+/** `namespace:name` in backticks, with the page that names it. */
+function namedCommands(): Array<{ file: string; command: string }> {
+  const found: Array<{ file: string; command: string }> = [];
+  for (const line of bannerLines()) {
+    const file = line.split(":", 2)[1] ?? "unknown";
     for (const m of line.matchAll(/`([a-z][a-z0-9-]*(?::[a-z0-9-]+)+)`/g)) {
-      banners.push({ file, command: m[1] });
+      found.push({ file, command: m[1] });
     }
   }
+  return found;
+}
+
+function scripts(): Record<string, string> {
+  return JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")).scripts;
 }
 
 describe("a command a generated page names is a command that exists", () => {
   test("the corpus really has banners — otherwise every assertion here is vacuous", () => {
     // The failure mode of every scan-shaped check in this repository: a renamed
-    // marker, a moved docs directory, an `ls-files` pattern that matches nothing,
-    // and the assertions below run over an empty list while reporting clean.
-    // `could not determine` is never rendered as clean, and neither is `did not
-    // look`.
-    expect(tracked.length).toBeGreaterThan(100);
-    expect(bannerCount).toBeGreaterThan(0);
-    expect(banners.length).toBeGreaterThan(0);
+    // marker, a moved docs directory, a pathspec that matches nothing, and the
+    // assertions below run over an empty list while reporting clean. `could not
+    // determine` is never rendered as clean, and neither is `did not look`.
+    expect(bannerLines().length).toBeGreaterThan(0);
+    expect(namedCommands().length).toBeGreaterThan(0);
   });
 
   test("every named command resolves to a package.json script", () => {
-    const missing = [...new Set(banners.map((b) => b.command))]
-      .filter((c) => !(c in scripts))
+    const declared = scripts();
+    const missing = [...new Set(namedCommands().map((c) => c.command))]
+      .filter((c) => !(c in declared))
       .sort();
     expect(
       missing,
@@ -122,8 +120,9 @@ describe("a command a generated page names is a command that exists", () => {
     // Named explicitly as well as swept, because the general assertion above
     // passes the day somebody deletes the banner, and that is not the same
     // outcome as the banner being true.
-    expect(banners.some((b) => b.command === "docs:pages:check")).toBe(true);
-    expect(scripts["docs:pages:check"]).toContain("gen-docs-pages.ts");
-    expect(scripts["docs:pages:check"]).toContain("--check");
+    expect(namedCommands().some((c) => c.command === "docs:pages:check")).toBe(true);
+    const declared = scripts();
+    expect(declared["docs:pages:check"]).toContain("gen-docs-pages.ts");
+    expect(declared["docs:pages:check"]).toContain("--check");
   });
 });
