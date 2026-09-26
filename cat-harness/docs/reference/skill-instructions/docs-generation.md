@@ -29,7 +29,7 @@ content-object schemas through to per-paper PDF/HTML viewers.
 | **Paper viewer** | `generate-index.py` | `papers/<dir>/index.html` | publish workflow |
 | **Folio landing** | `generate-folio-index.py` | `index.html` | publish workflow |
 | **Schema docs** | TypeDoc (`npm run build:docs`) | `schema-docs/` | publish workflow |
-| **Schema manifest** | `scripts/generate-schema-manifest.ts` | `/api/schema-manifest` | MCP server |
+| **Schema manifest** | `cat-harness/scripts/generate-schema-manifest.ts` | `/api/schema-manifest` | MCP server |
 | **Formal API docs** | doc generator | `docs/` | formal-layer workflow |
 | **Dependency graph** | `generate_dependency_graph.py` | `dependency-graph.svg` | publish / formal workflow |
 | **Proof/object report** | `extract_proof_objects.py` | `proof-objects.json` | all workflows |
@@ -114,7 +114,7 @@ npm run build:docs
 For programmatic access (viewer, MCP server):
 
 ```bash
-bun run scripts/generate-schema-manifest.ts
+bun run cat-harness/scripts/generate-schema-manifest.ts
 # Output: build/schema-manifest.json
 ```
 
