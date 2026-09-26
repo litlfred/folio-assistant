@@ -264,6 +264,9 @@
     "omitted": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#omitted",
       "@container": "@set"
+    },
+    "sourceLanguage": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceLanguage"
     }
   },
   "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld",
@@ -273,10 +276,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T12:12:13.950Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2c3b67b775ac158358ce54c3de67565067a953ed",
-  "sourceCommitSha": "2c3b67b775ac158358ce54c3de67565067a953ed",
-  "sourceCommitAt": "2026-09-26T12:09:20Z",
+  "generatedAt": "2026-09-26T15:03:05.179Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a21d2fcbb40f4dce1eb4a2e746bb24e269341f9b",
+  "sourceCommitSha": "a21d2fcbb40f4dce1eb4a2e746bb24e269341f9b",
+  "sourceCommitAt": "2026-09-26T15:00:12Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -286,11 +289,11 @@
     "Convention": 2,
     "SkillPackage": 20,
     "Process": 71,
-    "SequenceFlow": 910,
+    "SequenceFlow": 912,
     "Role": 148,
-    "ProcessNode": 861,
+    "ProcessNode": 862,
     "Tool": 101,
-    "Schema": 123,
+    "Schema": 124,
     "GraphKind": 34,
     "Directory": 44,
     "Asset": 3
@@ -909,7 +912,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#package/security"
       ],
       "instructionsPath": "skills/security/path-containment.md",
-      "instructionLines": 57,
+      "instructionLines": 101,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -921,12 +924,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "injection-boundaries",
       "title": "Injection — the value became program",
-      "description": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the existing gate covers, the one latent gap in its model, and the argv rule.",
+      "description": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the gate covers, why a step output carries a severity rather than having one, and the argv rule.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#package/security"
       ],
       "instructionsPath": "skills/security/injection-boundaries.md",
-      "instructionLines": 53,
+      "instructionLines": 155,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1178,7 +1181,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/pickup.md",
-      "instructionLines": 179,
+      "instructionLines": 185,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1972,7 +1975,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/library-ingestion.md",
-      "instructionLines": 505,
+      "instructionLines": 545,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2833,7 +2836,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 390,
+      "instructionLines": 397,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3492,7 +3495,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/untrusted-input.md",
-      "instructionLines": 141,
+      "instructionLines": 152,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4440,7 +4443,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "latex-build-cache",
       "title": "LaTeX build performance — findings + what's safe",
-      "description": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`scripts/install-tex.sh`) and quick changed-chapter feature builds (`scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
+      "description": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`cat-harness/scripts/install-tex.sh`) and quick changed-chapter feature builds (`cat-harness/scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#package/folio-paper-adapter"
       ],
@@ -22814,8 +22817,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change"
       ],
-      "nodeCount": 13,
-      "flowCount": 18,
+      "nodeCount": 14,
+      "flowCount": 20,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates"
     },
@@ -22970,7 +22973,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_SkillChain",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16"
     },
@@ -22978,10 +22981,28 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_SkillChain",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_18",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_SkillChain",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_18"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_19",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_SkillChain",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_19"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change",
@@ -23004,7 +23025,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "All seven, in parallel",
+      "name": "All eight, in parallel",
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates",
@@ -23022,7 +23043,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_4",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_5",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_14",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_18"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Fork"
@@ -23074,7 +23096,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_TypeScript",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "TypeScript: tests, lint, types, and ~30 repository gates (HARD)",
+      "name": "TypeScript: lint, types and tests (HARD)",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates",
@@ -23160,9 +23182,9 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_Advisories"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_SkillChain",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Skill-registration chain (UNMASKED)",
+      "name": "Repository gates (HARD)",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates",
@@ -23177,6 +23199,28 @@
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_SkillChain",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Skill-registration chain (UNMASKED)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#role/CI/CD%20Pipeline",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#skill/platform-gates"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_18"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_19"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_SkillChain"
@@ -23199,7 +23243,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_9",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_10",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_15",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_19"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_11"
@@ -41570,6 +41615,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/user-story"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#schema/vector-labels",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "vector-labels",
+      "title": "The positioned TEXT on a page that declares a figure — bean `a8wy`, under",
+      "module": "schemas/vector-labels.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/vector-labels"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#schema/version-bump",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "version-bump",
@@ -43556,8 +43610,8 @@
   ],
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "ebb760d39ddfd948d6bbe801baa2c9cc31b6f3ad",
+    "sha": "f0d22110ba93765fd34a899a9d49bf1c8c740274",
     "pr": "1399/merge",
-    "run": "36241036930"
+    "run": "36250420855"
   }
 }
