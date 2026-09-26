@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/skills/latex-authoring/output.schema.json",
+  "title": "LaTeX Authoring Output",
+  "description": "Output schema for the latex-authoring skill.",
+  "type": "object",
+  "required": [
+    "outputFile",
+    "buildStatus"
+  ],
+  "properties": {
+    "outputFile": {
+      "type": "string",
+      "description": "Path to the compiled output (PDF, etc.)."
+    },
+    "buildStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "warnings",
+        "errors"
+      ]
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pageCount": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "staging": {
+    "branch": "claude/e8m3-archive-is-a-view",
+    "sha": "2272ac7f721334f3b9417d0ca313c1dd1e9fbadc",
+    "pr": "1419/merge",
+    "run": "36258932647"
+  }
+}

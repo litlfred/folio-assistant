@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-e8m3-archive-is-a-view/skills/document-authoring/output.schema.json",
+  "title": "Document Authoring Output",
+  "type": "object",
+  "required": [
+    "label",
+    "filesWritten",
+    "listedInSection"
+  ],
+  "properties": {
+    "label": {
+      "type": "string"
+    },
+    "filesWritten": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Repo-relative paths written (.ts and .md)."
+    },
+    "listedInSection": {
+      "type": "boolean",
+      "description": "Whether the block root was added to a section's blocks[]. False means the block renders nowhere — the most common way authored work disappears."
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "integer"
+        },
+        "warnings": {
+          "type": "integer"
+        },
+        "profileViolations": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/e8m3-archive-is-a-view",
+    "sha": "2272ac7f721334f3b9417d0ca313c1dd1e9fbadc",
+    "pr": "1419/merge",
+    "run": "36258932647"
+  }
+}
