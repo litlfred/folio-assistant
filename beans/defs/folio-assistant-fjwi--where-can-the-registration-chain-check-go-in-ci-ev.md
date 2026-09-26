@@ -1,11 +1,11 @@
 ---
 # folio-assistant-fjwi
 title: Where can the registration-chain check go in CI? Every placement today is masked or red on arrival
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T10:24:13Z
-updated_at: 2026-09-26T10:40:49Z
+updated_at: 2026-09-26T11:23:18Z
 parent: folio-assistant-1xhc
 ---
 
@@ -183,3 +183,41 @@ expiry were drafted over a number that took thirteen seconds to check.
 - [x] the false premise is corrected in place rather than removed
 - [ ] the job is green in CI on this PR, not only locally. MEASURED AFTER — a
       gate that has only ever run on one laptop has not been shown to run
+
+
+## CLOSED — the job is green in CI, and its first run earned its place
+
+`Skill-registration chain, unmasked (hard)`: **success, 9s**, run 36238414800 on
+head `34f95b9564`. The last open clause is satisfied by a run on a fresh runner
+rather than by a laptop.
+
+It is worth recording what the first run bought, because the case for this job
+was theoretical when it was written and is not any more. It went **red**, and the
+defect was not in the chain:
+
+`kg-detangle.ts` read the DISK rather than the git corpus, so
+`cat-harness/schemas/block-qa-schema/node_modules/` — 2719 gitignored files —
+counted as graph nodes wherever a gate had built that subpackage.
+`cat-harness/schemas` was committed at **1441** nodes; a clean checkout computes
+**227**. A six-fold overcount, pinned in `main`'s sidecar and copied into the
+generated UML overview pages.
+
+Nothing had caught it because `kg:detangle:check` is step 37 of the `typescript`
+job and has been **skipped, not run** behind main's accepted `bun test` red —
+the 45-gate cascade. **This job is the first thing that ever evaluated it**,
+which is precisely the property the four options above were weighing, and the
+reason option 3 (no gate) would have been the wrong default even though it was
+the safe one.
+
+So the bean's own conclusion inverts twice and lands where it started: the
+placement question was real, my "red on arrival" premise for it was an artefact,
+and the gate that resulted was red on arrival anyway — for a reason worth having
+found.
+
+Done when:
+
+- [x] the owner has chosen among the four options — not needed; the premise that
+      made it a decision dissolved, and the answer was a shape none of the four
+      described (a separate job)
+- [x] the false premise is corrected in place rather than removed
+- [x] the job is green in CI on this PR, not only locally — run 36238414800
