@@ -28,55 +28,51 @@
  *
  * ## Why the check is the KIND SEQUENCE and not the count
  *
- * Measured 2026-09-26 over the 25 uncatalogued (page, locale) pairs:
+ * A count match is not an alignment, and on this corpus that was not academic.
+ * Before the extractor fixes below, `fr/accessibility` and `ru/getting-started`
+ * matched their source's entry count EXACTLY and each diverged in kind partway
+ * through — at construct 32 and 53, a source `paragraph` against a translated
+ * `table-cell`. A count-only check would have written two catalogues pairing a
+ * paragraph's msgid with a table cell's text, and nothing downstream would have
+ * noticed: a `.po` is well-formed whatever it claims.
  *
- * | | pairs |
- * |---|---|
- * | kind sequence identical — derivable | **7** |
- * | count matches but kinds diverge — REFUSED | **2** |
- * | count differs — refused | 16 |
- *
- * The middle row is the reason this check exists. `fr/accessibility` and
- * `ru/getting-started` both match their source's entry count exactly, and both
- * diverge in kind partway through — at index 32 and 53, source `paragraph`
- * against translated `table-cell`. A count check would have written two
- * catalogues pairing a paragraph's msgid with a table cell's text, and nothing
- * downstream would have noticed: a `.po` is well-formed whatever it claims.
- *
- * ## What a refusal is ABOUT — measured, and not what it first looked like
+ * ## What the refusals turned out to be ABOUT, measured twice
  *
  * A refusal says the two documents are not the same shape. It does **not** say
- * the translator changed the structure, and on this corpus that reading would be
- * wrong for more than half of them.
+ * the translator restructured the page, and reading it that way was wrong for
+ * some of them. Two properties of `pot-extract.ts` were not locale-neutral:
  *
- * `MD_MIN_TEXT_LEN` in `pot-extract.ts` is a minimum in **characters**, and a
- * character count is not script-neutral. Measured by re-running both sides with
- * the minimum at 1: of the 16 count mismatches, **7 disappear entirely**, and so
- * do **both** kind divergences — `fr/accessibility` and `ru/getting-started`
- * align exactly (`firstKindDivergence === -1`). The mechanism, on one cell:
+ * - **`MD_MIN_TEXT_LEN` was a minimum in CHARACTERS** (bean `6b8u`). Stripping
+ *   code spans left `", "` (2) in English and `"، و"` (3) in Arabic, so an
+ *   identical 4x7 table yielded 66 constructs in `ar` against 65. It ran the
+ *   other way for dense scripts, where `否` is one character and was dropped
+ *   while `non` and `нет` were kept. Now a count of LETTERS.
+ * - **A code fence was recognised only at column 0** (bean `ig4a`), so an
+ *   indented fence inside a list item was not a fence and its body was
+ *   extracted as prose.
  *
- * | | cell | after code spans are stripped | extracted at min 3? |
- * |---|---|---|---|
- * | source | ``` `pandoc`, `ripgrep` ``` | `", "` (2) | no |
- * | `ar` | ``` `pandoc`، و`ripgrep` ``` | `"، و"` (3) | **yes** |
+ * | | pairs aligned |
+ * |---|---|
+ * | before either fix | **7** / 25 |
+ * | after both | **10** / 25 |
  *
- * The Arabic comma and the conjunction are a correct localisation, and they push
- * a code-only cell over a threshold English sits under. The same asymmetry runs
- * the other way for Chinese, where a one-character cell (`否` for "no") falls
- * under a threshold that `non` and `нет` clear — which is why `zh` is short on
- * all five pages.
+ * **The first account of this said 9 more, and that was wrong.** It inferred the
+ * number by stitching together a count measurement and a kind measurement taken
+ * separately. Measured directly on the thing that matters — count and kind
+ * together — the two fixes unlock **three**. Pinned by a test, so the claim
+ * cannot drift back.
  *
- * So of the 18 refusals, **9 are artefacts of the extractor's own threshold**
- * and **9 are substantive** (the translation really does carry less). This
- * module still refuses all 18, and that is deliberate: it aligns against the
- * extractor AS SHIPPED, because every other consumer of these catalogues does
- * too. Deriving the other 9 would mean aligning under a threshold that is not
- * the repository's. The threshold is tracked as its own finding rather than
- * worked around here.
+ * The 15 that still refuse are all `count-differs`; no pair diverges by kind any
+ * more. A **third** extractor property is implicated in three of them and is
+ * deliberately NOT fixed here: blockquotes are extracted one entry per LINE, so
+ * the count depends on hard-wrap width, which no translator preserves.
+ * Coalescing contiguous blockquote lines takes alignment to 13/25, unlocking
+ * exactly `es`/`fr`/`ru` `installation`. Its own bean, because it changes what a
+ * blockquote msgid IS and would rewrite existing catalogues' entries rather than
+ * add and remove them.
  *
- * **The kind check is vindicated either way.** Whatever the cause, at the
- * shipped threshold those two pairs ARE misaligned, and a count-only check would
- * have written two wrong catalogues.
+ * **The kind check is vindicated either way.** Whatever the cause, those two
+ * pairs WERE misaligned, and a count-only check would have shipped them.
  *
  * ## What a matching kind sequence does NOT prove
  *
@@ -90,9 +86,11 @@
  * here is marked unofficial in its header.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, relative } from "node:path";
 
 import { extractMarkdown, type PotEntry } from "./pot-extract.ts";
+import { catalogueFor } from "./translation-drift.ts";
+import { siteRoot } from "./translation-index.ts";
 
 /** Why a pair could not be derived — never just "failed". */
 export interface Refusal {
@@ -218,7 +216,29 @@ export function derive(
   locales: string[],
   opts: { docsDir?: string } = {},
 ): DeriveResult {
-  const docs = opts.docsDir ?? join(instanceRoot, "docs");
+  // `siteRoot` rather than a `docs` literal: two directories in this instance
+  // declare that path (`docs` instance-scoped, `root-docs` repository-scoped),
+  // so `directoryForGraph` would throw on the ambiguity — and `siteRoot`
+  // CONFIRMS the directory by finding `_config.yml` in it rather than scanning
+  // whatever is there. `opts.docsDir` is what the tests pass, and it is why a
+  // fixture needs no `_config.yml`.
+  const docs = opts.docsDir ?? siteRoot(instanceRoot);
+  if (docs === undefined) {
+    // Not "no pages found" — a missing site is a different fact from an empty
+    // one, and reporting it as the latter is the `dh4f` defect: a consumer that
+    // scans nothing and calls the run clean.
+    return {
+      derived: [],
+      refused: pages.flatMap((page) =>
+        locales.map((locale) => ({
+          page,
+          locale,
+          reason: "source-missing" as const,
+          detail: `no site root under ${instanceRoot} — nothing declares a directory with a _config.yml`,
+        })),
+      ),
+    };
+  }
   const derived: Derivation[] = [];
   const refused: Refusal[] = [];
 
@@ -230,7 +250,7 @@ export function derive(
       }
       continue;
     }
-    const rel = `docs/${page}.md`;
+    const rel = `${relative(instanceRoot, docs) || "."}/${page}.md`;
     const src = extractMarkdown(readFileSync(srcPath, "utf-8"), rel);
 
     for (const locale of locales) {
@@ -239,7 +259,10 @@ export function derive(
         refused.push({ page, locale, reason: "translation-missing", detail: `no ${trPath}` });
         continue;
       }
-      const tr = extractMarkdown(readFileSync(trPath, "utf-8"), `docs/${locale}/${page}.md`);
+      const tr = extractMarkdown(
+        readFileSync(trPath, "utf-8"),
+        `${relative(instanceRoot, docs) || "."}/${locale}/${page}.md`,
+      );
       if (tr.length !== src.length) {
         refused.push({
           page,
@@ -272,12 +295,21 @@ export function derive(
   return { derived, refused };
 }
 
-/** Write what `derive` produced. Returns the paths written. */
+/**
+ * Write what `derive` produced. Returns the paths written.
+ *
+ * The destination comes from `catalogueFor` in `translation-drift.ts` — the same
+ * function the GATE uses to decide whether a catalogue exists. A second answer
+ * here could put a file somewhere the gate does not look, which is a catalogue
+ * that is written and still reported missing.
+ */
 export function write(instanceRoot: string, r: DeriveResult, translationsDir?: string): string[] {
-  const dir = translationsDir ?? join(instanceRoot, "translations");
   const written: string[] = [];
   for (const d of r.derived) {
-    const out = join(dir, d.locale, `${d.page}.po`);
+    const out =
+      translationsDir === undefined
+        ? catalogueFor(instanceRoot, d.locale, d.page)
+        : join(translationsDir, d.locale, `${d.page}.po`);
     mkdirSync(dirname(out), { recursive: true });
     writeFileSync(out, d.po, "utf-8");
     written.push(out);

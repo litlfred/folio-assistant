@@ -20,6 +20,10 @@ import { extractMarkdown } from "./pot-extract.ts";
 function fixture(source: string, translations: Record<string, string>): { root: string; cleanup: () => void } {
   const root = mkdtempSync(join(tmpdir(), "derive-po-"));
   mkdirSync(join(root, "docs"), { recursive: true });
+  // `siteRoot` CONFIRMS a site by finding `_config.yml` rather than trusting the
+  // path, so the fixture has to carry one — which is the point: a tree that only
+  // looks like a site is reported as no site at all.
+  writeFileSync(join(root, "docs", "_config.yml"), "title: fixture\n");
   writeFileSync(join(root, "docs", "page.md"), source);
   for (const [locale, text] of Object.entries(translations)) {
     mkdirSync(join(root, "docs", locale), { recursive: true });
@@ -102,9 +106,24 @@ describe("it REFUSES rather than guesses", () => {
 
   it("an absent source refuses every locale, rather than reporting none", () => {
     const root = mkdtempSync(join(tmpdir(), "derive-po-nosrc-"));
+    mkdirSync(join(root, "docs"), { recursive: true });
+    writeFileSync(join(root, "docs", "_config.yml"), "title: fixture\n");
     const r = derive(root, ["page"], ["fr", "es"]);
     expect(r.refused.map((f) => f.reason)).toEqual(["source-missing", "source-missing"]);
     expect(r.derived).toEqual([]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it("a tree with NO site is refused for every pair, not reported as nothing to do", () => {
+    // `dh4f` from the other side: a consumer that resolves no directory and
+    // exits clean reads as coverage. There is no `_config.yml` here, so there is
+    // no site — and the refusal says so in its detail rather than claiming the
+    // pages are missing from a directory it never found.
+    const root = mkdtempSync(join(tmpdir(), "derive-po-nosite-"));
+    const r = derive(root, ["a", "b"], ["fr", "es"]);
+    expect(r.derived).toEqual([]);
+    expect(r.refused).toHaveLength(4);
+    expect(r.refused[0].detail).toContain("no site root");
     rmSync(root, { recursive: true, force: true });
   });
 
@@ -191,35 +210,83 @@ describe("this repository's five uncatalogued pages", () => {
     expect(r.derived.length).toBeGreaterThan(0);
   });
 
-  it("the two count-matching-but-divergent pairs are refused BY KIND", () => {
-    // The measured justification for checking kinds at all. If either of these
-    // ever reports `count-differs` instead, the extractor's segmentation moved
-    // and this tool's guarantee needs re-deriving rather than trusting.
+  it("NO pair diverges by kind any more — both that did were threshold artefacts", () => {
+    // History, because it is the whole reason `kind` exists on `PotEntry`. Before
+    // `6b8u`, `fr/accessibility` (construct 32) and `ru/getting-started`
+    // (construct 53) matched their source's count EXACTLY and each paired a
+    // source paragraph against a translated table cell. A count-only check would
+    // have written two catalogues that were well-formed and wrong.
+    //
+    // Both were the character threshold, not the translators: with
+    // `isTranslatable` counting letters they align exactly. So the kind check now
+    // finds nothing — and that is the point of keeping this test. It fails if a
+    // future extractor change reintroduces a shape divergence, which is the case
+    // no count check can see.
     const root = resolve(import.meta.dir, "..", "..");
     const r = derive(root, PAGES, LOCALES);
     const byKind = r.refused.filter((f) => f.reason === "kind-diverges").map((f) => `${f.locale}/${f.page}`);
-    expect(byKind.sort()).toEqual(["fr/accessibility", "ru/getting-started"]);
+    expect(byKind).toEqual([]);
   });
 
-  it("a refusal is about the SHAPE, and on this corpus that is mostly the extractor's threshold", () => {
-    // Guards the docblock's claim against the reading it displaced. A refusal
-    // looks like "the translator restructured the page", and for 9 of the 18 it
-    // is instead `MD_MIN_TEXT_LEN` being a minimum in CHARACTERS: measured by
-    // re-running both sides at a minimum of 1, 7 of the 16 count mismatches and
-    // BOTH kind divergences disappear.
-    //
-    // The mechanism, pinned here against the shipped extractor rather than
-    // asserted in prose — this is the actual cell from docs/installation.md, and
-    // the Arabic row is what makes that page 66 constructs against 65.
+  it("the extractor fixes moved alignment from 7 to 10, and no further — measured, not hoped", () => {
+    // Pins the number the PR claims. The first account of these fixes said they
+    // would unlock 9 more pairs; that came from stitching a count measurement
+    // and a kind measurement taken separately, and measuring the two together
+    // gives THREE. This test is here so the claim cannot drift back.
+    const root = resolve(import.meta.dir, "..", "..");
+    const r = derive(root, PAGES, LOCALES);
+    expect(r.derived).toHaveLength(10);
+    expect(r.refused).toHaveLength(15);
+    // Every remaining refusal is a count difference — a fact about the
+    // translation, now that the extractor's own asymmetries are gone. Bean `7x8o`.
+    expect(new Set(r.refused.map((f) => f.reason))).toEqual(new Set(["count-differs"]));
+  });
+
+  it("the same table cell is now translatable in the same way in every script (`6b8u`)", () => {
+    // THE REGRESSION THIS PINS, and it is the reason `isTranslatable` counts
+    // letters. These are the real cells from `docs/installation.md` and its
+    // Arabic translation. Under the old `text.length >= 3`, stripping the code
+    // spans left `", "` (2 characters, dropped) in English and `"، و"` (3, kept)
+    // in Arabic — so an identical 4x7 table yielded 66 constructs in `ar` against
+    // 65 in English, and translatability was a property of the script.
     const en = extractMarkdown("| `pandoc`, `ripgrep` | conversions, search |", "en");
     const ar = extractMarkdown("| `pandoc`، و`ripgrep` | التحويلات، والبحث |", "ar");
-    // Same table, same two cells, one more extracted string — because stripping
-    // the code spans leaves `", "` (2 characters, under the minimum) in English
-    // and `"، و"` (3, over it) in Arabic. The localised comma and conjunction are
-    // correct; the threshold is what is not script-neutral.
     expect(en).toHaveLength(1);
-    expect(ar).toHaveLength(2);
-    expect(ar.map((e) => e.kind)).toEqual(["table-cell", "table-cell"]);
+    expect(ar).toHaveLength(1);
+    expect(en[0].kind).toBe("table-cell");
+    expect(ar[0].kind).toBe("table-cell");
+  });
+
+  it("a letterless string is never offered to a translator", () => {
+    // The measure that actually settled the predicate: the old rule put 432
+    // msgids with NO LETTER IN THEM into this corpus's catalogues. There is
+    // nothing in such a string for a translator to do, and every candidate
+    // considered removed all of them — so this is the floor, not a preference.
+    for (const junk of [", ", " | ", "...", "—", "\u060c \u0648"]) {
+      expect(extractMarkdown(`| ${junk} | real words here |`, "x").map((e) => e.msgid)).not.toContain(
+        junk.trim(),
+      );
+    }
+  });
+
+  it("an INDENTED code fence is a code fence (`ig4a`)", () => {
+    // Anchored at column 0, the fence inside a list item was invisible and its
+    // body was extracted as prose — `docs/contributing.md` yielded "````" as a
+    // PARAGRAPH, twice. Corpus-wide that was 74 msgids of code offered to
+    // translators, 48 of them a bare fence run.
+    const md = [
+      "- A list item introducing a command:",
+      "",
+      "  ```sh",
+      "  bun run scripts/gen-schema-docs.ts",
+      "  ```",
+      "",
+      "- A second item with real prose in it.",
+    ].join("\n");
+    const ids = extractMarkdown(md, "x").map((e) => e.msgid);
+    expect(ids.some((m) => /^[`~]{2,}$/.test(m))).toBe(false);
+    expect(ids.some((m) => m.includes("gen-schema-docs"))).toBe(false);
+    expect(ids).toContain("A second item with real prose in it.");
   });
 
   it("nothing is derived for a pair whose counts differ", () => {

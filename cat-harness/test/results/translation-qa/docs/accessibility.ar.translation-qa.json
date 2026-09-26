@@ -1,0 +1,116 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:ar/accessibility",
+  "block": "Accessibility",
+  "locale": "ar",
+  "paths": {
+    "md": "docs/accessibility.md"
+  },
+  "po": "translations/ar/accessibility.po",
+  "source_hashes": {
+    "md": "6c800c5c9307",
+    "po": "cc66e1375ad5"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "6c800c5c9307",
+          "po": "cc66e1375ad5"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "2cae133afe47",
+          "script_commit_sha": "92d79fc7e591fbcdc33c7239860a59ff8788b4cb"
+        },
+        "reviewed_at": "2026-09-26T09:16:15.347Z",
+        "reviewed_sha": "24d9b4860e9f4a1d48960056a0f391d2125f9383",
+        "metrics": {
+          "translated": 131,
+          "total": 131,
+          "pct": 100
+        }
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "6c800c5c9307",
+          "po": "cc66e1375ad5"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "2cae133afe47",
+          "script_commit_sha": "92d79fc7e591fbcdc33c7239860a59ff8788b4cb"
+        },
+        "reviewed_at": "2026-09-26T09:16:15.361Z",
+        "reviewed_sha": "24d9b4860e9f4a1d48960056a0f391d2125f9383",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "SC — absent from: \"في المخرجات المعروضة: معيار النجاح 2.5.8 في WCAG 2.2 حجم الهدف (الحد الأدنى) — 2\""
+          },
+          {
+            "text": "SC — absent from: \"معايير النجاح الجديدة في WCAG 2.2 — 2.5.7، 2.5.8، 3.3.7\""
+          },
+          {
+            "text": "EU — absent from: \"المشتريات الحكومية في الاتحاد الأوروبي\""
+          },
+          {
+            "text": "US — absent from: \"المشتريات الفيدرالية الأمريكية\""
+          },
+          {
+            "text": "US — absent from: \"الأمر نفسه، في الولايات المتحدة\""
+          },
+          {
+            "text": "QA — absent from: \"لا توجد فحوصات للجزء B من ATAG في مسح ضمان الجودة. لا يوجد شيء حتى\""
+          }
+        ],
+        "metrics": {
+          "checked": 131,
+          "missing": 6,
+          "missing_strict": 0,
+          "missing_acronyms": 6,
+          "glossary_broken": 0,
+          "glossary_resolved": 1
+        },
+        "notes": "6 acronym(s) from the source do not appear verbatim in the translation and no glossary entry speaks for them. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart. Add them to translations/ar/glossary.po: a pinned msgstr says what the term must become, and a \"#, localised\" flag says it is rendered in the target language without pinning how. 1 further acronym(s) are absent verbatim and the glossary accounts for each: WHO — the glossary marks it localised, so an absent verbatim form is expected."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "6c800c5c9307",
+          "po": "cc66e1375ad5"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "2cae133afe47",
+          "script_commit_sha": "92d79fc7e591fbcdc33c7239860a59ff8788b4cb"
+        },
+        "reviewed_at": "2026-09-26T09:16:15.374Z",
+        "reviewed_sha": "24d9b4860e9f4a1d48960056a0f391d2125f9383",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 4,
+          "translated": 131
+        },
+        "notes": "4 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-09-26T09:16:15.376Z"
+}

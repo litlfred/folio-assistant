@@ -3,9 +3,12 @@
 title: 'TRANSLATIONS: 9 published pages carry LESS than their source — zh short on all five, and es/ru accessibility short by the same 13'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-09-26T08:57:09Z
-updated_at: 2026-09-26T08:57:09Z
+updated_at: 2026-09-26T09:20:41Z
 parent: folio-assistant-bzyu
+blocked_by:
+    - folio-assistant-lvk9
 ---
 
 Found while deriving `.po` catalogues for #206 (bean `tbdg`). Measured
@@ -74,3 +77,61 @@ gate green would be manufacturing the sign-off the issue exists to protect.
 - [ ] the accessibility-page omissions are restored first, ahead of the rest
 - [ ] MEASURED AFTER: `derive-po.ts` refuses 0 of these 9 (with `6b8u`/`ig4a`
       landed), so `translation-drift` reports on real catalogues for all 25
+
+
+## CORRECTION, same day — this bean's PREMISE is wrong for most of it
+
+The owner's instruction was to **diagnose the cause before touching any
+translation**. Diagnosing it refuted the bean.
+
+This bean says *"the translation genuinely carries less content than its source"*
+and treats the `es`/`ru` `accessibility` pair agreeing on exactly 117 as *"a shared
+cause — most likely one truncated source handed to both"*. **It is a shared cause,
+and it is not that.** It is bean `lvk9`: `extractMarkdown` emits list items and
+blockquotes ONE ENTRY PER LINE, so how many entries a construct yields depends on
+where the author pressed return, and no translator preserves an English hard wrap.
+
+The evidence that settles it — `es`, `ru` and `zh` diverge at **the same three
+source indices, 5, 11 and 78**, and all three land on exactly 117. At source[3]:
+
+| | |
+|---|---|
+| source `[3]` list-item | *"What are the options for forcing agentic Q&A into guided questions that"* |
+| source `[4]` paragraph | *"follow DMN logic and can serve several interaction modalities?"* |
+| `es` `[3]` list-item | the whole sentence as one entry |
+
+One wrapped English sentence, split by the extractor into a list-item plus a
+paragraph. The Spanish is not wrapped, so it is one entry. **Nothing was
+truncated and nothing was omitted.**
+
+Measured with wrapped list items and blockquotes coalesced: alignment goes 10/25
+→ **17/25**, and all three `accessibility` pages align. So of the 9 pairs listed
+above, **7 are not this bean's** — including every one that carried the strongest
+prose in it.
+
+### The accessibility claim was the worst of it, and it was false
+
+This bean said, of a missing blockquote and *"published folio has alt text,
+correct heading order or table headers"*:
+
+> *"on an **accessibility** page, in three of five locales"*
+
+That was written to make the finding land, and it was wrong — both strings are
+present in all three translations. They looked absent because an LCS alignment
+over KINDS alone picks an arbitrary pairing among equal-kind runs, so it named
+whichever entry the walk happened to fall out of step on rather than a missing
+one. A diagnostic that cannot say WHICH entry is extra must not be quoted as
+saying which entry is missing, and this bean quoted it that way.
+
+### What is left
+
+8 pairs, after `lvk9`: `ru`/`zh` `content-types`, `ar`/`es`/`fr`/`ru`/`zh`
+`getting-started`, `zh` `installation`. `zh` is still over-represented among them,
+so the `zh` question may survive in smaller form — but it is now **4 of 8 rather
+than 5 of 5**, and it is not established as a content problem at all until `lvk9`
+lands and the remainder is re-measured.
+
+**Blocked on `lvk9`**, and no translation should be corrected or re-translated
+before it: on the evidence so far, most of what looked like missing content is the
+extractor's wrap sensitivity, and re-translating against it would change good
+translations to match a defect.

@@ -93,8 +93,72 @@ const MD_KRAMDOWN_ATTR_RE = /^\{[:%][^}]*\}\s*$/;
  */
 const MD_KRAMDOWN_CONSUMING_RE = /^\{:\s*toc\s*\}$/;
 
-/** Minimum character length for a string to be considered translatable. */
-const MD_MIN_TEXT_LEN = 3;
+/**
+ * Is there anything here a translator can act on?
+ *
+ * **A count of LETTERS, not of characters, and the difference is not cosmetic.**
+ * This was `text.length >= 3` until 2026-09-26, which made translatability a
+ * property of the locale's script rather than of the content. Bean `6b8u`.
+ *
+ * The mechanism, on a real cell of `docs/installation.md` — after
+ * {@link cleanMarkdownText} strips the code spans:
+ *
+ * | | cell | residue | extracted at `length >= 3`? |
+ * |---|---|---|---|
+ * | source | `` `pandoc`, `ripgrep` `` | `", "` (2 chars) | no |
+ * | `ar` | `` `pandoc`، و`ripgrep` `` | `"، و"` (3 chars) | **yes** |
+ *
+ * The Arabic comma and the conjunction are a correct localisation, and they
+ * pushed a code-only cell over a threshold English sat under — so an identical
+ * 4x7 table yielded 66 constructs in `ar` against 65 in English. It ran the
+ * other way for dense scripts: `否` is one character and was dropped where
+ * `non` and `нет` were kept, which is why `zh` measured short on all five of
+ * the pages `derive-po.ts` tried to align.
+ *
+ * ## Why two letters, measured rather than chosen
+ *
+ * Four candidates, scored over `cat-harness/docs/` (618 files) on two things:
+ * how many of the 25 (page, locale) pairs align by count AND kind, and how many
+ * msgids contain **no letter at all** — a string offered to a translator with
+ * nothing in it to translate.
+ *
+ * | predicate | aligned | msgids | letterless |
+ * |---|---|---|---|
+ * | `length >= 3` (what this replaces) | 7/25 | 45320 | **432** |
+ * | `>= 1` letter | 9/25 | 45458 | 0 |
+ * | **`>= 2` letters** | **10/25** | 45288 | **0** |
+ * | `>= 1` letter and `>= 2` non-space | 9/25 | 45419 | 0 |
+ *
+ * Two letters wins on both measures at once, and the letterless column is the
+ * one that settles it: the old rule put **432** msgids with no letter in them
+ * into this corpus's catalogues, and every candidate here removes all of them.
+ *
+ * **It is not primarily an alignment fix, and the first account of it said
+ * otherwise.** That account inferred "9 of the 18 refusals are extractor
+ * artefacts" by stitching together a count measurement and a kind measurement
+ * taken separately. Measured directly on the thing that matters — count and
+ * kind together — this predicate plus the fence fix takes alignment from 7/25
+ * to **10/25**. Three more, not nine. The remaining 15 are `7x8o`.
+ *
+ * `\p{L}` rather than `[A-Za-z]` for the obvious reason, and `u` because
+ * without it the property escape is a syntax error rather than a silent
+ * mismatch.
+ */
+function isTranslatable(text: string): boolean {
+  let letters = 0;
+  for (const ch of text) {
+    if (/\p{L}/u.test(ch) && ++letters >= MD_MIN_TEXT_LETTERS) return true;
+  }
+  return false;
+}
+
+/**
+ * How many letters make a string worth a translator's attention.
+ *
+ * Named and separate so the measurement above has something to refer to, and so
+ * a later change has to argue with the table rather than edit a bare `2`.
+ */
+const MD_MIN_TEXT_LETTERS = 2;
 
 /** Prefix for Liquid output variables in gettext brace format. */
 const LQD_PREFIX = "lqd_";
@@ -223,7 +287,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
     if (paragraphLines.length === 0) return;
     const raw = paragraphLines.map((p) => p.text).join(" ");
     const text = cleanMarkdownText(raw);
-    if (text.length >= MD_MIN_TEXT_LEN) {
+    if (isTranslatable(text)) {
       entries.push({
         source,
         line: paragraphLines[0].lineno,
@@ -281,13 +345,20 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
     }
 
     // --- Fenced code blocks ---
-    const fenceMatch = line.match(MD_CODE_FENCE_RE);
+    // `stripped`, not `line`: an INDENTED fence is the ordinary way to put a code
+    // block inside a list item, and anchoring at column 0 meant those were never
+    // recognised — their bodies were extracted as prose. Bean `ig4a`. Measured
+    // over 618 files: 74 msgids removed (code offered as prose, 48 of them a bare
+    // fence run) and 16 ADDED — real sentences that had been swallowed, because
+    // a column-0 opening fence whose closing fence was indented kept the parser
+    // `inCodeBlock` until the next column-0 fence.
+    const fenceMatch = stripped.match(MD_CODE_FENCE_RE);
     if (fenceMatch) {
       if (!inCodeBlock) {
         flushParagraph();
         inCodeBlock = true;
         codeFence = fenceMatch[1];
-      } else if (codeFence && line.startsWith(codeFence[0].repeat(codeFence.length))) {
+      } else if (codeFence && stripped.startsWith(codeFence[0].repeat(codeFence.length))) {
         inCodeBlock = false;
         codeFence = null;
       }
@@ -328,7 +399,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
     if (headingMatch) {
       flushParagraph();
       const text = cleanMarkdownText(headingMatch[2]);
-      if (text.length >= MD_MIN_TEXT_LEN) {
+      if (isTranslatable(text)) {
         entries.push({ source, line: lineno, msgid: text, kind: "heading" });
       }
       continue;
@@ -346,7 +417,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
       flushParagraph();
       if (listRunStart === null) listRunStart = entries.length;
       const text = cleanMarkdownText(listMatch[2].trim());
-      if (text.length >= MD_MIN_TEXT_LEN) {
+      if (isTranslatable(text)) {
         entries.push({ source, line: lineno, msgid: text, kind: "list-item" });
       }
       continue;
@@ -357,7 +428,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
     if (bqMatch) {
       flushParagraph();
       const text = cleanMarkdownText(bqMatch[2]);
-      if (text.length >= MD_MIN_TEXT_LEN) {
+      if (isTranslatable(text)) {
         entries.push({ source, line: lineno, msgid: text, kind: "blockquote" });
       }
       continue;
@@ -369,7 +440,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
       const cells = stripped.slice(1, -1).split("|");
       for (const cell of cells) {
         const text = cleanMarkdownText(cell.trim());
-        if (text.length >= MD_MIN_TEXT_LEN) {
+        if (isTranslatable(text)) {
           entries.push({ source, line: lineno, msgid: text, kind: "table-cell" });
         }
       }

@@ -236,10 +236,25 @@ describe("extractMarkdown", () => {
     expect(msgids).toContain("After.");
   });
 
-  test("skips short strings (< 3 chars)", () => {
+  test("skips strings with fewer than two LETTERS, not fewer than three characters", () => {
+    // Changed 2026-09-26, bean `6b8u`. The old rule was `text.length >= 3`, which
+    // made translatability a property of the locale's script: `否` ("no") is one
+    // character and was dropped where `non` and `нет` were kept, and an Arabic
+    // cell's `"، و"` was kept where the English `", "` it translates was not.
+    //
+    // `OK` is the case that moved. It is two characters, so the old rule dropped
+    // it — and it is a word with real translations (`Vale`, `Хорошо`), so dropping
+    // it was wrong in the same direction as the rest of the defect.
     const entries = extractMarkdown("OK\n\nReal content here.\n", "test.md");
-    expect(entries.length).toBe(1);
-    expect(entries[0].msgid).toBe("Real content here.");
+    expect(entries.map((e) => e.msgid)).toEqual(["OK", "Real content here."]);
+  });
+
+  test("a string with no letters is never translatable", () => {
+    // What the threshold is actually FOR: skipping things that are not prose.
+    // The old rule let 432 letterless msgids into this corpus's catalogues,
+    // because it counted characters and punctuation is characters.
+    const entries = extractMarkdown("| ... | — | 1.2.3 | Real words here |\n", "test.md");
+    expect(entries.map((e) => e.msgid)).toEqual(["Real words here"]);
   });
 });
 
