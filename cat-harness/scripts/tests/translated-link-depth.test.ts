@@ -13,7 +13,12 @@ import { join, resolve } from "node:path";
 
 import { siteDir } from "../../schemas/cat-harness.ts";
 
-import { depthSensitive, repair, translatedLinkDepth } from "../check-translated-link-depth.ts";
+import {
+  depthSensitive,
+  localeSegmentIndex,
+  repair,
+  translatedLinkDepth,
+} from "../check-translated-link-depth.ts";
 
 const HARNESS = resolve(import.meta.dir, "../..");
 
@@ -41,6 +46,34 @@ describe("the real corpus", () => {
     // `migrations/*.html`. A floor rather than the number, because a count in
     // a test is a claim that goes stale.
     expect(report.publishedOnly).toBeGreaterThan(0);
+  });
+});
+
+describe("localeSegmentIndex — a locale directory at ANY depth", () => {
+  const L = ["ar", "es", "fr", "ru", "zh"];
+
+  test("at the top, the shape the first version handled", () => {
+    expect(localeSegmentIndex(["fr", "architecture.md"], L)).toBe(0);
+  });
+
+  test("NESTED, the shape it missed", () => {
+    // 24 links across four `docs/guides/<locale>/agent-onboarding.md` pages
+    // were invisible while this asked `segs[0]` only. Same defect, same
+    // repair, one directory further in.
+    expect(localeSegmentIndex(["guides", "ar", "agent-onboarding.md"], L)).toBe(1);
+  });
+
+  test("a FILE named like a locale is not a locale directory", () => {
+    // The last segment is the filename. Without this the check would treat
+    // `docs/fr.md` as a translated page and compute a source path that is
+    // just `docs/`, which resolves differently and would mint findings on a
+    // page nobody translated.
+    expect(localeSegmentIndex(["fr.md"], L)).toBe(-1);
+    expect(localeSegmentIndex(["guides", "fr.md"], L)).toBe(-1);
+  });
+
+  test("no locale anywhere", () => {
+    expect(localeSegmentIndex(["guides", "agent-onboarding.md"], L)).toBe(-1);
   });
 });
 
