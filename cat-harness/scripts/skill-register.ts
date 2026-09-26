@@ -74,6 +74,7 @@
  * and this script says so rather than papering over it.
  *
  * @module scripts/skill-register
+ * @covers cat-harness
  */
 import { spawnSync } from "node:child_process";
 import { dirname, resolve } from "node:path";
