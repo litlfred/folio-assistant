@@ -4717,14 +4717,14 @@
     {
       "id": "folio-assistant-wlyg",
       "title": "ROUND TRIP: pot-extract and po-inject declare ten copies of the same markdown constants, and one of them diverged inside a single change",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T10:03:23Z",
-      "updatedAt": "2026-09-26T10:03:23Z",
+      "updatedAt": "2026-09-26T12:37:13Z",
       "preview": "Found 2026-09-26 while shipping `ig4a`, by asking whether anything else shared the\nfact being changed before committing it.\n\n`pot-extract.ts` (extract) and `po-inject.ts` (inject) are the two halves of one\nround trip, and they parse markdown with **ten separately declared copies** of the\nsame constants:\n\n| constant | identical today? |\n|---|---|\n| `MD_CODE_FENCE_RE` | **no — diverged, now consolid",
       "file": "beans/defs/folio-assistant-wlyg--round-trip-pot-extract-and-po-inject-declare-ten-c.md"
     },
