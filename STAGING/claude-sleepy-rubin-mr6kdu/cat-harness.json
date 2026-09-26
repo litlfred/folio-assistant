@@ -273,14 +273,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T07:03:39.853Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5e7e11eb2feab089c08a388a051def771080917c",
-  "sourceCommitSha": "5e7e11eb2feab089c08a388a051def771080917c",
-  "sourceCommitAt": "2026-09-26T07:00:56Z",
+  "generatedAt": "2026-09-26T08:24:32.485Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f789603cba122b62c7fd52cbba314ba7520510ba",
+  "sourceCommitSha": "f789603cba122b62c7fd52cbba314ba7520510ba",
+  "sourceCommitAt": "2026-09-26T08:21:17Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 270,
+    "Skill": 271,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
@@ -4503,6 +4503,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/raci"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/cat-harness.jsonld#skill/release-epic-planning",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "release-epic-planning",
+      "title": "Release epic planning",
+      "description": "Plan and track releases using bean epics. Covers epic creation, story/task decomposition, release readiness tracking, and the relationship between epics and GitHub milestones. Applies to code releases, paper publications, and project milestones.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/release-epic-planning.md",
+      "instructionLines": 147,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-epic-planning"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/cat-harness.jsonld#skill/dmn-authoring",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "dmn-authoring",
@@ -6548,11 +6565,13 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/cat-harness.jsonld#skill/deterministic-and-agentic",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/cat-harness.jsonld#skill/dmn-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/cat-harness.jsonld#skill/process-state",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/cat-harness.jsonld#skill/release-epic-planning",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/cat-harness.jsonld#skill/release-lifecycle",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/cat-harness.jsonld#skill/session-context",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/cat-harness.jsonld#skill/session-state-machine",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/cat-harness.jsonld#skill/specification-compiled-agents",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/cat-harness.jsonld#skill/workflow-state"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/cat-harness.jsonld#skill/workflow-state",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-rubin-mr6kdu/cat-harness.jsonld#skill/release-epic-planning"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -43463,8 +43482,8 @@
   ],
   "staging": {
     "branch": "claude/sleepy-rubin-mr6kdu",
-    "sha": "603716e1e6bad72372887cd5ed0bd360e7d87489",
+    "sha": "e25a224b4b4e87de2acc26555121a4f8b88bc7cc",
     "pr": "1372/merge",
-    "run": "36225488038"
+    "run": "36229529693"
   }
 }

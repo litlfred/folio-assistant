@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 351,
+      "count": 357,
       "unit": "beans"
     }
   },
@@ -557,6 +557,20 @@
       "file": "beans/defs/folio-assistant-423d--review-comments-anchored-to-block-id-as-9gyz-findi.md"
     },
     {
+      "id": "folio-assistant-46l0",
+      "title": "The same commit fails DIFFERENTLY in three environments, so a green run cannot be read as a green tree",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T06:33:48Z",
+      "updatedAt": "2026-09-26T06:33:48Z",
+      "preview": "Measured 2026-09-26 on ONE commit, `3c2523a8071`, three ways:\n\n| where | `bun test` failures |\n|---|---|\n| GitHub Actions | **7** |\n| a clean `git worktree` of that exact sha, full suite | **8** |\n| the two disagreeing files, run alone | **0** |\n\nThe sets are not nested. CI had two the worktree did not (`this repository's own\ncorpus`, `the real corpus`); the worktree had three CI did not (`FOLIO_R",
+      "file": "beans/defs/folio-assistant-46l0--the-same-commit-fails-differently-in-three-environ.md"
+    },
+    {
       "id": "folio-assistant-46nf",
       "title": "B2 (#1168): voices and user stories point at their role; Role.voice and Role.useCases out",
       "status": "completed",
@@ -969,12 +983,12 @@
       "title": "COORDINATION: eight sessions woke into the same 2435-commit gap and all eight re-surveyed it independently",
       "status": "todo",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T15:44:18Z",
-      "updatedAt": "2026-09-25T15:44:18Z",
+      "updatedAt": "2026-09-26T07:38:23Z",
       "preview": "## Measured 2026-09-25, from the session API\n\n`list_sessions` returned 30 sessions, of which **eight were RUNNING at the same\nminute** (15:38–15:39Z). Their own `task_summary` fields, verbatim:\n\n```\nrebasing from main; 2369 commits (PR #477→#1306); facts before plan\nreviewing PR #542 impact; fast-forward reset blocked; surveying origin/main\nre-fetching main after date change; will propose next ste",
       "file": "beans/defs/folio-assistant-6ptx--coordination-eight-sessions-woke-into-the-same-243.md"
     },
@@ -1399,6 +1413,20 @@
       "file": "beans/defs/folio-assistant-9scf--folio-visualiser-5-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-9v4m",
+      "title": "TEST INTERFERENCE: a profile-gate test fails in the full suite and passes in isolation on the same commit",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T03:40:20Z",
+      "updatedAt": "2026-09-26T03:40:20Z",
+      "preview": "Measured 2026-09-26 on `985d0bada2a` (branch claude/brave-hypatia-r820sf, diff = two bean .md files only).\n\n## What happened\n\n`bun run gates` failed with ONE test failure:\n\n    (fail) the sweep's profile gate, end to end > a paper-only criterion is n/a'd in a document folio, under its OWN outcome [5769.02ms]\n\nThe same test, by name, **passes in isolation** — both with the branch's changes applied ",
+      "file": "beans/defs/folio-assistant-9v4m--test-interference-a-profile-gate-test-fails-in-the.md"
+    },
+    {
       "id": "folio-assistant-9wb0",
       "title": "PUBLICATION IS A STATE, NOT A BOOLEAN: every asset carries id + version and sits in draft; formal publication is an undefined process",
       "status": "in-progress",
@@ -1817,6 +1845,20 @@
       "updatedAt": "2026-09-21T11:12:15Z",
       "preview": "Found 2026-09-21 while measuring `v49e`'s join. **This bean was written once\nwith the opposite conclusion and rewritten after a roast.** The wrong version\nis kept below as the worked example, because the mistake it made is precisely\nthe mistake the check this bean asks for would make.\n\n## What is actually true\n\nTwo `running` CRDM instances. **Both are waiting on a human, correctly.**\n\n| instance |",
       "file": "beans/defs/folio-assistant-chq5--stuck-check-trap-a-parent-token-in-the-agents-lane.md"
+    },
+    {
+      "id": "folio-assistant-cjvs",
+      "title": "190 dangling refs in the KG: 137 ts-import, 28 md-link, 25 bpmn-skill",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T06:33:48Z",
+      "updatedAt": "2026-09-26T06:33:48Z",
+      "preview": "`bun run kg:detangle`, measured 2026-09-26 on `main`:\n\n```\nDetangle — 697 nodes, 2828 edges, 190 dangling\n```\n\nBreakdown, from the tool's own JSON rather than from prose:\n\n| via | count |\n|---|---|\n| `ts-import` | 137 |\n| `md-link` | 28 |\n| `bpmn-skill` | 25 |\n\nA dangling ref is a link-shaped value that does not dereference — bean `blv9`\n— at scale, in the graph the whole separation effort is comp",
+      "file": "beans/defs/folio-assistant-cjvs--190-dangling-refs-in-the-kg-137-ts-import-28-md-li.md"
     },
     {
       "id": "folio-assistant-cmsl",
@@ -2616,7 +2658,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T06:30:00Z",
-      "updatedAt": "2026-09-25T16:46:42Z",
+      "updatedAt": "2026-09-26T03:23:23Z",
       "preview": "Found 2026-09-21 by the `goal-review` sweep of 2026-09-20T19:00Z →\n2026-09-21T06:25Z (session_01AYHimvYMmf8h8e9fFN6dW5), independently by **two**\ndelegated agents reading two different milestones. An instruction gap.\n\n## Measured\n\n| milestone | what its own body advertises | what the store says |\n|---|---|---|\n| `p5wm` (GOAL 2) | critical path `b5f0 → 603s → hfkl → 2krx → (6lb8 ‖ ivfw + 5y4b) → pb",
       "file": "beans/defs/folio-assistant-k59d--milestone-critical-paths-go-stale-p5wm-and-yg29-bo.md"
     },
@@ -2829,6 +2871,20 @@
       "updatedAt": "2026-09-20T14:37:30Z",
       "preview": "_2026-09-19T00:41:01Z_ — Verified RESOLVED, 2026-09-19 on main at 17dc1e6. .github/workflows/feature-staging.yml exists with 32 STAGING references and is demonstrably working — it deployed previews for PRs #298 and #308 in this session, each commenting the STAGING URL. Note this bean has an EMPTY body: title and issue #215 only, no statement of what 'done' means, so this verification is against ob",
       "file": "beans/defs/folio-assistant-lx2s--feature-branch-staging-under-gh-pages-issue-215.md"
+    },
+    {
+      "id": "folio-assistant-m1k4",
+      "title": "DUPLICATE manifest entry survives every gate — the uniqueness check uses a Set, which collapses it",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T08:05:18Z",
+      "updatedAt": "2026-09-26T08:05:36Z",
+      "preview": "Measured on `origin/main` at `0c5086db6c1`, 2026-09-26.\n\n`cat-harness/skills/workflow/package-manifest.json` lists **14** skills of which\n**13 are distinct**. `release-epic-planning` appears **twice**.\n\n    skills entries: 14 | distinct: 13\n    DUPLICATES: {'release-epic-planning': 2}\n\n## Why no gate sees it\n\n`scripts/tests/skill-manifest-coverage.test.ts:133`:\n\n    const listed = new Set(p.listed",
+      "file": "beans/defs/folio-assistant-m1k4--duplicate-manifest-entry-survives-every-gate-the-u.md"
     },
     {
       "id": "folio-assistant-m4xy",
@@ -3901,6 +3957,20 @@
       "file": "beans/defs/folio-assistant-tr05--kg-modelling-dependents-point-at-the-general-node.md"
     },
     {
+      "id": "folio-assistant-tuvg",
+      "title": "MAIN IS RED: three crdm skills are in no package manifest and carry a retired roles: field",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T04:09:28Z",
+      "updatedAt": "2026-09-26T07:10:10Z",
+      "preview": "Measured 2026-09-26 on `origin/main` at `6840b14097b`. **This fails every open PR, not one.**\n\n## The two failures\n\nBoth name the same three files, added by main's commit `7edf7b7ed5a` (*\"feat: CRDM Phase 4b prioritization, SDLC/release skills, CRDM phase detail skills\"*):\n\n    cat-harness/skills/crdm/crdm-needs-assessment.md\n    cat-harness/skills/crdm/crdm-impact-analysis.md\n    cat-harness/skil",
+      "file": "beans/defs/folio-assistant-tuvg--main-is-red-three-crdm-skills-are-in-no-package-ma.md"
+    },
+    {
       "id": "folio-assistant-txut",
       "title": "REVIEW VISUALISER: a review/ page per folio showing what changed from main, grouped by the folio/ graph",
       "status": "in-progress",
@@ -4867,6 +4937,20 @@
       "updatedAt": "2026-09-20T22:53:52Z",
       "preview": "Found while building the `elsewhere` state (bean `flh4`, PR #619). A `ContentDirectory`'s `path` resolves against the INSTANCE root; its `coverage.visualiser` / `coverage.docs` resolve against the REPO root. Nothing in `SubgraphCoverageSchema` or `ContentDirectorySchema` says so.\n\nMeasured 2026-09-20 across `harness.json` and `cat-harness/harness.json`: of 27 coverage paths, **25 resolve only from",
       "file": "beans/defs/folio-assistant-yt7j--schema-coverage-is-repo-root-relative-while-a-dire.md"
+    },
+    {
+      "id": "folio-assistant-yx9p",
+      "title": "SEPARATION: the 5 partition package names and the 5 instance directory names do not agree — 1 of 5 does",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T06:33:48Z",
+      "updatedAt": "2026-09-26T06:33:48Z",
+      "preview": "Measured 2026-09-26. `repo-partition.ts` partitions 1143 modules into five\ntarget packages. The repository holds sixteen declared instances as sibling\ndirectories. **The two naming schemes agree on one of five.**\n\n| partition package | directory | the directory's declared `name` |\n|---|---|---|\n| `agentic-harness` | `cat-harness/` | `cat-harness` |\n| `folio-assist-core` | `folio-assistant-core/` |",
+      "file": "beans/defs/folio-assistant-yx9p--separation-the-5-partition-package-names-and-the-5.md"
     },
     {
       "id": "folio-assistant-z4mq",

@@ -260,6 +260,13 @@
    * free to disagree with the chart above it.
    */
   var SCOPE = "";
+  /**
+   * The bean type the dashboard is filtered to, or "" for all types.
+   *
+   * Same pattern as SCOPE: module state, because every panel must agree.
+   * Composable with SCOPE — you can filter by epic AND by type.
+   */
+  var TYPE_SCOPE = "";
   /** Every bean, so an expanded epic can list its children without refetching. */
   var ALL_BEANS = [];
   /** Re-render inputs, kept so a scope change does not refetch. */
@@ -292,10 +299,15 @@
    * reader can reconcile with the bar they clicked plus the epic row itself.
    */
   function inScope(beans) {
-    if (!SCOPE) return beans;
+    if (!SCOPE && !TYPE_SCOPE) return beans;
     var out = [];
     for (var i = 0; i < beans.length; i++) {
-      if (beans[i].id === SCOPE || beans[i].parent === SCOPE) out.push(beans[i]);
+      var b = beans[i];
+      // Epic scope: the epic itself plus its children
+      if (SCOPE && b.id !== SCOPE && b.parent !== SCOPE) continue;
+      // Type scope: only beans of the selected type
+      if (TYPE_SCOPE && b.type !== TYPE_SCOPE) continue;
+      out.push(b);
     }
     return out;
   }
@@ -591,14 +603,81 @@
    */
   function filterRow(epic) {
     var row = el("div", { class: "fa-workplan-filter" });
+    var labels = [];
+    if (SCOPE) {
+      labels.push(epic ? epic.title : SCOPE);
+    }
+    if (TYPE_SCOPE) {
+      labels.push("type: " + TYPE_SCOPE);
+    }
     row.appendChild(el("span", { class: "fa-workplan-filter-label" }, "Showing only"));
     row.appendChild(el("span", { class: "fa-workplan-filter-value" },
-                       epic ? epic.title : SCOPE));
+                       labels.join(" · ")));
     var clear = el("button", { type: "button", class: "fa-workplan-action" },
                    "Show everything");
     clear.setAttribute("data-scope", "");
+    clear.setAttribute("data-type-scope", "");
     row.appendChild(clear);
     return row;
+  }
+
+  /**
+   * Type filter buttons — always visible above the board.
+   *
+   * Unlike the epic filter row (which appears only when scoped), this bar is
+   * always shown because the user asked for type filtering as a primary
+   * interaction. The active type is highlighted.
+   */
+  function typeFilterBar(beans) {
+    // Collect the types that actually appear in the (possibly epic-scoped) set
+    var typeCounts = {};
+    var totalOpen = 0;
+    for (var i = 0; i < beans.length; i++) {
+      var b = beans[i];
+      if (!WORKPLAN_OPEN[b.status]) continue;
+      // When epic-scoped, only count beans in that epic
+      if (SCOPE && b.id !== SCOPE && b.parent !== SCOPE) continue;
+      var t = b.type || "other";
+      typeCounts[t] = (typeCounts[t] || 0) + 1;
+      totalOpen++;
+    }
+    // Stable order: the types we know, then anything else
+    var ORDER = ["task", "feature", "bug", "epic", "milestone"];
+    var types = [];
+    for (var j = 0; j < ORDER.length; j++) {
+      if (typeCounts[ORDER[j]]) types.push(ORDER[j]);
+    }
+    // Any types not in ORDER
+    var seen = {};
+    for (j = 0; j < ORDER.length; j++) seen[ORDER[j]] = true;
+    var allTypes = Object.keys(typeCounts);
+    for (j = 0; j < allTypes.length; j++) {
+      if (!seen[allTypes[j]]) types.push(allTypes[j]);
+    }
+
+    var bar = el("div", { class: "fa-workplan-type-bar" });
+
+    // "All" button
+    var allBtn = el("button", {
+      type: "button",
+      class: "fa-workplan-type-btn" + (!TYPE_SCOPE ? " is-active" : "")
+    });
+    allBtn.setAttribute("data-type-scope", "");
+    allBtn.textContent = "All (" + totalOpen + ")";
+    bar.appendChild(allBtn);
+
+    // One button per type
+    for (var k = 0; k < types.length; k++) {
+      var t = types[k];
+      var btn = el("button", {
+        type: "button",
+        class: "fa-workplan-type-btn" + (TYPE_SCOPE === t ? " is-active" : "")
+      });
+      btn.setAttribute("data-type-scope", t);
+      btn.textContent = t + " (" + typeCounts[t] + ")";
+      bar.appendChild(btn);
+    }
+    return bar;
   }
 
   /**
@@ -610,10 +689,14 @@
     var board = el("div", { class: "fa-workplan-board" });
 
     if (beans) {
+      // Type filter bar — always visible so the user can filter by type
+      board.appendChild(typeFilterBar(beans));
       var scoped = inScope(beans);
-      if (SCOPE) {
+      if (SCOPE || TYPE_SCOPE) {
         var epic = null;
-        for (var i = 0; i < beans.length; i++) if (beans[i].id === SCOPE) epic = beans[i];
+        if (SCOPE) {
+          for (var i = 0; i < beans.length; i++) if (beans[i].id === SCOPE) epic = beans[i];
+        }
         board.appendChild(filterRow(epic));
       }
       // Counts and findings take the SCOPED set so every number on the page
@@ -622,7 +705,7 @@
       // lives outside the scope, or the sentence loses its link.
       board.appendChild(countsPanel(scoped, SCOPE ? undefined : BOARD.todos));
       var findings = BOARD.findings;
-      if (SCOPE) {
+      if (SCOPE || TYPE_SCOPE) {
         findings = findings.filter(function (f) {
           for (var j = 0; j < scoped.length; j++) if (scoped[j].id === f.bean) return true;
           return false;
@@ -655,6 +738,22 @@
    */
   function wireBoard(host) {
     host.addEventListener("click", function (ev) {
+      // Type filter buttons — check FIRST because the "Show everything"
+      // button carries BOTH data-scope and data-type-scope
+      var typer = ev.target.closest ? ev.target.closest("[data-type-scope]") : null;
+      if (typer) {
+        var newType = typer.getAttribute("data-type-scope");
+        // "Show everything" also has data-scope="" to clear the epic scope
+        if (typer.hasAttribute("data-scope")) {
+          SCOPE = typer.getAttribute("data-scope");
+        }
+        TYPE_SCOPE = newType;
+        renderBoard(host);
+        // Focus the clicked button's new position
+        var focus = host.querySelector(".fa-workplan-type-btn.is-active");
+        if (focus) focus.focus();
+        return;
+      }
       var scoper = ev.target.closest ? ev.target.closest("[data-scope]") : null;
       if (scoper) {
         SCOPE = scoper.getAttribute("data-scope");
