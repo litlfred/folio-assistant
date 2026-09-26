@@ -31,6 +31,43 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Plan",
+          "detail": "names skill \"content-plan\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Scaffold",
+          "detail": "names skill \"content-plan\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_AuthorBlocks",
+          "detail": "names skill \"content-author\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Formalize",
+          "detail": "names skill \"lean-formalization\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Formalize",
+          "detail": "names skill \"proof-verification\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Render",
+          "detail": "names skill \"latex-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Review",
+          "detail": "names skill \"content-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Publish",
+          "detail": "names skill \"content-publish\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "pass",
       "findings": []
@@ -106,7 +143,7 @@
   },
   "totals": {
     "pass": 16,
-    "fail": 0,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

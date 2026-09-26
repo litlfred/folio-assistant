@@ -31,6 +31,19 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Call_Verify",
+          "detail": "names skill \"publish-verification\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_Alert",
+          "detail": "names skill \"publish-verification\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -111,7 +124,7 @@
   },
   "totals": {
     "pass": 16,
-    "fail": 1,
+    "fail": 2,
     "n/a": 7,
     "unknown": 0
   },

@@ -212,7 +212,7 @@ Rien n'est déplacé tant que la question 3 n'a pas reçu de réponse. Cette ét
 `relaxable="false"` dans le BPMN, de sorte qu'aucun paquet de contenu ne peut la désactiver.
 
 Discipline complète : la compétence
-[`repo-conversion`](reference/skill-instructions/repo-conversion.html).
+[`repo-conversion`](../reference/skill-instructions/repo-conversion.html).
 
 ## 7. Le voir publié
 
@@ -338,7 +338,7 @@ beans <id> --status in-progress   # claim an item
 > n'effectue aucune déduplication. La réexécution d'une étape scriptée sans contrôle d'existence
 > a produit **14 688** beans en double dans un folio en un seul après-midi. Cette
 > vérification figure dans la compétence
-> [`todo-manager`](reference/skill-instructions/todo-manager.html).
+> [`todo-manager`](../reference/skill-instructions/todo-manager.html).
 
 Le hook `SessionStart` présente le plan au début de chaque session, et l'outil MCP
 `work_plan_prime` expose cette même surface à tout agent connecté.
@@ -347,8 +347,8 @@ Le hook `SessionStart` présente le plan au début de chaque session, et l'outil
 
 - **[Accessibilité](accessibility.html)** — comment l'agent pose ses questions, et le contrôle
   des paramètres sur ce site
-- **[Tutoriel — rédiger un article](guides/writing-a-paper.html)**
-- **[Rédiger un document](guides/writing-a-document.html)**
+- **[Tutoriel — rédiger un article](../guides/writing-a-paper.html)**
+- **[Rédiger un document](../guides/writing-a-document.html)**
 - **[Types de contenu](content-types.html)** — le formalisme propre à chaque domaine
 - **[Flux de publication](publication-workflow.html)** — chaque processus au sein du dépôt
 - **[Architecture](architecture.html)** — adaptateurs, compétences, et le modèle de blocs

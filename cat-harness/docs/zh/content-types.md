@@ -44,7 +44,7 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
        alt="单个 folio 周期的 BPMN 泳道图：项目经理进行规划，规划以 bean 的形式提供初始数据，针对每次提议的变更运行编辑和人机交互（HCI）验证，随后进行集成测试和 QA 全面检查，然后是草稿-审阅-发布；对反馈进行分类并记录为 bean，整个周期要么重复，要么将 folio 归档退役。">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [full-size SVG](assets/img/workflows/content-lifecycle.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [full-size SVG](../assets/img/workflows/content-lifecycle.svg)
 {: .bpmn-source }
 
 | 阶段 | 技能 | 发生的操作 |
@@ -71,7 +71,7 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 
 **技能包：** `folio-document-adapter` ·
 **适配器：** `document` ·
-**指南：** [编写文档](guides/writing-a-document.html)
+**指南：** [编写文档](../guides/writing-a-document.html)
 
 结构化散文：卫生政策指南（比如 L1 指南）、标准、报告、手册、书籍章节。论文所具备的一切它都有，唯独缺少形式化层——因而也去掉了服务于形式化层的两条工具链。
 
@@ -80,17 +80,17 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 - **强制约束**（Enforcement）——`content_profile_check` 会拒绝数学类型、`lean` 字段或同级的 `.lean` 文件，并在每次 `content_validate` 时运行。
 
 相关的技能模式：
-[`document-authoring`](reference/skills/document-authoring.html)、
-[`document-structure`](reference/skills/document-structure.html)、
-[`normative-statements`](reference/skills/normative-statements.html)、
-[`document-publishing`](reference/skills/document-publishing.html)。
+[`document-authoring`](../reference/skills/document-authoring.html)、
+[`document-structure`](../reference/skills/document-structure.html)、
+[`normative-statements`](../reference/skills/normative-statements.html)、
+[`document-publishing`](../reference/skills/document-publishing.html)。
 
 <div class="bpmn-figure" id="figure-documents-policy-guidance">
   <img src="assets/img/workflows/authoring-a-document.svg"
        alt="文档创作的 BPMN 泳道图：作者进行规划，规划以 bean 的形式提供初始数据，智能体搭建 folio 脚手架并创作块，构建流水线在验证和渲染为 Markdown、HTML 及 PDF 之前检查声明的配置文件，最后由审阅者把关决定是否发布。">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [full-size SVG](assets/img/workflows/authoring-a-document.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [full-size SVG](../assets/img/workflows/authoring-a-document.svg)
 {: .bpmn-source }
 
 ### 承载规范性陈述
@@ -100,7 +100,7 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 
 建议、要求或规则是读者所引述、实施者所追踪的块。它需要标签、稳定的标识以及在依赖图中的位置——`theorem`（定理）所拥有的一切——但它断然不是定理，因为没有任何东西去证明它。
 
-目前**不存在作为一等公民的 `recommendation` 块类型**。目前它的载体是一个带有标签和标题的 `prose` 块；[`normative-statements`](reference/skill-instructions/normative-statements.html) 技能阐明了该约定及其限制。早期在 `document-intake` 中的指导意见将指南建议映射到 `definition` 上——这早于当前这种内容类型，并且对文档 folio 而言是错误的，因为在文档 folio 中 `definition` 属于数学类型，且其 `lean` 字段是必填项。
+目前**不存在作为一等公民的 `recommendation` 块类型**。目前它的载体是一个带有标签和标题的 `prose` 块；[`normative-statements`](../reference/skill-instructions/normative-statements.html) 技能阐明了该约定及其限制。早期在 `document-intake` 中的指导意见将指南建议映射到 `definition` 上——这早于当前这种内容类型，并且对文档 folio 而言是错误的，因为在文档 folio 中 `definition` 属于数学类型，且其 `lean` 字段是必填项。
 
 ---
 
@@ -111,7 +111,7 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 
 **技能包：** `authoring-math` ·
 **适配器：** `paper` ·
-**指南：** [编写论文](guides/writing-a-paper.html)
+**指南：** [编写论文](../guides/writing-a-paper.html)
 
 严谨的科学论文与专著，其中的散文和数学内容均有机器校验的 **Lean 4** 形式化作为后盾，并通过 **LaTeX** 进行排版渲染。
 
@@ -138,9 +138,9 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 其中有两行值得进一步审视。`definition` 是整个划分中最明确的分水岭——它是唯一一个其 `lean` 字段为*必需*而非可选的类型，因此即便配置文件允许，文档 folio 也无法容纳它。而“共享”（`shared`）类型仍然*声明*了一个可选的 `lean`：类型系统允许了配置文件所禁止的内容，这正是为什么 `content_profile_check` 在“该类型是否被允许”之外还有第二条规则。
 
 相关的技能模式：
-[`latex-authoring`](reference/skills/latex-authoring.html)、
-[`lean-formalization`](reference/skills/lean-formalization.html)、
-[`proof-verification`](reference/skills/proof-verification.html)。
+[`latex-authoring`](../reference/skills/latex-authoring.html)、
+[`lean-formalization`](../reference/skills/lean-formalization.html)、
+[`proof-verification`](../reference/skills/proof-verification.html)。
 
 ---
 
@@ -150,7 +150,7 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/l2-dak-authoring.bpmn){: .fa-node-edit title="Edit processes/l2-dak-authoring.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="who-smart-guidelines-daks-l2.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/content-types/who-smart-guidelines-daks-l2.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="who-smart-guidelines-daks-l2.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/content-types/who-smart-guidelines-daks-l2.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 **技能包：** `authoring-who-smart-guidelines` ·
-**指南：** [创作 WHO SMART DAK](guides/who-smart-dak.html)
+**指南：** [创作 WHO SMART DAK](../guides/who-smart-dak.html)
 
 **数字适应套件**（Digital Adaptation Kit，简称 **DAK**）是 WHO 指南的 *L2*（机器可读，但独立于具体实现）表示。folio-assistant 负责创作以下 L2 制品：
 
@@ -161,17 +161,17 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 - **人物画像、场景、指标、需求**
 
 相关的技能模式：
-[`l2-dak-authoring`](reference/skills/l2-dak-authoring.html)、
-[`bpmn-authoring`](reference/skills/bpmn-authoring.html)、
-[`dmn-authoring`](reference/skills/dmn-authoring.html)、
-[`terminology-management`](reference/skills/terminology-management.html)。
+[`l2-dak-authoring`](../reference/skills/l2-dak-authoring.html)、
+[`bpmn-authoring`](../reference/skills/bpmn-authoring.html)、
+[`dmn-authoring`](../reference/skills/dmn-authoring.html)、
+[`terminology-management`](../reference/skills/terminology-management.html)。
 
 <div class="bpmn-figure" id="figure-who-smart-guidelines-daks-l2">
   <img src="assets/img/workflows/l2-dak-authoring.svg"
        alt="L2 DAK 创作的 BPMN 泳道图：并行网关将人物画像、BPMN 流程、DMN 决策逻辑、数据字典和指标分流到业务分析师泳道，同时由术语专家进行绑定，随后临床领域专家（SME）的验证把关 DAK 的组装。">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn) · [full-size SVG](assets/img/workflows/l2-dak-authoring.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn) · [full-size SVG](../assets/img/workflows/l2-dak-authoring.svg)
 {: .bpmn-source }
 
 ---
@@ -182,7 +182,7 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/l3-fhir-pipeline.bpmn){: .fa-node-edit title="Edit processes/l3-fhir-pipeline.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="who-smart-implementation-guides-l3.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/content-types/who-smart-implementation-guides-l3.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="who-smart-implementation-guides-l3.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/content-types/who-smart-implementation-guides-l3.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 **技能包：** `authoring-who-smart-guidelines` ·
-**指南：** [创作 WHO SMART IG](guides/who-smart-ig.html)
+**指南：** [创作 WHO SMART IG](../guides/who-smart-ig.html)
 
 *L3* 层将 L2 DAK 转换为可计算的 **FHIR 实施指南**（Implementation Guide）：
 
@@ -192,17 +192,17 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 - **质量控制**——质控关卡（`quality-control`）
 
 相关的技能模式：
-[`l3-fhir-authoring`](reference/skills/l3-fhir-authoring.html)、
-[`fhir-validation`](reference/skills/fhir-validation.html)、
-[`ig-publication`](reference/skills/ig-publication.html)、
-[`quality-control`](reference/skills/quality-control.html)。
+[`l3-fhir-authoring`](../reference/skills/l3-fhir-authoring.html)、
+[`fhir-validation`](../reference/skills/fhir-validation.html)、
+[`ig-publication`](../reference/skills/ig-publication.html)、
+[`quality-control`](../reference/skills/quality-control.html)。
 
 <div class="bpmn-figure" id="figure-who-smart-implementation-guides-l3">
   <img src="assets/img/workflows/l3-fhir-pipeline.svg"
        alt="L3 流水线的 BPMN 泳道图：将 L2 映射到 L3、编写 FSH、SUSHI 编译、针对 Profile 进行验证（失败时循环回到 FSH）、将发现的问题记录为 bean 的质控把关、IG Publisher 构建，以及发布 IG 站点。">
 </div>
 
-[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [full-size SVG](assets/img/workflows/l3-fhir-pipeline.svg)
+[BPMN 2.0 source](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [full-size SVG](../assets/img/workflows/l3-fhir-pipeline.svg)
 {: .bpmn-source }
 
 ---
@@ -212,4 +212,4 @@ folio-assistant 是**与内容无关的**：该平台对任何特定的论文或
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/content-types/others-extending-folio-assistant.md){: .fa-node-edit title="Edit content/docs/content-types/others-extending-folio-assistant.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="others-extending-folio-assistant.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/content-types/others-extending-folio-assistant.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-新的内容类型是一等公民：添加一个内容**适配器**（adapter）和一个技能**包**（package），生命周期、RBAC 以及 MCP 底层管道即可直接获享。请参阅[添加内容类型](guides/new-content-type.html)。
+新的内容类型是一等公民：添加一个内容**适配器**（adapter）和一个技能**包**（package），生命周期、RBAC 以及 MCP 底层管道即可直接获享。请参阅[添加内容类型](../guides/new-content-type.html)。

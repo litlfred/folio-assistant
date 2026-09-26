@@ -31,6 +31,51 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Purpose",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Enumerate",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Size",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Restrictions",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Copyright",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Retention",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_SourceLoss",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Fetch",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Declare",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_StayRef",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -123,7 +168,7 @@
   },
   "totals": {
     "pass": 14,
-    "fail": 1,
+    "fail": 2,
     "n/a": 9,
     "unknown": 0
   }

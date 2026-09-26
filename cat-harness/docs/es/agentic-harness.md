@@ -63,13 +63,13 @@ Flujos de trabajo activos en esta plataforma:
 
 | Flujo de trabajo | Origen BPMN | Se inicia cuando |
 |---|---|---|
-| **Autoría (paper)** | [`authoring-a-paper.bpmn`](../processes/authoring-a-paper.bpmn) | El usuario solicita autoría de contenido en un folio de paper |
-| **Autoría (document)** | [`authoring-a-document.bpmn`](../processes/authoring-a-document.bpmn) | El usuario solicita autoría de contenido en un folio de documento |
-| **Ciclo de vida de contenido** | [`content-lifecycle.bpmn`](../processes/content-lifecycle.bpmn) | El contenido avanza a través de validar → renderizar → publicar |
-| **Ingesta de documentos** | [`document-ingestion.bpmn`](../processes/document-ingestion.bpmn) | El usuario deposita un archivo en `uploads/` |
-| **De borrador a publicación** | [`draft-to-publication.bpmn`](../processes/draft-to-publication.bpmn) | El contenido pasa de borrador a publicado |
-| **Requisitos CRDM** | [`crdm-requirements.bpmn`](../processes/crdm-requirements.bpmn) | El agente detecta una solicitud de funcionalidad (*feature request*) |
-| **Recuperación de evidencias** | [`evidence-retrieval.bpmn`](../processes/evidence-retrieval.bpmn) | El agente busca evidencias para respaldar una afirmación |
+| **Autoría (paper)** | [`authoring-a-paper.bpmn`](../../processes/authoring-a-paper.bpmn) | El usuario solicita autoría de contenido en un folio de paper |
+| **Autoría (document)** | [`authoring-a-document.bpmn`](../../processes/authoring-a-document.bpmn) | El usuario solicita autoría de contenido en un folio de documento |
+| **Ciclo de vida de contenido** | [`content-lifecycle.bpmn`](../../processes/content-lifecycle.bpmn) | El contenido avanza a través de validar → renderizar → publicar |
+| **Ingesta de documentos** | [`document-ingestion.bpmn`](../../processes/document-ingestion.bpmn) | El usuario deposita un archivo en `uploads/` |
+| **De borrador a publicación** | [`draft-to-publication.bpmn`](../../processes/draft-to-publication.bpmn) | El contenido pasa de borrador a publicado |
+| **Requisitos CRDM** | [`crdm-requirements.bpmn`](../../processes/crdm-requirements.bpmn) | El agente detecta una solicitud de funcionalidad (*feature request*) |
+| **Recuperación de evidencias** | [`evidence-retrieval.bpmn`](../../processes/evidence-retrieval.bpmn) | El agente busca evidencias para respaldar una afirmación |
 
 **Transiciones de estado:** un flujo de trabajo puede **suspenderse** cuando el usuario solicita
 cambiar de contexto. El agente registra dónde se encontraba (la actividad BPMN actual) y
@@ -121,7 +121,7 @@ clasificación determina a qué flujo de trabajo ingresa el agente.
 | **Autoría de contenido** | Escribir, editar, ampliar contenido del folio (capítulos, bloques, secciones) | Flujo de trabajo de autoría (paper o document) |
 | **Revisión de contenido** | Revisar, validar, proporcionar comentarios sobre contenido existente | Ciclo de vida de contenido / flujo de trabajo de HCI de edición |
 | **Ingesta de contenido** | Ingerir un documento fuente en el folio | Flujo de trabajo de ingesta de documentos |
-| **Solicitud de funcionalidad (*feature request*)** | Solicitar una nueva capacidad de la plataforma (ver [crdm-detect](../skills/crdm/crdm-detect.md)) | Flujo de trabajo de requisitos CRDM |
+| **Solicitud de funcionalidad (*feature request*)** | Solicitar una nueva capacidad de la plataforma (ver [crdm-detect](../../skills/crdm/crdm-detect.md)) | Flujo de trabajo de requisitos CRDM |
 | **Solicitud de información** | Preguntar sobre la plataforma, el contenido o el proceso | Sin flujo de trabajo — responder directamente |
 | **Invocación de herramientas** | Ejecutar una herramienta específica (`content_validate`, `qa_sweep`, etc.) | Sin flujo de trabajo — ejecutar e informar |
 | **Gestión del plan de trabajo** | Crear, actualizar o consultar beans | Sin flujo de trabajo — ejecutar e informar |
@@ -131,7 +131,7 @@ clasificación determina a qué flujo de trabajo ingresa el agente.
 
 El límite de clasificación crítico se sitúa entre la **autoría de contenido** y
 la **solicitud de funcionalidad** (*feature request*). La habilidad `crdm-detect`
-([`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md))
+([`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md))
 proporciona las señales detalladas de detección. La regla resumida:
 
 > Si implementar la solicitud requeriría cambios en **folio-assistant**
@@ -202,7 +202,7 @@ son riesgos de seguridad, cuánto debe ser determinista y cómo se comparan los 
 subflujos de trabajo bajo una superposición controlada de contexto y recuerdos son tres
 preguntas que este repositorio ahora puede plantear y aún no ha respondido. La agenda, con
 cada afirmación marcada como medida, decidida o hipótesis, es
-[`deterministic-and-agentic`](reference/skill-instructions/deterministic-and-agentic.html).
+[`deterministic-and-agentic`](../reference/skill-instructions/deterministic-and-agentic.html).
 Léela como una agenda: contiene más hipótesis que mediciones, y así lo declara.
 
 ## Ejecución de BPMN: una habilidad, dos motores
@@ -215,7 +215,7 @@ El responsable (*owner*), 2026-09-23, nombrando la habilidad sobre la que trata 
 > **Habilidad de ejecución de BPMN:** dados un Proceso, Contexto, Estado y Rol, utilizar
 > una o más Habilidades para ejecutar una Tarea.
 
-![Ejecución de BPMN, de determinista a agéntica. Una barra de color va de "determinista" (azul, izquierda: ejecución gestionada por agente de una sola tarea) a "agéntica" (verde, derecha: agentes en la mayoría o todas las tareas). A la izquierda, bajo un icono de engranaje y motor: "Herramienta de ejecución de BPMN: cualquiera de los motores BPMN de código abierto, estado y carriles estrictamente aplicados", sobre un diagrama plano de carriles del ciclo de vida del folio con una nota adhesiva, un grupo de beans, una persona y un gato-robot junto a los carriles. A la derecha, bajo un icono de gato-robot: "Herramienta de ejecución de BPMN: enjambre agéntico con estado no gobernado. Los agentes 'relajan' los carriles, mitigado por informes de QA/QC mecánicos + agénticos", sobre el mismo diagrama inclinado en perspectiva, beans dispersos por cada carril y muchos gatos-robot debajo.](assets/img/bpmn-execution-spectrum.webp)
+![Ejecución de BPMN, de determinista a agéntica. Una barra de color va de "determinista" (azul, izquierda: ejecución gestionada por agente de una sola tarea) a "agéntica" (verde, derecha: agentes en la mayoría o todas las tareas). A la izquierda, bajo un icono de engranaje y motor: "Herramienta de ejecución de BPMN: cualquiera de los motores BPMN de código abierto, estado y carriles estrictamente aplicados", sobre un diagrama plano de carriles del ciclo de vida del folio con una nota adhesiva, un grupo de beans, una persona y un gato-robot junto a los carriles. A la derecha, bajo un icono de gato-robot: "Herramienta de ejecución de BPMN: enjambre agéntico con estado no gobernado. Los agentes 'relajan' los carriles, mitigado por informes de QA/QC mecánicos + agénticos", sobre el mismo diagrama inclinado en perspectiva, beans dispersos por cada carril y muchos gatos-robot debajo.](../assets/img/bpmn-execution-spectrum.webp)
 
 **Una habilidad, dos tipos de Herramienta.** La habilidad es la misma en ambos extremos: tomar el
 proceso, el contexto, el estado actual y el rol, elegir las habilidades y realizar
@@ -238,7 +238,7 @@ si las reglas y el registro son datos legibles por un informe, lo cual se cumple
 [W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) como lenguaje de permisos
 y [W3C PROV-O](https://www.w3.org/TR/prov-o/) como registro de ejecución (responsable,
 2026-09-23; el esquema que esto implica es la
-[propuesta de actores, ODRL y PROV-O](proposals/odrl-prov-actor-model.html)).
+[propuesta de actores, ODRL y PROV-O](../proposals/odrl-prov-actor-model.html)).
 
 **La mayoría de las ejecuciones reales se sitúan entre ambos extremos**, y por tarea más que por proceso:
 la [sección anterior](#deterministic-and-agentic) ya contabiliza qué
@@ -261,7 +261,7 @@ propuesta tenga algo con qué contrastarse.
 Cuando una solicitud se clasifica como solicitud de funcionalidad (*feature request*), el agente ingresa al
 **flujo de trabajo de requisitos CRDM**
 ([documentación completa](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
-[BPMN](../processes/crdm-requirements.bpmn)).
+[BPMN](../../processes/crdm-requirements.bpmn)).
 
 El flujo de trabajo de solicitudes de funcionalidad es donde este documento de arnés aporta el mayor
 valor, porque describe un comportamiento que antes era implícito. Los
@@ -270,7 +270,7 @@ flujo de trabajo de requisitos existía únicamente como conversación ad-hoc.
 
 ### Cómo ingresa el agente a CRDM
 
-La lógica de detección se encuentra en [`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md).
+La lógica de detección se encuentra en [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md).
 Tres escenarios:
 
 **Nueva sesión, la primera solicitud es una funcionalidad:**
@@ -394,17 +394,17 @@ con sus fuentes autorizadas.
 | Comportamiento | Habilidad / documento de origen | Ubicación |
 |---|---|---|
 | Barrido de inicio de sesión | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
-| Protocolo de beans | `todo-manager.md`, `bean-coordination.md` | [`skills/folio-core/`](../skills/folio-core/) |
+| Protocolo de beans | `todo-manager.md`, `bean-coordination.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Disciplina de commits y PR | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| Detección de solicitudes de funcionalidad | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md) |
-| Flujo de trabajo de requisitos CRDM | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../skills/crdm/crdm-requirements-workflow.md) |
-| Autoría de contenido (paper) | habilidades authoring-math | [`skills/authoring-math/`](../skills/authoring-math/) |
-| Autoría de contenido (document) | habilidades folio-document-adapter | [`skills/folio-document-adapter/`](../skills/folio-document-adapter/) |
-| Ciclo de vida de contenido | habilidades content-lifecycle | [`skills/content-lifecycle/`](../skills/content-lifecycle/) |
-| Ingesta de documentos | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../skills/folio-core/docs-generation.md) |
-| Despacho y coordinación | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../skills/folio-core/) |
+| Detección de solicitudes de funcionalidad | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md) |
+| Flujo de trabajo de requisitos CRDM | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../../skills/crdm/crdm-requirements-workflow.md) |
+| Autoría de contenido (paper) | habilidades authoring-math | [`skills/authoring-math/`](../../skills/authoring-math/) |
+| Autoría de contenido (document) | habilidades folio-document-adapter | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
+| Ciclo de vida de contenido | habilidades content-lifecycle | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
+| Ingesta de documentos | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../../skills/folio-core/docs-generation.md) |
+| Despacho y coordinación | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Tipos de contenido y adaptadores | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |
-| Autoría de diagramas BPMN | habilidad `bpmn-authoring` | [`skills/folio-core/`](../skills/folio-core/) |
+| Autoría de diagramas BPMN | habilidad `bpmn-authoring` | [`skills/folio-core/`](../../skills/folio-core/) |
 
 **Cuando una habilidad y esta página discrepen, la habilidad prevalece.** Esta página es una
 consolidación, no una nueva autoridad. Si encuentras una discrepancia, corrige esta página.

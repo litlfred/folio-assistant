@@ -5,7 +5,7 @@
     "id": "Process_Editing",
     "path": "processes/editing-hci-validation.bpmn"
   },
-  "source_hash": "sha256:95f36a596190f36be315fec4ad3217f0e1009279098361a30b2b342a4c7dfa46",
+  "source_hash": "sha256:4b0ec929b50d090a91dc02e66fe16476f4b238356e43dcaea9953874ba2d2d92",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,27 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_DraftEdit",
+          "detail": "names skill \"content-author\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_AgentReview",
+          "detail": "names skill \"content-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_SmeReview",
+          "detail": "names skill \"content-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ReviseEdit",
+          "detail": "names skill \"content-author\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -106,7 +127,7 @@
   },
   "totals": {
     "pass": 16,
-    "fail": 0,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

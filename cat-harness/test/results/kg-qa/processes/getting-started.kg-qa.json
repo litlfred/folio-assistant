@@ -31,6 +31,23 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_DetectModality",
+          "detail": "names skill \"interaction-modality\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_AskIntent",
+          "detail": "names skill \"interaction-modality\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ConfirmImport",
+          "detail": "names skill \"dispatch-agent\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "pass",
       "findings": []
@@ -106,7 +123,7 @@
   },
   "totals": {
     "pass": 16,
-    "fail": 0,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

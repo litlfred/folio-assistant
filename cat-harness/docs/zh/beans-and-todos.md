@@ -121,7 +121,7 @@ CLI 中存在 `beans delete` 命令。**请勿使用它。**
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/beans-and-todos/work-plan-state.md){: .fa-node-edit title="Edit content/docs/beans-and-todos/work-plan-state.md" } <span class="fa-qa-badges"><span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-本页面的其余部分阐述了 bean **是什么**。本节则说明了存储区当前**包含的内容**——实时读取自 [`/assets/beans/index.json`](assets/beans/index.json)，即 `gen-docs-pages.ts` 在每次构建时从 `beans/defs/` 生成的投影，与其早已发布的 todo 索引并列。
+本页面的其余部分阐述了 bean **是什么**。本节则说明了存储区当前**包含的内容**——实时读取自 [`/assets/beans/index.json`](../assets/beans/index.json)，即 `gen-docs-pages.ts` 在每次构建时从 `beans/defs/` 生成的投影，与其早已发布的 todo 索引并列。
 
 在 2026-09-20 之前，这里无物可放。`todos/` 拥有读取器、公开发布的索引以及基于它的看板；而 `beans/` 这三者皆无，尽管后者的存储规模要大上两个数量级。一个无人能查阅的工作计划，就是一个无人会去核验的计划。
 

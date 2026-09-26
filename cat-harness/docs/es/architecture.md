@@ -20,14 +20,14 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 > **Las reglas detrás de esta página.** La arquitectura describe la forma; las habilidades
 > rigen las decisiones. Adaptadores frente a perfiles —
-> [`content-profiles`](reference/skill-instructions/content-profiles.html).
+> [`content-profiles`](../reference/skill-instructions/content-profiles.html).
 > A dónde pertenece un nuevo nodo antes de crearlo —
-> [`placement`](reference/skill-instructions/placement.html). La estructura del
+> [`placement`](../reference/skill-instructions/placement.html). La estructura del
 > repositorio y cada tipo de grafo —
-> [`directory-conventions`](reference/skill-instructions/directory-conventions.html).
+> [`directory-conventions`](../reference/skill-instructions/directory-conventions.html).
 > Composición y verificación de la superficie MCP —
-> [`mcp-assembly`](reference/skill-instructions/mcp-assembly.html) y
-> [`mcp-contract`](reference/skill-instructions/mcp-contract.html).
+> [`mcp-assembly`](../reference/skill-instructions/mcp-assembly.html) y
+> [`mcp-contract`](../reference/skill-instructions/mcp-contract.html).
 > Donde esta página y una habilidad discrepen, la habilidad prevalece.
 
 folio-assistant es un **servidor MCP** con una capa conectable de **adaptadores de contenido**,
@@ -60,19 +60,19 @@ en cinco instancias componibles de folio-assistant. Las páginas secundarias lo 
 
 | página | qué responde |
 |---|---|
-| [Taxonomía de repositorios](architecture/repo-taxonomy.html) | Qué tipos de repositorios existen — Herramienta, Prueba, Contenido, Consumidor — y qué puede contener cada uno |
-| [Estado actual](architecture/current-state.html) | Qué hay realmente en este repositorio hoy, cuantificado, y dónde se encuentra la mezcla |
-| [Estado futuro](architecture/future-state.html) | Los cinco repositorios de destino y qué directorio va a parar a cuál |
-| [Plan de migración](architecture/migration-plan.html) | Fases 0/I/II/III, las puertas de validación y lo que aún no se ha decidido |
-| [`cat-harness` mínimo](architecture/cat-harness-minimum.html) | Qué sobrevive en el arnés una vez que se aplica «no autodocumentado» como prueba |
-| [Instancias de arnés](architecture/harness-instances.html) | Qué ES una instancia — esquemas, visualizaciones, herramientas; los cuatro directorios; el renderizado por defecto |
+| [Taxonomía de repositorios](../architecture/repo-taxonomy.html) | Qué tipos de repositorios existen — Herramienta, Prueba, Contenido, Consumidor — y qué puede contener cada uno |
+| [Estado actual](../architecture/current-state.html) | Qué hay realmente en este repositorio hoy, cuantificado, y dónde se encuentra la mezcla |
+| [Estado futuro](../architecture/future-state.html) | Los cinco repositorios de destino y qué directorio va a parar a cuál |
+| [Plan de migración](../architecture/migration-plan.html) | Fases 0/I/II/III, las puertas de validación y lo que aún no se ha decidido |
+| [`cat-harness` mínimo](../architecture/cat-harness-minimum.html) | Qué sobrevive en el arnés una vez que se aplica «no autodocumentado» como prueba |
+| [Instancias de arnés](../architecture/harness-instances.html) | Qué ES una instancia — esquemas, visualizaciones, herramientas; los cuatro directorios; el renderizado por defecto |
 
 Las dos últimas parecen contradecirse: la versión mínima dice que un arnés no produce
 nada que un humano mire, y la página de instancias dice que una instancia renderiza por
 defecto. No se contradicen: el requisito es un **suelo que se eleva**, con
 `bootstrap` exento del visualizador y debiendo proporcionar en su lugar su propio `.json`/`.jsonld`,
 siendo `cat-harness` la capa donde el resto comienza a aplicarse. Consulta
-[Dónde comienza el requisito](architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
+[Dónde comienza el requisito](../architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
 
 El resto de esta página describe la arquitectura **tal como es ahora**.
 
@@ -106,7 +106,7 @@ registrar. El adaptador `document` (`adapters/document/`) es la base para folios
 el adaptador `paper` (`adapters/paper/`) lo extiende y proporciona herramientas del ciclo de vida de Lean
 (`lean_setup`/`build`/`check`/`status`), validación y renderizado
 (`paper_render_pdf`/`html`, `formula_render`). Los nuevos tipos de contenido añaden un nuevo
-adaptador; consulta [Añadir un tipo de contenido](guides/new-content-type.html).
+adaptador; consulta [Añadir un tipo de contenido](../guides/new-content-type.html).
 
 ## Habilidades y paquetes de habilidades
 
@@ -117,7 +117,7 @@ habilidades con `skill_list` y carga instrucciones con `skill_fetch`. La lista
 completa de habilidades y roles —y cómo se combinan con el LLM (RBAC, capacidades,
 requisitos)— se encuentra en la página [Habilidades y roles](skills.html); el contrato de
 entrada/salida de cada habilidad está publicado en la
-[Referencia de esquemas de habilidades](reference/skills/).
+[Referencia de esquemas de habilidades](../reference/skills/).
 
 ## El modelo de objetos de contenido
 
@@ -147,7 +147,7 @@ evaluadas por `permits()` / `decide()` en `schemas/odrl.ts`. Dos invocadores lo 
 
 Hasta el issue #1207 (23-09-2026), `rbac.ts` era una escala independiente de visor < colaborador
 < propietario y el ejecutor no comprobaba nada. La disciplina correspondiente es la
-habilidad [`task-authorization`](reference/skill-instructions/task-authorization.html).
+habilidad [`task-authorization`](../reference/skill-instructions/task-authorization.html).
 
 ## Preparación del plan de trabajo (entre arneses)
 
