@@ -1,11 +1,11 @@
 ---
 # folio-assistant-wlyg
 title: 'ROUND TRIP: pot-extract and po-inject declare ten copies of the same markdown constants, and one of them diverged inside a single change'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-26T10:03:23Z
-updated_at: 2026-09-26T12:37:13Z
+updated_at: 2026-09-26T13:48:19Z
 parent: folio-assistant-bzyu
 ---
 
@@ -55,7 +55,7 @@ change.
 - [x] a test fails if either module re-declares one — the existing
       `derive-po.test.ts` §"both halves read ONE definition of a fence" generalised
       over the whole set rather than repeated per constant
-- [ ] MEASURED AFTER: extraction over `cat-harness/docs/` yields byte-identical
+- [x] MEASURED AFTER: extraction over `cat-harness/docs/` yields byte-identical
       output, and `injectMarkdown` substitutes identically on the round-trip
       fixtures — this is a refactor and must be provable as one
 - [x] ordered before `lvk9` in the work plan
