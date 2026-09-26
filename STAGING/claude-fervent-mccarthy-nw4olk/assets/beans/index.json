@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 348,
+      "count": 349,
       "unit": "beans"
     }
   },
@@ -1205,14 +1205,14 @@
     {
       "id": "folio-assistant-81t5",
       "title": "TOOL 8/13: ingest-extract-structure — document ingestion (15 files, 7 entry points)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-d308",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T04:34:56Z",
-      "updatedAt": "2026-09-20T16:38:42Z",
+      "updatedAt": "2026-09-26T00:00:00Z",
       "preview": "Group 8 of 13 in `d308`. **15 files, 7 entry points.**\n\n`pdf-extract`, `pdf-ocr`, `pdf-pages`, `pdf-structure`, `pdf-tables`,\n`split-pdf-by-chapter`, `extract-candidates`, `tabular-records`,\n`archive-contents`, `ingest-document`, `scan-repo-content`,\n`smart-base-transform`, `_pdf_doc_id`, `_pypdf_compat`, `_tech_meta`,\n`pypdf_safe`.\n\n**BPMN:** `ingest-extract-structure · Task_ExtractText · Task_Oc",
       "file": "beans/defs/folio-assistant-81t5--tool-813-ingest-extract-structure-document-ingesti.md"
     },
@@ -1649,6 +1649,20 @@
       "updatedAt": "2026-09-23T10:36:15Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/translation-status/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **Horizontal scroll at phone width.** At 390 px the document is 509 px wide (`scrollWidth` 509). The *fuzzy* and *untranslated* columns start off-scr",
       "file": "beans/defs/folio-assistant-bgrz--translation-status-visualiser-6-wireframe-findings.md"
+    },
+    {
+      "id": "folio-assistant-bjzs",
+      "title": "PER-INSTANCE GATES: kg:audit, render:bpmn and check:workflow-refs run at the root only, so 15 nested instances are counted and none is audited",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-d308",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T04:14:07Z",
+      "updatedAt": "2026-09-26T04:14:07Z",
+      "preview": "Split out of `sa8y` 2026-09-26. It was `sa8y`'s last genuinely open item and the\nonly one of its four; the other three are done and `sa8y` closed on the wording\nfix that is its actual subject. It gets its own bean because it is a different\nsubject — `sa8y` is about a finding's **wording**, this is about a gate's\n**range** — and because a wording bean carrying an infrastructure item is how\n`sa8y` c",
+      "file": "beans/defs/folio-assistant-bjzs--per-instance-gates-kgaudit-renderbpmn-and-checkwor.md"
     },
     {
       "id": "folio-assistant-bkje",
@@ -3649,14 +3663,14 @@
     {
       "id": "folio-assistant-sa8y",
       "title": "QA WORDING: a graph-scoped finding worded absolutely sent a session to a wrong fix",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-d308",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T05:52:43Z",
-      "updatedAt": "2026-09-20T14:17:35Z",
+      "updatedAt": "2026-09-26T00:00:00Z",
       "preview": "A finding scoped to one graph but **worded absolutely** sent this session to a\nwrong fix, and the wrong fix was caught only by a test written the day before.\n\n## What the report says, and what is true\n\n`kg:audit` at the repo root reports:\n\n> skill \"confirm-harness\" is listed by no package manifest, carried by no role\n> and named by no activity.\n\nEach clause is true **of the root instance's graph**",
       "file": "beans/defs/folio-assistant-sa8y--qa-wording-a-graph-scoped-finding-worded-absolutel.md"
     },
