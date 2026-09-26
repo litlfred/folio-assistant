@@ -47,7 +47,7 @@ branding against the instance's own declaration, every declared locale — the
 sections below are unchanged in substance and now apply to the ingested assets.
 
 **Theme choice is still an authoring judgement.** There is still no
-role-to-theme mapping ([`theme.ts`](../../schemas/theme.ts) records why), so
+role-to-theme mapping ([`theme.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/theme.ts) records why), so
 nothing here checks a binding. What gets reviewed is the ingested art in its
 design context.
 

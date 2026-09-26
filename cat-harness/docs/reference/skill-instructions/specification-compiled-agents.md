@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Specification-compiled agents
 
-Renders [`methodologies/specification-compiled-agents.md`](../../methodologies/specification-compiled-agents.md)
+Renders [`methodologies/specification-compiled-agents.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/specification-compiled-agents.md)
 — Borman et al., arXiv:2607.14456v1, SCALE @ ICML 2026 — as something an agent
 here can act on. Read the methodology node for what the paper claims, what its
 figures actually show, and where the rendering stops; this is the part you do.
@@ -112,6 +112,6 @@ it first looks:
   `<bootstrap.processes:skill ref>` and `<cat-harness.processes:bean>` are required for.
 - [`process-state`](process-state.md) — saying which process you are in, and
   the five detectors for being out of one.
-- [`hybrid-llm-deterministic`](../../methodologies/hybrid-llm-deterministic.md)
+- [`hybrid-llm-deterministic`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/hybrid-llm-deterministic.md)
   — emit a rule, validate it, run it. The same shape one grain down.
 {% endraw %}
