@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T09:20:19Z
-updated_at: 2026-09-26T13:48:19Z
+updated_at: 2026-09-26T14:44:44Z
 parent: folio-assistant-bzyu
 blocked_by:
     - folio-assistant-wlyg
@@ -106,7 +106,9 @@ line each with a measured effect in both directions, and this is a parser change
 - [ ] the 3785 msgids this merges away are obsoleted in the existing `.po` files
       with tooling, not dropped
 - [x] `7x8o` re-measured afterwards; expect 8 pairs or fewer to remain
-- [ ] checked against a folio other than this one — extraction is shared
+- [x] checked against a folio other than this one — extraction is shared.
+      `litlfred/qou`, 150 markdown files, pre-`lvk9` extractor vs now. It found
+      bean `o29r`, a pre-existing underscore defect `lvk9` widens.
 
 
 ### From bean `f6r1` — check the INJECT side too
@@ -207,3 +209,52 @@ before re-reading them:
 
 The extract half is merged and measured; the corpus-wide bookkeeping is not.
 Closing on the first would have hidden the second.
+
+## The cross-folio check is done, and it found a defect
+
+`litlfred/qou` carries no `.po` at all, so "re-derive its catalogues and see
+what breaks" was not available. The check became the comparison this bean
+actually is: the extractor at `958e36d7840^` (`6b8u` + `ig4a` + `wlyg`, no
+hard-wrap merging) against the extractor now, over 150 of qou's markdown files.
+
+| class | count |
+|---|---|
+| msgids old to new | 17832 to 16022 |
+| unchanged | 14416 |
+| merges — what this bean intends | 1128, widest 12 old entries |
+| differ only by collapsed internal whitespace | 191 |
+| differ only by a stripped subscript underscore | 122 → bean `o29r` |
+| neither — inline-code gaps, `3mo4` territory | 165 |
+
+**The merging itself held.** 1128 merges over a corpus it was never tuned on,
+and not one joined two different constructs. The widest merge spans 12 old
+entries, which is a 12-line hard-wrapped paragraph re-joined — exactly the
+intent.
+
+**What it found instead is `o29r`**: `MD_ITALIC_UNDER_RE` has no intraword
+guard, so two underscores anywhere in one string are read as emphasis and both
+deleted. `$a_1$ and $b_2$` becomes `$a1$ and $b2$`; `snake_case_name` becomes
+`snakecasename`. This bean does not cause it — the minimal case needs no
+merging — but it widens the blast radius, because joining wrapped lines puts
+more subscripts into one string, and per-line cleaning happened to protect a
+subscript that was alone on its line. On a `paper` folio the corrupted artefact
+is a formula.
+
+That is the argument for this Done-when item existing. On this folio's own
+corpus the defect is nearly invisible; one repository of mathematical prose
+surfaced 122 instances.
+
+## Three harness corrections, recorded because each looked like a finding
+
+1. A wrap-invariance harness reported 95 violations. Its re-wrap put
+   `+ JSON-Schema` at the start of a line, which IS a markdown bullet — the
+   extractor was right.
+2. An over-merge regex reported 86 violations, firing on `proved in  + Lean`, a
+   double space left by a stripped code span.
+3. Comparing the outputs as SETS reported 3459 dropped msgids. A msgid corpus
+   is a MULTISET: `indexOf` consumed only the first `"Package"`, so the second
+   copy of a repeated table header read as dropped. Any corpus with tables
+   breaks a set-based comparison this way.
+
+None of the three was the extractor. A cross-corpus comparison needs its own
+harness checked as carefully as the thing it measures.
