@@ -925,6 +925,22 @@ jobs:
       - name: generated docs pages are current
         run: bun run docs:pages:check
 
+      # ABOVE the drift batch DELIBERATELY, like the two steps directly above.
+      # A gate registered INSIDE that batch does not run at all: the batch is
+      # one `run: |` block under `set -e` holding 106 gates, and
+      # `translation:drift:check` is the THIRD of them, so the 103 after it have
+      # never executed on any PR or any push to `main`. Bean `cpss` carries the
+      # measurement; `check:workflow-injection` and
+      # `check:artefact-verification` are two of the 103, both landed the same
+      # day this was measured.
+      #
+      # That is the whole reason this gate is its own step. Satisfying
+      # `no check script is unrun` by appending to the batch would have
+      # registered it, reported it, and never run it — which is worse than not
+      # wiring it, because the PR would go green saying otherwise.
+      - name: every claimed locale has a page behind it
+        run: bun run check:available-locales
+
       - name: gates that were registered and never run
         run: |
           set -e

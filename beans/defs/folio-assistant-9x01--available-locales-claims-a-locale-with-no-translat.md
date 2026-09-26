@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T14:26:44Z
-updated_at: 2026-09-26T19:33:33Z
+updated_at: 2026-09-26T19:33:36Z
 parent: folio-assistant-bzyu
 ---
 
