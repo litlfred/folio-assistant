@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T11:40:56Z
-updated_at: 2026-09-26T12:05:41Z
+updated_at: 2026-09-26T12:38:50Z
 parent: folio-assistant-1xhc
 ---
 
@@ -92,3 +92,45 @@ passes over a documentation body whose counts contradict the diagram beside it.
 - [ ] the counts question: can a documentation body's job/step counts be checked
       against the diagram, or is that only reviewable? Five were wrong the moment
       a job was added and nothing said so
+
+
+## The GATE is built — `check:rendered-labels`, #1399
+
+The second clause, done. `cat-harness/scripts/check-rendered-labels.ts`, wired in
+the E2E job beside `rendered BPMN SVGs are current`, baseline at
+`scripts/rendered-labels-baseline.json`: **6 files, 68 labels**.
+
+It reads the RENDERED SVG rather than the `.bpmn`, and the second reason is the
+one that settled it: `docs-site-publish.bpmn` carries eight `&amp;#10;` and its
+SVG carries NONE — all eight are in `<bpmn:documentation>`. A source-level grep
+would have demanded a label fix for eight cases that are the documentation half
+of this bean, which wants a different remedy. The matcher also takes hex
+(`&amp;#x2014;`), because the defect is a character reference reaching drawn
+text, not one spelling.
+
+Baselined on file AND count, not presence: a file already listed can gain a
+seventh bad label, and a set of filenames would say nothing. Falsified in four
+directions by hand before being pinned as 12 tests — new file fails, a baselined
+file gaining one fails, progress prints FIXED at exit 0, an empty corpus is
+undetermined.
+
+### Done when — revised
+
+- [ ] the remaining 7 files' `name` attributes are single-escaped and the SVGs
+      re-rendered. **The gate now makes this safe to do incrementally**: fix one
+      file, re-run with `--update`, and the diff a reviewer sees is the
+      shrinking baseline
+- [x] a GATE for it — `check:rendered-labels`, and it cannot be satisfied by the
+      thing that hid this: it asserts over rendered TEXT, where
+      `render:bpmn:check` asserts currency
+- [ ] DECIDE the documentation half separately: should `processes:viz` turn a
+      documentation body's line breaks into markdown paragraphs? Still not
+      assumed — and now provably outside the label gate's scope rather than
+      merely excluded by intent
+- [ ] the counts question: five documentation counts AND one rendered label
+      (`GW_Fork`, "All six" → "All seven") were falsified the moment a job was
+      added, and nothing said so. The rendered one was caught only because a
+      `.pot` diff laid every label side by side
+- [ ] the five-locale exposure: `ar/es/fr/ru/zh` `.pot` templates handed
+      translators the escape INSIDE the msgid. Fixed for code-quality-gates; the
+      other 7 files still carry it
