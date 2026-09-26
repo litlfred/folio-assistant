@@ -90,13 +90,21 @@ gating workflow, so it is the owner's call and not an agent's.
 
 ## Done when
 
-- [ ] The owner picks among the four, or names a fifth
-- [ ] Whatever is chosen, a red step and an unrun step are distinguishable in CI
-      output — the current state renders "never asked" as nothing at all
-- [ ] The `xd1g` detangle poisoning is fixed, and the fix is verified by a run that
-      actually reaches line 663
-- [ ] Re-check whether any OTHER gate in the masked region is red — this bean proves
-      one is, and 112 invocations are still unexamined
+- [x] The owner picks among the four, or names a fifth — **split the job**, 2026-09-26
+- [x] Whatever is chosen, a red step and an unrun step are distinguishable in CI
+      output — 48 individually-concluded steps where there were 47 behind one
+- [x] The `xd1g` detangle poisoning is fixed, and the fix is verified by a run that
+      actually reaches line 663 — `detangle measurements are current` is step 35 of
+      the new job and PASSED on `6f1e445f43e`. Before the split nothing could reach it.
+- [x] Re-check whether any OTHER gate in the masked region is red — **five were.**
+      `tsc` and the t8g3 drift are main's; `check:glossary`, `kg:audit:check`,
+      `check:lockfile-pinning` and `docs:auto:check` were mine, all fixed.
+- [ ] The residual **6** steps behind step 42 — the drift gate wants its own job, the
+      same shape as the decision above. Not started: a third job on a judgement the
+      owner has already made once, for six steps whose current state is demonstrable.
+- [ ] **OWNER ONLY:** if the merge queue (`nytj`'s last box) goes on, BOTH check names
+      must be required — `TypeScript — tests, lint, types (hard)` and `Repository
+      gates (hard)` — or 150 gate invocations run and block nothing.
 
 
 ## The mechanism, pinned to a timestamp — it is ORDER-dependent within ONE run
@@ -325,22 +333,22 @@ pass today. That is a fact about today's tree, **not a property of the arrangeme
 which is the distinction this bean exists to make, and the reason "they pass" does not
 close the gap.
 
-### Done when — updated
+### A NOTE ON THIS BEAN'S OWN CHECKLIST
 
-- [x] The owner picked: split the job
-- [x] A red step and an unrun step are distinguishable — 48 named steps with
-      individual conclusions, where there were 47 behind one
-- [x] The `xd1g` detangle poisoning is fixed AND verified by a run that reaches the
-      detangle step: `detangle measurements are current` is step 35 and it PASSED on
-      `6f1e445f43e`. This box could not be ticked before the split existed.
-- [x] Whether any OTHER gate in the masked region was red — answered: FIVE were, and
-      every one is now named. `tsc` and the drift are main's; `check:glossary`,
-      `kg:audit:check`, `check:lockfile-pinning` and `docs:auto:check` were mine and
-      are fixed.
-- [ ] **NEW:** the residual 6 steps behind step 42. Same shape, same decision — the
-      drift gate in its own job. Not started: it is a third job on a judgement the
-      owner has already made once, and the marginal gain is six steps whose current
-      state is already demonstrable.
-- [ ] **OWNER ONLY:** if the merge queue (`nytj`'s last box) is switched on, BOTH
-      check names must be required — `TypeScript — tests, lint, types (hard)` and
-      `Repository gates (hard)` — or 150 gate invocations run and block nothing.
+An earlier revision of this section carried a SECOND, ticked copy of the list above
+while the canonical one still read as open. `check:bean-bodies` named it
+`[shadow-checklist]` — *"the section a reader and every tool consult says this is not
+done"* — and it was right: two checklists that disagree leave the authoritative one
+lying. The boxes are ticked in place now and there is one list.
+
+Worth recording HOW it got there, because it is this bean's own subject a third time:
+I ran the full gate set, verified, and then edited the tree. The gate that catches this
+lives in `bun test`, and `bun test` is behind `tsc` in the new job order — which is red
+on main's `vitest` defect — so CI could not have told me. I found it by running the
+bean checks by hand, which is the only reason it is not on `main`.
+
+**That is a live consequence of the reordering**: `bun test` runs LAST in `typescript`
+now, so while `tsc` is red, `bun test` does not run at all. The ordering assumed lint
+and typecheck could not fail for reasons outside their own subject; `tsc` currently
+fails for exactly such a reason. Landing the one-line `tsconfig` exclude unmasks it,
+which is a second argument for that patch beyond tidiness.
