@@ -35,6 +35,7 @@
 
 import {
   cleanMarkdownText,
+  isTranslatable,
   MD_BLOCKQUOTE_RE,
   MD_CODE_FENCE_RE,
   MD_FRONT_MATTER_DELIM,
@@ -223,7 +224,21 @@ function unescapePo(s: string): string {
 // SUBSTITUTES, which is a different question from what the extractor OFFERS.
 
 
-const MD_INJ_MIN_LEN = 3;
+// `MD_INJ_MIN_LEN = 3` stood here — a minimum in CHARACTERS, deciding what this
+// module will SUBSTITUTE, while `isTranslatable` in `pot-extract.ts` decides what
+// gets OFFERED. Those are the same question asked from two ends, and after `6b8u`
+// moved the extractor to a count of LETTERS the two ends disagreed.
+//
+// Measured over `cat-harness/docs`: **468 occurrences of 46 distinct msgids** were
+// extracted, handed to translators, and then structurally un-injectable because
+// they are shorter than three characters. 23 are in `zh`, and they are ordinary
+// two-character words — 原因, 标准, 选项, 代价 — which is exactly the population
+// `6b8u` existed to stop dropping. It rescued them on the extract side and
+// stranded them on the inject side.
+//
+// So the predicate is imported rather than restated. Bean `wlyg`: what the
+// extractor treats as translatable and what the injector treats as translatable
+// must be ONE answer.
 
 // ── Injection ───────────────────────────────────────────────────
 
@@ -273,7 +288,7 @@ export function injectMarkdown(
   /** Look up translation for raw text, return Liquid-restored result or null. */
   const translate = (rawText: string): string | null => {
     const msgid = cleanMarkdownText(rawText);
-    if (msgid.length < MD_INJ_MIN_LEN) return null;
+    if (!isTranslatable(msgid)) return null;
     totalSpans++;
     const msgstr = translations.get(msgid);
     if (msgstr && msgstr !== msgid) {

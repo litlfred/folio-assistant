@@ -181,7 +181,7 @@ const MD_KRAMDOWN_CONSUMING_RE = /^\{:\s*toc\s*\}$/;
  * without it the property escape is a syntax error rather than a silent
  * mismatch.
  */
-function isTranslatable(text: string): boolean {
+export function isTranslatable(text: string): boolean {
   let letters = 0;
   for (const ch of text) {
     if (/\p{L}/u.test(ch) && ++letters >= MD_MIN_TEXT_LETTERS) return true;
