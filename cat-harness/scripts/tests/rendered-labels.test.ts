@@ -68,7 +68,9 @@ describe("the ratchet", () => {
   function fixture(perFile: Record<string, string[]>): { root: string; baseline: string } {
     const root = mkdtempSync(join(tmpdir(), "rendered-labels-"));
     spawnSync("git", ["init", "-q"], { cwd: root });
-    const dir = join(root, "docs", "assets", "img", "workflows");
+    // No site-root literal: the check keys on a `workflows/` segment anywhere in
+    // the path, so the fixture must not assert where the site lives.
+    const dir = join(root, "img", "workflows");
     mkdirSync(dir, { recursive: true });
     for (const [name, labels] of Object.entries(perFile)) {
       writeFileSync(join(dir, name), svg(labels));
@@ -125,7 +127,7 @@ describe("the ratchet", () => {
   test("a file AT its baseline count passes — the outstanding sweep does not fail the gate", () => {
     const { root, baseline } = fixture({ "a.svg": [BAD, BAD] });
     try {
-      writeFileSync(baseline, JSON.stringify({ counts: { "docs/assets/img/workflows/a.svg": 2 } }));
+      writeFileSync(baseline, JSON.stringify({ counts: { "img/workflows/a.svg": 2 } }));
       const r = checkRenderedLabels(root, baseline);
       expect(r.unexpected).toEqual([]);
       expect(r.fixed).toEqual([]);
@@ -140,9 +142,9 @@ describe("the ratchet", () => {
     // fail. A set of filenames would have said nothing.
     const { root, baseline } = fixture({ "a.svg": [BAD, BAD, BAD] });
     try {
-      writeFileSync(baseline, JSON.stringify({ counts: { "docs/assets/img/workflows/a.svg": 2 } }));
+      writeFileSync(baseline, JSON.stringify({ counts: { "img/workflows/a.svg": 2 } }));
       const r = checkRenderedLabels(root, baseline);
-      expect(r.unexpected).toEqual(["docs/assets/img/workflows/a.svg"]);
+      expect(r.unexpected).toEqual(["img/workflows/a.svg"]);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
@@ -151,10 +153,10 @@ describe("the ratchet", () => {
   test("progress is FIXED and never a failure", () => {
     const { root, baseline } = fixture({ "a.svg": [BAD, OK] });
     try {
-      writeFileSync(baseline, JSON.stringify({ counts: { "docs/assets/img/workflows/a.svg": 2 } }));
+      writeFileSync(baseline, JSON.stringify({ counts: { "img/workflows/a.svg": 2 } }));
       const r = checkRenderedLabels(root, baseline);
       expect(r.unexpected).toEqual([]);
-      expect(r.fixed).toEqual(["docs/assets/img/workflows/a.svg"]);
+      expect(r.fixed).toEqual(["img/workflows/a.svg"]);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
@@ -167,8 +169,8 @@ describe("the ratchet", () => {
     const root = mkdtempSync(join(tmpdir(), "rendered-labels-scope-"));
     spawnSync("git", ["init", "-q"], { cwd: root });
     try {
-      mkdirSync(join(root, "docs", "assets", "img", "icons"), { recursive: true });
-      writeFileSync(join(root, "docs", "assets", "img", "icons", "i.svg"), svg([BAD]));
+      mkdirSync(join(root, "img", "icons"), { recursive: true });
+      writeFileSync(join(root, "img", "icons", "i.svg"), svg([BAD]));
       const r = checkRenderedLabels(root, join(root, "none.json"));
       // No workflow SVG at all — so undetermined, and NOT a finding about the icon.
       expect(r.undetermined).toBe(true);
