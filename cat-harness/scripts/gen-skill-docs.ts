@@ -296,6 +296,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // how this was caught rather than shipped as two uncategorised packages.
   crdm: "CRDM requirements methodology (skills/crdm)",
   raci: "RACI involvement model (skills/raci)",
+  "spec-kit": "Spec Kit spec-driven development (skills/spec-kit)",
   // Synced from claude-scientific-skills at a pinned commit (issue #556):
   // somebody else's bytes, one package per skill so upstream's relative links
   // resolve. `remote-stubs` was retired when these arrived.
@@ -749,6 +750,12 @@ async function main(): Promise<void> {
       const page: string[] = [];
       page.push("---");
       page.push("layout: default");
+      // The page SAYS it is generated, so a consumer need not infer it from a
+      // path. `check:reference-direction` reads exactly this: a name in
+      // machine output is not an authored reference, and the fix for one is
+      // in the SOURCE skill, not here (145 occurrences across 31 of these
+      // pages were reporting as authored prose until 2026-09-24).
+      page.push("generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill");
       // QUOTED, always. A skill's title is its H1, which is prose — so it
       // carries colons ("Contrast: measured over the darkest thing that could
       // be there") and backticks, and YAML rejects both unquoted. The page
@@ -811,6 +818,7 @@ async function main(): Promise<void> {
   const idx: string[] = [];
   idx.push("---");
   idx.push("layout: default");
+  idx.push("generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill");
   idx.push("title: Skill instructions");
   idx.push("nav_order: 6");
   idx.push("has_children: true");

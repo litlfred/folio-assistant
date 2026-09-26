@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: '`uses[]` Editorial Review'
 parent: Skill instructions
 ---
