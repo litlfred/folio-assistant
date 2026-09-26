@@ -89,6 +89,7 @@ Stated so a caller does not assume both have the same prerequisites.
 scripts — `validate-tex`, `audit-tex-source`, `latexmk-compile`, `render-latex`,
 `generate-block-tex`, `generate-main-tex`, `headless-render-qc`.
 
+_2026-09-26T03:34:29Z_ — Claimed by claude/fervent-mccarthy-nw4olk — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 ---
 
