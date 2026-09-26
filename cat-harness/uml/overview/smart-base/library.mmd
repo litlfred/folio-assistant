@@ -8,5 +8,13 @@ classDiagram
       images [1] object[] | null
       undetermined_reason [0..1] string
     }
+    class smart_base_library_folio_vector_labels_v1_folio_vector_labels_v1["folio-vector-labels/v1"] {
+      <<json: VectorLabelsSidecarSchema>>
+      $schema [1] 'folio-vector-labels/v1'
+      doc_id [1] string
+      pages [1] object[] | null
+      undetermined_reason [0..1] string
+    }
   }
   cssClass "smart_base_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
+  cssClass "smart_base_library_folio_vector_labels_v1_folio_vector_labels_v1" fa_uml_kind_library
