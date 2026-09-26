@@ -1,0 +1,51 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "cat-harness/scripts/check-rendered-labels.ts",
+    "script_hash": "485f8797b697"
+  },
+  "subject": {
+    "kind": "corpus",
+    "id": "rendered-diagram-labels"
+  },
+  "updated_at": "2026-09-26T12:21:50.616Z",
+  "families": {
+    "literal-character-reference": {
+      "summary": "A rendered diagram label showing an XML character reference as literal text — a reader sees `Dependency advisories&#10;(WARN-ONLY)` inside the box. The cause is a DOUBLE-escaped `name` in the BPMN (`&amp;#10;` where `&#10;` was meant). Measured against the RENDERED SVG rather than the source, because a source grep finds only the escape form somebody already knows and cannot tell a label from `<bpmn:documentation>`, whose eight instances in docs-site-publish want a different remedy. `render:bpmn:check` is green across all of these and correctly so: it asks whether the SVG matches the renderer's output, and the renderer faithfully produced the wrong thing. Known counts are baselined so an outstanding sweep does not fail the gate; a NEW file, or an existing file gaining a label, does. Bean `li5y`.",
+      "count": 6,
+      "entries": [
+        {
+          "file": "cat-harness/docs/assets/img/workflows/atomic-mass-drift-check.svg",
+          "count": 8,
+          "known": true
+        },
+        {
+          "file": "cat-harness/docs/assets/img/workflows/ci-health-watch.svg",
+          "count": 10,
+          "known": true
+        },
+        {
+          "file": "cat-harness/docs/assets/img/workflows/graph-detanglement.svg",
+          "count": 20,
+          "known": true
+        },
+        {
+          "file": "cat-harness/docs/assets/img/workflows/jsonld-drift-check.svg",
+          "count": 8,
+          "known": true
+        },
+        {
+          "file": "cat-harness/docs/assets/img/workflows/pr-checks-present.svg",
+          "count": 12,
+          "known": true
+        },
+        {
+          "file": "cat-harness/docs/assets/img/workflows/repository-health-watch.svg",
+          "count": 10,
+          "known": true
+        }
+      ]
+    }
+  },
+  "total": 6
+}
