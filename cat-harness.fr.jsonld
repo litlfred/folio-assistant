@@ -272,10 +272,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T14:37:56.908Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/016b9c0f46c22e23802559e76368a1b6cfa64e06",
-  "sourceCommitSha": "016b9c0f46c22e23802559e76368a1b6cfa64e06",
-  "sourceCommitAt": "2026-09-26T16:34:38+02:00",
+  "generatedAt": "2026-09-26T17:00:55.628Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/37a36ce9296b95a9ad4862d51dc496ac44053143",
+  "sourceCommitSha": "37a36ce9296b95a9ad4862d51dc496ac44053143",
+  "sourceCommitAt": "2026-09-26T18:57:43+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -289,7 +289,7 @@
     "Role": 148,
     "ProcessNode": 861,
     "Tool": 101,
-    "Schema": 124,
+    "Schema": 125,
     "GraphKind": 34,
     "Directory": 44,
     "Asset": 3
@@ -889,7 +889,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/security"
       ],
       "instructionsPath": "skills/security/injection-boundaries.md",
-      "instructionLines": 155,
+      "instructionLines": 187,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -39231,6 +39231,14 @@
       "name": "skill-package",
       "title": "The SKILL-FRAMEWORK vocabulary — actors, capabilities, skills, requirements,",
       "module": "schemas/skill-package.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/source-provenance",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "source-provenance",
+      "title": "WHERE BYTES CAME FROM — the source-side provenance pair, and a signature.",
+      "module": "schemas/source-provenance.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {

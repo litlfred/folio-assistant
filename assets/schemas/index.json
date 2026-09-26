@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 175,
+      "count": 176,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -1086,6 +1086,14 @@
       "name": "skill-package",
       "graphNode": "schema",
       "summary": "The SKILL-FRAMEWORK vocabulary — actors, capabilities, skills, requirements,",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/source-provenance.ts",
+      "instance": "cat-harness",
+      "name": "source-provenance",
+      "graphNode": "schema",
+      "summary": "WHERE BYTES CAME FROM — the source-side provenance pair, and a signature.",
       "isTest": false
     },
     {
@@ -16885,15 +16893,15 @@
         }
       ],
       "extendsNames": [
-        "ProvenanceSchema"
+        "SourceProvenanceSchema"
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/intake.ts#DateTime"
+        "cat-harness/schemas/intake.ts#DateTime",
+        "cat-harness/schemas/source-provenance.ts#SourceProvenanceSchema"
       ],
       "unresolved": [],
       "external": [
-        "ProvenanceSchema",
         "z"
       ],
       "exported": true
@@ -26372,6 +26380,116 @@
       "extendsNames": [],
       "values": [],
       "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/source-provenance.ts#Signature",
+      "name": "Signature",
+      "module": "cat-harness/schemas/source-provenance.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/source-provenance.ts#SignatureSchema",
+      "name": "SignatureSchema",
+      "module": "cat-harness/schemas/source-provenance.ts",
+      "kind": "zod-object",
+      "doc": "A digital signature over the materialized bytes.",
+      "fields": [
+        {
+          "name": "format",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "How to interpret `value` — a media type or a named scheme."
+        },
+        {
+          "name": "value",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The signature itself, or a URI that resolves to it."
+        },
+        {
+          "name": "signer",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Who signed, as a key identifier."
+        },
+        {
+          "name": "verifiedAt",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "When it was last CHECKED against the signer's key — never when it was recorded. Same discipline as {@link FixitySchema.verifiedAt}."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/source-provenance.ts#SourceProvenance",
+      "name": "SourceProvenance",
+      "module": "cat-harness/schemas/source-provenance.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/source-provenance.ts#SourceProvenanceSchema",
+      "name": "SourceProvenanceSchema",
+      "module": "cat-harness/schemas/source-provenance.ts",
+      "kind": "zod-object",
+      "doc": "WHERE THIS CAME FROM — a pointer pair, not a flag.",
+      "fields": [
+        {
+          "name": "upstream",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not \"there is none\"."
+        },
+        {
+          "name": "local",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The original **in this repository** this was taken from."
+        },
+        {
+          "name": "signature",
+          "type": "SignatureSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/source-provenance.ts#SignatureSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -38594,10 +38712,10 @@
         },
         {
           "name": "provenance",
-          "type": "ProvenanceSchema",
+          "type": "SourceProvenanceSchema",
           "optional": false,
           "array": false,
-          "doc": "WHERE THIS CAME FROM — see {@link ProvenanceSchema}."
+          "doc": "WHERE THIS CAME FROM — see {@link SourceProvenanceSchema}."
         },
         {
           "name": "localPath",
@@ -38680,14 +38798,14 @@
       "refs": [
         "folio-assistant-core/schemas/materialization.ts#CompiledInputsSchema",
         "folio-assistant-core/schemas/materialization.ts#FixitySchema",
-        "folio-assistant-core/schemas/materialization.ts#GatesSchema",
-        "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema"
+        "folio-assistant-core/schemas/materialization.ts#GatesSchema"
       ],
       "unresolved": [],
       "external": [
         "MATERIALIZATION_PURPOSES",
         "MATERIALIZATION_SCHEMA_TAG",
         "MATERIALIZATION_STATES",
+        "SourceProvenanceSchema",
         "z"
       ],
       "exported": true
@@ -38703,116 +38821,6 @@
       "refs": [],
       "unresolved": [],
       "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/materialization.ts#Provenance",
-      "name": "Provenance",
-      "module": "folio-assistant-core/schemas/materialization.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema",
-      "name": "ProvenanceSchema",
-      "module": "folio-assistant-core/schemas/materialization.ts",
-      "kind": "zod-object",
-      "doc": "WHERE THIS CAME FROM — a pointer pair, not a flag.",
-      "fields": [
-        {
-          "name": "upstream",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not \"there is none\"."
-        },
-        {
-          "name": "local",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The original **in this repository** this was taken from."
-        },
-        {
-          "name": "signature",
-          "type": "SignatureSchema.optional()",
-          "optional": true,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "folio-assistant-core/schemas/materialization.ts#SignatureSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/materialization.ts#Signature",
-      "name": "Signature",
-      "module": "folio-assistant-core/schemas/materialization.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "folio-assistant-core/schemas/materialization.ts#SignatureSchema",
-      "name": "SignatureSchema",
-      "module": "folio-assistant-core/schemas/materialization.ts",
-      "kind": "zod-object",
-      "doc": "A digital signature over the materialized bytes.",
-      "fields": [
-        {
-          "name": "format",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "How to interpret `value` — a media type or a named scheme."
-        },
-        {
-          "name": "value",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The signature itself, or a URI that resolves to it."
-        },
-        {
-          "name": "signer",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Who signed, as a key identifier."
-        },
-        {
-          "name": "verifiedAt",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false,
-          "doc": "When it was last CHECKED against the signer's key — never when it was recorded. Same discipline as {@link FixitySchema.verifiedAt}."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
       "exported": true
     },
     {
@@ -42604,6 +42612,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/intake.ts#IntakeSourceSchema",
+      "to": "cat-harness/schemas/source-provenance.ts#SourceProvenanceSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/interaction.ts#InteractionNodeSchema",
       "to": "cat-harness/schemas/interaction.ts#InteractionProfileSchema",
       "via": "default",
@@ -44042,6 +44058,14 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/source-provenance.ts#SourceProvenanceSchema",
+      "to": "cat-harness/schemas/source-provenance.ts#SignatureSchema",
+      "via": "signature",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/staging-preview.ts#StagingPreviewBlockSchema",
@@ -45687,22 +45711,6 @@
       "from": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
       "to": "folio-assistant-core/schemas/materialization.ts#GatesSchema",
       "via": "gates",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema",
-      "to": "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema",
-      "via": "provenance",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema",
-      "to": "folio-assistant-core/schemas/materialization.ts#SignatureSchema",
-      "via": "signature",
       "kind": "field",
       "optional": true,
       "array": false
