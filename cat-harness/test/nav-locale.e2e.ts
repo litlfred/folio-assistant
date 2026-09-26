@@ -77,6 +77,7 @@ const GUIDE = INDEX.pages["guides/agent-onboarding"];
 /**
  * A nav item with no translation in ANY locale — the fallback case.
  *
+<<<<<<< HEAD
  * **This fixture was `getting-started`, and it did exactly what its own
  * docblock promised.** That note read: *"a real page of this site that has
  * never been translated. If it ever is, this test starts failing loudly rather
@@ -112,6 +113,25 @@ const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
   // Case 2. A real page of this site, deliberately one the index does not list.
   return { key: "agentic-harness", url: "/agentic-harness.html", title: "Agentic harness" };
 })();
+=======
+ * Named, not counted: `architecture` is a real page of this site that has
+ * never been translated. If it ever is, this test starts failing loudly rather
+ * than silently verifying nothing, which is the correct direction to fail in.
+ *
+ * ## The tripwire fired once, 2026-09-26, and this is what it cost
+ *
+ * It was `getting-started` until #1374 translated that page into all six UN
+ * languages. The design worked exactly as written above — but the FAILURE MODE
+ * was `element(s) not found` on a locator, which says nothing about why. Three
+ * environments and a bisect against `origin/main` went into learning that the
+ * page had simply been translated.
+ *
+ * So the premise is now ASSERTED rather than assumed: the test below fails with
+ * a sentence naming the page and telling the next person to re-point this
+ * constant. Failing loudly was right; failing legibly is what it was missing.
+ */
+const UNTRANSLATED = { key: "architecture", url: "/architecture.html", title: "Architecture" };
+>>>>>>> origin/main
 
 /** just-the-docs' nav markup, reduced to what the filter touches. */
 function harness(indexIsland: string): string {
@@ -253,6 +273,20 @@ test.describe("the navbar shows the selected locale", () => {
     const box = (await link.boundingBox())!;
     expect(box.width).toBeGreaterThan(0);
     expect(box.height).toBeGreaterThan(0);
+  });
+
+  test("...and the premise of that fixture still holds — it really is untranslated", () => {
+    // Asserted, not assumed. Without this the fallback test below fails with
+    // `element(s) not found`, which is true and tells you nothing: the locator
+    // misses because the JS correctly rewrote the href to a localised URL.
+    // This says what actually happened, so the fix is one line rather than a
+    // bisect. See UNTRANSLATED's docblock — the tripwire has fired once.
+    expect(
+      Object.keys(INDEX.pages),
+      `\`${UNTRANSLATED.key}\` now HAS a translation, so it can no longer stand for the ` +
+        `no-translation case. That is good news about the site and a two-line fix here: ` +
+        `re-point UNTRANSLATED at a page still absent from _data/translations.json.`,
+    ).not.toContain(UNTRANSLATED.key);
   });
 
   test("a page with no translation falls back to the source language", async ({ page }) => {

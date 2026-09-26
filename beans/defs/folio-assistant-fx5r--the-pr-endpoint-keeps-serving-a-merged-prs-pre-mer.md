@@ -138,3 +138,33 @@ visible rather than quietly edited.
       field. Two tests now pin the REFERENT, which is the cheap half; a
       general rule (no advice string names `mergeable_state` approvingly)
       would be the whole one.
+
+---
+
+## 2026-09-26 — a THIRD copy, and it is the answer to this bean's open item
+
+This bean's last unchecked item is *"nothing gates the prose generally"*. It
+has now cost something concrete.
+
+PR #1362 fixed the two advice strings in `scripts/check-head-has-run.ts`.
+**`.github/workflows/pr-checks-present.yml` carries its own third copy**, and
+it was not touched, because nothing links them. Found by reading run 133's log
+rather than the file — the pre-`fx5r` text was being posted to live PRs hours
+after the fix merged.
+
+The drift is PARTIAL, which is the part worth keeping:
+
+| | the merge-ref probe (code) | the UNKNOWN advice (prose) |
+|---|---|---|
+| `check-head-has-run.ts` | ✅ correct | ✅ fixed by #1362 |
+| `pr-checks-present.yml` | ✅ correct, line 163 | ❌ pre-`fx5r`, line 192 |
+
+**The code was right in both places and the prose in only one.** A reader who
+checked whether the fix had landed by grepping for `ls-remote` would have found
+it in both and concluded the job was done.
+
+Aligned now. But that is the instance, not the fix: a fourth copy is free to
+appear tomorrow. The general rule this bean asks for — *no advice string names
+`mergeable_state` approvingly, anywhere* — would have caught this one, and is
+still not written.
+
