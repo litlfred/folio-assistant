@@ -857,6 +857,15 @@ jobs:
           # defect hid behind: PLATFORM meant the repo root in one test and
           # cat-harness/ in five siblings, in one directory.
           bun run check:anchor-names
+          # Bean `fx5r`'s last open item, and the only one a test could not
+          # close: the other four fixed particular strings. PR #1362 fixed the
+          # two advice strings in check-head-has-run.ts and MISSED the third
+          # copy in pr-checks-present.yml, which kept being posted to live PRs
+          # for four days, because nothing linked them. The rule is structural
+          # rather than about intent -- a mention passes when its neighbourhood
+          # says something about the field's reliability, whether that is a
+          # caution or a measured licence, and fails when it is bare.
+          bun run check:stale-field-advice
           # Bean `jijc`, under the owner's REPLACE ruling on `b5f0`:
           # DECLARATION_FILENAME existed the whole time and 20 non-test call
           # sites built the path from a literal instead, which is what turns

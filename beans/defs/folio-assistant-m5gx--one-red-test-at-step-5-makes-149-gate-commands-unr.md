@@ -1,11 +1,11 @@
 ---
 # folio-assistant-m5gx
 title: One red test at step 5 makes 149 gate commands unreachable in CI — the typescript job stops and 45 of its 50 steps never run
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T10:20:26Z
-updated_at: 2026-09-26T10:20:44Z
+updated_at: 2026-09-26T12:15:44Z
 parent: folio-assistant-1xhc
 ---
 
@@ -67,3 +67,5 @@ anything in steps 6–50, because those produce no evidence either way.
 That any of the 149 is currently broken. Nobody knows, and that is the finding —
 not a prediction that something is wrong, but that the question is unanswerable
 from CI right now.
+
+_2026-09-26T12:15:44Z_ — Claimed by claude/sleepy-rubin-mr6kdu — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
