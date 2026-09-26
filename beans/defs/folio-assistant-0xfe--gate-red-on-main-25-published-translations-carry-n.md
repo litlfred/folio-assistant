@@ -1,7 +1,7 @@
 ---
 # folio-assistant-0xfe
 title: 'GATE RED ON MAIN: 25 published translations carry no `.po` catalogue, compounding across three merges'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T06:44:45Z
@@ -9,13 +9,23 @@ updated_at: 2026-09-26T06:47:24Z
 parent: folio-assistant-bzyu
 ---
 
-
 `translation-drift`'s ratchet test — "no NEW drift, and nothing unreadable" —
-fails on `main`. 25 published translations are served with no `.po` catalogue
-and no entry in `UNCATALOGED`, so the gate has been red on every merge since
-it started.
+was failing on `main`: 25 published translations served with no `.po` catalogue
+and no entry in `UNCATALOGED`.
 
-## Measured 2026-09-26, by bisecting `main`'s first-parent history
+**Fixed on `main` by #1364, not by this bean.** Closed on evidence rather than
+authorship, per `bean-coordination` §"Closing a bean whose work has already
+landed" — the evidence is re-derived below rather than taken from #1364's word.
+
+## Why it is recorded anyway
+
+Nothing else states WHEN `main` went red or HOW FAR it had drifted. #1364's
+account fixes the state; this is the history, and it is the part that says the
+gate fired three times and three merges went in past it.
+
+## Measured 2026-09-26 by bisecting `main`'s first-parent history
+
+One test run per merge, on a pristine worktree each time:
 
 | merge | findings |
 |---|---|
@@ -27,85 +37,60 @@ it started.
 Three translation PRs merged in a row, each publishing pages with no
 catalogue, each making the same test worse. **The gate fired on all three and
 the merges kept coming** — the same shape as `skill-manifest-coverage` under
-#1365, where a working hard gate named six files exactly and nobody acted
-between the merge and the next day.
+#1365, where a working hard gate named six files exactly and nothing acted on
+it. That recurrence is the finding worth keeping; the 25 entries were only its
+symptom.
 
 A clean 5 x 5 grid: `accessibility`, `content-types`, `contributing`,
-`getting-started`, `installation` x `ar`, `es`, `fr`, `ru`, `zh`. Re-measured
-on `772b14accd` after `main` moved: still exactly 25.
+`getting-started`, `installation` x `ar`, `es`, `fr`, `ru`, `zh`.
 
-## Why RECORDING is the fix and generating catalogues is not
+## Why recording was the right remedy, and not generating catalogues
 
-Every one of the 25 is a catalogue finding. **Zero are structure findings**,
-and that is a measurement rather than an assumption: `driftFor` runs the
-structure check independently of the catalogue check in the same loop, so each
-page was compared against its source and `sameStructure` held. Only the `.po`
-is absent.
+All 25 were **catalogue** findings. **Zero were structure findings** — measured,
+not assumed: `driftFor` runs the structure check independently of the catalogue
+check in the same loop, so every page was compared against its source and
+`sameStructure` held. Only the `.po` was absent.
 
-`UNCATALOGED`'s own docstring settles the rest — a catalogue "cannot be
-derived from a finished translation without inventing the segmentation". So
-the two `agent-onboarding` entries already there are precedent for exactly
-this situation, and the same reason applies verbatim.
+`UNCATALOGED`'s own docstring settles it: a catalogue "cannot be derived from a
+finished translation without inventing the segmentation". The two
+`agent-onboarding` entries already there were precedent for exactly this.
 
-## What this bean does NOT decide
+This remains a BACKLOG, not a policy. Every entry on `main` carries a date so
+it cannot quietly become permanent, and the translation owner clears them by
+adding the catalogues. **That work is still open and is not this bean's.**
 
-It does not decide that these pages should ship without catalogues. The list
-is a BACKLOG by its own docstring, every entry carries `2026-09-26`, and
-whoever owns the translation work clears them by adding the catalogues.
+## Evidence for closing
 
-## The overlap with #1370, deliberately
+Re-derived on `main` at `617609dcd3`, in the real checkout:
 
-#1370 records five of the same 25 (`getting-started`). Recording only the
-other 20 was tried first and measured: the gate stays RED at 5 findings, so a
-20-entry PR cannot unblock `main` by itself and would wait on a 63-bean sweep
-to land. This carries all 25 instead.
+| | |
+|---|---|
+| `translation-drift.test.ts` on `main` | **18 pass / 0 fail** |
+| `main`'s `UNCATALOGED` keys vs the set measured here | **identical** — `diff` empty, 27 entries (2 pre-existing + 25) |
+| `check:retired-front-matter`, `check:glossary`, `docs:auto:check`, `check:ci-invocations`, `kg:detangle:check`, `gen-skill-docs --check` | all exit 0 |
+| `bun test` on `main` | 11741 pass / 2 fail, and **both failures are a worktree artefact** — `INSTANCE_ROOT is this platform checkout` and `every instance is found` fail only when run from a git worktree at another path; both pass in the real checkout |
 
-Whichever PR merges second drops its copy of those five. Not left to
-vigilance: the "no page is recorded TWICE" test spans `KNOWN_DRIFT` and
-`UNCATALOGED` together, so the duplicate fails the suite rather than merging
-quietly. That is the `kfkh` shape — two sessions adding the same key at
-different line positions merge with no conflict — and it is caught here.
+## What this cost, recorded because it is the useful part
+
+This was the ninth time in one session that work was duplicated by a sibling,
+and the first that checking open PRs first would not have caught: #1364's title
+is about beans `k59d` / GOAL 1 / `tuvg` and gives no sign it carries a
+`translation-drift` fix. A PR list is searched by subject; a fix riding inside
+an unrelated PR is invisible to that search. Recorded rather than filed as a
+defect — `c3d7` owns bean-claim stomping, and this is the PR-level analogue it
+does not cover.
 
 ## Done when
 
-- [x] every one of the 25 is recorded with a date and a reason naming what is missing
-- [x] `translation-drift.test.ts` green — 18 pass, 0 fail (was 17/1)
-- [x] the reason is a measurement: zero structure findings, verified via the independent structure check
-- [x] the gate set run against the MERGE commit, not `bun test` alone — CI on `e62f82bbd0`:
-      11738 pass / 5 fail, and `translation-drift` is **not** among the 5
-- [ ] #1370's session told to drop its five rather than extend, so the second merge does not duplicate
-- [ ] the catalogues themselves added, or these entries re-justified — **owner's, not this bean's**
+- [x] `main`'s red on `translation-drift` explained, with the commit that
+      introduced it and the two that compounded it
+- [x] the remedy justified against the alternative, from the registry's own contract
+- [x] closed on re-derived evidence rather than on #1364's word
+- [ ] the `.po` catalogues themselves added, or the 25 entries re-justified —
+      **the translation owner's, tracked under the epic `bzyu`, not here**
 
-## Evidence
+## Summary of Changes
 
-Bisect above, re-measured on `772b14accd`. After recording:
-`bun test cat-harness/content/pipeline/translation-drift.test.ts` -> 18 pass,
-0 fail, 76 expect() calls. `UNCATALOGED` holds 27 entries (2 pre-existing +
-25). Intermediate state with only 20 recorded left exactly the 5
-`getting-started` findings, which is what established that a partial fix does
-not clear the gate.
-
-## CI, 2026-09-26 06:51Z — the gate this bean exists for passed
-
-`TypeScript — tests, lint, types (hard)` on `e62f82bbd0`: **11738 pass / 5 fail**.
-`translation-drift`'s ratchet is absent from the failures, measured on the merge
-of this head into `main` rather than only locally. The change works.
-
-The 5 that remain are #1365's set — the retired `roles:` key (two are one test
-file), 8 stale reference pages, 6 unlisted manifest entries, and the
-declared-directory guard as a knock-on. None touches
-`content/pipeline/translation-drift.ts`.
-
-**#1376 and #1381 are exactly complementary**, which is itself evidence each
-fixes what it claims and nothing more:
-
-| | failures |
-|---|---|
-| #1376 — fixes #1365's five | **1**, `translation-drift` |
-| #1381 — fixes `translation-drift` | **5**, #1365's set |
-
-Not porting #1376's 37 files here: that change was #1377, closed as a strict
-subset of #1376, and re-adding it would recreate a withdrawn duplicate in the
-one file category where two branches collide worst. Not spending the one
-re-run either — these five fail deterministically on pristine `origin/main` at
-both `ffe24b51cc` and `772b14accd`, so there is no suspected flake to confirm.
+No code. The `UNCATALOGED` change this bean was opened to make was landed
+independently by #1364 while it was being written, verified byte-identical, so
+it was dropped rather than merged as a no-op. What lands is this record.

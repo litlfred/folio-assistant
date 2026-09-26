@@ -133,169 +133,166 @@ export const UNCATALOGED: UncatalogedTranslation[] = [
     since: "2026-09-20",
     reason: "same as `es/agent-onboarding` — published, structurally current, no catalogue",
   },
-  // The 20 below are `accessibility`, `content-types`, `contributing` and
-  // `installation` in five locales, recorded 2026-09-26 by a session that found
-  // `main` RED on this gate and did not publish any of them.
+
+  // The five docs pages translated into all five locales during 2026-09-25/26,
+  // none of which shipped a `.po`. Recorded rather than left failing, on the
+  // owner's instruction (2026-09-26) after `main` had been red on this for
+  // hours and every open pull request with it.
   //
-  // RECORDED, NOT DECIDED, and the reason is a MEASUREMENT. The structure check
-  // runs independently of the catalogue check in the same loop, so each of these
-  // was compared against its source and produced no finding: `sameStructure`
-  // held for all 20. Only the `.po` is missing. That is the same situation as
-  // the `agent-onboarding` entries above, which is why the same reason applies.
-  //
-  // Bisected down `main`'s first-parent history: green at `ffe24b51cc`, 7
-  // findings at #1368, 17 at #1371, 25 at #1374. Three translation merges in a
-  // row each published pages with no catalogue, and the gate failed on every
-  // one of them.
-  //
-  // The five `getting-started` entries of that same 25 are NOT here — PR #1370
-  // records those, and the two sets are deliberately disjoint so neither branch
-  // re-records the other's. The "recorded TWICE" test is what enforces it.
-  //
-  // A BACKLOG, per this list's own docstring, each carrying today's date so it
-  // cannot quietly become permanent. Whoever owns the translation work clears
-  // these by adding the catalogues; nothing here decides they should not exist.
+  // These are a BACKLOG, not a dispensation. `translation-drift`'s own comment
+  // states the rule that keeps them honest: an entry whose page has since been
+  // fixed must not survive, "that is how a backlog turns into a set of claims
+  // about a corpus that has moved on". Writing the catalogues is the fix; this
+  // records why they are absent and when anybody may start asking.
   {
     translation: "ar/accessibility",
     since: "2026-09-26",
     reason:
-      "published with no `.po`; the page's structure matches its source, so it is current but untracked. A catalogue cannot be derived from a finished translation without inventing the segmentation",
+      "published with no `.po`; the page's structure matches its source, so it is current but untracked. Same ground as `es/agent-onboarding` above, and the structural half is MEASURED rather than assumed: `translation-drift` compares `sameStructure(src, got)` on its own branch and reports a mismatch as drift, separately from a missing catalogue. None of these 25 reported drift, so each is structurally current",
   },
   {
     translation: "es/accessibility",
     since: "2026-09-26",
-    reason: "same as `ar/accessibility` — published, structurally current, no catalogue",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "fr/accessibility",
     since: "2026-09-26",
-    reason: "same as `ar/accessibility` — published, structurally current, no catalogue",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "ru/accessibility",
     since: "2026-09-26",
-    reason: "same as `ar/accessibility` — published, structurally current, no catalogue",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "zh/accessibility",
     since: "2026-09-26",
-    reason: "same as `ar/accessibility` — published, structurally current, no catalogue",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "ar/content-types",
     since: "2026-09-26",
     reason:
-      "published with no `.po`; the page's structure matches its source, so it is current but untracked. A catalogue cannot be derived from a finished translation without inventing the segmentation",
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "es/content-types",
     since: "2026-09-26",
-    reason: "same as `ar/content-types` — published, structurally current, no catalogue",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "fr/content-types",
     since: "2026-09-26",
-    reason: "same as `ar/content-types` — published, structurally current, no catalogue",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "ru/content-types",
     since: "2026-09-26",
-    reason: "same as `ar/content-types` — published, structurally current, no catalogue",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "zh/content-types",
     since: "2026-09-26",
-    reason: "same as `ar/content-types` — published, structurally current, no catalogue",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "ar/contributing",
     since: "2026-09-26",
     reason:
-      "published with no `.po`; the page's structure matches its source, so it is current but untracked. A catalogue cannot be derived from a finished translation without inventing the segmentation",
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "es/contributing",
     since: "2026-09-26",
-    reason: "same as `ar/contributing` — published, structurally current, no catalogue",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "fr/contributing",
     since: "2026-09-26",
-    reason: "same as `ar/contributing` — published, structurally current, no catalogue",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "ru/contributing",
     since: "2026-09-26",
-    reason: "same as `ar/contributing` — published, structurally current, no catalogue",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "zh/contributing",
     since: "2026-09-26",
-    reason: "same as `ar/contributing` — published, structurally current, no catalogue",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
+  },
+  {
+    translation: "ar/getting-started",
+    since: "2026-09-26",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
+  },
+  {
+    translation: "es/getting-started",
+    since: "2026-09-26",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
+  },
+  {
+    translation: "fr/getting-started",
+    since: "2026-09-26",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
+  },
+  {
+    translation: "ru/getting-started",
+    since: "2026-09-26",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
+  },
+  {
+    translation: "zh/getting-started",
+    since: "2026-09-26",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "ar/installation",
     since: "2026-09-26",
     reason:
-      "published with no `.po`; the page's structure matches its source, so it is current but untracked. A catalogue cannot be derived from a finished translation without inventing the segmentation",
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "es/installation",
     since: "2026-09-26",
-    reason: "same as `ar/installation` — published, structurally current, no catalogue",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "fr/installation",
     since: "2026-09-26",
-    reason: "same as `ar/installation` — published, structurally current, no catalogue",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "ru/installation",
     since: "2026-09-26",
-    reason: "same as `ar/installation` — published, structurally current, no catalogue",
+    reason:
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
   {
     translation: "zh/installation",
     since: "2026-09-26",
-    reason: "same as `ar/installation` — published, structurally current, no catalogue",
-  },
-  // `getting-started` in five locales completes the same 25. PR #1370 ALSO
-  // records these five, and that overlap is deliberate rather than overlooked:
-  // recording only the other 20 leaves this gate RED until both branches land,
-  // and #1370 carries a 63-bean sweep whose timing is not this fix's to wait on.
-  // So this PR is self-sufficient — it takes the gate to zero on its own.
-  //
-  // Whichever of the two merges SECOND drops its copy of these five. That is
-  // not left to vigilance: the "no page is recorded TWICE" test spans
-  // KNOWN_DRIFT and UNCATALOGED together, so a duplicate fails the suite
-  // instead of merging quietly. It is the one shape bean `kfkh` warns about —
-  // two sessions adding the same key at different line positions merge with no
-  // conflict — and here it is caught.
-  {
-    translation: "ar/getting-started",
-    since: "2026-09-26",
     reason:
-      "published with no `.po`; the page's structure matches its source, so it is current but untracked. A catalogue cannot be derived from a finished translation without inventing the segmentation",
-  },
-  {
-    translation: "es/getting-started",
-    since: "2026-09-26",
-    reason: "same as `ar/getting-started` — published, structurally current, no catalogue",
-  },
-  {
-    translation: "fr/getting-started",
-    since: "2026-09-26",
-    reason: "same as `ar/getting-started` — published, structurally current, no catalogue",
-  },
-  {
-    translation: "ru/getting-started",
-    since: "2026-09-26",
-    reason: "same as `ar/getting-started` — published, structurally current, no catalogue",
-  },
-  {
-    translation: "zh/getting-started",
-    since: "2026-09-26",
-    reason: "same as `ar/getting-started` — published, structurally current, no catalogue",
+      "same as `ar/accessibility` — published, structurally current, no catalogue",
   },
 ];
 

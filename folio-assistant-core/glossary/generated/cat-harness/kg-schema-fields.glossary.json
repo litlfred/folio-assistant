@@ -3345,6 +3345,20 @@
       "status": "candidate"
     },
     {
+      "id": "detangle-sidecar.detanglesidecar.undetermineddirection",
+      "prefLabel": "DetangleSidecar.undeterminedDirection",
+      "definition": "Outbound edges whose direction cannot be decided, because the source instance declares no `needs`. Not clean.",
+      "source": "cat-harness/schemas/detangle-sidecar.ts#DetangleSidecar.undeterminedDirection",
+      "status": "candidate"
+    },
+    {
+      "id": "detangle-sidecar.detanglesidecar.wrongdirection",
+      "prefLabel": "DetangleSidecar.wrongDirection",
+      "definition": "Outbound edges `directionOf` called `wrong-direction` — the layering is inverted.",
+      "source": "cat-harness/schemas/detangle-sidecar.ts#DetangleSidecar.wrongDirection",
+      "status": "candidate"
+    },
+    {
       "id": "detangle.classifiededge.basis",
       "prefLabel": "ClassifiedEdge.basis",
       "definition": "Why it was classified so. A classification with no basis is an assertion.",
