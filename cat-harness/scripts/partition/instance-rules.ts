@@ -492,6 +492,13 @@ export const RULES: Rule[] = [
       // `harness.json` for the directories, DERIVES the nesting from their
       // declared paths, and has nothing to say about any folio's content.
       "scripts/check-subgraphs.ts",
+      // Whether a translated page's links survived being one directory
+      // deeper than the page they were translated from (bean `ahab`).
+      // Harness for `check-subgraphs.ts`' reason and by the same route — it
+      // consumes that tool's report and resolves the site root from the
+      // declaration, so it knows which directories publish a site and
+      // nothing at all about what any folio put in them.
+      "scripts/check-translated-link-depth.ts",
       // Whether each methodology's cited `origin` resolves to an ingested
       // source. Harness for the same reason as the two above: it reads the
       // declaration for the `methodology` and `library` graphs and fans out

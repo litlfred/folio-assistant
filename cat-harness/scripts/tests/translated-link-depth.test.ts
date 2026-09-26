@@ -11,6 +11,8 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
+import { siteDir } from "../../schemas/cat-harness.ts";
+
 import { depthSensitive, repair, translatedLinkDepth } from "../check-translated-link-depth.ts";
 
 const HARNESS = resolve(import.meta.dir, "../..");
@@ -62,8 +64,14 @@ describe("repair — the two ways the rewrite was wrong before it was right", ()
   const withTemp = (body: string, targets: string[]): string => {
     const dir = mkdtempSync(join(tmpdir(), "ahab-"));
     try {
-      mkdirSync(join(dir, "docs", "fr"), { recursive: true });
-      const file = join("docs", "fr", "page.md");
+      // `siteDir` rather than "docs": the output site root is ONE ANSWER and
+      // a literal is a second one. `site-dir-single-answer` flagged both
+      // lines below, and it was right to — a test that hardcodes the site
+      // root keeps passing the day the instance moves it, which is the only
+      // moment it mattered.
+      const site = siteDir({ name: "scratch" });
+      mkdirSync(join(dir, site, "fr"), { recursive: true });
+      const file = join(site, "fr", "page.md");
       writeFileSync(join(dir, file), body);
       repair(
         {
