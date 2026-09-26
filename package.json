@@ -332,7 +332,11 @@
     "voices:viz": "bun run cat-harness/scripts/gen-voices-viz.ts",
     "voices:viz:check": "bun run cat-harness/scripts/gen-voices-viz.ts --check",
     "sync:remote-skills": "bun run cat-harness/scripts/sync-remote-skills.ts",
-    "check:remote-skills": "bun run cat-harness/scripts/sync-remote-skills.ts --check"
+    "check:remote-skills": "bun run cat-harness/scripts/sync-remote-skills.ts --check",
+    "skills:docs": "bun run cat-harness/scripts/gen-skill-docs.ts",
+    "skills:docs:check": "bun run cat-harness/scripts/gen-skill-docs.ts --check",
+    "skills:register": "bun run cat-harness/scripts/register-skills.ts",
+    "skills:register:check": "bun run cat-harness/scripts/register-skills.ts --check"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",
