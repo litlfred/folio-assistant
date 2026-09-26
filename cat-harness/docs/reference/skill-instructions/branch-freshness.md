@@ -1,12 +1,15 @@
 ---
-name: branch-freshness
-description: >
-  Periodically rebase or merge main into the feature branch, detect what
-  changed upstream, and re-analyse the session workplan. Prevents stale
-  assumptions, merge conflicts, and duplicated work — especially after
-  session restarts, long idle periods, or heavy sibling activity on main.
+layout: default
+title: 'Branch freshness'
+parent: Skill instructions
 ---
 
+{: .note }
+> Generated from [`cat-harness/skills/workflow/branch-freshness.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/branch-freshness.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/branch-freshness.md){: .fa-edit-source }
+
+{% raw %}
 # Branch freshness — stay current with main
 
 A feature branch that drifts from `main` accumulates three kinds of debt:
@@ -106,6 +109,7 @@ Or:
 
 ## Cross-references
 
-- [`../../skills/folio-core/coordinate.md`](../../skills/folio-core/coordinate.md) — multi-agent coordination
-- [`../../skills/folio-core/todo-manager.md`](../../skills/folio-core/todo-manager.md) — bean management
-- [`../../skills/folio-core/bean-coordination.md`](../../skills/folio-core/bean-coordination.md) — cross-session beans
+- [`../../skills/folio-core/coordinate.md`](coordinate.md) — multi-agent coordination
+- [`../../skills/folio-core/todo-manager.md`](todo-manager.md) — bean management
+- [`../../skills/folio-core/bean-coordination.md`](bean-coordination.md) — cross-session beans
+{% endraw %}

@@ -1,12 +1,15 @@
 ---
-name: crdm-impact-analysis
-description: >
-  Guide for CRDM Phase 4 — Impact Analysis and Migration Planning.
-  Systematic scan across 7 dimensions: schema, pipeline, adapter, folio,
-  skill, migration, and test/documentation impact. Produces a structured
-  assessment for posting to the GitHub issue.
+layout: default
+title: 'Phase 4'
+parent: Skill instructions
 ---
 
+{: .note }
+> Generated from [`cat-harness/skills/crdm/crdm-impact-analysis.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-impact-analysis.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/crdm/crdm-impact-analysis.md){: .fa-edit-source }
+
+{% raw %}
 # Phase 4 — Impact analysis (detail)
 
 This skill expands the Phase 4 summary in `crdm-requirements-workflow.md`.
@@ -129,5 +132,6 @@ rg "CONCEPT" cat-harness/docs/
 - [`crdm-requirements-workflow`](crdm-requirements-workflow.md) — Phase 4
 - [`crdm-requirements-template`](crdm-requirements-template.md) — Phase 3 feeds this
 - [`crdm-detect`](crdm-detect.md) — detection
-- [`../../skills/folio-core/staging-review.md`](../../skills/folio-core/staging-review.md) — staging
-- [`../../skills/folio-core/todo-manager.md`](../../skills/folio-core/todo-manager.md) — beans
+- [`../../skills/folio-core/staging-review.md`](staging-review.md) — staging
+- [`../../skills/folio-core/todo-manager.md`](todo-manager.md) — beans
+{% endraw %}
