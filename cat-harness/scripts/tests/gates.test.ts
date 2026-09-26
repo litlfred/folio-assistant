@@ -86,7 +86,22 @@ describe("the gates come from the workflow, not from a list", () => {
     // So a local failure and a CI failure are findable by the same string.
     const g = loadGates(ROOT).find((x) => x.command === "bun run ns:check");
     expect(g?.step).toBe("namespace vocabulary is complete");
-    expect(g?.job).toBe("typescript");
+    // `gates`, not `typescript`, since bean `om30` split the job: `typescript`
+    // is lint + typecheck + `bun test`, and every repository gate moved to a
+    // sibling job with no `needs`, so a red test no longer stops them being
+    // asked. The job is asserted rather than left loose because it is half of
+    // what makes a failure findable — the Actions UI groups by it.
+    expect(g?.job).toBe("gates");
+  });
+
+  test("both fast jobs contribute, so a split cannot silently shrink the set", () => {
+    // The regression this guards is specific and was live for one commit while
+    // `om30` was implemented: `FAST_JOBS` named only `typescript`, so moving 43
+    // steps into `gates` dropped them from `bun run gates` entirely — 154 gates
+    // to 6 — while the runner still printed a confident pass over what was
+    // left. A subset of the gate set is not the gate set.
+    const jobs = new Set(loadGates(ROOT).map((g) => g.job));
+    expect(jobs).toEqual(new Set(["typescript", "gates"]));
   });
 });
 
