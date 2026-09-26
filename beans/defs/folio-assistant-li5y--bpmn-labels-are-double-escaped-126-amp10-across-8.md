@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T11:40:56Z
-updated_at: 2026-09-26T18:03:47Z
+updated_at: 2026-09-26T18:42:46Z
 parent: folio-assistant-1xhc
 ---
 
@@ -213,3 +213,58 @@ generated title and the sweep moved it. Regenerated, not exempted.
 - [x] the five-locale `.pot` exposure — 205 msgids carrying a character
       reference, now 0
 - [x] a `&#10;` in a table cell cannot corrupt the table
+
+
+## VERIFIED ON THE RENDERED SITE — and a count of mine was wrong by two orders of magnitude
+
+2026-09-26, after the sweep landed. `bun run preview:site` built all 75 process
+pages locally, because the staging preview is unreachable from this container
+(`litlfred.github.io:443` answers 403 CONNECT — an environment network-policy
+denial, the same one already recorded against the WHO IG mirror). So the
+verification is a LOCAL build of the same generator, not the deployed page, and
+that limit is stated rather than glossed.
+
+### What the rendered HTML shows
+
+| measurement, built site | result |
+|---|---|
+| files carrying a character reference as literal TEXT | **0** (8 process pages did before) |
+| `<p>` elements for the three-paragraph documentation block on one page | **3**, separate | 
+| `<br>` in that standalone prose block | 0, correctly — it is not a table cell |
+
+So the paragraph structure an author wrote now reaches a reader as paragraphs. It
+did not before: it reached them as the five characters `&#10;` twice, inline.
+
+### The correction: `cell()` protects 238 cells, not one
+
+I recorded the `cell()` newline→`<br>` change as *"load-bearing rather than
+speculative: ONE of the 90 is inside a `<bpmn:task>`, whose documentation renders
+in a table cell."* Measured on the built site: **238 table cells** carry a `<br />`
+from a documentation newline (counting only cells not led by `<strong>`, which
+excludes the pre-existing `**name**<br>\`id\`` pattern).
+
+The estimate came from a crude nearest-open-tag walk over DOUBLE-escaped
+references only, which found one `bpmn:task` and missed that the exposure is every
+documentation cell containing ANY newline — including the single-escaped ones and,
+decisively, the ones my own sweep was about to create.
+
+**That reverses the relationship between the two changes.** I framed `cell()` as a
+guard accompanying the sweep. It is the other way round: `cell()`'s previous body
+was `esc(s)`, which touches pipes and not newlines, so **the sweep would have
+emitted a raw newline into 238 markdown table rows**, and a raw newline ends a
+table row. Without it the sweep would have corrupted 238 cells and everything to
+their right — silently, since a broken table reads as a content error rather than
+a generator fault.
+
+I got the ordering right by accident of caution (I wrote the guard before
+sweeping, on a single measured instance) and the reasoning wrong. Recording it
+because the next person to touch `cell()` should know what it holds up, and a
+"one instance" note invites deleting it.
+
+### The general point, which this bean keeps earning
+
+A count derived from a heuristic over the SOURCE was wrong by 237. The count from
+the RENDERED OUTPUT is the one that answers the question, and it was available for
+the cost of one local site build. `preview:site`'s own docblock says why it exists
+— *"a human cannot assess a rendered artefact from a description of it"* — and
+that applies to the agent's own estimates at least as strongly.
