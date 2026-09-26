@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: code-quality-gates\n"
-"POT-Creation-Date: 2026-09-26T10:55:01.117Z\n"
+"POT-Creation-Date: 2026-09-26T12:07:46.928Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -16,12 +16,12 @@ msgstr ""
 
 #: processes/code-quality-gates.bpmn:45
 #. Diagram label
-msgid "All six,&#10;in parallel"
+msgid "All seven, in parallel"
 msgstr ""
 
 #: processes/code-quality-gates.bpmn:119
 #. Diagram label
-msgid "Any HARD&#10;gate red?"
+msgid "Any HARD gate red?"
 msgstr ""
 
 #: processes/code-quality-gates.bpmn:120
@@ -51,12 +51,12 @@ msgstr ""
 
 #: processes/code-quality-gates.bpmn:94
 #. Diagram label
-msgid "Dependency advisories&#10;(WARN-ONLY)"
+msgid "Dependency advisories (WARN-ONLY)"
 msgstr ""
 
 #: processes/code-quality-gates.bpmn:78
 #. Diagram label
-msgid "End-to-end +&#10;accessibility (HARD)"
+msgid "End-to-end + accessibility (HARD)"
 msgstr ""
 
 #: processes/code-quality-gates.bpmn:55
@@ -76,7 +76,7 @@ msgstr ""
 
 #: processes/code-quality-gates.bpmn:54
 #. Diagram label
-msgid "Lean: no bare&#10;`import Mathlib` (HARD)"
+msgid "Lean: no bare `import Mathlib` (HARD)"
 msgstr ""
 
 #: processes/code-quality-gates.bpmn:125
@@ -91,12 +91,12 @@ msgstr ""
 
 #: processes/code-quality-gates.bpmn:42
 #. Diagram label
-msgid "Pull request, push to main,&#10;or dispatch"
+msgid "Pull request, push to main, or dispatch"
 msgstr ""
 
 #: processes/code-quality-gates.bpmn:62
 #. Diagram label
-msgid "Python: unused and&#10;wildcard imports (HARD)"
+msgid "Python: unused and wildcard imports (HARD)"
 msgstr ""
 
 #: processes/code-quality-gates.bpmn:87
@@ -116,17 +116,17 @@ msgstr ""
 
 #: processes/code-quality-gates.bpmn:86
 #. Diagram label
-msgid "Rust wildcard imports&#10;(WARN-ONLY)"
+msgid "Rust wildcard imports (WARN-ONLY)"
 msgstr ""
 
 #: processes/code-quality-gates.bpmn:14
 #. Diagram element documentation
-msgid "SIX INDEPENDENT JOBS, AND NOTHING IN THE YAML SAYS SO IN ONE PLACE. Bean `7yvd`. The file reads as a long sequence; it is not one. No job declares `needs:`, so all six start together and the wall-clock cost of the whole workflow is the SLOWEST job, not the sum. That is the single most useful thing to know before adding a gate, and it is recoverable today only by checking five `needs:` keys that are not there.&#10;&#10;THE ASYMMETRY IS THE OTHER HALF. Four jobs are HARD and TWO report without blocking &#8212; `rust-wildcard` and `dependency-advisories`. Drawing them as six equal boxes would be a lie a reader would act on, so both warn-only jobs are labelled as such and the gateway after the join asks specifically about the HARD ones.&#10;&#10;THE TWO WARN-ONLY JOBS ARE WARN-ONLY BY DIFFERENT MECHANISMS, AND THE DIFFERENCE IS THE POINT. `rust-wildcard` carries `continue-on-error: true` &#8212; the RUNNER discards its result. `dependency-advisories` carries no such flag: its script exits 0 in every state and keeps the three states apart in its OUTPUT instead. That is deliberate, because a warn-only step whose exit code says nothing has only its output left to distinguish `found nothing` from `could not find out`, and `continue-on-error` would have thrown away the one signal that still worked.&#10;&#10;`continue-on-error` IS NOT A DEFAULT HERE, it is a decision that has been REVERSED once already: `python-imports` carried it, and the flag swallowed a failure on a missing path, so the job reported success over a check that never ran. It was removed and a new unused import now fails. The flag STILL survives on exactly one job &#8212; adding a second warn-only job did not add a second `continue-on-error`, which is the history being honoured rather than an oversight. Anyone reaching for the flag should read that paragraph first.&#10;&#10;`TypeScript` IS ONE BOX STANDING FOR ROUGHLY THIRTY REPOSITORY GATES &#8212; workflow policy, AGENTS.md cross-references and claims, declared assets, workflow skill refs and BPMN coverage, the knowledge-graph audit, generated-docs currency, agent memory, and the ratchet that fails a check script no workflow runs. They are sequential only because one job runs them; each is independent, and `bun run gates` is the local runner derived from this job so a contributor can run the same set before pushing.&#10;&#10;Mechanical throughout. Nothing here waits on a person, which is what makes `build-pipeline` the right lane rather than a convenient one."
+msgid "SEVEN INDEPENDENT JOBS, AND NOTHING IN THE YAML SAYS SO IN ONE PLACE. Bean `7yvd`. The file reads as a long sequence; it is not one. No job declares `needs:`, so all seven start together and the wall-clock cost of the whole workflow is the SLOWEST job, not the sum. That is the single most useful thing to know before adding a gate, and it is recoverable today only by checking six `needs:` keys that are not there.&#10;&#10;THE ASYMMETRY IS THE OTHER HALF. Five jobs are HARD and TWO report without blocking &#8212; `rust-wildcard` and `dependency-advisories`. Drawing them as seven equal boxes would be a lie a reader would act on, so both warn-only jobs are labelled as such and the gateway after the join asks specifically about the HARD ones.&#10;&#10;THE TWO WARN-ONLY JOBS ARE WARN-ONLY BY DIFFERENT MECHANISMS, AND THE DIFFERENCE IS THE POINT. `rust-wildcard` carries `continue-on-error: true` &#8212; the RUNNER discards its result. `dependency-advisories` carries no such flag: its script exits 0 in every state and keeps the three states apart in its OUTPUT instead. That is deliberate, because a warn-only step whose exit code says nothing has only its output left to distinguish `found nothing` from `could not find out`, and `continue-on-error` would have thrown away the one signal that still worked.&#10;&#10;`continue-on-error` IS NOT A DEFAULT HERE, it is a decision that has been REVERSED once already: `python-imports` carried it, and the flag swallowed a failure on a missing path, so the job reported success over a check that never ran. It was removed and a new unused import now fails. The flag STILL survives on exactly one job &#8212; adding a second warn-only job did not add a second `continue-on-error`, which is the history being honoured rather than an oversight. Anyone reaching for the flag should read that paragraph first.&#10;&#10;`TypeScript` IS ONE BOX STANDING FOR ROUGHLY THIRTY REPOSITORY GATES &#8212; workflow policy, AGENTS.md cross-references and claims, declared assets, workflow skill refs and BPMN coverage, the knowledge-graph audit, generated-docs currency, agent memory, and the ratchet that fails a check script no workflow runs. They are sequential only because one job runs them; each is independent, and `bun run gates` is the local runner derived from this job so a contributor can run the same set before pushing.&#10;&#10;Mechanical throughout. Nothing here waits on a person, which is what makes `build-pipeline` the right lane rather than a convenient one."
 msgstr ""
 
 #: processes/code-quality-gates.bpmn:102
 #. Diagram label
-msgid "Skill-registration chain&#10;(UNMASKED)"
+msgid "Skill-registration chain (UNMASKED)"
 msgstr ""
 
 #: processes/code-quality-gates.bpmn:11
@@ -136,7 +136,7 @@ msgstr ""
 
 #: processes/code-quality-gates.bpmn:70
 #. Diagram label
-msgid "TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD)"
+msgid "TypeScript: tests, lint, types, and ~30 repository gates (HARD)"
 msgstr ""
 
 #: processes/code-quality-gates.bpmn:144

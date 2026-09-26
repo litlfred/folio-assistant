@@ -5,7 +5,8 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T11:40:56Z
-updated_at: 2026-09-26T11:40:56Z
+updated_at: 2026-09-26T12:05:41Z
+parent: folio-assistant-1xhc
 ---
 
 Found 2026-09-26 by LOOKING at a rendered SVG, not by any gate. `render:bpmn:check`

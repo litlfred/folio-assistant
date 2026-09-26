@@ -42,7 +42,7 @@
     <bpmn:startEvent id="Start_Change" name="Pull request, push to main,&#10;or dispatch">
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:parallelGateway id="GW_Fork" name="All six,&#10;in parallel">
+    <bpmn:parallelGateway id="GW_Fork" name="All seven,&#10;in parallel">
       <bpmn:incoming>Flow_0</bpmn:incoming>
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
