@@ -77,11 +77,38 @@ const GUIDE = INDEX.pages["guides/agent-onboarding"];
 /**
  * A nav item with no translation in ANY locale — the fallback case.
  *
- * Named, not counted: `getting-started` is a real page of this site that has
- * never been translated. If it ever is, this test starts failing loudly rather
- * than silently verifying nothing, which is the correct direction to fail in.
+ * Named, not counted, and the naming is the author's design: if the page is
+ * ever translated this test fails loudly rather than silently verifying
+ * nothing, which is the correct direction to fail in.
+ *
+ * **It was `getting-started`, and it fired exactly as designed.** Bean `t8g3`
+ * (issue #206) is translating the docs site page by page and reached it in
+ * `#1371`. The failure surfaced here on 2026-09-26 only because
+ * `docs/_data/translations.json` was regenerated: main's committed index listed
+ * **2** pages against the tree's **7**, so this test had been passing on a
+ * stale index — the "silently verifying nothing" state the paragraph above
+ * exists to prevent. The signal was correct and the index was late.
+ *
+ * `detangle` verified before being named: a real page at `docs/detangle.md`,
+ * absent from the regenerated index's keys, and no `docs/<locale>/detangle.md`.
+ * It is an internal page rather than a user-facing one, so it should be among
+ * the last the campaign reaches — a guess about their ordering, said as one.
+ *
+ * **The fixture's design does not survive this campaign, and that is the real
+ * finding.** "Name a real untranslated page, fail loudly if it changes" is
+ * right for a slow corpus and wrong while every page is being translated: it
+ * fails on each batch and the failure says nothing about the code under test.
+ * Deriving the subject from the index at run time would keep the author's
+ * intent — never silently verify nothing — while failing loudly only at the
+ * state that actually matters, which is NO untranslated page left. That is a
+ * change to this test's design and belongs to its author, so it is raised
+ * rather than made.
+ *
+ * **If `detangle` is ever translated, do not just move this a third time.**
+ * Same page and same reasoning as `#1370`, deliberately, so the two branches
+ * agree rather than collide.
  */
-const UNTRANSLATED = { key: "getting-started", url: "/getting-started.html", title: "Getting started" };
+const UNTRANSLATED = { key: "detangle", url: "/detangle.html", title: "Detangle" };
 
 /** just-the-docs' nav markup, reduced to what the filter touches. */
 function harness(indexIsland: string): string {
