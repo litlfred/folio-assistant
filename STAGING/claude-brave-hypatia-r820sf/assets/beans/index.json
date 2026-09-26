@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 372,
+      "count": 373,
       "unit": "beans"
     }
   },
@@ -2927,6 +2927,20 @@
       "updatedAt": "2026-09-18T17:43:01Z",
       "preview": "## What\n\n`proof-no-placeholder-stub` was declared `automated: true` with **no checker\nfunction anywhere in the repo** — no dispatch-table entry, no `check*`\nfunction. Found by bean `fg6z` while closing the coverage gap in\n`scripts/tests/qa-criterion-source-file.test.ts`.\n\n`qa-sweep` resolves a checker with\n\n    AUTOMATED_CHECKERS[id] ?? DAK_AUTOMATED_CHECKERS[id]\n\nand falls through to `needs-agent",
       "file": "beans/defs/folio-assistant-lfxa--qa-write-the-proof-no-placeholder-stub-checker-and.md"
+    },
+    {
+      "id": "folio-assistant-li5y",
+      "title": "BPMN labels are DOUBLE-escaped: 126 `&amp;#10;` across 8 diagrams render as literal text in 7 published SVGs",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T11:40:56Z",
+      "updatedAt": "2026-09-26T11:40:56Z",
+      "preview": "Found 2026-09-26 by LOOKING at a rendered SVG, not by any gate. `render:bpmn:check`\nwas green throughout: it grades whether the committed SVG matches what the\nrenderer produces, and the renderer faithfully produced the wrong thing. That is\nthe currency-vs-validity split `check:artefact-verification` exists for, arriving\nin the diagrams.\n\n## What renders\n\nA BPMN `name` attribute written `&amp;#10;`",
+      "file": "beans/defs/folio-assistant-li5y--bpmn-labels-are-double-escaped-126-amp10-across-8.md"
     },
     {
       "id": "folio-assistant-lqo9",
