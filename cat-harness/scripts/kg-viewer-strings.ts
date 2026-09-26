@@ -324,6 +324,7 @@ export function potEntries(fileText?: string): PotEntry[] {
     const needle = JSON.stringify(s.en).slice(1, -1);
     const idx = lines.findIndex((l) => l.includes(needle));
     return {
+      kind: "ui-string" as const,
       source: STRINGS_SOURCE,
       line: idx === -1 ? 1 : idx + 1,
       msgid: s.en,

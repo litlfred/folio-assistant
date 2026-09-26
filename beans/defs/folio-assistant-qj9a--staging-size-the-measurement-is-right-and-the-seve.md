@@ -154,10 +154,46 @@ that the reason given for draining it is unverified.
 
 ## Done when
 
-- [ ] `STAGING_CRITICAL_BYTES`' basis claims only what an instrument can support
-- [ ] The finding's action names who can observe the served site, since no agent
+- [x] `STAGING_CRITICAL_BYTES`' basis claims only what an instrument can support —
+      superseded by the SPLIT: the threshold is gone from `staging-preview-size`
+      entirely, and its argument moved to `pages-publish-health`
+- [x] The finding's action names who can observe the served site, since no agent
       here can
-- [ ] It is recorded that a green `docs-site.yml` run is evidence about the PUSH
-      and not about serving — the distinction this bean turned on
-- [ ] The instrument's owner is settled — it is NOT `7s52`, which declines the
-      live host by design, so either `1lfx` takes it or it needs a bean of its own
+- [x] It is recorded that a green `docs-site.yml` run is evidence about the PUSH
+      and not about serving — in `pages-publish-health`'s own docs, so it sits
+      beside the check that would otherwise re-make the mistake
+- [x] The instrument's owner is settled — it is NOT `7s52`, which declines the
+      live host by design. It got its own bean: `1dre`, the CI-side serving probe
+
+
+## The split landed, and building it corrected the plan again
+
+Option 3 was chosen and implemented. Two things the implementation established
+that the options above had wrong:
+
+**1. A check reporting `unknown` would have broken the health family.** The
+option read *"a separate `pages-publish-health` owns the serving claim and
+reports `unknown` until an instrument exists"*. Reading `healthVerdict` refutes
+it: a single `unknown` takes the ENTIRE report to `unknown`, `run.ts` exits 2 and
+the tracking issue is left untouched. `health-check.yml`'s own comment already
+said what that is worth — *"the whole verdict goes to `unknown` — correctly, and
+uselessly"*. A permanently blind check would have made the daily sweep
+permanently useless and hidden every other check behind it.
+
+So the new check's subject is narrowed to something **determinable**: *does an
+instrument exist?* Answerable today (no), so it reports a `major` finding and
+never `unknown` about its own subject. Measured after the change: `bun run
+health` exits **1 (findings)**, not 2.
+
+**2. The critical threshold did not need re-wording, it needed removing.** `qj9a`
+first re-worded its basis. The split shows that was treating a symptom: the
+threshold's entire justification was the publish consequence, so once that moved,
+nothing was left for the number to mean in this check. `staging-preview-size` now
+carries one threshold — the owner's 500 MB budget — and **never escalates past
+`major`**, pinned by a test at an absurd 3.7 GB rather than just past the line.
+
+Two stale statements fixed in passing, both the same defect the code comments
+warn about: the registry summary still advertised *"owner's 100 MB warning"* after
+the raise to 500 MB, and the check's own summary still claimed the previews had
+*"grown past what a GitHub Pages site can carry"* — a publish claim, in the check
+that just had one taken away.

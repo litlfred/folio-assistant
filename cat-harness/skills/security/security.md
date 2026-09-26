@@ -36,9 +36,9 @@ off a variable.
 | boundary | the hazard | machinery | state |
 |---|---|---|---|
 | `${{ }}` → a `run:` block | the value is substituted into the script TEXT before bash parses it, so a quote is enough | `scripts/check-workflow-injection.ts` + baseline + 2 test files | **gated** (`1wef`) |
-| an external id → a path | `join(base, external)` escapes the store; `mkdirSync` + `writeFileSync` make it a write primitive | [`path-containment`](path-containment.md), `src/core/safe-path.ts` | **guarded, not yet gated** (`6bhf`) |
+| an external id → a path | `join(base, external)` escapes the store; `mkdirSync` + `writeFileSync` make it a write primitive | [`path-containment`](path-containment.md), `src/core/safe-path.ts` | **guarded; narrowly gated** — `server-path-sinks.test.ts`, a source ratchet (`6bhf`) |
 | a shell string → a process | `execSync("cmd " + value)` gives the shell a program | [`injection-boundaries`](injection-boundaries.md) | partly (`execFileSync` at the fixed sites) |
-| an archive → a filesystem | a symlink member writes through the link, which `..`-refusal does not cover | member listing before extraction, at the one call site | **guarded at one site** |
+| an archive → a filesystem | a LINK member writes through to its target, which `..`-refusal does not cover | member-TYPE whitelist (`tar tvzf`, accept only `-` and `d`) at the one call site, `tar-member-guard.test.ts` against real archives | **closed at one site** (`6bhf`) |
 | a `.po` catalogue → a render | translated content is authored elsewhere | `scripts/translation/translation_security.py` | exists, unaudited here |
 | content → HTML | XSS in a rendered surface | bean `q2wm`, declared XSS hints on tools and skills | **open** |
 
