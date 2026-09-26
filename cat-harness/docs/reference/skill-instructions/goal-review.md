@@ -224,6 +224,46 @@ low-dexterity profile (`interaction/`) answers by choosing a number.
 - A "stalled" session that was in fact mid-turn: the inference from its
   branch was stated as fact. Re-read §Sibling sessions; the word is *inferred*.
 
+## Read the published survey before deriving one
+
+**`bun run survey:owed` first.** Bean `6ptx`: eight sessions ran in the same
+minute and seven were doing this same sweep, over the same ~2435-commit window.
+Authored commits on `main` that day: **one**. Throughput did not fall because
+the work ran out — 243 beans were open — it fell because everybody was reading,
+and none of them could see the other seven.
+
+The command answers in four states, and each says what you owe:
+
+| it says | you do |
+|---|---|
+| **none published** | the whole window is yours. A determined empty, not an error. |
+| **covered** | read the survey; do not re-derive it. |
+| **a delta** | survey only `to..origin/main` — normally a handful of commits. |
+| **unusable** | a published survey's upper edge is unreachable here (rewritten history, another branch). Survey the whole window. |
+
+When you finish a sweep, publish it:
+
+```sh
+bun run survey:publish --from <sha> --by <session> --axis beans="…" --axis ci="!not looked at, and why"
+```
+
+An axis written `name=!reason` records one you did **not** cover. That is a
+first-class answer: a survey of four of six axes is useful, and a reader must
+be able to tell which two it says nothing about. Recording only what you did
+lets a partial survey read as a complete one, which is `1xhc` — absence taken
+for a clean result.
+
+**What makes this safe is that the window's two edge commits are recorded**, so
+staleness is decidable rather than guessed. A survey whose window cannot be
+pinned is `fx5r` with a wider blast radius: siblings would trust it *instead of*
+looking. An unreachable upper edge is therefore reported as unusable and never
+as covered.
+
+This does not claim the window and does not divide the axes between sessions —
+those were considered and not chosen. It is an artefact: one session writes what
+it found, and a later one decides for itself whether that still covers its
+question.
+
 ## Tools this skill reaches for
 
 Reached through the tools graph the instance declares, never by a remembered

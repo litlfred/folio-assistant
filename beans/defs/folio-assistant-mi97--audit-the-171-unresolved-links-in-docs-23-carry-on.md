@@ -1,11 +1,11 @@
 ---
 # folio-assistant-mi97
 title: Audit the 171 unresolved links in docs/ — 23 carry one ../ too many from the cat-harness move
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T17:06:16Z
-updated_at: 2026-09-25T16:21:36Z
+updated_at: 2026-09-26T17:58:04Z
 parent: folio-assistant-zzmr
 ---
 
@@ -99,3 +99,48 @@ merely exists.
       `.bpmn`, 12 `.ts`, 4 `.json`, 4 `.py`, 32 `.md`. The shape is the same
       generator flattening a body whose links leave the knowledge graph, and
       the treatment differs per kind, which is why it is not folded in here.
+
+
+## Resolved on main, 2026-09-26 — re-measured, and the 23 are ZERO
+
+The bean's subject is `docs/` links carrying one `../` too many from the
+cat-harness move. Measured on `origin/main` at 811148af01d by trying the
+repair against disk, exactly as the bean's own table was built:
+
+    docs/ non-locale unresolved links:            42
+      one ../ TOO MANY (this bean's 23):           0
+      published-tree only (api/, *.html, beans/): 42
+
+Closed on EVIDENCE rather than authorship — I did not write the fix. The 42
+that remain are the category this bean already documented as correct: *"a
+renderable graph addresses the PUBLISHED tree"*, so they are counted and
+never asserted.
+
+## What the re-measure found instead, and it was mine
+
+Four `docs/guides/<locale>/agent-onboarding.md` pages carried **24** links
+with one `../` TOO FEW — the `ahab` defect, nested one directory deeper:
+
+```text
+docs/guides/agent-onboarding.md     ](../skills.html)  ->  docs/skills.html          ok
+docs/guides/ar/agent-onboarding.md  ](../skills.html)  ->  docs/guides/skills.html   MISSING
+```
+
+(Fenced at column 0. An indented block left those two `](…)` link-shaped and
+`check:subgraphs` read them as real links — the SECOND time I have done this
+today, the first being the `ahab` bean, where I wrote the reason down and then
+did not apply it here. `ig4a`: a fence is only a fence at column 0.)
+
+Byte-identical link text, one level down, same as `ahab`. The gate `ahab`
+added could not see them: it asked whether the FIRST segment under the site
+root was a locale, so `docs/fr/x.md` matched and `docs/guides/ar/x.md` did
+not. Its own docblock says a guard covering one of two writers *"is
+indistinguishable from a pass"*, and it was one, for an hour.
+
+Fixed with the bean's own tooling: locale detection now takes the locale
+segment at ANY depth, the rule is exported as `localeSegmentIndex` so it has
+a test rather than living inline, and the 24 links are repaired. Falsified by
+reverting to `segs[0]` — the nested test goes red.
+
+Found by re-measuring THIS bean, not by any check. The only check that could
+have found it was the one with the hole.

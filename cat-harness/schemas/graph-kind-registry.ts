@@ -1115,6 +1115,33 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Work items — one Markdown file each, in the layout the `beans` CLI reads. " +
       "Authored and edited by people and agents.",
   },
+  "session-survey": {
+    type: termIri("SessionSurveyGraph"),
+    renderable: false,
+    // Written BY a running session, for other sessions to read. That makes it
+    // state rather than context: `interaction/` is context because no process
+    // writes it, and this one exists only because a process did.
+    holds: "state",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    nodeSchemas: {
+      // A RUNNABLE validator rather than a `shape`: this is a zod schema, so the
+      // nodes can actually be parsed instead of merely typed. `workflow-state`
+      // next door can only offer a TypeScript shape, which `check:kind-validators`
+      // reports as "not runnable — could not determine".
+      "folio-session-survey/v1": { validator: "schemas/session-survey.ts#SessionSurveySchema" },
+    },
+    schema: "schemas/session-survey.ts",
+    // A survey is a READING of work, not work anybody is partway through. An
+    // agent told this graph is active would arrive looking for something to
+    // pick up and find a finished report — the distinction `recordsWork`'s own
+    // docblock draws against `uploads`.
+    recordsWork: false,
+    summary:
+      "Published surveys of a commit window — one JSON file each, carrying " +
+      "`\"$schema\": \"folio-session-survey/v1\"` and the window's two edge commits, " +
+      "so a later session can compute what it is NOT covered for instead of re-deriving " +
+      "the whole range (bean `6ptx`).",
+  },
   "workflow-state": {
     type: termIri("WorkflowStateGraph"),
     renderable: false,

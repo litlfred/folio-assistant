@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1447 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1457 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1621 terms and is 879 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1631 terms and is 884 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1621</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1631</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -8425,6 +8425,55 @@ SessionHook.matcher <span class="fa-gloss-status">candidate, extracted</span>
 <p>Tool name regex matcher (for PostToolUse).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/assistant-types.ts"><code>cat-harness/schemas/assistant-types.ts#SessionHook.matcher</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--session-survey.sessionsurveyschema.axes" data-fa-state="extracted" data-fa-gloss="">
+SessionSurveySchema.axes <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Per-axis findings. Empty is refused: a survey that covered nothing is not a survey.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/session-survey.ts"><code>cat-harness/schemas/session-survey.ts#SessionSurveySchema.axes</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--session-survey.sessionsurveyschema.branch" data-fa-state="extracted" data-fa-gloss="">
+SessionSurveySchema.branch <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The branch the window is on, so a reader knows which history `from`/`to` live in.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/session-survey.ts"><code>cat-harness/schemas/session-survey.ts#SessionSurveySchema.branch</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--session-survey.sessionsurveyschema.by" data-fa-state="extracted" data-fa-gloss="">
+SessionSurveySchema.by <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Who took it, so a reader can ask. A session URL or id.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/session-survey.ts"><code>cat-harness/schemas/session-survey.ts#SessionSurveySchema.by</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--session-survey.sessionsurveyschema.commits" data-fa-state="extracted" data-fa-gloss="">
+SessionSurveySchema.commits <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How many commits the window held, as counted at publication.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/session-survey.ts"><code>cat-harness/schemas/session-survey.ts#SessionSurveySchema.commits</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--session-survey.sessionsurveyschema.from" data-fa-state="extracted" data-fa-gloss="">
+SessionSurveySchema.from <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The window's LOWER edge — the last commit the surveyor already knew. Exclusive, matching `git rev-list from..to`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/session-survey.ts"><code>cat-harness/schemas/session-survey.ts#SessionSurveySchema.from</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--session-survey.sessionsurveyschema.takenat" data-fa-state="extracted" data-fa-gloss="">
+SessionSurveySchema.takenAt <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>When it was taken, ISO-8601. Not the staleness test — `to` is — but it dates the prose.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/session-survey.ts"><code>cat-harness/schemas/session-survey.ts#SessionSurveySchema.takenAt</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--session-survey.sessionsurveyschema.to" data-fa-state="extracted" data-fa-gloss="">
+SessionSurveySchema.to <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The window's UPPER edge — the newest commit the survey actually read. Inclusive.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/session-survey.ts"><code>cat-harness/schemas/session-survey.ts#SessionSurveySchema.to</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--kind-validator.shapefield.type" data-fa-state="extracted" data-fa-gloss="">
 ShapeField.type <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -9278,6 +9327,27 @@ SubgraphRelation.parent <span class="fa-gloss-status">candidate, extracted</span
 <dd>
 <p>The containing directory's `id`.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#SubgraphRelation.parent</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--session-survey.surveyaxisschema.axis" data-fa-state="extracted" data-fa-gloss="">
+SurveyAxisSchema.axis <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What was examined — `beans`, `ci`, `prs`, `issues`, `branches`, …</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/session-survey.ts"><code>cat-harness/schemas/session-survey.ts#SurveyAxisSchema.axis</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--session-survey.surveyaxisschema.covered" data-fa-state="extracted" data-fa-gloss="">
+SurveyAxisSchema.covered <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>False means NOT LOOKED AT; `finding` then says why, not what was found.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/session-survey.ts"><code>cat-harness/schemas/session-survey.ts#SurveyAxisSchema.covered</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--session-survey.surveyaxisschema.finding" data-fa-state="extracted" data-fa-gloss="">
+SurveyAxisSchema.finding <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What it found, or — when `covered` is false — why it was skipped.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/session-survey.ts"><code>cat-harness/schemas/session-survey.ts#SurveyAxisSchema.finding</code></a></p>
 </dd>
 </dl>
 

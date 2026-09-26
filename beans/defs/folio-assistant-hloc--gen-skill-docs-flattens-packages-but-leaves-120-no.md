@@ -1,11 +1,11 @@
 ---
 # folio-assistant-hloc
 title: gen-skill-docs flattens packages but leaves 120 non-skill links addressing the source layout
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-26T11:52:30Z
+updated_at: 2026-09-26T19:38:18Z
 parent: folio-assistant-ahvw
 ---
 
@@ -65,7 +65,68 @@ reported.
 _2026-09-26T10:39:59Z_ — Claimed by claude/sleepy-rubin-mr6kdu — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 
+## Box 3 answered, 2026-09-26 — and it found the last of this bean's own defect
 
+Box 3 asked that the `siteResolved` count fall and that what remains be
+genuinely the published tree. Unmeasurable until now, because 775 translated-page
+links (`ahab`) dominated the bucket. With those gone:
+
+| | when this bean was written | now |
+|---|---|---|
+| `siteResolved` over `docs/` | 340 | **70** |
+| `docs/reference/skill-instructions/` — this bean's subject | 76 | **1** |
+
+And the survivors were NOT all published tree. Three remained here, and two
+were this bean's own sentence:
+
+```text
+harness-requirements.md        ](../../../beans/defs/)
+    -> cat-harness/beans/defs/                     MISSING (real: beans/defs/)
+milnor-exposition-standard.md  ](../../../folio-assistant-sci/library/milnorlink/)
+    -> cat-harness/folio-assistant-sci/...         MISSING (real: folio-assistant-sci/...)
+```
+
+(Fenced at column 0. An indented block would leave those `](` link-shaped
+and `check:subgraphs` would report this bean as carrying dangling links —
+which it did, twice today, in `ahab` and `mi97`. `ig4a`.)
+
+A published page sits one directory DEEPER than the body it was generated
+from — `cat-harness/skills/<pkg>/x.md` is three from the repository root,
+`cat-harness/docs/reference/skill-instructions/x.md` is four — so
+`../../../beans/defs/` is right at the source and lands one level short here.
+`rebaseLinks` exists for exactly that.
+
+## Why it missed them, and it was my edit
+
+The matcher required a FILE EXTENSION:
+
+    /\]\((\.{0,2}[^)\s:]*?\.[A-Za-z0-9]+)(#[^)\s]*)?\)/g
+
+A directory target has none, so `](../../../beans/defs/)` never reached
+`publishedLocation` at all. I widened that pattern from `\.md` to
+`\.[A-Za-z0-9]+` in #1398 — more extensions, still no directories. The case
+I added it for hid the case I did not.
+
+Fixed: the matcher accepts a trailing `/` as well, and branch 4 emits
+`tree/main/` for a directory rather than `blob/main/`, which GitHub serves
+as a 404.
+
+## The third survivor is box 2 working
+
+`kg-navigation.md -> local-kg-navigation.html` is left exactly as written: a
+local skill under `.claude/skills/local/` that publishes no page here. So is
+`.claude/skills/local/todo-manager.md`'s `../../../skills/folio-core/...`,
+which resolves nowhere from its OWN source either — a source defect, correctly
+published untouched. An early draft of the new test called both generator
+failures; the control that separates them is the same one `ahab` uses, one
+directory up.
+
+## Done when — all three
+
+- [x] Each kind has a stated treatment and the generator applies it
+- [x] A target the generator cannot place is LEFT ALONE
+- [x] The count falls and what remains is genuinely the published tree — 76 -> 1,
+      and the 1 is the documented leave-alone
 --------
 
 _2026-09-26T11:50Z, from `claude/fervent-mccarthy-nw4olk` (PR #1361) — a note, not a claim. Status untouched, nothing ticked._

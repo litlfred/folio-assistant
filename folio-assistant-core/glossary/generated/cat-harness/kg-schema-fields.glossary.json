@@ -7090,6 +7090,76 @@
       "status": "candidate"
     },
     {
+      "id": "session-survey.sessionsurveyschema.axes",
+      "prefLabel": "SessionSurveySchema.axes",
+      "definition": "Per-axis findings. Empty is refused: a survey that covered nothing is not a survey.",
+      "source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.axes",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.sessionsurveyschema.branch",
+      "prefLabel": "SessionSurveySchema.branch",
+      "definition": "The branch the window is on, so a reader knows which history `from`/`to` live in.",
+      "source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.branch",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.sessionsurveyschema.by",
+      "prefLabel": "SessionSurveySchema.by",
+      "definition": "Who took it, so a reader can ask. A session URL or id.",
+      "source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.by",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.sessionsurveyschema.commits",
+      "prefLabel": "SessionSurveySchema.commits",
+      "definition": "How many commits the window held, as counted at publication.",
+      "source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.commits",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.sessionsurveyschema.from",
+      "prefLabel": "SessionSurveySchema.from",
+      "definition": "The window's LOWER edge — the last commit the surveyor already knew. Exclusive, matching `git rev-list from..to`.",
+      "source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.from",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.sessionsurveyschema.takenat",
+      "prefLabel": "SessionSurveySchema.takenAt",
+      "definition": "When it was taken, ISO-8601. Not the staleness test — `to` is — but it dates the prose.",
+      "source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.takenAt",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.sessionsurveyschema.to",
+      "prefLabel": "SessionSurveySchema.to",
+      "definition": "The window's UPPER edge — the newest commit the survey actually read. Inclusive.",
+      "source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.to",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.surveyaxisschema.axis",
+      "prefLabel": "SurveyAxisSchema.axis",
+      "definition": "What was examined — `beans`, `ci`, `prs`, `issues`, `branches`, …",
+      "source": "cat-harness/schemas/session-survey.ts#SurveyAxisSchema.axis",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.surveyaxisschema.covered",
+      "prefLabel": "SurveyAxisSchema.covered",
+      "definition": "False means NOT LOOKED AT; `finding` then says why, not what was found.",
+      "source": "cat-harness/schemas/session-survey.ts#SurveyAxisSchema.covered",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.surveyaxisschema.finding",
+      "prefLabel": "SurveyAxisSchema.finding",
+      "definition": "What it found, or — when `covered` is false — why it was skipped.",
+      "source": "cat-harness/schemas/session-survey.ts#SurveyAxisSchema.finding",
+      "status": "candidate"
+    },
+    {
       "id": "site-indexes.beanindexitemschema.file",
       "prefLabel": "BeanIndexItemSchema.file",
       "definition": "Repository-relative path of the bean file.",
