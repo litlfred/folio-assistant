@@ -14775,6 +14775,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/kg-qa.kgcriteriondefinition.scope",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgCriterionDefinition.scope"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "WHICH INSTANCE ROOT can answer it — the second axis beside {@link applies}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/kg-qa.ts#KgCriterionDefinition.scope",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/kg-qa.kgcriteriondefinition.scopebasis",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgCriterionDefinition.scopeBasis"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why this criterion is `repo`-scoped. Required for `repo`, absent for `instance`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/kg-qa.ts#KgCriterionDefinition.scopeBasis",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/kg-qa.kgcriteriondefinition.summary",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -25716,6 +25754,215 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/user-story.ts#UserStorySchema.want",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/vector-labels.vectorfigurepageschema.captioncandidates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorFigurePageSchema.captionCandidates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Verbatim line-start `Fig.`/`Figure` matches on the page, table-of-contents entries removed. A lower bound, and it deliberately includes cross-references — plural, and never asserted to be the page's figure."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.captionCandidates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/vector-labels.vectorfigurepageschema.drawings",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorFigurePageSchema.drawings"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Vector drawing operations MuPDF reports on the page. Reported, never graded."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.drawings",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/vector-labels.vectorfigurepageschema.page",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorFigurePageSchema.page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "1-based, matching `DocumentImage`'s `basis.page` so the two join."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.page",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/vector-labels.vectorfigurepageschema.rasterimagesonpage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorFigurePageSchema.rasterImagesOnPage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Raster images the page also places."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.rasterImagesOnPage",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/vector-labels.vectorfigurepageschema.rotation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorFigurePageSchema.rotation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The page's rotation in degrees, as the PDF declares it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.rotation",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/vector-labels.vectorlabelschema.bbox",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorLabelSchema.bbox"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The line's rectangle **in the visible frame** — rotation already applied."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema.bbox",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/vector-labels.vectorlabelschema.fonts",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorLabelSchema.fonts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Font names on the line's spans, deduplicated and sorted."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema.fonts",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/vector-labels.vectorlabelschema.intersectsdrawing",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorLabelSchema.intersectsDrawing"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether this block's rectangle intersects any vector drawing's."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema.intersectsDrawing",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/vector-labels.vectorlabelschema.sizes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorLabelSchema.sizes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Point sizes on the line's spans, deduplicated and sorted ascending."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema.sizes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/vector-labels.vectorlabelschema.text",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorLabelSchema.text"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The line's text: its spans concatenated, since a span break is a style change and not a word break."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema.text",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/vector-labels.vectorlabelssidecarschema.pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "VectorLabelsSidecarSchema.pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`null` is could-not-determine and is NOT an empty list."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vector-labels.ts#VectorLabelsSidecarSchema.pages",
       "skos:note": "candidate"
     },
     {

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 380,
+      "count": 382,
       "unit": "beans"
     }
   },
@@ -105,6 +105,20 @@
       "updatedAt": "2026-09-19T10:04:45Z",
       "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"no github,\nlocal git only. tools (several options) to run lightweight server locally for\nskill of hosting content (using mime time data whch github tool cant)\" and\n\"github on private repo so gh-pages not avaialbe. use local server skill.\"\n\n## This hole is already documented, deliberately\n\n`skills/folio-core/serving-renderings.md",
       "file": "beans/defs/folio-assistant-0hi8--deploy-a-local-http-server-that-serves-a-rendering.md"
+    },
+    {
+      "id": "folio-assistant-0js9",
+      "title": "INGEST + METHODOLOGY: five subject-indexing papers (SemEval-2025 Task 5 x3, LCSH agentic pipeline, LCSHBench)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T19:46:16Z",
+      "updatedAt": "2026-09-26T12:13:49Z",
+      "preview": "Ingest five open-access subject-indexing papers into `cat-harness/library/`, and adopt the methodology they support. The platform library holds only sources a methodology cites (`library-ref.test.ts`), so the ingest and the methodology nodes have to land together.\n\n## The five sources\n\n| bib-slug | paper | role |\n|---|---|---|\n| `arxiv-2605.03537v1` | Chow, skill-based agentic pipeline for LCSH in",
+      "file": "beans/defs/folio-assistant-0js9--ingest-methodology-five-subject-indexing-papers-se.md"
     },
     {
       "id": "folio-assistant-0jtl",
@@ -1581,6 +1595,20 @@
       "file": "beans/defs/folio-assistant-a7t8--ingest-documents-run-the-remaining-arms-line-doubl.md"
     },
     {
+      "id": "folio-assistant-a8wy",
+      "title": "VECTOR FIGURE ARM: extract positioned labels from vector-only figures — 69 of 87 caption pages",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-2yyh",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:04:22Z",
+      "updatedAt": "2026-09-24T18:35:11Z",
+      "preview": "Sibling of `m4xy` under the same epic, and the second of its two open arms, and the narrow one: **the labels, and\nnothing above them.** `pdf-images.py` recovers the raster layer; a WHO\nconceptual figure is drawn in path operators and text, so there is no image\nobject and that arm places nothing. `9789240120747-eng` declares six captioned\nfigures and places zero images, and `check-l1-complete` repo",
+      "file": "beans/defs/folio-assistant-a8wy--vector-figure-arm-extract-positioned-labels-from-v.md"
+    },
+    {
       "id": "folio-assistant-a98i",
       "title": "translate-kg-viewer --extract refreshes every .pot but never syncs the .po stubs",
       "status": "todo",
@@ -1814,7 +1842,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T04:14:07Z",
-      "updatedAt": "2026-09-26T12:35:30Z",
+      "updatedAt": "2026-09-26T14:05:33Z",
       "preview": "Split out of `sa8y` 2026-09-26. It was `sa8y`'s last genuinely open item and the\nonly one of its four; the other three are done and `sa8y` closed on the wording\nfix that is its actual subject. It gets its own bean because it is a different\nsubject — `sa8y` is about a finding's **wording**, this is about a gate's\n**range** — and because a wording bean carrying an infrastructure item is how\n`sa8y` c",
       "file": "beans/defs/folio-assistant-bjzs--per-instance-gates-kgaudit-renderbpmn-and-checkwor.md"
     },
@@ -2705,14 +2733,14 @@
     {
       "id": "folio-assistant-j820",
       "title": "PDF EXTRACTOR FRAGMENTS A COMPOSITE FIGURE: 383 placed images against 7 captioned figures, 335 from one page",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T21:14:17Z",
-      "updatedAt": "2026-09-24T05:10:40Z",
+      "updatedAt": "2026-09-24T13:46:41Z",
       "preview": "Found 2026-09-23 while ingesting arXiv:2510.21603v1 (bean `ctp3`). Split out\nrather than worked around, because routing around it would have meant writing 383\nimage descriptions from nothing.\n\n## CORRECTED 2026-09-24 — the original diagnosis in this bean was WRONG\n\nEverything below the next heading was written on 2026-09-23 from counts and\nfile sizes. **Two file reads falsified it**, and the corre",
       "file": "beans/defs/folio-assistant-j820--pdf-extractor-fragments-a-composite-figure-383-pla.md"
     },
@@ -3043,14 +3071,14 @@
     {
       "id": "folio-assistant-m4xy",
       "title": "INGEST ARM: pdf-images recovers the raster layer, and WHO's real figures are vector",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-2yyh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T08:48:53Z",
-      "updatedAt": "2026-09-22T11:55:18Z",
+      "updatedAt": "2026-09-24T18:00:36Z",
       "preview": "Surveyed across all seven entries 2026-09-22 (issue #877). The cheapest of the three candidate fixes has shipped; the other two remain the owner's call.\n\n## The finding\n\n`pdf-images.py` recovers the **raster** layer. WHO's conceptual figures — frameworks, maturity models, taxonomies, process flows — are drawn in **vector**, so they are never extracted. What IS extracted is furniture.\n\n| entry | de",
       "file": "beans/defs/folio-assistant-m4xy--ingest-arm-pdf-images-recovers-the-raster-layer-an.md"
     },
