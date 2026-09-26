@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-09-26T07:38:20Z
-updated_at: 2026-09-26T10:35:33Z
+updated_at: 2026-09-26T12:21:59Z
 parent: folio-assistant-1xhc
 ---
 
@@ -261,3 +261,67 @@ than the pattern.
 [x] the dropped behaviour is dropped on an argument, recorded here, not by
     accident of which file won
 [x] both suites merged rather than one discarded
+
+
+
+--------
+
+## 2026-09-26T12:20Z — CORRECTION: the gate I called load-bearing has NEVER RUN
+
+I wrote, in this bean and in the PR body and in three check-in notes, that
+`skill:register:check` in `code-quality-gates.yml` is *"the load-bearing half"* and
+*"the only thing that makes the obligation binding"*.
+
+**It has not executed once.** Measured:
+
+    .github/workflows/code-quality-gates.yml
+      line 260   run: bun test                   job `typescript`
+      line 639   run: bun run skill:register:check   job `typescript`  ← same job
+
+A failing step skips every step behind it in the same job. `bun test` is red on
+`main` (the 25 uncatalogued translations, bean `ngxj`, and `f6r1` has now shown the
+mechanical remedy is closed) so it is red on every run of this branch — and my gate
+sits 379 lines downstream of it. Run `36238697037` on this branch, job
+`TypeScript — tests, lint, types (hard)`: step 34, *"every skill is declared, and
+declares nothing absent"*, conclusion **`skipped`**. Steps 7 through 52 all
+skipped, 45 gates returning no verdict.
+
+**So this bean shipped the exact defect its own parent epic is named for.**
+`1xhc` is *"a gate that does not fire is indistinguishable from one that passed"*,
+and I added a gate that cannot fire, inside a PR whose second feature is a
+year-old instance of the same shape (`check:workflow-refs` auditing a path that
+never existed).
+
+### I had the evidence and did not apply it
+
+An hour before writing this I recorded the identical mechanism on bean `9cc0` —
+*"CI cannot see the typecheck failure either: step 6 fails, steps 7 onward
+including `tsc --noEmit` are SKIPPED"* — and cited `m5gx` for it. I read the
+skipped-step list, described it accurately, drew the conclusion for
+somebody else's defect, and did not turn it on my own gate in the same file.
+Noticing a mechanism is not the same as checking what of mine it applies to.
+
+### The fix exists and is somebody else's, already measured
+
+PR **#1399** (`claude/brave-hypatia-r820sf`, bean `v625`) adds a SEPARATE CI job,
+`skill-registration-chain`, and argues the placement from the same measurement on
+main's run `36234052354`: *"a failing step skips every step behind it … 45 gates
+returning no verdict while the job reported as one red. A step in front would
+widen that cascade instead of adding a verdict. A separate job skips nothing and
+runs in parallel: 13s measured, against ~2.5min for typescript."*
+
+That is a better answer than mine and it is already written. **Not duplicating it** —
+moving my step into its own job on this branch would collide with theirs in the
+same file and re-run their measurement badly. Coordinated on #1399 instead.
+
+### What this means for #1361 as it stands
+
+The gate is **declared and inert**. `skill:register:check` is correct, exits 0 on a
+clean tree and 1 on each of the three defects (falsified end-to-end), and
+`audit:coverage` counts it as a gate covering the `skills` kind — which is now
+itself slightly generous, since declaring coverage is not the same as running.
+It becomes real the moment either #1399's separate job lands or `bun test` goes
+green.
+
+Recorded rather than silently fixed, because a reviewer reading "a gate refuses an
+undeclared skill" should know it currently does not.
