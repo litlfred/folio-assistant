@@ -268,3 +268,5 @@ The claim that survives intact is the one that matters for this bean: the missin
 catalogue was **masking** a real divergence on 9 pages, so this gate was
 *under*-reporting. The remedy is 7 catalogues plus `7x8o`, and never 27
 `UNCATALOGED` entries.
+
+_2026-09-26T08:50:20Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
