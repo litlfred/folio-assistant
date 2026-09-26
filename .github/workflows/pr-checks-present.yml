@@ -53,7 +53,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Install bun
         uses: oven-sh/setup-bun@v2
@@ -190,8 +190,14 @@ jobs:
             because then the branch and the merge result agree." ;;
               *)
                 advice="Its mergeability could not be read, so the reason is unknown.
-            Check that FIRST: on a conflicted PR a dispatch tests a tree that
-            will never exist, so it is not a safe default." ;;
+            Check it by hand FIRST — and ask GIT, not \`mergeable_state\`.
+            Bean \`fx5r\`: that field served a merged PR's pre-merge value 45
+            minutes after the merge, and \`update-branch\` called a CLOSED PR a
+            conflict. Only \`merged\` is stale-safe:
+                gh pr view N --json merged
+                git ls-remote origin refs/pull/N/merge
+            On a conflicted PR a dispatch tests a tree that will never exist,
+            so it is not a safe default." ;;
             esac
             # Indented to stay inside the YAML block scalar. Unindented, these
             # lines end the scalar and the file will not parse — which

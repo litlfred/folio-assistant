@@ -56,9 +56,9 @@
  * absence: no sidecar, and the icon reads `TR ·` — not swept.
  *
  * Usage:
- *   bun run content/pipeline/translation-block-qa.ts                 # write
- *   bun run content/pipeline/translation-block-qa.ts --check         # fail if stale
- *   bun run content/pipeline/translation-block-qa.ts --root <dir> --locales fr,es
+ *   bun run cat-harness/content/pipeline/translation-block-qa.ts                 # write
+ *   bun run cat-harness/content/pipeline/translation-block-qa.ts --check         # fail if stale
+ *   bun run cat-harness/content/pipeline/translation-block-qa.ts --root <dir> --locales fr,es
  *
  * @module content/pipeline/translation-block-qa
  * @covers translation-sources, qa

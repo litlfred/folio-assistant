@@ -79,7 +79,7 @@ jobs:
     name: Lean bare-import gate (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # HARD GATE: a bare `import Mathlib` (optionally trailing whitespace)
       # at the start of a line is forbidden in content Lean files. Use
@@ -137,9 +137,9 @@ jobs:
     name: Python unused/wildcard imports (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -220,7 +220,7 @@ jobs:
     name: TypeScript — tests, lint, types (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -529,6 +529,22 @@ jobs:
       - name: workflow script paths
         run: bun run check:workflow-paths
 
+      # The same defect one layer in, and the one a READER hits first: a script
+      # whose own usage string names a path that is not the script. 178
+      # occurrences across 67 files when this was added, every one a casualty of
+      # the #223 split moving the platform under `cat-harness/` while the usage
+      # strings kept the pre-split spelling.
+      #
+      # A separate step from the one above for the reason those two are separate
+      # from each other: this needs no cwd model and no exemptions, because a
+      # self-reference has no audience to guess at. `check:command-paths` PASSES
+      # over all 178 by design — `aboutThisTree` judges a path only when its
+      # first segment is a directory that exists at the root, so these land in
+      # its folio-relative bucket (306 of them, counted rather than judged). The
+      # general question is bean `52dz`'s open half and is NOT gated here.
+      - name: usage strings name their own script
+        run: bun run check:usage-paths
+
       # THE OTHER DIRECTION FROM `ovkk`, and the reason it needs a gate at all
       # is that this direction is silent.
       #
@@ -795,6 +811,16 @@ jobs:
           # about, arriving again through the back door.
           bun run navbar:include:check
           bun run check:agents-xref
+          # Bean `rsi6`: `@litlfred/block-qa-schema` is the only package here
+          # that ships to npm, and NO workflow built it. PR #914 bumped its
+          # typescript 5.9.3 -> 7.0.2, passed TEN checks, and left the package
+          # unbuildable -- `tsup --dts` delegates to rollup-plugin-dts, which
+          # bundles its own TypeScript 5.7.3 and dies on TypeScript 7's
+          # compiler API. Ten green checks, not one of which read the file the
+          # PR changed. The set is derived from the git index, and an EMPTY
+          # set fails rather than passing: a sweep that examined nothing has
+          # not cleared anything.
+          bun run check:published-packages
           # Bean `b963`: a path inside a fenced COMMAND is not a link, not a
           # symbol claim and not a literal in a .ts file, so all three
           # neighbouring checks miss it by design. The cold-start line every
@@ -1367,7 +1393,7 @@ jobs:
     name: End-to-end + accessibility (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -1398,7 +1424,7 @@ jobs:
     name: Rust wildcard imports (warn-only)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # WARN-ONLY ratchet: count non-test `use ...::*;` wildcard imports in
       # tools/. Test modules (`#[cfg(test)]` / `use super::*;`) are the bulk
@@ -1435,7 +1461,7 @@ jobs:
     name: Dependency advisories (warn-only)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest

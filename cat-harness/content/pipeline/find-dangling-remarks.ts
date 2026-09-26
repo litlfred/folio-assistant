@@ -6,7 +6,7 @@
  *   2. Is not a glossary remark (no "glossary" tag)
  *
  * Usage:
- *   cd content && bun run pipeline/find-dangling-remarks.ts [paper-dir]
+ *   cd content && bun run cat-harness/content/pipeline/find-dangling-remarks.ts [paper-dir]
  *
  * Output: structured report of all remarks, classified as:
  *   - BACKED: has `interprets` field

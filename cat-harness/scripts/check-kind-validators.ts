@@ -26,6 +26,8 @@
 
 import { BASE_GRAPH_KINDS } from "../schemas/cat-harness.js";
 import { readdirSync, readFileSync, statSync } from "node:fs";
+
+import { gitCorpus } from "./git-corpus.ts";
 import { join, relative } from "node:path";
 
 import { directoriesForGraph, instanceRootsIn } from "../schemas/cat-harness.js";
@@ -96,7 +98,31 @@ export interface FamilySweep {
   noDirectory?: boolean;
 }
 
+/**
+ * The JSON nodes in {@link dir} — asked of git, not of the disk.
+ *
+ * Two defects, both hit on 2026-09-26 the moment a gate installed a
+ * publishable package's devDependencies (bean `rsi6`):
+ *
+ * 1. **It swept `node_modules/`.** A declared directory containing an
+ *    untracked subtree meant thousands of third-party `.json` files routed
+ *    through this repository's `$schema` map — and a tag the map does not
+ *    name is a FAILURE here, so every one of them would have been a finding.
+ * 2. **A dangling symlink CRASHED it.** `statSync` on `node_modules/.bin/`
+ *    threw `ENOENT` and took the whole sweep with it, so the check reported
+ *    nothing at all rather than reporting what it could not read. A checker
+ *    that dies is strictly worse than one that says "could not determine".
+ *
+ * `gitCorpus` fixes the first; `statSync` is now guarded for the second,
+ * because a broken symlink is a fact about the tree and not a reason to stop.
+ */
 function jsonFiles(dir: string): string[] {
+  const listed = gitCorpus(dir, ["*.json"]);
+  if (listed !== undefined) return listed;
+
+  // Fallback for a directory git cannot answer about — a temp fixture, or a
+  // path outside any work tree. Looser than the git answer, so it can only
+  // over-report.
   let entries: string[];
   try {
     entries = readdirSync(dir);
@@ -105,7 +131,13 @@ function jsonFiles(dir: string): string[] {
   }
   return entries.flatMap((e) => {
     const p = join(dir, e);
-    return statSync(p).isDirectory() ? jsonFiles(p) : p.endsWith(".json") ? [p] : [];
+    let isDir: boolean;
+    try {
+      isDir = statSync(p).isDirectory();
+    } catch {
+      return []; // dangling symlink, or a race: not readable is not a crash
+    }
+    return isDir ? jsonFiles(p) : p.endsWith(".json") ? [p] : [];
   });
 }
 

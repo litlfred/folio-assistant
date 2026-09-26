@@ -85,7 +85,7 @@ preference; a broken relative link in somebody's README is a defect.
 
 ## 3. Dispatch the ingestion
 
-Ingestion proper is [`document-intake`](../folio-paper-adapter/document-intake.md)
+Ingestion proper is [`document-intake`](document-intake.md)
 and `processes/document-ingestion.bpmn`. What this skill decides is *how
 much parallelism*, and it is a question for the author because it spends their
 tokens:

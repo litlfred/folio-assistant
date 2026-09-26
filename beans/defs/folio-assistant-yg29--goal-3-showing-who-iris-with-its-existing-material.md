@@ -116,6 +116,80 @@ verify a mounted instance from a local build will hit it too.
    large-datasets subsetting skill — rather than IRIS-catalogue work. Whether
    they belong under `kupb` is a re-parenting decision and is **the owner's**.
 
+## RE-MEASURED 2026-09-25 — `kupb` is three days closer than this bean says
+
+The section above was measured 2026-09-22. Re-derived against the store today,
+item by item, not carried forward:
+
+| item | recorded above | now |
+|---|---|---|
+| `j66n` | *"has one clause left … **owner-blocked**"* | **`completed`** |
+| `kupb`'s children | 13 open | **3 open**, 10 closed |
+
+**Ten closed since:** `4pm8`, `54rk`, `809i`, `gpdo`, `hfwl`, `hpax`, `j66n`,
+`rtrg`, `v048`, `w5bn`.
+
+**Three still open:** `eof6` (in-progress — search index as a release
+artifact), `j79e` (in-progress — detangle), `xies` (in-progress — publish
+to CDN).
+
+## SUPERSEDED 2026-09-26 — the re-parenting happened, and it was not mine
+
+The three named just above are **no longer `kupb`'s children.** Commit
+`9fe74a7be8d`, *"kupb narrowed to IRIS-catalogue work, so GOAL 3 can close"*,
+moved `eof6` and `xies` to `5a3l` (DEPLOYMENT) and `j79e` to `zzmr` (KG) —
+about nine hours after the table above was written, by the session that owned
+that work.
+
+**`kupb` now has two open children, and both are genuinely IRIS:**
+
+| id | what it is |
+|---|---|
+| `08u4` | SURVIVAL PATH: every referenced IRIS node resolves by Handle |
+| `xlg2` | RUN THE SAMPLE IMPORT: one real end-to-end instance of sample-import |
+
+So the re-parenting question this bean carried is **settled and executed**, and
+the Done-when clause below is rewritten accordingly. What blocks `kupb` is now
+two pieces of real IRIS-catalogue work rather than an unanswered filing
+decision — which is the state that clause should always have described.
+
+### This is a staleness class the new check cannot see
+
+`check:stale-paths` grew a `done-when` rule yesterday for a clause naming a
+**closed** bean as a precondition. It does not fire here, and correctly so:
+`eof6`, `j79e` and `xies` are all still `in-progress`. They are not finished —
+they are **somebody else's children now**. A body asserting a parent relation
+the store contradicts is a *different* defect from one routing through
+finished work, and nothing reads it. Recorded on `k59d` as the next drawable
+rule rather than fixed by hand here, because a parent edge is structured data
+and a hand pass over it has already failed twice in two days.
+
+> **`4pm8` closed while this section was being written.** It was `todo` when
+> the table above was first measured and `completed` twenty-odd minutes later,
+> in the 23 commits `main` took during the edit. Recorded rather than quietly
+> corrected, because it is the sharpest evidence this bean has for `k59d`'s
+> argument: a hand measurement of a fast-moving store is stale before the
+> commit that carries it lands. Caught only because the edit was re-falsified
+> after merging `main` instead of before.
+
+Two things follow, and they point opposite ways:
+
+1. **The `j66n` line above is stale and should not be acted on.** It puts a
+   theme-sources question to the owner that its own bean has since closed.
+   Left in place with this correction beside it rather than deleted, so the
+   next reader can see the question was answered rather than dropped.
+2. **The re-parenting decision is unchanged and is still the owner's** — but
+   it is now a smaller question. Of the four that remain, all four are the
+   "large independent subject" kind the 2026-09-22 note flagged (search,
+   CDN publication, detangle), and **none** is IRIS-catalogue work. The case
+   for re-parenting them out of `kupb` is therefore stronger than when it was
+   4-of-13; whether to do it is still not an agent's call.
+
+This bean has now been re-measured twice for the same reason (`k59d`): a
+milestone's body is read as current by every session that opens it, and
+nothing recomputes it. That is the argument for the check `k59d` asks for,
+not for a third hand pass.
+
 ## Not blocked on the owner any more
 
 `hqku` is `completed`; the question *"is `library/` active content a sweep should
@@ -131,5 +205,7 @@ still open and is asked as a selectable question rather than assumed.
       explained
 - [x] It renders on the IRIS theme rather than the default
 - [x] `check:voices` is green across the instance boundary
-- [ ] `kupb` closes — blocked on its 13 open children, whose re-parenting is the
-      owner's call
+- [ ] `kupb` closes — blocked on **two** open children, `08u4` and `xlg2`, both
+      genuine IRIS-catalogue work. The re-parenting this clause used to wait on
+      is DONE (2026-09-26, commit `9fe74a7be8d`); nothing here waits on the
+      owner any more.

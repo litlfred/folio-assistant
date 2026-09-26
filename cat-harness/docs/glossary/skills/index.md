@@ -11,13 +11,13 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 7 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 259 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 6 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 1 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 3 (<a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 7 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 266 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 6 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 1 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 3 (<a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 277 terms and is 197 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 284 terms and is 202 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">277</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">284</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -181,6 +181,13 @@ bpmn-processes <span class="fa-gloss-status">candidate, extracted</span>
 <p>Every process here is BPMN, the diagrams are executable, and the base processes are strict. How to author one, how to run it, how a package relaxes a step and what it may never relax, and which gateways are computed rather than chosen.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/bpmn-processes.md"><code>cat-harness/skills/workflow/bpmn-processes.md</code></a></p>
 </dd>
+<dt id="cat-harness--kg-skills--branch-freshness" data-fa-state="extracted" data-fa-gloss="">
+branch-freshness <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan. Prevents stale assumptions, merge conflicts, and duplicated work — especially after session restarts, long idle periods, or heavy sibling activity on main.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/branch-freshness.md"><code>cat-harness/skills/workflow/branch-freshness.md</code></a></p>
+</dd>
 <dt id="cat-harness--kg-skills--build-docs" data-fa-state="extracted" data-fa-gloss="">
 build-docs <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -247,6 +254,13 @@ code-node-review <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Review the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/` — for the joins a reader cannot see: that a node declares what it is, that what it names resolves, and that the mechanism it describes is the one that actually runs.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/code-node-review.md"><code>cat-harness/skills/folio-core/code-node-review.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--code-review-process" data-fa-state="extracted" data-fa-gloss="">
+code-review-process <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where code review sits in the release lifecycle. Review types, who reviews what, how feedback maps to beans, and the path from review to approval to release. Works with prepare-merge-auto for mechanics and release-lifecycle for the broader flow.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/code-review-process.md"><code>cat-harness/skills/workflow/code-review-process.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--communication-language" data-fa-state="extracted" data-fa-gloss="">
 communication-language <span class="fa-gloss-status">candidate, extracted</span>
@@ -436,6 +450,27 @@ crdm-detect <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p><em>The asset carries no description.</em></p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-detect.md"><code>cat-harness/skills/crdm/crdm-detect.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--crdm-impact-analysis" data-fa-state="extracted" data-fa-gloss="">
+crdm-impact-analysis <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Guide for CRDM Phase 4 — Impact Analysis and Migration Planning. Systematic scan across 7 dimensions: schema, pipeline, adapter, folio, skill, migration, and test/documentation impact. Produces a structured assessment for posting to the GitHub issue.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-impact-analysis.md"><code>cat-harness/skills/crdm/crdm-impact-analysis.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--crdm-needs-assessment" data-fa-state="extracted" data-fa-gloss="">
+crdm-needs-assessment <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Facilitate Phase 1 (Needs Assessment) of the CRDM requirements workflow. Guide the BA through stakeholder identification, source material gathering, and synthesising a domain-language needs statement. Post to the GitHub issue and iterate until the BA confirms the need is correctly captured.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-needs-assessment.md"><code>cat-harness/skills/crdm/crdm-needs-assessment.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--crdm-requirements-template" data-fa-state="extracted" data-fa-gloss="">
+crdm-requirements-template <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Guide and template for CRDM Phase 3 — Requirements Definition. Helps the agent structure requirements from conversation using a REQ-### format with acceptance criteria, priority, and traceability.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-requirements-template.md"><code>cat-harness/skills/crdm/crdm-requirements-template.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--crdm-requirements-workflow" data-fa-state="extracted" data-fa-gloss="">
 crdm-requirements-workflow <span class="fa-gloss-status">candidate, extracted</span>
@@ -1507,6 +1542,20 @@ related-work-coordination <span class="fa-gloss-status">candidate, extracted</sp
 <dd>
 <p>Before new work takes shape, find the work it touches. Search beans, issues and open PRs for relevance; categorize and summarize every hit; then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation, and the user decides the coordination. Called by CRDM when a requirement is initiated or updated in chat, and by methodology adoption. Process: processes/related-work.bpmn.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/related-work-coordination.md"><code>cat-harness/skills/folio-core/related-work-coordination.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--release-epic-planning" data-fa-state="extracted" data-fa-gloss="">
+release-epic-planning <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Plan and track releases using bean epics. Covers epic creation, story/task decomposition, release readiness tracking, and the relationship between epics and GitHub milestones. Applies to code releases, paper publications, and project milestones.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/release-epic-planning.md"><code>cat-harness/skills/workflow/release-epic-planning.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--release-lifecycle" data-fa-state="extracted" data-fa-gloss="">
+release-lifecycle <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases. Applies to code releases, paper publications, and project milestones. Complements package-release (which handles the mechanics of cutting a release) with the process and policy layer.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/release-lifecycle.md"><code>cat-harness/skills/workflow/release-lifecycle.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--remark-audit" data-fa-state="extracted" data-fa-gloss="">
 remark-audit <span class="fa-gloss-status">candidate, extracted</span>
