@@ -465,6 +465,15 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   sourceCommitAt: { gloss: "When that commit was made." },
   sourceTreeDirty: { gloss: "Whether the working tree had uncommitted changes when the export ran." },
   sourceCommitUnavailable: { gloss: "That the commit could not be determined — never rendered as clean." },
+  // Per-locale documents only (`kg-locale-export.ts`). It is the language of
+  // the document's UNTAGGED strings, NOT of its content — for a French
+  // document the second answer is French and the first is English, which is
+  // why `kg-export.ts` mints this rather than borrowing `schema:inLanguage`.
+  sourceLanguage: {
+    gloss:
+      "The language a per-locale document's UNTAGGED strings are in — its " +
+      "SOURCE language, not the locale it was translated into.",
+  },
 
   // ── Staging provenance ───────────────────────────────────────────────
   //
