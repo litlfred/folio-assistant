@@ -259,5 +259,49 @@ nine hours early, two of this bean's own causes fixed while the patch was held)
 - [x] `git diff origin/main` is a pure deletion, nothing else
 - [x] `no page is recorded TWICE` passes, so #1381 is unblocked
 - [ ] The `.po` catalogues land (issue #206 / bean `ngxj`, not this bean)
-- [ ] **A way for one session to see another's open question before answering
-      it** — the owner cannot be the only place two sessions meet.
+- [x] ~~A way for one session to see another's open question before answering
+      it~~ — **WITHDRAWN 2026-09-26: the mechanism already exists and I skipped
+      it.** See below.
+
+## The remedy I proposed already existed — withdrawn, and the real gap is narrower
+
+I recommended building cross-session question visibility. Then I looked, which
+is the step that should have come first. `bean-coordination` §"A claim is
+branch-local" **already prescribes the check**, with the command, and names my
+exact case in its own words:
+
+> `gh pr list --state open --search '<bean-id>'`
+>
+> Both are cheap, and **the second catches the case that matters most in
+> practice — a sibling minutes ahead of you who already has a PR up.**
+
+#1381 was up. I did not look. **Seventh premise to dissolve on re-measurement
+today, and the first that was my own proposal.**
+
+### What IS a real gap, and it is one sentence wide
+
+Those checks are written as *pre-claim*. I was not claiming: I already held
+`tuvg` and was executing an owner instruction on one cause inside it. **No
+claim, so the rule never fired.** Two edits to the skill follow, and both are
+mechanical rather than aspirational:
+
+1. **The trigger is starting work, not claiming.** A cause inside a bean you
+   hold, a fix just asked for, a gate you are unbreaking — each is a unit a
+   sibling may already have a PR up for, and none involves a claim.
+2. **Search the subject, not only the bean id.** The sibling's bean `0xfe` was
+   on an unpushed branch, so an id search would have returned nothing. #1381's
+   title was *"Record the 25 uncatalogued translations"* — `UNCATALOGED` would
+   have matched; `tuvg` never could.
+
+Also recorded there: a duplicate-detecting test punishes **whoever merges
+second**, not whoever duplicated. Merging first is not evidence of being first.
+
+### What this does NOT fix, stated so nobody reads it as closed
+
+The two contradictory owner answers are still possible. Nothing above would have
+shown me that another session had already asked and been told *no* — that
+information lived only in an unpushed bean and another session's check-in text.
+The PR check would have stopped me **by finding the duplicate work**, not by
+finding the decision. That remains unsolved, and it is deliberately NOT being
+designed here: it is a platform capability change, so it belongs in CRDM behind
+an issue, and I have not been given permission to open one.
