@@ -12,7 +12,7 @@ parent: Skill instructions
 {% raw %}
 # /proof-integration-watcher
 
-A concrete instance of [`local/integration-watcher`](../folio-core/integration-watcher.md).
+A concrete instance of [`local/integration-watcher`](integration-watcher.md).
 The parent encodes the shared mechanics (Monitor, subscriptions,
 queue, ledger, idle sweep, author-ask, watch-PRs-you-prepare,
 sibling-PR comment protocol, witness-drift recovery, billing

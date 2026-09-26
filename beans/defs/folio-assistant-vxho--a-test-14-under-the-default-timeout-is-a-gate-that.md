@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-24T12:19:24Z
-updated_at: 2026-09-25T18:14:49Z
+updated_at: 2026-09-25T16:37:25Z
 parent: folio-assistant-1xhc
 ---
 
@@ -96,27 +96,41 @@ was already ruled out.
 `LIBRARY_GRAPH` hoisted to module scope; four call sites became two reads.
 No assertion changed.
 
+
 ---
 
-## Evidence — re-derived 2026-09-25, closing
+## Re-derived and closed by another session, 2026-09-25
 
-Closed on evidence per `bean-coordination` §"Closing a bean whose work has
-already landed". Re-run from a clean checkout identical to `origin/main` at
-`d8c450b9a2`.
+Found by `bun run beans:landed` as `done-ticked`. Closed on evidence re-run
+here, not on the ticks — `bean-coordination.md` §"Closing a bean whose work has
+already landed".
 
-The test is `cat-harness/schemas/viz-generators.test.ts` — **not** under
-`scripts/tests/`, which is where I looked first and found nothing. Recorded
-because the path in a note is the part that rots.
+**Not mid-flight**: no `Claimed by` note, no open PR, and the last commit on
+`main` touching this bean is its own merge (`c349c374`).
 
-| box | how it was re-derived |
-|---|---|
-| runtime MEASURED, cause named | `bun test ./cat-harness/schemas/viz-generators.test.ts` → **16 pass, 0 fail, 1.72s for the whole file**, against the 5683ms ONE test took under the full suite |
-| walks the real tree — point or accident? | decided, and the decision is implemented: the graphs are a fixture, so reading them four times was *"four answers to one question that were only ever equal by luck"* |
-| no longer depends on machine load, never a bare number | **structural, verified.** `grep` finds no timeout override in the file at all. `readSchemaGraph` and `readLibraryGraph` are at lines 51–52, **column 0 — module scope** — each called exactly once, so no test's per-test budget contains that filesystem work |
+**Box 1 — runtime MEASURED.** Three standalone runs, 2026-09-25:
 
-The fix was not a raised number and not a deleted test: 16 tests still run and
-still pass. The bean's own disclosure that **the 5683ms failure was never
-reproduced** stands, and does not block closing — the boxes ask for a measured
-runtime, a named cause and a load-independent gate, and all three are satisfied.
+```
+run 1: 2.02s   16 pass  0 fail
+run 2: 2.40s   16 pass  0 fail
+run 3: 2.02s   16 pass  0 fail
+```
 
-Not mid-flight: last touched 2026-09-24, no branch on the remote names it.
+Against bun's 5000ms per-test default that is better than **2× headroom**,
+where the bean opened at 5.6s — 14 % under, which is the margin that made it a
+gate failing on a busy machine rather than a red one.
+
+**Boxes 2 and 3 — the mechanism, read rather than assumed.**
+`cat-harness/schemas/viz-generators.test.ts:33` carries it in the file itself:
+
+> *THE GRAPHS ARE READ ONCE, HERE — not inside the tests that assert on them.*
+
+`SCHEMA_GRAPH` and `LIBRARY_GRAPH` are module-level, so the filesystem work
+happens once at import and sits outside any single test's budget. That is the
+"explicitly-reasoned" half box 3 required, as against a bare raised number —
+and it is why the fix does not decay as the repository grows, which was the
+bean's own objection to raising the timeout.
+
+The bean's diagnosis (**contention**, not growth) is consistent with what I
+measured: the same test standalone is fast, so nothing about the test itself
+was slow.

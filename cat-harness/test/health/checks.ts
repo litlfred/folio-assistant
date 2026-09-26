@@ -548,8 +548,27 @@ const STAGING_SIZE_THRESHOLDS: HealthThreshold[] = [
     severity: "critical",
     basis:
       "Three-quarters of GitHub's documented 1 GB Pages limit. Past here the previews occupy most " +
-      "of the budget the main site must also fit inside, and the next deploy is the one that fails " +
-      "to publish — so something is about to be lost, which is what `critical` means on this scale.",
+      "of the budget the main site must also fit inside. " +
+      "THIS BASIS USED TO PREDICT A CONSEQUENCE IT HAS NO INSTRUMENT FOR, and bean `qj9a` " +
+      "measured it false in practice. It said: \"the next deploy is the one that fails to publish — " +
+      "so something is about to be lost, which is what `critical` means on this scale.\" That is a " +
+      "claim about GITHUB'S ENFORCEMENT, and nothing in this repository can observe it. Measured " +
+      "2026-09-25 off the publish ref itself (`git ls-tree -r -l origin/gh-pages`): the served tree " +
+      "is 2.67 GB over 50,511 files, of which `STAGING/` is 2.37 GB and the main site 0.30 GB. It " +
+      "crossed 1 GB on 2026-09-23 and has stayed above continuously, while every deploy kept " +
+      "succeeding. So the MEASUREMENT is sound and the prediction is not: past the documented limit " +
+      "by 2.7x, nothing had been lost. " +
+      "WHAT A GREEN DEPLOY ACTUALLY PROVES is that the push to `gh-pages` succeeded. Serving is " +
+      "GitHub's side of the line, so a green `docs-site.yml` run neither confirms nor refutes this " +
+      "threshold — it is evidence about the PUSH. Reading it as evidence about publishing is the " +
+      "mistake `qj9a` made before it measured, and it is recorded here because the next reader will " +
+      "reach for the same green checkmark. " +
+      "SO THIS SEVERITY IS NOW ABOUT THE DOCUMENTED LIMIT AND NOTHING ELSE: past three-quarters of " +
+      "a published ceiling GitHub states, with enforcement UNOBSERVED from here. The action names a " +
+      "person because only a person can open the served site — every route an agent has is refused " +
+      "by egress policy (the site itself, `/repos/:o/:r/pages`, and `/pages/builds`), which is bean " +
+      "`7s52` from the other side. Until something observes the served site, no check here may say " +
+      "a publish is about to fail.",
   },
 ];
 
@@ -589,14 +608,22 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
       severity: "critical",
       summary:
         `${ev.previews.length} staging preview(s) total ${formatBytes(total)}, past three-quarters ` +
-        `of GitHub's 1 GB Pages limit — the main site shares that budget.`,
+        `of GitHub's DOCUMENTED 1 GB Pages limit — the main site shares that budget. Whether that ` +
+        `limit is ENFORCED is not observed here: see this threshold's basis, and bean qj9a.`,
       action:
-        "Ask which previews are still under review, then have the owner add `staging:cleanup` to the " +
-        "OPEN PRs whose previews are finished with — the label is read from the " +
-        "`pull_request_target: closed` payload, so it works only while the PR can still close with it " +
-        "attached (bean `7umv`). A preview whose PR is already closed is removed by a " +
-        "`feature-staging.yml` dispatch instead; `staging-preview-orphans` lists those with the exact " +
-        "inputs. Do not remove any preview without one of the two.",
+        "FIRST, HAVE A PERSON OPEN THE SERVED SITE — bean `qj9a`. This finding is about a documented " +
+        "ceiling, not an observed failure. Every route an agent has to the served site is refused by " +
+        "egress policy (the site itself, `/repos/:o/:r/pages`, `/pages/builds`), and a green " +
+        "`docs-site.yml` run is evidence that the PUSH succeeded rather than that Pages served it. So " +
+        "the first question is whether anything is actually wrong, and only a person can answer it. " +
+        "IF SOMETHING IS WRONG, or if the owner wants the store drained regardless: ask which previews " +
+        "are still under review, then have the owner add `staging:cleanup` to the OPEN PRs whose " +
+        "previews are finished with — the label is read from the `pull_request_target: closed` payload, " +
+        "so it works only while the PR can still close with it attached (bean `7umv`). A preview whose " +
+        "PR is already closed is removed by a `feature-staging.yml` dispatch instead; " +
+        "`staging-preview-orphans` lists those with the exact inputs. Do not remove any preview without " +
+        "one of the two. Per-preview SIZE remains the lever `tebu` established, and the total has grown " +
+        "3x since it landed, so size alone has not held the line at this concurrency.",
     });
   } else if (total > STAGING_WARN_BYTES) {
     findings.push({

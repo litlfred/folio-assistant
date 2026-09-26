@@ -1,11 +1,11 @@
 ---
 # folio-assistant-r8br
 title: 'BLOCKER: pdf-images classifies browser-print nav icons as figures, so 7 documents cannot be promoted'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T16:36:29Z
-updated_at: 2026-09-21T14:02:42Z
+updated_at: 2026-09-25T16:36:33Z
 parent: folio-assistant-slw1
 ---
 
@@ -76,7 +76,7 @@ the owner's call, not mine.
 - [x] Whatever is chosen, the verdict is CHECKABLE per image, not a silent
       reclassification — `images.json` already carries `basis`, and this must
       go there too.
-- [ ] The seven staged documents promote, and `check:l1-complete` passes over
+- [x] The seven staged documents promote, and `check:l1-complete` passes over
       all nine.
 - [x] A fixture proves the classifier still calls a real figure a figure; a
       change that makes everything decorative would pass the promotion gate
@@ -182,3 +182,40 @@ should not be implied by ticking it:
   feared, because 210 of the 219 were chrome.
 - **`2602.12670v4`** is an arXiv paper with 7 sub-threshold images. Same shape,
   different rung; no browser-print detection reaches it. Worth its own bean.
+
+## Closed on evidence — 2026-09-25
+
+**Re-derived from the REMOTE**, not from a checkout, and in a separate command
+from the fetch: a worktree at `origin/main` = `c11e16651f5`.
+
+    bun run check:l1-complete
+    EXIT=0 — 23 document(s) ✓, 0 ✗
+
+All eleven `agent-skills/library/` documents pass, the seven this bean blocked
+among them — `agent-skill-best-practices---gemini-cli`,
+`agent-skills---google-antigravity-docs`,
+`best-practices---google-antigravity-docs`,
+`equipping-agents-for-the-real-world-with-agent-skills-anthro`,
+`skill-authoring-best-practices---claude-platform-docs`,
+`skills-in-openai-api`, and the two RFC documents. `image-descriptions` passes
+on each, which is the requirement this bean was named for.
+
+The one thing the run still reports as NOT a pass is `audio-transcripts`, "not
+derivable by any arm yet" (bean `1r0p`) — a different requirement, and it is
+printed as a third state rather than counted as green, which is the behaviour
+this bean's second box asked for.
+
+**Closed by a session that did not open it**, under
+[`bean-coordination`](../../cat-harness/skills/folio-core/bean-coordination.md)
+§"Closing a bean whose work has already landed": a bean closes on EVIDENCE, not
+on authorship, once the measurement has been re-run rather than quoted. Not
+mid-flight — no claim naming a branch, no note since 2026-09-21, no open PR
+mentions it. The remaining box was a measurement, not something only a person
+could satisfy, so it was mine to discharge.
+
+**This turn got that wrong first.** An hour earlier it recorded the same
+evidence and left the bean open, citing *"never resolve a sibling's bean"* —
+the rule as it stood before `0pes`. That is exactly the failure `0pes` measured:
+six beans carrying *"verified resolved — NOT closing it, not my bean"*, and
+**zero** of them ever reaching `completed`. A bean verified done and left open
+costs the next agent the work over again.

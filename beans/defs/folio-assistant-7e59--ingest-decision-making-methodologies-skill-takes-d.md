@@ -5,9 +5,8 @@ status: todo
 type: task
 parent: folio-assistant-slw1
 created_at: 2026-09-25T15:38:03Z
-updated_at: 2026-09-25T15:38:03Z
+updated_at: 2026-09-25T16:43:37Z
 ---
-
 
 ## Body added by a gate fix, not by this bean's author
 
@@ -59,3 +58,4 @@ was missing is everything that makes it *findable*.
 - [ ] The skill's ranking output has a schema, or a stated reason it does not.
 - [ ] The "covers all methodology families" claim is checked against the three
       sources rather than asserted.
+

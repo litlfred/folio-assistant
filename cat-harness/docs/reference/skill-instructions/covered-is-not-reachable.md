@@ -147,7 +147,7 @@ Authoring the skill is a **design act** — a claim about the platform's capabil
 vocabulary, inherited by every dependent instance — so it goes to the owner rather
 than being decided in passing. Bean `yean` carried the two candidates.
 
-**Settled 2026-09-20:** [`site-presentation-assets`](../theming/site-presentation-assets.md)
+**Settled 2026-09-20:** [`site-presentation-assets`](site-presentation-assets.md)
 was authored, and `themes-css` / `avatars-css` are in the graph satisfying it. The
 resolution is recorded here because the alternative — leaving the gap notice
 standing — is worse than never having written one: an agent that believes a stale

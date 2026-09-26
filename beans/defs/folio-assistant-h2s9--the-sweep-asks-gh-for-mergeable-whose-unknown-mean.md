@@ -187,3 +187,23 @@ That the **workflow reaches this step in production**. Steps 7 and 8 are gated `
 
 - [ ] **PRODUCTION:** the sweep flags a PR with no run and reports `MERGEABLE` or `CONFLICTING`, never `UNKNOWN` — **still open after two clean sweeps**
 - [x] **THE DEPLOYED STEP'S LOGIC:** all five branches exercised against real forge refs, four of them with no synthetic input at all; no `UNKNOWN` mergeability verdict in any case
+
+## 2026-09-25 — a second, sharper instance: `fx5r`
+
+The same root (a forge API's view of a PR treated as current) hit again, and
+worse. `update-branch` returned **"merge conflict between base and head"** for a
+PR that had been **closed and merged 45 minutes earlier**, while
+`GET /pulls/1317` still served `mergeable=None`, `mergeable_state=unknown` and
+the pre-merge `head.sha`.
+
+That is beyond this bean's subject in one respect worth naming: here the field
+was merely *uninformative* (`unknown` rendered as "could not be read"). There
+the API **named a cause that was false** — a conflict, when `git merge-tree`
+and a real `git merge --no-commit` both reported zero unmerged paths. A wrong
+error string is worse than an absent one, because it is a hypothesis delivered
+with the authority of a measurement, and an agent will build on it.
+
+This bean's own remedy generalises and is the right one:
+`git ls-remote origin refs/pull/N/merge` here, `git merge-base --is-ancestor`
+there — **when a forge API and git disagree about git, git is the subject and
+the API is a cache.** Details and the full measurement table: `fx5r`.

@@ -84,3 +84,55 @@ to make, which is how `1hvo` and `7u3g` have stayed outstanding.
 would need `merge.*.driver` set per checkout — `oxka` already rejected that as
 working here and nowhere else, and that reasoning holds for this too.
 
+
+## Measured addition (not this bean's author): the manifest case is caught by NOTHING
+
+Appended 2026-09-25 by the session that made the `package-manifest.json`
+duplicate this bean describes. The body above has the mechanism right; this adds
+the one measurement it does not carry, because it changes what "Done when" has
+to cover.
+
+**The bean-store case is caught downstream. The manifest case is not caught at
+all.** For front matter, YAML itself rejects a duplicate key, so
+`check:bean-front-matter` fails and the defect surfaces late but surfaces. JSON
+has no such rule: a duplicate array element is valid JSON.
+
+Measured on the merge commit that carried the duplicate:
+
+| | |
+|---|---|
+| `package-manifest.json` `skills` entries | 152 |
+| unique entries | 151 |
+| `bun run gates` | **152 gate(s) pass** — exit 0 |
+
+So the duplicate rode a fully green fast gate set. The reason is that
+`skill-manifest-coverage` asks *"is every skill on disk listed?"* — a duplicate
+answers that question twice and never answers it wrongly. **Coverage is not
+uniqueness, and a coverage check cannot be made to notice this by tightening
+it**; the question has to be asked separately.
+
+That also means the two cases sit at different severities than the body implies.
+Front matter: caught, late. A hand-maintained JSON list: silent, and the only
+reason this one was found is that I diffed my own branch against `main` and
+could not reconcile the line count.
+
+Two further consequences worth having written down:
+
+- **Alphabetical position is not checked either.** `main` appended
+  `decision-methodology-selector` after `workflow-*` rather than after
+  `decision-comparison`; nothing failed. So the array's stated ordering
+  convention is unenforced, which is *why* two sessions inserted at different
+  indices and the merge kept both. Enforcing the order would have turned this
+  into an ordinary conflict.
+- The duplicate was resolved here by keeping **`main`'s** entry and dropping the
+  one added on the branch — not because it was better placed (it is worse
+  placed), but because it landed first.
+
+### Adds to "Done when"
+
+- [ ] duplicate detection covers hand-maintained JSON lists, not only YAML front
+      matter — `package-manifest.json` `skills` is the known instance
+- [ ] the `skills` array's ordering convention is either enforced or dropped,
+      since an unenforced order is what lets two insertions coexist
+- [ ] MEASURED AFTER: a deliberate duplicate in `package-manifest.json` makes
+      `bun run gates` exit non-zero

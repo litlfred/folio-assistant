@@ -69,7 +69,7 @@ The open surface was the TypeScript I/O layer.
 
 **Deletion policy is not security.** Whether an agent may remove a durable
 artefact at all is
-[`deletion-requires-confirmation`](../folio-core/deletion-requires-confirmation.md),
+[`deletion-requires-confirmation`](deletion-requires-confirmation.md),
 and it governs cases where the path is perfectly safe and the deletion is still
 wrong.
 {% endraw %}

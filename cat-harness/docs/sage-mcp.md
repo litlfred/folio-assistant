@@ -32,7 +32,7 @@ dependency-free JSON-RPC 2.0 stdio server (system Python 3, no `mcp` package).
 
 ## Mode 1 — local / dev (Claude Code)
 
-Already wired. The project [`.mcp.json`](../.mcp.json) registers the `sage`
+Already wired. The project [`.mcp.json`](https://github.com/litlfred/folio-assistant/blob/main/.mcp.json) registers the `sage`
 server via `scripts/sage-mcp.sh`. Registration costs nothing; on the first Sage
 tool call the script uses a native `sage` if present, otherwise pulls and runs
 the Docker image (mounting the current dir at `/work`).

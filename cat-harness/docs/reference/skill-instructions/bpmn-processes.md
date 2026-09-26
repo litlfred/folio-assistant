@@ -30,10 +30,10 @@ Every activity carries **`<bootstrap.processes:skill ref="…">`** naming the sk
 implements it, and **`<cat-harness.processes:bean …>`** where it touches the work plan. Add both
 when you add an activity; the audit reports an activity that names no skill, and
 the exemptions for the legitimate cases are *declarations*, not silence — see
-[`role-model`](../folio-core/role-model.md).
+[`role-model`](role-model.md).
 
 Lanes bind roles, not people. A lane is the role; an actor **takes it on** for
-the duration. [`role-model`](../folio-core/role-model.md) carries that model.
+the duration. [`role-model`](role-model.md) carries that model.
 
 ### Binding the extension namespaces
 
@@ -108,7 +108,7 @@ this process and task, and allowed to touch the target content? This is
 generic engine behaviour, so **do not draw an authorization task into a
 diagram**: a check drawn into some processes is a check missing from the rest.
 What a diagram owes the check is a lane bound to a declared role. See
-[`task-authorization`](../folio-core/task-authorization.md).
+[`task-authorization`](task-authorization.md).
 
 **Instance state is committed**, alongside the work plan, so a sibling session
 sees the same position. That is the whole reason not to hand-roll a second
@@ -177,7 +177,7 @@ does claim → resolve — every one manufactures the condition and none
 discharges it, which is how **219** beans accumulated.
 
 Before reaching for an `archive` op, read
-[`todo-manager`](../folio-core/todo-manager.md) §"Archiving — two dispositions": an op and
+[`todo-manager`](todo-manager.md) §"Archiving — two dispositions": an op and
 a periodic sweep answer different questions, and for most processes the
 answer is the sweep. An op is worth an edge on your diagram only where your
 process's completion is *itself* the reason a bean is finished — and then the

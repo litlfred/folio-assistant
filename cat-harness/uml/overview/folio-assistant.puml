@@ -34,7 +34,12 @@ package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
     omitted [0..*] : Omitted[]
   }
 }
+package "folio-assistant/root-tools" as pkg_folio_assistant_root_tools <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_root_tools_code
+}
 
 folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Asset : assets
 folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Omitted : omitted
+' grid: portrait, 1 column(s) — pkg_folio_assistant_uploads pkg_folio_assistant_root_tools
+pkg_folio_assistant_uploads -[hidden]down- pkg_folio_assistant_root_tools
 @enduml

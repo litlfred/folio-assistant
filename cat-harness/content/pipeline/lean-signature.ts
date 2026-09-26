@@ -84,7 +84,7 @@ if (import.meta.main) {
   if (args.length === 0) {
     console.log(`Statement-level hashing for .lean files.
 
-  bun run content/pipeline/lean-signature.ts <file.lean> [--show]
+  bun run cat-harness/content/pipeline/lean-signature.ts <file.lean> [--show]
 
   --show   print the extracted signatures instead of the hash
 

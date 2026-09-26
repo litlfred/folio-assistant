@@ -5,7 +5,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-09-23T19:29:49Z
-updated_at: 2026-09-25T18:14:49Z
+updated_at: 2026-09-25T16:37:09Z
 parent: folio-assistant-zzmr
 ---
 
@@ -20,25 +20,40 @@ Owner, 2026-09-23, on the adjudication answers bean bvuk had written into diagra
 - [x] gate code-lists:check; skill code-lists; tests code-list.test.ts
 - [x] 2j09 JSON-LD scan, owner-approved levels, 11 new external-schema records
 
+
 ---
 
-## Evidence — re-derived 2026-09-25, closing
+## Re-derived and closed by another session, 2026-09-25
 
-Closed on evidence per `bean-coordination`. Clean checkout, identical to
-`origin/main` at `d8c450b9a2`.
+Found by `bun run beans:landed` as `done-ticked` — every box ticked, status
+still open. That is the `4d22` orphan shape, and
+[`bean-coordination.md` §"Closing a bean whose work has already landed"](../../cat-harness/skills/folio-core/bean-coordination.md)
+says a bean closes on evidence re-run by whoever closes it, never on a note.
+So none of the ticks below were taken on trust.
 
-| box | how it was re-derived |
+**Not mid-flight**, checked first: no `Claimed by` note, no open PR naming it,
+and the last commit on `main` touching this bean is its own merge (`5e54c322`).
+
+**Re-run here, 2026-09-25:**
+
+```sh
+bun run code-lists:check          # exit 0
+bun test cat-harness/schemas/code-list.test.ts   # 12 pass, 0 fail
+```
+
+`code-lists:check` ends *"every list parses; every adjudication names the list
+its codes come from"* — which is the third Done-when box (the engine refusing a
+code outside its list) asserted mechanically rather than described.
+
+**Two counts in the boxes above are now stale, and the PROPERTY is what was
+verified** — this repository's own rule that a count in prose is a claim rather
+than evidence:
+
+| the box says | measured today |
 |---|---|
-| `folio-code-list/v1`, graph kind `code-list`, declared directory | `cat-harness/schemas/code-list.ts` present; `"code-list"` declared in `cat-harness/cat-harness.json`; `cat-harness/code-lists/` present |
-| the lists exist and parse | `bun run code-lists:check` → **exit 0**, *"every list parses; every adjudication names the list its codes come from"* |
-| the engine refuses codes off-list | `code-list.test.ts` → **12 pass, 0 fail** |
-| skill + gate | `skills/folio-core/code-lists.md` present; `code-lists:check` is a script |
+| six lists | **12** — the 5 adjudication sets and `own-namespaces` are all present, and 6 `grade-*` lists were added by later work |
+| own-namespaces: 9 IRIs, 2 retired | **11 codes, 3 retired** |
 
-**Two counts in the boxes have moved, and the facts have not.** The box says
-"six lists … own-namespaces (9 IRIs, 2 retired)"; I measure **12 lists** and
-own-namespaces at **11 codes, 3 retired**. Lists were added after this bean was
-written. Obligation 1 says verify the fact rather than the figure — *"line
-numbers rot"* — and the fact here is that the lists exist, parse, and are named
-by the adjudications that use them. That holds.
-
-Not mid-flight: last touched 2026-09-23, no branch on the remote names it.
+Neither is a regression: the named six all exist, and the store grew. The
+counts were snapshots and are left as written rather than edited, because
+rewriting a past measurement is worse than letting it read as one.

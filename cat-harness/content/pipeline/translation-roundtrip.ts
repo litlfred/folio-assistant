@@ -44,7 +44,7 @@
  * because nobody can cheaply re-run it.
  *
  * Usage:
- *   bun run content/pipeline/translation-roundtrip.ts --payload <file.json>
+ *   bun run cat-harness/content/pipeline/translation-roundtrip.ts --payload <file.json>
  *
  * The payload is {@link RoundTripPayload}. It is written by whatever ran the
  * agents — this module does not call a model itself, deliberately: the
