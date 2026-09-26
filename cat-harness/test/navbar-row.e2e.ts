@@ -209,6 +209,14 @@ async function load(
     r.fulfill({ contentType: "text/html", body: page(row, main, staging) }),
   );
   await p.goto("http://navbar.fixture/nav", { waitUntil: "load" });
+  // AT REST MEANS THE POINTER IS NOT OVER THE STRIP, and that is now stated
+  // rather than inherited. The strip sits at the left edge, where the pointer
+  // starts. With Playwright 1.63's Chromium, the "at rest" tests found the bar
+  // already open, as if hovered, on the bump PR (bean x89e) and passed on the
+  // same main without it. Parking the pointer in the far corner makes "no hover"
+  // a precondition these tests set, not one a browser revision decides.
+  const vp = p.viewportSize();
+  if (vp) await p.mouse.move(vp.width - 5, vp.height - 5);
   return { errors, console: logs };
 }
 

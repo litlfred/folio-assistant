@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T13:41:12Z
-updated_at: 2026-09-26T13:44:26Z
+updated_at: 2026-09-26T14:37:59Z
 parent: folio-assistant-1xhc
 ---
 
@@ -27,3 +27,6 @@ Owner decision 2026-09-26: do the bump on a branch, regenerating both lockfiles,
 - **Main's `cat-harness/adapters/mcp-server/bun.lock` was already stale.** It still recorded `@anthropic-ai/sdk ^0.80.0` and `zod ^3.23.0`, while the manifest has said `^0.104.2` and `zod ^4.6.5` since e3303e584c9 (2026-09-22). `bun install --frozen-lockfile` in that directory exits 1 on main. No CI job installs that directory, so nothing reported it. Regenerating the lock for the SDK bump fixes this as a side effect.
 - **A standalone mcp-server install does not type-check, and that predates this bump.** The lock resolves `@modelcontextprotocol/sdk` to 1.28.0, which wants zod 3 (bun nests zod 3.25.76 under it), while the manifest's zod 4 is hoisted. With that directory's own `node_modules` present, root `tsc` reports 12 errors across six `mcp-server/tools/*.ts` files. CI resolves from the root install instead (MCP SDK 1.30.0), and there `tsc` exits 0. Not fixed here, because it would widen a dependency PR. Bumping mcp-server's `@modelcontextprotocol/sdk` to the root's version is the likely fix.
 - **The mcp-server Dockerfile still copies `scripts/mcp-server/`**, a path that no longer exists, and installs without a lock. `build-lean-mcp.yml` already records the path half.
+
+
+**E2E finding (2026-09-26):** with Playwright 1.63, CI downloads Chromium revision 1228. On it, three `navbar-row.e2e.ts` "at rest" tests found the sidebar already open, as if hovered: on this PR, 3 failed; on the sibling duplicate #1405, 1 failed. The same main without the bump passed (#1408). The fix parks the pointer in the far corner inside the tests' `load()` helper, so "no hover" is a stated precondition. No test was skipped or weakened. It could not be reproduced locally, because this container's "1228" is a symlink to 1194, so CI is the check.
