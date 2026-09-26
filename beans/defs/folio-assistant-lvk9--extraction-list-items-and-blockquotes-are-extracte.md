@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lvk9
 title: 'EXTRACTION: list items and blockquotes are extracted PER LINE, so a msgid depends on the author''s hard wrap — translators get sentences in halves'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T09:20:19Z
-updated_at: 2026-09-26T10:42:14Z
+updated_at: 2026-09-26T13:08:39Z
 parent: folio-assistant-bzyu
 blocked_by:
     - folio-assistant-wlyg
@@ -117,3 +117,76 @@ the continuations, so re-extraction legitimately re-segments"*. Same hard-wrap
 sensitivity, from the injecting half. A fix that makes a msgid survive a re-wrap on
 the extract side must be checked against inject as well, or the round trip stays
 non-identical for a new reason. Adds to `wlyg`'s case for one definition.
+
+
+## 2026-09-26 — extract half done. Drift 25 → 5, and the crude rule UNDERSOLD it
+
+`extractMarkdown` now accumulates list items and blockquotes the way it already
+accumulated paragraphs, with continuation decided by **indentation against the
+marker**, ending at a blank line or the next block — what markdown says, rather
+than the line adjacency used to size this bean.
+
+| | derived / 25 |
+|---|---|
+| before `6b8u` + `ig4a` | 7 |
+| after those two | 10 |
+| **after this** | **19** |
+
+**19, not the 17 the crude rule predicted.** That rule both over-merged (joining two
+unrelated sentences in `intent.md`) and under-merged, so its 17 was never a ceiling
+— which is why this bean recorded it as "a crude rule's reach rather than a
+promise" rather than as a target. `translation:drift:check`: **25 → 5** findings,
+against 25 on `main`.
+
+All five locales of `accessibility` now align at 117 entries and all five of
+`content-types` at 99 — `zh` included, the locale that looked "systematically
+short" throughout.
+
+### What the remaining 6 refusals turned out to be
+
+Five are ONE cause, and it is not the translators: **`installation` × 5 locales,
+each short by exactly 2.** Those two are the Windows/Git Bash paragraphs `main`
+added to `docs/installation.md` on 2026-09-26, after the translations landed.
+Verified at source `[32]`/`[33]`, where every translation jumps to the next
+heading. That is #206's own **stale-on-edit** case — the source moved — and
+refusing is correct, since a translation cannot be aligned against a source that
+grew.
+
+The sixth is `zh/getting-started`, short by 4, and it is the only remaining
+candidate for a genuine content shortfall in the whole corpus.
+
+So `7x8o`'s claim — *"9 published pages carry LESS than their source"* — resolves
+to **one pair worth investigating**, with five explained by source staleness and
+the rest by three extractor defects.
+
+### The falsifier, run rather than asserted
+
+Six property tests: the same content wrapped two ways must yield **equal msgid
+sequences**, for a list item (one line vs two, two vs three), a blockquote, and an
+emphasis span broken by the wrap; a paragraph as the control; plus an
+anti-vacuity floor so equal-and-empty cannot pass. And the two guards against
+over-merging: an UNINDENTED following line is a new paragraph, a bare `>`
+separates two quoted paragraphs, and a change of quote depth starts a new entry.
+
+Corpus-wide, split emphasis spans: **376 → 47**, with 342 repaired. The 13 that
+appear "new" are bean `3mo4` — `cleanMarkdownText` leaving literal `****` for a
+code span wrapped in emphasis — surfacing in one msgid instead of being split
+across two. Proven pre-existing: the before-state already emitted
+`"**** — fail if entries ≥ ,"`.
+
+### The 10 earlier catalogues were REPLACED, deliberately
+
+They were derived from the superseded extractor: 28 of `ar/accessibility.po`'s 131
+msgids no longer existed in the source, being exactly the wrap-split fragments this
+fix merges. `--overwrite` was passed as a decision, on the grounds `rmor`'s guard
+is there to protect — these were my own unofficial derivations with no human
+sign-off, and leaving them would leave stale msgids in every one.
+
+### Two defects found on the way, both pre-existing, both beaned not folded in
+
+- `3mo4` — `cleanMarkdownText` mangles a code span wrapped in emphasis, two
+  different wrong ways.
+- `rmor` — **`injectMarkdown` deletes every blank line in the document**, not the
+  ones it introduced, and that output is WRITTEN to disk by the
+  `translation_inject` MCP tool. Measured: 3 blank lines in, 0 out. This is why
+  `f6r1`'s round-trip control failed on known-good catalogues. Marked high.

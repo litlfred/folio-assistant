@@ -7,7 +7,7 @@
 # source with the same extractor. No human has adjudicated it. Issue #206
 # defines official as human sign-off; until that happens this is a starting
 # point, not an authority. The alignment was accepted because the two
-# documents yield the same sequence of 131 constructs; see the module
+# documents yield the same sequence of 117 constructs; see the module
 # docblock for what that does and does not establish.
 #
 msgid ""
@@ -34,12 +34,8 @@ msgid "What are the options for disability support here, and what is best practi
 msgstr "Quelles sont les options pour la prise en charge du handicap ici, et quelles sont les bonnes pratiques ?"
 
 #: docs/accessibility.md:17
-msgid "What are the options for forcing agentic Q&A into guided questions that"
-msgstr "Quelles sont les options pour contraindre les questions-réponses agentiques sous forme de questions guidées qui"
-
-#: docs/accessibility.md:18
-msgid "follow DMN logic and can serve several interaction modalities?"
-msgstr "suivent la logique DMN et peuvent servir plusieurs modalités d'interaction ?"
+msgid "What are the options for forcing agentic Q&A into guided questions that follow DMN logic and can serve several interaction modalities?"
+msgstr "Quelles sont les options pour contraindre les questions-réponses agentiques sous forme de questions guidées qui suivent la logique DMN et peuvent servir plusieurs modalités d'interaction ?"
 
 #: docs/accessibility.md:20
 msgid "They turn out to be the same question asked from two ends, which is why they share a page. The implementing skill is ."
@@ -62,12 +58,8 @@ msgid "This repository's owner has very limited hand function, so the case is no
 msgstr "Le propriétaire de ce dépôt a un usage très limité de ses mains, le cas n'est donc pas hypothétique ici. Mais la règle se généralise sans référence à quiconque :"
 
 #: docs/accessibility.md:43
-msgid "A question's cost is paid by the person answering it. Design the question"
-msgstr "Le coût d'une question est payé par la personne qui y répond. Concevez la question"
-
-#: docs/accessibility.md:44
-msgid "so that the cheapest possible answer is still a complete one."
-msgstr "de manière à ce que la réponse la moins coûteuse possible soit malgré tout une réponse complète."
+msgid "A question's cost is paid by the person answering it. Design the question so that the cheapest possible answer is still a complete one."
+msgstr "Le coût d'une question est payé par la personne qui y répond. Concevez la question de manière à ce que la réponse la moins coûteuse possible soit malgré tout une réponse complète."
 
 #: docs/accessibility.md:46
 msgid "Selectable options are a better question than an open one for nearly everybody, and cost nothing to the person who would rather type anyway. Treating that as an accommodation rather than as the default is how it ends up applied only after someone has had to ask."
@@ -330,36 +322,20 @@ msgid "Stated rather than implied, because a half-claimed accessibility feature 
 msgstr "Énoncé explicitement plutôt qu'implicitement, car une fonctionnalité d'accessibilité proclamée à moitié est pire qu'une fonctionnalité absente :"
 
 #: docs/accessibility.md:139
-msgid "No ATAG Part B checks in the QA sweep. Nothing yet verifies that a"
-msgstr "Aucun contrôle de la partie B d'ATAG dans le balayage QA. Rien ne vérifie encore qu'un"
-
-#: docs/accessibility.md:140
-msgid "published folio has alt text, correct heading order or table headers."
-msgstr "folio publié dispose de textes alternatifs, d'un ordre de titres correct ou d'en-têtes de tableau."
+msgid "No ATAG Part B checks in the QA sweep. Nothing yet verifies that a published folio has alt text, correct heading order or table headers."
+msgstr "Aucun contrôle de la partie B d'ATAG dans le balayage QA. Rien ne vérifie encore qu'un folio publié dispose de textes alternatifs, d'un ordre de titres correct ou d'en-têtes de tableau."
 
 #: docs/accessibility.md:141
-msgid "No audit of generated PDFs. The document render path goes through"
-msgstr "Aucun audit des PDF générés. Le chemin de rendu des documents passe par"
-
-#: docs/accessibility.md:142
-msgid "weasyprint/prince/wkhtmltopdf and tagged-PDF output has not been checked."
-msgstr "weasyprint/prince/wkhtmltopdf et la sortie PDF balisée (tagged PDF) n'a pas été vérifiée."
+msgid "No audit of generated PDFs. The document render path goes through weasyprint/prince/wkhtmltopdf and tagged-PDF output has not been checked."
+msgstr "Aucun audit des PDF générés. Le chemin de rendu des documents passe par weasyprint/prince/wkhtmltopdf et la sortie PDF balisée (tagged PDF) n'a pas été vérifiée."
 
 #: docs/accessibility.md:143
-msgid "No screen-reader testing. The site controls are built to the criteria and"
-msgstr "Aucun test avec un lecteur d'écran. Les contrôles du site sont conçus selon les critères, mais"
-
-#: docs/accessibility.md:144
-msgid "have not been driven with NVDA, JAWS or VoiceOver. Built to spec is not the same as verified."
-msgstr "n'ont pas été testés avec NVDA, JAWS ou VoiceOver. Conçu selon les spécifications ne signifie pas vérifié en pratique."
+msgid "No screen-reader testing. The site controls are built to the criteria and have not been driven with NVDA, JAWS or VoiceOver. Built to spec is not the same as verified."
+msgstr "Aucun test avec un lecteur d'écran. Les contrôles du site sont conçus selon les critères, mais n'ont pas été testés avec NVDA, JAWS ou VoiceOver. Conçu selon les spécifications ne signifie pas vérifié en pratique."
 
 #: docs/accessibility.md:146
-msgid "Audio modality is described, not implemented. The rules are written down;"
-msgstr "La modalité audio est décrite, mais non implémentée. Les règles sont documentées ;"
-
-#: docs/accessibility.md:147
-msgid "no voice channel is wired up."
-msgstr "aucun canal vocal n'est raccordé."
+msgid "Audio modality is described, not implemented. The rules are written down; no voice channel is wired up."
+msgstr "La modalité audio est décrite, mais non implémentée. Les règles sont documentées ; aucun canal vocal n'est raccordé."
 
 #: docs/accessibility.md:149
 msgid "3. Forcing agentic Q&A into guided questions"
@@ -390,36 +366,20 @@ msgid "3.2 Four properties this buys"
 msgstr "3.2 Quatre propriétés apportées par cette approche"
 
 #: docs/accessibility.md:176
-msgid "The question set is finite and reviewable. You can read the table and"
-msgstr "L'ensemble des questions est fini et révisable. Vous pouvez lire la table et"
-
-#: docs/accessibility.md:177
-msgid "know every question the agent is able to ask. An improvising agent offers no such guarantee, and cannot be reviewed before it meets a user."
-msgstr "connaître chaque question que l'agent est susceptible de poser. Un agent qui improvise n'offre aucune garantie de ce type, et ne peut pas être passé en revue avant d'être confronté à un utilisateur."
+msgid "The question set is finite and reviewable. You can read the table and know every question the agent is able to ask. An improvising agent offers no such guarantee, and cannot be reviewed before it meets a user."
+msgstr "L'ensemble des questions est fini et révisable. Vous pouvez lire la table et connaître chaque question que l'agent est susceptible de poser. Un agent qui improvise n'offre aucune garantie de ce type, et ne peut pas être passé en revue avant d'être confronté à un utilisateur."
 
 #: docs/accessibility.md:179
-msgid "It terminates. A table whose output can be  has a stopping"
-msgstr "Le processus se termine. Une table dont la sortie peut être  possède une condition"
-
-#: docs/accessibility.md:180
-msgid "condition."
-msgstr "d'arrêt."
+msgid "It terminates. A table whose output can be  has a stopping condition."
+msgstr "Le processus se termine. Une table dont la sortie peut être  possède une condition d'arrêt."
 
 #: docs/accessibility.md:181
-msgid "Asking becomes obligatory rather than optional. This is the trick"
-msgstr "Poser une question devient obligatoire plutôt que facultatif. C'est l'astuce que"
-
-#: docs/accessibility.md:182
-msgid "already uses:  is an outcome of the table, so the agent cannot route past it. An agent that decides for itself whether to ask will, under any pressure to seem helpful, decide not to."
-msgstr "utilise déjà :  est un résultat de la table, si bien que l'agent ne peut pas contourner cette étape. Un agent qui décide de lui-même s'il doit ou non poser une question choisira, dès qu'il se sentira obligé d'avoir l'air serviable, de ne pas la poser."
+msgid "Asking becomes obligatory rather than optional. This is the trick  already uses:  is an outcome of the table, so the agent cannot route past it. An agent that decides for itself whether to ask will, under any pressure to seem helpful, decide not to."
+msgstr "Poser une question devient obligatoire plutôt que facultatif. C'est l'astuce que  utilise déjà :  est un résultat de la table, si bien que l'agent ne peut pas contourner cette étape. Un agent qui décide de lui-même s'il doit ou non poser une question choisira, dès qu'il se sentira obligé d'avoir l'air serviable, de ne pas la poser."
 
 #: docs/accessibility.md:186
-msgid "A skipped question is auditable. The facts are recorded; replay the table"
-msgstr "Une question ignorée est vérifiable (auditable). Les faits sont enregistrés ; rejouez la table"
-
-#: docs/accessibility.md:187
-msgid "and see which rule fired."
-msgstr "et observez quelle règle s'est déclenchée."
+msgid "A skipped question is auditable. The facts are recorded; replay the table and see which rule fired."
+msgstr "Une question ignorée est vérifiable (auditable). Les faits sont enregistrés ; rejouez la table et observez quelle règle s'est déclenchée."
 
 #: docs/accessibility.md:189
 msgid "3.3 The options, and what each costs"
@@ -494,36 +454,20 @@ msgid "3.4 Limits, stated plainly"
 msgstr "3.4 Les limites, clairement exposées"
 
 #: docs/accessibility.md:202
-msgid "The FEEL subset is small.  implements"
-msgstr "Le sous-ensemble FEEL est restreint.  implémente"
-
-#: docs/accessibility.md:203
-msgid "equality, comparison and one-of. Ranges,  and function calls are refused rather than silently mis-evaluated — a table that returns an answer and is not the table on the page is worse than one that throws."
-msgstr "l'égalité, la comparaison et l'appartenance à un ensemble (one-of). Les plages de valeurs,  et les appels de fonctions sont refusés plutôt que silencieusement mal évalués — une table qui renvoie une réponse qui ne correspond pas à la table affichée sur la page est pire qu'une table qui lève une erreur."
+msgid "The FEEL subset is small.  implements equality, comparison and one-of. Ranges,  and function calls are refused rather than silently mis-evaluated — a table that returns an answer and is not the table on the page is worse than one that throws."
+msgstr "Le sous-ensemble FEEL est restreint.  implémente l'égalité, la comparaison et l'appartenance à un ensemble (one-of). Les plages de valeurs,  et les appels de fonctions sont refusés plutôt que silencieusement mal évalués — une table qui renvoie une réponse qui ne correspond pas à la table affichée sur la page est pire qu'une table qui lève une erreur."
 
 #: docs/accessibility.md:206
-msgid "An open question is not a decision. \"What is this paper about?\" does not"
-msgstr "Une question ouverte n'est pas une décision. « De quoi traite cet article ? » n'a"
-
-#: docs/accessibility.md:207
-msgid "belong in a table, and forcing it there produces a worse interview."
-msgstr "pas sa place dans une table, et l'y contraindre ne fait que dégrader l'entretien."
+msgid "An open question is not a decision. \"What is this paper about?\" does not belong in a table, and forcing it there produces a worse interview."
+msgstr "Une question ouverte n'est pas une décision. « De quoi traite cet article ? » n'a pas sa place dans une table, et l'y contraindre ne fait que dégrader l'entretien."
 
 #: docs/accessibility.md:208
-msgid "A conversation is not a wizard. A user must always be able to say"
-msgstr "Une conversation n'est pas un assistant guidé (wizard). Un utilisateur doit toujours pouvoir dire"
-
-#: docs/accessibility.md:209
-msgid "something the table did not anticipate. That is what the \"tell me more\" option is for, and it is not optional garnish."
-msgstr "quelque chose que la table n'avait pas anticipé. C'est la raison d'être de l'option « en savoir plus », et ce n'est pas une fioriture facultative."
+msgid "A conversation is not a wizard. A user must always be able to say something the table did not anticipate. That is what the \"tell me more\" option is for, and it is not optional garnish."
+msgstr "Une conversation n'est pas un assistant guidé (wizard). Un utilisateur doit toujours pouvoir dire quelque chose que la table n'avait pas anticipé. C'est la raison d'être de l'option « en savoir plus », et ce n'est pas une fioriture facultative."
 
 #: docs/accessibility.md:211
-msgid "Guided does not mean interrogating. The largest accessibility win"
-msgstr "Guidé ne veut pas dire interrogatoire. Le plus grand gain d'accessibilité"
-
-#: docs/accessibility.md:212
-msgid "available is the question you did not have to ask — every fact the agent reads from the filesystem is one fewer. That win is invisible, unrewarded, and larger than any stylesheet."
-msgstr "possible est la question que vous n'avez pas eu à poser — chaque fait que l'agent lit depuis le système de fichiers est une question de moins. Ce gain est invisible, non récompensé, et pourtant supérieur à n'importe quelle feuille de style."
+msgid "Guided does not mean interrogating. The largest accessibility win available is the question you did not have to ask — every fact the agent reads from the filesystem is one fewer. That win is invisible, unrewarded, and larger than any stylesheet."
+msgstr "Guidé ne veut pas dire interrogatoire. Le plus grand gain d'accessibilité possible est la question que vous n'avez pas eu à poser — chaque fait que l'agent lit depuis le système de fichiers est une question de moins. Ce gain est invisible, non récompensé, et pourtant supérieur à n'importe quelle feuille de style."
 
 #: docs/accessibility.md:216
 msgid "See also"

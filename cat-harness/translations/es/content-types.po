@@ -7,7 +7,7 @@
 # source with the same extractor. No human has adjudicated it. Issue #206
 # defines official as human sign-off; until that happens this is a starting
 # point, not an authority. The alignment was accepted because the two
-# documents yield the same sequence of 114 constructs; see the module
+# documents yield the same sequence of 99 constructs; see the module
 # docblock for what that does and does not establish.
 #
 msgid ""
@@ -46,16 +46,8 @@ msgid "folio-assistant is content-agnostic: the platform knows nothing about any
 msgstr "folio-assistant es independiente del contenido: la plataforma no sabe nada sobre ningún artículo o guía en particular. Cada tipo de contenido está respaldado por un adaptador de contenido (código que sabe cómo validar, compilar y renderizar ese tipo) y un paquete de habilidades (el formalismo de autoría: lo que hacen un autor y el LLM)."
 
 #: docs/content-types.md:34
-msgid "This page describes the formalism of each content type. It is intentionally"
-msgstr "Esta página describe el formalismo de cada tipo de contenido. Se mantiene"
-
-#: docs/content-types.md:35
-msgid "kept separate from any concrete content; concrete artifacts live in their own"
-msgstr "intencionalmente separada de cualquier contenido concreto; los artefactos concretos"
-
-#: docs/content-types.md:36
-msgid "content repository."
-msgstr "residen en su propio repositorio de contenido."
+msgid "This page describes the formalism of each content type. It is intentionally kept separate from any concrete content; concrete artifacts live in their own content repository."
+msgstr "Esta página describe el formalismo de cada tipo de contenido. Se mantiene intencionalmente separada de cualquier contenido concreto; los artefactos concretos residen en su propio repositorio de contenido."
 
 #: docs/content-types.md:40
 msgid "The content lifecycle"
@@ -174,28 +166,16 @@ msgid "Structured prose: health-policy guidance (an L1 guideline, say), a standa
 msgstr "Prosa estructurada: directrices de políticas de salud (por ejemplo, una guía L1), un estándar, un informe, un manual, el capítulo de un libro. Todo lo que es un artículo, menos la capa formal —y, por lo tanto, menos las dos cadenas de herramientas que la atienden—."
 
 #: docs/content-types.md:93
-msgid "Source model — the same tree of typed blocks as a paper, restricted to"
-msgstr "Modelo fuente — el mismo árbol de bloques tipados que un artículo, restringido"
-
-#: docs/content-types.md:94
-msgid "the kinds whose content is prose rather than a formal claim: , , , , , , , ."
-msgstr "a los tipos cuyo contenido es prosa en lugar de una afirmación formal: , , , , , , , ."
+msgid "Source model — the same tree of typed blocks as a paper, restricted to the kinds whose content is prose rather than a formal claim: , , , , , , , ."
+msgstr "Modelo fuente — el mismo árbol de bloques tipados que un artículo, restringido a los tipos cuyo contenido es prosa en lugar de una afirmación formal: , , , , , , , ."
 
 #: docs/content-types.md:97
-msgid "Rendering —  assembles the folio into one Markdown"
-msgstr "Renderizado —  ensambla el folio en un único archivo"
-
-#: docs/content-types.md:98
-msgid "file;  and  take it through pandoc. The PDF path uses an HTML engine (weasyprint, prince, wkhtmltopdf) and never falls back to , so \"no TeX required\" stays true rather than becoming true-until-someone-has-TeX-installed."
-msgstr "Markdown;  y  lo procesan a través de pandoc. La ruta para PDF utiliza un motor HTML (weasyprint, prince, wkhtmltopdf) y nunca recurre a , de modo que «no se requiere TeX» se mantiene verdadero en lugar de convertirse en «verdadero hasta que alguien instale TeX»."
+msgid "Rendering —  assembles the folio into one Markdown file;  and  take it through pandoc. The PDF path uses an HTML engine (weasyprint, prince, wkhtmltopdf) and never falls back to , so \"no TeX required\" stays true rather than becoming true-until-someone-has-TeX-installed."
+msgstr "Renderizado —  ensambla el folio en un único archivo Markdown;  y  lo procesan a través de pandoc. La ruta para PDF utiliza un motor HTML (weasyprint, prince, wkhtmltopdf) y nunca recurre a , de modo que «no se requiere TeX» se mantiene verdadero en lugar de convertirse en «verdadero hasta que alguien instale TeX»."
 
 #: docs/content-types.md:102
-msgid "Enforcement —  rejects a math kind, a"
-msgstr "Control de cumplimiento —  rechaza cualquier tipo matemático,"
-
-#: docs/content-types.md:103
-msgid "field or a  sibling, and runs on every ."
-msgstr "campo  o archivo hermano , y se ejecuta en cada ."
+msgid "Enforcement —  rejects a math kind, a  field or a  sibling, and runs on every ."
+msgstr "Control de cumplimiento —  rechaza cualquier tipo matemático, campo  o archivo hermano , y se ejecuta en cada ."
 
 #: docs/content-types.md:105
 msgid "Relevant skill schemas: , , , ."
@@ -234,56 +214,20 @@ msgid "Rigorous scientific papers and books where prose and mathematics are back
 msgstr "Artículos científicos y libros rigurosos donde la prosa y las matemáticas están respaldadas por una formalización en Lean 4 verificada por máquina y renderizadas mediante LaTeX."
 
 #: docs/content-types.md:151
-msgid "A paper is a document plus Lean-bearing blocks. Everything in the section"
-msgstr "Un artículo es un documento más bloques con Lean. Todo lo explicado en la sección"
-
-#: docs/content-types.md:152
-msgid "above applies here: the same block tree, the same editorial  graph,"
-msgstr "anterior aplica aquí: el mismo árbol de bloques, el mismo grafo editorial de ,"
-
-#: docs/content-types.md:153
-msgid "the same QA sidecars, the same lifecycle — and the Markdown render path, which"
-msgstr "los mismos sidecars de QA, el mismo ciclo de vida —y la ruta de renderizado a Markdown, que"
-
-#: docs/content-types.md:154
-msgid "works while drafting on a machine with no TeX. The  adapter extends"
-msgstr "funciona mientras se redacta en una máquina sin TeX. El adaptador  extiende"
-
-#: docs/content-types.md:155
-msgid "the  adapter in code, for exactly that reason. What a paper adds is"
-msgstr "el adaptador  en el código, exactamente por esa razón. Lo que añade un artículo son"
-
-#: docs/content-types.md:156
-msgid "the seven kinds below whose assertion is a formal claim, and the two"
-msgstr "los siete tipos siguientes cuya aseveración es una afirmación formal, y las dos"
-
-#: docs/content-types.md:157
-msgid "toolchains that check and typeset them."
-msgstr "cadenas de herramientas que los verifican y componen tipográficamente."
+msgid "A paper is a document plus Lean-bearing blocks. Everything in the section above applies here: the same block tree, the same editorial  graph, the same QA sidecars, the same lifecycle — and the Markdown render path, which works while drafting on a machine with no TeX. The  adapter extends the  adapter in code, for exactly that reason. What a paper adds is the seven kinds below whose assertion is a formal claim, and the two toolchains that check and typeset them."
+msgstr "Un artículo es un documento más bloques con Lean. Todo lo explicado en la sección anterior aplica aquí: el mismo árbol de bloques, el mismo grafo editorial de , los mismos sidecars de QA, el mismo ciclo de vida —y la ruta de renderizado a Markdown, que funciona mientras se redacta en una máquina sin TeX. El adaptador  extiende el adaptador  en el código, exactamente por esa razón. Lo que añade un artículo son los siete tipos siguientes cuya aseveración es una afirmación formal, y las dos cadenas de herramientas que los verifican y componen tipográficamente."
 
 #: docs/content-types.md:159
-msgid "Source model — content is a tree of typed blocks (,"
-msgstr "Modelo fuente — el contenido es un árbol de bloques tipados (,"
-
-#: docs/content-types.md:160
-msgid ", , , , , …). See the TypeScript API reference for , , and ."
-msgstr ", , , , , …). Consulta la referencia de la API de TypeScript para ,  y ."
+msgid "Source model — content is a tree of typed blocks (, , , , , , …). See the TypeScript API reference for , , and ."
+msgstr "Modelo fuente — el contenido es un árbol de bloques tipados (, , , , , , …). Consulta la referencia de la API de TypeScript para ,  y ."
 
 #: docs/content-types.md:162
-msgid "Formalization —  and  skills drive"
-msgstr "Formalización — las habilidades  y  controlan"
-
-#: docs/content-types.md:163
-msgid "Lean; each theorem-like block can be tracked against its Lean counterpart, and every  is auditable."
-msgstr "Lean; cada bloque de tipo teorema puede rastrearse frente a su contraparte en Lean, y cada  es auditable."
+msgid "Formalization —  and  skills drive Lean; each theorem-like block can be tracked against its Lean counterpart, and every  is auditable."
+msgstr "Formalización — las habilidades  y  controlan Lean; cada bloque de tipo teorema puede rastrearse frente a su contraparte en Lean, y cada  es auditable."
 
 #: docs/content-types.md:165
-msgid "Rendering —  plus the paper adapter's"
-msgstr "Renderizado —  más las herramientas  /"
-
-#: docs/content-types.md:166
-msgid "/  tools."
-msgstr "del adaptador paper."
+msgid "Rendering —  plus the paper adapter's  /  tools."
+msgstr "Renderizado —  más las herramientas  /  del adaptador paper."
 
 #: docs/content-types.md:168
 msgid "The seven kinds a document folio does not get, and the eight it shares:"
@@ -394,12 +338,8 @@ msgid "The L3 layer turns an L2 DAK into a computable FHIR Implementation Guide:
 msgstr "La capa L3 convierte un DAK L2 en una Guía de Implementación FHIR computable:"
 
 #: docs/content-types.md:243
-msgid "FHIR resources authored as FSH (FHIR Shorthand) and compiled with"
-msgstr "Recursos FHIR creados como FSH (FHIR Shorthand) y compilados con"
-
-#: docs/content-types.md:244
-msgid "SUSHI ()"
-msgstr "SUSHI ()"
+msgid "FHIR resources authored as FSH (FHIR Shorthand) and compiled with SUSHI ()"
+msgstr "Recursos FHIR creados como FSH (FHIR Shorthand) y compilados con SUSHI ()"
 
 #: docs/content-types.md:245
 msgid "Validation against FHIR profiles ()"

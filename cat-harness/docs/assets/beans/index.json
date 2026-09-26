@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 378,
+      "count": 380,
       "unit": "beans"
     }
   },
@@ -541,6 +541,20 @@
       "updatedAt": "2026-09-20T05:21:39Z",
       "preview": "**Asked by the owner, 2026-09-20**: *\"all zod usage is associated with skills\nand put in tools? (like validate node in graph, or so) in kg-navigation?\"* —\nand, on shape: *\"a Tool per Zod schema... no, but there should be common\npatterns (single pattern?) with some parameters more or less\"*.\n\nAnalysis: `cat-harness/docs/proposals/zod-schemas-as-tools.md`, attached to\n[#223](https://github.com/litlf",
       "file": "beans/defs/folio-assistant-3lbz--tools-zod-schemas-are-not-reachable-as-tools-and-k.md"
+    },
+    {
+      "id": "folio-assistant-3mo4",
+      "title": "EXTRACTION: cleanMarkdownText leaves literal **** in a msgid when a code span is wrapped in emphasis, and eats the spacing when there are two",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T12:53:23Z",
+      "updatedAt": "2026-09-26T12:53:23Z",
+      "preview": "Found 2026-09-26 while measuring `lvk9`, and **pre-existing rather than introduced\nby it** — proven below.\n\n`cleanMarkdownText` strips an inline code span and strips emphasis markers, but\nwhen a code span is WRAPPED in emphasis it does neither cleanly, and it is not\nconsistent about which way it fails:\n\n| input | output |\n|---|---|\n| ``` **`clarity-defn-single`** — fail if x ``` | `\"**** — fail if",
+      "file": "beans/defs/folio-assistant-3mo4--extraction-cleanmarkdowntext-leaves-literal-in-a-m.md"
     },
     {
       "id": "folio-assistant-3oqj",
@@ -3015,14 +3029,14 @@
     {
       "id": "folio-assistant-lvk9",
       "title": "EXTRACTION: list items and blockquotes are extracted PER LINE, so a msgid depends on the author's hard wrap — translators get sentences in halves",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T09:20:19Z",
-      "updatedAt": "2026-09-26T10:42:14Z",
+      "updatedAt": "2026-09-26T13:08:39Z",
       "preview": "Found 2026-09-26 while diagnosing bean `7x8o` at the owner's instruction to find\nthe cause before touching any translation. **It is the third and largest member of\nthe `6b8u`/`ig4a` family, and it refutes most of `7x8o`.**\n\n`extractMarkdown` accumulates a PARAGRAPH until a blank line, so a hard-wrapped\nparagraph is correctly one entry. **List items and blockquotes are not\naccumulated** — each matc",
       "file": "beans/defs/folio-assistant-lvk9--extraction-list-items-and-blockquotes-are-extracte.md"
     },
@@ -3785,6 +3799,20 @@
       "updatedAt": "2026-09-21T21:46:40Z",
       "preview": "Owner, 2026-09-20, with an upload and a link:\n\n> `Agent_Skill_best_practices___Gemini_CLI.pdf` one-voice source for skills\n> <https://github.com/litlfred/folio-assistant/commit/467717508cf8ee3f8bb4cf1eaace91e769d92e16>\n>\n> for model specific sources, make those model specific voices. make sure .ts\n> skill data model accomodates all. (preference leave unstructured schema,\n> agentic review b/c of \"b",
       "file": "beans/defs/folio-assistant-rkqp--ingest-gemini-cli-agent-skill-best-practices-pdf-c.md"
+    },
+    {
+      "id": "folio-assistant-rmor",
+      "title": "INJECTION: injectMarkdown deletes EVERY blank line in the document, not the ones it introduced — the written page is structurally destroyed",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T12:57:59Z",
+      "updatedAt": "2026-09-26T12:57:59Z",
+      "preview": "Found 2026-09-26 while doing `lvk9`. Pre-existing, and the most damaging thing in\nthis family so far.\n\n`injectMarkdown` ends with:\n\n```ts\n// Remove blank lines introduced by paragraph collapse\nconst result = outLines.filter((line) => line !== \"\").join(\"\\n\");\n```\n\nThe comment says *\"introduced by paragraph collapse\"*. The code removes **every\nempty line in the document**, including every one the au",
+      "file": "beans/defs/folio-assistant-rmor--injection-injectmarkdown-deletes-every-blank-line.md"
     },
     {
       "id": "folio-assistant-rn3o",

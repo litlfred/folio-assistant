@@ -7,7 +7,7 @@
 # source with the same extractor. No human has adjudicated it. Issue #206
 # defines official as human sign-off; until that happens this is a starting
 # point, not an authority. The alignment was accepted because the two
-# documents yield the same sequence of 114 constructs; see the module
+# documents yield the same sequence of 99 constructs; see the module
 # docblock for what that does and does not establish.
 #
 msgid ""
@@ -46,16 +46,8 @@ msgid "folio-assistant is content-agnostic: the platform knows nothing about any
 msgstr "إن folio-assistant مستقل عن المحتوى: فالمنصة لا تعرف شيئًا عن أي ورقة بحثية أو دليل إرشادي بعينه. ويتم دعم كل نوع من أنواع المحتوى عبر محول محتوى (شفرة برمجية تعرف كيفية التحقق من ذلك النوع وبنائه وعرضه) و حزمة مهارات (الصياغة الرسمية للتأليف — ما يقوم به المؤلف والنموذج اللغوي الكبير)."
 
 #: docs/content-types.md:34
-msgid "This page describes the formalism of each content type. It is intentionally"
-msgstr "تصف هذه الصفحة الصياغة الرسمية لكل نوع محتوى. وقد تم فصلها عمدًا"
-
-#: docs/content-types.md:35
-msgid "kept separate from any concrete content; concrete artifacts live in their own"
-msgstr "عن أي محتوى ملموس؛ حيث تعيش المخرجات الملموسة في مستودع المحتوى"
-
-#: docs/content-types.md:36
-msgid "content repository."
-msgstr "الخاص بها."
+msgid "This page describes the formalism of each content type. It is intentionally kept separate from any concrete content; concrete artifacts live in their own content repository."
+msgstr "تصف هذه الصفحة الصياغة الرسمية لكل نوع محتوى. وقد تم فصلها عمدًا عن أي محتوى ملموس؛ حيث تعيش المخرجات الملموسة في مستودع المحتوى الخاص بها."
 
 #: docs/content-types.md:40
 msgid "The content lifecycle"
@@ -174,28 +166,16 @@ msgid "Structured prose: health-policy guidance (an L1 guideline, say), a standa
 msgstr "نثر مهيكل: إرشادات السياسات الصحية (دليل إرشادي من المستوى L1، على سبيل المثال)، أو معيار، أو تقرير، أو كتيب، أو فصل من كتاب. كل ما تمثله الورقة البحثية، باستثناء الطبقة الرسمية — وبالتالي باستثناء سلسلتي الأدوات اللتين تخدمانها."
 
 #: docs/content-types.md:93
-msgid "Source model — the same tree of typed blocks as a paper, restricted to"
-msgstr "نموذج المصدر — شجرة الكتل المصنفة نفسها كما في الورقة البحثية، وتقتصر على"
-
-#: docs/content-types.md:94
-msgid "the kinds whose content is prose rather than a formal claim: , , , , , , , ."
-msgstr "الأنواع التي يكون محتواها نثرًا بدلاً من ادعاء رسمي: ، و، و، و، و، و، و، و."
+msgid "Source model — the same tree of typed blocks as a paper, restricted to the kinds whose content is prose rather than a formal claim: , , , , , , , ."
+msgstr "نموذج المصدر — شجرة الكتل المصنفة نفسها كما في الورقة البحثية، وتقتصر على الأنواع التي يكون محتواها نثرًا بدلاً من ادعاء رسمي: ، و، و، و، و، و، و، و."
 
 #: docs/content-types.md:97
-msgid "Rendering —  assembles the folio into one Markdown"
-msgstr "التصيير — تقوم أداة  بتجميع الـ folio في ملف Markdown"
-
-#: docs/content-types.md:98
-msgid "file;  and  take it through pandoc. The PDF path uses an HTML engine (weasyprint, prince, wkhtmltopdf) and never falls back to , so \"no TeX required\" stays true rather than becoming true-until-someone-has-TeX-installed."
-msgstr "واحد؛ بينما تنقله أداتا  و عبر pandoc. يستخدم مسار إنشاء PDF محرك HTML (مثل weasyprint أو prince أو wkhtmltopdf) ولا يلجأ أبدًا إلى  كحل بديل، بحيث تظل عبارة \"لا يلزم تثبيت TeX\" صحيحة بدلاً من أن تصبح صحيحة حتى يقوم شخص ما بتثبيت TeX."
+msgid "Rendering —  assembles the folio into one Markdown file;  and  take it through pandoc. The PDF path uses an HTML engine (weasyprint, prince, wkhtmltopdf) and never falls back to , so \"no TeX required\" stays true rather than becoming true-until-someone-has-TeX-installed."
+msgstr "التصيير — تقوم أداة  بتجميع الـ folio في ملف Markdown واحد؛ بينما تنقله أداتا  و عبر pandoc. يستخدم مسار إنشاء PDF محرك HTML (مثل weasyprint أو prince أو wkhtmltopdf) ولا يلجأ أبدًا إلى  كحل بديل، بحيث تظل عبارة \"لا يلزم تثبيت TeX\" صحيحة بدلاً من أن تصبح صحيحة حتى يقوم شخص ما بتثبيت TeX."
 
 #: docs/content-types.md:102
-msgid "Enforcement —  rejects a math kind, a"
-msgstr "فرض القيود — ترفض أداة  أي نوع رياضي، أو حقل"
-
-#: docs/content-types.md:103
-msgid "field or a  sibling, and runs on every ."
-msgstr "أو ملف مجاور بامتداد ، وتعمل عند كل استدعاء لـ ."
+msgid "Enforcement —  rejects a math kind, a  field or a  sibling, and runs on every ."
+msgstr "فرض القيود — ترفض أداة  أي نوع رياضي، أو حقل  أو ملف مجاور بامتداد ، وتعمل عند كل استدعاء لـ ."
 
 #: docs/content-types.md:105
 msgid "Relevant skill schemas: , , , ."
@@ -234,56 +214,20 @@ msgid "Rigorous scientific papers and books where prose and mathematics are back
 msgstr "الأوراق والكتب العلمية الدقيقة حيث يُدعم النثر والرياضيات بصياغة رسمية يتم التحقق منها آليًا عبر Lean 4 وتُصيَّر باستخدام LaTeX."
 
 #: docs/content-types.md:151
-msgid "A paper is a document plus Lean-bearing blocks. Everything in the section"
-msgstr "الورقة البحثية هي مستند بالإضافة إلى كتل تدعم Lean. ينطبق كل ما ورد في القسم"
-
-#: docs/content-types.md:152
-msgid "above applies here: the same block tree, the same editorial  graph,"
-msgstr "أعلاه هنا: شجرة الكتل نفسها، ومخطط  التحريري نفسه،"
-
-#: docs/content-types.md:153
-msgid "the same QA sidecars, the same lifecycle — and the Markdown render path, which"
-msgstr "وملفات ضمان الجودة المرافقة (QA sidecars) نفسها، ودورة الحياة نفسها — ومسار"
-
-#: docs/content-types.md:154
-msgid "works while drafting on a machine with no TeX. The  adapter extends"
-msgstr "تصيير Markdown، الذي يعمل أثناء الصياغة الأولية على جهاز لا يحتوي على TeX. يوسع"
-
-#: docs/content-types.md:155
-msgid "the  adapter in code, for exactly that reason. What a paper adds is"
-msgstr "محول  محول  برمجياً لهذا السبب تحديدًا. وما تضيفه الورقة هو"
-
-#: docs/content-types.md:156
-msgid "the seven kinds below whose assertion is a formal claim, and the two"
-msgstr "الأنواع السبعة الموضحة أدناه والتي يشكل توكيدها ادعاءً رسميًا، بالإضافة إلى سلسلتي"
-
-#: docs/content-types.md:157
-msgid "toolchains that check and typeset them."
-msgstr "الأدوات اللتين تتحققان منها وتنضدانها."
+msgid "A paper is a document plus Lean-bearing blocks. Everything in the section above applies here: the same block tree, the same editorial  graph, the same QA sidecars, the same lifecycle — and the Markdown render path, which works while drafting on a machine with no TeX. The  adapter extends the  adapter in code, for exactly that reason. What a paper adds is the seven kinds below whose assertion is a formal claim, and the two toolchains that check and typeset them."
+msgstr "الورقة البحثية هي مستند بالإضافة إلى كتل تدعم Lean. ينطبق كل ما ورد في القسم أعلاه هنا: شجرة الكتل نفسها، ومخطط  التحريري نفسه، وملفات ضمان الجودة المرافقة (QA sidecars) نفسها، ودورة الحياة نفسها — ومسار تصيير Markdown، الذي يعمل أثناء الصياغة الأولية على جهاز لا يحتوي على TeX. يوسع محول  محول  برمجياً لهذا السبب تحديدًا. وما تضيفه الورقة هو الأنواع السبعة الموضحة أدناه والتي يشكل توكيدها ادعاءً رسميًا، بالإضافة إلى سلسلتي الأدوات اللتين تتحققان منها وتنضدانها."
 
 #: docs/content-types.md:159
-msgid "Source model — content is a tree of typed blocks (,"
-msgstr "نموذج المصدر — المحتوى عبارة عن شجرة من الكتل المصنفة (،"
-
-#: docs/content-types.md:160
-msgid ", , , , , …). See the TypeScript API reference for , , and ."
-msgstr "و، و، و، و، و، …). راجع مرجع واجهة برمجة تطبيقات TypeScript للاطلاع على  و و."
+msgid "Source model — content is a tree of typed blocks (, , , , , , …). See the TypeScript API reference for , , and ."
+msgstr "نموذج المصدر — المحتوى عبارة عن شجرة من الكتل المصنفة (، و، و، و، و، و، …). راجع مرجع واجهة برمجة تطبيقات TypeScript للاطلاع على  و و."
 
 #: docs/content-types.md:162
-msgid "Formalization —  and  skills drive"
-msgstr "الصياغة الرسمية — تقود مهارتا  و نظام"
-
-#: docs/content-types.md:163
-msgid "Lean; each theorem-like block can be tracked against its Lean counterpart, and every  is auditable."
-msgstr "Lean؛ حيث يمكن تتبع كل كتلة شبيهة بالمبرهنة مقابل نظيرتها في Lean، ويكون كل تعبير  قابلاً للتدقيق."
+msgid "Formalization —  and  skills drive Lean; each theorem-like block can be tracked against its Lean counterpart, and every  is auditable."
+msgstr "الصياغة الرسمية — تقود مهارتا  و نظام Lean؛ حيث يمكن تتبع كل كتلة شبيهة بالمبرهنة مقابل نظيرتها في Lean، ويكون كل تعبير  قابلاً للتدقيق."
 
 #: docs/content-types.md:165
-msgid "Rendering —  plus the paper adapter's"
-msgstr "التصيير — مهارة  بالإضافة إلى أداتي"
-
-#: docs/content-types.md:166
-msgid "/  tools."
-msgstr "و التابعتين لمحول الورقة."
+msgid "Rendering —  plus the paper adapter's  /  tools."
+msgstr "التصيير — مهارة  بالإضافة إلى أداتي  و التابعتين لمحول الورقة."
 
 #: docs/content-types.md:168
 msgid "The seven kinds a document folio does not get, and the eight it shares:"
@@ -394,12 +338,8 @@ msgid "The L3 layer turns an L2 DAK into a computable FHIR Implementation Guide:
 msgstr "تحوّل طبقة المستوى L3 حزمة DAK من المستوى L2 إلى دليل تطبيق FHIR قابل للحوسبة:"
 
 #: docs/content-types.md:243
-msgid "FHIR resources authored as FSH (FHIR Shorthand) and compiled with"
-msgstr "موارد FHIR تُؤلف باستخدام FSH (اختزال FHIR / FHIR Shorthand) وتُترجم بواسطة"
-
-#: docs/content-types.md:244
-msgid "SUSHI ()"
-msgstr "SUSHI ()"
+msgid "FHIR resources authored as FSH (FHIR Shorthand) and compiled with SUSHI ()"
+msgstr "موارد FHIR تُؤلف باستخدام FSH (اختزال FHIR / FHIR Shorthand) وتُترجم بواسطة SUSHI ()"
 
 #: docs/content-types.md:245
 msgid "Validation against FHIR profiles ()"

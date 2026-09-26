@@ -486,3 +486,74 @@ describe("a repeated msgid translated two ways is REFUSED, not deduped (`f6r1`)"
     expect(r.refused.filter((f) => f.reason === "msgid-conflict")).toEqual([]);
   });
 });
+
+describe("a msgid does not depend on where the author pressed return (`lvk9`)", () => {
+  // THE PROPERTY THIS FIX EXISTS FOR, and the one that would falsify it. Before
+  // `lvk9`, paragraphs were accumulated but list items and blockquotes were
+  // matched PER LINE, so re-wrapping a source changed its msgids — and a wrapped
+  // list item's continuation fell through to the paragraph accumulator, so it came
+  // out as a `paragraph`. Wrong count and wrong kind from one cause.
+  //
+  // Each case is the same content wrapped two ways. Equal msgid sequences is the
+  // whole claim; a count check would miss the kind half.
+  const CASES: Array<[string, string, string]> = [
+    [
+      "a list item, one line against two",
+      "- **No ATAG Part B checks.** Nothing yet verifies that a published folio has alt text.",
+      "- **No ATAG Part B checks.** Nothing yet verifies that a\n  published folio has alt text.",
+    ],
+    [
+      "a list item, two lines against three",
+      "- A sentence that is long enough to wrap\n  across two source lines here.",
+      "- A sentence that is long\n  enough to wrap\n  across two source lines here.",
+    ],
+    [
+      "a blockquote, one line against two",
+      "> A question's cost is paid by the person answering it. Design it well.",
+      "> A question's cost is paid by the person answering it.\n> Design it well.",
+    ],
+    [
+      "an emphasis span broken by the wrap",
+      // The case with the reader-facing cost: `**` opened on one line and closed
+      // on the next used to become two msgids, so NEITHER half could be rendered
+      // and no word order differing from English was expressible.
+      "- **An actor performs a task in a process as a role, and a tool is one way.**",
+      "- **An actor performs a task in a process as a role,\n  and a tool is one way.**",
+    ],
+    [
+      "a paragraph — the control, which already held",
+      "Some prose that is long enough to wrap across two lines.",
+      "Some prose that is long enough\nto wrap across two lines.",
+    ],
+  ];
+
+  for (const [name, unwrapped, wrapped] of CASES) {
+    it(name, () => {
+      const a = extractMarkdown(unwrapped, "x").map((e) => `${e.kind}:${e.msgid}`);
+      const b = extractMarkdown(wrapped, "x").map((e) => `${e.kind}:${e.msgid}`);
+      expect(a).toEqual(b);
+      // Anti-vacuity: equal-and-empty would satisfy the above.
+      expect(a.length).toBeGreaterThan(0);
+    });
+  }
+
+  it("an UNINDENTED following line is a new paragraph, not a continuation", () => {
+    // The over-merge this fix had to avoid. The rule used to SIZE the defect
+    // merged anything on the next line, and it joined two unrelated sentences in
+    // `wireframes/fsh-guts/intent.md`. Continuation is by INDENTATION.
+    const md = "- A list item that ends here.\nAn unindented paragraph that follows it.";
+    const kinds = extractMarkdown(md, "x").map((e) => e.kind);
+    expect(kinds).toEqual(["list-item", "paragraph"]);
+  });
+
+  it("a bare `>` separates two quoted paragraphs rather than joining them", () => {
+    const md = "> First quoted paragraph here.\n>\n> Second quoted paragraph here.";
+    const ids = extractMarkdown(md, "x").map((e) => e.msgid);
+    expect(ids).toEqual(["First quoted paragraph here.", "Second quoted paragraph here."]);
+  });
+
+  it("a change of quote depth starts a new entry", () => {
+    const md = "> Outer quote text here.\n>> Inner quote text here.";
+    expect(extractMarkdown(md, "x")).toHaveLength(2);
+  });
+});

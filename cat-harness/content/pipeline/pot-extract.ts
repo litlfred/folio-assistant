@@ -318,21 +318,52 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
   let codeFence: string | null = null;
   let inHtmlBlock = false;
   let htmlCloseTag = "";
-  const paragraphLines: Array<{ lineno: number; text: string }> = [];
+  /**
+   * The multi-line construct currently being accumulated.
+   *
+   * **Paragraphs were accumulated and list items and blockquotes were not**, so a
+   * msgid's identity depended on where the author pressed return — and a wrapped
+   * list item's continuation line fell through to the paragraph accumulator, so it
+   * came out as a `paragraph`. Wrong count and wrong KIND from one cause. Bean
+   * `lvk9`.
+   *
+   * The cost was not the count. A translator was handed one sentence as two
+   * msgids, with a `**` span opening in the first and closing in the second:
+   * neither half can be rendered, and no word order differing from English is
+   * expressible at all.
+   *
+   * One accumulator for all three kinds, because the alternative is three copies
+   * of the same flush logic and `wlyg` is this file's evidence for what duplicated
+   * parsing rules do.
+   */
+  type PendingKind = "paragraph" | "list-item" | "blockquote";
+  let pending:
+    | {
+        kind: PendingKind;
+        lines: Array<{ lineno: number; text: string }>;
+        /** For a list item, the column its content starts at — see {@link continuesItem}. */
+        contentCol: number;
+        /** For a blockquote, how many `>` deep it is. A change in depth is a new quote. */
+        depth: number;
+      }
+    | null = null;
 
-  const flushParagraph = () => {
-    if (paragraphLines.length === 0) return;
-    const raw = paragraphLines.map((p) => p.text).join(" ");
+  /**
+   * Emit the accumulated construct as ONE entry, at the line it started on.
+   *
+   * `cleanMarkdownText` runs on the JOINED text rather than per line, which is the
+   * half that fixes the split `**` span: an emphasis run opened on one line and
+   * closed on the next is a single span once the lines are joined, and nothing
+   * else can make it one.
+   */
+  const flushPending = (): void => {
+    if (pending === null) return;
+    const raw = pending.lines.map((p) => p.text).join(" ");
     const text = cleanMarkdownText(raw);
     if (isTranslatable(text)) {
-      entries.push({
-        source,
-        line: paragraphLines[0].lineno,
-        msgid: text,
-        kind: "paragraph",
-      });
+      entries.push({ source, line: pending.lines[0].lineno, msgid: text, kind: pending.kind });
     }
-    paragraphLines.length = 0;
+    pending = null;
   };
 
   /**
@@ -348,6 +379,40 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
    * placeholder would otherwise leak its second line, and the directive's
    * semantics do not care how many there are.
    */
+  /**
+   * Does this line continue the list item being accumulated?
+   *
+   * **Indentation, not line adjacency.** The rule that measured this defect's
+   * reach merged any entry sitting on the immediately next line, and it
+   * over-merged — in `wireframes/fsh-guts/intent.md` it joined two unrelated
+   * sentences. What markdown actually says is that a continuation is INDENTED
+   * under the marker and ends at a blank line or the next block, so that is what
+   * this tests.
+   *
+   * Indented-at-all rather than `>= contentCol`: a continuation one space shy of
+   * the content column is still unambiguously a continuation, while an
+   * UNINDENTED line is exactly the case that must not be swallowed — it is the
+   * following paragraph. (`contentCol` is kept on `pending` because a stricter
+   * rule may want it, and because it documents what the marker was.)
+   *
+   * Every other block construct is excluded explicitly. A list of exclusions is
+   * the wrong shape in general, but here each one is a branch that appears ABOVE
+   * this point in the loop, so omitting one would mean a construct silently
+   * absorbed into a list item's msgid.
+   */
+  const continuesItem = (line: string, stripped: string): boolean =>
+    pending?.kind === "list-item" &&
+    stripped !== "" &&
+    /^\s/.test(line) &&
+    !MD_LIST_ITEM_RE.test(line) &&
+    !MD_HEADING_RE.test(line) &&
+    !MD_BLOCKQUOTE_RE.test(line) &&
+    !MD_HLINE_RE.test(stripped) &&
+    !MD_TABLE_SEP_RE.test(stripped) &&
+    !MD_KRAMDOWN_ATTR_RE.test(stripped) &&
+    !MD_CODE_FENCE_RE.test(stripped) &&
+    !(stripped.startsWith("|") && stripped.endsWith("|"));
+
   let listRunStart: number | null = null;
   /** Blank lines do not end a list run — a loose list has them between items. */
   const endListRun = (): void => {
@@ -365,7 +430,15 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
     // direction: it means the items stay in the catalogue, which is today's
     // behaviour, whereas failing to end one would let a `{:toc}` further down
     // the page delete a list nobody asked it to touch.
-    if (stripped !== "" && !MD_LIST_ITEM_RE.test(line) && !MD_KRAMDOWN_ATTR_RE.test(stripped)) {
+    // A CONTINUATION of the item above is part of that item, so it does not end
+    // the run either — missing this would let a `{:toc}` stop consuming a list
+    // whose last item happened to be wrapped.
+    if (
+      stripped !== "" &&
+      !MD_LIST_ITEM_RE.test(line) &&
+      !MD_KRAMDOWN_ATTR_RE.test(stripped) &&
+      !continuesItem(line, stripped)
+    ) {
       endListRun();
     }
 
@@ -392,7 +465,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
     const fenceMatch = stripped.match(MD_CODE_FENCE_RE);
     if (fenceMatch) {
       if (!inCodeBlock) {
-        flushParagraph();
+        flushPending();
         inCodeBlock = true;
         codeFence = fenceMatch[1];
       } else if (codeFence && stripped.startsWith(codeFence[0].repeat(codeFence.length))) {
@@ -415,7 +488,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
     const openMatch = stripped.match(MD_HTML_SKIP_OPEN_RE);
     if (openMatch) {
       const tagName = openMatch[1].toLowerCase();
-      flushParagraph();
+      flushPending();
       const closeMatch = stripped.match(MD_HTML_CLOSE_TAG_RE);
       if (closeMatch && closeMatch[1].toLowerCase() === tagName) {
         continue;
@@ -427,14 +500,14 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
 
     // --- Blank line: end of paragraph ---
     if (!stripped) {
-      flushParagraph();
+      flushPending();
       continue;
     }
 
     // --- Headings ---
     const headingMatch = line.match(MD_HEADING_RE);
     if (headingMatch) {
-      flushParagraph();
+      flushPending();
       const text = cleanMarkdownText(headingMatch[2]);
       if (isTranslatable(text)) {
         entries.push({ source, line: lineno, msgid: text, kind: "heading" });
@@ -444,36 +517,50 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
 
     // --- Horizontal rules / table separators (skip) ---
     if (MD_HLINE_RE.test(stripped) || MD_TABLE_SEP_RE.test(stripped)) {
-      flushParagraph();
+      flushPending();
       continue;
     }
 
     // --- List items ---
     const listMatch = line.match(MD_LIST_ITEM_RE);
     if (listMatch) {
-      flushParagraph();
+      // Flush BEFORE capturing `listRunStart`, so the index is where this run
+      // begins rather than where the preceding paragraph still sat unflushed.
+      flushPending();
       if (listRunStart === null) listRunStart = entries.length;
-      const text = cleanMarkdownText(listMatch[2].trim());
-      if (isTranslatable(text)) {
-        entries.push({ source, line: lineno, msgid: text, kind: "list-item" });
-      }
+      pending = {
+        kind: "list-item",
+        lines: [{ lineno, text: listMatch[2].trim() }],
+        contentCol: listMatch[1].length,
+        depth: 0,
+      };
       continue;
     }
 
     // --- Blockquote lines ---
     const bqMatch = line.match(MD_BLOCKQUOTE_RE);
     if (bqMatch) {
-      flushParagraph();
-      const text = cleanMarkdownText(bqMatch[2]);
-      if (isTranslatable(text)) {
-        entries.push({ source, line: lineno, msgid: text, kind: "blockquote" });
+      const depth = (bqMatch[1].match(/>/g) ?? []).length;
+      const content = bqMatch[2];
+      if (content.trim() === "") {
+        // A bare `>` is a paragraph break INSIDE the quote, not decoration —
+        // joining across it would merge two quoted paragraphs into one msgid.
+        flushPending();
+        continue;
       }
+      if (pending?.kind === "blockquote" && pending.depth === depth) {
+        pending.lines.push({ lineno, text: content });
+        continue;
+      }
+      // A change of depth is a different quote, so it does not continue this one.
+      flushPending();
+      pending = { kind: "blockquote", lines: [{ lineno, text: content }], contentCol: 0, depth };
       continue;
     }
 
     // --- Table rows: extract cell content ---
     if (stripped.startsWith("|") && stripped.endsWith("|")) {
-      flushParagraph();
+      flushPending();
       const cells = stripped.slice(1, -1).split("|");
       for (const cell of cells) {
         const text = cleanMarkdownText(cell.trim());
@@ -486,7 +573,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
 
     // --- Kramdown / Jekyll attribute lists (skip) ---
     if (MD_KRAMDOWN_ATTR_RE.test(stripped)) {
-      flushParagraph();
+      flushPending();
       // A CONSUMING directive takes its block with it. `{:toc}` replaces the
       // list above with a generated table of contents, so that list's text is
       // a placeholder no reader ever sees — and offering it to a translator
@@ -500,12 +587,18 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
       continue;
     }
 
-    // --- Paragraph continuation ---
-    paragraphLines.push({ lineno, text: stripped });
+    // --- Continuation of a list item, else paragraph ---
+    if (continuesItem(line, stripped)) {
+      pending!.lines.push({ lineno, text: stripped });
+      continue;
+    }
+    if (pending !== null && pending.kind !== "paragraph") flushPending();
+    pending ??= { kind: "paragraph", lines: [], contentCol: 0, depth: 0 };
+    pending.lines.push({ lineno, text: stripped });
   }
 
-  // Flush any remaining paragraph
-  flushParagraph();
+  // Flush whatever construct was still being accumulated at EOF.
+  flushPending();
 
   return entries;
 }
