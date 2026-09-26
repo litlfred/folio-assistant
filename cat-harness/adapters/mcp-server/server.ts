@@ -3109,18 +3109,22 @@ These become clickable buttons so users don't have to type. Make them specific t
                     `(a link member writes through to its target), first ${JSON.stringify(badType[0].slice(0, 120))}`,
                 );
               }
-              // The member name is everything after the FIFTH field. Measured
-              // against real GNU tar output rather than counted by eye, because
-              // the first attempt stripped six and silently ate the first word
-              // of every name — `sub/a b c.tex` became `b c.tex`, and the
-              // containment check below would then have run on a fabricated
-              // path. A name may contain spaces, so only the fixed-width prefix
-              // is removed:
+              // The member name is everything after the time field. Anchoring
+              // on the `HH:MM` pattern handles BOTH formats:
               //
-              //     -rw-r--r-- root/root  2 2026-09-26 12:13 sub/a b c.tex
-              //     \_______/ \_______/ \/ \________/ \___/ \___________/
-              //       mode      owner   size   date   time      name
-              const members = listing.map((l) => l.replace(/^\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+/, ""));
+              //   GNU tar:  -rw-r--r-- root/root  2 2026-09-26 12:13 sub/a b c.tex
+              //             \_______/ \_______/ \/ \________/ \___/ \___________/
+              //               mode      owner   sz    date    time      name
+              //
+              //   BSD tar:  -rw-r--r--  0 user wheel  2 Sep 26 21:34 sub/a b c.tex
+              //             \_______/ \/ \__/ \___/ \/ \__/ \/ \___/ \___________/
+              //               mode    lk own  grp  sz mon  dy time       name
+              //
+              // The first version stripped five fields and silently ate the first
+              // word of every name on macOS — `sub/a b c.tex` came out as
+              // `Sep 26 21:34 sub/a b c.tex`, and the path check ran on a
+              // fabrication.
+              const members = listing.map((l) => l.replace(/^.*?\d{1,2}:\d{2}\s+/, ""));
               const unsafe = members.filter(
                 (m) => m.startsWith("/") || m.split("/").includes("..") || m.includes("\0"),
               );
