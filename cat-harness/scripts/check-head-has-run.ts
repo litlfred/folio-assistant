@@ -110,6 +110,41 @@
  * is the whole check: in both of the bean's cases the branch *did* have a
  * recent run — for the commit the previous PR had merged.
  *
+ * ## A push does not buy you a run, and `mergeable_state` does not buy you an answer
+ *
+ * Two things measured 2026-09-25 (bean `fx5r`), both of which change what an
+ * operator standing at a runless head should DO.
+ *
+ * **Pushing to a PR's head branch does not re-run its `pull_request`
+ * workflows.** A merge commit was pushed to an open PR's branch and only the
+ * `push`-triggered workflow fired:
+ *
+ * ```
+ * 17:04  success  JSON-LD generated-file drift   57fd738d8  (event=push)
+ * 04:54  success  Code-quality gates             5a02ac4b5  (event=pull_request)
+ * ```
+ *
+ * The head then carried ONE green check and not the one that mattered — this
+ * script's own subject, `3pqn`, arrived at from the other side: not zero
+ * checks, but the wrong subset, which reads as green at a glance. So
+ * "push something to trigger CI" is not a remedy; `workflow_dispatch` against
+ * the branch is, and the table above is right that it is safe only while the
+ * PR is mergeable.
+ *
+ * **`mergeable_state` is not the way to check by hand.** It, `head.sha` and
+ * `updated_at` all kept serving a PR's pre-merge view 45 minutes after that PR
+ * merged; only `merged` went stale-safe. Worse, `update-branch` answered
+ * *"merge conflict between base and head"* for a CLOSED PR, while
+ * `git merge-tree` and a real `git merge --no-commit` both reported zero
+ * unmerged paths — a wrong cause stated with the authority of a measurement.
+ *
+ * This module already had the right instinct: {@link mergeStateForHead} asks
+ * `git ls-remote origin refs/pull/N/merge` rather than the field. The advice it
+ * PRINTED in the `unknown` case did not, and pointed at `mergeable_state`
+ * twice. That is fixed; the rule is the one `h2s9` arrived at independently —
+ * **when a forge API and git disagree about git, git is the subject and the
+ * API is a cache.**
+ *
  * ## The hazard this script could itself have become
  *
  * A commit id GitHub has never heard of returns an empty run list, which is
@@ -390,8 +425,13 @@ export function noRunAdvice(merge: MergeState): string {
   return (
     head +
     "\n\n  The mergeability probe itself failed, so even THAT is unknown here.\n" +
-    "  Check `mergeable_state` by hand before dispatching anything: on a\n" +
-    "  conflicted PR a dispatch tests a tree that will never exist."
+    "  Check by hand before dispatching anything — and ask GIT, not\n" +
+    "  `mergeable_state`. Bean `fx5r`: that field kept serving a merged PR's\n" +
+    "  pre-merge value 45 minutes after the merge, and `update-branch` called\n" +
+    "  a CLOSED PR a conflict. Only `merged` goes stale-safe:\n" +
+    "      gh pr view N --json merged          # merged? then nothing is owed\n" +
+    "      git ls-remote origin refs/pull/N/merge   # the probe above, retried\n" +
+    "  On a conflicted PR a dispatch tests a tree that will never exist."
   );
 }
 
@@ -476,9 +516,13 @@ export function missingRequiredAdvice(missing: string[], merge: MergeState): str
   }
   return (
     head +
-    "\n\n  Mergeability is not established, so check `mergeable_state` by hand\n" +
-    "  before dispatching anything: on a conflicted PR a dispatch tests a tree\n" +
-    "  that will never exist."
+    "\n\n  Mergeability is not established, so check by hand before dispatching\n" +
+    "  anything — and ask GIT, not `mergeable_state`. Bean `fx5r` measured it\n" +
+    "  still serving a merged PR's pre-merge value 45 minutes after the merge;\n" +
+    "  only `merged` goes stale-safe:\n" +
+    "      gh pr view N --json merged          # merged? then nothing is owed\n" +
+    "      git ls-remote origin refs/pull/N/merge   # the probe above, retried\n" +
+    "  On a conflicted PR a dispatch tests a tree that will never exist."
   );
 }
 
