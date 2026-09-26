@@ -622,24 +622,57 @@ describe("a source that GREW since its translation is still alignable", () => {
     expect(out!.some((e) => e === undefined)).toBe(false);
   });
 
-  it("the five installation catalogues carry exactly 2 untranslated entries each", () => {
-    // Against the real corpus, and the number is the claim: those two are the
-    // paragraphs `main` added. If it ever reads other than 2, either the source
-    // moved again or the alignment is pairing something it should not.
-    const root = resolve(import.meta.dir, "..", "..");
-    const r = derive(root, ["installation"], LOCALES_ALL);
-    expect(r.derived).toHaveLength(5);
-    for (const d of r.derived) expect(d.untranslated).toBe(2);
+  // These two tests used to name a corpus state: "the five installation
+  // catalogues carry exactly 2 untranslated entries each", with a comment
+  // calling the number the claim and a tripwire for the alignment pairing
+  // something it should not. It fired on 2026-09-26 — correctly, and for the
+  // uninteresting reason. `main` translated those two paragraphs, so the count
+  // went to 0 and the header stopped saying INCOMPLETE.
+  //
+  // A tripwire that trips on every legitimate translate batch is not a
+  // tripwire. It is bean `tbdg`'s "scheduled failure with a comment on it", the
+  // same thing that expired the `nav-locale` fixture three times, and the third
+  // corpus-pinned absolute in this file's history (`toHaveLength(10)` was the
+  // first). The growth being tested is a property of the PAIR, so the pair is
+  // built here and no batch can expire it.
+  it("a grown source leaves the added construct untranslated, and says so", () => {
+    const grown = [SRC, "", "A paragraph added after the translation was made."].join("\n");
+    const { root, cleanup } = fixture(grown, { fr: OK });
+    const d = derive(root, ["page"], ["fr"]).derived[0];
+    expect(d.untranslated).toBe(1);
+    // Untranslated is not merely counted — a reader of the file must see it.
+    expect(d.po).toContain("INCOMPLETE");
+    expect(d.po).toContain("added to the source AFTER this translation was made");
+    expect(d.po).toContain("#, fuzzy");
+    expect(d.po).toContain('msgstr ""');
+    cleanup();
   });
 
-  it("an incomplete catalogue SAYS SO in its header, and marks the entry fuzzy", () => {
-    // A catalogue that is incomplete by construction must not read as complete.
+  it("a complete catalogue does NOT claim to be incomplete", () => {
+    // The other direction, which the corpus-pinned version could not test: a
+    // pair with no growth must not carry the INCOMPLETE banner or a fuzzy mark.
+    // Without this, a header that said INCOMPLETE unconditionally would have
+    // passed every assertion above.
+    const { root, cleanup } = fixture(SRC, { fr: OK });
+    const d = derive(root, ["page"], ["fr"]).derived[0];
+    expect(d.untranslated).toBe(0);
+    expect(d.po).not.toContain("INCOMPLETE");
+    expect(d.po).not.toContain("#, fuzzy");
+    cleanup();
+  });
+
+  it("over the REAL corpus: the banner appears exactly when something is untranslated", () => {
+    // Corpus-wide, as an INVARIANT rather than a count. Whatever `main` has
+    // translated since, `untranslated > 0` and the INCOMPLETE banner must agree
+    // — in both directions — and a count can never exceed the entries it counts.
     const root = resolve(import.meta.dir, "..", "..");
-    const po = derive(root, ["installation"], ["fr"]).derived[0].po;
-    expect(po).toContain("INCOMPLETE");
-    expect(po).toContain("added to the source AFTER this translation was made");
-    expect(po).toContain("#, fuzzy");
-    expect(po).toContain('msgstr ""');
+    const r = derive(root, ["installation"], LOCALES_ALL);
+    expect(r.derived.length).toBeGreaterThan(0);
+    for (const d of r.derived) {
+      expect(d.untranslated).toBeLessThanOrEqual(d.entries);
+      expect(d.po.includes("INCOMPLETE")).toBe(d.untranslated > 0);
+      expect(d.po.includes("#, fuzzy")).toBe(d.untranslated > 0);
+    }
   });
 });
 
