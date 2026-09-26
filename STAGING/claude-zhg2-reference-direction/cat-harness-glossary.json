@@ -440,7 +440,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#process/Process_ThemeUIReview",
       "label": "Reviewer",
-      "scopeNote": "The single point in this process where a person looks rather than a tool measures, reached only after all four agent passes are done — so what this lane judges is the rendered whole, not any one axis in isolation. Its finding is the only thing that can send the process to A_RaiseFindings; a clean build, a passing accessibility check and a correct branding pass can each be true and still miss what only rendering and looking catches.",
+      "scopeNote": "The single point in this process where a person looks rather than a tool measures, reached only after all four agent passes are done — so what this lane judges is the ingested assets as a whole, in the design they are for — not any one axis in isolation. Its finding is the only thing that can send the process to A_RaiseFindings; a clean ingest, a passing accessibility check and a correct branding pass can each be true and still miss what only laying the assets out and looking catches.",
       "source": "cat-harness/processes/theme-ui-review.bpmn"
     },
     {
@@ -1175,7 +1175,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Machine",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_Translation/Lane_Platform",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent",
@@ -1354,15 +1353,6 @@
       "source": "cat-harness/processes/session-state-machine.bpmn"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#role/authoring-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#process/Process_ThemeUIReview",
-      "label": "Agent",
-      "scopeNote": "Four measured passes into R_Judge — inventory, accessibility, branding, locales — each one required to MEASURE rather than assert, because an automated pass alone missed three defects a rendered look caught outright. If GW_Findings comes back yes, this lane still does not fix anything: A_RaiseFindings sends the finding back to whoever authored the theme choice, since picking it was a judgement call this lane does not get to override.",
-      "source": "cat-harness/processes/theme-ui-review.bpmn"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_Translation/Lane_Platform",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#role/authoring-agent",
@@ -1442,7 +1432,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_IngestTheme/Lane_0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_1",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_1",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_1"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_SampleImport/Lane_1",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent"
       ]
     },
     {
@@ -1460,7 +1451,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#process/Process_Ingestion",
       "label": "Ingestion Engine (agent, runs unattended)",
-      "scopeNote": "Runs the whole pipeline from Task_Detect through Task_Promote — including the theme branch, which stays in THIS lane rather than dipping into Lane_2: deciding a document is a theme source is the engine asking its author a question, not a write to the shared work plan. It does not stop at a gap: Gateway_Complete's 'gap' branch leaves this lane only long enough for Lane_2 to record the bean, then Flow_i8 returns control here at CallActivity_Derive rather than ending the run — so an incomplete L1 build is this lane's problem to keep working until Gateway_Complete says otherwise.",
+      "scopeNote": "Runs the whole pipeline from Task_Detect through Task_Promote, and then Task_SummaryQueue, where it drains a few prose blocks of the advisory summary queue — including the theme branch, which stays in THIS lane rather than dipping into Lane_2: deciding a document is a theme source is the engine asking its author a question, not a write to the shared work plan. It does not stop at a gap: Gateway_Complete's 'gap' branch leaves this lane only long enough for Lane_2 to record the bean, then Flow_i8 returns control here at CallActivity_Derive rather than ending the run — so an incomplete L1 build is this lane's problem to keep working until Gateway_Complete says otherwise.",
       "source": "cat-harness/processes/document-ingestion.bpmn"
     },
     {
@@ -1536,6 +1527,15 @@
       "source": "cat-harness/processes/sample-import.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#role/ingestion-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#process/Process_ThemeUIReview",
+      "label": "Agent",
+      "scopeNote": "Four measured passes into R_Judge — inventory, accessibility, branding, locales — each one required to MEASURE rather than assert, because an automated pass alone missed three defects a rendered look caught outright. If GW_Findings comes back yes, this lane still does not fix anything: A_RaiseFindings sends the finding back to whoever authored the theme choice, since picking it was a judgement call this lane does not get to override.",
+      "source": "cat-harness/processes/theme-ui-review.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#role/librarian",
       "@type": "skos:Concept",
       "prefLabel": "Librarian",
@@ -1594,7 +1594,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#role/sibling-session",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-zhg2-reference-direction/cat-harness.jsonld#process/Process_BeanLifecycle",
       "label": "Sibling session or human (not yours to close)",
-      "scopeNote": "The only task in this diagram with no `folio:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans.",
+      "scopeNote": "The only task in this diagram with no `cat-harness.processes:bean` op at all — every other terminal action here writes something, and this one's entire job is to write nothing to a bean it does not own, ending the lifecycle at End_NotYours rather than at the completion Lane_Agent reaches for its own beans.",
       "source": "cat-harness/processes/bean-lifecycle.bpmn"
     },
     {

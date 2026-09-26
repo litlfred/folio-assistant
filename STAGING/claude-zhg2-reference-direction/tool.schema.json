@@ -262,6 +262,13 @@
               "artefact"
             ]
           }
+        },
+        "renders": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       },
       "required": [
@@ -280,8 +287,8 @@
   "description": "One concrete way to exercise a skill. A skill states a capability generically; a Tool names the skills it satisfies and how to install and invoke it. Generated from schemas/tool.ts, which is authoritative.",
   "staging": {
     "branch": "claude/zhg2-reference-direction",
-    "sha": "d1592fd17cdf5a1abcd8981d493f854dfea3cec5",
+    "sha": "804dfb9aeb4e23ea817c6604aebf6409883eacd1",
     "pr": "1222/merge",
-    "run": "35961535491"
+    "run": "36235893624"
   }
 }
