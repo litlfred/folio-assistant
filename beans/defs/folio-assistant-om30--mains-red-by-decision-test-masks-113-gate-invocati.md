@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T09:42:57Z
-updated_at: 2026-09-26T12:26:27Z
+updated_at: 2026-09-26T14:46:46Z
 parent: folio-assistant-1xhc
 ---
 
@@ -389,3 +389,21 @@ in `bun test`, and I found it by hand because CI could not.
 `detangle measurements are current` is **step 35 and PASSED** — the `xd1g` verification
 box, which was deliberately left unticked as *"a fix, not a verification"* because
 nothing could reach the check before the split existed.
+
+
+## The \"45 -> 6\" limit has expired, and the shape of the claim was wrong — `xm31`
+
+This bean's merge commit recorded: *\"the split took the masked region from 45
+steps to 6, not to 0. Steps 43-48 still sit behind the drift gate at 42. Local
+evidence says all six pass today, which is a fact about today's tree and not a
+property of the arrangement.\"*
+
+Measured 2026-09-26, hours later: main's gates job stops at **`check:glossary`,
+step 8 of 43**, so 35 steps are masked, not 6. **The masked count is not a
+property of the split — it is a property of WHICH step is red, and that moves.**
+Five gates fail on `origin/main` with nothing in CI saying so; the measurement
+and its method are on `xm31`.
+
+So the caveat was right to be there and still understated the case: it named the
+tree as the unstable half when the unstable half is the POSITION of the first red
+step.
