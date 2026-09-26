@@ -64,6 +64,27 @@ day. The withdrawal is recorded in the next section.
   "a standing gate on every step" and then written into the chain's sentence,
   where the stale-path rule reads it as work waiting to happen.
 
+## RE-CHECKED 2026-09-25 — the path above HELD, and that is worth recording
+
+`b5f0` → `603s` → `6lb8` → `supn`, re-derived against the store three days on:
+`b5f0` **todo**, `603s` **in-progress**, `6lb8` **in-progress**, `supn`
+**todo**. All four still open; **nothing withdrawn, nothing added**.
+
+Recorded because a *confirmation* is as much a measurement as a correction,
+and an unrecorded one costs the next session the same re-derivation. This
+milestone's path was rebuilt on 2026-09-22 and has not drifted since, while
+`yg29`'s moved substantially in the same window — so "milestone bodies go
+stale" is not uniform, and a session should check rather than assume either
+way.
+
+A caution for whoever reads the id counts: a crude sweep of this body names 36
+bean ids of which 18 are `completed`, which looks like 50% rot and **is not**.
+The withdrawal table below, and §"The ruling `603s` was waiting for", exist
+precisely to name closed beans and say what happened to them. Correct prose
+about a finished step counts identically to a stale blocker in any grep that
+only matches ids — the measurement error `k59d` warns about, reproduced here
+on purpose so it is not made a third time.
+
 ## Withdrawn from the path, 2026-09-22, with reasons
 
 Re-verified with `bun run check:stale-paths` on `main` (193 open beans), which

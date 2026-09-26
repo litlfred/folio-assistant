@@ -156,6 +156,14 @@
       "status": "candidate"
     },
     {
+      "id": "branch-freshness",
+      "prefLabel": "branch-freshness",
+      "definition": "Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan. Prevents stale assumptions, merge conflicts, and duplicated work — especially after session restarts, long idle periods, or heavy sibling activity on main.",
+      "notation": "branch-freshness",
+      "source": "cat-harness/skills/workflow/branch-freshness.md",
+      "status": "candidate"
+    },
+    {
       "id": "build-docs",
       "prefLabel": "build-docs",
       "definition": "Builds the Lean HTML documentation (doc-gen4) locally in the workspace, for any paper folio's Lean package.",
@@ -225,6 +233,14 @@
       "definition": "Review the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/` — for the joins a reader cannot see: that a node declares what it is, that what it names resolves, and that the mechanism it describes is the one that actually runs.",
       "notation": "code-node-review",
       "source": "cat-harness/skills/folio-core/code-node-review.md",
+      "status": "candidate"
+    },
+    {
+      "id": "code-review-process",
+      "prefLabel": "code-review-process",
+      "definition": "Where code review sits in the release lifecycle. Review types, who reviews what, how feedback maps to beans, and the path from review to approval to release. Works with prepare-merge-auto for mechanics and release-lifecycle for the broader flow.",
+      "notation": "code-review-process",
+      "source": "cat-harness/skills/workflow/code-review-process.md",
       "status": "candidate"
     },
     {
@@ -418,6 +434,30 @@
       "status": "candidate"
     },
     {
+      "id": "crdm-impact-analysis",
+      "prefLabel": "crdm-impact-analysis",
+      "definition": "Guide for CRDM Phase 4 — Impact Analysis and Migration Planning. Systematic scan across 7 dimensions: schema, pipeline, adapter, folio, skill, migration, and test/documentation impact. Produces a structured assessment for posting to the GitHub issue.",
+      "notation": "crdm-impact-analysis",
+      "source": "cat-harness/skills/crdm/crdm-impact-analysis.md",
+      "status": "candidate"
+    },
+    {
+      "id": "crdm-needs-assessment",
+      "prefLabel": "crdm-needs-assessment",
+      "definition": "Facilitate Phase 1 (Needs Assessment) of the CRDM requirements workflow. Guide the BA through stakeholder identification, source material gathering, and synthesising a domain-language needs statement. Post to the GitHub issue and iterate until the BA confirms the need is correctly captured.",
+      "notation": "crdm-needs-assessment",
+      "source": "cat-harness/skills/crdm/crdm-needs-assessment.md",
+      "status": "candidate"
+    },
+    {
+      "id": "crdm-requirements-template",
+      "prefLabel": "crdm-requirements-template",
+      "definition": "Guide and template for CRDM Phase 3 — Requirements Definition. Helps the agent structure requirements from conversation using a REQ-### format with acceptance criteria, priority, and traceability.",
+      "notation": "crdm-requirements-template",
+      "source": "cat-harness/skills/crdm/crdm-requirements-template.md",
+      "status": "candidate"
+    },
+    {
       "id": "crdm-requirements-workflow",
       "prefLabel": "crdm-requirements-workflow",
       "notation": "crdm-requirements-workflow",
@@ -478,6 +518,14 @@
       "definition": "Lay a decision out as a comparison before you ask it — what each option does, its pro, its con, what it changes downstream, and how reversible it is — in the prose that precedes the question, never inside the option labels. Required whenever a choice is handed to a person.",
       "notation": "decision-comparison",
       "source": "cat-harness/skills/folio-core/decision-comparison.md",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-selector",
+      "prefLabel": "decision-methodology-selector",
+      "definition": "Given a decision context, select the applicable methodology from the methodology graph. Reads the graph's applies-when declarations, matches them against the context, and returns the ranked applicable methods with rationale. Extends methodology-adoption's four-question protocol with quantitative method-selection criteria from the MCDM literature.",
+      "notation": "decision-methodology-selector",
+      "source": "cat-harness/skills/folio-core/decision-methodology-selector.md",
       "status": "candidate"
     },
     {
@@ -841,6 +889,14 @@
       "definition": "Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH KINDS rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.",
       "notation": "incremental-render",
       "source": "cat-harness/skills/folio-core/incremental-render.md",
+      "status": "candidate"
+    },
+    {
+      "id": "injection-boundaries",
+      "prefLabel": "injection-boundaries",
+      "definition": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the existing gate covers, the one latent gap in its model, and the argv rule.",
+      "notation": "injection-boundaries",
+      "source": "cat-harness/skills/security/injection-boundaries.md",
       "status": "candidate"
     },
     {
@@ -1219,6 +1275,14 @@
       "status": "candidate"
     },
     {
+      "id": "path-containment",
+      "prefLabel": "path-containment",
+      "definition": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check.",
+      "notation": "path-containment",
+      "source": "cat-harness/skills/security/path-containment.md",
+      "status": "candidate"
+    },
+    {
       "id": "pending-show",
       "prefLabel": "pending-show",
       "definition": "Show the current session's pending work — beans list + ledger intent. Read-only.",
@@ -1438,6 +1502,22 @@
       "status": "candidate"
     },
     {
+      "id": "release-epic-planning",
+      "prefLabel": "release-epic-planning",
+      "definition": "Plan and track releases using bean epics. Covers epic creation, story/task decomposition, release readiness tracking, and the relationship between epics and GitHub milestones. Applies to code releases, paper publications, and project milestones.",
+      "notation": "release-epic-planning",
+      "source": "cat-harness/skills/workflow/release-epic-planning.md",
+      "status": "candidate"
+    },
+    {
+      "id": "release-lifecycle",
+      "prefLabel": "release-lifecycle",
+      "definition": "Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases. Applies to code releases, paper publications, and project milestones. Complements package-release (which handles the mechanics of cutting a release) with the process and policy layer.",
+      "notation": "release-lifecycle",
+      "source": "cat-harness/skills/workflow/release-lifecycle.md",
+      "status": "candidate"
+    },
+    {
       "id": "remark-audit",
       "prefLabel": "remark-audit",
       "definition": "Audit remarks for provable content. Every remark must interpret a mathematical statement that can be formalized in Lean. Detects dangling remarks (no `interprets` link), ambiguous domain terms, and missing formalization.",
@@ -1561,6 +1641,14 @@
       "definition": "Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning.",
       "notation": "scientific-visualization",
       "source": "cat-harness/skills/scientific-visualization/scientific-visualization.md",
+      "status": "candidate"
+    },
+    {
+      "id": "security",
+      "prefLabel": "security",
+      "definition": "The security sub-KG's entry point. What the boundaries are, which machinery already guards each one, and the single rule that unifies them — refuse, never repair. Read this before adding a check, so the answer that already exists is reused rather than rebuilt in a fourth place.",
+      "notation": "security",
+      "source": "cat-harness/skills/security/security.md",
       "status": "candidate"
     },
     {

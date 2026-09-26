@@ -57,7 +57,7 @@
  * With `--write-sidecars` the scanner upserts `reviewer.kind="script"`
  * entries into `<block>.qa.json` for agent adjudication and drain.
  *
- *   bun run content/pipeline/language-trap-audit.ts \
+ *   bun run cat-harness/content/pipeline/language-trap-audit.ts \
  *     [root ...]                 # default: content/
  *     [--json  docs/audits/<date>-language-trap-audit.json]
  *     [--md    docs/audits/<date>-language-trap-audit.md]

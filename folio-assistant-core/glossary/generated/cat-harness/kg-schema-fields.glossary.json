@@ -2918,6 +2918,167 @@
       "status": "candidate"
     },
     {
+      "id": "decision-methodology-context.decisioncontextschema.alternativecount",
+      "prefLabel": "DecisionContextSchema.alternativeCount",
+      "definition": "How many alternatives are being compared.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.alternativeCount",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.criteriacount",
+      "prefLabel": "DecisionContextSchema.criteriaCount",
+      "definition": "How many criteria the alternatives are scored against.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.criteriaCount",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.criteriaweightsknown",
+      "prefLabel": "DecisionContextSchema.criteriaWeightsKnown",
+      "definition": "Whether criteria weights are known a priori or must be derived.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.criteriaWeightsKnown",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.datatype",
+      "prefLabel": "DecisionContextSchema.dataType",
+      "definition": "Kind of data available for the criteria values.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.dataType",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.questiontype",
+      "prefLabel": "DecisionContextSchema.questionType",
+      "definition": "The methodology-adoption lane. When provided, only methods in this lane are candidates.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.questionType",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.reversibility",
+      "prefLabel": "DecisionContextSchema.reversibility",
+      "definition": "Can the decision be undone, and at what cost?",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.reversibility",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.sequential",
+      "prefLabel": "DecisionContextSchema.sequential",
+      "definition": "True when decisions recur or adapt over time (sequential/bandit setting).",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.sequential",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.stakeholdercount",
+      "prefLabel": "DecisionContextSchema.stakeholderCount",
+      "definition": "Number of people involved in the decision.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.stakeholderCount",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.summary",
+      "prefLabel": "DecisionContextSchema.summary",
+      "definition": "Free-text summary of what is being decided. Not matched algorithmically — carried for the rationale narrative.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.summary",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.timeconstraint",
+      "prefLabel": "DecisionContextSchema.timeConstraint",
+      "definition": "How much time is available for the analysis.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.timeConstraint",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.uncertainty",
+      "prefLabel": "DecisionContextSchema.uncertainty",
+      "definition": "How much is unknown about the problem.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.uncertainty",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.avoidwhen",
+      "prefLabel": "MethodologyRecommendationSchema.avoidWhen",
+      "definition": "Under what conditions this method should NOT be used. Matched against context.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.avoidWhen",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.complexity",
+      "prefLabel": "MethodologyRecommendationSchema.complexity",
+      "definition": "Low / Medium / High.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.complexity",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.datarequirements",
+      "prefLabel": "MethodologyRecommendationSchema.dataRequirements",
+      "definition": "What data the method requires.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.dataRequirements",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.family",
+      "prefLabel": "MethodologyRecommendationSchema.family",
+      "definition": "Which method family: mcdm-aggregation, probabilistic, social, classical, hybrid-mcdm.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.family",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.matchtier",
+      "prefLabel": "MethodologyRecommendationSchema.matchTier",
+      "definition": "How well this method fits the context. A tier, not a score — the platform refuses pseudo-measurement (methodology-adoption: \"never quantify a judgement to make it look measured; where a method scores and sums, take structure and refuse arithmetic\").",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.matchTier",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.methodologyid",
+      "prefLabel": "MethodologyRecommendationSchema.methodologyId",
+      "definition": "The methodology's `name` from its front matter (kebab-case id).",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.methodologyId",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.rationale",
+      "prefLabel": "MethodologyRecommendationSchema.rationale",
+      "definition": "Why this methodology fits the given context. Matched against `applies-when`.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.rationale",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.source",
+      "prefLabel": "MethodologyRecommendationSchema.source",
+      "definition": "Bibliographic source: paper title, authors, arxiv id or standard.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.source",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.title",
+      "prefLabel": "MethodologyRecommendationSchema.title",
+      "definition": "The methodology's human-readable title.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.title",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyselectionresultschema.context",
+      "prefLabel": "MethodologySelectionResultSchema.context",
+      "definition": "The context that was provided.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologySelectionResultSchema.context",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyselectionresultschema.nomatchreason",
+      "prefLabel": "MethodologySelectionResultSchema.noMatchReason",
+      "definition": "If no methodology fits, this explains why. Per methodology-adoption: \"If none fits, that is a finding, not a licence.\"",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologySelectionResultSchema.noMatchReason",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyselectionresultschema.recommendations",
+      "prefLabel": "MethodologySelectionResultSchema.recommendations",
+      "definition": "Ranked recommendations, best fit first.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologySelectionResultSchema.recommendations",
+      "status": "candidate"
+    },
+    {
       "id": "decision-request.decisionoptionschema.con",
       "prefLabel": "DecisionOptionSchema.con",
       "definition": "What it costs to DO. Not what it costs later; that is `downstream`.",
@@ -3181,6 +3342,20 @@
       "prefLabel": "DetangleSidecar.size",
       "definition": "Node count.",
       "source": "cat-harness/schemas/detangle-sidecar.ts#DetangleSidecar.size",
+      "status": "candidate"
+    },
+    {
+      "id": "detangle-sidecar.detanglesidecar.undetermineddirection",
+      "prefLabel": "DetangleSidecar.undeterminedDirection",
+      "definition": "Outbound edges whose direction cannot be decided, because the source instance declares no `needs`. Not clean.",
+      "source": "cat-harness/schemas/detangle-sidecar.ts#DetangleSidecar.undeterminedDirection",
+      "status": "candidate"
+    },
+    {
+      "id": "detangle-sidecar.detanglesidecar.wrongdirection",
+      "prefLabel": "DetangleSidecar.wrongDirection",
+      "definition": "Outbound edges `directionOf` called `wrong-direction` — the layering is inverted.",
+      "source": "cat-harness/schemas/detangle-sidecar.ts#DetangleSidecar.wrongDirection",
       "status": "candidate"
     },
     {

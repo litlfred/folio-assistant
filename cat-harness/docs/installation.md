@@ -2,6 +2,8 @@
 layout: default
 title: Installation
 nav_order: 2
+supported_locales: ["ar", "zh", "en", "fr", "ru", "es"]
+available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 # Installation
@@ -26,17 +28,20 @@ MCP. The platform itself only needs Bun; individual content types pull in
 heavier toolchains (LaTeX, Lean, the FHIR IG Publisher) which are checked at
 runtime and can be installed on demand.
 
-| Requirement | Needed for | Install |
-|-------------|-----------|---------|
-| **Bun ≥ 1.0** | the framework (always) | `curl -fsSL https://bun.sh/install \| bash` |
-| Git + git-lfs | content repositories | `apt install git git-lfs` |
-| LaTeX (`latexmk`, `texlive`) | rendering papers | `apt install texlive-full latexmk biber` |
-| Lean 4 (via `elan`) | formalizing papers | `curl …/elan-init.sh \| sh -s -- -y` |
-| Java 21 + IG Publisher + SUSHI | WHO SMART IGs (L3) | see [WHO SMART IG guide](guides/who-smart-ig.html) |
-| `pandoc`, `ripgrep` | conversions, search | `apt install pandoc ripgrep` |
+| Requirement | Needed for | Install (Linux/macOS) | Install (Windows) |
+|-------------|-----------|---------|---------|
+| **Bun ≥ 1.0** | the framework (always) | `curl -fsSL https://bun.sh/install \| bash` | `winget install Oven-sh.Bun` |
+| Git + git-lfs | content repositories | `apt install git git-lfs` | `winget install Git.Git GitHub.GitLFS` |
+| LaTeX (`latexmk`, `texlive`) | rendering papers | `apt install texlive-full latexmk biber` | `winget install MiKTeX.MiKTeX` |
+| Lean 4 (via `elan`) | formalizing papers | `curl …/elan-init.sh \| sh -s -- -y` | see [elan releases](https://github.com/leanprover/elan/releases) |
+| Java 21 + IG Publisher + SUSHI | WHO SMART IGs (L3) | see [WHO SMART IG guide](guides/who-smart-ig.html) | `winget install EclipseAdoptium.Temurin.21.JDK`, then the guide |
+| `pandoc`, `ripgrep` | conversions, search | `apt install pandoc ripgrep` | `winget install JohnMacFarlane.Pandoc BurntSushi.ripgrep.MSVC` |
 
 You do not need all of these — install only what the content types you author
 require. The built-in capability probe tells you what is missing.
+
+> **Only Bun is required.** Every other row is per content type and is probed at
+> runtime, so install nothing else until `check-deps` asks for it.
 
 ## Clone and install
 
@@ -46,13 +51,38 @@ cd folio-assistant
 bun install
 ```
 
+### On Windows, there is a script
+
+From a bare machine with only a git client, this installs Bun (via winget where
+available), refreshes `PATH`, runs `bun install`, and then hands over to the
+capability probe:
+
+```powershell
+git clone https://github.com/litlfred/folio-assistant.git
+cd folio-assistant
+.\cat-harness\scripts\bootstrap.ps1 -CheckOnly   # report only, installs nothing
+.\cat-harness\scripts\bootstrap.ps1              # do it
+```
+
+It installs Bun and nothing else — LaTeX, Lean, Java and the IG Publisher stay
+per content type, reported by `check-deps` with install hints.
+
+### On Linux/macOS, there is also a script
+
+`cat-harness/scripts/start-folio-assistant.sh` installs Bun if it is missing and
+then starts the server, and
+`cat-harness/adapters/mcp-server/install.sh` is a fuller installer covering TeX
+Live as well. Both were undocumented until 2026-09-21
+([#740](https://github.com/litlfred/folio-assistant/issues/740)) — which is why
+this section exists.
+
 ## Check your environment
 
 The `--check-deps` probe reports which capabilities are present and gives an
 install hint for anything missing:
 
 ```sh
-bun run src/index.ts --check-deps
+bun run cat-harness/src/index.ts --check-deps
 # or via the npm script
 bun run check-deps
 ```
@@ -63,13 +93,13 @@ folio-assistant is an MCP server. It speaks two transports:
 
 ```sh
 # stdio transport — what LLM harnesses (Claude Code, etc.) launch
-bun run src/index.ts --stdio
+bun run cat-harness/src/index.ts --stdio
 
 # HTTP transport — for a long-running shared instance / the web UI
-bun run src/index.ts --http
+bun run cat-harness/src/index.ts --http
 
 # point it at the content repo you are authoring (defaults to ../.. )
-bun run src/index.ts --stdio --repo /path/to/your/content-repo
+bun run cat-harness/src/index.ts --stdio --repo /path/to/your/content-repo
 ```
 
 There are convenience scripts in `package.json`:
@@ -127,7 +157,7 @@ at the root of your content repo:
   "mcpServers": {
     "folio-assistant": {
       "command": "bun",
-      "args": ["run", "/path/to/folio-assistant/src/index.ts", "--stdio", "--repo", "."]
+      "args": ["run", "/path/to/folio-assistant/cat-harness/src/index.ts", "--stdio", "--repo", "."]
     }
   }
 }
@@ -136,7 +166,7 @@ at the root of your content repo:
 Or register it from the CLI:
 
 ```sh
-claude mcp add folio-assistant -- bun run /path/to/folio-assistant/src/index.ts --stdio --repo .
+claude mcp add folio-assistant -- bun run /path/to/folio-assistant/cat-harness/src/index.ts --stdio --repo .
 ```
 
 Claude Code also reads `AGENTS.md` / `CLAUDE.md` natively and honours the
@@ -154,7 +184,7 @@ shared with Gemini CLI):
   "mcpServers": {
     "folio-assistant": {
       "command": "bun",
-      "args": ["run", "/path/to/folio-assistant/src/index.ts", "--stdio", "--repo", "."]
+      "args": ["run", "/path/to/folio-assistant/cat-harness/src/index.ts", "--stdio", "--repo", "."]
     }
   }
 }
@@ -162,7 +192,7 @@ shared with Gemini CLI):
 
 Wire the session-start primer to Antigravity's `SessionStart` hook so each
 session is primed with the work-plan — point the hook command at the shared
-script `scripts/session-start-coord-sweep.sh` (the same script every harness
+script `cat-harness/scripts/session-start-coord-sweep.sh` (the same script every harness
 uses; only the hook-config format differs per tool).
 
 ### Gemini CLI
@@ -175,7 +205,7 @@ its settings and reuse the same `SessionStart` script:
   "mcpServers": {
     "folio-assistant": {
       "command": "bun",
-      "args": ["run", "/path/to/folio-assistant/src/index.ts", "--stdio", "--repo", "."]
+      "args": ["run", "/path/to/folio-assistant/cat-harness/src/index.ts", "--stdio", "--repo", "."]
     }
   }
 }

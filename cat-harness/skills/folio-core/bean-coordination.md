@@ -97,6 +97,40 @@ Neither check closes the window. Both are cheap, and the second catches the case
 that matters most in practice — a sibling minutes ahead of you who already has a
 PR up.
 
+### The trigger is STARTING WORK, not claiming — and that distinction cost a merge
+
+**Measured 2026-09-26, bean `tuvg`.** These checks are written above as what you
+do *before you claim*, and an agent that is not claiming anything therefore
+never runs them. That is not a hypothetical reading; it is what happened:
+
+A session already held `tuvg` and was executing an owner instruction on one
+cause inside it. No new bean, so no claim, so neither check fired. Sibling PR
+**#1381 was open and doing the identical work** — 25 `UNCATALOGED` records —
+and a `--search` for it would have returned it in one call. The duplicate
+merged first, which then made the *innocent* PR fail
+`translation-drift.test.ts:154` (*"no page is recorded TWICE"*) on 52 entries.
+It had to be reverted out of `main` an hour later.
+
+So the trigger is wider than a claim:
+
+> **Run the open-PR check before you start work on a topic — not only before
+> you claim a bean.** A cause inside a bean you already hold, a fix an owner
+> just asked for, a gate you are about to unbreak: each is a unit of work a
+> sibling can already have a PR up for, and none of them involves claiming
+> anything.
+
+The search term follows from that. Keyed on a bean id it finds nothing when the
+work has no bean of its own, which was this case — the sibling's bean (`0xfe`)
+existed only on an unpushed branch. **Search the subject as well as the id**:
+the file you are about to edit, the gate you are about to turn green, the
+symbol you are about to add. #1381's title said *"Record the 25 uncatalogued
+translations"*; nothing about `tuvg` would have matched it, and `UNCATALOGED`
+would have.
+
+And a second-order caution, because it inverts who pays: a duplicate-detecting
+test punishes **whoever merges second**, not whoever duplicated. Merging first
+does not mean you were first.
+
 ### `bun run beans:claim <id>` closes it — when the remote lets it
 
 **The window is closable and there is now a tool for it.** `scripts/claim-bean.ts`
@@ -126,10 +160,30 @@ and removes it on every path including failure.
 |---|---|---|
 | `pushed` | 0 | on the default branch; every session sees it |
 | `already-claimed` | 0 | a sibling holds it, and is **named**. Nothing written — pick another item |
+| `held-unknown` | **4** | `in-progress` there, and **nobody recorded a holder**. Nothing written. It cannot tell a live sibling from a claim abandoned days ago, so it refuses and says so — read the bean and the open PR list before taking it |
 | `already-closed` | 0 | it is `completed` or `scrapped` there. **Not claimed, deliberately** — reviving finished work, and especially a `scrapped` bean whose whole purpose is recording a rejected approach, is a decision rather than a side effect of asking to claim |
 | `new-on-branch` | 0 | the bean is not on the default branch yet, so nobody can see it and there is nothing to race over. Claim locally and open the PR early |
 | `fell-back` | **3** | the push was REJECTED. The bean is **not** claimed anywhere a sibling can see — claim on your branch and open the PR at your first commit |
 | `unknown` | **2** | the default branch could not be read. **Never** "the bean is free" |
+
+**`held-unknown` is the case the store is mostly made of, and it used to be
+silent.** That arm returned `pushed` until bean `c3d7` — `heldBy === branch ||
+heldBy === undefined`, on the reading that both mean "ours, idempotent". They do
+not. The first is a determined answer; the second is *could not determine who
+holds it*, and it printed `✓ claimed … every session can see it now` having
+pushed nothing.
+
+It is not rare. Measured on `origin/main` 2026-09-25: of the **100** non-epic
+beans marked `in-progress`, **97 record no holder** — because `todo-manager.md`
+and `session-intent.md` told an agent to claim with
+`beans update <id> --status in-progress`, which writes no note. So the guard
+against claim-stomping answered "go ahead" for 97 % of what it was guarding.
+Both documents now name this tool; the code half is the third state, because
+the legacy claims and any hand-edited bean keep producing it.
+
+Its exit code is **4** and neither of its neighbours: not `0`, which
+`already-claimed` uses to say *pick another item* — this one cannot tell you
+even that; and not `2`, because the default branch was read perfectly well.
 
 **`fell-back` is the case to expect, not an edge case.** Whether the default
 branch accepts a direct push cannot be determined from inside an agent session:

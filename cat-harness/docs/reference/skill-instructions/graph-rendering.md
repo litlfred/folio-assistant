@@ -21,9 +21,9 @@ math proofs/lean etc"*.
 
 This skill is the general part. It says what any drawing of a graph owes its
 reader. The per-graph skills say how one generator meets it:
-[`uml-overview`](../folio-core/uml-overview.md) for schemas,
-[`bpmn-authoring`](../workflow/bpmn-authoring.md) for processes, and
-[`content-graph`](../folio-core/content-graph.md) for a paper's blocks.
+[`uml-overview`](uml-overview.md) for schemas,
+[`bpmn-authoring`](bpmn-authoring.md) for processes, and
+[`content-graph`](content-graph.md) for a paper's blocks.
 
 A drawing is how a person READS a graph. [`graph-detanglement`](graph-detanglement.md)
 is how the graph is RESTRUCTURED, and it needs the drawing: a partition you
@@ -127,7 +127,7 @@ which outranks the Lean status: the order the CI graph used.
 
 **Never populate `uses[]` from the formal graph to make a drawing look
 connected.** The editorial relation is authored; see `AGENTS.md` and
-[`uses-editorial-review`](../folio-core/uses-editorial-review.md). Rule 4 is how
+[`uses-editorial-review`](uses-editorial-review.md). Rule 4 is how
 the drawing keeps them apart.
 
 ## Related
@@ -136,8 +136,8 @@ the drawing keeps them apart.
   skill draws.
 - [`edge-kinds-and-blast-radius`](edge-kinds-and-blast-radius.md): why edge
   kinds must stay distinct (rule 4).
-- [`uml-overview`](../folio-core/uml-overview.md): the schema diagrams, where
+- [`uml-overview`](uml-overview.md): the schema diagrams, where
   these rules were first learned.
-- [`kg-viewer`](../folio-core/kg-viewer.md): the shared rule for an HTML
+- [`kg-viewer`](kg-viewer.md): the shared rule for an HTML
   viewer that fetches its projection by a path relative to itself.
 {% endraw %}

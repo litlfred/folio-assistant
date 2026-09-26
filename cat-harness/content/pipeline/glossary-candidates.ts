@@ -12,7 +12,7 @@
  *
  * Output is JSON, served to the curator web UI:
  *
- *   bun run pipeline/glossary-candidates.ts <paper-dir>
+ *   bun run cat-harness/content/pipeline/glossary-candidates.ts <paper-dir>
  *     → writes content/<paper>/glossary-candidates.json
  *
  * The UI lets a human pick the canonical owner per slug; choices are
@@ -274,7 +274,7 @@ if (import.meta.main) {
   const args = process.argv.slice(2);
   const paperArg = args.find(a => !a.startsWith("--"));
   if (!paperArg) {
-    console.error("Usage: bun run pipeline/glossary-candidates.ts <paper-dir>");
+    console.error("Usage: bun run cat-harness/content/pipeline/glossary-candidates.ts <paper-dir>");
     process.exit(2);
   }
 
