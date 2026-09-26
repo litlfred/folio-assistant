@@ -1,11 +1,11 @@
 ---
 # folio-assistant-g5o5
-title: check:glossary calls kg-skills STALE in CI and CURRENT in two local environments, on a commit whose only diff is an e2e comment
-status: in-progress
+title: kg-skills glossary stale on main since 2c295f8ac06 — and CI reads the MERGE, which is why no local probe saw it
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T14:02:57Z
-updated_at: 2026-09-26T14:03:32Z
+updated_at: 2026-09-26T14:28:14Z
 parent: folio-assistant-1xhc
 ---
 
@@ -56,3 +56,49 @@ The generated content CI produced. Nothing available to this session prints it �
 - [ ] Someone reproduces it, or the next CI run on a fresh commit shows it transient
 - [ ] If it recurs: `glossary-page.ts --check` reports WHAT differs, not only THAT something does
 - [ ] If it is environment-dependent, the dependency is named — the three artefacts are committed, so whichever environment is wrong is publishing a wrong glossary
+
+
+## ANSWERED, and the bean's own premise is withdrawn — 2026-09-26
+
+**There was no CI-vs-local disagreement.** This workflow triggers on
+`pull_request`, so `actions/checkout` gives it **the merge of the PR head with
+main**, not the PR head. Its own `on:` block says so:
+
+> The MERGE QUEUE — bean `nytj`. A pull_request run tests the PR merged with
+> main AS IT WAS WHEN THE PR WAS PUSHED
+
+So CI was reading a tree containing main's `2c295f8ac06` ("fix: update 59 stale
+script paths in skills after repo restructuring") and every local probe was
+reading one that predated it. Two different trees, one commit id quoted for
+both. That is why every environmental hypothesis failed: there was no
+environment difference to find.
+
+**The defect itself is one term.** `2c295f8ac06` edited
+`cat-harness/skills/folio-paper-adapter/latex-build-cache.md`'s front-matter
+`description`, `scripts/install-tex.sh` -> `cat-harness/scripts/install-tex.sh`
+(twice), and that description is PROJECTED into the three artefacts named above.
+It did not regenerate them. Fixed by `bun run glossary:page` in `bc6c84a5166`.
+
+Measured after merging main into this branch: the three failures reproduced
+byte-for-byte on the first try, the regeneration touched exactly those three
+files and nothing else, and `check:glossary` is green — 2560 extracted terms
+against 2549 pre-merge, the 11 being skills main added and none of them this.
+
+## What the three wrong hypotheses have in common
+
+Residue, nondeterministic ordering, and \"the comment added a term\" were all
+guesses about the RUNNER. The measurement that would have settled it in one step
+was not another probe of my container: it was asking what tree CI checked out.
+
+**The rule worth carrying: a local gate run on a branch head and a CI gate run
+on the same branch are not runs of the same tree, and the difference is
+invisible from a checkout.** `check:merged` exists precisely because of this
+(bean `nytj`) — and running it here would have found this without a single
+hypothesis.
+
+## Done when
+
+- [x] the three stale artefacts are explained by a named commit
+- [x] regenerated and green on the merged tree
+- [x] the premise \"CI and local disagree on one tree\" is withdrawn in place,
+      not edited away
