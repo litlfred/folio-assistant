@@ -72,10 +72,24 @@ my own check-in note three times that day. Regenerated in a clean worktree.
 - [x] falsified in both directions, and the clean tree still exits 0
 - [x] the discipline written where an author will meet it, and registered by the
       command it documents
-- [ ] Whether the gate belongs at **merge** rather than at PR time is a separate
-      question this does not answer. It fails on every PR whose head lacks the
-      declarations, which is the right place for the author — but `main` can still
-      take an unregistered skill through a merge that never ran the gate on the
-      merged tree. `check:merged` (bean `nytj`) is the mechanism that would close
-      it. Not started, and not mine to decide alone
+- [x] The merge-time half is **already decided and already covers this gate** —
+      I left it here as an open question for the owner and it was answered on
+      2026-09-23, before this bean existed. `nytj` owns the subject, is
+      `in-progress` under a holder, and the owner chose both halves: `merge_group:`
+      on the gating workflows plus `bun run check:merged`. Its only open box is a
+      repository SETTING — switching the merge queue on for `main` — which is the
+      owner's to flip, not a decision to take.
+
+      **And it needs nothing from this bean.** `check-merged.ts` runs
+      `bun run gates` on the merged tree, and `gates.ts` derives its list from
+      `code-quality-gates.yml`, where `skills:register:check` is now wired. So the
+      moment the merge queue is on, an unregistered skill cannot reach `main` —
+      automatically, with no further change here. Read rather than assumed:
+      `check-merged.ts:133`.
+
+      Recorded as my error rather than dropped. I put a settled question to the
+      owner as though open, which spends the one thing their accessibility
+      constraints make expensive. `nytj`'s own commit message names the guard that
+      would have caught it — *"'Check before you create' is why I did not"* — and
+      the same check applies to a QUESTION, not only to a bean
 
