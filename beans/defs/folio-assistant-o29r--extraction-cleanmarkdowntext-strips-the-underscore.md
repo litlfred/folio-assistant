@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-26T14:43:40Z
-updated_at: 2026-09-26T14:47:23Z
+updated_at: 2026-09-26T16:56:25Z
 parent: folio-assistant-bzyu
 ---
 
@@ -138,3 +138,17 @@ be a finding: `MD_INLINE_CODE_RE` deletes backticked spans BEFORE the emphasis
 regex runs, so the pipeline had already removed the text it claimed was
 corrupted. Comparing the two full extractors is the only sound form of this
 measurement, because the regex under test sits in the middle of a pipeline.
+
+## Owner decision, 2026-09-26: its own PR, after #1411 merges
+
+Asked with the measurement above in hand and four options. The owner chose a
+**separate PR once #1411 has merged**, over folding it in, over starting it in
+parallel, and over holding.
+
+So this bean is not blocked and not in flight — it is QUEUED behind #1411, and
+the reason is worth keeping: #1411 is about page discovery, and a regex on a
+shared code path that rewrites 229 msgids here is a second measurement a
+reviewer should be able to read on its own.
+
+**Do not fold it into #1411** on a later turn because the catalogues are being
+rewritten anyway. That was offered as option 2 and declined.
