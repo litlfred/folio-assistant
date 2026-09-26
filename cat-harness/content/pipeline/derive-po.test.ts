@@ -20,6 +20,7 @@ import {
   firstKindDivergence,
   formatDerivedPo,
   alignGrownSource,
+  publishedPairs,
   LOCALE_NAMES,
 } from "./derive-po.ts";
 import { extractMarkdown, MD_CODE_FENCE_RE } from "./pot-extract.ts";
@@ -639,5 +640,62 @@ describe("a source that GREW since its translation is still alignable", () => {
     expect(po).toContain("added to the source AFTER this translation was made");
     expect(po).toContain("#, fuzzy");
     expect(po).toContain('msgstr ""');
+  });
+});
+
+describe("the pages to catalogue are DISCOVERED, not listed in the script", () => {
+  // The CLI hard-coded five page names, which is why PR #1404 could publish four
+  // more pages across five locales and take `translation-drift` from 1 finding to
+  // 21 while this tool could not see them. A list of pages in a script goes stale
+  // on somebody else's merge.
+  it("finds a page published in a locale that has a source beside it", () => {
+    const root = mkdtempSync(join(tmpdir(), "derive-po-disc-"));
+    mkdirSync(join(root, SITE_DIR, "fr"), { recursive: true });
+    writeFileSync(join(root, SITE_DIR, "_config.yml"), "title: fixture\n");
+    writeFileSync(join(root, SITE_DIR, "alpha.md"), "# Alpha heading here\n");
+    writeFileSync(join(root, SITE_DIR, "beta.md"), "# Beta heading here\n");
+    writeFileSync(join(root, SITE_DIR, "fr", "alpha.md"), "# Titre alpha ici\n");
+    const { pages, locales } = publishedPairs(join(root, SITE_DIR), ["en", "fr", "ru"], "en");
+    // `beta` has no translation, `ru` has no directory, `en` is the source.
+    expect(pages).toEqual(["alpha"]);
+    expect(locales).toEqual(["fr"]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it("a translated page with NO source beside it is not a pair", () => {
+    // Otherwise a stray file in a locale directory invents a page to catalogue.
+    const root = mkdtempSync(join(tmpdir(), "derive-po-orphan-"));
+    mkdirSync(join(root, SITE_DIR, "fr"), { recursive: true });
+    writeFileSync(join(root, SITE_DIR, "_config.yml"), "title: fixture\n");
+    writeFileSync(join(root, SITE_DIR, "fr", "orphan.md"), "# Orphelin ici\n");
+    expect(publishedPairs(join(root, SITE_DIR), ["en", "fr"], "en").pages).toEqual([]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it("locales come from the DECLARATION, so a lookalike directory is not one", () => {
+    // THE DEFECT THIS PINS. My first version matched a two-or-three-letter
+    // directory name and picked up `wireframes/fsh-guts` as a locale — `fsh` plus
+    // a suffix fits that shape exactly. A locale is a declared vocabulary, so
+    // guessing it from the filesystem invents an answer the instance already gives.
+    const root = mkdtempSync(join(tmpdir(), "derive-po-lookalike-"));
+    mkdirSync(join(root, SITE_DIR, "fsh-guts"), { recursive: true });
+    mkdirSync(join(root, SITE_DIR, "fr"), { recursive: true });
+    writeFileSync(join(root, SITE_DIR, "_config.yml"), "title: fixture\n");
+    writeFileSync(join(root, SITE_DIR, "intent.md"), "# Intent heading here\n");
+    writeFileSync(join(root, SITE_DIR, "fsh-guts", "intent.md"), "# Not a translation\n");
+    writeFileSync(join(root, SITE_DIR, "fr", "intent.md"), "# Intention ici\n");
+    const { locales } = publishedPairs(join(root, SITE_DIR), ["en", "fr"], "en");
+    expect(locales).toEqual(["fr"]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it("this repository's real pairs are found, and `fsh-guts` is not among them", () => {
+    const root = resolve(import.meta.dir, "..", "..");
+    const { pages, locales } = publishedPairs(join(root, SITE_DIR), ["en", "ar", "es", "fr", "ru", "zh"], "en");
+    expect(locales).toEqual(["ar", "es", "fr", "ru", "zh"]);
+    expect(locales).not.toContain("fsh-guts");
+    // Anti-vacuity, and it must include a page #1404 added — the whole point.
+    expect(pages.length).toBeGreaterThan(5);
+    expect(pages).toContain("architecture");
   });
 });
