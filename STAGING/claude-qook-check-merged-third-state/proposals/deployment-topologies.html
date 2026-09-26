@@ -1,0 +1,1881 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+    
+    .site-nav > ul.nav-list:first-child > li:not(:nth-child(36)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(36) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(36) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(36) > ul.nav-list {
+      display: block;
+    }
+  </style>
+
+  
+
+  
+    <script src="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Deployment topologies and operating modes | folio-assistant</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Deployment topologies and operating modes" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
+<meta property="og:site_name" content="folio-assistant" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Deployment topologies and operating modes" />
+<!-- End Jekyll SEO tag -->
+
+
+  <!--
+  The configured colour scheme, published for docs/assets/js/docs-ui.js.
+
+  just-the-docs' first stylesheet is `just-the-docs-default.css`, which is
+  whatever `color_scheme` in _config.yml compiled to -- so `jtd.getTheme()`
+  returns the string "default" on a fresh load, never "dark". The scheme
+  toggle needs to know what "default" MEANS here, and reading it from the
+  config is the one way that does not go stale when the config changes.
+
+  FIRST in this file since 2026-09-24, because the first-paint snippet below
+  reads it too, and a script can only read what the parser has already seen.
+-->
+<script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script>
+<!--
+  THE FIRST PAINT IS DARK — owner, 2026-09-24: *"when any
+  page/foio-asst/cat-harness first loads if flashes white before goignt o
+  dark mode. instead it should deafult dark mode then turn to light mode to
+  prevent light flash in dark."*
+
+  WHY IT FLASHED. The site is configured dark, so the theme's first
+  stylesheet already paints dark. But `docs-ui.js` is deferred, and on load
+  it applied a STORED choice with `jtd.setTheme(name)`, which swaps that
+  stylesheet's href -- to the dark file, when the default file already was
+  dark. The swap unloads the sheet that was painting the ground, and until
+  the new one arrives the browser's WHITE canvas shows. Every reader who had
+  ever pressed the light/dark control got that on every page. And nothing
+  painted `html` at all, so any moment without the theme's sheet was white.
+
+  So, FIRST THING in this include, before every stylesheet it emits:
+
+  1. decide the scheme -- the reader's stored choice (`fa-color-scheme`, the
+     key `docs-ui.js` writes), else the OS, else DARK -- and put it on
+     `<html data-fa-scheme>` before the body is parsed, so no rule keyed on
+     it ever paints the wrong way first;
+  2. if that is not the configured scheme, switch the theme's sheet NOW,
+     while the parser is still in the head. The link is parser-created, so
+     the browser holds first paint for its new file: a light reader is light
+     from the first frame, with no dark flash either;
+  3. paint `html` itself, dark unless the scheme is light, so a sheet in
+     flight shows the page's ground rather than white.
+
+  The theme's own stylesheet link is ABOVE this include (just-the-docs emits
+  `head_custom.html` last in its head), which is why step 2 exists: there is
+  no hook before it, and none is needed -- nothing paints until the head is
+  parsed, and this runs while it is being parsed.
+
+  INLINE, which the rest of this file avoids so that no `script-src`
+  relaxation is ever needed. This is the one exception, and it is the only
+  way to run before first paint: a `src` script here is a network round-trip
+  on the critical path of every page. It interpolates nothing into markup,
+  and a CSP added later needs this block's hash.
+
+  NO LIQUID between the markers. `first-paint-scheme.e2e.ts` lifts these
+  exact bytes into a replica page, so the spec tests what ships.
+
+  The generated dashboards that write their OWN head (`state-visualizer.ts`,
+  `gen-translation-status.ts`) do not carry this. They switch nothing with
+  script, so they cannot flash: their first CSS paints dark, and the same spec
+  holds them to that. Giving them this snippet would switch ON their
+  `data-fa-scheme="light"` rules for the first time -- and those were never
+  finished (axe, 2026-09-24: 3 to 6 contrast failures per dashboard in light,
+  dark-scheme tag colours on a light ground). A light palette for them is its
+  own piece of work, not a side effect of this one.
+-->
+<!-- fa-first-paint:begin -->
+<script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script>
+<style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style>
+<!-- fa-first-paint:end -->
+<!--
+  The browser-tab icon, from the same declared mark the sidebar title
+  (`title.html`) renders — reused rather than looked up by its own
+  `browser-icon` role. There WAS a second role for exactly that, on
+  `mark-small` in `harness.json`, and it went unread: nothing in this
+  repo ever emitted a favicon at all, `rel="icon"` included. It also could
+  not have driven this lookup as declared — `imagesForRole()`
+  (`schemas/kg-node.ts`) requires an image's `layout` field, which neither
+  mark entry carries, so a `browser-icon`-role lookup returns nothing. Reusing
+  the already-resolved `icon` (the same field `title.html` reads) sidesteps
+  that and, more importantly, is what was asked for: the sidebar mark and the
+  tab icon are meant to be the SAME glyph, so one declaration driving both is
+  correct, not just convenient — flip `icon` in `harness.json` and both
+  follow in one edit, no template change needed.
+
+  SVG-only. No PNG/ICO fallback exists in the repo and none is generated
+  here — every browser this matters for (evergreen Chrome/Firefox/Edge, and
+  Safari since 16) reads `type="image/svg+xml"` directly; a raster fallback
+  would need generating actual image files, which is out of scope for this
+  change.
+
+  `relative_url`, same as `title.html` and `landing.html` — a bare
+  `/assets/...` 404s on the same baseurl this file's landing-panel fix exists
+  for.
+--><link rel="icon" type="image/svg+xml" href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/img/icons/cat-mark.svg" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/svg+xml" href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/img/icons/cat-mark-dark.svg" media="(prefers-color-scheme: dark)"><link rel="icon" type="image/svg+xml" sizes="16x16" href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/img/icons/cat-mark-small.svg"><!--
+  Site-wide styling for the BPMN workflow figures.
+
+  just-the-docs pulls this file into <head> on every page. The diagrams are wide
+  (a swimlane process does not shrink well), so the figure scrolls horizontally
+  inside its own container rather than forcing the page body to scroll.
+
+  The SVGs carry their own white backdrop — see scripts/render-bpmn.ts — so they
+  stay legible under the dark colour scheme even if this stylesheet is missing.
+-->
+<style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style>
+
+<!--
+  Site UI: a QR of the current page in the sidebar header, and zoom /
+  full-width controls on the figures.
+
+  Loaded as same-origin files with no inline script, so no script-src
+  relaxation is needed. The QR is generated in the browser from
+  window.location.href rather than baked per page at build time, so it is
+  right for anchors, query strings, and both the directory and .html forms of
+  the same page. The UTF-8 shim must come after the encoder: without it the
+  encoder's stringToBytes is single-byte and a non-ASCII character in a URL
+  silently encodes to mojibake.
+-->
+<!--
+  The TRANSLATION INDEX — which source page has a translation in which locale.
+
+  `mountNavLocale` in docs-ui.js reads this to decide what the left-hand navbar
+  shows: with the source language selected it does nothing, and with `fr`
+  selected it swaps each nav item that HAS a French page for that page, IN
+  PLACE OF the English one. An item with no translation is left exactly as it
+  is — that is the fallback, and it is the absence of a rewrite rather than a
+  code path of its own.
+
+  Generated into `docs/_data/translations.json` by
+  `content/pipeline/translation-index.ts`, from what each page DECLARES about
+  itself: `lang`, and `translation_source` naming the page it expresses. NOT
+  from a scan for directories whose names look like language subtags — see
+  that module's header for why that inference is wrong in both directions.
+
+  THREE STATES, and the third is the reason this is a JSON island rather than
+  a conditional. (The tag name is written inside {% raw %}
+  below because LIQUID PARSES TAGS INSIDE AN HTML COMMENT — the comment
+  wrapper means nothing to it — so naming a tag in prose is a syntax error at
+  build time, and the message points at the THEME's head.html because Liquid
+  attributes an include's line to the includer. This comment cost one red
+  deploy.
+
+  AND THEN IT COST A SECOND ONE, differently, which is why this paragraph now
+  describes the wrapper rather than spelling it. It used to SPELL both halves
+  as an example — and the closing half ENDED THIS COMMENT eighteen lines
+  early, so every line below it rendered as visible body text at the top of
+  EVERY PAGE on the site. Reported by the owner from the staging URL,
+  2026-09-19.
+
+  The asymmetry is the lesson: a Liquid tag has an escape, and the closing
+  comment delimiter has NONE. There is no way to write those three characters
+  inside a comment and have the comment survive them, because the parser is
+  not looking for an escape — it stops at the first match. So the rule is not
+  "escape it carefully", it is DO NOT WRITE IT: describe it, or name it one
+  character at a time. Guarded by
+  scripts/tests/html-comment-delimiters.test.ts, which fails on an opening
+  delimiter appearing inside an open comment — the one machine-detectable
+  signature of somebody trying.)
+  A {% if %} would have to choose between the second and
+  third rows below, and there is no expression that can:
+
+    1. the data file is there      -> `index` is an object; filter the nav.
+    2. it is there and EMPTY       -> `pages` is `{}`; there is nothing to
+                                      swap, so every item correctly falls back
+                                      to the source language.
+    3. the data file is ABSENT     -> `jsonify` emits `null`, and docs-ui.js
+                                      leaves the navbar EXACTLY as built.
+
+  A build that could not determine the translation set must never render as a
+  folio that has no translations. `null` is how that is said.
+
+  `baseurl` travels with it because the client has no other way to strip the
+  site prefix off a nav `href` before matching it.
+-->
+<script type="application/json" id="fa-translation-index">{
+  "baseurl": "/folio-assistant/STAGING/claude-qook-check-merged-third-state",
+  "index": {"$schema":"folio-translation-index/v1","sourceLocale":"en","locales":["ar","es","fr","ru","zh"],"pages":{"":{"sourceUrl":"/","sourceTitle":"Home","translations":{"ar":{"url":"/ar/index.html","title":"الصفحة الرئيسية (AR)","status":"unverified","dir":"rtl"},"es":{"url":"/es/index.html","title":"Inicio (ES)","status":"unverified","dir":"ltr"},"fr":{"url":"/fr/index.html","title":"Accueil (FR)","status":"unverified","dir":"ltr"},"ru":{"url":"/ru/index.html","title":"Главная (RU)","status":"unverified","dir":"ltr"},"zh":{"url":"/zh/index.html","title":"首页 (ZH)","status":"unverified","dir":"ltr"}}},"accessibility":{"sourceUrl":"/accessibility.html","sourceTitle":"Accessibility","translations":{"ar":{"url":"/ar/accessibility.html","title":"إمكانية الوصول","status":"unverified","dir":"rtl"},"es":{"url":"/es/accessibility.html","title":"Accesibilidad","status":"unverified","dir":"ltr"},"fr":{"url":"/fr/accessibility.html","title":"Accessibilité","status":"unverified","dir":"ltr"},"ru":{"url":"/ru/accessibility.html","title":"Доступность","status":"unverified","dir":"ltr"},"zh":{"url":"/zh/accessibility.html","title":"无障碍功能","status":"unverified","dir":"ltr"}}},"content-types":{"sourceUrl":"/content-types.html","sourceTitle":"Content types","translations":{"ar":{"url":"/ar/content-types.html","title":"أنواع المحتوى","status":"unverified","dir":"rtl"},"es":{"url":"/es/content-types.html","title":"Tipos de contenido","status":"unverified","dir":"ltr"},"fr":{"url":"/fr/content-types.html","title":"Types de contenu","status":"unverified","dir":"ltr"},"ru":{"url":"/ru/content-types.html","title":"Типы контента","status":"unverified","dir":"ltr"},"zh":{"url":"/zh/content-types.html","title":"内容类型","status":"unverified","dir":"ltr"}}},"contributing":{"sourceUrl":"/contributing.html","sourceTitle":"Contributing","translations":{"ar":{"url":"/ar/contributing.html","title":"المساهمة","status":"unverified","dir":"rtl"},"es":{"url":"/es/contributing.html","title":"Contribuir","status":"unverified","dir":"ltr"},"fr":{"url":"/fr/contributing.html","title":"Contribuer","status":"unverified","dir":"ltr"},"ru":{"url":"/ru/contributing.html","title":"Участие в проекте","status":"unverified","dir":"ltr"},"zh":{"url":"/zh/contributing.html","title":"贡献指南","status":"unverified","dir":"ltr"}}},"getting-started":{"sourceUrl":"/getting-started.html","sourceTitle":"Getting started","translations":{"ar":{"url":"/ar/getting-started.html","title":"البدء","status":"unverified","dir":"rtl"},"es":{"url":"/es/getting-started.html","title":"Primeros pasos","status":"unverified","dir":"ltr"},"fr":{"url":"/fr/getting-started.html","title":"Premiers pas","status":"unverified","dir":"ltr"},"ru":{"url":"/ru/getting-started.html","title":"Начало работы","status":"unverified","dir":"ltr"},"zh":{"url":"/zh/getting-started.html","title":"入门指南","status":"unverified","dir":"ltr"}}},"guides/agent-onboarding":{"sourceUrl":"/guides/agent-onboarding.html","sourceTitle":"Agent onboarding","translations":{"ar":{"url":"/guides/ar/agent-onboarding.html","title":"تأهيل الوكيل (AR)","status":"unverified","dir":"rtl"},"es":{"url":"/guides/es/agent-onboarding.html","title":"Incorporación del agente (ES)","status":"unverified","dir":"ltr"},"fr":{"url":"/guides/fr/agent-onboarding.html","title":"Intégration de l'agent (FR)","status":"unverified","dir":"ltr"},"ru":{"url":"/guides/ru/agent-onboarding.html","title":"Введение для агента (RU)","status":"unverified","dir":"ltr"},"zh":{"url":"/guides/zh/agent-onboarding.html","title":"代理入门 (ZH)","status":"unverified","dir":"ltr"}}},"installation":{"sourceUrl":"/installation.html","sourceTitle":"Installation","translations":{"ar":{"url":"/ar/installation.html","title":"التثبيت","status":"unverified","dir":"rtl"},"es":{"url":"/es/installation.html","title":"Instalación","status":"unverified","dir":"ltr"},"fr":{"url":"/fr/installation.html","title":"Installation","status":"unverified","dir":"ltr"},"ru":{"url":"/ru/installation.html","title":"Установка","status":"unverified","dir":"ltr"},"zh":{"url":"/zh/installation.html","title":"安装指南","status":"unverified","dir":"ltr"}}}}}
+}</script>
+<!--
+  Translation metadata for this page, consumed by docs-ui.js to auto-render
+  language coverage and QA badges. The translation pipeline stamps front matter;
+  this block publishes it to the client. No manual editing needed.
+-->
+<script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":null,
+  "sweep": {
+    "run": true,
+    "sweptAt": "2026-09-21T11:25:19.602Z",
+    "totalPages": 289,
+    "pagesWithTranslations": 8,
+    "complete": true
+  }
+}</script>
+<!--
+  Where the action tiles point.
+
+  RESOLVED, not composed. `scripts/sync-docs-harness.ts` writes
+  `docs/_data/harness.json` from the instance's own `cat-harness.json`,
+  through `siteLinks` in `scripts/site-links.ts` -- which computes every path
+  with `artefactStub` and `renderingPath`, the same functions the knowledge
+  graph exporter and the Pages workflow use. The tile therefore cannot
+  disagree with what is published.
+
+  This block previously wrote `/folio-assistant/STAGING/claude-qook-check-merged-third-state/kg/` by hand. Nothing
+  has ever been published at `<base>/kg/` -- the renderings sit at the base,
+  named after the stub -- so the only entry point to the viewer anywhere on
+  this site was a 404 from the day it was added. See bean `udx8`, and the
+  identical defect AGENTS.md records against the README's chapter PDFs. A
+  path built by convention is a claim; `bun run site:links --site _site`
+  checks it against the tree that actually ships, and the Pages workflow runs
+  that check after the export.
+
+  `path` is site-ROOT-relative and gets `relative_url`, which is what makes it
+  right under this site's `/folio-assistant/` baseurl. `url` is off-site and
+  is printed as-is. `source` is no longer taken from `aux_links`: those were
+  removed so the forge link stops appearing as text at the top of the main
+  panel (the owner asked for it as an icon, not a header), and the URL is
+  resolved from the git remote instead of written down twice.
+-->
+<!--
+  THE NAVBAR ICON ROW — which icons this instance shows, and where each goes.
+
+  `null` when the instance has not decided, and that is NOT the same as an
+  empty list: `navbarIcons` absent means "inherit, and nothing up the chain has
+  said either", while `[]` means the instance chose to show none. docs-ui.js
+  reads the two apart, and `jsonify` emits `null` for the first exactly as the
+  translations block above relies on.
+
+  Resolved in `sync-docs-harness.ts`: the icon list walks `needs` with the site
+  owner as the floor, and the hrefs come from this instance's own declared
+  visualisations plus `siteLinks`. Nothing about the row is decided in Liquid
+  or in JavaScript.
+-->
+<script type="application/json" id="fa-navbar-row">{"icons":["close","todos","beans","processes","kg","launcher"],"hrefs":{"todos":"/todos/","beans":"/beans/","processes":"/processes/","kg":"/cat-harness/"},"notes":{},"folders":[{"kind":"beans","path":"/beans/"},{"kind":"cat-harness","path":"/cat-harness/schemas/cat-harness/"},{"kind":"code","note":"no viewer yet"},{"kind":"code-list","note":"no viewer yet"},{"kind":"docs","path":"/cat-harness/docs-auto/index/docs/docs/"},{"kind":"external-schema","path":"/external-schemas/"},{"kind":"folio","path":"/cat-harness/folio/"},{"kind":"fsh-guts","path":"/fsh-guts/","stagingOnly":true},{"kind":"health","path":"/health/"},{"kind":"interaction","note":"no viewer yet"},{"kind":"issue-marks","path":"/issue-marks/"},{"kind":"library","path":"/cat-harness/library/cat-harness/"},{"kind":"memory","note":"no viewer yet"},{"kind":"methodology","path":"/methodologies/"},{"kind":"policies","note":"no viewer yet"},{"kind":"processes","path":"/processes/"},{"kind":"proposals","within":"docs","path":"/proposals/"},{"kind":"qa","path":"/qa/"},{"kind":"requirements","within":"docs","path":"/requirements/"},{"kind":"scenarios","note":"no viewer yet"},{"kind":"schemas","path":"/cat-harness/schemas/cat-harness/"},{"kind":"skills","path":"/cat-harness/docs-auto/index/skills/large-datasets-skills/"},{"kind":"swimlane-glossary","path":"/swimlane-glossary/"},{"kind":"todos","path":"/todos/"},{"kind":"tools","path":"/tools/"},{"kind":"translation-sources","path":"/translation-status/"},{"kind":"uml","note":"no viewer yet"},{"kind":"uploads","path":"/uploads/"},{"kind":"waiver","note":"no viewer yet"}]}</script>
+
+<script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/","jsonld":"/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script>
+
+<!--
+  The todo index — a PERSON's outstanding items, published by
+  `scripts/gen-docs-pages.ts` to `/assets/todos/index.json`.
+
+  `relative_url` for the same reason every other path here uses it: the site is
+  served from `/folio-assistant` on the canonical deploy and from
+  `/folio-assistant/STAGING/<branch>` on a preview, and an absolute literal
+  404s on every deploy but one.
+
+  A URL rather than inline JSON, unlike `fa-site-links` above, because the
+  index grows with the todo corpus and inlining it would put the whole set into
+  every page's <head> whether the reader opens the board or not. A missing file
+  is reported by the fetch and the board is simply not mounted — a board that
+  opens empty is indistinguishable from a person with nothing outstanding, and
+  those are opposite facts.
+
+  `<meta>` and not a `<div>`: this is `<head>`, where flow content is not
+  permitted. A browser hoists a stray `<div>` into `<body>` and the code still
+  works, which is exactly what makes the mistake survive review.
+-->
+<meta name="fa-todo-src" content="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/todos/index.json">
+
+<!--
+  THE SEMANTIC-ZOOM DECLARATION — when the card stops rendering its words and
+  becomes its avatar.
+
+  R2 of issue #602: *"The threshold SHALL be declared data, not a literal in
+  the renderer."* `gen-docs-pages.ts` publishes the folio's own
+  `semantic-zoom.json`, and publishes NOTHING when the folio has not declared
+  one. So this `<meta>` may point at a 404, and that is a real state rather
+  than a defect: `docs-ui.js` reports it could not determine a threshold and
+  leaves every card's words in place. A default in either file would be the
+  literal R2 forbids, one layer further from where anybody looks for it.
+
+  The pointer is emitted UNCONDITIONALLY because Liquid cannot see whether the
+  generator wrote the file, and a conditional that guessed would make "this
+  folio declares no threshold" and "the build did not run" the same page.
+-->
+<meta name="fa-zoom-src" content="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/semantic-zoom.json">
+
+<!--
+  THE DECLARED VISUALISATIONS, as tiles.
+
+  Owner, 2026-09-20: *"if harness declares visaluzers, those should have tile"*
+  — so the tile set is the `coverage.visualiser` obligation made reachable, not
+  a second registry. `graph-tiles.ts` derives it into `_data/harness.json`;
+  this hands it to `docs-ui.js` for BOTH surfaces, because a tile is declared
+  once and says where it shows.
+
+  INLINE rather than a second fetch, unlike the todo index above, and the two
+  are different for a reason worth stating: that index grows with the todo
+  corpus, while this one is bounded by the number of directories an instance
+  DECLARES — twelve here — and every page needs it before first paint or the
+  navbar would visibly grow tiles a moment after the reader arrives.
+
+  `jsonify` and not a hand-built string: a title carrying a quote would
+  otherwise close the attribute, and the quoting rule is Liquid's rather than
+  something this comment has to be right about.
+-->
+<meta name="fa-tiles" content="[{&quot;id&quot;:&quot;agent-skills-library&quot;,&quot;directory&quot;:&quot;agent-skills-library&quot;,&quot;title&quot;:&quot;agent-skills-library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/agent-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/library/agent-skills/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:11,&quot;unit&quot;:&quot;entries&quot;},{&quot;id&quot;:&quot;beans&quot;,&quot;directory&quot;:&quot;beans&quot;,&quot;title&quot;:&quot;beans&quot;,&quot;ref&quot;:&quot;cat-harness/docs/beans/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/beans/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;beans&quot;,&quot;count&quot;:357,&quot;unit&quot;:&quot;beans&quot;},{&quot;id&quot;:&quot;docs&quot;,&quot;directory&quot;:&quot;docs&quot;,&quot;title&quot;:&quot;Docs — cat-harness&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/docs-auto/index/docs/docs/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/docs-auto/index/docs/docs/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;external-schemas&quot;,&quot;directory&quot;:&quot;external-schemas&quot;,&quot;title&quot;:&quot;External schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/external-schemas/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/external-schemas/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;folio&quot;,&quot;directory&quot;:&quot;folio&quot;,&quot;title&quot;:&quot;folio&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/folio/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/folio/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:5,&quot;unit&quot;:&quot;stickies&quot;},{&quot;id&quot;:&quot;folio-assist-core-schemas&quot;,&quot;directory&quot;:&quot;folio-assist-core-schemas&quot;,&quot;title&quot;:&quot;folio-assist-core-schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/folio-assistant-core/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:22,&quot;unit&quot;:&quot;modules&quot;},{&quot;id&quot;:&quot;folio-assistant-sci-library&quot;,&quot;directory&quot;:&quot;folio-assistant-sci-library&quot;,&quot;title&quot;:&quot;folio-assistant-sci-library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/library/folio-assistant-sci/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:1,&quot;unit&quot;:&quot;entry&quot;},{&quot;id&quot;:&quot;fsh-guts&quot;,&quot;directory&quot;:&quot;fsh-guts&quot;,&quot;title&quot;:&quot;fsh-guts&quot;,&quot;ref&quot;:&quot;cat-harness/docs/fsh-guts/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/fsh-guts/&quot;,&quot;hidden&quot;:false,&quot;publish&quot;:&quot;staging-only&quot;},{&quot;id&quot;:&quot;large-datasets-schemas&quot;,&quot;directory&quot;:&quot;large-datasets-schemas&quot;,&quot;title&quot;:&quot;large-datasets-schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/large-datasets/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/large-datasets/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:5,&quot;unit&quot;:&quot;modules&quot;},{&quot;id&quot;:&quot;large-datasets-skills&quot;,&quot;directory&quot;:&quot;large-datasets-skills&quot;,&quot;title&quot;:&quot;Skills — large-datasets&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/docs-auto/index/skills/large-datasets-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/docs-auto/index/skills/large-datasets-skills/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;library&quot;,&quot;directory&quot;:&quot;library&quot;,&quot;title&quot;:&quot;library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/cat-harness/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/library/cat-harness/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:6,&quot;unit&quot;:&quot;entries&quot;},{&quot;id&quot;:&quot;methodologies&quot;,&quot;directory&quot;:&quot;methodologies&quot;,&quot;title&quot;:&quot;Methodologies&quot;,&quot;ref&quot;:&quot;cat-harness/docs/methodologies/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/methodologies/&quot;,&quot;hidden&quot;:false,&quot;theme&quot;:&quot;analyst&quot;},{&quot;id&quot;:&quot;processes&quot;,&quot;directory&quot;:&quot;processes&quot;,&quot;title&quot;:&quot;processes&quot;,&quot;ref&quot;:&quot;cat-harness/docs/processes/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/processes/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;schemas&quot;,&quot;directory&quot;:&quot;schemas&quot;,&quot;title&quot;:&quot;schemas&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/schemas/cat-harness/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/schemas/cat-harness/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:169,&quot;unit&quot;:&quot;modules&quot;},{&quot;id&quot;:&quot;skills&quot;,&quot;directory&quot;:&quot;skills&quot;,&quot;title&quot;:&quot;Skills — cat-harness&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/docs-auto/index/skills/cat-harness/&quot;,&quot;hidden&quot;:false,&quot;readOnly&quot;:false},{&quot;id&quot;:&quot;swimlane-glossary&quot;,&quot;directory&quot;:&quot;swimlane-glossary&quot;,&quot;title&quot;:&quot;swimlane-glossary&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/docs-auto/glossary/glossary/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/docs-auto/glossary/glossary/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;todos&quot;,&quot;directory&quot;:&quot;todos&quot;,&quot;title&quot;:&quot;todos&quot;,&quot;ref&quot;:&quot;cat-harness/docs/todos/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/todos/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:3,&quot;unit&quot;:&quot;todos&quot;},{&quot;id&quot;:&quot;tools&quot;,&quot;directory&quot;:&quot;tools&quot;,&quot;title&quot;:&quot;Tools&quot;,&quot;ref&quot;:&quot;cat-harness/docs/tools/index.md&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/tools/&quot;,&quot;hidden&quot;:false},{&quot;id&quot;:&quot;translation-sources&quot;,&quot;directory&quot;:&quot;translation-sources&quot;,&quot;title&quot;:&quot;translation-sources&quot;,&quot;ref&quot;:&quot;cat-harness/docs/translation-status/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/translation-status/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:5,&quot;unit&quot;:&quot;locales&quot;},{&quot;id&quot;:&quot;uploads&quot;,&quot;directory&quot;:&quot;uploads&quot;,&quot;title&quot;:&quot;uploads&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/uploads/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/uploads/&quot;,&quot;hidden&quot;:false,&quot;icon&quot;:&quot;uploads&quot;,&quot;count&quot;:21,&quot;unit&quot;:&quot;waiting&quot;},{&quot;id&quot;:&quot;who-iris-library&quot;,&quot;directory&quot;:&quot;who-iris-library&quot;,&quot;title&quot;:&quot;who-iris-library&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/library/who-iris/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/library/who-iris/&quot;,&quot;hidden&quot;:false,&quot;count&quot;:3,&quot;unit&quot;:&quot;entries&quot;},{&quot;id&quot;:&quot;who-iris-skills&quot;,&quot;directory&quot;:&quot;who-iris-skills&quot;,&quot;title&quot;:&quot;Skills — who-iris&quot;,&quot;ref&quot;:&quot;cat-harness/docs/cat-harness/docs-auto/index/skills/who-iris-skills/index.html&quot;,&quot;surfaces&quot;:[&quot;navbar&quot;,&quot;board&quot;,&quot;glass&quot;],&quot;href&quot;:&quot;/cat-harness/docs-auto/index/skills/who-iris-skills/&quot;,&quot;hidden&quot;:false}]">
+
+<!--
+  THE SITE'S BASEURL, for the tiles above.
+
+  Every other site-root path on this page is composed by Liquid: `relative_url`
+  prepends `site.baseurl`, which is `/folio-assistant` on the canonical deploy
+  and `/folio-assistant/STAGING/<branch>` on a preview. The tiles cannot use
+  it, because they reach the client as JSON and are composed in `docs-ui.js`
+  after Liquid has finished — so the base has to travel with them.
+
+  IT SHIPPED WITHOUT ONE AND EVERY TILE 404ed (issue #801). `graph-tiles.ts`
+  stores `/beans/`, which is correct as data and is what `harness.links[].path`
+  stores too; written into an `href` unprefixed, a browser resolves it against
+  the ORIGIN, so the beans tile pointed at `litlfred.github.io/beans/`. The
+  owner found it by going looking for the board and landing there.
+
+  A meta of its own rather than reading `#fa-translation-index`, which already
+  carries a `baseurl`: that block is absent when `_data/translations.json` was
+  not built, and its reader returns `null` for it. Composing links out of an
+  optional block means the day it goes missing every tile silently points at
+  the origin again — which is this defect, with a second way to reach it.
+-->
+<meta name="fa-baseurl" content="/folio-assistant/STAGING/claude-qook-check-merged-third-state">
+
+<!--
+  WHETHER THIS IS A PREVIEW, for the tiles above.
+
+  `feature-staging.yml` writes `staging_slug` into `_data/build.yml`;
+  `docs-site.yml` writes the same file WITHOUT it. So a non-empty value here
+  means "a STAGING/<slug>/ preview", an empty one means the canonical deploy
+  or a local build.
+
+  It exists so a tile can vanish with its page. `compose-docs.ts` withholds a
+  `publish: "staging-only"` page from the canonical tree; a tile still pointing
+  at it would be a link to a 404 — `pb04`, a dead link being worse than no
+  link, and worse than usual here because the tile ALSO advertises content the
+  declaration is deliberately not publishing.
+
+  The filtering is client-side rather than baked into `harness.json` because
+  that file is generated once and committed, so it cannot know which deploy
+  will serve it. The page can be withheld at compose time because compose runs
+  per deploy; the data file cannot.
+
+  EMPTY IS THE SAFE VALUE, and it is what an absent `_data/build.yml` yields:
+  a build that cannot say it is a preview is treated as canonical and hides
+  the tile. That matches `compose-docs.ts`, which withholds unless positively
+  told `--staging` — one direction in both places, so the page and its tile
+  cannot disagree about which deploy they are on.
+-->
+<meta name="fa-staging" content="claude-qook-check-merged-third-state">
+
+<!--
+  WHICH SEARCH INDEX THIS PAGE IS SERVING.
+
+  `feature-staging.yml` fetches the PUBLISHED index before the build and
+  stamps what happened; `docs-site.yml` writes no such key, so the canonical
+  deploy leaves this empty and draws no warning. Bean `eof6`, on the owner's
+  ruling of 2026-09-22: *"staging uses last published index (w/ wanrnig)"*.
+
+  Three values, and the empty one is a real state rather than a fallback:
+
+    published    the preview serves the last published index. Results are
+                 about the MAIN SITE, not about this branch.
+    unavailable  the fetch failed; an empty index is served.
+    (empty)      not a staging build. No warning.
+
+  The bean this implements had first concluded that staging must disable
+  search outright, because a stale hit is "a wrong PASS, BELIEVED". The ruling
+  keeps search and attacks the belief instead — which is why the value is
+  emitted at all. An index swapped in with nothing on the page saying so would
+  be the unmarked staleness the bean was right to refuse.
+-->
+<meta name="fa-search-index" content="published">
+
+<!--
+  The bean index — the AGENT work plan, published by the same generator beside
+  the todo index above, for the same reason and read the same way. Separate
+  files rather than one combined document because the two stores are separate
+  graphs with separate declarations, and a consumer that wants only the human
+  half should not fetch 239 beans to get three todos.
+-->
+<meta name="fa-beans-src" content="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/beans/index.json">
+
+<!--
+  The discarded-items document — `fsh-guts.jsonld`, published at the base by
+  `docs-site.yml`. A URL and not inline JSON, for the todo index's reason and
+  then some: it carries every node's BODY, which is 64 KB against a 5 KB
+  document without them. Inlining that into every page's <head> would be
+  absurd for content reached through one control inside Settings.
+
+  `.json` rather than `.jsonld`. Both are published and they are the same
+  bytes; Pages has no media type for `.jsonld` and serves it as
+  octet-stream. `fetch().json()` would parse it anyway, but every other
+  rendering here uses the alias and one that did not would be the odd case a
+  later reader has to work out.
+
+  The viewer fetches this WHEN SETTINGS OPENS, never on page load, and a
+  fetch that fails is reported rather than shown as an empty trashcan —
+  "nothing discarded" and "could not read the document" are opposite facts.
+-->
+<meta name="fa-fsh-guts-src" content="/folio-assistant/STAGING/claude-qook-check-merged-third-state/fsh-guts.json">
+<!--
+  ?v=<build time> ON EVERY FIRST-PARTY ASSET — and the reason is a REVIEW
+  failure, not a performance one.
+
+  These five are served from stable paths with no hash in the name, so a
+  browser that has the page cached keeps the old CSS and JS until its
+  `max-age` runs out. On the live site that is invisible. On a STAGING
+  preview it is the whole point of the deployment: the reviewer opens the URL
+  they opened an hour ago, gets yesterday's stylesheet, and reports "i dont
+  see changes" — which is indistinguishable from a deploy that never
+  happened, and sends the next hour after the wrong cause. Measured
+  2026-09-21 on this branch: every byte of the change was verified present in
+  the publish ref while the page rendered the previous build.
+
+  `site.time` is the BUILD's timestamp, so the query changes exactly when the
+  bytes might have, and never between two readers of the same build. A
+  content hash would be tighter and needs a pipeline step; this needs none
+  and closes the case that costs review time.
+
+  NOT a cache-busting strategy for third-party assets, and not applied to
+  them: those are versioned in their own URLs already.
+-->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/css/docs-ui.css?v=1790428545">
+<!-- Narrow viewports: wide content scrolls in its own box, never the page
+     (bean `2r2n`). The standalone viewers inline the same file through
+     `withViewerNav`, so both kinds of page read one set of rules. -->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/css/narrow-viewport.css?v=1790428545">
+
+<!--
+  The work-plan dashboard's styles, split from docs-ui.css so that
+  `state-visualizer.ts` can inline exactly these bytes into the generated
+  `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
+-->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/css/work-plan.css?v=1790428545">
+<!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
+     `bun run themes:css`; `themes:css:check` fails the build when it is stale.
+     Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
+     roles that docs-ui.css consumes, and a custom property has to be set on a
+     matching element before the rule reading it takes effect. -->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/css/themes.css?v=1790428545">
+<!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
+     that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/css/uml.css?v=1790428545">
+<!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
+     `avatars:css:check` fails the build when it is stale. One stylesheet
+     rather than 68 assets: the glyph is a mask and the colour is a property,
+     so a scheme swap is a custom property and the trash state is a selector. -->
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/css/avatars.css?v=1790428545">
+
+<!--
+  The kinds THIS INSTANCE DECLARES, for the avatar fan.
+
+  Owner: "shows the DECLared kinds for that instance, not inheritance." Written
+  by `sync-docs-harness.ts` from the instance's own `harness.json`, BEFORE
+  `resolveDirectories` overlays a dependency's. The effective set is strictly
+  larger, and showing it would name kinds this repository never claimed.
+
+  Inline rather than a fetched URL, unlike the todo index and the discarded
+  document: this is a dozen short strings, it is needed to render the fan at
+  all, and a fetch for that would put a spinner in front of a badge.
+-->
+<script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
+<script src="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/js/vendor/qrcode.js" defer></script>
+<script src="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/js/vendor/qrcode_UTF8.js" defer></script>
+<script src="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/js/docs-ui.js?v=1790428545" defer></script>
+
+<!--
+  The work-plan dashboard. SELF-MOUNTING on any page carrying
+  `[data-fa-workplan]`, so docs-ui.js neither calls it nor knows it exists; a
+  page without that container pays one failed querySelector. The same file is
+  inlined verbatim into the generated state-visualiser pages.
+-->
+<script src="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/js/work-plan.js" defer></script>
+
+<!--
+  The landing panel — the instance's declared description drawn inside the
+  quiet part of its declared backdrop. Markup: `_includes/landing.html`.
+
+  The region comes in as custom properties (`--fl-x` …) set per instance from
+  `harness.json`, so this stylesheet knows nothing about where any
+  particular picture is quiet. That is the whole design: a downstream folio
+  swaps the art and the numbers and needs no CSS.
+-->
+<style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style>
+
+
+</head>
+
+<body><div data-fa-staging-banner style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:sticky;top:0;z-index:9999;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}.side-bar{top:var(--fa-staging-offset,0px)!important}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,'PR #'+f.pr));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  stamp(f);
+  measure();
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <header class="side-bar">
+  <div class="site-header">
+    <a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/" class="site-title lh-tight"><span class="fa-site-mark fa-site-mark--avatar" aria-hidden="true">
+    <img src="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/img/harness/landing-card.webp" alt=""
+         style="width: 200%; height: 200%;
+                left: 0%; top: -92%">
+  </span><span class="fa-site-title">C@T Harness</span>
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/installation.html" class="nav-list-link">Installation</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/getting-started.html" class="nav-list-link">Getting started</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/content-types.html" class="nav-list-link">Content types</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/agentic-harness.html" class="nav-list-link">Agentic harness</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/crdm-methodology.html" class="nav-list-link">CRDM methodology</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/skills.html" class="nav-list-link">Skills & roles</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/beans-and-todos.html" class="nav-list-link">Beans and todos</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/publication-workflow.html" class="nav-list-link">Publication workflow</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/document-ingestion.html" class="nav-list-link">Document ingestion</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/evidence.html" class="nav-list-link">Evidence for a recommendation</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Authoring guides submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/guides/" class="nav-list-link">Authoring guides</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/guides/agent-onboarding.html" class="nav-list-link">Agent onboarding</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/guides/writing-a-paper.html" class="nav-list-link">Writing a paper with folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/guides/who-smart-dak.html" class="nav-list-link">Authoring a WHO SMART DAK (L2)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/guides/writing-a-document.html" class="nav-list-link">Writing a document</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/guides/who-smart-ig.html" class="nav-list-link">Authoring a WHO SMART IG (L3)</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/guides/new-content-type.html" class="nav-list-link">Adding a new content type</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/guides/reseeding-the-lean-cache.html" class="nav-list-link">Reseeding the Lean cache</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/guides/voices.html" class="nav-list-link">Voices — editorial overlays</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Architecture submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/architecture.html" class="nav-list-link">Architecture</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/architecture/repo-taxonomy.html" class="nav-list-link">Repo taxonomy</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/architecture/current-state.html" class="nav-list-link">Current state</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/architecture/future-state.html" class="nav-list-link">Future state</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/architecture/migration-plan.html" class="nav-list-link">Migration plan</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/architecture/cat-harness-minimum.html" class="nav-list-link">Minimum cat-harness</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/architecture/harness-instances.html" class="nav-list-link">Harness instances</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/architecture/theming.html" class="nav-list-link">Theming</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/architecture/folio-board-requirements.html" class="nav-list-link">The folio board — requirements as agreed</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/managing-agent-context.html" class="nav-list-link">Managing agent context</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/contributing.html" class="nav-list-link">Contributing</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/kgraph.html" class="nav-list-link">The KGraph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/accessibility.html" class="nav-list-link">Accessibility</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/harness.html" class="nav-list-link">The Harness</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/ig-publisher.html" class="nav-list-link">The FHIR IG Publisher</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/translation-support.html" class="nav-list-link">Translation support</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/fhir-content.html" class="nav-list-link">FHIR content</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/swarm-management.html" class="nav-list-link">Swarm management</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/subgraph-viewers.html" class="nav-list-link">Subgraph viewers</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="UML overview submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uml/overview/" class="nav-list-link">UML overview</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uml/overview/agent-skills.html" class="nav-list-link">UML — agent-skills</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uml/overview/bootstrap.html" class="nav-list-link">UML — bootstrap</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uml/overview/cat-harness.html" class="nav-list-link">UML — cat-harness</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uml/overview/fhir-harness.html" class="nav-list-link">UML — fhir-harness</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uml/overview/folio-assistant.html" class="nav-list-link">UML — folio-assistant</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uml/overview/folio-assistant-core.html" class="nav-list-link">UML — folio-assistant-core</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uml/overview/folio-assistant-sci.html" class="nav-list-link">UML — folio-assistant-sci</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uml/overview/large-datasets.html" class="nav-list-link">UML — large-datasets</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uml/overview/smart-base.html" class="nav-list-link">UML — smart-base</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uml/overview/smart-immunizations.html" class="nav-list-link">UML — smart-immunizations</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uml/overview/smart-trust.html" class="nav-list-link">UML — smart-trust</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uml/overview/who-iris.html" class="nav-list-link">UML — who-iris</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uml/overview/who-style-guide.html" class="nav-list-link">UML — who-style-guide</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/tool-graph.html" class="nav-list-link">The tool graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/detangle.html" class="nav-list-link">Detangle</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/kg-navigation.html" class="nav-list-link">KG navigation</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="Glossary submenu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+      </button><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/glossary/" class="nav-list-link">Glossary</a><ul class="nav-list"><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/glossary/skills/" class="nav-list-link">Glossary: Skills</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/glossary/tools/" class="nav-list-link">Glossary: Tools</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/glossary/bpmn-activities/" class="nav-list-link">Glossary: BPMN activities</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/glossary/dmn-decisions/" class="nav-list-link">Glossary: DMN decisions</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/glossary/schema-fields/" class="nav-list-link">Glossary: Schema fields</a></li></ul></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/reference/" class="nav-list-link">Reference</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/prov-qaqc/" class="nav-list-link">PROV-O QA/QC report</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/actor-facts-and-their-processes.html" class="nav-list-link">Actor facts and the processes that must read them</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/odrl-prov-actor-model.html" class="nav-list-link">Actors, ODRL and PROV-O: one permission language, one execution log</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/bean-archiving-in-bpmn.html" class="nav-list-link">Bean archiving in BPMN — the terminal state nothing draws</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/beans/intent.html" class="nav-list-link">Beans visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/catalogue/intent.html" class="nav-list-link">Catalogue visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/deployment-topologies.html" class="nav-list-link">Deployment topologies and operating modes</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/docs-index/intent.html" class="nav-list-link">Docs index visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/narrative-asserts-code.html" class="nav-list-link">Does the prose say what the artefact does?</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/external-schemas/" class="nav-list-link">External schemas</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/external-schemas/intent.html" class="nav-list-link">External schemas — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/folio/intent.html" class="nav-list-link">Folio visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/fsh-guts/intent.html" class="nav-list-link">Fsh-guts — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/glossary/intent.html" class="nav-list-link">Glossary visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/harness-config/intent.html" class="nav-list-link">Harness config panel, and associated harnesses: intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/instance-versioning.html" class="nav-list-link">Instance versioning and dependency resolution, aligned to FHIR/SUSHI</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/kg-viewer/intent.html" class="nav-list-link">KG viewer — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/library/intent.html" class="nav-list-link">Library visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/methodologies/" class="nav-list-link">Methodologies</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/methodologies/intent.html" class="nav-list-link">Methodologies — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/agents-md-migration.html" class="nav-list-link">Migrating AGENTS.md into skills</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/navbar/intent.html" class="nav-list-link">Navbar — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/research-and-analysis/prior-art.html" class="nav-list-link">Prior art — open-source projects taking a similar approach</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/processes/intent.html" class="nav-list-link">Processes — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/" class="nav-list-link">Proposals</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/requirements/" class="nav-list-link">Requirements</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/research-and-analysis/" class="nav-list-link">Research and analysis</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/sdlc-process-audit.html" class="nav-list-link">SDLC process audit</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/schemas/intent.html" class="nav-list-link">Schemas visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/skills-index/intent.html" class="nav-list-link">Skills index visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/bootstrap.html" class="nav-list-link">The bootstrap graph</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/themes/" class="nav-list-link">Themes</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/todos/intent.html" class="nav-list-link">Todos visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/tools/" class="nav-list-link">Tools</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/tools/intent.html" class="nav-list-link">Tools — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/translation-status/intent.html" class="nav-list-link">Translation status visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/translation-block-audit.html" class="nav-list-link">Translation support by block kind</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/uploads/intent.html" class="nav-list-link">Uploads visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/voices/intent.html" class="nav-list-link">Voices visualiser — as-is intent</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/wallet-custody.html" class="nav-list-link">Wallet custody in a self-sovereign harness</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/declaration-gap.html" class="nav-list-link">Which top-level directories are not declared subgraphs?</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/workflow-state-in-beans.html" class="nav-list-link">Workflow state in beans</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/zod-schemas-as-tools.html" class="nav-list-link">Zod schemas as Tools — audit and analysis</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/fsh-guts/" class="nav-list-link">fsh-guts — the trashcan that is kept</a></li><li class="nav-list-item"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/wireframes/glossary-page/intent.html" class="nav-list-link">glossary/ page: as-is intent</a></li></ul>
+  
+</nav>
+
+
+<div class="d-md-block d-none site-footer">
+  
+  
+    <!-- GENERATED by cat-harness/scripts/gen-navbar-include.ts. Do not hand-edit: `bun run navbar:include` rewrites it, and `--check` fails the build if it is stale. --><input type="checkbox" class="fa-nav-open" id="fa-nav-open"><label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label><div class="fa-nav-in"><div class="fa-nav-top"><label class="fa-nav-head" for="fa-nav-open" title="Open navigation"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span><span class="fa-nav-name fa-nav-label">C@T Harness</span></label></div><div class="fa-nav-bottom"><details class="fa-nav-group"><summary><span class="fa-nav-glyph" aria-hidden="true">▦</span><span class="fa-nav-label">Harnesses</span></summary><div class="fa-nav-sub"><div class="fa-nav-row"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/smart-trust/"><span class="fa-nav-glyph fa-nav-tone fa-nav-crop"><img src="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/img/harness/landing-operations-card.webp" alt="" title="Grumpy cat, operations" style="width:370.3704%;height:370.3704%;left:-62.963%;top:-175.9259%"></span><span class="fa-nav-label">smart-trust</span></a><button type="button" class="fa-nav-action" data-fa-harness-config="smart-trust" aria-label="Configuration of smart-trust">⚙︎</button><div class="fa-nav-kids"><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/docs-auto/index/docs/smart-trust-docs/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">D</span><span class="fa-nav-label">docs</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">fhir-artifact-index</span><span class="fa-nav-note">no viewer yet</span></span></div></div><div class="fa-nav-row"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/who-iris/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">W</span><span class="fa-nav-label">WHO IRIS</span></a><button type="button" class="fa-nav-action" data-fa-harness-config="who-iris" aria-label="Configuration of WHO IRIS">⚙︎</button><div class="fa-nav-kids"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/catalogue/who-iris/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">catalogue</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/docs-auto/index/docs/who-iris-docs/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">D</span><span class="fa-nav-label">docs</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/library/who-iris/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">L</span><span class="fa-nav-label">library</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">skills</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">themes</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/library/who-iris/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uploads</span></a></div></div><div class="fa-nav-row"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/library/smart-base/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">S</span><span class="fa-nav-label">SMART Base</span></a><button type="button" class="fa-nav-action" data-fa-harness-config="smart-base" aria-label="Configuration of SMART Base">⚙︎</button><div class="fa-nav-kids"><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">fhir-artifact-index</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/library/smart-base/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">L</span><span class="fa-nav-label">library</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">methodology</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">processes</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">tools</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/voices/smart-base/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">V</span><span class="fa-nav-label">voices</span></a></div></div><div class="fa-nav-row"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/"><span class="fa-nav-glyph fa-nav-tone fa-nav-crop" style="background:hsl(236 45% 28%)"><img src="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/img/harness/landing-engineer-card.webp" alt="" title="Grumpy cat, engineering" style="width:217.3913%;height:217.3913%;left:0%;top:-86.9565%"></span><span class="fa-nav-label">Folio Assistant</span></a><button type="button" class="fa-nav-action" data-fa-harness-config="folio-assistant" aria-label="Configuration of Folio Assistant">⚙︎</button><div class="fa-nav-kids"><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/uploads/folio-assistant/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uploads</span></a></div></div><div class="fa-nav-row"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/"><span class="fa-nav-glyph fa-nav-tone fa-nav-crop" style="background:hsl(268 45% 28%)"><img src="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/img/harness/landing-grumpy-cyborg-agents-card.webp" alt="" title="Grumpy cyborg agents" style="width:500%;height:500%;left:-30%;top:-170%"></span><span class="fa-nav-label">C@T Harness</span></a><button type="button" class="fa-nav-action" data-fa-harness-config="cat-harness" aria-label="Configuration of C@T Harness">⚙︎</button><div class="fa-nav-kids"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/beans/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">B</span><span class="fa-nav-label">beans</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">cat-harness</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code-list</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/docs-auto/index/docs/docs/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">D</span><span class="fa-nav-label">docs</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/external-schemas/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">E</span><span class="fa-nav-label">external-schema</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/folio/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">folio</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/fsh-guts/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">fsh-guts</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/health/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">H</span><span class="fa-nav-label">health</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">interaction</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/issue-marks/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">issue-marks</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/library/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">L</span><span class="fa-nav-label">library</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">memory</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/methodologies/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">methodology</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">policies</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/processes/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">processes</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">proposals</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/qa/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">Q</span><span class="fa-nav-label">qa</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/requirements/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">R</span><span class="fa-nav-label">requirements</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">scenarios</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">schemas</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/docs-auto/index/skills/large-datasets-skills/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">skills</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/swimlane-glossary/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">swimlane-glossary</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/todos/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">todos</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/tools/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">tools</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/translation-status/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">translation-sources</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uml</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uploads/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uploads</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">W</span><span class="fa-nav-label">waiver</span><span class="fa-nav-note">no viewer yet</span></span></div></div><div class="fa-nav-row"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/bootstrap/README.html"><span class="fa-nav-glyph fa-nav-tone fa-nav-crop" style="background:hsl(96 45% 28%)"><img src="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/img/harness/landing-bootstrap-card.webp" alt="" title="CatBootstrap" style="width:416.6667%;height:416.6667%;left:-112.5%;top:-256.25%"></span><span class="fa-nav-label">Bootstrap</span></a><button type="button" class="fa-nav-action" data-fa-harness-config="bootstrap" aria-label="Configuration of Bootstrap">⚙︎</button><div class="fa-nav-kids"><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">models</span><span class="fa-nav-note">no viewer by design</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">processes</span><span class="fa-nav-note">no viewer by design</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">scenarios</span><span class="fa-nav-note">no viewer by design</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">schemas</span><span class="fa-nav-note">no viewer by design</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">skills</span><span class="fa-nav-note">no viewer by design</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">swimlane-glossary</span><span class="fa-nav-note">no viewer by design</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">translation-sources</span><span class="fa-nav-note">no viewer by design</span></span></div></div></div></details><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">⌂</span><span class="fa-nav-label">C@T Harness</span></a></div></div>
+
+  
+  </div>
+</header>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <span class="sr-only">Search folio-assistant</span>
+      <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  
+  
+</div>
+
+    <div class="main-content-wrap">
+      
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <h1 id="deployment-topologies-and-operating-modes">
+  
+  
+    <a href="#deployment-topologies-and-operating-modes" class="anchor-heading" aria-labelledby="deployment-topologies-and-operating-modes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Deployment topologies and operating modes
+  
+  
+</h1>
+    
+
+<blockquote>
+  <p><strong>Editorial correction, 2026-09-23.</strong> This proposal was written while the
+instance declaration was a fixed <code class="language-plaintext highlighter-rouge">harness.json</code>; it is <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> since
+the 2026-09-21 split (<code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code> is the config beside it). The
+references below were updated so a reader is not sent to a file that does not
+exist — the proposal’s argument is untouched, and only the filename moved.
+The occurrences were invisible while this lived under <code class="language-plaintext highlighter-rouge">fsh-guts/</code>, which the
+filename gate counts as retired material; publishing it is what surfaced them.</p>
+</blockquote>
+
+<p class="no_toc">Asked on <a href="https://github.com/litlfred/folio-assistant/issues/363">#363</a>,
+“self-sovereign compute + test harness deployments”, which lists roughly ten
+deployment and utilization scenarios and asks for a strawperson of each.</p>
+
+<blockquote>
+<h2 id="-decided-2026-09-19--the-axes-are-the-model">
+  
+  
+    <a href="#-decided-2026-09-19--the-axes-are-the-model" class="anchor-heading" aria-labelledby="-decided-2026-09-19--the-axes-are-the-model"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ✅ Decided 2026-09-19 — the axes are the model
+  
+  
+</h2>
+    
+
+  <p>The owner accepted the two-axis model: a <strong>topology</strong> (where things live) and
+an <strong>operating mode</strong> (what the harness is doing), with the named scenarios
+as points in their product rather than an enum of modes.</p>
+
+  <p><strong>The thirteen work items under epic <code class="language-plaintext highlighter-rouge">folio-assistant-5a3l</code> are unblocked by
+that decision</strong> and may now be implemented against this vocabulary. Nothing
+here is implemented yet; the axes are agreed, the code is not written.</p>
+
+  <p>Also settled in the same breath: <code class="language-plaintext highlighter-rouge">private repo</code> × <code class="language-plaintext highlighter-rouge">github-pages</code> is <strong>a
+possible deployment scenario</strong>, not an incompatibility — see §3.</p>
+
+  <p>What remains genuinely open is narrower, and it is §4’s last paragraph:
+whether <strong>sovereign cloud and self-sovereign are two topologies or one</strong>.
+They differ on a single axis. Threads:
+<a href="https://github.com/litlfred/folio-assistant/issues/369">#369</a>,
+<a href="https://github.com/litlfred/folio-assistant/issues/370">#370</a>,
+<a href="https://github.com/litlfred/folio-assistant/issues/371">#371</a>.</p>
+</blockquote>
+
+<p>The document is kept in the form it was argued in, rather than rewritten as a
+settled specification. §6 still lists what would change its mind, because an
+accepted model that cannot say what would falsify it is worth less than one
+that can — and two of those four tests have already fired once.</p>
+
+<ol id="markdown-toc">
+  <li><a href="#deployment-topologies-and-operating-modes" id="markdown-toc-deployment-topologies-and-operating-modes">Deployment topologies and operating modes</a>    <ol>
+      <li><a href="#-decided-2026-09-19--the-axes-are-the-model" id="markdown-toc--decided-2026-09-19--the-axes-are-the-model">✅ Decided 2026-09-19 — the axes are the model</a></li>
+      <li><a href="#0-the-claim-and-the-sentence-that-forces-it" id="markdown-toc-0-the-claim-and-the-sentence-that-forces-it">0. The claim, and the sentence that forces it</a></li>
+      <li><a href="#1-the-topology-axes" id="markdown-toc-1-the-topology-axes">1. The topology axes</a>        <ol>
+          <li><a href="#what-is-derived-and-must-not-become-an-axis" id="markdown-toc-what-is-derived-and-must-not-become-an-axis">What is derived, and must not become an axis</a></li>
+          <li><a href="#axis-3-is-declared--publicationhost" id="markdown-toc-axis-3-is-declared--publicationhost">Axis 3 is declared — <code class="language-plaintext highlighter-rouge">publication.host</code></a></li>
+        </ol>
+      </li>
+      <li><a href="#2-the-operating-modes" id="markdown-toc-2-the-operating-modes">2. The operating modes</a>        <ol>
+          <li><a href="#the-test-mode-carries-an-axis-of-its-own" id="markdown-toc-the-test-mode-carries-an-axis-of-its-own">The <code class="language-plaintext highlighter-rouge">test</code> mode carries an axis of its own</a></li>
+          <li><a href="#where-a-modes-output-goes--provenance-not-file-family" id="markdown-toc-where-a-modes-output-goes--provenance-not-file-family">Where a mode’s output goes — provenance, not file family</a></li>
+        </ol>
+      </li>
+      <li><a href="#3-incompatibilities--a-free-product-admits-combinations-that-must-not-exist" id="markdown-toc-3-incompatibilities--a-free-product-admits-combinations-that-must-not-exist">3. Incompatibilities — a free product admits combinations that must not exist</a>        <ol>
+          <li><a href="#settled-private-repo-with-pages-is-a-scenario-not-an-incompatibility" id="markdown-toc-settled-private-repo-with-pages-is-a-scenario-not-an-incompatibility">Settled: private repo with Pages is a scenario, not an incompatibility</a></li>
+          <li><a href="#the-principle-that-decides-it--do-not-encode-a-rule-against-a-working-setup" id="markdown-toc-the-principle-that-decides-it--do-not-encode-a-rule-against-a-working-setup">The principle that decides it — do not encode a rule against a working setup</a></li>
+        </ol>
+      </li>
+      <li><a href="#4-the-named-scenarios-as-points-in-the-product" id="markdown-toc-4-the-named-scenarios-as-points-in-the-product">4. The named scenarios as points in the product</a></li>
+      <li><a href="#5-the-sdlc-and-what-is-actually-missing" id="markdown-toc-5-the-sdlc-and-what-is-actually-missing">5. The SDLC, and what is actually missing</a></li>
+      <li><a href="#6-what-would-change-my-mind" id="markdown-toc-6-what-would-change-my-mind">6. What would change my mind</a></li>
+      <li><a href="#related-work" id="markdown-toc-related-work">Related work</a></li>
+    </ol>
+  </li>
+</ol><hr />
+<h2 id="0-the-claim-and-the-sentence-that-forces-it">
+  
+  
+    <a href="#0-the-claim-and-the-sentence-that-forces-it" class="anchor-heading" aria-labelledby="0-the-claim-and-the-sentence-that-forces-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0. The claim, and the sentence that forces it
+  
+  
+</h2>
+    
+
+<p>#363 names the scenarios — local git only, private GitHub, sovereign cloud,
+self-sovereign, developer, test/swarm, benchmarking, QA review — and then adds
+this:</p>
+
+<blockquote>
+  <p>may also oprate in mixed modalities, self sovergn cloud except models could be
+closed not openweight etc, or self-sovering connects to their national portal
+or PCP emr</p>
+</blockquote>
+
+<p><strong>A fixed list of named modes cannot express a mix.</strong> Each example given is a
+named profile with exactly one thing moved. Model them as an enum and every mix
+needs a new entry, combinatorially, forever.</p>
+
+<p>So this proposal models two orthogonal things and derives the named scenarios
+from their product:</p>
+
+<ul>
+  <li>a <strong>topology</strong> — WHERE the instance and its artefacts live;</li>
+  <li>an <strong>operating mode</strong> — WHAT the harness is doing.</li>
+</ul>
+
+<p>A mode runs <em>on</em> a topology. “Self-sovereign cloud with closed models” is not an
+eleventh mode; it is one topology with one axis set differently.</p>
+
+<pre><code class="language-mermaid">flowchart LR
+    subgraph M["Operating mode — what the harness is doing"]
+        A[author] --- I[ingest] --- D[develop] --- T[test] --- Q[qa-review] --- P[publish]
+    end
+    subgraph TP["Topology — where things live"]
+        F[forge] --- V[visibility] --- H[publication host] --- C[compute] --- N[network reach] --- S[tool surface] --- MC[model cardinality] --- MP[model provenance] --- DS[data stores] --- O[outward facing]
+    end
+    M --&gt;|runs on| TP
+</code></pre>
+
+<p>The same mode runs on many topologies, and the same topology hosts many modes
+over its life. That is the whole reason to separate them.</p><hr />
+<h2 id="1-the-topology-axes">
+  
+  
+    <a href="#1-the-topology-axes" class="anchor-heading" aria-labelledby="1-the-topology-axes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. The topology axes
+  
+  
+</h2>
+    
+
+<p>Ten axes. Each is a property of the <strong>deployment</strong>, not of the content, and each
+is declared rather than inferred.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>axis</th>
+      <th>values</th>
+      <th>what it decides</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><strong>forge</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">none</code> (local git only) · <code class="language-plaintext highlighter-rouge">github</code> · <code class="language-plaintext highlighter-rouge">self-hosted</code> (GitLab, Gitea, …) · <code class="language-plaintext highlighter-rouge">jurisdiction-hosted</code></td>
+      <td>where change proposals live</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><strong>visibility</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">public</code> · <code class="language-plaintext highlighter-rouge">private</code> · <code class="language-plaintext highlighter-rouge">internal</code></td>
+      <td>who can reach the repository</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><strong>publication host</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">github-pages</code> · <code class="language-plaintext highlighter-rouge">local-server</code> · <code class="language-plaintext highlighter-rouge">jurisdiction-endpoint</code> · <code class="language-plaintext highlighter-rouge">none</code></td>
+      <td>where a rendering is served from. <strong>The first axis actually declared</strong> — <code class="language-plaintext highlighter-rouge">publication.host</code> in <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><strong>compute</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">workstation</code> · <code class="language-plaintext highlighter-rouge">vendor-cloud</code> · <code class="language-plaintext highlighter-rouge">jurisdiction-cloud</code> · <code class="language-plaintext highlighter-rouge">own-infrastructure</code></td>
+      <td>whose hardware runs the harness</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><strong>network reach</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">internet</code> · <code class="language-plaintext highlighter-rouge">egress-restricted</code> · <code class="language-plaintext highlighter-rouge">air-gapped</code></td>
+      <td>what the harness may call out to</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td><strong>tool surface</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">mcp</code> · <code class="language-plaintext highlighter-rouge">cli</code> · <code class="language-plaintext highlighter-rouge">both</code></td>
+      <td>how a capability is invoked</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td><strong>model cardinality</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">single</code> · <code class="language-plaintext highlighter-rouge">stack</code></td>
+      <td>one model for every workflow, or several</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td><strong>model provenance</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">open-weight-local</code> · <code class="language-plaintext highlighter-rouge">hosted</code> · <code class="language-plaintext highlighter-rouge">mixed</code></td>
+      <td>where inference happens and under whose terms</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td><strong>data stores</strong></td>
+      <td><em>a set</em>: <code class="language-plaintext highlighter-rouge">none</code> · <code class="language-plaintext highlighter-rouge">hapi-fhir</code> · <code class="language-plaintext highlighter-rouge">national-portal</code> · <code class="language-plaintext highlighter-rouge">emr</code> · <code class="language-plaintext highlighter-rouge">wallet</code></td>
+      <td>what live systems exist in the L4–L5 context</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td><strong>outward facing</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">yes</code> · <code class="language-plaintext highlighter-rouge">no</code></td>
+      <td>whether the deployment serves people outside the operator</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Three of these deserve a note, because they are the ones most likely to be
+argued with.</p>
+
+<p><strong>Axis 6, tool surface, was not in my first draft.</strong> It was found by the
+falsification check in §4: #363’s developer mode says “run CLI version of tools”,
+and that is not a fact about <em>where</em> anything lives — it survives every value of
+every other axis. Every capability here nominally exists twice, as an MCP tool
+and as a <code class="language-plaintext highlighter-rouge">bun run</code> script, but the parity between the two is <strong>unmeasured</strong>. If
+a capability is MCP-only, a <code class="language-plaintext highlighter-rouge">cli</code> deployment silently cannot do it. That is bean
+<code class="language-plaintext highlighter-rouge">folio-assistant-2ngl</code>, and it is measurement work before it is design work.</p>
+
+<p><strong>Axes 7 and 8 are split deliberately.</strong> “How many models” and “whose models”
+vary independently: a stack of open-weight local models and a single closed
+hosted one are both real configurations. Collapsing them into one
+“model supply” axis was the first draft’s error and it is what made the
+air-gapped contradiction in §3 invisible.</p>
+
+<p><strong>Owner, 2026-09-24 (beans <code class="language-plaintext highlighter-rouge">4y2i</code>, <code class="language-plaintext highlighter-rouge">61tg</code>): a data store is something the
+harness sits BESIDE, never something it connects to</strong> — in sovereign cloud
+it produces artefacts a deployment pulls (“artefacts only”). The one
+exception under discussion is custody of wallet credentials in
+self-sovereign mode: see <a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/wallet-custody.html">wallet custody</a>.</p>
+
+<p><strong>Axis 9 is a set, not a single value.</strong> A sovereign deployment may hold a HAPI
+FHIR store <em>and</em> reach a national portal. Every other axis takes one value.</p>
+<h3 id="what-is-derived-and-must-not-become-an-axis">
+  
+  
+    <a href="#what-is-derived-and-must-not-become-an-axis" class="anchor-heading" aria-labelledby="what-is-derived-and-must-not-become-an-axis"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is derived, and must not become an axis
+  
+  
+</h3>
+    
+
+<p>Some facts follow from the axes and must be computed, never declared
+separately — a second declaration is a second thing to disagree with.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>derived fact</th>
+      <th>from</th>
+      <th>why it matters</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>can <code class="language-plaintext highlighter-rouge">Content-Type</code> be enforced?</td>
+      <td>axis 3</td>
+      <td><code class="language-plaintext highlighter-rouge">github-pages</code> <strong>cannot</strong> serve <code class="language-plaintext highlighter-rouge">application/ld+json</code>; <code class="language-plaintext highlighter-rouge">local-server</code> can. Settled in <a href="../reference/skill-instructions/serving-renderings.html"><code class="language-plaintext highlighter-rouge">serving-renderings</code></a></td>
+    </tr>
+    <tr>
+      <td>where did this render, and what URL do I tell the author?</td>
+      <td>axis 3</td>
+      <td>bean <code class="language-plaintext highlighter-rouge">folio-assistant-1lfx</code> — today this is composed on the assumption of Pages</td>
+    </tr>
+    <tr>
+      <td>may a capability probe install a missing tool?</td>
+      <td>axis 5</td>
+      <td><code class="language-plaintext highlighter-rouge">--check-deps</code> assumes it may. On <code class="language-plaintext highlighter-rouge">air-gapped</code> it may not</td>
+    </tr>
+    <tr>
+      <td>is a pull request the term of art?</td>
+      <td>axis 1</td>
+      <td>GitHub says pull request, GitLab says merge request. Bean <code class="language-plaintext highlighter-rouge">folio-assistant-4dbr</code></td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="axis-3-is-declared--publicationhost">
+  
+  
+    <a href="#axis-3-is-declared--publicationhost" class="anchor-heading" aria-labelledby="axis-3-is-declared--publicationhost"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Axis 3 is declared — <code class="language-plaintext highlighter-rouge">publication.host</code>
+  
+  
+</h3>
+    
+
+<p>The first of these axes to exist in code rather than only in this table.
+<code class="language-plaintext highlighter-rouge">publication.host</code> in <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code>, values exactly the four above, and
+<code class="language-plaintext highlighter-rouge">publicationHost()</code> in <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code> reads it. Bean
+<code class="language-plaintext highlighter-rouge">folio-assistant-1lfx</code>.</p>
+
+<p><strong>Absent is a third state and callers must keep it one.</strong> It means the
+deployment has not said, NOT <code class="language-plaintext highlighter-rouge">github-pages</code>. Defaulting would put the very
+defect this closes one layer lower, where nobody looks: an agent telling an
+author “your page is at …” on a deployment that publishes nowhere near there.</p>
+
+<p><strong>It is deliberately NOT the same field as <code class="language-plaintext highlighter-rouge">readme.linkStyle</code></strong>, which lives
+in <code class="language-plaintext highlighter-rouge">harness.config.json</code> and answers how a link to a published artefact is
+<em>written</em> (<code class="language-plaintext highlighter-rouge">blob</code> | <code class="language-plaintext highlighter-rouge">pages</code> | <code class="language-plaintext highlighter-rouge">raw</code>). Three adjacent questions, kept apart:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>field</th>
+      <th>question</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">canonicalUrl</code></td>
+      <td>what base are <code class="language-plaintext highlighter-rouge">@id</code>s minted against?</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">publication.host</code></td>
+      <td>what kind of thing serves the rendering?</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">readme.linkStyle</code></td>
+      <td>how is a link to a published artefact written?</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Two fields in two files can disagree, and that is the cost of separating
+them. <code class="language-plaintext highlighter-rouge">publicationLinkStyleConflict()</code> is the check that pays it, with
+<strong>exactly one rule</strong>, an entailment: <code class="language-plaintext highlighter-rouge">linkStyle: "pages"</code> writes links
+against a Pages site, so any other declared host makes them dead.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">raw</code> is deliberately unruled.</strong> It resolves through
+<code class="language-plaintext highlighter-rouge">raw.githubusercontent.com</code> and so depends on the forge and on repository
+<strong>visibility</strong> — and measured 2026-09-19, the schema declares neither. A rule
+needing a fact the harness does not have is a guess wearing a gate’s
+authority. There is a test recording that gap, so it is checked rather than
+remembered.</p><hr />
+<h2 id="2-the-operating-modes">
+  
+  
+    <a href="#2-the-operating-modes" class="anchor-heading" aria-labelledby="2-the-operating-modes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. The operating modes
+  
+  
+</h2>
+    
+
+<p>Six. A mode is a <em>thing the harness is doing</em>, and more than one may be live at
+once in different sessions against the same repository.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>mode</th>
+      <th>what it does</th>
+      <th>already has a process?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>author</strong></td>
+      <td>produce and edit folio content</td>
+      <td>yes — <code class="language-plaintext highlighter-rouge">authoring-a-paper</code>, <code class="language-plaintext highlighter-rouge">authoring-a-document</code>, <code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></td>
+    </tr>
+    <tr>
+      <td><strong>ingest</strong></td>
+      <td>receive external content into <code class="language-plaintext highlighter-rouge">uploads/</code> → <code class="language-plaintext highlighter-rouge">library/</code></td>
+      <td>yes — the five <code class="language-plaintext highlighter-rouge">ingest-*.bpmn</code></td>
+    </tr>
+    <tr>
+      <td><strong>develop</strong></td>
+      <td>change the platform itself</td>
+      <td><strong>no</strong> — §5</td>
+    </tr>
+    <tr>
+      <td><strong>test</strong></td>
+      <td>run a scenario bank; benchmark across models</td>
+      <td><strong>no</strong></td>
+    </tr>
+    <tr>
+      <td><strong>qa-review</strong></td>
+      <td>produce audited verdicts about the folio</td>
+      <td>partly — the QA sweep, <code class="language-plaintext highlighter-rouge">editing-hci-validation</code></td>
+    </tr>
+    <tr>
+      <td><strong>publish</strong></td>
+      <td>render and serve</td>
+      <td>yes — <code class="language-plaintext highlighter-rouge">draft-to-publication</code></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong><code class="language-plaintext highlighter-rouge">ingest</code> is a mode and not a topology property</strong>, though #363 raises it as one
+(“have incoming DAK content” under self-sovereign). Receiving content is
+something the harness <em>does</em>; that a given deployment does it often is a fact
+about how it is used, not about where it lives. The reason to be careful here:
+the ingestion pipeline’s capability probes assume tools can be installed on
+demand, which is an <em>axis 5</em> constraint — so the interaction is real, but it is
+an interaction between a mode and an axis, which is exactly what this model is
+shaped to express.</p>
+<h3 id="the-test-mode-carries-an-axis-of-its-own">
+  
+  
+    <a href="#the-test-mode-carries-an-axis-of-its-own" class="anchor-heading" aria-labelledby="the-test-mode-carries-an-axis-of-its-own"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The <code class="language-plaintext highlighter-rouge">test</code> mode carries an axis of its own
+  
+  
+</h3>
+    
+
+<p>#363: “shared or indepedent work queues.” This is not a topology axis — it is a
+property of a <strong>run</strong>:</p>
+
+<ul>
+  <li><strong>shared</strong> — any model may take any item. Maximises throughput. The models end
+up having worked on <em>different items</em>, so their outputs are not comparable.</li>
+  <li><strong>independent</strong> — every model gets the same bank. Necessary for benchmarking,
+and wasteful for anything else.</li>
+</ul>
+
+<p>These are not a setting to tune, they are different activities, and conflating
+them produces a benchmark that means nothing. Bean <code class="language-plaintext highlighter-rouge">folio-assistant-amom</code>.</p>
+<h3 id="where-a-modes-output-goes--provenance-not-file-family">
+  
+  
+    <a href="#where-a-modes-output-goes--provenance-not-file-family" class="anchor-heading" aria-labelledby="where-a-modes-output-goes--provenance-not-file-family"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where a mode’s output goes — provenance, not file family
+  
+  
+</h3>
+    
+
+<p>The rule is already the repository’s, recorded in <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code>’s declaration
+of the <code class="language-plaintext highlighter-rouge">qa</code> graph: <strong>placement follows provenance.</strong> This proposal adds one
+consequence and does not change the rule.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>mode</th>
+      <th>output</th>
+      <th>goes in the KG?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>qa-review</td>
+      <td>a verdict about a block, a translation, a recommendation</td>
+      <td><strong>yes</strong> — it is an assertion about the folio</td>
+    </tr>
+    <tr>
+      <td>test</td>
+      <td>a benchmark number for a model under a configuration</td>
+      <td><strong>no</strong> — it is an assertion about a <em>model</em></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>That second row is a deliberate exception to “everything is a graph node”, so it
+needs its reason written down or the next agent will helpfully declare a graph
+for it. The reason: admitting benchmark numbers would make the graph’s contents
+depend on which model happened to run it, and two instances of the same folio
+would then hold different graphs. Beans <code class="language-plaintext highlighter-rouge">folio-assistant-wp49</code> (the report) and
+<code class="language-plaintext highlighter-rouge">folio-assistant-6qk5</code> (the verdicts).</p><hr />
+<h2 id="3-incompatibilities--a-free-product-admits-combinations-that-must-not-exist">
+  
+  
+    <a href="#3-incompatibilities--a-free-product-admits-combinations-that-must-not-exist" class="anchor-heading" aria-labelledby="3-incompatibilities--a-free-product-admits-combinations-that-must-not-exist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Incompatibilities — a free product admits combinations that must not exist
+  
+  
+</h2>
+    
+
+<p>This is the part that makes the model checkable rather than merely expressive.
+An axis product of ten axes is large and most of it is nonsense. The following
+pairs <strong>cannot co-occur</strong>, and a declaration naming one should be refused rather
+than quietly accepted.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>A</th>
+      <th>B</th>
+      <th>why</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">publication: github-pages</code></td>
+      <td><code class="language-plaintext highlighter-rouge">forge: none</code> / <code class="language-plaintext highlighter-rouge">self-hosted</code> / <code class="language-plaintext highlighter-rouge">jurisdiction-hosted</code></td>
+      <td>Pages is a GitHub product; there is nothing to publish from</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">network: air-gapped</code></td>
+      <td><code class="language-plaintext highlighter-rouge">forge: github</code></td>
+      <td>the forge is unreachable</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">network: air-gapped</code></td>
+      <td><code class="language-plaintext highlighter-rouge">model provenance: hosted</code></td>
+      <td><strong>inference cannot leave the airlock.</strong> This is #363’s own mixed example — “self-sovereign … models could be closed” — and it is expressible <em>only</em> if that deployment is <code class="language-plaintext highlighter-rouge">egress-restricted</code> rather than <code class="language-plaintext highlighter-rouge">air-gapped</code>. See below</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">network: air-gapped</code></td>
+      <td><code class="language-plaintext highlighter-rouge">publication: github-pages</code></td>
+      <td>follows from the two above</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">outward facing: yes</code></td>
+      <td><code class="language-plaintext highlighter-rouge">publication: none</code></td>
+      <td>nothing is served, so nobody outside can reach it</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<blockquote>
+  <p><strong>Enforced since 2026-09-19.</strong> All five pairs are now refused rather than
+described: <code class="language-plaintext highlighter-rouge">topologyConflicts()</code> in <code class="language-plaintext highlighter-rouge">schemas/cat-harness.ts</code>, thrown from
+<code class="language-plaintext highlighter-rouge">readDeclaration</code> as <code class="language-plaintext highlighter-rouge">TopologyConflictError</code>. Four axes are declared —
+<code class="language-plaintext highlighter-rouge">forge</code>, <code class="language-plaintext highlighter-rouge">network</code>, <code class="language-plaintext highlighter-rouge">modelProvenance</code>, <code class="language-plaintext highlighter-rouge">outwardFacing</code> — joined with the
+<code class="language-plaintext highlighter-rouge">publication.host</code> that already existed. <strong>Every axis is optional and absent
+means “has not said”</strong>, so no existing deployment is refused; the first test
+in the suite is that this repository’s own declaration still reads.
+Bean <code class="language-plaintext highlighter-rouge">folio-assistant-g7vb</code>.</p>
+
+  <p><strong><code class="language-plaintext highlighter-rouge">air-gapped</code> × <code class="language-plaintext highlighter-rouge">mixed</code> settled 2026-09-20, and not by the reason I gave.</strong>
+Owner: <em>“no air-gapped-mixed. that is mixed already. its a spectrum, based
+on the deployment archicutectur of each machine actor.”</em> At deployment
+level <strong><code class="language-plaintext highlighter-rouge">mixed</code> means the actors differ from each other</strong>, so refusing it
+would refuse the normal case. The deployment value is an aggregate over
+participants that are each individually consistent — which is also why
+reach belongs on the <strong>actor</strong> (see
+<a href="actor-facts-and-their-processes.html">Actor facts and their processes</a>),
+and why a <code class="language-plaintext highlighter-rouge">network</code> × <code class="language-plaintext highlighter-rouge">provenance</code> rule is sound only where the provenance
+value admits no local participant.</p>
+
+  <p>Two things stayed out, both on §3’s own bar — <em>is a counter-example
+conceivable?</em> Private repo × Pages, settled above. And <code class="language-plaintext highlighter-rouge">air-gapped</code> ×
+<code class="language-plaintext highlighter-rouge">modelProvenance: mixed</code>, where the entailment looks identical to the
+<code class="language-plaintext highlighter-rouge">hosted</code> row but only holds if <code class="language-plaintext highlighter-rouge">mixed</code> necessarily means a LIVE hosted
+component; a deployment could mean “local models, hosted path configured
+and disabled”. <strong>Open for the owner</strong>, and recorded in a test so it is a
+decision rather than an omission.</p>
+</blockquote>
+
+<p><strong>The third row is the most useful thing in this document.</strong> #363 gives
+“self-sovereign cloud except models could be closed not openweight” as a mixed
+modality it must support. The axes express it — but only at
+<code class="language-plaintext highlighter-rouge">egress-restricted</code>, not at <code class="language-plaintext highlighter-rouge">air-gapped</code>. Those two were one value in the first
+draft of this proposal, and the contradiction was invisible until they were
+split. A deployment that wants closed hosted models is, by that choice, not
+air-gapped, and whoever operates it should be told so by a check rather than
+discover it in procurement.</p>
+<h3 id="settled-private-repo-with-pages-is-a-scenario-not-an-incompatibility">
+  
+  
+    <a href="#settled-private-repo-with-pages-is-a-scenario-not-an-incompatibility" class="anchor-heading" aria-labelledby="settled-private-repo-with-pages-is-a-scenario-not-an-incompatibility"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Settled: private repo with Pages is a scenario, not an incompatibility
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">visibility: private</code> × <code class="language-plaintext highlighter-rouge">publication: github-pages</code> is <strong>a possible deployment
+scenario</strong>. Owner, 2026-09-19. It stays out of the table above.</p>
+
+<p>#363’s “github on private repo so gh-pages not avaialbe” is the operative fact
+for the deployment that prompted the issue — a <em>reason to reach for the local
+server</em>, not a property of the mechanism. Pages on a private repository exists
+on some plans, so a deployment may legitimately declare both, and the harness
+has nothing to say about it.</p>
+<h3 id="the-principle-that-decides-it--do-not-encode-a-rule-against-a-working-setup">
+  
+  
+    <a href="#the-principle-that-decides-it--do-not-encode-a-rule-against-a-working-setup" class="anchor-heading" aria-labelledby="the-principle-that-decides-it--do-not-encode-a-rule-against-a-working-setup"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The principle that decides it — do not encode a rule against a working setup
+  
+  
+</h3>
+    
+
+<p>Stated by the owner, 2026-09-19, and it governs every row of the table above:</p>
+
+<blockquote>
+  <p><strong>“dont encode rules against a working setup.”</strong></p>
+</blockquote>
+
+<p>A constraint is a <strong>refusal</strong>, and the two ways it can be wrong are not
+symmetric. A <em>missing</em> constraint lets a bad topology through, and it fails
+visibly at the point of use with the real error. A <em>wrong</em> constraint refuses a
+good topology at the gate, with a confident message asserting the thing is
+impossible — and nobody investigates a settled question. The same asymmetry is
+why <code class="language-plaintext highlighter-rouge">serving-renderings</code> reports “could not enforce” as its own state, and why
+<code class="language-plaintext highlighter-rouge">ci-health</code> never renders “could not check” as green.</p>
+
+<p>So the bar for a row in §3 is <strong>evidence, not confidence</strong>:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>encode it</th>
+      <th>do not encode it</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>an <strong>entailment of the mechanism</strong> — Pages has no per-file media-type configuration; air-gapped compute cannot reach hosted inference</td>
+      <td><strong>someone said so</strong>, however authoritative</td>
+    </tr>
+    <tr>
+      <td><strong>measured here</strong>, with the command and the date</td>
+      <td>true of <strong>one account, one plan, one version</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Every one of the five pairs in §3 is an entailment. The private-repo row is a
+report, which is why it is prose and not a row. The test is never how certain
+the claim feels — it is whether a counter-example is conceivable.</p>
+
+<p>Recorded for future sessions as the memory node
+<code class="language-plaintext highlighter-rouge">do-not-encode-a-rule-against-a-working-setup</code>.</p><hr />
+<h2 id="4-the-named-scenarios-as-points-in-the-product">
+  
+  
+    <a href="#4-the-named-scenarios-as-points-in-the-product" class="anchor-heading" aria-labelledby="4-the-named-scenarios-as-points-in-the-product"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. The named scenarios as points in the product
+  
+  
+</h2>
+    
+
+<p>The falsification test for §0’s claim: take every scenario #363 names and
+express it. <strong>Every one is expressible.</strong> Nothing was left over, and the
+exercise found axis 6 and the <code class="language-plaintext highlighter-rouge">ingest</code> mode, both of which were missing from the
+first draft.</p>
+
+<p>Axes in column order: forge · visibility · publication · compute · network ·
+tool surface · cardinality · provenance · stores · outward.</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>profile</th>
+      <th>axis values</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>current state</strong> (this repo, today)</td>
+      <td><code class="language-plaintext highlighter-rouge">github</code> · <code class="language-plaintext highlighter-rouge">public</code> · <code class="language-plaintext highlighter-rouge">github-pages</code> · <code class="language-plaintext highlighter-rouge">vendor-cloud</code> · <code class="language-plaintext highlighter-rouge">internet</code> · <code class="language-plaintext highlighter-rouge">both</code> · <code class="language-plaintext highlighter-rouge">single</code> · <code class="language-plaintext highlighter-rouge">hosted</code> · <code class="language-plaintext highlighter-rouge">none</code> · <code class="language-plaintext highlighter-rouge">yes</code></td>
+    </tr>
+    <tr>
+      <td><strong>local git only</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">none</code> · — · <code class="language-plaintext highlighter-rouge">local-server</code> · <code class="language-plaintext highlighter-rouge">workstation</code> · any · <code class="language-plaintext highlighter-rouge">cli</code> · <code class="language-plaintext highlighter-rouge">single</code> · any · <code class="language-plaintext highlighter-rouge">none</code> · <code class="language-plaintext highlighter-rouge">no</code></td>
+    </tr>
+    <tr>
+      <td><strong>private repo</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">github</code> · <code class="language-plaintext highlighter-rouge">private</code> · <code class="language-plaintext highlighter-rouge">local-server</code> · any · <code class="language-plaintext highlighter-rouge">internet</code> · <code class="language-plaintext highlighter-rouge">both</code> · <code class="language-plaintext highlighter-rouge">single</code> · <code class="language-plaintext highlighter-rouge">hosted</code> · <code class="language-plaintext highlighter-rouge">none</code> · <code class="language-plaintext highlighter-rouge">no</code></td>
+    </tr>
+    <tr>
+      <td><strong>developer</strong></td>
+      <td>any · any · <code class="language-plaintext highlighter-rouge">local-server</code> · <code class="language-plaintext highlighter-rouge">workstation</code> · <code class="language-plaintext highlighter-rouge">internet</code> · <code class="language-plaintext highlighter-rouge">cli</code> · <code class="language-plaintext highlighter-rouge">single</code> · any · <code class="language-plaintext highlighter-rouge">none</code> · <code class="language-plaintext highlighter-rouge">no</code></td>
+    </tr>
+    <tr>
+      <td><strong>sovereign cloud</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">jurisdiction-hosted</code> · <code class="language-plaintext highlighter-rouge">internal</code> · <code class="language-plaintext highlighter-rouge">jurisdiction-endpoint</code> · <code class="language-plaintext highlighter-rouge">jurisdiction-cloud</code> · <code class="language-plaintext highlighter-rouge">egress-restricted</code> · <code class="language-plaintext highlighter-rouge">both</code> · any · any · <code class="language-plaintext highlighter-rouge">{hapi-fhir, portal, wallet}</code> · <strong><code class="language-plaintext highlighter-rouge">yes</code></strong></td>
+    </tr>
+    <tr>
+      <td><strong>self-sovereign</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">self-hosted</code> or <code class="language-plaintext highlighter-rouge">none</code> · <code class="language-plaintext highlighter-rouge">internal</code> · <code class="language-plaintext highlighter-rouge">local-server</code> · <code class="language-plaintext highlighter-rouge">own-infrastructure</code> · <code class="language-plaintext highlighter-rouge">egress-restricted</code> or <code class="language-plaintext highlighter-rouge">air-gapped</code> · <code class="language-plaintext highlighter-rouge">both</code> · any · <code class="language-plaintext highlighter-rouge">open-weight-local</code> · <code class="language-plaintext highlighter-rouge">{hapi-fhir, wallet}</code> · <strong><code class="language-plaintext highlighter-rouge">no</code></strong></td>
+    </tr>
+    <tr>
+      <td><strong>self-sovereign + closed models</strong></td>
+      <td>as above, but <code class="language-plaintext highlighter-rouge">provenance: hosted</code> and therefore <code class="language-plaintext highlighter-rouge">network: egress-restricted</code> — see §3</td>
+    </tr>
+    <tr>
+      <td><strong>self-sovereign + national portal / EMR</strong></td>
+      <td>as self-sovereign, <code class="language-plaintext highlighter-rouge">stores: {hapi-fhir, wallet, national-portal, emr}</code>. Still <code class="language-plaintext highlighter-rouge">outward: no</code> — it <em>consumes</em> those systems, it does not serve them</td>
+    </tr>
+    <tr>
+      <td><strong>test / swarm</strong></td>
+      <td>a <em>mode</em> on any topology, with <code class="language-plaintext highlighter-rouge">cardinality: stack</code></td>
+    </tr>
+    <tr>
+      <td><strong>benchmarking</strong></td>
+      <td>a <em>mode</em> on any topology; queue discipline <code class="language-plaintext highlighter-rouge">independent</code></td>
+    </tr>
+    <tr>
+      <td><strong>qa review</strong></td>
+      <td>a <em>mode</em> on any topology</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Sovereign cloud and self-sovereign differ on exactly one axis</strong>: <code class="language-plaintext highlighter-rouge">outward
+facing</code>. Everything else about them is a range that overlaps. If that line does
+not survive review, the honest conclusion is that they are <em>one</em> topology with
+an outward-facing axis, and two named profiles is one too many.</p><hr />
+<h2 id="5-the-sdlc-and-what-is-actually-missing">
+  
+  
+    <a href="#5-the-sdlc-and-what-is-actually-missing" class="anchor-heading" aria-labelledby="5-the-sdlc-and-what-is-actually-missing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. The SDLC, and what is actually missing
+  
+  
+</h2>
+    
+
+<p>#363: “need better documentation on deve, testing and deployment lifecycle to
+fit in with the software development lifecycle (SDLC - it needs to be formal
+formal, subprocess includes developing MVP etc, align/cleanup exisrting
+documentation).”</p>
+
+<p><strong>Measured 2026-09-19.</strong> <code class="language-plaintext highlighter-rouge">processes/</code> holds 33 BPMN files (this said
+31 when first written; two landed the same day, which is why
+<a href="sdlc-process-audit.html">the audit</a> re-measures rather than quotes). The
+content-agnostic, <code class="language-plaintext highlighter-rouge">strict</code> ones — <code class="language-plaintext highlighter-rouge">content-lifecycle</code>, <code class="language-plaintext highlighter-rouge">draft-to-publication</code>,
+<code class="language-plaintext highlighter-rouge">editing-hci-validation</code> — plus seven <code class="language-plaintext highlighter-rouge">crdm-*</code> cover requirements and content.
+There is <strong>no BPMN for the software development lifecycle itself</strong>: for how a
+change to the <em>platform</em> travels from a need to a released capability.
+<code class="language-plaintext highlighter-rouge">beans list -S SDLC</code> returns empty.</p>
+
+<p>So the gap is not that the documentation is scattered. It is that the SDLC is
+the one process here described only in prose — <code class="language-plaintext highlighter-rouge">AGENTS.md</code> §”Commit early,
+commit often, always PR”, <a href="../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a>,
+<code class="language-plaintext highlighter-rouge">docs/contributing.md</code> — while this project’s own rule is that anything with
+actors, activities and a control flow is authored as BPMN, not as prose and not
+as a Mermaid fence.</p>
+
+<p><strong>“Formal formal” has to mean executable, not longer.</strong> A process here is formal
+when its lanes bind to declared roles, every activity carries
+<code class="language-plaintext highlighter-rouge">&lt;bootstrap.processes:skill ref&gt;</code>, bean operations are declared with <code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:bean op&gt;</code>, and
+<code class="language-plaintext highlighter-rouge">bun run kg:audit</code> is green on its joins. <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code> already meets
+that bar and is the model to copy.</p>
+
+<p>Two cautions for whoever takes bean <code class="language-plaintext highlighter-rouge">folio-assistant-haya</code>:</p>
+
+<ul>
+  <li><strong>MVP may already be a subprocess.</strong> <code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code> contains “share MVP”
+and loops back into implementation. Check before drawing a second one.</li>
+  <li><strong>Do not draw over the existing 33.</strong> The first deliverable is an audit
+saying which diagram owns which phase — <em>including the phases nothing owns</em>.
+<strong>Done:</strong> <a href="sdlc-process-audit.html">SDLC process audit</a>. It confirms the MVP
+caution above (the subprocess exists, in <code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code>), finds five
+phases unowned and one half-owned, and finds that the missing artefact has
+an exact template in <code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code>.</li>
+</ul>
+
+<p><strong>Where this proposal touches the SDLC</strong>: it adds a deployment phase whose
+activities differ per topology. That is why the SDLC bean depends on the axes
+being agreed — a lane whose steps change with the deployment target cannot be
+drawn before the targets are named.</p><hr />
+<h2 id="6-what-would-change-my-mind">
+  
+  
+    <a href="#6-what-would-change-my-mind" class="anchor-heading" aria-labelledby="6-what-would-change-my-mind"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. What would change my mind
+  
+  
+</h2>
+    
+
+<p>Per the standard this project sets for a proposal: if it cannot say what
+evidence would move it, it is an opinion wearing a heading.</p>
+
+<ol>
+  <li><strong>A scenario that is not a point in the product.</strong> If the BA names a
+deployment needing a value no axis ranges over, the axes are incomplete.
+Two were already found this way and added.</li>
+  <li><strong>Two axes that do not vary independently.</strong> If fixing one always fixes
+another, they are one axis wearing two names — which is what axes 7 and 8
+were, until splitting them exposed the air-gapped contradiction.</li>
+  <li><strong>An incompatibility table that grows without bound.</strong> A handful of stated
+incompatibilities is a feature. Dozens would mean the axes carve the space
+badly and a smaller set of richer values would serve better.</li>
+  <li><strong>Sovereign cloud and self-sovereign collapsing.</strong> If review finds the
+outward-facing line does not hold, they are one topology, and this document
+should say so rather than keep two names for one thing.</li>
+</ol><hr />
+<h2 id="related-work">
+  
+  
+    <a href="#related-work" class="anchor-heading" aria-labelledby="related-work"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related work
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>item</th>
+      <th>what it holds</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/litlfred/folio-assistant/issues/363">#363</a></td>
+      <td>the request</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-5a3l</code></td>
+      <td>the epic, and the fourteen beans under it</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-4dbr</code></td>
+      <td>forge portability as Tool nodes, not a sixth repo. Its §”Sovereign compute” already separates <em>which service hosts change proposals</em> from <em>running with no external service at all</em>, and records that the portability claim is asserted and never exercised</td>
+    </tr>
+    <tr>
+      <td><a href="../reference/skill-instructions/serving-renderings.html"><code class="language-plaintext highlighter-rouge">serving-renderings</code></a></td>
+      <td>per-host media types, and the three enforcement states. Explicitly leaves “how to run a server” uncovered — the hole bean <code class="language-plaintext highlighter-rouge">folio-assistant-0hi8</code> fills</td>
+    </tr>
+    <tr>
+      <td><a href="../architecture/cat-harness-minimum.html"><code class="language-plaintext highlighter-rouge">cat-harness-minimum</code></a></td>
+      <td>the written claim that the harness runs with no forge and no MCP. 614 lines, and untested</td>
+    </tr>
+    <tr>
+      <td><a href="../swarm-management.html"><code class="language-plaintext highlighter-rouge">swarm-management</code></a></td>
+      <td>a swarm is asked for every time, per swarm, with agent count, model level and rough cost. Unchanged by this proposal</td>
+    </tr>
+  </tbody>
+</table></div>
+
+          
+
+          
+            
+          
+        </main>
+        
+<hr>
+<footer>
+  
+
+  <!-- GENERATED by scripts/gen-docs-pages.ts. Do not hand-edit: `bun run cat-harness/scripts/gen-docs-pages.ts` rewrites it, and `--check` fails the build if it is stale. -->
+<section class="fa-todo-listing" id="fa-todo-listing" aria-labelledby="fa-todo-listing-heading" data-fa-todo-count="3">
+  <h2 class="fa-todo-listing-heading" id="fa-todo-listing-heading">Open notes (3)</h2>
+  <p class="fa-todo-listing-lead">Every note in this folio, in document order. This listing is the artefact; the board is an overlay over it.</p>
+  <ol class="fa-todo-listing-items">
+    <li class="fa-todo-listing-item" id="fa-todo-listing-human-todos-page-says-not-built-yet" data-fa-todo="human-todos-page-says-not-built-yet">
+      <h3 class="fa-todo-listing-summary">The human-todos page still says &#39;Not built yet&#39; — the store now exists</h3>
+      <dl class="fa-todo-listing-meta">
+        <dt>Status</dt><dd>open</dd>
+        <dt>Priority</dt><dd>high</dd>
+        <dt>Raised by</dt><dd>agent</dd>
+        <dt>Created</dt><dd>2026-09-19</dd>
+        <dt>About</dt><dd><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/beans-and-todos.html#human-todos">beans-and-todos &rsaquo; human-todos</a></dd>
+      </dl>
+      <div class="fa-todo-listing-body">
+        <p>`content/docs/beans-and-todos/human-todos.md` opens **&quot;Not built yet&quot;**, and
+that is no longer true. `todos/` is a declared graph with items on disk, a
+reader, a published JSON index and a board on the site.</p>
+        <p>This todo is attached to that block, so it renders beside the sentence it
+contradicts. That is the per-page assignment working on a real case rather
+than a demonstration — the page is genuinely stale and somebody has to decide
+what it should say now.</p>
+        <p>## What the page still gets RIGHT, and must not lose</p>
+        <p>Three of its four claims survive, and they are the valuable part:</p>
+        <p>- **&quot;Do not repurpose beans for it.&quot;** Still correct, and now structural:
+  `beans/` and `todos/` are separate declared graphs.
+- **When a todo is shown.** Still undecided. This PR answers it for the
+  navbar and the board; it does not answer whether an open item should
+  surface unasked, and the page&#39;s objection stands — surfacing every item on
+  every turn is noise, surfacing none is a list nobody reads.
+- **How one is retired.** Still undecided. `TodoStatus` carries `resolved`
+  and `wontfix`, but nothing retires one, and the page&#39;s point holds: a
+  person abandoning a reminder is ordinary and needs no ceremony, so the bean
+  rules do not transfer.</p>
+        <p>## What has changed and needs writing down</p>
+        <p>- **How a person creates one** is answered in the worst way: by an agent
+  writing a file. There is no human path at all yet.
+- The 2×2 the page is missing — memory against workflow management, human
+  against agent — with the empty quadrant named.</p>
+        <p>## Done when</p>
+        <p>The page says what is true. Cheapest correct move is an edit to that block,
+not a rewrite: strike &quot;Not built yet&quot;, keep the three open questions, add
+what now exists and who created it.</p>
+        <p>Every todo carries a pencil to exactly this file, so the edit is one click
+from where the stale sentence renders.</p>
+      </div>
+      <p class="fa-todo-listing-links"><a href="https://github.com/litlfred/folio-assistant/blob/main/todos/items/human-todos-page-says-not-built-yet.md">View source</a> &middot; <a href="https://github.com/litlfred/folio-assistant/edit/main/todos/items/human-todos-page-says-not-built-yet.md">Edit</a></p>
+      <ul class="fa-todo-listing-relations">
+        <li><a href="https://github.com/litlfred">who: github:litlfred</a></li>
+        <li><a href="https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio-assistant-h32d--memory-and-todos-one-schema-attachable-to-any-kg-n.md">bean: folio-assistant-h32d</a></li>
+        <li><a href="https://github.com/litlfred/folio-assistant/pull/336">PR: #336</a></li>
+        <li><a href="https://github.com/litlfred/folio-assistant/pull/314">PR: #314</a></li>
+      </ul>
+    </li>
+    <li class="fa-todo-listing-item" id="fa-todo-listing-subagent-roles-for-the-two-judgement-agents" data-fa-todo="subagent-roles-for-the-two-judgement-agents">
+      <h3 class="fa-todo-listing-summary">Decide which roles content-pipeline-navigator and platform-boundary-guard take on</h3>
+      <dl class="fa-todo-listing-meta">
+        <dt>Status</dt><dd>blocked</dd>
+        <dt>Priority</dt><dd>medium</dd>
+        <dt>Raised by</dt><dd>agent</dd>
+        <dt>Created</dt><dd>2026-09-19</dd>
+        <dt>About</dt><dd><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/publication-workflow.html#agents-and-system-actors">publication-workflow &rsaquo; agents-and-system-actors</a></dd>
+      </dl>
+      <div class="fa-todo-listing-body">
+        <p>`ci-health-watcher` is settled: it is a mechanical participant in the CI
+process, so it takes `build-pipeline` and `validation-pipeline`, both
+`actorKind: &quot;system&quot;`. Declared, and `memoryForRoles` now discriminates
+because of it.</p>
+        <p>**The other two are not settled by that argument, and the reason is precise.**
+Both system roles are described as running a fixed program and exercising *no
+judgement*. That is exactly what makes them the right home for a watcher — and
+exactly why they are the wrong home for these two:</p>
+        <p>- **`platform-boundary-guard`** decides whether a literal naming one folio
+  belongs in platform code, and whether a new content type needs an adapter or
+  only a profile. Those are judgements; a wrong one is not a failed check.
+- **`content-pipeline-navigator`** is closer to mechanical — it knows which
+  stage owns which file — but it also answers &quot;should this be a block kind&quot;,
+  which is not.</p>
+        <p>## What differs depending on the answer</p>
+        <p>Nothing breaks either way today: memory is scoped by agent and the duplication
+is already fixed, because one node can reach several agents. What changes is
+whether a fact written for one of these two reaches an agent standing in that
+lane, or only the agent named in the file.</p>
+        <p>## Options</p>
+        <p>1. **Leave both agent-scoped, and say so in the role model.** Costs nothing,
+   and is honest — neither is a lane anyone else acts in. The cost is that the
+   role axis stays half-used, with one actor on it.
+2. **Give them a judgement-bearing existing role** — `editor` and
+   `code-reviewer` are the nearest. Cheap, and wrong if the fit is loose: a
+   forced edge is one every later audit trusts as true.
+3. **Add roles for them.** Honest edges. But `AGENTS.md` warns under
+   `skill-in-role-or-process` against &quot;inventing roles and activities to
+   absorb tools that do not want them&quot;, and a role with one actor describes
+   the tool rather than the work.</p>
+        <p>No recommendation. The `ci-health-watcher` case was settled by a property of
+the work (it exercises no judgement); neither option here has an equivalent,
+which is why it is a person&#39;s call and not an agent&#39;s.</p>
+        <p>## If nothing is decided</p>
+        <p>Option 1 is the status quo and nothing regresses.</p>
+      </div>
+      <p class="fa-todo-listing-links"><a href="https://github.com/litlfred/folio-assistant/blob/main/todos/items/subagent-roles-for-the-two-judgement-agents.md">View source</a> &middot; <a href="https://github.com/litlfred/folio-assistant/edit/main/todos/items/subagent-roles-for-the-two-judgement-agents.md">Edit</a></p>
+      <ul class="fa-todo-listing-relations">
+        <li><a href="https://github.com/litlfred">who: github:litlfred</a></li>
+        <li>bean: folio-assistant-29ij</li>
+        <li><a href="https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio-assistant-h32d--memory-and-todos-one-schema-attachable-to-any-kg-n.md">bean: folio-assistant-h32d</a></li>
+        <li><a href="https://github.com/litlfred/folio-assistant/pull/314">PR: #314</a></li>
+      </ul>
+    </li>
+    <li class="fa-todo-listing-item" id="fa-todo-listing-what-kick-off-means-for-a-ci-watcher" data-fa-todo="what-kick-off-means-for-a-ci-watcher">
+      <h3 class="fa-todo-listing-summary">Decide what &#39;kick off&#39; means mechanically for the two CI-watcher dispatch points</h3>
+      <dl class="fa-todo-listing-meta">
+        <dt>Status</dt><dd>in_progress</dd>
+        <dt>Priority</dt><dd>medium</dd>
+        <dt>Raised by</dt><dd>agent</dd>
+        <dt>Created</dt><dd>2026-09-19</dd>
+        <dt>About</dt><dd><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/publication-workflow.html#agents-and-system-actors">publication-workflow &rsaquo; agents-and-system-actors</a></dd>
+      </dl>
+      <div class="fa-todo-listing-body">
+        <p>Stated 2026-09-19: a CI watcher *&quot;should kick off during feature development
+once changes are made to feature branch. and when approved for final
+publication/merge to main.&quot;*</p>
+        <p>The two dispatch points are clear. **What performs the dispatch is not**, and
+the three candidates differ enough that guessing would be wasted work.</p>
+        <p>## ANSWERED, 2026-09-19</p>
+        <p>Owner: *&quot;kick off if like task or workflow initation or bean roast&quot;*.</p>
+        <p>**Option 2.** A dispatch point is a **task / workflow initiation**, and it
+opens a **bean** — not a GitHub Actions job. That is the answer the repo&#39;s own
+machinery is already shaped for: an activity carrying
+`&lt;folio:bean op=&quot;claim&quot;/&gt;` performs the bean operation when the step
+completes, so &quot;start the watcher&quot; and &quot;record that it is running&quot; are one
+declared step rather than two mechanisms that can disagree.</p>
+        <p>It also settles the cost I flagged against option 2 — that a BPMN activity
+only fires while somebody is working. With a bean opened at initiation, the
+work is *durable*: a later session sees the bean whether or not the session
+that opened it is still alive.</p>
+        <p>Remaining, and now narrow: which diagrams host the two steps, and whether the
+feature-branch one needs a process that does not yet exist.</p>
+        <p>## Options, with what each costs</p>
+        <p>1. **A GitHub Actions job.** Fires without anybody present, which is the whole
+   premise of `xom7` — the failure being guarded against is a quiet stretch
+   with nobody looking. Cost: it cannot read the session&#39;s memory, so the
+   &quot;dispatch an agent with a specific memory context&quot; half does not happen.
+2. **An activity in a BPMN process**, performed by a session. Gets the memory
+   context, and puts the dispatch where `workflow_next` can report it. Cost: it
+   only fires while somebody is working — precisely the stretch that is already
+   covered.
+3. **An MCP tool a workflow step calls.** Both, at the price of building the
+   tool and deciding who calls it.</p>
+        <p>## Where the two dispatch points already live</p>
+        <p>Both are steps in diagrams that exist, which is why this todo is tagged with
+them rather than describing them:</p>
+        <p>- **&quot;approved for final publication / merge to `main`&quot;** is
+  `Process_Publication` (`draft-to-publication.bpmn`), whose lane carries
+  *Authorise the release* and *Version, tag and publish*. The dispatch point
+  the owner named is that authorisation step.
+- **&quot;once changes are made to feature branch&quot;** is `Process_CodeReview`,
+  reached from `Process_Review`.</p>
+        <p>## What is already true, so this is not started from nothing</p>
+        <p>The two dispatch points are process events, so wherever they are performed they
+should be DRAWN in BPMN under `processes/`. The likely homes are
+`draft-to-publication` for the merge-to-main gate and a feature-branch process
+that may not exist yet — that needs checking rather than assuming.</p>
+        <p>## If nothing is decided</p>
+        <p>Nothing fires. `bun run check:ci-health` still runs in the session-start sweep
+and `ci-health.yml` still runs weekly, so the watcher is not silent — it is
+just not tied to the two moments named above.</p>
+      </div>
+      <p class="fa-todo-listing-links"><a href="https://github.com/litlfred/folio-assistant/blob/main/todos/items/what-kick-off-means-for-a-ci-watcher.md">View source</a> &middot; <a href="https://github.com/litlfred/folio-assistant/edit/main/todos/items/what-kick-off-means-for-a-ci-watcher.md">Edit</a></p>
+      <ul class="fa-todo-listing-relations">
+        <li>process: Process_CodeReview</li>
+        <li>process: Process_Publication</li>
+        <li><a href="https://github.com/litlfred">who: github:litlfred</a></li>
+        <li>bean: folio-assistant-29ij</li>
+      </ul>
+    </li>
+  </ol>
+</section>
+<p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p>
+
+
+  <div class="d-md-none mt-4 fs-2">
+    
+    
+      <!-- GENERATED by cat-harness/scripts/gen-navbar-include.ts. Do not hand-edit: `bun run navbar:include` rewrites it, and `--check` fails the build if it is stale. --><label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label><div class="fa-nav-in"><div class="fa-nav-top"><label class="fa-nav-head" for="fa-nav-open" title="Open navigation"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span><span class="fa-nav-name fa-nav-label">C@T Harness</span></label></div><div class="fa-nav-bottom"><details class="fa-nav-group"><summary><span class="fa-nav-glyph" aria-hidden="true">▦</span><span class="fa-nav-label">Harnesses</span></summary><div class="fa-nav-sub"><div class="fa-nav-row"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/smart-trust/"><span class="fa-nav-glyph fa-nav-tone fa-nav-crop"><img src="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/img/harness/landing-operations-card.webp" alt="" title="Grumpy cat, operations" style="width:370.3704%;height:370.3704%;left:-62.963%;top:-175.9259%"></span><span class="fa-nav-label">smart-trust</span></a><button type="button" class="fa-nav-action" data-fa-harness-config="smart-trust" aria-label="Configuration of smart-trust">⚙︎</button><div class="fa-nav-kids"><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/docs-auto/index/docs/smart-trust-docs/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">D</span><span class="fa-nav-label">docs</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">fhir-artifact-index</span><span class="fa-nav-note">no viewer yet</span></span></div></div><div class="fa-nav-row"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/who-iris/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">W</span><span class="fa-nav-label">WHO IRIS</span></a><button type="button" class="fa-nav-action" data-fa-harness-config="who-iris" aria-label="Configuration of WHO IRIS">⚙︎</button><div class="fa-nav-kids"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/catalogue/who-iris/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">catalogue</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/docs-auto/index/docs/who-iris-docs/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">D</span><span class="fa-nav-label">docs</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/library/who-iris/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">L</span><span class="fa-nav-label">library</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">skills</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">themes</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/library/who-iris/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uploads</span></a></div></div><div class="fa-nav-row"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/library/smart-base/"><span class="fa-nav-glyph fa-nav-tone" style="background:hsl(199 45% 28%)" aria-hidden="true">S</span><span class="fa-nav-label">SMART Base</span></a><button type="button" class="fa-nav-action" data-fa-harness-config="smart-base" aria-label="Configuration of SMART Base">⚙︎</button><div class="fa-nav-kids"><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">fhir-artifact-index</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/library/smart-base/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">L</span><span class="fa-nav-label">library</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">methodology</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">processes</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">tools</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/voices/smart-base/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">V</span><span class="fa-nav-label">voices</span></a></div></div><div class="fa-nav-row"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/"><span class="fa-nav-glyph fa-nav-tone fa-nav-crop" style="background:hsl(236 45% 28%)"><img src="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/img/harness/landing-engineer-card.webp" alt="" title="Grumpy cat, engineering" style="width:217.3913%;height:217.3913%;left:0%;top:-86.9565%"></span><span class="fa-nav-label">Folio Assistant</span></a><button type="button" class="fa-nav-action" data-fa-harness-config="folio-assistant" aria-label="Configuration of Folio Assistant">⚙︎</button><div class="fa-nav-kids"><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/uploads/folio-assistant/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uploads</span></a></div></div><div class="fa-nav-row"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/"><span class="fa-nav-glyph fa-nav-tone fa-nav-crop" style="background:hsl(268 45% 28%)"><img src="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/img/harness/landing-grumpy-cyborg-agents-card.webp" alt="" title="Grumpy cyborg agents" style="width:500%;height:500%;left:-30%;top:-170%"></span><span class="fa-nav-label">C@T Harness</span></a><button type="button" class="fa-nav-action" data-fa-harness-config="cat-harness" aria-label="Configuration of C@T Harness">⚙︎</button><div class="fa-nav-kids"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/beans/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">B</span><span class="fa-nav-label">beans</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">cat-harness</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code</span><span class="fa-nav-note">no viewer yet</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">C</span><span class="fa-nav-label">code-list</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/docs-auto/index/docs/docs/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">D</span><span class="fa-nav-label">docs</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/external-schemas/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">E</span><span class="fa-nav-label">external-schema</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/folio/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">folio</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/fsh-guts/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">F</span><span class="fa-nav-label">fsh-guts</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/health/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">H</span><span class="fa-nav-label">health</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">interaction</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/issue-marks/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">I</span><span class="fa-nav-label">issue-marks</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/library/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">L</span><span class="fa-nav-label">library</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">memory</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/methodologies/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">methodology</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">policies</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/processes/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">processes</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/proposals/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">proposals</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/qa/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">Q</span><span class="fa-nav-label">qa</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/requirements/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">R</span><span class="fa-nav-label">requirements</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">scenarios</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/schemas/cat-harness/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">schemas</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/cat-harness/docs-auto/index/skills/large-datasets-skills/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">skills</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/swimlane-glossary/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">swimlane-glossary</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/todos/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">todos</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/tools/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">tools</span></a><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/translation-status/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">translation-sources</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uml</span><span class="fa-nav-note">no viewer yet</span></span><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/uploads/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">U</span><span class="fa-nav-label">uploads</span></a><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">W</span><span class="fa-nav-label">waiver</span><span class="fa-nav-note">no viewer yet</span></span></div></div><div class="fa-nav-row"><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/bootstrap/README.html"><span class="fa-nav-glyph fa-nav-tone fa-nav-crop" style="background:hsl(96 45% 28%)"><img src="/folio-assistant/STAGING/claude-qook-check-merged-third-state/assets/img/harness/landing-bootstrap-card.webp" alt="" title="CatBootstrap" style="width:416.6667%;height:416.6667%;left:-112.5%;top:-256.25%"></span><span class="fa-nav-label">Bootstrap</span></a><button type="button" class="fa-nav-action" data-fa-harness-config="bootstrap" aria-label="Configuration of Bootstrap">⚙︎</button><div class="fa-nav-kids"><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">M</span><span class="fa-nav-label">models</span><span class="fa-nav-note">no viewer by design</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">P</span><span class="fa-nav-label">processes</span><span class="fa-nav-note">no viewer by design</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">scenarios</span><span class="fa-nav-note">no viewer by design</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">schemas</span><span class="fa-nav-note">no viewer by design</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">skills</span><span class="fa-nav-note">no viewer by design</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">S</span><span class="fa-nav-label">swimlane-glossary</span><span class="fa-nav-note">no viewer by design</span></span><span class="fa-nav-dead"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">T</span><span class="fa-nav-label">translation-sources</span><span class="fa-nav-note">no viewer by design</span></span></div></div></div></details><a href="/folio-assistant/STAGING/claude-qook-check-merged-third-state/"><span class="fa-nav-glyph fa-nav-tone" aria-hidden="true">⌂</span><span class="fa-nav-label">C@T Harness</span></a></div></div>
+
+    
+  </div>
+</footer>
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+    
+
+
+
+
+
+<script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = /* Mermaid configuration for this docs site.
+
+   just-the-docs interpolates this file's contents directly into
+   `var config = <here>; mermaid.initialize(config);`
+   — see that theme's `_includes/components/mermaid.html` — so this must be a
+   bare JavaScript object literal. No `export`, no statements, no semicolon.
+
+   DIAGRAMS ARE ALWAYS LIGHT, IN BOTH COLOUR SCHEMES. The site's stylesheet
+   follows the reader's choice; the drawings do not. They render in Mermaid's
+   light palette on a white card supplied by `.fa-figure-wrap`
+   (docs/assets/css/docs-ui.css), exactly like the BPMN exports beside them,
+   which carry their own white backdrop and cannot follow a scheme at all.
+
+   This reverses a decision made an hour earlier in this session, and the
+   reversal is the whole point of the comment. Setting `theme: "dark"` did fix
+   the ORIGINAL complaint — pale nodes glaring on a dark page — and replaced it
+   with a worse one: dark-on-dark, the diagram's own near-black background
+   dissolving into the page and the text with it. Owner's call, and it is the
+   right one: a schematic is a figure, figures are printed on white, and one
+   consistent treatment across BPMN and Mermaid beats two that each look
+   correct only in one mode.
+
+   Consequence worth knowing: the palette no longer depends on the reader's
+   scheme, so the header's light/dark toggle does not need to re-render
+   anything and no longer reloads the page on diagram pages.
+
+   The PARENTHESES are load-bearing. A bare `{ "theme": ... }` at the start of
+   a statement parses as a BLOCK, not an object, so eslint rejects it with
+   "';' expected" — and eslint lints this file, which is free syntax checking
+   worth keeping. `var config = ({ ... });` is exactly as valid as without
+   them, so the wrapper costs nothing and buys the linter. */
+(({
+  "theme": "default",
+  "themeVariables": {
+    /* Match the card the diagram sits on, so its own backdrop and the
+       wrapper's are the same white rather than two near-whites with a seam. */
+    "background": "#ffffff"
+  },
+  /* Long swimlane labels wrap rather than forcing the diagram wider than the
+     zoom controls can usefully bring back. */
+  "flowchart": { "useMaxWidth": true }
+}))
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+
+
+
+  
+</body>
+</html>
+
