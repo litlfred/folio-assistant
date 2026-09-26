@@ -256,6 +256,20 @@ export function withDerivedArms(
       // that depends on that breaks silently the first time a rung grows a
       // trailing flag.
       ["python3", pyHelper("pdf-images.py"), "-o", stagingRoot, pdf],
+      // The OTHER layer of the same pages — bean `a8wy`, under `m4xy`. Same
+      // conventions as the arm above, and for the same reason: it reads the
+      // PDF, so it takes the source and the library ROOT.
+      //
+      // It is an ARM rather than something an agent runs when a document looks
+      // like it needs it, because the case it exists for is invisible without
+      // it: `9789240120747-eng` declares six captioned figures, places zero
+      // images, and `image-descriptions` reported "0 image(s), 0 describable
+      // and all described" over it. Nothing in that line asks anybody to look.
+      //
+      // Order against `apply-image-verdicts.ts` does not matter — the two
+      // write different files — but it sits beside `pdf-images.py` because
+      // the two answer the same question about the same page.
+      ["python3", pyHelper("pdf-vector-labels.py"), "-o", stagingRoot, pdf],
       // `l1-blocks.ts` reads what the rung already wrote, so it takes the
       // ENTRY directory and no source at all. See the table above.
       ["bun", "run", tsHelper("l1-blocks.ts"), "-o", staging],

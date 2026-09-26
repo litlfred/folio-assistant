@@ -20,6 +20,12 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
     inspected_at [1] : string
     verdicts [1] : Record<string, Record<string, Verdict>>
   }
+  class "folio-vector-labels/v1" as cat_harness_library_folio_vector_labels_v1_folio_vector_labels_v1 <<json: VectorLabelsSidecarSchema>> #f4f4f1 {
+    $schema [1] : 'folio-vector-labels/v1'
+    doc_id [1] : string
+    pages [1] : object[] | null
+    undetermined_reason [0..1] : string
+  }
   class "Superseded" as cat_harness_library_folio_block_summaries_v1_Superseded <<json: BlockSummariesSidecarSchema>> #f4f4f1 {
     text [1] : string | null
     state [1] : not-authored | draft | confirmed | rejected

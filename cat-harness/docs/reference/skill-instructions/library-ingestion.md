@@ -465,6 +465,46 @@ same check each — the same record called three bars one repeated legend when
 the third was a different, signed scale, and it had the disconfirming datum
 (5188 bytes against 5167 twice) already written down beside the claim.
 
+### The figure that is DRAWN — `pdf-vector-labels.py`, the other arm
+
+`pdf-images.py` answers "what does this page PLACE". A WHO conceptual figure —
+a framework, a maturity model, a taxonomy, a process flow — is drawn in path
+operators and text, so it places nothing, and the raster arm is silent about
+it truthfully. `9789240120747-eng` declares six captioned figures, places zero
+images, and `image-descriptions` reported *"0 image(s), 0 describable and all
+described"* over it: **a determined empty that is true about raster and
+misleading about figures.** Bean `m4xy`.
+
+The vector arm (bean `a8wy`) runs beside the raster one in `withDerivedArms`
+and writes `vector-labels.json` — every positioned text line on a page that
+declares a figure, with its rectangle in the visible frame, its fonts and
+sizes, and whether it intersects a drawing.
+
+**Read the sidecar, not a count.** Three things it deliberately does not do,
+each because the obvious version of it was tried and failed on a real page:
+
+- **It does not say which labels belong to the figure.** `intersectsDrawing`
+  is recorded and never filtered on. On `9789240120747-eng` page 34 it
+  separates perfectly; on `9789240010567-eng` page 25 it is false for thirty
+  labels that are plainly figure content, because they sit in the white space
+  *between* the drawn boxes.
+- **It does not group above the MuPDF LINE.** A block on that same page holds
+  six circled numerals 200 pt apart across three different diagrams.
+- **It does not compare its counts to anything.** `m4xy`'s rule: declared
+  figures and recovered labels are not commensurable.
+
+So when you describe such a figure, the labels are your evidence and the
+grouping is your judgement — which is the same split as
+`image-verdicts.json`, one level over. The rule from the section above holds
+here with more force, not less: **render the page and look at it.** The arm
+recovers what the text layer says; it cannot tell you that the arrows run
+clockwise.
+
+The determined empty is still meaningful: `who-rhr-1806-eng` records zero
+pages because it contains no `Fig.` or `Figure` mention at all. A document with
+**no text layer** returns `pages: null` with a reason instead — the one place
+this arm could otherwise report a clean run over an unread scan (`dh4f`).
+
 ### An `.xlsx` IS a zip, and that broke the archive routing
 
 The magic bytes of an OOXML or ODF document say `application/zip`, which is
