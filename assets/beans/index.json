@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 373,
+      "count": 374,
       "unit": "beans"
     }
   },
@@ -3601,6 +3601,20 @@
       "updatedAt": "2026-09-25T18:10:30Z",
       "preview": "`health` reports `staging-preview-size` as **critical** while every deploy keeps\nsucceeding. I went looking for a wrong number and did not find one: **the\nmeasurement is sound.** What is wrong is one level up, in what `critical` is\nasserting.\n\n## Measured first-hand, 2026-09-25\n\nDirectly off the publish ref — `git ls-tree -r -l origin/gh-pages`, not the\ncheck's own report:\n\n| | files | size |\n|---",
       "file": "beans/defs/folio-assistant-qj9a--staging-size-the-measurement-is-right-and-the-seve.md"
+    },
+    {
+      "id": "folio-assistant-qook",
+      "title": "check:merged reports uml:overview:check red on a merged tree that is green — a sweep artefact, twice",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T11:04:49Z",
+      "updatedAt": "2026-09-26T11:04:49Z",
+      "preview": "## What was measured, 2026-09-26\n\n`bun run check:merged` (bean `nytj`) reported `uml:overview:check` red on the\nmerged tree for **two unrelated branches within the same hour** — PR #1392's\n`claude/ask-well-fourth-layer` and PR #1395's `claude/fx5r-stale-field-advice`.\nNeither branch touches the UML overview's inputs in a way the other does.\n\nIt is a false positive. Every isolated measurement on th",
+      "file": "beans/defs/folio-assistant-qook--checkmerged-reports-umloverviewcheck-red-on-a-merg.md"
     },
     {
       "id": "folio-assistant-qrnz",
