@@ -31,6 +31,47 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Scope",
+          "detail": "names skill \"sample-import\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_Materialize",
+          "detail": "names skill \"sample-import\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_Materialize",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Library",
+          "detail": "names skill \"sample-import\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Trial",
+          "detail": "names skill \"sample-import\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ImportTest",
+          "detail": "names skill \"sample-import\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RecordFindings",
+          "detail": "names skill \"sample-import\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_Refresh",
+          "detail": "names skill \"sample-import\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_Refresh",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -135,7 +176,7 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 1,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }

@@ -571,6 +571,35 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "(acts, but no procedure yields the answer), and an activity carrying `<cat-harness.processes:no-skill reason=\"…\"/>`.",
   },
   {
+    id: "activity-skill-has-tool",
+    applies: ["process"],
+    // `minor`, and the grade is the argument. Every `critical` here is a
+    // DANGLING REFERENCE and every `major` a gap between things that exist —
+    // this is neither. The skill exists, the reference resolves, and the
+    // absent thing is a MECHANISM nobody has promised: `check:tools` ruled in
+    // its own docblock that a skill with no Tool is not an error, because
+    // plenty of skills are pure judgement. Grading it `major` would gate
+    // `kg:audit:strict` on 67 findings that are mostly correct.
+    //
+    // It needs no baseline for that reason: `kg:audit:check` gates `critical`
+    // and `:strict` adds `major`, so a `minor` criterion reports without
+    // gating and the backlog cannot redden a sibling's branch.
+    //
+    // NOT a second answer to `check:tools`, which counts the same relation
+    // corpus-wide. That count cannot say WHICH activity hands a performer a
+    // skill whose mechanism is still inlined in its prose, and the located
+    // form is the whole reason this is a per-process sidecar. Measured
+    // 2026-09-26 over `tools/discover.ts`: 99 distinct activity-named skills,
+    // 32 with a Tool, 67 without.
+    severity: "minor",
+    summary:
+      "An activity names a skill that exists and resolves, but no Tool declares `satisfies` for it — the " +
+      "step's mechanism is still inlined in the skill's prose rather than being a thing an agent can " +
+      "invoke. Not an error: many skills are pure judgement and name no mechanism on purpose " +
+      "(`check:tools` carries that ruling and the corpus-wide count). Reported per activity because a " +
+      "corpus total cannot locate the step.",
+  },
+  {
     id: "raci-role-resolves",
     applies: ["process"],
     // `critical`, and the severity is argued rather than picked. Every

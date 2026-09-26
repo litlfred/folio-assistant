@@ -31,6 +31,31 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_BuildRun",
+          "detail": "names skill \"qa-report-signing\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ResolveReach",
+          "detail": "names skill \"qa-report-signing\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ApiSign",
+          "detail": "names skill \"qa-report-signing\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_HumanSign",
+          "detail": "names skill \"qa-report-signing\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RecordAttestation",
+          "detail": "names skill \"qa-report-signing\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "pass",
       "findings": []
@@ -119,7 +144,7 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 1,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }

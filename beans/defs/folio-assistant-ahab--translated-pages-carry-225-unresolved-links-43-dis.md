@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ahab
 title: Translated pages carry 225 unresolved links — 43 distinct, five near-copies each, and the English sources do not carry them
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-26T10:40:05Z
-updated_at: 2026-09-26T10:40:21Z
+updated_at: 2026-09-26T17:29:28Z
 parent: folio-assistant-ahvw
 ---
 
@@ -64,3 +64,70 @@ unresolved links in translated pages.
 
 That the translated pages are wrong to exist, or that #1374 should be reverted
 again. Only that they carry links their sources do not, and nobody has looked.
+
+
+## Re-measured and RE-CAUSED, 2026-09-26 — every figure above was stale and the cause was wrong
+
+Measured on `origin/main` at fb62ecdae5c:
+
+| | bean said | actual |
+|---|---|---|
+| links | 225 | **775** |
+| distinct | 43 | **80** targets / 122 from→target pairs |
+| pages | — | **55** (50 with a repairable finding) |
+| non-translated | 115 | **42** |
+
+It got worse because five more batches landed, not because anything regressed.
+
+### The cause, settled
+
+The bean left it open: *"either being generated with different link rewriting,
+or was translated from a different revision. Which of those it is decides the
+entire fix."*
+
+**Neither. There is no generator.** `438a79d284d` added the pages and changed
+no `.ts` or `.py` at all — the translations are hand-authored content,
+committed directly. The link text is BYTE-IDENTICAL to the English page's:
+
+```text
+EN docs/agentic-harness.md     ](reference/skill-instructions/deterministic-and-agentic.html)
+FR docs/fr/agentic-harness.md  ](reference/skill-instructions/deterministic-and-agentic.html)
+```
+
+(Fenced at column 0, not indented. An INDENTED block left the two `](…)` above
+link-shaped to `check:subgraphs`, which duly reported this bean as carrying two
+dangling links — `blv9`'s shape, arriving in the text of a bean about links.
+`ig4a` is why the fence has to start at column 0.)
+
+Same string, one directory deeper. From `docs/` it reaches `docs/reference/…`;
+from `docs/fr/` it reaches `docs/fr/reference/…`, which does not exist — the
+reference tree is not translated, so the link has to climb back out.
+
+### Why nothing reported it, and it is not a bug in `check:subgraphs`
+
+`docs/` is RENDERABLE, so a link that does not resolve in the source tree goes
+to `siteResolved` — counted, never asserted — because `architecture.md -> api/`
+legitimately resolves only after the docs build. That bucket mixes "will
+resolve once built" with "will never resolve", and for most directories they
+are not separable.
+
+For a TRANSLATED page they are: the same link, read from the source page's own
+directory, is the control. **745 resolve there; 30 do not.** The 30 are `api/`,
+`proposals/*.html`, `migrations/*.html` — and a blanket rewrite would have
+turned all 30 into links that resolve nowhere.
+
+### Fixed
+
+745 links across 50 pages repaired by prepending exactly one `../`, each
+verified against disk before it was made. New gate
+`bun run translated-links:check`, registered in CI, with
+`translated-links:fix` as its writer. Falsified three ways: strip one `../`
+→ exactly one named finding; restore → green; `api/` untouched, 0 diff lines.
+
+### Third instance of one shape, and that is the part worth carrying
+
+`gw8h` — a prefix added that should not have been (6 links).
+`mi97` — one `../` too many (23 links).
+`ahab` — one `../` too few (745 links).
+
+All three on the same day, none caught by the same check.

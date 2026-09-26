@@ -6,12 +6,13 @@
  * work rather than a unit test. They guard the three ways the declaration
  * could rot between such measurements.
  */
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { describe, expect, test } from "bun:test";
 
-import { STEPS } from "../skill-register.js";
+import { parseFlags, STEPS, writeReport } from "../skill-register.js";
 
 const ROOT = join(import.meta.dir, "..", "..", "..");
 const scripts = (): Record<string, string> =>
@@ -94,4 +95,97 @@ test("the four that adding a skill does NOT stale are absent", () => {
         `of a session where other things were also stale.`,
     ).toBe(false);
   }
+});
+
+/**
+ * The reporting surface — flags, the sidecar, and the one invariant the sidecar
+ * exists for.
+ *
+ * These are unit tests over pure functions, deliberately: the command's own
+ * behaviour needs five real `--check` runs over a live corpus, which is a
+ * session's work. What CAN be pinned cheaply is that the report says which
+ * steps RAN, because that is the single property distinguishing it from a
+ * printed verdict.
+ */
+describe("flags", () => {
+  test("every flag is off by default, so a bare run regenerates and reports", () => {
+    const f = parseFlags([]);
+    expect(f).toEqual({ check: false, dryRun: false, json: false, noReport: false });
+  });
+
+  test("each flag is recognised on its own", () => {
+    expect(parseFlags(["--check"]).check).toBe(true);
+    expect(parseFlags(["--dry-run"]).dryRun).toBe(true);
+    expect(parseFlags(["--json"]).json).toBe(true);
+    expect(parseFlags(["--no-report"]).noReport).toBe(true);
+  });
+
+  test("an unrelated argument sets nothing", () => {
+    // `bun run` passes its own arguments through, and a flag parser that
+    // matched loosely would turn `--help` into a silent `--check`.
+    expect(parseFlags(["--help", "somefile.md"])).toEqual({
+      check: false,
+      dryRun: false,
+      json: false,
+      noReport: false,
+    });
+  });
+});
+
+describe("the report", () => {
+  test("lands under the INSTANCE root, not the caller's cwd", () => {
+    // The defect this pins, measured 2026-09-26: `writeReport` was called with
+    // `process.cwd()`, so running the command from the repository root wrote
+    // `test/results/skill-register.qa-results.json` — a fresh top-level
+    // directory no instance declares and no sweep reads. `writeQaResult`
+    // composes `<root>/test/results/`, so the root must be the instance's.
+    const dir = mkdtempSync(join(tmpdir(), "skill-register-report-"));
+    try {
+      const at = writeReport(dir, [{ verify: "kg:detangle:check", because: "x", ran: true, current: true }]);
+      expect(at).toBe(join(dir, "test", "results", "skill-register.qa-results.json"));
+      expect(existsSync(at)).toBe(true);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  test("`ran` is present on EVERY entry, so absence never carries the fact", () => {
+    // The invariant. A sidecar whose entries omit `ran` when nothing ran makes
+    // "listed but not run" and "run and clean" the same bytes — which is the
+    // confusion the sidecar exists to prevent, reproduced inside it. A
+    // `--dry-run` report is the case that would tempt the omission.
+    const dir = mkdtempSync(join(tmpdir(), "skill-register-ran-"));
+    try {
+      const at = writeReport(dir, STEPS.map((s) => ({ verify: s.verify.join(" "), because: s.because, ran: false })));
+      const entries = JSON.parse(readFileSync(at, "utf8")).families["registration-chain"].entries;
+      expect(entries.length).toBe(STEPS.length);
+      for (const e of entries) {
+        expect(Object.hasOwn(e, "ran"), `an entry omits \`ran\`: ${JSON.stringify(e)}`).toBe(true);
+        expect(e.ran).toBe(false);
+        // `current` is absent precisely when nothing ran — a step that did not
+        // run has no verdict, and emitting `current: false` would report it as
+        // measured and red.
+        expect(Object.hasOwn(e, "current")).toBe(false);
+      }
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  test("a red verdict is recorded rather than only printed", () => {
+    // A sidecar written only on success cannot tell "clean" from "never ran",
+    // so the report is written BEFORE the exit branches. This pins that a
+    // failing step reaches the file at all.
+    const dir = mkdtempSync(join(tmpdir(), "skill-register-red-"));
+    try {
+      const at = writeReport(dir, [
+        { verify: "kg:detangle:check", because: "the skills subgraph gains a node", ran: true, current: false },
+      ]);
+      const fam = JSON.parse(readFileSync(at, "utf8")).families["registration-chain"];
+      expect(fam.entries[0].ran).toBe(true);
+      expect(fam.entries[0].current).toBe(false);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
 });

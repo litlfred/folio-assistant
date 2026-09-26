@@ -20,14 +20,14 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 > **Правила, стоящие за этой страницей.** Архитектура описывает форму; Навыки
 > определяют решения. Адаптеры относительно профилей —
-> [`content-profiles`](reference/skill-instructions/content-profiles.html).
+> [`content-profiles`](../reference/skill-instructions/content-profiles.html).
 > Куда относится новый узел до его создания —
-> [`placement`](reference/skill-instructions/placement.html). Структура
+> [`placement`](../reference/skill-instructions/placement.html). Структура
 > репозитория и каждый вид графа —
-> [`directory-conventions`](reference/skill-instructions/directory-conventions.html).
+> [`directory-conventions`](../reference/skill-instructions/directory-conventions.html).
 > Формирование и верификация поверхности MCP —
-> [`mcp-assembly`](reference/skill-instructions/mcp-assembly.html) и
-> [`mcp-contract`](reference/skill-instructions/mcp-contract.html).
+> [`mcp-assembly`](../reference/skill-instructions/mcp-assembly.html) и
+> [`mcp-contract`](../reference/skill-instructions/mcp-contract.html).
 > При разногласиях между этой страницей и Навыком приоритет имеет Навык.
 
 folio-assistant — это **MCP-сервер** с подключаемым уровнем **адаптеров контента**,
@@ -60,12 +60,12 @@ flowchart TD
 
 | страница | на какой вопрос отвечает |
 |---|---|
-| [Таксономия репозиториев](architecture/repo-taxonomy.html) | Какие виды репозиториев существуют — Tool, Test, Content, Consumer — и что может содержать каждый из них |
-| [Текущее состояние](architecture/current-state.html) | Что фактически находится в этом репозитории сегодня (в измеренном виде) и где происходит смешение |
-| [Будущее состояние](architecture/future-state.html) | Пять целевых репозиториев и то, какой каталог в какой из них попадает |
-| [План миграции](architecture/migration-plan.html) | Фазы 0/I/II/III, контрольные точки (gates) и то, что пока остается нерешенным |
-| [Минимальный `cat-harness`](architecture/cat-harness-minimum.html) | Что сохраняется в харнессе, если применить тест на «несамодокументируемость» |
-| [Инстансы харнесса](architecture/harness-instances.html) | Чем ЯВЛЯЕТСЯ инстанс — схемы, визуализации, инструменты; четыре каталога; рендеринг по умолчанию |
+| [Таксономия репозиториев](../architecture/repo-taxonomy.html) | Какие виды репозиториев существуют — Tool, Test, Content, Consumer — и что может содержать каждый из них |
+| [Текущее состояние](../architecture/current-state.html) | Что фактически находится в этом репозитории сегодня (в измеренном виде) и где происходит смешение |
+| [Будущее состояние](../architecture/future-state.html) | Пять целевых репозиториев и то, какой каталог в какой из них попадает |
+| [План миграции](../architecture/migration-plan.html) | Фазы 0/I/II/III, контрольные точки (gates) и то, что пока остается нерешенным |
+| [Минимальный `cat-harness`](../architecture/cat-harness-minimum.html) | Что сохраняется в харнессе, если применить тест на «несамодокументируемость» |
+| [Инстансы харнесса](../architecture/harness-instances.html) | Чем ЯВЛЯЕТСЯ инстанс — схемы, визуализации, инструменты; четыре каталога; рендеринг по умолчанию |
 
 Может показаться, что два последних пункта противоречат друг другу: минимальный вариант
 говорит, что харнесс не создает ничего, на что смотрел бы человек, а страница об инстансах
@@ -73,7 +73,7 @@ flowchart TD
 требование представляет собой **повышающуюся планку**, где `bootstrap` освобожден от
 визуализатора и взамен обязан предоставлять собственные `.json`/`.jsonld`, а `cat-harness`
 является тем уровнем, на котором начинает применяться все остальное. См.
-[С чего начинается требование](architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
+[С чего начинается требование](../architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
 
 В остальной части этой страницы описывается архитектура **в ее текущем виде**.
 
@@ -107,7 +107,7 @@ flowchart TD
 фолио; адаптер `paper` (`adapters/paper/`) расширяет его и предоставляет инструменты жизненного цикла Lean
 (`lean_setup`/`build`/`check`/`status`), валидацию и рендеринг
 (`paper_render_pdf`/`html`, `formula_render`). Для новых типов контента добавляется новый
-адаптер — см. [Добавление типа контента](guides/new-content-type.html).
+адаптер — см. [Добавление типа контента](../guides/new-content-type.html).
 
 ## Навыки и пакеты навыков
 
@@ -118,7 +118,7 @@ flowchart TD
 список навыков и ролей — а также то, как они компонуются с LLM (RBAC, возможности,
 требования), — находится на странице [Навыки и роли](skills.html); контракт
 входных/выходных данных каждого навыка опубликован в
-[Справочнике схем навыков](reference/skills/).
+[Справочнике схем навыков](../reference/skills/).
 
 ## Объектная модель контента
 
@@ -150,7 +150,7 @@ flowchart TD
 Вплоть до issue #1207 (2026-09-23) файл `rbac.ts` представлял собой отдельную
 иерархическую лестницу viewer < collaborator < owner, а исполнитель ничего не проверял. Данный
 регламент закреплен в навыке
-[`task-authorization`](reference/skill-instructions/task-authorization.html).
+[`task-authorization`](../reference/skill-instructions/task-authorization.html).
 
 ## Прайминг плана работы (между харнессами)
 

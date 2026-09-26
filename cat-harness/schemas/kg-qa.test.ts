@@ -45,6 +45,22 @@ describe("the criteria registry", () => {
     expect(KG_CRITERIA_BY_ID["activity-names-skill"]!.severity).toBe("major");
   });
 
+  test("`activity-skill-has-tool` is minor, so the backlog cannot gate", () => {
+    // The grade IS the design. Measured 2026-09-26: 99 distinct activity-named
+    // skills, 32 with a Tool, 67 without — 314 located findings across 71
+    // process sidecars. `kg:audit:check` gates `critical` and `:strict` adds
+    // `major`, so `minor` reports without gating; raising it would redden
+    // every sibling branch for a corpus-wide gap its author never touched,
+    // which is the "check that cries wolf is a check somebody switches off"
+    // failure. `check:tools` already ruled that a skill with no Tool is not an
+    // error, because plenty of skills are pure judgement.
+    expect(KG_CRITERIA_BY_ID["activity-skill-has-tool"]!.severity).toBe("minor");
+    // And it is about a PROCESS, because the located form is its whole reason
+    // for existing: `check:tools` has the corpus count already and cannot say
+    // which activity hands a performer a skill whose mechanism is prose.
+    expect(KG_CRITERIA_BY_ID["activity-skill-has-tool"]!.applies).toEqual(["process"]);
+  });
+
   test("`call-activity-resolves` is not critical — an outward call is not a defect", () => {
     // It was written `critical`, which would have broken the build of the first
     // downstream instance calling a process it does not host. PR #282 states

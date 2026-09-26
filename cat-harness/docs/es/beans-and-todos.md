@@ -182,7 +182,7 @@ ningún agente debería estar actuando.
 
 El resto de esta página explica lo que un bean **es**. Esta sección explica lo que el
 almacén actualmente **contiene** —leído en vivo desde
-[`/assets/beans/index.json`](assets/beans/index.json), la proyección que
+[`/assets/beans/index.json`](../assets/beans/index.json), la proyección que
 `gen-docs-pages.ts` escribe a partir de `beans/defs/` en cada compilación, junto al índice
 de tareas (todos) que ha publicado desde hace más tiempo.
 

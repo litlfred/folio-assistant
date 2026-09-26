@@ -359,7 +359,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Regenerate AtomicMass.lean&#10;from the data table &#8212; and diff"
+          "@value": "Regenerate AtomicMass.lean from the data table — and diff"
         }
       ],
       "skos:definition": [
@@ -939,7 +939,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Run check:ci-health,&#10;WRITING the report file"
+          "@value": "Run check:ci-health, WRITING the report file"
         }
       ],
       "skos:definition": [
@@ -959,7 +959,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Close the&#10;tracking issue"
+          "@value": "Close the tracking issue"
         }
       ],
       "skos:definition": [
@@ -979,7 +979,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Ensure the tracking&#10;label exists"
+          "@value": "Ensure the tracking label exists"
         }
       ],
       "skos:definition": [
@@ -999,7 +999,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Open or EDIT the one&#10;tracking issue"
+          "@value": "Open or EDIT the one tracking issue"
         }
       ],
       "skos:definition": [
@@ -1239,7 +1239,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Dependency advisories&#10;(WARN-ONLY)"
+          "@value": "Dependency advisories (WARN-ONLY)"
         }
       ],
       "skos:definition": [
@@ -1259,7 +1259,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "End-to-end +&#10;accessibility (HARD)"
+          "@value": "End-to-end + accessibility (HARD)"
         }
       ],
       "skos:definition": [
@@ -1279,7 +1279,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Lean: no bare&#10;`import Mathlib` (HARD)"
+          "@value": "Lean: no bare `import Mathlib` (HARD)"
         }
       ],
       "skos:definition": [
@@ -1299,7 +1299,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Python: unused and&#10;wildcard imports (HARD)"
+          "@value": "Python: unused and wildcard imports (HARD)"
         }
       ],
       "skos:definition": [
@@ -1319,7 +1319,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Repository gates&#10;(HARD)"
+          "@value": "Repository gates (HARD)"
         }
       ],
       "skos:definition": [
@@ -1339,7 +1339,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Rust wildcard imports&#10;(WARN-ONLY)"
+          "@value": "Rust wildcard imports (WARN-ONLY)"
         }
       ],
       "skos:definition": [
@@ -1352,6 +1352,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_skillchain",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Skill-registration chain (UNMASKED)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Runs the five `--check` commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, docs:auto:check, kg:audit:check, kg:detangle:check. CORRECTED 2026-09-26, after main split this workflow: the original justification is GONE. It read \"the only place those five are read against the tree as checked out\", because at the time all six lived in one job behind `bun test`, which runs the kg-audit and detangle WRITERS and repaired two artefacts before their checks read them (bean `ymsu`). Task_RepositoryGates is now a separate job that runs all six and never runs `bun test`, so they are unmasked THERE. What survives is narrower and is the reason this is kept: one command a skill author runs (`bun run skill:register`) that regenerates and verifies the chain together, a committed QA sidecar saying which steps ran, and ONE named failure instead of six unrelated generated files — which is bean `v625`'s actual complaint. The unmasking argument belongs to Task_RepositoryGates now. Its first CI run earned the place: it went red on `kg:detangle:check` and the cause was `kg-detangle.ts` counting 1214 files of a gitignored `node_modules/` as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of `bun test` either: measured on main's run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans `v625`, `fjwi`."
+        }
+      ],
+      "skos:notation": "Task_SkillChain",
+      "dcterms:source": "cat-harness/processes/code-quality-gates.bpmn#Task_SkillChain",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_typescript",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1359,7 +1379,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TypeScript: lint, types&#10;and tests (HARD)"
+          "@value": "TypeScript: lint, types and tests (HARD)"
         }
       ],
       "skos:definition": [
@@ -4839,7 +4859,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Brief the topic before&#10;touching anything"
+          "@value": "Brief the topic before touching anything"
         }
       ],
       "skos:definition": [
@@ -4859,7 +4879,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "1 &#183; Declare in place&#10;(nothing moves)"
+          "@value": "1 · Declare in place (nothing moves)"
         }
       ],
       "skos:definition": [
@@ -4879,7 +4899,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "4 &#183; Extract &#8212; a directory move,&#10;not a file-by-file sift"
+          "@value": "4 · Extract — a directory move, not a file-by-file sift"
         }
       ],
       "skos:definition": [
@@ -4899,7 +4919,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact"
+          "@value": "3 · Isolate — own declaration, namespace, artefact"
         }
       ],
       "skos:definition": [
@@ -4919,7 +4939,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "2a &#183; Measure &#8212; unassigned&#10;column FIRST"
+          "@value": "2a · Measure — unassigned column FIRST"
         }
       ],
       "skos:definition": [
@@ -4939,7 +4959,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "2b &#183; Prune, merge, factor&#10;&#8212; or the classification is wrong"
+          "@value": "2b · Prune, merge, factor — or the classification is wrong"
         }
       ],
       "skos:definition": [
@@ -4959,7 +4979,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Report what would move&#10;&#8212; sizes, and what breaks"
+          "@value": "Report what would move — sizes, and what breaks"
         }
       ],
       "skos:definition": [
@@ -5979,7 +5999,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Regenerate the context, block,&#10;library and site graphs &#8212; and diff"
+          "@value": "Regenerate the context, block, library and site graphs — and diff"
         }
       ],
       "skos:definition": [
@@ -7654,7 +7674,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Close the&#10;tracking issue"
+          "@value": "Close the tracking issue"
         }
       ],
       "skos:definition": [
@@ -7674,7 +7694,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Comment ONCE per&#10;(PR, head sha)"
+          "@value": "Comment ONCE per (PR, head sha)"
         }
       ],
       "skos:definition": [
@@ -7694,7 +7714,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Ensure the tracking&#10;label exists"
+          "@value": "Ensure the tracking label exists"
         }
       ],
       "skos:definition": [
@@ -7714,7 +7734,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Ask, per open PR, whether its&#10;HEAD has a run &#8212; skipping&#10;heads younger than 15 min"
+          "@value": "Ask, per open PR, whether its HEAD has a run — skipping heads younger than 15 min"
         }
       ],
       "skos:definition": [
@@ -7734,7 +7754,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Open or EDIT the one&#10;tracking issue"
+          "@value": "Open or EDIT the one tracking issue"
         }
       ],
       "skos:definition": [
@@ -8549,7 +8569,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Run the health checks,&#10;keeping the report either way"
+          "@value": "Run the health checks, keeping the report either way"
         }
       ],
       "skos:definition": [
@@ -8569,7 +8589,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Close the&#10;tracking issue"
+          "@value": "Close the tracking issue"
         }
       ],
       "skos:definition": [
@@ -8589,7 +8609,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Ensure the tracking&#10;label exists"
+          "@value": "Ensure the tracking label exists"
         }
       ],
       "skos:definition": [
@@ -8609,7 +8629,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Open or EDIT the one&#10;tracking issue"
+          "@value": "Open or EDIT the one tracking issue"
         }
       ],
       "skos:definition": [

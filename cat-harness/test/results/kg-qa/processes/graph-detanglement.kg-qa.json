@@ -5,7 +5,7 @@
     "id": "Process_GraphDetanglement",
     "path": "processes/graph-detanglement.bpmn"
   },
-  "source_hash": "sha256:1a16e905bd6daf05faf4a48915db7005e17719d7506060ad7d216e7d4ad162df",
+  "source_hash": "sha256:ca1bf8360b088863c38bd8560c7b03a8b2ffc59725dc392fdd29f9098c862b0b",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,43 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Brief",
+          "detail": "names skill \"opening-brief\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Declare",
+          "detail": "names skill \"graph-detanglement\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Measure",
+          "detail": "names skill \"graph-detanglement\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Move",
+          "detail": "names skill \"graph-detanglement\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Isolate",
+          "detail": "names skill \"graph-detanglement\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Propose",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Authorise",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Extract",
+          "detail": "names skill \"graph-detanglement\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "pass",
@@ -106,7 +143,7 @@
   },
   "totals": {
     "pass": 16,
-    "fail": 0,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }
