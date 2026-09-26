@@ -34,7 +34,7 @@ If it reports `cache ABSENT — formal graph unavailable`, populate it:
 
 ```sh
 # Preferred: Lean Atlas (elaborated, authoritative)
-scripts/install-lean-atlas.sh          # provisions the Lake require
+cat-harness/scripts/install-lean-atlas.sh          # provisions the Lake require
 lake exe atlas graph-data --output /tmp/atlas.json --pretty
 # → adapt to folio's JSONL, then:
 bun run content/pipeline/lean-atlas-ingest.ts --ingest /tmp/deps.jsonl

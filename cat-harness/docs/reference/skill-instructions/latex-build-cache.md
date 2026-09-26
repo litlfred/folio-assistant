@@ -75,8 +75,8 @@ only ran on `workflow_dispatch`, so the image was never actually built.
 
 | Tool | Role |
 |------|------|
-| [`scripts/install-tex.sh`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/install-tex.sh) | Get a TeX engine into the sandbox (the base Ubuntu repos are reachable; only launchpad PPAs are firewalled). Idempotent. **This is how you compile/verify at all.** |
-| [`scripts/feature-build.sh`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/feature-build.sh) | Quick draft: compiles ONLY the changed chapters (not the full paper) with the **inline** preamble, + per-chapter latexdiff (colored + plain). Speedup is from fewer chapters, not a format. **Sets `FAST_PREVIEW=1` by default** (margins off, ~2× on top). |
+| [`cat-harness/scripts/install-tex.sh`](../../cat-harness/scripts/install-tex.sh) | Get a TeX engine into the sandbox (the base Ubuntu repos are reachable; only launchpad PPAs are firewalled). Idempotent. **This is how you compile/verify at all.** |
+| [`cat-harness/scripts/feature-build.sh`](../../cat-harness/scripts/feature-build.sh) | Quick draft: compiles ONLY the changed chapters (not the full paper) with the **inline** preamble, + per-chapter latexdiff (colored + plain). Speedup is from fewer chapters, not a format. **Sets `FAST_PREVIEW=1` by default** (margins off, ~2× on top). |
 | **`FAST_PREVIEW=1`** env flag | Read by `generate-main-tex.ts`: no-ops `\marginnote`, skipping the 2944 per-block source/issue/Lean icons that cost **~50%** of compile (19.5 s → 9.2 s). Body byte-identical; **published builds leave it unset**. The biggest single *preview* speedup. |
 
 ## Getting a TeX engine in the sandbox
@@ -86,7 +86,7 @@ are reachable (only the launchpad PPAs — `ondrej/php`, `deadsnakes` —
 are firewalled and break `apt-get update`). Run:
 
 ```bash
-scripts/install-tex.sh     # run with run_in_background: true (~5 GB, ~10-20 min)
+cat-harness/scripts/install-tex.sh     # run with run_in_background: true (~5 GB, ~10-20 min)
 ```
 
 It disables the firewalled PPAs, installs `texlive-full` + `latexmk`,
@@ -97,7 +97,7 @@ returning a path is the ready signal).
 ## Quick feature build
 
 ```bash
-scripts/feature-build.sh [--base origin/main] [--chapters slug1,slug2]
+cat-harness/scripts/feature-build.sh [--base origin/main] [--chapters slug1,slug2]
 # → build-feature/changed.pdf + per-chapter <c>.diff-color.pdf / .diff-plain.pdf
 ```
 

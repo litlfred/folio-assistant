@@ -245,7 +245,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Compute Audit](compute-audit.html) | `compute-audit` | — | python3 script.py --args ... |
 | [Compute-author](compute-author.html) | `compute-author` | — |  |
 | [Content Block Review](content-block-review.html) | `content-block-review` | — |  |
-| [Content Validation](content-validation.html) | `content-validation` | — | bun run scripts/run-validate.ts content/<paper>   # after setup-folio-assistant.sh |
+| [Content Validation](content-validation.html) | `content-validation` | — | bun run cat-harness/content/pipeline/validate.ts content/<paper>   # after setup-folio-assistant.sh |
 | [Critical Path Analysis & Context Review](critical-path-analysis.html) | `critical-path-analysis` | — |  |
 | [definition-clarity-audit](definition-clarity-audit.html) | `definition-clarity-audit` | — | A content block can be **schema-clean, ref-resolving, proof-backed** and still be |
 | [Document Intake](document-intake.html) | `document-intake` | — | > **Bib human-review integration.** Track per-upload ingestion |
@@ -255,7 +255,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [LaTeX build performance](latex-build-cache.html) | `latex-build-cache` | — | A from-scratch compile re-parses the heavy preamble on **every latexmk |
 | [LaTeX Validation](latex-validation.html) | `latex-validation` | — |  |
 | [Lean Build Fix](lean-build-fix.html) | `lean-build-fix` | — |  |
-| [Lean cache: the authoring loop](lean-cache-restore.html) | `lean-cache-restore` | — | scripts/lake-cache.sh contribute   # give the build back |
+| [Lean cache: the authoring loop](lean-cache-restore.html) | `lean-cache-restore` | — | cat-harness/scripts/lake-cache.sh contribute   # give the build back |
 | [Lean Completeness Audit](lean-completeness-audit.html) | `lean-completeness-audit` | — | find content/<paper>/lean/ -name '*.lean' -not -path '*/.lake/*' \| sort |
 | [Lean Environment Setup](lean-environment-setup.html) | `lean-environment-setup` | — | A proven workaround for one specific failure: `lake exe cache get` returning |
 | [Lean formal dependency graph](lean-formal-graph.html) | `lean-formal-graph` | — | bun run content/pipeline/content-graph.ts content/<paper> |

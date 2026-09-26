@@ -5,7 +5,7 @@
     "id": "content-validation",
     "path": "skills/folio-paper-adapter/content-validation.md"
   },
-  "source_hash": "07c3f8d976b2",
+  "source_hash": "32b7425ff641",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
@@ -29,13 +29,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "cat-harness/skills/folio-paper-adapter/content-validation.ts",
-          "detail": "cat-harness/skills/folio-paper-adapter/content-validation.ts changed since cat-harness/skills/folio-paper-adapter/content-validation.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "n/a",
@@ -43,8 +38,8 @@
     }
   },
   "totals": {
-    "pass": 3,
-    "fail": 2,
+    "pass": 4,
+    "fail": 1,
     "n/a": 1,
     "unknown": 0
   },
@@ -53,8 +48,8 @@
       "kind": "co-located",
       "prose": "cat-harness/skills/folio-paper-adapter/content-validation.md",
       "code": "cat-harness/skills/folio-paper-adapter/content-validation.ts",
-      "prose_hash": "07c3f8d976b2",
-      "code_hash": "a5feac0c2eb4",
+      "prose_hash": "32b7425ff641",
+      "code_hash": "ab54b030d216",
       "by": "baseline"
     }
   ]
