@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T09:42:57Z
-updated_at: 2026-09-26T11:42:38Z
+updated_at: 2026-09-26T11:44:19Z
 parent: folio-assistant-1xhc
 ---
 
@@ -294,3 +294,53 @@ nearly reported this as a fourth finding.
 Both directions now have a named instance: a gate is wrong in a built container
 (detangle, 1441 vs 229) and wrong in a throwaway worktree (FOLIO_ROOT). Neither
 environment is the truth on its own, which is what `check:merged` is for.
+
+
+## CONFIRMED on CI, and the honest limit: 45 -> 6, not 45 -> 0
+
+`Repository gates` on `6f1e445f43e`, read from the step list:
+
+- steps **1-41 all green**, including `knowledge-graph audit` at 31 which failed the
+  round before
+- **step 42 `gates that were registered and never run` FAILED** — `translation:drift:check`,
+  the t8g3 drift
+- steps **43-48 skipped**
+
+So the pre-push clean-worktree prediction held exactly.
+
+### Six steps are STILL masked
+
+43 `generated docs pages are current`, 44 `voices projection and viewer`, 45 `folio
+projection and viewer`, 46 `viewer pages keep the navbar they had`, 47 `handler
+namespace index`, 48 `translation index`.
+
+The drift sits at step 42 and Actions still stops the job there. **Splitting moved 43
+gates out from behind `bun test`; it cannot move a gate out from behind another gate
+in the same job.** That is the limit of this fix and it belongs on this bean rather
+than in a reader's head.
+
+What is known about those six is MEASURED: the local clean-worktree run executed all
+156 gates regardless of order and reported 5 failures, none of them these. So they
+pass today. That is a fact about today's tree, **not a property of the arrangement** —
+which is the distinction this bean exists to make, and the reason "they pass" does not
+close the gap.
+
+### Done when — updated
+
+- [x] The owner picked: split the job
+- [x] A red step and an unrun step are distinguishable — 48 named steps with
+      individual conclusions, where there were 47 behind one
+- [x] The `xd1g` detangle poisoning is fixed AND verified by a run that reaches the
+      detangle step: `detangle measurements are current` is step 35 and it PASSED on
+      `6f1e445f43e`. This box could not be ticked before the split existed.
+- [x] Whether any OTHER gate in the masked region was red — answered: FIVE were, and
+      every one is now named. `tsc` and the drift are main's; `check:glossary`,
+      `kg:audit:check`, `check:lockfile-pinning` and `docs:auto:check` were mine and
+      are fixed.
+- [ ] **NEW:** the residual 6 steps behind step 42. Same shape, same decision — the
+      drift gate in its own job. Not started: it is a third job on a judgement the
+      owner has already made once, and the marginal gain is six steps whose current
+      state is already demonstrable.
+- [ ] **OWNER ONLY:** if the merge queue (`nytj`'s last box) is switched on, BOTH
+      check names must be required — `TypeScript — tests, lint, types (hard)` and
+      `Repository gates (hard)` — or 150 gate invocations run and block nothing.
