@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Wireframe design review
 
-Method: [`wiregen`](../../methodologies/wiregen.md). Process: [`processes/wireframe-design-review.bpmn`](../../processes/wireframe-design-review.bpmn). Owner, 2026-09-23: *"need both web and mobile layouts in usability reviews. wireframe is part of design process for adjudication"*.
+Method: [`wiregen`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/wiregen.md). Process: [`processes/wireframe-design-review.bpmn`](../../processes/wireframe-design-review.html). Owner, 2026-09-23: *"need both web and mobile layouts in usability reviews. wireframe is part of design process for adjudication"*.
 
 ## Where wireframes live
 

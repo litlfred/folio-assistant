@@ -146,7 +146,7 @@ outcome that tells you a split is load-bearing rather than descriptive:
 | comment on PR — deployment completed | (deploy) | `cat-harness` |
 
 And the deploy phase as a whole came back **entirely generic** — see
-[`ig-build-pipeline`](../../../fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md)
+[`ig-build-pipeline`](https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md)
 §"The deploy phase". The overlay does not reach the deployment end at all,
 which is the strongest evidence for `nsbb`'s base-plus-overlay claim.
 
