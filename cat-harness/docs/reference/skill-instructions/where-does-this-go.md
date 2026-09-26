@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Where does this go?'
 parent: Skill instructions
 ---

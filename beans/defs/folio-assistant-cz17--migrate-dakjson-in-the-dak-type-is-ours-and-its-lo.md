@@ -43,6 +43,12 @@ and refuses to model what is not:
 
 ## Blocked on upstream
 
+- **waits on:** WHO's DAK Logical Model being final in FHIR — an external standards body
+- **since:** 2026-09-20
+- **expires:** 2026-09-29 — a REVIEW date, not a takeover date; see the handoff
+- **handoff:** do NOT take this over on expiry. Re-ask whether the Logical Model has landed; if it has not, move the date out again and say so. Writing a `<Name>Source` type before it exists is the drifting second copy this bean was opened to prevent.
+
+
 **WHO's DAK Logical Model is not final in FHIR.** Until it is, the element
 shape of a component is unknowable and any `<Name>Source` type written here
 would be a second, weaker, drifting copy of a specification about to exist —

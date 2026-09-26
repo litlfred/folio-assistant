@@ -60,3 +60,5 @@ verifiable against disk before it is made. This is four different questions
 about where a non-skill artefact lives on the site, and answering them wrong
 is worse than leaving the links broken, because a rewritten link stops being
 reported.
+
+_2026-09-26T10:39:59Z_ — Claimed by claude/sleepy-rubin-mr6kdu — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Materializing remote content'
 parent: Skill instructions
 ---

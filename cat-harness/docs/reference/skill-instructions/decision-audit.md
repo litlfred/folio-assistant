@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'A decision is not a finding, and neither is a substitute for the other'
 parent: Skill instructions
 ---

@@ -83,9 +83,24 @@ export const DegradationStrategySchema = z.enum(["fail", "warn", "skip", "fallba
  * hook — `.claude/settings.json` accepted the entry and the generated skill
  * registry refused it. That is the right order (the gate caught it) and it is
  * still a gap: the hook was live and unrepresentable at the same time.
+ *
+ * **It grew again on 2026-09-26, exactly as predicted above, and `Stop` is the
+ * addition.** `interaction-modality` §4.1's three enforcement layers are each
+ * keyed on the agent CHOOSING to ask — a tool call, or a rendered schema — and
+ * the failure the owner named twice that day routes around all three: a closing
+ * paragraph of an ordinary turn that lists open decisions by name with none of
+ * their terms. No tool is called, so `PreToolUse` cannot see it; the turn is
+ * over, so nothing later can. `Stop` is the only point at which that paragraph
+ * exists and the turn has not yet been handed back.
+ *
+ * The paragraph above described the symptom precisely — live and
+ * unrepresentable — and that is what happened: the hook ran and the registry
+ * refused it. Worth keeping as evidence that the prediction was load-bearing
+ * rather than decorative.
  */
 export const HookEventSchema = z.enum([
   "SessionStart", "PreToolUse", "PostToolUse", "PreCommit", "PostCommit", "UserPromptSubmit",
+  "Stop",
 ]);
 export const IdentitySourceSchema = z.enum([
   "git-config", "github-oauth", "google-oauth", "env-var", "bearer-token", "default",

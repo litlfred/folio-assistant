@@ -891,6 +891,7 @@ jobs:
           # `imagesForRole` is layout-keyed and a mark declares no layout.
           bun run check:image-roles
           bun run check:bean-parents
+          bun run check:bean-blocks
           # Bean `kpcl`, issue #956: `in-progress` stopped carrying information --
           # 99 claims, 77 untouched for a day or more. The obvious sweep assumes
           # its own answer, so this gate owns only the half that is PURE GRAPH:
@@ -1442,6 +1443,13 @@ jobs:
 
       - name: playwright test
         run: bunx playwright test
+
+      # Every .sh a user runs by hand or wires into a config has a .bat beside
+      # it, generated from one template by scripts/gen-bat-wrappers.sh. A
+      # script added to WRAPPED without a regenerate, or a wrapper edited by
+      # hand, is the drift this catches; --check writes nothing.
+      - name: windows .bat wrappers are current
+        run: bun run bat:sync:check
 
   rust-wildcard:
     # bpmn-node: Task_Rust
