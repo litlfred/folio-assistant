@@ -135,7 +135,7 @@ scripts/reseed-lean-cache.sh --repo <content-repo> --dry-run
 
 Phased, resumable, and safe by default — seeds to a `-test` branch and
 verifies a restore from a clean clone before it will touch production.
-See [Reseeding the Lean cache](../../docs/guides/reseeding-the-lean-cache.md).
+See [Reseeding the Lean cache](../../guides/reseeding-the-lean-cache.html).
 
 ## Toolchain
 

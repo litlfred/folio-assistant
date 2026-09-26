@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1s5s
 title: The published package's PYTHON half runs nowhere — CI's pytest job globs a directory that does not contain it
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-26T09:13:49Z
-updated_at: 2026-09-26T09:54:40Z
+updated_at: 2026-09-26T10:38:03Z
 parent: folio-assistant-1xhc
 ---
 
@@ -143,3 +143,32 @@ halves are guarded unequally. Recorded rather than decided: it costs a second
 install on every PR, and the real argument for it is that the tests import from
 `pythonpath` rather than from the built wheel, so a wheel whose `force-include`d
 schema files went missing would pass every test there is.
+
+
+## Summary of Changes
+
+Merged to `main` as `804866262a8` (PR #1391).
+
+- `check-published-packages.ts` discovers `pyproject.toml` from the git index
+  alongside `package.json`; one directory shipping to both registries yields
+  **two entries and two verdicts**.
+- Runner and dependencies are read from the package, never hardcoded:
+  `[tool.pytest.ini_options]` declares pytest, `[project.optional-dependencies]
+  test` declares what gets installed. `Private ::` honoured for the PEP 621
+  exclusion. An absent interpreter is a FINDING, not a skip.
+- `actions/setup-python@v7` added to the `typescript` job; scoping comments in
+  both jobs, the `python` job's leading.
+- 12 discovery tests over git-repo fixtures.
+
+Verified: merged-tree `bun run gates` **152 of 154** with no tree-guard finding;
+CI 9 green including e2e. The 2 local / 1 CI red is the `t8g3` drift held red on
+`main` by decision (#1384), not this work.
+
+Corrected here rather than quietly: this bean said the Python job "already
+installs" pytest — it does not — and said the suite was 17 tests — it is 18.
+
+Split out and NOT actioned: `872t` (the Python half's wheel build is still
+unchecked) and `m5gx` (a red test at step 5 makes 149 gate commands unreachable
+in CI, which is why this bean's own gate is locally verified and not
+runner-verified). This bean's second recorded box — version-pinning a published
+package against the platform — remains the owner's and unasked.

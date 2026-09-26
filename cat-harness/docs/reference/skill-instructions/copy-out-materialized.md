@@ -23,7 +23,7 @@ does not edit it in place.** The owner, 2026-09-21:
 And 2026-09-22, choosing between advising and enforcing: **enforce from the
 start.**
 
-Diagram: [`copy-out-materialized.bpmn`](../../cat-harness/processes/copy-out-materialized.bpmn).
+Diagram: [`copy-out-materialized.bpmn`](../../processes/copy-out-materialized.html).
 Schema: `folio-assistant-core/schemas/materialization.ts`. Where they disagree,
 the schema wins and this file is wrong.
 

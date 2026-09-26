@@ -1,11 +1,11 @@
 ---
 # folio-assistant-fx5r
 title: The PR endpoint keeps serving a merged PR's pre-merge view, and merge_pull_request reports success on it
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-25T18:09:14Z
-updated_at: 2026-09-26T03:20:56Z
+updated_at: 2026-09-26T12:12:45Z
 parent: folio-assistant-1xhc
 ---
 
@@ -134,10 +134,12 @@ visible rather than quietly edited.
       the module whose subject is "is a run owed here".
 - [x] `h2s9` cross-references this, and this one says plainly that a wrong
       error string is worse than an absent one.
-- [ ] Nothing gates the prose: a future edit can point "by hand" back at the
+- [x] Nothing gates the prose: a future edit can point "by hand" back at the
       field. Two tests now pin the REFERENT, which is the cheap half; a
       general rule (no advice string names `mergeable_state` approvingly)
-      would be the whole one.
+      would be the whole one. **`check:stale-field-advice`, 2026-09-26** —
+      see the section below for what it measures instead of "approvingly",
+      and the two sites it found that I had not.
 
 ---
 
@@ -168,3 +170,95 @@ appear tomorrow. The general rule this bean asks for — *no advice string names
 `mergeable_state` approvingly, anywhere* — would have caught this one, and is
 still not written.
 
+
+
+## 2026-09-26 — the general rule, and it caught two sites I had not
+
+`bun run check:stale-field-advice` (`cat-harness/scripts/check-stale-field-advice.ts`),
+in `Code-quality gates` beside `check:command-paths`.
+
+**It does not read intent, and that is the design.** "Approvingly" is exactly
+what a regex is worst at, and a gate that guessed would be wrong in both
+directions and then deleted. So the burden is inverted and the test is
+structural: a mention passes when its neighbourhood **says something about the
+field's reliability**, and fails when it is bare. That is deliberately wider
+than "not approving", because it admits the two shapes that are both
+legitimate and that a caution-only rule would have to choose between —
+
+- a **caution**: *"`unknown` means GitHub has not finished computing it, not
+  that the PR is fine"*;
+- a **measured licence**: *"when it is `dirty`, merge the base in"*, which
+  `yv4z` established and which is sound because `dirty` is the one value whose
+  falsity costs nothing.
+
+What it refuses is the third shape, which is the one that actually shipped.
+
+### The two it found, neither of which was on my list
+
+I had this bean's scope wrong once already (the three-call-sites table above),
+so this time the gate ran before the guess. Both findings are real:
+
+| site | what it said | what it says now |
+|---|---|---|
+| `pickup.md:79` | `mergeable_state` in a list of fields to read from `pull_request_read get`, **nothing said** | act on it only when it reads `dirty`, with `fx5r` and `h2s9` named and `git merge-base --is-ancestor` given for "has this landed?" |
+| `prepare-merge.md:330` | *"Read `mergeable_state` FIRST"* — approving, and **correct**, but silent on which values are worth believing | believe it only when it says `dirty`, because that is the one value whose remedy costs nothing if it is wrong |
+
+`pickup.md` is the sharp one. It is the step-1 instruction an agent follows
+when picking up a PR, and it named the field with no caveat at all — a reader
+cannot tell from that whether the author knew.
+
+### Falsified before it was trusted, because `yx9p` is four days old
+
+A guard that passes 7/7 and lets its own defect through is this month's
+measured failure, so the gate was run against sabotage rather than read:
+
+1. a fourth copy of the advice string, planted as a new workflow → **exit 1**;
+2. the caution stripped from `github-state-inspection.md`, a site that passes →
+   **exit 1**;
+3. restored → **exit 0**, 13 qualified mentions, 0 bare.
+
+All three are pinned in `cat-harness/scripts/tests/stale-field-advice.test.ts`,
+with the corpus test itself falsified the same way (planting a bare mention
+turns it red).
+
+### What it deliberately does NOT cover, so the coverage is not a guess
+
+- **`mergeable` and `head.sha`** went stale in the same measurement and are
+  absent from the table. Both are ordinary words here — `head.sha` is read
+  correctly dozens of times off a check-run payload, where it is neither
+  served by the PR endpoint nor stale. A gate that cried wolf on those would
+  be deleted, and would take the one true rule with it.
+- **`beans/`** is out of scope. A bean is a `state` graph: the record of a
+  measurement, in the past tense, frequently quoting the very string the fix
+  removed — this bean names the field a dozen times and every one is evidence.
+  Requiring a qualifier there would either rewrite history or teach authors to
+  sprinkle the marker, and a marker sprinkled to satisfy a gate stops meaning
+  anything.
+- **Five paths declined**, each by whole path with a reason and each COUNTED in
+  the summary rather than dropped (`check-command-paths`' rule: what a check
+  declines to judge has to stay visible). There is no per-LINE exemption table:
+  a line number is invalidated by the next paragraph inserted above it, and an
+  exemption protecting a line that has moved protects the wrong text.
+
+
+## Summary of Changes — closed 2026-09-26
+
+All five `Done when` items are ticked and the evidence is on `main`, not on a
+branch: `git merge-base --is-ancestor` confirms both heads.
+
+| what | where it landed |
+|---|---|
+| the two UNKNOWN advice strings name `merged` and the merge ref | PR #1362 |
+| `prepare-merge` and `/watch` checked — already correct | measured, nothing to do |
+| refreshing CI documented as `workflow_dispatch`, not a push | PR #1362 |
+| `h2s9` cross-references this; a wrong error string is worse than an absent one | PR #1362 |
+| **the general rule** — `bun run check:stale-field-advice` | PR #1395 |
+
+The last one is the one a test could not close, and it found **two sites this
+bean had not**: `pickup.md:79`, the step-1 instruction for picking up a PR,
+naming the field with no caveat at all; and `prepare-merge.md:330`, approving
+and correct but silent on which values are worth believing. Both now say
+`dirty` only, and name this bean and `h2s9`.
+
+Closed on evidence rather than authorship, per `bean-coordination`
+§"Closing a bean whose work has already landed".

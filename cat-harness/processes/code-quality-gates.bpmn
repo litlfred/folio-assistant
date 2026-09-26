@@ -22,13 +22,14 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_CodeQualityGates">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
-        <bpmn:documentation>Joins all six jobs before asking anything, then GW_Hard asks specifically about the four HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the five-are-not-four asymmetry actually bites.</bpmn:documentation>
+        <bpmn:documentation>Joins all seven jobs before asking anything, then GW_Hard asks specifically about the five HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the seven-are-not-five asymmetry actually bites. These counts read six-and-four with the asymmetry called five-are-not-four, which was already inconsistent before `om30` split the gates job out; both are corrected here rather than incremented.</bpmn:documentation>
         <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Change</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Fork</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Lean</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Python</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_TypeScript</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RepositoryGates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_E2E</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Rust</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Advisories</bpmn:flowNodeRef>
@@ -41,7 +42,7 @@
     <bpmn:startEvent id="Start_Change" name="Pull request, push to main,&amp;#10;or dispatch">
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:parallelGateway id="GW_Fork" name="All six,&amp;#10;in parallel">
+    <bpmn:parallelGateway id="GW_Fork" name="All seven,&amp;#10;in parallel">
       <bpmn:incoming>Flow_0</bpmn:incoming>
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
@@ -49,6 +50,7 @@
       <bpmn:outgoing>Flow_4</bpmn:outgoing>
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
       <bpmn:outgoing>Flow_14</bpmn:outgoing>
+      <bpmn:outgoing>Flow_16</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:task id="Task_Lean" name="Lean: no bare&amp;#10;`import Mathlib` (HARD)">
       <bpmn:documentation>Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently.</bpmn:documentation>
@@ -66,8 +68,8 @@
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="Task_TypeScript" name="TypeScript: tests, lint, types,&amp;#10;and ~30 repository gates (HARD)">
-      <bpmn:documentation>bun test, lint, tsc --noEmit, then the repository gates (workflow refs, lane and process documentation, kg:audit:check, detangle, skills, …). `bun run gates` derives its list from this job, so it is the local way to run the same set before pushing.</bpmn:documentation>
+    <bpmn:task id="Task_TypeScript" name="TypeScript: lint, types&amp;#10;and tests (HARD)">
+      <bpmn:documentation>Three checks and nothing else: `bun run lint`, `tsc --noEmit`, then `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Order inside the job is load-bearing rather than stylistic: Actions stops a job at its first failing step, so `bun test` — red on `main` by the owner's decision — runs LAST, with nothing behind it to mask. While it ran first, lint and typecheck did not execute on `main` at all.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
@@ -98,6 +100,14 @@
       <bpmn:incoming>Flow_14</bpmn:incoming>
       <bpmn:outgoing>Flow_15</bpmn:outgoing>
     </bpmn:task>
+    <bpmn:task id="Task_RepositoryGates" name="Repository gates&amp;#10;(HARD)">
+      <bpmn:documentation>The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 `bun run` invocations in all. A SEPARATE job from Task_TypeScript since bean `om30`: they were one job in which `bun test` came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on `main` meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is `xom7` at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. `bun run gates` derives its list from BOTH jobs, so the local set still cannot drift from CI's.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="platform-gates"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_16</bpmn:incoming>
+      <bpmn:outgoing>Flow_17</bpmn:outgoing>
+    </bpmn:task>
     <bpmn:parallelGateway id="GW_Join" name="">
       <bpmn:incoming>Flow_6</bpmn:incoming>
       <bpmn:incoming>Flow_7</bpmn:incoming>
@@ -105,6 +115,7 @@
       <bpmn:incoming>Flow_9</bpmn:incoming>
       <bpmn:incoming>Flow_10</bpmn:incoming>
       <bpmn:incoming>Flow_15</bpmn:incoming>
+      <bpmn:incoming>Flow_17</bpmn:incoming>
       <bpmn:outgoing>Flow_11</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:exclusiveGateway id="GW_Hard" name="Any HARD&amp;#10;gate red?">
@@ -135,14 +146,16 @@
     <bpmn:sequenceFlow id="Flow_13" sourceRef="GW_Hard" targetRef="End_Fail" name="yes"/>
     <bpmn:sequenceFlow id="Flow_14" sourceRef="GW_Fork" targetRef="Task_Advisories"/>
     <bpmn:sequenceFlow id="Flow_15" sourceRef="Task_Advisories" targetRef="GW_Join"/>
+    <bpmn:sequenceFlow id="Flow_16" sourceRef="GW_Fork" targetRef="Task_RepositoryGates"/>
+    <bpmn:sequenceFlow id="Flow_17" sourceRef="Task_RepositoryGates" targetRef="GW_Join"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_CodeQualityGates">
     <bpmndi:BPMNPlane id="Plane_Process_CodeQualityGates" bpmnElement="Collaboration_Process_CodeQualityGates">
       <bpmndi:BPMNShape id="Shape_Participant_Process_CodeQualityGates" bpmnElement="Participant_Process_CodeQualityGates" isHorizontal="true">
-        <dc:Bounds x="60" y="60" width="1640" height="830"/>
+        <dc:Bounds x="60" y="60" width="1640" height="950"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Ci" bpmnElement="Lane_Ci" isHorizontal="true">
-        <dc:Bounds x="90" y="60" width="1610" height="720"/>
+        <dc:Bounds x="90" y="60" width="1610" height="840"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_Change" bpmnElement="Start_Change">
         <dc:Bounds x="122" y="332" width="36" height="36"/>
@@ -167,6 +180,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Task_Advisories" bpmnElement="Task_Advisories">
         <dc:Bounds x="550" y="670" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_RepositoryGates" bpmnElement="Task_RepositoryGates">
+        <dc:Bounds x="550" y="790" width="180" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_Join" bpmnElement="GW_Join">
         <dc:Bounds x="865" y="325" width="50" height="50"/>
@@ -253,6 +269,16 @@
       <bpmndi:BPMNEdge id="Edge_Flow_15" bpmnElement="Flow_15">
         <di:waypoint x="730" y="710"/>
         <di:waypoint x="890" y="710"/>
+        <di:waypoint x="890" y="375"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_16" bpmnElement="Flow_16">
+        <di:waypoint x="415" y="350"/>
+        <di:waypoint x="640" y="350"/>
+        <di:waypoint x="640" y="790"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_17" bpmnElement="Flow_17">
+        <di:waypoint x="730" y="830"/>
+        <di:waypoint x="890" y="830"/>
         <di:waypoint x="890" y="375"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
