@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 373,
+      "count": 376,
       "unit": "beans"
     }
   },
@@ -279,14 +279,14 @@
     {
       "id": "folio-assistant-1s5s",
       "title": "The published package's PYTHON half runs nowhere — CI's pytest job globs a directory that does not contain it",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T09:13:49Z",
-      "updatedAt": "2026-09-26T09:54:40Z",
+      "updatedAt": "2026-09-26T10:38:03Z",
       "preview": "Split out of `rsi6` 2026-09-26. **That bean was closed `completed` carrying two\nunchecked boxes**, which the store's own rule forbids — \"ONLY if the bean has\nno unchecked todo items left\". Recorded here rather than quietly re-ticked,\nbecause a completed bean holding live work is exactly the shape that makes the\nstore unreadable, and this session has spent the day filing that class against\nother pe",
       "file": "beans/defs/folio-assistant-1s5s--the-published-packages-python-half-runs-nowhere-ci.md"
     },
@@ -583,6 +583,20 @@
       "updatedAt": "2026-09-24T13:08:48Z",
       "preview": "`bun run audit:coverage` (bean `xutg`) reports coverage per declared graph kind\nfrom `@covers` lines gates carry in their own module docblocks. 118 scripts\ndeclare; **10 gates have not said**, measured 2026-09-24:\n\n- `check:agents-claims`\n- `check:context-emission`\n- `check:image-roles`\n- `check:avatar-instances`\n- `check:asset-roles`\n- `check:retired-front-matter`\n- `check:wireframes`\n- `check:pa",
       "file": "beans/defs/folio-assistant-3srh--ten-gates-have-not-declared-covers-so-every-audit.md"
+    },
+    {
+      "id": "folio-assistant-3x2o",
+      "title": "Two generated skill pages name a source directory that does not exist — the oe98 banner bug recurs for remote stubs",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T10:44:49Z",
+      "updatedAt": "2026-09-26T10:45:07Z",
+      "preview": "Found 2026-09-26 while verifying `hloc`'s link rewriting — by checking that\nevery rewritten link points at something that EXISTS, which also swept the\nlinks the generator already composed.\n\n## The measurement\n\n`cat-harness/docs/reference/skill-instructions/fhir-client-operations.md` and\n`smart-launch.md` each open with:\n\n    > Generated from [`cat-harness/skills/remote-stubs/<name>.md`](\n    >   h",
+      "file": "beans/defs/folio-assistant-3x2o--two-generated-skill-pages-name-a-source-directory.md"
     },
     {
       "id": "folio-assistant-423d",
@@ -1595,6 +1609,20 @@
       "file": "beans/defs/folio-assistant-aazi--workflow-statemgmt-rendering-a-status-dashboard-at.md"
     },
     {
+      "id": "folio-assistant-ahab",
+      "title": "Translated pages carry 225 unresolved links — 43 distinct, five near-copies each, and the English sources do not carry them",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T10:40:05Z",
+      "updatedAt": "2026-09-26T10:40:21Z",
+      "preview": "Found 2026-09-26 while re-deriving `hloc`'s premise. `hloc` records the `docs/`\nunresolved-link count as **120** after `mi97` took it from 246. Re-measured\ntoday with `scanSubgraphs()` it is **340** — higher than the pre-`mi97` figure.\n\nThat is not an `mi97` regression. It is a different population, and it splits:\n\n| source | links |\n|---|---|\n| translated pages — `docs/{ar,es,fr,ru,zh}/` | **225*",
+      "file": "beans/defs/folio-assistant-ahab--translated-pages-carry-225-unresolved-links-43-dis.md"
+    },
+    {
       "id": "folio-assistant-ahvw",
       "title": "PROCESS: how an agent decides what it is doing, and what governs each step",
       "status": "in-progress",
@@ -2474,7 +2502,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T16:21:48Z",
-      "updatedAt": "2026-09-26T10:39:59Z",
+      "updatedAt": "2026-09-26T10:40:01Z",
       "preview": "Measured 2026-09-25, after `mi97` took `check:subgraphs`' unresolved-link count\nin `docs/` from **246** to **120**.\n\nThe 120 that remain are NOT published-tree addresses, which is what the\n`siteResolved` bucket assumes of them. Classified by target:\n\n| target kind | count |\n|---|---|\n| directory or generated path | 33 |\n| `.md` | 32 |\n| `.html` | 19 |\n| `.bpmn` | 17 |\n| `.ts` | 12 |\n| `.json` | 4 ",
       "file": "beans/defs/folio-assistant-hloc--gen-skill-docs-flattens-packages-but-leaves-120-no.md"
     },
@@ -3001,14 +3029,14 @@
     {
       "id": "folio-assistant-m5gx",
       "title": "One red test at step 5 makes 149 gate commands unreachable in CI — the typescript job stops and 45 of its 50 steps never run",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T10:20:26Z",
-      "updatedAt": "2026-09-26T10:20:44Z",
+      "updatedAt": "2026-09-26T12:15:44Z",
       "preview": "Found 2026-09-26 while wiring bean `1s5s` (the published package's Python half)\ninto `check:published-packages`. Noticed because the new gate **could not be\nverified on a runner** — not because it failed, but because it never ran.\n\n## The measurement\n\n`.github/workflows/code-quality-gates.yml`, job `typescript`, parsed rather\nthan eyeballed:\n\n- `bun test` is **step 5 of 50**, with no `continue-on-",
       "file": "beans/defs/folio-assistant-m5gx--one-red-test-at-step-5-makes-149-gate-commands-unr.md"
     },
@@ -3601,6 +3629,20 @@
       "updatedAt": "2026-09-25T18:10:30Z",
       "preview": "`health` reports `staging-preview-size` as **critical** while every deploy keeps\nsucceeding. I went looking for a wrong number and did not find one: **the\nmeasurement is sound.** What is wrong is one level up, in what `critical` is\nasserting.\n\n## Measured first-hand, 2026-09-25\n\nDirectly off the publish ref — `git ls-tree -r -l origin/gh-pages`, not the\ncheck's own report:\n\n| | files | size |\n|---",
       "file": "beans/defs/folio-assistant-qj9a--staging-size-the-measurement-is-right-and-the-seve.md"
+    },
+    {
+      "id": "folio-assistant-qook",
+      "title": "check:merged reports uml:overview:check red on a merged tree that is green — a sweep artefact, twice",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T11:04:49Z",
+      "updatedAt": "2026-09-26T11:04:49Z",
+      "preview": "## What was measured, 2026-09-26\n\n`bun run check:merged` (bean `nytj`) reported `uml:overview:check` red on the\nmerged tree for **two unrelated branches within the same hour** — PR #1392's\n`claude/ask-well-fourth-layer` and PR #1395's `claude/fx5r-stale-field-advice`.\nNeither branch touches the UML overview's inputs in a way the other does.\n\nIt is a false positive. Every isolated measurement on th",
+      "file": "beans/defs/folio-assistant-qook--checkmerged-reports-umloverviewcheck-red-on-a-merg.md"
     },
     {
       "id": "folio-assistant-qrnz",
