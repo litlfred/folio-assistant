@@ -110,7 +110,8 @@ import { basename, join, relative, resolve } from "node:path";
 import { parsePo } from "../content/pipeline/po-inject.js";
 import { readHarnessConfig } from "../schemas/harness-config.js";
 import { repoRootFor, resolveDirectories } from "../schemas/cat-harness.js";
-import { buildExport, exportIdentity } from "./kg-export.js";
+import { termIri } from "../schemas/namespaces.js";
+import { buildExport, exportIdentity, publishedDocument } from "./kg-export.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -312,6 +313,14 @@ export function translateDocument(
   // source language, not this locale — which is the whole point of tagging
   // per value above.
   (doc as { sourceLanguage?: string }).sourceLanguage = sourceLocale;
+  // Declare `sourceLanguage` in the locale document's `@context`. It is a
+  // locale-only field (not on the core document), so the term goes WITH the
+  // field rather than in `buildContext()` — same rule as the QA fields that
+  // were removed from there. Without this, JSON-LD expansion reports
+  // "invalid property (sourceLanguage)". Bean `vigi` / #1406.
+  if (doc["@context"] && typeof doc["@context"] === "object" && !Array.isArray(doc["@context"])) {
+    (doc["@context"] as Record<string, unknown>).sourceLanguage = termIri("sourceLanguage");
+  }
 
   return {
     doc,
@@ -384,7 +393,13 @@ export async function buildLocaleExports(opts: {
 } = {}): Promise<LocaleBuild> {
   const instanceRoot = resolve(opts.instanceRoot ?? ROOT);
   const id = exportIdentity({ baseUrl: opts.baseUrl, instanceRoot: opts.instanceRoot });
-  const core = (await buildExport({ baseUrl: opts.baseUrl, instanceRoot: opts.instanceRoot })) as unknown as Record<
+  const rawExport = await buildExport({ baseUrl: opts.baseUrl, instanceRoot: opts.instanceRoot });
+  // Strip QA-only fields (problems, undeclaredTerms, undeclaredSchemaModules,
+  // danglingLinks) before translating. Without this, `translateDocument`'s walk
+  // copies them into every locale document where they are undeclared in the
+  // `@context`, causing `publish-verify` to fail with "invalid property".
+  // Bean `vigi` / #1406.
+  const core = publishedDocument(rawExport) as unknown as Record<
     string,
     unknown
   >;

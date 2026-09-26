@@ -107,10 +107,15 @@ describe("translateDocument — the same graph, in another language", () => {
     expect(r["@type"]).toBe("cat:Role");
   });
 
-  test("links are left alone, and the @context is not repointed", () => {
+  test("links are left alone, and the @context carries the core plus sourceLanguage", () => {
     const t = nodeById(doc, "https://x.test/cat-harness.jsonld#process/P1/node/T1");
     expect(t.performedBy).toBe("https://x.test/cat-harness.jsonld#role/Reviewer");
-    expect(doc["@context"]).toEqual(CORE["@context"]);
+    // The locale document's @context is the core context plus `sourceLanguage`,
+    // which is a locale-only field declared alongside its value. #1406.
+    const ctx = doc["@context"] as Record<string, unknown>;
+    expect(ctx.name).toBe(CORE["@context"].name);
+    expect(ctx.skos).toBe(CORE["@context"].skos);
+    expect(ctx.sourceLanguage).toBeDefined();
   });
 
   test("a link is NOT rewritten even when the catalogue carries it as a msgid", () => {
