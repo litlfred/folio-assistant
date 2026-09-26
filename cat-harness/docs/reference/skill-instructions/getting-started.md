@@ -13,8 +13,8 @@ parent: Skill instructions
 {% raw %}
 # /getting-started — what did they actually ask for?
 
-Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn).
-Decision table: [`decisions/folio-intent.dmn`](../../processes/decisions/folio-intent.dmn).
+Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html).
+Decision table: [`decisions/folio-intent.dmn`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/decisions/folio-intent.dmn).
 
 ## The landing page is the instance's own description
 

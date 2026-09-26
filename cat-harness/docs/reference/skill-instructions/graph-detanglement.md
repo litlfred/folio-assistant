@@ -45,7 +45,7 @@ message:
 > wrong — **check the target's layer before the importer's** — or the import
 > is."
 
-**At knowledge-graph scale** — [`kg-detangle.ts`](kg-detangle.ts), beside this skill (`bun run kg:detangle`), over the
+**At knowledge-graph scale** — [`kg-detangle.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/graph-management/kg-detangle.ts), beside this skill (`bun run kg:detangle`), over the
 instance stack each `<instance>.json` declares in `needs`.
 
 The repository and knowledge-graph scales share ONE verdict function,
