@@ -287,6 +287,9 @@
     "sessions": "bun run cat-harness/scripts/sibling-sessions.ts",
     "site:links": "bun run cat-harness/scripts/site-links.ts",
     "skill:register": "bun run cat-harness/scripts/skill-register.ts",
+    "skill:register:check": "bun run cat-harness/scripts/skill-register.ts --check",
+    "skills:docs": "bun run cat-harness/scripts/gen-skill-docs.ts",
+    "skills:docs:check": "bun run cat-harness/scripts/gen-skill-docs.ts --check",
     "smart-trust:pages": "bun run smart-trust/scripts/gen-smart-trust-pages.ts",
     "smart-trust:pages:check": "bun run smart-trust/scripts/gen-smart-trust-pages.ts --check",
     "stakeholder-map": "bun run cat-harness/scripts/stakeholder-map.ts",
@@ -334,11 +337,7 @@
     "voices:graph": "bun run cat-harness/scripts/voices-graph.ts",
     "voices:viz": "bun run cat-harness/scripts/gen-voices-viz.ts",
     "voices:viz:check": "bun run cat-harness/scripts/gen-voices-viz.ts --check",
-    "wireframe:check": "bun run cat-harness/scripts/wireframe-check.mjs",
-    "skills:docs": "bun run cat-harness/scripts/gen-skill-docs.ts",
-    "skills:docs:check": "bun run cat-harness/scripts/gen-skill-docs.ts --check",
-    "skills:register": "bun run cat-harness/scripts/register-skills.ts",
-    "skills:register:check": "bun run cat-harness/scripts/register-skills.ts --check"
+    "wireframe:check": "bun run cat-harness/scripts/wireframe-check.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",

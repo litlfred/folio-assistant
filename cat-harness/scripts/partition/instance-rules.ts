@@ -1231,12 +1231,11 @@ export const RULES: Rule[] = [
       "scripts/check-python-deps.ts",       // the repo's own toolchain
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
       "scripts/check-usage-paths.ts",       // a script's usage string names the script
-      "scripts/register-skills.ts",         // a skill's declarations, performed and gated (bean `nfv3`)
       "scripts/render-pipeline.ts",         // WHICH renders run and in what order, read from the declarations
       "scripts/render-selection.ts",        // WHICH of them must re-run against a seed, and why (bean `9c34`). Harness machinery: it computes a decision and writes no page, so it belongs beside the pipeline rather than with the renderers
       "scripts/gates.ts",                   // the gate runner itself
       "scripts/gate-tree-guard.ts",         // ...and which gate changed the tree under it (bean `ymsu`). Harness for the same reason the runner is: it asks a question only the runner is positioned to ask, since no gate can observe what another gate did
-      "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales (bean `v625`). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the five artefacts before their checks read them
+      "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales AND gates the declarations (beans `v625`, `nfv3` — two commands one letter apart, consolidated here at the owner's decision 2026-09-26). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the five artefacts before their checks read them
       "scripts/check-merged.ts",            // the gate runner, on the merged tree (bean `nytj`)
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
       "scripts/gen-bootstrap-graph.ts", // writes bootstrap/bootstrap.jsonld

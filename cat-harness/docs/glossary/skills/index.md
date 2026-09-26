@@ -1747,7 +1747,7 @@ site-presentation-assets <span class="fa-gloss-status">candidate, extracted</spa
 skill-registration <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Adding a skill is never a one-file change. What a new skill file owes, the one command that performs all of it, why running that command once is not enough, and the two orphan directions it reports rather than fixes. Read this before adding, renaming or removing a skill.</p>
+<p>Adding a skill is never a one-file change. What a new skill file owes, the one command that performs the derived half, the one declaration it deliberately leaves to you, why running it once is not enough, and the two orphan directions it reports rather than fixes. Read this before adding, renaming or removing a skill.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/skill-registration.md"><code>cat-harness/skills/folio-core/skill-registration.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--skills-and-tools" data-fa-state="extracted" data-fa-gloss="">
