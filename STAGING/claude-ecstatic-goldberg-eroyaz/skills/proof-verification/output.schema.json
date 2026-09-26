@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ecstatic-goldberg-eroyaz/skills/proof-verification/output.schema.json",
+  "title": "Proof Verification Output",
+  "description": "Output schema for the proof-verification skill.",
+  "type": "object",
+  "required": [
+    "verified",
+    "sorryCount"
+  ],
+  "properties": {
+    "verified": {
+      "type": "boolean"
+    },
+    "sorryCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sorries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "file",
+          "line",
+          "obligation"
+        ],
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer"
+          },
+          "obligation": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/ecstatic-goldberg-eroyaz",
+    "sha": "69e2afa267099728c529a0121a5d0888c901d5b8",
+    "pr": "1370/merge",
+    "run": "36217284587"
+  }
+}
