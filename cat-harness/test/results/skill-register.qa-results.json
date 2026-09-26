@@ -2,20 +2,25 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/skill-register.ts",
-    "script_hash": "16693a244f2f"
+    "script_hash": "d2cfb26544bc"
   },
   "subject": {
     "kind": "corpus",
     "id": "skill-registration-chain"
   },
-  "updated_at": "2026-09-26T20:37:23.147Z",
+  "updated_at": "2026-09-26T20:01:31.894Z",
   "families": {
+    "declarations": {
+      "summary": "Skills whose DECLARATIONS are wrong: present in no package manifest, carrying a retired front-matter key, or listed in a manifest with no file. Empty means audited and clean, not unaudited — the chain family above records whether the run happened. Only the retired key is repaired; the other two are the author's assertion to make and this command reports them rather than guessing.",
+      "count": 0,
+      "entries": []
+    },
     "registration-chain": {
       "summary": "Each artefact that adding a skill stales, with the verdict of its own `--check` run INDIVIDUALLY rather than through `bun run gates`. The distinction is the point: `bun test` runs the kg-audit and detangle writers, so a gates run repairs two of these before their checks read them and reports as current what is not (bean `ymsu`). `ran: false` means the step was listed but not run — what `--dry-run` produces — and is not a pass. It is emitted on every entry so that absence never carries that fact.",
       "count": 6,
       "entries": [
         {
-          "verify": "cat-harness/scripts/gen-skill-docs.ts --check",
+          "verify": "skills:docs:check",
           "because": "the skill's published reference page",
           "ran": true,
           "current": true
