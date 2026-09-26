@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { siteDirFor } from "../schemas/cat-harness.ts";
@@ -121,8 +121,50 @@ const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
     const [key, v] = indexed;
     return { key, url: v.sourceUrl, title: v.sourceTitle };
   }
-  // Case 2. A real page of this site, deliberately one the index does not list.
-  return { key: "architecture", url: "/architecture.html", title: "Architecture" };
+  // Case 2. DERIVED, not named. A top-level source page of this site that the
+  // index does not list — so it has no translation in any locale, which is the
+  // definition this fixture needs.
+  //
+  // `architecture` was named here and was translated on 2026-09-26, which is the
+  // SECOND time this fixture rotted the same way (`getting-started` was the
+  // first). Five translation batches landed that day; any name picked here is a
+  // clock, and the docblock above already said so about case 1. So case 2 is
+  // derived on the same principle: the moment a page is translated, this simply
+  // picks another, and the tripwire below only fires if the site runs out of
+  // untranslated pages entirely — which would be real news rather than rot.
+  //
+  // Sorted, so two runs on one tree agree; a set iteration order would make the
+  // fixture depend on directory listing order and this test is a fixture's only
+  // reader.
+  const siteRoot = join(ROOT, SITE);
+  // Absence from the index is NOT the definition — the definition is that no
+  // locale publishes this page. Checked on disk rather than inferred, because an
+  // index that under-reports would hand this fixture a page that IS translated,
+  // and the test would then assert a fallback that should not happen. (Measured
+  // while writing this: `crdm-methodology` is absent from the index AND has a
+  // `.po` catalogue, which is a different artefact from a published page — so the
+  // two questions really do come apart.)
+  const untranslated = (key: string): boolean =>
+    !INDEX.locales.some((loc) => existsSync(join(siteRoot, loc, `${key}.md`)));
+  const candidate = readdirSync(siteRoot)
+    .filter((f) => f.endsWith(".md"))
+    .map((f) => f.slice(0, -3))
+    .filter((key) => !INDEX.pages[key] && untranslated(key))
+    .sort()[0];
+  if (candidate === undefined) {
+    throw new Error(
+      "every top-level page of this site is translated, so no fixture can stand for " +
+        "the no-translation case. That is good news about the site; this test now needs " +
+        "a synthetic page built inside `harness()` rather than a real one.",
+    );
+  }
+  const front = readFileSync(join(siteRoot, `${candidate}.md`), "utf8");
+  const titled = /^title:\s*(.+?)\s*$/m.exec(front.split("---")[1] ?? "");
+  return {
+    key: candidate,
+    url: `/${candidate}.html`,
+    title: (titled?.[1] ?? candidate).replace(/^["']|["']$/g, ""),
+  };
 })();
 
 /** just-the-docs' nav markup, reduced to what the filter touches. */
