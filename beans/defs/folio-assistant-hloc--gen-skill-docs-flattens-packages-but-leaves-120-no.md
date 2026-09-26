@@ -1,10 +1,10 @@
 ---
 # folio-assistant-hloc
 title: gen-skill-docs flattens packages but leaves 120 non-skill links addressing the source layout
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-25T16:22:33Z
+updated_at: 2026-09-26T10:40:01Z
 parent: folio-assistant-ahvw
 ---
 
