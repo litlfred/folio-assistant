@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-26T06:46:02Z
-updated_at: 2026-09-26T14:23:25Z
+updated_at: 2026-09-26T14:28:56Z
 parent: folio-assistant-1xhc
 ---
 
@@ -245,3 +245,82 @@ the growth from 25 to 36 happened in a window where the gate that would have
 reported it was not running. That is `1xhc` doing real damage rather than
 hypothetical damage, and it is worth stating plainly: **the number grew while the
 instrument was switched off.**
+
+
+
+--------
+
+## 2026-09-26T14:45Z — WITHDRAWN: "the mechanical route is CLOSED" was wrong within hours
+
+The two notes above are **superseded, and the second of them was wrong when I
+wrote it.** Correcting rather than editing, because how it went wrong is the
+useful part.
+
+### What I recorded
+
+At 13:30 I wrote, on `f6r1`'s authority, that derivability was settled —
+*"19 provably not, 8 undetermined, 0 demonstrated derivable"* — and concluded
+**"the mechanical route is CLOSED"**, then framed the growth 25 → 36 as *"the cost
+of fresh authoring grew while the decision sat open."*
+
+### What was already true
+
+    git ls-tree -r --name-only <ref> | grep -c "\.po$"
+      6579d63239^   19 catalogues     (before #1369)
+      6579d63239    43 catalogues     (#1369 itself)
+      origin/main   43 catalogues
+
+**`#1369` derived 24 catalogues**, exactly as its own commit message says:
+*"translation-drift: 25 findings -> 1. Three extractor defects fixed, each
+measured: `6b8u` (translatability was a property of the locale's script), `ig4a`
+(a code fence was only a fence at column 0), `lvk9` (a msgid depended on the
+author's hard wrap) … 24 of 25 catalogues derived, all UNOFFICIAL per #206."*
+
+So the blocker was never the translations. **It was the extractor**, and once three
+defects in it were fixed the catalogues derived fine. `f6r1`'s measurement was
+honest and correct *against the code of that hour*, and it answered "can these be
+derived by the CURRENT extractor" while reading as "can these be derived at all".
+
+The one refusal, `zh/getting-started`, is refused **by the subsequence guard** and
+needs a human's translation decision — which is why it still appears in today's
+list.
+
+### So what are the 36?
+
+Not 36 undone things that were 25 undone things. Main published MORE translated
+pages in the meantime — `#1404` *"architecture + evidence + beans + skills in all 6
+UN languages (bean t8g3)"* and `#1409` *"doc-ingestion + agentic-harness +
+pub-workflow in all 6 UN languages"*. The drift count tracks **published pages
+without catalogues yet**, and the campaign is publishing faster than the
+derivation step runs.
+
+**The `t8g3` ask this bean was opened to make has been ANSWERED — by delivery.**
+The campaign is shipping translations. The owner's choice worked.
+
+### What that means for this bean
+
+- "Mechanical route closed" — **withdrawn**. It is open and has been used 24 times.
+- "Cost grows while the decision sits open" — **withdrawn as applied here**. The
+  cost that grows is a derivation step, not authoring, and it is not waiting on a
+  decision.
+- The 48-hour expiry to 2026-09-28 06:45 is **moot**: it was a deadline for an
+  answer that has arrived.
+- `UNCATALOGED` recording is still not mine to do, and that has not changed.
+
+Main carries this red knowingly — `#1402`'s merge message states it plainly and
+points at bean **`tbdg`** as the owner-level tracking for the `t8g3` blocker. That
+is the bean to read, not this one; this one should not be the place a stale
+conclusion lives.
+
+### The lesson, which is the same one twice in one session
+
+This is the second conclusion I have recorded today that a sibling's work overtook
+within the hour — the first was asserting my own CI gate "has never executed" when
+main's `om30` split had just made it run. Both were correctly measured and both
+became false because the corpus moved.
+
+**A measurement carries a timestamp; a conclusion drawn from it does not.**
+`f6r1` said what was true of one extractor at one hour, and I promoted it to a
+property of the translations. Before repeating a sibling's conclusion as settled,
+check whether the thing it measured has moved — here, one `git ls-tree | grep -c`
+would have shown 19 → 43 before I wrote a word.
