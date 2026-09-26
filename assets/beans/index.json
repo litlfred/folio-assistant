@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 347,
+      "count": 348,
       "unit": "beans"
     }
   },
@@ -3391,6 +3391,20 @@
       "updatedAt": "2026-09-23T19:34:01Z",
       "preview": "Issue #1164. Owner, 2026-09-23, on filing a shipped feature's proposal into docs/requirements/: 'make sure no name collision, need to organize things when filing. need process to do so and methodologies. (we dont have yet... bean up for lit search)'.\n\nWhat exists: one page per shipped feature, id = file name, check:requirements refuses a slug used twice. Nothing says how requirements are GROUPED, ",
       "file": "beans/defs/folio-assistant-qh1s--lit-search-a-process-and-methodologies-for-organis.md"
+    },
+    {
+      "id": "folio-assistant-qj9a",
+      "title": "STAGING SIZE: the measurement is right and the SEVERITY is an unverifiable claim — critical predicts a failed publish, and nothing in this repo can observe enforcement",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T18:10:30Z",
+      "updatedAt": "2026-09-25T18:10:30Z",
+      "preview": "`health` reports `staging-preview-size` as **critical** while every deploy keeps\nsucceeding. I went looking for a wrong number and did not find one: **the\nmeasurement is sound.** What is wrong is one level up, in what `critical` is\nasserting.\n\n## Measured first-hand, 2026-09-25\n\nDirectly off the publish ref — `git ls-tree -r -l origin/gh-pages`, not the\ncheck's own report:\n\n| | files | size |\n|---",
+      "file": "beans/defs/folio-assistant-qj9a--staging-size-the-measurement-is-right-and-the-seve.md"
     },
     {
       "id": "folio-assistant-qrnz",
