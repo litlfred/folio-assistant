@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-26T06:46:02Z
-updated_at: 2026-09-26T06:46:02Z
+updated_at: 2026-09-26T10:50:27Z
 parent: folio-assistant-1xhc
 ---
 
@@ -133,3 +133,58 @@ bean now has a merged commit saying the recording route was taken and withdrawn,
 so it does not have to re-litigate option 2 from scratch. Recording is still
 available and still only on the owner's own instruction.
 
+
+
+--------
+
+## 2026-09-26T11:05Z — a sibling settled the derivability question, and it is NOT derivable
+
+Bean `f6r1` (**completed**, merged to `main` via `#1393`) asked exactly the
+question this bean's remedy depends on: can the missing `.po` catalogues be
+DERIVED from the finished translations, instead of recorded as absent (which the
+owner ruled out here) or authored fresh?
+
+**Answer, measured on `main` at `74f27e4c7f`: 19 provably not, 8 undetermined,
+0 demonstrated derivable.**
+
+| verdict | n | basis |
+|---|---|---|
+| count mismatch | 18 | source and translation yield different segment counts |
+| needs `msgctxt` | 1 | `ru/getting-started` — one repeated source msgid whose two occurrences are translated DIFFERENTLY, which a msgid-keyed `.po` cannot represent |
+| undetermined | 8 | the roundtrip check fails on them — **and on known-good catalogues too**, so the criterion cannot decide |
+
+The mismatches are not rounding: `zh/content-types` 117 → 95, `zh/accessibility`
+130 → 111, `zh/getting-started` 165 → 147. Around twenty source segments have no
+counterpart, so deriving would mean DECIDING which went untranslated and which
+were merged — authoring judgement, not extraction. `f6r1` reaches the
+`UNCATALOGED` docstring's conclusion by a different route: not that the
+segmentation is unavailable (`pot-extract.ts` defines it canonically), but that
+**these translations are not segment-wise images of their sources at all**.
+
+Its third state is the honest part and is preserved rather than collapsed: the 8
+are undetermined *because the test that would decide them is invalid*, shown by a
+control — run against the 8 catalogues that already exist and are accepted, the
+roundtrip fails on every one, because `injectMarkdown` collapses a multi-line
+paragraph onto its first line and re-extraction legitimately re-segments.
+
+### What this changes, and what it does not
+
+**It does not change what I do.** The owner chose asking the `t8g3` campaign
+(issue #206 comment 5844010805), the expiry stands at 2026-09-28 06:45, and
+recording the 25 in `UNCATALOGED` remains available ONLY on the owner's own
+instruction — a sibling landed those entries in `#1381` and `main` reverted them
+(`e9f30a78c1`) precisely because they collided with that decision. Nothing here
+re-opens it.
+
+**It does change what the owner is choosing between**, which is why it is
+recorded rather than acted on. The decision was taken without this measurement.
+Now: the mechanical route is closed, so the live options are the campaign
+answering, fresh authoring of 25 page-locale pairs, or recording the absence.
+
+### Re-measured on `main` at `8dc7547549`
+
+Still 17 pass / 1 fail on `translation-drift.test.ts` in a clean worktree, still
+exactly 25 findings — 5 locales (ar, es, fr, ru, zh) × 5 pages (accessibility,
+content-types, contributing, getting-started, installation). `f6r1` merging did
+not change the count, and was never going to: it answered whether a remedy was
+possible, not whether one had been applied.
