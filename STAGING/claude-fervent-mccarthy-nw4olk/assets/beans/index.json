@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 375,
+      "count": 377,
       "unit": "beans"
     }
   },
@@ -265,14 +265,14 @@
     {
       "id": "folio-assistant-1s5s",
       "title": "The published package's PYTHON half runs nowhere — CI's pytest job globs a directory that does not contain it",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T09:13:49Z",
-      "updatedAt": "2026-09-26T09:54:40Z",
+      "updatedAt": "2026-09-26T10:38:03Z",
       "preview": "Split out of `rsi6` 2026-09-26. **That bean was closed `completed` carrying two\nunchecked boxes**, which the store's own rule forbids — \"ONLY if the bean has\nno unchecked todo items left\". Recorded here rather than quietly re-ticked,\nbecause a completed bean holding live work is exactly the shape that makes the\nstore unreadable, and this session has spent the day filing that class against\nother pe",
       "file": "beans/defs/folio-assistant-1s5s--the-published-packages-python-half-runs-nowhere-ci.md"
     },
@@ -569,6 +569,20 @@
       "updatedAt": "2026-09-24T13:08:48Z",
       "preview": "`bun run audit:coverage` (bean `xutg`) reports coverage per declared graph kind\nfrom `@covers` lines gates carry in their own module docblocks. 118 scripts\ndeclare; **10 gates have not said**, measured 2026-09-24:\n\n- `check:agents-claims`\n- `check:context-emission`\n- `check:image-roles`\n- `check:avatar-instances`\n- `check:asset-roles`\n- `check:retired-front-matter`\n- `check:wireframes`\n- `check:pa",
       "file": "beans/defs/folio-assistant-3srh--ten-gates-have-not-declared-covers-so-every-audit.md"
+    },
+    {
+      "id": "folio-assistant-3x2o",
+      "title": "Two generated skill pages name a source directory that does not exist — the oe98 banner bug recurs for remote stubs",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T10:44:49Z",
+      "updatedAt": "2026-09-26T10:45:07Z",
+      "preview": "Found 2026-09-26 while verifying `hloc`'s link rewriting — by checking that\nevery rewritten link points at something that EXISTS, which also swept the\nlinks the generator already composed.\n\n## The measurement\n\n`cat-harness/docs/reference/skill-instructions/fhir-client-operations.md` and\n`smart-launch.md` each open with:\n\n    > Generated from [`cat-harness/skills/remote-stubs/<name>.md`](\n    >   h",
+      "file": "beans/defs/folio-assistant-3x2o--two-generated-skill-pages-name-a-source-directory.md"
     },
     {
       "id": "folio-assistant-423d",
@@ -1595,6 +1609,20 @@
       "file": "beans/defs/folio-assistant-aazi--workflow-statemgmt-rendering-a-status-dashboard-at.md"
     },
     {
+      "id": "folio-assistant-ahab",
+      "title": "Translated pages carry 225 unresolved links — 43 distinct, five near-copies each, and the English sources do not carry them",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T10:40:05Z",
+      "updatedAt": "2026-09-26T10:40:21Z",
+      "preview": "Found 2026-09-26 while re-deriving `hloc`'s premise. `hloc` records the `docs/`\nunresolved-link count as **120** after `mi97` took it from 246. Re-measured\ntoday with `scanSubgraphs()` it is **340** — higher than the pre-`mi97` figure.\n\nThat is not an `mi97` regression. It is a different population, and it splits:\n\n| source | links |\n|---|---|\n| translated pages — `docs/{ar,es,fr,ru,zh}/` | **225*",
+      "file": "beans/defs/folio-assistant-ahab--translated-pages-carry-225-unresolved-links-43-dis.md"
+    },
+    {
       "id": "folio-assistant-ahvw",
       "title": "PROCESS: how an agent decides what it is doing, and what governs each step",
       "status": "in-progress",
@@ -2483,12 +2511,12 @@
       "title": "gen-skill-docs flattens packages but leaves 120 non-skill links addressing the source layout",
       "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T16:21:48Z",
-      "updatedAt": "2026-09-26T10:39:59Z",
+      "updatedAt": "2026-09-26T11:52:30Z",
       "preview": "Measured 2026-09-25, after `mi97` took `check:subgraphs`' unresolved-link count\nin `docs/` from **246** to **120**.\n\nThe 120 that remain are NOT published-tree addresses, which is what the\n`siteResolved` bucket assumes of them. Classified by target:\n\n| target kind | count |\n|---|---|\n| directory or generated path | 33 |\n| `.md` | 32 |\n| `.html` | 19 |\n| `.bpmn` | 17 |\n| `.ts` | 12 |\n| `.json` | 4 ",
       "file": "beans/defs/folio-assistant-hloc--gen-skill-docs-flattens-packages-but-leaves-120-no.md"
     },
