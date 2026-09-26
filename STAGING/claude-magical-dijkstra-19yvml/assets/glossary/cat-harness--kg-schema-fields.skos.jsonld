@@ -17568,6 +17568,139 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/reference-direction.occurrence.from",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Occurrence.from"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The instance the FILE belongs to."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/reference-direction.ts#Occurrence.from",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/reference-direction.occurrence.text",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Occurrence.text"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The whole line, which is what an exemption matches against."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/reference-direction.ts#Occurrence.text",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/reference-direction.occurrence.to",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Occurrence.to"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The instance whose NAME was found."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/reference-direction.ts#Occurrence.to",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/reference-direction.referenceexemption.file",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferenceExemption.file"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Matches the FILE the occurrence sits in, repo-relative. Omitted means any file."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.file",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/reference-direction.referenceexemption.pattern",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferenceExemption.pattern"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Matches the LINE the occurrence sits on. Omitted means any line, and then `file` must be set."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.pattern",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/reference-direction.referenceexemption.reason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferenceExemption.reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why this is not a reference to the instance. Required."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/reference-direction.referenceexemption.to",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferenceExemption.to"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Limit to one target instance; omitted means any."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.to",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/render-log.renderlogentryschema.branch",
       "@type": "skos:Concept",
       "skos:inScheme": {

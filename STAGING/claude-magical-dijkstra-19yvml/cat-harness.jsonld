@@ -273,18 +273,18 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T10:35:14.428Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6eec2b545770935c7a37ff5699d8364fef4d8dab",
-  "sourceCommitSha": "6eec2b545770935c7a37ff5699d8364fef4d8dab",
-  "sourceCommitAt": "2026-09-26T10:32:38Z",
+  "generatedAt": "2026-09-26T11:22:46.306Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f7dda381528caa6d40f2a6e24da2bf2dbc4da959",
+  "sourceCommitSha": "f7dda381528caa6d40f2a6e24da2bf2dbc4da959",
+  "sourceCommitAt": "2026-09-26T11:20:31Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 271,
+    "Skill": 272,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
-    "SkillPackage": 19,
+    "SkillPackage": 20,
     "Process": 71,
     "SequenceFlow": 908,
     "Role": 148,
@@ -885,11 +885,12 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "crdm-detect",
       "title": "Feature-request detection (CRDM trigger)",
+      "description": "Detect when a request needs requirements agreed before anything is built, and which of the two parallel requirements methodologies governs it.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#package/crdm"
       ],
       "instructionsPath": "skills/crdm/crdm-detect.md",
-      "instructionLines": 241,
+      "instructionLines": 281,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/skills/crdm-detect/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/skills/crdm-detect/output.schema.json",
       "hasInstructions": true,
@@ -2088,7 +2089,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/interaction-modality.md",
-      "instructionLines": 519,
+      "instructionLines": 542,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2680,7 +2681,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/methodology-adoption.md",
-      "instructionLines": 202,
+      "instructionLines": 233,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3204,7 +3205,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/bean-blocking.md",
-      "instructionLines": 71,
+      "instructionLines": 117,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4724,6 +4725,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/specification-compiled-agents"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#skill/spec-kit",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "spec-kit",
+      "title": "Spec Kit — spec-driven development",
+      "description": "Spec-driven development, adopted whole: define what and why before deciding how, and do not develop before a spec exists. Carries what this platform adopts and — separately, with reasons — what it refuses.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#package/spec-kit"
+      ],
+      "instructionsPath": "skills/spec-kit/spec-kit.md",
+      "instructionLines": 146,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/spec-kit"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#skill/normative-statements",
@@ -6575,6 +6593,22 @@
       "requiresCapability": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#package/spec-kit",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "spec-kit",
+      "version": "0.1.0",
+      "description": "Spec Kit — spec-driven development for platform feature work, adopted whole from github/spec-kit. A skill package, as CRDM became (skills/crdm/): placed here on the owner's decision of 2026-09-26 rather than as a methodologies/ subgraph, the shape removed on 2026-09-22. PARALLEL to crdm rather than composed with it: crdm governs stakeholder-facing WHO/IG work, spec-kit governs folio-assistant feature development by tool developers. Which applies is a question of who is asking and whether the answer depends on what a folio says; the question itself is in methodology-adoption's ladder, and the answers are in each methodology's applies-when.",
+      "path": "skills/spec-kit",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#skill/spec-kit"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/spec-kit"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#package/folio-document-adapter",
@@ -43489,8 +43523,8 @@
   ],
   "staging": {
     "branch": "claude/magical-dijkstra-19yvml",
-    "sha": "c3217c9a88561904ce74ca5711aac944586e19b6",
+    "sha": "3b844b83342195e065b8553243d9f3b5e1145afa",
     "pr": "1290/merge",
-    "run": "36236114913"
+    "run": "36238526281"
   }
 }

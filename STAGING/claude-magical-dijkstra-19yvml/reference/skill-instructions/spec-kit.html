@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(87)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(202)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(87) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(202) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(87) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(202) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(87) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(202) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Diff | folio-assistant</title>
+<title>Spec Kit | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Diff" />
+<meta property="og:title" content="Spec Kit" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Diff" />
+<meta property="twitter:title" content="Spec Kit" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -788,7 +788,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Diff</span></li>
+    <li class="breadcrumb-nav-list-item"><span>Spec Kit</span></li>
   </ol>
 </nav>
 
@@ -797,324 +797,259 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/diff.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/folio-core/diff.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/spec-kit/spec-kit.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/spec-kit/spec-kit.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/diff.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/spec-kit/spec-kit.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="diff--content-block-change-report">
+<h1 id="spec-kit--spec-driven-development">
   
   
-    <a href="#diff--content-block-change-report" class="anchor-heading" aria-labelledby="diff--content-block-change-report"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Diff — Content Block Change Report
+    <a href="#spec-kit--spec-driven-development" class="anchor-heading" aria-labelledby="spec-kit--spec-driven-development"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Spec Kit — spec-driven development
   
   
 </h1>
     
-
-<p>Show what changed at the content-block level, with viewer links and
-explanations. This is the primary way the user sees what an agent did.</p>
-<h2 id="when-to-invoke">
+<h2 id="origin">
   
   
-    <a href="#when-to-invoke" class="anchor-heading" aria-labelledby="when-to-invoke"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to invoke
+    <a href="#origin" class="anchor-heading" aria-labelledby="origin"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Origin
   
   
 </h2>
     
 
-<ul>
-  <li>After pushing changes (replaces delivery-summary)</li>
-  <li>When user asks “what changed”, “diff”, “show changes”</li>
-  <li>At the end of any editing session</li>
-</ul>
-<h2 id="1-server-restart-command">
+<p>github/spec-kit (GitHub, 2025), <a href="https://github.com/github/spec-kit">https://github.com/github/spec-kit</a>. Its
+<code class="language-plaintext highlighter-rouge">/speckit-*</code> command set, its specify → plan → tasks → implement → converge
+cycle, and its <code class="language-plaintext highlighter-rouge">templates/spec-template.md</code>. Rendered here from the upstream
+README and spec template, read 2026-09-21.</p>
+<h2 id="applies-when">
   
   
-    <a href="#1-server-restart-command" class="anchor-heading" aria-labelledby="1-server-restart-command"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Server restart command
-  
-  
-</h2>
-    
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git fetch origin &lt;BRANCH&gt; <span class="o">&amp;&amp;</span> git switch &lt;BRANCH&gt; <span class="o">&amp;&amp;</span> git pull origin &lt;BRANCH&gt; <span class="o">&amp;&amp;</span> ./scripts/start-folio-assistant.sh <span class="nt">--http</span>
-</code></pre></div></div>
-<h2 id="2-per-block-change-report">
-  
-  
-    <a href="#2-per-block-change-report" class="anchor-heading" aria-labelledby="2-per-block-change-report"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Per-block change report
+    <a href="#applies-when" class="anchor-heading" aria-labelledby="applies-when"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Applies when
   
   
 </h2>
     
 
-<p><strong>This is the most important part.</strong> Every changed content block gets a
-clickable viewer link and 1-line explanation.</p>
-<h3 id="finding-changed-blocks-use-the-changeset">
-  
-  
-    <a href="#finding-changed-blocks-use-the-changeset" class="anchor-heading" aria-labelledby="finding-changed-blocks-use-the-changeset"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Finding changed blocks: use the ChangeSet
-  
-  
-</h3>
-    
+<p>A change to the PLATFORM’s own capability — a tool, a schema, a pipeline, a
+skill, a gate — raised by somebody building the tooling rather than by somebody
+writing a folio’s subject matter, and whose answer does not depend on what any
+folio says. Owner, 2026-09-21: <em>“spec-kit is specific to folio assistant feature
+development requests by tool developers not content developers (content
+agnostic, more scrum methodology process) for best practives of software
+development”</em>. NOT for work whose requirements come from stakeholders who must
+sign them off, and not for anything tied to a folio’s domain — that is <code class="language-plaintext highlighter-rouge">crdm</code>.</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run folio-assistant/folio-assistant-core/schemas/changeset.ts <span class="se">\</span>
-  <span class="nt">--folio</span> &lt;folio graph <span class="nb">dir</span><span class="o">&gt;</span> <span class="nt">--base</span> origin/main <span class="nt">--head</span> worktree <span class="nt">--out</span> /tmp/changeset.json
-</code></pre></div></div>
+<p><strong>Adopted whole, 2026-09-21</strong>, on the owner’s decision (issue #730, option A):
+spec-kit sits <strong>beside</strong> <code class="language-plaintext highlighter-rouge">crdm</code> as a parallel track, not blended with it. External
+method, rendered faithfully. Where this text and the published method differ, the
+published method is right and this file is wrong.</p>
 
-<p><code class="language-plaintext highlighter-rouge">--folio</code> is the directory the folio declares for its <code class="language-plaintext highlighter-rouge">folio</code> graph in
-<code class="language-plaintext highlighter-rouge">&lt;slug&gt;.json</code>, usually <code class="language-plaintext highlighter-rouge">folio/</code>. The path prefix is wherever this folio
-links the platform. Its stderr line is the summary. The JSON
-(<code class="language-plaintext highlighter-rouge">folio-changeset/v1</code>, schema in
-<code class="language-plaintext highlighter-rouge">folio-assistant-core/schemas/changeset.ts</code>) lists every block that differs,
-keyed on its <strong>label</strong>, in reading order.</p>
-
-<p><strong>Why not <code class="language-plaintext highlighter-rouge">git diff --name-only</code> over <code class="language-plaintext highlighter-rouge">.ts</code> files</strong>, which this section used
-to do. That misses three things a reviewer needs:</p>
-<ul>
-  <li><strong>A prose-only edit.</strong> The <code class="language-plaintext highlighter-rouge">.md</code> changed and the <code class="language-plaintext highlighter-rouge">.ts</code> did not, which is
-the commonest edit in a document folio.</li>
-  <li><strong>A move</strong> between sections. It either vanishes or reads as noise.</li>
-  <li><strong>A rename.</strong> A relabelled block reads as a different block.</li>
-</ul>
-
-<p>The ChangeSet matches blocks by label, follows <code class="language-plaintext highlighter-rouge">renamedFrom</code>, and reads
-section position from the manifests.</p>
-
-<p>It reads the base ref as text and never executes it. An unresolvable base is
-an error, not “no changes”. Say so rather than reporting an empty diff.</p>
-<h3 id="viewer-link-format">
-  
-  
-    <a href="#viewer-link-format" class="anchor-heading" aria-labelledby="viewer-link-format"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Viewer link format
-  
-  
-</h3>
-    
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://localhost:8080/assistant/#&lt;label&gt;
-</code></pre></div></div>
-
-<p>Port from <code class="language-plaintext highlighter-rouge">lean-mcp.config.json</code> <code class="language-plaintext highlighter-rouge">viewer_port</code>. Use <code class="language-plaintext highlighter-rouge">assistant/</code> (not
-<code class="language-plaintext highlighter-rouge">viewer/</code>) since the assistant has changelog, before/after toggle, and
-undo built in.</p>
-<h3 id="presentation">
-  
-  
-    <a href="#presentation" class="anchor-heading" aria-labelledby="presentation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Presentation
-  
-  
-</h3>
-    
-
-<p>Group by chapter. Markdown table: <strong>Block</strong> (link), <strong>What changed</strong>.</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Block</th>
-      <th>What changed</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="http://localhost:8080/assistant/#def:central-object">def:central-object</a></td>
-      <td>Rewrote axiom 3</td>
-    </tr>
-    <tr>
-      <td><a href="http://localhost:8080/assistant/#prf:main-lemma">prf:main-lemma</a></td>
-      <td>Added first SVG render</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="change-categories-the-changesets-verbatim">
-  
-  
-    <a href="#change-categories-the-changesets-verbatim" class="anchor-heading" aria-labelledby="change-categories-the-changesets-verbatim"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Change categories: the ChangeSet’s, verbatim
-  
-  
-</h3>
-    
-
-<p>Report each entry with the ChangeSet’s own words, so the report and the
-review page never disagree:</p>
-
-<ul>
-  <li><strong>added</strong> / <strong>removed</strong>: the whole block is new, or gone. A removed block
-reports where it WAS.</li>
-  <li><strong>changed</strong>, with every aspect that applies (one edit can carry several):
-    <ul>
-      <li><code class="language-plaintext highlighter-rouge">prose</code>: the <code class="language-plaintext highlighter-rouge">.md</code> narrative changed.</li>
-      <li><code class="language-plaintext highlighter-rouge">manifest</code>: the <code class="language-plaintext highlighter-rouge">.ts</code> changed (uses[], lean ref, kind, metadata), ignoring
-the label.</li>
-      <li><code class="language-plaintext highlighter-rouge">moved</code>: a different section, or a different order relative to its
-neighbours. Inserting a block above does <strong>not</strong> move the ones below.</li>
-      <li><code class="language-plaintext highlighter-rouge">renamed</code>: the label changed and the block records the old one in
-<code class="language-plaintext highlighter-rouge">renamedFrom</code>. A relabel WITHOUT <code class="language-plaintext highlighter-rouge">renamedFrom</code> shows as removed + added,
-and the <code class="language-plaintext highlighter-rouge">id-stable</code> QA criterion fails it. Point that out; do not
-paper over it.</li>
-    </ul>
-  </li>
-</ul>
-
-<p><strong>Once the branch is pushed, link the review page as well.</strong> The folio’s
-staging preview publishes this same ChangeSet as <code class="language-plaintext highlighter-rouge">changeset.json</code> and renders
-it at <code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/review/</code>: before and after for every block, the heat
-map, and the outline. Give that URL next to the table. It is the one a
-reviewer can open without a local server, and it shows the same changes in
-the same words, because it reads the same file.</p>
-
-<p>Rendered-asset changes (re-rendered or new SVGs) are not in the ChangeSet.
-Report them separately from <code class="language-plaintext highlighter-rouge">rendered[]</code> hashes, as before.</p>
-<h2 id="3-viewer-features-for-reviewing-changes">
-  
-  
-    <a href="#3-viewer-features-for-reviewing-changes" class="anchor-heading" aria-labelledby="3-viewer-features-for-reviewing-changes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Viewer features for reviewing changes
-  
-  
-</h2>
-    
-
-<p>Point the user to these built-in viewer features:</p>
-
-<ul>
-  <li><strong>Changelog</strong> (<code class="language-plaintext highlighter-rouge">hist</code> button on each block): shows git log for that
-block’s files, with commit links</li>
-  <li><strong>Before/after toggle</strong> (<code class="language-plaintext highlighter-rouge">prev</code> button on rendered SVGs): switches
-between current and previous version of the SVG</li>
-  <li><strong>Undo</strong> (<code class="language-plaintext highlighter-rouge">undo</code> button, collaborator+): shows downstream impact
-analysis before reverting</li>
-</ul>
-<h2 id="4-github-links">
-  
-  
-    <a href="#4-github-links" class="anchor-heading" aria-labelledby="4-github-links"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. GitHub links
-  
-  
-</h2>
-    
-
-<ul>
-  <li><strong>Commits</strong>: <code class="language-plaintext highlighter-rouge">https://github.com/&lt;owner&gt;/&lt;repo&gt;/commit/&lt;sha&gt;</code></li>
-  <li><strong>Branch diff</strong>: <code class="language-plaintext highlighter-rouge">https://github.com/&lt;owner&gt;/&lt;repo&gt;/compare/main...&lt;branch&gt;</code></li>
-</ul>
-<h2 id="5-undo-guidance">
-  
-  
-    <a href="#5-undo-guidance" class="anchor-heading" aria-labelledby="5-undo-guidance"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Undo guidance
-  
-  
-</h2>
-    
-
-<p>When users ask to “undo” or “revert” a block change:</p>
-
-<ol>
-  <li>The viewer’s <code class="language-plaintext highlighter-rouge">undo</code> button calls <code class="language-plaintext highlighter-rouge">/api/undo-impact</code> which walks the
-reverse <code class="language-plaintext highlighter-rouge">uses[]</code> dependency graph</li>
-  <li>It shows direct dependents (blocks that <code class="language-plaintext highlighter-rouge">uses</code> the target) and
-transitive dependents (further downstream)</li>
-  <li>The user confirms before the revert proceeds via <code class="language-plaintext highlighter-rouge">/api/block/revert</code></li>
-  <li>Agents should also use <code class="language-plaintext highlighter-rouge">/api/undo-impact</code> before reverting
-programmatically — never revert without showing consequences</li>
-</ol>
-<h2 id="api-endpoints-for-agents">
-  
-  
-    <a href="#api-endpoints-for-agents" class="anchor-heading" aria-labelledby="api-endpoints-for-agents"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> API endpoints (for agents)
-  
-  
-</h2>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Endpoint</th>
-      <th>Method</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">/api/diff?id=&lt;paper&gt;&amp;base=main&amp;head=&lt;branch&gt;</code></td>
-      <td>GET</td>
-      <td>Full paper diff</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">/api/block-changelog?label=&lt;label&gt;&amp;limit=N</code></td>
-      <td>GET</td>
-      <td>Git log for a block</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">/api/content-asset-at/&lt;sha&gt;/&lt;paper&gt;/&lt;ch&gt;/rendered/&lt;file&gt;</code></td>
-      <td>GET</td>
-      <td>SVG at a specific commit</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">/api/undo-impact?label=&lt;label&gt;</code></td>
-      <td>GET</td>
-      <td>Reverse dependency analysis</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">/api/block/revert</code></td>
-      <td>POST</td>
-      <td>Revert block .md to a commit</td>
-    </tr>
-  </tbody>
-</table></div>
-<h2 id="example-output">
-  
-  
-    <a href="#example-output" class="anchor-heading" aria-labelledby="example-output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Example output
-  
-  
-</h2>
-    
+<p>Its one-line claim, upstream’s words:</p>
 
 <blockquote>
-  <p><strong>Restart &amp; preview:</strong></p>
-  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git fetch origin claude/feature-xyz <span class="o">&amp;&amp;</span> git switch claude/feature-xyz <span class="o">&amp;&amp;</span> git pull origin claude/feature-xyz <span class="o">&amp;&amp;</span> ./scripts/start-folio-assistant.sh <span class="nt">--http</span>
-</code></pre></div>  </div>
-<h3 id="changed-content-blocks">
+  <p>Define <strong>what and why</strong> before deciding <strong>how</strong> to build it.</p>
+</blockquote>
+<h2 id="the-cycle">
   
   
-    <a href="#changed-content-blocks" class="anchor-heading" aria-labelledby="changed-content-blocks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Changed content blocks
+    <a href="#the-cycle" class="anchor-heading" aria-labelledby="the-cycle"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The cycle
   
   
-</h3>
+</h2>
     
 
-  <p><strong>Chapter 1:</strong></p>
+<p><code class="language-plaintext highlighter-rouge">constitution</code> once per project, then per feature:</p>
 
-  <div class="table-wrapper"><table>
-    <thead>
-      <tr>
-        <th>Block</th>
-        <th>What changed</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a href="http://localhost:8080/assistant/#def:central-object">def:central-object</a></td>
-        <td>Rewrote axiom 3 for clarity</td>
-      </tr>
-      <tr>
-        <td><a href="http://localhost:8080/assistant/#prop:main-relation">prop:main-relation</a></td>
-        <td>Re-rendered SVG (notation update)</td>
-      </tr>
-    </tbody>
-  </table></div>
+<p><strong>specify → plan → tasks → implement → converge</strong>, repeating <strong>implement →
+converge</strong> until converge reports <em>Converged</em>.</p>
 
-  <p>In the viewer, click <code class="language-plaintext highlighter-rouge">hist</code> on any block to see its full changelog,
-or <code class="language-plaintext highlighter-rouge">prev</code> on rendered diagrams to compare before/after.</p>
+<p>Upstream installs these as skills:</p>
 
-  <p><strong>Commits:</strong></p>
-  <ul>
-    <li><a href="https://github.com/&lt;owner&gt;/&lt;repo&gt;/commit/abc123">Rewrite axiom 3</a></li>
-  </ul>
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>command</th>
+      <th>what it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-constitution</code></td>
+      <td>establishes project principles</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-specify</code></td>
+      <td>creates the specification from the request</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-plan</code></td>
+      <td>develops the technical implementation strategy</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-tasks</code></td>
+      <td>generates actionable work items</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-implement</code></td>
+      <td>guides the building</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">/speckit-converge</code></td>
+      <td>validates completion against the artefacts</td>
+    </tr>
+  </tbody>
+</table></div>
 
-  <p><strong>Full diff:</strong> <a href="https://github.com/&lt;owner&gt;/&lt;repo&gt;/compare/main...claude/feature-xyz">main…claude/feature-xyz</a></p>
+<p>Two extensions ship alongside: bug-fixing (<code class="language-plaintext highlighter-rouge">bug-assess</code> → <code class="language-plaintext highlighter-rouge">bug-fix</code> →
+<code class="language-plaintext highlighter-rouge">bug-test</code>, artefacts under <code class="language-plaintext highlighter-rouge">.specify/bugs/{slug}/</code>) and idea assessment
+(<code class="language-plaintext highlighter-rouge">assess-intake</code> → <code class="language-plaintext highlighter-rouge">assess-research</code> → <code class="language-plaintext highlighter-rouge">assess-define</code> → <code class="language-plaintext highlighter-rouge">assess-shape</code> →
+<code class="language-plaintext highlighter-rouge">assess-decide</code>, producing go / needs-clarification / kill, under
+<code class="language-plaintext highlighter-rouge">.specify/assessments/{slug}/</code>).</p>
+<h2 id="the-spec-template">
+  
+  
+    <a href="#the-spec-template" class="anchor-heading" aria-labelledby="the-spec-template"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The spec template
+  
+  
+</h2>
+    
+
+<p>Upstream’s <code class="language-plaintext highlighter-rouge">templates/spec-template.md</code>, in order. <strong>Mandatory</strong> where upstream
+marks it so:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>section</th>
+      <th>asks for</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>header</td>
+      <td>feature name, branch, creation date, status</td>
+    </tr>
+    <tr>
+      <td><strong>User Scenarios &amp; Testing</strong> <em>(mandatory)</em></td>
+      <td>prioritised independent journeys (P1, P2, …), each delivering standalone value, each with its rationale, an independent test approach, and Given-When-Then acceptance scenarios</td>
+    </tr>
+    <tr>
+      <td>Edge Cases</td>
+      <td>boundary conditions and error scenarios</td>
+    </tr>
+    <tr>
+      <td><strong>Requirements</strong> <em>(mandatory)</em></td>
+      <td>functional requirements <code class="language-plaintext highlighter-rouge">FR-001…</code>, plus key entities where data modelling applies</td>
+    </tr>
+    <tr>
+      <td><strong>Success Criteria</strong> <em>(mandatory)</em></td>
+      <td>measurable, <strong>technology-agnostic</strong> outcomes <code class="language-plaintext highlighter-rouge">SC-001…</code></td>
+    </tr>
+    <tr>
+      <td>Assumptions</td>
+      <td>the defaults taken where the request was silent</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>Markers.</strong> <code class="language-plaintext highlighter-rouge">[NEEDS CLARIFICATION: …]</code> flags an ambiguity that must be resolved
+rather than guessed. <code class="language-plaintext highlighter-rouge">ACTION REQUIRED</code> marks a section that must be substantively
+completed before approval.</p>
+<h2 id="what-this-platform-adds-and-why-it-is-an-addition-rather-than-a-reading">
+  
+  
+    <a href="#what-this-platform-adds-and-why-it-is-an-addition-rather-than-a-reading" class="anchor-heading" aria-labelledby="what-this-platform-adds-and-why-it-is-an-addition-rather-than-a-reading"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this platform adds, and why it is an addition rather than a reading
+  
+  
+</h2>
+    
+
+<p><strong>Upstream does not itself state a hard “no code without a spec” rule</strong>, and it
+does not claim its specs are executable. The gate is <em>ours</em>. It is stated here so
+that nobody later cites spec-kit as the authority for a rule spec-kit does not
+carry:</p>
+
+<blockquote>
+  <p>No implementation work on a feature begins before a spec for it exists in the
+declared template and is posted to its governing issue.</p>
 </blockquote>
+
+<p>Owner, 2026-09-21: <em>“ensure that the spec exists before anything is developed”</em>.</p>
+<h2 id="what-this-platform-refuses-with-reasons">
+  
+  
+    <a href="#what-this-platform-refuses-with-reasons" class="anchor-heading" aria-labelledby="what-this-platform-refuses-with-reasons"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this platform refuses, with reasons
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">methodology-adoption</code> requires both halves stated — a silent omission
+misrepresents the standard.</p>
+
+<ul>
+  <li><strong>The on-disk layout.</strong> Upstream keeps a spec at <code class="language-plaintext highlighter-rouge">specs/NNN-feature/spec.md</code>
+and its own state under <code class="language-plaintext highlighter-rouge">.specify/</code>. <strong>Not adopted.</strong> A spec instance here is a
+comment on its governing issue and goes nowhere near the knowledge graph, per
+<code class="language-plaintext highlighter-rouge">where-a-proposal-goes</code> — the owner’s standing rule of 2026-09-19, <em>“do not
+pollute the KG with SDLC churn”</em>. A spec is an argument about what to build,
+superseded the moment it is decided; it has the wrong lifetime for a permanent
+URL and needs none of translation, QA sidecars or link auditing. A <code class="language-plaintext highlighter-rouge">specs/</code>
+directory was drafted while adopting this and withdrawn before it was
+committed. The <strong>template</strong> is durable and belongs in the graph; an
+<strong>instance</strong> is not.
+<code class="language-plaintext highlighter-rouge">.specify/</code> is refused on a second ground as well: this repository’s
+dot-prefix guard rejects a dot-prefixed segment, which is why <code class="language-plaintext highlighter-rouge">.beans/</code> and
+<code class="language-plaintext highlighter-rouge">.harness/</code> were moved out in 2026-09.</li>
+  <li><strong>The <code class="language-plaintext highlighter-rouge">/speckit-*</code> command surface, as a surface.</strong> The <em>method</em> is adopted;
+the concrete command names are upstream’s packaging for tools that install
+slash commands. Adopting names this repository does not serve would be
+adoption by citation — the refusal <code class="language-plaintext highlighter-rouge">methodology-adoption</code> names second.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">constitution</code>, for now.</strong> This repository already has a constitution in
+everything but the name: <code class="language-plaintext highlighter-rouge">AGENTS.md</code>, the skills it points to, and the
+<code class="language-plaintext highlighter-rouge">req:*</code> conformance lattice. A second statement of principles would be a
+second answer to “what binds here”, free to disagree with the first. Revisit
+only if the two are ever reconciled into one.</li>
+</ul>
+<h2 id="against-crdm--parallel-never-blended">
+  
+  
+    <a href="#against-crdm--parallel-never-blended" class="anchor-heading" aria-labelledby="against-crdm--parallel-never-blended"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Against <code class="language-plaintext highlighter-rouge">crdm</code> — parallel, never blended
+  
+  
+</h2>
+    
+
+<p>Both answer <em>request → agreed requirements</em>. <code class="language-plaintext highlighter-rouge">methodology-adoption</code> is explicit
+that parallel means parallel: pick one per decision, name it, follow it. The
+discriminator is in each one’s <code class="language-plaintext highlighter-rouge">applies-when</code> above and in <code class="language-plaintext highlighter-rouge">crdm-detect</code>’s, and
+the ladder question that reaches them is in <code class="language-plaintext highlighter-rouge">methodology-adoption</code>.</p>
+
+<p>The short form, in the owner’s terms: <strong>who is asking, and does the answer depend
+on what a folio says?</strong> Tool developer, content-agnostic → here. Stakeholders who
+must sign it off, tied to WHO/IG subject matter → <code class="language-plaintext highlighter-rouge">crdm</code>.</p>
+<h2 id="refusals">
+  
+  
+    <a href="#refusals" class="anchor-heading" aria-labelledby="refusals"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Refusals
+  
+  
+</h2>
+    
+
+<ul>
+  <li><strong>Never blend this with <code class="language-plaintext highlighter-rouge">crdm</code>.</strong> A composite inherits neither one’s authority
+while claiming both.</li>
+  <li><strong>Never resolve a <code class="language-plaintext highlighter-rouge">[NEEDS CLARIFICATION]</code> by agent judgement.</strong>
+<code class="language-plaintext highlighter-rouge">req:agent-workflow</code> → <code class="language-plaintext highlighter-rouge">judgement-stays-human</code> (SHALL) applies unchanged: an
+agent does not record a human’s decision on their behalf. A marker silently
+closed is worse than one never raised, because it looks answered.</li>
+  <li><strong>Never let a spec reach adjudicated status with a marker open.</strong> Otherwise
+the marker becomes a way of appearing to ask without having asked.</li>
+  <li><strong>Never cite spec-kit for the spec-before-code gate.</strong> It is this platform’s
+addition, stated above.</li>
+</ul>
 
           
 
