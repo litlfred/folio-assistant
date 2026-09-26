@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-26T11:33:34Z
+updated_at: 2026-09-26T13:28:57Z
 parent: folio-assistant-1xhc
 ---
 
@@ -248,3 +248,46 @@ as a candidate rather than asserted.
 
 I committed the 1443 values, because they are what the check requires in a clean
 run. If CI disagrees, the scope difference is environmental and that is the finding.
+
+
+## CORRECTION 2026-09-26 — I had the two populations BACKWARDS
+
+The instance recorded above says `main` was *"carrying a sidecar its own check
+rejects"*, with 229 wrong and my 1443 right. **That is inverted.** 229 was correct
+and 1443 was mine, inflated.
+
+### What established it
+
+Merging 40 more commits of `main` and regenerating gave **230**, and
+`kg:detangle:check` passes with it. The cause is in that range —
+`a0f7719032e`, *"xd1g: kg-detangle asks git for its corpus"*. Before it, the
+generator WALKED THE FILESYSTEM and so counted untracked and ignored content;
+after it, it asks git, and only the tracked corpus counts. 1443 was an
+ignore-blind scan; 229/230 is the corpus.
+
+So the check genuinely failed with 229 in my container and passed with 1443 — I
+measured that correctly — but the fault was in the SCAN, not in the sidecar, and I
+attributed it to the sidecar. Beans `xd1g` and `biz4` had this right while I was
+writing the opposite.
+
+### The part of my own reasoning that failed
+
+I tested the hypothesis that an untracked `_kg/` (4.8 MB, gitignored) explained the
+inflation, moved it aside, still got 1443, and concluded the inflation was not
+ignore-blindness. **The test was too narrow rather than wrong**: removing one
+ignored directory does not remove the others an ignore-blind walk also sees, so
+1443 barely moved and I read "barely moved" as "not the cause". A negative result
+from removing ONE member of a set says nothing about the set.
+
+The right control was the one `biz4` names — a clean checkout, which has none of
+them — and I had used exactly that control earlier in the session for a different
+question and did not reach for it here.
+
+### What survives
+
+The observation this bean is actually about is untouched and still correct:
+`bun run gates` did not report the failing `kg:detangle:check` because `bun test`
+runs earlier in the same set and rewrites the sidecar first, so the check validated
+a file the run itself had just written. That is this bean's subject, it is
+independent of which value was right, and it is why the discrepancy was invisible
+until I measured one check at a time.
