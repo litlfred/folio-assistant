@@ -56,8 +56,10 @@ session that happened to trip over it.
 
 ## Done when
 
-- [ ] the owner has chosen whether the relation is over beans, PRs, or time
-- [ ] whatever is chosen is reachable without reading every open PR by hand
+- [x] the owner has chosen whether the relation is over beans, PRs, or time —
+      **TIME**, 2026-09-26: a re-check at a second point, not a new relation
+- [ ] the re-check is written into `bean-coordination`, beside the two checks
+      that skill already names
 
 
 ## A FOURTH collision, and this one cost a wrong finding — 2026-09-26
@@ -90,3 +92,35 @@ to know which I was holding until the other one landed.
 That is the strongest argument yet for whatever mechanism the owner chooses below:
 the duplicate was not just waste, it was a source of a false claim about the
 application.
+
+## DECIDED: the relation is TIME, not a new edge — owner, 2026-09-26
+
+Asked with four options; the owner chose **a re-check at a second point in time**:
+
+> A session re-runs the PR/bean search before opening its PR, not only at the
+> start.
+
+No schema change, no new relation, nothing for a gate to validate. And it is the
+option that addresses the measured failure rather than a nearby one: in at least
+one of the four collisions the search WAS run and found nothing, because the
+duplicate had not been opened yet. **An index would not have helped there. Only
+asking again later would.**
+
+The two rejected structural options are recorded rather than dropped, because each
+fails in a way worth knowing:
+
+- **an edge between beans** (`describes:`) — the second session to arrive cannot
+  know it is second, so nobody is in a position to write the edge
+- **a label or line on the PR** — only helps once a PR exists, which is exactly
+  the window these collisions open in
+
+### Where it goes
+
+`skills/folio-core/bean-coordination.md` §"A claim is branch-local" already says a
+claim ANNOUNCES rather than reserves until your PR exists, and already names two
+checks to run first. This is a THIRD check at a LATER moment, so it belongs beside
+them rather than in a new section — and `AGENTS.md` is a pointer, not the home.
+
+NOT written yet, and deliberately not bundled into the PR carrying this bean: that
+PR is beans-only by the owner's decision, and a skill edit would make it something
+else.
