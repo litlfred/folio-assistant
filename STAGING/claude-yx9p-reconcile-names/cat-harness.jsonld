@@ -273,14 +273,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T07:08:40.097Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/236dde677717af47cc4f3c5752306ca935878690",
-  "sourceCommitSha": "236dde677717af47cc4f3c5752306ca935878690",
-  "sourceCommitAt": "2026-09-26T07:06:15Z",
+  "generatedAt": "2026-09-26T07:19:05.623Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1e505b24408039a5789aa2c2caba7306cb4627a5",
+  "sourceCommitSha": "1e505b24408039a5789aa2c2caba7306cb4627a5",
+  "sourceCommitAt": "2026-09-26T07:16:37Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 270,
+    "Skill": 271,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
@@ -4503,6 +4503,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/raci"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-yx9p-reconcile-names/cat-harness.jsonld#skill/release-epic-planning",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "release-epic-planning",
+      "title": "Release epic planning",
+      "description": "Plan and track releases using bean epics. Covers epic creation, story/task decomposition, release readiness tracking, and the relationship between epics and GitHub milestones. Applies to code releases, paper publications, and project milestones.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-yx9p-reconcile-names/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/workflow/release-epic-planning.md",
+      "instructionLines": 147,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-yx9p-reconcile-names/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-epic-planning"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-yx9p-reconcile-names/cat-harness.jsonld#skill/dmn-authoring",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "dmn-authoring",
@@ -6548,6 +6565,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-yx9p-reconcile-names/cat-harness.jsonld#skill/deterministic-and-agentic",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-yx9p-reconcile-names/cat-harness.jsonld#skill/dmn-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-yx9p-reconcile-names/cat-harness.jsonld#skill/process-state",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-yx9p-reconcile-names/cat-harness.jsonld#skill/release-epic-planning",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-yx9p-reconcile-names/cat-harness.jsonld#skill/release-lifecycle",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-yx9p-reconcile-names/cat-harness.jsonld#skill/session-context",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-yx9p-reconcile-names/cat-harness.jsonld#skill/session-state-machine",
@@ -43463,8 +43481,8 @@
   ],
   "staging": {
     "branch": "claude/yx9p-reconcile-names",
-    "sha": "6571a0afa164bfbbd27807ffc92e432cf7dc2f35",
+    "sha": "c80949addeca64ff749163fefabead9b85db73d1",
     "pr": "1382/merge",
-    "run": "36225776875"
+    "run": "36226293320"
   }
 }
