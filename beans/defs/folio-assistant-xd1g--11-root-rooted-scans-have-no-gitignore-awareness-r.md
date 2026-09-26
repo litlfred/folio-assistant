@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-26T09:38:39Z
+updated_at: 2026-09-26T10:42:54Z
 parent: folio-assistant-ahvw
 ---
 
@@ -181,3 +181,77 @@ it FROM, and **nothing under `skills/` imports from `scripts/` today**:
 
 (3) is out. (1) versus (2) is an architecture call that collides with an open PR, so
 it is queued for the owner rather than guessed at.
+
+
+## FIXED 2026-09-26 — the thirteenth is done, and the owner settled the placement
+
+`kg-detangle` now asks git. `cat-harness/schemas` goes from a committed **1441**
+(1442 by the time `main` was merged — it climbs on its own) to **229**, and the
+group's verdict from *"1 clause(s) fail"* to `CANDIDATE`. The republished table in
+`docs/uml/overview/cat-harness.md` and `.../schemas.md` reads `229 | 0.82 | 26 | 2`.
+
+### The owner's ruling, and why it picked the home the import graph already allowed
+
+> *"Skills don't know about scripts… Scripts need to be part of tools."*
+
+So `git-corpus.ts` moved from `scripts/` to **`schemas/`**. Measured, not reasoned:
+
+| direction | edges today |
+|---|---|
+| `skills/` → `scripts/` | **0** — importing from where it lived would have minted the first |
+| `skills/` → `schemas/` | established (`kg-detangle` already takes `detangle-sidecar.ts`) |
+| `tools/` → anything | **only** `../schemas/*`, three imports |
+
+`tools/` was not the answer despite the ruling's second clause: a rule placed there
+is unreachable from `schemas/` and `scripts/` without inverting the one edge
+`tools/` has. `schemas/` is legal from all four directions **now** and still legal
+**after** scripts become tools, because `tools/` → `schemas/` is already that edge.
+
+**The precedent is exact rather than analogous.** `schemas/layer-direction.ts` is a
+shared verdict used by `check:partition` in `scripts/` and by `kg-detangle` in
+`skills/` — same shape, same two callers (bean `j79e`). `git-corpus.ts` sits beside
+it and carries the same two tags.
+
+### THREE states, because the second version of the fix invented a fourth case
+
+`gitCorpus` answers `undefined` for a directory that **is not there**, which is a
+determined empty rather than an unknown. `SCAN` still names
+`cat-harness/src/skills`, removed by #760 — so the first version dutifully reported
+*"git could not enumerate 1 directory"* about a directory whose answer is perfectly
+known. A could-not-determine manufactured out of a fact is as bad as the reverse.
+
+    absent      -> [] , reported as a stale SCAN entry for a person to remove
+    git refused -> a bare walk, reported, so a number pinned from one is legible
+    git answers -> that list, filtered to EXT and the same dot-prefix rule
+
+Neither report fails the run: `gates` must stay runnable where git cannot be asked,
+and editing `SCAN` is not a script's call. **That stale entry is a live `dh4f`
+instance and is now visible on every run rather than silent.**
+
+### An obligation that travels with a directory, not with a module
+
+Eight targeted checks passed and `bun test` still failed: every `.ts` under
+`schemas/` must carry `@graphNode`, and an untagged file is `undeclared`, never a
+pass. `scripts/` has no such rule, so the move made the file undeclared without
+changing a line of it. My first attempt added `@module` — three siblings had it —
+and the test still failed, because the tag asked for is a different one.
+**Matching the shape of a neighbour is not reading the rule.**
+
+### Verification
+
+`bun test` — **11783 pass, 1 fail**, and the one is `no NEW drift, and nothing
+unreadable`, `main`'s own `t8g3` blocker, checked by NAME. tsc and eslint clean.
+`kg:detangle:check`, `uml:overview:check`, `check:partition`,
+`check:kind-validators`, `check:subgraphs`, `check:context-emission`,
+`check:code-accounting`, `check:harness-dirs` each PASS, run one at a time rather
+than through `bun run gates` — every false reading this session came from running
+the gate set while editing the tree.
+
+### Still open on this bean
+
+The **ten** original scanners are untouched. And one thing noticed in passing, left
+for the owner because correcting guidance is not a side effect of a fix:
+`scripts/schema-nodes.ts` says *"Three modules carry it"* of `@graphNode none` and
+names three files; there are at least eight in `schemas/` alone. A count in prose
+gone stale, which is the failure mode this repository warns about in its own
+conventions.

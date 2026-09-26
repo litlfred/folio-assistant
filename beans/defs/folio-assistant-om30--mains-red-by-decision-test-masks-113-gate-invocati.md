@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-26T09:42:57Z
-updated_at: 2026-09-26T09:57:56Z
+updated_at: 2026-09-26T10:43:11Z
 parent: folio-assistant-1xhc
 ---
 
@@ -150,3 +150,21 @@ That is a third state, not a defence, which is the shape this repo already prefe
 (`no NEW drift, and nothing unreadable`) and `translation:drift:check`. Both are the
 same `t8g3` drift that is red on `main` by the owner's decision. `uml:overview:check`
 green. Nothing on this branch fails that main does not.
+
+
+## The masked defect is FIXED; the masking is not (2026-09-26)
+
+`xd1g`'s detangle poisoning is repaired — `kg-detangle` asks git, and
+`cat-harness/schemas` reads **229** rather than a committed 1442. So the third
+`## Done when` box below is ticked *as a fix*, but **not as a verification**, and the
+difference is this bean's whole subject:
+
+**Nothing has yet confirmed the fix on a runner that reaches line 663.** It cannot,
+while `bun test` fails at step 2. The fix was verified by running
+`kg:detangle:check` directly, which is exactly the instrument CI does not get to.
+
+One thing the merge added as evidence: `main`'s pinned value **rose from 1441 to
+1442** during the hours this branch was open. The wrong number is not static — it
+tracks whatever the dependency tree holds, so it climbs whenever any session re-runs
+the writer in a container that has already installed `block-qa-schema`. A masked
+gate does not merely fail to catch a defect once; it lets the defect keep moving.
