@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T03:40:20Z
-updated_at: 2026-09-26T15:13:14Z
+updated_at: 2026-09-26T16:43:35Z
 parent: folio-assistant-1swy
 ---
 
@@ -206,3 +206,83 @@ never more than a suspicion.
 - [ ] the sibling is NAMED by bisecting the test corpus, not by inspecting
       `profile-scoping.test.ts`. MEASURED AFTER: a subset of test files that
       reproduces the failure and a proper subset of it that does not
+
+
+## IT IS NOT A FLAKE. It is a DIRTY WORKING TREE — 4 gate runs, perfect correlation
+
+And this **corrects the conclusion I wrote earlier the same day**, two entries
+above. The isolation measurement was right and my reading of it named the wrong
+variable.
+
+| `bun run gates` | tree at start | failures beyond the accepted `ngxj` red |
+|---|---|---|
+| 1 | **dirty** — a regenerated detangle sidecar, uncommitted | `profile-scoping` |
+| 2 | clean | **none** |
+| 3 | **dirty** — 109 files: BPMN sources, SVGs, `.pot` | `declared-directory-resolves` |
+| 4 | clean | **none** |
+
+Plus `bun test` alone on a clean tree: **none**, 12015 pass / 1 fail, and the
+tree still clean afterwards.
+
+Two dirty runs, one extra failure each. Two clean runs, none. And it is a
+DIFFERENT test each dirty time, which is why it read as intermittency: the
+subject is not either test, it is the tree.
+
+### What I had concluded, and what was wrong with it
+
+I wrote: *"the cause is a sibling in the same `bun test` process"*, from 12
+isolated passes against a roughly 1-in-2 in-suite rate. The direction holds — it
+does need the suite — but **"which sibling" was the wrong question**, and the
+`Done when` clause I added asking for a bisection to NAME the sibling is
+therefore the wrong next step. A bisection would have found a different
+"culprit" on each dirty tree and none on a clean one, which is how a real cause
+gets attributed to whatever happened to be adjacent.
+
+The general lesson is the one this bean keeps paying for from new directions: an
+intermittent result means a variable you are not controlling, and the first move
+is to list the variables rather than to subdivide the suite. Tree state was not
+on my list.
+
+### Mechanism — ESTABLISHED for one of the two tests, not for the other
+
+`declared-directory-resolves.test.ts` compares `git status --porcelain` BEFORE
+and AFTER spawning an import of every module that resolves a declared
+directory. Its own docblock says why the comparison is a comparison rather than
+an assertion of cleanliness — *"a tree that was already dirty is not this test's
+business"* — and that reasoning is sound for a tree that is dirty and STAYS
+dirty. It is unsound when the tree changes inside the window: a module imported
+on a dirty tree can regenerate a derived artefact FROM the uncommitted source,
+which is a new modification, so `before !== after`. On a clean tree the identical
+import is a no-op. The failure was 13 unexpected entries.
+
+So the test is not wrong about anything except its own method, and the remedy is
+in the method: compare only the paths the test could have caused, or run the
+probe against a clean checkout, rather than against the developer's tree.
+
+**NOT established: the mechanism for `profile-scoping`.** I have the correlation
+and no cause, and the only honest thing to record is that. It is a paper-only
+criterion being `n/a`'d in a document folio — plausibly reading a sidecar that a
+dirty tree makes inconsistent, and plausibly something else.
+
+### The practical rule, which is worth more than the bean
+
+**Commit before you believe a `bun test` failure.** Two of this session's
+"failures" cost real time and neither existed. Both appeared on a tree carrying
+uncommitted regenerated artefacts, which is the normal state of a tree
+mid-sweep, so this is not a rare condition — it is the condition an agent is
+almost always in when it runs the suite.
+
+### Rewritten "Done when"
+
+- [x] the flake is observed both ways on one commit range
+- [x] the single test file is run in isolation N times — 12, 0 failures
+- [x] the confounding variable is IDENTIFIED — working-tree cleanliness, 4 gate
+      runs correlating perfectly, and a mechanism for `declared-directory-resolves`
+- [ ] ~~bisect the corpus to NAME the sibling~~ — WITHDRAWN as the wrong step,
+      for the reason above
+- [ ] `declared-directory-resolves` compares only the paths it could have caused,
+      so a dirty tree cannot fail it. MEASURED AFTER: the full suite passes with
+      an uncommitted regenerated artefact in the tree
+- [ ] `profile-scoping`'s mechanism is found, or the test is made independent of
+      tree state. MEASURED AFTER: it passes in-suite on a deliberately dirtied
+      tree, ten runs
