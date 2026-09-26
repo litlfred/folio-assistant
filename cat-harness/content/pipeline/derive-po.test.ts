@@ -398,13 +398,40 @@ describe("the two halves of the round trip agree about where the code is (`ig4a`
     expect(out).toContain("Prose traduite.");
   });
 
-  it("both halves read ONE definition of a fence", () => {
-    // The finding that survives. A duplicated regex is a fact free to drift, and
-    // this one had drifted within a single change.
+  it("both halves read ONE definition of every shared construct (`wlyg`)", () => {
+    // Generalised from the fence alone. A duplicated regex is a fact free to
+    // drift, and `MD_CODE_FENCE_RE` drifted inside a single change — so this
+    // asserts the property over the whole set rather than repeating the fence
+    // test nine times.
+    //
+    // Written as "the injector declares none of these" rather than as a list of
+    // imports, because the failure mode is a RE-DECLARATION appearing, and a
+    // test that only checked the import line would pass with both present.
     const inject = readFileSync(new URL("./po-inject.ts", import.meta.url).pathname, "utf-8");
+    const SHARED = [
+      "MD_CODE_FENCE_RE",
+      "MD_FRONT_MATTER_DELIM",
+      "MD_HEADING_RE",
+      "MD_HTML_SKIP_OPEN_RE",
+      "MD_HTML_CLOSE_TAG_RE",
+      "MD_HLINE_RE",
+      "MD_TABLE_SEP_RE",
+      "MD_LIST_ITEM_RE",
+      "MD_BLOCKQUOTE_RE",
+      "MD_KRAMDOWN_ATTR_RE",
+    ];
+    const redeclared = SHARED.filter((n) => new RegExp(`^const ${n}\\s*=`, "m").test(inject));
+    expect(redeclared).toEqual([]);
+    // ...and the injector must actually USE them, or "no duplicate" would be
+    // satisfiable by the injector having quietly stopped parsing markdown.
+    const unused = SHARED.filter((n) => !inject.includes(n));
+    expect(unused).toEqual([]);
+    // Anti-vacuity: the names have to be real exports, not a list of typos that
+    // trivially fails to match anything.
     expect(MD_CODE_FENCE_RE).toBeInstanceOf(RegExp);
-    expect(inject).toContain('MD_CODE_FENCE_RE } from "./pot-extract"');
-    expect(inject).not.toMatch(/const MD_CODE_FENCE_RE\s*=/);
+    const extract = readFileSync(new URL("./pot-extract.ts", import.meta.url).pathname, "utf-8");
+    const notExported = SHARED.filter((n) => !new RegExp(`^export const ${n}\\s*=`, "m").test(extract));
+    expect(notExported).toEqual([]);
   });
 });
 

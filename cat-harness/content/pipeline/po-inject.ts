@@ -33,7 +33,19 @@
  * @module content/pipeline/po-inject
  */
 
-import { cleanMarkdownText, MD_CODE_FENCE_RE } from "./pot-extract";
+import {
+  cleanMarkdownText,
+  MD_BLOCKQUOTE_RE,
+  MD_CODE_FENCE_RE,
+  MD_FRONT_MATTER_DELIM,
+  MD_HEADING_RE,
+  MD_HLINE_RE,
+  MD_HTML_CLOSE_TAG_RE,
+  MD_HTML_SKIP_OPEN_RE,
+  MD_KRAMDOWN_ATTR_RE,
+  MD_LIST_ITEM_RE,
+  MD_TABLE_SEP_RE,
+} from "./pot-extract";
 
 // ── Liquid restoration ──────────────────────────────────────────
 
@@ -200,24 +212,16 @@ function unescapePo(s: string): string {
     .replace(/\\\\/g, "\\");
 }
 
-// ── Structural patterns ─────────────────────────────────────────
+// ── Injection-only constants ────────────────────────────────────
 //
-// These MIRROR `pot-extract.ts` (and smart-base before it) rather than being
-// imported from it, and "mirror" is doing real work in that sentence: nine of
-// these are byte-identical to the extractor's copy today, and `MD_CODE_FENCE_RE`
-// was too until `ig4a` changed one side. It is imported above for that reason.
-// The rest is bean `wlyg`, ordered BEFORE `lvk9` because `lvk9` changes how list
-// items and blockquotes are recognised — two of the duplicates below.
+// The markdown-construct patterns are IMPORTED from `pot-extract.ts` — see the
+// docblock there. They used to be declared again here, and "mirror" was doing
+// real work in that sentence: nine were byte-identical, and `MD_CODE_FENCE_RE`
+// was too until `ig4a` changed one side. Bean `wlyg`.
+//
+// What is left below is genuinely injection-only: it governs what this module
+// SUBSTITUTES, which is a different question from what the extractor OFFERS.
 
-const MD_FRONT_MATTER_DELIM = /^---\s*$/;
-const MD_HEADING_RE = /^(#{1,6}\s+)(.+)$/;
-const MD_HTML_SKIP_OPEN_RE = /<(style|script|pre)\b/i;
-const MD_HTML_CLOSE_TAG_RE = /<\/(\w+)\s*>/i;
-const MD_HLINE_RE = /^[-*_]{3,}\s*$/;
-const MD_TABLE_SEP_RE = /^\|[-| :]+\|?\s*$/;
-const MD_LIST_ITEM_RE = /^(\s*(?:[-*+]|\d+\.)\s+)(.*)/;
-const MD_BLOCKQUOTE_RE = /^(>+\s?)(.*)/;
-const MD_KRAMDOWN_ATTR_RE = /^\{[:%][^}]*\}\s*$/;
 
 const MD_INJ_MIN_LEN = 3;
 

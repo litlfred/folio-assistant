@@ -1,10 +1,11 @@
 ---
 # folio-assistant-wlyg
 title: 'ROUND TRIP: pot-extract and po-inject declare ten copies of the same markdown constants, and one of them diverged inside a single change'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-26T10:03:23Z
-updated_at: 2026-09-26T10:03:23Z
+updated_at: 2026-09-26T12:18:07Z
 parent: folio-assistant-bzyu
 ---
 

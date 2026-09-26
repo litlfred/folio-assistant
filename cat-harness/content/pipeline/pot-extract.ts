@@ -65,8 +65,27 @@ const MD_LIQUID_OUTPUT_RE = /\{\{\s*(.*?)\s*\}\}/gs;
 
 // ── Structural patterns ─────────────────────────────────────────
 
-const MD_FRONT_MATTER_DELIM = /^---\s*$/;
-const MD_HEADING_RE = /^(#{1,6}\s+)(.+)$/;
+/**
+ * The markdown constructs this pipeline recognises, shared with `po-inject.ts`.
+ *
+ * **Exported because the injecting half declared its own copies.** What the
+ * extractor treats as a construct and what the injector treats as a construct
+ * are the same question, so two answers can disagree — and one already had:
+ * `MD_CODE_FENCE_RE` was byte-identical in both modules until `ig4a` changed one
+ * side, and a grep was the only thing between that and a round trip whose halves
+ * parsed differently. Bean `wlyg`.
+ *
+ * Nine of the ten were identical when they moved, so this is **hygiene, not a bug
+ * fix**, and it is worth doing now for a specific reason: `lvk9` changes
+ * {@link MD_LIST_ITEM_RE} and {@link MD_BLOCKQUOTE_RE}, and doing that against two
+ * copies means doing it twice, in the copy nobody is watching.
+ *
+ * Proven a pure move rather than asserted to be one: extraction over all 618
+ * files of `cat-harness/docs`, and `injectMarkdown` over every real (catalogue,
+ * source) pair, are byte-identical before and after.
+ */
+export const MD_FRONT_MATTER_DELIM = /^---\s*$/;
+export const MD_HEADING_RE = /^(#{1,6}\s+)(.+)$/;
 /**
  * A fenced code block's delimiter.
  *
@@ -86,13 +105,13 @@ const MD_HEADING_RE = /^(#{1,6}\s+)(.+)$/;
  * one — see the comment at the fence branch in {@link extractMarkdown}.
  */
 export const MD_CODE_FENCE_RE = /^(`{3,}|~{3,})/;
-const MD_HTML_SKIP_OPEN_RE = /<(style|script|pre)\b/i;
-const MD_HTML_CLOSE_TAG_RE = /<\/(\w+)\s*>/i;
-const MD_HLINE_RE = /^[-*_]{3,}\s*$/;
-const MD_TABLE_SEP_RE = /^\|[-| :]+\|?\s*$/;
-const MD_LIST_ITEM_RE = /^(\s*(?:[-*+]|\d+\.)\s+)(.*)/;
-const MD_BLOCKQUOTE_RE = /^(>+\s?)(.*)/;
-const MD_KRAMDOWN_ATTR_RE = /^\{[:%][^}]*\}\s*$/;
+export const MD_HTML_SKIP_OPEN_RE = /<(style|script|pre)\b/i;
+export const MD_HTML_CLOSE_TAG_RE = /<\/(\w+)\s*>/i;
+export const MD_HLINE_RE = /^[-*_]{3,}\s*$/;
+export const MD_TABLE_SEP_RE = /^\|[-| :]+\|?\s*$/;
+export const MD_LIST_ITEM_RE = /^(\s*(?:[-*+]|\d+\.)\s+)(.*)/;
+export const MD_BLOCKQUOTE_RE = /^(>+\s?)(.*)/;
+export const MD_KRAMDOWN_ATTR_RE = /^\{[:%][^}]*\}\s*$/;
 /**
  * The kramdown directive that CONSUMES the block it attaches to.
  *
