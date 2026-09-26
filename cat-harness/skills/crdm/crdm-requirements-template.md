@@ -1,6 +1,5 @@
 ---
 name: crdm-requirements-template
-roles: [reader, collaborator, owner]
 description: >
   Guide and template for CRDM Phase 3 — Requirements Definition.
   Helps the agent structure requirements from conversation using a

@@ -48,13 +48,43 @@ import type { PartitionSpec, PermittedEdge, Rule } from "./engine.js";
  */
 export type Repo = "harness" | "core" | "sci" | "kg" | "base" | "test";
 
-/** Display names, in dependency order (most depended-upon first). */
-export const REPOS: Array<{ id: Repo; name: string }> = [
-  { id: "harness", name: "agentic-harness" },
-  { id: "core", name: "folio-assist-core" },
-  { id: "sci", name: "folio-asst-sci" },
+/**
+ * Target repository names, in dependency order (most depended-upon first).
+ *
+ * ## `name` is the TARGET REPO; `instance` is where it is staged today
+ *
+ * These are two different facts and were one string until 2026-09-26, which
+ * is how they drifted. `name` is what the repository will be called when
+ * #223 cuts it. `instance` is the directory staging it in this pre-split
+ * checkout, and it must equal that directory's own declared `name` — the
+ * declaration is the source of truth, so `instance` is a POINTER to it, not
+ * a second copy. `partition-names.test.ts` holds them equal.
+ *
+ * `kg` carries no `instance` ON PURPOSE. `smart-kg` is a Phase III target
+ * for WHO L1 document and KG schemas that this checkout does not hold, so it
+ * has 0 modules. That is a target not yet staged, NOT a `dh4f`
+ * declared-but-absent defect, and the two must not be conflated: the first is
+ * a plan, the second is a consumer scanning nothing and reporting a clean run.
+ * `undefined` says "no instance yet"; it never means "the instance is missing".
+ *
+ * ## Why three of these were renamed
+ *
+ * `folio-assist-core` and `folio-asst-sci` were ABBREVIATIONS of the declared
+ * names — no decision behind "asst", just terser — and `agentic-harness`
+ * predates the owner's rename of the harness to `cat-harness`, which the
+ * declaration, the directory and `AGENTS.md` all already carry. Only the
+ * architecture docs and this table still said the old thing.
+ *
+ * The docs page `/agentic-harness.html` is NOT this name and was not touched:
+ * it documents the agent-user interaction model, which is a concept rather
+ * than a repository, and its slug is a published URL.
+ */
+export const REPOS: Array<{ id: Repo; name: string; instance?: string }> = [
+  { id: "harness", name: "cat-harness", instance: "cat-harness" },
+  { id: "core", name: "folio-assistant-core", instance: "folio-assistant-core" },
+  { id: "sci", name: "folio-assistant-sci", instance: "folio-assistant-sci" },
   { id: "kg", name: "smart-kg" },
-  { id: "base", name: "smart-base" },
+  { id: "base", name: "smart-base", instance: "smart-base" },
   { id: "test", name: "(test material)" },
 ];
 
@@ -1192,6 +1222,7 @@ export const RULES: Rule[] = [
       "scripts/render-pipeline.ts",         // WHICH renders run and in what order, read from the declarations
       "scripts/render-selection.ts",        // WHICH of them must re-run against a seed, and why (bean `9c34`). Harness machinery: it computes a decision and writes no page, so it belongs beside the pipeline rather than with the renderers
       "scripts/gates.ts",                   // the gate runner itself
+      "scripts/gate-tree-guard.ts",         // ...and which gate changed the tree under it (bean `ymsu`). Harness for the same reason the runner is: it asks a question only the runner is positioned to ask, since no gate can observe what another gate did
       "scripts/check-merged.ts",            // the gate runner, on the merged tree (bean `nytj`)
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
       "scripts/gen-bootstrap-graph.ts", // writes bootstrap/bootstrap.jsonld

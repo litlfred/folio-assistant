@@ -1,12 +1,12 @@
 ---
 # folio-assistant-fx5r
 title: The PR endpoint keeps serving a merged PR's pre-merge view, and merge_pull_request reports success on it
-status: todo
+status: in-progress
 type: bug
 priority: high
-parent: folio-assistant-1xhc
 created_at: 2026-09-25T18:09:14Z
-updated_at: 2026-09-25T18:09:14Z
+updated_at: 2026-09-26T03:20:56Z
+parent: folio-assistant-1xhc
 ---
 
 
@@ -103,12 +103,68 @@ computed answer as current without a freshness check**, because unlike a local
 instrument it has no way to tell you it is behind. Both are "a number that was
 true when taken, quoted as if taken now"; they differ only in who took it.
 
+## The call sites, measured 2026-09-26 — and this bean overstated the scope
+
+I wrote "the sweep, `/watch`, `prepare-merge`, any merge helper" from memory.
+Checked, two of the three were already right:
+
+| site | state |
+|---|---|
+| `prepare-merge` (command + skill) | **already correct** — step 4 is `git merge-base --is-ancestor origin/<base> HEAD` |
+| `/watch` | **nothing to fix** — it carries no mergeability logic at all |
+| `check-head-has-run.ts` | **code correct, prose wrong** |
+
+The sweep's own `mergeStateForHead` asks
+`git ls-remote origin refs/pull/N/merge`, exactly as `h2s9` prescribed — but
+both of its UNKNOWN messages told the reader to *"check `mergeable_state` by
+hand"*. The code had the right instinct and the prose sent the reader the
+other way, in the one branch where the operator has nothing else to go on.
+
+Listing three sites when one was defective is the same failure this bean is
+about, one level up: a claim written from memory rather than measured. Left
+visible rather than quietly edited.
+
 ## Done when
 
-- [ ] Wherever this repository acts on a PR (the sweep, `/watch`,
-      `prepare-merge`, any merge helper), `merged` is checked FIRST and
-      `merge-base --is-ancestor` is the discriminator, not `mergeable_state`.
-- [ ] Refreshing a PR's CI is documented as `workflow_dispatch` against the
-      branch, not a push — with the measurement above as the reason.
-- [ ] `h2s9` cross-references this, and this one says plainly that a wrong
+- [x] `check-head-has-run.ts`'s two UNKNOWN messages name `merged` and the
+      merge ref instead of `mergeable_state`, with the 45-minute measurement
+      as the reason.
+- [x] `prepare-merge` and `/watch` checked — already correct, nothing to do.
+- [x] Refreshing a PR's CI documented as `workflow_dispatch`, not a push, in
+      the module whose subject is "is a run owed here".
+- [x] `h2s9` cross-references this, and this one says plainly that a wrong
       error string is worse than an absent one.
+- [ ] Nothing gates the prose: a future edit can point "by hand" back at the
+      field. Two tests now pin the REFERENT, which is the cheap half; a
+      general rule (no advice string names `mergeable_state` approvingly)
+      would be the whole one.
+
+---
+
+## 2026-09-26 — a THIRD copy, and it is the answer to this bean's open item
+
+This bean's last unchecked item is *"nothing gates the prose generally"*. It
+has now cost something concrete.
+
+PR #1362 fixed the two advice strings in `scripts/check-head-has-run.ts`.
+**`.github/workflows/pr-checks-present.yml` carries its own third copy**, and
+it was not touched, because nothing links them. Found by reading run 133's log
+rather than the file — the pre-`fx5r` text was being posted to live PRs hours
+after the fix merged.
+
+The drift is PARTIAL, which is the part worth keeping:
+
+| | the merge-ref probe (code) | the UNKNOWN advice (prose) |
+|---|---|---|
+| `check-head-has-run.ts` | ✅ correct | ✅ fixed by #1362 |
+| `pr-checks-present.yml` | ✅ correct, line 163 | ❌ pre-`fx5r`, line 192 |
+
+**The code was right in both places and the prose in only one.** A reader who
+checked whether the fix had landed by grepping for `ls-remote` would have found
+it in both and concluded the job was done.
+
+Aligned now. But that is the instance, not the fix: a fourth copy is free to
+appear tomorrow. The general rule this bean asks for — *no advice string names
+`mergeable_state` approvingly, anywhere* — would have caught this one, and is
+still not written.
+

@@ -122,6 +122,37 @@ item by item, not carried forward:
 artifact), `j79e` (in-progress — detangle), `xies` (in-progress — publish
 to CDN).
 
+## SUPERSEDED 2026-09-26 — the re-parenting happened, and it was not mine
+
+The three named just above are **no longer `kupb`'s children.** Commit
+`9fe74a7be8d`, *"kupb narrowed to IRIS-catalogue work, so GOAL 3 can close"*,
+moved `eof6` and `xies` to `5a3l` (DEPLOYMENT) and `j79e` to `zzmr` (KG) —
+about nine hours after the table above was written, by the session that owned
+that work.
+
+**`kupb` now has two open children, and both are genuinely IRIS:**
+
+| id | what it is |
+|---|---|
+| `08u4` | SURVIVAL PATH: every referenced IRIS node resolves by Handle |
+| `xlg2` | RUN THE SAMPLE IMPORT: one real end-to-end instance of sample-import |
+
+So the re-parenting question this bean carried is **settled and executed**, and
+the Done-when clause below is rewritten accordingly. What blocks `kupb` is now
+two pieces of real IRIS-catalogue work rather than an unanswered filing
+decision — which is the state that clause should always have described.
+
+### This is a staleness class the new check cannot see
+
+`check:stale-paths` grew a `done-when` rule yesterday for a clause naming a
+**closed** bean as a precondition. It does not fire here, and correctly so:
+`eof6`, `j79e` and `xies` are all still `in-progress`. They are not finished —
+they are **somebody else's children now**. A body asserting a parent relation
+the store contradicts is a *different* defect from one routing through
+finished work, and nothing reads it. Recorded on `k59d` as the next drawable
+rule rather than fixed by hand here, because a parent edge is structured data
+and a hand pass over it has already failed twice in two days.
+
 > **`4pm8` closed while this section was being written.** It was `todo` when
 > the table above was first measured and `completed` twenty-odd minutes later,
 > in the 23 commits `main` took during the edit. Recorded rather than quietly
@@ -163,5 +194,7 @@ still open and is asked as a selectable question rather than assumed.
       explained
 - [x] It renders on the IRIS theme rather than the default
 - [x] `check:voices` is green across the instance boundary
-- [ ] `kupb` closes — blocked on its 13 open children, whose re-parenting is the
-      owner's call
+- [ ] `kupb` closes — blocked on **two** open children, `08u4` and `xlg2`, both
+      genuine IRIS-catalogue work. The re-parenting this clause used to wait on
+      is DONE (2026-09-26, commit `9fe74a7be8d`); nothing here waits on the
+      owner any more.
