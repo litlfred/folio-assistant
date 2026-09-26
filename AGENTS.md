@@ -215,8 +215,20 @@ cat-harness/scripts/install-beans.sh                 # install the CLI if missin
 beans prime                              # emit work-plan priming for agents
 beans list                               # current open items
 beans create "<title>"                   # open a work-plan item
-beans <id> --status in-progress          # claim an item
+bun run beans:claim <id>                 # claim an item
 ```
+
+**Two things were wrong with the line this replaces**, and the second matters
+more. It read `beans <id> --status in-progress`, which **exits 1 with
+`unknown command`** — measured. And `beans update <id> --status in-progress`,
+the working spelling, is **not how you claim**: it writes no holder note, so
+the claim is invisible to the `already-claimed` check that exists to protect
+it. Measured 2026-09-25: 97 of the 100 non-epic `in-progress` beans on `main`
+record no holder, and `beans:claim` answered "go ahead" for every one of them
+(bean `c3d7`).
+
+`beans update` stays correct for the transitions that are **not** claims —
+closing your own bean, `--body-append`, `--blocked-by`.
 
 **The discipline is in the skill, not here.**
 [`skills/folio-core/todo-manager.md`](cat-harness/skills/folio-core/todo-manager.md) carries

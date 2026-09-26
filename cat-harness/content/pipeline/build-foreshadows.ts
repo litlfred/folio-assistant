@@ -35,7 +35,7 @@
  * artifact is an emission for humans, diffs, and other tools.
  *
  * Usage:
- *   bun run content/pipeline/build-foreshadows.ts <paper-dir> [--check]
+ *   bun run cat-harness/content/pipeline/build-foreshadows.ts <paper-dir> [--check]
  *
  * `--check` regenerates in memory and exits 1 if the committed file differs,
  * naming the drifted blocks. That is the CI gate; it never rewrites.
@@ -144,7 +144,7 @@ export function buildForeshadows(paper: string): {
       "unioned with the manifest's declared foreshadows[]",
     note:
       "GENERATED — do not hand-edit. Rebuild with " +
-      "`bun run content/pipeline/build-foreshadows.ts <paper>`. The QA " +
+      "`bun run cat-harness/content/pipeline/build-foreshadows.ts <paper>`. The QA " +
       "checkers derive the same data from source on every run and never read " +
       "this file, so it cannot go stale in a way that changes a verdict.",
     totals: { blocks: Object.keys(blocks).length, derived: dTot, declared: cTot, effective: eTot },

@@ -86,7 +86,7 @@ const PLATFORM_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 /** How many times a non-fast-forward is re-tried before giving up. */
 export const MAX_ATTEMPTS = 3;
 
-export type ClaimState = "pushed" | "already-claimed" | "already-closed" | "new-on-branch" | "fell-back" | "unknown";
+export type ClaimState = "pushed" | "already-claimed" | "held-unknown" | "already-closed" | "new-on-branch" | "fell-back" | "unknown";
 
 export interface ClaimOutcome {
   state: ClaimState;
@@ -229,10 +229,33 @@ export function claimOnDefaultBranch(id: string, branch: string, opts: { repo?: 
     if (onBranch.status === "in-progress" && onBranch.heldBy !== undefined && onBranch.heldBy !== branch) {
       return { state: "already-claimed", heldBy: onBranch.heldBy, attempts };
     }
-    // Ours already, or already in-progress with no holder recorded and we are
-    // the one asking: idempotent, nothing to push.
-    if (onBranch.status === "in-progress" && (onBranch.heldBy === branch || onBranch.heldBy === undefined)) {
+    // Ours already: idempotent, nothing to push.
+    if (onBranch.status === "in-progress" && onBranch.heldBy === branch) {
       return { state: "pushed", attempts };
+    }
+    // In progress, and NOBODY RECORDED A HOLDER. This arm used to fall in with
+    // the one above — `heldBy === branch || heldBy === undefined` — on the
+    // reading that both are "ours, idempotent". They are not the same thing.
+    //
+    // `heldBy === branch` is a determined answer: we hold it. `heldBy ===
+    // undefined` is *could not determine who holds it*, and the merged version
+    // rendered it as `✓ claimed … every session can see it now` while pushing
+    // nothing and warning nobody — could-not-determine wearing the costume of a
+    // determined answer, which is the failure this file already refuses twelve
+    // lines above for `absent`.
+    //
+    // It is not a rare arm. Measured on `origin/main` 2026-09-25: of the 100
+    // non-epic beans marked `in-progress`, **97 record no holder**, because
+    // `todo-manager.md` and `session-intent.md` still tell an agent to claim
+    // with `beans update <id> --status in-progress`, which writes no note. So
+    // the check that exists to stop claim-stomping answered "go ahead" for 97 %
+    // of the store it was guarding.
+    //
+    // Reported rather than guessed either way: this cannot tell a live sibling
+    // from a claim abandoned five days ago, and inventing a staleness threshold
+    // would need a basis nothing here has.
+    if (onBranch.status === "in-progress") {
+      return { state: "held-unknown", attempts };
     }
 
     if (opts.dryRun === true) {
@@ -326,6 +349,16 @@ export function describe(o: ClaimOutcome, id: string): string {
   switch (o.state) {
     case "pushed":
       return o.reason ?? `claimed ${id} on the default branch — every session can see it now${o.attempts > 1 ? ` (after ${o.attempts} attempts; a sibling claim landed mid-flight)` : ""}`;
+    case "held-unknown":
+      return (
+        `${id} is already in-progress on the default branch, and NOBODY RECORDED A HOLDER — so this cannot tell
+` +
+        `  a sibling working it right now from a claim somebody abandoned. NOT claimed, and nothing was written.
+` +
+        `  Read the bean and the open PR list before you take it. If it is genuinely free, claim it on your branch
+` +
+        `  (\`beans update ${id} --status in-progress\`) and open the PR at your FIRST commit.`
+      );
     case "already-closed":
       return (
         `${id} is ${o.closedAs} on the default branch — NOT claimed, deliberately.\n` +
@@ -355,9 +388,19 @@ export function describe(o: ClaimOutcome, id: string): string {
 }
 
 /** `unknown` is 2, a failed push is 3, a live claim by somebody else is 0. */
-export function exitCodeFor(o: ClaimOutcome): 0 | 2 | 3 {
+export function exitCodeFor(o: ClaimOutcome): 0 | 2 | 3 | 4 {
   if (o.state === "unknown") return 2;
   if (o.state === "fell-back") return 3;
+  // Its own code, and neither of its neighbours.
+  //
+  // Not 0, which `already-claimed` uses: that one is a DETERMINED refusal and
+  // tells the caller to go pick another item. This one cannot tell them even
+  // that, so a script treating 0 as "carry on" must not get it.
+  //
+  // Not 2 either: the default branch was read perfectly well. What could not be
+  // determined is who holds the bean, not whether the remote could be reached,
+  // and collapsing the two would make a readable remote look unreadable.
+  if (o.state === "held-unknown") return 4;
   return 0;
 }
 

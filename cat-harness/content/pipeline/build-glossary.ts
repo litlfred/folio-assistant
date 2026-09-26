@@ -28,8 +28,8 @@
  *
  * Run modes:
  *
- *   bun run pipeline/build-glossary.ts <paper-dir>           # write outputs
- *   bun run pipeline/build-glossary.ts <paper-dir> --check    # CI gate
+ *   bun run cat-harness/content/pipeline/build-glossary.ts <paper-dir>           # write outputs
+ *   bun run cat-harness/content/pipeline/build-glossary.ts <paper-dir> --check    # CI gate
  *
  * In `--check` mode the script exits non-zero if any glossary slug is
  * duplicated, if `glossary.json` on disk would change, if the SKOS scheme on
@@ -537,7 +537,7 @@ if (import.meta.main) {
   // The ARGUMENT is tested before it is resolved, and that order is the fix.
   // `resolve("")` returns the CWD — truthy, and it exists — so `resolve(positional[0] || "")`
   // made the guard below unreachable for the no-argument case: a bare
-  // `bun run build-glossary.ts` fell through it into `buildGlossary`, which threw
+  // `bun run cat-harness/content/pipeline/build-glossary.ts` fell through it into `buildGlossary`, which threw
   // `Paper manifest not found: <cwd>/<cwd-basename>.ts` and exited 1 with a stack
   // trace. The usage line never printed and the exit code said "it broke" rather
   // than "you did not tell me which paper", which is the could-not-determine

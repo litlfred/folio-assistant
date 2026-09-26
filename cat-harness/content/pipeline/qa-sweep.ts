@@ -6,22 +6,22 @@
  * Usage:
  *
  *   # Sweep one section (relative to repo root)
- *   bun run pipeline/qa-sweep.ts \
+ *   bun run cat-harness/content/pipeline/qa-sweep.ts \
  *     content/quantum-observable-universe/organic-chemistry
  *
  *   # Sweep the whole paper
- *   bun run pipeline/qa-sweep.ts content/quantum-observable-universe
+ *   bun run cat-harness/content/pipeline/qa-sweep.ts content/quantum-observable-universe
  *
  *   # Restrict to a single criterion
- *   bun run pipeline/qa-sweep.ts \
+ *   bun run cat-harness/content/pipeline/qa-sweep.ts \
  *     content/.../organic-chemistry \
  *     --only voice-status-leak,voice-ai-slop
  *
  *   # Show what would change, write nothing
- *   bun run pipeline/qa-sweep.ts content/.../organic-chemistry --dry-run
+ *   bun run cat-harness/content/pipeline/qa-sweep.ts content/.../organic-chemistry --dry-run
  *
  *   # Emit a structured JSON summary to stdout (machine-readable)
- *   bun run pipeline/qa-sweep.ts content/... --json
+ *   bun run cat-harness/content/pipeline/qa-sweep.ts content/... --json
  *
  * Behaviour:
  *
