@@ -5,7 +5,7 @@
     "id": "Process_PrChecksPresent",
     "path": "processes/pr-checks-present.bpmn"
   },
-  "source_hash": "sha256:2796013c06269af561779acaf25607f27fbab48d61446a9414cba663ef961d4a",
+  "source_hash": "sha256:a9decf260d2dd83502fa6578e03db6e3cbe84a20fb4ec9d3c4d1d76a0ee929b9",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,15 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Comment",
+          "detail": "names skill \"issue-working\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -127,7 +136,7 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 1,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   },
@@ -136,10 +145,9 @@
       "kind": "implements",
       "prose": "cat-harness/processes/pr-checks-present.bpmn",
       "code": ".github/workflows/pr-checks-present.yml",
-      "prose_hash": "2796013c0626",
+      "prose_hash": "a9decf260d2d",
       "code_hash": "b167678d9c0e",
-      "by": "agent",
-      "reason": "The change is to the WORDING of one advice branch inside the comment body (the UNKNOWN mergeability case), aligning it with check-head-has-run.ts per bean fx5r. No step, gateway, lane or ordering changed: the diagram's five activities — ask per open PR whether HEAD has a run, ensure the label, open-or-edit the one tracking issue, comment once per (PR, head sha), close the issue when every head has a run — all still describe exactly what the workflow does. Re-read the diagram against the workflow to confirm rather than assuming."
+      "by": "baseline"
     }
   ]
 }

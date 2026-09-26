@@ -39,6 +39,8 @@ import {
   CHECKS,
   STEPS,
   audit,
+  parseFlags,
+  writeReport,
   dangling,
   frontMatterKeys,
   missingScripts,
@@ -61,21 +63,34 @@ test("the chain is not empty", () => {
   expect(STEPS.length).toBeGreaterThan(0);
 });
 
+/**
+ * A step's HEAD is what `bun run` resolves; the rest are flags.
+ *
+ * `v625` moved a step to an argument list, so asking whether the whole list is
+ * a script would report `["x", "--check"]` as unresolvable — a false red on a
+ * legal step. Only the head is looked up.
+ */
+function head(args: readonly string[]): string {
+  return args[0]!;
+}
+
 describe("every step resolves to something runnable", () => {
   for (const s of STEPS) {
-    test(`\`${s.write}\` exists`, () => {
-      const ok = s.write in scripts() || existsSync(join(ROOT, s.write));
+    test(`\`${s.write.join(" ")}\` exists`, () => {
+      const t = head(s.write);
+      const ok = t in scripts() || existsSync(join(ROOT, t));
       expect(
         ok,
-        `\`${s.write}\` is neither an npm script nor a file. A step that cannot run is ` +
+        `\`${t}\` is neither an npm script nor a file. A step that cannot run is ` +
           `worse than a missing step: the command reports it, exits non-zero, and ` +
           `the author cannot tell a broken chain from their own mistake.`,
       ).toBe(true);
     });
 
-    test(`\`${s.verify}\` exists`, () => {
-      const ok = s.verify in scripts() || existsSync(join(ROOT, s.verify));
-      expect(ok, `verify target \`${s.verify}\` is neither an npm script nor a file.`).toBe(true);
+    test(`\`${s.verify.join(" ")}\` exists`, () => {
+      const t = head(s.verify);
+      const ok = t in scripts() || existsSync(join(ROOT, t));
+      expect(ok, `verify target \`${t}\` is neither an npm script nor a file.`).toBe(true);
     });
   }
 });
@@ -161,8 +176,23 @@ test("the four that adding a skill does NOT stale are absent", () => {
  */
 test("no step verifies itself with its writer, and no writer repeats", () => {
   expect(CHECKS.length).toBe(CHAIN.length);
-  for (const s of STEPS) expect(s.verify).not.toBe(s.write);
+  // Compared as the JOINED command, not as the arrays. `v625` moved a step to
+  // `readonly string[]`, and `expect(arrayA).not.toBe(arrayB)` is true of every
+  // pair of distinct arrays — so this assertion would have kept passing while
+  // measuring nothing. A test that cannot fail is the `1xhc` shape inside the
+  // suite, and this one is the reason the joined form is what `CHAIN` exports.
+  for (const s of STEPS) expect(s.verify.join(" ")).not.toBe(s.write.join(" "));
   expect(new Set(CHAIN).size).toBe(CHAIN.length);
+});
+
+test("a step's arguments are a non-empty list, and its head is what runs", () => {
+  // The shape `missingScripts` and the runner both assume. An empty list would
+  // make `bun run` print its own help and exit 0 — a step that silently does
+  // nothing while reading as a pass.
+  for (const s of STEPS) {
+    expect(s.write.length, `a step has no write arguments: ${JSON.stringify(s)}`).toBeGreaterThan(0);
+    expect(s.verify.length, `a step has no verify arguments: ${JSON.stringify(s)}`).toBeGreaterThan(0);
+  }
 });
 
 /* ────────────────────────── the declaration audit ────────────────────────── */
@@ -316,5 +346,144 @@ describe("the real corpus", () => {
     const f = audit();
     expect(f.packages).toBeGreaterThan(3);
     expect(f.skills).toBeGreaterThan(50);
+  });
+});
+
+
+/* ─────────────────────────── the flags and the report ─────────────────────────
+ * `v625`'s half of the suite, kept whole across the consolidation. The report
+ * tests gained the third argument the merge added — the declaration findings —
+ * and one test of their own, because a sidecar that recorded only the chain
+ * would report a clean run over a skill registered nowhere.
+ */
+
+describe("flags", () => {
+  test("every flag is off by default, so a bare run regenerates and reports", () => {
+    const f = parseFlags([]);
+    expect(f).toEqual({ check: false, dryRun: false, json: false, noReport: false });
+  });
+
+  test("each flag is recognised on its own", () => {
+    expect(parseFlags(["--check"]).check).toBe(true);
+    expect(parseFlags(["--dry-run"]).dryRun).toBe(true);
+    expect(parseFlags(["--json"]).json).toBe(true);
+    expect(parseFlags(["--no-report"]).noReport).toBe(true);
+  });
+
+  test("an unrelated argument sets nothing", () => {
+    // `bun run` passes its own arguments through, and a flag parser that
+    // matched loosely would turn `--help` into a silent `--check`.
+    expect(parseFlags(["--help", "somefile.md"])).toEqual({
+      check: false,
+      dryRun: false,
+      json: false,
+      noReport: false,
+    });
+  });
+});
+
+describe("the report", () => {
+  test("lands under the INSTANCE root, not the caller's cwd", () => {
+    // The defect this pins, measured 2026-09-26: `writeReport` was called with
+    // `process.cwd()`, so running the command from the repository root wrote
+    // `test/results/skill-register.qa-results.json` — a fresh top-level
+    // directory no instance declares and no sweep reads. `writeQaResult`
+    // composes `<root>/test/results/`, so the root must be the instance's.
+    const dir = mkdtempSync(join(tmpdir(), "skill-register-report-"));
+    try {
+      const at = writeReport(
+        dir,
+        [{ verify: "kg:detangle:check", because: "x", ran: true, current: true }],
+        [],
+      );
+      expect(at).toBe(join(dir, "test", "results", "skill-register.qa-results.json"));
+      expect(existsSync(at)).toBe(true);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  test("`ran` is present on EVERY entry, so absence never carries the fact", () => {
+    // The invariant. A sidecar whose entries omit `ran` when nothing ran makes
+    // "listed but not run" and "run and clean" the same bytes — which is the
+    // confusion the sidecar exists to prevent, reproduced inside it. A
+    // `--dry-run` report is the case that would tempt the omission.
+    const dir = mkdtempSync(join(tmpdir(), "skill-register-ran-"));
+    try {
+      const at = writeReport(
+        dir,
+        STEPS.map((s) => ({ verify: s.verify.join(" "), because: s.because, ran: false })),
+        [],
+      );
+      const entries = JSON.parse(readFileSync(at, "utf8")).families["registration-chain"].entries;
+      expect(entries.length).toBe(STEPS.length);
+      for (const e of entries) {
+        expect(Object.hasOwn(e, "ran"), `an entry omits \`ran\`: ${JSON.stringify(e)}`).toBe(true);
+        expect(e.ran).toBe(false);
+        // `current` is absent precisely when nothing ran — a step that did not
+        // run has no verdict, and emitting `current: false` would report it as
+        // measured and red.
+        expect(Object.hasOwn(e, "current")).toBe(false);
+      }
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  test("a red verdict is recorded rather than only printed", () => {
+    // A sidecar written only on success cannot tell "clean" from "never ran",
+    // so the report is written BEFORE the exit branches. This pins that a
+    // failing step reaches the file at all.
+    const dir = mkdtempSync(join(tmpdir(), "skill-register-red-"));
+    try {
+      const at = writeReport(
+        dir,
+        [
+          {
+            verify: "kg:detangle:check",
+            because: "the skills subgraph gains a node",
+            ran: true,
+            current: false,
+          },
+        ],
+        [],
+      );
+      const fam = JSON.parse(readFileSync(at, "utf8")).families["registration-chain"];
+      expect(fam.entries[0].ran).toBe(true);
+      expect(fam.entries[0].current).toBe(false);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  test("the declaration findings are a family of their own, present even when empty", () => {
+    // The consolidation's own addition. `v625`'s sidecar carried the chain
+    // alone, so a tree whose chain was current but whose skill was in no
+    // manifest produced a sidecar that read as clean. An EMPTY family is the
+    // load-bearing case: it says audited-and-found-nothing, which is a
+    // different claim from a family that is not there at all.
+    const dir = mkdtempSync(join(tmpdir(), "skill-register-decl-"));
+    try {
+      const clean = JSON.parse(
+        readFileSync(writeReport(dir, [{ verify: "x:check", because: "y", ran: true, current: true }], []), "utf8"),
+      );
+      expect(Object.hasOwn(clean.families, "declarations")).toBe(true);
+      expect(clean.families.declarations.entries).toEqual([]);
+
+      const found = JSON.parse(
+        readFileSync(
+          writeReport(
+            dir,
+            [{ verify: "x:check", because: "y", ran: true, current: true }],
+            [{ finding: "undeclared", subject: "folio-core/probe", remedy: "add the slug" }],
+          ),
+          "utf8",
+        ),
+      );
+      expect(found.families.declarations.entries.length).toBe(1);
+      expect(found.families.declarations.entries[0].finding).toBe("undeclared");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });

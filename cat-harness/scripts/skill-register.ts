@@ -94,6 +94,19 @@
  * `check:ci-invocations` asks of every CI step, and a chain that names scripts
  * uniformly can be asserted against `package.json` — {@link missingScripts}.
  *
+ * **A step is an ARGUMENT LIST rather than a bare name, and that is `v625`'s
+ * shape kept over this file's own.** `v625` reached `main` with
+ * `readonly string[]`, because it needed `gen-skill-docs.ts --check` and there
+ * was then no `skills:docs:check` script to name. Both halves were right about
+ * something: a list can carry a flag, and a NAME can be asserted against
+ * `package.json`. The merge keeps the list shape and populates it with script
+ * names — this branch supplies the two aliases `main` lacked — so nothing has
+ * to choose between expressiveness and assertability.
+ *
+ * It also removes a defect a merge would otherwise have shipped silently:
+ * `v625`'s step arrived in the array shape while this file's field was typed
+ * `string`, and `git` merged the two without complaint.
+ *
  * **`gen-uml-overview` was added as a sixth step on the day this shipped**, and
  * how it was missed is the same lesson one turn later. The per-check sweep that
  * derived the first five ran the checks IN SEQUENCE, and sequence perturbs —
@@ -150,24 +163,49 @@
  * {@link dangling}.
  *
  * @module cat-harness/scripts/skill-register
- * @covers skills — and ONLY that kind, deliberately. This gate judges a skill's
- *   DECLARATIONS: its manifest entry, its front matter, and whether the manifest
- *   points at anything absent. The derived `folio` reference pages and `qa`
- *   sidecars are produced by the chain and judged by their own gates
- *   (`skills:docs:check`, `kg:audit:check`), so claiming them here would report
- *   coverage this gate does not provide. `kg` was written in `nfv3`'s version
- *   first and is not a kind at all — it names a graph LAYER, which
- *   `audit-coverage`'s own test caught
+ * @covers skills — the kind this gate JUDGES. It reads a skill's declarations:
+ *   its manifest entry, its front matter, and whether the manifest points at
+ *   anything absent. Those live in the directories that declare `skills`. The
+ *   derived `folio` reference pages and `qa` sidecars are produced by the chain
+ *   and judged by their own gates (`skills:docs:check`, `kg:audit:check`), so
+ *   claiming them here would report coverage this gate does not provide. `kg`
+ *   was written in `nfv3`'s version first and is not a kind at all — it names a
+ *   graph LAYER, which `audit-coverage`'s own test caught
  *
  *   The subject set is resolved from the instance's declarations via
  *   `kgDirectories`, never from a list written here
+ * @covers cat-harness — `v625`'s declaration, RETAINED across the merge rather
+ *   than reversed, and flagged rather than quietly kept. Both names are real
+ *   graph kinds (42 are registered in `BASE_GRAPH_KINDS`; `audit-coverage`
+ *   validates a `@covers` name against nothing, so being accepted is not
+ *   evidence of being apt), and both are declared by many other gates, so
+ *   `audit:coverage:require-all` is unaffected whichever stands. The reason to
+ *   query it: in `cat-harness.json` the `cat-harness` kind is declared on the
+ *   `schemas/` directories, and this gate does not read a schema. Reversing a
+ *   sibling's deliberate line inside a merge resolution is the wrong place to
+ *   settle it, so it stays and the question is on the PR.
  */
+import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { kgDirectories } from "./known-skills.js";
+import { buildQaResult, writeQaResult } from "./qa-results.js";
 
-const INSTANCE = resolve(import.meta.dir, "..");
+/**
+ * This instance's root — `cat-harness/`, one level up from `scripts/`.
+ *
+ * NOT `process.cwd()`, and that is a correction rather than a preference.
+ * `writeQaResult` composes `<root>/test/results/`, so a cwd-relative root puts
+ * the sidecar wherever the command happened to be invoked from — measured:
+ * run from the repository root it landed in a fresh top-level `test/results/`,
+ * a directory no instance declares and no sweep reads. Every sibling here
+ * derives the root from its own module path for that reason
+ * (`check-layout-norms.ts`, `check-harness-state.ts`), so the sidecar goes to
+ * the same place whoever runs the command and from wherever.
+ */
+const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 /* ───────────────────────── the declarations, audited ───────────────────────── */
 
@@ -195,7 +233,7 @@ export interface SkillPackage {
 const STRIPPABLE = ["roles"] as const;
 
 /**
- * Skill packages, found in the directories the INSTANCE DECLARES.
+ * Skill packages, found in the directories the INSTANCE_ROOT DECLARES.
  *
  * Not `join(instance, "skills")`. That literal is what
  * `check-declared-paths.ts` refuses, and rightly — `cat-harness.json` owns the
@@ -213,7 +251,7 @@ const STRIPPABLE = ["roles"] as const;
  * predicate `tests/skill-manifest-coverage.test.ts` uses — the test that fails
  * when this command has not been run.
  */
-export function skillPackages(instance: string = INSTANCE): SkillPackage[] {
+export function skillPackages(instance: string = INSTANCE_ROOT): SkillPackage[] {
   const out: SkillPackage[] = [];
   for (const graph of kgDirectories(instance)) {
     for (const d of readdirSync(graph.absPath, { withFileTypes: true })) {
@@ -368,7 +406,7 @@ export interface Findings {
   skills: number;
 }
 
-export function audit(instance: string = INSTANCE): Findings {
+export function audit(instance: string = INSTANCE_ROOT): Findings {
   const pkgs = skillPackages(instance);
   return {
     unlisted: unlisted(pkgs),
@@ -387,7 +425,7 @@ export function audit(instance: string = INSTANCE): Findings {
  * read by nothing and pointed at actor ids that never existed in any commit, so
  * there is no author intent to guess at.
  */
-export function stripRetired(instance: string = INSTANCE): string[] {
+export function stripRetired(instance: string = INSTANCE_ROOT): string[] {
   const written: string[] = [];
   for (const r of audit(instance).retired) {
     writeFileSync(r.file, withoutKey(readFileSync(r.file, "utf-8"), r.key));
@@ -400,10 +438,10 @@ export function stripRetired(instance: string = INSTANCE): string[] {
 
 /** One regeneration step: the writer, and the check that proves it landed. */
 export interface Step {
-  /** The package script that writes. */
-  readonly write: string;
-  /** The script asking the same question rather than writing. */
-  readonly verify: string;
+  /** What to run, as `bun run` arguments. One script name, for the reasons above. */
+  readonly write: readonly string[];
+  /** The same question asked rather than written — the repo-wide `--check` convention. */
+  readonly verify: readonly string[];
   /** Why this is in the chain, so a reader can re-derive rather than trust. */
   readonly because: string;
 }
@@ -424,63 +462,203 @@ export interface Step {
  */
 export const STEPS: readonly Step[] = [
   {
-    write: "skills:docs",
-    verify: "skills:docs:check",
+    write: ["skills:docs"],
+    verify: ["skills:docs:check"],
     because: "the skill's published reference page",
   },
   {
-    write: "glossary:page",
-    verify: "check:glossary",
+    write: ["glossary:page"],
+    verify: ["check:glossary"],
     because: "the glossary page and its SKOS projection",
   },
   {
-    write: "docs:auto",
-    verify: "docs:auto:check",
+    write: ["docs:auto"],
+    verify: ["docs:auto:check"],
     because: "the generated docs index",
   },
   {
-    write: "kg:audit",
-    verify: "kg:audit:check",
+    write: ["kg:audit"],
+    verify: ["kg:audit:check"],
     because: "the skill's kg-qa sidecar — masked inside `gates` by `bun test`",
   },
   {
-    write: "kg:detangle",
-    verify: "kg:detangle:check",
+    write: ["kg:detangle"],
+    verify: ["kg:detangle:check"],
     because: "the skills subgraph gains a node, so its detangle sidecar moves",
   },
   {
-    write: "uml:overview",
-    verify: "uml:overview:check",
+    write: ["uml:overview"],
+    verify: ["uml:overview:check"],
     because: "the UML overview renders the QA tree the two steps above just wrote",
   },
 ];
 
-/** The writers, in order. Derived from {@link STEPS} so there is one list. */
-export const CHAIN: readonly string[] = STEPS.map((s) => s.write);
+/**
+ * The writers, in order. Derived from {@link STEPS} so there is one list.
+ *
+ * Joined to a string per step, which keeps the public shape a `string[]` across
+ * `v625`'s move to argument lists — and keeps the tests' comparisons MEANINGFUL.
+ * `s.verify !== s.write` on two arrays compares references and is true of every
+ * conceivable pair, so an assertion written against the old shape would have
+ * gone vacuous rather than red. A test that cannot fail is bean `1xhc` inside
+ * the test suite.
+ */
+export const CHAIN: readonly string[] = STEPS.map((s) => s.write.join(" "));
 
 /** The checks that decide convergence. Derived from {@link STEPS}. */
-export const CHECKS: readonly string[] = STEPS.map((s) => s.verify);
+export const CHECKS: readonly string[] = STEPS.map((s) => s.verify.join(" "));
 
 /** Scripts named here that `package.json` does not declare. */
-export function missingScripts(instance: string = INSTANCE): string[] {
-  const named = [...CHAIN, ...CHECKS];
+export function missingScripts(instance: string = INSTANCE_ROOT): string[] {
+  // A step's first argument is what `bun run` resolves; anything after it is a
+  // flag. Only names are asserted against `package.json` — a step given as a
+  // path (`v625`'s original shape, and still legal) is checked as a FILE, since
+  // asking `package.json` about it would report every path as missing and turn
+  // the third state below into a permanent exit 2.
+  const heads = STEPS.flatMap((s) => [s.write[0]!, s.verify[0]!]);
+  const paths = heads.filter((h) => h.includes("/") || h.endsWith(".ts"));
+  const named = heads.filter((h) => !paths.includes(h));
+  const absentPaths = paths.filter((p) => !existsSync(resolve(instance, "..", p)));
   const pkgPath = join(resolve(instance, ".."), "package.json");
-  if (!existsSync(pkgPath)) return named;
+  if (!existsSync(pkgPath)) return [...named, ...absentPaths];
   const scripts =
     (JSON.parse(readFileSync(pkgPath, "utf-8")) as { scripts?: Record<string, string> }).scripts ??
     {};
-  return named.filter((s) => !(s in scripts));
+  return [...named.filter((s) => !(s in scripts)), ...absentPaths];
 }
 
 /* ────────────────────────────────── the command ────────────────────────────── */
 
-async function sh(script: string, root: string, quiet: boolean): Promise<boolean> {
-  const p = Bun.spawn(["bun", "run", script], {
-    cwd: root,
-    stdout: quiet ? "pipe" : "inherit",
-    stderr: quiet ? "pipe" : "inherit",
+/**
+ * Run one step. `spawnSync` with inherited stdio, so a generator's own output
+ * reaches the reader rather than being swallowed and summarised.
+ *
+ * It shells out instead of importing for the reason in §"Why it shells out":
+ * an imported generator is free to drift from the one CI executes, and
+ * `declared-directory-resolves.test.ts` guards a real defect where importing a
+ * generator WROTE files.
+ */
+function run(args: readonly string[], quiet = false): number {
+  const r = spawnSync("bun", ["run", ...args], {
+    stdio: quiet ? ["ignore", "pipe", "pipe"] : "inherit",
+    cwd: resolve(INSTANCE_ROOT, ".."),
   });
-  return (await p.exited) === 0;
+  return r.status ?? 1;
+}
+
+/**
+ * The flags, and why each exists rather than being inferred.
+ *
+ * `--check` predates the others: verify without writing. The rest were added
+ * on the owner's instruction (2026-09-26) alongside the QA report and the gate,
+ * because a command that only ever streams to a terminal cannot be read by CI,
+ * by a sibling session, or by a person asking *"was this ever checked?"*.
+ */
+export interface Flags {
+  /** Verify only — regenerate nothing. What CI runs. */
+  check: boolean;
+  /** Print the chain and exit 0. Writes nothing, verifies nothing. */
+  dryRun: boolean;
+  /** Emit the report as JSON on stdout instead of prose. Implies no colour, no prompts. */
+  json: boolean;
+  /** Skip the committed QA sidecar. For a scratch tree that must not be dirtied. */
+  noReport: boolean;
+}
+
+export function parseFlags(argv: readonly string[]): Flags {
+  return {
+    check: argv.includes("--check"),
+    dryRun: argv.includes("--dry-run"),
+    json: argv.includes("--json"),
+    noReport: argv.includes("--no-report"),
+  };
+}
+
+/** One step's verdict, as the report and the JSON both carry it. */
+export interface StepVerdict {
+  /** The `--check` invocation, exactly as run. */
+  verify: string;
+  /** What staling it means for a reader — the step's own `because`. */
+  because: string;
+  /**
+   * Was the check RUN at all? Emitted on every step, never left to absence.
+   *
+   * `--dry-run` produces `ran: false`, and a reader must be able to tell that
+   * from a clean verify. An absent `current` would have carried that fact
+   * implicitly, which is the rule this repository states on `hasInstructions`
+   * in `kg-export`: absence must not be the carrier of a fact.
+   */
+  ran: boolean;
+  /** `true` only when the check exited 0. Absent iff `ran` is false. */
+  current?: boolean;
+}
+
+/** One declaration finding, as the sidecar carries it. */
+export interface DeclarationVerdict {
+  /** `undeclared` | `retired-key` | `dangling` — which of the three audits fired. */
+  finding: string;
+  /** `<package>/<skill>`, qualified by graph where the graph is not `skills`. */
+  subject: string;
+  /** What a reader must do, and who must do it. */
+  remedy: string;
+}
+
+/**
+ * Write the run's verdicts as a committed `qa-results/v1` sidecar.
+ *
+ * **Why a file and not just the console.** The checks in this chain are the only
+ * ones nothing else verifies UNMASKED — `bun test` runs the `kg-audit` and
+ * `detangle` writers, so by the time `gates` reaches their checks the artefacts
+ * are already repaired (bean `ymsu`). A printed verdict is gone the moment the
+ * terminal scrolls, which makes *"never verified"* and *"verified clean"* the
+ * same observation. That is the exact confusion this repository builds sidecars
+ * to prevent.
+ *
+ * `ran: false` on every step is therefore a REAL state and not a placeholder:
+ * it says the chain was listed and not run (`--dry-run`). It is emitted rather
+ * than implied, because absence must not be the carrier of a fact.
+ *
+ * **Two families, because this command answers two questions.** `v625` recorded
+ * the chain; the consolidation added the DECLARATION audit, and a sidecar that
+ * carried only the chain would report a clean run over a skill registered
+ * nowhere. An empty `declarations` family is a real verdict — audited, nothing
+ * found — which is why it is written rather than omitted when empty.
+ */
+export function writeReport(
+  root: string,
+  verdicts: readonly StepVerdict[],
+  declarations: readonly DeclarationVerdict[],
+): string {
+  return writeQaResult(
+    root,
+    "skill-register",
+    buildQaResult({
+      script: "cat-harness/scripts/skill-register.ts",
+      scriptAbsPath: fileURLToPath(import.meta.url),
+      subject: { kind: "corpus", id: "skill-registration-chain" },
+      families: {
+        "registration-chain": {
+          summary:
+            "Each artefact that adding a skill stales, with the verdict of its own `--check` run " +
+            "INDIVIDUALLY rather than through `bun run gates`. The distinction is the point: " +
+            "`bun test` runs the kg-audit and detangle writers, so a gates run repairs two of " +
+            "these before their checks read them and reports as current what is not (bean `ymsu`). " +
+            "`ran: false` means the step was listed but not run — what `--dry-run` produces — and is " +
+            "not a pass. It is emitted on every entry so that absence never carries that fact.",
+          entries: verdicts as unknown[],
+        },
+        declarations: {
+          summary:
+            "Skills whose DECLARATIONS are wrong: present in no package manifest, carrying a " +
+            "retired front-matter key, or listed in a manifest with no file. Empty means audited " +
+            "and clean, not unaudited — the chain family above records whether the run happened. " +
+            "Only the retired key is repaired; the other two are the author's assertion to make " +
+            "and this command reports them rather than guessing.",
+          entries: declarations as unknown[],
+        },
+      },
+    }),
+  );
 }
 
 const FIX_UNLISTED =
@@ -489,31 +667,104 @@ const FIX_UNLISTED =
   "  assertion, not a derivable fact, and a command that guessed it would\n" +
   "  register files somebody was still drafting.\n";
 
-async function main(): Promise<number> {
-  const checking = process.argv.includes("--check");
-  const root = resolve(INSTANCE, "..");
+const HELP =
+  `skill-register — regenerate everything adding a skill stales, and refuse a\n` +
+  `skill that arrived without its declarations (beans \`v625\`, \`nfv3\`).\n\n` +
+  `  bun run skill:register              regenerate, then verify\n` +
+  `  bun run skill:register --check      verify only — what CI runs\n` +
+  `  bun run skill:register --dry-run    print the chain; write and verify nothing\n` +
+  `  bun run skill:register --json       emit the verdicts as JSON\n` +
+  `  bun run skill:register --no-report  skip the committed QA sidecar\n\n` +
+  `It deliberately does NOT add a package-manifest entry: which package a\n` +
+  `file belongs to is your assertion, not a derivable fact.\n\n` +
+  `Exit 2 is a THIRD STATE, never a pass and never a finding: no package\n` +
+  `manifests found, or a chain step naming a script that is not registered.\n`;
+
+/** The audit's findings, flattened for the sidecar. */
+function declarationVerdicts(f: Findings): DeclarationVerdict[] {
+  return [
+    ...f.unlisted.map((u) => ({
+      finding: "undeclared",
+      subject: `${u.pkg}/${u.skill}`,
+      remedy: "add the slug to its package-manifest.json — the author's assertion, not derivable",
+    })),
+    ...f.retired.map((r) => ({
+      finding: "retired-key",
+      subject: `${r.pkg}/${r.skill}`,
+      remedy: `strip the retired \`${r.key}\` key — this command repairs it on the writing path`,
+    })),
+    ...f.dangling.map((d) => ({
+      finding: "dangling",
+      subject: `${d.pkg}/${d.skill}`,
+      remedy:
+        "restore the skill or remove the manifest entry — a deletion, so a person's decision",
+    })),
+  ];
+}
+
+function main(): number {
+  const flags = parseFlags(process.argv);
+  const checking = flags.check;
+
+  if (process.argv.includes("--help")) {
+    console.log(HELP);
+    return 0;
+  }
+
   const f = audit();
 
-  // Third state, both directions. A run that found no packages, or a chain
-  // naming a script that no longer exists, has cleared nothing — and reporting
-  // either as clean is bean `dh4f`.
+  // Third state, all three directions. A run that found no packages, an empty
+  // chain, or a chain naming a script nothing registered has cleared nothing —
+  // and reporting any of them as clean is bean `dh4f`.
   if (f.packages === 0) {
     console.error(
       "skill-register: no package manifests found — cannot tell registered from unregistered.",
     );
     return 2;
   }
+  // The vacuity guard `gates.ts` argues for: a runner that executes an empty
+  // list exits 0 and reads as a clean sweep. An empty chain is a defect in
+  // this file, never a tree that needs nothing.
   if (STEPS.length === 0) {
     console.error("skill-register: the chain is empty — that is a bug here, not a clean tree.");
     return 2;
   }
   const absent = missingScripts();
   if (absent.length > 0) {
-    console.error(`skill-register: this chain names ${absent.length} undeclared script(s):`);
+    console.error(`skill-register: this chain names ${absent.length} unresolvable step(s):`);
     for (const s of absent) console.error(`    ${s}`);
     return 2;
   }
 
+  if (flags.dryRun) {
+    // Listed, not run. The report records `ran: false` for each, which is a
+    // third state rather than a pass — see {@link writeReport}.
+    const listed: StepVerdict[] = STEPS.map((st) => ({
+      verify: st.verify.join(" "),
+      because: st.because,
+      ran: false,
+    }));
+    if (flags.json) console.log(JSON.stringify({ dryRun: true, steps: listed }, null, 2));
+    else {
+      console.log(`\nWould regenerate ${STEPS.length} artefact(s), then verify each:\n`);
+      for (const st of listed) console.log(`  ${st.verify}\n      (${st.because})`);
+      console.log("");
+    }
+    if (!flags.noReport) writeReport(INSTANCE_ROOT, listed, declarationVerdicts(f));
+    return 0;
+  }
+
+  /*
+   * The declaration audit runs in BOTH modes, and under `--check` it no longer
+   * short-circuits the chain.
+   *
+   * `nfv3`'s version returned as soon as it had a declaration finding, so the
+   * six checks never ran and the gate reported ONE of the two things it exists
+   * to judge. Whoever fixed the manifest entry then got the staleness on their
+   * next run instead of this one. Both halves are reported, then one exit
+   * decision is taken over both.
+   */
+  const problems = f.unlisted.length + f.retired.length + f.dangling.length;
   if (checking) {
     for (const u of f.unlisted) console.log(`✗ ${u.pkg}/${u.skill}.md is in no package manifest`);
     for (const r of f.retired) {
@@ -525,78 +776,108 @@ async function main(): Promise<number> {
           "— restore the skill, or remove the entry (this command will not)",
       );
     }
-    const total = f.unlisted.length + f.retired.length + f.dangling.length;
-    if (total > 0) {
-      console.error(
-        `\n✗ ${total} skill declaration problem(s) across ${f.packages} package(s) ` +
-          `(${f.unlisted.length} undeclared, ${f.retired.length} retired key(s), ` +
-          `${f.dangling.length} dangling).\n\n` +
-          "  For the derived pages and sidecars, one command performs all of it:\n\n" +
-          "      bun run skill:register\n\n" +
-          (f.unlisted.length > 0 ? `\n${FIX_UNLISTED}` : "") +
-          "\n  Adding a skill is never a one-file change. Seven merges between\n" +
-          "  2026-09-24 and 2026-09-26 each broke the gate set this way, and each was\n" +
-          "  repaired by whoever opened the next PR rather than by its author, because\n" +
-          "  CI judges the MERGE of every open head into the base.\n" +
-          "  A retired key is not a judgement call: see the record\n" +
-          "  `check-retired-front-matter.ts` points at before re-adding one.",
+    if (problems === 0) {
+      console.log(
+        `✓ ${f.skills} skill(s) across ${f.packages} package(s): every one declared, ` +
+          "none carrying a retired key, nothing dangling",
       );
-      return 1;
     }
-    console.log(
-      `✓ ${f.skills} skill(s) across ${f.packages} package(s): every one declared, ` +
-        "none carrying a retired key, nothing dangling",
-    );
-    return 0;
-  }
+  } else {
+    const stripped = stripRetired();
+    for (const s of stripped) {
+      console.log(`  stripped a retired key from  ${s.replace(`${resolve(INSTANCE_ROOT, "..")}/`, "")}`);
+    }
 
-  const stripped = stripRetired();
-  for (const s of stripped) console.log(`  stripped a retired key from  ${s.replace(`${root}/`, "")}`);
+    // Said on the performing path too. An author running this to fix one thing
+    // should not have a critical finding left silently behind them — and neither
+    // of these is this command's to repair.
+    for (const u of f.unlisted) {
+      console.log(`  NOT DECLARED  ${u.pkg}/${u.skill}.md is in no package manifest — yours to add`);
+    }
+    for (const d of f.dangling) {
+      console.log(
+        `  NOT TOUCHED  ${d.pkg}/package-manifest.json lists \`${d.skill}\` with no file ` +
+          "— yours to resolve; `kg:audit` calls this critical",
+      );
+    }
 
-  // Said on the performing path too. An author running this to fix one thing
-  // should not have a critical finding left silently behind them — and neither
-  // of these is this command's to repair.
-  for (const u of f.unlisted) {
-    console.log(`  NOT DECLARED  ${u.pkg}/${u.skill}.md is in no package manifest — yours to add`);
-  }
-  for (const d of f.dangling) {
-    console.log(
-      `  NOT TOUCHED  ${d.pkg}/package-manifest.json lists \`${d.skill}\` with no file ` +
-        "— yours to resolve; `kg:audit` calls this critical",
-    );
-  }
-
-  console.log(`\nRegenerating ${STEPS.length} artefact(s) that adding a skill stales.\n`);
-  for (const s of STEPS) {
-    console.log(`── ${s.write}   (${s.because})`);
-    if (!(await sh(s.write, root, false))) {
-      console.error(`\nskill-register: \`bun run ${s.write}\` failed. Stopping.`);
-      return 2;
+    console.log(`\nRegenerating ${STEPS.length} artefact(s) that adding a skill stales.\n`);
+    for (const s of STEPS) {
+      console.log(`── ${s.write.join(" ")}   (${s.because})`);
+      const rc = run(s.write);
+      if (rc !== 0) {
+        console.error(`\nskill-register: \`${s.write.join(" ")}\` exited ${rc}. Stopping.`);
+        return rc;
+      }
     }
   }
 
   // Verification is the point. The list above is hand-maintained and so can
   // UNDER-declare; this cannot make the command claim success falsely, because
-  // what it reports is the checks' own verdicts rather than "I ran five things".
-  console.log(`\nVerifying — each check run on its own, never through \`gates\`:\n`);
+  // what it reports is the checks' own verdicts rather than "I ran six things".
+  if (!flags.json) console.log(`\nVerifying — each check run on its own, never through \`gates\`:\n`);
   const red: string[] = [];
+  const verdicts: StepVerdict[] = [];
   for (const s of STEPS) {
-    const ok = await sh(s.verify, root, true);
-    console.log(`${ok ? "  ✓" : "  ✗"} ${s.verify}`);
-    if (!ok) red.push(s.verify);
+    const rc = run(s.verify, true);
+    verdicts.push({ verify: s.verify.join(" "), because: s.because, ran: true, current: rc === 0 });
+    if (!flags.json) console.log(`${rc === 0 ? "  ✓" : "  ✗"} ${s.verify.join(" ")}`);
+    if (rc !== 0) red.push(s.verify.join(" "));
+  }
+
+  // Written BEFORE the exit branches, so a red run is recorded rather than only
+  // printed. A sidecar that exists only on success cannot distinguish "clean"
+  // from "never ran".
+  const reportAt = flags.noReport
+    ? undefined
+    : writeReport(INSTANCE_ROOT, verdicts, declarationVerdicts(f));
+  if (flags.json) {
+    console.log(
+      JSON.stringify(
+        { checking, red, problems, steps: verdicts, declarations: declarationVerdicts(f), report: reportAt },
+        null,
+        2,
+      ),
+    );
+    return red.length > 0 || problems > 0 ? 1 : 0;
+  }
+  if (reportAt !== undefined) console.log(`\n  report → ${reportAt}`);
+
+  if (problems > 0) {
+    console.error(
+      `\n✗ ${problems} skill declaration problem(s) across ${f.packages} package(s) ` +
+        `(${f.unlisted.length} undeclared, ${f.retired.length} retired key(s), ` +
+        `${f.dangling.length} dangling).\n` +
+        (f.unlisted.length > 0 ? `\n${FIX_UNLISTED}` : "") +
+        "\n  Adding a skill is never a one-file change. Seven merges between\n" +
+        "  2026-09-24 and 2026-09-26 each broke the gate set this way, and each was\n" +
+        "  repaired by whoever opened the next PR rather than by its author, because\n" +
+        "  CI judges the MERGE of every open head into the base.\n" +
+        "  A retired key is not a judgement call: see the record\n" +
+        "  `check-retired-front-matter.ts` points at before re-adding one.\n",
+    );
   }
 
   if (red.length > 0) {
     console.error(
-      `\n${red.length} check(s) still red after regenerating:\n` +
+      // The wording must state WHICH mode ran, and that is a correction rather
+      // than a nicety. Under `--check` nothing is regenerated, so "still red
+      // after regenerating" was false in exactly the mode CI runs — measured
+      // on this gate's first CI run, where it also pointed the reader at a
+      // missing package-manifest entry that was not the cause. A diagnostic
+      // that names the wrong remedy costs more than none.
+      (checking
+        ? `\n${red.length} check(s) red — nothing was regenerated (\`--check\`):\n`
+        : `\n${red.length} check(s) still red after regenerating:\n`) +
         red.map((r) => `    ${r}`).join("\n") +
-        "\n\n" +
-        (f.unlisted.length > 0
-          ? `The likely cause is a MISSING PACKAGE-MANIFEST ENTRY, and this run found ` +
-            `${f.unlisted.length}:\n${FIX_UNLISTED}\n`
-          : "") +
-        "Two other causes look identical from here and this command does NOT guess\n" +
+        (checking
+          ? `\n\nRun \`bun run skill:register\` (without \`--check\`) to regenerate, then\n` +
+            `commit what it writes. If a check is STILL red after that, read on.\n\n`
+          : "\n\n") +
+        "Three causes look identical from here and this command does NOT guess\n" +
         "between them — run the red check above directly and read what it names:\n\n" +
+        "  · a MISSING PACKAGE-MANIFEST ENTRY. Reported above when this run found\n" +
+        "    one; this command deliberately does not add it.\n" +
         "  · a subject was REMOVED, leaving a derived artefact orphaned. `kg:audit`\n" +
         "    reports `SUBJECT GONE` and refuses to delete it, which is correct:\n" +
         "    `deletion-requires-confirmation` makes removing a durable artefact a\n" +
@@ -607,13 +888,22 @@ async function main(): Promise<number> {
         "    a clean tree with and without your skill. Do NOT measure through\n" +
         "    `bun run gates` — `bun test` runs some of these writers and repairs what\n" +
         "    later gates read (bean `ymsu`), so gates reports artefacts as current\n" +
-        "    that are not. Four separate attempts to recall this list were wrong.\n",
+        "    that are not. Four separate attempts to recall this list were wrong.\n\n" +
+        "And if it is red in CI but green here: ask git what the corpus is, not\n" +
+        "the disk. A gitignored `node_modules/` in a subpackage inflated\n" +
+        "`cat-harness/schemas` from 227 nodes to 1441 in one container while a\n" +
+        "fresh checkout saw 227 — see `kg-detangle.ts`'s `walk` and\n" +
+        "`scripts/git-corpus.ts`.\n",
     );
-    return 1;
   }
 
-  console.log(`\n✓ ${STEPS.length} artefact(s) current. Commit them with the skill.\n`);
+  if (red.length > 0 || problems > 0) return 1;
+
+  console.log(
+    `\n✓ ${STEPS.length} artefact(s) current, ${f.skills} skill(s) across ${f.packages} ` +
+      `package(s) declared. Commit them with the skill.\n`,
+  );
   return 0;
 }
 
-if (import.meta.main) process.exit(await main());
+if (import.meta.main) process.exit(main());

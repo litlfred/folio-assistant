@@ -31,10 +31,10 @@
         <bpmn:flowNodeRef>End_Drift</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:startEvent id="Start_Change" name="Pull request, push to main,&amp;#10;or dispatch">
+    <bpmn:startEvent id="Start_Change" name="Pull request, push to main,&#10;or dispatch">
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="Task_Check" name="Regenerate AtomicMass.lean&amp;#10;from the data table &amp;#8212; and diff">
+    <bpmn:task id="Task_Check" name="Regenerate AtomicMass.lean&#10;from the data table — and diff">
       <bpmn:documentation>Run gen_atomic_mass.py --check: regenerate AtomicMass.lean from the data table and diff it against the committed file. Any divergence exits 1 with a unified diff and fails the PR — a Lean file that compiles must not carry numbers the table no longer produces.</bpmn:documentation>
       <bpmn:extensionElements>
         <cat-harness.processes:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed, and a skill here would describe somebody else&apos;s behaviour."/>
@@ -42,7 +42,7 @@
       <bpmn:incoming>Flow_0</bpmn:incoming>
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:exclusiveGateway id="GW_Drift" name="Did anything&amp;#10;change?">
+    <bpmn:exclusiveGateway id="GW_Drift" name="Did anything&#10;change?">
       <bpmn:documentation>Answered by the diff Task_Check takes after regenerating AtomicMass.lean from the data table. No difference ends clean; any difference ends the job red, because the committed file is stale against its source.</bpmn:documentation>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
@@ -51,13 +51,13 @@
     <bpmn:endEvent id="End_Clean" name="Generated file in sync">
       <bpmn:incoming>Flow_2</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:endEvent id="End_Drift" name="Job RED &amp;#8212; the generated&amp;#10;file is stale">
+    <bpmn:endEvent id="End_Drift" name="Job RED — the generated&#10;file is stale">
       <bpmn:incoming>Flow_3</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0" sourceRef="Start_Change" targetRef="Task_Check"/>
     <bpmn:sequenceFlow id="Flow_1" sourceRef="Task_Check" targetRef="GW_Drift"/>
-    <bpmn:sequenceFlow id="Flow_2" sourceRef="GW_Drift" targetRef="End_Clean" name="no &amp;#8212; in sync"/>
-    <bpmn:sequenceFlow id="Flow_3" sourceRef="GW_Drift" targetRef="End_Drift" name="yes &amp;#8212; drifted"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="GW_Drift" targetRef="End_Clean" name="no — in sync"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="GW_Drift" targetRef="End_Drift" name="yes — drifted"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_AtomicMassDrift">
     <bpmndi:BPMNPlane id="Plane_Process_AtomicMassDrift" bpmnElement="Collaboration_Process_AtomicMassDrift">
