@@ -126,10 +126,30 @@ and removes it on every path including failure.
 |---|---|---|
 | `pushed` | 0 | on the default branch; every session sees it |
 | `already-claimed` | 0 | a sibling holds it, and is **named**. Nothing written — pick another item |
+| `held-unknown` | **4** | `in-progress` there, and **nobody recorded a holder**. Nothing written. It cannot tell a live sibling from a claim abandoned days ago, so it refuses and says so — read the bean and the open PR list before taking it |
 | `already-closed` | 0 | it is `completed` or `scrapped` there. **Not claimed, deliberately** — reviving finished work, and especially a `scrapped` bean whose whole purpose is recording a rejected approach, is a decision rather than a side effect of asking to claim |
 | `new-on-branch` | 0 | the bean is not on the default branch yet, so nobody can see it and there is nothing to race over. Claim locally and open the PR early |
 | `fell-back` | **3** | the push was REJECTED. The bean is **not** claimed anywhere a sibling can see — claim on your branch and open the PR at your first commit |
 | `unknown` | **2** | the default branch could not be read. **Never** "the bean is free" |
+
+**`held-unknown` is the case the store is mostly made of, and it used to be
+silent.** That arm returned `pushed` until bean `c3d7` — `heldBy === branch ||
+heldBy === undefined`, on the reading that both mean "ours, idempotent". They do
+not. The first is a determined answer; the second is *could not determine who
+holds it*, and it printed `✓ claimed … every session can see it now` having
+pushed nothing.
+
+It is not rare. Measured on `origin/main` 2026-09-25: of the **100** non-epic
+beans marked `in-progress`, **97 record no holder** — because `todo-manager.md`
+and `session-intent.md` told an agent to claim with
+`beans update <id> --status in-progress`, which writes no note. So the guard
+against claim-stomping answered "go ahead" for 97 % of what it was guarding.
+Both documents now name this tool; the code half is the third state, because
+the legacy claims and any hand-edited bean keep producing it.
+
+Its exit code is **4** and neither of its neighbours: not `0`, which
+`already-claimed` uses to say *pick another item* — this one cannot tell you
+even that; and not `2`, because the default branch was read perfectly well.
 
 **`fell-back` is the case to expect, not an edge case.** Whether the default
 branch accepts a direct push cannot be determined from inside an agent session:
