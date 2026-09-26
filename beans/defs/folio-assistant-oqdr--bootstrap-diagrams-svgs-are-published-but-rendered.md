@@ -1,11 +1,11 @@
 ---
 # folio-assistant-oqdr
 title: Bootstrap diagrams' SVGs are published but rendered by nothing since the split
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-24T17:52:19Z
-updated_at: 2026-09-26T09:51:47Z
+updated_at: 2026-09-26T09:54:12Z
 parent: folio-assistant-vke6
 ---
 
@@ -19,55 +19,60 @@ Seen 2026-09-24 while deriving subprocess links (bean `xl55`): `initialize-harne
 ## Done when
 Bootstrap's diagrams are rendered and checked (by render-bpmn over every instance, as gen-processes-viz already does with `instanceRoots`), or their SVGs move to bootstrap's own site layer; and the owner has decided about `bootstrap.svg`.
 
+
+
+## Re-measured 2026-09-26 (session_01ERf1yH3k69x37rXCrb6GYt, while salvaging #1340/#1040)
+
+Still true, and now visibly wrong. `cat-harness/docs/assets/img/workflows/initialize-harness.svg` was last written by `cf04dd6e9b6` (2026-09-20); `bootstrap/processes/initialize-harness.bpmn` has had **10 commits** since, including the Initiator → Bootstrapping Agent rename (`ad278cb23a5`). `cat-harness/docs/processes/initialize-harness.md` embeds it, so the published page shows a pre-rename diagram.
+
+Found because a repo-wide fix could not reach it: the gateway-marker salvage set `isMarkerVisible="true"` on 46 exclusive-gateway shapes in 25 diagrams. `render:bpmn` re-rendered 24 SVGs (X-marker paths 3 → 46), and the 3 shapes in `initialize-harness.bpmn` changed nothing in its SVG. `render:bpmn:check` still exits 0, because it checks only what `workflowFiles(ROOT)` returns for the cat-harness instance. **A stale SVG from a dependency instance is invisible to the only gate that checks SVG staleness.**
+
 _2026-09-26T09:51:47Z_ — Claimed by claude/oqdr-render-bootstrap-diagrams — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+
+## Summary of Changes — 2026-09-26 (branch claude/oqdr-render-bootstrap-diagrams)
+
+**Done when, both halves:**
+- [x] Bootstrap's diagrams are rendered and checked — by `render-bpmn` over every instance (`instanceRootsIn`), the first of the two options this bean offered.
+- [x] The owner decided about `bootstrap.svg`: **delete** (2026-09-26, selected). Its source `bootstrap.bpmn` was deleted in `7d57e2d2790` ("bootstrap: one process…"); its element ids (`Start_Pointed`, `Gate_IsInstance`) exist in no current `.bpmn`, and nothing links to it. The two apparent references are to `/assets/img/uml/overview/bootstrap.svg`, a different file.
+
+**What changed.** `bpmnSources()` walks `workflowFiles` for every instance root instead of cat-harness's alone. Measured first: the union is exactly the 74 committed `.bpmn`, and the only additions are bootstrap's three (`folio-assistant-core` and `smart-base` were already reached through cat-harness's overlay). The basename collision the old docblock called latent is now **refused**: two same-named diagrams in different instances throw, naming both.
+
+**Verified, both directions, with a control:**
+- the re-render changed exactly the three bootstrap SVGs and no other — nothing outside the widened source set moved;
+- `initialize-harness.svg`: `Initiator` 2 → 0, `Bootstrapping Agent` 0 → 1; its sub-process link `assets/img/workflows/log-message.svg` (resolved to nothing, per this bean) → `../../../processes/log-message.html`;
+- a bootstrap label mutated without re-rendering: this branch's `render:bpmn:check` exits **1** naming `log-message.svg`; main's script on the same mutation exits **0**;
+- a same-named `activity-log.bpmn` added to `bootstrap/processes/`: exits 1 naming both paths; removed: 0.
+
+**Not done:** moving the SVGs to bootstrap's own site layer (the bean's alternative — a publishing-layout change nobody asked for). The bootstrap declaration says `initialize-harness` *calls* `discussion`, but it holds one call activity (`A_LogFailure` → `log-message`); whatever `discussion` is reached by, it is not a BPMN call, so no second link is expected.
 
 ---
 
-_2026-09-26T10:05Z_ — **NOTE FROM ANOTHER SESSION, not a claim and not a closure.**
-This bean is yours and mid-flight; nothing here is ticked and the status is
-untouched. But the work overlaps almost exactly with what
-`claude/fervent-mccarthy-nw4olk` pushed at ~09:55 (PR #1361, bean `bjzs`), and you
-should know before spending the round.
+_2026-09-26T10:55Z, from `claude/fervent-mccarthy-nw4olk` (PR #1361)_ — **your
+version won, and this replaces the longer note I left before it merged.**
 
-I reached it from `bjzs` — *"render:bpmn never lists a nested diagram"* — and did
-NOT find this bean first, which is my failure: I searched the store for "per
-declared instance" and "nested-instance-audited", neither of which matches how you
-worded it. It has been open since 2026-09-24.
+I reached this subject from bean `bjzs` (*"render:bpmn never lists a nested
+diagram"*) and pushed an overlapping fix at ~09:55 without finding this bean
+first. **That was a search failure, and it is the durable lesson**: I grepped the
+store for "per declared instance" and "nested-instance-audited", neither of which
+matches how this bean is worded, and it had been open since 2026-09-24. Searching
+for the terms I had in mind rather than the terms the defect would be described
+in is a much narrower sweep than it feels like.
 
-**What is already pushed** (commits `5f12698dde` and the one following):
+On merging `main` at `8dc7547549` I took **your `render-bpmn.ts` entirely**. It is
+not a tie broken by seniority: your collision guard *throws inside*
+`bpmnSources()`, which refuses earlier and unconditionally, where mine reported
+and let a later exit handle it. My `collidingBasenames` helper is superseded and
+gone.
 
-- `render-bpmn.ts` takes its sources from the union over every declared instance
-  via `instanceRootsIn` — which is the shape THIS BEAN names (*"as
-  gen-processes-viz already does with `instanceRoots`"*). My first attempt was a
-  two-element list naming `bootstrap` by hand; your wording is what corrected it.
-  Measured: 16 instances, union of 74 diagrams, identical to the hand-built pair,
-  so nothing widens today and no instance is named by a literal.
-- All three SVGs re-rendered. They WERE stale: sources last changed 2026-09-24,
-  SVGs were from 2026-09-20. `render:bpmn:check` goes 71 → 74 judged, exit 0.
-- **Your `xl55` finding is fixed by that re-render.**
-  `initialize-harness.svg` carried `assets/img/workflows/log-message.svg`, which
-  resolved to nothing from the SVG's own location; the re-rendered file carries
-  `../../../processes/log-message.html`. The fix existed and had never reached
-  bootstrap, because nothing re-rendered it.
-- A basename-collision report, now FATAL. The docstring carried it as prose
-  (*"today there is one such directory, so it is not a live defect"*), and with
-  more than one instance in range both readings are wrong — `--check` would
-  compare one source against the other's picture, and a write run lets the later
-  render overwrite the earlier.
+What survives from my side is one test file, `tests/workflow-refs-instances.test.ts`,
+which asserts from the same inputs that bootstrap's diagrams resolve, that the
+root's own walk does not reach them, that each has a published SVG (via
+`siteDirFor`, never a literal `docs`), and that no basename collides. It
+complements your throw rather than duplicating it — `render-bpmn.ts` cannot be
+imported to test the guard directly, since its top-level awaits launch a browser
+and write files.
 
-**What is NOT done, and is still this bean's:**
-
-- `bootstrap.svg` — confirmed orphaned rather than merely suspected:
-  `bootstrap/processes/bootstrap.bpmn` does not exist (renamed to
-  `initialize-harness.bpmn`). 22150 bytes. Reported, not removed —
-  `deletion-requires-confirmation`, and your `## Done when` already puts it to the
-  owner.
-- The alternative you offer — moving the SVGs to bootstrap's own site layer — is
-  untouched. What landed keeps them where they already were, because the root's
-  site already publishes bootstrap content (`docs/bootstrap/`,
-  `docs/uml/overview/bootstrap/`) and all three SVGs were already there.
-
-If you would rather your branch carry this, say so on #1361 and I will drop mine
-— it is one file plus a test. What I would ask either way is that the
-`instanceRootsIn` shape survives, since it is the half that came from your bean.
-
+The `instanceRootsIn` shape came from your `## Done when`, and it is what
+corrected my first attempt — a two-element list naming `bootstrap` by hand.

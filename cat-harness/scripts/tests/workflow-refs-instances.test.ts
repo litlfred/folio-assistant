@@ -106,14 +106,29 @@ describe("the checker, run as a command", () => {
   }, 120_000);
 });
 
-describe("render:bpmn covers the same two instances", () => {
+/**
+ * `render:bpmn` walks EVERY instance, which is wider than this checker's two.
+ *
+ * Bean `oqdr`, merged from a sibling's branch as `#1394`. The assertions below
+ * are about bootstrap specifically, because that is the instance whose diagrams
+ * nothing reached — but the fix is not a second hand-built list: `bpmnSources()`
+ * unions `workflowFiles` over `instanceRootsIn`, and it **throws** on a basename
+ * collision rather than reporting one. This branch's own first attempt named
+ * `bootstrap` by hand and was corrected by that bean's wording.
+ *
+ * So these tests are a complement to that guard, not a duplicate of it, and they
+ * exist because `render-bpmn.ts` cannot be imported: its top-level awaits launch
+ * a browser and write files, so reaching one pure function would render the whole
+ * corpus as a side effect.
+ */
+describe("render:bpmn covers bootstrap, whatever the walk's shape", () => {
   /**
    * Measured 2026-09-26, and this was a live defect rather than a gap: all three
-   * of bootstrap's SVGs already existed in `docs/assets/img/workflows/` and were
-   * referenced by published pages under `docs/processes/`, their sources all
+   * of bootstrap's SVGs already existed in the site's `assets/img/workflows/` and
+   * were referenced by published pages under `processes/`, their sources all
    * changed on 2026-09-24, and every SVG was from 2026-09-20. Four days stale on
    * the published site, with no gate able to say so — `render:bpmn:check` judged
-   * 71 diagrams and named none of bootstrap's.
+   * 71 diagrams and named none of bootstrap's. It judges 74 now.
    */
   test("every bootstrap diagram has a rendered SVG in the site assets", () => {
     // `siteDirFor`, never the literal `docs` — the site root has moved twice
@@ -127,15 +142,14 @@ describe("render:bpmn covers the same two instances", () => {
   });
 
   /**
-   * The invariant `collidingBasenames` guards, asserted here instead of against
-   * that function directly.
+   * The invariant `bpmnSources()` throws on, asserted from the same inputs rather
+   * than against that function.
    *
-   * `render-bpmn.ts` cannot be imported: it has top-level `await`s that launch a
-   * browser and write files, so a test that imported it to reach one pure helper
-   * would render the whole corpus as a side effect — the unguarded-entry-point
-   * defect. Guarding that module is a worthwhile separate change; until then the
-   * property is checked from the same inputs the script uses, which fails on a
-   * real collision whether or not the script's own report fires.
+   * My own version of this reported the collision and let a later exit act on it;
+   * the merged one refuses inside the source walk, which is earlier and
+   * unconditional, so `collidingBasenames` is gone. This assertion survives
+   * because it fails with a NAMED pair whether or not the script's throw fires,
+   * and because the script cannot be imported (see the block above).
    */
   test("no two diagrams across both instances share a basename", () => {
     const all = [...diagrams(INSTANCE_ROOT), ...diagrams(BOOTSTRAP)];

@@ -30,68 +30,43 @@ import { processPresentations, processTarget } from "./process-presentations.js"
 
 const ROOT = resolve(import.meta.dir, "..");
 /**
- * The `.bpmn` sources, from EVERY directory each instance declares as holding
- * its knowledge graph — not from the literal `processes/`.
+ * The `.bpmn` sources, from EVERY instance in the repository — each one's
+ * declared knowledge-graph directories, via `workflowFiles` — not from the
+ * literal `processes/`, and not from this instance alone.
  *
  * `workflowFiles` returns absolute paths, so `file` below is already complete
  * and nothing joins it to a base. That is the point: a topical layout
- * (`crdm/workflows/`) is found without this script knowing the layout exists.
+ * (`bootstrap/processes/`, `crdm/workflows/`) is found without this script
+ * knowing the layout exists.
  *
- * ## `bootstrap` is a SECOND instance, and this named it and did not reach it
+ * Every instance, not just this one, since bean `oqdr` (2026-09-26): bootstrap
+ * is a separate instance, so `workflowFiles(ROOT)` never reached its three
+ * diagrams. Their SVGs sat in this site's `workflows/` rendered by nothing —
+ * `initialize-harness.svg` went ten source commits stale, still drawing the
+ * pre-rename role — and `render:bpmn:check`, which checks only what this
+ * function returns, could not see it. The same walk `audit-coverage` and
+ * `check-asset-roles` already do.
  *
- * This docblock said `bootstrap/processes/` was found here. It was not.
- * `workflowFiles(ROOT)` resolves the directories the ROOT declares, and the root
- * declares `bootstrap/skills/` and deliberately NOT `bootstrap/processes/` —
- * `pve3`'s "declares HALF of bootstrap". Declaring the other half is the wrong
- * fix, established twice: it re-introduces the 2026-09-19 leak of 88 references
- * that `instance-graph-isolation.test.ts` guards (`sa8y`).
- *
- * So the sources are the union over EVERY declared instance, via
- * `instanceRootsIn`. **Measured before the change, and this was a live defect
- * rather than a gap**: all three of bootstrap's SVGs existed in this site's
- * assets and were referenced by published pages under `docs/processes/`, their
- * sources all changed on 2026-09-24, and every SVG was from 2026-09-20 — four
- * days stale, with no gate able to say so, because `render:bpmn:check` never
- * named them.
- *
- * **`instanceRootsIn` rather than a two-element list naming bootstrap.** That is
- * what this first had, and bean `oqdr` — open since 2026-09-24, which I failed to
- * find — names the better shape: *"by render-bpmn over every instance, as
- * gen-processes-viz already does with `instanceRoots`."* Measured: 16 instances,
- * union of 74 diagrams, which is exactly what the hand-built pair produced, so
- * nothing widens today. What changes is that a new instance is covered the day it
- * declares itself, and no instance is named by a literal here — the same argument
- * `check-declared-paths` makes about every other composed path.
- *
- * Output names are still the BASENAME, which is a latent collision if two
- * instances ever hold a diagram of the same name. Now that there are two
- * instances that is closer than it was, so {@link collidingBasenames} reports
- * it rather than leaving the caveat as prose.
+ * Output names are the BASENAME, so two instances holding a diagram of the
+ * same name would silently overwrite one SVG with the other. That was
+ * "latent" while one directory fed this; with every instance feeding it, it
+ * is refused rather than trusted.
  */
 function bpmnSources(): string[] {
-  return [...new Set(instanceRootsIn(repoRootFor(ROOT)).flatMap((r) => workflowFiles(r)))]
-    .filter((f) => f.endsWith(".bpmn"))
-    .sort();
-}
-
-/**
- * Two sources that would render to the same `<basename>.svg`.
- *
- * The old docblock carried this as a caveat — *"today there is one such
- * directory, so it is not a live defect"* — and a caveat nothing evaluates stops
- * being true silently. With a second instance in range it is worth one loop:
- * whichever rendered last would win and the other's published page would show
- * the wrong process, which is worse than a missing picture.
- */
-function collidingBasenames(files: string[]): string[] {
-  const seen = new Map<string, string[]>();
-  for (const f of files) {
-    const k = basename(f, ".bpmn");
-    seen.set(k, [...(seen.get(k) ?? []), f]);
+  const all = new Set<string>();
+  for (const inst of instanceRootsIn(repoRootFor(ROOT))) {
+    for (const f of workflowFiles(inst)) if (f.endsWith(".bpmn")) all.add(f);
   }
-  return [...seen.entries()]
-    .filter(([, v]) => v.length > 1)
-    .map(([k, v]) => `${k}.svg ← ${v.map((f) => relative(repoRootFor(ROOT), f)).join(" + ")}`);
+  const byName = new Map<string, string[]>();
+  for (const f of all) byName.set(basename(f), [...(byName.get(basename(f)) ?? []), f]);
+  const clashes = [...byName].filter(([, fs]) => fs.length > 1);
+  if (clashes.length > 0) {
+    throw new Error(
+      "render-bpmn: two diagrams would render to the same SVG name:\n" +
+        clashes.map(([n, fs]) => `  ${n}: ${fs.join(", ")}`).join("\n"),
+    );
+  }
+  return [...all].sort();
 }
 const OUT_DIR = join(ROOT, siteDirFor(ROOT), "assets/img/workflows");
 // `node_modules/` is a REPOSITORY artefact — it sits beside `package.json` and
@@ -341,13 +316,4 @@ for (const file of sources) {
 }
 
 await browser.close();
-
-// A basename collision is FATAL either way, because both readings are wrong: in
-// `--check` it would compare one source against the other's picture, and in a
-// write run the later render silently overwrites the earlier. A published page
-// showing the wrong process is worse than one showing none.
-const collisions = collidingBasenames(sources);
-for (const c of collisions) console.error(`✗ two sources render to one file: ${c}`);
-if (collisions.length > 0) process.exit(1);
-
 if (stale > 0) process.exit(1);
