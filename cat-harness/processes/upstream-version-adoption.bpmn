@@ -52,7 +52,7 @@ Shaped after `crdm-requirements.bpmn` because the question is the same one: some
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="Start_Adopt" name="Candidate version&#10;identified"/>
-    <bpmn:serviceTask id="A_Scope" name="Scope the delta&#10;pinned &#8594; candidate">
+    <bpmn:serviceTask id="A_Scope" name="Scope the delta&#10;pinned → candidate">
       <bpmn:documentation>Restricted to the directories that reach our output — for a Jekyll theme `_sass`, `_includes`, `_layouts`, `assets`. Upstream's own docs, CI and tests cannot reach us, and counting them makes a harmless release look alarming.
 
 The changelog is the claim; `git diff --stat pinned..candidate` over those paths is the evidence.</bpmn:documentation>
@@ -71,7 +71,7 @@ For the theme: `docs/assets/js/docs-ui.js` MOVES the theme's own search markup i
       <bpmn:documentation>An MVP is a DEPLOYED BUILD, not a description of one. The pin is moved on a branch and `feature-staging.yml` publishes it under `STAGING/&lt;branch-slug&gt;/`, so the reviewer looks at the artefact rather than at a screenshot — the same argument the merge discipline makes about rendered work.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="feature-staging"/><cat-harness.processes:no-call reason="Moving the pin on a branch is the step; CI stages it on the pull_request event. A call activity would claim the engine drives CI."/></bpmn:extensionElements>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_Gates" name="Run the row's gates&#10;tests &#183; e2e &#183; site-links">
+    <bpmn:serviceTask id="Task_Gates" name="Run the row's gates&#10;tests · e2e · site-links">
       <bpmn:documentation>The `mvp` commands declared for this tenant. For the theme: `bun test`, `CI=1 bunx playwright test` (a11y, action tiles, sidebar panels, QA panel) and `scripts/site-links.ts --site ./_site`, which checks the navbar tiles against the BUILT site rather than against the attribute — the distinction that let a 404 ship unnoticed once already.
 
 A red gate is EVIDENCE, not an exit. It does not end the process and it does not loop by itself: "this version breaks us" is a finding the decider needs, not a reason to stop before they see it.</bpmn:documentation>
@@ -93,7 +93,7 @@ A `userTask`, and the lane admits `person` and `agent` — a review agent is a l
     <bpmn:exclusiveGateway id="GW_Findings" name="Findings we can fix?">
       <bpmn:documentation>The review of the upstream MVP against what we bind to: are there findings we can fix on our side? `yes` goes to impact analysis; `no` goes to the options analysis (adopt, hold or decline).</bpmn:documentation>
     </bpmn:exclusiveGateway>
-    <bpmn:callActivity id="Call_OptionsAnalysis" name="Options analysis&#10;adopt &#183; hold &#183; decline" calledElement="Process_OptionsAnalysis">
+    <bpmn:callActivity id="Call_OptionsAnalysis" name="Options analysis&#10;adopt · hold · decline" calledElement="Process_OptionsAnalysis">
       <bpmn:documentation>On the single edge into `PM_Decide`, and deliberately not earlier: the MVP build and its gates are HOW the options' costs are measured, so an analysis before `Task_Mvp` would weigh alternatives against no evidence. Everything the decider needs exists by the time the reviewer has finished and the fixable findings are fixed.
 
 In the Agent lane, because this step produces the analysis and does not make the decision — `PM_Decide` is a `userTask` whose lane admits `person` only, and putting the analysis in the agent's lane is what keeps that separation legible rather than implied. A subprocess that decided would be a second accepting party.

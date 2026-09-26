@@ -180,7 +180,7 @@ _تم توليد هذه الصفحة من [`content/docs/beans-and-todos/`](http
 
 توضح بقية هذه الصفحة **ماهية** الـ bean. أما هذا القسم فيبيّن ما
 **يحتويه** المخزن حاليًا — مقروءًا بشكل مباشر من
-[`/assets/beans/index.json`](assets/beans/index.json)، وهو الإسقاط (projection)
+[`/assets/beans/index.json`](../assets/beans/index.json)، وهو الإسقاط (projection)
 الذي يكتبه `gen-docs-pages.ts` من `beans/defs/` في كل بناء، إلى جانب فهرس المهام (todos)
 الذي نُشر منذ فترة أطول.
 

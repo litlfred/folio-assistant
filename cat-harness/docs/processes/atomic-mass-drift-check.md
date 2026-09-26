@@ -33,7 +33,7 @@ Every one of the 1 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
-| **Regenerate AtomicMass.lean&#10;from the data table &#8212; and diff**<br>`Task_Check` | CI/CD Pipeline | — | Run gen_atomic_mass.py --check: regenerate AtomicMass.lean from the data table and diff it against the committed file. Any divergence exits 1 with a unified diff and fails the PR — a Lean file that compiles must not carry numbers the table no longer produces. |
+| **Regenerate AtomicMass.lean from the data table — and diff**<br>`Task_Check` | CI/CD Pipeline | — | Run gen_atomic_mass.py --check: regenerate AtomicMass.lean from the data table and diff it against the committed file. Any divergence exits 1 with a unified diff and fails the PR — a Lean file that compiles must not carry numbers the table no longer produces. |
 
 ## Decisions
 
@@ -41,6 +41,6 @@ Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Did anything&#10;change?**<br>`GW_Drift` | Answered by the diff Task_Check takes after regenerating AtomicMass.lean from the data table. No difference ends clean; any difference ends the job red, because the committed file is stale against its source. | **no &#8212; in sync** → Generated file in sync<br>**yes &#8212; drifted** → Job RED &#8212; the generated&#10;file is stale |
+| **Did anything change?**<br>`GW_Drift` | Answered by the diff Task_Check takes after regenerating AtomicMass.lean from the data table. No difference ends clean; any difference ends the job red, because the committed file is stale against its source. | **no — in sync** → Generated file in sync<br>**yes — drifted** → Job RED — the generated file is stale |
 
 {% endraw %}

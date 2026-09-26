@@ -3,8 +3,9 @@
 title: 'TEST INTERFERENCE: a profile-gate test fails in the full suite and passes in isolation on the same commit'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-09-26T03:40:20Z
-updated_at: 2026-09-26T03:40:20Z
+updated_at: 2026-09-26T16:43:35Z
 parent: folio-assistant-1swy
 ---
 
@@ -39,3 +40,249 @@ Related class: `iumj` (e2e fixtures read the live QA corpus).
 - [ ] The two tests sharing the path are named, by reproducing the failure rather than by reading.
 - [ ] Either the fixture path is made per-test, or the ordering dependency is removed.
 - [ ] A run that reproduces the original failure is shown passing after the fix.
+
+
+## The suspect is REFUTED — `/tmp/8suc-*` is not shared, and the `✗` line is a passing test's own output
+
+Measured 2026-09-26, by reading the two call sites and the assertion that emits
+the line. The bean labelled this a hypothesis rather than a measurement, which is
+why it was cheap to kill; it would not have been cheap to chase.
+
+**1. `/tmp/8suc-*` is unique per call, so no two tests can race on it.**
+One place creates it — `cat-harness/scripts/tests/apply-image-verdicts.test.ts:48`:
+
+    const root = mkdtempSync(join(tmpdir(), "8suc-"));
+
+`mkdtempSync` appends six random characters and creates the directory
+exclusively. `/tmp/8suc-eCDI0u` is one `fixture()` call's private directory, and
+`fixture()` is called afresh in each test. The `8suc-` prefix is a **bean id in a
+name**, not a shared location — which is exactly what made it look like one.
+
+**2. The `✗ no-such-doc` line is the expected output of a test that PASSED.**
+`apply-image-verdicts.test.ts:105-110`, the test *"a missing images.json is an
+error — an arm did not run"*:
+
+    expect(runStaging(join(f.root, "staging", "no-such-doc"), f.lib, false)).toBe(1);
+
+It hands `apply-image-verdicts` a path that deliberately does not exist and
+asserts the exit code is 1. The `✗ no-such-doc: no images.json at …` line is the
+subject under test refusing, printed to stderr, on the path the test just made
+up. A green assertion's diagnostic, not a symptom of anything.
+
+**3. The failing test's own fixtures are unique too.**
+`profile-scoping.test.ts:185` — `mkdtempSync(join(tmpdir(), \`profile-sweep-${contentType}-\`))`,
+and :148 likewise. So the failing test shares no scaffold either.
+
+### What this leaves — a named hypothesis, and it is NOT the same shape
+
+The interference, if real, is not through the filesystem paths the tests create.
+The remaining shared mutable resource is the one the failing test reaches into
+deliberately: `sweepOutcomes` (`profile-scoping.test.ts:204`) spawns
+
+    bun run <PLATFORM_ROOT>/content/pipeline/qa-sweep.ts <block>.ts --dry-run --json
+
+with `cwd` set to the temp folio but the SWEEP resolved out of the **live
+checkout**. So its verdict depends on the state of the live tree at the moment
+the subprocess runs — and `bun test` mutates the live tree while it runs:
+`ymsu` measures the detangle writer writing into `cat-harness/test/results/`
+during the suite, and the new `gate-tree-guard` catches `bun test` doing exactly
+that.
+
+That is a hypothesis with a name, and it is falsifiable: run the failing test
+while a writer is mid-flight, or pin the live tree and see the failure vanish.
+It is recorded as a hypothesis because nobody has reproduced the failure yet —
+the same discipline that kept the `8suc` lead cheap.
+
+### The `Done when` clause is answered as stated, and is the wrong clause
+
+*"The two tests sharing the path are named"* presupposes two tests share a path.
+None do. Replaced rather than ticked, because ticking it would record a false
+premise as settled.
+
+### Done when — revised
+
+- [x] the `/tmp/8suc-*` lead is resolved: **refuted**, both call sites use
+      `mkdtempSync`, and the `✗` line belongs to a passing test
+- [ ] the failure is REPRODUCED before any further cause is proposed. It has been
+      seen once, in one full run, and a second full run on the same commit was
+      green 152/152
+- [ ] the live-tree hypothesis above is tested: does the profile gate's verdict
+      depend on the state of `cat-harness/test/results/` at the moment its
+      subprocess runs? MEASURED AFTER — either the failure reproduces with a
+      writer mid-flight, or the hypothesis is refuted and recorded as such
+
+
+## REPRODUCED, 2026-09-26 — two full gate runs, same tree, opposite verdicts
+
+This bean's remaining clause was *"reproduce the flake"*. It reproduced on its
+own, without being hunted, which is worth more than a hunt would have been: the
+two runs below were done for an unrelated reason (checking a merge), so neither
+was arranged to produce this.
+
+| run | tree | `a paper-only criterion is n/a'd in a document folio, under its OWN outcome` |
+|---|---|---|
+| 1 | merge of `origin/main`, before my fixes | **fail** (6895.10ms) |
+| 2 | same merge, plus fixes touching only `pot-for-pages.ts`, its test, `artefact-verification.json` and `.pot`/status artefacts | **pass** |
+
+Nothing in run 2's diff is reachable from the profile gate. It reads the content
+profile registry and a sweep fixture; it does not read a `.pot`, a translation
+status page, or an artefact-verification declaration. So the change of verdict is
+not attributable to the diff, and this is the same commit range giving both
+answers.
+
+### What this DOES and does not establish
+
+Establishes: the test is intermittent on an unchanged subject, which is the
+bean's title claim, and it had until now only ever been observed failing once.
+Two observations with opposite results is the minimum evidence for
+intermittency, and it is now in hand.
+
+Does NOT establish the mechanism, and I am not guessing at one. The title says
+TEST INTERFERENCE and that remains a hypothesis: the 6.9-second duration is
+consistent with a test that does real work and so has real opportunity to race,
+but a duration is not a cause. Note also that the earlier `/tmp/8suc-*` theory
+was already REFUTED on this bean (`mkdtempSync` is unique per call), so the
+shared-path mechanism is not available as the explanation.
+
+### The instrument note that matters for the next attempt
+
+Both runs were `bun run gates`, which runs `bun test` as one step among 162. So
+each observation costs a full gate run, and the failing one gives no isolation.
+Whoever picks this up should run the single test file in a loop instead — that is
+cheap, and it is the measurement that can distinguish "races against a sibling in
+the same process" from "races against something in the environment".
+
+### Adds to "Done when"
+
+- [x] the flake is observed both ways on one commit range — run 1 red, run 2
+      green, diff unreachable from the subject
+- [ ] the single test file is run in isolation N times and the failure rate is
+      recorded. MEASURED AFTER: a number, with N, rather than "it is flaky"
+- [ ] if it does NOT fail in isolation, that is the finding — it localises the
+      cause to a sibling test in the same `bun test` process, which is the
+      title's hypothesis finally tested rather than assumed
+
+
+## ISOLATION MEASURED, same day — 12 of 12 pass alone, so the title's hypothesis now has evidence
+
+`cat-harness/scripts/tests/profile-scoping.test.ts`, run on its own, twelve
+consecutive times on the tree where `bun run gates` had just produced the
+failure: **12 pass, 0 fail.**
+
+That is the second clause above answered, and it answers it in the direction the
+clause named as the informative one. The test does not fail alone. It failed
+inside `bun test`, which runs it in ONE process with every other `*.test.ts` in
+the repository. So the cause is not in this test's own logic and not in the
+environment it reads — it is a sibling in the same process, which is what this
+bean has claimed as TEST INTERFERENCE since it was opened and what it could not
+support until now.
+
+### Why 12 and not 3, and what the number is worth
+
+The failure was seen once in two full-gate runs, so the per-run rate is somewhere
+near 1/2 on the evidence available. Twelve clean runs under that prior is
+worth having: if the isolated rate were the same 1/2, twelve passes would be a
+1-in-4096 coincidence. It does not establish the isolated rate is ZERO — twelve
+runs cannot — and nothing here should be quoted as "it never fails alone". What
+it establishes is that the isolated rate is much lower than the in-suite rate,
+which is the comparison the hypothesis turns on.
+
+### What is now the shortest path, for whoever takes this
+
+The subject is no longer "why does this test fail". It is **which sibling**. That
+is a bisection over the test corpus rather than a study of this file, and it is
+mechanical: `bun test` a growing subset containing `profile-scoping.test.ts`
+until the failure appears. Recording it that way because the previous two
+attempts on this bean both went looking at the failing test itself — the
+`/tmp/8suc-*` shared-path theory, refuted, and the duration-as-cause reading,
+never more than a suspicion.
+
+### Adds to and closes clauses in "Done when"
+
+- [x] the single test file is run in isolation N times and the failure rate is
+      recorded — N = 12, 0 failures, against a roughly 1-in-2 in-suite rate
+- [x] if it does NOT fail in isolation, that is the finding — it does not, and
+      the cause is localised to a sibling test in the same `bun test` process
+- [ ] the sibling is NAMED by bisecting the test corpus, not by inspecting
+      `profile-scoping.test.ts`. MEASURED AFTER: a subset of test files that
+      reproduces the failure and a proper subset of it that does not
+
+
+## IT IS NOT A FLAKE. It is a DIRTY WORKING TREE — 4 gate runs, perfect correlation
+
+And this **corrects the conclusion I wrote earlier the same day**, two entries
+above. The isolation measurement was right and my reading of it named the wrong
+variable.
+
+| `bun run gates` | tree at start | failures beyond the accepted `ngxj` red |
+|---|---|---|
+| 1 | **dirty** — a regenerated detangle sidecar, uncommitted | `profile-scoping` |
+| 2 | clean | **none** |
+| 3 | **dirty** — 109 files: BPMN sources, SVGs, `.pot` | `declared-directory-resolves` |
+| 4 | clean | **none** |
+
+Plus `bun test` alone on a clean tree: **none**, 12015 pass / 1 fail, and the
+tree still clean afterwards.
+
+Two dirty runs, one extra failure each. Two clean runs, none. And it is a
+DIFFERENT test each dirty time, which is why it read as intermittency: the
+subject is not either test, it is the tree.
+
+### What I had concluded, and what was wrong with it
+
+I wrote: *"the cause is a sibling in the same `bun test` process"*, from 12
+isolated passes against a roughly 1-in-2 in-suite rate. The direction holds — it
+does need the suite — but **"which sibling" was the wrong question**, and the
+`Done when` clause I added asking for a bisection to NAME the sibling is
+therefore the wrong next step. A bisection would have found a different
+"culprit" on each dirty tree and none on a clean one, which is how a real cause
+gets attributed to whatever happened to be adjacent.
+
+The general lesson is the one this bean keeps paying for from new directions: an
+intermittent result means a variable you are not controlling, and the first move
+is to list the variables rather than to subdivide the suite. Tree state was not
+on my list.
+
+### Mechanism — ESTABLISHED for one of the two tests, not for the other
+
+`declared-directory-resolves.test.ts` compares `git status --porcelain` BEFORE
+and AFTER spawning an import of every module that resolves a declared
+directory. Its own docblock says why the comparison is a comparison rather than
+an assertion of cleanliness — *"a tree that was already dirty is not this test's
+business"* — and that reasoning is sound for a tree that is dirty and STAYS
+dirty. It is unsound when the tree changes inside the window: a module imported
+on a dirty tree can regenerate a derived artefact FROM the uncommitted source,
+which is a new modification, so `before !== after`. On a clean tree the identical
+import is a no-op. The failure was 13 unexpected entries.
+
+So the test is not wrong about anything except its own method, and the remedy is
+in the method: compare only the paths the test could have caused, or run the
+probe against a clean checkout, rather than against the developer's tree.
+
+**NOT established: the mechanism for `profile-scoping`.** I have the correlation
+and no cause, and the only honest thing to record is that. It is a paper-only
+criterion being `n/a`'d in a document folio — plausibly reading a sidecar that a
+dirty tree makes inconsistent, and plausibly something else.
+
+### The practical rule, which is worth more than the bean
+
+**Commit before you believe a `bun test` failure.** Two of this session's
+"failures" cost real time and neither existed. Both appeared on a tree carrying
+uncommitted regenerated artefacts, which is the normal state of a tree
+mid-sweep, so this is not a rare condition — it is the condition an agent is
+almost always in when it runs the suite.
+
+### Rewritten "Done when"
+
+- [x] the flake is observed both ways on one commit range
+- [x] the single test file is run in isolation N times — 12, 0 failures
+- [x] the confounding variable is IDENTIFIED — working-tree cleanliness, 4 gate
+      runs correlating perfectly, and a mechanism for `declared-directory-resolves`
+- [ ] ~~bisect the corpus to NAME the sibling~~ — WITHDRAWN as the wrong step,
+      for the reason above
+- [ ] `declared-directory-resolves` compares only the paths it could have caused,
+      so a dirty tree cannot fail it. MEASURED AFTER: the full suite passes with
+      an uncommitted regenerated artefact in the tree
+- [ ] `profile-scoping`'s mechanism is found, or the test is made independent of
+      tree state. MEASURED AFTER: it passes in-suite on a deliberately dirtied
+      tree, ten runs

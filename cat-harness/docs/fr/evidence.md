@@ -80,7 +80,7 @@ couloir à l'intérieur des limites du système ferait du caractère « faisant 
        alt="Diagramme BPMN à couloirs sur quatre couloirs. L'auteur examine les orientations déjà présentes dans son contenu, puis formule la question sous forme de PICO. Une passerelle parallèle distribue vers trois tâches de recherche exécutées par l'agent de recherche de preuves : sources L1 de confiance sous library/, contenu de confiance DAK L2 et IG L3, et dépôts de données et jeux de données statistiques. Les éléments candidats convergent, et le couloir des registres de confiance vérifie l'autorité de chacun par rapport à l'API de l'organisme éditeur ; une passerelle exclusive achemine toute citation non confirmée vers un bean sur le plan de travail avant de converger à nouveau. L'auteur évalue ensuite de manière critique et grade le corpus de preuves, et une seconde passerelle exclusive demande si celui-ci est suffisant pour une recommandation : si ce n'est pas le cas, la lacune est enregistrée sous forme de bean et le processus se termine sans recommandation ; si oui, les preuves sont associées à la recommandation.">
 </div>
 
-[Source BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/evidence-retrieval.bpmn) · [SVG en taille réelle](assets/img/workflows/evidence-retrieval.svg)
+[Source BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/evidence-retrieval.bpmn) · [SVG en taille réelle](../assets/img/workflows/evidence-retrieval.svg)
 {: .bpmn-source }
 
 ## La première étape regarde vers l'intérieur

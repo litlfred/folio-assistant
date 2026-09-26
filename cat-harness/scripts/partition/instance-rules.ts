@@ -492,6 +492,13 @@ export const RULES: Rule[] = [
       // `harness.json` for the directories, DERIVES the nesting from their
       // declared paths, and has nothing to say about any folio's content.
       "scripts/check-subgraphs.ts",
+      // Whether a translated page's links survived being one directory
+      // deeper than the page they were translated from (bean `ahab`).
+      // Harness for `check-subgraphs.ts`' reason and by the same route — it
+      // consumes that tool's report and resolves the site root from the
+      // declaration, so it knows which directories publish a site and
+      // nothing at all about what any folio put in them.
+      "scripts/check-translated-link-depth.ts",
       // Whether each methodology's cited `origin` resolves to an ingested
       // source. Harness for the same reason as the two above: it reads the
       // declaration for the `methodology` and `library` graphs and fans out
@@ -505,6 +512,12 @@ export const RULES: Rule[] = [
       // and it runs across EVERY instance in the repository rather than for
       // one folio.
       "scripts/check-layout-norms.ts",
+      // Whether a rendered workflow diagram shows an XML character reference
+      // as literal text (bean `li5y`). Harness for the same reason as the
+      // layout norm above: its input is this instance's own process diagrams
+      // under `workflows/`, it reads no folio content of any kind, and what it
+      // judges is the harness's own published SVGs.
+      "scripts/check-rendered-labels.ts",
       // Issue #1023. Both read every instance's declaration (visualisers) or
       // every declared library (manifests), and hold no folio's content: the
       // same reason as the layout norm above.
