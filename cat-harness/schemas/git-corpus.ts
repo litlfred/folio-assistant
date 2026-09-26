@@ -67,6 +67,8 @@
  * test, and a check that cannot see it passes on the very file it exists to
  * examine.
  *
+ * @module schemas/git-corpus
+ * @graphNode none — asks git which files exist: a corpus rule, not a schema
  * @covers cat-harness
  */
 import { spawnSync } from "node:child_process";
