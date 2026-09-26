@@ -1,0 +1,12 @@
+import type { SkillDefinition } from "../framework/types.js";
+
+export const deploymentAuth: SkillDefinition = {
+  id: "deployment-auth",
+  name: "Deployment & Auth",
+  description: "OAuth configuration, remote MCP deployment, and role/whitelist management.",
+  requiredCapabilities: [
+    { capabilityId: "deploy-access", degradation: "fail" },
+  ],
+  routingPatterns: ["deploy", "auth", "oauth", "whitelist"],
+  tags: ["deployment", "auth", "infrastructure"],
+};

@@ -1,0 +1,154 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_KgToPortal",
+    "path": "processes/kg-to-portal.bpmn"
+  },
+  "source_hash": "sha256:a1fb3604c41add5f11256767ec8788947bbd40552aa0e9ca2e71d21bc9aca0cd",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "D_Constraints",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"publication-manager\" does not carry it."
+        },
+        {
+          "where": "E_Scope",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"editor\" does not carry it."
+        },
+        {
+          "where": "A_Select",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "A_Serialize",
+          "detail": "needs skill \"kg-export\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "A_Package",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "S_Sign",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"attestation-service\" does not carry it."
+        },
+        {
+          "where": "E_HumanEyes",
+          "detail": "needs skill \"continual-progress\", but its lane's role \"editor\" does not carry it."
+        },
+        {
+          "where": "D_Undetermined",
+          "detail": "needs skill \"bean-blocking\", but its lane's role \"publication-manager\" does not carry it."
+        },
+        {
+          "where": "A_Distribute",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"publish-target\" does not carry it."
+        },
+        {
+          "where": "P_Verify",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"external-registry\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 14,
+    "fail": 1,
+    "n/a": 9,
+    "unknown": 0
+  }
+}

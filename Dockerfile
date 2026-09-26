@@ -14,7 +14,7 @@ FROM ubuntu:24.04 AS base
 LABEL org.opencontainers.image.title="folio-assistant"
 LABEL org.opencontainers.image.description="Cross-repository agent skills framework with unified skill management, RBAC, and capability detection"
 LABEL org.opencontainers.image.source="https://github.com/litlfred/folio-assistant"
-LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.licenses="Apache-2.0"
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
@@ -64,6 +64,27 @@ RUN npm install -g \
     fsh-sushi
 
 # ─── Python packages ─────────────────────────────────────────────────────────
+#
+# THE DECLARED SET IS INSTALLED FROM `requirements.txt`, NOT RETYPED HERE.
+#
+# This was a hand-maintained list and it had drifted: it omitted 6 of the 10
+# packages `schemas/python-deps.ts` declares — `cffi`, `cryptography`,
+# `pymupdf`, `pillow`, `pdfminer.six` and `pdfplumber`. The cost was measured
+# 2026-09-21: without `cffi`, importing `cryptography` raises
+# `ModuleNotFoundError: _cffi_backend` and then PANICS under pyo3, so EVERY
+# PDF library fails at import; and without `pymupdf` the document-ingestion
+# pipeline refuses to promote anything. An agent lost a working session to it,
+# and `requirements.txt` had documented the exact failure since 2026-09-19 —
+# the knowledge was written down, and this file simply did not read it.
+#
+# `deps:python:check` now fails if this line stops installing from the
+# generated file, so the two cannot diverge again.
+COPY requirements.txt /tmp/requirements.txt
+RUN pip3 install --no-cache-dir --break-system-packages -r /tmp/requirements.txt \
+ && rm /tmp/requirements.txt
+
+# Packages this image needs BEYOND the declared set — maths, notebooks, FHIR
+# and Lean tooling that no gate exercises, so they are not in `python-deps.ts`.
 RUN pip3 install --no-cache-dir --break-system-packages \
     matplotlib \
     numpy \
@@ -71,11 +92,7 @@ RUN pip3 install --no-cache-dir --break-system-packages \
     jupyter \
     fhir.resources \
     fhirpathpy \
-    requests \
-    pyyaml \
     jsonschema \
-    lxml \
-    pypdf \
     leanblueprint
 
 # ─── Ruby gems ───────────────────────────────────────────────────────────────

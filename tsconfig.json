@@ -48,6 +48,35 @@
   //
   // Every tree is now compiled. A green `bun run typecheck` finally means what
   // it says.
-  "include": ["src/**/*.ts", "schemas/**/*.ts", "content/**/*.ts", "scripts/**/*.ts", "adapters/**/*.ts", "types/**/*.d.ts"],
+  //
+  // `test/health/**` is in scope, and the rest of `test/**` deliberately is
+  // not. The health sweep is ordinary program code that ships behind a
+  // workflow, so a green `typecheck` has to mean something about it. The rest
+  // of `test/` is `test/results/` — 500-odd committed JSON verdicts, not
+  // program code — plus the Playwright `*.e2e.ts` specs and their `support/`
+  // fixtures, matched by `**/*.e2e.ts` and compiled by Playwright's own
+  // pipeline; pulling those in here would put a second typechecker over files
+  // that already have one, and a disagreement between the two is a failure
+  // with no owner.
+  //
+  // This said `tests/health/**` until 2026-09-19 (bean `auap`), when the two
+  // test trees were consolidated onto `test/`. The narrow glob is what keeps
+  // the distinction intact across that move: `test/**` would have quietly
+  // widened the program to the e2e specs.
+  //
+  // THE SIBLING INSTANCES WERE OUTSIDE THE PROGRAM, and the comment above said
+  // "Every tree is now compiled" while four of them were not. `detangle/` (folded into cat-harness 2026-09-23),
+  // `large-datasets/`, `who-iris/`, `who-style-guide/`, `folio-assistant-sci/`,
+  // `agent-skills/` and `folio-assistant-core/` are staged top-level instances
+  // of THIS repository, so their TypeScript is this repository's TypeScript.
+  //
+  // It was not a theoretical gap: `detangle/scripts/kg-detangle.ts` carried a
+  // live TS2322 (an `EdgeAuthority` table annotated with two of its three
+  // values) that tsc could not see, found 2026-09-20 by a review reading the
+  // include list rather than trusting a green run.
+  //
+  // Same `test/` and `*.e2e.ts` reasoning as above applies to each, which is
+  // why these are per-directory globs rather than a bare `*/**/*.ts`.
+  "include": ["cat-harness/src/**/*.ts", "cat-harness/schemas/**/*.ts", "cat-harness/content/**/*.ts", "cat-harness/scripts/**/*.ts", "cat-harness/skills/**/*.ts", "cat-harness/adapters/**/*.ts", "cat-harness/test/health/**/*.ts", "cat-harness/types/**/*.d.ts", "tools/**/*.ts", "folio-assistant-core/schemas/**/*.ts", "large-datasets/schemas/**/*.ts", "large-datasets/scripts/**/*.ts", "who-iris/scripts/**/*.ts", "who-iris/schemas/**/*.ts"],
   "exclude": ["dist", "node_modules"]
 }

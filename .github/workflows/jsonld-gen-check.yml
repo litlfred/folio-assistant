@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/jsonld-drift-check.bpmn
 # Generated-file drift gate for the JSON-LD projection of content blocks.
 #
 # Each content block is authored as `<block>.ts` and published as a generated
@@ -19,36 +20,73 @@ name: JSON-LD generated-file drift
 on:
   pull_request:
     paths:
-      - 'content/**/*.ts'
-      - 'content/**/*.jsonld'
-      - 'schemas/jsonld.ts'
-      - 'schemas/constraints.ts'
-      - 'schemas/block-kinds.ts'
-      - 'content/pipeline/gen-block-jsonld.ts'
-      - 'content/pipeline/gen-library-jsonld.ts'
-      - 'content/pipeline/gen-site-jsonld.ts'
+      - 'cat-harness/content/**/*.ts'
+      - 'cat-harness/content/**/*.jsonld'
+      - 'cat-harness/schemas/jsonld.ts'
+      - 'cat-harness/schemas/constraints.ts'
+      - 'cat-harness/schemas/block-kinds.ts'
+      - 'cat-harness/content/pipeline/gen-block-jsonld.ts'
+      - 'cat-harness/content/pipeline/gen-library-jsonld.ts'
+      - 'cat-harness/content/pipeline/gen-site-jsonld.ts'
       - 'site-content/**'
-      - 'library/**/structure.json'
-      - 'library/**/candidates.json'
-      - 'scripts/gen-jsonld-context.ts'
-      - 'ns/content/v1.jsonld'
+      # Every library, wherever it is declared. `cat-harness/library/**` until
+      # bean `frs5` moved the four entries into `who-iris/` and
+      # `folio-assistant-sci/` — a path filter naming a directory that no longer
+      # exists is a workflow that stops firing on the files it gates, and it
+      # reports nothing while doing so. That is `xom7` in its quietest form:
+      # not a red workflow, an absent one.
+      #
+      # `*/library/**` rather than the two names, so declaring a third library
+      # does not silently fall outside the gate. A filter listing the instances
+      # would have to be edited by whoever adds one, and the symptom of
+      # forgetting is invisible.
+      - '*/library/**/structure.json'
+      - '*/library/**/candidates.json'
+      # The same argument this file already makes about `*/library/**`, applied
+      # to the scripts: a named list is edited by whoever remembers it, and
+      # forgetting is invisible. `tyyc` measured 4 of the 11 scripts this
+      # workflow runs uncovered — all of them test files it executes.
+      - 'cat-harness/scripts/**'
+      - 'cat-harness/scripts/gen-jsonld-context.ts'
+      - 'cat-harness/ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'
   push:
     paths:
-      - 'content/**/*.ts'
-      - 'content/**/*.jsonld'
-      - 'schemas/jsonld.ts'
-      - 'schemas/constraints.ts'
-      - 'schemas/block-kinds.ts'
-      - 'content/pipeline/gen-block-jsonld.ts'
-      - 'content/pipeline/gen-library-jsonld.ts'
-      - 'content/pipeline/gen-site-jsonld.ts'
+      - 'cat-harness/content/**/*.ts'
+      - 'cat-harness/content/**/*.jsonld'
+      - 'cat-harness/schemas/jsonld.ts'
+      - 'cat-harness/schemas/constraints.ts'
+      - 'cat-harness/schemas/block-kinds.ts'
+      - 'cat-harness/content/pipeline/gen-block-jsonld.ts'
+      - 'cat-harness/content/pipeline/gen-library-jsonld.ts'
+      - 'cat-harness/content/pipeline/gen-site-jsonld.ts'
       - 'site-content/**'
-      - 'library/**/structure.json'
-      - 'library/**/candidates.json'
-      - 'scripts/gen-jsonld-context.ts'
-      - 'ns/content/v1.jsonld'
+      # Every library, wherever it is declared. `cat-harness/library/**` until
+      # bean `frs5` moved the four entries into `who-iris/` and
+      # `folio-assistant-sci/` — a path filter naming a directory that no longer
+      # exists is a workflow that stops firing on the files it gates, and it
+      # reports nothing while doing so. That is `xom7` in its quietest form:
+      # not a red workflow, an absent one.
+      #
+      # `*/library/**` rather than the two names, so declaring a third library
+      # does not silently fall outside the gate. A filter listing the instances
+      # would have to be edited by whoever adds one, and the symptom of
+      # forgetting is invisible.
+      - '*/library/**/structure.json'
+      - '*/library/**/candidates.json'
+      # The same argument this file already makes about `*/library/**`, applied
+      # to the scripts: a named list is edited by whoever remembers it, and
+      # forgetting is invisible. `tyyc` measured 4 of the 11 scripts this
+      # workflow runs uncovered — all of them test files it executes.
+      - 'cat-harness/scripts/**'
+      - 'cat-harness/scripts/gen-jsonld-context.ts'
+      - 'cat-harness/ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'
+  # The merge queue — bean `nytj`; see code-quality-gates.yml for why. A
+  # merge_group event takes NO `paths:` filter, so in the queue this runs on
+  # every entry: about fifteen seconds, and a required check that did not
+  # report would stall the queue rather than skip.
+  merge_group:
   workflow_dispatch:
 
 permissions:
@@ -56,10 +94,11 @@ permissions:
 
 jobs:
   drift-check:
+    # bpmn-node: Start_Change
     name: .jsonld siblings in sync with .ts manifests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -72,31 +111,31 @@ jobs:
       # one artefact both authored and ingested nodes reference by URL, so a
       # stale copy misdescribes the whole graph rather than one block.
       - name: Context in sync
-        run: bun run scripts/gen-jsonld-context.ts --check
+        run: bun run cat-harness/scripts/gen-jsonld-context.ts --check
 
       # HARD GATE: regenerate every sibling and fail on divergence. Also fails
       # on a block manifest that will not import — a block that throws is a
       # finding, not a file to pass over.
       - name: Block siblings in sync
-        run: bun run content/pipeline/gen-block-jsonld.ts --check
+        run: bun run cat-harness/content/pipeline/gen-block-jsonld.ts --check
 
       # Ingested documents. Same gate, other population: `library/**` nodes are
       # generated from structure.json + candidates.json, so a hand-edit or a
       # re-run of Stage A/B without regenerating leaves the graph describing a
       # document that no longer exists in that shape.
       - name: Library nodes in sync
-        run: bun run content/pipeline/gen-library-jsonld.ts --check
+        run: bun run cat-harness/content/pipeline/gen-library-jsonld.ts --check
 
       # The docs site's own graph. Separate from the block half because the
       # site is not a folio -- `gen-block-jsonld` declines to run here by
       # design, and re-merging the two populations is what broke the
       # empty-corpus audit once already.
       - name: Site graph drift (site-content/)
-        run: bun run content/pipeline/gen-site-jsonld.ts --check
+        run: bun run cat-harness/content/pipeline/gen-site-jsonld.ts --check
 
       - name: Label resolution + emitter tests
         run: |
-          bun test scripts/tests/jsonld-label-resolution.test.ts \
-                   scripts/tests/gen-block-jsonld.test.ts \
-                   scripts/tests/gen-library-jsonld.test.ts \
-                   scripts/tests/mcp-graph-tools.test.ts
+          bun test cat-harness/scripts/tests/jsonld-label-resolution.test.ts \
+                   cat-harness/scripts/tests/gen-block-jsonld.test.ts \
+                   cat-harness/scripts/tests/gen-library-jsonld.test.ts \
+                   cat-harness/scripts/tests/mcp-graph-tools.test.ts

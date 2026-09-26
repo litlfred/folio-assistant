@@ -1,0 +1,14 @@
+---
+# folio-assistant-lgwe
+title: Locale subdirectories must be declared as translated content and filtered from the navbar
+status: completed
+type: task
+priority: normal
+created_at: 2026-09-19T07:27:41Z
+updated_at: 2026-09-19T08:40:35Z
+---
+
+
+_2026-09-19T07:51:03Z_ — Implemented on claude/translated-locales-navbar (PR #351). Declaration: two new graph kinds in BASE_GRAPH_KINDS — `translation-sources` for `translations/` (previously undeclared entirely, the dh4f defect in reverse) and `translated-content` for the ten rendered locale directories — plus a `locale` field on ContentDirectory that is REQUIRED on the first kind and REFUSED anywhere else. Nothing reads a language subtag out of a path. Navbar: `nav_exclude: true` on all ten translated pages takes them out of the statically-built nav (just-the-docs builds it once, for every reader, before anybody picks a locale — no client-side work substitutes for that), and `mountNavLocale` in docs-ui.js swaps each item IN PLACE from `docs/_data/translations.json` when a non-source locale is selected. Fallback is the absence of a rewrite rather than a branch. Three states recorded as `data-fa-nav-index`: ok / empty / unknown, with the index published as `null` when the data file was absent so 'could not tell' never renders as 'there are none'. Gates: 2201 unit tests, 90 e2e (10 new, verified to fail with the filter disabled), eslint, kg:audit:check, readme:sync:check all green. Adjacent finding filed separately as bean d2kp: the `gen-docs-pages --check` gate is a folded YAML line and has never run, and un-folding it is not a one-line fix because those pages embed live QA verdicts.
+
+_2026-09-19T08:31:40Z_ — Reworked on the owner's steer: the directory-level declaration is gone. A page is a translation because IT declares `lang`; `translation_source` gives the fallback edge; translatability is a property of a FORMAT within a content type (schemas/translation-tools.ts + isTranslatable), which already existed. `docs/_data/translations.json` is byte-identical to the first shape — different route, same answer. Kept: `translation-sources` on `translations/`, which was undeclared entirely (dh4f in reverse). PR #351 green on 8bf672c12: all 9 checks including `stage` and e2e. Also fixed a Liquid tag named in prose inside an HTML comment that broke the site build (Liquid parses tags inside HTML comments); scripts/tests/liquid-includes.test.ts now catches that class without needing Ruby in CI. NOT verified from here: the deployed staging page — egress to github.io is blocked by proxy policy — so the PR comment lists the four things a human should look at. Filed rather than fixed: d2kp (gen-docs-pages --check has never run, and the published site shows a failing KG badge on a page whose checks pass) and x4a6 (declare docs/, blocked on core's folio registration). Awaiting the owner's merge word.

@@ -1,0 +1,9 @@
+# GENERATED — do not edit.
+# Source: schemas/python-deps.ts (bean 68dt). Regenerate: bun run deps:python
+#
+# NOT installed in CI. Declared so the cost is visible rather than implied;
+# see each entry's reason in schemas/python-deps.ts.
+
+# camelot-py: `pdf-tables.py` only. 912 KB itself, but it pulls numpy, pandas and OpenCV — 323 MB measured 2026-09-20, more than the whole lean set. Kept out of CI for that reason alone; the script is live (two skills document it, bean `fj94` has 38 tests) and this is a cost statement, not a deprecation.
+# imports: camelot
+camelot-py

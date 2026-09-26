@@ -1,0 +1,42 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "requirement",
+    "id": "req:session-start",
+    "path": "skills/requirements/session-start.json"
+  },
+  "source_hash": "sha256:5dec65fc955d22d9d1247ce554ecad4525141eb702e33968204f150985397316",
+  "criteria": {
+    "requirement-statement-satisfied": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "req:session-start/check-capabilities",
+          "detail": "no skill or capability declares `satisfies: req:session-start#check-capabilities` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:session-start/check-todos",
+          "detail": "no skill or capability declares `satisfies: req:session-start#check-todos` — nothing is recorded as discharging this statement."
+        }
+      ]
+    },
+    "requirement-actors-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-derived-from-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-statements-graded": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 3,
+    "fail": 1,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

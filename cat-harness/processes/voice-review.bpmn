@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+                  id="Definitions_VoiceReview"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       Voice overlay review — a SUBPROCESS of Process_NarrativeReview.
+
+       Issue #208 asks for the voice review to be part of the "one voice"
+       review rather than beside it, and this is where that lands: the
+       narrative reviewer descends here after adjudicating the base house
+       voice, and takes on no new role — the same `narrative-reviewer` lane
+       owns both halves, because a voice is a REGISTER and register is what
+       that lane already judges.
+
+       THE FIRST GATEWAY IS THE POINT. A folio that has activated no voice
+       must leave immediately, and this diagram says so structurally rather
+       than leaving it to a reviewer's discretion. Issue #208: "we shouldnt
+       autmoatically apply voices … the folio-asst's own docuemtnation conent
+       doesnt have any voice". An unasked-for voice produces confident
+       findings against prose that was never written to it.
+
+       THE LOOP OVER VOICES IS SEQUENTIAL AND DELIBERATE. Rules from several
+       active voices are UNIONED, not merged, so two voices may both speak
+       about capitalisation and both findings stand. A reviewer reading a
+       finding has to know which voice raised it, and a merged pass would
+       lose that.
+       ═══════════════════════════════════════════════════════════ -->
+
+  <bpmn:process id="Process_VoiceReview" name="Voice overlay review" isExecutable="false">
+    <bpmn:documentation>The voice axis: load whichever editorial voices are active, run each rule's mechanical half, and decide — for each finding — whether the prose is wrong, the rule does not apply to this content, or this block is a stated exception.
+
+You are in this process after the base voice has been adjudicated, and only if a voice is active at all: the first gateway ends the process honestly when none is, rather than reporting a clean review of nothing.
+
+Three outcomes, all legitimate, and the third is the one that needs recording: an exception without a reviewer entry is indistinguishable from a rule nobody ran. There is also a fourth path the diagram draws deliberately — if the rule's own citation does not support it, the RULE is the defect, and that becomes a bean rather than a finding against the prose.</bpmn:documentation>
+
+    <bpmn:laneSet id="LaneSet_VoiceReview">
+      <bpmn:lane id="Lane_NarrativeReviewer" name="Narrative reviewer">
+        <bpmn:documentation>Runs every active voice to completion rather than stopping at the first, because rules from separate voices are UNIONED rather than merged — two voices can both flag capitalisation and both findings must stand, so folding voice N+1's pass into voice N's would lose which voice raised what. At each citation, this lane also has to route the defect to the right place: a rule its own citation does not support goes to Task_RuleIsWrong as a finding against the VOICE, never into Task_Adjudicate, which only ever judges the block.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="narrative-reviewer"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Start_BaseVoiceDone</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_AnyActive</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_NoVoice</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_LoadActive</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_MechanicalHalf</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_OpenCitation</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_QuoteSupports</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RuleIsWrong</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Adjudicate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_MoreVoices</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RecordOnSidecar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_VoiceReviewed</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Start_BaseVoiceDone" name="Base voice&#10;adjudicated"/>
+
+    <bpmn:exclusiveGateway id="GW_AnyActive" name="Any voice&#10;activated?">
+      <bpmn:documentation>Is any voice activated for this block, beyond the base voice already adjudicated? `none` ends with nothing to review; `one or more` loads the active voices.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:endEvent id="End_NoVoice" name="No voice —&#10;nothing to review">
+      <bpmn:documentation>A pass, not a gap. An empty `voices.active` is the default and a legitimate answer: this instance ships four voices and activates none.</bpmn:documentation>
+    </bpmn:endEvent>
+
+    <bpmn:task id="Task_LoadActive" name="Load the active voices">
+      <bpmn:documentation>The activated set only, never everything shipped. An id naming no shipped voice is an error rather than a skip — a folio that believes it is applying a voice and is applying nothing has the cleanest-looking output of the three.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="voice-overlay-review"/></bpmn:extensionElements>
+    </bpmn:task>
+
+    <bpmn:task id="Task_MechanicalHalf" name="Run the rule's mechanical half">
+      <bpmn:documentation>Whatever `patterns` and `terminology` the rule carries. A `judgementOnly` rule has no mechanical half by declaration, which is different from nobody having written one yet.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="voice-overlay-review"/></bpmn:extensionElements>
+    </bpmn:task>
+
+    <bpmn:task id="Task_OpenCitation" name="Open the rule's citation">
+      <bpmn:documentation>Every rule resolves to a real `library/` section or a KG node, and carries the quote it was read from. Opening it is what lets a reviewer say WHY the rule applies — and it is the only way to catch a rule that misread its own source.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="voice-overlay-review"/></bpmn:extensionElements>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_QuoteSupports" name="Does the quote&#10;support the rule?">
+      <bpmn:documentation>Answered by opening the rule's citation: does the quoted source support the rule? `no` means the rule itself is the defect and is beaned; `yes` goes to adjudicating the prose, the rule's scope or an exception.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="Task_RuleIsWrong" name="The RULE is the defect — bean it">
+      <bpmn:documentation>A rule its own quote does not support is a finding against the voice, not against the block. Measured precedent: `voice-editorializing` flags "clearly", and the exemplar the Milnor gate is named after uses it fourteen times as proof economy (bean `2t41`).</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="voice-overlay-review"/>
+        <cat-harness.processes:bean op="note"/>
+      </bpmn:extensionElements>
+    </bpmn:task>
+
+    <bpmn:callActivity id="Task_Adjudicate" calledElement="Process_CriterionAdjudication" name="Adjudicate: prose, scope, or exception">
+      <bpmn:documentation>The same three outcomes as the base voice axis. The register is wrong for this block (fix the prose); the rule does not apply to this content (scope it on the voice, one edit rather than ten overrules); or the rule applies and this block is an exception (a reviewer entry saying why).</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="voice-overlay-review"/><bootstrap.processes:skill ref="adjudication"/><cat-harness.processes:adjudication accepts="stands scope dispensation"/></bpmn:extensionElements>
+    </bpmn:callActivity>
+
+    <bpmn:exclusiveGateway id="GW_MoreVoices" name="Another active&#10;voice?">
+      <bpmn:documentation>Is another active voice left to review? `yes` runs that voice's mechanical half; `no` records the results on the block's QA sidecar.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="Task_RecordOnSidecar" name="Record on the block's QA sidecar">
+      <bpmn:documentation>Through `qa-merge-findings`, so the icon and the published witness agree with the decision. The adjudication LEADS the criterion and the script entry is kept beneath it: a disagreement between a checker and a reviewer is information.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="voice-overlay-review"/></bpmn:extensionElements>
+    </bpmn:task>
+
+    <bpmn:endEvent id="End_VoiceReviewed" name="Voices&#10;adjudicated"/>
+
+    <bpmn:sequenceFlow id="F_V1" sourceRef="Start_BaseVoiceDone" targetRef="GW_AnyActive"/>
+    <bpmn:sequenceFlow id="F_V2" name="none" sourceRef="GW_AnyActive" targetRef="End_NoVoice"/>
+    <bpmn:sequenceFlow id="F_V3" name="one or more" sourceRef="GW_AnyActive" targetRef="Task_LoadActive"/>
+    <bpmn:sequenceFlow id="F_V4" sourceRef="Task_LoadActive" targetRef="Task_MechanicalHalf"/>
+    <bpmn:sequenceFlow id="F_V5" sourceRef="Task_MechanicalHalf" targetRef="Task_OpenCitation"/>
+    <bpmn:sequenceFlow id="F_V6" sourceRef="Task_OpenCitation" targetRef="GW_QuoteSupports"/>
+    <bpmn:sequenceFlow id="F_V7" name="no" sourceRef="GW_QuoteSupports" targetRef="Task_RuleIsWrong"/>
+    <bpmn:sequenceFlow id="F_V8" name="yes" sourceRef="GW_QuoteSupports" targetRef="Task_Adjudicate"/>
+    <bpmn:sequenceFlow id="F_V9" sourceRef="Task_RuleIsWrong" targetRef="GW_MoreVoices"/>
+    <bpmn:sequenceFlow id="F_V10" sourceRef="Task_Adjudicate" targetRef="GW_MoreVoices"/>
+    <bpmn:sequenceFlow id="F_V11" name="yes" sourceRef="GW_MoreVoices" targetRef="Task_MechanicalHalf"/>
+    <bpmn:sequenceFlow id="F_V12" name="no" sourceRef="GW_MoreVoices" targetRef="Task_RecordOnSidecar"/>
+    <bpmn:sequenceFlow id="F_V13" sourceRef="Task_RecordOnSidecar" targetRef="End_VoiceReviewed"/>
+
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="Diagram_VoiceReview">
+    <bpmndi:BPMNPlane id="Plane_VoiceReview" bpmnElement="Process_VoiceReview">
+      <bpmndi:BPMNShape id="S_Lane_NarrativeReviewer_V" bpmnElement="Lane_NarrativeReviewer" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="1560" height="360"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Start_BaseVoiceDone" bpmnElement="Start_BaseVoiceDone">
+        <dc:Bounds x="200" y="212" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_GW_AnyActive" bpmnElement="GW_AnyActive" isMarkerVisible="true">
+        <dc:Bounds x="280" y="205" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_End_NoVoice" bpmnElement="End_NoVoice">
+        <dc:Bounds x="287" y="120" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_LoadActive" bpmnElement="Task_LoadActive">
+        <dc:Bounds x="380" y="190" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_MechanicalHalf" bpmnElement="Task_MechanicalHalf">
+        <dc:Bounds x="570" y="190" width="160" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_OpenCitation" bpmnElement="Task_OpenCitation">
+        <dc:Bounds x="770" y="190" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_GW_QuoteSupports" bpmnElement="GW_QuoteSupports" isMarkerVisible="true">
+        <dc:Bounds x="960" y="205" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_RuleIsWrong" bpmnElement="Task_RuleIsWrong">
+        <dc:Bounds x="1050" y="100" width="170" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_Adjudicate" bpmnElement="Task_Adjudicate">
+        <dc:Bounds x="1050" y="290" width="170" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_GW_MoreVoices" bpmnElement="GW_MoreVoices" isMarkerVisible="true">
+        <dc:Bounds x="1270" y="205" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_RecordOnSidecar" bpmnElement="Task_RecordOnSidecar">
+        <dc:Bounds x="1370" y="190" width="170" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_End_VoiceReviewed" bpmnElement="End_VoiceReviewed">
+        <dc:Bounds x="1600" y="212" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="E_F_V1" bpmnElement="F_V1">
+        <di:waypoint x="236" y="230"/><di:waypoint x="280" y="230"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_V2" bpmnElement="F_V2">
+        <di:waypoint x="305" y="205"/><di:waypoint x="305" y="156"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_V3" bpmnElement="F_V3">
+        <di:waypoint x="330" y="230"/><di:waypoint x="380" y="230"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_V4" bpmnElement="F_V4">
+        <di:waypoint x="530" y="230"/><di:waypoint x="570" y="230"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_V5" bpmnElement="F_V5">
+        <di:waypoint x="730" y="230"/><di:waypoint x="770" y="230"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_V6" bpmnElement="F_V6">
+        <di:waypoint x="920" y="230"/><di:waypoint x="960" y="230"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_V7" bpmnElement="F_V7">
+        <di:waypoint x="985" y="205"/><di:waypoint x="985" y="135"/><di:waypoint x="1050" y="135"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_V8" bpmnElement="F_V8">
+        <di:waypoint x="985" y="255"/><di:waypoint x="985" y="325"/><di:waypoint x="1050" y="325"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_V9" bpmnElement="F_V9">
+        <di:waypoint x="1220" y="135"/><di:waypoint x="1295" y="135"/><di:waypoint x="1295" y="205"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_V10" bpmnElement="F_V10">
+        <di:waypoint x="1220" y="325"/><di:waypoint x="1295" y="325"/><di:waypoint x="1295" y="255"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_V11" bpmnElement="F_V11">
+        <di:waypoint x="1295" y="205"/><di:waypoint x="1295" y="410"/><di:waypoint x="650" y="410"/><di:waypoint x="650" y="270"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_V12" bpmnElement="F_V12">
+        <di:waypoint x="1320" y="230"/><di:waypoint x="1370" y="230"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_F_V13" bpmnElement="F_V13">
+        <di:waypoint x="1540" y="230"/><di:waypoint x="1600" y="230"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

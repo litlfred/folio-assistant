@@ -1,0 +1,51 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "proof-status-tracking",
+    "path": "skills/folio-paper-adapter/proof-status-tracking.md"
+  },
+  "source_hash": "2058cf31ba5d",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 6,
+    "fail": 0,
+    "n/a": 0,
+    "unknown": 0
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/proof-status-tracking.md",
+      "code": "cat-harness/skills/folio-paper-adapter/proof-status-tracking.ts",
+      "prose_hash": "2058cf31ba5d",
+      "code_hash": "ab8872961a25",
+      "by": "baseline"
+    }
+  ]
+}

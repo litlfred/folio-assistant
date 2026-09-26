@@ -1,0 +1,165 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_FeatureStaging",
+    "path": "processes/feature-staging.bpmn"
+  },
+  "source_hash": "sha256:d38ea6587f471f3ea1224092711466841c2556ff96ab8a5ce0466b7cd9c5c48c",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_LogRendered",
+          "detail": "needs skill \"render-logging\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Comment",
+          "detail": "needs skill \"staging-review\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Remove",
+          "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_LogRetained",
+          "detail": "needs skill \"render-logging\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Notice",
+          "detail": "needs skill \"staging-review\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Validate",
+          "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Preflight",
+          "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_RemoveDisp",
+          "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "H_Confirm",
+          "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"user\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "H_Confirm",
+          "detail": "\"Repeat the slug, exactly, to confirm\" — a ServiceTask is performed by agent or system, but its lane's role \"user\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
+        }
+      ]
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 15,
+    "fail": 2,
+    "n/a": 7,
+    "unknown": 0
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/feature-staging.bpmn",
+      "code": ".github/workflows/feature-staging.yml",
+      "prose_hash": "d38ea6587f47",
+      "code_hash": "6ddd833a727e",
+      "by": "baseline"
+    }
+  ]
+}

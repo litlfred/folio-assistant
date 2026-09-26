@@ -1,0 +1,407 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2608.08453v1",
+ "source": {
+  "file": "2608.08453v1.pdf",
+  "sha256": "dd50ffb3d44d7a3c7d66ec1e0d96b13a0798a62a4184a4516a2cbff0d3ce88bd",
+  "bytes": 600985,
+  "pages": 10,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-20T15:00:53Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2608.08453",
+   "version": "1",
+   "primary_class": "cs.AI",
+   "stamp_date": "9 Aug 2026"
+  },
+  "doi": null,
+  "title": "What Keeps Agent Skills from Being Reusable? Evidence from 138K SKILL.md Files",
+  "authors_raw": "Chi Zhang",
+  "title_lines": [
+   "What Keeps Agent Skills from Being Reusable?",
+   "Evidence from 138K SKILL.md Files"
+  ],
+  "abstract": "Under the current standard, Agent Skills are SKILL.md files that combine instructions with supporting resources, en- abling Large Language Model (LLM) agents to reuse proce- dures beyond a single conversation. Yet many public skills appear to originate from a single task, repository, or conver- sation, even when they are shared as reusable components. We analyze this gap across 138,133 public SKILL.md files from 20,556 repositories using a two-tier defect taxonomy grounded in the official specification and best-practice guid- ance. We find that 91.8% of skills contain at least one de- tected defect, with stable estimates across lenient and strict thresholds (88.8\u201394.6%). The dominant failures are ordinary packaging problems rather than exotic attacks: weak routing metadata, bloated or non-actionable bodies, and poor re- source organization. A deterministic routing stress test over 20,000 skills shows the functional impact: skills with valid routing metadata are retrieved more reliably from startup descriptions than skills with routing defects. Defect rates vary by platform and provenance: specification-aware skills contain fewer defects, while AI-marked skills show more safety and portability problems. Lightweight enforcement and repair experiments support a quality-assured generation workflow combining spec-aware prompting, lightweight lint- ing, automated repair, and safety gating.",
+  "docinfo": {
+   "Title": "What Keeps Agent Skills from Being Reusable? Evidence from 138K SKILL.md Files",
+   "Author": "Chi Zhang; Yimin Liu; Xinze Chen; Ping Ji",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:8def8d8)",
+   "CreationDate": "D:20260811010335+00'00'"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Abstract",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": "1"
+  },
+  {
+   "level": 1,
+   "title": "Background and Related Work",
+   "page": 2,
+   "source": "outline",
+   "number": "2"
+  },
+  {
+   "level": 2,
+   "title": "Agent Skills and the SKILL.md Format",
+   "page": 2,
+   "source": "outline",
+   "number": "2.1"
+  },
+  {
+   "level": 2,
+   "title": "Related Work",
+   "page": 2,
+   "source": "outline",
+   "number": "2.2"
+  },
+  {
+   "level": 1,
+   "title": "Methodology",
+   "page": 3,
+   "source": "outline",
+   "number": "3"
+  },
+  {
+   "level": 2,
+   "title": "Data Collection",
+   "page": 3,
+   "source": "outline",
+   "number": "3.1"
+  },
+  {
+   "level": 2,
+   "title": "Defect Taxonomy",
+   "page": 3,
+   "source": "outline",
+   "number": "3.2"
+  },
+  {
+   "level": 2,
+   "title": "Detector Validation",
+   "page": 4,
+   "source": "outline",
+   "number": "3.3"
+  },
+  {
+   "level": 2,
+   "title": "Routing Stress Test",
+   "page": 4,
+   "source": "outline",
+   "number": "3.4"
+  },
+  {
+   "level": 1,
+   "title": "Results",
+   "page": 4,
+   "source": "outline",
+   "number": "4"
+  },
+  {
+   "level": 2,
+   "title": "Ecosystem Overview",
+   "page": 4,
+   "source": "outline",
+   "number": "4.1"
+  },
+  {
+   "level": 2,
+   "title": "RQ1: What reusability defects are prevalent in public skills?",
+   "page": 4,
+   "source": "outline",
+   "number": "4.2"
+  },
+  {
+   "level": 2,
+   "title": "RQ2: How do these defects limit skill reuse?",
+   "page": 4,
+   "source": "outline",
+   "number": "4.3"
+  },
+  {
+   "level": 2,
+   "title": "RQ3: Which platform and provenance signals are associated with reusable skill quality?",
+   "page": 5,
+   "source": "outline",
+   "number": "4.4"
+  },
+  {
+   "level": 2,
+   "title": "RQ4: What traits characterize reusable, high-quality Agent Skills?",
+   "page": 6,
+   "source": "outline",
+   "number": "4.5"
+  },
+  {
+   "level": 2,
+   "title": "Evidence-Based Authoring Guidelines",
+   "page": 7,
+   "source": "outline",
+   "number": "4.6"
+  },
+  {
+   "level": 1,
+   "title": "Discussion",
+   "page": 7,
+   "source": "outline",
+   "number": "5"
+  },
+  {
+   "level": 1,
+   "title": "Threats to Validity",
+   "page": 8,
+   "source": "outline",
+   "number": "6"
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 9,
+   "source": "outline",
+   "number": "7"
+  },
+  {
+   "level": 1,
+   "title": "References",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 456,
+   "n_words": 66
+  },
+  {
+   "id": "sec-000-abstract",
+   "number": null,
+   "title": "Abstract",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1517,
+   "n_words": 208
+  },
+  {
+   "id": "sec-001-1-introduction",
+   "number": "1",
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 3297,
+   "n_words": 505
+  },
+  {
+   "id": "sec-002-22-related-work",
+   "number": "2.2",
+   "title": "Related Work",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-003-32-defect-taxonomy",
+   "number": "3.2",
+   "title": "Defect Taxonomy",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 165,
+   "n_words": 25
+  },
+  {
+   "id": "sec-004-2-background-and-related-work",
+   "number": "2",
+   "title": "Background and Related Work",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-005-21-agent-skills-and-the-skillmd-format",
+   "number": "2.1",
+   "title": "Agent Skills and the SKILL.md Format",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 5052,
+   "n_words": 753
+  },
+  {
+   "id": "sec-006-3-methodology",
+   "number": "3",
+   "title": "Methodology",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-007-31-data-collection",
+   "number": "3.1",
+   "title": "Data Collection",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 1637,
+   "n_words": 232
+  },
+  {
+   "id": "sec-008-34-routing-stress-test",
+   "number": "3.4",
+   "title": "Routing Stress Test",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 4390,
+   "n_words": 634
+  },
+  {
+   "id": "sec-009-33-detector-validation",
+   "number": "3.3",
+   "title": "Detector Validation",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 1692,
+   "n_words": 251
+  },
+  {
+   "id": "sec-010-4-results",
+   "number": "4",
+   "title": "Results",
+   "level": 1,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-011-41-ecosystem-overview",
+   "number": "4.1",
+   "title": "Ecosystem Overview",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 983,
+   "n_words": 138
+  },
+  {
+   "id": "sec-012-42-rq1-what-reusability-defects-are-prevalent-in",
+   "number": "4.2",
+   "title": "RQ1: What reusability defects are prevalent in public skills?",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 1145,
+   "n_words": 172
+  },
+  {
+   "id": "sec-013-43-rq2-how-do-these-defects-limit-skill-reuse",
+   "number": "4.3",
+   "title": "RQ2: How do these defects limit skill reuse?",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 5,
+   "n_chars": 3637,
+   "n_words": 561
+  },
+  {
+   "id": "sec-014-44-rq3-which-platform-and-provenance-signals-are",
+   "number": "4.4",
+   "title": "RQ3: Which platform and provenance signals are associated with reusable skill quality?",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 7,
+   "n_chars": 6114,
+   "n_words": 898
+  },
+  {
+   "id": "sec-015-46-evidence-based-authoring-guidelines",
+   "number": "4.6",
+   "title": "Evidence-Based Authoring Guidelines",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 210,
+   "n_words": 31
+  },
+  {
+   "id": "sec-016-5-discussion",
+   "number": "5",
+   "title": "Discussion",
+   "level": 1,
+   "page_start": 7,
+   "page_end": 8,
+   "n_chars": 7673,
+   "n_words": 1118
+  },
+  {
+   "id": "sec-017-6-threats-to-validity",
+   "number": "6",
+   "title": "Threats to Validity",
+   "level": 1,
+   "page_start": 8,
+   "page_end": 9,
+   "n_chars": 4625,
+   "n_words": 685
+  },
+  {
+   "id": "sec-018-7-conclusion",
+   "number": "7",
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 1326,
+   "n_words": 178
+  },
+  {
+   "id": "sec-019-references",
+   "number": null,
+   "title": "References",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 10,
+   "n_chars": 4237,
+   "n_words": 556
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 21,
+  "sections": 21,
+  "chars_total": 48165
+ }
+}

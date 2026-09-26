@@ -1,0 +1,56 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "chapter-analysis",
+    "path": "skills/folio-paper-adapter/chapter-analysis.md"
+  },
+  "source_hash": "14495e1f6706",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "entry_count in glossary.json",
+          "detail": "location: glossary.json is not in this repository (a folio's file?)"
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 0,
+    "n/a": 0,
+    "unknown": 1
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/chapter-analysis.md",
+      "code": "cat-harness/skills/folio-paper-adapter/chapter-analysis.ts",
+      "prose_hash": "14495e1f6706",
+      "code_hash": "a19147eb15fc",
+      "by": "baseline"
+    }
+  ]
+}

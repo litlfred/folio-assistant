@@ -1,0 +1,11 @@
+# Declared in `../beans.json` as the `workflow-state` node, and empty until a
+# BPMN instance is started.
+#
+# Same reason as `todos/feedback/.gitkeep`: git does not track an empty
+# directory, and a declared-but-absent directory is the bean `dh4f` defect.
+#
+# This one was PRE-EXISTING and uncaught — `beans/beans.json` has declared
+# `workflows` since the graph was written, and the directory has never been on
+# disk. Found 2026-09-19 while fixing the same defect in the todo graph, and
+# fixed here rather than noted: a gate exposing a pre-existing defect is a
+# predictable cost of adding one, and the answer is to fix the defect.

@@ -1,7 +1,10 @@
 {
   "id": "lean-mcp",
   "name": "Lean MCP Server",
-  "description": "MCP server providing Lean 4 diagnostics, proof state, and goal information.",
-  "detection": { "method": "mcp-probe", "endpoint": "lean-mcp", "healthPath": "/health" },
-  "requires": ["lean-toolchain"]
+  "description": "MCP server providing Lean 4 diagnostics, proof state, and goal information. It does NOT require a local lean-toolchain: the Lean runs server-side and detection is an mcp-probe against the endpoint. It used to declare that requirement, which made it unavailable on any machine without a local Lean even when the server was reachable \u2014 and, because `lean-toolchain.fallbackTo` names this capability, made that fallback unable to fire at all (it was absent in exactly the case it existed for). Removed 2026-09-20, bean folio-assistant-sym3.",
+  "detection": {
+    "method": "mcp-probe",
+    "endpoint": "lean-mcp",
+    "healthPath": "/health"
+  }
 }

@@ -1,0 +1,212 @@
+# bpmn: cat-harness/processes/repository-health-watch.bpmn
+# Repository health watchdog — the daily half of what `ci-health.yml` does weekly.
+#
+# `ci-health.yml` watches whether the WORKFLOWS pass. This watches the
+# REPOSITORY: how big it has grown, how much of the publish branch the review
+# previews occupy, and whether the work plan and the todo store have drifted.
+# Registry and thresholds: `test/health/checks.ts`. Results shape:
+# `schemas/health-report.ts`. Declared in `cat-harness/cat-harness.json` as the
+# `health` graph, at `test/health/results/`.
+#
+# ## Why daily, where `ci-health.yml` is deliberately weekly
+#
+# The owner asked for 24 hours, and for what this measures that is the right
+# rate rather than a concession. `ci-health.yml`'s own header explains its
+# choice: the defect it guards is "nobody noticed for two months", and the
+# session-start sweep already covers every day somebody is working, so a weekly
+# backstop bounds the blind spot without turning the tracking issue into a feed.
+#
+# The staging metric is not like that. One preview measured 36.7-37.6 MB on
+# 2026-09-19 and the warning point is 100 MB, so the THIRD concurrent review
+# breaches it — a week's blind spot is several breaches wide. And this is a
+# genuinely new curve: until #377, `docs-site.yml` deleted every preview on
+# every push to `main` (bean `plj1`), so the total never accumulated. It was
+# garbage-collected by accident, against `feature-staging.yml`'s written
+# retention policy, and nobody had decided that. Now that previews persist by
+# design, the rate at which they do is the thing nobody has measured yet.
+#
+# Daily also stays quiet by construction: the tracking issue is EDITED in place
+# while a condition persists, and an edit does not notify. A week of the same
+# finding is one unread item, not seven.
+#
+# ## Nothing here deletes anything
+#
+# Several of these checks are about artefacts accumulating, and the obvious
+# next step is to have the workflow tidy up. It must not:
+# `skills/folio-core/deletion-requires-confirmation.md`, and bean `plj1` for
+# what a workflow that tidies up on its own initiative actually costs. Every
+# finding names an action a PERSON takes.
+#
+# Cost: this repository is PUBLIC, so standard runners are free. One ~90s job
+# a day, most of which is the shallow fetch of `gh-pages`.
+
+name: Repository health watchdog
+
+on:
+  schedule:
+    # 06:41 UTC. Off the hour deliberately — GitHub's scheduler queues heavily
+    # at :00 and a delayed run is a run whose report is stamped later than the
+    # state it describes.
+    - cron: '41 6 * * *'
+  # A check reachable only from a cron is one nobody can reproduce when it
+  # fires. Also runnable locally: `bun run health`.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  # `staging-preview-orphans` asks which pull requests are open. Without this
+  # the API call 403s, the probe returns `unknown`, and the whole verdict goes
+  # to `unknown` — correctly, and uselessly.
+  pull-requests: read
+
+concurrency:
+  group: repo-health
+  cancel-in-progress: false
+
+jobs:
+  report:
+    # bpmn-node: Start_Sweep
+    name: Report repository health
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # REQUIRED, and not an optimisation to shave off. `repository-size`
+          # measures the pack a full-history clone downloads; a shallow one
+          # would report a fraction of it and the ratio finding would never
+          # fire — a false NEGATIVE, which is the direction this family refuses.
+          #
+          # Worth knowing when reading the number: a fresh clone is packed
+          # tight, so the runner's figure is the post-gc one. A local run
+          # includes this clone's own housekeeping (44 packs here on
+          # 2026-09-19) and will read higher. The finding says so.
+          fetch-depth: 0
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Run the health checks
+        id: check
+        run: |
+          set +e
+          bun run health --out "$RUNNER_TEMP/health.md"
+          status=$?
+          set -e
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          # 0 = clean, 1 = gating finding(s), 2 = could not check. Anything
+          # else is a crash in the checker and is treated as "could not check".
+          # bun exits 1 on an uncaught exception too, so exit 1 alone does not
+          # separate "found something" from "crashed". The report file is what
+          # separates them: `--out` is written before any exit path, so a real
+          # finding always has one and a crash before that point does not.
+          # Without this, a crash would open a tracking issue quoting nothing.
+          report="$RUNNER_TEMP/health.md"
+          if [ "$status" = "1" ] && [ ! -s "$report" ]; then
+            echo "::warning::checker exited 1 without writing a report — treating as unchecked"
+            status=2
+          fi
+          case "$status" in
+            0) echo "verdict=clean" >> "$GITHUB_OUTPUT" ;;
+            1) echo "verdict=findings" >> "$GITHUB_OUTPUT" ;;
+            *) echo "verdict=unknown" >> "$GITHUB_OUTPUT" ;;
+          esac
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # The machine-readable half, kept whatever the verdict — including on
+      # `unknown`, where it is the only evidence of WHY the sweep went blind.
+      # `if: always()` rather than a verdict filter for exactly that reason.
+      - name: Keep the report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: repository-health-report
+          path: test/health/results/repository.health-report.json
+          if-no-files-found: warn
+          retention-days: 90
+
+      # Ensured for BOTH issue paths: the clean path filters on this label too,
+      # and on a repository where nothing has ever been found the label would
+      # not otherwise exist. Skipped on `unknown`, where neither path runs and
+      # a label hiccup must not be what fails the job.
+      - name: Ensure the tracking label exists
+        if: steps.check.outputs.verdict != 'unknown'
+        run: gh label create repo-health --color FBCA04 --description "Automated repository health watchdog" --force
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Open or update the tracking issue
+        if: steps.check.outputs.verdict == 'findings'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          {
+            cat "$RUNNER_TEMP/health.md"
+            echo
+            echo "---"
+            echo
+            echo "Maintained by [\`health-check.yml\`]($RUN_URL). This issue is **edited in place**"
+            echo "each day and closed automatically once every check is clean, so its body is the"
+            echo "current state rather than a log — an edit does not notify, so a finding that"
+            echo "persists for a fortnight stays one unread item."
+            echo
+            echo "**Nothing in this report has been acted on.** Every action above names something"
+            echo "a person does; the sweep removes nothing on its own initiative. See"
+            echo "\`skills/folio-core/deletion-requires-confirmation.md\`."
+            echo
+            echo "Reproduce locally: \`bun run health\`."
+          } > "$RUNNER_TEMP/issue-body.md"
+
+          existing=$(gh issue list --label repo-health --state open \
+            --json number --jq '.[0].number // empty')
+
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --body-file "$RUNNER_TEMP/issue-body.md"
+            echo "updated issue #$existing"
+          else
+            gh issue create \
+              --title "Repository health: findings" \
+              --label repo-health \
+              --body-file "$RUNNER_TEMP/issue-body.md"
+          fi
+
+      - name: Close the tracking issue when everything is clean
+        if: steps.check.outputs.verdict == 'clean'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          existing=$(gh issue list --label repo-health --state open \
+            --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" \
+              --comment "Every health check ran and none had anything to report. Closed by \`health-check.yml\`."
+            echo "closed issue #$existing"
+          else
+            echo "clean, and no tracking issue open — nothing to do."
+          fi
+
+      # "Could not check" is not "healthy", and it is not a worse "findings"
+      # either — it is a third answer. The tracking issue is left exactly as it
+      # is, NEVER closed, and the job fails, which makes this workflow itself
+      # red on `main`, which `ci-health.yml` reports. The watchdog is watched by
+      # the other watchdog.
+      #
+      # Closing on `unknown` would be the precise failure the whole family is
+      # built to refuse: a sweep that could not read `gh-pages` has not
+      # established that the previews are under 100 MB.
+      - name: Refuse to report success on an unchecked repository
+        if: steps.check.outputs.verdict == 'unknown'
+        run: |
+          echo "::error::Repository health could not be determined (exit ${{ steps.check.outputs.status }})."
+          echo "::error::Treat this as unknown, not as clean. The tracking issue was left untouched."
+          exit 1

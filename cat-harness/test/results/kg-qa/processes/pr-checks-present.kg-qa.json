@@ -1,0 +1,145 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_PrChecksPresent",
+    "path": "processes/pr-checks-present.bpmn"
+  },
+  "source_hash": "sha256:2796013c06269af561779acaf25607f27fbab48d61446a9414cba663ef961d4a",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Sweep",
+          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Label",
+          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Close",
+          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Track",
+          "detail": "needs skill \"ci-health\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Comment",
+          "detail": "needs skill \"issue-working\", but its lane's role \"build-pipeline\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 15,
+    "fail": 1,
+    "n/a": 8,
+    "unknown": 0
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/processes/pr-checks-present.bpmn",
+      "code": ".github/workflows/pr-checks-present.yml",
+      "prose_hash": "2796013c0626",
+      "code_hash": "b167678d9c0e",
+      "by": "agent",
+      "reason": "The change is to the WORDING of one advice branch inside the comment body (the UNKNOWN mergeability case), aligning it with check-head-has-run.ts per bean fx5r. No step, gateway, lane or ordering changed: the diagram's five activities — ask per open PR whether HEAD has a run, ensure the label, open-or-edit the one tracking issue, comment once per (PR, head sha), close the issue when every head has a run — all still describe exactly what the workflow does. Re-read the diagram against the workflow to confirm rather than assuming."
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "requirement",
+    "id": "req:agent-workflow",
+    "path": "skills/requirements/agent-workflow.json"
+  },
+  "source_hash": "sha256:840dc6c731efccbc7e6b979d89af93aa75e0d5ec010ff9a2c2c9e85735ee4f60",
+  "criteria": {
+    "requirement-statement-satisfied": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "req:agent-workflow/judgement-stays-human",
+          "detail": "no skill or capability declares `satisfies: req:agent-workflow#judgement-stays-human` — nothing is recorded as discharging this statement."
+        }
+      ]
+    },
+    "requirement-actors-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-derived-from-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "requirement-statements-graded": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 2,
+    "fail": 1,
+    "n/a": 1,
+    "unknown": 0
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "folio-image-verdicts/v1",
+  "_comment": "Bean d5f1. One agent's INSPECTION of every extracted image, as data rather than code, so the judgement can be reviewed line by line and re-run. `saw` is the REASON for the role, not the description; `draft` is the description. Every entry here was produced by looking at the image. Applied by scripts/apply-image-verdicts.ts, which writes an `inspection` basis naming this agent and leaves every narrative in `draft` — only a human may confirm one (schemas/narrative.ts). SPLIT 2026-09-20 (bean frs5): this file judged documents that now live in TWO libraries, so it became two files, each beside the documents it judges. A single verdict file spanning libraries is how one library's judgement comes to rewrite another's `images.json` -- `apply-image-verdicts` resolves each document against the library its verdict file is IN, and could not do that from one shared file. Nothing was re-judged: every verdict below is byte-identical to the one it was split from, and `inspected_by`/`inspected_at` are carried over unchanged because the inspection they record actually happened, once, before the split.",
+  "inspected_by": {
+    "kind": "agent",
+    "id": "claude",
+    "model": "claude-opus-5"
+  },
+  "inspected_at": "2026-09-20",
+  "verdicts": {
+    "milnorlink": {
+      "img-p001-1": {
+        "role": "logo",
+        "saw": "the JSTOR publisher mark",
+        "draft": "The JSTOR logo: an ornate decorated capital J in a black square, above the word STOR, with a registered-trademark symbol."
+      }
+    }
+  }
+}

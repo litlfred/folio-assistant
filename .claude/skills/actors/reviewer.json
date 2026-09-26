@@ -1,8 +1,12 @@
 {
   "id": "reviewer",
-  "name": "Reviewer",
-  "type": "person",
-  "description": "Can view content and provide review comments. Cannot make direct changes.",
-  "inherits": ["viewer"],
-  "capabilities": ["review-comments"]
+  "title": "Reviewer",
+  "kind": "person",
+  "description": "A person who reads a change and judges it. Acting as `reviewer` does not carry the authority to accept — that is the editor's lane.",
+  "roles": [
+    "reviewer",
+    "narrative-reviewer",
+    "feedback-provider"
+  ],
+  "capabilities": []
 }

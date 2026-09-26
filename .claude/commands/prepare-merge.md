@@ -10,7 +10,7 @@ A **generalized** branch-shipping recipe that ends with content-type-specific
 verification. "Prepare-merge" ≠ "merge": it makes the branch *mergeable* and
 stops — it does **not** push to the default branch and does **not** open or
 merge a PR (those are explicit, separate asks). Full discipline:
-`.claude/skills/local/prepare-merge.md`.
+`skills/folio-core/prepare-merge.md`.
 
 Base branch: `$ARGUMENTS` if given, else the repo default (auto-detect:
 `git remote show origin | sed -n 's/.*HEAD branch: //p'`, fallback `main`).
@@ -25,16 +25,22 @@ Base branch: `$ARGUMENTS` if given, else the repo default (auto-detect:
    force-push **with lease**) or merge it in. Resolve conflicts.
 4. **Prove it merges cleanly** — `git merge-base --is-ancestor origin/<base> HEAD`
    (clean fast-forward) or `git merge-tree --write-tree origin/<base> HEAD` (trust
-   the exit code).
+   the exit code). A clean TEXT merge is not a clean STATE: then run
+   `bun run check:merged`, which runs the full gates on the merged tree (bean
+   `nytj`; exit 2 = could not determine, never clean).
 5. **Green check** — run the gates below; do not declare green while sitting on
    pre-existing failures.
 6. **Push** the feature branch: `git push -u origin <branch>` (with lease after a
-   rebase). Stop here unless explicitly asked to open/merge a PR.
+   rebase). Then `bun run check:head-has-run` — a push can silently produce no
+   run at all (bean `3pqn`), and zero checks looks exactly like checks-not-yet-
+   started. It does not change what you do; it changes what you can say in the
+   PR. `could not ask` is a third state, not a finding.
+   Stop here unless explicitly asked to open/merge a PR.
 
 ## Content-type-specific verification (the generalization point)
 
 After the generic gates, run the checks for **this folio's content type** (read
-`contentType` from `folio.config.json`; default to the platform's own checks).
+`contentType` from `<name>.config.json`; default to the platform's own checks).
 Prefer the MCP tools (structured findings) when connected; otherwise the scripts.
 
 **Always (platform):**

@@ -29,8 +29,21 @@ jobs:
   rust-api:
     name: cargo doc → /rust-api/
     runs-on: ubuntu-latest
+    # NO shared `gh-pages-push` group here, deliberately — see the retry below.
+    #
+    # #300 put all three of this workflow's jobs in that group and that was
+    # WRONG, for a reason its own commit message had already stated about a
+    # different case: GitHub cancels a PENDING job when a newer one queues for
+    # the same group. These three run in parallel with no `needs:`, so all
+    # three enter at once — one runs, one pends, and the third cancels the
+    # pending one. A lost publish EVERY RUN, and a cancelled job reads as
+    # intentional while a rejected push is at least red.
+    #
+    # Raised by a sibling session on PR #300 before it landed (bean `pdxk`,
+    # scrapped in favour of #300 but keeping this disagreement on the record)
+    # and merged without it being seen.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: dtolnay/rust-toolchain@stable
 
@@ -60,21 +73,52 @@ jobs:
           <a href="hecke_engine/index.html">redirecting to hecke_engine/</a>
           EOF
 
+      # A retry instead of a queue. Safe HERE specifically because the three
+      # jobs write to DIFFERENT directories under one `gh-pages` root with
+      # `keep_files: true`, so the action's re-clone and re-push loses nothing
+      # — it picks up whichever sibling won and adds its own tile beside it.
+      # That is not true in general and must not be copied without checking it.
       - uses: peaceiris/actions-gh-pages@v4
+        id: publish
+        continue-on-error: true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
           keep_files: true
           commit_message: 'docs(rust-api): cargo doc from ${{ github.sha }}'
 
+      # `continue-on-error` on the first attempt only: if the retry fails too
+      # it fails the job, because a lost publish must stay visible.
+      - name: Retry publish (a sibling job pushed to gh-pages first)
+        if: steps.publish.outcome == 'failure'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          keep_files: true
+          commit_message: 'docs(rust-api): cargo doc from ${{ github.sha }} (retry)'
+
   # ── 1f: Python API docs ─────────────────────────────────────────
   python-api:
     name: pdoc → /python-api/
     runs-on: ubuntu-latest
+    # NO shared `gh-pages-push` group here, deliberately — see the retry below.
+    #
+    # #300 put all three of this workflow's jobs in that group and that was
+    # WRONG, for a reason its own commit message had already stated about a
+    # different case: GitHub cancels a PENDING job when a newer one queues for
+    # the same group. These three run in parallel with no `needs:`, so all
+    # three enter at once — one runs, one pends, and the third cancels the
+    # pending one. A lost publish EVERY RUN, and a cancelled job reads as
+    # intentional while a rejected push is at least red.
+    #
+    # Raised by a sibling session on PR #300 before it landed (bean `pdxk`,
+    # scrapped in favour of #300 but keeping this disagreement on the record)
+    # and merged without it being seen.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
 
@@ -111,39 +155,94 @@ jobs:
           </ul>
           EOF
 
+      # A retry instead of a queue. Safe HERE specifically because the three
+      # jobs write to DIFFERENT directories under one `gh-pages` root with
+      # `keep_files: true`, so the action's re-clone and re-push loses nothing
+      # — it picks up whichever sibling won and adds its own tile beside it.
+      # That is not true in general and must not be copied without checking it.
       - uses: peaceiris/actions-gh-pages@v4
+        id: publish
+        continue-on-error: true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
           keep_files: true
           commit_message: 'docs(python-api): pdoc from ${{ github.sha }}'
 
+      # `continue-on-error` on the first attempt only: if the retry fails too
+      # it fails the job, because a lost publish must stay visible.
+      - name: Retry publish (a sibling job pushed to gh-pages first)
+        if: steps.publish.outcome == 'failure'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          keep_files: true
+          commit_message: 'docs(python-api): pdoc from ${{ github.sha }} (retry)'
+
   # ── 1g: TypeScript schema docs ──────────────────────────────────
   schema-docs:
     name: TypeDoc → /schema-docs/
     runs-on: ubuntu-latest
+    # NO shared `gh-pages-push` group here, deliberately — see the retry below.
+    #
+    # #300 put all three of this workflow's jobs in that group and that was
+    # WRONG, for a reason its own commit message had already stated about a
+    # different case: GitHub cancels a PENDING job when a newer one queues for
+    # the same group. These three run in parallel with no `needs:`, so all
+    # three enter at once — one runs, one pends, and the third cancels the
+    # pending one. A lost publish EVERY RUN, and a cancelled job reads as
+    # intentional while a rejected push is at least red.
+    #
+    # Raised by a sibling session on PR #300 before it landed (bean `pdxk`,
+    # scrapped in favour of #300 but keeping this disagreement on the record)
+    # and merged without it being seen.
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
       - name: Install + run TypeDoc
-        working-directory: folio-assistant
+        working-directory: cat-harness
         run: |
-          bun install || npm install
+          # Pinned 2026-09-26 (salvaged from #1040, bean u9r9). This step was an
+          # unpinned install with an npm fallback; `setup-bun` above has already
+          # installed bun, so the fallback was a runtime degradation that resolved
+          # unpinned behind a green step. No fallback: a pin that falls back
+          # swallows the failure it exists to raise. The old command is described
+          # rather than quoted because check:lockfile-pinning keys on command text.
+          bun install --frozen-lockfile
           # Use TypeDoc to document the schemas/ exports + adapters/paper/schemas/
-          npx typedoc \
+          npx --yes typedoc@0.28.20 \
             --out ../_site/schema-docs \
             --entryPointStrategy expand \
             --readme none \
             --hideGenerator \
             schemas/ adapters/paper/schemas/ 2>&1 | tail -20
 
+      # A retry instead of a queue. Safe HERE specifically because the three
+      # jobs write to DIFFERENT directories under one `gh-pages` root with
+      # `keep_files: true`, so the action's re-clone and re-push loses nothing
+      # — it picks up whichever sibling won and adds its own tile beside it.
+      # That is not true in general and must not be copied without checking it.
       - uses: peaceiris/actions-gh-pages@v4
+        id: publish
+        continue-on-error: true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
           keep_files: true
           commit_message: 'docs(schema-docs): TypeDoc from ${{ github.sha }}'
+
+      # `continue-on-error` on the first attempt only: if the retry fails too
+      # it fails the job, because a lost publish must stay visible.
+      - name: Retry publish (a sibling job pushed to gh-pages first)
+        if: steps.publish.outcome == 'failure'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          keep_files: true
+          commit_message: 'docs(schema-docs): TypeDoc from ${{ github.sha }} (retry)'

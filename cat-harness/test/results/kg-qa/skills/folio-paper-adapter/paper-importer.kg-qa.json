@@ -1,0 +1,56 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "paper-importer",
+    "path": "skills/folio-paper-adapter/paper-importer.md"
+  },
+  "source_hash": "ad1bfa9982a0",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-paper-adapter/paper-importer.md",
+          "detail": "348 lines; p75 of the skill corpus is 279."
+        }
+      ]
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 4,
+    "fail": 1,
+    "n/a": 1,
+    "unknown": 0
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/paper-importer.md",
+      "code": "cat-harness/skills/folio-paper-adapter/paper-importer.ts",
+      "prose_hash": "ad1bfa9982a0",
+      "code_hash": "fa3f5ca58029",
+      "by": "baseline"
+    }
+  ]
+}

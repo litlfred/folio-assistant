@@ -1,0 +1,42 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "requirement",
+    "id": "req:lean-verification",
+    "path": "skills/requirements/lean-verification.json"
+  },
+  "source_hash": "sha256:236bd030cd22eb3a56ff160d9e39fda75cfc7487ef3bcf1e433a3c9bfad3740c",
+  "criteria": {
+    "requirement-statement-satisfied": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "req:lean-verification/sorry-tracking",
+          "detail": "no skill or capability declares `satisfies: req:lean-verification#sorry-tracking` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:lean-verification/citation-match",
+          "detail": "no skill or capability declares `satisfies: req:lean-verification#citation-match` — nothing is recorded as discharging this statement."
+        }
+      ]
+    },
+    "requirement-actors-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-derived-from-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-statements-graded": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 3,
+    "fail": 1,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

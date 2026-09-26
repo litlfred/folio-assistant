@@ -1,0 +1,324 @@
+#!/usr/bin/env bun
+/**
+ * Conjectural-propagation audit (CLAUDE.md §3b + §3b-cond).
+ *
+ * Walks every block manifest under
+ * content/quantum-observable-universe/, builds the uses[] graph,
+ * and reports every `theorem`/`proposition`/`lemma`/`corollary`
+ * block whose uses[] cone transitively touches a `conj:` label.
+ *
+ * Per CLAUDE.md §3b: such blocks must be `conjecture` (or recast as
+ * `remark` with `interprets:`).
+ *
+ * §3b-cond exception (Option B substrate-axiom classification): a
+ * provable block may keep its kind iff every conjecture in its
+ * transitive cone has been **class-axiomatised** (Lean `class`
+ * declaration in the conjecture's `.lean` file). The audit
+ * separates such blocks into a "conditional-on-class" classification.
+ *
+ * Definitions are exempt — they name constructions, not logical
+ * claims.
+ */
+import { folioDir, deferResolution} from "../../schemas/cat-harness.js";
+import { readFile, readdir } from "node:fs/promises";
+import { join } from "node:path";
+import { leanPackageByName } from "../../schemas/lean-packages.ts";
+import { findContentRepoRoot } from "./repo-root";
+import { requirePaper } from "./repo-root";
+import { loadBlocksUnder, reportLoadFailures } from "./block-module";
+import type { BlockLoadFailure } from "./block-module";
+import { paperArg } from "./cli-args";
+import { siteDirFor } from "../../schemas/cat-harness.ts";
+
+/** Blocks that would not import. Surfaced, never silently dropped. */
+const LOAD_FAILURES: BlockLoadFailure[] = [];
+
+// Resolve repo root from this script's location:
+// content/pipeline/conjectural-propagation-audit.ts → repo root.
+// Was rooted at this file's own location, which is the PLATFORM — but every
+// path below is folio content. `findContentRepoRoot()` walks up from cwd;
+// it must not use `import.meta.dir`, which resolves back through a folio's
+// `folio-assistant/` symlink to the platform.
+const REPO_ROOT = findContentRepoRoot();
+// Was a hardcoded folio paper name in PLATFORM code; see `requirePaper`.
+// `--paper <name>` (not a positional): several of these scripts already
+// use argv[2] for an output path or a `--strict` flag, so a positional
+// would collide. Matches `extract-status-sections.ts`.
+const _paperArg = paperArg();
+const ROOT = deferResolution(() => join(folioDir(REPO_ROOT),  requirePaper(_paperArg)), {
+  moduleUrl: import.meta.url,
+  what: "ROOT",
+  under: REPO_ROOT,
+});
+// First non-flag argument. `process.argv[2]` alone would pick up `--paper`
+// (or its value), which is how this script came to write its witness to a
+// file literally named `--paper`.
+const _positional = (() => {
+  const a = process.argv.slice(2);
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] === "--paper") { i++; continue; }
+    if (a[i].startsWith("--")) continue;
+    return a[i];
+  }
+  return undefined;
+})();
+const WITNESS_OUT = _positional ??
+  join(REPO_ROOT, siteDirFor(REPO_ROOT), "audits/2026-05-01-p3-1-conjectural-propagation.witness.json");
+
+interface Block {
+  label: string;
+  kind: string;
+  uses: string[];
+  file: string;
+}
+
+const PROVABLE = new Set(["theorem", "proposition", "lemma", "corollary"]);
+
+/**
+ * Detect whether a conjecture has been class-axiomatised per
+ * CLAUDE.md §3b-cond. Returns true iff EITHER:
+ *   (a) the `.lean` sibling contains a `class` declaration, OR
+ *   (b) the lean.ref-resolved file under `<paper>/lean/<Decl/Path>.lean`
+ *       contains a `class` declaration, or
+ *   (c) the file that actually *declares* the ref's final segment,
+ *       located by searching the package's Lake root, contains one.
+ *
+ * The fallback (b) is needed because not every block keeps its
+ * Lean implementation as a direct sibling — many live under the
+ * Lake-package directory structure (qou:QOU.X.Y → lean/QOU/X/Y.lean).
+ *
+ * (c) is needed because a `lean.ref` is a **namespace + declaration**
+ * path, not a file path, and (b) appends the declaration name as a
+ * final path segment. That only resolves when the file happens to be
+ * named after the declaration it holds. Measured on
+ * `content/quantum-observable-universe` (2026-09-03): (b) resolved to a
+ * **non-existent** file for all seven conjectures then reported as
+ * blocking, and three of those seven — `GradedMarkovTraceExistence`
+ * (`QOU/IwahoriHecke/MarkovTrace.lean:93`), `KashaevSurreal`
+ * (`QOU/AppendixSurreals/Conjectures.lean:463`) and
+ * `TowerGeometricLowerBound`
+ * (`QOU/Mass/LevelSelectionLogarithmic.lean:48`) — already had exactly
+ * the `class` the audit was reporting as absent. This is candidate (3),
+ * the grep fallback, of the `lean.ref` resolution order the content
+ * convention already specifies (AGENTS.md §0a); the audit implemented
+ * only (1) and (2).
+ *
+ * Note the blast radius is smaller than the false-positive count: those
+ * three accounted for 22 conjecture-instances but only **5** violator
+ * blocks, because most of the affected blocks are independently blocked
+ * by a genuinely un-axiomatised conjecture in the same cone.
+ */
+/**
+ * Every `.lean` under a Lake root, cached per root. Built once and
+ * reused: (c) below would otherwise walk the tree per conjecture.
+ */
+const LEAN_FILES = new Map<string, string[]>();
+async function leanFilesUnder(root: string): Promise<string[]> {
+  const hit = LEAN_FILES.get(root);
+  if (hit) return hit;
+  const out: string[] = [];
+  const walk = async (dir: string) => {
+    let entries;
+    try { entries = await readdir(dir, { withFileTypes: true }); }
+    catch { return; }
+    for (const e of entries) {
+      if (e.name === ".lake" || e.name === "build") continue;
+      const p = join(dir, e.name);
+      if (e.isDirectory()) await walk(p);
+      else if (e.name.endsWith(".lean")) out.push(p);
+    }
+  };
+  await walk(root);
+  LEAN_FILES.set(root, out);
+  return out;
+}
+
+async function isClassAxiomatised(conjBlock: Block): Promise<boolean> {
+  const checkText = (text: string) => /\bclass\s+\w+/.test(text);
+
+  // (a) sibling .lean
+  const sibling = conjBlock.file.replace(/\.ts$/, ".lean");
+  try {
+    const text = await readFile(sibling, "utf8");
+    if (checkText(text)) return true;
+  } catch { /* sibling absent — try (b) */ }
+
+  // (b) lean.ref path: parse the .ts for `ref: "<pkg>:<Decl.Path>"`
+  // and resolve <pkg> via the LEAN_PACKAGES registry to get the
+  // Lake-root directory (e.g. "content/quantum-observable-universe/lean").
+  try {
+    const tsText = await readFile(conjBlock.file, "utf8");
+    const refMatch = tsText.match(/ref:\s*"([^:"]+):([^"]+)"/);
+    if (!refMatch) return false;
+    const pkgName = refMatch[1];
+    const declPath = refMatch[2];           // e.g. "QOU.Archimedean.Foo"
+    const pkg = leanPackageByName(pkgName);
+    if (!pkg) return false;
+    const leanFile = join(
+      REPO_ROOT,
+      pkg.lakeRoot,
+      declPath.replace(/\./g, "/") + ".lean",
+    );
+    try {
+      const text = await readFile(leanFile, "utf8");
+      return checkText(text);
+    } catch { /* (b) missed — a lean.ref is a namespace path, not a
+                 file path. Fall through to the grep fallback. */ }
+
+    // (c) grep fallback: find the file that declares the ref's final
+    // segment. Matches the `lean.ref` resolution order in AGENTS.md §0a.
+    const decl = declPath.split(".").pop()!;
+    if (!decl) return false;
+    const declRe = new RegExp(
+      String.raw`^\s*(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+|scoped\s+)*` +
+      String.raw`(?:class|structure|theorem|lemma|def|abbrev|instance|axiom|opaque)\s+` +
+      escapeRe(decl) + String.raw`\b`,
+      "m",
+    );
+    for (const f of await leanFilesUnder(join(REPO_ROOT, pkg.lakeRoot))) {
+      let text: string;
+      try { text = await readFile(f, "utf8"); } catch { continue; }
+      if (declRe.test(text)) return checkText(text);
+    }
+    return false;
+  } catch {
+    return false;
+  }
+}
+
+/** Escape a declaration name for use inside a RegExp. */
+function escapeRe(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * Import each block rather than scanning its source.
+ *
+ * The note here used to read "Crude but sufficient parse … Avoid running
+ * TS — too slow + needs deps." Measured on a 300-block corpus: the scan
+ * took 34 ms and skipped 149 of them; importing took 197 ms and skipped
+ * none. 0.66 ms per block is not too slow for an audit, and Bun needs no
+ * dependency to import TypeScript.
+ *
+ * The 149 were `algorithm`, `proof` and `table` blocks — the regex
+ * listed twelve of the fifteen kinds in `Block`. A `proof` block
+ * invisible to the *conjectural propagation* audit is the sharp end of
+ * that: this audit exists to trace what rests on a conjecture.
+ */
+async function loadAll(): Promise<Map<string, Block>> {
+  const { blocks, failures } = await loadBlocksUnder(ROOT());
+  if (reportLoadFailures(failures)) LOAD_FAILURES.push(...failures);
+  return blocks;
+}
+
+function transitivelyTouchesConjecture(
+  start: string,
+  blocks: Map<string, Block>,
+  cache: Map<string, Set<string>>,
+): Set<string> {
+  if (cache.has(start)) return cache.get(start)!;
+  const visited = new Set<string>();
+  const conjAncestors = new Set<string>();
+  const stack = [start];
+  while (stack.length) {
+    const cur = stack.pop()!;
+    if (visited.has(cur)) continue;
+    visited.add(cur);
+    const block = blocks.get(cur);
+    if (!block) continue;
+    for (const u of block.uses) {
+      // Skip cross-paper / external refs (paper-dir:label or https).
+      if (u.includes(":") && !u.startsWith("conj:") && !u.startsWith("def:")
+          && !u.startsWith("thm:") && !u.startsWith("prop:")
+          && !u.startsWith("lem:") && !u.startsWith("cor:")
+          && !u.startsWith("rem:") && !u.startsWith("ex:")
+          && !u.startsWith("sim:") && !u.startsWith("eq:")) {
+        continue; // qualified cross-paper ref or URL
+      }
+      if (u.startsWith("conj:")) conjAncestors.add(u);
+      if (!visited.has(u)) stack.push(u);
+    }
+  }
+  cache.set(start, conjAncestors);
+  return conjAncestors;
+}
+
+const blocks = await loadAll();
+console.log(`Loaded ${blocks.size} blocks.`);
+
+// Build set of class-axiomatised conjectures (per §3b-cond).
+// Parallelize file I/O — sequential await would scale poorly with
+// the number of conjectures.
+const classAxiomatised = new Set<string>();
+await Promise.all(
+  [...blocks].filter(([_, block]) => block.kind === "conjecture")
+    .map(async ([label, block]) => {
+      if (await isClassAxiomatised(block)) classAxiomatised.add(label);
+    })
+);
+console.log(`Class-axiomatised conjectures (§3b-cond eligible): ${classAxiomatised.size}`);
+for (const c of [...classAxiomatised].sort()) console.log(`  ${c}`);
+
+const cache = new Map<string, Set<string>>();
+const violators: { label: string; kind: string; conj: string[]; file: string }[] = [];
+const conditional: { label: string; kind: string; conj: string[]; file: string }[] = [];
+for (const [label, block] of blocks) {
+  if (!PROVABLE.has(block.kind)) continue;
+  const conjAncestors = transitivelyTouchesConjecture(label, blocks, cache);
+  if (conjAncestors.size === 0) continue;
+  // §3b-cond eligible iff every conjecture in cone is class-axiomatised
+  const allClassAxiomatised = [...conjAncestors].every((c) =>
+    classAxiomatised.has(c));
+  const entry = {
+    label,
+    kind: block.kind,
+    conj: [...conjAncestors],
+    file: block.file.replace(REPO_ROOT + "/", ""),
+  };
+  if (allClassAxiomatised) conditional.push(entry);
+  else violators.push(entry);
+}
+
+violators.sort((a, b) => a.label.localeCompare(b.label));
+conditional.sort((a, b) => a.label.localeCompare(b.label));
+console.log(`\nViolators (cone touches non-class-axiomatised conjecture): ${violators.length}`);
+console.log(`Conditional-on-class (cone fully class-axiomatised): ${conditional.length}`);
+console.log();
+if (conditional.length > 0) {
+  console.log(`--- Conditional-on-class (eligible under §3b-cond) ---`);
+  for (const v of conditional.slice(0, 20)) {
+    console.log(`  ${v.kind.padEnd(11)} ${v.label.padEnd(60)} via {${v.conj.join(", ")}}`);
+  }
+  if (conditional.length > 20) console.log(`  … (${conditional.length - 20} more)`);
+  console.log();
+}
+console.log(`--- Violators (require demotion to conjecture or class-axiomatisation) ---`);
+for (const v of violators.slice(0, 20)) {
+  console.log(`  ${v.kind.padEnd(11)} ${v.label.padEnd(60)} via {${v.conj.slice(0, 3).join(", ")}${v.conj.length > 3 ? ", …" : ""}}`);
+}
+if (violators.length > 20) console.log(`  … (${violators.length - 20} more)`);
+
+// Also emit a witness JSON.
+await Bun.write(
+  WITNESS_OUT,
+  JSON.stringify(
+    {
+      audit: "conjectural-propagation (CLAUDE.md §3b + §3b-cond)",
+      generated: new Date().toISOString(),
+      total_blocks: blocks.size,
+      // Coverage, in the artifact itself: a consumer must be able to see
+      // that this run did not read the whole corpus. `0` is a claim; the
+      // field's absence used to be one too, silently.
+      blocks_failed_to_load: LOAD_FAILURES.length,
+      failed_to_load: LOAD_FAILURES.map((f) => f.file),
+      class_axiomatised_conjectures: [...classAxiomatised].sort(),
+      provable_blocks_touching_conjecture:
+        violators.length + conditional.length,
+      violators,
+      conditional_on_class: conditional,
+    },
+    null,
+    2,
+  ),
+);
+console.log(`\nWitness: ${WITNESS_OUT.replace(REPO_ROOT + "/", "")}`);

@@ -1,8 +1,6 @@
 ---
 name: language-trap-agent-audit
 description: Thorough per-block agentic audit of the ten language-trap categories (owner spec 2026-08-15) — full-context judgement over every prose-bearing content block, agent reviewer entries in the QA sidecar, small fixes applied inline, structural fixes flagged.
-roles:
-  - collaborator
 ---
 
 # /language-trap-agent-audit — per-block agentic trap audit

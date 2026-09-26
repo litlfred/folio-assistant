@@ -1,12 +1,18 @@
 {
   "id": "clinical-sme",
-  "name": "Clinical Subject Matter Expert",
-  "type": "person",
+  "title": "Clinical Subject Matter Expert",
+  "kind": "person",
   "description": "Clinical validator and ground-truth provider who ensures clinical accuracy and completeness of authored content.",
-  "inherits": ["reviewer"],
-  "capabilities": ["clinical-validation"],
+  "roles": [
+    "clinical-sme"
+  ],
+  "capabilities": [],
   "meta": {
     "smartBaseAnalog": "SGAuthoring.Persona.ClinicalSME",
-    "lifecycle": ["validate", "review", "feedback"]
+    "lifecycle": [
+      "validate",
+      "review",
+      "feedback"
+    ]
   }
 }

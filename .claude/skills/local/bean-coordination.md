@@ -1,62 +1,21 @@
-# Bean Coordination — multi-agent work-plan discipline
+# bean-coordination — see `skills/folio-core/`
 
-Canonical, repo-agnostic coordination skill for agents sharing a `beans`
-work-plan (see `.claude/skills/local/todo-manager.md` for what beans are and the
-core commands). This is the **generic source of truth**; downstream repos (e.g.
-qou) vendor or sync it rather than hand-maintaining their own copy.
+**This is a stub. The skill lives in the `kg` graph, not here.**
 
-The problem this solves: several agent sessions run in parallel against the same
-repo, each in its own `claude/*` branch and ephemeral container. Without
-discipline they duplicate work, clobber each other's queues, or resolve items a
-sibling is mid-flight on. Beans are durable (committed) and therefore the shared
-substrate for coordinating across sessions.
+`skill_fetch("bean-coordination")` serves
+[`skills/folio-core/bean-coordination.md`](../../../skills/folio-core/bean-coordination.md)
+— `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` holds `skills/folio-core` and
+no `.claude/skills/local` entry.
 
-## Lifecycle of a coordinated work item
+A 62-line hand-authored copy sat here until 2026-09-19. It described *itself* as
+"the generic source of truth" from which downstream repos sync, which was
+measurably wrong for the reason above, and it lacked
+§"A claim is branch-local" — the rule that a claim announces rather than
+reserves, after two sessions claimed one bean 61 seconds apart and shipped two
+PRs for it. Its `## Lifecycle of a coordinated work item`, including the rule
+that stopping mid-flight leaves the bean `in-progress` with a note on where you
+got to, was ported into the servable copy first; nothing was dropped. Bean
+`tdmg`.
 
-1. **Prime** — at session start, read the current work-plan
-   (`beans prime` + `beans list`, or the CLI-independent fallback that parses
-   `.beans/` directly). Know what is open and what siblings are touching.
-2. **Declare intent + claim** — before starting work, set the bean
-   `in-progress`. The claim is durable and visible to siblings, so two sessions
-   don't pick the same probe. Add a short note naming your branch.
-3. **Work** — keep the bean current; append status notes as you progress. Do not
-   fork the bean into a parallel `todos/*.json` queue — link to any bulk queue
-   from the bean instead.
-4. **Hand off or finish** — on landing, close the bean and update any cross-repo
-   ownership note. If you stop mid-flight, leave the bean `in-progress` with a
-   note on where you got to, so the next session can resume.
-
-## Rules
-
-- **Claim before you work.** An unclaimed bean is fair game for any session;
-  a claimed one is not. Respect sibling claims.
-- **Agents create and `in-progress`; they do not resolve others' items.** Only
-  close a bean you own or were handed. Never delete a sibling's bean.
-- **`beans ≠ sidecars`.** Never `beans create` a QA (`*.qa.json`) or witness
-  (`*.witness.json`) queue, or any bulk machine-generated queue. Those stay as
-  bulk JSON read by their own tooling.
-- **Move wiring and script together.** When relocating a hook-backed script or a
-  queue, repoint every reference (docs, hooks, code readers) in the same change.
-  A reference without its backing file — or a file no reference points at — is
-  the migration failure mode to avoid.
-- **One source of truth per concern.** If a goal has a bulk queue, the bean is
-  the index and the queue is the data; don't duplicate state across both.
-
-## Session-start coordination sweep
-
-A session-start surface should, without disrupting the user-facing flow:
-- fetch the default branch and note how far it has moved since this branch
-  diverged;
-- summarize recent sibling `claude/*` branch activity;
-- surface the current bean work-plan (`beans prime`), with a CLI-independent
-  fallback for fresh containers that boot without the CLI on `PATH`.
-
-Heavy triage (reading every new commit, every sibling PR) belongs in a
-background subagent, not the foreground. Escalate to the user only when the
-sweep surfaces something actionable against the current work-plan.
-
-## Cross-repo ownership
-
-When this skill or the installer changes, the generic version here is canonical;
-downstream repos sync from it. On landing a coordination change that affects a
-downstream repo, update that repo's ownership note and close the tracking beans.
+Same discipline as `CLAUDE.md` and `GEMINI.md`: one source of truth, thin
+pointers to it. Do not re-add content here — edit the skill.

@@ -1,0 +1,97 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:ar/index",
+  "block": "Home",
+  "locale": "ar",
+  "paths": {
+    "md": "docs/index.md"
+  },
+  "po": "translations/ar/index.po",
+  "source_hashes": {
+    "md": "f45341639950",
+    "po": "3ffef16e37c9"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "f45341639950",
+          "po": "3ffef16e37c9"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "2cae133afe47",
+          "script_commit_sha": "92d79fc7e591fbcdc33c7239860a59ff8788b4cb"
+        },
+        "reviewed_at": "2026-09-25T18:37:27.661Z",
+        "reviewed_sha": "27bbe6636244b5cda07ea800c52c09d94b166229",
+        "severity": "minor",
+        "metrics": {
+          "translated": 36,
+          "total": 47,
+          "pct": 77
+        },
+        "notes": "11 of 47 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "f45341639950",
+          "po": "3ffef16e37c9"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "2cae133afe47",
+          "script_commit_sha": "92d79fc7e591fbcdc33c7239860a59ff8788b4cb"
+        },
+        "reviewed_at": "2026-09-25T18:37:27.672Z",
+        "reviewed_sha": "27bbe6636244b5cda07ea800c52c09d94b166229",
+        "metrics": {
+          "checked": 36,
+          "missing": 0,
+          "missing_strict": 0,
+          "missing_acronyms": 0,
+          "glossary_broken": 0,
+          "glossary_resolved": 9
+        },
+        "notes": "9 further acronym(s) are absent verbatim and the glossary accounts for each: WHO — the glossary marks it localised, so an absent verbatim form is expected; LLM — the glossary marks it localised, so an absent verbatim form is expected; WHO — the glossary marks it localised, so an absent verbatim form is expected; WHO — the glossary marks it localised, so an absent verbatim form is expected; LLM — the glossary marks it localised, so an absent verbatim form is expected; LLM — the glossary marks it localised, so an absent verbatim form is expected; LLM — the glossary marks it localised, so an absent verbatim form is expected; LLM — the glossary marks it localised, so an absent verbatim form is expected; API — the glossary marks it localised, so an absent verbatim form is expected."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "f45341639950",
+          "po": "3ffef16e37c9"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "2cae133afe47",
+          "script_commit_sha": "92d79fc7e591fbcdc33c7239860a59ff8788b4cb"
+        },
+        "reviewed_at": "2026-09-25T18:37:27.680Z",
+        "reviewed_sha": "27bbe6636244b5cda07ea800c52c09d94b166229",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 1,
+          "translated": 36
+        },
+        "notes": "1 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-09-25T18:37:27.682Z"
+}

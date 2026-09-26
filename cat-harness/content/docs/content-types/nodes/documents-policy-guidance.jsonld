@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "site/content-types/nodes/documents-policy-guidance",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "label": "documents-policy-guidance",
+  "provenance": "authored",
+  "title": "Documents & policy guidance",
+  "text": "documents-policy-guidance-lead.md",
+  "sourceDocument": "processes/authoring-a-document.bpmn",
+  "meta": {
+    "assetKind": "bpmn",
+    "rendered": "assets/img/workflows/authoring-a-document.svg",
+    "alt": "BPMN swimlane diagram of document authoring: the author plans, the plan is seeded as beans, an agent scaffolds the folio and authors blocks, the build pipeline checks the declared profile before validating and rendering to Markdown, HTML and PDF, and a reviewer gates publication.",
+    "sourceDir": "content/docs/content-types"
+  }
+}

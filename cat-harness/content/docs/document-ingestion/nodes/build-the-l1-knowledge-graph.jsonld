@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "site/document-ingestion/nodes/build-the-l1-knowledge-graph",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "label": "build-the-l1-knowledge-graph",
+  "provenance": "authored",
+  "title": "Build the L1 knowledge graph",
+  "text": "build-the-l1-knowledge-graph.md",
+  "sourceDocument": "processes/ingest-build-l1-kg.bpmn",
+  "meta": {
+    "assetKind": "bpmn",
+    "rendered": "assets/img/workflows/ingest-build-l1-kg.svg",
+    "alt": "BPMN diagram: the engine writes a Dublin Core record, then a manifest referencing it, then the assets array with local paths or remote URLs, then binds the folder name to the bibliography slug; the corpus lane links the resulting L1 nodes into the knowledge graph.",
+    "sourceDir": "content/docs/document-ingestion"
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "_comment": "The bootstrap instance. It declares two directories — `skills/` and `workflows/` — because discovery reads declarations rather than walking the tree, and an undeclared directory is not this instance's graph however many files sit in it. TWO processes live here and exactly one of them is an ENTRY POINT: `workflows/initialize-harness.bpmn`. A Bootstrapping Agent that has read README.md is at its start event with nowhere else to begin. `workflows/log-message.bpmn` is the other, and it is an independent SUB-PROCESS — reached only by a callActivity from a step, never started — so it does not compete with the first for being the thing you begin. The constraint was never 'one file'; it is that there is one place to start. Cat-harness is composed ON TOP of this rather than being its parent, which is why nothing here may import from it.",
+  "name": "bootstrap",
+  "version": "0.1.0",
+  "_title_comment": "The display name. `name` stays the identifier that file names use; `title` is what a person reads.",
+  "title": "Bootstrap",
+  "description": "The graph an agent reads before it knows what this repository is.",
+  "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — bootstrap",
+      "description": "Phase one of two. Valid with nothing installed: no skills, no knowledge graph, no MCP, no beans. The default behaviour of initialisation is to copy this file, and the last bootstrap step re-enters through the installed harness, which is what supplies phase two. No `source` because this is the origin — an absent source means authored here, which is a different fact from an upstream that cannot be reached."
+    },
+    {
+      "id": "readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "bootstrap",
+      "description": "The flow, with every term linked to the schema that defines it. Self-documenting on GitHub: a person landing on the directory reads the thing itself rather than a pointer to a site."
+    }
+  ],
+  "_directories_comment": "ONE entry, and it is a subdirectory rather than `bootstrap/` itself. `isSkillMd` is declaration-over-location: a markdown file that does NOT declare `$schema:` is a skill. README.md and AGENTS.md declare neither, so a graph rooted at `bootstrap/` would count this instance's two DECLARED ASSETS as skill nodes — the instance has already said what those files are, and a scan would contradict its own declaration. Keeping the graph one level down means the two mechanisms cannot collide. Declared explicitly rather than relying on DEFAULT_DIRECTORIES: a declaration that exists is honoured as written, so defaults do not apply to an instance that declares anything at all.",
+  "stickies": [
+    {
+      "_comment": "bootstrap's own card on a Harness's landing board. Order 90 puts it last: a layer can state only its own priority. It links to bootstrap's source and its README, because bootstrap has no site of its own.",
+      "id": "bootstrap",
+      "order": 90,
+      "theme": "bootstrap",
+      "summary": "Before you know what this repository is",
+      "bodyFrom": "description",
+      "links": [
+        {
+          "label": "bootstrap, in the source",
+          "href": "https://github.com/litlfred/folio-assistant/tree/main/bootstrap",
+          "note": "One process lives here and only one: workflows/initialize-harness.bpmn."
+        },
+        {
+          "label": "RTFM — the bootstrap docs",
+          "href": "https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md",
+          "note": "The flow, with every term linked to the schema that defines it."
+        }
+      ],
+      "text": {
+        "box": {
+          "x": 0.09,
+          "y": 0.13,
+          "w": 0.82,
+          "h": 0.42
+        },
+        "scale": 0.82
+      },
+      "bodyAppend": "**Scope:** phase one of two, and valid with NOTHING installed — no skills, no knowledge graph, no MCP, no beans. One process lives here and only one. Everything else is composed on top of it, and nothing here may import from the layer above."
+    }
+  ],
+  "directories": [
+    {
+      "id": "skills",
+      "path": "skills/",
+      "dependents": "skip",
+      "graphKinds": [
+        "skills"
+      ]
+    },
+    {
+      "id": "schemas",
+      "path": "schemas/",
+      "dependents": "skip",
+      "description": "The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and output of the discussion Process. Their published `$id`s do not change when a file moves.",
+      "graphKinds": [
+        "schemas"
+      ]
+    },
+    {
+      "id": "scenarios",
+      "path": "scenarios/",
+      "dependents": "reproduce",
+      "description": "bootstrap's four Roles: Bootstrapping Agent, Requestor, Knowledge Graph Data Store and Logger.",
+      "graphKinds": [
+        "scenarios"
+      ]
+    },
+    {
+      "id": "processes",
+      "path": "processes/",
+      "dependents": "skip",
+      "description": "bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to ask the Requestor; and `log-message.bpmn`, which any step may call to record what it is doing. `ns.jsonld` defines the elements these diagrams add to BPMN (skill, role, precondition), written with the prefix `bootstrap.processes:`.",
+      "graphKinds": [
+        "processes"
+      ]
+    },
+    {
+      "id": "models",
+      "path": "models/",
+      "dependents": "skip",
+      "description": "Which languages a model is good at, and whether anybody checked. In BOOTSTRAP for the reason everything else here is: an agent reaching for the language it should communicate in has not yet loaded the harness that would otherwise answer, so a registry one layer up would be unreachable in exactly the case it exists for. `context`: read when a session opens, never written by a process — a person grants a validation, an agent never does, because a model's own claim about its languages is the thing the validation state exists to distrust.",
+      "graphKinds": [
+        "models"
+      ]
+    },
+    {
+      "id": "swimlane-glossary",
+      "path": "glossary/",
+      "dependents": "skip",
+      "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived — that a concept was once minted — is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
+      "graphKinds": [
+        "swimlane-glossary"
+      ]
+    },
+    {
+      "id": "bootstrap-translations",
+      "path": "translations/",
+      "dependents": "reproduce",
+      "description": "Translation templates (`.pot`) for bootstrap's Process diagrams, one directory per target language.",
+      "graphKinds": [
+        "translation-sources"
+      ]
+    }
+  ],
+  "renderExemption": {
+    "_comment": "Owner, 2026-09-20, verbatim: \"it is exception to harness/layer not having visualtion/workflow visualizer. but it must have its json/jsonld... that is its existence.\" Declared here rather than hardcoded in the `2krx` checker, because a checker that names one instance states a rule true only for the instance somebody remembered. `owes` is required by the schema: an exemption with no substitute is a hole, and bootstrap is not dropping out of the requirement — it is trading a criterion it could fail quietly for one it cannot.",
+    "of": [
+      "visualiser",
+      "workflow-visualiser"
+    ],
+    "reason": "bootstrap is what an agent reads before it knows what a repository is, with nothing installed: no Skills beyond its own, no Knowledge Graph loaded, no server and no Tools. So it renders nothing for a person to browse.",
+    "owes": "Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
+    "reachableAt": "README.md",
+    "_reachableAt_comment": "Where a person is sent to read about bootstrap, since bootstrap renders no pages of its own: its own README, relative to this directory. The site build publishes bootstrap's files as they sit, with each `.md` also rendered as `.html`, so the link stays inside bootstrap."
+  },
+  "_needs_comment": "The layer this instance sits on. Owner, 2026-09-20: \"So bootsteap, cat harness, fa-core, f-a, from bottom to top.\" Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first. An EMPTY list is an assertion that this instance sits on nothing — the floor — while an ABSENT one means nobody has said, and the two are different answers.",
+  "needs": []
+}

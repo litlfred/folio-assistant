@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+                  id="Definitions_Process_FeatureStaging" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:collaboration id="Collaboration_Process_FeatureStaging">
+    <bpmn:participant id="Participant_Process_FeatureStaging" name="Staging a feature branch preview, and taking it down" processRef="Process_FeatureStaging"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_FeatureStaging" name="Staging a feature branch preview, and taking it down" isExecutable="false">
+    <bpmn:documentation>THE LIFECYCLE OF A REVIEW PREVIEW, drawn rather than described. Bean `7yvd`, owner: &quot;make sure all workflows documented as bpmn&quot;. This is the first `.github/workflows/*.yml` documented here, and it was chosen because its shape was the least visible: three jobs, eight `if:` branches, a confirmation gate and a deletion trigger, written down only in a sixty-line YAML comment.&#10;&#10;Three entry points, and they are three different processes sharing a file. A pull request opened or pushed to STAGES a preview. A pull request CLOSED asks whether the preview should go. A dispatch removes ONE preview that the first two can no longer reach — bean `w2g5`: the health sweep can only ever report a preview whose pull request is already closed, so by the time anybody reads the finding the event has fired, the job has run and the label was absent. Labelling afterwards fires nothing.&#10;&#10;TWO GATEWAYS, and both are three-state rather than yes/no. `Removal confirmed?` reads a merge as confirmation in its own right (bean `1feu`) while still requiring a label for a close without a merge. `Still in use?` refuses on a live signal AND on could-not-tell, because a preflight that has gone blind must not read as permission.&#10;&#10;EVERY PATH THAT CHANGES `STAGING/` WRITES TO THE RENDER LOG, and the two removal paths write the record in the SAME COMMIT as the removal. A separate log push can fail alone and leave a preview that vanished with nothing saying why, which is the state bean `plj1` left the publish branch in for months.&#10;&#10;The single human step is the dispatch confirmation. Everything else is mechanical, which is what makes `build-pipeline` the right lane rather than a convenient one.</bpmn:documentation>
+    <bpmn:laneSet id="LaneSet_Process_FeatureStaging">
+      <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
+        <bpmn:documentation>Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes `STAGING/` writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Start_PR</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Build</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Deploy</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_LogRendered</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Comment</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Staged</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Start_Closed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Slug</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Confirmed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Remove</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Removed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_LogRetained</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Notice</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Retained</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Start_Dispatch</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Validate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Preflight</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Live</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RemoveDisp</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_RemovedDisp</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Refused</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Human" name="Human actor">
+        <bpmn:documentation>The only lane whose actor cannot be a machine — `deletion-requires-confirmation` is not satisfied by a click, so H_Confirm must repeat the slug rather than approve generically, which is what stops a confirmation from an earlier run being replayed against a different preview. It precedes Start_Dispatch rather than following it, so the dispatch entry point cannot fire at all until this lane has acted.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="user"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>H_Confirm</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_PR" name="Pull request opened,&#10;synchronised or reopened">
+      <bpmn:outgoing>Flow_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_Build" name="Build the docs site&#10;Jekyll · TypeDoc · KG export">
+      <bpmn:documentation>Build the preview from the PR's head: regenerate the generated docs, trim what this preview does not need, render the BPMN diagrams, then Jekyll, TypeDoc and the knowledge-graph export, with the staging banner and SEO identity claims stripped.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="feature-staging"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Deploy" name="Publish to&#10;STAGING/&amp;lt;slug&amp;gt;">
+      <bpmn:documentation>`keep_files: true` and a `destination_dir`, so this push adds one directory beside whatever else is on the branch. It is also RETRIED once: five other workflows push to `gh-pages` without joining this one&#x27;s concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="feature-staging"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_LogRendered" name="Append `rendered`&#10;to the render log">
+      <bpmn:documentation>Its OWN commit, not part of the deploy. The publish action writes only into `destination_dir`, so an entry riding in `_site` would land at `STAGING/&lt;slug&gt;/_render-log/` — inside the directory a cleanup removes, which is the one place a record of the removal must not be. `continue-on-error`: a preview that deployed and whose entry did not is a gap in the record, not a failed deploy.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="render-logging"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Comment" name="Comment the preview&#10;URL on the PR">
+      <bpmn:documentation>Post, or update in place, one comment on the PR giving the preview URL (STAGING/&lt;slug&gt;/) and the commit it was built from. Pull-request events only.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="staging-review"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Staged" name="Preview live">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="Start_Closed" name="Pull request&#10;closed">
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_Slug" name="Derive the slug&#10;from the head ref">
+      <bpmn:documentation>Derive the slug from the PR's head ref: every character outside [a-zA-Z0-9._-] becomes '-', runs of '-' collapse, and leading or trailing '-' is trimmed. It must be one safe path segment, checked by value.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="feature-staging"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="GW_Confirmed" name="Removal&#10;confirmed?">
+      <bpmn:documentation>THREE inputs, two outcomes, and bean `1feu` set the split: a MERGED pull request needs no label, because the merge IS the confirmation — a person decided the content belongs on `main`, which says more about the preview than a label does. A pull request closed WITHOUT merging still needs `staging:cleanup`, because there the preview is the only rendering of that work: not redundant, the last copy.&#10;&#10;The branch taken is emitted as `reason=merged | labelled | closed-unmerged-and-unlabelled` and written into the log entry, so an audit of a removal can tell which rule did it.</bpmn:documentation>
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_Remove" name="Remove the preview AND&#10;append `removed` — one commit">
+      <bpmn:documentation>ONE COMMIT for the removal and its record. A separate log push can fail on its own and leave a preview that vanished with nothing saying why — which is the exact state bean `plj1` left the branch in. `render-log.ts` refuses a `removed` entry with no reason, so this step fails loudly rather than writing a record that says an artefact went and not why.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Removed" name="Preview gone,&#10;with its reason">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Task_LogRetained" name="Append `retained`,&#10;with why it stays">
+      <bpmn:documentation>The event that makes the log worth reading. A removal was CONSIDERED and refused; without an entry that leaves no trace on the branch at all, and the next person asking *&quot;why is this preview still up&quot;* has only a comment on a pull request that may itself be closed.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="render-logging"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Notice" name="Post the retention&#10;notice on the PR">
+      <bpmn:documentation>Removal was not confirmed, so the preview stays: post a retention notice on the PR giving its URL and saying it has NOT been removed, and the two ways to remove it: the staging:cleanup label while the PR is open, or, once it is closed, a Run workflow dispatch with cleanup_slug and a matching cleanup_confirm.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="staging-review"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_11</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Retained" name="Preview kept">
+      <bpmn:incoming>Flow_11</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="Start_Dispatch" name="Dispatched with&#10;cleanup_slug">
+      <bpmn:incoming>Flow_18</bpmn:incoming>
+      <bpmn:outgoing>Flow_12</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_Validate" name="Check the slug&#x27;s SHAPE and&#10;that the confirmation repeats it">
+      <bpmn:documentation>Guarded three ways because a dispatch input is a DELETION TRIGGER. `workflow_dispatch` is available only to an actor with write access; the slug must match exactly the characters the sed pipeline can produce, with `.` and `..` refused by name; and the confirmation must repeat the slug, so a confirmation cannot be carried over from an earlier run against a different preview.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_13</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Preflight" name="Re-evaluate liveness&#10;AT REMOVAL TIME">
+      <bpmn:documentation>Re-evaluated AT REMOVAL TIME, through the same `previewLiveness` the health sweep uses rather than a second implementation of it. The sweep runs daily and proposes; this acts. Between them a branch can come back to life — bean `w2g5` documents exactly that, a session reusing one branch across five successive pull requests.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_13</bpmn:incoming>
+      <bpmn:outgoing>Flow_14</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="GW_Live" name="Still&#10;in use?">
+      <bpmn:documentation>THREE states, and the third is why this gateway exists. Still in use → refuse, exit 1. COULD NOT TELL → refuse, exit 2. Only a determined absence of every liveness signal removes anything. Refusing to delete is the only recoverable direction, and a preflight that has gone blind must not read as permission.</bpmn:documentation>
+      <bpmn:incoming>Flow_14</bpmn:incoming>
+      <bpmn:outgoing>Flow_15</bpmn:outgoing>
+      <bpmn:outgoing>Flow_17</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_RemoveDisp" name="Remove it AND append&#10;`removed` — one commit">
+      <bpmn:documentation>Say what is going — size and file count — then remove STAGING/&lt;slug&gt;/ and append `removed` to the render log in the SAME commit, so a preview cannot vanish without a record of who dispatched it and why. The slug is a dispatch input, so the tool re-checks it by value rather than trusting the guard.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_15</bpmn:incoming>
+      <bpmn:outgoing>Flow_16</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_RemovedDisp" name="Preview gone">
+      <bpmn:incoming>Flow_16</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_Refused" name="REFUSED —&#10;nothing removed">
+      <bpmn:incoming>Flow_17</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="H_Confirm" name="Repeat the slug,&#10;exactly, to confirm">
+      <bpmn:documentation>The one step in this process that is a person&#x27;s. Repeating the slug is not ceremony: it names the artefact being confirmed, so a confirmation cannot be inherited by a later run pointed at a different preview.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_18</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0" sourceRef="Start_PR" targetRef="Task_Build"/>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Task_Build" targetRef="Task_Deploy"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_Deploy" targetRef="Task_LogRendered"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_LogRendered" targetRef="Task_Comment"/>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_Comment" targetRef="End_Staged"/>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Start_Closed" targetRef="Task_Slug"/>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_Slug" targetRef="GW_Confirmed"/>
+    <bpmn:sequenceFlow id="Flow_7" name="merged, or labelled" sourceRef="GW_Confirmed" targetRef="Task_Remove"/>
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Task_Remove" targetRef="End_Removed"/>
+    <bpmn:sequenceFlow id="Flow_9" name="closed unmerged,&#10;no label" sourceRef="GW_Confirmed" targetRef="Task_LogRetained"/>
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="Task_LogRetained" targetRef="Task_Notice"/>
+    <bpmn:sequenceFlow id="Flow_11" sourceRef="Task_Notice" targetRef="End_Retained"/>
+    <bpmn:sequenceFlow id="Flow_12" sourceRef="Start_Dispatch" targetRef="Task_Validate"/>
+    <bpmn:sequenceFlow id="Flow_13" sourceRef="Task_Validate" targetRef="Task_Preflight"/>
+    <bpmn:sequenceFlow id="Flow_14" sourceRef="Task_Preflight" targetRef="GW_Live"/>
+    <bpmn:sequenceFlow id="Flow_15" name="no signal —&#10;safe to remove" sourceRef="GW_Live" targetRef="Task_RemoveDisp"/>
+    <bpmn:sequenceFlow id="Flow_16" sourceRef="Task_RemoveDisp" targetRef="End_RemovedDisp"/>
+    <bpmn:sequenceFlow id="Flow_17" name="live, OR&#10;could not tell" sourceRef="GW_Live" targetRef="End_Refused"/>
+    <bpmn:sequenceFlow id="Flow_18" sourceRef="H_Confirm" targetRef="Start_Dispatch"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Process_FeatureStaging">
+    <bpmndi:BPMNPlane id="Plane_Process_FeatureStaging" bpmnElement="Collaboration_Process_FeatureStaging">
+      <bpmndi:BPMNShape id="Shape_Participant_Process_FeatureStaging" bpmnElement="Participant_Process_FeatureStaging" isHorizontal="true">
+        <dc:Bounds x="60" y="60" width="1130" height="760"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Ci" bpmnElement="Lane_Ci" isHorizontal="true">
+        <dc:Bounds x="90" y="60" width="1100" height="620"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Human" bpmnElement="Lane_Human" isHorizontal="true">
+        <dc:Bounds x="90" y="680" width="1100" height="140"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_PR" bpmnElement="Start_PR">
+        <dc:Bounds x="142" y="132" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Build" bpmnElement="Task_Build">
+        <dc:Bounds x="235" y="110" width="170" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Deploy" bpmnElement="Task_Deploy">
+        <dc:Bounds x="415" y="110" width="170" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_LogRendered" bpmnElement="Task_LogRendered">
+        <dc:Bounds x="595" y="110" width="170" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Comment" bpmnElement="Task_Comment">
+        <dc:Bounds x="775" y="110" width="170" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Staged" bpmnElement="End_Staged">
+        <dc:Bounds x="1012" y="132" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Closed" bpmnElement="Start_Closed">
+        <dc:Bounds x="142" y="312" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Slug" bpmnElement="Task_Slug">
+        <dc:Bounds x="235" y="290" width="170" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Confirmed" bpmnElement="GW_Confirmed" isMarkerVisible="true">
+        <dc:Bounds x="475" y="305" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Remove" bpmnElement="Task_Remove">
+        <dc:Bounds x="615" y="230" width="170" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Removed" bpmnElement="End_Removed">
+        <dc:Bounds x="872" y="252" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_LogRetained" bpmnElement="Task_LogRetained">
+        <dc:Bounds x="615" y="360" width="170" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Notice" bpmnElement="Task_Notice">
+        <dc:Bounds x="795" y="360" width="170" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Retained" bpmnElement="End_Retained">
+        <dc:Bounds x="1012" y="382" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Dispatch" bpmnElement="Start_Dispatch">
+        <dc:Bounds x="142" y="512" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Validate" bpmnElement="Task_Validate">
+        <dc:Bounds x="255" y="490" width="170" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Preflight" bpmnElement="Task_Preflight">
+        <dc:Bounds x="445" y="490" width="170" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Live" bpmnElement="GW_Live" isMarkerVisible="true">
+        <dc:Bounds x="675" y="505" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_RemoveDisp" bpmnElement="Task_RemoveDisp">
+        <dc:Bounds x="795" y="430" width="170" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_RemovedDisp" bpmnElement="End_RemovedDisp">
+        <dc:Bounds x="1042" y="452" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Refused" bpmnElement="End_Refused">
+        <dc:Bounds x="862" y="592" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_H_Confirm" bpmnElement="H_Confirm">
+        <dc:Bounds x="255" y="680" width="170" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Flow_0" bpmnElement="Flow_0">
+        <di:waypoint x="178" y="150"/>
+        <di:waypoint x="235" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_1" bpmnElement="Flow_1">
+        <di:waypoint x="405" y="150"/>
+        <di:waypoint x="415" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_2" bpmnElement="Flow_2">
+        <di:waypoint x="585" y="150"/>
+        <di:waypoint x="595" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_3" bpmnElement="Flow_3">
+        <di:waypoint x="765" y="150"/>
+        <di:waypoint x="775" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_4" bpmnElement="Flow_4">
+        <di:waypoint x="945" y="150"/>
+        <di:waypoint x="1012" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_5" bpmnElement="Flow_5">
+        <di:waypoint x="178" y="330"/>
+        <di:waypoint x="235" y="330"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_6" bpmnElement="Flow_6">
+        <di:waypoint x="405" y="330"/>
+        <di:waypoint x="475" y="330"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_7" bpmnElement="Flow_7">
+        <di:waypoint x="525" y="330"/>
+        <di:waypoint x="700" y="330"/>
+        <di:waypoint x="700" y="310"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_8" bpmnElement="Flow_8">
+        <di:waypoint x="785" y="270"/>
+        <di:waypoint x="872" y="270"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_9" bpmnElement="Flow_9">
+        <di:waypoint x="525" y="330"/>
+        <di:waypoint x="700" y="330"/>
+        <di:waypoint x="700" y="360"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_10" bpmnElement="Flow_10">
+        <di:waypoint x="785" y="400"/>
+        <di:waypoint x="795" y="400"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_11" bpmnElement="Flow_11">
+        <di:waypoint x="965" y="400"/>
+        <di:waypoint x="1012" y="400"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_12" bpmnElement="Flow_12">
+        <di:waypoint x="178" y="530"/>
+        <di:waypoint x="255" y="530"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_13" bpmnElement="Flow_13">
+        <di:waypoint x="425" y="530"/>
+        <di:waypoint x="445" y="530"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_14" bpmnElement="Flow_14">
+        <di:waypoint x="615" y="530"/>
+        <di:waypoint x="675" y="530"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_15" bpmnElement="Flow_15">
+        <di:waypoint x="725" y="530"/>
+        <di:waypoint x="880" y="530"/>
+        <di:waypoint x="880" y="510"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_16" bpmnElement="Flow_16">
+        <di:waypoint x="965" y="470"/>
+        <di:waypoint x="1042" y="470"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_17" bpmnElement="Flow_17">
+        <di:waypoint x="725" y="530"/>
+        <di:waypoint x="880" y="530"/>
+        <di:waypoint x="880" y="592"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_18" bpmnElement="Flow_18">
+        <di:waypoint x="425" y="720"/>
+        <di:waypoint x="160" y="720"/>
+        <di:waypoint x="160" y="548"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

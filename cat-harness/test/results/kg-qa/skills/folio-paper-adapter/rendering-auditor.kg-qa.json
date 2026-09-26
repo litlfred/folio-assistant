@@ -1,0 +1,76 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "rendering-auditor",
+    "path": "skills/folio-paper-adapter/rendering-auditor.md"
+  },
+  "source_hash": "53afd209f8c1",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "418 lines; p75 of the skill corpus is 279."
+        }
+      ]
+    },
+    "skill-not-a-document": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "418 lines; p90 is 391. At this length it is a document."
+        }
+      ]
+    },
+    "skill-no-repeated-heading": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "heading \"Checks\" repeated (also at line 49)"
+        },
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "heading \"Checks\" repeated (also at line 49)"
+        },
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "heading \"Purpose\" repeated (also at line 139)"
+        },
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "heading \"Checks\" repeated (also at line 49)"
+        },
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "heading \"Purpose\" repeated (also at line 139)"
+        },
+        {
+          "where": "skills/folio-paper-adapter/rendering-auditor.md",
+          "detail": "heading \"Checks\" repeated (also at line 49)"
+        }
+      ]
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 1,
+    "fail": 3,
+    "n/a": 2,
+    "unknown": 0
+  }
+}

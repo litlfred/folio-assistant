@@ -1,0 +1,13 @@
+{
+  "_comment": "THE REPOSITORY ROOT, declared as an INSTANTIATED harness. The presence of a `<name>.config.json` at the instantiation root is what makes `folio-assistant` an instantiated harness rather than a dependency, and it is what the LHS navbar's harness tiles filter on. Its sibling `folio-assistant.json` says what the instance DECLARES; this says the instance is instantiated HERE and how it is configured. Two different facts, which is why the navbar could not be derived from the declarations alone — and, since 2026-09-21, two different filenames rather than two files sharing one shape. `check:instance-config` verifies the filename names a declared instance.",
+  "contentType": "document",
+  "_dependencies_comment": "THE FIRST DEPENDENCY EDGE IN THIS REPOSITORY, added 2026-09-21 for bean rfev. It is what makes `loadContributions` reach folio-assistant-sci's `contributes` module, and so what gives ContributionRegistry its first real contributor -- until then every reference to it outside its own file was a test. It lives in the CONFIG half rather than the declaration (#727 split them): a declaration says what an instance IS, and a dependency is what this folio USES, which `readHarnessConfig` is what reads. `path` is relative to this root and the instance is a sibling directory here, which is the pre-split arrangement: after the cut it becomes a package and only this entry changes. NOT a list of every instance in the checkout -- an instance is declared here when this folio DEPENDS on what it contributes, which is a different question from whether it exists.",
+  "dependencies": {
+    "folioAssistant": [
+      {
+        "name": "folio-assistant-sci",
+        "path": "folio-assistant-sci"
+      }
+    ]
+  }
+}

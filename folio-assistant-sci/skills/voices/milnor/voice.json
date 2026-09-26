@@ -1,0 +1,201 @@
+{
+  "$schema": "folio-voice-skill/v1",
+  "id": "milnor",
+  "title": "Milnor exposition standard",
+  "description": "Eight hallmarks of mathematical exposition, scored 0-2 each with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (Annals of Mathematics 59(2), 1954, pp. 177-195). Not a house standard named after him any more: every rule now cites a page of the paper, and three of them exist because the paper CONTRADICTS what this platform's own house voice asserts. 8899 words, 496 sentences, measured 2026-09-19.",
+  "instructions": {
+    "file": "SKILL.md",
+    "summary": "Write and review in the Milnor exposition standard voice — 12 rules, each citing the publication it was read from."
+  },
+  "sources": [
+    {
+      "title": "Link Groups (John Milnor, Annals of Mathematics, Second Series, 59(2), March 1954, pp. 177-195)",
+      "libraryId": "milnorlink",
+      "instance": "folio-assistant-sci",
+      "url": "http://www.jstor.org/stable/1969685",
+      "year": 1954
+    }
+  ],
+  "provenance": "house",
+  "overlaySeverity": "minor",
+  "rules": [
+    {
+      "id": "milnor-h1-economy",
+      "title": "H1 — Economy: the opening is a Summary, not an Introduction",
+      "description": "Milnor's §1 is titled \"Summary\" and runs about 200 words. In them: what link homotopy is, the purpose of the paper, the tool, what the tool is, and all four results. No preamble, no literature survey, no statement of what the reader will find in section 3. 0 if a paragraph could be deleted with no loss. 1 if sentences restate their neighbours, or a closing line summarises what was just said. 2 when nothing can be removed without losing content.",
+      "category": "register",
+      "severity": "major",
+      "source": {
+        "libraryId": "milnorlink",
+        "sectionId": "page-177",
+        "pages": "177",
+        "quote": "1. Summary — By a link homotopy is meant a deformation of one link onto another, during which each component of the link is allowed to cross itself, but such that no two components are allowed to intersect. The purpose of this paper is to study links under the relation of homotopy. The fundamental tool in this study will be the link group."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-h2-concrete-first",
+      "title": "H2 — Concrete before abstract, at the scale of the PAPER not the section",
+      "description": "Read §2 alone and it opens on pure abstraction: \"Let M be an open 3-dimensional manifold which possesses a regular triangulation. Let C be a circle.\" A rubric applied per section would score that 0. It is a 2, because §1 has already given the concrete picture in words a reader can hold — a deformation in which each component may cross itself but no two components may meet. The informal instance precedes the formal definition by one section. So score H2 over the unit a reader actually reads through, and never on a definitions section in isolation.",
+      "category": "structure",
+      "severity": "major",
+      "source": {
+        "libraryId": "milnorlink",
+        "sectionId": "page-177",
+        "pages": "177",
+        "quote": "2. The basic theorems — Let M be an open 3-dimensional manifold which possesses a regular triangulation. Let C be a circle. By an n-link L will be meant an ordered collection (l1, …, ln) of maps li: C -> M, where the images l1(C), …, ln(C) are to be disjoint."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-h3-why-before-what",
+      "title": "H3 — Name the tool's purpose before defining the tool",
+      "description": "\"The fundamental tool in this study will be the link group\" comes before \"The link group of a link is a factor group of the fundamental group of its complement\". The reader is told what the object is FOR in the sentence before they are told what it IS. 0 if a construction appears with no indication of what it is for; 1 if the motivation is present but buried after it; 2 when the purpose arrives first.",
+      "category": "structure",
+      "severity": "major",
+      "source": {
+        "libraryId": "milnorlink",
+        "sectionId": "page-177",
+        "pages": "177",
+        "quote": "The fundamental tool in this study will be the link group. The link group of a link is a factor group of the fundamental group of its complement, which is invariant under homotopy."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-h4-uncluttered-notation",
+      "title": "H4 — A symbol is introduced where it is needed and then carries weight",
+      "description": "Milnor introduces G(L), Ai(L), [Ai] and the product E = [A1][A2]…[An] in four consecutive sentences, each at the moment it is needed and each used thereafter; and he gives the image of a link the short name |L| because it recurs constantly. Nothing is defined for symmetry. 0 for notation used once, for collisions, or for a decorated symbol where a word would do; 1 for more indices than the argument needs; 2 when every symbol earns its name. Fixing this is not local — notation is shared across a chapter, so check what else binds a symbol before renaming it.",
+      "category": "formatting",
+      "severity": "major",
+      "source": {
+        "libraryId": "milnorlink",
+        "sectionId": "page-177",
+        "pages": "177",
+        "quote": "Denote the image l1(C) ∪ … ∪ ln(C) of a link L by |L|. For each proper link L let G(L) denote the fundamental group of the complement M - |L|. … Denote the kernel of this homomorphism by Ai(L), and denote the commutator subgroup of Ai by [Ai]. Since the [Ai] are normal subgroups of G(L), their product E = [A1][A2] … [An] is also a normal subgroup."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-h5-linear-argument",
+      "title": "H5 — Routine verification is dispatched in a sentence, never promoted to a lemma",
+      "description": "\"Clearly the relation of homotopy is reflexive, symmetric and transitive.\" One sentence, no lemma, no proof. Promoting that to a numbered lemma would have cost the reader a context switch for nothing. 0 for a forward reference to a result not yet stated; 1 for an aside the reader must park and return to; 2 when it reads once, top to bottom. Score this on the FIRST reading: a second pass already knows the argument and cannot recover the property.",
+      "category": "structure",
+      "severity": "major",
+      "source": {
+        "libraryId": "milnorlink",
+        "sectionId": "page-177",
+        "pages": "177",
+        "quote": "Two links L and L' will be called homotopic if there exist homotopies hi between the maps li and the maps l'i so that the sets h1t(C), …, hnt(C) are disjoint for each value of t. Clearly the relation of homotopy is reflexive, symmetric and transitive."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-h6-strategy-before-execution",
+      "title": "H6 — State the shape of the proof, then execute it",
+      "description": "The most transferable pattern in the paper. Lemma 3's proof opens by saying what will be built and why that finishes the job — \"A natural isomorphism … will be constructed for i = 0, 1. Since a homotopy … induces a homotopy equivalence …, this will complete the proof\" — and only then constructs it. The reader knows the destination before the first step, so no step is a surprise. 0 when the argument exists only in the displays and the prose says \"we compute\"; 1 when the prose narrates steps without saying why they follow; 2 when a reader who skipped every display would still follow the argument.",
+      "category": "register",
+      "severity": "major",
+      "source": {
+        "libraryId": "milnorlink",
+        "sectionId": "page-179",
+        "pages": "179",
+        "quote": "The proof will be valid for any cohomology theory. Let Q0 and Q1 denote the mapping cylinders of h0 and h1. A natural isomorphism between Hr(Z, hi(Y)) and Hr(Qi, Y) will be constructed for i = 0, 1. Since a homotopy between h0 and h1 induces a homotopy equivalence between the pairs (Q0, Y) and (Q1, Y), this will complete the proof."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-h7-right-tool-framing",
+      "title": "H7 — Say what the method requires, in one clause",
+      "description": "\"The proof will be valid for any cohomology theory.\" Seven words telling the reader the argument does not depend on a choice they might have worried about. Milnor also situates the work against the neighbouring literature in a footnote rather than a survey section — one sentence on K. Chen's factor groups, placed where a reader who wondered would look. 0 for a heavy method with no indication why; 1 for the right tool used without saying what the alternative would have cost; 2 when the reader can see why this tool and not the obvious other one.",
+      "category": "structure",
+      "severity": "major",
+      "source": {
+        "libraryId": "milnorlink",
+        "sectionId": "page-179",
+        "pages": "179",
+        "quote": "The proof will be valid for any cohomology theory."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-h8-respect-for-the-reader",
+      "title": "H8 — Measured: no superlatives, one hedge, zero second person",
+      "description": "H8 is the hallmark that can be counted, and the counts are the standard. Over 8899 words: ZERO instances of surprisingly, remarkably, interestingly, beautiful or elegant; ONE hedge (\"a (possibly redundant) list\") and it qualifies a mathematical fact rather than the author's confidence; ten uses of \"may\", all permissive rather than epistemic; zero \"you\"; zero \"our\"; zero \"the author\". Milnor never tells the reader what is important. 0 when the text tells the reader what is beautiful, surprising or important; 1 when it hedges a claim it can support; 2 when it states what is true and lets the reader judge.",
+      "category": "register",
+      "severity": "major",
+      "source": {
+        "libraryId": "milnorlink",
+        "sectionId": "page-177",
+        "pages": "177-195",
+        "quote": "A study of this group therefore, not only gives a method for distinguishing between links which are not homotopic, but also gives a procedure for obtaining a (possibly redundant) list of all homotopy classes of links with a given number of components."
+      }
+    },
+    {
+      "id": "milnor-clearly-is-proof-economy",
+      "title": "\"Clearly\" is proof economy — 14 uses in the exemplar, and the checker now knows",
+      "description": "The judgement half of a criterion that has been narrowed because of it. `voice-editorializing` used to fail a block for `clearly`, and failed this very paper 26 times across 11 of its 20 pages — about twenty of them proof economy, four a term of art (`naturally isomorphic`), and exactly ONE a real finding (\"Unfortunately these invariants are not strong enough\", p194). Bean `2t41` narrowed the checker: the exemplar now scores that one finding and no others.\n\nThe rule stays because the mechanical half cannot make the distinction that matters. `clearly` before a verification the reader can perform is correct — it routes their effort away from something routine, which is the opposite of spending it on the author's opinion. `clearly` attached to a claim the reader CANNOT check in their head is the real defect: the author asserting where they should be proving. No phrase list separates those, and the checker's exemption is deliberately a construction test rather than a word test, which approximates it without deciding it. A reviewer deciding whether a given `clearly` earns its place is doing the part no regex can.",
+      "category": "register",
+      "severity": "minor",
+      "source": {
+        "libraryId": "milnorlink",
+        "sectionId": "page-177",
+        "pages": "177, 179, 181, 184, 188, 190, 193",
+        "quote": "Clearly the relation of homotopy is reflexive, symmetric and transitive. … The inclusion map (Z, hi(Y)) -> (Qi, Pi) is clearly a homotopy equivalence. … The 2-link illustrated in Figure 3 is clearly trivial. … The single invariant μ(12) is clearly the linking number."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-i-for-the-debt-we-for-the-mathematics",
+      "title": "\"I\" for the acknowledgement, \"we\" for the mathematics — and nothing else",
+      "description": "The second rule that corrects this platform's house voice. `one-voice-style-guide.md` says \"'we' for joint reasoning with the reader, never 'I'\". Milnor's split is sharper than the prohibition: exactly ONE first-person singular in the whole paper — \"I am indebted to R. H. Fox for assistance in the preparation of this paper\", placed at the end of §1 — against twenty uses of \"we\", every one of them joint reasoning (\"Thus we have obtained a complete set of homotopy invariants\"). Zero \"our\", zero \"the author\". So the rule is not \"never I\": it is that a personal debt is stated personally and in one sentence, and the mathematics is done together with the reader.",
+      "category": "person",
+      "severity": "minor",
+      "source": {
+        "libraryId": "milnorlink",
+        "sectionId": "page-177",
+        "pages": "177",
+        "quote": "I am indebted to R. H. Fox for assistance in the preparation of this paper."
+      },
+      "patterns": [
+        {
+          "regex": "\\b(?:the author (?:would like to|wishes to|thanks)|the present author|in our opinion|it is our belief)\\b",
+          "message": "Milnor writes \"I am indebted to …\" once and otherwise \"we\"; third-person self-reference and first-person opinion both appear zero times in the exemplar"
+        }
+      ]
+    },
+    {
+      "id": "milnor-sentence-length",
+      "title": "Median sentence 17 words; a 50-word sentence is the outlier, not the register",
+      "description": "Measured over the paper's 496 sentences: median 17 words, 90th percentile 29, longest 52. This is a diagnostic rather than a rule to enforce line by line — a block whose median runs to 30 is not automatically wrong, but it is not written in this voice either, and the usual cause is clauses doing the work that a full stop and a new subject would do better.",
+      "category": "register",
+      "severity": "minor",
+      "source": {
+        "libraryId": "milnorlink",
+        "sectionId": "page-190",
+        "pages": "190",
+        "quote": "Every link with two components is almost trivial. The single invariant μ(12) is clearly the linking number: hence the linking number is a complete homotopy invariant for 2-links. A link with three components is almost trivial if each pair of components has linking number zero."
+      },
+      "judgementOnly": true
+    },
+    {
+      "id": "milnor-brevity-no-repeats",
+      "title": "No content repeated within the block — and the resolve discipline is stricter",
+      "description": "Milnor does not restate: where a result is needed again he names it and points at it. The cited sentence is the sharpest instance — the assertion about meridian and parallel pairs could have been proved by reproducing the proof of Theorem 1 with the new pairs substituted in, and instead the reader is sent back through the existing proof. The paper does this throughout, invoking numbered results by number (\"by Lemma 7\", \"It follows from Lemma 4\", \"hence by Theorem 5\") rather than re-deriving them.\n\nSo: no content is repeated within a block. THE RESOLVE DISCIPLINE BELOW IS THIS PROJECT'S, NOT MILNOR'S, and is stated here rather than in the citation because it is about editing rather than about the paper — a repeat may be deleted ONLY where the two occurrences are semantically identical. Where the content differs you may not delete, and you never delete maths: a diagram, an equation or a derivation. Where de-duplication would lose distinct content, keep it, or split the block if that aids explication.",
+      "category": "structure",
+      "severity": "major",
+      "source": {
+        "libraryId": "milnorlink",
+        "sectionId": "page-181",
+        "pages": "181",
+        "quote": "The proof is easily given: it is only necessary to check this assertion through each stage of the proof of Theorem 1."
+      },
+      "judgementOnly": true
+    }
+  ],
+  "appliesTo": [
+    "prose",
+    "remark",
+    "example",
+    "algorithm"
+  ]
+}

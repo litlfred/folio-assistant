@@ -1,0 +1,13 @@
+# do not delete me
+#
+# Git tracks files, not directories, so this directory would vanish from
+# the next clone without a file in it. This is that file. It ignores
+# nothing on purpose — see `keepMarker` in schemas/cat-harness.ts.
+#
+# uploads/  (THE REPOSITORY'S OWN)
+# Declared by `harness.json` at the repo ROOT, because this checkout acts as
+# an initialized instance and an initialized instance's ingestion queue sits
+# at its own root. `cat-harness/uploads/` is a DIFFERENT queue belonging to
+# the harness layer — same id, different instance, not one directory declared
+# twice. Files dropped at the repository root land here; the harness layer's
+# own sources stay with the harness.

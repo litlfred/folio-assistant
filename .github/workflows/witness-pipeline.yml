@@ -46,10 +46,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.11"
 
@@ -60,7 +60,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libmpfr-dev libgmp-dev
 
       - name: Cache cargo + hecke-engine target
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             ~/.cargo/registry
@@ -383,7 +383,7 @@ jobs:
           # Install bun on demand (workflow's other steps are pure Python).
           curl -fsSL https://bun.sh/install | bash
           export PATH="$HOME/.bun/bin:$PATH"
-          bun run scripts/audit-wiring.ts --warn-only
+          bun run cat-harness/scripts/audit-wiring.ts --warn-only
 
       - name: Section-story compliance audit (strict on majors)
         # Enforces the §Story coherence (STRICT) policy from PR #738
@@ -398,14 +398,14 @@ jobs:
         # the JSON artifact but do not fail the build.
         run: |
           export PATH="$HOME/.bun/bin:$PATH"
-          bun run scripts/section-story-audit.ts
+          bun run cat-harness/scripts/section-story-audit.ts
           # Always emit JSON for download as an artifact.
-          bun run scripts/section-story-audit.ts \
+          bun run cat-harness/scripts/section-story-audit.ts \
             --json --out docs/audits/section-story-audit-latest.json || true
 
       - name: Upload section-story audit JSON
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: section-story-audit
           path: docs/audits/section-story-audit-latest.json
@@ -478,7 +478,7 @@ jobs:
           # `bun run … --emit-baseline` after deliberately discharging
           # (or accepting) a gap. See PR #1735 for the rationale.
           export PATH="$HOME/.bun/bin:$PATH"
-          bun run content/pipeline/conditional-class-banner-audit.ts \
+          bun run cat-harness/content/pipeline/conditional-class-banner-audit.ts \
             --strict \
             --baseline-allowlist docs/audits/2026-06-03-conditional-class-banner-baseline.json
 

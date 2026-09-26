@@ -1,0 +1,122 @@
+{%- comment -%}
+  WHAT EACH HARNESS HOLDS — the counts and the viewers, on the page the
+  sidebar tab opens.
+
+  Owner, 2026-09-21, having seen the fat tiles: *"those are too much like a
+  dashboard, i want them to be more like diverders"*, and, asked where the
+  counts and viewer links should go rather than be dropped: **inside the
+  section it opens**. So the sidebar became purely navigational and this is
+  the other half of that move. Nothing was deleted.
+
+  ANCHORED per instance — `#harness-<name>` — so a tab can point at a section
+  rather than only at a page. Both instantiated harnesses in this repository
+  resolve their folio view to the site root, which is why this is included
+  from `index.md`; an instance that generates its own docs publishes its own
+  page, and `harness-tiles.ts` reports that as a finding rather than this
+  template guessing.
+
+  Every value is GENERATED into `docs/_data/harness.json` and gated by
+  `docs:harness:check`. This template decides nothing.
+{%- endcomment -%}
+{%- assign tiles = site.data.harness.harnesses -%}
+{%- assign instantiated = tiles | where: "instantiated", true -%}
+{%- if instantiated.size > 0 -%}
+<section class="fa-harness-sections" id="harnesses">
+  <h2 id="harnesses-heading">What each harness holds</h2>
+  <p class="fa-harness-sections__lead">
+    One section per instantiated harness, in the same order as the dividers in
+    the sidebar — the floor last.
+  </p>
+  {%- for t in instantiated -%}
+  <section class="fa-harness-section" id="harness-{{ t.name }}"
+           style="--fa-tile-tone: {{ t.tone }}; --fa-tile-on: {% if t.genericAvatar %}0{% else %}1{% endif %}">
+    <h3 class="fa-harness-section__title" id="harness-{{ t.name }}-heading">
+      {%- if t.href -%}
+      <a href="{{ t.href | relative_url }}">{{ t.label | default: t.title }}</a>
+      {%- else -%}
+      {{ t.label | default: t.title }}
+      {%- endif -%}
+    </h3>
+    {%- if t.description and t.description != "" -%}
+    <p class="fa-harness-section__description">{{ t.description }}</p>
+    {%- endif -%}
+    {%- if t.stats.size > 0 -%}
+    <dl class="fa-harness-section__stats">
+      {%- for s in t.stats -%}
+      <div class="fa-harness-section__stat" data-fa-stat="{{ s.id }}">
+        <dt>{{ s.label }}</dt>
+        <dd>{{ s.value }}</dd>
+      </div>
+      {%- endfor -%}
+    </dl>
+    {%- endif -%}
+    {%- assign open = t.visualisations | where_exp: "v", "v.path" -%}
+    {%- comment -%}
+      The viewers, which are NOT the same thing as the tab's target and the
+      split is the owner's: `/who-iris/` is who-iris presenting itself,
+      `/library/who-iris/` is the cat-harness handler's default rendering of
+      its library. The tab opens the first; these reach the second.
+    {%- endcomment -%}
+    {%- if open.size > 0 -%}
+    {%- comment -%}
+      THE TWO GREYS, on the surface where they actually occur.
+
+      A kind with no `path` is already excluded above — there is nothing to
+      open. A kind that IS published and `readOnly` opens perfectly and refuses
+      an edit, and it is the one that offers the copy-out. Marking it here and
+      not only on the graph-tile surface is a correction: the mark shipped on
+      the tiles first, and `readOnly` is never populated on that surface in
+      this repository, so the CSS and the JS were live and the mark appeared
+      ZERO times on any deployed page. Caught by reading the staging deploy
+      rather than by re-reading the diff.
+
+      `== true`, not truthiness: absent means NOT DECLARED — a third state,
+      and not a claim that the kind is writable.
+
+      AND THIS MARK IS ITSELF UNEXERCISED TODAY, which is said here rather
+      than discovered later. This list holds only kinds WITH a `path`, and no
+      kind in this repository is both published and read-only — all three
+      frozen ones lack a viewer. So the fact is also stated as a FINDING by
+      `harness-tiles.ts`, where the gap cannot hide it, and that is what a
+      reader sees now. This branch is kept because it is correct the moment a
+      frozen kind gains a viewer, and because the alternative — adding it then
+      — is how the first attempt came to ship a mark with nothing to style.
+    {%- endcomment -%}
+    <ul class="fa-harness-section__viewers">
+      {%- for v in open -%}
+      <li>
+        <a href="{{ v.path | relative_url }}"
+           {%- if v.readOnly == true %} data-fa-readonly
+           title="materialized content: readable, not editable here"{% endif -%}
+        >{{ v.kind }}</a>
+        {%- if v.readOnly == true -%}
+        <span class="fa-readonly-note">read-only</span>
+        {%- endif -%}
+      </li>
+      {%- endfor -%}
+    </ul>
+    {%- else -%}
+    <p class="fa-harness-section__gap">Nothing published to open yet.</p>
+    {%- endif -%}
+    {%- comment -%}
+      THE FINDINGS, shown rather than kept in the data file. Each one names
+      something a reader can act on — a graph declared with no viewer, a
+      viewer published for a graph nobody declared, an icon that cannot be
+      turned into a published path. Hiding them would make "declared and not
+      rendered" and "rendered and not declared" both invisible, which is the
+      state they were in before `harness-tiles.ts` reported them at all.
+    {%- endcomment -%}
+    {%- if t.findings.size > 0 -%}
+    <details class="fa-harness-section__findings">
+      <summary>Gaps in this instance's declaration ({{ t.findings.size }})</summary>
+      <ul>
+        {%- for f in t.findings -%}
+        <li>{{ f }}</li>
+        {%- endfor -%}
+      </ul>
+    </details>
+    {%- endif -%}
+  </section>
+  {%- endfor -%}
+</section>
+{%- endif -%}

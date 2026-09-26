@@ -1,0 +1,66 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "category-theory",
+    "path": "skills/folio-paper-adapter/category-theory.md"
+  },
+  "source_hash": "e99b2b700054",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-paper-adapter/category-theory.md",
+          "detail": "415 lines; p75 of the skill corpus is 279."
+        }
+      ]
+    },
+    "skill-not-a-document": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-paper-adapter/category-theory.md",
+          "detail": "415 lines; p90 is 391. At this length it is a document."
+        }
+      ]
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "cat-harness/skills/folio-paper-adapter/category-theory.ts",
+          "detail": "cat-harness/skills/folio-paper-adapter/category-theory.ts changed since cat-harness/skills/folio-paper-adapter/category-theory.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 2,
+    "fail": 3,
+    "n/a": 1,
+    "unknown": 0
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/category-theory.md",
+      "code": "cat-harness/skills/folio-paper-adapter/category-theory.ts",
+      "prose_hash": "e99b2b700054",
+      "code_hash": "d01c26714513",
+      "by": "baseline"
+    }
+  ]
+}

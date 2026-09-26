@@ -26,9 +26,20 @@ name: release-please
 #      Owner reviews the cut release on GitHub, then triggers the
 #      publish workflow with `target=pypi`.
 #
-# Config:
-#   .github/release-please-config.json   — per-package rules
-#   .github/release-please-manifest.json — current released versions
+# Config: NONE, and that is deliberate as of 2026-09-20 (bean
+# `folio-assistant-frq2`). This block used to name
+# `.github/release-please-config.json` and `-manifest.json` as though they
+# were here; neither has ever existed in this repository, and the step below
+# passed both paths to the action. See the comment on the step for what was
+# measured and why a config was not simply written.
+#
+# EVERYTHING ABOVE THIS LINE DESCRIBES THE OTHER REPOSITORY. The push trigger,
+# the seven packages under `tools/`, `pyhecke`, `qou-substrate`, the stranded
+# release branches and their PR numbers — all of it came across at the split
+# (109a4ff) with the prose untouched. The corrections are below, and that
+# ordering has a measured cost: on 2026-09-20 an agent read this header,
+# stopped before reaching them, and reported to the owner as fact that this
+# workflow runs on every push to `main`. It does not.
 #
 # KNOWN ISSUE — silent PR-creation failure
 # ─────────────────────────────────────────
@@ -75,7 +86,7 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: googleapis/release-please-action@v4
+      - uses: googleapis/release-please-action@v5
         with:
           # Token: GITHUB_TOKEN is the conservative default but suffers
           # from the silent-fail issue documented above. If a fine-
@@ -84,5 +95,32 @@ jobs:
           # (Coalesce so the workflow still runs when the PAT secret is
           # unset; it just falls back to the half-broken path.)
           token: ${{ secrets.RELEASE_PLEASE_TOKEN || secrets.GITHUB_TOKEN }}
-          config-file: .github/release-please-config.json
-          manifest-file: .github/release-please-manifest.json
+          # NO `config-file:` / `manifest-file:` — REMOVED 2026-09-20, bean
+          # `folio-assistant-frq2`. They named
+          # `.github/release-please-config.json` and
+          # `.github/release-please-manifest.json`, and NEITHER FILE HAS EVER
+          # EXISTED here: both were inherited from the other repository at the
+          # split, along with the header prose above.
+          #
+          # THIS DOES NOT MAKE THE WORKFLOW WORK, and it is not meant to.
+          # Removing the lines stops it ASSERTING a config location that is
+          # wrong; release-please now falls back to its own defaults, which it
+          # will also not find. The workflow remains unexercised — zero tags in
+          # this repository, and `workflow_dispatch` only.
+          #
+          # A config was deliberately NOT written instead, because the package
+          # it would release CANNOT BE BUILT (frq2 §5, measured):
+          #
+          #   · `release-folio-assistant.yml` packs `PKG_DIR: folio-assistant`
+          #     — a directory that does not exist here.
+          #   · `package.json`'s `files[]` resolves 2 of 6 at the root; `src/`,
+          #     `ui/` and the two `viewer/` entries moved under `cat-harness/`.
+          #   · `package.json` is named `@anthropic-ai/folio-assistant`, a
+          #     scope this repository presumably does not own.
+          #
+          # A config naming a package whose own `files[]` does not resolve
+          # would make this path LOOK configured while leaving it as broken —
+          # the `xom7` shape. Before one is written, the package has to be
+          # buildable and `instance-versioning.md` §3.1 has to have said WHICH
+          # instances are publishable; that is its first open question, and a
+          # config written now would answer it by accident.

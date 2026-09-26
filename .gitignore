@@ -1,6 +1,6 @@
 node_modules/
 dist/
-# Jekyll build output — the docs site is built from docs/, never committed.
+# Jekyll build output — the docs site is built from `<stub>/docs`, never committed.
 _site/
 *.js
 *.js.map
@@ -9,6 +9,10 @@ _site/
 # that ship none (bpmn-moddle); the blanket rule above is for generated output,
 # and without this exception a fresh clone fails `tsc` on a missing module.
 !types/*.d.ts
+# ...and the identifier lookup's client (bean `4pm8`), which is hand-written
+# JavaScript a browser loads as written, with its hand-written types beside it.
+!large-datasets/id-lookup/lookup.js
+!large-datasets/id-lookup/lookup.d.ts
 .env
 .env.*
 *.log
@@ -72,21 +76,148 @@ content/schema/
 # `project` scope lives at .claude/agent-memory/ and is tracked.
 .claude/agent-memory-local/
 
-# docs/assets/js is SOURCE, not build output. The rule above exists because
-# compiled JS is generated next to its .ts; these files are hand-written and
-# vendored assets that Jekyll serves verbatim to the browser, so there is no
-# build step that could regenerate them.
-!docs/assets/js/
-!docs/assets/js/**/*.js
+# `<stub>/docs/assets/js` is SOURCE, not build output. The rule above exists
+# because compiled JS is generated next to its .ts; these files are
+# hand-written and vendored assets that Jekyll serves verbatim to the browser,
+# so there is no build step that could regenerate them.
+!cat-harness/docs/assets/js/
+!cat-harness/docs/assets/js/**/*.js
 
-# Same reason, different directory. `docs/_includes/mermaid_config.js` is the
-# hook just-the-docs interpolates into its `mermaid.initialize()` call (see
-# that theme's `_includes/components/mermaid.html`). It is a .js file that is
-# hand-written source and lives OUTSIDE docs/assets, so the exception above
-# does not reach it — `git add` reported nothing and the file would simply
-# never have deployed.
-!docs/_includes/*.js
+# Same reason, different directory. `mermaid_config.js` is the hook
+# just-the-docs interpolates into its `mermaid.initialize()` call (see that
+# theme's `_includes/components/mermaid.html`). It is a .js file that is
+# hand-written source and lives OUTSIDE the assets tree, so the exception
+# above does not reach it — `git add` reported nothing and the file would
+# simply never have deployed.
+!cat-harness/docs/_includes/*.js
 
 # Build stamp written by .github/workflows/docs-site.yml at deploy time.
 # Never committed: a sha in the repo names the commit BEFORE the deploy.
-docs/_data/build.yml
+cat-harness/docs/_data/build.yml
+
+# Build artifacts: regenerated from the tree, stale the moment they are
+# committed. `_kg/` is the published KG export; `registry.json` is the runtime
+# manifest `scripts/generate-registry.ts` writes. Neither was ignored before,
+# and `registry.json` was nearly committed by accident while writing kg-export.
+_kg/
+.claude/skills/registry.json
+
+# The bootstrap graph, built at render time into the published site by
+# `.github/workflows/docs-site.yml` rather than committed. It WAS committed,
+# on a rationale that said its reader "has nothing installed" and cited a
+# README step telling that reader to load it. Neither held: no prose file
+# under `bootstrap/` mentions this document, and nothing published it, so the
+# `@id` it names itself by resolved to nothing. It was 52 % of `bootstrap/`
+# by line count. Regenerate locally with `bun run bootstrap:graph`.
+bootstrap/bootstrap.jsonld
+
+# Playwright artefacts — the WHOLE directory, including `.last-run.json`.
+#
+# `.last-run.json` was tracked from 2026-09-18 (bb28f8e) and untracked on
+# 2026-09-20 by owner ruling. The note here previously said it was "deliberately
+# restored on main after a sibling session deleted it, so it stays tracked —
+# main's reason is the better one". Measured before reversing that:
+#
+#   git log -- test-results/.last-run.json   ->  ONE commit, bb28f8e
+#
+# bb28f8e is `fix(test): name Playwright specs .e2e.ts`. The file came along
+# with a rename; nothing decided it. There is no restoration commit on this
+# path, and the "better reason" was never written down anywhere — which is the
+# shape AGENTS.md names: a rule whose justification has no home.
+#
+# What tracking it cost, measured on 2026-09-20 alone: two accidental deletions
+# on one branch (a `git add -A` mid-`gates` staged the transient removal, and a
+# hand `mv` to unblock `git revert` did it again), one earlier sibling deletion
+# recorded in the note this replaces, and three stop-hook alarms on a file that
+# the next e2e run recreated by itself.
+#
+# The rule that was supposed to prevent this — "do not `git add -A` while the
+# e2e gates are running" — depends on remembering, and it has now failed at
+# least three times. This repository turns rules that need remembering into
+# checks; ignoring the path is the cheapest version of that.
+#
+# The per-test directories are snapshots of a failing run: one
+# reproduce-then-fix cycle wrote 3,040 lines of them into a commit on
+# 2026-09-19. That is why the directory was partly ignored already — the old
+# pattern `test-results/*/` matched only SUBDIRECTORIES, so a file sitting
+# directly in `test-results/` slipped through it.
+#
+# If someone does have the reason for tracking it, write it here and revert
+# this — an unstated reason is not one this can be weighed against.
+test-results/
+playwright-report/
+
+# Bundler's local gem tree and config, written by `bundle install --path vendor`
+# when somebody builds the docs site to CHECK a change rather than to ship one.
+#
+# Measured 2026-09-19 while verifying the landing-image fix: 3,080 files and
+# 53 MB, untracked and — until this rule — not ignored, so any `git add -A` in
+# the repo root would have swept the whole gem tree into a commit. Nothing
+# under `docs/vendor/` has ever been tracked (`git ls-tree` reports zero), so
+# this ignores a directory that is purely local build state.
+#
+# Not to be confused with the `!…/docs/assets/js/` exception above: THAT
+# vendor is hand-written source Jekyll serves verbatim and is deliberately
+# tracked. Same word, opposite intent.
+cat-harness/docs/.bundle/
+cat-harness/docs/vendor/
+
+# `/docs/` IS TRACKED CONTENT AGAIN as of 2026-09-21, and the wholesale ignore
+# that used to sit here is gone. Owner's ruling on bean `n0nf` (issue #638):
+# "there is also docs/ dir in repo root managed by cat-harness. other harness
+# augment or overlay ontop of that". It is declared in `cat-harness/harness.json`
+# as `root-docs`, `scope: "repository"`, and `compose-docs.ts` lays it over
+# `cat-harness/docs/` before Jekyll builds.
+#
+# THE OLD RULE'S REASONING IS KEPT, because it was right for its time and the
+# hazard it names is still live. It read:
+#
+#   The pre-inversion site root. Zero tracked files — what is left in a working
+#   tree that predates the move is purely local build state: `.bundle/`,
+#   `.jekyll-cache/`, maybe `vendor/`. It is ignored WHOLESALE rather than
+#   deleted because an agent does not remove a durable artefact on its own
+#   initiative, and ignored rather than left alone because it is what made this
+#   whole block stale without anybody noticing: the old entries above still
+#   MATCHED this leftover tree, so the ignores looked alive while the directory
+#   they were written for had moved. A rule that matches the wrong thing reads
+#   exactly like one that matches the right thing.
+#
+# The CONCERN was local build state, never the directory. So the build state is
+# ignored by name below and the directory itself is tracked — which is also the
+# only way the overlay can contain anything, since an ignored `docs/page.md` is
+# an override nobody can commit and every session would re-discover as missing.
+/docs/.bundle/
+/docs/.jekyll-cache/
+/docs/vendor/
+/docs/_site/
+
+# Agent activity log — OFF BY DEFAULT (bean `folio-assistant-7uff`).
+#
+# `fsh-guts/logs/` is inside the repository, so writing there would be
+# committing unless this line stops it. The owner's rule: "by default commit
+# audit log to git data store is turned off - need explict like (cpature log
+# when agent runs this workflow)."
+#
+# The agent still WRITES and READS its log during a session; only persistence
+# is off. A workflow or config that sets capture `on` force-adds the entries
+# it wants kept (`git add -f`), so opting in is a deliberate act at the point
+# of capture rather than a global switch somebody forgets is flipped.
+#
+# NOT `fsh-guts/` wholesale: the rest of the trashcan is committed on purpose
+# — that is what makes the never-delete rule a relocation rather than a
+# disappearance.
+fsh-guts/logs/
+
+# Transient ingest staging — the arms write here, `check:l1-complete` gates it
+# on `--promote`, and only a COMPLETE entry is copied into `library/`
+# (bean `pn6j`). A REFUSED document's output is deliberately left behind for
+# inspection, so this can be non-empty; it is working state, never an artefact.
+# Not dot-prefixed: `.beans/` and `.harness/` were moved out from behind dots
+# in 2026-09-18 because the artefacts a person looks for first were the
+# hardest to find, and a staging tree holding a refused document is exactly
+# that.
+cat-harness/ingest-staging/
+
+# The composed documentation tree (`compose-docs.ts`). A build output: the
+# BASE is `cat-harness/docs/` and the overlay is the root `docs/`, both tracked.
+_docs/

@@ -1,0 +1,134 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_CRDM_DataModel",
+    "path": "processes/crdm-data-model.bpmn"
+  },
+  "source_hash": "sha256:6e009d132b469c4fb7a1813269c3c678b40ac026f31ce65d55f3f3200d96a7dd",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "pass",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "pass",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Entities",
+          "detail": "needs skill \"crdm-data-model\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_Relations",
+          "detail": "needs skill \"crdm-data-model\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "BA_ConfirmEntities",
+          "detail": "needs skill \"crdm-data-model\", but its lane's role \"business-analyst\" does not carry it."
+        },
+        {
+          "where": "S_ConfirmCardinality",
+          "detail": "needs skill \"crdm-data-model\", but its lane's role \"stakeholder\" does not carry it."
+        },
+        {
+          "where": "A_Declare",
+          "detail": "needs skill \"crdm-data-model\", but its lane's role \"authoring-agent\" does not carry it."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 16,
+    "fail": 1,
+    "n/a": 7,
+    "unknown": 0
+  }
+}

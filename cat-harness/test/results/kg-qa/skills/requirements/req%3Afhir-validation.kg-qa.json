@@ -1,0 +1,42 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "requirement",
+    "id": "req:fhir-validation",
+    "path": "skills/requirements/fhir-validation.json"
+  },
+  "source_hash": "sha256:55b8e704553f2d764b235e90377ac18bfce93fae786f11ff3decae66e7613bf6",
+  "criteria": {
+    "requirement-statement-satisfied": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "req:fhir-validation/crmi-conformance",
+          "detail": "no skill or capability declares `satisfies: req:fhir-validation#crmi-conformance` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:fhir-validation/terminology-bindings",
+          "detail": "no skill or capability declares `satisfies: req:fhir-validation#terminology-bindings` — nothing is recorded as discharging this statement."
+        }
+      ]
+    },
+    "requirement-actors-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-derived-from-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-statements-graded": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 3,
+    "fail": 1,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

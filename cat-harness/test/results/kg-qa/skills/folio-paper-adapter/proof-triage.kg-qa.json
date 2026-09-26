@@ -1,0 +1,56 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "proof-triage",
+    "path": "skills/folio-paper-adapter/proof-triage.md"
+  },
+  "source_hash": "2dce2f0c0d28",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-paper-adapter/proof-triage.md",
+          "detail": "386 lines; p75 of the skill corpus is 279."
+        }
+      ]
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 4,
+    "fail": 1,
+    "n/a": 1,
+    "unknown": 0
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/proof-triage.md",
+      "code": "cat-harness/skills/folio-paper-adapter/proof-triage.ts",
+      "prose_hash": "2dce2f0c0d28",
+      "code_hash": "44fab3b52fa6",
+      "by": "baseline"
+    }
+  ]
+}

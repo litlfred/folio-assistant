@@ -1,0 +1,58 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "requirement",
+    "id": "req:serving-a-rendering",
+    "path": "skills/requirements/serving-a-rendering.json"
+  },
+  "source_hash": "sha256:e96b5485f9d1f66adf5bc28cd2820a4960478160712490a4e0515e13a52ab7af",
+  "criteria": {
+    "requirement-statement-satisfied": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "req:serving-a-rendering/compound-extension-wins",
+          "detail": "no skill or capability declares `satisfies: req:serving-a-rendering#compound-extension-wins` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:serving-a-rendering/bare-stub-opens",
+          "detail": "no skill or capability declares `satisfies: req:serving-a-rendering#bare-stub-opens` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:serving-a-rendering/alias-is-byte-identical",
+          "detail": "no skill or capability declares `satisfies: req:serving-a-rendering#alias-is-byte-identical` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:serving-a-rendering/undeclared-is-not-forced",
+          "detail": "no skill or capability declares `satisfies: req:serving-a-rendering#undeclared-is-not-forced` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:serving-a-rendering/contained",
+          "detail": "no skill or capability declares `satisfies: req:serving-a-rendering#contained` — nothing is recorded as discharging this statement."
+        },
+        {
+          "where": "req:serving-a-rendering/loopback-by-default",
+          "detail": "no skill or capability declares `satisfies: req:serving-a-rendering#loopback-by-default` — nothing is recorded as discharging this statement."
+        }
+      ]
+    },
+    "requirement-actors-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-derived-from-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "requirement-statements-graded": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 3,
+    "fail": 1,
+    "n/a": 0,
+    "unknown": 0
+  }
+}

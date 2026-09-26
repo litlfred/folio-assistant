@@ -1,0 +1,154 @@
+# bpmn: cat-harness/processes/upstream-pin-watch.bpmn
+# Upstream pin watchdog — the detection half of `upstream-version-adoption`.
+#
+# `docs/_config.yml` used to carry `remote_theme: just-the-docs/just-the-docs`
+# with no ref, so every Jekyll build downloaded the theme's default-branch HEAD
+# and an upstream commit could take this repo's docs build red with no commit of
+# ours. Pinning fixes that and creates the opposite obligation: somebody has to
+# notice the pin has gone stale, and decide.
+#
+# This is the "somebody". It is deliberately the SAME SHAPE as `ci-health.yml`,
+# because the lesson is the same one: GitHub sent thirty failure emails about
+# `docs-site.yml` and nobody read any of them, so a notification is not a
+# control. This maintains ONE issue, edited in place, closed automatically —
+# state on the front page rather than another item in an inbox.
+#
+# It never moves a pin. Adoption is `processes/upstream-version-adoption.bpmn`,
+# and the accepting step there is a `bpmn:userTask` in a person-only lane.
+#
+# Cost: this repository is PUBLIC, so GitHub-hosted runners are free. One ~30s
+# job a week, one `git ls-remote` per pinned dependency.
+
+name: Upstream pin watchdog
+
+on:
+  # Weekly, on the same reasoning as `ci-health.yml`: the defect is "nobody
+  # noticed for months", not "nobody noticed for a day". A daily run would turn
+  # the tracking issue into a feed, and upstream does not cut releases daily.
+  schedule:
+    - cron: '43 9 * * 2'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: upstream-pins
+  cancel-in-progress: false
+
+jobs:
+  report:
+    # bpmn-node: Start_Sweep
+    name: Check every pinned upstream dependency
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Check the pins
+        id: check
+        run: |
+          set +e
+          bun run check:upstream-pins --out "$RUNNER_TEMP/upstream-pins.md"
+          status=$?
+          set -e
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          # 0 = every pin current, 1 = at least one behind, 2 = could not tell.
+          # bun exits 1 on an uncaught exception too, so exit 1 alone does not
+          # separate "found a stale pin" from "crashed". The report file is what
+          # separates them: `--out` writes it before any exit path, so a real
+          # finding always has one and a crash before that point does not.
+          report="$RUNNER_TEMP/upstream-pins.md"
+          if [ "$status" = "1" ] && [ ! -s "$report" ]; then
+            echo "::warning::checker exited 1 without writing a report — treating as unchecked"
+            status=2
+          fi
+          case "$status" in
+            0) echo "verdict=current" >> "$GITHUB_OUTPUT" ;;
+            1) echo "verdict=behind" >> "$GITHUB_OUTPUT" ;;
+            *) echo "verdict=unknown" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+      # Ensured for BOTH issue paths — the close path filters on the label too,
+      # and on a repo where no pin has ever gone stale the label would not
+      # otherwise exist. Skipped on `unknown`, where neither path runs and a
+      # label hiccup must not be what fails the job.
+      - name: Ensure the tracking label exists
+        if: steps.check.outputs.verdict != 'unknown'
+        run: gh label create upstream-pin --color 1D76DB --description "A pinned upstream dependency is behind a release" --force
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Open or update the tracking issue
+        if: steps.check.outputs.verdict == 'behind'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          {
+            cat "$RUNNER_TEMP/upstream-pins.md"
+            echo
+            echo "---"
+            echo
+            echo "**This issue is not a request to bump the pin.** It is the entry point to"
+            echo "\`upstream-version-adoption\` — impact analysis against what of ours binds the"
+            echo "dependency (\`binds\` in \`upstream-pins.json\`), an MVP deployed to staging, a"
+            echo "review of the deployed page, and a **person** deciding to adopt, hold or"
+            echo "decline. See \`skills/folio-core/upstream-version-adoption.md\`."
+            echo
+            echo "Maintained by [\`upstream-pins.yml\`]($RUN_URL). Edited in place each week and"
+            echo "closed automatically once every pin is current, so its body is the current"
+            echo "state rather than a log."
+          } > "$RUNNER_TEMP/issue-body.md"
+
+          existing=$(gh issue list --label upstream-pin --state open \
+            --json number --jq '.[0].number // empty')
+
+          if [ -n "$existing" ]; then
+            # Edit rather than comment: an edit does not notify, so a pin left
+            # behind for two months stays one unread item rather than nine.
+            gh issue edit "$existing" --body-file "$RUNNER_TEMP/issue-body.md"
+            echo "updated issue #$existing"
+          else
+            gh issue create \
+              --title "A pinned upstream dependency is behind a release" \
+              --label upstream-pin \
+              --body-file "$RUNNER_TEMP/issue-body.md"
+          fi
+
+      - name: Close the tracking issue when every pin is current
+        if: steps.check.outputs.verdict == 'current'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          existing=$(gh issue list --label upstream-pin --state open \
+            --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" \
+              --comment "Every pinned upstream dependency is at its newest matching release. Closed by \`upstream-pins.yml\`."
+            echo "closed issue #$existing"
+          else
+            echo "every pin current, and no tracking issue open — nothing to do."
+          fi
+
+      # "Could not tell" is not "current". The checker refuses to render an
+      # unreachable remote as green and so does this: the tracking issue is left
+      # exactly as it is — NEVER closed — and the job fails, which makes this
+      # workflow red on the default branch, which `check:ci-health` reports.
+      - name: Refuse to report success on an undetermined pin
+        if: steps.check.outputs.verdict == 'unknown'
+        run: |
+          echo "::error::At least one pinned dependency could not be determined (exit ${{ steps.check.outputs.status }})."
+          echo "::error::Treat this as unknown, not as current. The tracking issue was left untouched."
+          exit 1

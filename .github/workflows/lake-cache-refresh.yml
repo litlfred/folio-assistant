@@ -41,8 +41,17 @@ jobs:
       matrix: ${{ steps.read.outputs.matrix }}
       packages: ${{ steps.read.outputs.packages }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - id: read
+        # The requested package comes through `env`, NOT `${{ }}` interpolation.
+        # An expression is substituted into the script TEXT before bash sees it,
+        # so a value containing a single quote closes `sel='...'` and the rest
+        # executes. `workflow_dispatch` narrows who can supply one to somebody
+        # with write access, which lowers the severity and does not change the
+        # shape — and `feature-staging.yml`'s banner step already states this
+        # reasoning for PR title and body. As an environment variable it is data.
+        env:
+          REQUESTED_PACKAGE: ${{ github.event.inputs.package }}
         run: |
           set -euo pipefail
           cfg=".github/lake-packages.json"
@@ -51,7 +60,7 @@ jobs:
             exit 1
           fi
           # Optionally narrow to a single requested package.
-          sel='${{ github.event.inputs.package }}'
+          sel="$REQUESTED_PACKAGE"
           if [ -n "$sel" ] && [ "$sel" != "all" ]; then
             matrix=$(jq -c --arg p "$sel" '{include: [.packages[] | select(.package == $p)]}' "$cfg")
           else
@@ -72,7 +81,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.setup.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0  # need full history to push orphan branches
 
@@ -143,7 +152,7 @@ jobs:
     if: always() && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 

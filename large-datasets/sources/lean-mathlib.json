@@ -1,0 +1,35 @@
+{
+  "$schema": "folio-source-descriptor/v1",
+  "id": "lean-mathlib",
+  "title": "Lean 4 mathlib",
+  "system": "Lean 4 / Lake",
+  "nodeKind": "declaration (a theorem, definition or instance), inside a module",
+  "subsetStrategies": [
+    "closure",
+    "identifier",
+    "container"
+  ],
+  "subsetIsSelfContained": false,
+  "subsetBasis": "FALSE, and this is the row that makes the abstraction real rather than IRIS with an interface drawn round it. An IRIS item stands alone: fetch it and you have it. A mathlib declaration does not — it needs its import closure, and a subset that omits what its members depend on is not a smaller corpus, it is one that does not compile. The breakage surfaces at BUILD time, long after the subset was chosen. Any source with this flag false must be closed over dependencies before the five materialization gates are even asked, because the size being gated is the closure's, not the request's.",
+  "identifiers": [
+    {
+      "name": "fully-qualified name",
+      "authoritative": true,
+      "example": "Nat.succ_le_of_lt",
+      "note": "One identifier system, not three — the contrast with IRIS. It is authoritative WITHIN a revision and not across them: mathlib renames, and a name that resolved last month may resolve to nothing or to something else. So a citation needs the name AND the revision, which is the same lesson as recording upstreamVersion on a materialization."
+    }
+  ],
+  "enumeration": {
+    "method": "The module graph — `lake` plus the generated import graph. There is no paged API; enumeration is a local traversal of a checkout, which is a different SHAPE of cost from IRIS's REST paging: the expense is the initial clone and build, not per-request round trips.",
+    "basis": "NOT MEASURED. No mathlib checkout exists in this environment and none was fetched, so totalNodes and pageSize are absent rather than estimated. enumerationCost() returns undefined for this descriptor, which is the correct answer and the one that makes a size gate REFUSE — the third state doing its job on the second worked example, not a gap in it."
+  },
+  "termsUrl": "https://github.com/leanprover-community/mathlib4",
+  "character": {
+    "remote": true,
+    "large": true,
+    "volatility": "volatile",
+    "availability": "unknown",
+    "hasOwnSearch": true,
+    "basis": "remote and large: a full checkout plus build is the unit of acquisition, and the import closure of one declaration can reach most of the library. volatility `volatile` and this is the substantive call: mathlib's master branch RENAMES declarations, so a fully-qualified name is authoritative within a revision and not across them -- content at an address changes. That is why a mathlib citation needs a revision and why archivalImperative() returns `required` here while IRIS gets `recommended`. availability `unknown`: NOT tested from this environment, and `unknown` is recorded rather than guessed. hasOwnSearch: loogle and the mathlib docs search exist."
+  }
+}

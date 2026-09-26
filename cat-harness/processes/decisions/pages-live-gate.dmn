@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  "Is the published site answering?" — Gateway_Live in getting-started.bpmn.
+
+  A folio that has just been scaffolded is worth very little to its author until
+  they can see it. So the last thing the onboarding process does is publish, and
+  the last thing it says is the URL — but only once that URL actually answers.
+
+  Facts the caller supplies, from the JSON output of
+  `bun run scripts/pages-bootstrap.ts` (its `json` flag):
+
+    pagesUrlKnown   the Pages base URL could be derived at all (git remote
+                    readable, owner/repo parsed, or <name>.config.json
+                    readme.pagesBaseUrl set).
+    probe           "ok"        the URL returned a success status
+                    "not-found" the URL answered 404 — the site is not published
+                                yet, which is the ordinary state for the first
+                                minutes after a scaffold
+                    "error"     the request failed for some other reason:
+                                network, TLS, timeout, a proxy
+                    "unchecked" no probe was attempted
+
+  ## Three states, and the third is not a shade of the other two
+
+  `unknown` exists because "I could not find out" is a different answer from
+  "not yet", and collapsing them is the specific failure this repository has
+  already paid for twice — the README TOC that rendered an unreadable publish
+  ref as an empty table, and the simulators section that rendered an absent
+  directory as "no simulators". Here the cost would be telling an author their
+  site is still building when in fact nothing was ever checked.
+
+  So: `not-yet` is a MEASUREMENT (the server answered, with a 404), and
+  `unknown` is the ABSENCE of one. They route to different tasks and the author
+  is told which they got.
+
+  Hit policy FIRST. Rule 1 comes before any probe rule because a probe result
+  without a URL to attach it to is not evidence about this folio's site.
+-->
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             id="Definitions_PagesLiveGate"
+             name="Pages live gate"
+             namespace="https://litlfred.github.io/folio-assistant/decisions">
+  <decision id="Decision_PagesLive" name="Is the published site answering?">
+    <decisionTable id="Table_PagesLive" hitPolicy="FIRST">
+      <input id="In_UrlKnown" label="Pages URL derivable?">
+        <inputExpression id="Expr_UrlKnown" typeRef="boolean">
+          <text>pagesUrlKnown</text>
+        </inputExpression>
+      </input>
+      <input id="In_Probe" label="probe result">
+        <inputExpression id="Expr_Probe" typeRef="string">
+          <text>probe</text>
+        </inputExpression>
+      </input>
+      <output id="Out_PagesLive" name="outcome" typeRef="string" />
+
+      <rule id="Rule_NoUrl">
+        <description>No URL to report and none to probe. Say so; do not guess one from the folio name.</description>
+        <inputEntry id="IE_NoUrl_1"><text>false</text></inputEntry>
+        <inputEntry id="IE_NoUrl_2"><text>-</text></inputEntry>
+        <outputEntry id="OE_NoUrl"><text>"unknown"</text></outputEntry>
+      </rule>
+      <rule id="Rule_Ok">
+        <description>The site answered. Hand the author the live link.</description>
+        <inputEntry id="IE_Ok_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_Ok_2"><text>"ok"</text></inputEntry>
+        <outputEntry id="OE_Ok"><text>"live"</text></outputEntry>
+      </rule>
+      <rule id="Rule_NotFound">
+        <description>A real 404 — the build has not landed yet. Tell the author where it WILL be, and that it is not there now.</description>
+        <inputEntry id="IE_NotFound_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_NotFound_2"><text>"not-found"</text></inputEntry>
+        <outputEntry id="OE_NotFound"><text>"not-yet"</text></outputEntry>
+      </rule>
+      <rule id="Rule_Error">
+        <description>The request failed. This is not evidence that the site is missing.</description>
+        <inputEntry id="IE_Error_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_Error_2"><text>"error"</text></inputEntry>
+        <outputEntry id="OE_Error"><text>"unknown"</text></outputEntry>
+      </rule>
+      <rule id="Rule_Unchecked">
+        <description>Nothing was probed. Never rendered as either of the other two.</description>
+        <inputEntry id="IE_Unchecked_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_Unchecked_2"><text>"unchecked"</text></inputEntry>
+        <outputEntry id="OE_Unchecked"><text>"unknown"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

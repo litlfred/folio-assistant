@@ -1,8 +1,13 @@
 {
   "id": "author",
-  "name": "Author",
-  "type": "person",
-  "description": "Can create and modify content. Inherits all reviewer capabilities.",
-  "inherits": ["reviewer"],
-  "capabilities": ["git-push", "content-authoring"]
+  "title": "Author",
+  "kind": "person",
+  "description": "A person who writes and revises content. Acts as the `author` role, and as `editor` when accepting a change into the corpus.",
+  "roles": [
+    "author",
+    "editor"
+  ],
+  "capabilities": [
+    "git-push"
+  ]
 }

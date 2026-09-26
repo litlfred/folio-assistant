@@ -1,0 +1,51 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "critical-path-analysis",
+    "path": "skills/folio-paper-adapter/critical-path-analysis.md"
+  },
+  "source_hash": "a068467371c5",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 0,
+    "n/a": 1,
+    "unknown": 0
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/critical-path-analysis.md",
+      "code": "cat-harness/skills/folio-paper-adapter/critical-path-analysis.ts",
+      "prose_hash": "a068467371c5",
+      "code_hash": "66be5380b58d",
+      "by": "baseline"
+    }
+  ]
+}

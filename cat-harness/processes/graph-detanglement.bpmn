@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+                  id="Definitions_Process_GraphDetanglement" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:collaboration id="Collaboration_Process_GraphDetanglement">
+    <bpmn:participant id="Participant_Process_GraphDetanglement" name="A sub-graph wants to leave" processRef="Process_GraphDetanglement"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_GraphDetanglement" name="A sub-graph wants to leave" isExecutable="false">
+    <bpmn:documentation>THE FOUR STAGES ARE GATES, NOT ADVICE, AND THAT IS THE WHOLE REASON THIS IS A DIAGRAM. `graph-detanglement.md` says "nothing moves until the stage before it measures zero" in prose, and prose is what an agent under pressure talks itself past. Each gate here is a DECISION TABLE: `workflow_complete` refuses a hand-supplied outcome at a `cat-harness.processes:decision` gateway, so the branch is computed from the counts a tool already produced rather than asserted.&amp;#10;&amp;#10;THE SHARPEST GATE IS `Detangled?`, AND IT IS SHARP BECAUSE OF ITS RULE ORDER. `unassignedEdges &amp;gt; 0` returns `unknown` BEFORE the cross-edge rule is reached, so a zero cross-edge count over an unjudged corpus cannot be read as a pass. `repo-partition.ts` states it in its own voice &amp;#8212; "these are not cross-edges, they are edges this tool declined to judge. Do not read them as clean" &amp;#8212; and move 1 of the practice is exactly that sentence. A person can skip it. A table cannot.&amp;#10;&amp;#10;EVERY GATE HAS A THIRD STATE AND NONE OF THEM RENDERS IT AS CLEAN. `Declared in place?` answers `unknown` on a declaration that did not parse rather than "not yet", because one says the work has not started and the other says nobody can tell. `Detangled?` answers `unknown` on an incomplete measurement. Both route to `End_Unknown`, which is a REFUSAL to advance &amp;#8212; the process stops rather than proceeding on a guess.&amp;#10;&amp;#10;DECLARING IS CHEAP AND EXTRACTING IS EXPENSIVE, WHICH IS THE POINT. Stage 1 moves nothing: the sub-graph is declared where it already sits, still inside the repository, still connected. `smart-base/methodologies/` is the worked example and it belongs to a repository that does not exist yet.&amp;#10;&amp;#10;STAGE 2 IS A LOOP, AND THE LOOP IS LOAD-BEARING. `Prune, merge, factor, or reclassify` returns to `Measure` rather than to the gate, because an assignment is verified by RE-RUNNING and never by being locally reasonable &amp;#8212; the obvious move, the one the tool's own message asks for, once took the count from 5 to 15. The four moves are the only four: the first three are the block-scale rule, and "the classification is wrong" is the fourth the repository scale adds because a module's layer is in doubt the way a block's chapter is not.&amp;#10;&amp;#10;ISOLATION IS NOT ZERO EDGES. A sub-graph with no inbound edges can still carry no declaration, no namespace and no published artefact, and lifting that directory produces a repository that cannot say what it is. `bootstrap/` is the demonstrated case and the shape to match.&amp;#10;&amp;#10;THE EXTRACTION IS A PERSON'S DECISION, AND THE LANE SAYS SO. `Authorise the extraction` sits in the Administrator lane because an extraction moves durable artefacts out of a repository, and `deletion-requires-confirmation` is not a courtesy the agent may waive: the agent reports what would move, and waits. The administrator lane is the one whose activities change the substrate every other diagram's lanes bind to, which is exactly what a repository cut does.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <cat-harness.processes:policy enforcement="strict"/>
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="LaneSet_Process_GraphDetanglement">
+      <bpmn:lane id="Lane_Agent" name="Authoring agent">
+        <bpmn:documentation>Runs every stage up to the edge of authorisation — brief, declare, measure, move-and-remeasure, isolate — and Task_Propose is the last thing it does off its own judgement: reporting sizes and what would break, then waiting. Verification here is always by RE-RUNNING the measurement rather than by an assignment being locally reasonable, which is why Task_Move loops back to Task_Measure and not to the gate — a move that looks right is not yet a move that measured right.</bpmn:documentation>
+        <!-- Bound EXPLICITLY rather than by name. "Authoring agent" is not in
+             the role's `lanes` aliases, and the audit caught that on the first
+             run — which is the cheap version of the near-miss
+             `code-change-review` records, where "CI/CD pipeline" differed from
+             the declared name by one capital letter. A ref cannot near-miss.
+             And the role is REUSED rather than minted: `role-model` says a role
+             is never invented to make a diagram drawable, so there is no
+             "graph steward" here. -->
+        <bpmn:extensionElements>
+          <bootstrap.processes:role ref="authoring-agent"/>
+        </bpmn:extensionElements>
+        <bpmn:flowNodeRef>Start_Wants</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Brief</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Declare</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Declared</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Measure</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Detangled</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Move</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Isolate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Isolated</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Propose</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Extract</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Extracted</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Unknown</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Admin" name="Administrator">
+        <bpmn:documentation>Reached only after Declared, Detangled and Isolated have each independently cleared — so this lane is never asked to judge the measurement, only whether an already-clean extraction may proceed. Declining is not a refusal back to unknown: End_Declined leaves the sub-graph declared, detangled and isolated in place, which is a real outcome of this process and not merely the absence of one.</bpmn:documentation>
+        <bpmn:extensionElements>
+          <bootstrap.processes:role ref="administrator"/>
+        </bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_Authorise</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Declined</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Start_Wants" name="Size, or a semantic&amp;#10;reason to separate">
+      <bpmn:outgoing>G0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Brief" name="Brief the topic before&amp;#10;touching anything">
+      <bpmn:documentation>What am I doing and why is it worth doing; what do I already know, with each measurement's provenance; how do I plan to do it and WHAT WOULD FALSIFY THE APPROACH. A falsifier that never fires is decoration &amp;#8212; this practice's own fired, took edges 5 to 12, and rewrote the plan.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="opening-brief"/>
+        <cat-harness.processes:bean op="claim"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>G0</bpmn:incoming>
+      <bpmn:outgoing>G1</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_Declare" name="1 &amp;#183; Declare in place&amp;#10;(nothing moves)">
+      <bpmn:documentation>A `&lt;name&gt;.json` entry with its `graphs[]` kinds. A sub-graph that owns its own layout gains a NESTED declaration whose paths resolve against its own directory, so the whole graph relocates by moving one folder.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="graph-detanglement"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>G1</bpmn:incoming>
+      <bpmn:outgoing>G2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Declared" name="Declared&amp;#10;in place?">
+      <bpmn:documentation>Computed, not chosen: decisions/subgraph-declared-gate.dmn (hit policy FIRST) over three inputs — the declaration parsed (`readable`), an entry present for the sub-graph, and every declared path exists. Unparseable goes to `unknown`, a fault rather than 'not yet', and stops the process. No entry, or a declared path that does not exist (bean `dh4f`), goes to `not yet`, back to Declare. Otherwise `declared`, on to Measure.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <cat-harness.processes:decision ref="decisions/subgraph-declared-gate.dmn#Decision_SubgraphDeclaredGate"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>G2</bpmn:incoming>
+      <bpmn:outgoing>G3</bpmn:outgoing>
+      <bpmn:outgoing>G4</bpmn:outgoing>
+      <bpmn:outgoing>G5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="Task_Measure" name="2a &amp;#183; Measure &amp;#8212; unassigned&amp;#10;column FIRST">
+      <bpmn:documentation>`bun run check:partition`. Read the unassigned column before the edge count, and quote BOTH numbers rather than only the one that improved. The count rising when the measurement improves is correct: 43 to 49 when thirteen previously-unjudged edges were folded in.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="graph-detanglement"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>G4</bpmn:incoming>
+      <bpmn:incoming>G7</bpmn:incoming>
+      <bpmn:outgoing>G6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Detangled" name="Detangled?">
+      <bpmn:documentation>Computed from `check:partition`'s counts by decisions/detanglement-gate.dmn (hit policy FIRST). `unassignedEdges &gt; 0` answers `unknown` BEFORE the cross-edge rule is reached, because a zero cross-edge count over an unjudged corpus is not a pass; that stops the process. `crossEdges &gt; 0` answers `keep detangling`: prune, merge, factor, or reclassify, then re-measure. Zero of both is `detangled`, on to Isolate.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <cat-harness.processes:decision ref="decisions/detanglement-gate.dmn#Decision_DetanglementGate"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>G6</bpmn:incoming>
+      <bpmn:outgoing>G5b</bpmn:outgoing>
+      <bpmn:outgoing>G8</bpmn:outgoing>
+      <bpmn:outgoing>G9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Move" name="2b &amp;#183; Prune, merge, factor&amp;#10;&amp;#8212; or the classification is wrong">
+      <bpmn:documentation>The only four moves. Move the shared TARGET first and the importers after; check the target's layer before the importer's; a schema moves with its script. The fix is never an exemption, it is the right owner.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="graph-detanglement"/>
+        <cat-harness.processes:bean op="note"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>G8</bpmn:incoming>
+      <bpmn:outgoing>G7</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="Task_Isolate" name="3 &amp;#183; Isolate &amp;#8212; own declaration,&amp;#10;namespace, artefact">
+      <bpmn:documentation>Only once cross-edges measure zero: give the sub-graph its own declaration, its own namespace and its own published artefact, as bootstrap/ has (its own declaration, bs: namespace and graph document). Nothing moves yet; the sub-graph now stands alone in place.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="graph-detanglement"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>G9</bpmn:incoming>
+      <bpmn:outgoing>G10</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Isolated" name="Stands&amp;#10;alone?">
+      <bpmn:documentation>Computed by decisions/isolation-gate.dmn (hit policy FIRST) over three inputs: its own declaration with paths relative to itself, its own namespace with every minted term defined, and a published artefact of its own. Any one missing answers `not yet`, back to Isolate. All three answer `isolated`, on to reporting what would move and waiting for a person to authorise it. Zero edges alone is not isolation.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <cat-harness.processes:decision ref="decisions/isolation-gate.dmn#Decision_IsolationGate"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>G10</bpmn:incoming>
+      <bpmn:outgoing>G11</bpmn:outgoing>
+      <bpmn:outgoing>G12</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="Task_Propose" name="Report what would move&amp;#10;&amp;#8212; sizes, and what breaks">
+      <bpmn:documentation>The agent reports and waits. `deletion-requires-confirmation` is not a courtesy to waive: an agent never removes or relocates a durable artefact on its own initiative.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>G12</bpmn:incoming>
+      <bpmn:outgoing>G13</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:userTask id="Task_Authorise" name="Authorise the extraction">
+      <bpmn:documentation>The one step no package may relax. A repository cut changes the substrate every other diagram's lanes bind to, and that is a person's decision.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="deletion-requires-confirmation"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>G13</bpmn:incoming>
+      <bpmn:outgoing>G14</bpmn:outgoing>
+      <bpmn:outgoing>G15</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_Declined" name="Stays where it is&amp;#10;&amp;#8212; declared, detangled, isolated">
+      <bpmn:incoming>G15</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:task id="Task_Extract" name="4 &amp;#183; Extract &amp;#8212; a directory move,&amp;#10;not a file-by-file sift">
+      <bpmn:documentation>Only once edges are zero and the declaration stands alone: move the sub-graph out as one directory move, not a file-by-file sift. Its nested declaration resolves paths against its own directory, so moving the folder moves the graph. The five-point gate is in migration-plan.md Phase II.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="graph-detanglement"/>
+        <cat-harness.processes:bean op="resolve"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>G14</bpmn:incoming>
+      <bpmn:outgoing>G16</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_Extracted" name="Extracted">
+      <bpmn:incoming>G16</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_Unknown" name="UNKNOWN &amp;#8212; stop.&amp;#10;Not &amp;#8220;not yet&amp;#8221;, not clean">
+      <bpmn:incoming>G3</bpmn:incoming>
+      <bpmn:incoming>G5b</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="G0" sourceRef="Start_Wants" targetRef="Task_Brief"/>
+    <bpmn:sequenceFlow id="G1" sourceRef="Task_Brief" targetRef="Task_Declare"/>
+    <bpmn:sequenceFlow id="G2" sourceRef="Task_Declare" targetRef="GW_Declared"/>
+    <bpmn:sequenceFlow id="G3" sourceRef="GW_Declared" targetRef="End_Unknown" name="unknown"/>
+    <bpmn:sequenceFlow id="G4" sourceRef="GW_Declared" targetRef="Task_Measure" name="declared"/>
+    <bpmn:sequenceFlow id="G5" sourceRef="GW_Declared" targetRef="Task_Declare" name="not yet"/>
+    <bpmn:sequenceFlow id="G6" sourceRef="Task_Measure" targetRef="GW_Detangled"/>
+    <bpmn:sequenceFlow id="G5b" sourceRef="GW_Detangled" targetRef="End_Unknown" name="unknown"/>
+    <bpmn:sequenceFlow id="G8" sourceRef="GW_Detangled" targetRef="Task_Move" name="keep detangling"/>
+    <bpmn:sequenceFlow id="G7" sourceRef="Task_Move" targetRef="Task_Measure"/>
+    <bpmn:sequenceFlow id="G9" sourceRef="GW_Detangled" targetRef="Task_Isolate" name="detangled"/>
+    <bpmn:sequenceFlow id="G10" sourceRef="Task_Isolate" targetRef="GW_Isolated"/>
+    <bpmn:sequenceFlow id="G11" sourceRef="GW_Isolated" targetRef="Task_Isolate" name="not yet"/>
+    <bpmn:sequenceFlow id="G12" sourceRef="GW_Isolated" targetRef="Task_Propose" name="isolated"/>
+    <bpmn:sequenceFlow id="G13" sourceRef="Task_Propose" targetRef="Task_Authorise"/>
+    <bpmn:sequenceFlow id="G14" sourceRef="Task_Authorise" targetRef="Task_Extract" name="authorised"/>
+    <bpmn:sequenceFlow id="G15" sourceRef="Task_Authorise" targetRef="End_Declined" name="declined"/>
+    <bpmn:sequenceFlow id="G16" sourceRef="Task_Extract" targetRef="End_Extracted"/>
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="Diagram_Process_GraphDetanglement">
+    <bpmndi:BPMNPlane id="Plane_Process_GraphDetanglement" bpmnElement="Collaboration_Process_GraphDetanglement">
+      <bpmndi:BPMNShape id="Shape_Participant_Process_GraphDetanglement" bpmnElement="Participant_Process_GraphDetanglement" isHorizontal="true">
+        <dc:Bounds x="60" y="60" width="2340" height="620"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Agent" bpmnElement="Lane_Agent" isHorizontal="true">
+        <dc:Bounds x="90" y="60" width="2310" height="460"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Admin" bpmnElement="Lane_Admin" isHorizontal="true">
+        <dc:Bounds x="90" y="520" width="2310" height="160"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Wants" bpmnElement="Start_Wants">
+        <dc:Bounds x="122" y="132" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Brief" bpmnElement="Task_Brief">
+        <dc:Bounds x="220" y="110" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Declare" bpmnElement="Task_Declare">
+        <dc:Bounds x="470" y="110" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Declared" bpmnElement="GW_Declared" isMarkerVisible="true">
+        <dc:Bounds x="725" y="125" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Measure" bpmnElement="Task_Measure">
+        <dc:Bounds x="870" y="110" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Detangled" bpmnElement="GW_Detangled" isMarkerVisible="true">
+        <dc:Bounds x="1125" y="125" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Move" bpmnElement="Task_Move">
+        <dc:Bounds x="870" y="270" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Isolate" bpmnElement="Task_Isolate">
+        <dc:Bounds x="1270" y="110" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Isolated" bpmnElement="GW_Isolated" isMarkerVisible="true">
+        <dc:Bounds x="1525" y="125" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Propose" bpmnElement="Task_Propose">
+        <dc:Bounds x="1670" y="110" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Authorise" bpmnElement="Task_Authorise">
+        <dc:Bounds x="1670" y="560" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Declined" bpmnElement="End_Declined">
+        <dc:Bounds x="1952" y="582" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Extract" bpmnElement="Task_Extract">
+        <dc:Bounds x="2070" y="110" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Extracted" bpmnElement="End_Extracted">
+        <dc:Bounds x="2322" y="132" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Unknown" bpmnElement="End_Unknown">
+        <dc:Bounds x="932" y="422" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_G0" bpmnElement="G0">
+        <di:waypoint x="158" y="150"/>
+        <di:waypoint x="220" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G1" bpmnElement="G1">
+        <di:waypoint x="400" y="150"/>
+        <di:waypoint x="470" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G2" bpmnElement="G2">
+        <di:waypoint x="650" y="150"/>
+        <di:waypoint x="725" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G3" bpmnElement="G3">
+        <di:waypoint x="750" y="175"/>
+        <di:waypoint x="750" y="440"/>
+        <di:waypoint x="932" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G4" bpmnElement="G4">
+        <di:waypoint x="775" y="150"/>
+        <di:waypoint x="870" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G5" bpmnElement="G5">
+        <di:waypoint x="750" y="125"/>
+        <di:waypoint x="750" y="80"/>
+        <di:waypoint x="560" y="80"/>
+        <di:waypoint x="560" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G6" bpmnElement="G6">
+        <di:waypoint x="1050" y="150"/>
+        <di:waypoint x="1125" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G5b" bpmnElement="G5b">
+        <di:waypoint x="1150" y="175"/>
+        <di:waypoint x="1150" y="440"/>
+        <di:waypoint x="968" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G8" bpmnElement="G8">
+        <di:waypoint x="1150" y="175"/>
+        <di:waypoint x="1150" y="310"/>
+        <di:waypoint x="1050" y="310"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G7" bpmnElement="G7">
+        <di:waypoint x="870" y="310"/>
+        <di:waypoint x="800" y="310"/>
+        <di:waypoint x="800" y="190"/>
+        <di:waypoint x="870" y="190"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G9" bpmnElement="G9">
+        <di:waypoint x="1175" y="150"/>
+        <di:waypoint x="1270" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G10" bpmnElement="G10">
+        <di:waypoint x="1450" y="150"/>
+        <di:waypoint x="1525" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G11" bpmnElement="G11">
+        <di:waypoint x="1550" y="125"/>
+        <di:waypoint x="1550" y="80"/>
+        <di:waypoint x="1360" y="80"/>
+        <di:waypoint x="1360" y="110"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G12" bpmnElement="G12">
+        <di:waypoint x="1575" y="150"/>
+        <di:waypoint x="1670" y="150"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G13" bpmnElement="G13">
+        <di:waypoint x="1760" y="190"/>
+        <di:waypoint x="1760" y="560"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G14" bpmnElement="G14">
+        <di:waypoint x="1850" y="580"/>
+        <di:waypoint x="2160" y="580"/>
+        <di:waypoint x="2160" y="190"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G15" bpmnElement="G15">
+        <di:waypoint x="1850" y="600"/>
+        <di:waypoint x="1952" y="600"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_G16" bpmnElement="G16">
+        <di:waypoint x="2250" y="150"/>
+        <di:waypoint x="2322" y="150"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,22 @@
+{
+  "_comment": "The bean graph. `beans/` is a graph whose DIRECTORIES are declared here — the same shape as `cat-harness.json`, reusing `ContentDirectorySchema` and the same open graph-kind registry rather than a parallel vocabulary. `graphs` is an array because a directory is a place to look and may hold more than one part of the graph; it does NOT say how to tell the contents apart, because the files declare what they are (a bean's front matter, a workflow instance's `$schema`). Paths resolve against THIS file's directory, so the whole graph relocates by moving one folder. Schema: schemas/bean-graph.ts. NOTE: `.beans.yml` still carries the defs path because the `beans` binary is third-party; `bun run check:harness-dirs` fails when they disagree.",
+  "name": "folio-assistant",
+  "directories": [
+    {
+      "id": "defs",
+      "path": "defs",
+      "graphKinds": [
+        "bean-defs"
+      ],
+      "description": "Work items — one Markdown file each, in the layout the `beans` CLI reads."
+    },
+    {
+      "id": "workflows",
+      "path": "workflows",
+      "graphKinds": [
+        "workflow-state"
+      ],
+      "description": "Running BPMN instances — one JSON file each, carrying `\"$schema\": \"folio-workflow-instance/v1\"`."
+    }
+  ]
+}

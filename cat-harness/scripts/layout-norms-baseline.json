@@ -1,0 +1,14 @@
+{
+  "_comment": "Nested declared directories that EXIST and are not yet resolved. Not intended layout — see scripts/check-layout-norms.ts. Anything not listed here fails the check, so this file only ever shrinks. Written by `bun run check:layout-norms -- --update`.",
+  "pairs": [
+    "agent-skills: skills contains skills/voices",
+    "cat-harness: smart-base/methodologies contains smart-base/methodologies/processes",
+    "cat-harness: test contains test/health/results",
+    "cat-harness: test contains test/results",
+    "folio-assistant-core: skills contains skills/voices",
+    "folio-assistant-sci: skills contains skills/voices",
+    "smart-base: methodologies contains methodologies/processes",
+    "smart-base: skills contains skills/voices",
+    "who-style-guide: skills contains skills/voices"
+  ]
+}

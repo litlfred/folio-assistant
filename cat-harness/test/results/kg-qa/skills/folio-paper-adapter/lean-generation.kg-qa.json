@@ -1,0 +1,74 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "lean-generation",
+    "path": "skills/folio-paper-adapter/lean-generation.md"
+  },
+  "source_hash": "3026253c1541",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "skills/folio-paper-adapter/lean-generation.md",
+          "detail": "367 lines; p75 of the skill corpus is 279."
+        }
+      ]
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "cat-harness/skills/folio-paper-adapter/lean-generation.ts",
+          "detail": "cat-harness/skills/folio-paper-adapter/lean-generation.ts changed since cat-harness/skills/folio-paper-adapter/lean-generation.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
+    },
+    "prose-claims-resolve": {
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "key in content/schema/references.ts",
+          "detail": "location: content/schema/references.ts is not in this repository (a folio's file?)"
+        },
+        {
+          "where": "key in content/schema/references.ts",
+          "detail": "location: content/schema/references.ts is not in this repository (a folio's file?)"
+        },
+        {
+          "where": "pipeline/prune-transitive-deps.ts",
+          "detail": "file-run: pipeline/prune-transitive-deps.ts is not in this repository"
+        }
+      ]
+    }
+  },
+  "totals": {
+    "pass": 3,
+    "fail": 2,
+    "n/a": 0,
+    "unknown": 1
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/lean-generation.md",
+      "code": "cat-harness/skills/folio-paper-adapter/lean-generation.ts",
+      "prose_hash": "3026253c1541",
+      "code_hash": "8ff7845b28d8",
+      "by": "baseline"
+    }
+  ]
+}

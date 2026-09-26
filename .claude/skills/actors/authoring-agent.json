@@ -1,12 +1,23 @@
 {
   "id": "authoring-agent",
-  "name": "Authoring Agent",
-  "type": "system",
+  "title": "Authoring Agent",
+  "kind": "agent",
   "description": "LLM agent that drafts and revises a PROPOSED change to a content block. It never commits: its output enters the HCI validation pipeline and the editor accepts, revises or discards it.",
-  "inherits": [],
-  "capabilities": ["content-authoring"],
+  "roles": [
+    "authoring-agent",
+    "sibling-session",
+    "compute-authoring-agent",
+    "docs-authoring-agent",
+    "editorial-authoring-agent",
+    "lean-authoring-agent",
+    "platform-authoring-agent",
+    "session-coordinator"
+  ],
+  "capabilities": [],
   "meta": {
-    "lifecycle": ["author"],
-    "workflow": "docs/workflows/editing-hci-validation.bpmn#Lane_Agent"
+    "lifecycle": [
+      "author"
+    ],
+    "workflow": "processes/editing-hci-validation.bpmn#Lane_Agent"
   }
 }

@@ -1,0 +1,56 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "formalizer",
+    "path": "skills/folio-paper-adapter/formalizer.md"
+  },
+  "source_hash": "45db8336b895",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "cat-harness/skills/folio-paper-adapter/formalizer.ts",
+          "detail": "cat-harness/skills/folio-paper-adapter/formalizer.ts changed since cat-harness/skills/folio-paper-adapter/formalizer.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 1,
+    "n/a": 0,
+    "unknown": 0
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/formalizer.md",
+      "code": "cat-harness/skills/folio-paper-adapter/formalizer.ts",
+      "prose_hash": "45db8336b895",
+      "code_hash": "41c3ea30ebb5",
+      "by": "baseline"
+    }
+  ]
+}

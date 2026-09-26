@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  folio-assistant — Ingestion subprocess — build the L1 knowledge graph.
+
+  Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+  BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+  by `bun run render:bpmn` — never hand-edit the SVG.
+
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+  that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
+  work plan in beans/.
+-->
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+                  id="Definitions_BuildL1Kg"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:collaboration id="Collaboration_BuildL1Kg">
+    <bpmn:participant id="Participant_BuildL1Kg" name="Ingestion subprocess — build the L1 knowledge graph" processRef="Process_BuildL1Kg" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_BuildL1Kg" name="Ingestion subprocess — build the L1 knowledge graph" isExecutable="false">
+    <bpmn:documentation>folio-assistant — Ingestion subprocess — build the L1 knowledge graph.
+
+  Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+  BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+  by `bun run render:bpmn` — never hand-edit the SVG.
+
+  The &lt;bootstrap.processes:skill&gt; extension on an activity names the folio-assistant skill
+  that implements it; &lt;cat-harness.processes:bean&gt; marks a step that reads or writes the shared
+  work plan in beans/.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <cat-harness.processes:policy enforcement="advisory" />
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="Process_BuildL1Kg_LaneSet">
+      <bpmn:lane id="Lane_0" name="Ingestion Engine (agent, runs unattended)">
+        <bpmn:documentation>Writes four records in a fixed order and touches the corpus graph in none of them — dublin-core as the record of truth, a manifest that references it, assets[] kept as a SIBLING of library: because that tree is regenerated and would drop anything written inside it, and finally the slug binding Task_Link depends on. Getting the order or the placement wrong here is invisible until the next sync silently drops it.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="ingestion-agent"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>StartEvent_Derived2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Dublin</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Manifest</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Assets</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Bind</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_1" name="Corpus — L1 source knowledge graph">
+        <bpmn:documentation>The single moment the four records Lane_0 wrote become reachable by reference rather than just present on disk: Task_Link is what a knowledge-graph reference in a paper, an L2 or an L3 artefact actually resolves through, and until it runs, dublin-core.jsonld and its siblings are files in library/ that nothing in the graph points to yet.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="corpus"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Task_Link</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_KgBuilt</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_Derived2" name="Derived content ready">
+      <bpmn:outgoing>Flow_k1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_Dublin" name="Write dublin-core.jsonld
+(the record of truth)">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>One standalone Dublin Core record per folder. dcterms is already this corpus's JSON-LD vocabulary, so this extends a live context rather than introducing one.</bpmn:documentation>
+      <bpmn:incoming>Flow_k1</bpmn:incoming>
+      <bpmn:outgoing>Flow_k2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Manifest" name="Write manifest.jsonld
+referencing it">
+      <bpmn:documentation>Write manifest.jsonld for the folder: its @id, @type folio:SourceDocument, what it contains and its provenance, referencing the standalone dublin-core.jsonld as the record of truth rather than copying its fields.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
+      <bpmn:incoming>Flow_k2</bpmn:incoming>
+      <bpmn:outgoing>Flow_k3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Assets" name="Record assets[] —
+local path or remote URL">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>kind / role / url-or-path / checksum / retrieved. A SIBLING of library:, never inside it: LibraryRef is regenerated from the tree, so an authored URL placed there is dropped on the next sync.</bpmn:documentation>
+      <bpmn:incoming>Flow_k3</bpmn:incoming>
+      <bpmn:outgoing>Flow_k4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Bind" name="Bind the folder name
+to the bibliography slug">
+      <bpmn:documentation>Bind the folder name to the document's bibliography slug, so library/&lt;bib-slug&gt;/ and its citation key are the same string: a citation resolves to a directory without a lookup table between them.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
+      <bpmn:incoming>Flow_k4</bpmn:incoming>
+      <bpmn:outgoing>Flow_k5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:task id="Task_Link" name="Link L1 nodes into
+the corpus graph">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="document-intake"/>
+      </bpmn:extensionElements>
+
+      <bpmn:documentation>Anything in library/ is L1 source content. A knowledge-graph reference from any artefact -- paper, L2, L3 -- resolves to it through library/.</bpmn:documentation>
+      <bpmn:incoming>Flow_k5</bpmn:incoming>
+      <bpmn:outgoing>Flow_k6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="EndEvent_KgBuilt" name="L1 graph built">
+      <bpmn:incoming>Flow_k6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_k1" sourceRef="StartEvent_Derived2" targetRef="Task_Dublin" />
+    <bpmn:sequenceFlow id="Flow_k2" sourceRef="Task_Dublin" targetRef="Task_Manifest" />
+    <bpmn:sequenceFlow id="Flow_k3" sourceRef="Task_Manifest" targetRef="Task_Assets" />
+    <bpmn:sequenceFlow id="Flow_k4" sourceRef="Task_Assets" targetRef="Task_Bind" />
+    <bpmn:sequenceFlow id="Flow_k5" sourceRef="Task_Bind" targetRef="Task_Link" />
+    <bpmn:sequenceFlow id="Flow_k6" sourceRef="Task_Link" targetRef="EndEvent_KgBuilt" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_BuildL1Kg">
+    <bpmndi:BPMNPlane id="Plane_BuildL1Kg" bpmnElement="Collaboration_BuildL1Kg">
+      <bpmndi:BPMNShape id="Participant_BuildL1Kg_di" bpmnElement="Participant_BuildL1Kg" isHorizontal="true"><dc:Bounds x="160" y="80" width="1450" height="360" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0_di" bpmnElement="Lane_0" isHorizontal="true"><dc:Bounds x="190" y="80" width="1420" height="180" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1_di" bpmnElement="Lane_1" isHorizontal="true"><dc:Bounds x="190" y="260" width="1420" height="180" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_Derived2_di" bpmnElement="StartEvent_Derived2"><dc:Bounds x="277" y="152" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Dublin_di" bpmnElement="Task_Dublin"><dc:Bounds x="410" y="130" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Manifest_di" bpmnElement="Task_Manifest"><dc:Bounds x="600" y="130" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Assets_di" bpmnElement="Task_Assets"><dc:Bounds x="790" y="130" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Bind_di" bpmnElement="Task_Bind"><dc:Bounds x="980" y="130" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Link_di" bpmnElement="Task_Link"><dc:Bounds x="1170" y="310" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_KgBuilt_di" bpmnElement="EndEvent_KgBuilt"><dc:Bounds x="1417" y="332" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_k1_di" bpmnElement="Flow_k1"><di:waypoint x="313" y="170" /><di:waypoint x="410" y="170" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_k2_di" bpmnElement="Flow_k2"><di:waypoint x="560" y="170" /><di:waypoint x="600" y="170" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_k3_di" bpmnElement="Flow_k3"><di:waypoint x="750" y="170" /><di:waypoint x="790" y="170" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_k4_di" bpmnElement="Flow_k4"><di:waypoint x="940" y="170" /><di:waypoint x="980" y="170" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_k5_di" bpmnElement="Flow_k5"><di:waypoint x="1130" y="170" /><di:waypoint x="1140" y="170" /><di:waypoint x="1140" y="350" /><di:waypoint x="1170" y="350" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_k6_di" bpmnElement="Flow_k6"><di:waypoint x="1320" y="350" /><di:waypoint x="1417" y="350" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

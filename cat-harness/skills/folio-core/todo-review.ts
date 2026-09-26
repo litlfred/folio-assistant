@@ -1,0 +1,12 @@
+import type { SkillDefinition } from "../framework/types.js";
+
+export const todoReview: SkillDefinition = {
+  id: "todo-review",
+  name: "Todo Review",
+  description: "Todo item lifecycle management, feedback processing, and work-tracking coordination.",
+  requiredCapabilities: [
+    { capabilityId: "git-read", degradation: "fail" },
+  ],
+  routingPatterns: ["todo", "process\\s+feedback", "work.*item"],
+  tags: ["todos", "tracking"],
+};

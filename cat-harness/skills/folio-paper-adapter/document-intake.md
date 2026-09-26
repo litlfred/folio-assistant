@@ -1,0 +1,437 @@
+---
+name: document-intake
+description: >
+  Process uploaded documents (PDFs, scans, LaTeX, structured/normative
+  guidelines, etc.) from uploads/ into structured content objects. Handles OCR
+  extraction, environment detection, structural analysis, and content-object
+  generation. Supports multi-stage pipelines: raw upload → extracted text →
+  structured blocks → .ts/.md content objects.
+allowed-tools: Read Write Edit Bash Grep Glob Agent WebFetch
+---
+
+# Document Intake
+
+> **Bib human-review integration.** Track per-upload ingestion
+> status beside the upload's records in `uploads/<document-id>/` (identified passage, formalised?, matched?) and
+> link each upload to the `references.ts` entry it sources. An upload that
+> supplies a cited source moves that ref to `source-in-repo` (agent-identified
+> passage; no human photo) and then through the
+> [`bib-human-review`](../folio-core/bib-human-review.md) ladder to `validated`. Existing
+> `uploads/` follow the same agent-sourced path.
+
+## Overview
+
+This skill manages the `uploads/` directory as an intake pipeline for
+converting raw documents into structured content objects. It handles:
+
+1. **Scanned PDFs / images** — OCR extraction → text → blocks
+2. **LaTeX source** — environment extraction → blocks
+3. **Structured / normative guidelines** — normative structure → blocks
+4. **arXiv papers** — fetched source → blocks (delegates to paper-importer)
+5. **Arbitrary documents** — best-effort structural analysis
+
+The key distinction from `paper-importer`: this skill owns the full
+lifecycle of `uploads/`, including tracking processing state, partial
+extractions, and multi-pass refinement. Paper-importer focuses on the
+final content-object generation step.
+
+## When to Use This Skill
+
+- User says "upload", "scan", "process document", "intake"
+- User drops a file into `uploads/`
+- User mentions a guideline, standard, or normative document
+- User wants to convert a raw document into content objects
+- Files appear in `uploads/` that haven't been processed yet
+
+## uploads/ Directory Convention
+
+```
+uploads/
+  <document-id>/
+    intake.json                  ← what arrived and where from (folio-intake/v1)
+    <document-id>.dc.json        ← what it is: title, type, subject (folio-dublin-core/v1)
+    original.pdf                 ← raw upload (PDF, scan, etc.)
+    original.tex                 ← or LaTeX source
+    extracted-text.md            ← OCR or parser output (intermediate)
+    extracted-blocks.json        ← structured extraction (intermediate)
+    mapping.json                 ← label/section mapping decisions
+    README.md                    ← human notes about the document
+```
+
+### The two records an upload writes
+
+Rebuilt from schemas this repository already had (#1168 B6b-2, bean `d4lb`).
+The description is a Dublin Core record; the intake records the capture and
+points at it. Both are validated by the registry (`check:kind-validators`).
+
+`intake.json` — `folio-intake/v1`, `cat-harness/schemas/intake.ts`:
+
+```json
+{
+  "$schema": "folio-intake/v1",
+  "doc_id": "example-doc-2016",
+  "record": "example-doc-2016.dc.json",
+  "source": {
+    "upstream": "https://...",
+    "capturedAt": "2026-03-25T10:00:00Z",
+    "capturedBy": "folio-assistant document adapter: the upload form"
+  },
+  "files": [
+    { "path": "original.pdf", "bytes": 123456, "sha256": "…", "type": "upload", "role": "original-bitstream" }
+  ]
+}
+```
+
+An intake names what it is a capture OF: a catalogue `item` (a
+`folio-catalogue-node/v1` id), a Dublin Core `record`, or — only when
+neither exists — its own `title`. `source` is `ProvenanceSchema` (`upstream`
+for a URL, absent for a direct upload) plus the capture moment.
+
+`<document-id>.dc.json` — `folio-dublin-core/v1`:
+
+| upload field | Dublin Core |
+|---|---|
+| title | `dc.title` |
+| type (`guideline`, `paper`, `report`, `standard`) | `dc.type` |
+| domain | `dc.subject` |
+| normative level | `dc.type` qualified `normativeLevel` |
+| detected format (`pdf`, `latex`, `scan`, `docx`) | `dc.format` |
+
+## Pipeline Stages
+
+### Stage 1: Upload (→ `uploaded`)
+
+Place raw files in `uploads/<document-id>/`. Create `intake.json`
+with source metadata. Files are committed to git for reproducibility.
+
+Supported formats:
+- **PDF** — academic papers, scanned guidelines, reports
+- **LaTeX** — `.tex` source bundles
+- **HTML** — web-published guidelines, standards
+- **DOCX** — Word documents
+- **Images** — scanned pages (PNG, JPG, TIFF)
+
+**For academic papers, prefer the MCP fetch path:**
+when the session network allows the upstream host, use
+`paper-search-mcp` (arxiv / PubMed / bioRxiv / medRxiv) or
+`openalex-paper-search` (alex-mcp; OpenAlex catalog) rather than
+`curl`/`WebFetch`. The MCP tools return canonical metadata and the
+PDF in one call, eliminating the OCR-then-extract-then-name dance.
+See [`paper-importer.md §Phase 1`](paper-importer.md#phase-1-acquisition)
+for the per-tool routing table. Sandboxed Claude-Code-on-the-web
+sessions (github-only allowlist) cannot reach those hosts; in
+those sessions, queue the fetch onto a normal-network machine
+per [`bib-qa.md §Batch intake pipeline`](../folio-core/bib-qa.md#batch-intake-pipeline).
+
+### Stage 2: Extraction (→ `extracted`)
+
+Convert raw format to `extracted-text.md`:
+
+**For PDFs, always start with
+[`scripts/pdf-extract.py`](../../scripts/pdf-extract.py)** — do not reach for a
+Python PDF library directly. It walks a fallback ladder (`pdftotext` → `pypdf` →
+`pdfminer.six` → a zero-dependency content-stream extractor → OCR) and, when it
+cannot read a file, **tells you which rung failed and why** instead of returning
+an empty string:
+
+```bash
+python3 scripts/pdf-extract.py FILE.pdf -o extracted-text.md
+python3 scripts/pdf-extract.py FILE.pdf --diagnose   # structure only
+```
+
+Exit `0` = text; **exit `2` = no text layer (a scan)**; exit `3` = a parser
+problem on a file that does have text.
+
+Two failure modes it exists to prevent, both observed in practice:
+
+* **A silent empty extraction reads exactly like a scan, a broken library, and
+  a malformed PDF.** The script separates them by inspecting the PDF structure
+  (`CCITTFaxDecode` / `JBIG2Decode` / `DCTDecode` counts against `/Font`), so
+  "swap libraries" vs "you need OCR" is decided by evidence rather than guessed.
+* **A broken native extension kills the whole pipeline.** `pypdf` and
+  `pdfminer.six` both fail via pyo3 `PanicException` when `cryptography`'s Rust
+  bindings are broken — and that is a `BaseException`, so an ordinary
+  `except Exception` does **not** catch it. Every rung is guarded accordingly.
+  The zero-dependency rung exists precisely for this case; in the container this
+  was written in it was the only rung that worked.
+
+| Format | Extraction method |
+|--------|-------------------|
+| PDF (text) | `scripts/pdf-extract.py` (ladder; `pdftotext` when available) |
+| PDF (scan) | `scripts/pdf-extract.py` → exit 2, then `scripts/pdf-ocr.py` (Tesseract) or Claude vision |
+| LaTeX | Direct parse (strip preamble) |
+| HTML | Readability + turndown |
+| DOCX | Pandoc → markdown |
+| Images | Claude vision API |
+| PDF (tables/figures) | `scripts/pdf-tables.py` → `tables.json` (see Stage 3) |
+| PDF (sections) | `scripts/pdf-structure.py` → `structure.json` + `sections/*.md` (see Stage 3) |
+
+For scanned documents the script's OCR rung fires automatically **if**
+`tesseract` and `pdftoppm` are installed (`apt-get install -y tesseract-ocr
+poppler-utils`); it names whichever is missing. Where OCR is unavailable, or
+where layout carries meaning (headings, lists, tables, boxes), fall back to
+Claude's vision capability, which reads structure that OCR flattens.
+
+**Output**: `extracted-text.md` — raw markdown with preserved structure.
+
+### Stage 3: Structural Analysis (→ `structured`)
+
+Analyze extracted text for formal environments and document structure.
+
+#### The three producers this stage actually runs
+
+**Documented here because nothing else named them**, and they are the scripts
+that built the corpus: measured on `qou`, 715 `library/*/structure.json` and 26
+`library/*/ocr/` trees exist, and until now no skill in either repo pointed at
+the programs that wrote them. An agent following Stage 2 alone reaches
+`pdf-extract.py`, which writes loose text — not the greppable `sections/` tree
+the corpus-grep checklist reads.
+
+| script | writes | notes |
+|---|---|---|
+| [`scripts/pdf-structure.py`](../../scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (title, authors, arXiv/DOI from the page-1 stamp), TOC from the PDF outline or inferred from heading patterns, per-section text split |
+| [`scripts/pdf-ocr.py`](../../scripts/pdf-ocr.py) | `library/<doc-id>/ocr/page-NNN.txt` | `pdftoppm -r 300 -png` then `tesseract`; per-page cache; script auto-detected via Tesseract's own OSD |
+| [`scripts/extract-candidates.py`](../../scripts/extract-candidates.py) | `library/<doc-id>/candidates.json` | pure regex, imports no PDF library; **proposals, never content** — nothing here writes to `content/` and nothing here creates Lean |
+
+```bash
+python3 scripts/pdf-ocr.py FILE.pdf --outdir library/<doc-id>/   # only if scanned
+python3 scripts/pdf-structure.py FILE.pdf --outdir library --ocr
+python3 scripts/extract-candidates.py library/<doc-id>/
+```
+
+Three things about how they fit together, each of which has already cost
+someone time:
+
+* **`pdf-structure.py` READS OCR, it never runs it.** Its `--ocr` flag consults
+  the cache `pdf-ocr.py` wrote, gated on `text_is_unusable()` (under 120
+  chars/page, or under 55 % letters — mojibake). So on a scanned document the
+  order is `pdf-ocr.py` first, `pdf-structure.py --ocr` second. Run them the
+  other way round and the sections come out empty.
+* **An OCR'd document whose structure was never re-run is invisible to the
+  section grep.** Measured on `qou`: 26 `ocr/` directories exist but only 11
+  `structure.json` record `"text_source": "ocr"` — so roughly 15 documents have
+  their text on disk and a stub in `sections/`. A `sections/` grep misses them
+  entirely. `library/procrsoclondona92/` is the worked case: 1,916 bytes of
+  JSTOR download banner in `sections/` against 46,511 bytes of real text in
+  `ocr/`.
+* **The backends are optional and their absence is reported, not guessed.**
+  `pdf-structure.py` prefers PyMuPDF (better text on maths, real outlines) and
+  falls back to `pypdf`; the Dockerfile ships `pypdf` only, deliberately, so the
+  image stays BSD-licensed against PyMuPDF's AGPL. Check with
+  `python3 scripts/pdf-ocr.py --check`.
+
+#### For academic papers:
+Same as paper-importer Phase 2 — detect theorem/definition/lemma
+environments, sections, cross-references.
+
+#### For structured / normative guidelines:
+
+> **Superseded for a `document` folio.** The table below predates the
+> `document` content type. Two of its mappings are now wrong there:
+> `definition` is a **math** kind whose `lean` field is *required*, so a
+> guideline recommendation mapped onto it will not validate at all; and
+> `proposition` and `conjecture` are math kinds that `content_profile_check`
+> rejects outright. In a document folio, a normative statement is carried by a
+> **labelled, titled `prose` block** — load `normative-statements` from the
+> `folio-document-adapter` package for the convention and its limits.
+>
+> The table stands as written for a **paper** folio, which is the case it was
+> written for and where all seven kinds are available.
+
+Many guideline and standards documents have a recurring normative
+structure that maps onto content-block kinds:
+
+| Guideline element | Content block kind | Notes |
+|------------------|-------------------|-------|
+| **Recommendation** (numbered, boxed) | `definition` | Normative statement |
+| **Evidence / rationale summary** | `prose` | Supporting narrative |
+| **Remarks** | `remark` | Implementation notes |
+| **Good-practice statement** | `proposition` | Consensus-based |
+| **Research priority** | `conjecture` | Open questions |
+| **Background** | `prose` | Context sections |
+| **Evidence-quality table** | `diagram` | Quality assessment |
+
+When a document distinguishes *normative levels* (e.g. L1 = what to do,
+L2 = how to do it), map the normative statement to a `definition` block
+and the implementation guidance to a `prose` block tagged with the level
+(e.g. `["implementation", "L2"]`). The exact level taxonomy is
+domain-specific; record it in the upload's Dublin Core record as `dc.type`
+qualified `normativeLevel`.
+
+> Domain-specific guideline handling (e.g. a particular standards body's
+> recommendation grammar) belongs in a domain adapter bundle, not the
+> generic paper adapter. This skill detects the *shape* and hands off the
+> domain-specific mapping rules to the relevant adapter.
+>
+> That hand-off now has somewhere to go: `folio-document-adapter` is the bundle
+> for prose folios, and `normative-statements` is where the recommendation
+> grammar belongs.
+
+#### Tables and figures — run `scripts/pdf-tables.py`
+
+Text extraction destroys tables. A GRADE evidence table or a boxed
+recommendation comes out of Stage 2 as a run of prose that reads exactly like
+prose, and nothing downstream can recover that it was a grid — which matters
+most for precisely the guideline documents this skill exists to process.
+
+```bash
+python3 scripts/pdf-tables.py FILE.pdf -o uploads/<document-id>/
+python3 scripts/pdf-tables.py --check     # which backends are installed
+```
+
+Writes `tables.json` (`pdf-tables/v1`) beside `structure.json`, with each
+table's cell matrix, column edges, caption, containing `section_id`, and a
+**GFM rendering that can be pasted straight into a content block** — the
+LaTeX pipeline already converts a GFM table to `\begin{tabular}`.
+
+Tables split across a page break are rejoined when their column geometry
+matches; `stitched_from` records what was merged, so check it on any table
+whose rows look like two tables.
+
+**Read `status` before you read `tables`.** The three ways to get no tables are
+distinguished on purpose, and `tables` is `null` — not `[]` — whenever nothing
+actually looked:
+
+| `status` | Exit | Means |
+|---|---|---|
+| `ok` | 0 | a backend looked; `tables: []` means the document has none |
+| `n/a-no-backend` | 5 | `pip install pdfplumber` (or `camelot-py`) |
+| `n/a-no-text-layer` | 2 | a scan — its tables are pixels; see Stage 2's OCR route |
+
+Needs `pdfplumber` or `camelot-py`, both pure PyPI installs with no model
+weights. **Docling is the better parser and is not this**: its weights come
+from HuggingFace, which is 403-blocked in sandboxed sessions, so it is a
+workstation/CI stage whose artefacts get committed — the
+`docling` capability probe reports it absent here rather than letting a session
+believe it ran. See `docs/proposals/rag-document-ingestion.md` §12.26.
+
+**Output**: `extracted-blocks.json` — array of detected blocks with
+provisional kinds, titles, and content; `tables.json` for the layout-bearing
+parts that do not survive as text.
+
+### Stage 4: Mapping (→ `mapped`)
+
+Interactive step — present extracted blocks to user for review:
+
+1. Show block count by kind
+2. Let user rename, reclassify, skip, or merge blocks
+3. Let user define chapter/section structure
+4. Let user set the target paper ID
+5. Generate `mapping.json` with confirmed decisions
+
+### Stage 5: Content Generation (→ `generated`)
+
+Generate content objects under `content/<paper-id>/`:
+
+1. **`.ts` manifests** via `content/schema/builders.ts`
+2. **`.md` content** in project markdown conventions
+3. **Chapter `.ts` manifests** with section structure
+4. **Paper `.ts` manifest** (new or updated)
+
+Tag all generated blocks with:
+```typescript
+tags: ["imported", "source:<document-id>"]
+```
+
+Add `meta.source` referencing the upload:
+```typescript
+meta: {
+  source: "uploads/<document-id>",
+  originalSection: "3.2",
+  importedAt: "2026-03-25T..."
+}
+```
+
+## Structured-Document Processing
+
+### Detecting normative structure
+
+Normative guidelines often follow predictable patterns:
+
+```
+RECOMMENDATION N:
+<recommendation text in bold/box>
+
+Remarks:
+- Implementation note 1
+- Implementation note 2
+
+Summary of evidence:
+<narrative text>
+
+Evidence-quality table:
+<quality assessment>
+```
+
+### Label conventions for guidelines
+
+| Element | Label pattern | Example |
+|---------|--------------|---------|
+| Recommendation | `def:<doc>-rec-<N>` | `def:example-rec-1` |
+| Evidence summary | `prose:<doc>-evidence-<N>` | — |
+| Remark | `rem:<doc>-remark-<N>` | `rem:example-remark-1` |
+| Good practice | `prop:<doc>-gps-<N>` | `prop:example-gps-1` |
+| Research priority | `conj:<doc>-research-<N>` | `conj:example-research-1` |
+
+### Cross-referencing recommendations
+
+Recommendations often reference each other and external evidence.
+Map these to `uses[]` in content objects:
+
+```typescript
+export default definition({
+  label: "def:example-rec-3",
+  title: "Recommendation 3: ...",
+  uses: ["def:example-rec-1"],  // references Rec 1
+  tags: ["imported", "source:example-doc-2016", "L1", "normative"],
+  meta: {
+    source: "uploads/example-doc-2016",
+    strength: "strong",
+    quality: "moderate",
+  }
+});
+```
+
+## Integration with Other Skills
+
+| Skill | Integration point |
+|-------|-------------------|
+| `paper-importer` | Delegates Phase 5 generation for academic papers |
+| `content-validation` | Validates generated content objects |
+| `editor` | Reviews generated narrative content |
+| `scientific-accuracy` | Checks extracted statements |
+| `ontologist` | Maps terminology to glossary |
+
+## Resuming Partial Processing
+
+Where processing stopped is read from what EXISTS, not from a status field.
+The old `intake.json` carried `pipeline.stage`, which the adapter wrote once
+as `uploaded` and nothing ever advanced — a status nobody maintains reads as
+authoritative and is wrong. To resume:
+
+1. `uploaded` — `intake.json` is there
+2. `extracted` — `extracted-text.md` (or an extraction record) is there
+3. `structured` — `extracted-blocks.json` is there
+4. `mapped` — `mapping.json` is there
+5. `generated` — blocks tagged `source:<document-id>` exist in the content
+
+Start from the first stage whose artefact is missing.
+
+This allows multi-session processing of large documents.
+
+## Checklist
+
+Before marking intake complete:
+
+- [ ] Raw files committed to `uploads/<document-id>/`
+- [ ] `intake.json` and `<document-id>.dc.json` validate (`check:kind-validators`)
+- [ ] `extracted-text.md` reviewed for OCR errors
+- [ ] `extracted-blocks.json` reviewed and confirmed by user
+- [ ] `tables.json` written, `status` checked (not silently `n/a`), and any
+      `stitched_from` table spot-checked against the PDF
+- [ ] All content objects generated with correct builders
+- [ ] Blocks tagged with `["imported", "source:<document-id>"]`
+- [ ] Chapter/section structure matches document
+- [ ] Cross-references mapped to `uses[]`
+- [ ] Content validation passes (`content_validate`)
+```

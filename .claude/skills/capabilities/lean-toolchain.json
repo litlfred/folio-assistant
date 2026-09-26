@@ -2,5 +2,10 @@
   "id": "lean-toolchain",
   "name": "Lean 4 Toolchain",
   "description": "Lean 4 theorem prover and build system (elan + lake).",
-  "detection": { "method": "command", "command": "lean --version" }
+  "detection": {
+    "method": "command",
+    "command": "lean --version"
+  },
+  "fallbackTo": "lean-mcp",
+  "satisfies": ["req:lean-verification#lean-compiles"]
 }

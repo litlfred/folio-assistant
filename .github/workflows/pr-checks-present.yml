@@ -1,0 +1,241 @@
+# bpmn: cat-harness/processes/pr-checks-present.bpmn
+# Which open pull requests have NO CI run on their head?
+#
+# Bean `3pqn`. A pull request showing zero checks is indistinguishable from one
+# whose checks have not started, so "nothing red" is not "nothing wrong" — it is
+# *nothing was asked*. `check:head-has-run` answers this for one commit when
+# somebody remembers to look; this is the half that looks when nobody does,
+# which is the whole point, because a zero-check PR is invisible PRECISELY
+# because nobody is looking.
+#
+# Measured 2026-09-20 over the six open pull requests here: TWO had no run of
+# any kind on their head.
+#
+# HOURLY, and the cadence is an argument rather than a default: most pull
+# requests in this repository live less than a day, so a daily sweep would
+# notice after the merge. The owner chose hourly, a 15-minute age gate, and
+# both reporting channels on 2026-09-20.
+# TRIGGERS, ACTUAL: `schedule` (hourly) and `workflow_dispatch` only.
+# The prose above is about pull requests as the SUBJECT of the sweep, not as a
+# trigger for it — this workflow deliberately does NOT fire on `pull_request`.
+#
+# Firing per-PR would ask the question at the one moment it cannot be answered:
+# the instant of the push, before any run could exist. The point is to look
+# LATER, once a missing run has become a fact rather than a not-yet.
+#
+# The hourly cadence, the 15-minute age gate and the two reporting channels are
+# the owner's decision, 2026-09-20, taken against a measurement: two of the six
+# open pull requests had no run on their head at that moment.
+name: PRs without checks
+
+on:
+  schedule:
+    # :37 — off the hour deliberately. GitHub's scheduler queues heavily at :00,
+    # and a delayed run is a run whose report is stamped later than the state it
+    # describes. Same reasoning as `health-check.yml`.
+    - cron: '37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: pr-checks-present
+  cancel-in-progress: false
+
+jobs:
+  report:
+    # bpmn-node: Start_Sweep
+    name: Open PRs whose head has no run
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Sweep
+        id: check
+        run: |
+          set +e
+          bun run check:prs-have-runs --min-age-minutes 15 --out "$RUNNER_TEMP/pr-checks.md"
+          status=$?
+          set -e
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          # 0 clean · 1 findings · 2 could not determine. Anything else is a
+          # crash in the sweep and is treated as could-not-determine — the
+          # report file separates them, because `--out` is written before any
+          # exit path, so a real finding always has one and a crash does not.
+          report="$RUNNER_TEMP/pr-checks.md"
+          if [ "$status" = "1" ] && [ ! -s "$report" ]; then
+            echo "::warning::sweep exited 1 without writing a report — treating as unchecked"
+            status=2
+          fi
+          case "$status" in
+            0) echo "verdict=clean" >> "$GITHUB_OUTPUT" ;;
+            1) echo "verdict=findings" >> "$GITHUB_OUTPUT" ;;
+            *) echo "verdict=unknown" >> "$GITHUB_OUTPUT" ;;
+          esac
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Ensured for BOTH issue paths. The clean path filters on this label too,
+      # and on a repository where nothing has ever been found it would not
+      # otherwise exist. Skipped on `unknown`, where neither path runs and a
+      # label hiccup must not be what fails the job.
+      - name: Ensure the tracking label exists
+        if: steps.check.outputs.verdict != 'unknown'
+        run: gh label create pr-no-checks --color D93F0B --description "Open PRs whose head has no CI run" --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Open or EDIT the one tracking issue
+        if: steps.check.outputs.verdict == 'findings'
+        run: |
+          body="$(cat "$RUNNER_TEMP/pr-checks.md")"
+          existing="$(gh issue list --label pr-no-checks --state open --limit 1 --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            # EDITED IN PLACE, never commented on: an edit does not notify, and
+            # a watchdog that appends hourly becomes a feed nobody reads.
+            gh issue edit "$existing" --body "$body"
+          else
+            gh issue create --label pr-no-checks \
+              --title "Open pull requests with no CI run on their head" --body "$body"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ONE comment per (pull request, head sha) — never one per sweep. The
+      # owner asked for both channels; hourly comments without this marker
+      # would put twenty-four notifications a day on one unchanged PR, which is
+      # how a warning gets muted.
+      - name: Comment once on each affected pull request
+        if: steps.check.outputs.verdict == 'findings'
+        run: |
+          bun run check:prs-have-runs --min-age-minutes 15 2>/dev/null \
+            | awk '/^  ✗ #/ { gsub("#","",$2); print $2 }' > "$RUNNER_TEMP/affected.txt" || true
+          while read -r pr; do
+            [ -n "$pr" ] || continue
+            # STATE and head in one call. A pull request that closed between
+            # the sweep and this loop has nothing owed to it, and saying so
+            # matters for the probe below: `refs/pull/N/head` SURVIVES a close
+            # while `refs/pull/N/merge` is reaped, so on a merged PR the pair
+            # reads exactly like an open conflicted one. Measured: 681 head
+            # refs against 12 merge refs on this repository, the twelve being
+            # precisely the then-open PRs.
+            pr_json="$(gh pr view "$pr" --json state,headRefOid 2>/dev/null || echo '{}')"
+            state="$(printf '%s' "$pr_json" | jq -r '.state // "UNKNOWN"')"
+            sha="$(printf '%s' "$pr_json" | jq -r '.headRefOid // empty')"
+            if [ "$state" != "OPEN" ] || [ -z "$sha" ]; then
+              echo "#$pr is no longer open (state=$state) — nothing owed"
+              continue
+            fi
+            # MERGEABILITY, asked before any advice is given. Bean `sddf`:
+            # a `pull_request` run checks out `refs/pull/N/merge`, which a
+            # conflicted PR has none of, so telling its author to dispatch
+            # hands them a green signal for a tree that will never exist.
+            # Measured on #813 — conflicted: no merge ref for 433s and no run;
+            # resolved: merge ref in 15s and runs in 7s.
+            #
+            # THE MERGE REF, not `gh pr view --json mergeable`. Bean `h2s9`:
+            # that field is computed LAZILY, so a read returns `UNKNOWN`
+            # because nothing has computed it yet — which is not the same as
+            # "this PR's mergeability cannot be determined". Measured on the
+            # first run carrying sddf's fix: the API said `unknown` for #731
+            # while the forge was publishing refs/pull/731/merge, and the
+            # comment went out on the UNKNOWN branch. That is sddf's own
+            # defect class reappearing inside sddf's remedy.
+            #
+            # The ref is deterministic and needs no token, and it is the same
+            # instrument `mergeStateForHead` uses in check-head-has-run.ts —
+            # so the two halves cannot disagree, which is what sddf was for.
+            # Reached only for a CONFIRMED-OPEN pull request, which is what
+            # makes an absent merge ref mean "conflicted" rather than "closed".
+            if ! merge_ref="$(git ls-remote origin "refs/pull/$pr/merge" 2>/dev/null)"; then
+              mergeable=UNKNOWN            # the probe itself failed
+            elif [ -n "$merge_ref" ]; then
+              mergeable=MERGEABLE
+            else
+              mergeable=CONFLICTING
+            fi
+            marker="<!-- pr-no-checks:$sha -->"
+            if gh pr view "$pr" --json comments --jq '.comments[].body' | grep -qF "$marker"; then
+              echo "already told #$pr about $sha"
+              continue
+            fi
+            # One advice per state, and only ONE of them may say "dispatch".
+            case "$mergeable" in
+              CONFLICTING)
+                advice="This PR is UNMERGEABLE, and that is very likely the whole reason.
+            A \`pull_request\` run checks out \`refs/pull/N/merge\`, which the forge
+            publishes only for a mergeable PR — so this head will never get one
+            until the conflict is resolved. **Merge the base branch in and push.**
+            Do NOT dispatch the workflow: a dispatch resolves \`refs/heads/<branch>\`,
+            so it would test the branch rather than the merge result." ;;
+              MERGEABLE)
+                advice="This PR is mergeable, so a run is owed and its absence is
+            unexplained. Re-pushing may not produce one: on 2026-09-20 two
+            consecutive pushes were both dropped, 26s apart. Elapsed time is no
+            guide either — latency measured 7s and 2m43s within one hour here.
+            Dispatching against this ref is safe while the PR is mergeable,
+            because then the branch and the merge result agree." ;;
+              *)
+                advice="Its mergeability could not be read, so the reason is unknown.
+            Check it by hand FIRST — and ask GIT, not \`mergeable_state\`.
+            Bean \`fx5r\`: that field served a merged PR's pre-merge value 45
+            minutes after the merge, and \`update-branch\` called a CLOSED PR a
+            conflict. Only \`merged\` is stale-safe:
+                gh pr view N --json merged
+                git ls-remote origin refs/pull/N/merge
+            On a conflicted PR a dispatch tests a tree that will never exist,
+            so it is not a safe default." ;;
+            esac
+            # Indented to stay inside the YAML block scalar. Unindented, these
+            # lines end the scalar and the file will not parse — which
+            # `check:workflow-coverage` reports as COULD NOT DETERMINE rather
+            # than as an uncovered workflow, and is how this was caught.
+            body="$marker
+
+            **This pull request's head has no CI run of any kind.**
+
+            Zero checks looks exactly like checks-not-yet-started, so \"nothing
+            red\" here is not \"nothing wrong\" — it is *nothing was asked*.
+            Merging on it merges unverified.
+
+            $advice
+
+            Beans \`3pqn\`, \`sddf\`. Checked with \`bun run check:head-has-run\`,
+            which reports the same three states for one commit."
+            gh pr comment "$pr" --body "$(echo "$body" | sed 's/^            //')"
+          done < "$RUNNER_TEMP/affected.txt"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Close the tracking issue when every head has a run
+        if: steps.check.outputs.verdict == 'clean'
+        run: |
+          existing="$(gh issue list --label pr-no-checks --state open --limit 1 --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            gh issue close "$existing" --comment "Every open pull request's head now has a CI run."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Closing on `unknown` would be the precise failure the whole family is
+      # built to refuse: a sweep that could not read the pull request list has
+      # not established that every head has a run.
+      - name: Refuse to report success on an unchecked repository
+        if: steps.check.outputs.verdict == 'unknown'
+        run: |
+          echo "::error::Could not determine which PRs have runs (exit ${{ steps.check.outputs.status }})."
+          echo "::error::Treat this as unknown, not as clean. The tracking issue was left untouched."
+          exit 1

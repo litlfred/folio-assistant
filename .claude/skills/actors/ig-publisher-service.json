@@ -1,10 +1,15 @@
 {
   "id": "ig-publisher-service",
-  "name": "IG Publisher Service",
-  "type": "system",
+  "title": "IG Publisher Service",
+  "kind": "system",
   "description": "System actor providing FHIR IG Publisher build and QA reporting.",
-  "inherits": [],
-  "capabilities": ["ig-publisher", "fhir-validator", "qa-reporting"],
+  "roles": [
+    "ig-publisher-service"
+  ],
+  "capabilities": [
+    "ig-publisher",
+    "fhir-validator"
+  ],
   "meta": {
     "provider": "docker",
     "image": "folio-assistant-smart-guidelines"

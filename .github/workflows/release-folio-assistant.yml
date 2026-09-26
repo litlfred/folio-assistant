@@ -1,11 +1,22 @@
 # Publish folio-assistant as a GitHub Release with tarball.
 #
 # Content repos install via:
-#   bun add https://github.com/litlfred/qou/releases/download/folio-assistant-v0.1.0/folio-assistant-0.1.0.tgz
+#   bun add https://github.com/litlfred/folio-assistant/releases/download/folio-assistant-v0.1.0/folio-assistant-0.1.0.tgz
 #
-# Triggers on:
-#   - Tag push matching folio-assistant-v*
-#   - Manual dispatch
+# The URL in the RELEASE BODY below is `${{ github.repository }}`, not this
+# literal: the workflow creates the release in the repository it runs in, so
+# deriving it is the one spelling that cannot drift. Both said `litlfred/qou`
+# until 2026-09-20 — inherited at the split — which published an install
+# command, on the release page itself, pointing at a repository that does not
+# host the package. Bean `folio-assistant-frq2`.
+#
+# Triggers on: `workflow_dispatch` ONLY.
+#
+# This block said "Tag push matching folio-assistant-v*" until 2026-09-20 and
+# the `on:` below has never carried one — text inherited at the split. The
+# version step still reads `GITHUB_REF_NAME` for that case, which is harmless
+# and is why the claim survived unchallenged: the code looks like it supports
+# a tag push. Bean `folio-assistant-frq2`.
 
 name: Release Folio Assistant
 
@@ -21,7 +32,12 @@ permissions:
   packages: write
 
 env:
-  PKG_DIR: folio-assistant
+  # THE REPOSITORY ROOT, because that is where the one `package.json` is.
+  # This said `folio-assistant` until 2026-09-20 — the pre-split package
+  # directory — so `cd $PKG_DIR` failed and the workflow died at its first
+  # real step. Nobody saw it: there are zero tags, so no release has ever
+  # been cut. Bean `folio-assistant-frq2`.
+  PKG_DIR: .
 
 jobs:
   release:
@@ -30,7 +46,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -57,21 +73,39 @@ jobs:
           echo "$EOF" >> "$GITHUB_OUTPUT"
 
       - name: Install dependencies
-        run: cd $PKG_DIR && bun install
+        run: cd $PKG_DIR && bun install --frozen-lockfile
 
       - name: Pack tarball (generic core only)
         run: |
           cd $PKG_DIR
-          # bun pack creates a tarball from package.json "files" field
-          bun pack 2>/dev/null || npm pack 2>/dev/null || tar czf \
-            "folio-assistant-${{ steps.version.outputs.version }}.tgz" \
-            --transform 's,^,package/,' \
-            src/ ui/ viewer/sw-pyodide-cache.js viewer/register-sw.js \
-            folio.config.example.json package.json tsconfig.json README.md 2>/dev/null || true
+          # `bun pm pack` — NOT `bun pack`, which is not a subcommand and so
+          # was always the dead first branch of a three-way fallback whose
+          # other two arms were `2>/dev/null` and `|| true`. A chain that
+          # cannot fail cannot report, which is how a tarball of FOUR FILES
+          # AND NO CODE went unnoticed: `files[]` had rotted at the split and
+          # every path that would have said so was silenced.
+          #
+          # One command, errors visible, exit code honoured.
+          bun pm pack
+          # RENAME to the asset name the release body advertises.
+          #
+          # `bun pm pack` names the file after the package: scope included, so
+          # `@litlfred/folio-assistant` packs as
+          # `litlfred-folio-assistant-<version>.tgz`. The release body has
+          # always told consumers to fetch `folio-assistant-<version>.tgz`,
+          # and the upload glob is `*.tgz` — so the asset went up under one
+          # name and the documented install URL asked for another. A 404, and
+          # the second way that URL was broken: #593 fixed it naming the wrong
+          # REPOSITORY, this fixes it naming the wrong FILE.
+          #
+          # Renaming rather than interpolating the scope into the body keeps
+          # the asset name a stable contract: it survives the package being
+          # renamed again, which is exactly what just happened.
+          mv *.tgz "folio-assistant-${{ steps.version.outputs.version }}.tgz"
           ls -la *.tgz
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ steps.version.outputs.tag }}
           name: "Folio Assistant ${{ steps.version.outputs.version }}"
@@ -83,7 +117,7 @@ jobs:
             ### Install in a content repo
 
             ```bash
-            bun add https://github.com/litlfred/qou/releases/download/${{ steps.version.outputs.tag }}/folio-assistant-${{ steps.version.outputs.version }}.tgz
+            bun add https://github.com/${{ github.repository }}/releases/download/${{ steps.version.outputs.tag }}/folio-assistant-${{ steps.version.outputs.version }}.tgz
             ```
 
             ### What's included
@@ -110,7 +144,17 @@ jobs:
           cd $PKG_DIR
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
           echo "@litlfred:registry=https://npm.pkg.github.com/" >> .npmrc
-          # Update scope for GitHub Packages
-          sed -i 's/"@anthropic-ai\/folio-assistant"/"@litlfred\/folio-assistant"/' package.json
-          npm publish --registry=https://npm.pkg.github.com/ || echo "Publish to GPR skipped (may need scope setup)"
+          # NO `sed` on package.json. It rewrote the name from `@anthropic-ai`
+          # to `@litlfred` right here, which meant the PUBLISHED identity and
+          # the DECLARED one disagreed and the declaration lost at build time.
+          # `package.json` now declares `@litlfred/folio-assistant`, so there
+          # is one answer and nothing to patch. Bean `frq2`.
+          #
+          # `|| echo "...skipped"` removed too: it sat in front of
+          # `continue-on-error: true`, so a failed publish was swallowed twice
+          # and surfaced as a green step with a sentence in the log. The step
+          # stays OPTIONAL — `continue-on-error` keeps a GPR failure from
+          # failing the release — but it now reports as failed when it fails,
+          # which is the difference between optional and invisible.
+          npm publish --registry=https://npm.pkg.github.com/
         continue-on-error: true

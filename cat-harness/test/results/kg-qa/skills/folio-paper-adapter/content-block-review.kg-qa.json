@@ -1,0 +1,51 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "content-block-review",
+    "path": "skills/folio-paper-adapter/content-block-review.md"
+  },
+  "source_hash": "716dc9a3d0bd",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 0,
+    "n/a": 1,
+    "unknown": 0
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/folio-paper-adapter/content-block-review.md",
+      "code": "cat-harness/skills/folio-paper-adapter/content-block-review.ts",
+      "prose_hash": "716dc9a3d0bd",
+      "code_hash": "92afa68f3b2c",
+      "by": "baseline"
+    }
+  ]
+}

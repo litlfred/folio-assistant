@@ -1,12 +1,19 @@
 {
   "id": "content-reviewer",
-  "name": "Content Reviewer",
-  "type": "person",
+  "title": "Content Reviewer",
+  "kind": "person",
   "description": "Formal approval and sign-off authority who gates phase transitions and ensures alignment with source guidelines.",
-  "inherits": ["reviewer"],
-  "capabilities": ["approval-authority"],
+  "roles": [
+    "reviewer",
+    "translation-adjudicator",
+    "narrative-reviewer",
+    "adjudicator"
+  ],
+  "capabilities": [],
   "meta": {
     "smartBaseAnalog": "SGAuthoring.Persona.ContentReviewer",
-    "lifecycle": ["review"]
+    "lifecycle": [
+      "review"
+    ]
   }
 }

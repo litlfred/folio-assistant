@@ -1,0 +1,17 @@
+{
+  "$schema": "folio-interaction/v1",
+  "$comment": "Interaction preferences, read at session start by every agent working in this repository. Committed on purpose: a preference that lives in one agent's context is re-learned by every sibling session, and re-learning it means asking again — which is WCAG 2.2 SC 3.3.7 (Redundant Entry) violated in the least excusable way. See skills/folio-core/interaction-modality.md. The site's own settings control is a DIFFERENT thing: per-viewer, in localStorage, and it never reaches an agent.",
+  "users": {
+    "litlfred@ibiblio.org": {
+      "profiles": [
+        "low-dexterity"
+      ],
+      "note": "Very limited hand function. Every question is to be answerable by selecting: numbered options, four or fewer, the recommended one first and marked, and a stated default that the work proceeds on if no answer comes. Free text always available, never required.",
+      "source": "stated by the user"
+    }
+  },
+  "default": {
+    "profiles": [],
+    "note": "Nobody has said anything: ordinary chat, with selectable options wherever there is a genuine choice. That is not a concession to anyone — it is a better question than an open one, and costs the user who would rather type nothing at all."
+  }
+}

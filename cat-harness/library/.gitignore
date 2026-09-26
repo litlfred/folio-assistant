@@ -1,0 +1,39 @@
+# do not delete me
+#
+# Git tracks files, not directories, so this directory would vanish from
+# the next clone without a file in it. This is that file. It ignores
+# nothing on purpose — see `keepMarker` in schemas/cat-harness.ts.
+#
+# library/
+# L1 source content — one <bib-slug>/ per ingested document, holding
+# sections/*.md, structure.json and, where the source was scanned,
+# ocr/page-NNN.txt. Every knowledge-graph reference to a source resolves
+# THROUGH here, never to a loose path or a bare URL.
+#
+# ── THIS ONE IS EMPTY, AND THAT IS DELIBERATE ──────────────────────────
+#
+# Bean `frs5` moved all four entries out on 2026-09-20 — the three IRIS
+# items to `who-iris/library/`, `milnorlink` to `folio-assistant-sci/library/`
+# — because the platform holds no content. This marker went with them and
+# the declaration went with it.
+#
+# Both came back, on the owner's ruling the same day, for ONE reason and it
+# is not about this instance: `wwi6` pins the guarantee that a DEPENDENT
+# folio materialises its own `uploads/` and `library/`, and a dependent
+# inherits that convention — an id and a relative path — from what the
+# harness declares. Remove the declaration and every downstream folio
+# silently stops getting a library; remove this file and `harness:dirs:check`
+# reports a declared directory that is not there.
+#
+# It IS the `dh4f` shape: a declared directory holding nothing. That was
+# weighed, not missed. The cost is bounded because the consumers that scan
+# libraries now fan out over EVERY declared one (bean `a02m`), so this one
+# contributes nothing rather than shadowing the two that have documents.
+# What it must never become again is the FIRST of several, silently taken
+# as the only one — which is what `[0]` did until that bean.
+#
+# The real fix is the core relocation: `uploads`, `voices`,
+# `translation-sources` and `library` moving to folio-assistant-core, per
+# the owner's "voices, uploads library in folio-asst-core". After that a
+# dependent inherits them from the layer that owns content, and this
+# directory goes for good.

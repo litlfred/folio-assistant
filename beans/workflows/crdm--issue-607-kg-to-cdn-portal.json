@@ -1,0 +1,131 @@
+{
+  "$schema": "folio-workflow-instance/v1",
+  "id": "crdm--issue-607-kg-to-cdn-portal",
+  "processId": "Process_CRDM",
+  "source": "cat-harness/methodologies/crdm/processes/crdm-requirements.bpmn",
+  "subject": "issue-607-kg-to-cdn-portal",
+  "bean": "folio-assistant-xies",
+  "tokens": [
+    "Call_Needs"
+  ],
+  "arrivals": {},
+  "history": [
+    {
+      "at": "2026-09-20T21:22:42.004Z",
+      "node": "Start_BA",
+      "note": "instance started"
+    },
+    {
+      "at": "2026-09-20T21:22:54.164Z",
+      "node": "BA_Submit",
+      "actor": "owner",
+      "note": "Owner described the need in chat, 2026-09-20: a webportal mockup as part of CRDM of the KG — a data-ingestion pipeline from the KG into a public portal, subject to operational and deployment constraints ($, network traffic, graph size), example being a CDN sitting behind Moodle. Explicitly UNDETERMINED: the ingestion method. Explicitly REQUIRED: hosted git or suitable versioned storage for the graph, switchable by deployment considerations."
+    },
+    {
+      "at": "2026-09-20T21:23:04.162Z",
+      "node": "A_Detect",
+      "actor": "claude",
+      "note": "Detected as a feature request, not content work: it asks for platform capability (a generalized ingestion pipeline, skills, tools and a BPMN), not for subject matter in a folio. Issue association: PR #607 is the working PR; bean folio-assistant-xies already carries the owner's four-gate publication pipeline and is claimed for this."
+    },
+    {
+      "at": "2026-09-20T21:35:34.132Z",
+      "node": "GW_Feature",
+      "outcome": "yes",
+      "actor": "claude",
+      "note": "Platform capability, not content: a generalized pipeline, a skill, a process and a drawing, none of which is subject matter in a folio."
+    },
+    {
+      "at": "2026-09-20T21:36:15.340Z",
+      "node": "Call_Issue",
+      "actor": "claude",
+      "note": "subprocess Process_CRDM_Issue completed"
+    }
+  ],
+  "status": "running",
+  "startedAt": "2026-09-20T21:22:42.004Z",
+  "updatedAt": "2026-09-21T06:14:27.079Z",
+  "children": {
+    "Call_Issue": {
+      "id": "crdm--issue-607-kg-to-cdn-portal/Call_Issue",
+      "processId": "Process_CRDM_Issue",
+      "source": "cat-harness/methodologies/crdm/processes/crdm-issue-linking.bpmn",
+      "subject": "issue-607-kg-to-cdn-portal",
+      "bean": "folio-assistant-xies",
+      "tokens": [],
+      "arrivals": {},
+      "history": [
+        {
+          "at": "2026-09-20T21:35:34.132Z",
+          "node": "Start_Process_CRDM_Issue",
+          "note": "instance started"
+        },
+        {
+          "at": "2026-09-20T21:36:00.340Z",
+          "node": "A_ScanIssues",
+          "actor": "claude",
+          "note": "Scanned open issues (18 matching CDN/portal/publication/signing). MATCH: #476 'IRIS catalogue: a referenced import, theme ingestion, and the general process for materialising' -- the epic kupb's issue, which PR #607 already continues. No new issue created: crdm-detect forbids creating one without permission, and a match exists."
+        },
+        {
+          "at": "2026-09-20T21:36:08.707Z",
+          "node": "GW_Issue",
+          "outcome": "yes",
+          "actor": "claude",
+          "note": "#476."
+        },
+        {
+          "at": "2026-09-20T21:36:15.340Z",
+          "node": "A_LinkIssue",
+          "actor": "claude",
+          "note": "PR #607 already opens with 'Continues #476'. Linked, not duplicated."
+        },
+        {
+          "at": "2026-09-20T21:36:15.340Z",
+          "node": "End_Process_CRDM_Issue",
+          "note": "end event reached"
+        }
+      ],
+      "status": "completed",
+      "startedAt": "2026-09-20T21:35:34.132Z",
+      "updatedAt": "2026-09-20T21:36:15.340Z"
+    },
+    "Call_Needs": {
+      "id": "crdm--issue-607-kg-to-cdn-portal/Call_Needs",
+      "processId": "Process_CRDM_Needs",
+      "source": "cat-harness/methodologies/crdm/processes/crdm-needs.bpmn",
+      "subject": "issue-607-kg-to-cdn-portal",
+      "bean": "folio-assistant-xies",
+      "tokens": [
+        "S_ConfirmNeeds"
+      ],
+      "arrivals": {},
+      "history": [
+        {
+          "at": "2026-09-20T21:36:15.340Z",
+          "node": "Start_Process_CRDM_Needs",
+          "note": "instance started"
+        },
+        {
+          "at": "2026-09-20T21:36:32.178Z",
+          "node": "A_Stakeholders",
+          "actor": "claude",
+          "note": "Four, and they want different things. PUBLISHER (this repository) wants the canonical URL to survive a change of cache. DEPLOYMENT OWNER pays for traffic and storage and picks the transport. TRUST NETWORK (GDHCN) grants and can withdraw signing capability, so it is a participant rather than a dependency. PORTAL/READER wants the bytes and, where it can, a verification -- and may be offline, which is a declared deployment value rather than an edge case."
+        },
+        {
+          "at": "2026-09-20T21:36:44.298Z",
+          "node": "A_Synthesise",
+          "actor": "claude",
+          "note": "Synthesised as the six stages and the four constraints in skills/folio-core/kg-to-portal.md, drawn as processes/kg-to-portal.bpmn, and measured against this instance in who-iris/docs/kg-to-portal.html. Three decisions are recorded as the DEPLOYMENT's rather than the pipeline's: the transport (undetermined, and drawn as a gateway with no default branch), the versioned store (required; which store is a choice), and the package-vs-per-asset scheme. The trust anchor is settled -- GDHCN -- with four questions open against its specification, which is unfetchable from this container."
+        },
+        {
+          "at": "2026-09-21T06:14:27.079Z",
+          "node": "BA_ReviewNeeds",
+          "actor": "owner",
+          "note": "Owner approved the synthesised needs statement (session_014HGPQoUnzXGqSspA8x6YyD, 2026-09-21). Recorded on the owner's explicit selection, not inferred."
+        }
+      ],
+      "status": "running",
+      "startedAt": "2026-09-20T21:36:15.340Z",
+      "updatedAt": "2026-09-21T06:14:27.079Z"
+    }
+  }
+}

@@ -1,0 +1,121 @@
+{%- comment -%}
+  The sidebar title, overriding just-the-docs' own `title.html`.
+
+  Reads `docs/_data/harness.json`, which `scripts/sync-docs-harness.ts` copies
+  from the instance's `harness.json`. The declaration is the source of
+  truth for what this instance is called; `site.title` is the fallback for a
+  checkout where the sync has not run.
+
+  The mark carries `alt=""` ON PURPOSE. It sits immediately before the title
+  text, so the link already has an accessible name and a screen reader would
+  otherwise announce the site twice. It is decorative HERE — the same image is
+  not decorative elsewhere, which is why the emptiness lives in this template
+  rather than in the node.
+{%- endcomment -%}
+{%- assign h = site.data.harness -%}
+{%- comment -%}
+  The FULL mark here — whiskers and all — because it is the mark, and the
+  owner asked for this one in this place, twice.
+
+  It was briefly the small mark, on my reasoning that 24 px cannot carry the
+  detail. That was the wrong call in two ways. The small mark is a DIFFERENT
+  DRAWING, so serving it here quietly substitutes a second glyph for the one
+  the instance declares; and my attempt to make it legible at 24 px — an
+  8-unit white halo where the original has 3 — blunted the ear tips under
+  `stroke-linejoin="round"` and read as a fat white outline at full size.
+  Reverted. The lever for legibility is the RENDER SIZE below, which leaves
+  the artwork alone.
+
+  `h.icon` is the instance's declared mark, so an instance that declares a
+  different one gets its own here with no template change.
+{%- endcomment -%}
+{%- comment -%}
+  TWO MARKS WHEN THE INSTANCE DECLARES ONE, and the stylesheet shows whichever
+  matches the page's scheme.
+
+  The reason is a measurement, not taste: the light ink (#596a5b, taken from
+  the art the owner supplied) is 2.60:1 on the dark sidebar — under the 3:1
+  bar for meaningful non-text content. The dark variant is the same hue
+  lifted, at 7.00:1.
+
+  BOTH ARE IN THE DOCUMENT and CSS picks one, rather than Liquid choosing.
+  Liquid cannot: the scheme is `data-fa-scheme` on `<html>`, set by
+  `docs-ui.js` from the reader's stored choice, which the server does not
+  know. A server-side choice would be right for exactly the readers who never
+  changed it.
+
+  The cost is one extra request, and it is paid once: both files are ~3 KB,
+  the second is fetched lazily by the browser only if its rule matches, and
+  the alternative — a CSS filter lightening the light mark — is a GUESS about
+  the resulting colour, which is the one thing this change exists to stop
+  guessing.
+
+  ABSENT IS A REAL STATE. An instance that declares no `mark-dark` renders
+  one `<img>` with no scheme class, shown in both — which is what every
+  instance did before this existed.
+{%- endcomment -%}
+{%- comment -%}
+  ONE MASKED ELEMENT WHEN THE INSTANCE DECLARES A MASK, and it replaces the
+  light/dark PAIR below rather than joining it.
+
+  Owner, 2026-09-22: *"I want theme like in avaatars"*. An avatar is a mask
+  plus a `background-color` derived from one declared hue, so both schemes
+  come from one number. The pair below is the thing that mechanism exists to
+  replace: `gen-avatars-css` says it outright about not shipping assets per
+  scheme — *"as files they would drift, and the one that fell behind would be
+  invisible until somebody opened the site in the other mode"* — and the mark
+  had already shipped exactly that risk, two files that must agree.
+
+  A `<span>`, not an `<img>`: the colour is painted through the glyph's shape
+  by `background-color`, which an `<img>`'s own pixels would sit on top of.
+  `aria-hidden` and the empty name are unchanged — the title beside it names
+  the site, and a mark that repeated it would be read twice.
+
+  ABSENT IS A REAL STATE, the same rule `mark-dark` follows: an instance that
+  declares no mask falls through to the pair, and nothing changes for it.
+{%- endcomment -%}
+{%- comment -%}
+  THE THEME AVATAR FIRST — owner, 2026-09-22: *"use theme avatar not the purply
+  thing"*. The `@` mark below is the purply thing; this is the instance's own
+  theme art, clipped to the cat.
+
+  IT IS THE SAME CROP THE RAIL USES. `603s` measured `avatarRegion` per image
+  and shipped it with no consumer; `sync-docs-harness.ts` now solves it into
+  the four CSS values, and `navbar.ts`'s `mark()` does the identical sum for a
+  mounted page. One declaration, two renderers, no second formula.
+
+  THE CARD LAYOUT, not laptop or mobile. It is the square one (1254x1254), and
+  `KgImageSchema` refuses a non-square `avatarRegion` in PIXELS — equal
+  fractions on a landscape crop are a box 1.78x wider than tall, and the clip
+  scales width and height separately, so a landscape layout would stretch the
+  cat by exactly that factor.
+
+  THE MARK IS NOT DELETED. An instance with no theme art, or a theme whose art
+  declares no crop, falls through to the pair below and nothing changes for it
+  — the same "absent is a real state" rule `mark-dark` already follows here.
+  Rendering the whole 1254px composition in a 2rem frame instead would be
+  `603s`'s "grey mush", which is why the fallback is the mark rather than the
+  uncropped card.
+{%- endcomment -%}
+{%- assign card = h.landing.card -%}
+{%- if card.avatar -%}
+  <span class="fa-site-mark fa-site-mark--avatar" aria-hidden="true">
+    <img src="{{ card.src | relative_url }}" alt=""
+         style="width: {{ card.avatar.width }}%; height: {{ card.avatar.height }}%;
+                left: {{ card.avatar.left }}%; top: {{ card.avatar.top }}%">
+  </span>
+{%- elsif h.icon.src -%}
+  {%- if h.iconMask.src -%}
+  <span class="fa-site-mark fa-site-mark--masked" aria-hidden="true"
+        style="--fa-site-mark-src: url('{{ h.iconMask.src | relative_url }}')"></span>
+  {%- elsif h.iconDark.src -%}
+  <img src="{{ h.icon.src | relative_url }}" alt="" aria-hidden="true"
+       class="fa-site-mark fa-site-mark--light" width="32" height="32" />
+  <img src="{{ h.iconDark.src | relative_url }}" alt="" aria-hidden="true"
+       class="fa-site-mark fa-site-mark--dark" width="32" height="32" />
+  {%- else -%}
+  <img src="{{ h.icon.src | relative_url }}" alt="" aria-hidden="true"
+       class="fa-site-mark" width="32" height="32" />
+  {%- endif -%}
+{%- endif -%}
+<span class="fa-site-title">{{ h.title | default: site.title }}</span>

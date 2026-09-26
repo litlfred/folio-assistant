@@ -37,8 +37,12 @@ export default tseslint.config(
     ignores: [
       "node_modules/**",
       "**/.lake/**",
-      "dist/**",
-      "schemas/generated/**",
+      // `**/`, not root-anchored: a PUBLISHABLE package builds into its own
+      // `dist/`, and since `check:published-packages` builds it (bean `rsi6`),
+      // that output now exists on any machine that has run the gate set.
+      // Root-anchored, this matched only the platform's own build, and
+      // `bun run lint` reported 3 errors in generated CJS nobody wrote.
+      "**/dist/**",
       "**/*.d.ts",
       "viewer/**",
       "ui/**",
@@ -130,7 +134,17 @@ export default tseslint.config(
   // fragment would otherwise surface as a broken docs site rather than as a
   // failed check.
   {
-    files: ["docs/_includes/**/*.js"],
+    // `**/docs/**/_includes/`, which survives the site root moving in EITHER
+    // direction. It was `docs/**/_includes/` and broke the moment the stub
+    // pattern inverted (`docs/<stub>/` -> `<stub>/docs/`, bean `wggr`), which
+    // is the third time a literal site path has had to be chased after a move
+    // — hence a pattern that names the relationship rather than the location.
+    //
+    // Originally `docs/**/_includes/` rather than `docs/_includes/`: the site moved under
+    // its instance stub (`docs/<stub>/`) to package it for the repo split, and
+    // a glob pinned to the old depth silently stops matching — which is a lint
+    // rule that quietly covers nothing rather than one that fails loudly.
+    files: ["**/docs/**/_includes/**/*.js"],
     rules: {
       "@typescript-eslint/no-unused-expressions": "off",
     },

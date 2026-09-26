@@ -1,0 +1,95 @@
+# Jekyll configuration for the folio-assistant documentation site.
+#
+# Published to GitHub Pages at https://litlfred.github.io/folio-assistant/
+# Built and deployed by .github/workflows/docs-site.yml.
+#
+# Theme: just-the-docs (via remote_theme — the jekyll-remote-theme plugin is
+# whitelisted by the github-pages gem, so this works on GitHub Pages).
+
+title: folio-assistant
+description: >-
+  Content-agnostic agent skills framework — author scientific papers, WHO SMART
+  Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a
+  typed content-object model.
+
+# PINNED. `remote_theme: just-the-docs/just-the-docs` with no ref downloads the
+# theme's default-branch HEAD on every build -- confirmed in the CI log:
+# "Remote Theme: Downloading https://codeload.github.com/just-the-docs/just-the-docs/zip/HEAD".
+# An upstream commit could therefore turn this repo's docs build red with no
+# commit of ours, and `docs/assets/js/docs-ui.js` MOVES the theme's own search
+# markup into the action launcher -- it binds `.search`, `#search-input` and
+# `.search-label` -- so an upstream rename degrades a shipped feature silently
+# rather than loudly.
+#
+# v0.12.0 is the newest RELEASE at or below what the site is rendering today,
+# established by fingerprinting the deployed CSS on `gh-pages` rather than by
+# assuming: `assets/css/just-the-docs-dark.css` carries
+# `outline-offset:-1px;text-wrap:balance`, and `text-wrap: balance` entered
+# `_sass/navigation.scss` upstream in 2e1f449 (2026-08-01), after v0.12.0 and
+# in no release. So the live theme is upstream `main`, 61 commits past v0.12.0.
+# Restricted to the directories that reach rendered output -- `_sass`,
+# `_includes`, `_layouts`, `assets` -- v0.12.0..HEAD is exactly that one line.
+#
+# Moving this pin is NOT an edit somebody makes in passing. It is the
+# `upstream-version-adoption` process (`processes/upstream-version-adoption.bpmn`,
+# skill `skills/folio-core/upstream-version-adoption.md`): detect, impact
+# analysis, MVP on a staging branch, review, and a PERSON decides. Bump this
+# literal only as the output of that process.
+#
+# THIS LINE IS THE ONLY COPY OF THE VERSION. `upstream-pins.json` declares the
+# tenant -- the upstream repo, what of ours binds it, what its MVP runs -- and
+# points `bun run check:upstream-pins` back HERE to read the ref. A registry
+# carrying its own copy would be a second answer to "what are we running",
+# free to disagree with the build.
+remote_theme: just-the-docs/just-the-docs@v0.12.0
+
+# Site lives under /folio-assistant/ on litlfred.github.io.
+baseurl: "/folio-assistant"
+url: "https://litlfred.github.io"
+
+# just-the-docs options
+search_enabled: true
+heading_anchors: true
+color_scheme: dark
+
+# Enable Mermaid diagrams in pages (workflow diagrams in the guides).
+mermaid:
+  version: "10.9.0"
+
+# NO `aux_links`, deliberately.
+#
+# just-the-docs draws them as text at the top right of the MAIN panel, which
+# is where the words "GitHub" sat above every page. The owner asked for that
+# gone -- "remove the github.com from the top of the display" (bean `udx8`) --
+# and for the forge to be reachable as an icon instead. It is: the Source tile
+# in the header's action launcher, beside the JSON-LD and knowledge-graph
+# tiles.
+#
+# The tile does NOT read this key any more either. `aux_links` was doing two
+# jobs -- displaying a link, and recording where the repository is -- and only
+# the second was wanted. The repository URL is now resolved from the git
+# remote by `scripts/sync-docs-harness.ts` into `docs/_data/harness.json`,
+# alongside the knowledge-graph and JSON-LD targets, so there is one answer to
+# "where is this instance published" rather than one per consumer. Putting a
+# link back here would restore the header text this removed.
+
+footer_content: >-
+  folio-assistant — code under the Apache License 2.0, documentation under
+  CC BY 3.0. Generated schema and API references are rebuilt from source on
+  every push to main.
+
+# The TypeDoc API reference is generated HTML; let it pass through untouched
+# rather than being processed as Jekyll pages.
+keep_files:
+  - api
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - folio-assistant-migration.md
+  - qou-migration-checklist.md
+  - sage-mcp.md
+
+plugins:
+  - jekyll-remote-theme
