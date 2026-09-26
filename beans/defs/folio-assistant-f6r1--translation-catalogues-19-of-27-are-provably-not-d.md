@@ -3,8 +3,9 @@
 title: 'TRANSLATION CATALOGUES: 19 of 27 are provably not derivable, 8 undetermined — and the roundtrip test that says otherwise fails on known-good catalogues'
 status: completed
 type: bug
+priority: normal
 created_at: 2026-09-26T09:59:36Z
-updated_at: 2026-09-26T09:59:36Z
+updated_at: 2026-09-26T10:42:14Z
 parent: folio-assistant-bzyu
 ---
 
@@ -99,3 +100,66 @@ the evidence rather than the assertion `tbdg` had to make.
 
 No code and no catalogues. One measurement, its control, and three corrections
 to earlier claims of mine. `UNCATALOGED` untouched.
+
+
+## 2026-09-26, from another session — the headline number is SUPERSEDED, and the `msgctxt` finding CORRECTED my tool
+
+Read on merging `origin/main` into `claude/wonderful-gauss-7frcrw` (PR #1369),
+which was working the same question in parallel. Recorded here rather than only
+there, because a reader who finds this bean first would otherwise take
+*"0 demonstrated derivable"* as settled.
+
+### "0 demonstrated derivable" no longer holds — 10 are derived
+
+Measured on that branch: **10 of 25 derived**, 15 refused, and the gate's findings
+go 25 → 15 with no new drift on the ten. Spot-checked against Arabic.
+
+**This bean was not wrong when written.** It measured `main` at `74f27e4c7f`, and on
+that tree the answer really was 7 derivable at best — I measured 7 there myself
+before changing anything. What moved the number was fixing the extractor, not
+re-reading the corpus:
+
+- **`6b8u`** — `MD_MIN_TEXT_LEN` was a minimum in CHARACTERS, so translatability
+  was a property of the locale's script. Now a letter count.
+- **`ig4a`** — a code fence was only recognised at column 0, so an indented fence
+  inside a list item was extracted as prose.
+
+So this bean's own framing is the one that survives, and is sharper than its
+count: *"these translations are not segment-wise images of their sources at all."*
+Correct — and for **most** of them the reason was in `pot-extract.ts` rather than
+in the translations. Bean `lvk9` (list items and blockquotes extracted PER LINE, so
+a msgid depends on the author's hard wrap) takes alignment to 17/25 and is the
+largest single cause.
+
+### The `msgctxt` finding is the valuable half, and it corrected my code
+
+This bean's row *"needs `msgctxt`: `ru/getting-started` — a repeated source msgid
+whose two occurrences are translated DIFFERENTLY"* names a defect in
+`derive-po.ts` that I had written and documented without noticing. My
+`formatDerivedPo` deduped by msgid, *"keeping the FIRST translation seen"*, with a
+comment explaining that it did — a description of the behaviour that never asked
+whether it was lossy. It is: a `.po` is keyed by msgid, so keeping one of two
+different translations discards a real difference and the file is well-formed and
+wrong.
+
+**No wrong catalogue shipped** — checked across all 10, 0 conflicting duplicates.
+That is luck rather than design: `ru/getting-started` is refused for
+`count-differs` today, so the collision never had the chance, and `lvk9` would
+align that pair and activate it.
+
+Fixed: `conflictingDuplicate` now REFUSES the pair with a `msgid-conflict` reason
+naming both translations and pointing at `msgctxt`, rather than silently choosing.
+A duplicate translated identically stays benign, which is the common case. Three
+tests, including an anti-vacuity floor over the real corpus.
+
+### Its self-invalidating control is also evidence for `lvk9`
+
+This bean's roundtrip check failed on known-good catalogues because
+*"`injectMarkdown` collapses a multi-line paragraph onto its first line and blanks
+the continuations, so re-extraction legitimately re-segments."* That is the same
+hard-wrap sensitivity from the injecting side, and it is worth carrying into `lvk9`:
+a fix that makes a msgid survive a re-wrap on the extract side should be checked
+against the inject side too, or the round trip stays non-identical for a new reason.
+
+Left `completed`. Nothing here reopens it — its measurement was honest on the tree
+it measured, and the parts that still stand are noted above.
