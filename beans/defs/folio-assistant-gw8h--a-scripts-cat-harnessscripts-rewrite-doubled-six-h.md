@@ -1,11 +1,11 @@
 ---
 # folio-assistant-gw8h
 title: A scripts/ -> cat-harness/scripts/ rewrite doubled six hrefs and left the glossary stale — two red checks on every open PR, one cause
-status: todo
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-26T14:16:58Z
-updated_at: 2026-09-26T14:25:57Z
+updated_at: 2026-09-26T14:33:46Z
 ---
 
 ## Two red checks on `main`, in two different jobs, from one edit
