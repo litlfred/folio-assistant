@@ -1,11 +1,11 @@
 ---
 # folio-assistant-j0zs
 title: 'INJECTION: the gate reads `run:` only — `actions/github-script` blocks are JavaScript and carry the same laundering'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T13:59:53Z
-updated_at: 2026-09-26T13:59:53Z
+updated_at: 2026-09-26T16:57:07Z
 parent: folio-assistant-1xhc
 ---
 
@@ -138,3 +138,19 @@ interpolations there are `filename-base`, which is `date -u` plus a short SHA.
 - 28 tests, one asserting the **real corpus has a scanned `script:` block**: a
   broken detector would otherwise make this entire surface silently green
 - `tsc` clean; BPMN prose re-read and attested
+
+## Closed 2026-09-26 — merged as 694425c961 (PR #1415)
+
+Three of three. Evidence, not authorship: the merge commit carries the `Surface`
+type, `resolveProvenance`'s `script:` walker, the surface in `baselineKey`, the
+two `env:`-bound `script:` blocks in `feature-staging.yml`, the six new tests and
+the rewritten `injection-boundaries` section.
+
+Verified before merge: 2 free-text findings in `script:` blocks against the
+pre-fix file and 0 after; gate green at 8 `run:` + 1 `script:`; 28 tests, one of
+which asserts the real corpus HAS a scanned `script:` block so a broken detector
+cannot make the surface silently green; `ns:check` 168 terms; `tsc` clean;
+`End-to-end + accessibility` and `stage` green in CI on the merged base.
+
+The one red check at merge was `translation:drift:check` — the owner's deliberate
+decision (bean `ngxj`, issue #206), 11999 pass / 44 skip / 1 fail.
