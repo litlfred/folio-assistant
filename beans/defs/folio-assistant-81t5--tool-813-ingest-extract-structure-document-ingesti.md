@@ -1,11 +1,11 @@
 ---
 # folio-assistant-81t5
 title: 'TOOL 8/13: ingest-extract-structure — document ingestion (15 files, 7 entry points)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T04:34:56Z
-updated_at: 2026-09-20T16:38:42Z
+updated_at: 2026-09-26T00:00:00Z
 parent: folio-assistant-d308
 ---
 
@@ -43,7 +43,9 @@ the one nobody consults.*
       — optional by design; no question, no node owed
 - [x] `extract-lean-blocks.py` retired to `fsh-guts/` under the owner's one-shot rule
 - [x] `requires.runtime` honest about Python deps, per bean `68dt`
-- [ ] `extract-candidates.py` stays a tier-C reachability observation, not a blocker
+- [x] `extract-candidates.py` has its dispatch point already, and it is a TRIGGER —
+      BPMN `Task_Candidates`, not a command. No Tool node is owed. See the second
+      correction at the end of this bean: "tier C" was the wrong word for it.
 
 
 ---
@@ -123,10 +125,12 @@ node of their own.
 ### Done when — an INTERIM list, superseded below
 
 - [x] the nine broken `invoke.shell` paths fixed and gated — `jqv4`
-- [ ] **Stage B: operator-invoked with a Tool node, or run by `ingest-document.ts`?**
-      — the owner's call
-- [ ] **`extract-lean-blocks.py`: move to `litlfred/qou`, or retire to `fsh-guts`?**
-      — the owner's call
+- [x] ~~**Stage B: operator-invoked with a Tool node, or run by `ingest-document.ts`?**~~
+      — **withdrawn**, never the owner's call: `candidates.json` is optional by
+      design. Resolved in the first correction below
+- [x] ~~**`extract-lean-blocks.py`: move to `litlfred/qou`, or retire to `fsh-guts`?**~~
+      — **decided**: `fsh-guts`, under the owner's one-shot-migration rule.
+      Resolved in the first correction below
 - [x] `requires.runtime` honest about Python deps, per bean `68dt` — the two ingest
       nodes already declare it
 
@@ -201,4 +205,94 @@ verdicts, so the two agree rather than contradict.*
       — optional by design; no question, no node owed
 - [x] `extract-lean-blocks.py` retired to `fsh-guts/` under the owner's one-shot rule
 - [x] `requires.runtime` honest about Python deps, per bean `68dt`
-- [ ] `extract-candidates.py` stays a tier-C reachability observation, not a blocker
+- [x] `extract-candidates.py` has its dispatch point already, and it is a TRIGGER —
+      BPMN `Task_Candidates`, not a command. No Tool node is owed. See the second
+      correction at the end of this bean: "tier C" was the wrong word for it.
+
+
+---
+
+## CORRECTION 2026-09-26 — "tier-C reachability observation" was the wrong frame, and the mechanism is reachable
+
+The first correction withdrew the Stage B blocker correctly — `candidates.json`
+is optional by design — and then mis-filed what was left:
+
+> So `extract-candidates.py` being called by nothing is a **tier-C reachability
+> observation**, the same shape as the fifteen can't-tell files
+
+Two errors in one sentence, and the second is the substantive one.
+
+**`tier C` is not a name this observation can carry.** Tier A–D in
+`tools:coverage` is a taxonomy of **skills** — how close a skill is to having a
+Tool node that satisfies it. A callerless *script* is not a member of it at all.
+So the phrase reads as a classification and denotes nothing, which is worse than
+leaving the observation unclassified: a reader who goes looking for tier C finds
+a table of skills and cannot tell whether the entry is missing or the frame was.
+
+**And "called by nothing" is false once the question is asked correctly.**
+Measured 2026-09-26:
+
+| dispatch point | exists? | evidence |
+|---|---|---|
+| a named command (`package.json`, a Tool node) | **no** | no entry; only `who-l1-extractor.test.py` imports it |
+| a **BPMN activity** | **YES** | `processes/ingest-extract-structure.bpmn:97` — `<bpmn:serviceTask id="Task_Candidates" name="Extract claim candidates">`, in the lane at `:48`, reached by `Flow_e7` from `Task_Structure` and flowing to `EndEvent_Structured` |
+| a QA sweep axis | no | — |
+| a schedule or watcher | no | — |
+
+`Task_Candidates` carries `<bootstrap.processes:skill ref="document-intake" />`, so
+`workflow_next` already hands an agent that skill at that step — and
+`document-intake.md:199` gives the literal line to run:
+
+```bash
+python3 scripts/extract-candidates.py library/<doc-id>/
+```
+
+So the mechanism has **exactly one dispatch point and it is already built**. That
+is `covered-is-not-reachable` §"Reachability is PLURAL" in its plainest form:
+
+> the question to ask is not *which caller should this have* but: **What should be
+> able to start this — and is each of those a trigger or a Tool?**
+
+The original measurement asked the first question. A grep for callers cannot see
+a trigger, because a trigger is not a call site — the process fires the step when
+it is reached. This is the `vo9d` shape the skill already records, where *"the
+BPMN trigger **already existed**"* and two of three proposed dispatch points were
+wasted work.
+
+**Does it also want a Tool node?** No, and the reason is the one the BPMN
+documentation states about its own output:
+
+> candidates.json holds extracted theorems and definitions. Proposals only --
+> never adjudicated verdicts.
+
+A step whose output is a proposal is a step an operator runs inside the intake
+process, with the skill in hand telling them what the output may and may not be
+treated as. A Tool node would make it invocable **outside** that process, which
+is exactly where the proposal/verdict distinction stops being enforced by
+anything. `document-intake` carries the constraint; the BPMN step carries the
+skill; a bare command would carry neither.
+
+### What this cost, and the rule it is the third instance of
+
+Nothing, because the bean was still open — but the frame would have propagated:
+`d308:377` already cites `covered-is-not-reachable` and a reader following the
+citation into this bean would have found a non-existent tier.
+
+The underlying failure is the one this bean's own first correction names, hit a
+second time in the same bean: **reasoning from a mechanism's name or label
+instead of its body.** The first time it was the label `Stage B (input)` read as
+"required". This time it was the phrase "called by nothing", which is a claim
+about *callers* being read as a claim about *reachability* — and reachability is
+plural.
+
+## Closing
+
+Every item on the authoritative list at the top of this bean is now `[x]`. The
+last one was never work: it was a verdict written as a checkbox, which is a
+wording error of mine — a verdict belongs in prose where it can carry its
+evidence, and an unticked box reads as outstanding work to every agent that
+scans the list. Corrected in place rather than deleted, per the standing rule
+that a withdrawn or re-framed finding left in place stops the next agent
+re-deriving it.
+
+No node is owed by this group. Closing.

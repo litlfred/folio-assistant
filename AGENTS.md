@@ -726,6 +726,23 @@ to spend the words: **do not start the topic.**
   [`skills/folio-core/directory-conventions.md`](cat-harness/skills/folio-core/directory-conventions.md).
 - Migration plan + cross-repo coordination: `folio-assistant/docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
+- **Adding one is never a one-file change** — `bun run skill:register` performs
+  every derived artefact a skill owes and verifies each one landed;
+  `skill:register:check` is the gate, and it is the only thing that makes the
+  obligation binding. **Each stale artefact names a GENERATED file rather than
+  your skill, so the cause is invisible from the symptom** — which is why the
+  remedy is a command rather than a list. **The discipline is in the skill, not
+  here** —
+  [`skill-registration`](cat-harness/skills/folio-core/skill-registration.md)
+  carries what a skill owes and why the feedback arrives on somebody else's PR,
+  the ONE declaration the command deliberately leaves to you (which package a
+  file belongs to is your assertion, not a derivable fact), why the chain cannot
+  be measured through `bun run gates` (bean `ymsu`: `bun test` runs two of the
+  writers, so gates reports their artefacts current when they are not), why
+  `roles:` keeps coming back, and the two orphan directions the command reports
+  rather than fixes. Seven merges in three days each broke the gate set this way
+  before the command existed, and the list itself was recalled wrong four times
+  before it was measured (beans `v625`, `nfv3`).
 - Shipping a branch — `/prepare-merge [base]` runs the generic recipe plus this
   folio's **content-type-specific** gates (paper → content_validate / qa_sweep /
   proof_status / latex_preflight / lean_build; WHO IG → fhir-validation / QC),
@@ -734,17 +751,6 @@ to spend the words: **do not start the topic.**
 - Watching a sibling PR — `/watch <pr|branch>` subscribes to a PR's CI / review /
   comment activity and follows through until it's merged or closed:
   `.claude/commands/watch.md`.
-- **Adding a skill? Run `bun run skill:register`.** Five artefacts go stale
-  when a skill is added, and each red one names a GENERATED file rather than
-  your skill, so the cause is invisible from the symptom. The command
-  regenerates all five and verifies each one, then tells you if a
-  package-manifest entry is still missing — the one step it deliberately does
-  not do for you, because which package a file belongs to is your assertion.
-  Bean `v625`: this was a documented list before it was a command, and the list
-  was wrong three times AND recurred forty minutes after being fixed.
-  **Do not re-derive the chain through `bun run gates`** — `bun test` runs two
-  of the five writers, so gates reports their artefacts current when they are
-  not (bean `ymsu`). Measure one check at a time.
 - User-facing docs site (README + install + guides + generated schema/API
   reference): `docs/` → published to <https://litlfred.github.io/folio-assistant/>
   by `.github/workflows/docs-site.yml`. Regenerate the generated references with

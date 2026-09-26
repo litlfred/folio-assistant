@@ -652,6 +652,110 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
     }),
 
+    // ── jh2j's remaining half: the TeX scripts that had no declared command ──
+    //
+    // Seven files, none with a `package.json` script, so nothing in the
+    // repository named them — `d308`'s premise exactly. Three are reachable and
+    // get a node; `render-latex` and `generate-block-tex` are LIBRARIES reached
+    // through their consumers (the criterion that already exempted
+    // `pdf-extract` and `pdf-structure` in `81t5`); and two are recorded on the
+    // bean rather than noded, for reasons that are findings:
+    //
+    //   `generate-main-tex.ts`  exits 1 having printed a STACK TRACE from its
+    //                           own source, so it has no refusal to document.
+    //   `latexmk-compile.sh`    compiles LaTeX with a security boundary
+    //                           (shell-escape only on trusted events) and NO
+    //                           skill in the corpus is about compiling. The
+    //                           `yean` shape — a mechanism with no skill —
+    //                           which is the owner's call to author.
+    //
+    // **All three nodes below exit 1 where the house rule wants 2**, and that is
+    // documented rather than silently fixed. `latex-preflight` and
+    // `latex-overfull` above DO exit 2, so the divergence is inside one family.
+    // Changing five scripts' exit codes is a behaviour change the owner should
+    // take deliberately; a node that lies about the exit it will get is worse
+    // than one that records the inconsistency.
+    //
+    // None of the skills these satisfy carries an input contract, so
+    // `check-tools` cannot verify these edges against one. A clean run does not
+    // mean the edge was tested — the same caveat `l1-complete-check` records.
+
+    defineTool({
+      id: "tex-snippet-validate",
+      title: "TeX snippet validation (AST)",
+      description:
+        "Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/validate-tex.ts" },
+      io: {
+        inputs: [
+          { name: "paper", schema: t("Slug"), required: false, arg: { flag: "--paper" }, description: "One folio by slug. Absent, every folio the content root holds." },
+          { name: "file", schema: t("RepoPath"), required: false, arg: { flag: "--file" }, description: "A single `.md` block, for the narrow case." },
+          { name: "compile", schema: t("Flag"), required: false, arg: { flag: "--compile" }, description: "Also compile each snippet with pdflatex — needs a TeX distribution, which the base `requires` does NOT claim." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" } },
+          { name: "warningsLog", schema: t("RepoPath"), required: false, arg: { flag: "--warnings-log" }, description: "Write a QA-compatible log to this path." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "Per snippet, what will not compile. Run in the platform it reports `Files scanned: 0` and exits 1 — measured. That is a could-not-determine wearing a finding's exit code: this repository carries no folio, so there was nothing to scan. Read the scanned count before reading the verdict." },
+        ],
+      },
+      satisfies: ["latex-validation"],
+      // `alternativeTo` stays EMPTY against its two siblings. They are
+      // complementary rather than substitutable, and the sequence says why:
+      // preflight gates the source BEFORE a compile, this parses the snippets
+      // IN it, overfull reads the log AFTER. Naming them alternatives would tell
+      // a caller that running one covers another.
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "tex-source-audit",
+      title: "TeX-source hazard audit",
+      description:
+        "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/audit-tex-source.ts" },
+      io: {
+        inputs: [
+          { name: "strict", schema: t("Flag"), required: false, arg: { flag: "--strict" }, description: "Exit 1 on any finding, for use as a gate." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "Hazards with file and line, plus a committed sidecar. Its refusal is the model of the pair: run where no folio exists it says `No .md files found … refusing to report success. This audits a FOLIO's content; folio-assistant is the platform.` — then exits 1, where 2 is the house value for could-not-determine. The MESSAGE is right and the exit code is not." },
+        ],
+      },
+      satisfies: ["latex-validation"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "headless-render-qc",
+      title: "Headless render QC (Playwright)",
+      description:
+        "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/headless-render-qc.ts" },
+      io: {
+        inputs: [
+          { name: "screenshot", schema: t("Flag"), required: false, arg: { flag: "--screenshot" }, description: "Save the screenshots as well as the verdict — which is the point when the reader is a person rather than a gate." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "Per block: rendered, or the failure. Needs a FOLIO's `build/viewer/paper.json` and its `folio-assistant/ui`, so it exits 1 with `No paper.json found` in the platform — could-not-determine, again spelled 1 rather than 2." },
+        ],
+      },
+      // `rendered-verification`, NOT `html-rendering-qc`. Established by reading
+      // the bodies rather than matching the names: `html-rendering-qc` and
+      // `markdown-render-check` both audit `.md` SOURCE for patterns that will
+      // fail, while `rendered-verification` is the one about "LOOKING at it in a
+      // browser … driving it with Playwright in this environment" — which is
+      // what this script does. The first guess was `html-rendering-qc` and it
+      // was wrong.
+      satisfies: ["rendered-verification"],
+      // A FOLIO's build output, so a node rather than a script here — it reaches
+      // downstream where the tree exists. Same posture and same reason as
+      // `l1-complete-check`.
+      requires: { runtime: ["bun", "chromium"], network: false },
+    }),
+
     // ── The Lean family, which is a FAMILY and not one command ────────────
     //
     // Bean `eu38` wrote the caution before the work: 16 entry points spanning

@@ -87,8 +87,103 @@ with this measurement as their stated reason**, rather than rotting unexplained
 - [x] The absent primitives named, and the `Project`/`Program` replacement found
 - [ ] The owner decides: rewrite against `unstable/`, or hold at 6 until the
       API is stable — **it is a risk call about gates, not a feasibility one**
-- [ ] #910 and #914 carry a comment pointing at this bean
+- [→] #910 carries a comment pointing here (2026-09-26). **#914 needs none — it
+      MERGED on 2026-09-25**, which this bean's plan did not anticipate; see the
+      update below
 
+---
+
+## UPDATED 2026-09-26 — #914 merged, and there is a SECOND blocker that is not about `unstable/`
+
+Three things, and the first corrects this bean rather than adding to it.
+
+### 1. `#914` is merged, so *"#910 / #914 stay open"* is no longer true
+
+Merged 2026-09-25T18:06Z by the owner. It bumped
+`cat-harness/schemas/block-qa-schema` from `5.9.3` to `7.0.2`, so **main already
+carries TypeScript 7 in one package** while the root sits at `^6.0.3`.
+
+Measured before calling it harmless:
+
+| question | answer |
+|---|---|
+| is it a workspace member? | **no** — the root `package.json` has no `workspaces` key, so its devDependency is resolved independently |
+| does it import the TS compiler API? | **no** — no `from "typescript"` anywhere under it |
+| how does it use `tsc`? | as a build tool only: `tsup … --dts`, tests under `vitest` |
+| does any gate run it? | `code-quality-gates.yml` never names it |
+
+So the split is real but **inert**: it is not the shared-compile inconsistency it
+looks like, and it does not touch the `unstable/` problem, which is about code
+that `import`s the compiler. The correction that matters is to the *record* —
+this bean's plan assumed both PRs would be held, and an agent reading it would
+have gone looking for an open `#914`.
+
+### 2. `typescript-eslint` REFUSES to load on TS 7.0 — a second, independent blocker
+
+Not mentioned here, and it is not about `unstable/` at all.
+`typescript-eslint@8.70.0` declares
+
+    peerDependencies.typescript:  >=4.8.4 <6.1.0
+
+and it does not warn-and-degrade. Run in an isolated probe — `typescript@7.0.2`
++ `typescript-eslint@8.70.0` + `eslint@9.39.5`, one file,
+`recommendedTypeChecked`:
+
+    typescript-eslint does not support TS 7.0.
+    Please see …/announcing-typescript-7-0/#running-side-by-side-with-typescript-6.0
+    to run typescript-eslint using the TS 6 API.
+    See also typescript-eslint#10940 for tracking support for TS >=7.1
+
+    Error: typescript-eslint does not support TS 7.0.   → eslint exit 2
+
+A hard throw at module load, so `bun run lint` would not run at all. That is the
+*better* failure mode — loud rather than silent — but it means the hold at 6 has
+a **second** reason, and unlike the `unstable/` one this reason comes with a
+**condition for revisiting**: upstream's own issue tracks TS ≥ 7.1. Two blockers
+with different owners should not be carried as one.
+
+Upstream also documents a side-by-side arrangement (typescript-eslint on the TS 6
+API), which is a third option this bean's decision list does not offer and which
+would let the compiler and the linter disagree about version on purpose.
+
+### 3. What holding at 6 actually costs, since nothing here had priced it
+
+`tsc -p tsconfig.json --noEmit`, both binaries run directly rather than through
+`bunx`, same config, same tree:
+
+| | exit | wall | diagnostics |
+|---|---|---|---|
+| `typescript@6.0.3` (current) | 0 | **31.1 s** | 0 |
+| `typescript@7.0.2` (`#910`) | 0 | **6.6 s** | 0 |
+
+**This does NOT contradict this bean's "69 + 38 errors", and the distinction is
+the whole point.** Two different questions:
+
+- *can TS 7 typecheck this codebase?* — yes, cleanly, ~4.7× faster. That is what
+  `tsc --noEmit` answers.
+- *is the compiler API those two scripts import still there?* — no. Re-verified
+  independently today: `import("typescript")` under 7.0.2 exposes **2** exports,
+  `version` and `versionMajorMinor`, and `createSourceFile`, `forEachChild`,
+  `SyntaxKind`, `createProgram` and `ScriptTarget` all read `undefined`. Exactly
+  what this bean measured on 2026-09-23.
+
+So the hold is not costing correctness, it is costing ~25 s per typecheck — worth
+stating, because a decision framed only as "risk of an unstable API" reads as
+having no price on the other side. `schema-graph.ts` (65 `ts.` references) and
+`qa-criterion-hash.ts` (37) remain the whole blast radius.
+
+### Still the owner's, and still not an agent's
+
+Unchanged, and now with three options rather than two:
+
+1. rewrite both consumers against `unstable/sync`'s `Project`/`Program`
+2. hold at 6 — now until **both** `unstable/` stabilises **and**
+   typescript-eslint ships TS 7 support
+3. side-by-side: TS 7 for `tsc`, the TS 6 API for typescript-eslint, per
+   upstream's own note
+
+No rewrite, no pin change, nothing installed into this repo — both probes ran in
+a scratch directory and `git status` was verified clean afterwards.
 
 ## A THIRD consumer, found 2026-09-26 — and the bean was right when written
 
@@ -132,3 +227,16 @@ was ~15 minutes and no wrong artefact, but it is the second time today.
 
 Unchanged: rewrite against `unstable/`, hold at 6, or run side-by-side. This adds one input
 (option 1 is three files, not two) and no new option.
+
+---
+
+_Merge note, 2026-09-26T12:45Z._ Both sides of this file appended and neither was
+wrong. The one line that had to be chosen is the checklist box: `main` carried
+`- [ ] #910 and #914 carry a comment pointing at this bean`, and this branch had
+already corrected it to `[→]` on the measurement that **#914 merged on
+2026-09-25**, so it needs no comment. The corrected line is kept and the original
+dropped — not as a preference, but because the fact under it changed.
+
+The third-consumer section is `main`'s and is left as written. Its argument is the
+one that should reach the owner: **the cost of the rewrite option grows while the
+decision sits open**, so a hold is not the static side of this choice.

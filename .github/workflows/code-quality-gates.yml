@@ -682,6 +682,23 @@ jobs:
       - name: skill manifests and framework JSON
         run: bun run check:skills
 
+      # A skill that arrived without its declarations, REFUSED HERE instead of
+      # surfacing as six obscure failures on somebody else's PR. Seven merges
+      # between 2026-09-24 and 2026-09-26 each broke the gate set that way, and
+      # each was repaired by whoever opened the next PR rather than by its
+      # author -- because CI judges the MERGE of each head into the base, so the
+      # cost lands downstream of the change that caused it. The failure names
+      # `bun run skill:register`, which performs the whole chain; a gate that
+      # states the defect and not the remedy is how six tests came to mean
+      # "somebody read the corpus and work it out".
+      #
+      # The command it names was `skills:register` until the owner consolidated
+      # the two (2026-09-26). Keep this step pointed at whichever one survives:
+      # the gate is the only thing that makes the obligation binding, and for
+      # four days it was on the command that was NOT in CI.
+      - name: every skill is declared, and declares nothing absent
+        run: bun run skill:register:check
+
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 
@@ -784,7 +801,7 @@ jobs:
       - name: generated docs are current
         run: |
           bun run cat-harness/scripts/gen-schema-docs.ts --check
-          bun run cat-harness/scripts/gen-skill-docs.ts --check
+          bun run skills:docs:check
 
       # The README's AUTHORED half. `readme-sections.ts` owns the marked
       # regions; this owns every other link, and `AGENTS.md` claims that

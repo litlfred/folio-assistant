@@ -364,6 +364,20 @@ export const KG_RESULTS = ["pass", "fail", "n/a", "unknown"] as const;
 export type KgResult = (typeof KG_RESULTS)[number];
 
 export const KG_SEVERITIES = ["critical", "major", "minor"] as const;
+
+/**
+ * The instance roots that can answer a criterion.
+ *
+ * `instance` — every declared instance can decide it about its own corpus.
+ * `repo` — only the repository can; an instance run records `n/a` and says so.
+ *
+ * Two states rather than three: there is no "both", because a criterion that
+ * the repository AND each instance can answer separately is `instance` and gets
+ * asked once per instance, with the repository's own run being one of them.
+ */
+export const KG_CRITERION_SCOPES = ["instance", "repo"] as const;
+export type KgCriterionScope = (typeof KG_CRITERION_SCOPES)[number];
+
 export type KgSeverity = (typeof KG_SEVERITIES)[number];
 
 /** A criterion in the registry below. */
@@ -371,6 +385,37 @@ export interface KgCriterionDefinition {
   id: string;
   /** Subject kinds it applies to. Anything else records `n/a`. */
   applies: KgSubjectKind[];
+  /**
+   * WHICH INSTANCE ROOT can answer it — the second axis beside {@link applies}.
+   *
+   * `applies` asks *what kind of node is this about*; `scope` asks *whose
+   * corpus can decide it*. They are independent, and the graph roll-up proves
+   * it: `applies: ["graph"]` covers both `skill-in-role-or-process`, which every
+   * instance can answer about its own graph, and `actor-roles-resolve`, which
+   * only the repository can — because an actor is declared once at the
+   * repository root (`.claude/skills/actors/`) while a role is a swimlane inside
+   * one instance's diagrams.
+   *
+   * **Required, deliberately.** A criterion that has not decided its scope does
+   * not compile, for the same reason a graph kind must declare `renderable` and
+   * `holds`: the default would be silent and wrong half the time.
+   *
+   * Added 2026-09-26 (bean `bjzs`) after `kg:audit --instance ./bootstrap`
+   * reported **76 criticals of which 73 were false** — 36 repository-level
+   * actors judged against bootstrap's 4 roles. The owner chose classifying every
+   * criterion over declaring only the one measured to misfire.
+   */
+  scope: KgCriterionScope;
+  /**
+   * Why this criterion is `repo`-scoped. Required for `repo`, absent for
+   * `instance`.
+   *
+   * The evidence, not the restatement — because a `repo` scope SUPPRESSES the
+   * criterion in an instance run, and a suppression with no stated basis is
+   * indistinguishable from a criterion somebody found inconvenient. Asserted by
+   * `kg-qa.test.ts`, so the pair cannot drift apart.
+   */
+  scopeBasis?: string;
   severity: KgSeverity;
   /** One line, in the form of what a FAILURE means. */
   summary: string;
@@ -386,6 +431,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "tool-invoke-path-resolves",
     applies: ["tool"],
+    scope: "instance",
     severity: "critical",
     summary:
       "A Tool names a command or module that does not exist, so it is unreachable through its own " +
@@ -394,6 +440,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "tool-satisfies-resolves",
     applies: ["tool"],
+    scope: "instance",
     severity: "critical",
     summary:
       "A `satisfies` names a skill that does not exist — an edge to nothing, so the Tool claims to " +
@@ -403,6 +450,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "tool-satisfies-contract-met",
     applies: ["tool"],
+    scope: "instance",
     severity: "major",
     summary:
       "A Tool claims to satisfy a skill whose input contract it has no port for, so it cannot actually " +
@@ -412,12 +460,14 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "tool-io-types-declared",
     applies: ["tool"],
+    scope: "instance",
     severity: "major",
     summary: "An `io` port references a type the shared vocabulary does not declare.",
   },
   {
     id: "tool-args-shell-safe",
     applies: ["tool"],
+    scope: "instance",
     severity: "critical",
     summary:
       "A command-line input has a type that can express a shell payload. `critical` because this is the " +
@@ -426,6 +476,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "tool-alternative-resolves",
     applies: ["tool"],
+    scope: "instance",
     severity: "major",
     summary:
       "An `alternativeTo` names a Tool that does not exist, or the relation is not symmetric — a choice " +
@@ -435,6 +486,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "tool-maintains-in-tree",
     applies: ["tool"],
+    scope: "instance",
     // `minor`, and NOT because a rotted artefact is a small thing — it is a
     // 404 a reader follows. It is minor because from here this criterion can
     // only ever be `unknown`, and `unknown` counts toward `worstSeverity`.
@@ -476,18 +528,21 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "skill-ref-resolves",
     applies: ["process"],
+    scope: "instance",
     severity: "critical",
     summary: "An activity names a skill that does not exist, so an agent handed the step cannot open it.",
   },
   {
     id: "decision-ref-resolves",
     applies: ["process"],
+    scope: "instance",
     severity: "critical",
     summary: "A gateway names a DMN file or decision id that does not exist, so the branch cannot be computed.",
   },
   {
     id: "variable-performer-declared-alone",
     applies: ["process"],
+    scope: "instance",
     severity: "major",
     summary:
       "A lane declares <bootstrap.processes:role variable=\"true\"/> AND a `ref`. It cannot be both: a lane that names " +
@@ -498,24 +553,28 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "role-ref-resolves",
     applies: ["process"],
+    scope: "instance",
     severity: "critical",
     summary: "A lane's explicit <bootstrap.processes:role ref> names a role that is not declared.",
   },
   {
     id: "activity-in-lane",
     applies: ["process"],
+    scope: "instance",
     severity: "major",
     summary: "An activity sits in no lane, so it has no role, so no actor can be said to perform it.",
   },
   {
     id: "lane-binds-role",
     applies: ["process"],
+    scope: "instance",
     severity: "major",
     summary: "A lane matches no declared role, so 'which skills does this task's performer have' has no answer.",
   },
   {
     id: "role-carries-activity-skill",
     applies: ["process"],
+    scope: "instance",
     severity: "major",
     summary:
       "An activity names a skill its lane's role does not carry — the task demands something the performer was never given.",
@@ -523,6 +582,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "skill-servable",
     applies: ["process"],
+    scope: "instance",
     severity: "major",
     summary:
       "An activity names a skill that exists on disk but that `skill_fetch` cannot serve — its directory is " +
@@ -531,6 +591,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "convention-ref-resolves",
     applies: ["process"],
+    scope: "instance",
     // `critical`, and the severity is the whole point of this one.
     //
     // It is the DANGLING direction, not the absence direction. A diagram
@@ -552,6 +613,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "activity-names-skill",
     applies: ["process"],
+    scope: "instance",
     // `major`, not `minor`, SINCE the exemptions became declarations.
     //
     // It was `minor` because it had legitimate instances it could not tell
@@ -573,6 +635,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "raci-role-resolves",
     applies: ["process"],
+    scope: "instance",
     // `critical`, and the severity is argued rather than picked. Every
     // `critical` in this registry is a DANGLING REFERENCE and every `major`
     // is a gap between things that exist — and this is `role-ref-resolves`
@@ -587,6 +650,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "raci-single-accountable",
     applies: ["process"],
+    scope: "instance",
     // `major`: structural, not dangling. Every role named exists; what is
     // wrong is how many of them carry the decision.
     severity: "major",
@@ -597,6 +661,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "raci-accountable-not-consulted",
     applies: ["process"],
+    scope: "instance",
     // `major` for the same reason, and not `minor`. `minor` here grades
     // INTENDED states (a stub, reference material nobody performs); this is a
     // modelling error that makes the chart read as complete while one of its
@@ -609,6 +674,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "raci-involvement-vocabulary",
     applies: ["process"],
+    scope: "instance",
     // `major`, matching its two neighbours above, and the reasoning is the
     // same: every role named exists, so this is not a dangling reference. It
     // is a modelling error — a letter the process's chosen vocabulary does
@@ -625,6 +691,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "activity-fulfilment-kind",
     applies: ["process"],
+    scope: "instance",
     // `major`. Nothing dangles — both ends of this join resolve — so it is not
     // `critical`; and it is not coverage, so it is not `minor`. It is TWO
     // DECLARATIONS THAT CONTRADICT EACH OTHER: the diagram says this step runs
@@ -642,6 +709,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "call-activity-resolves",
     applies: ["process"],
+    scope: "instance",
     severity: "major",
     // `major`, and an unresolved target records `unknown` rather than `fail`,
     // because this audit **cannot tell a typo from a legitimate outward call.**
@@ -667,6 +735,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "process-diagram-published",
     applies: ["process"],
+    scope: "instance",
     // `major`: the diagram exists and is correct, so nothing dangles — what is
     // absent is the page a reader would meet it on, which the scale calls major.
     severity: "major",
@@ -678,6 +747,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "activity-documented",
     applies: ["process"],
+    scope: "instance",
     // `minor`, and deliberately not gated. A step's NAME is often enough; the
     // measurement (95 of 456 undocumented) is the backlog, not a verdict that
     // each one is wrong.
@@ -690,6 +760,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "activity-calls-skill-process",
     applies: ["process"],
+    scope: "instance",
     // `minor` because the rule is a heuristic and says so. It fires only when
     // exactly ONE step in a diagram names a skill that owns a same-named
     // process: several steps naming one skill are using its know-how as steps
@@ -713,6 +784,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "gateway-documented",
     applies: ["process"],
+    scope: "instance",
     // `minor` and not gated, like `activity-documented`: 83 is a backlog, and
     // a well-named question with well-named branches often reads without
     // prose. Only DECISIONS are asked — a merge, fork or join decides nothing,
@@ -727,6 +799,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "gateway-branches-named",
     applies: ["process"],
+    scope: "instance",
     // `minor`, and it reads 0 on the day it was added: it holds a line the
     // corpus already meets rather than opening a backlog. Not `major`, because
     // an engine routes an unnamed branch correctly — what is lost is the
@@ -739,6 +812,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "node-reachable",
     applies: ["process"],
+    scope: "instance",
     // `major`: a node nothing can reach is not run, and a diagram is the
     // normative statement of what runs. Not `critical`, because the engine
     // does not fault on it — the step is simply never offered, which is the
@@ -752,6 +826,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "node-has-exit",
     applies: ["process"],
+    scope: "instance",
     // `major` for the same reason, from the other end: control arrives and
     // the process neither continues nor ends.
     severity: "major",
@@ -762,6 +837,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "prose-reviewed-since-code-changed",
     applies: ["process", "skill"],
+    scope: "instance",
     // `minor` and not gated (R7, issue #1042): it asserts nothing about
     // whether the prose is TRUE, only that the code moved while the prose
     // describing it stood still. Gating waits for a clean run to show it does
@@ -775,6 +851,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "prose-claims-resolve",
     applies: ["process", "skill"],
+    scope: "instance",
     // `minor`, advisory (R7). Stage A of #1042: what the prose side of a
     // declared pair says about the code side, checked where it names a
     // resolvable thing. Measured before it shipped: 1 false, 23 holding and
@@ -789,24 +866,28 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "role-skills-resolve",
     applies: ["role"],
+    scope: "instance",
     severity: "critical",
     summary: "A role carries a skill name that does not exist.",
   },
   {
     id: "role-inherits-resolves",
     applies: ["role"],
+    scope: "instance",
     severity: "critical",
     summary: "A role inherits a role that is not declared.",
   },
   {
     id: "role-binds-a-lane",
     applies: ["role"],
+    scope: "instance",
     severity: "minor",
     summary: "A declared role binds no lane in any diagram — a dangling role nothing can enter.",
   },
   {
     id: "role-has-actor",
     applies: ["role"],
+    scope: "instance",
     severity: "minor",
     summary: "No declared actor is eligible for this role. Advisory: the actor registry is not a permission system.",
   },
@@ -823,6 +904,14 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     // readable; they contradict each other about what may fill a lane.
     id: "actor-kind-fits-role",
     applies: ["role"],
+    // `instance`, though it consults the repository's actor set — and this is the
+    // case that shows why scope follows the SUBJECT rather than the data read.
+    // The subject is one instance's role, and the question is whether the actor
+    // filling that lane is of a fitting kind, which that instance can act on.
+    // MEASURED 2026-09-26: it produced NO findings in the `--instance ./bootstrap`
+    // run, because it degrades to `n/a` when no actor declares the role — so it is
+    // safe per instance rather than merely arguably so.
+    scope: "instance",
     severity: "major",
     summary:
       "An actor declares this role, but its kind is not among the kinds the role admits — so either the " +
@@ -831,6 +920,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "requirement-statement-satisfied",
     applies: ["requirement"],
+    scope: "instance",
     severity: "minor",
     summary:
       "A statement that no skill or capability claims — nothing declares `satisfies: req:<id>#<key>`, so " +
@@ -840,12 +930,14 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "requirement-actors-resolve",
     applies: ["requirement"],
+    scope: "instance",
     severity: "critical",
     summary: "A requirement or statement binds an actor id the registry does not declare.",
   },
   {
     id: "requirement-derived-from-resolves",
     applies: ["requirement"],
+    scope: "instance",
     severity: "critical",
     summary:
       "A requirement derives from a parent requirement that does not exist, so the conformance lattice has a " +
@@ -854,6 +946,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "requirement-statements-graded",
     applies: ["requirement"],
+    scope: "instance",
     severity: "major",
     summary:
       "A statement carries no `conformance` grade. SHALL and SHOULD are the whole point of writing a " +
@@ -872,6 +965,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "role-has-persona",
     applies: ["role"],
+    scope: "instance",
     severity: "major",
     summary:
       "A role an author writes for carries no `persona` — nothing says what this reader already knows, " +
@@ -883,6 +977,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "role-has-story",
     applies: ["role"],
+    scope: "instance",
     severity: "minor",
     summary:
       "No user story is told as this role — nothing says what this reader is trying to do. 'Is this well " +
@@ -892,6 +987,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "decision-outcomes-used",
     applies: ["decision"],
+    scope: "instance",
     severity: "major",
     summary: "A decision table is referenced by no gateway, or returns an outcome no branch is named for.",
   },
@@ -912,6 +1008,12 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "nested-instance-audited",
     applies: ["graph"],
+    scope: "repo",
+    scopeBasis:
+      "`unreadNestedInstances()` walks from `repoRootFor(root)` to find declarations, so it asks a " +
+      "question ABOUT the repository's set of instances. MEASURED 2026-09-26: it fired 15 inside the " +
+      "bootstrap run, reporting bootstrap's siblings as unread from inside bootstrap — which is the " +
+      "root's question being asked in a place that cannot act on it.",
     // `minor`, because the SILENCE is correct and only its invisibility is the
     // defect. One instance's graph must not carry another's nodes — that is
     // `instance-graph-isolation.test.ts`, guarding a live 2026-09-19 leak of 88
@@ -932,6 +1034,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "skill-is-a-stub",
     applies: ["skill"],
+    scope: "instance",
     // `minor`, and the severity is the whole point. A stub is INTENDED
     // work-in-progress, not a defect: it exists so the graph traverses and
     // `skill_fetch` answers instead of failing mid-task. It must be VISIBLE —
@@ -950,6 +1053,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "skill-is-brief",
     applies: ["skill"],
+    scope: "instance",
     severity: "minor",
     summary:
       "A skill is longer than 280 lines (p75 of the corpus) — an agent reads it before acting, " +
@@ -958,6 +1062,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "skill-not-a-document",
     applies: ["skill"],
+    scope: "instance",
     severity: "major",
     summary:
       "A skill is longer than 400 lines (p90) — at that length it is a document, and an agent that " +
@@ -966,6 +1071,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "skill-no-repeated-heading",
     applies: ["skill"],
+    scope: "instance",
     severity: "minor",
     summary:
       "A skill repeats a heading. The same section said twice is the redundancy that makes a long " +
@@ -974,6 +1080,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "skill-has-entry-point",
     applies: ["graph"],
+    scope: "instance",
     severity: "minor",
     // Renamed from `skill-reachable`, which was the honest check under a name
     // that promised more than it delivered. "Reachable" reads as "something in
@@ -997,6 +1104,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "skill-in-role-or-process",
     applies: ["graph"],
+    scope: "instance",
     severity: "minor",
     // NEVER gate on this, and it is `minor` so that it cannot.
     //
@@ -1020,6 +1128,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "consulted-skill-not-performed",
     applies: ["graph"],
+    scope: "instance",
     severity: "major",
     // The guard that makes `consulted: true` falsifiable, and the reason
     // the exemption above is safe to grant.
@@ -1044,6 +1153,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "manifest-skill-exists",
     applies: ["graph"],
+    scope: "instance",
     severity: "critical",
     summary:
       "A `package-manifest.json` entry names a skill the instance cannot resolve anywhere. Checked against " +
@@ -1054,6 +1164,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "remote-skill-is-servable",
     applies: ["graph"],
+    scope: "instance",
     // `major`, not `critical`: the reference is not broken, it points outside
     // this repository on purpose. What is missing is the JOIN — nothing fetches
     // the package, so a declared name has no body here. `critical` is reserved
@@ -1076,6 +1187,13 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "actor-roles-resolve",
     applies: ["graph"],
+    scope: "repo",
+    scopeBasis:
+      "An actor is declared ONCE at the repository root (`.claude/skills/actors/`) while a role is a " +
+      "swimlane inside one instance's diagrams, so this compares a repository-level set against an " +
+      "instance-level one. MEASURED 2026-09-26: `--instance ./bootstrap` produced 73 findings, one for " +
+      "almost every one of the 36 repository actors, because they name roles the bootstrap graph does " +
+      "not declare. Every one was false.",
     severity: "critical",
     summary:
       "An actor lists a role that is not declared — the reverse of role-has-actor, and the direction " +
@@ -1084,6 +1202,11 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "actor-capabilities-resolve",
     applies: ["graph"],
+    scope: "repo",
+    scopeBasis:
+      "Both sides are repository-level — actors and `.claude/skills/capabilities/` are resolved through " +
+      "`repoRootFor`, so `--instance` does not move either. Re-asking per instance would re-derive the " +
+      "root's own answer once per declaration and report the same findings N times.",
     severity: "critical",
     summary:
       "An actor claims an environment capability the registry does not declare. `critical` since 2026-09: " +
@@ -1094,6 +1217,10 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "actor-permissions-resolve",
     applies: ["graph"],
+    scope: "repo",
+    scopeBasis:
+      "Same shape as `actor-capabilities-resolve`: actors and `skills/permissions/permissions.json` are " +
+      "both repository-level, so an instance run can only duplicate the root's verdict.",
     severity: "critical",
     summary:
       "An actor claims a permission `skills/permissions/permissions.json` does not declare. A permission " +
@@ -1102,6 +1229,11 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "actor-is-not-a-role",
     applies: ["graph"],
+    scope: "repo",
+    scopeBasis:
+      "The subject set is `ACTOR_DIR`, resolved through `repoRootFor`, so it is repository-level " +
+      "and `--instance` does not move it. An instance run would re-derive the root's verdict over " +
+      "the same actor files and report the same findings once per declaration.",
     severity: "minor",
     summary:
       "An entry in the actor registry carries `inherits` — it is modelling a role lattice, not an actor. Migration debt.",
@@ -1109,6 +1241,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "satisfies-resolves",
     applies: ["graph"],
+    scope: "instance",
     severity: "critical",
     summary:
       "A skill's front matter or a capability names a requirement statement in `satisfies` that is not " +
@@ -1117,6 +1250,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "skill-graph-kinds-resolve",
     applies: ["graph"],
+    scope: "instance",
     severity: "major",
     summary:
       "A skill's front matter names, under `graph-kinds:`, a graph kind the registry does not declare — it " +
@@ -1125,6 +1259,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "skill-contract-resolves",
     applies: ["graph"],
+    scope: "instance",
     severity: "critical",
     summary:
       "A skill's front matter names an `input:` or `output:` contract that is malformed or not in the " +
@@ -1133,6 +1268,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "skill-contract-claimed",
     applies: ["graph"],
+    scope: "instance",
     severity: "minor",
     summary:
       "A contract under `schemas/skills/` that no skill names as its `input:` or `output:` — specified " +
@@ -1141,6 +1277,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "test-run-skill-resolves",
     applies: ["graph"],
+    scope: "instance",
     severity: "critical",
     summary:
       "A recorded test run does not parse, or names a skill that does not exist — a result attributed to " +
@@ -1149,6 +1286,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "test-run-conforms",
     applies: ["graph"],
+    scope: "instance",
     severity: "major",
     summary:
       "A recorded test run's cases violate the input or output contract of the skill it names, so it " +
@@ -1157,6 +1295,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "test-run-checkable",
     applies: ["graph"],
+    scope: "instance",
     severity: "minor",
     summary:
       "A recorded test run that cannot be checked against its skill's contract: the skill declares none, " +
@@ -1165,6 +1304,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "arrow-direction",
     applies: ["graph"],
+    scope: "instance",
     severity: "major",
     summary:
       "A general node names one of its dependents: a `@general` schema `@ref`s a declaration that is not " +
@@ -1174,6 +1314,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "prose-names-resolve",
     applies: ["graph"],
+    scope: "instance",
     // `minor` and advisory (bean `epbt`). Prose may name a dependent as
     // explanation — the arrow rule governs data — so this never says a name
     // should not be there, only that it no longer resolves.
@@ -1186,6 +1327,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
   {
     id: "story-role-resolves",
     applies: ["graph"],
+    scope: "instance",
     severity: "major",
     summary:
       "A user story in `scenarios/stories.json` is told as a role the role graph does not declare — a story " +
