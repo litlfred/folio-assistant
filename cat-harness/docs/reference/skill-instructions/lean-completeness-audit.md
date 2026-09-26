@@ -37,12 +37,12 @@ current (not stale).
 ### Deep Lean audit (chapter-by-chapter)
 
 ```bash
-bun run scripts/lean-audit.ts            # console report
-bun run scripts/lean-audit.ts --json     # JSON for programmatic use
-bun run scripts/lean-audit.ts --chapter ch5  # filter to one chapter
-bun run scripts/lean-audit.ts --strict   # exit 1 on uncited sorry
-bun run scripts/lean-audit.ts --strict --check-axioms  # also fail on axioms
-bun run scripts/lean-audit.ts --help     # full CLI reference
+bun run cat-harness/scripts/lean-audit.ts            # console report
+bun run cat-harness/scripts/lean-audit.ts --json     # JSON for programmatic use
+bun run cat-harness/scripts/lean-audit.ts --chapter ch5  # filter to one chapter
+bun run cat-harness/scripts/lean-audit.ts --strict   # exit 1 on uncited sorry
+bun run cat-harness/scripts/lean-audit.ts --strict --check-axioms  # also fail on axioms
+bun run cat-harness/scripts/lean-audit.ts --help     # full CLI reference
 ```
 
 This script produces:
@@ -55,18 +55,18 @@ This script produces:
 ### Unified witness staleness audit (Lean + Python)
 
 ```bash
-bun run scripts/witness-audit.ts             # full audit
-bun run scripts/witness-audit.ts --lean-only # only Lean witnesses
-bun run scripts/witness-audit.ts --py-only   # only Python witnesses
-bun run scripts/witness-audit.ts --json      # JSON output
+bun run cat-harness/scripts/witness-audit.ts             # full audit
+bun run cat-harness/scripts/witness-audit.ts --lean-only # only Lean witnesses
+bun run cat-harness/scripts/witness-audit.ts --py-only   # only Python witnesses
+bun run cat-harness/scripts/witness-audit.ts --json      # JSON output
 ```
 
 ### Lean witness management
 
 ```bash
-bun run scripts/lean-witness.ts status   # show all witness statuses
-bun run scripts/lean-witness.ts check <file>  # check single file
-bun run scripts/lean-witness.ts stamp <file>  # create witness after build
+bun run cat-harness/scripts/lean-witness.ts status   # show all witness statuses
+bun run cat-harness/scripts/lean-witness.ts check <file>  # check single file
+bun run cat-harness/scripts/lean-witness.ts stamp <file>  # create witness after build
 ```
 
 ### Python witness staleness
@@ -84,7 +84,7 @@ python3 witness_base.py check-stale <file>  # check single witness
 Verify every paper with `.lean` files has a proper Lake project:
 
 ```bash
-./scripts/lean-build-all.sh  # discovers via lean-toolchain files
+cat-harness/scripts/lean-build-all.sh  # discovers via lean-toolchain files
 ```
 
 **Required files** in each `content/<paper>/lean/`:
@@ -240,7 +240,7 @@ See `lean-proof-vacuity-audit.md` for the full vacuous-proof family.
 Run builds for all papers:
 
 ```bash
-./scripts/lean-build-all.sh
+cat-harness/scripts/lean-build-all.sh
 ```
 
 Report:
@@ -254,10 +254,10 @@ After a successful build, stamp witnesses and check for staleness:
 
 ```bash
 # Stamp a witness after successful Lean build
-bun run scripts/lean-witness.ts stamp <lean-file>
+bun run cat-harness/scripts/lean-witness.ts stamp <lean-file>
 
 # Check if witnesses are current
-bun run scripts/witness-audit.ts
+bun run cat-harness/scripts/witness-audit.ts
 ```
 
 **Staleness criteria for Lean witnesses:**
