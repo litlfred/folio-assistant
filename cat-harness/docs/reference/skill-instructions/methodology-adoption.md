@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Adopting a methodology, and choosing between them'
 parent: Skill instructions
 ---

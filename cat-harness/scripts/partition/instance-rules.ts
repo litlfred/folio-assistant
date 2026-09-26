@@ -184,6 +184,14 @@ export const RULES: Rule[] = [
       "scripts/block-screenshots.ts",    // pictures of changed visual blocks, compared in Chromium (bean `0rxe`)
       "scripts/publish-main-site.ts",    // a folio's main site at the publish root: the before side (bean `5uuf`)
       "scripts/repo-partition.ts",           // this tool; platform meta
+      // The prose half of the same arrow this tool measures for imports, and
+      // harness for the same reason `repo-partition.ts` is: its subject is
+      // which INSTANCE a file belongs to and what that instance declares it
+      // needs, which is platform meta. It reads no folio material, and its
+      // rule (`schemas/reference-direction.ts`) consumes `layer-direction.ts`
+      // — the module this tool already shares — so both axes are classified
+      // by the same test and answer to the same declaration (bean `zhg2`).
+      "scripts/check-reference-direction.ts",
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
       // this repository's own Jekyll templates and the baseurl its site is
