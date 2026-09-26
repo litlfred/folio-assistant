@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ahab
 title: Translated pages carry 225 unresolved links — 43 distinct, five near-copies each, and the English sources do not carry them
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T10:40:05Z
-updated_at: 2026-09-26T10:40:21Z
+updated_at: 2026-09-26T16:56:28Z
 parent: folio-assistant-ahvw
 ---
 
@@ -64,3 +64,5 @@ unresolved links in translated pages.
 
 That the translated pages are wrong to exist, or that #1374 should be reverted
 again. Only that they carry links their sources do not, and nobody has looked.
+
+_2026-09-26T16:56:28Z_ — Claimed by claude/sleepy-rubin-mr6kdu — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
