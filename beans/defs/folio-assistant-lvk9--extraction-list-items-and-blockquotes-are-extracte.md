@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T09:20:19Z
-updated_at: 2026-09-26T13:08:39Z
+updated_at: 2026-09-26T13:48:19Z
 parent: folio-assistant-bzyu
 blocked_by:
     - folio-assistant-wlyg
@@ -96,16 +96,16 @@ line each with a measured effect in both directions, and this is a parser change
 
 ## Done when
 
-- [ ] a list item is one entry however it is wrapped, with continuation lines
+- [x] a list item is one entry however it is wrapped, with continuation lines
       recognised by indentation, ending at a blank line or the next marker
-- [ ] a blockquote is one entry per blockquote, not per line
-- [ ] MEASURED AFTER: no msgid is a clause fragment — specifically, no pair of
+- [x] a blockquote is one entry per blockquote, not per line
+- [x] MEASURED AFTER: no msgid is a clause fragment — specifically, no pair of
       adjacent msgids where the first opens a `**` span the second closes
-- [ ] MEASURED AFTER: re-wrapping a source paragraph, list item or blockquote
+- [x] MEASURED AFTER: re-wrapping a source paragraph, list item or blockquote
       changes NO msgid — the property that makes a catalogue survive an edit
 - [ ] the 3785 msgids this merges away are obsoleted in the existing `.po` files
       with tooling, not dropped
-- [ ] `7x8o` re-measured afterwards; expect 8 pairs or fewer to remain
+- [x] `7x8o` re-measured afterwards; expect 8 pairs or fewer to remain
 - [ ] checked against a folio other than this one — extraction is shared
 
 
@@ -190,3 +190,20 @@ sign-off, and leaving them would leave stale msgids in every one.
   ones it introduced, and that output is WRITTEN to disk by the
   `translation_inject` MCP tool. Measured: 3 blank lines in, 0 out. This is why
   `f6r1`'s round-trip control failed on known-good catalogues. Marked high.
+
+
+### Why this stays OPEN after #1369 merged
+
+Two Done-when items are genuinely not done, and I closed this bean prematurely
+before re-reading them:
+
+- **the 3785 msgids this merges away are not obsoleted** in the existing `.po`
+  files. They want doing ONCE, together with `6b8u`'s additions, `ig4a`'s
+  removals and `3mo4`'s when it lands — four rewrites of every catalogue would be
+  four chances to leave one stale.
+- **not checked against a folio other than this one.** Extraction is shared by
+  every instance, so a change this size has consequences I have only measured
+  here.
+
+The extract half is merged and measured; the corpus-wide bookkeeping is not.
+Closing on the first would have hidden the second.
