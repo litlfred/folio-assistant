@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T11:40:56Z
-updated_at: 2026-09-26T12:38:50Z
+updated_at: 2026-09-26T18:03:47Z
 parent: folio-assistant-1xhc
 ---
 
@@ -134,3 +134,82 @@ undetermined.
 - [ ] the five-locale exposure: `ar/es/fr/ru/zh` `.pot` templates handed
       translators the escape INSIDE the msgid. Fixed for code-quality-gates; the
       other 7 files still carry it
+
+
+## The documentation half is DONE, and the cause was a normaliser rather than 90 authoring mistakes
+
+2026-09-26. Every character reference is gone from the corpus and from every
+locale's templates:
+
+| measurement | before | after |
+|---|---|---|
+| double-escaped references in `processes/` | 90 (documentation) + 68 (labels) | **0** |
+| `.pot` msgids carrying ANY character reference | 205 | **0** |
+| literal `&#10;` / `&#8212;` on a process page | present on 8 pages | **0** |
+| `check:rendered-labels` baseline | 6 files / 68 labels | **empty** |
+
+### The finding, which is the part worth keeping
+
+`process-model.ts` normalised every `<bpmn:documentation>` body with
+`.replace(/\s+/g, " ").trim()`, at three call sites. That collapsed newlines, so
+**an author had no way to put a paragraph break in documentation:**
+
+- a literal blank line — eaten by the collapse
+- `&#10;` — the XML parser decodes it to a newline BEFORE that code runs, so also
+  eaten
+- `&amp;#10;` — decodes to the five NON-whitespace characters `&#10;`, so it
+  SURVIVES the collapse, and the page shows them as literal text
+
+So all 90 instances are one workaround, applied by authors who had correctly
+worked out that it was the only spelling that got through. **Sweeping them as
+authoring mistakes would have left the cause in place for the next author to
+rediscover** — and it would have been worse than that, per the falsification
+below.
+
+### How the wrong remedy was caught, before the sweep rather than after
+
+I predicted that single-escaping documentation would work as it had for labels,
+and named the falsification condition: the paragraph break must survive into the
+`.pot` msgid. Tested on ONE file first — the smallest of the eight.
+
+**It did not survive.** The msgid went 1346 → 1316 characters with no `\n`, and
+the page went from literal `&#10;&#10;` to a single unbroken paragraph. So a
+plain sweep would have traded VISIBLE garbage for a SILENT loss of the author's
+paragraph structure, which is the worse of the two: garbage is obvious and a
+missing break reads as prose somebody wrote badly.
+
+The label rule does not transfer, and now the reason is recorded both ways: in an
+ATTRIBUTE, `&#10;` must stay a reference because attribute-value normalisation
+eats a literal newline; in ELEMENT CONTENT there is no such normalisation, and
+what ate it was this repository's own code.
+
+### The fix, in three parts, smallest first
+
+1. `DOC_WS` in `process-model.ts` — one run of whitespace, one decision: a run
+   CONTAINING a newline becomes newlines alone (so `"\n    "` yields `"\n"` and
+   the pretty-printer's indentation is absorbed by the same match), and a run
+   without one becomes a single space. Three or more newlines clamp to two.
+2. `cell()` in `gen-processes-viz.ts` — newlines become `<br>`, because a real
+   newline ENDS a markdown table row and would corrupt every column to its right.
+   Load-bearing rather than speculative: one of the 90 is inside a `<bpmn:task>`,
+   whose documentation is rendered in a table cell.
+3. The corpus sweep — 84 documentation references in 7 files, plus 22
+   single-escaped ASCII ones (`&#x27;`, `&#34;`) in 4 more, which needed no
+   escaping in element content and were reaching translators verbatim.
+
+Verified end to end on the page: three real paragraphs with blank lines between
+them, zero literal escapes. Clean-tree `bun run gates`: 2 of 162, both the
+accepted `ngxj` red.
+
+`docs:harness:check` went red on the way and is worth naming, because it is the
+gate a previous session pushed past: `docs/_data/harness.json` carries a
+generated title and the sweep moved it. Regenerated, not exempted.
+
+### Done when
+
+- [x] the 68 rendered labels are fixed and the baseline is empty
+- [x] the documentation half — 90 references, and the NORMALISER that made them
+      the only working spelling
+- [x] the five-locale `.pot` exposure — 205 msgids carrying a character
+      reference, now 0
+- [x] a `&#10;` in a table cell cannot corrupt the table

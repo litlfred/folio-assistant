@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "processes/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:2286ea1f8f1b2959744300720268c95a4bc8d73691de88eb7032f1973fd6a98b",
+  "source_hash": "sha256:f8dd3d54012de93bc1c013cb042d3214228219ac5406ff17c0d28437d9e1ccdf",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -133,13 +133,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/code-quality-gates.yml",
-          "detail": ".github/workflows/code-quality-gates.yml changed since cat-harness/processes/code-quality-gates.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -147,8 +142,8 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 2,
+    "pass": 16,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   },
@@ -157,8 +152,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/code-quality-gates.bpmn",
       "code": ".github/workflows/code-quality-gates.yml",
-      "prose_hash": "2286ea1f8f1b",
-      "code_hash": "2ed62e9cd3f4",
+      "prose_hash": "f8dd3d54012d",
+      "code_hash": "bb6cbd2d26c2",
       "by": "baseline"
     }
   ]

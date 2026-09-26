@@ -65,6 +65,46 @@ export type NodeKind = "start" | "end" | "activity" | "exclusive" | "parallel";
  * The three RACI letters a diagram can declare. `responsible` is absent
  * deliberately — the lane already carries it. See {@link ProcessNode.raci}.
  */
+/**
+ * Whitespace normalisation for a `<bpmn:documentation>` body — and it PRESERVES
+ * the paragraph break, which the previous `/\s+/g -> " "` destroyed.
+ *
+ * ## Why this is not a cosmetic change
+ *
+ * Collapsing every run of whitespace, newlines included, meant an author had NO
+ * WAY to put a paragraph break in documentation. A literal blank line was eaten;
+ * `&#10;` was eaten too, because the XML parser decodes it to a newline BEFORE
+ * this code sees it. The only spelling that survived was `&amp;#10;`, which
+ * decodes to the five NON-whitespace characters `&#10;` — so it passed the
+ * collapse and the published page showed them as literal text:
+ *
+ *     Dependency advisories&#10;&#10;THIS DIAGRAM IS DELIBERATELY SMALL
+ *
+ * Measured 2026-09-26 (bean `li5y`): **90** such instances across 8 process
+ * files, surfacing in 50 `.pot` msgids across five locales, so translators were
+ * handed the escape sequence inside the string to translate. Every one of them
+ * is an author defeating this normaliser the only way that worked. Treating them
+ * as 90 authoring mistakes and sweeping them would have left the cause in place
+ * for the next author to rediscover.
+ *
+ * ## What it still collapses, and why that half was right
+ *
+ * Indentation. A `.bpmn` is pretty-printed, so a documentation body arrives with
+ * every line indented to its element's depth; without collapsing that, the page
+ * would carry the XML's layout.
+ *
+ * One run of whitespace, one decision, which is what makes the indentation
+ * problem disappear rather than need a second pass: a run CONTAINING a newline
+ * becomes newlines alone — so `"\n    "` yields `"\n"` and the indentation is
+ * absorbed by the same match that produced the break — and a run containing no
+ * newline becomes a single space. Three or more newlines are clamped to two,
+ * since a paragraph break is the largest gap that means anything.
+ */
+const DOC_WS: [RegExp, (m: string) => string] = [
+  /\s+/g,
+  (m: string): string => (m.includes("\n") ? "\n".repeat(Math.min((m.match(/\n/g) ?? []).length, 2)) : " "),
+];
+
 export const RACI_INVOLVEMENTS = ["accountable", "consulted", "informed"] as const;
 
 /**
@@ -1221,7 +1261,7 @@ export async function loadProcessModel(
       .filter((v) => v.$type === CONVENTION_EXT && v.ref)
       .map((v) => v.ref!);
     const nodeIds = (lane.flowNodeRef ?? []).map((r) => r.id);
-    const laneDoc = (lane as ModdleElement).documentation?.[0]?.text?.replace(/\s+/g, " ").trim() || undefined;
+    const laneDoc = (lane as ModdleElement).documentation?.[0]?.text?.replace(...DOC_WS).trim() || undefined;
     lanes.push({ id: laneId, name: lane.name, ...(laneDoc ? { documentation: laneDoc } : {}), roleRef, performerVaries, nodes: nodeIds });
     for (const id of nodeIds) {
       if (lane.name) laneOf.set(id, lane.name);
@@ -1306,7 +1346,7 @@ export async function loadProcessModel(
       workPlanOp: readWorkPlanOp(el.id, ext),
       relaxable: ext.find((v) => v.$type === "folio:policy")?.relaxable !== "false",
       decisionRef: ext.find((v) => v.$type === "folio:decision" && v.ref)?.ref,
-      documentation: el.documentation?.[0]?.text?.replace(/\s+/g, " ").trim() || undefined,
+      documentation: el.documentation?.[0]?.text?.replace(...DOC_WS).trim() || undefined,
       calledElement: el.calledElement,
       incoming: [],
       outgoing: [],
@@ -1536,7 +1576,7 @@ export async function loadProcessModel(
     name: cleanName(proc.name) || proc.id,
     source: bpmnPath,
     dir: dirname(bpmnPath),
-    documentation: (proc as ModdleElement).documentation?.[0]?.text?.replace(/\s+/g, " ").trim() || undefined,
+    documentation: (proc as ModdleElement).documentation?.[0]?.text?.replace(...DOC_WS).trim() || undefined,
     enforcement,
     involvementVocabulary,
     logCapture,
