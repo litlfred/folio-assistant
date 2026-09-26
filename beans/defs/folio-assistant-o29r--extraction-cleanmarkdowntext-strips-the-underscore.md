@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-26T14:43:40Z
-updated_at: 2026-09-26T19:57:40Z
+updated_at: 2026-09-26T19:54:35Z
 parent: folio-assistant-bzyu
 ---
 
@@ -158,6 +158,8 @@ reviewer should be able to read on its own.
 **Do not fold it into #1411** on a later turn because the catalogues are being
 rewritten anyway. That was offered as option 2 and declined.
 
+_2026-09-26T19:54:35Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 ## Fixed, and every claim here was measured in both directions
 
 `MD_ITALIC_UNDER_RE` now carries CommonMark's intraword rule:
@@ -176,21 +178,45 @@ string — passes BOTH ways on purpose. It is the guard against buying subscript
 safety by deleting the emphasis branch, which would have satisfied every other
 assertion.
 
-## No committed catalogue needs re-deriving, and that was measured
+## THREE committed catalogues WERE stranded — the section above this was wrong
 
-The obvious worry is that changing 229 msgids strands the `.po` files keyed on
-them. It does not, and the reasoning is not from equal totals:
+**Superseded, and the way it was wrong is the reusable part.** The paragraph that
+stood here claimed "25 of 6102 before, 25 after" and "0 of 14 pages differ", and
+concluded no committed catalogue was stranded. Both figures came from scripts that
+resolved a catalogue's source as `join(DOCS, page + ".md")` — **top-level pages
+only**. `translations/ar/agent-onboarding.po` pairs with
+`docs/guides/agent-onboarding.md`, nested, so it was never in the set. A
+measurement that silently covers a subset is worse than none, because the subset
+looks like the whole.
 
-- stale msgids in the 60 committed catalogues: **25 of 6102 before, 25 after**,
-  with an identical per-file breakdown (5 each in `index.po` across 5 locales).
-  Those 25 are pre-existing and have nothing to do with underscores.
-- equal totals could in principle hide an offsetting pair, so the two extractors
-  were also compared msgid-by-msgid over exactly the 14 pages a `.po` exists
-  for: **0 pages differ.**
+`translation:block-qa:check` caught it: red on two sidecars here, exit 0 on `main`
+in a worktree, so unambiguously this branch's.
 
-So the 229 are all on pages that carry no catalogue. `o29r` adds nothing to the
-combined obsoletion pass; that pass is still owed for `6b8u`, `ig4a`, `lvk9` and
-`3mo4`, and it belongs to `lvk9`.
+Re-measured walking `translations/` recursively and resolving each `.po` by
+basename across all of `docs/`:
+
+| | stale msgids, 56 catalogues |
+|---|---|
+| `main`'s extractor | **281** of 4987 |
+| with this fix | **284** |
+| after the repair | **281** |
+
+The fix stranded exactly **three** — the same `/prepare-merge` gate-list string in
+`ar`, `ru` and `fr/agent-onboarding.po`, keyed as `contentvalidate / qasweep /
+proofstatus / latexpreflight / lean_build`. `lean_build` survived even then, being
+the odd underscore with no partner.
+
+**The repair is three keys, not three translations.** One line each, `msgid` only.
+Nothing needed translating: `ar` and `ru`'s msgstrs already carry the correct
+`content_validate` and `qa_sweep`, `fr`'s is empty, and the PUBLISHED pages were
+always right. Only the derived key was corrupted, by our own extractor. Sidecars
+regenerated to ar 69/80 and ru 69/80 — their pre-fix values, so the fix costs
+nothing in measured coverage.
+
+**281 msgids were already stale before any of this work** — `kg-viewer.po` is 40 of
+40 stale across five locales, `glossary.po` 8 of 8. A different and larger figure
+than the 3785 `lvk9` tracks, and input for the combined pass rather than this
+bean's business.
 
 ## Gates
 

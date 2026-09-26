@@ -499,6 +499,14 @@ export const RULES: Rule[] = [
       // declaration, so it knows which directories publish a site and
       // nothing at all about what any folio put in them.
       "scripts/check-translated-link-depth.ts",
+      // Whether a page's `available_locales` names a locale a reader can
+      // actually read it in (bean `9x01`). Harness by the same route as the two
+      // above: it resolves the site root from the declaration, builds the
+      // translation index from what the pages themselves declare (`lang` and
+      // `translation_source`), and compares a page's claim with that index. The
+      // CLAIM is structural — "is this readable in French" — so it says nothing
+      // about what any folio wrote in French.
+      "scripts/check-available-locales.ts",
       // Whether each methodology's cited `origin` resolves to an ingested
       // source. Harness for the same reason as the two above: it reads the
       // declaration for the `methodology` and `library` graphs and fans out
@@ -1280,7 +1288,7 @@ export const RULES: Rule[] = [
       "scripts/gates.ts",                   // the gate runner itself
       "scripts/gate-tree-guard.ts",         // ...and which gate changed the tree under it (bean `ymsu`). Harness for the same reason the runner is: it asks a question only the runner is positioned to ask, since no gate can observe what another gate did
       "scripts/decisions-named-not-asked.ts", // the `Stop` layer of `interaction-modality` §4.1 (bean `ahvw`). Harness: it reads a transcript and enforces how a QUESTION is put, which no content type varies
-      "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales (bean `v625`). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the five artefacts before their checks read them
+      "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales AND gates the declarations (beans `v625`, `nfv3` — two commands one letter apart, consolidated here at the owner's decision 2026-09-26). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the six artefacts before their checks read them
       "scripts/check-merged.ts",            // the gate runner, on the merged tree (bean `nytj`)
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
       "scripts/gen-bootstrap-graph.ts", // writes bootstrap/bootstrap.jsonld

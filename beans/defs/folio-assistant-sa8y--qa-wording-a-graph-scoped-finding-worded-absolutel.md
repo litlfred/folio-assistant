@@ -1,11 +1,11 @@
 ---
 # folio-assistant-sa8y
 title: 'QA WORDING: a graph-scoped finding worded absolutely sent a session to a wrong fix'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-20T05:52:43Z
-updated_at: 2026-09-20T14:17:35Z
+updated_at: 2026-09-26T00:00:00Z
 parent: folio-assistant-d308
 ---
 
@@ -87,19 +87,46 @@ directory to notice the subject is gone.
 **Not deleted.** One file, ~1 KB, subject removed on `main` 2026-09-19.
 `deletion-requires-confirmation`: reported, waiting.
 
-## Done when
+## Done when — THE AUTHORITATIVE LIST
+
+*Promoted to the top 2026-09-26 under bean `sfhr`, which catalogued this exact
+class. This bean carried **three** "done when" lists and the one a reader reached
+LAST was the stalest: its four "genuinely open" items were three-quarters already
+closed by the list above it. The lists below are kept for their reasoning and
+each now points here. Where any of them disagrees with this list, this list is
+right.*
+
+- [x] **graph-ranging findings name their graph** — the bean's actual subject.
+      `graphScope()` appends the scope, built from the DECLARED path strings, and
+      carries the 2026-09-20 incident in its own doc comment
+- [x] **`bootstrap/skills/` is servable** — the manifest exists and lists
+      `confirm-harness`; and the manifest was never the blocker, `manifestSkills()`
+      hardcoding `join(root, "skills")` was
+- [x] **the three lanes bind roles** — done on the LANE, which is why it cost no
+      dangling link. Re-measured 2026-09-26, below
+- [x] **`initialize-harness.bpmn` has a `BPMNDiagram`** — 2026-09-20; still there,
+      re-measured below
+- [x] **the stale `bootstrap.bpmn` sidecar** — owner decided "Delete it"; gone in
+      `30f5057`, reported before acting (2409 bytes, last touched 2026-09-19)
+- [x] **the root's silence about a nested instance is reported** — criterion
+      `nested-instance-audited` (`minor`)
+- [→] **a gate runs the audits per declared instance** — NOT done, and moved to
+      bean `bjzs` rather than left here. A different subject: this bean is about a
+      finding's **wording**, that one is about a gate's **range**
+
+## Superseded list 1 of 3 — kept for reasoning; see the authoritative list above
 
 - [x] graph-ranging findings name their graph — `skill-has-entry-point` and
       `skill-in-role-or-process` now append the scope, built from the DECLARED
       path strings rather than computed relative ones (computing them printed
       `../bootstrap/skills` once the tree moved into `cat-harness/`, which is
       accurate and reads like a bug)
-- [ ] a gate runs the audits per declared instance, or the root's silence about a
-      nested one is itself reported
-- [ ] `bootstrap/skills/` gets a package manifest so `confirm-harness` is servable
-- [ ] the three unbound lanes get roles, or the lanes are renamed to declared ones
-- [ ] `initialize-harness.bpmn` gets a `BPMNDiagram`, or its absence is a recorded
-      criterion rather than a hard renderer failure
+- [→] a gate runs the audits per declared instance, or the root's silence about a
+      nested one is itself reported — moved to bean `bjzs`; see THE AUTHORITATIVE LIST
+- [x] `bootstrap/skills/` gets a package manifest so `confirm-harness` is servable — the manifest exists (measured 2026-09-26)
+- [x] the three unbound lanes get roles, or the lanes are renamed to declared ones — bound on the LANE by `#1168`; measured 2026-09-26
+- [x] `initialize-harness.bpmn` gets a `BPMNDiagram`, or its absence is a recorded
+      criterion rather than a hard renderer failure — added 2026-09-20; 2 occurrences today
 - [x] the stale sidecar: **owner decided — "Delete it"**, and it is gone. Done in
       `30f5057`, reported before acting: 2409 bytes, last touched 2026-09-19,
       subject `bootstrap.bpmn` removed on `main` 2026-09-19
@@ -130,7 +157,7 @@ defect. Switched to the declared `path` string: it is what a reader would go and
 edit, and it cannot acquire a `../` when the tree moves again. "Resolve, do not
 compose", applied to a diagnostic rather than to a link.
 
-### Still open on this bean
+### Superseded list 2 of 3 — kept for reasoning; see the authoritative list above
 
 - [x] the root's silence about a nested one is now **reported**, as criterion
       `nested-instance-audited` (`minor`). It names the instance, counts the
@@ -138,9 +165,9 @@ compose", applied to a diagnostic rather than to a link.
       warns against the exact wrong fix — declaring its directories at the root,
       which re-introduces the leak `instance-graph-isolation.test.ts` guards.
       A reported number is not deducible-and-mis-deducible
-- [ ] running the audits per declared instance is still open, and is the half that
+- [→] running the audits per declared instance is still open, and is the half that
       would actually AUDIT bootstrap rather than count it. The criterion makes the
-      gap visible; it does not close it
+      gap visible; it does not close it — moved to bean `bjzs`
 - [x] `bootstrap/skills/` package manifest — **and the manifest was not the
       blocker.** `manifestSkills()` hardcoded `join(root, "skills")` and scanned
       only one level of subdirectories, so a manifest AT a declared directory was
@@ -176,7 +203,9 @@ compose", applied to a diagnostic rather than to a link.
       references**. Not rendered to SVG here — `bpmn-js` is one of the
       `--all` browser jobs and is not installed in this container — so that
       half is stated as unverified rather than claimed.
-- [ ] the stale `bootstrap.bpmn` sidecar — owner's call, still untouched
+- [x] the stale `bootstrap.bpmn` sidecar — ~~owner's call, still untouched~~
+      the owner had ALREADY decided "Delete it" when this line was written; gone
+      in `30f5057`, which is the re-check-rather-than-re-ask below
 
 
 ---
@@ -194,7 +223,7 @@ So this bean was carrying an open question the owner had already answered. Ticke
 rather than re-raised: asking twice is its own failure, and it spends the one thing
 the owner's accessibility constraints make expensive.
 
-### The four that are genuinely open, and none of them is a decision
+### Superseded list 3 of 3 — "the four that are genuinely open" was wrong when written and is wronger now; see the authoritative list above
 
 - a gate runs the audits **per declared instance**, or the root's silence about a
   nested one is itself reported. `kg:audit` currently reports
@@ -209,3 +238,74 @@ Each is work, not a judgement for the owner. Left for a session that can take th
 nested-instance question whole, because the first item changes what the audit
 **ranges over** and the other three are findings inside that range — doing them in
 the other order means auditing them twice.
+
+---
+
+## RECONCILED 2026-09-26 — three of the four "genuinely open" items were already done, and the fourth is now `bjzs`
+
+The last list in this bean said four items were open. Re-measured rather than
+re-asked, because re-asking is the one thing the owner's accessibility
+constraints make expensive:
+
+| the list said | measured 2026-09-26 | evidence |
+|---|---|---|
+| `bootstrap/skills/` needs a package manifest | **exists** | `bootstrap/skills/package-manifest.json`, 784 bytes, 7 skills, `confirm-harness` among them |
+| the three unbound lanes need roles | **bound** | `bootstrap/processes/initialize-harness.bpmn:32,48,53` |
+| `initialize-harness.bpmn` needs a `BPMNDiagram` | **present** | 2 occurrences (open + close) |
+| a gate runs the audits per declared instance | **still open** | now bean `bjzs` |
+
+### The lane item is the interesting one — it was `[~]` and is now `[x]`, and the mechanism changed underneath it
+
+This bean recorded the lanes as *"NOT work, a recorded decision"*, because
+adding `lanes` to each role would mint `bindsLane -> role/Initiator` in
+folio-assistant's graph pointing at a lane node only bootstrap's export
+produces — **three dangling links**. That reasoning was correct for the
+mechanism as it stood.
+
+It no longer stands. `#1168` inverted the relation (bean `nafz` records the
+landing): a **lane names its role** with `<…processes:role ref>`, and a role no
+longer carries `lanes[]`, on the principle that a general node never names its
+users. So the binding moved to the end that could carry it without crossing the
+instance boundary:
+
+```xml
+<bpmn:lane id="Lane_BootstrappingAgent" name="Bootstrapping Agent">
+  <bpmn:extensionElements><bootstrap.processes:role ref="bootstrapping-agent"/></bpmn:extensionElements>
+```
+
+All three refs resolve against `bootstrap/scenarios/roles.json`
+(`bootstrapping-agent`, `requestor`, `knowledge-graph-data-store`), and all four
+declared roles now carry **no** `lanes` key — so there is nothing left to
+dangle. `roleForLane` resolves an explicit ref ahead of the name table, which is
+why this costs no root-graph edge.
+
+Two corrections to this bean's own record while I am here:
+
+- **The lane names are stale.** This bean lists `Initiator`; the lane is
+  `Lane_BootstrappingAgent` / *"Bootstrapping Agent"*. Nothing named `Initiator`
+  is in the file.
+- **`_lanes_comment` is gone**, and the bean still cites it as the record. It was
+  right to go: bean `ug4r` is the whole argument — *"a `_lanes_comment` string
+  inside a JSON file, which no tool reads"* — and its remedy was
+  `<folio:role variable="true"/>` on the lane, a declaration in a form a tool
+  reads. So a citation in this bean now points at a string that no longer
+  exists, which is the same defect one level out: **a record is only a record
+  while something reads it.**
+
+### And the count this bean quotes is stale, which is the rule earning another instance
+
+> `kg:audit` currently reports `graph:kg nested-instance-audited (2)`
+
+It is **15** as of this run — 15 declared instances, 5 unread diagrams
+(`bootstrap` 3, `folio-assistant-core` 1, `smart-base` 1), read from
+`test/results/kg-qa/scenarios/kg.kg-qa.json`. The criterion did not change; the
+tree grew. `kg:audit`'s own reading rules say **never quote a count from prose**,
+and this bean quoted one into prose eleven lines after invoking the discipline
+that forbids it. The figures above are in the same position and should be read
+from the sidecar too.
+
+### What this bean is closed on
+
+Its subject — *a graph-scoped finding worded absolutely* — is fixed, tested, and
+carries its own incident report at the code. Everything the detour surfaced is
+either done or has a bean. Closing.
