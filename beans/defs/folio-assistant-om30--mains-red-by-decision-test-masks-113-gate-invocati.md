@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-26T09:42:57Z
-updated_at: 2026-09-26T09:43:29Z
+updated_at: 2026-09-26T09:45:57Z
 ---
 
 ## What
@@ -96,3 +96,56 @@ gating workflow, so it is the owner's call and not an agent's.
       actually reaches line 663
 - [ ] Re-check whether any OTHER gate in the masked region is red — this bean proves
       one is, and 112 invocations are still unexamined
+
+
+## The mechanism, pinned to a timestamp — it is ORDER-dependent within ONE run
+
+Measured in this container, not reasoned about. `cat-harness/schemas/block-qa-schema/`:
+
+    node_modules/   created 2026-09-26 09:30:30
+    dist/           created 2026-09-26 09:30:31
+
+**Both were created by a gate, partway through a `bun run gates` run.** So inside a
+single run the corpus CHANGES underneath the gate set: everything before that instant
+scans 227 tracked files, everything after scans 1441.
+
+Two consecutive runs in the same container, same commit, demonstrate it:
+
+| run | `bun test` wrote | guard report |
+|---|---|---|
+| first (residue absent at start) | `size: 227` into the committed sidecars | **6 detangle sidecars mutated** — a true positive |
+| second (residue now persists) | nothing | no detangle mutation |
+
+So a pinned measurement whose value depends on whether an earlier gate in the same
+run has already installed something is not a measurement of the repository. And the
+committed 1441 is only self-consistent in a container that has ALREADY run the gate
+that creates the residue — which is why every local re-run after the first agrees
+with it and a fresh runner would not.
+
+## Correction to my own instrument, found in its first live outing
+
+The second run's guard report is a **false positive**, and I caused it:
+
+    · bun run check:fallback-roles        wrote     ("??")  beans/defs/…om30….md
+    · bun run translation:block-qa:check  reverted  (was "??")  beans/defs/…om30….md
+
+Neither gate touched that file. I created this bean and then committed it **while the
+gates were running**, so `git status` went `??` → absent and the guard attributed
+each transition to whichever gate was mid-flight. That is exactly the case
+`gate-tree-guard.ts`'s own docblock documents under *"Known limitation: do not run
+git WHILE the gates run"* — written because the session building it nearly did this.
+It then did it, one day later.
+
+The limitation is real and the docblock's reasoning for not defending against it
+stands (voiding the run is worse). But the report gives a reader no way to tell this
+case from a true one, and two innocent gates are named. Worth a follow-up: the guard
+could record `.git/HEAD` plus the index mtime alongside each snapshot and SAY
+"attribution unreliable — the repository moved mid-run" without voiding anything.
+That is a third state, not a defence, which is the shape this repo already prefers.
+
+## Verdict on this branch, for the record
+
+`bun run gates` — **2 of 154 failed**, verified by NAME: `bun test`
+(`no NEW drift, and nothing unreadable`) and `translation:drift:check`. Both are the
+same `t8g3` drift that is red on `main` by the owner's decision. `uml:overview:check`
+green. Nothing on this branch fails that main does not.
