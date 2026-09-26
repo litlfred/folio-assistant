@@ -24,7 +24,8 @@
  * - exit 1 — the merge conflicts (files listed), or a gate fails on the
  *   merged tree: this branch needs the base merged in and regenerated;
  * - exit 2 — COULD NOT DETERMINE (the base could not be fetched, the worktree
- *   could not be built). Never reported as clean.
+ *   could not be built, or the worktree's corpus is distorted — see the
+ *   `node_modules` guard below, bean `qook`). Never reported as clean.
  *
  * The working copy is never touched: the merge happens in a temporary worktree
  * that is removed on every path out, including failure.
@@ -127,6 +128,31 @@ function main(): number {
       }
     } else {
       symlinkSync(join(REPO, "node_modules"), join(wt, "node_modules"), "dir");
+      // The symlink must be INVISIBLE to git, and for five days it was not.
+      //
+      // Bean `qook`. `.gitignore` read `node_modules/`, and git's trailing
+      // slash means DIRECTORY ONLY. A symlink is not a directory, so
+      // `git ls-files --others --exclude-standard` returned it and
+      // `gitCorpus` handed every consumer one phantom entry. On commit
+      // `0d3c49c8` that was 13667 paths here against 13666 in a real
+      // checkout — and `kg:detangle:check` went from "29 pinned current" to
+      // five files STALE. This script then reported two unrelated branches'
+      // merged trees defective when no real checkout of either was.
+      //
+      // So the environment is verified before the sweep, not assumed. A
+      // distorted corpus is COULD NOT DETERMINE (exit 2), never a red: a
+      // false refusal from a tool whose job is to refuse teaches everyone to
+      // stop running it, and then it is not there for the merge it exists for.
+      const ignored = git(["check-ignore", "-q", "node_modules"], wt);
+      if (!ignored.ok) {
+        console.error(
+          "::error::check:merged: the `node_modules` symlink is NOT ignored in the worktree, " +
+            "so every corpus-derived gate would measure one phantom entry — COULD NOT DETERMINE.\n" +
+            "Bean `qook`: `.gitignore` must ignore `node_modules` with NO trailing slash, or git " +
+            "treats the pattern as directory-only and the symlink leaks into `git ls-files --others`.",
+        );
+        return 2;
+      }
     }
 
     console.log("  running `bun run gates` on the merged tree…\n");
