@@ -4,8 +4,10 @@ title: 'WHO IG CHROME: the blue bar, DRAFT watermark and publish box, ingested f
 status: in-progress
 type: feature
 priority: normal
+tags:
+    - ready-to-close
 created_at: 2026-09-23T19:56:03Z
-updated_at: 2026-09-25T16:37:43Z
+updated_at: 2026-09-26T03:54:14Z
 parent: folio-assistant-yj32
 ---
 
@@ -185,3 +187,44 @@ exception carrying no way to re-derive it cannot be told from an oversight.
 
 **Status deliberately unchanged.** Nothing here reopens, re-scopes or reverts
 anything; it records one failed re-verification and what would settle it.
+
+---
+
+## Evidence
+
+_2026-09-26, a second session reaching the same refusal — tagged
+`ready-to-close` so it is visible to `check:ready-to-close`._
+
+The session above refused this bean for the right reason and left it
+`in-progress` without the tag. `bean-coordination` §"When you cannot re-derive
+it yourself" is explicit that the un-taggable version of this state is the one
+that accumulates: four beans read as finished in their own bodies and sat
+`in-progress`, *"every session that met one discharged it the same way — by
+leaving it open"*. The tag is what puts it on `bun run check:ready-to-close`, so
+the owner confirms a batch in one read instead of meeting it again on the next
+sweep.
+
+**What I independently re-derived**, on a tree identical to `origin/main`, clean
+and with no untracked pollution:
+
+| box | how |
+|---|---|
+| a schema for the ingested chrome | `cat-harness/schemas/ig-chrome.ts` present |
+| an ingest; `no --source exits 2` | `cat-harness/scripts/ingest-ig-chrome.ts` present |
+| a `--check` gate exists and runs | `ingest:ig-chrome:check` |
+| declared at smart-base | carried in `graph-kind-registry.ts` |
+| tests | `ig-chrome.test.ts` + `ingest-ig-chrome.test.ts` → **28 pass, 0 fail** |
+
+**What neither session can re-derive, in one line:** that the smart-trust pages
+actually carry the blue bar, the DRAFT watermark and the publish box. The gate
+reports the third state — *"could not determine … The committed chrome was NOT
+verified"* — and **exits 0 while saying so**, which a caller reading only the
+exit code records as a pass. It needs the IG and each `fhir.template` cloned and
+passed base-first with `--layer`.
+
+One thing I did NOT take on trust, and the reason is recent: the last box reads
+*"gates green — 135 of 136, the one failure pre-existing on main"*. I published
+exactly that shape of claim wrongly on 2026-09-25, from a working directory
+holding an untracked root `scripts/` that `git status` could not see — bean
+`pomp`'s shape, third recorded occurrence. A "pre-existing on main" claim is
+only as good as the cleanliness of the tree it was measured in.

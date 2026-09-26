@@ -150,7 +150,7 @@ jobs:
     if: github.event_name != 'issue_comment' && github.event_name != 'push' && github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # Full history: the ChangeSet reads the base ref with `git archive`.
           fetch-depth: 0
@@ -181,7 +181,7 @@ jobs:
 
       - name: Check out the platform
         if: steps.platform.outputs.present == 'false'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: litlfred/folio-assistant
           ref: ${{ inputs.platform_ref }}
@@ -314,7 +314,7 @@ jobs:
             --folio "$FOLIO_DIR" --out "$SITE_DIR/block-qa.json"
 
       - name: Check out the publish branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ inputs.publish_branch }}
           path: pages
@@ -490,7 +490,7 @@ jobs:
 
       - name: Comment staging URL on PR
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         env:
           SLUG: ${{ steps.slug.outputs.slug }}
           BRANCH: ${{ steps.slug.outputs.branch }}
@@ -546,7 +546,7 @@ jobs:
       group: folio-publish-main-${{ github.repository }}
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: recursive
 
@@ -575,7 +575,7 @@ jobs:
 
       - name: Check out the platform
         if: steps.platform.outputs.present == 'false'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: litlfred/folio-assistant
           ref: ${{ inputs.platform_ref }}
@@ -683,7 +683,7 @@ jobs:
       cancel-in-progress: false
     steps:
       - name: Check out the platform (never the pull request's copy)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: litlfred/folio-assistant
           ref: ${{ inputs.platform_ref }}
@@ -706,14 +706,14 @@ jobs:
         id: slug
         # The head branch is ATTACKER-CONTROLLED on a fork PR: read from the
         # API into env, never interpolated, and checked by VALUE (bean `fuzm`).
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const { data } = await github.rest.pulls.get({ ...context.repo, pull_number: context.issue.number });
             core.setOutput("branch", data.head.ref);
 
       - name: Check out the publish branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ inputs.publish_branch }}
           path: pages
