@@ -613,20 +613,32 @@ export function exemptionFor(command: string): StepExemption | undefined {
 }
 
 /**
- * Jobs whose steps need no browser — the inner loop.
+ * Does this job install a browser? — the inner loop's one question.
  *
- * **Two entries, not one, since bean `om30` split them, and the set is the
- * reason the split was safe to make.** `loadGates` reads this workflow so the
- * local gate set cannot drift from CI's; that guarantee is exactly what a job
- * split threatens, because a job this set does not name contributes NOTHING and
- * `bun run gates` would quietly shrink from 154 gates to 6 while still printing
- * a confident pass. A subset of the gate set is not the gate set.
+ * **Derived, because the sentence this replaces already said the answer was
+ * derivable.** `FAST_JOBS = new Set(["typescript", "gates"])` was documented
+ * as *"jobs whose steps need no browser"* and as *"Chromium … is the only
+ * question this set actually asks"* — a predicate, written out, beside a
+ * hardcoded list of the jobs that happened to satisfy it. Asking it directly
+ * removes the gap where those two can disagree.
  *
- * `typescript` is lint, typecheck and `bun test`; `gates` is the 43 repository
- * gate steps. Neither needs Chromium, which is the only question this set
- * actually asks — `e2e` installs it, which is why `--all` exists.
+ * The hazard the old comment names is real and this keeps it: a job the set
+ * does not name contributes NOTHING, so `bun run gates` would shrink while
+ * still printing a confident pass, and {@link NoGatesFound} could not catch it
+ * because the remaining jobs still yield commands. Bean `om30` had to widen
+ * the literal by hand when it split the job; the next split will not.
+ *
+ * It was also already wrong in the other direction. `dependency-advisories`
+ * runs `bun run check:dependency-advisories`, needs no browser, and was absent
+ * from the literal — so one CI gate had never run in the local fast set at all
+ * (157 → 158).
+ *
+ * `playwright install` is the discriminator rather than a job's name: it is
+ * what actually costs the 36 seconds and actually requires Chromium.
  */
-const FAST_JOBS = new Set(["typescript", "gates"]);
+function installsBrowser(def: { steps?: { run?: string }[] }): boolean {
+  return (def.steps ?? []).some((s) => /playwright\s+install/.test(s.run ?? ""));
+}
 
 /** One runnable gate, with the job and step that ask for it. */
 export interface Gate {
@@ -651,7 +663,7 @@ export function gatesFrom(workflowText: string, opts: { all?: boolean } = {}): G
   };
   const out: Gate[] = [];
   for (const [job, def] of Object.entries(doc.jobs ?? {})) {
-    if (!opts.all && !FAST_JOBS.has(job)) continue;
+    if (!opts.all && installsBrowser(def)) continue;
     for (const step of def.steps ?? []) {
       if (!step.run) continue;
       // A step's `run` may hold several lines; each `bun …` line is its own
@@ -709,7 +721,7 @@ export interface ForeignStep {
 /**
  * Every `bun` step in every OTHER workflow, in file order.
  *
- * Jobs are not filtered by {@link FAST_JOBS} here: that set names jobs of the
+ * Jobs are not filtered by {@link installsBrowser} here: that question is asked of the
  * gates workflow, and a job called `typescript` in another file is a different
  * job. Reading them all and classifying each is what keeps the two lists from
  * drifting.
@@ -1125,7 +1137,7 @@ if (import.meta.main) {
 
   const scope = all
     ? "every job, plus every locally-runnable step from the other workflows"
-    : `the fast set (${[...FAST_JOBS].join(", ")})`;
+    : `the fast set (every job that does not install a browser)`;
   console.log(`${gates.length} gate(s) — ${scope}\n`);
 
   // Reported on EVERY run, not only with `--list`: an unclassified step is a
