@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-25T16:38:20Z
-updated_at: 2026-09-25T16:38:20Z
+updated_at: 2026-09-26T11:14:23Z
 parent: folio-assistant-1xhc
 ---
 
@@ -109,9 +109,11 @@ repository today and is not a property of the class.
 
 ## Done when
 
-- [ ] A shared `safeSegment` / containment module exists, and `resolveWithin` is
-      promoted out of `serve-rendering.ts` rather than copied
-- [ ] All three `paperId` sinks validate before the path is built
+- [x] A shared `safeSegment` / containment module exists, and `resolveWithin` is
+      promoted out of `serve-rendering.ts` rather than copied — `src/core/safe-path.ts`,
+      25 tests
+- [x] All three `paperId` sinks validate before the path is built — **and a FOURTH
+      was found unguarded after the first three were fixed**, see below
 - [ ] The tar extraction is contained, or its residual is written down where the
       call is
 - [ ] A gate finds an external value reaching a path join, so the property does
@@ -120,3 +122,69 @@ repository today and is not a property of the class.
       the knowledge sitting in four unrelated files
 - [ ] `steps.*.outputs` laundering is recorded on `1wef`'s gate as a known model
       gap with its measurement
+
+## Re-measured 2026-09-26: three sinks were fixed and a fourth was missed
+
+The helper landed and `feedbackPath`, `writeFeedback` and `/api/import/arxiv`
+all use it. **Two routes were still unguarded**, which is this bean's own thesis
+turned on its own fix — *"a correct helper stranded in one script while three
+HTTP handlers hand-roll `join()`"*, one layer later.
+
+### `/api/import/scan` — an arbitrary-file READ, two chained traversals
+
+```ts
+const uploadDir = join(UPLOADS_DIR(), body.paperId);   // (1) unvalidated
+const metaPath  = join(uploadDir, "import-meta.json");
+const meta      = JSON.parse(readFileSync(metaPath, "utf-8"));
+const texFiles  = meta.files?.length ? meta.files : readdirSync(uploadDir)…;
+for (const tf of texFiles) {
+  const texPath = join(uploadDir, tf);                 // (2) unvalidated
+  const src     = readFileSync(texPath, "utf-8");
+```
+
+`(2)` is the one that matters, because it **survives fixing `(1)`**:
+`meta.files` is written by `/api/import/upload` from the uploaded file's own
+name, so a member can name anything without any traversal in the identifier.
+What leaks is constrained — only text matching a theorem-like environment is
+returned — but `readFileSync` on an arbitrary path is a hazard in itself.
+
+`(2)` is NOT a `safeSegment` case: a `.tex` may legitimately sit in
+`sections/`, so the question is containment. Fixed with
+`realPathWithin(uploadDir, …)`, which also subsumes the old `existsSync`.
+
+### `/api/import/upload` — an arbitrary-file WRITE, and the worse of the two
+
+```ts
+const id = paperId || file.name.replace(/\.[^.]+$/, "")…;   // supplied value RAW
+const filename = ext === ".pdf" ? "original.pdf" : file.name;
+writeFileSync(join(uploadDir, filename), buf);              // path AND content attacker-controlled
+```
+
+The bean's own sentence — *"the fallback is sanitised, the supplied value is
+not"* — was still literally true here after the arxiv route was fixed. And
+`file.name` reaching `writeFileSync` is a write primitive with attacker-supplied
+content.
+
+**Severity is raised by the route's posture**: no authentication anywhere in
+`server.ts`, and `Access-Control-Allow-Origin: *`. A cross-origin `FormData`
+POST is a *simple* request, so the write lands whether or not the response can
+be read.
+
+Fixed with `safeSegment(rawId)`, `safeSegment(basename(file.name))` — `basename`
+first because a browser may send a path, `safeSegment` after because
+`basename("..")` is `".."` — and `writableWithin(UPLOADS_DIR(), target)` for the
+symlinked-store case that `serve-rendering.ts`'s own test once got a 200 from.
+
+### The gate, narrow form
+
+`scripts/tests/server-path-sinks.test.ts`, 13 tests. **8 of them fail against
+`origin/main`'s server and all 13 pass after**, verified by reverting the file
+and re-running — so it detects the defect rather than describing the fix.
+
+It is a SOURCE ratchet and says so: it cannot prove a value is checked on every
+path to a sink, only that the guard has not been deleted. It asserts its own
+non-vacuity (the file is >50 KB and contains the three route strings), because
+a renamed server would otherwise make every `not.toContain` pass trivially.
+
+Not done: the `security` skill package, the tar-extraction containment, and the
+`steps.*.outputs` note on `1wef` — three separate boxes above, untouched here.

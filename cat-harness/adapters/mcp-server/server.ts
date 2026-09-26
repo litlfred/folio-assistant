@@ -43,7 +43,7 @@ import { leanStatusBucket } from "../../schemas/types";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { REPO_ROOT, BUILD_DIR, FEEDBACK_DIR, FEEDBACK_WORKTREE, MAIN_TEX, FOLIO_PORT, LIBRARY_DIRS, UPLOADS_DIR } from "./paths.js";
-import { safeSegment, joinSegments } from "../../src/core/safe-path.js";
+import { safeSegment, joinSegments, realPathWithin, writableWithin } from "../../src/core/safe-path.js";
 import { executeGraphTool } from "./tools/graph.js";
 import {
   currentBranch, listBranches, fetchOrigin, isCurrentBranch,
@@ -51,7 +51,7 @@ import {
   mergeBase, gitLogFiles, gitShowBinaryAt, gitShowAt,
 } from "./git.js";
 import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync } from "fs";
-import { join, relative, resolve, extname } from "path";
+import { join, relative, resolve, extname, basename } from "path";
 import Anthropic from "@anthropic-ai/sdk";
 
 // ── Access control ───────────────────────────────────────────
@@ -2951,15 +2951,40 @@ These become clickable buttons so users don't have to type. Make them specific t
 
       if (!file) return Response.json({ error: "No file uploaded" }, { status: 400 });
 
-      const id = paperId || file.name.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-]/gi, "-").toLowerCase();
+      // `6bhf`, second and third sinks. The FALLBACK was sanitised and the
+      // SUPPLIED value was not — `id = paperId || <slugified file.name>` used a
+      // supplied `paperId` verbatim, so `../../..` reached `join()` and the two
+      // lines below are `mkdirSync(recursive)` and a `writeFileSync`. The route
+      // is unauthenticated and answers `Access-Control-Allow-Origin: *`, and a
+      // cross-origin FormData POST is a simple request: the write lands whether
+      // or not the response can be read.
+      const rawId = paperId || file.name.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-]/gi, "-").toLowerCase();
+      const id = safeSegment(rawId);
+      if (id === undefined) {
+        return Response.json({ error: "paperId must be one safe path segment" }, { status: 400 });
+      }
       const uploadDir = join(UPLOADS_DIR(), id);
       mkdirSync(uploadDir, { recursive: true });
 
       // Save the file
       const buf = Buffer.from(await file.arrayBuffer());
       const ext = extname(file.name) || (file.type === "application/pdf" ? ".pdf" : ".tex");
-      const filename = ext === ".pdf" ? "original.pdf" : file.name;
-      writeFileSync(join(uploadDir, filename), buf);
+      // `file.name` is attacker-supplied and reached `join()` unchanged, which
+      // is an arbitrary file WRITE with attacker-controlled content — the worse
+      // half of this route. `basename` first because a browser may legitimately
+      // send a path, then `safeSegment` because `basename("..")` is `".."`.
+      const filename = ext === ".pdf" ? "original.pdf" : safeSegment(basename(file.name));
+      if (filename === undefined) {
+        return Response.json({ error: "file name must be one safe path segment" }, { status: 400 });
+      }
+      const target = join(uploadDir, filename);
+      // The symlink half: lexical containment cannot see an uploads/<id> that
+      // is a link out of the store. `serve-rendering.ts`'s own test got a 200
+      // from the lexical-only version by exactly that route.
+      if (!writableWithin(UPLOADS_DIR(), target)) {
+        return Response.json({ error: "upload target is outside the uploads store" }, { status: 400 });
+      }
+      writeFileSync(target, buf);
 
       // Write import metadata
       const meta = {
@@ -3116,7 +3141,14 @@ These become clickable buttons so users don't have to type. Make them specific t
   if (path === "/api/import/scan") {
     try {
       const body = await req.json() as { paperId: string };
-      const uploadDir = join(UPLOADS_DIR(), body.paperId);
+      // `6bhf`, fourth sink — missed when the other three were fixed, which is
+      // this bean's own thesis: a correct helper stranded while a sibling route
+      // hand-rolls `join()`. `/api/import/arxiv` validates 100 lines above.
+      const scanId = safeSegment(body.paperId);
+      if (scanId === undefined) {
+        return Response.json({ error: "paperId must be one safe path segment" }, { status: 400 });
+      }
+      const uploadDir = join(UPLOADS_DIR(), scanId);
       const metaPath = join(uploadDir, "import-meta.json");
       if (!existsSync(metaPath)) {
         return Response.json({ error: `No import found: ${body.paperId}` }, { status: 404 });
@@ -3135,8 +3167,17 @@ These become clickable buttons so users don't have to type. Make them specific t
       const texFiles = meta.files?.length ? meta.files : readdirSync(uploadDir).filter((f: string) => f.endsWith(".tex"));
 
       for (const tf of texFiles) {
-        const texPath = join(uploadDir, tf);
-        if (!existsSync(texPath)) continue;
+        // `meta.files` comes out of `import-meta.json`, which `/api/import/upload`
+        // writes from the uploaded file's own name — so this is a SECOND
+        // traversal that survives validating `paperId`, and the one that made
+        // the read primitive reachable without a traversal in the identifier.
+        // Not `safeSegment`: a `.tex` may legitimately sit in `sections/`, so
+        // the question is containment rather than single-segment-ness.
+        const texPath = realPathWithin(uploadDir, join(uploadDir, String(tf)));
+        if (texPath === undefined) {
+          log("import", `refused unsafe member`, `paperId=${scanId} file=${JSON.stringify(tf)}`);
+          continue;
+        }
         const src = readFileSync(texPath, "utf-8");
       
         let match;
