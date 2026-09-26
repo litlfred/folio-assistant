@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 172,
+      "count": 173,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -939,6 +939,15 @@
       "name": "refactor-strategy",
       "graphNode": "schema",
       "summary": "Lean proof-refactoring strategy database.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/reference-direction.ts",
+      "instance": "cat-harness",
+      "name": "reference-direction",
+      "graphNode": "none",
+      "reason": "a classification function: it defines no schema",
+      "summary": "reference-direction.ts — does this PROSE reference follow the dependency arrow?",
       "isTest": false
     },
     {
@@ -22308,6 +22317,110 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/reference-direction.ts#Occurrence",
+      "name": "Occurrence",
+      "module": "cat-harness/schemas/reference-direction.ts",
+      "kind": "interface",
+      "doc": "One bounded occurrence of an instance's name in a file.",
+      "fields": [
+        {
+          "name": "file",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "line",
+          "type": "number",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The whole line, which is what an exemption matches against."
+        },
+        {
+          "name": "from",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The instance the FILE belongs to."
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The instance whose NAME was found."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/reference-direction.ts#ReferenceExemption",
+      "name": "ReferenceExemption",
+      "module": "cat-harness/schemas/reference-direction.ts",
+      "kind": "interface",
+      "doc": "An exception to the rule. `reason` is required and `iwtn`'s `ALLOW` is why:",
+      "fields": [
+        {
+          "name": "pattern",
+          "type": "RegExp",
+          "optional": true,
+          "array": false,
+          "doc": "Matches the LINE the occurrence sits on. Omitted means any line, and then `file` must be set."
+        },
+        {
+          "name": "file",
+          "type": "RegExp",
+          "optional": true,
+          "array": false,
+          "doc": "Matches the FILE the occurrence sits in, repo-relative. Omitted means any file."
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Why this is not a reference to the instance. Required."
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Limit to one target instance; omitted means any."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/reference-direction.ts#ReferenceVerdict",
+      "name": "ReferenceVerdict",
+      "module": "cat-harness/schemas/reference-direction.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/render-log.ts#RenderEvent",
       "name": "RenderEvent",
       "module": "cat-harness/schemas/render-log.ts",
@@ -25267,7 +25380,8 @@
         "PostToolUse",
         "PreCommit",
         "PostCommit",
-        "UserPromptSubmit"
+        "UserPromptSubmit",
+        "Stop"
       ],
       "refs": [],
       "unresolved": [],
