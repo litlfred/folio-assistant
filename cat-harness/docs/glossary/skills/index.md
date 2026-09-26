@@ -941,7 +941,7 @@ incremental-render <span class="fa-gloss-status">candidate, extracted</span>
 injection-boundaries <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the existing gate covers, the one latent gap in its model, and the argv rule.</p>
+<p>Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the gate covers, why a step output carries a severity rather than having one, and the argv rule.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/security/injection-boundaries.md"><code>cat-harness/skills/security/injection-boundaries.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--instance-kinds" data-fa-state="extracted" data-fa-gloss="">

@@ -24,17 +24,81 @@ asserting it, and its three bands are worth knowing:
 |---|---|---|
 | **free text** | `pull_request.title`, `.body`, `comment.body`, a dispatch input | FAIL |
 | **constrained** | `pull_request.number`, `head_ref`, `repository.name` | reported and baselined |
-| **safe** | `github.workspace`, `steps.*.outputs`, `matrix.*`, `secrets.*` | not reported |
+| **safe** | `github.workspace`, `matrix.*`, `secrets.*` | not reported |
 
 The fix is `env:` plus `"$VAR"`, where bash sees a value rather than source.
 
-**One latent gap in that model, recorded rather than fixed** (bean `6bhf`):
-`steps.*.outputs` is classified safe **unconditionally**, but a step output can
-*carry* free text — a step that echoes a PR title into `$GITHUB_OUTPUT` launders
-it into the safe band. Measured on this corpus: every `>> "$GITHUB_OUTPUT"`
-write of a reason or title is a literal, so the classification is true of this
-repository **today** and is not a property of the class. Re-measure before
-relying on it.
+### `steps.*.outputs` is not a class — it is a PIPE
+
+A step output holds whatever the step put in it, so it has no severity of its
+own. It was in the **safe** band above, unconditionally, until 2026-09-26, and
+the consequence was live rather than theoretical (bean `6bhf`):
+
+```yaml
+- id: version
+  env:
+    INPUT_VERSION: ${{ github.event.inputs.version }}   # free text — FAIL band
+  run: |
+    echo "$VERSION" >> "$GITHUB_OUTPUT"                 # ...written out
+# a later step:
+  run: |
+    mv *.tgz "folio-assistant-${{ steps.version.outputs.version }}.tgz"
+```
+
+A dispatch of `1.0";id;"` renders `mv *.tgz "folio-assistant-1.0";id;".tgz"` and
+runs `id`. The gate reported nothing, and **the step that handled the value
+correctly is the step that leaked it** — `env:` protects the step that binds,
+not the value's onward journey.
+
+**Provenance is resolved, not assumed.** `resolveProvenance` reads each step
+that writes `$GITHUB_OUTPUT`, takes the worst severity among the expressions
+that step binds, and a consumption of its output inherits it — keyed
+`job.stepId`, since step outputs are job-scoped and two jobs may reuse an id. A
+job's `outputs:` block is followed one more hop, so `needs.<job>.outputs.<name>`
+inherits too.
+
+**Graded free text rather than constrained, on purpose.** One consumer's producer
+reduces its value to `[A-Za-z0-9._-]` with a `sed`, so that value genuinely
+cannot carry a payload — and recognising it would mean the gate deciding, per
+site, whether somebody's sanitiser was good enough. Refuse the shape instead, as
+the archive rule below whitelists member types: the remedy is one `env:` line,
+and the three sites took it.
+
+**This was already written down, four days before the gate was.**
+[`untrusted-input`](untrusted-input.md) §"What counts as
+attacker-controlled" has listed *"anything derived from them — including a
+`steps.*.outputs.*` that merely passed one through"* since 2026-09-18, with a
+measured example from this very corpus: the staging workflow bound `head.ref` to
+`env` in one step and wrote the **raw** branch to `$GITHUB_OUTPUT`. The gate,
+written 2026-09-22, then classified `steps.*.outputs` safe unconditionally. So
+this is `1wef`'s own lesson one turn further round — *"somebody had understood
+this hazard exactly, nothing checked it"* — except that this time the thing that
+did not check it was **the check**. When a gate and a skill disagree, one of them
+is a claim nobody tested; find out which before trusting either.
+
+**Where the gate is now STRICTER than that skill, and why that is not a
+disagreement.** `untrusted-input` lists as trusted *"an output your own workflow
+sanitised"*, which is correct as advice to a person reading the workflow. The
+gate cannot make that judgement — it would have to decide, per site, whether a
+`sed` was good enough — so it reports the site and takes an `env:` line as the
+answer. A reviewer may conclude a value is fine; the gate's job is to make sure
+somebody concluded it.
+
+> **The measurement that missed it is the part worth carrying.** This gap was
+> first recorded as *latent*, on the evidence that *"every `>> $GITHUB_OUTPUT`
+> write of a reason or title is a literal"*. That was true. It asked about **two**
+> members of the free-text band — a reason and a title — while the **third**, a
+> dispatch input, was the one being written. A measurement scoped to the
+> instances an audit happened to name is exactly as narrow as a fix scoped to
+> them, which is `path-containment`'s lesson in the same bean on the same day.
+> **Enumerate the band, not its examples.**
+
+**What it still does not read**, and this is a scope claim rather than a clean
+bill: `actions/github-script` `script:` blocks are JavaScript, and the same
+laundering reaches them — `const slug = '${{ steps.slug.outputs.slug }}';`
+appears twice in this corpus. Those two values are character-class constrained
+so neither closes that string today. Extending the scanner to a second language
+changes what the gate claims to read, so it is written down here instead.
 
 ## Shell strings: pass an argv, not a sentence
 
