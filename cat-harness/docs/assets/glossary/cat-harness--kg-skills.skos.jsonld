@@ -382,6 +382,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/branch-freshness",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "branch-freshness"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan. Prevents stale assumptions, merge conflicts, and duplicated work — especially after session restarts, long idle periods, or heavy sibling activity on main."
+        }
+      ],
+      "skos:notation": "branch-freshness",
+      "dcterms:source": "cat-harness/skills/workflow/branch-freshness.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/build-docs",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -559,6 +579,26 @@
       ],
       "skos:notation": "code-node-review",
       "dcterms:source": "cat-harness/skills/folio-core/code-node-review.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/code-review-process",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "code-review-process"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where code review sits in the release lifecycle. Review types, who reviews what, how feedback maps to beans, and the path from review to approval to release. Works with prepare-merge-auto for mechanics and release-lifecycle for the broader flow."
+        }
+      ],
+      "skos:notation": "code-review-process",
+      "dcterms:source": "cat-harness/skills/workflow/code-review-process.md",
       "skos:note": "candidate"
     },
     {
@@ -1009,6 +1049,66 @@
       ],
       "skos:notation": "crdm-detect",
       "dcterms:source": "cat-harness/skills/crdm/crdm-detect.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/crdm-impact-analysis",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "crdm-impact-analysis"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Guide for CRDM Phase 4 — Impact Analysis and Migration Planning. Systematic scan across 7 dimensions: schema, pipeline, adapter, folio, skill, migration, and test/documentation impact. Produces a structured assessment for posting to the GitHub issue."
+        }
+      ],
+      "skos:notation": "crdm-impact-analysis",
+      "dcterms:source": "cat-harness/skills/crdm/crdm-impact-analysis.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/crdm-needs-assessment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "crdm-needs-assessment"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Facilitate Phase 1 (Needs Assessment) of the CRDM requirements workflow. Guide the BA through stakeholder identification, source material gathering, and synthesising a domain-language needs statement. Post to the GitHub issue and iterate until the BA confirms the need is correctly captured."
+        }
+      ],
+      "skos:notation": "crdm-needs-assessment",
+      "dcterms:source": "cat-harness/skills/crdm/crdm-needs-assessment.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/crdm-requirements-template",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "crdm-requirements-template"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Guide and template for CRDM Phase 3 — Requirements Definition. Helps the agent structure requirements from conversation using a REQ-### format with acceptance criteria, priority, and traceability."
+        }
+      ],
+      "skos:notation": "crdm-requirements-template",
+      "dcterms:source": "cat-harness/skills/crdm/crdm-requirements-template.md",
       "skos:note": "candidate"
     },
     {
@@ -3549,6 +3649,46 @@
       ],
       "skos:notation": "related-work-coordination",
       "dcterms:source": "cat-harness/skills/folio-core/related-work-coordination.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/release-epic-planning",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "release-epic-planning"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Plan and track releases using bean epics. Covers epic creation, story/task decomposition, release readiness tracking, and the relationship between epics and GitHub milestones. Applies to code releases, paper publications, and project milestones."
+        }
+      ],
+      "skos:notation": "release-epic-planning",
+      "dcterms:source": "cat-harness/skills/workflow/release-epic-planning.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/release-lifecycle",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "release-lifecycle"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases. Applies to code releases, paper publications, and project milestones. Complements package-release (which handles the mechanics of cutting a release) with the process and policy layer."
+        }
+      ],
+      "skos:notation": "release-lifecycle",
+      "dcterms:source": "cat-harness/skills/workflow/release-lifecycle.md",
       "skos:note": "candidate"
     },
     {
