@@ -61,10 +61,16 @@ const MD_ITALIC_STAR_RE = /(?<!\*)\*([^*]+)\*(?!\*)/g;
 /**
  * `_emphasis_`, with CommonMark's INTRAWORD rule — bean `o29r`.
  *
- * A `_` cannot OPEN emphasis when preceded by an alphanumeric, and cannot CLOSE
+ * A `_` cannot OPEN emphasis when preceded by a word character, and cannot CLOSE
  * when followed by one. That is what makes `$a_1$ and $b_2$` literal text in
  * every conforming renderer, and `snake_case_name` an identifier rather than a
  * word with emphasis inside it.
+ *
+ * `\w` rather than `[_\w]`, because JavaScript's `\w` is `[A-Za-z0-9_]` and
+ * already contains the underscore — the class was redundant. Checked rather than
+ * reasoned: the two spellings agree on all 20 cases in the tests below and on
+ * 200 000 random strings over `_ab1 .-*$\{}`, the alphabet where the boundary
+ * could differ.
  *
  * Without the guard, ANY TWO underscores in one extracted string paired up and
  * both were deleted. One subscript alone was safe because the regex needs a
@@ -83,7 +89,7 @@ const MD_ITALIC_STAR_RE = /(?<!\*)\*([^*]+)\*(?!\*)/g;
  * The site was right and the gate was wrong — kramdown renders the subscript
  * this regex stripped, so the corrupted msgid never matched the page.
  */
-const MD_ITALIC_UNDER_RE = /(?<![_\w])_([^_]+)_(?!\w)/g;
+const MD_ITALIC_UNDER_RE = /(?<!\w)_([^_]+)_(?!\w)/g;
 const MD_HTML_TAG_RE = /<[^>]+>/g;
 const MD_LIQUID_TAG_RE = /\{%.*?%\}/gs;
 const MD_LIQUID_OUTPUT_RE = /\{\{\s*(.*?)\s*\}\}/gs;
