@@ -9,17 +9,36 @@
  *
  * and `bun run docs:pages:check` exited `Script not found` — for about twenty
  * pages, in the line a reader consults precisely when they are unsure whether
- * they are allowed to edit the file in front of them. CI ran the guard the whole
- * time, by its long path (`code-quality-gates.yml`), so nothing was unguarded;
- * what was wrong was the instruction, which is worse in one specific way. **An
- * absent guard fails loudly the first time it is needed. A guard whose
- * documented name exits non-zero teaches the reader it does not exist**, and the
- * two available conclusions from there are to hand-edit the file the banner
- * forbids, or to commit a stale one.
+ * they are allowed to edit the file in front of them.
+ *
+ * CI ran the guard the whole time by its long path (`code-quality-gates.yml`), so
+ * nothing was unguarded; what was wrong was the instruction, which is worse in
+ * one specific way. **An absent guard fails loudly the first time it is needed. A
+ * guard whose documented name exits non-zero teaches the reader it does not
+ * exist**, and the two available conclusions from there are to hand-edit the file
+ * the banner forbids, or to commit a stale one.
  *
  * This is the same shape AGENTS.md paid for with its pre-split `scripts/`
  * prefixes: the two commands in the file a newcomer reads first both exited 1.
  * That was fixed as a one-off. This asserts the property instead.
+ *
+ * ## Read from the COMMIT, not the working tree — and that is not a detail
+ *
+ * The first version of this file walked `cat-harness/docs` on disk. It passed
+ * alone and **failed in the suite**, which is the `ymsu` signature: a test that
+ * reads what another test writes. `bun test` runs files in parallel and this
+ * repository has tests that spawn generators in their WRITING form, so the real
+ * `docs/` tree is not stable for the duration of a test run — the same trap bean
+ * `bjzs` hit with bootstrap sidecars, recorded there as *"passed alone, failed in
+ * the suite"*.
+ *
+ * So the population is `git ls-files` and the content is `git show HEAD:<path>`.
+ * Nothing another test does to the working tree can reach either. **What this
+ * gives up, stated rather than left implied:** an uncommitted banner change is not
+ * checked until it is committed. That is the right trade for a property about
+ * what the repository *publishes* — CI tests a commit, and a guard that is
+ * occasionally wrong about the working tree is worth less than one that is never
+ * wrong about the corpus.
  *
  * ## Why over the CORPUS rather than over the generator's source
  *
@@ -32,26 +51,24 @@
  * add it here.
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const REPO = join(import.meta.dir, "..", "..", "..");
-const DOCS = join(import.meta.dir, "..", "..", "docs");
 
 const scripts: Record<string, string> = JSON.parse(
   readFileSync(join(REPO, "package.json"), "utf-8"),
 ).scripts;
 
-/** Every `.md` under `docs/`, skipping dot- and underscore-prefixed segments. */
-function markdown(dir: string, out: string[] = []): string[] {
-  for (const e of readdirSync(dir)) {
-    if (e.startsWith(".") || e.startsWith("_")) continue;
-    const p = join(dir, e);
-    if (statSync(p).isDirectory()) markdown(p, out);
-    else if (e.endsWith(".md")) out.push(p);
-  }
-  return out;
+function git(...args: string[]): string {
+  return execFileSync("git", args, { cwd: REPO, encoding: "utf-8", timeout: 60_000 });
 }
+
+/** Tracked markdown under the docs tree, as the COMMIT has it. */
+const tracked = git("ls-files", "--", "cat-harness/docs/*.md", "cat-harness/docs/**/*.md")
+  .split("\n")
+  .filter((p) => p.endsWith(".md"));
 
 /**
  * Banner lines, and the backticked `namespace:name` commands they name.
@@ -61,12 +78,19 @@ function markdown(dir: string, out: string[] = []): string[] {
  */
 const banners: Array<{ file: string; command: string }> = [];
 let bannerCount = 0;
-for (const file of markdown(DOCS)) {
-  for (const line of readFileSync(file, "utf-8").split("\n")) {
+for (const file of tracked) {
+  let text: string;
+  try {
+    text = git("show", `HEAD:${file}`);
+  } catch {
+    // Tracked but not in HEAD — a staged addition. Not this test's business.
+    continue;
+  }
+  for (const line of text.split("\n")) {
     if (!line.includes("<!--") || !line.includes("Do not hand-edit")) continue;
     bannerCount += 1;
     for (const m of line.matchAll(/`([a-z][a-z0-9-]*(?::[a-z0-9-]+)+)`/g)) {
-      banners.push({ file: file.slice(REPO.length + 1), command: m[1] });
+      banners.push({ file, command: m[1] });
     }
   }
 }
@@ -74,9 +98,11 @@ for (const file of markdown(DOCS)) {
 describe("a command a generated page names is a command that exists", () => {
   test("the corpus really has banners — otherwise every assertion here is vacuous", () => {
     // The failure mode of every scan-shaped check in this repository: a renamed
-    // marker, a moved docs directory, and the loop below runs over nothing while
-    // reporting clean. `could not determine` is never rendered as clean, and
-    // neither is `did not look`.
+    // marker, a moved docs directory, an `ls-files` pattern that matches nothing,
+    // and the assertions below run over an empty list while reporting clean.
+    // `could not determine` is never rendered as clean, and neither is `did not
+    // look`.
+    expect(tracked.length).toBeGreaterThan(100);
     expect(bannerCount).toBeGreaterThan(0);
     expect(banners.length).toBeGreaterThan(0);
   });
