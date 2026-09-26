@@ -146,6 +146,8 @@ classDiagram
       enforcedBoundary [1] number
       recordedBoundary [1] number
       proseMentions [1] number
+      wrongDirection [1] number
+      undeterminedDirection [1] number
     }
     class cat_harness_qa_viewer_nav_qa_v1_Page["Page"] {
       <<json: ViewerNavQaSchema>>
