@@ -96,8 +96,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/upstream-pins.yml",
+          "detail": ".github/workflows/upstream-pins.yml changed since cat-harness/processes/upstream-pin-watch.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -105,8 +110,8 @@
     }
   },
   "totals": {
-    "pass": 18,
-    "fail": 0,
+    "pass": 17,
+    "fail": 1,
     "n/a": 6,
     "unknown": 0
   },
