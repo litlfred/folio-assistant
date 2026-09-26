@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-26T17:53:41Z
+updated_at: 2026-09-26T21:35:59Z
 parent: folio-assistant-1xhc
 ---
 
@@ -138,3 +138,30 @@ residue (`3vc1`) and the `pull_request` merge-ref discovery (`g5o5`).
 Status untouched, no claim taken — this is somebody else's to work; the evidence is
 recorded here rather than in a new bean because `check before you create` would have
 had me open a duplicate of it.
+
+
+## Two more timeouts, and their MARGINS are the evidence
+
+A clean-tree `bun run gates` on 2026-09-26 21:2x hit these, in the same file:
+
+    (fail) a paper-only criterion is n/a'd in a document folio, under its OWN outcome  [5170.50ms]
+      ^ this test timed out after 5000ms.
+    (fail) a folio whose config cannot be read keeps its coverage                      [5047.46ms]
+      ^ this test timed out after 5000ms.
+
+**Both are timeouts at the limit plus a small remainder** — 5000 ms + 170 ms and
+5000 ms + 47 ms — and that is the discriminating fact, not the failure itself. A
+deterministic environment difference (a missing binary, a different resolution, a
+path that is absent in one place) does not land just past a deadline: it fails
+the same way every time, usually fast. Work that is merely **slower than the
+budget under load** lands exactly here, arbitrarily close to the limit from
+above.
+
+Taken with the earlier datapoint — the failing test SET varies between runs of
+the identical commit, while `profile-scoping.test.ts` is 16/16 in isolation —
+the shape is contention for a shared resource, not a difference between this
+container and CI's.
+
+Recorded as evidence only; this is not my bean and its status is untouched. If
+it is contention, the fix is a budget or a serialisation, not a code path, and
+whoever holds it should decide which.

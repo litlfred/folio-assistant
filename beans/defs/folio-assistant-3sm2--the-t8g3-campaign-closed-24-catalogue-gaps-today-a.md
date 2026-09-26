@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3sm2
-title: 'The t8g3 campaign closed 24 catalogue gaps today and opened 35: the drift gate cannot ratchet while it is held red'
+title: 'A gate held red by decision cannot ratchet its own subject — so the catalogue question is asked of the CHANGE (the 25→36 growth claim is RETRACTED: it was a mutant''s output)'
 status: completed
 type: task
 priority: high
 created_at: 2026-09-26T19:39:54Z
-updated_at: 2026-09-26T20:39:52Z
+updated_at: 2026-09-26T21:36:20Z
 parent: folio-assistant-bzyu
 ---
 
@@ -254,3 +254,111 @@ count announces itself and a missing failure mode does not.
       `translation:catalogue:check`, ABOVE the drift batch
 - [x] the 35's segment alignment is measured — done, and **corrected above**: the
       method missed msgid uniqueness, so 2 of the 29 were misclassified
+
+
+# CORRECTION 2026-09-26 21:3x — the growth claim is WITHDRAWN. I published a mutant's output as the gate's.
+
+This bean asserted that the catalogue backlog went **25 -> 36 today, net +11**,
+and that *"35 is the number the drift gate reports"*. **Both are false, and the
+second was false when it was written.** The gate is still right; its
+justification is smaller and different.
+
+## What the numbers actually are
+
+Separating the gate's two conditions, which is what I failed to do:
+
+    range             added   publish a translation   of those, NO .po
+    6ec97bd64ab^       257            35                      5
+    438a79d284d^       172            15                      2
+    origin/main          4             0                      0
+
+**35 and 15 are the "added file publishes a translation" counts. The FINDINGS
+were 5 and 2.** The table in this bean and in #1422 presents 35 and 15 as
+findings.
+
+**Where they came from.** One of the three hand-mutations used to test this gate
+was *"drop the `existsSync` check"* — and a mutant that reports every added
+translated page regardless of its catalogue returns exactly 35 and 15. The
+mutation testing worked; I then carried the mutant's output into the report as
+the gate's. That is the whole error, and it is worse than an arithmetic slip
+because the mutant was *built to produce* the number that made the case.
+
+## The corpus backlog SHRANK, and the remainder is the hard core
+
+`translation:drift:check` on this head: **70 compared, 0 NEWLY drifted, 8
+uncatalogued and recorded.** Not 36.
+
+`f6r1`'s population was **27**, not the 25 this bean said — 25 is the count of
+`UNCATALOGED` entries #1364 merged and #1384 reverted, a different set that I
+conflated with it. So the trajectory is **27 -> 8**, downward, over the period
+this bean characterised as growth.
+
+The 8 that remain are diagnosed by the drift gate itself, and they are the
+classes `f6r1` called provably not derivable: 2 published-and-structurally-current
+but untracked, 3 `count-differs`, 3 `msgid-conflict` needing `msgctxt`. The
+campaign cleared the mechanical cases and left the ones that need a human
+decision — the opposite of the picture this bean painted.
+
+My 5 findings are a **subset** of those 8; the other 3 were published before
+`6ec97bd64ab` and are therefore outside the range, which is the gate keying on
+the change working as intended.
+
+## What survives, and it is enough to keep the gate
+
+1. **The mechanism argument, which never rested on a count.** A job stops at its
+   first failing step, so a gate held red by decision cannot report GROWTH in its
+   own subject: a batch adding to the set it reports leaves the job red either
+   way and no reviewer sees a new red. That is an argument about control flow, and
+   it is unaffected by every retraction above.
+2. **The gate finds real instances.** 5 on `6ec97bd64ab^`, exit 1, each naming a
+   page and the catalogue to author; 0 on the current change, exit 0. Both
+   verified on this head.
+3. **The alignment measurement is untouched**, and the reason is worth stating
+   because it uses the same 35. There, 35 is the count of published translations
+   added in those batches — the population the measurement needed, and the
+   correct use of the number. It is only the *findings* reading that was wrong.
+
+## The falsification command in #1422 is wrong and is being corrected
+
+    bun run translation:catalogue:check -- --since 6ec97bd64ab^
+
+is offered there with *"it should report 35"*. **It reports 5.** And its output
+DECAYS as catalogues are authored, because `uncatalogued` tests `existsSync` in
+the working tree rather than at the historical commit — correct for the question
+"will this land a publication with no catalogue", but it means the command is a
+moving target and never was a fixed falsification. The stable one is the unit
+tests over the temp-dir fixture, which decide the three cases by construction.
+
+
+## The alignment measurement survives `o29r`, and for the strongest reason
+
+#1433 (`o29r`) fixes `MD_ITALIC_UNDER_RE` in `pot-extract.ts`, which was pairing
+**any** two underscores in one extracted string as an `_emphasis_` span and
+deleting both — so `$a_1$ and $b_2$` extracted as `$a1$ and $b2$`. This
+measurement ran `extractMarkdown` over the same corpus, so every figure in it
+was computed through the broken extractor. Re-measured rather than argued:
+
+| | original extractor | with `o29r`'s regex |
+|---|---|---|
+| pairs with equal count | 32 | **32** |
+| segments across them | 5004 | **5004** |
+| identical-text anchors | 462 (9.2 %) | **462 (9.2 %)** |
+| pairs showing any off-by-one shift | 0 | **0** |
+| pairs with zero anchors | 3 | **3** |
+
+**Identical is worthless unless the harness could have seen a difference**, so
+that was measured too, and it is the part that settles it:
+
+- over the **42 files** this bean measured (35 translations + their 7 sources),
+  **0 of 6,366** segments change under the fix;
+- over **all of `cat-harness/docs`**, **230 of 46,452** change, in **69 files**.
+
+So the harness is sensitive — it detects 230 — and **not one of them lands on
+the pages this bean measured.** The caveat does not apply because the defect
+does not occur there, which is a better answer than "the method is robust to
+it": robustness would have to be argued, absence is observed.
+
+230 is **my own count**, against `o29r`'s reported 229 for the same corpus. The
+difference of one is unexplained and not chased: it changes nothing here, and
+quoting their number as confirmed when I measured a different one would be the
+failure this repository has a rule about.
