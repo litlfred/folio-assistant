@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T03:40:20Z
-updated_at: 2026-09-26T16:43:35Z
+updated_at: 2026-09-26T19:55:08Z
 parent: folio-assistant-1swy
 ---
 
@@ -286,3 +286,49 @@ almost always in when it runs the suite.
 - [ ] `profile-scoping`'s mechanism is found, or the test is made independent of
       tree state. MEASURED AFTER: it passes in-suite on a deliberately dirtied
       tree, ten runs
+
+
+## `declared-directory-resolves`' MECHANISM IS NAMED: the probe causes the writes it detects
+
+2026-09-26, found while testing an unrelated fix (`xd1g`). This closes the clause
+this bean left open — I had recorded "a sibling in the same `bun test` process" and
+could not say which sibling.
+
+**It is not a sibling. It is the test's own probe.**
+
+`declared-directory-resolves.test.ts` spawns `bun -e 'import "./<module>";'` for
+every module that resolves a declared directory, and compares
+`git status --porcelain` before and after. `cat-harness/scripts/kg-audit.ts` is one
+of those modules and **has no `import.meta.main` guard** — its body is top-level and
+ends `process.exit(0)`, so importing it RUNS THE WHOLE AUDIT and writes the kg-qa
+sidecars.
+
+That resolves the correlation this bean recorded:
+
+| tree at the time | what the audit's writes do | test verdict |
+|---|---|---|
+| clean | regenerate identical bytes — no-ops | **passes** |
+| dirty | regenerate against the UNCOMMITTED sources, producing new modifications | **fails** — the 13 entries it reported |
+
+So the dirty-tree correlation was right and the attribution was wrong: nothing else
+in the suite is involved, and a bisection over the test corpus — the step I had
+already withdrawn as the wrong move — would have found `kg-audit.ts` and called it
+a "culprit sibling", which is only half the truth. The test does not observe a
+sibling writing; it commissions the write itself.
+
+How it was found: I tried to unit-test a predicate by importing `kg-audit.ts`, got
+the audit's output and no test summary, and went looking for the guard. Nothing
+about this bean's subject led me there — which is worth recording, because two
+deliberate attempts on this bean did not find it and an accident did.
+
+### Adds to and closes clauses in "Done when"
+
+- [x] the mechanism for `declared-directory-resolves` is NAMED — the probe imports
+      an unguarded entry point and causes the writes it then detects
+- [ ] `kg-audit.ts` gets an `import.meta.main` guard, after which the test passes on
+      a DIRTY tree too. MEASURED AFTER: with an uncommitted BPMN edit in the tree,
+      the full suite reports no `declared-directory-resolves` failure. Owner's call:
+      it restructures a 2000-line top-level script
+- [ ] `profile-scoping`'s mechanism is STILL not established. Do not assume it is
+      the same one — that assumption is what this entry just corrected for the
+      other test

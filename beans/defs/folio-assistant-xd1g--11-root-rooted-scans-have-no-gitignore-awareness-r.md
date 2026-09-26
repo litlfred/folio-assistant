@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-26T18:17:15Z
+updated_at: 2026-09-26T19:55:08Z
 parent: folio-assistant-ahvw
 ---
 
@@ -357,3 +357,70 @@ own merits, not to that PR on a coincidence.
 - [ ] the `gitCorpus` fix for it lands, on its own change. MEASURED AFTER: the
       six files are present and no sidecar differs from a pristine clone's
 - [ ] `skillFiles()` in the same file — the second bare walk, not yet measured
+
+
+## `kg-audit`'s page corpus now asks git — and the OTHER walk is measured CLEAN rather than fixed
+
+2026-09-26. The held fix landed, with the two things it was missing: a home where
+it can be tested, and a test that can fail.
+
+### Fixed: the page-corpus walk
+
+`corpusPredicate` now lives in `schemas/git-corpus.ts` beside `gitCorpus`, and
+`kg-audit.ts` imports it. Four states kept apart, each with a test:
+
+| case | answer | why |
+|---|---|---|
+| git listed it (tracked, or untracked-and-not-ignored) | in | a file a contributor just wrote is part of the corpus; `--cached` alone would make the audit disagree with itself between `git add` and `git commit` |
+| under the repo, git did not list it | **out** | gitignored — the defect |
+| not under the repo | in | `docsLayers` can return a SIBLING checkout, which cannot be judged by this corpus; dropping it would be a clean run over unread content (`dh4f`) |
+| git could not answer | in, everything | an unanswerable question is not an empty answer |
+
+**Mutation-tested by hand**, four mutations, each red on the test that names it:
+`undefined` read as an empty corpus; outside-the-repo dropped; the trailing
+separator removed from the prefix test (so `<root>-other/…` reads as inside);
+and the gitignored case admitted, i.e. the defect restored.
+
+### NOT fixed, because it has no measured exposure: `skillFiles()`
+
+The second bare walk. Measured against
+`git ls-files --others --ignored --exclude-standard` over the real kg roots:
+
+    cat-harness/skills   ignored=0  untracked=0
+    bootstrap/skills     ignored=0  untracked=0
+
+The 17 ignored `.md` under a `skills/` path in this container are all inside
+`node_modules/playwright/.../skills/playwright-cli/`, which is **not** under
+`ownKgRoots(root)`, so the walk never reaches them. It also walks DECLARED roots
+rather than every docs layer, and filters through `isSkillMd`.
+
+So it is latently unguarded and currently clean. **Left alone deliberately: a fix
+with no measured effect is a fix no test can demonstrate**, and shipping one into a
+hot path would be the same over-claim this bean exists to catch, pointed inward.
+The one-line predicate is now exported and applies the day it matters.
+
+### A finding that belongs to `9v4m`, found by trying to test this
+
+`kg-audit.ts` has **no `import.meta.main` guard**. Its body is top-level and ends
+`process.exit(0)`, so *importing* it runs the entire audit and then kills the
+process — which is why the first version of this test produced audit output and no
+test summary, and why the predicate had to move rather than be exported in place.
+
+**That is the mechanism for `9v4m`'s `declared-directory-resolves` failure**, which
+I had recorded as "a sibling in the same process" and left without a named cause.
+The test spawns an import of every module that resolves a declared directory;
+`kg-audit.ts` is one, so the test ITSELF runs the audit and rewrites sidecars. On a
+clean tree those writes are no-ops and `git status` is unchanged, so it passes. On a
+dirty tree they regenerate against uncommitted sources and produce real
+modifications — the 13 it reported. **The probe causes the writes it detects.**
+Cross-referenced on `9v4m`; the remedy is a guard on `kg-audit.ts`, which is a
+structural change to a 2000-line top-level script and is not taken here.
+
+### Done when
+
+- [x] `kg-audit.ts`'s page corpus asks git — landed, tested, mutation-tested
+- [x] `skillFiles()` measured — 0 ignored, 0 untracked under the real kg roots;
+      not fixed, and the reason recorded
+- [ ] an `import.meta.main` guard on `kg-audit.ts`. MEASURED AFTER: importing it
+      writes nothing and does not exit the importing process. Owner's call — it
+      restructures a hot script

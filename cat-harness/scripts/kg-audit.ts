@@ -62,6 +62,8 @@ import { claimsEntry, judgePair, rootScripts } from "./pair-claims.js";
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
+import { corpusPredicate } from "../schemas/git-corpus.ts";
+
 import {
   KG_QA_SCHEMA,
   KG_QA_DIRNAME,
@@ -281,12 +283,33 @@ function docsSurface(): DocsSurface | undefined {
   const base = layers.find((l) => !l.repositoryScoped);
   if (!base) return undefined;
   const texts: string[] = [];
+
+  // ASK GIT what the page corpus is, for anything inside this repository.
+  //
+  // This walk used to exclude `_site`, `node_modules` and `vendor` by name, and
+  // a name list cannot be complete. Measured 2026-09-26, and it cost a red CI
+  // job on a green local tree (bean `xd1g`, the shape `rsi6` and `kg-detangle`
+  // already paid for): this container held SIX gitignored `.md`/`.html` files a
+  // fresh checkout does not — five `_kg/**/index.html` and a
+  // `.pytest_cache/README.md` — none of them matching any excluded name. Their
+  // text entered `pages`, so every criterion that asks "is this mentioned on a
+  // page?" answered differently here than in CI, and `kg:audit:check` was green
+  // locally and red on the runner FOR THE SAME COMMIT.
+  //
+  // A path is dropped only when it is under the repository AND git does not
+  // list it, so the two cases stay distinct: a layer in a SIBLING checkout
+  // (`docsLayers` may return one) is outside this corpus and cannot be judged
+  // by it, and is therefore kept rather than silently dropped. `undefined` from
+  // `gitCorpus` means git could not answer at all, which keeps every file for
+  // the same reason — an unanswerable question is not an empty answer.
+  const inCorpus = corpusPredicate(resolve(root, ".."));
+
   const walk = (dir: string): void => {
     for (const e of readdirSync(dir, { withFileTypes: true })) {
       if (e.name.startsWith("_site") || e.name === "node_modules" || e.name === "vendor") continue;
       const p = join(dir, e.name);
       if (e.isDirectory()) walk(p);
-      else if (/\.(md|html)$/.test(e.name)) texts.push(readFileSync(p, "utf-8"));
+      else if (/\.(md|html)$/.test(e.name) && inCorpus(resolve(p))) texts.push(readFileSync(p, "utf-8"));
     }
   };
   for (const l of layers) walk(l.dir);
