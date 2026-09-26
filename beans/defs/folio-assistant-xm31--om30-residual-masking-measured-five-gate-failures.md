@@ -62,7 +62,8 @@ reads the first red run as its fault.
 
 - [ ] the owner has decided whether the remaining steps get `continue-on-error`,
       a second split, or nothing
-- [ ] the four unowned failures each have a bean or an owner
+- [x] the four unowned failures each have a bean or an owner — all five fixed by
+      #1414, #1410 and #1413
 
 
 ## The five are fixed — by a sibling, within the hour (2026-09-26)
@@ -96,9 +97,7 @@ number will move again at the next unrelated red.
 
 So the owner decision below is the whole remaining content of this bean.
 
-## Done when
-
-- [ ] the owner has decided whether the remaining steps get `continue-on-error`,
-      a second split, or nothing
-- [x] the four unowned failures each have a bean or an owner — all five fixed by
-      #1414, #1410 and #1413
+(The resolution above is recorded against this bean's ONE `## Done when` list at
+the top, ticked in place. A second ticked list is the `check:bean-bodies`
+shadow-checklist defect — the same one this session already paid for on `om30`,
+made again here.)
