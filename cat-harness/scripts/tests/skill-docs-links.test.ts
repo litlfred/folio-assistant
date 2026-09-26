@@ -28,7 +28,7 @@
  */
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { dirname, join, relative, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 
