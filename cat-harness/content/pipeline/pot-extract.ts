@@ -148,6 +148,35 @@ export function cleanMarkdownText(text: string): string {
 
 // ── POT entry ───────────────────────────────────────────────────
 
+/**
+ * What KIND of markdown construct an entry came from.
+ *
+ * Added for `derive-po.ts` (issue #206), which aligns an already-translated
+ * page against its source to recover a `.po` catalogue. Alignment is positional,
+ * so it needs a way to be REFUSED when the two sides are not the same shape —
+ * and a count match is not that. Measured 2026-09-26: of the 25 uncatalogued
+ * (page, locale) pairs, 9 matched by count, and a count match does not rule out
+ * two adjacent constructs having swapped. The kind sequence does.
+ *
+ * Not emitted into the `.pot` — `formatPot` ignores it, so the on-disk format is
+ * unchanged and every existing catalogue still parses.
+ */
+export type PotEntryKind =
+  // From markdown prose — the five constructs `extractMarkdown` recognises.
+  | "heading"
+  | "paragraph"
+  | "list-item"
+  | "blockquote"
+  | "table-cell"
+  // Not markdown at all. Named rather than made optional, so a new producer has
+  // to DECIDE — the rule this repository applies to graph kinds, where "a kind
+  // that has not decided does not compile". An optional field would let a
+  // producer stay silent, and `derive-po.ts` would then align against entries
+  // whose shape it cannot check.
+  | "bpmn-label"
+  | "manifest-title"
+  | "ui-string";
+
 /** A single translatable entry extracted from a source file. */
 export interface PotEntry {
   /** Source file path (relative to content root). */
@@ -156,6 +185,8 @@ export interface PotEntry {
   line: number;
   /** The msgid — the cleaned source string to translate. */
   msgid: string;
+  /** Which construct it came from — see {@link PotEntryKind}. */
+  kind: PotEntryKind;
   /** Published/context URL for Weblate (optional). */
   contextUrl?: string;
   /** Optional translator comment. */
@@ -197,6 +228,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
         source,
         line: paragraphLines[0].lineno,
         msgid: text,
+        kind: "paragraph",
       });
     }
     paragraphLines.length = 0;
@@ -297,7 +329,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
       flushParagraph();
       const text = cleanMarkdownText(headingMatch[2]);
       if (text.length >= MD_MIN_TEXT_LEN) {
-        entries.push({ source, line: lineno, msgid: text });
+        entries.push({ source, line: lineno, msgid: text, kind: "heading" });
       }
       continue;
     }
@@ -315,7 +347,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
       if (listRunStart === null) listRunStart = entries.length;
       const text = cleanMarkdownText(listMatch[2].trim());
       if (text.length >= MD_MIN_TEXT_LEN) {
-        entries.push({ source, line: lineno, msgid: text });
+        entries.push({ source, line: lineno, msgid: text, kind: "list-item" });
       }
       continue;
     }
@@ -326,7 +358,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
       flushParagraph();
       const text = cleanMarkdownText(bqMatch[2]);
       if (text.length >= MD_MIN_TEXT_LEN) {
-        entries.push({ source, line: lineno, msgid: text });
+        entries.push({ source, line: lineno, msgid: text, kind: "blockquote" });
       }
       continue;
     }
@@ -338,7 +370,7 @@ export function extractMarkdown(md: string, source: string): PotEntry[] {
       for (const cell of cells) {
         const text = cleanMarkdownText(cell.trim());
         if (text.length >= MD_MIN_TEXT_LEN) {
-          entries.push({ source, line: lineno, msgid: text });
+          entries.push({ source, line: lineno, msgid: text, kind: "table-cell" });
         }
       }
       continue;
@@ -386,6 +418,7 @@ export function extractFromManifest(
       source: sourcePath,
       line: 1,
       msgid: manifest.title,
+      kind: "manifest-title",
       comment: manifest.kind
         ? `Title of ${manifest.kind} block "${manifest.label}"`
         : `Title of block "${manifest.label}"`,

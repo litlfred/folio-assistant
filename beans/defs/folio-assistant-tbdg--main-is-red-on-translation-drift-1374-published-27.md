@@ -1,10 +1,11 @@
 ---
 # folio-assistant-tbdg
 title: 'main is RED on translation-drift: #1374 published 27 translated pages with no .po catalogue, and the backlog list is not the fix'
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-26T04:22:55Z
-updated_at: 2026-09-26T04:22:55Z
+updated_at: 2026-09-26T08:57:28Z
 parent: folio-assistant-1xhc
 ---
 
@@ -157,3 +158,113 @@ would make that PR's own account of itself false.
       (and the clock accepted, with that stated) or a synthetic page inside
       `harness()` (and the corpus dependency removed)
 - [ ] MEASURED AFTER: translating one more real page does not turn this test red
+
+
+## MEASURED 2026-09-26 — 7 of the 25 catalogues are derivable, and the other 18 are a REAL FINDING
+
+The remedy this bean called for ("the catalogues are the fix") is partly
+mechanisable, and the part that is not turns out to be the more important half.
+
+`content/pipeline/derive-po.ts` runs the SAME deterministic extractor
+(`extractMarkdown`) over a source page and its published translation and pairs
+entries by position. That is reading one segmentation rather than inventing a
+second — which is why the `UNCATALOGED` docblock's reason ("a catalogue cannot be
+derived from a finished translation without inventing the segmentation") is nearly
+right rather than right: it holds for a translation you can only read as prose.
+
+### The split
+
+| outcome | pairs |
+|---|---|
+| kind sequence identical — derived | **7** |
+| count matches but kinds diverge — REFUSED | **2** |
+| count differs — refused | **16** |
+
+Seven catalogues written (`{ar,es,fr}/content-types.po`,
+`{ar,es,fr,ru}/contributing.po`), each marked **UNOFFICIAL** in its header
+because #206 defines official as human sign-off and a script's output is not
+that. Independent corroboration: `translation:drift:check` findings went
+**25 → 18** with no NEW drift reported on the seven — the gate now reads them as
+catalogued pages and finds them consistent, which a wrongly-aligned catalogue
+would not have produced.
+
+### The middle row is why the check is the KIND SEQUENCE and not the count
+
+My first hypothesis was a count match. It was **refuted by measurement**: only 9
+of 25 pairs match by count, and `PotEntry` carried no structural field to verify
+the alignment with, so a count was all there was to check. Adding
+`PotEntryKind` (8 named kinds; a new producer must DECIDE, the rule this repo
+applies to graph kinds) then caught **2 of those 9** as structurally divergent:
+`fr/accessibility` at construct 32 and `ru/getting-started` at construct 53, both
+pairing a source **paragraph** against a translated **table-cell**.
+
+A count-only check would have written two catalogues pairing a paragraph's msgid
+with a table cell's text, and **nothing downstream would have noticed** — a `.po`
+is well-formed whatever it claims. The extra field earned itself on its first run.
+
+### What a matching kind sequence does NOT prove
+
+Necessary, not sufficient: two adjacent paragraphs could have swapped and the
+sequence would still match. Stated in the module docblock rather than hidden,
+because a caller deciding whether to trust the output needs it.
+
+### The 18 refusals are drift the MISSING catalogue was hiding
+
+This is the finding, and it is larger than the gate failure that surfaced it. A
+refusal means the published translation does not have the same SHAPE as its
+source, so no positional alignment is sound. `translation-drift` could only ever
+report "no catalogue" on these pages — the absence was **masking** a structural
+divergence, so the red gate was under-reporting rather than over-reporting.
+
+`zh` is systematically short on all five pages, which is a pattern rather than
+five accidents and points at one producer. Split out as its own bean: correcting
+or re-translating those pages is content work, not catalogue work, and it needs
+the owner's call on which.
+
+### Adds to "Done when"
+
+- [x] the 7 soundly-derivable catalogues exist, marked unofficial
+- [ ] the 18 refused pairs are dispositioned (see the child bean)
+
+
+### CORRECTION, same day — the 18 refusals are NOT 18 findings about translations
+
+The section above says *"The 18 refusals are drift the MISSING catalogue was
+hiding"* and treats every one as a divergence the translator introduced. **That is
+wrong for half of them**, and I established it by measuring rather than by reading
+the refusals again.
+
+Re-running both sides with `MD_MIN_TEXT_LEN` at 1 instead of 3:
+
+| refusal | pairs |
+|---|---|
+| artefact of the extractor's own threshold — vanishes at min 1 | **9** |
+| substantive — the translation really carries less | **9** |
+
+**Both kind divergences are in the first group.** `fr/accessibility` and
+`ru/getting-started` align exactly (`firstKindDivergence === -1`) once the
+threshold is out of the way. So the sentence above calling them "the measured
+justification for checking kinds at all" was right about the *check* and wrong
+about the *cause*: they are misaligned, a count-only check would have shipped two
+wrong catalogues, and the reason they are misaligned is this repository's
+extractor, not the translators.
+
+The mechanism, on a real cell of `docs/installation.md`: stripping code spans
+leaves `", "` (2 characters) in English and `"، و"` (3) in Arabic, so an
+identical 4×7 table yields 66 constructs in `ar` against 65 in English. It runs
+the other way for Chinese, where `否` is one character and is dropped while `non`
+and `нет` are kept — which is the actual reason `zh` looked "systematically
+short", and that reading was partly a threshold too.
+
+Split into three beans so each has an owner and none of them is this one:
+
+- `6b8u` — the character threshold (7 count mismatches + both kind divergences)
+- `ig4a` — indented code fences extracted as prose (74 code fragments offered to
+  translators, 16 real strings hidden), found in the same sweep
+- `7x8o` — the 9 that survive: `zh` short on all five pages, and `es`/`ru`
+  `accessibility` short by the same 13
+
+The claim that survives intact is the one that matters for this bean: the missing
+catalogue was **masking** a real divergence on 9 pages, so this gate was
+*under*-reporting. The remedy is 7 catalogues plus `7x8o`, and never 27
+`UNCATALOGED` entries.

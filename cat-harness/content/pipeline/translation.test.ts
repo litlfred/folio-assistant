@@ -270,7 +270,7 @@ describe("extractFromManifest", () => {
 describe("formatPot", () => {
   test("formats valid POT with header", () => {
     const pot = formatPot(
-      [{ source: "test.md", line: 1, msgid: "Hello world" }],
+      [{ source: "test.md", line: 1, msgid: "Hello world" , kind: "paragraph" }],
       { projectName: "test-folio" }
     );
     expect(pot).toContain('msgid "Hello world"');
@@ -281,8 +281,8 @@ describe("formatPot", () => {
 
   test("deduplicates entries with same msgid", () => {
     const pot = formatPot([
-      { source: "a.md", line: 1, msgid: "Same text" },
-      { source: "b.md", line: 5, msgid: "Same text" },
+      { source: "a.md", line: 1, msgid: "Same text" , kind: "paragraph" },
+      { source: "b.md", line: 5, msgid: "Same text" , kind: "paragraph" },
     ]);
     // Should appear once as msgid, but with two #: references
     const matches = pot.match(/msgid "Same text"/g);
@@ -293,7 +293,7 @@ describe("formatPot", () => {
 
   test("adds python-brace-format flag for Liquid vars", () => {
     const pot = formatPot([
-      { source: "t.md", line: 1, msgid: "Count: {lqd_count}" },
+      { source: "t.md", line: 1, msgid: "Count: {lqd_count}" , kind: "paragraph" },
     ]);
     expect(pot).toContain("#, python-brace-format");
   });
