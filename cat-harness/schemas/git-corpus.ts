@@ -24,9 +24,32 @@
  * became wrong because something else in the tree changed. A denylist encodes
  * what happened to be there when it was written.
  *
- * `xd1g` counted **11** scanners here walking from a root with no gitignore
- * awareness, and said the rule wants stating once rather than copying eleven
- * times. This is that statement.
+ * `xd1g` counted **11** scanners under `scripts/` walking from a root with no
+ * gitignore awareness, and said the rule wants stating once rather than copying
+ * eleven times. This is that statement.
+ *
+ * ## Why it lives in `schemas/` and not beside the scripts that use it
+ *
+ * It sat in `scripts/` until 2026-09-26. Then a **thirteenth** ignore-blind scan
+ * turned up in `skills/graph-management/kg-detangle.ts`, outside the directory
+ * `xd1g`'s survey searched — and the one whose output is COMMITTED, so its wrong
+ * answer was pinned and then republished: `cat-harness/schemas`'s `size` read
+ * **1441** where git accounts for **227**, the difference being
+ * `block-qa-schema/node_modules` and `dist/`.
+ *
+ * The owner ruled the placement: **a skill does not know about a script, and a
+ * script belongs to `tools`.** Importing this from `skills/` while it lived in
+ * `scripts/` would have minted the first `skills/` -> `scripts/` edge in the
+ * repository — measured the same day, and there were **zero**. `tools/` was not
+ * the answer either: it imports `../schemas/*` and nothing else, so a rule placed
+ * there could not be reached from `schemas/` or `scripts/` without inverting that.
+ *
+ * `schemas/` is the one home legal from all four directions today AND still legal
+ * once scripts become tools, because `tools/` -> `schemas/` is already the only
+ * edge `tools/` has. Its neighbour `layer-direction.ts` is the precedent rather
+ * than an analogy: a shared verdict used by `check:partition` in `scripts/` and by
+ * `kg-detangle` in `skills/`, for the same reason and by the same two callers
+ * (bean `j79e`).
  *
  * ## The contract, and the distinction callers must keep
  *

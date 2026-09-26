@@ -48,7 +48,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 
-import { gitCorpus } from "./git-corpus.ts";
+import { gitCorpus } from "../schemas/git-corpus.ts";
 import { dirname, join, relative, resolve } from "node:path";
 import type { z } from "zod";
 
