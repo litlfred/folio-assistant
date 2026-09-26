@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 349,
+      "count": 351,
       "unit": "beans"
     }
   },
@@ -1635,6 +1635,20 @@
       "updatedAt": "2026-09-20T21:55:00Z",
       "preview": "## The register — the shapes have NAMES, not numbers\n\n*2026-09-20T23:1xZ, on the owner's instruction (\"2 resolve\").*\n\nThe ordinals collided: this bean numbered **shapes** in discovery order, while\n`7iog` called itself \"a fourth class beyond `b963`'s three\" — numbering\nsomething else entirely, the **readers** `check:command-paths` had at the\ntime. Two incompatible schemes, one word. And by the time",
       "file": "beans/defs/folio-assistant-b963--cold-start-the-entry-documents-named-scripts-for-t.md"
+    },
+    {
+      "id": "folio-assistant-bf5l",
+      "title": "WRONG DIRECTION on main: cat-harness/schemas/intake.ts imports folio-assistant-core, and two of three checks cannot see it",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T04:01:42Z",
+      "updatedAt": "2026-09-26T04:01:42Z",
+      "preview": "`cat-harness/schemas/intake.ts:28`:\n\n```ts\nimport { ProvenanceSchema } from \"../../folio-assistant-core/schemas/materialization.js\";\n```\n\n`cat-harness` declares `needs: ['bootstrap']`. `folio-assistant-core` declares\n`needs: ['cat-harness']`. So the code adds a **harness → core** edge against a\ndeclared **core → harness** dependency. The declarations alone have no cycle;\nthe declarations plus the ",
+      "file": "beans/defs/folio-assistant-bf5l--wrong-direction-on-main-cat-harnessschemasintakets.md"
     },
     {
       "id": "folio-assistant-bgrz",
@@ -4069,6 +4083,20 @@
       "file": "beans/defs/folio-assistant-v556--two-kg-export-sidecars-carry-three-script-hashes-b.md"
     },
     {
+      "id": "folio-assistant-v625",
+      "title": "MAIN IS RED: six skills landed with no manifest entry and no reference page — one cause, four failing gates",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T05:10:48Z",
+      "updatedAt": "2026-09-26T05:11:00Z",
+      "preview": "`main` was red in CI, and four of its seven failures had one cause: **six skill\nfiles existed with no package-manifest entry and no published reference page.**\n\n| file | manifest | reference page |\n|---|---|---|\n| `crdm/crdm-needs-assessment.md` | missing | missing |\n| `crdm/crdm-impact-analysis.md` | missing | missing |\n| `crdm/crdm-requirements-template.md` | missing | missing |\n| `workflow/code",
+      "file": "beans/defs/folio-assistant-v625--main-is-red-six-skills-landed-with-no-manifest-ent.md"
+    },
+    {
       "id": "folio-assistant-v7bg",
       "title": "TOOL 1/13: Task_Publish — publication & export (34 files, 19 entry points)",
       "status": "in-progress",
@@ -4787,14 +4815,14 @@
     {
       "id": "folio-assistant-ymsu",
       "title": "kg:detangle:check CANNOT FAIL inside bun run gates — bun test repairs the sidecar 1140 lines earlier in the same run",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T18:38:34Z",
-      "updatedAt": "2026-09-25T18:38:34Z",
+      "updatedAt": "2026-09-26T04:54:43Z",
       "preview": "Measured 2026-09-25, while establishing whether PR #1348 still had anything to\nfix. It is the ROOT CAUSE of #1348's own subject: the detangle staleness that\nbroke `main` was invisible to `bun run gates` and surfaced only because a test\nrun left the working tree dirty.\n\n## The mechanism\n\n`bun run gates` runs 152 gates in order. Gate 1 is `bun test`. Somewhere in that\nsuite the detangle **writer** r",
       "file": "beans/defs/folio-assistant-ymsu--kgdetanglecheck-cannot-fail-inside-bun-run-gates-b.md"
     },
