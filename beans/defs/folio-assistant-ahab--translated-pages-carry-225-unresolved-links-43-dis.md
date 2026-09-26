@@ -89,8 +89,15 @@ entire fix."*
 no `.ts` or `.py` at all — the translations are hand-authored content,
 committed directly. The link text is BYTE-IDENTICAL to the English page's:
 
-    EN docs/agentic-harness.md     ](reference/skill-instructions/deterministic-and-agentic.html)
-    FR docs/fr/agentic-harness.md  ](reference/skill-instructions/deterministic-and-agentic.html)
+```text
+EN docs/agentic-harness.md     ](reference/skill-instructions/deterministic-and-agentic.html)
+FR docs/fr/agentic-harness.md  ](reference/skill-instructions/deterministic-and-agentic.html)
+```
+
+(Fenced at column 0, not indented. An INDENTED block left the two `](…)` above
+link-shaped to `check:subgraphs`, which duly reported this bean as carrying two
+dangling links — `blv9`'s shape, arriving in the text of a bean about links.
+`ig4a` is why the fence has to start at column 0.)
 
 Same string, one directory deeper. From `docs/` it reaches `docs/reference/…`;
 from `docs/fr/` it reaches `docs/fr/reference/…`, which does not exist — the

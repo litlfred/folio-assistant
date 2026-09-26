@@ -83,13 +83,47 @@
  * than enumerating the hostile ones: the remedy is one `env:` line either way,
  * and the three slug sites took it.
  *
+ * ## TWO surfaces, because `run:` is not the only thing that parses text
+ *
+ * `actions/github-script` `script:` blocks are JavaScript, and a `${{ }}` is
+ * substituted into their source the same way — so the same values are graded by
+ * the same bands there. What differs is the REMEDY, which is why they are a
+ * separate surface rather than a wider regex: a `script:` block is Node, so the
+ * step's `env:` arrives as `process.env.X`, and telling somebody to write
+ * `"$VAR"` in JavaScript is advice that does not apply.
+ *
+ * **And one position there is worse than any in bash** (bean `j0zs`, measured
+ * 2026-09-26). Inside a template literal, `${…}` is EVALUATED, so a value does
+ * not need to close a quote to become program:
+ *
+ * ```
+ * git check-ref-format --branch 'a${process.exit(1)}b'   → LEGAL
+ * git check-ref-format --branch 'x`id`'                  → LEGAL
+ * git check-ref-format --branch 'x${7*7}'                → refused (the `*`)
+ * ```
+ *
+ * `feature-staging.yml` interpolated the RAW fork branch name into a template
+ * literal, in a step whose own sibling two jobs down binds the same value to
+ * `env:` and says why. So this was arbitrary JavaScript execution reachable by
+ * opening a fork PR — and `folio-staging.yml`, doing the same job, had used
+ * `process.env` all along. **The corpus held the defect and its own remedy side
+ * by side, and nothing checked which one a file used.** That is `1wef`'s lesson
+ * a third time, in the surface this gate had declared out of scope.
+ *
+ * Position is NOT modelled. Deciding whether an interpolation sits inside a
+ * template literal means tracking backticks across lines, and a detector that
+ * quietly misses the multi-line case would be worse than none — so the bands
+ * grade the VALUE, as everywhere else, and this paragraph carries the fact that
+ * a `script:` position can be more dangerous than the equivalent shell one.
+ *
  * ## What it does NOT claim
  *
- * It reads `run:` blocks only. An expression in `with:`, `env:` or `if:` is
- * not a shell injection and is not graded here — `env:` is the REMEDY, and
- * flagging it would push people back toward interpolation. Template injection
- * in generated pages and prompt injection are the other two surfaces of bean
- * `1wef` and are not this file's.
+ * An expression in `with:`, `env:` or `if:` is not graded — `env:` is the
+ * REMEDY, and flagging it would push people back toward interpolation. The one
+ * exception is `script:`, which lives *under* `with:` and is code: that
+ * collision is what bean `j0zs` settled. Template injection in generated pages
+ * and prompt injection are the other two surfaces of bean `1wef` and are not
+ * this file's.
  *
  * @module scripts/check-workflow-injection
  * @covers none — .github/workflows/ is not a declared graph kind
@@ -134,11 +168,21 @@ const CONSTRAINED = [
 
 export type Severity = "free-text" | "constrained";
 
+/**
+ * Where the value lands, which decides the REMEDY rather than the severity.
+ *
+ * `run:` is a shell (`env:` + `"$VAR"`); `script:` is Node inside
+ * `actions/github-script` (`env:` + `process.env.X`). One advice string for both
+ * would be wrong for one of them.
+ */
+export type Surface = "run" | "script";
+
 export interface Injection {
   workflow: string;
   line: number;
   expression: string;
   severity: Severity;
+  surface: Surface;
   /** Set when the severity came from the PRODUCING step rather than the expression. */
   via?: string;
 }
@@ -397,34 +441,50 @@ export function scanWorkflows(dir: string = WORKFLOWS): Injection[] {
     // known, and a producer may sit below its consumer in the file.
     const prov = resolveProvenance(lines);
     let job = "";
-    let inRun = false;
-    let runIndent = 0;
+    // One walker for both surfaces: the block shapes are identical and only the
+    // key differs, so a second copy of this loop would be a second place for the
+    // indentation rule to be wrong.
+    let inBlock: Surface | null = null;
+    let blockIndent = 0;
     lines.forEach((line, i) => {
       const stripped = line.trimStart();
       const indent = line.length - stripped.length;
       if (indent === 2 && /^[A-Za-z0-9_-]+:\s*$/.test(stripped)) job = stripped.replace(/:\s*$/, "");
-      if (inRun && stripped !== "" && indent <= runIndent) inRun = false;
-      const isRun = /^-?\s*run:\s*\|?/.test(stripped) && stripped.includes("run:");
-      const haystack = isRun ? stripped.split("run:")[1] ?? "" : inRun ? line : "";
-      if (isRun) {
-        inRun = true;
-        runIndent = indent;
+      if (inBlock && stripped !== "" && indent <= blockIndent) inBlock = null;
+      const opens: Surface | null = /^-?\s*run:\s*\|?/.test(stripped) && stripped.includes("run:")
+        ? "run"
+        : /^-?\s*script:\s*\|?/.test(stripped) && stripped.includes("script:")
+          ? "script"
+          : null;
+      const haystack = opens ? stripped.split(`${opens}:`)[1] ?? "" : inBlock ? line : "";
+      const surface = opens ?? inBlock;
+      if (opens) {
+        inBlock = opens;
+        blockIndent = indent;
       }
+      if (surface === null) return;
       for (const m of haystack.matchAll(/\$\{\{([^}]*)\}\}/g)) {
         const expression = m[1].trim();
         const severity = classify(expression, prov, job);
         if (!severity) continue;
         const via = resolveReferences(expression, prov, job)[0]?.[0];
-        out.push({ workflow: f, line: i + 1, expression, severity, ...(via ? { via } : {}) });
+        out.push({ workflow: f, line: i + 1, expression, severity, surface, ...(via ? { via } : {}) });
       }
     });
   }
   return out;
 }
 
-/** Keyed by workflow and expression, not line — a line moves when a step is added above. */
+/**
+ * Keyed by workflow, SURFACE and expression — never line, which moves when a
+ * step is added above.
+ *
+ * The surface is in the key because the same expression in a `run:` and in a
+ * `script:` block is two decisions with two different remedies, so baselining
+ * one must not silently baseline the other.
+ */
 export function baselineKey(i: Injection): string {
-  return `${i.workflow}: ${i.expression}`;
+  return `${i.workflow} (${i.surface}): ${i.expression}`;
 }
 
 function readBaseline(): string[] {
@@ -444,12 +504,14 @@ if (import.meta.main) {
       JSON.stringify(
         {
           _comment:
-            "Attacker-CHOSEN but shape-constrained expressions inside `run:` blocks — refs, PR numbers, " +
-            "repository names. A git ref cannot contain a space, a quote or a semicolon and a PR number is an " +
-            "integer, so none carries a shell break; they are listed because 'cannot carry THIS payload' is a " +
-            "narrower claim than 'safe'. FREE TEXT is never baselined: a quote is all it takes, and the remedy " +
-            "(pass it through `env:`) is one line. Keyed by expression rather than line so an unrelated step " +
-            "added above does not churn the file. Refresh with --write-baseline.",
+            "Attacker-CHOSEN but shape-constrained expressions inside a `run:` or `script:` block — refs, PR " +
+            "numbers, repository names. A git ref cannot contain a space, a quote or a semicolon and a PR number " +
+            "is an integer, so none carries a shell break; they are listed because 'cannot carry THIS payload' is " +
+            "a narrower claim than 'safe'. FREE TEXT is never baselined: a quote is all it takes, and the remedy " +
+            "is one line — `env:` plus \"$VAR\" in a `run:` block, `env:` plus process.env.VAR in a `script:` " +
+            "one, which is Node. Keyed by workflow, SURFACE and expression, never line: a line moves when a step " +
+            "is added above, and the same expression in the two surfaces is two decisions with two different " +
+            "remedies. Refresh with --write-baseline.",
           known,
         },
         null,
@@ -465,24 +527,40 @@ if (import.meta.main) {
   const novel = [...keys].filter((k) => !known.has(k));
   const stale = [...known].filter((k) => !keys.has(k));
 
+  // Counted PER SURFACE, because one total over two surfaces cannot be checked
+  // against either. Both numbers are printed even when one is zero — a surface
+  // that is scanned and finds nothing must not read like a surface nobody looked at.
+  const bySurface = (x: Surface) => found.filter((i) => i.surface === x).length;
   console.log(
-    `Workflow expression injection (${found.length} attacker-influenced expression(s) in \`run:\` blocks)`,
+    `Workflow expression injection (${found.length} attacker-influenced expression(s): ` +
+      `${bySurface("run")} in \`run:\` blocks, ${bySurface("script")} in \`script:\` blocks)`,
   );
 
   let bad = false;
   for (const i of free) {
-    console.log(`  ✗ ${i.workflow}:${i.line} — FREE TEXT in a \`run:\` block: \`${i.expression}\``);
+    console.log(`  ✗ ${i.workflow}:${i.line} — FREE TEXT in a \`${i.surface}:\` block: \`${i.expression}\``);
     if (i.via) {
       // Naming the producer matters more here than anywhere else: the
       // expression on this line looks harmless, and the leak is elsewhere.
       console.log(`      It CARRIES free text — written by \`${i.via}\`, which binds a free-text value.`);
     }
-    console.log("      A quote closes the surrounding string and the rest executes.");
-    console.log("      Pass it through `env:` and read \"$VAR\" — bash then sees a value, not source.");
+    if (i.surface === "run") {
+      console.log("      A quote closes the surrounding string and the rest executes.");
+      console.log("      Pass it through `env:` and read \"$VAR\" — bash then sees a value, not source.");
+    } else {
+      // Deliberately a different sentence, not a reworded one: the mechanism
+      // and the remedy are both different, and `"$VAR"` is not valid advice here.
+      console.log("      A quote closes the string — and inside a template literal `${…}` is EVALUATED,");
+      console.log("      so the value need not close anything to become program.");
+      console.log("      Pass it through the step's `env:` and read `process.env.VAR` — this block is Node.");
+    }
     bad = true;
   }
   for (const k of novel) {
-    console.log(`  ✗ NEW constrained expression in a \`run:\` block: ${k}`);
+    // The key already names the surface, so the message must not name it again
+    // — and certainly not name `run:` for a `script:` finding, which it did for
+    // one commit.
+    console.log(`  ✗ NEW constrained expression: ${k}`);
     console.log("      Shape-constrained, so not a break today — but decide it rather than inherit it.");
     bad = true;
   }
@@ -493,7 +571,10 @@ if (import.meta.main) {
 
   if (!bad) {
     console.log(
-      `  ✓ no free text reaches a shell; ${constrained.length} constrained expression(s) baselined`,
+      // "a shell" was the whole claim until `script:` was added, and a green
+      // line that names one of two surfaces is a green line about half the run.
+      `  ✓ no free text reaches a shell or a \`script:\` block; ` +
+        `${constrained.length} constrained expression(s) baselined`,
     );
     process.exit(0);
   }

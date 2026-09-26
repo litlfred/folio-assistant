@@ -158,9 +158,9 @@
       "prose": "cat-harness/processes/feature-staging.bpmn",
       "code": ".github/workflows/feature-staging.yml",
       "prose_hash": "d38ea6587f47",
-      "code_hash": "0c73493bf62e",
+      "code_hash": "280836e66ca8",
       "by": "agent",
-      "reason": "Re-read the BPMN documentation against the workflow change (bean 6bhf): three steps gained an `env:` binding for `steps.slug.outputs.slug` and read \"$STAGING_SLUG\" instead of interpolating it. No step, gateway, lane, entry point or render-log write changed, so the drawn process and every prose claim about it — three entry points, two three-state gateways, the log written in the same commit as the removal, the single human confirmation — are unaffected."
+      "reason": "Re-read the BPMN documentation against the workflow change (bean j0zs): the two `actions/github-script` steps — 'Comment staging URL on PR' in the stage lane and 'Post retention notice (not confirmed)' in the cleanup lane — gained an `env:` block and now read `process.env` instead of interpolating `${{ }}` into JavaScript source. Both still post the same comment at the same point. No step, gateway, lane, entry point or render-log write changed, so every prose claim about the drawn process holds: three entry points, two three-state gateways, the log written in the same commit as the removal, and the single human confirmation."
     }
   ]
 }
