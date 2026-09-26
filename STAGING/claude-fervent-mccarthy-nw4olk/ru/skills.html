@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/docs-ui.css?v=1790443831">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/docs-ui.css?v=1790446390">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/narrow-viewport.css?v=1790443831">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/narrow-viewport.css?v=1790446390">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/work-plan.css?v=1790443831">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/work-plan.css?v=1790446390">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/themes.css?v=1790443831">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/themes.css?v=1790446390">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/uml.css?v=1790443831">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/uml.css?v=1790446390">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/avatars.css?v=1790443831">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/avatars.css?v=1790446390">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/docs-ui.js?v=1790443831" defer></script>
+<script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/docs-ui.js?v=1790446390" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -781,7 +781,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p>Эта страница представляет собой полный перечень всех <strong>навыков</strong> и <strong>ролей</strong> в folio-assistant
 и объясняет, как они взаимодействуют с LLM. С типизированным контрактом ввода/вывода
-для каждого навыка можно ознакомиться в <a href="reference/skills/">Справочнике схем навыков</a>.</p>
+для каждого навыка можно ознакомиться в <a href="../reference/skills/">Справочнике схем навыков</a>.</p>
 
 <ol id="markdown-toc">
   <li><a href="#как-это-работает-вместе-с-llm" id="markdown-toc-как-это-работает-вместе-с-llm">Как это работает вместе с LLM</a></li>
@@ -831,14 +831,14 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <li><strong>Навык (Skill)</strong> — документированная, ограниченная схемой единица работы (например,
 <code class="language-plaintext highlighter-rouge">lean-formalization</code>). Агент обнаруживает навыки с помощью MCP-инструмента
 <code class="language-plaintext highlighter-rouge">skill_list</code> и загружает инструкции навыка через <code class="language-plaintext highlighter-rouge">skill_fetch</code>. Каждый навык имеет
-типизированный <a href="reference/skills/">контракт ввода/вывода</a>.</li>
+типизированный <a href="../reference/skills/">контракт ввода/вывода</a>.</li>
   <li><strong>Пакет навыков (Skill package)</strong> — группа связанных навыков, которая также объявляет свои
 зависимости от среды выполнения и Docker (<code class="language-plaintext highlighter-rouge">package-manifest.json</code>).</li>
   <li><strong>Роль (действующее лицо / actor)</strong> — <em>в качестве кого</em> выступает агент. <strong>Действующее лицо (actor)</strong> принимает
 <strong>роль (role)</strong> в соответствии с дорожкой BPMN, в которой оно действует. То, что действующему лицу
 разрешено <strong>делать</strong>, определяется политикой W3C ODRL в <code class="language-plaintext highlighter-rouge">policies/</code>, а не свойством роли. Перед каждой
 задачей исполнитель проверяет аутентификацию, назначение роли, политику и доступ к контенту
-(<a href="reference/skill-instructions/task-authorization.html"><code class="language-plaintext highlighter-rouge">task-authorization</code></a>);
+(<a href="../reference/skill-instructions/task-authorization.html"><code class="language-plaintext highlighter-rouge">task-authorization</code></a>);
 HTTP-маршруты запрашивают те же политики через <code class="language-plaintext highlighter-rouge">src/core/rbac.ts</code>.</li>
   <li><strong>Возможность (Capability)</strong> — конкретная способность окружения (например, <code class="language-plaintext highlighter-rouge">latex-compiler</code>,
 <code class="language-plaintext highlighter-rouge">lean-toolchain</code>). Навыки требуют наличия возможностей; инструмент <code class="language-plaintext highlighter-rouge">check_dependencies</code> проверяет
@@ -887,10 +887,10 @@ HTTP-маршруты запрашивают те же политики чере
     <tr>
       <td><strong>Типизированный контракт</strong> (JSON Schema ввода/вывода)</td>
       <td><code class="language-plaintext highlighter-rouge">schemas/skills/&lt;skill&gt;/</code></td>
-      <td>✅ все 22 — см. <a href="reference/skills/">справочник</a></td>
+      <td>✅ все 22 — см. <a href="../reference/skills/">справочник</a></td>
     </tr>
     <tr>
-      <td><strong>Тело инструкций</strong> (текстовое руководство, загружаемое LLM) — ознакомьтесь с ними в справочнике <a href="reference/skill-instructions/">Инструкции к навыкам</a></td>
+      <td><strong>Тело инструкций</strong> (текстовое руководство, загружаемое LLM) — ознакомьтесь с ними в справочнике <a href="../reference/skill-instructions/">Инструкции к навыкам</a></td>
       <td><code class="language-plaintext highlighter-rouge">skills/content-lifecycle/*.md</code>, <code class="language-plaintext highlighter-rouge">skills/folio-*-adapter/*.md</code>, <code class="language-plaintext highlighter-rouge">src/skills/*.md</code></td>
       <td>✅ навыки жизненного цикла, агента, платформенного набора и <strong>folio-document-adapter</strong>; ⏳ <strong>тексты инструкций для authoring-math / authoring-who-smart-guidelines находятся в разработке (TBD)</strong> (эти пакеты поставляют манифест + определения JSON)</td>
     </tr>
@@ -928,37 +928,37 @@ HTTP-маршруты запрашивают те же политики чере
   </thead>
   <tbody>
     <tr>
-      <td><a href="reference/skills/content-plan.html"><code class="language-plaintext highlighter-rouge">content-plan</code></a></td>
+      <td><a href="../reference/skills/content-plan.html"><code class="language-plaintext highlighter-rouge">content-plan</code></a></td>
       <td>plan</td>
       <td>Определение границ, команда, график, управление (governance)</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/content-author.html"><code class="language-plaintext highlighter-rouge">content-author</code></a></td>
+      <td><a href="../reference/skills/content-author.html"><code class="language-plaintext highlighter-rouge">content-author</code></a></td>
       <td>author</td>
       <td>Создание структурированных артефактов</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
+      <td><a href="../reference/skills/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
       <td>validate</td>
       <td>Проверка схемы и ограничений</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+      <td><a href="../reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
       <td>review</td>
       <td>Официальное рецензирование и утверждение</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a></td>
+      <td><a href="../reference/skills/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a></td>
       <td>test</td>
       <td>Сквозной контроль качества (E2E QA) / успешная сборка («зеленый» билд)</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a></td>
+      <td><a href="../reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a></td>
       <td>publish</td>
       <td>Рендеринг и развертывание</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/content-feedback.html"><code class="language-plaintext highlighter-rouge">content-feedback</code></a></td>
+      <td><a href="../reference/skills/content-feedback.html"><code class="language-plaintext highlighter-rouge">content-feedback</code></a></td>
       <td>feedback</td>
       <td>Сбор и триаж обратной связи</td>
     </tr>
@@ -987,19 +987,19 @@ HTTP-маршруты запрашивают те же политики чере
   </thead>
   <tbody>
     <tr>
-      <td><a href="reference/skills/document-authoring.html"><code class="language-plaintext highlighter-rouge">document-authoring</code></a></td>
+      <td><a href="../reference/skills/document-authoring.html"><code class="language-plaintext highlighter-rouge">document-authoring</code></a></td>
       <td>Создание и редактирование блоков в текстовом фолио (prose folio)</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/document-structure.html"><code class="language-plaintext highlighter-rouge">document-structure</code></a></td>
+      <td><a href="../reference/skills/document-structure.html"><code class="language-plaintext highlighter-rouge">document-structure</code></a></td>
       <td>Главы и разделы — добавление, удаление, изменение порядка</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/normative-statements.html"><code class="language-plaintext highlighter-rouge">normative-statements</code></a></td>
+      <td><a href="../reference/skills/normative-statements.html"><code class="language-plaintext highlighter-rouge">normative-statements</code></a></td>
       <td>Формулирование рекомендаций, требований или правил</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/document-publishing.html"><code class="language-plaintext highlighter-rouge">document-publishing</code></a></td>
+      <td><a href="../reference/skills/document-publishing.html"><code class="language-plaintext highlighter-rouge">document-publishing</code></a></td>
       <td>Markdown → HTML / PDF, без TeX</td>
     </tr>
   </tbody>
@@ -1022,15 +1022,15 @@ HTTP-маршруты запрашивают те же политики чере
   </thead>
   <tbody>
     <tr>
-      <td><a href="reference/skills/lean-formalization.html"><code class="language-plaintext highlighter-rouge">lean-formalization</code></a></td>
+      <td><a href="../reference/skills/lean-formalization.html"><code class="language-plaintext highlighter-rouge">lean-formalization</code></a></td>
       <td>Формализация утверждений и доказательств в Lean 4</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/latex-authoring.html"><code class="language-plaintext highlighter-rouge">latex-authoring</code></a></td>
+      <td><a href="../reference/skills/latex-authoring.html"><code class="language-plaintext highlighter-rouge">latex-authoring</code></a></td>
       <td>Создание документов LaTeX</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/proof-verification.html"><code class="language-plaintext highlighter-rouge">proof-verification</code></a></td>
+      <td><a href="../reference/skills/proof-verification.html"><code class="language-plaintext highlighter-rouge">proof-verification</code></a></td>
       <td>Верификация доказательств, аудит <code class="language-plaintext highlighter-rouge">sorry</code> и аксиом</td>
     </tr>
     <tr>
@@ -1065,35 +1065,35 @@ HTTP-маршруты запрашивают те же политики чере
   </thead>
   <tbody>
     <tr>
-      <td><a href="reference/skills/l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></a></td>
+      <td><a href="../reference/skills/l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></a></td>
       <td>Артефакты L2 DAK (словарь данных и др.)</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/l3-fhir-authoring.html"><code class="language-plaintext highlighter-rouge">l3-fhir-authoring</code></a></td>
+      <td><a href="../reference/skills/l3-fhir-authoring.html"><code class="language-plaintext highlighter-rouge">l3-fhir-authoring</code></a></td>
       <td>Ресурсы L3 FHIR через FSH</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/bpmn-authoring.html"><code class="language-plaintext highlighter-rouge">bpmn-authoring</code></a></td>
+      <td><a href="../reference/skills/bpmn-authoring.html"><code class="language-plaintext highlighter-rouge">bpmn-authoring</code></a></td>
       <td>Бизнес-процессы BPMN 2.0</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/dmn-authoring.html"><code class="language-plaintext highlighter-rouge">dmn-authoring</code></a></td>
+      <td><a href="../reference/skills/dmn-authoring.html"><code class="language-plaintext highlighter-rouge">dmn-authoring</code></a></td>
       <td>Таблицы решений DMN</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/terminology-management.html"><code class="language-plaintext highlighter-rouge">terminology-management</code></a></td>
+      <td><a href="../reference/skills/terminology-management.html"><code class="language-plaintext highlighter-rouge">terminology-management</code></a></td>
       <td>Системы кодирования / наборы значений</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/fhir-validation.html"><code class="language-plaintext highlighter-rouge">fhir-validation</code></a></td>
+      <td><a href="../reference/skills/fhir-validation.html"><code class="language-plaintext highlighter-rouge">fhir-validation</code></a></td>
       <td>Валидация на соответствие профилям FHIR</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a></td>
+      <td><a href="../reference/skills/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a></td>
       <td>Сборка и публикация IG</td>
     </tr>
     <tr>
-      <td><a href="reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a></td>
+      <td><a href="../reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a></td>
       <td>Рубежи контроля качества (QA gates)</td>
     </tr>
   </tbody>
@@ -1212,7 +1212,7 @@ issue <a href="https://github.com/litlfred/folio-assistant/issues/27">#27</a>). 
 
 <blockquote>
   <p><strong>Схемы</strong> навыков (типизированный ввод/вывод для навыков создания контента) генерируются
-в <a href="reference/skills/">Справочнике схем навыков</a> — они никогда не расходятся с тем,
+в <a href="../reference/skills/">Справочнике схем навыков</a> — они никогда не расходятся с тем,
 что проверяет фреймворк.</p>
 </blockquote><hr />
 <h2 id="роли-действующие-лица--actors">
@@ -1429,8 +1429,8 @@ MCP-инструмент <code class="language-plaintext highlighter-rouge">chec
 
 <ul>
   <li><a href="publication-workflow.html">Процесс публикации</a> — дорожки BPMN: какой навык выполняется на каждом шаге и кто принимает решения</li>
-  <li><a href="reference/skill-instructions/">Инструкции к навыкам</a> — текстовые руководства, загружаемые LLM</li>
-  <li><a href="reference/skills/">Справочник схем навыков</a> — типизированный ввод/вывод для каждого навыка</li>
+  <li><a href="../reference/skill-instructions/">Инструкции к навыкам</a> — текстовые руководства, загружаемые LLM</li>
+  <li><a href="../reference/skills/">Справочник схем навыков</a> — типизированный ввод/вывод для каждого навыка</li>
   <li><a href="content-types.html">Типы контента</a> — какие навыки использует каждый тип контента</li>
   <li><a href="architecture.html">Архитектура</a> — RBAC, адаптеры и MCP-сервер</li>
   <li><a href="getting-started.html">Начало работы</a> — запуск вашего первого навыка</li>

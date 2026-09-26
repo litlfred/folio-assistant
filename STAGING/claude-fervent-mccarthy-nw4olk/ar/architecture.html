@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/docs-ui.css?v=1790443831">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/docs-ui.css?v=1790446390">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/narrow-viewport.css?v=1790443831">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/narrow-viewport.css?v=1790446390">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/work-plan.css?v=1790443831">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/work-plan.css?v=1790446390">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/themes.css?v=1790443831">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/themes.css?v=1790446390">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/uml.css?v=1790443831">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/uml.css?v=1790446390">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/avatars.css?v=1790443831">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/avatars.css?v=1790446390">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/docs-ui.js?v=1790443831" defer></script>
+<script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/docs-ui.js?v=1790446390" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -803,14 +803,14 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <blockquote>
   <p><strong>القواعد الكامنة وراء هذه الصفحة.</strong> تصف الهندسة المعمارية الهيكل؛ بينما تحكم
 المهارات القرارات. المحولات مقابل ملفات التعريف —
-<a href="reference/skill-instructions/content-profiles.html"><code class="language-plaintext highlighter-rouge">content-profiles</code></a>.
+<a href="../reference/skill-instructions/content-profiles.html"><code class="language-plaintext highlighter-rouge">content-profiles</code></a>.
 أين تنتمي العقدة الجديدة قبل إنشائها —
-<a href="reference/skill-instructions/placement.html"><code class="language-plaintext highlighter-rouge">placement</code></a>. وتخطيط المستودع
+<a href="../reference/skill-instructions/placement.html"><code class="language-plaintext highlighter-rouge">placement</code></a>. وتخطيط المستودع
 وكل نوع من أنواع الرسوم البيانية —
-<a href="reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a>.
+<a href="../reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a>.
 وتركيب واجهة MCP والتحقق منها —
-<a href="reference/skill-instructions/mcp-assembly.html"><code class="language-plaintext highlighter-rouge">mcp-assembly</code></a> و
-<a href="reference/skill-instructions/mcp-contract.html"><code class="language-plaintext highlighter-rouge">mcp-contract</code></a>.
+<a href="../reference/skill-instructions/mcp-assembly.html"><code class="language-plaintext highlighter-rouge">mcp-assembly</code></a> و
+<a href="../reference/skill-instructions/mcp-contract.html"><code class="language-plaintext highlighter-rouge">mcp-contract</code></a>.
 وحيثما تختلف هذه الصفحة مع إحدى المهارات، فإن المهارة هي التي تسود.</p>
 </blockquote>
 
@@ -856,34 +856,34 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   </thead>
   <tbody>
     <tr>
-      <td><a href="architecture/repo-taxonomy.html">تصنيف المستودعات</a></td>
+      <td><a href="../architecture/repo-taxonomy.html">تصنيف المستودعات</a></td>
       <td>ما هي أنواع المستودعات الموجودة — أداة (Tool)، واختبار (Test)، ومحتوى (Content)، ومستهلك (Consumer) — وما قد يحتويه كل منها</td>
     </tr>
     <tr>
-      <td><a href="architecture/current-state.html">الوضع الحالي</a></td>
+      <td><a href="../architecture/current-state.html">الوضع الحالي</a></td>
       <td>ما هو موجود بالفعل في هذا المستودع اليوم، بالأرقام المقاسة، وأين يكمن المزيج</td>
     </tr>
     <tr>
-      <td><a href="architecture/future-state.html">الوضع المستقبلي</a></td>
+      <td><a href="../architecture/future-state.html">الوضع المستقبلي</a></td>
       <td>المستودعات الخمسة المستهدفة وأي دليل يستقر في أيّ منها</td>
     </tr>
     <tr>
-      <td><a href="architecture/migration-plan.html">خطة الانتقال</a></td>
+      <td><a href="../architecture/migration-plan.html">خطة الانتقال</a></td>
       <td>المراحل 0/I/II/III، والبوابات، وما لم يُحسم بعد</td>
     </tr>
     <tr>
-      <td><a href="architecture/cat-harness-minimum.html">الحد الأدنى لـ <code class="language-plaintext highlighter-rouge">cat-harness</code></a></td>
+      <td><a href="../architecture/cat-harness-minimum.html">الحد الأدنى لـ <code class="language-plaintext highlighter-rouge">cat-harness</code></a></td>
       <td>ما يتبقى في إطار العمل (harness) بمجرد تطبيق معيار “ليس توثيقًا ذاتيًا” كاختبار</td>
     </tr>
     <tr>
-      <td><a href="architecture/harness-instances.html">حالات إطار العمل</a></td>
+      <td><a href="../architecture/harness-instances.html">حالات إطار العمل</a></td>
       <td>ما هي الحالة (instance) في واقعها — المخططات، والتصورات المرئية، والأدوات؛ والأدلة الأربعة؛ والتصيير الافتراضي</td>
     </tr>
   </tbody>
 </table></div>
 
 <p>يبدو البندان الأخيران وكأنهما يتعارضان — فالحد الأدنى ينص على أن إطار العمل لا ينتج شيئًا ينظر إليه إنسان، بينما تنص صفحة الحالات على أن الحالة تقوم بالتصيير افتراضيًا. لكنهما لا يتعارضان: فالمتطلب هو <strong>حد أدنى يرتفع تدريجيًا</strong>، مع إعفاء <code class="language-plaintext highlighter-rouge">bootstrap</code> من أداة التصور المرئي مع التزامه بتقديم <code class="language-plaintext highlighter-rouge">.json</code>/<code class="language-plaintext highlighter-rouge">.jsonld</code> الخاصة به بدلاً من ذلك، في حين يمثل <code class="language-plaintext highlighter-rouge">cat-harness</code> الطبقة التي يبدأ عندها تطبيق الباقي. راجع
-<a href="architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception">أين يبدأ المتطلب</a>.</p>
+<a href="../architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception">أين يبدأ المتطلب</a>.</p>
 
 <p>يصف باقي هذه الصفحة الهندسة المعمارية <strong>كما هي عليه الآن</strong>.</p>
 <h2 id="تخطيط-المستودع">
@@ -964,7 +964,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h2>
     
 
-<p>يغلف محول المحتوى كل ما يخص نوعًا معينًا: ما هي المخرجات (artifacts) الموجودة، وكيفية التحقق منها، وكيفية بنائها/تصييرها، وما هي أدوات MCP الإضافية التي يجب تسجيلها. ويعد محول <code class="language-plaintext highlighter-rouge">document</code> (<code class="language-plaintext highlighter-rouge">adapters/document/</code>) هو الأساس لملفات المحتوى النثرية؛ بينما يوسعه محول <code class="language-plaintext highlighter-rouge">paper</code> (<code class="language-plaintext highlighter-rouge">adapters/paper/</code>) ويوفر أدوات دورة حياة Lean (<code class="language-plaintext highlighter-rouge">lean_setup</code>/<code class="language-plaintext highlighter-rouge">build</code>/<code class="language-plaintext highlighter-rouge">check</code>/<code class="language-plaintext highlighter-rouge">status</code>)، والتحقق، والتصيير (<code class="language-plaintext highlighter-rouge">paper_render_pdf</code>/<code class="language-plaintext highlighter-rouge">html</code>، و<code class="language-plaintext highlighter-rouge">formula_render</code>). وتضيف أنواع المحتوى الجديدة محولاً جديدًا — راجع <a href="guides/new-content-type.html">إضافة نوع محتوى</a>.</p>
+<p>يغلف محول المحتوى كل ما يخص نوعًا معينًا: ما هي المخرجات (artifacts) الموجودة، وكيفية التحقق منها، وكيفية بنائها/تصييرها، وما هي أدوات MCP الإضافية التي يجب تسجيلها. ويعد محول <code class="language-plaintext highlighter-rouge">document</code> (<code class="language-plaintext highlighter-rouge">adapters/document/</code>) هو الأساس لملفات المحتوى النثرية؛ بينما يوسعه محول <code class="language-plaintext highlighter-rouge">paper</code> (<code class="language-plaintext highlighter-rouge">adapters/paper/</code>) ويوفر أدوات دورة حياة Lean (<code class="language-plaintext highlighter-rouge">lean_setup</code>/<code class="language-plaintext highlighter-rouge">build</code>/<code class="language-plaintext highlighter-rouge">check</code>/<code class="language-plaintext highlighter-rouge">status</code>)، والتحقق، والتصيير (<code class="language-plaintext highlighter-rouge">paper_render_pdf</code>/<code class="language-plaintext highlighter-rouge">html</code>، و<code class="language-plaintext highlighter-rouge">formula_render</code>). وتضيف أنواع المحتوى الجديدة محولاً جديدًا — راجع <a href="../guides/new-content-type.html">إضافة نوع محتوى</a>.</p>
 <h2 id="المهارات-وحزم-المهارات">
   
   
@@ -974,7 +974,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h2>
     
 
-<p>الـ <strong>مهارة</strong> (skill) هي وحدة عمل موثقة ومقيدة بمخطط بياني (مثل <code class="language-plaintext highlighter-rouge">lean-formalization</code>). وتُجمع المهارات في <strong>حزم</strong> تعلن عن تبعات Docker وبيئة التشغيل الخاصة بها عبر ملف <code class="language-plaintext highlighter-rouge">package-manifest.json</code>. ويكتشف النموذج اللغوي الكبير (LLM) المهارات عبر <code class="language-plaintext highlighter-rouge">skill_list</code> ويحمّل التعليمات عبر <code class="language-plaintext highlighter-rouge">skill_fetch</code>. وتوجد القائمة الكاملة للمهارات والأدوار — وكيفية تكاملها مع النموذج اللغوي الكبير (RBAC، والقدرات، والمتطلبات) — في صفحة <a href="skills.html">المهارات والأدوار</a>؛ كما يُنشر عقد المدخلات/المخرجات لكل مهارة في <a href="reference/skills/">مرجع مخططات المهارات</a>.</p>
+<p>الـ <strong>مهارة</strong> (skill) هي وحدة عمل موثقة ومقيدة بمخطط بياني (مثل <code class="language-plaintext highlighter-rouge">lean-formalization</code>). وتُجمع المهارات في <strong>حزم</strong> تعلن عن تبعات Docker وبيئة التشغيل الخاصة بها عبر ملف <code class="language-plaintext highlighter-rouge">package-manifest.json</code>. ويكتشف النموذج اللغوي الكبير (LLM) المهارات عبر <code class="language-plaintext highlighter-rouge">skill_list</code> ويحمّل التعليمات عبر <code class="language-plaintext highlighter-rouge">skill_fetch</code>. وتوجد القائمة الكاملة للمهارات والأدوار — وكيفية تكاملها مع النموذج اللغوي الكبير (RBAC، والقدرات، والمتطلبات) — في صفحة <a href="skills.html">المهارات والأدوار</a>؛ كما يُنشر عقد المدخلات/المخرجات لكل مهارة في <a href="../reference/skills/">مرجع مخططات المهارات</a>.</p>
 <h2 id="نموذج-كائنات-المحتوى">
   
   
@@ -1009,7 +1009,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <li><strong>مسارات HTTP</strong>، من خلال <code class="language-plaintext highlighter-rouge">src/core/rbac.ts</code>: يحدد كل مسار الإجراء الذي ينفذه (<code class="language-plaintext highlighter-rouge">content-authoring</code>، و<code class="language-plaintext highlighter-rouge">review-comments</code>، و<code class="language-plaintext highlighter-rouge">adjudication</code>)، وتُعد جلسات بوابة المصادقة (auth-gateway) فاعلين معلنين تكمن منحهم في <code class="language-plaintext highlighter-rouge">policies/http-gateway.jsonld</code>. وهنا تؤدي الحالة <code class="language-plaintext highlighter-rouge">unknown</code> إلى الرفض.</li>
 </ul>
 
-<p>حتى المسألة #1207 (2026-09-23)، كان <code class="language-plaintext highlighter-rouge">rbac.ts</code> سلمًا منفصلاً من viewer &lt; collaborator &lt; owner، ولم يكن المنفذ يتحقق من أي شيء. والانضباط المتبع هو مهارة <a href="reference/skill-instructions/task-authorization.html"><code class="language-plaintext highlighter-rouge">task-authorization</code></a>.</p>
+<p>حتى المسألة #1207 (2026-09-23)، كان <code class="language-plaintext highlighter-rouge">rbac.ts</code> سلمًا منفصلاً من viewer &lt; collaborator &lt; owner، ولم يكن المنفذ يتحقق من أي شيء. والانضباط المتبع هو مهارة <a href="../reference/skill-instructions/task-authorization.html"><code class="language-plaintext highlighter-rouge">task-authorization</code></a>.</p>
 <h2 id="تهيئة-خطة-العمل-عبر-أطر-العمل-المختلفة">
   
   
