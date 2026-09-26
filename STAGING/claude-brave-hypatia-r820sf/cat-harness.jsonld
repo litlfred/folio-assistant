@@ -276,10 +276,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T15:18:21.000Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/df2279939d0f5802aa037ebfe9fbe377315e535e",
-  "sourceCommitSha": "df2279939d0f5802aa037ebfe9fbe377315e535e",
-  "sourceCommitAt": "2026-09-26T15:15:59Z",
+  "generatedAt": "2026-09-26T16:46:15.904Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a9713357400e9479bc31dd1e427943f47cd03cd6",
+  "sourceCommitSha": "a9713357400e9479bc31dd1e427943f47cd03cd6",
+  "sourceCommitAt": "2026-09-26T16:43:35Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -6766,7 +6766,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth/node/Start_Sweep",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Daily (06:41 UTC),&#10;or on dispatch",
+      "name": "Daily (06:41 UTC), or on dispatch",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth",
@@ -6784,7 +6784,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth/node/Task_Check",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Run the health checks,&#10;keeping the report either way",
+      "name": "Run the health checks, keeping the report either way",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth",
@@ -6806,7 +6806,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth/node/GW_Determined",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Could we&#10;tell?",
+      "name": "Could we tell?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth",
@@ -6827,7 +6827,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth/node/End_Unknown",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Unknown &#8212; job RED,&#10;issue UNTOUCHED",
+      "name": "Unknown — job RED, issue UNTOUCHED",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth",
@@ -6845,7 +6845,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth/node/Task_Label",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Ensure the tracking&#10;label exists",
+      "name": "Ensure the tracking label exists",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth",
@@ -6867,7 +6867,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth/node/GW_Finding",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Any&#10;findings?",
+      "name": "Any findings?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth",
@@ -6888,7 +6888,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth/node/Task_Close",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Close the&#10;tracking issue",
+      "name": "Close the tracking issue",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth",
@@ -6928,7 +6928,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth/node/Task_Track",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Open or EDIT the one&#10;tracking issue",
+      "name": "Open or EDIT the one tracking issue",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth",
@@ -6950,7 +6950,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth/node/End_Found",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Recorded &#8212; job stays GREEN",
+      "name": "Recorded — job stays GREEN",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_RepoHealth",
@@ -10400,7 +10400,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift/flow/Flow_2",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "no &#8212; in sync",
+      "name": "no — in sync",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift/node/GW_Drift",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift/node/End_Clean",
@@ -10410,7 +10410,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift/flow/Flow_3",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "yes &#8212; drifted",
+      "name": "yes — drifted",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift/node/GW_Drift",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift/node/End_Drift",
@@ -10420,7 +10420,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift/node/Start_Change",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Pull request, push to main,&#10;or dispatch",
+      "name": "Pull request, push to main, or dispatch",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift",
@@ -10438,7 +10438,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift/node/Task_Check",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Regenerate AtomicMass.lean&#10;from the data table &#8212; and diff",
+      "name": "Regenerate AtomicMass.lean from the data table — and diff",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift",
@@ -10458,7 +10458,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift/node/GW_Drift",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Did anything&#10;change?",
+      "name": "Did anything change?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift",
@@ -10497,7 +10497,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift/node/End_Drift",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Job RED &#8212; the generated&#10;file is stale",
+      "name": "Job RED — the generated file is stale",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_AtomicMassDrift",
@@ -20806,7 +20806,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement/node/Start_Wants",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Size, or a semantic&#10;reason to separate",
+      "name": "Size, or a semantic reason to separate",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement",
@@ -20824,7 +20824,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Brief",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Brief the topic before&#10;touching anything",
+      "name": "Brief the topic before touching anything",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement",
@@ -20847,7 +20847,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Declare",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "1 &#183; Declare in place&#10;(nothing moves)",
+      "name": "1 · Declare in place (nothing moves)",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement",
@@ -20870,7 +20870,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement/node/GW_Declared",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Declared&#10;in place?",
+      "name": "Declared in place?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement",
@@ -20893,7 +20893,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Measure",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "2a &#183; Measure &#8212; unassigned&#10;column FIRST",
+      "name": "2a · Measure — unassigned column FIRST",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement",
@@ -20939,7 +20939,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Move",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "2b &#183; Prune, merge, factor&#10;&#8212; or the classification is wrong",
+      "name": "2b · Prune, merge, factor — or the classification is wrong",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement",
@@ -20962,7 +20962,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Isolate",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact",
+      "name": "3 · Isolate — own declaration, namespace, artefact",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement",
@@ -20985,7 +20985,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement/node/GW_Isolated",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Stands&#10;alone?",
+      "name": "Stands alone?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement",
@@ -21007,7 +21007,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Propose",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Report what would move&#10;&#8212; sizes, and what breaks",
+      "name": "Report what would move — sizes, and what breaks",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement",
@@ -21052,7 +21052,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement/node/End_Declined",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Stays where it is&#10;&#8212; declared, detangled, isolated",
+      "name": "Stays where it is — declared, detangled, isolated",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement",
@@ -21070,7 +21070,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement/node/Task_Extract",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "4 &#183; Extract &#8212; a directory move,&#10;not a file-by-file sift",
+      "name": "4 · Extract — a directory move, not a file-by-file sift",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement",
@@ -21111,7 +21111,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement/node/End_Unknown",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "UNKNOWN &#8212; stop.&#10;Not &#8220;not yet&#8221;, not clean",
+      "name": "UNKNOWN — stop. Not “not yet”, not clean",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_GraphDetanglement",
@@ -23420,7 +23420,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent/node/Start_Sweep",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Hourly (:37),&#10;or on dispatch",
+      "name": "Hourly (:37), or on dispatch",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent",
@@ -23438,7 +23438,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent/node/Task_Sweep",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Ask, per open PR, whether its&#10;HEAD has a run &#8212; skipping&#10;heads younger than 15 min",
+      "name": "Ask, per open PR, whether its HEAD has a run — skipping heads younger than 15 min",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent",
@@ -23460,7 +23460,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent/node/GW_Determined",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Could we&#10;tell?",
+      "name": "Could we tell?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent",
@@ -23481,7 +23481,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent/node/End_Unknown",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Unknown &#8212; job RED,&#10;issue UNTOUCHED",
+      "name": "Unknown — job RED, issue UNTOUCHED",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent",
@@ -23499,7 +23499,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent/node/Task_Label",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Ensure the tracking&#10;label exists",
+      "name": "Ensure the tracking label exists",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent",
@@ -23521,7 +23521,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent/node/GW_Finding",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Any head&#10;with no run?",
+      "name": "Any head with no run?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent",
@@ -23542,7 +23542,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent/node/Task_Close",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Close the&#10;tracking issue",
+      "name": "Close the tracking issue",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent",
@@ -23582,7 +23582,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent/node/Task_Track",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Open or EDIT the one&#10;tracking issue",
+      "name": "Open or EDIT the one tracking issue",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent",
@@ -23604,7 +23604,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent/node/Task_Comment",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Comment ONCE per&#10;(PR, head sha)",
+      "name": "Comment ONCE per (PR, head sha)",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent",
@@ -23626,7 +23626,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent/node/End_Recorded",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Recorded &#8212;&#10;job stays GREEN",
+      "name": "Recorded — job stays GREEN",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_PrChecksPresent",
@@ -31733,7 +31733,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift/flow/Flow_2",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "no &#8212; in sync",
+      "name": "no — in sync",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift/node/GW_Drift",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift/node/End_Clean",
@@ -31743,7 +31743,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift/flow/Flow_3",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
-      "name": "yes &#8212; drifted",
+      "name": "yes — drifted",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift/node/GW_Drift",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift/node/End_Drift",
@@ -31753,7 +31753,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift/node/Start_Change",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Pull request, push to main,&#10;or dispatch",
+      "name": "Pull request, push to main, or dispatch",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift",
@@ -31771,7 +31771,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift/node/Task_Check",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Regenerate the context, block,&#10;library and site graphs &#8212; and diff",
+      "name": "Regenerate the context, block, library and site graphs — and diff",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift",
@@ -31791,7 +31791,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift/node/GW_Drift",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Did anything&#10;change?",
+      "name": "Did anything change?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift",
@@ -31830,7 +31830,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift/node/End_Drift",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Job RED &#8212; the generated&#10;file is stale",
+      "name": "Job RED — the generated file is stale",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_JsonLdDrift",
@@ -32288,7 +32288,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth/node/Start_Sweep",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Weekly (Mon 09:17 UTC),&#10;or on dispatch",
+      "name": "Weekly (Mon 09:17 UTC), or on dispatch",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth",
@@ -32306,7 +32306,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth/node/Task_Check",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Run check:ci-health,&#10;WRITING the report file",
+      "name": "Run check:ci-health, WRITING the report file",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth",
@@ -32328,7 +32328,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth/node/GW_Determined",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Could we&#10;tell?",
+      "name": "Could we tell?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth",
@@ -32349,7 +32349,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth/node/End_Unknown",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Unknown &#8212; job RED,&#10;issue UNTOUCHED",
+      "name": "Unknown — job RED, issue UNTOUCHED",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth",
@@ -32367,7 +32367,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth/node/Task_Label",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Ensure the tracking&#10;label exists",
+      "name": "Ensure the tracking label exists",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth",
@@ -32389,7 +32389,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth/node/GW_Finding",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Anything red&#10;on main?",
+      "name": "Anything red on main?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth",
@@ -32410,7 +32410,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth/node/Task_Close",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Close the&#10;tracking issue",
+      "name": "Close the tracking issue",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth",
@@ -32450,7 +32450,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth/node/Task_Track",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Open or EDIT the one&#10;tracking issue",
+      "name": "Open or EDIT the one tracking issue",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth",
@@ -32472,7 +32472,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth/node/End_Found",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
-      "name": "Recorded &#8212; job stays GREEN",
+      "name": "Recorded — job stays GREEN",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/cat-harness.jsonld#process/Process_CiHealth",
@@ -43610,8 +43610,8 @@
   ],
   "staging": {
     "branch": "claude/brave-hypatia-r820sf",
-    "sha": "34fe940ff3c9f5e724f8695c556f8bc177f273db",
+    "sha": "a496f25b07b90bce91b4636150a3a3efa4247d7b",
     "pr": "1399/merge",
-    "run": "36251337184"
+    "run": "36256489913"
   }
 }

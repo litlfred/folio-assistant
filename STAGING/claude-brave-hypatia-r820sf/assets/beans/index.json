@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 397,
+      "count": 398,
       "unit": "beans"
     }
   },
@@ -1590,7 +1590,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T03:40:20Z",
-      "updatedAt": "2026-09-26T15:13:14Z",
+      "updatedAt": "2026-09-26T16:43:35Z",
       "preview": "Measured 2026-09-26 on `985d0bada2a` (branch claude/brave-hypatia-r820sf, diff = two bean .md files only).\n\n## What happened\n\n`bun run gates` failed with ONE test failure:\n\n    (fail) the sweep's profile gate, end to end > a paper-only criterion is n/a'd in a document folio, under its OWN outcome [5769.02ms]\n\nThe same test, by name, **passes in isolation** — both with the branch's changes applied ",
       "file": "beans/defs/folio-assistant-9v4m--test-interference-a-profile-gate-test-fails-in-the.md"
     },
@@ -5119,6 +5119,20 @@
       "updatedAt": "2026-09-24T14:00:00Z",
       "preview": "Issue #1250.\n\nOwner, 2026-09-24:\n\n> on library/ page, the extract of a node is shown, but no agentic summary\n\nand, on scope:\n\n> Make as QA sidecar as part of general doc ingestion to slowly drain.\n\n## The design\n\n- `library/<slug>/summaries.json`, `folio-block-summaries/v1` (`schemas/block-summary.ts`): one record per prose block with `block`, `source`, `source_hash` (sha256 of the section text th",
       "file": "beans/defs/folio-assistant-x80s--ingest-agent-summaries-of-prose-blocks-a-qa-sideca.md"
+    },
+    {
+      "id": "folio-assistant-x89e",
+      "title": "deps: land #908's two bumps with both bun.lock files regenerated",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T13:41:12Z",
+      "updatedAt": "2026-09-26T14:45:43Z",
+      "preview": "#908 (dependabot, minor-and-patch group) bumps @anthropic-ai/sdk ^0.104.2 -> ^0.127.0 in the root and mcp-server manifests, and @playwright/test 1.61.1 -> 1.63.0 in the root. It changes package.json only, never bun.lock, so under --frozen-lockfile it cannot go green, and it conflicts with main. Two @dependabot commands posted through the GitHub MCP tool arrived defanged (with middle dots inserted)",
+      "file": "beans/defs/folio-assistant-x89e--deps-land-908s-two-bumps-with-both-bunlock-files-r.md"
     },
     {
       "id": "folio-assistant-x89g",

@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/docs-ui.css?v=1790435834">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/docs-ui.css?v=1790441085">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/narrow-viewport.css?v=1790435834">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/narrow-viewport.css?v=1790441085">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/work-plan.css?v=1790435834">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/work-plan.css?v=1790441085">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/themes.css?v=1790435834">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/themes.css?v=1790441085">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/uml.css?v=1790435834">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/uml.css?v=1790441085">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/avatars.css?v=1790435834">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/avatars.css?v=1790441085">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/docs-ui.js?v=1790435834" defer></script>
+<script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/docs-ui.js?v=1790441085" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -866,43 +866,37 @@ THE EXTRACTION IS A PERSON’S DECISION, AND THE LANE SAYS SO. <code class="lang
   </thead>
   <tbody>
     <tr>
-      <td><strong>Brief the topic before
-touching anything</strong><br /><code class="language-plaintext highlighter-rouge">Task_Brief</code></td>
+      <td><strong>Brief the topic before touching anything</strong><br /><code class="language-plaintext highlighter-rouge">Task_Brief</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/opening-brief.html"><code class="language-plaintext highlighter-rouge">opening-brief</code></a></td>
       <td>What am I doing and why is it worth doing; what do I already know, with each measurement’s provenance; how do I plan to do it and WHAT WOULD FALSIFY THE APPROACH. A falsifier that never fires is decoration — this practice’s own fired, took edges 5 to 12, and rewrote the plan.</td>
     </tr>
     <tr>
-      <td><strong>1 · Declare in place
-(nothing moves)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Declare</code></td>
+      <td><strong>1 · Declare in place (nothing moves)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Declare</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/graph-detanglement.html"><code class="language-plaintext highlighter-rouge">graph-detanglement</code></a></td>
       <td>A <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> entry with its <code class="language-plaintext highlighter-rouge">graphs[]</code> kinds. A sub-graph that owns its own layout gains a NESTED declaration whose paths resolve against its own directory, so the whole graph relocates by moving one folder.</td>
     </tr>
     <tr>
-      <td><strong>2a · Measure — unassigned
-column FIRST</strong><br /><code class="language-plaintext highlighter-rouge">Task_Measure</code></td>
+      <td><strong>2a · Measure — unassigned column FIRST</strong><br /><code class="language-plaintext highlighter-rouge">Task_Measure</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/graph-detanglement.html"><code class="language-plaintext highlighter-rouge">graph-detanglement</code></a></td>
       <td><code class="language-plaintext highlighter-rouge">bun run check:partition</code>. Read the unassigned column before the edge count, and quote BOTH numbers rather than only the one that improved. The count rising when the measurement improves is correct: 43 to 49 when thirteen previously-unjudged edges were folded in.</td>
     </tr>
     <tr>
-      <td><strong>2b · Prune, merge, factor
-— or the classification is wrong</strong><br /><code class="language-plaintext highlighter-rouge">Task_Move</code></td>
+      <td><strong>2b · Prune, merge, factor — or the classification is wrong</strong><br /><code class="language-plaintext highlighter-rouge">Task_Move</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/graph-detanglement.html"><code class="language-plaintext highlighter-rouge">graph-detanglement</code></a></td>
       <td>The only four moves. Move the shared TARGET first and the importers after; check the target’s layer before the importer’s; a schema moves with its script. The fix is never an exemption, it is the right owner.</td>
     </tr>
     <tr>
-      <td><strong>3 · Isolate — own declaration,
-namespace, artefact</strong><br /><code class="language-plaintext highlighter-rouge">Task_Isolate</code></td>
+      <td><strong>3 · Isolate — own declaration, namespace, artefact</strong><br /><code class="language-plaintext highlighter-rouge">Task_Isolate</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/graph-detanglement.html"><code class="language-plaintext highlighter-rouge">graph-detanglement</code></a></td>
       <td>Only once cross-edges measure zero: give the sub-graph its own declaration, its own namespace and its own published artefact, as bootstrap/ has (its own declaration, bs: namespace and graph document). Nothing moves yet; the sub-graph now stands alone in place.</td>
     </tr>
     <tr>
-      <td><strong>Report what would move
-— sizes, and what breaks</strong><br /><code class="language-plaintext highlighter-rouge">Task_Propose</code></td>
+      <td><strong>Report what would move — sizes, and what breaks</strong><br /><code class="language-plaintext highlighter-rouge">Task_Propose</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/deletion-requires-confirmation.html"><code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code></a></td>
       <td>The agent reports and waits. <code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code> is not a courtesy to waive: an agent never removes or relocates a durable artefact on its own initiative.</td>
@@ -914,8 +908,7 @@ namespace, artefact</strong><br /><code class="language-plaintext highlighter-ro
       <td>The one step no package may relax. A repository cut changes the substrate every other diagram’s lanes bind to, and that is a person’s decision.</td>
     </tr>
     <tr>
-      <td><strong>4 · Extract — a directory move,
-not a file-by-file sift</strong><br /><code class="language-plaintext highlighter-rouge">Task_Extract</code></td>
+      <td><strong>4 · Extract — a directory move, not a file-by-file sift</strong><br /><code class="language-plaintext highlighter-rouge">Task_Extract</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/graph-detanglement.html"><code class="language-plaintext highlighter-rouge">graph-detanglement</code></a></td>
       <td>Only once edges are zero and the declaration stands alone: move the sub-graph out as one directory move, not a file-by-file sift. Its nested declaration resolves paths against its own directory, so moving the folder moves the graph. The five-point gate is in migration-plan.md Phase II.</td>
@@ -943,29 +936,19 @@ not a file-by-file sift</strong><br /><code class="language-plaintext highlighte
   </thead>
   <tbody>
     <tr>
-      <td><strong>Declared
-in place?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Declared</code></td>
+      <td><strong>Declared in place?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Declared</code></td>
       <td>Computed, not chosen: decisions/subgraph-declared-gate.dmn (hit policy FIRST) over three inputs — the declaration parsed (<code class="language-plaintext highlighter-rouge">readable</code>), an entry present for the sub-graph, and every declared path exists. Unparseable goes to <code class="language-plaintext highlighter-rouge">unknown</code>, a fault rather than ‘not yet’, and stops the process. No entry, or a declared path that does not exist (bean <code class="language-plaintext highlighter-rouge">dh4f</code>), goes to <code class="language-plaintext highlighter-rouge">not yet</code>, back to Declare. Otherwise <code class="language-plaintext highlighter-rouge">declared</code>, on to Measure.</td>
-      <td><strong>unknown</strong> → UNKNOWN — stop.
-Not “not yet”, not clean<br /><strong>declared</strong> → 2a · Measure — unassigned
-column FIRST<br /><strong>not yet</strong> → 1 · Declare in place
-(nothing moves)</td>
+      <td><strong>unknown</strong> → UNKNOWN — stop. Not “not yet”, not clean<br /><strong>declared</strong> → 2a · Measure — unassigned column FIRST<br /><strong>not yet</strong> → 1 · Declare in place (nothing moves)</td>
     </tr>
     <tr>
       <td><strong>Detangled?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Detangled</code></td>
       <td>Computed from <code class="language-plaintext highlighter-rouge">check:partition</code>’s counts by decisions/detanglement-gate.dmn (hit policy FIRST). <code class="language-plaintext highlighter-rouge">unassignedEdges &gt; 0</code> answers <code class="language-plaintext highlighter-rouge">unknown</code> BEFORE the cross-edge rule is reached, because a zero cross-edge count over an unjudged corpus is not a pass; that stops the process. <code class="language-plaintext highlighter-rouge">crossEdges &gt; 0</code> answers <code class="language-plaintext highlighter-rouge">keep detangling</code>: prune, merge, factor, or reclassify, then re-measure. Zero of both is <code class="language-plaintext highlighter-rouge">detangled</code>, on to Isolate.</td>
-      <td><strong>unknown</strong> → UNKNOWN — stop.
-Not “not yet”, not clean<br /><strong>keep detangling</strong> → 2b · Prune, merge, factor
-— or the classification is wrong<br /><strong>detangled</strong> → 3 · Isolate — own declaration,
-namespace, artefact</td>
+      <td><strong>unknown</strong> → UNKNOWN — stop. Not “not yet”, not clean<br /><strong>keep detangling</strong> → 2b · Prune, merge, factor — or the classification is wrong<br /><strong>detangled</strong> → 3 · Isolate — own declaration, namespace, artefact</td>
     </tr>
     <tr>
-      <td><strong>Stands
-alone?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Isolated</code></td>
+      <td><strong>Stands alone?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Isolated</code></td>
       <td>Computed by decisions/isolation-gate.dmn (hit policy FIRST) over three inputs: its own declaration with paths relative to itself, its own namespace with every minted term defined, and a published artefact of its own. Any one missing answers <code class="language-plaintext highlighter-rouge">not yet</code>, back to Isolate. All three answer <code class="language-plaintext highlighter-rouge">isolated</code>, on to reporting what would move and waiting for a person to authorise it. Zero edges alone is not isolation.</td>
-      <td><strong>not yet</strong> → 3 · Isolate — own declaration,
-namespace, artefact<br /><strong>isolated</strong> → Report what would move
-— sizes, and what breaks</td>
+      <td><strong>not yet</strong> → 3 · Isolate — own declaration, namespace, artefact<br /><strong>isolated</strong> → Report what would move — sizes, and what breaks</td>
     </tr>
   </tbody>
 </table></div>

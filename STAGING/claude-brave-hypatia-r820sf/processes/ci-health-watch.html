@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/docs-ui.css?v=1790435834">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/docs-ui.css?v=1790441085">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/narrow-viewport.css?v=1790435834">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/narrow-viewport.css?v=1790441085">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/work-plan.css?v=1790435834">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/work-plan.css?v=1790441085">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/themes.css?v=1790435834">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/themes.css?v=1790441085">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/uml.css?v=1790435834">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/uml.css?v=1790441085">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/avatars.css?v=1790435834">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/avatars.css?v=1790441085">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/docs-ui.js?v=1790435834" defer></script>
+<script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/docs-ui.js?v=1790441085" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -858,29 +858,25 @@ ONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue �
   </thead>
   <tbody>
     <tr>
-      <td><strong>Run check:ci-health,
-WRITING the report file</strong><br /><code class="language-plaintext highlighter-rouge">Task_Check</code></td>
+      <td><strong>Run check:ci-health, WRITING the report file</strong><br /><code class="language-plaintext highlighter-rouge">Task_Check</code></td>
       <td>Scheduled log sweep</td>
       <td><a href="../reference/skill-instructions/ci-health.html"><code class="language-plaintext highlighter-rouge">ci-health</code></a></td>
       <td>Run check:ci-health –out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check.</td>
     </tr>
     <tr>
-      <td><strong>Ensure the tracking
-label exists</strong><br /><code class="language-plaintext highlighter-rouge">Task_Label</code></td>
+      <td><strong>Ensure the tracking label exists</strong><br /><code class="language-plaintext highlighter-rouge">Task_Label</code></td>
       <td>Scheduled log sweep</td>
       <td><a href="../reference/skill-instructions/ci-health.html"><code class="language-plaintext highlighter-rouge">ci-health</code></a></td>
       <td>Create the ci-health label with –force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict.</td>
     </tr>
     <tr>
-      <td><strong>Close the
-tracking issue</strong><br /><code class="language-plaintext highlighter-rouge">Task_Close</code></td>
+      <td><strong>Close the tracking issue</strong><br /><code class="language-plaintext highlighter-rouge">Task_Close</code></td>
       <td>Scheduled log sweep</td>
       <td><a href="../reference/skill-instructions/ci-health.html"><code class="language-plaintext highlighter-rouge">ci-health</code></a></td>
       <td>Clean: close the open ci-health issue, if any, saying why (main is clean). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.</td>
     </tr>
     <tr>
-      <td><strong>Open or EDIT the one
-tracking issue</strong><br /><code class="language-plaintext highlighter-rouge">Task_Track</code></td>
+      <td><strong>Open or EDIT the one tracking issue</strong><br /><code class="language-plaintext highlighter-rouge">Task_Track</code></td>
       <td>Scheduled log sweep</td>
       <td><a href="../reference/skill-instructions/ci-health.html"><code class="language-plaintext highlighter-rouge">ci-health</code></a></td>
       <td>Findings: EDIT the one open issue labelled ci-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed.</td>
@@ -908,20 +904,14 @@ tracking issue</strong><br /><code class="language-plaintext highlighter-rouge">
   </thead>
   <tbody>
     <tr>
-      <td><strong>Could we
-tell?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Determined</code></td>
+      <td><strong>Could we tell?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Determined</code></td>
       <td>Asked of the <code class="language-plaintext highlighter-rouge">verdict</code> output that the <code class="language-plaintext highlighter-rouge">check</code> step of .github/workflows/ci-health.yml writes, not of the raw exit code. <code class="language-plaintext highlighter-rouge">check:ci-health</code> exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. <code class="language-plaintext highlighter-rouge">no</code> is verdict == ‘unknown’: the last step runs <code class="language-plaintext highlighter-rouge">exit 1</code> and no issue step runs, so the tracking issue is left untouched. <code class="language-plaintext highlighter-rouge">yes</code> is verdict != ‘unknown’, the guard on the label step and so on both issue paths.</td>
-      <td><strong>no</strong> → Unknown — job RED,
-issue UNTOUCHED<br /><strong>yes</strong> → Ensure the tracking
-label exists</td>
+      <td><strong>no</strong> → Unknown — job RED, issue UNTOUCHED<br /><strong>yes</strong> → Ensure the tracking label exists</td>
     </tr>
     <tr>
-      <td><strong>Anything red
-on main?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Finding</code></td>
+      <td><strong>Anything red on main?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Finding</code></td>
       <td>Asked of the same <code class="language-plaintext highlighter-rouge">verdict</code>, once it is known. <code class="language-plaintext highlighter-rouge">clean</code> is verdict == ‘clean’ (exit 0): the open <code class="language-plaintext highlighter-rouge">ci-health</code> issue, if there is one, is closed saying main is clean. <code class="language-plaintext highlighter-rouge">not clean</code> is verdict == ‘red’ (exit 1 with a report): the one open issue labelled <code class="language-plaintext highlighter-rouge">ci-health</code> is edited in place with the report as its body, or created if there is none. Neither branch fails the job — a red main speaks through the issue, not through this workflow’s status.</td>
-      <td><strong>clean</strong> → Close the
-tracking issue<br /><strong>not clean</strong> → Open or EDIT the one
-tracking issue</td>
+      <td><strong>clean</strong> → Close the tracking issue<br /><strong>not clean</strong> → Open or EDIT the one tracking issue</td>
     </tr>
   </tbody>
 </table></div>
