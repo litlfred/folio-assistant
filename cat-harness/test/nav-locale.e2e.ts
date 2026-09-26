@@ -77,7 +77,6 @@ const GUIDE = INDEX.pages["guides/agent-onboarding"];
 /**
  * A nav item with no translation in ANY locale — the fallback case.
  *
-<<<<<<< HEAD
  * **This fixture was `getting-started`, and it did exactly what its own
  * docblock promised.** That note read: *"a real page of this site that has
  * never been translated. If it ever is, this test starts failing loudly rather
@@ -98,6 +97,25 @@ const GUIDE = INDEX.pages["guides/agent-onboarding"];
  *    HAVE translations, so "untranslated" then means *absent from the index*,
  *    and the fixture is a real page of this site that the index does not list.
  *
+ *
+ * ## What the first firing cost, from `main`'s own account of it
+ *
+ * `main` resolved this differently — it re-pointed the constant by hand to
+ * `architecture` and asserted the premise. Its note records the price of the
+ * original failure, and the figure is worth keeping: the failure mode was
+ * `element(s) not found` on a locator, which says nothing about why, and
+ * *"three environments and a bisect against `origin/main`"* went into learning
+ * that the page had simply been translated.
+ *
+ * That is the argument for asserting the premise, which both resolutions make.
+ * It is not an argument for naming the page: a hand-named fixture is what rotted
+ * three times in one day (`getting-started` → `installation` → `detangle` →
+ * `architecture`). This side keeps the derivation, so there is no fourth.
+ *
+ * **So this file deliberately differs from `main`.** Same premise assertion,
+ * derived subject instead of a named one, and identical to
+ * `#1372`'s copy. Whoever reconciles them should take the derivation.
+ *
  * The premise is asserted rather than assumed: if the chosen page ever gains a
  * translation, the test says so in one sentence instead of timing out on a
  * missing locator, which is how this arrived the first time.
@@ -113,25 +131,6 @@ const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
   // Case 2. A real page of this site, deliberately one the index does not list.
   return { key: "agentic-harness", url: "/agentic-harness.html", title: "Agentic harness" };
 })();
-=======
- * Named, not counted: `architecture` is a real page of this site that has
- * never been translated. If it ever is, this test starts failing loudly rather
- * than silently verifying nothing, which is the correct direction to fail in.
- *
- * ## The tripwire fired once, 2026-09-26, and this is what it cost
- *
- * It was `getting-started` until #1374 translated that page into all six UN
- * languages. The design worked exactly as written above — but the FAILURE MODE
- * was `element(s) not found` on a locator, which says nothing about why. Three
- * environments and a bisect against `origin/main` went into learning that the
- * page had simply been translated.
- *
- * So the premise is now ASSERTED rather than assumed: the test below fails with
- * a sentence naming the page and telling the next person to re-point this
- * constant. Failing loudly was right; failing legibly is what it was missing.
- */
-const UNTRANSLATED = { key: "architecture", url: "/architecture.html", title: "Architecture" };
->>>>>>> origin/main
 
 /** just-the-docs' nav markup, reduced to what the filter touches. */
 function harness(indexIsland: string): string {
