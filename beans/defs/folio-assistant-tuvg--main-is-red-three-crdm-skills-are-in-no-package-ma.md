@@ -204,3 +204,104 @@ authoring-time gate below the whole answer rather than a nice-to-have.
       above as could-not-determine; the single-generator hypothesis is withdrawn.
 - [ ] Decide whether an unlisted skill should fail at authoring time rather than
       in the next PR's CI — four occurrences in two days.
+
+## REVERTED 2026-09-26 — cause C should never have been fixed this way
+
+The 25 `UNCATALOGED` entries are removed. They were merged (#1364) on the
+owner's instruction to me, and the owner has since reverted that instruction on
+being shown what the instruction collided with. **Both directions came from the
+owner within about forty minutes**, which is the finding, not a footnote.
+
+### What the entries collided with
+
+1. **A sibling PR was already doing the identical work.** #1381, *"Record the 25
+   uncatalogued translations"*, open, carrying the same 27 entries. The merge
+   here would have made it fail `translation-drift.test.ts:154` — *"no page is
+   recorded TWICE"* — on 52 entries with 25 duplicated. My merge **blocked
+   another session's PR**, and that PR had the work first.
+2. **Two other sessions carry the opposite decision, same day.** Their check-in
+   prompts record it directly: *"DO NOT add UNCATALOGED entries to go green —
+   documented as a BACKLOG not a policy, 2->29 retires a working gate"*, and
+   *"The owner chose on 2026-09-26 to ask the t8g3 campaign for the catalogues
+   rather than record the absence"*, under a bean `ngxj` with a 48-hour expiry.
+   Neither `ngxj` nor `0xfe` exists on any pushed ref, so the beans could not be
+   read — only the prompts.
+
+### Why the reverted direction is the better one, on the merits
+
+2 recorded absences to 27 changes what the gate MEANS: from *"published
+translations are catalogued"* to *"we noted that they are not"*. That is not a
+backlog entry, it is retiring a working gate by filling it. My own commit
+called the entries *"a BACKLOG, not a dispensation"* — the volume is what makes
+that distinction stop holding.
+
+### What this costs, stated plainly
+
+`main` is red again on `translation:drift:check` and `no NEW drift`, and every
+open PR with it. That is the state it was in before #1364, and it is the state
+the other sessions had deliberately chosen to sit in while asking issue #206's
+translation campaign for the actual `.po` files. The fix is the catalogues.
+
+### The instruction-collision is the durable finding
+
+Nothing in this repository let either side see the other. I had no way to read
+`ngxj`; those sessions had no way to see my question. The owner answered both
+questions truthfully and the answers contradicted, because each was asked
+without the other on the table. **Seven sessions were running.** That is the
+same cost this session has measured five other ways (`r1vw` re-implemented,
+`check:stale-paths` nearly rebuilt, `4pm8` closing mid-edit, `kupb` re-parented
+nine hours early, two of this bean's own causes fixed while the patch was held)
+— but this is the first time it reached `main` and had to be undone.
+
+## Done when
+
+- [x] The 25 entries removed; `UNCATALOGED` back to its original 2
+- [x] `git diff origin/main` is a pure deletion, nothing else
+- [x] `no page is recorded TWICE` passes, so #1381 is unblocked
+- [ ] The `.po` catalogues land (issue #206 / bean `ngxj`, not this bean)
+- [x] ~~A way for one session to see another's open question before answering
+      it~~ — **WITHDRAWN 2026-09-26: the mechanism already exists and I skipped
+      it.** See below.
+
+## The remedy I proposed already existed — withdrawn, and the real gap is narrower
+
+I recommended building cross-session question visibility. Then I looked, which
+is the step that should have come first. `bean-coordination` §"A claim is
+branch-local" **already prescribes the check**, with the command, and names my
+exact case in its own words:
+
+> `gh pr list --state open --search '<bean-id>'`
+>
+> Both are cheap, and **the second catches the case that matters most in
+> practice — a sibling minutes ahead of you who already has a PR up.**
+
+#1381 was up. I did not look. **Seventh premise to dissolve on re-measurement
+today, and the first that was my own proposal.**
+
+### What IS a real gap, and it is one sentence wide
+
+Those checks are written as *pre-claim*. I was not claiming: I already held
+`tuvg` and was executing an owner instruction on one cause inside it. **No
+claim, so the rule never fired.** Two edits to the skill follow, and both are
+mechanical rather than aspirational:
+
+1. **The trigger is starting work, not claiming.** A cause inside a bean you
+   hold, a fix just asked for, a gate you are unbreaking — each is a unit a
+   sibling may already have a PR up for, and none involves a claim.
+2. **Search the subject, not only the bean id.** The sibling's bean `0xfe` was
+   on an unpushed branch, so an id search would have returned nothing. #1381's
+   title was *"Record the 25 uncatalogued translations"* — `UNCATALOGED` would
+   have matched; `tuvg` never could.
+
+Also recorded there: a duplicate-detecting test punishes **whoever merges
+second**, not whoever duplicated. Merging first is not evidence of being first.
+
+### What this does NOT fix, stated so nobody reads it as closed
+
+The two contradictory owner answers are still possible. Nothing above would have
+shown me that another session had already asked and been told *no* — that
+information lived only in an unpushed bean and another session's check-in text.
+The PR check would have stopped me **by finding the duplicate work**, not by
+finding the decision. That remains unsolved, and it is deliberately NOT being
+designed here: it is a platform capability change, so it belongs in CRDM behind
+an issue, and I have not been given permission to open one.
