@@ -908,6 +908,23 @@ jobs:
       - name: translated pages' links resolve at their own depth
         run: bun run translated-links:check
 
+      # ABOVE the drift gate DELIBERATELY, same as `translated-links:check`
+      # directly above and for the same reason it records: this step sat 535
+      # lines BELOW the drift batch, and a job stops at its first failing step.
+      # The drift is deliberately red (owner's decision, bean `ngxj`, issue
+      # #206), so `docs:pages:check` could not fire on any PR — the `om30`
+      # masking shape, third instance in this file.
+      #
+      # Measured 2026-09-26 (bean `9x01`): the drift batch is step 40 of this
+      # job's 46, so SIX steps were unreachable. Five remain below it and are
+      # not this change's to move; the count and their names are on the bean.
+      # One of the five is "translation index is current", which is masked by
+      # the translation drift — so the gate that would catch a stale
+      # `translations.json` cannot fire while the catalogues are missing, and
+      # that is why the stale index found earlier today had to be fixed by hand.
+      - name: generated docs pages are current
+        run: bun run docs:pages:check
+
       - name: gates that were registered and never run
         run: |
           set -e
@@ -1431,8 +1448,18 @@ jobs:
       # What a red here means now: somebody added a node, renamed a block, ran
       # a first sweep, or moved a sidecar, and did not regenerate. A real
       # omission, every time.
-      - name: generated docs pages are current
-        run: bun run cat-harness/scripts/gen-docs-pages.ts --check
+      # NAMED, not the long path, and that is the whole point of bean `9x01`
+      # finding 4: every page this generator writes carries a banner ending "and
+      # `docs:pages:check` fails on the difference", and that script did not
+      # exist — `bun run docs:pages:check` answered `Script not found` while this
+      # step ran the same guard by its path. The documented command and the
+      # enforced command are now ONE STRING, so neither can drift from the other.
+      #
+      # Adding the script alone was not enough: `gates.test.ts > no check script
+      # is unrun` then reported `docs:pages:check` as declared and run by no
+      # workflow — bean `ot9a`'s defect, which is what this job's "gates that
+      # were registered and never run" step exists for. Two guards, opposite
+      # directions, and only this line satisfies both.
 
       # GATED, unlike the two projections below, and the difference is the
       # INPUT SET — which is the standard those two are excused against.
