@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jh2j
 title: 'TOOL 7/13: Task_Render — LaTeX / PDF rendering (16 files, 3 entry points)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T04:34:56Z
-updated_at: 2026-09-20T04:34:56Z
+updated_at: 2026-09-26T03:34:32Z
 parent: folio-assistant-d308
 ---
 
@@ -88,3 +88,102 @@ Stated so a caller does not assume both have the same prerequisites.
 `latex-authoring` (the unsatisfiable contract above), and the remaining TeX
 scripts — `validate-tex`, `audit-tex-source`, `latexmk-compile`, `render-latex`,
 `generate-block-tex`, `generate-main-tex`, `headless-render-qc`.
+
+
+---
+
+## 2026-09-26 — the remaining seven, read and dispositioned
+
+Three nodes, two libraries, two findings. Measured on `f5456796ea`, and the
+premise held: **none of the seven had a `package.json` script**, so nothing in
+the repository named any of them — `d308`'s claim exactly.
+
+### Three nodes
+
+| node | satisfies | mechanism |
+|---|---|---|
+| `tex-snippet-validate` | `latex-validation` | `content/pipeline/validate-tex.ts` |
+| `tex-source-audit` | `latex-validation` | `content/pipeline/audit-tex-source.ts` |
+| `headless-render-qc` | **`rendered-verification`** | `scripts/headless-render-qc.ts` |
+
+`alternativeTo` is EMPTY on all three. The three `latex-validation` tools are a
+SEQUENCE, not arms: `latex-preflight` gates the source before a compile,
+`tex-snippet-validate` parses the snippets in it, `tex-source-audit` catches the
+hazards that read as prose, `latex-overfull` reads the log after. Calling any two
+alternatives would tell a caller that running one covers another.
+
+### `rendered-verification`, not `html-rendering-qc` — and the first guess was wrong
+
+Established by reading the skill BODIES rather than matching names.
+`html-rendering-qc` (*"Audit `.md` content files for patterns that cause
+rendering failures"*) and `markdown-render-check` (*"verify the file renders
+correctly on GitHub"*) are both **source-side**. `rendered-verification` is the
+one about *"LOOKING at it in a browser … driving it with Playwright in this
+environment"* — which is what `headless-render-qc.ts` does. It left the uncovered
+list; `html-rendering-qc` stays in tier C, deliberately unclaimed.
+
+### Two libraries, no node — the `81t5` criterion
+
+`render-latex.ts` and `generate-block-tex.ts` are reached through their consumers
+(`render-changed-blocks`, `adapters/document/tools/render.ts`, and for
+`render-latex` several `schemas/` modules). Same criterion that already exempted
+`pdf-extract` and `pdf-structure`: reachable through a neighbour is reachable.
+
+### Finding 1 — five of the family exit 1 where the house rule wants 2
+
+Measured by RUNNING each, not by reading it:
+
+| script | run in the platform | exit |
+|---|---|---|
+| `validate-tex` | `Files scanned: 0` | **1** |
+| `audit-tex-source` | *"No .md files found … refusing to report success"* | **1** |
+| `headless-render-qc` | `No paper.json found` | **1** |
+| `latexmk-compile.sh` | usage | **1** |
+| `generate-main-tex` | a STACK TRACE from its own source | **1** |
+
+Every one is a could-not-determine — this repository carries no folio — spelled
+as a finding. And the divergence is INSIDE one family: `latex-preflight` and
+`latex-overfull`, the two nodes this bean already landed, both exit **2**
+correctly.
+
+`audit-tex-source` is the sharp case: its message is exactly right (*"This audits
+a FOLIO's content; folio-assistant is the platform"*) and its exit code
+contradicts it. **Not fixed here.** Changing five scripts' exit codes is a
+behaviour change the owner should take deliberately, and each node documents the
+exit a caller will actually get rather than the one the rule wants — a node that
+lies about its exit is worse than one that records the inconsistency.
+
+### Finding 2 — `latexmk-compile.sh` is the `yean` shape, and it guards a boundary
+
+Not noded. It *"compiles LaTeX with safe shell-escape handling"*, and the reason
+is security: `-shell-escape` is enabled only on trusted push events, *"to prevent
+arbitrary command execution from untrusted TeX content"* on a PR.
+
+It cannot satisfy `latex-authoring`: that contract requires `documentClass` AND
+`mainFile`, and this takes only a tex file. A **second instance** of the
+unsatisfiable-authoring-contract pattern this bean already named. And no skill in
+the corpus is about **compiling** — the six TeX/render skills in tier C are
+caching, incremental render, source checks and verification. That is `yean`: a
+mechanism with no skill, and authoring one is a claim about the capability
+vocabulary every dependent instance inherits, which `yean` established is the
+owner's call.
+
+### Also recorded, deliberately not fixed
+
+`headless-render-qc.ts`'s error message names `content/pipeline/export-json.ts` —
+a real platform file under a stale root. `check:usage-paths` does not touch it
+(a different file, not a self-reference) and `check:command-paths` does not judge
+it (`content/` is in `FOLIO_OWNED`). The script runs INSIDE a folio, so the
+folio-correct spelling depends on layout I would be guessing at — which is the
+audience ambiguity `check:command-paths` declines on purpose. Left for `52dz`.
+
+### Done when
+
+- [x] a Tool node for the TeX render path — three, with `satisfies` read from bodies
+- [x] `satisfies` includes `latex-validation` — twice
+- [x] it does NOT claim `authoring-a-document · Task_Render` — none of the three does
+- [x] `requires` honest — `chromium` on the Playwright one, `bun` on the others;
+      `--compile` notes that pdflatex is NOT claimed by the base `requires`
+- [x] `tool-coverage` reflects it — `rendered-verification` left the uncovered list
+- [ ] **the exit-2 contract across the family** — owner's call, Finding 1
+- [ ] **a skill for compiling, or `latexmk-compile.sh` recorded as unsatisfiable** — owner's call, Finding 2
