@@ -1,0 +1,1606 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "bootstrap": "https://litlfred.github.io/folio-assistant/bootstrap/ns#",
+    "cat-harness": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
+    "folio-assistant-core": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "id": "@id",
+    "type": "@type",
+    "graph": "@graph",
+    "name": "rdfs:label",
+    "title": "rdfs:label",
+    "description": "rdfs:comment",
+    "summary": "rdfs:comment",
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "sourceCommit": {
+      "@id": "http://www.w3.org/ns/prov#wasDerivedFrom",
+      "@type": "@id"
+    },
+    "sourceCommitSha": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceCommitSha",
+    "sourceCommitAt": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceCommitAt",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "sourceTreeDirty": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceTreeDirty",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "sourceCommitUnavailable": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceCommitUnavailable",
+    "dependsOn": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOn",
+    "packageId": "https://litlfred.github.io/folio-assistant/cat-harness/ns#packageId",
+    "uri": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#uri",
+      "@type": "@id"
+    },
+    "dependsOnGaps": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOnGaps",
+    "dependsOnUnavailable": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOnUnavailable",
+    "partOf": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#partOf",
+      "@type": "@id"
+    },
+    "inSubgraph": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#inSubgraph",
+      "@type": "@id"
+    },
+    "implementedBy": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#implementedBy",
+      "@type": "@id"
+    },
+    "performedBy": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#performedBy",
+      "@type": "@id"
+    },
+    "declaresSkill": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#declaresSkill",
+      "@type": "@id"
+    },
+    "inPackage": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#inPackage",
+      "@type": "@id"
+    },
+    "providesCapability": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#providesCapability",
+      "@type": "@id"
+    },
+    "requiresCapability": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#requiresCapability",
+      "@type": "@id"
+    },
+    "fallbackToCapability": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#fallbackToCapability",
+      "@type": "@id"
+    },
+    "satisfies": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#satisfies",
+      "@type": "@id"
+    },
+    "hasSkill": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hasSkill",
+      "@type": "@id"
+    },
+    "bindsRole": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bindsRole",
+      "@type": "@id"
+    },
+    "maintains": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#maintains",
+      "@type": "@id"
+    },
+    "maintainsFrom": "https://litlfred.github.io/folio-assistant/cat-harness/ns#maintainsFrom",
+    "maintainedBy": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#maintainedBy",
+      "@type": "@id"
+    },
+    "module": "https://litlfred.github.io/folio-assistant/cat-harness/ns#module",
+    "holdsGraph": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#holdsGraph",
+      "@type": "@id"
+    },
+    "startNode": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#startNode",
+      "@type": "@id"
+    },
+    "incoming": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#incoming",
+      "@type": "@id"
+    },
+    "outgoing": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#outgoing",
+      "@type": "@id"
+    },
+    "from": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#from",
+      "@type": "@id"
+    },
+    "to": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#to",
+      "@type": "@id"
+    },
+    "alternateOf": {
+      "@id": "http://www.w3.org/ns/prov#alternateOf",
+      "@type": "@id"
+    },
+    "canonicalDocument": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#canonicalDocument",
+      "@type": "@id"
+    },
+    "typeIri": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#typeIri",
+      "@type": "@id"
+    },
+    "inputSchema": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#inputSchema",
+      "@type": "@id"
+    },
+    "outputSchema": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#outputSchema",
+      "@type": "@id"
+    },
+    "localId": "https://litlfred.github.io/folio-assistant/cat-harness/ns#localId",
+    "actorKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actorKind",
+    "actorKinds": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actorKinds",
+    "reach": "https://litlfred.github.io/folio-assistant/cat-harness/ns#reach",
+    "actedUpon": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actedUpon",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "judgementOnly": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#judgementOnly",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "bpmnType": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bpmnType",
+    "statement": "https://litlfred.github.io/folio-assistant/cat-harness/ns#statement",
+    "rationale": "https://litlfred.github.io/folio-assistant/cat-harness/ns#rationale",
+    "applies": "https://litlfred.github.io/folio-assistant/cat-harness/ns#applies",
+    "nodeKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#nodeKind",
+    "enforcement": "https://litlfred.github.io/folio-assistant/cat-harness/ns#enforcement",
+    "workPlanOp": "https://litlfred.github.io/folio-assistant/cat-harness/ns#workPlanOp",
+    "touchesWorkPlan": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#touchesWorkPlan",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "relaxable": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#relaxable",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "nodeCount": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#nodeCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "flowCount": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#flowCount",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "decisionRef": "https://litlfred.github.io/folio-assistant/cat-harness/ns#decisionRef",
+    "sourcePath": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourcePath",
+    "sourceKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceKind",
+    "instructionsPath": "https://litlfred.github.io/folio-assistant/cat-harness/ns#instructionsPath",
+    "instructionLines": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#instructionLines",
+      "@type": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "hasInstructions": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hasInstructions",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "hasIOContract": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hasIOContract",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "ambiguous": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ambiguous",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "hasManifest": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hasManifest",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "renderable": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#renderable",
+      "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "path": "https://litlfred.github.io/folio-assistant/cat-harness/ns#path",
+    "assetRole": "https://litlfred.github.io/folio-assistant/cat-harness/ns#assetRole",
+    "version": "https://schema.org/softwareVersion",
+    "hasCapability": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hasCapability",
+      "@type": "@id"
+    },
+    "roleName": "https://litlfred.github.io/folio-assistant/cat-harness/ns#roleName",
+    "satisfiesStatement": "https://litlfred.github.io/folio-assistant/cat-harness/ns#satisfiesStatement",
+    "permissionName": "https://litlfred.github.io/folio-assistant/cat-harness/ns#permissionName",
+    "io": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#io",
+      "@type": "@json"
+    },
+    "invoke": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#invoke",
+      "@type": "@json"
+    },
+    "install": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#install",
+      "@type": "@json"
+    },
+    "detection": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#detection",
+      "@type": "@json"
+    },
+    "meta": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#meta",
+      "@type": "@json"
+    },
+    "assignments": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#assignments",
+      "@type": "@json"
+    },
+    "requirements": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#requirements",
+      "@type": "@json"
+    },
+    "staging": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#staging",
+      "@context": {
+        "branch": "https://litlfred.github.io/folio-assistant/cat-harness/ns#stagingBranch",
+        "sha": "https://litlfred.github.io/folio-assistant/cat-harness/ns#stagingSha",
+        "pr": "https://litlfred.github.io/folio-assistant/cat-harness/ns#stagingRef",
+        "run": "https://litlfred.github.io/folio-assistant/cat-harness/ns#stagingRun"
+      }
+    },
+    "repository": {
+      "@id": "https://schema.org/codeRepository",
+      "@type": "@id"
+    },
+    "counts": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#counts",
+      "@type": "@json"
+    },
+    "omitted": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#omitted",
+      "@container": "@set"
+    }
+  },
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld",
+  "@type": [
+    "http://www.w3.org/ns/prov#Entity",
+    "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#PreviewGraph"
+  ],
+  "canonicalDocument": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld",
+  "repository": "bootstrap",
+  "omitted": [
+    "registry",
+    "packages",
+    "schemas",
+    "tools"
+  ],
+  "generatedAt": "2026-09-26T08:23:39.608Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/05bc656381a66f741b90500f481d04a6c39f2884",
+  "sourceCommitSha": "05bc656381a66f741b90500f481d04a6c39f2884",
+  "sourceCommitAt": "2026-09-26T08:20:51Z",
+  "sourceTreeDirty": true,
+  "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
+  "counts": {
+    "Skill": 7,
+    "Process": 3,
+    "SequenceFlow": 30,
+    "Role": 9,
+    "ProcessNode": 30,
+    "GraphKind": 7,
+    "Directory": 7,
+    "Asset": 2
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-emission",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "bootstrap-graph-emission",
+      "title": "Writing out bootstrap's own Knowledge Graph",
+      "description": "What bootstrap's own Knowledge Graph must be when it is written out as a data file, `.jsonld` with a `.json` copy. bootstrap renders no pages for a person to browse, so this file is how it shows it is a Knowledge Graph at all.",
+      "instructionsPath": "skills/bootstrap-graph-emission.md",
+      "instructionLines": 62,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-emission"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/confirm-harness",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "confirm-harness",
+      "title": "Which harness, and where",
+      "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. It needs a person: the Requestor settles it, never the agent.",
+      "instructionsPath": "skills/confirm-harness.md",
+      "instructionLines": 58,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/confirm-harness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "bootstrap-kg-navigation",
+      "title": "Reading a knowledge graph before you have anything",
+      "description": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill bootstrap hands you, because the second step of the handoff cannot be followed without it. Named `bootstrap-` so it cannot be confused with a navigation Skill of a Harness that is installed.",
+      "instructionsPath": "skills/bootstrap-kg-navigation.md",
+      "instructionLines": 77,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/log-message",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "log-message",
+      "title": "Logging what you are doing",
+      "description": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.",
+      "instructionsPath": "skills/log-message.md",
+      "instructionLines": 92,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/log-message"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/root-readme",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "root-readme",
+      "title": "The root README, and the one fact it must carry",
+      "description": "Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. It runs only once the install has succeeded.",
+      "instructionsPath": "skills/root-readme.md",
+      "instructionLines": 82,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/root-readme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-publication",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "bootstrap-graph-publication",
+      "title": "Publishing bootstrap's Knowledge Graph",
+      "description": "Where bootstrap's Knowledge Graph file is published, why its `@id` must be exactly that address, why a `.json` copy sits beside the `.jsonld`, and why the file is not kept in the repository.",
+      "instructionsPath": "skills/bootstrap-graph-publication.md",
+      "instructionLines": 49,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-publication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/discussion",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "discussion",
+      "title": "discussion — settling what an agent cannot read off disk",
+      "instructionsPath": "skills/discussion.md",
+      "instructionLines": 107,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Determine the harness and repositories",
+      "enforcement": "strict",
+      "sourcePath": "processes/discussion.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion"
+      ],
+      "nodeCount": 9,
+      "flowCount": 9,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "not yet — ask once more",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "declined",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Bootstrapping Agent",
+      "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Requestor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Requestor",
+      "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/requestor",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Requestor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "A fact is needed that no file holds",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Narrow the candidates from context",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/discussion"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Start_Narrow"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_NarrowCandidates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Put the question, with its candidates named",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/discussion"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Narrow_Put",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_PutQuestion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Answer, or decline",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Requestor",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Put_Answer"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_Answer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Does the answer settle it?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Answer_Gate"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_No",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/G_Settled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Record the determination",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/discussion"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Yes"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordDetermination"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Record what is still open",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/discussion"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Settled_Declined"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/A_RecordUnsettled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Harness and repositories determined",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Record_End"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Settled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Still open, and said so",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/End_Unsettled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Initialize a harness",
+      "enforcement": "strict",
+      "sourcePath": "processes/initialize-harness.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness"
+      ],
+      "nodeCount": 15,
+      "flowCount": 16,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "none",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "one",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "already an instance",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "not yet",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Knowledge Graph Data Store",
+      "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Asked to initialize a harness",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "List the harnesses this could be",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/confirm-harness"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListHarnesses"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "List the locations this could install to",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/confirm-harness"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ListLocations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Confirm WHICH harness, and where",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Requestor",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/confirm-harness"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ConfirmHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "One harness?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_HarnessChosen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Read what each location already is",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadLocation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Already initialized?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_AlreadyInitialized"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Read the harness's declaration and instructions",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_15"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_ReadDeclaration"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Log the start of the install",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/log-message"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogInstallStart"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Instructions there?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/GW_InstructionsFound"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Follow them, at each location",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_Install"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Write the root README, if it is not there",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/root-readme"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_WriteRootReadme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Log the failure",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/log-message"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_14",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/A_LogFailure"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Harness installed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_16"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Installed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Failed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/End_Failed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Process",
+      "name": "Log a message",
+      "enforcement": "strict",
+      "sourcePath": "processes/log-message.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage"
+      ],
+      "nodeCount": 6,
+      "flowCount": 5,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Compose",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Compose",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_NotLogged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Record",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Record",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_Logged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Actor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Actor",
+      "sourceKind": "bpmn-lane",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Actor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Logger",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "Logger",
+      "sourceKind": "bpmn-lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/logger",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Logger"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "An actor has something to record",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Actor",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Compose",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Compose the message",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Actor",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/log-message"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Compose"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "All five present?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Actor",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/GW_Complete"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Record",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Record it where a person can read it",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Logger",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/log-message"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/A_Record"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_Logged",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Recorded",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Actor",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_Logged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_NotLogged",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#ProcessNode",
+      "name": "Not recorded — say so",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/Actor",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_3"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/End_NotLogged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "skills",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillGraph",
+      "renderable": false,
+      "summary": "Skill packages — the authored instruction bodies an Actor performs a Task from."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/processes",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "processes",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ProcessGraph",
+      "renderable": false,
+      "summary": "Executable BPMN processes and the DMN tables their gateways compute from."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/scenarios",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "scenarios",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ScenarioGraph",
+      "renderable": false,
+      "summary": "Actors, the Roles they take on, and the User Stories those Roles serve."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/schemas",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "schemas",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SchemaGraph",
+      "renderable": false,
+      "summary": "A Subgraph of schema definitions: files that state the shape other files must have."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/swimlane-glossary",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "swimlane-glossary",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SwimlaneGlossaryGraph",
+      "renderable": false,
+      "summary": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/models",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "models",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ModelGraph",
+      "renderable": false,
+      "summary": "Which languages a model is good at, and whether a human checked. Read when a session opens, as ONE input to the communication-language determination and never as the answer. Declared in bootstrap because an agent reaching for it has not yet loaded the harness."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "translation-sources",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#TranslationSourceGraph",
+      "renderable": false,
+      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "bootstrapping-agent",
+      "title": "Bootstrapping Agent",
+      "description": "An agent asked to set up a Harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: a Bootstrapping Agent has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step a Bootstrapping Agent cannot perform. It stops being a Bootstrapping Agent the moment the harness is installed and it re-enters through that harness instead.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/confirm-harness",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/discussion",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/log-message",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#skill/root-readme"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/bootstrapping-agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "knowledge-graph-data-store",
+      "title": "Knowledge Graph Data Store",
+      "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It is `actedUpon`: it holds and serves, and takes no part in deciding what should happen — which is why it carries no skills and why naming one for it would be a lie about what it does.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "hasSkill": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/requestor",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "requestor",
+      "title": "Requestor",
+      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or any Harness built on it. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Bootstrapping Agent may narrow the list from context; only the Requestor settles it.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "judgementOnly": true,
+      "hasSkill": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/requestor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#role/logger",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
+      "name": "logger",
+      "title": "Logger",
+      "description": "A machine that accepts log messages and puts them somewhere a person can read. Like the Knowledge Graph Data Store it is `actedUpon` — it receives and records, takes no part in what happens next, and carries no skills, because the skill belongs to whoever is DOING the thing being logged. The Logger is not the author of a log line; it is where the line goes. That distinction is why `log-message` takes `actor` as a required input: the Logger cannot infer who acted, and a log that names the logger rather than the actor records nothing worth having.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "actedUpon": true,
+      "hasSkill": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/logger"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/skills",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "skills",
+      "path": "skills/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/schemas",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "schemas",
+      "path": "schemas/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/schemas"
+      ],
+      "description": "The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and output of the discussion Process. Their published `$id`s do not change when a file moves.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/scenarios",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "scenarios",
+      "path": "scenarios/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/scenarios"
+      ],
+      "description": "bootstrap's four Roles: Bootstrapping Agent, Requestor, Knowledge Graph Data Store and Logger.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/scenarios",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/scenarios"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "processes",
+      "path": "processes/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/processes"
+      ],
+      "description": "bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to ask the Requestor; and `log-message.bpmn`, which any step may call to record what it is doing. `ns.jsonld` defines the elements these diagrams add to BPMN (skill, role, precondition), written with the prefix `bootstrap.processes:`.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/models",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "models",
+      "path": "models/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/models"
+      ],
+      "description": "Which languages a model is good at, and whether anybody checked. In BOOTSTRAP for the reason everything else here is: an agent reaching for the language it should communicate in has not yet loaded the harness that would otherwise answer, so a registry one layer up would be unreachable in exactly the case it exists for. `context`: read when a session opens, never written by a process — a person grants a validation, an agent never does, because a model's own claim about its languages is the thing the validation state exists to distrust.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/models",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/models"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/swimlane-glossary",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "swimlane-glossary",
+      "path": "glossary/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/swimlane-glossary"
+      ],
+      "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived — that a concept was once minted — is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/swimlane-glossary",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/swimlane-glossary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/bootstrap-translations",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "bootstrap-translations",
+      "path": "translations/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources"
+      ],
+      "description": "Translation templates (`.pot`) for bootstrap's Process diagrams, one directory per target language.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#directory/bootstrap-translations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-translations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#asset/agent-instructions",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — bootstrap",
+      "description": "Phase one of two. Valid with nothing installed: no skills, no knowledge graph, no MCP, no beans. The default behaviour of initialisation is to copy this file, and the last bootstrap step re-enters through the installed harness, which is what supplies phase two. No `source` because this is the origin — an absent source means authored here, which is a different fact from an upstream that cannot be reached.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#asset/agent-instructions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hypatia-r820sf/bootstrap/bootstrap.jsonld#asset/readme",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
+      "name": "readme",
+      "path": "README.md",
+      "assetRole": "instance-readme",
+      "title": "bootstrap",
+      "description": "The flow, with every term linked to the schema that defines it. Self-documenting on GitHub: a person landing on the directory reads the thing itself rather than a pointer to a site.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#asset/readme"
+    }
+  ],
+  "staging": {
+    "branch": "claude/brave-hypatia-r820sf",
+    "sha": "b4795c0076fe39def488b8e0b54b06ef85cad760",
+    "pr": "1385/merge",
+    "run": "36229522891"
+  }
+}
