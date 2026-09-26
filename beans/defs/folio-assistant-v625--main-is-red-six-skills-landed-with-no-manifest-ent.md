@@ -94,3 +94,51 @@ main**), `docs:auto:check`.
       it — or, better, one command performs it. Neither is in this change.
 - [ ] `translation:drift:check`'s 25, `check:glossary` and `docs:auto:check`
       are somebody's: all three are pre-existing and none is this bean's.
+
+---
+
+## 2026-09-26, ~40 minutes later — IT RECURRED, and that closes the argument
+
+This bean's open Done-when was *"the chain is written down somewhere an author
+adding a skill will find it — or, better, one command performs it."* It was a
+prediction. It is now a measurement.
+
+`cat-harness/skills/workflow/release-epic-planning.md` landed on `main` from a
+sibling session **after** #1378 merged, carrying:
+
+| | |
+|---|---|
+| package-manifest entry | **missing** |
+| published reference page | **missing** |
+| `roles: [reader, collaborator, owner]` | **present** — the retired key, again |
+
+So BOTH defects #1378 fixed recurred within the hour, on the next skill added.
+Registered here through the full six steps.
+
+**The second one tells us how it propagates.** The retired `roles:` key is not
+being typed fresh each time — it is being **copied from an existing skill file
+as a template**. That is why removing it from four files did not stop it: the
+template it is copied from was not one of the four, or the author copied one of
+them before #1378 landed. A gate that fires after the fact cannot break that
+loop; only the copied source can.
+
+### What this rules out
+
+- **Not carelessness.** Two independent authors, two independent sessions, the
+  same six-step gap and the same copied key. A process that two careful people
+  fail at in one hour is a process defect.
+- **Not fixed by documentation alone.** #1378's commit message wrote the chain
+  down in full, and it was written down before this author needed it. Prose in a
+  merged commit is not reachable from the moment of authoring.
+
+### What the fix has to look like
+
+One command that performs all six steps, invoked by whoever adds a skill —
+plus a template or scaffold that does not carry `roles:`. Either half alone
+leaves the other loop open: a command nobody runs, or a clean template with a
+five-step tail still done by hand.
+
+Still an owner decision (where such a command lives, whether it hooks the
+commit boundary), so recorded rather than built. But the evidence side is now
+closed: this is not a hypothetical.
+
