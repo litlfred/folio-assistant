@@ -276,10 +276,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T19:36:38.367Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/cf287be359097bf5ff12929b59fc4c7a3d26cc14",
-  "sourceCommitSha": "cf287be359097bf5ff12929b59fc4c7a3d26cc14",
-  "sourceCommitAt": "2026-09-26T19:33:18Z",
+  "generatedAt": "2026-09-26T19:42:43.897Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/acac7f2e3b5cd9e980f834291e31530461bdd79e",
+  "sourceCommitSha": "acac7f2e3b5cd9e980f834291e31530461bdd79e",
+  "sourceCommitAt": "2026-09-26T19:40:24Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -293,8 +293,8 @@
     "Role": 148,
     "ProcessNode": 862,
     "Tool": 101,
-    "Schema": 125,
-    "GraphKind": 34,
+    "Schema": 126,
+    "GraphKind": 35,
     "Directory": 44,
     "Asset": 3
   },
@@ -1384,7 +1384,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/goal-review.md",
-      "instructionLines": 236,
+      "instructionLines": 276,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2126,7 +2126,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/bean-coordination.md",
-      "instructionLines": 623,
+      "instructionLines": 655,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3039,7 +3039,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 1066,
+      "instructionLines": 1067,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -41399,6 +41399,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/session-context"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/cat-harness.jsonld#schema/session-survey",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "session-survey",
+      "title": "A PUBLISHED SURVEY of a commit window — so the next session reads it instead",
+      "module": "schemas/session-survey.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/session-survey"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/cat-harness.jsonld#schema/site-indexes",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "site-indexes",
@@ -42010,6 +42019,14 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#BeanDefsGraph",
       "renderable": false,
       "summary": "Work items — one Markdown file each, in the layout the `beans` CLI reads. Authored and edited by people and agents."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/session-survey",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "session-survey",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SessionSurveyGraph",
+      "renderable": false,
+      "summary": "Published surveys of a commit window — one JSON file each, carrying `\"$schema\": \"folio-session-survey/v1\"` and the window's two edge commits, so a later session can compute what it is NOT covered for instead of re-deriving the whole range (bean `6ptx`)."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/workflow-state",
@@ -43619,8 +43636,8 @@
   ],
   "staging": {
     "branch": "claude/wonderful-gauss-7frcrw",
-    "sha": "65d4bf5d256bd4be49e1228ac9c86986a755cb62",
+    "sha": "506f23a219a33462519c5e2161b24734c34e7803",
     "pr": "1411/merge",
-    "run": "36266536603"
+    "run": "36266888785"
   }
 }
