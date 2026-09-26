@@ -17,6 +17,14 @@
         "workflow-state"
       ],
       "description": "Running BPMN instances — one JSON file each, carrying `\"$schema\": \"folio-workflow-instance/v1\"`."
+    },
+    {
+      "id": "surveys",
+      "path": "surveys",
+      "graphKinds": [
+        "session-survey"
+      ],
+      "description": "Published surveys of commit windows. Bean `6ptx`: eight sessions surveyed the same ~2435-commit window in one minute and that day produced ONE authored commit. Each file records the window's TWO EDGE COMMITS, so a later session computes the uncovered delta rather than re-deriving the whole range — staleness decidable, not guessed."
     }
   ]
 }

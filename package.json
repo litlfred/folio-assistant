@@ -300,6 +300,8 @@
     "start:http": "bun run cat-harness/src/index.ts --http",
     "start:stdio": "bun run cat-harness/src/index.ts --stdio",
     "state:visualizer": "bun run cat-harness/scripts/state-visualizer.ts",
+    "survey:owed": "bun run cat-harness/scripts/survey.ts",
+    "survey:publish": "bun run cat-harness/scripts/survey.ts --publish",
     "state:visualizer:check": "bun run cat-harness/scripts/state-visualizer.ts --check",
     "subgraphs": "bun run cat-harness/scripts/check-subgraphs.ts",
     "summaries": "bun run cat-harness/scripts/summaries.ts",

@@ -829,6 +829,9 @@ export const RULES: Rule[] = [
       // but `node:fs` and `node:path`, and the advice it sweeps is this
       // platform's skills and workflows.
       "scripts/check-stale-field-advice.ts",
+      // Bean `6ptx`. Harness by subject: a survey is of THIS repository's own
+      // commit history and work plan, which no folio has as content.
+      "scripts/survey.ts",
       // Its subject is the harness's OWN declaration filename — which file
       // names an instance — so it is harness by subject as well as by
       // dependency: it imports `schemas/cat-harness.js` for the constant and

@@ -243,6 +243,14 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 188,
     reads: "two boxes and a flow between them, with a token part-way",
   },
+  // A SURVEY of a commit window. Two endpoint marks with a span between them,
+  // because the two edge commits ARE the artefact: a survey whose window
+  // cannot be pinned tells a reader nothing about today (bean `6ptx`).
+  "session-survey": {
+    glyph: "M5 12h14M5 9v6M19 9v6M9 5h6",
+    tone: 168,
+    reads: "a span between two marked endpoints — the window a survey covers",
+  },
   // THE BOARD AND ITS LAYOUT. Two glyphs because they are two kinds, and the
   // pair says the split: a frame with cards ON it, and the same frame with the
   // cards' POSITIONS marked. A reader who sees them side by side should be
