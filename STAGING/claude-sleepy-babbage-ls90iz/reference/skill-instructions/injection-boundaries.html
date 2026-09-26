@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790425006">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790425700">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790425006">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790425700">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790425006">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790425700">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790425006">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790425700">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790425006">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790425700">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790425006">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790425700">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790425006" defer></script>
+<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790425700" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -876,21 +876,61 @@ that it cannot become so by an edit somewhere else.</p>
 <p>An argv still leaves <strong>argument</strong> injection: a value beginning with <code class="language-plaintext highlighter-rouge">-</code> can be
 read as a flag. Where a value is a filename, <code class="language-plaintext highlighter-rouge">--</code> before it, or a <code class="language-plaintext highlighter-rouge">./</code> prefix,
 settles it.</p>
-<h2 id="archives--refusal-is-not-containment">
+<h2 id="archives--refusal-is-not-containment--check-the-member-type">
   
   
-    <a href="#archives--refusal-is-not-containment" class="anchor-heading" aria-labelledby="archives--refusal-is-not-containment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Archives: <code class="language-plaintext highlighter-rouge">..</code>-refusal is not containment
+    <a href="#archives--refusal-is-not-containment--check-the-member-type" class="anchor-heading" aria-labelledby="archives--refusal-is-not-containment--check-the-member-type"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Archives: <code class="language-plaintext highlighter-rouge">..</code>-refusal is not containment — check the member TYPE
   
   
 </h2>
     
 
 <p>GNU tar refuses a <code class="language-plaintext highlighter-rouge">..</code> member and strips a leading <code class="language-plaintext highlighter-rouge">/</code>, so traversal <strong>by
-spelling</strong> is covered by tar itself. What is not covered is a <strong>symlink member
-followed by a regular file of the same name</strong>, which writes through the link —
-the same residual class the lexical path check has. List members first
-(<code class="language-plaintext highlighter-rouge">tar tzf</code>), refuse absolute, <code class="language-plaintext highlighter-rouge">..</code> and NUL, then extract with
-<code class="language-plaintext highlighter-rouge">--no-same-owner --no-same-permissions</code>.</p>
+spelling</strong> is covered by tar itself. What that does not cover is a <strong>link
+member</strong>, which writes through to its target — the same residual class the
+lexical path check has.</p>
+
+<p><strong>Refuse on the member’s TYPE, and make it a whitelist.</strong> <code class="language-plaintext highlighter-rouge">tar tvzf</code> (not <code class="language-plaintext highlighter-rouge">tzf</code>)
+puts the type in the first character of the mode; accept only <code class="language-plaintext highlighter-rouge">-</code> (regular file)
+and <code class="language-plaintext highlighter-rouge">d</code> (directory). Then extract with <code class="language-plaintext highlighter-rouge">--no-same-owner --no-same-permissions</code>.</p>
+
+<p>A whitelist because enumerating the types to refuse admits whatever tar feature
+nobody thought of, and an arXiv e-print source has no legitimate device, fifo or
+link member.</p>
+
+<p><strong>Why the name checks cannot substitute</strong>, measured 2026-09-26 against a real
+archive (bean <code class="language-plaintext highlighter-rouge">6bhf</code>):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-rw-r--r-- root/root  2 2026-09-26 12:13 main.tex        ← accepted
+lrwxrwxrwx root/root  0 2026-09-26 12:13 evil.tex -&gt; /etc/passwd
+hrw-r--r-- root/root  0 2026-09-26 12:13 hard.tex        ← hardlink
+</code></pre></div></div>
+
+<p>The symlink member is named <code class="language-plaintext highlighter-rouge">evil.tex</code>: <strong>not absolute, no <code class="language-plaintext highlighter-rouge">..</code>, no NUL</strong>. It
+passes every name check there is. Only the type distinguishes it.</p>
+<h3 id="two-defects-the-fix-itself-carried-both-found-by-running-it">
+  
+  
+    <a href="#two-defects-the-fix-itself-carried-both-found-by-running-it" class="anchor-heading" aria-labelledby="two-defects-the-fix-itself-carried-both-found-by-running-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two defects the fix itself carried, both found by running it
+  
+  
+</h3>
+    
+
+<p><strong>The member name is everything after the FIFTH field of a <code class="language-plaintext highlighter-rouge">tvzf</code> line.</strong> Six was
+written first, which ate the first word of every name — <code class="language-plaintext highlighter-rouge">sub/a b c.tex</code> became
+<code class="language-plaintext highlighter-rouge">b c.tex</code>, so the containment check ran on a path that was never in the archive:
+a guard reading clean while examining a fabrication. Re-reading the regex would
+not have shown it; building a tarball with a space in a member name did,
+immediately. <strong>Parse a listing against real output, never against its shape as
+you remember it.</strong></p>
+
+<p><strong>A refusal is not a format mismatch.</strong> The unsafe-member <code class="language-plaintext highlighter-rouge">throw</code> landed in a
+bare <code class="language-plaintext highlighter-rouge">catch { /* might be a single file */ }</code>, so a refused archive fell through
+to the next format guess with nothing logged — an operator could not tell a
+hostile archive from a file that was not a tarball. Two states collapsed into
+one, which is <code class="language-plaintext highlighter-rouge">ci-health</code>’s rule at a different layer. A distinct error type is
+what lets a handler answer 422 for one and carry on for the other.</p>
 
           
 
