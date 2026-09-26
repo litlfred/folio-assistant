@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-26T14:46:29Z
-updated_at: 2026-09-26T14:48:54Z
+updated_at: 2026-09-26T19:00:51Z
 parent: folio-assistant-1xhc
 ---
 
@@ -101,3 +101,27 @@ So the owner decision below is the whole remaining content of this bean.
 the top, ticked in place. A second ticked list is the `check:bean-bodies`
 shadow-checklist defect — the same one this session already paid for on `om30`,
 made again here.)
+
+
+## The step number moved 42 -> 44 under an unrelated change — 2026-09-26, 18:59
+
+Direct confirmation of this bean's thesis from a run that had nothing to do with
+it. On `168d5ed926a` (a branch carrying one skill edit and two beans, with main
+merged in), `Repository gates` reports:
+
+    steps 6-43   ALL SUCCESS — including two gates main had just added:
+                 step 22  no rendered label shows a character reference as literal text
+                 step 43  translated pages' links resolve at their own depth
+    step 44      gates that were registered and never run   ← the ONLY failure
+    steps 45-50  skipped
+
+**The drift gate was step 42 this morning and is step 44 now**, because two gates
+were inserted ahead of it. The masked count happens to still be 6, so a reader
+comparing only the number would conclude nothing had changed — while the masked
+SET has a different identity and a different first element.
+
+So the thesis holds in both directions: the count moves when the red step moves
+(35 masked this morning at step 8), and the *set* moves when the gate list grows
+even though the count does not. **Neither number is a property of the split.**
+That is the whole argument for the owner deciding the arrangement rather than
+anyone quoting a figure from a commit message.
