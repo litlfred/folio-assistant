@@ -1,11 +1,9 @@
 ---
 # folio-assistant-ajx9
 title: 'WHO IG CHROME: the blue bar, DRAFT watermark and publish box, ingested from the template chain rather than transcribed'
-status: in-progress
+status: completed
 type: feature
 priority: normal
-tags:
-    - ready-to-close
 created_at: 2026-09-23T19:56:03Z
 updated_at: 2026-09-26T03:54:14Z
 parent: folio-assistant-yj32
@@ -228,3 +226,22 @@ exactly that shape of claim wrongly on 2026-09-25, from a working directory
 holding an untracked root `scripts/` that `git status` could not see — bean
 `pomp`'s shape, third recorded occurrence. A "pre-existing on main" claim is
 only as good as the cleanliness of the tree it was measured in.
+
+## Closed 2026-09-26 on the owner's confirmation
+
+The owner confirmed the close in session
+`session_01SFCwxF2nePwDpnQrX66fZE`, answering the one item
+`bun run check:ready-to-close` was reporting.
+
+`ready-to-close` tag removed with the close: the tag's whole job is to make an
+un-re-derivable bean visible to that check, and a tag that outlives the
+confirmation would keep a settled bean on the owner's next batch.
+
+**What stays unverified, and is deliberately not claimed by this close.** The
+gate reports *"could not determine … the committed chrome was NOT verified"* and
+**exits 0 while saying so**. So a caller reading only the exit code records a
+pass over a question nobody answered — that no session could confirm the
+published pages actually carry the blue bar, watermark and publish box. That is
+`ci-health`'s first rule pointed at this bean: could-not-determine is never
+green. It is why the close needed a person, and it is the reason the parent
+`yj32` still has work.

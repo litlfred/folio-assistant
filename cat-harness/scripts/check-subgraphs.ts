@@ -36,6 +36,8 @@ import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { Glob } from "bun";
 
+import { gitCorpus } from "./git-corpus.ts";
+
 import {
   isDerivedGraph,
   isPublishedGraphKind,
@@ -280,6 +282,27 @@ export function overDeepLinks(
   return out;
 }
 
+/**
+ * The markdown nodes in {@link abs}, as paths relative to it.
+ *
+ * **Asked of git, not of the disk** (`gitCorpus`). A bare glob here was
+ * correct for as long as no declared directory happened to contain an
+ * untracked subtree — and stopped being correct the moment a gate installed a
+ * publishable package's devDependencies, at which point this sweep descended
+ * into `node_modules/` and reported **31 broken links**, every one inside a
+ * third-party README linking to its own repository's files. Bean `rsi6`; the
+ * same shape as `ramz` one directory over.
+ *
+ * Falls back to the glob when git cannot answer — a temp fixture is not a
+ * work tree, and refusing there would trade a false finding for an unrunnable
+ * check. The fallback is the LOOSER set, so it can only over-report.
+ */
+function markdownIn(abs: string): string[] {
+  const listed = gitCorpus(abs, ["*.md"]);
+  if (listed !== undefined) return listed.map((f) => relative(abs, f));
+  return [...new Glob("**/*.md").scanSync({ cwd: abs })];
+}
+
 export function scanSubgraphs(root: string = ROOT): SubgraphReport {
   const dirs = resolveDirectories([{ name: "(local)", root, own: true }]);
   const tree = subgraphTree(dirs);
@@ -301,7 +324,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
       continue;
     }
     let attributed = 0;
-    for (const rel of new Glob("**/*.md").scanSync({ cwd: abs })) {
+    for (const rel of markdownIn(abs)) {
       const file = join(abs, rel);
       // ABSOLUTE, not instance-relative. A `scope: "repository"` directory
       // resolves OUTSIDE this instance, so `relative(root, …)` yields a
@@ -357,7 +380,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
         });
       }
     }
-    if (attributed === 0 && [...new Glob("**/*.md").scanSync({ cwd: abs })].length > 0) {
+    if (attributed === 0 && markdownIn(abs).length > 0) {
       notExamined.push(`${dir.id} (${dir.path})`);
     }
   }
