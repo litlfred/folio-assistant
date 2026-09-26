@@ -37,6 +37,38 @@ considered and rejected, and on what grounds — which is what stops the next
 agent re-entering the same dead end. A deleted bean leaves a sibling session
 unable to tell abandonment from accident.
 
+### Archiving is a VIEW, not a third way out
+
+`beans/defs/archive/` exists and is **not** a terminal state. The owner ruled it
+2026-09-26 (bean `e8m3`): an archived bean **keeps its status** and is still part
+of the store, moved aside rather than closed. So archiving decides nothing, and
+in particular it is not a way to make unwanted work go quiet without the reason
+this section requires.
+
+That mattered, measurably. In one five-day window 131 beans left the top level
+and **35 of them were `todo` or `in-progress`** — out of the active store with no
+terminal status and, because archiving is a *file move* rather than a status
+change, no recorded reason. Exactly the state the rule above exists to prevent,
+reached by a route the rule did not mention.
+
+It was invisible twice. Every bean count this repository quotes reads the active
+store only, so none could fall when it happened — *a number that drops when work
+FINISHES but not when it is set aside is not measuring what its name says*. And
+the directory itself was **undeclared**: 631 `bean-defs` in a path
+`beans/beans.json` named nowhere, which `check:declared-dirs` and
+`check:harness-dirs` cannot see by construction, because both compare
+declarations against disk and not the reverse.
+
+Both are now held by **`bun run check:bean-archive`**: the `archive` node must be
+declared, and every bean in it must be `completed` or `scrapped`. So the rule is
+unchanged and archiving is simply not an exit from it — if you want a bean out of
+the way, scrap it *with its reasons* first, then archive if you like.
+
+One consequence for readers of this store: `readBeans` is the **active** store
+and `readArchivedBeans` is the view, and they are separate on purpose. They share
+the graph kind `bean-defs`, so anything resolving by KIND gets whichever is
+declared first; resolve the archive by its **id**.
+
 **Claiming and closing are separately scoped.** Claim before you work, so two
 sessions do not pick the same item — with the limit in the next section, because
 a claim is not a lock.
