@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T04:14:07Z
-updated_at: 2026-09-26T14:05:33Z
+updated_at: 2026-09-26T16:59:47Z
 parent: folio-assistant-d308
 ---
 
@@ -391,3 +391,93 @@ one day, and the first time it reached files I nearly committed.
     `repo`-scoped, so it no longer fires INSIDE an instance run (which was the
     unexamined 15). Whether the ROOT's copy should stop naming an instance that has
     its own sidecar is a different question and untouched
+
+
+
+--------
+
+## 2026-09-26T17:00Z — the last box has a MEASURED blocker now, and it is not the one this bean named
+
+I went to close *"a nested instance DECLARES its results directory before its
+sidecars are committed"*, having wrongly banked it as the owner's. It is not the
+owner's — `cat-harness.json` already carries the precedent:
+
+    { "id": "qa", "path": "test/results/", "dependents": "reproduce",
+      "graphKinds": ["qa"] }
+
+and that entry's own description names the contents: *"`kg-qa/v1` (`kg-qa/**`, the
+KG verdicts themselves — what `kg-audit` wrote)"*. Declaring the same for bootstrap
+is following an established shape, not a judgement.
+
+**The declaration still must not land, and the falsifier is what says so.**
+
+### `iwtn` refuses the sidecars, and it is right to
+
+`graph.test.ts > nothing in bootstrap/ names anything above it (bean iwtn)` fails on
+the generated tree with **16 findings**. Not path escapes — I fixed those, and
+measured `grep -rl "\.\./" bootstrap/test/results/` → **0 files**. It refuses the
+NAMES:
+
+    test/results/kg-qa/tools/cat-harness-schema.kg-qa.json
+    test/results/kg-qa/tools/folio-init.kg-qa.json
+    test/results/kg-qa/tools/folio-viewer.kg-qa.json
+    test/results/kg-qa/tools/smart-liquid-variables.kg-qa.json
+    …and a `kg.kg-qa.json` detail naming `smart-base-tools`
+
+Those are **cat-harness's Tool nodes, audited as bootstrap's**.
+
+### A THIRD cross-instance leak, and this one cannot be closed with a guard
+
+Measured:
+
+| question | answer |
+|---|---|
+| does `bootstrap.json` declare a `tools` directory? | **no** — its 7 ids are skills, schemas, scenarios, processes, models, swimlane-glossary, bootstrap-translations |
+| does `bootstrap/tools/` exist on disk? | **no** |
+| how many tool sidecars did the instance run write? | **119** |
+
+So they do not come from `TOOLS_DIR` (which would be the absent
+`bootstrap/tools/`). They come from `auditTools()` → `checkTools()`, and:
+
+    cat-harness/scripts/check-tools.ts:297
+      export function checkTools(): ToolCheck {
+
+**It takes no root parameter at all**, and calls `knownSkills()` with no argument.
+It is hardcoded to the auditor's own instance, so an instance run audits the
+AUDITOR's tools and files the verdicts under the instance.
+
+That is the same class as the two already fixed here — repo-level actors judged
+against one instance's roles (73 false criticals), and repo-level capabilities
+judged against one instance's requirements (3 more) — but it is **not** the same
+size of fix. Those were a `scope` declaration and a one-line `INSTANCE_RUN` guard
+inside this file. This one needs a root threaded through another module that has
+its own gate (`check:tools`) and its own callers.
+
+### Why it is not being done in this change
+
+Not a reclassification. The six `tool-*` criteria are correctly `instance`: *"does
+this tool resolve its paths"* is answerable per instance — **if the tool SET is the
+instance's**. So the fix belongs in the data, as `readSatisfiers()`'s did, and the
+data lives in `check-tools.ts`.
+
+Stopping here rather than expanding into it is deliberate. `check-tools.ts` was last
+touched 2026-09-24 and no bean names the rootless registry, so nothing is in
+flight — but it is a second module with a second gate, and the falsifier firing is
+the signal to record rather than to widen. Ten sibling collisions this session all
+began with widening.
+
+## Done when — the last box, restated against measurement
+
+[ ] `checkTools()` takes an instance root, so an instance run audits THAT
+    instance's tools. Falsified by: `bootstrap` writes **no** `tools/` sidecars
+    (it declares no tools directory and has none), and `iwtn` goes green on the
+    generated tree
+[ ] THEN declare bootstrap's `qa` → `test/results/` following
+    `cat-harness.json`'s entry, and commit the declaration WITH the sidecars — the
+    `dh4f` rule is declare only what exists, so they arrive together or not at all
+[ ] only then the loop, and the `dh4f` zero-diagram question
+
+What is already proven, and worth not re-deriving: the bootstrap run reports **0
+criticals**, 693 pass / 11 fail / 284 n/a / 7 unknown, sidecars land under the
+instance's own tree, the root run stays byte-identical, and **0** files carry a
+`../` escape.
