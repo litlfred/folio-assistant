@@ -1,11 +1,11 @@
 ---
 # folio-assistant-qook
 title: check:merged reports uml:overview:check red on a merged tree that is green — a sweep artefact, twice
-status: todo
+status: in-progress
 type: bug
 parent: folio-assistant-1xhc
 created_at: 2026-09-26T11:04:49Z
-updated_at: 2026-09-26T11:04:49Z
+updated_at: 2026-09-26T12:24:17Z
 ---
 
 
@@ -64,3 +64,5 @@ memory. Naming the mechanism here without the run would be the third.
       gate in isolation before reporting it. A third state, not a second.
 - [ ] The two false positives above are re-run against the fix and confirmed
       green. A fix verified only forwards is `1xhc`.
+
+_2026-09-26T12:24:17Z_ — Claimed by claude/fx5r-close — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
