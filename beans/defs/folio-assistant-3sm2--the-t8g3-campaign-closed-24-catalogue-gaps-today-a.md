@@ -77,8 +77,10 @@ subject.
       **both, gate first**, 2026-09-26
 - [x] whichever is chosen, the count cannot grow silently while the gate is red —
       `translation:catalogue:check`, ABOVE the drift batch
-- [ ] the 35's segment alignment against their `.pot` is measured, so "derivable"
-      is a finding rather than an assumption in either direction
+- [x] the 35's segment alignment against their `.pot` is measured, so "derivable"
+      is a finding rather than an assumption in either direction — **29 of 35 carry
+      positive alignment evidence**, which inverts `f6r1`'s regime rather than
+      contradicting its measurement
 
 ## The gate — `translation:catalogue:check`, 2026-09-26
 
@@ -133,3 +135,64 @@ map must be non-empty, or every run of this gate is vacuously clean.
   green. The step fetches `origin/main` at depth 200 first; if that proves too
   shallow for a long-lived branch, CI says `could not determine` with the reason
   rather than passing blind.
+
+## Part 2: the alignment measurement — 2026-09-26
+
+Run with the repository's OWN extractor (`extractMarkdown` from `pot-extract.ts`)
+on both sides: the source page and each translated page. Measurement only; nothing
+derived, nothing written.
+
+### Segment counts
+
+    agentic-harness        src= 235   ar:=235  es:=235  fr:=235  ru:=235  zh:=235
+    architecture           src=  60   ar:+1    es:=60   fr:=60   ru:=60   zh:=60
+    beans-and-todos        src=  75   ar:=75   es:=75   fr:=75   ru:=75   zh:=75
+    document-ingestion     src=  95   ar:=95   es:=95   fr:=95   ru:=95   zh:-2
+    evidence               src=  82   ar:=82   es:=82   fr:=82   ru:=82   zh:=82
+    publication-workflow   src= 368   ar:=368  es:=368  fr:=368  ru:=368  zh:=368
+    skills                 src= 146   ar:+1    es:=146  fr:=146  ru:=146  zh:=146
+
+**32 of 35 match exactly.** The three that do not are `ar/architecture` (+1),
+`ar/skills` (+1) and `zh/document-ingestion` (-2).
+
+### Equal count is necessary, not sufficient — so the pairing was tested
+
+A dropped segment plus a split segment balances the count while destroying the
+alignment. Two further measurements over the 32, 5004 segments in all:
+
+| measurement | result |
+|---|---|
+| identical-text ANCHORS — positions whose text is byte-identical, i.e. untranslated code, identifiers, proper nouns, which must line up if the pairing is real | **462 (9.2%)** |
+| pairs where any translation's text belongs to a NEIGHBOURING source slot (off-by-one shift) | **0** |
+| pairs with ZERO anchors, so unverifiable by this method | **3** — `es`/`ru`/`zh` architecture |
+
+### The partition, and it is three states not two
+
+    29 of 35   equal count + anchors + no shift        positive alignment evidence
+     3 of 35   equal count, NO anchors                 COULD NOT TELL by this method
+     3 of 35   unequal count                           not pairable without a decision
+
+The middle row is reported rather than folded into either side. `es/ru/zh
+architecture` have 60 segments each and not one byte-identical position, so this
+method has nothing to test the pairing with; that is a limit of the method, not a
+verdict about the pages.
+
+### What this does and does not overturn
+
+`f6r1` measured 27 translations and found 19 provably not derivable, 0 demonstrated
+derivable, on segment gaps of **~20**. That measurement stands — and this is a
+**different regime**, not a contradiction: those were finished translations of pages
+whose structure had moved on, while these 35 were produced from their sources in the
+same batch hours ago, so the segmentation survived. The gaps here are 0, +1, +1, -2.
+
+**It does NOT follow that they should be auto-derived**, and this bean does not
+propose it. `pot-for-pages.ts`'s doctrine — *"a `.pot` is a translator's INPUT, a
+`.po` is their OUTPUT; authoring is human work"* — is about provenance, not
+alignment. A `.po` written from a published page records "this is the translation of
+that msgid", and if the page is machine output then the catalogue asserts machine
+output as a translation. That is a decision about what the corpus claims, and it
+belongs to whoever owns issue #206.
+
+What changed is only the input to that decision: the answer was *0 of 27
+demonstrated derivable*, and for this population it is **29 of 35 with positive
+alignment evidence**.
