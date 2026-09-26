@@ -51,18 +51,25 @@
  *   indented fence inside a list item was not a fence and its body was
  *   extracted as prose.
  *
- * | | pairs aligned |
- * |---|---|
- * | before either fix | **7** / 25 |
- * | after both | **10** / 25 |
+ * | | pairs aligned | measured on |
+ * |---|---|---|
+ * | before either fix | **7** / 25 | `main` @ `a0fbdc7ac7`, 2026-09-26 |
+ * | after both | **10** / 25 | this branch, same day |
  *
  * **The first account of this said 9 more, and that was wrong.** It inferred the
  * number by stitching together a count measurement and a kind measurement taken
  * separately. Measured directly on the thing that matters — count and kind
- * together — the two fixes unlock **three**. Pinned by a test, so the claim
- * cannot drift back.
+ * together — the two fixes unlock **three**.
  *
- * The 15 that still refuse are all `count-differs`; no pair diverges by kind any
+ * **These numbers are measurements, not invariants, and each carries the tree it
+ * was taken on for that reason.** They move when anyone edits a source page: hours
+ * after the 10 above, `main` added two constructs to `docs/installation.md`,
+ * `ar/installation` stopped aligning, and the pair became **9 / 16**. A test of
+ * mine asserted the equality and CI failed it — correctly. The equality is gone;
+ * what is asserted now is that alignment is partial and that no pair diverges by
+ * KIND, which is the part that is about this module rather than about the corpus.
+ *
+ * The remainder all refuse as `count-differs`; no pair diverges by kind any
  * more. A **third** extractor property accounts for most of them and is
  * deliberately NOT fixed here (bean `lvk9`): **list items and blockquotes are
  * extracted one entry per LINE**, so how many entries a construct yields depends
@@ -374,26 +381,61 @@ export function derive(
   return { derived, refused };
 }
 
+/** What {@link write} did, per catalogue. */
+export interface WriteResult {
+  written: string[];
+  /** Existing catalogues left alone, because replacing one is not this tool's call. */
+  skipped: string[];
+}
+
 /**
- * Write what `derive` produced. Returns the paths written.
+ * Write what `derive` produced, and **never replace an existing catalogue**
+ * unless explicitly told to.
  *
  * The destination comes from `catalogueFor` in `translation-drift.ts` — the same
  * function the GATE uses to decide whether a catalogue exists. A second answer
  * here could put a file somewhere the gate does not look, which is a catalogue
  * that is written and still reported missing.
+ *
+ * ## Why it skips rather than overwrites
+ *
+ * This wrote unconditionally until 2026-09-26, which is a data-loss hazard on
+ * precisely the artefact issue #206 exists to protect. A `.po` here may have been
+ * **signed off by a human** — #206's definition of *official* — or hand-corrected
+ * after this tool produced it. Re-running `--write` would have silently replaced
+ * either with a fresh unofficial derivation, and the diff would read as a
+ * regeneration rather than as a deletion.
+ *
+ * That is `deletion-requires-confirmation` applied to a writer: an agent does not
+ * remove a durable artefact, or replace one, on its own initiative. The skip is
+ * REPORTED rather than silent, because a skip nobody sees cannot be told from a
+ * write.
+ *
+ * `overwrite` is for the caller who has decided. It is never the default, and the
+ * CLI spells it `--overwrite` rather than folding it into `--write`, so choosing
+ * it is a separate act from choosing to write at all.
  */
-export function write(instanceRoot: string, r: DeriveResult, translationsDir?: string): string[] {
+export function write(
+  instanceRoot: string,
+  r: DeriveResult,
+  opts: { translationsDir?: string; overwrite?: boolean } = {},
+): WriteResult {
   const written: string[] = [];
+  const skipped: string[] = [];
   for (const d of r.derived) {
     const out =
-      translationsDir === undefined
+      opts.translationsDir === undefined
         ? catalogueFor(instanceRoot, d.locale, d.page)
-        : join(translationsDir, d.locale, `${d.page}.po`);
+        : join(opts.translationsDir, d.locale, `${d.page}.po`);
+    if (existsSync(out) && opts.overwrite !== true) {
+      skipped.push(out);
+      continue;
+    }
     mkdirSync(dirname(out), { recursive: true });
     writeFileSync(out, d.po, "utf-8");
     written.push(out);
   }
-  return written;
+  return { written, skipped };
 }
 
 export function formatReport(r: DeriveResult): string {
@@ -425,8 +467,16 @@ if (import.meta.main) {
   const r = derive(root, pages, locales);
   console.log(formatReport(r));
   if (argv.includes("--write")) {
-    const w = write(root, r);
-    console.log(`\nWrote ${w.length} file(s).`);
+    const w = write(root, r, { overwrite: argv.includes("--overwrite") });
+    console.log(`\nWrote ${w.written.length} file(s).`);
+    if (w.skipped.length > 0) {
+      console.log(
+        `\nLeft ${w.skipped.length} existing catalogue(s) ALONE. One may carry a human's ` +
+          `sign-off\nor hand corrections, and replacing it is not this tool's call. Pass ` +
+          `--overwrite\nif you have decided:`,
+      );
+      for (const path of w.skipped) console.log(`  · ${path}`);
+    }
   } else {
     console.log("\n(dry run — pass --write to create the catalogues)");
   }

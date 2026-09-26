@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-26T04:54:43Z
+updated_at: 2026-09-26T11:33:34Z
 parent: folio-assistant-1xhc
 ---
 
@@ -194,3 +194,57 @@ would attribute an author's own `git add` to whichever gate was running. Commit
 before or after a run, not during.
 
 _2026-09-26T04:54:43Z_ — Claimed by claude/ymsu-gates-tree-guard — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## 2026-09-26 — a MEASURED instance, with the numbers, and it is the inverse direction
+
+Found while merging `origin/main` (87 commits) into `claude/wonderful-gauss-7frcrw`
+for PR #1369. AGENTS.md states this hazard as *"`bun test` runs two of the five
+writers, so gates reports their artefacts current when they are not"*. Here it ran
+the other way, and the consequence is worse than a false green on a stale file: the
+gate cannot see a WRONG file that `main` is carrying.
+
+### The file, and the two regimes
+
+`cat-harness/test/results/detangle/cat-harness/schemas.detangle.json` exists in two
+populations, ~6x apart:
+
+| | size | internal | cohesion |
+|---|---|---|---|
+| what `main` carries | 229 | 125 | 0.82 |
+| what the real generator produces here | **1443** | **709** | **0.96** |
+
+Both grew by exactly **+2** across the 87-commit merge (1441→1443, 227→229), so
+these are not two moments of one measurement drifting — they are **two different
+scopes**, tracking the same corpus in parallel.
+
+### The decisive test
+
+    with main's 229 committed   → kg:detangle:check FAIL
+    with the generated 1443     → kg:detangle:check PASS
+
+So `main` is carrying a sidecar its own check rejects.
+
+### Why no gate catches it
+
+`bun run gates` reported **3** failures on this tree and `kg:detangle:check` was
+not among them — because `bun test` runs earlier in the same gate set and
+**rewrites the sidecar to the 1443 values**, so the check that runs afterwards
+validates a file the run itself had just repaired. The gate set is self-healing
+for exactly the artefact it is supposed to be judging.
+
+That is why this bean's rule — *measure one check at a time* — is not a
+convenience. Run in isolation, `kg:detangle:check` FAILS on main's file. Run inside
+`gates`, it passes. Neither run is lying; they are answering different questions,
+and only the isolated one answers the question a reviewer thinks they asked.
+
+### Not diagnosed here
+
+**Why** the two scopes differ by 6x. Both are produced by writers in this
+repository, and a difference that large is a difference in what is being scanned
+rather than in the corpus — bean `xd1g` (*"11 root-rooted scans have no gitignore
+awareness"*) is the obvious candidate and is NOT established as the cause. Stated
+as a candidate rather than asserted.
+
+I committed the 1443 values, because they are what the check requires in a clean
+run. If CI disagrees, the scope difference is environmental and that is the finding.

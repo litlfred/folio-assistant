@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T04:22:55Z
-updated_at: 2026-09-26T08:57:28Z
+updated_at: 2026-09-26T11:23:13Z
 parent: folio-assistant-1xhc
 ---
 
@@ -270,3 +270,70 @@ catalogue was **masking** a real divergence on 9 pages, so this gate was
 `UNCATALOGED` entries.
 
 _2026-09-26T08:50:20Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## CI found two defects in my own work that local runs could not — both about time
+
+`bun run gates` was green on these because it runs ONE tree. CI runs the PR
+**merged with `main` as it is now**, and `main` here moves every few minutes.
+
+### 1. I pinned a measurement in a test, and an unrelated edit falsified it
+
+The test read:
+
+```ts
+expect(r.derived).toHaveLength(10);
+expect(r.refused).toHaveLength(15);
+```
+
+CI failed it, **correctly**. `main` edited `docs/installation.md` while this
+branch was open — adding two constructs about Windows and Git Bash — so
+`ar/installation` stopped aligning and the pair became **9 / 16**. Nothing in
+`derive-po.ts` regressed.
+
+The claim that equality was protecting — *the two extractor fixes moved alignment
+from 7 to 10, three more rather than the nine I first inferred* — is a **dated
+historical measurement**, and its home is the module docblock with the tree each
+number was taken on. Pinning history in an assertion makes every source edit look
+like a regression, which is how a real signal gets ignored.
+
+Replaced with what is actually invariant: alignment is partial (non-zero at both
+ends, so it cannot pass vacuously) and **no pair diverges by KIND** — the part
+that is about this module rather than about the corpus.
+
+### 2. `write` replaced existing catalogues unconditionally — on the artefact #206 protects
+
+`writeFileSync` with no existence check. So a second `--write` would have silently
+replaced every catalogue, including one **signed off by a human** — #206's own
+definition of *official* — or hand-corrected after this tool produced it. The diff
+would have read as a regeneration rather than as a deletion.
+
+That is `deletion-requires-confirmation` applied to a writer, and I wrote the
+writer without applying it. Now it **skips and reports**:
+
+```
+Wrote 0 file(s).
+
+Left 9 existing catalogue(s) ALONE. One may carry a human's sign-off
+or hand corrections, and replacing it is not this tool's call. Pass --overwrite
+if you have decided:
+```
+
+`overwrite` is never the default, and the CLI spells it as its own flag so
+choosing it is a separate act from choosing to write. Re-running is now
+idempotent. Two tests: a stand-in human edit survives a re-run, and `--overwrite`
+replaces only when asked.
+
+### `ar/installation.po` is still sound, checked rather than assumed
+
+Since `main` edited its source after I derived it, I compared the committed
+catalogue against the current extraction: **0 msgids no longer in the source**, and
+**2 source constructs with no msgid** — the two `main` added. So it is
+**incomplete, not wrong**, which is exactly how a catalogue is supposed to age, and
+the drift gate agrees (it is not among the 15). Kept: deleting it would take drift
+from 15 back to 16, and it mistranslates nothing.
+
+This is the shape of `lvk9`'s stale-on-edit problem arriving early, from a
+different direction: a catalogue's msgids are a function of the source's wrapping
+AND of its content, and only the second kind of change should invalidate a
+translation.

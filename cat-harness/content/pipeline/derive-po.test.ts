@@ -188,16 +188,50 @@ describe("the catalogue is well-formed", () => {
 describe("write", () => {
   it("writes each catalogue to translations/<locale>/<page>.po", () => {
     const { root, cleanup } = fixture(SRC, { fr: OK });
-    const paths = write(root, derive(root, ["page"], ["fr"]));
-    expect(paths).toHaveLength(1);
-    expect(paths[0]).toContain(join("translations", "fr", "page.po"));
-    expect(readFileSync(paths[0], "utf-8")).toContain("UNOFFICIAL");
+    const { written } = write(root, derive(root, ["page"], ["fr"]));
+    expect(written).toHaveLength(1);
+    expect(written[0]).toContain(join("translations", "fr", "page.po"));
+    expect(readFileSync(written[0], "utf-8")).toContain("UNOFFICIAL");
     cleanup();
   });
 
   it("writes nothing when everything was refused", () => {
     const { root, cleanup } = fixture(SRC, {});
-    expect(write(root, derive(root, ["page"], ["fr"]))).toEqual([]);
+    expect(write(root, derive(root, ["page"], ["fr"]))).toEqual({ written: [], skipped: [] });
+    cleanup();
+  });
+
+  it("NEVER replaces an existing catalogue — it skips and says so", () => {
+    // THE HAZARD THIS PINS. `write` overwrote unconditionally until 2026-09-26.
+    // A `.po` here may carry a human's sign-off — #206's definition of *official*
+    // — or hand corrections made after this tool produced it, and re-running
+    // `--write` would have replaced either with a fresh unofficial derivation.
+    // The diff would have read as a regeneration rather than as a deletion.
+    const { root, cleanup } = fixture(SRC, { fr: OK });
+    const r = derive(root, ["page"], ["fr"]);
+    const first = write(root, r);
+    expect(first.written).toHaveLength(1);
+
+    // Stand in for a human's edit, then re-run exactly as before.
+    writeFileSync(first.written[0], "# OFFICIAL — a person signed this off\n", "utf-8");
+    const second = write(root, r);
+    expect(second.written).toEqual([]);
+    expect(second.skipped).toEqual([first.written[0]]);
+    expect(readFileSync(first.written[0], "utf-8")).toContain("a person signed this off");
+    cleanup();
+  });
+
+  it("replaces one only when the caller has explicitly decided to", () => {
+    // `overwrite` is never the default, and the CLI spells it as its own flag, so
+    // choosing it is a separate act from choosing to write at all.
+    const { root, cleanup } = fixture(SRC, { fr: OK });
+    const r = derive(root, ["page"], ["fr"]);
+    const first = write(root, r);
+    writeFileSync(first.written[0], "stale\n", "utf-8");
+    const second = write(root, r, { overwrite: true });
+    expect(second.written).toEqual([first.written[0]]);
+    expect(second.skipped).toEqual([]);
+    expect(readFileSync(first.written[0], "utf-8")).toContain("UNOFFICIAL");
     cleanup();
   });
 });
@@ -234,17 +268,32 @@ describe("this repository's five uncatalogued pages", () => {
     expect(byKind).toEqual([]);
   });
 
-  it("the extractor fixes moved alignment from 7 to 10, and no further — measured, not hoped", () => {
-    // Pins the number the PR claims. The first account of these fixes said they
-    // would unlock 9 more pairs; that came from stitching a count measurement
-    // and a kind measurement taken separately, and measuring the two together
-    // gives THREE. This test is here so the claim cannot drift back.
+  it("alignment is incomplete, and every refusal is a COUNT difference", () => {
+    // **This test asserted `derived === 10` and `refused === 15`, and CI was
+    // right to fail it.** Those are a measurement of a corpus at a moment, not an
+    // invariant: `main` edited `docs/installation.md` while this branch was open,
+    // which added two constructs to that page, so `ar/installation` stopped
+    // aligning and the pair became 9/16. Nothing in this module regressed — an
+    // unrelated source edit falsified an equality I had no business asserting.
+    //
+    // The claim the equality was meant to protect — that the two extractor fixes
+    // moved alignment from 7 to 10, THREE more rather than the nine I first
+    // inferred — is a dated historical measurement. Its home is the module
+    // docblock, with its provenance, not an assertion over a corpus other people
+    // edit. Pinning history in a test makes every source edit look like a
+    // regression, which is how a real signal gets ignored.
+    //
+    // What IS invariant, and what this now asserts: alignment is partial, and no
+    // pair diverges by KIND. That second one is the substantive state — the
+    // extractor's own asymmetries are gone, so what is left is a fact about the
+    // translations (bean `7x8o`) rather than about `pot-extract.ts`.
     const root = resolve(import.meta.dir, "..", "..");
     const r = derive(root, PAGES, LOCALES);
-    expect(r.derived).toHaveLength(10);
-    expect(r.refused).toHaveLength(15);
-    // Every remaining refusal is a count difference — a fact about the
-    // translation, now that the extractor's own asymmetries are gone. Bean `7x8o`.
+    // Anti-vacuity, in both directions: some derive, and some still do not. If
+    // either end goes to zero the tool or the corpus changed fundamentally and
+    // the rest of this file's assumptions need re-deriving rather than trusting.
+    expect(r.derived.length).toBeGreaterThan(0);
+    expect(r.refused.length).toBeGreaterThan(0);
     expect(new Set(r.refused.map((f) => f.reason))).toEqual(new Set(["count-differs"]));
   });
 

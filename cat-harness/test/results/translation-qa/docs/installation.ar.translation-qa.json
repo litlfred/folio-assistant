@@ -8,17 +8,17 @@
   },
   "po": "translations/ar/installation.po",
   "source_hashes": {
-    "md": "b5e1ea0cc74f",
+    "md": "3bb9822d5c2e",
     "po": "8d9c235edfbb"
   },
   "criteria": {
     "translation-coverage": [
       {
         "field_hash": {
-          "md": "b5e1ea0cc74f",
+          "md": "3bb9822d5c2e",
           "po": "8d9c235edfbb"
         },
-        "result": "pass",
+        "result": "warn",
         "reviewer": {
           "kind": "script",
           "id": "content/pipeline/translation-block-qa.ts",
@@ -27,19 +27,21 @@
           "script_hash": "2cae133afe47",
           "script_commit_sha": "92d79fc7e591fbcdc33c7239860a59ff8788b4cb"
         },
-        "reviewed_at": "2026-09-26T09:16:17.994Z",
-        "reviewed_sha": "24d9b4860e9f4a1d48960056a0f391d2125f9383",
+        "reviewed_at": "2026-09-26T11:23:32.644Z",
+        "reviewed_sha": "ceb98daee9d0b59653ec8f9a1f8838b9396d1d85",
+        "severity": "minor",
         "metrics": {
           "translated": 65,
-          "total": 65,
-          "pct": 100
-        }
+          "total": 67,
+          "pct": 97
+        },
+        "notes": "2 of 67 strings carry no translation in this locale."
       }
     ],
     "translation-terms-preserved": [
       {
         "field_hash": {
-          "md": "b5e1ea0cc74f",
+          "md": "3bb9822d5c2e",
           "po": "8d9c235edfbb"
         },
         "result": "fail",
@@ -51,8 +53,8 @@
           "script_hash": "2cae133afe47",
           "script_commit_sha": "92d79fc7e591fbcdc33c7239860a59ff8788b4cb"
         },
-        "reviewed_at": "2026-09-26T09:16:18.006Z",
-        "reviewed_sha": "24d9b4860e9f4a1d48960056a0f391d2125f9383",
+        "reviewed_at": "2026-09-26T11:23:32.653Z",
+        "reviewed_sha": "ceb98daee9d0b59653ec8f9a1f8838b9396d1d85",
         "severity": "major",
         "evidence": [
           {
@@ -72,7 +74,7 @@
     "translation-not-echo": [
       {
         "field_hash": {
-          "md": "b5e1ea0cc74f",
+          "md": "3bb9822d5c2e",
           "po": "8d9c235edfbb"
         },
         "result": "warn",
@@ -84,8 +86,8 @@
           "script_hash": "2cae133afe47",
           "script_commit_sha": "92d79fc7e591fbcdc33c7239860a59ff8788b4cb"
         },
-        "reviewed_at": "2026-09-26T09:16:18.018Z",
-        "reviewed_sha": "24d9b4860e9f4a1d48960056a0f391d2125f9383",
+        "reviewed_at": "2026-09-26T11:23:32.662Z",
+        "reviewed_sha": "ceb98daee9d0b59653ec8f9a1f8838b9396d1d85",
         "severity": "minor",
         "metrics": {
           "echoed": 10,
@@ -96,5 +98,5 @@
     ],
     "translation-semantic-roundtrip": []
   },
-  "updated_at": "2026-09-26T09:16:18.021Z"
+  "updated_at": "2026-09-26T11:23:32.664Z"
 }
