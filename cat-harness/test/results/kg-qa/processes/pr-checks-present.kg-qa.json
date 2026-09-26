@@ -117,8 +117,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/pr-checks-present.yml",
+          "detail": ".github/workflows/pr-checks-present.yml changed since cat-harness/processes/pr-checks-present.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -126,8 +131,8 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 1,
+    "pass": 14,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   },
