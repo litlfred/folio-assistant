@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9x01
 title: available_locales claims a locale with no translated page behind it, and nothing checks the two against each other
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T14:26:44Z
-updated_at: 2026-09-26T14:26:44Z
+updated_at: 2026-09-26T19:33:36Z
 parent: folio-assistant-bzyu
 ---
 
