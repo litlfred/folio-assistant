@@ -43,7 +43,7 @@ import { join, resolve } from "node:path";
 
 import { afterAll, expect, test } from "bun:test";
 
-import { gitCorpus } from "../git-corpus.js";
+import { gitCorpus } from "../../schemas/git-corpus.ts";
 
 const ROOT = resolve(import.meta.dir, "..", "..", "..");
 const scratches: string[] = [];
