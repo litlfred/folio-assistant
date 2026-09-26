@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-26T18:36:04Z
+updated_at: 2026-09-26T19:27:26Z
 parent: folio-assistant-1xhc
 ---
 
@@ -660,3 +660,63 @@ is.
 - [ ] the count of gates in step 44 that sit BELOW the drift command is reported
       somewhere a reader sees. They are all in the same position and none of them
       can fail today
+
+
+## The blast radius is 109 CHECKS, not 6 steps — my own framing corrected, twice over
+
+I have described this cascade as **45 steps**, then corrected it to **6 steps**, and
+both numbers were answers to the wrong question. Measured 2026-09-26 with the step
+boundaries verified:
+
+| | |
+|---|---|
+| the step | `gates that were registered and never run`, workflow lines **911–1433** |
+| `bun run` invocations inside it | **106** |
+| `translation:drift:check` position | **3rd** |
+| unreachable INSIDE the step, under `set -e` | **103** |
+| whole steps skipped AFTER it | **6** |
+| **checks that cannot run at all** | **109** |
+
+`set -e` is present; there is no `|| true` and no `set +e` anywhere in the step, so
+nothing resets the failure. Controlled for.
+
+### Why my earlier numbers were the wrong unit
+
+45 and 6 both count **STEPS**. A step is not a check: this one step holds 106
+checks. So "the cascade shrank from 45 to 6" was true of steps and badly misleading
+as a statement of how much goes unevaluated — the real figure went from a
+job-sized cascade to a **step-sized one that is larger than the job cascade it
+replaced**, because 103 gates were consolidated into a single `run: |` block.
+
+That is the same error I made on `cell()` the same day (recorded on `li5y`: "one
+instance" was 238). Both times I counted the coarse unit that was easy to see and
+published it as the exposure. **The unit a reader cares about is the CHECK, and it
+is never the unit a workflow makes convenient to count.**
+
+### Two verification notes, because the measurement itself nearly went wrong
+
+**My first slice was wrong and gave the right answer by luck.** I detected the
+step's end with an indentation heuristic that ran to line 1683 instead of 1433,
+swallowing the `rust-wildcard` and `dependency-advisories` steps. It still reported
+106 — because those later steps use raw shell rather than `bun run`, so the
+over-wide slice contained no extra matches. I only noticed because the same scan
+reported `|| true` and `continue-on-error` present, which contradicted the claim I
+was checking. **A count that survives a boundary bug is not a count that was
+measured correctly**, and the thing that exposed it was an incidental flag, not the
+number.
+
+**The figure reached me second-hand first.** Another session's check-in asserted
+106/3rd/103. I re-derived it rather than adopting it, which is what caught the
+boundary bug. The independent agreement is worth more than either measurement
+alone; the adoption would have been worth nothing.
+
+### Done when
+
+- [x] the count of gates below the drift command is measured and recorded —
+      **103 inside the step, 6 steps after, 109 checks total**
+- [ ] `check:artefact-verification` is reachable. Unchanged, and now with a number:
+      it is one of the 103
+- [ ] the 103 are not a single `run: |` block. The remedy a sibling session
+      proposes on `cpss` — split `translation:drift:check` out and make it the LAST
+      step — is recorded here as the candidate, NOT adopted: it restructures gates
+      that are not mine, and it is an owner decision
