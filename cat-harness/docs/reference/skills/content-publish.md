@@ -22,7 +22,7 @@ Input schema for content publication.
 | `target` | `"github-release"` \| `"npm"` \| `"fhir-registry"` \| `"arxiv"` | no | Publication target. |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/content-publish/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/content-publish/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-publish/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-publish/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -36,4 +36,4 @@ Output schema for content publication.
 | `releaseTag` | string | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/content-publish/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/content-publish/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-publish/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-publish/output.schema.json){: .fa-edit-source }

@@ -79,7 +79,7 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 // consequence was not subtle: its eight skills — `content-author`,
 // `content-validate`, `content-review`, `content-publish`, `content-plan`,
 // `content-test`, `content-feedback`, `content-retire` — are named by **52**
-// `<folio:skill ref>` activities across the twenty diagrams in
+// `<bootstrap.processes:skill ref>` activities across the twenty diagrams in
 // `processes/`. So `workflow_next` handed an agent `content-validate`,
 // the agent called `skill_fetch`, and got "package not found". Every step of
 // every content-lifecycle process. `kg:audit`'s `skill-servable` criterion
@@ -106,7 +106,7 @@ function holdsSkill(dir: string): boolean {
  *
  * This was a hardcoded table, and the cost of that is on the record: a package
  * missing from it is a package `skill_fetch` answers "not found" for, which is
- * how `content-lifecycle` — named by **52** `<folio:skill ref>` activities —
+ * how `content-lifecycle` — named by **52** `<bootstrap.processes:skill ref>` activities —
  * was unservable until 2026-09-18.
  *
  * It is discovered through {@link resolveSkillDirs}, which reads each

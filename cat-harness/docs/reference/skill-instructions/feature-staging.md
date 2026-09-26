@@ -89,21 +89,44 @@ prepends the `baseurl` to ~235 hrefs per page and the `fa-translation-index`
 island publishes `site.baseurl` to JavaScript. Those are coupled to the
 language switcher and are `g196`'s remaining half — not fixed here.
 
-### 3. Commit SHA stamping
+### 3. Commit SHA stamping — and the four fields staging must NOT write
 
-Both the main site (`docs-site.yml`) and staging sites write `docs/_data/build.yml`:
+Both builds write `docs/_data/build.yml`, and **they do not write the same
+fields.** The difference is not an oversight to tidy up; it is the second half
+of the deduplication above, and restoring it undoes that work silently.
 
-```yaml
-sha: "a1b2c3d4e5f6..."
-short_sha: "a1b2c3d"
-built_at: "2026-09-18T00:30:00Z"
-branch: "feature/update-schedule"
-staging: true                      # false on main
-staging_slug: "feature-update-schedule"
-run_url: "https://github.com/.../actions/runs/12345"
-```
+| | `docs-site.yml` (main) | `feature-staging.yml` (a preview) |
+|---|---|---|
+| `sha`, `short_sha`, `built_at`, `run_url` | **written** | **DELIBERATELY ABSENT** |
+| `branch`, `staging`, `staging_slug`, `pr_number`, `search_index` | — | written |
 
-A Jekyll layout can read `site.data.build.sha` to display the deployed version.
+**Why staging omits them.** `docs/_includes/footer_custom.html` renders
+`short_sha`, `built_at` and `run_url` into the footer of **every** page. A
+fresh `date -u` per run therefore changed every page on every deploy — the
+same defect as the old bash banner, one include along, and it **survived the
+banner fix** because it lives in a Jekyll include rather than in the
+workflow's injection step. Measured on two deploys of one branch three
+minutes apart, both already shipping the constant banner: 613 files,
+1466 insertions, 1465 deletions, **one insertion and one deletion on every
+HTML page**.
+
+The client fills those three in from the **same `staging.json`** the banner
+already fetches — one request, two consumers — and a failed fetch leaves
+Jekyll's `| default: 'dev'` in place rather than blanking the footer, which is
+the same third state §"The facts are fetched, not baked" requires of the
+banner. On main there is one copy and nothing to deduplicate, so the include's
+own reason stands: *"a stale browser cache and a deploy that has not run look
+identical."*
+
+**Adding a per-build field back to the staging stamp will not fail a test.**
+`staging-banner-constant.test.ts` compares the banner **fragment**, which is
+genuinely constant; the footer is not in it. This is the paragraph that guards
+the gap, and bean `g196` records the session that shipped the banner fix, said
+the pages no longer differed across rebuilds, and was proved wrong by reading
+the deploy commits on `gh-pages` rather than the code.
+
+A Jekyll layout can read `site.data.build.sha` to display the deployed
+version — on main. Under a preview, read it from `staging.json`.
 
 ### 4. Before/after comparison
 

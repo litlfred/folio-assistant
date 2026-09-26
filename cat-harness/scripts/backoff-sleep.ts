@@ -39,7 +39,7 @@
  *
  * ## Why it sleeps rather than printing a number
  *
- * `sleep $(bun run backoff-sleep.ts …)` would pass an EMPTY argument on any
+ * `sleep $(bun run cat-harness/scripts/backoff-sleep.ts …)` would pass an EMPTY argument on any
  * failure of this script, and `sleep` with no operand is an error the loop
  * would then take as its own. Sleeping here means a fault is this script's
  * exit code, which the calling loop can see.

@@ -25,7 +25,7 @@ Input schema for the document-structure skill: add, remove or reorder chapters a
 | `order` | array<string> | no | The complete new order, for the reorder-* operations. Must be a permutation of the existing entries. |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/document-structure/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/document-structure/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/document-structure/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/document-structure/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -36,4 +36,4 @@ Input schema for the document-structure skill: add, remove or reorder chapters a
 | `forwardReferences` | array<string> | no | Labels whose uses[] now points forward in reading order. A real finding after a reorder, not a mechanical detail. |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/document-structure/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/document-structure/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/document-structure/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/document-structure/output.schema.json){: .fa-edit-source }

@@ -32,9 +32,9 @@ different point, and none of them refers to the others:
 
 | mechanism | what it fixes | where |
 |---|---|---|
-| `folio:policy enforcement` | whether a step that is not enabled is **refused** or merely noted | per process, `strict` or `advisory` |
+| `cat-harness.processes:policy enforcement` | whether a step that is not enabled is **refused** or merely noted | per process, `strict` or `advisory` |
 | `relaxable="false"` | whether a package may **negotiate** a base step away | per activity |
-| `folio:decision` | whether the branch is **computed** from a table, refusing a hand-supplied outcome | per exclusive gateway |
+| `cat-harness.processes:decision` | whether the branch is **computed** from a table, refusing a hand-supplied outcome | per exclusive gateway |
 | `check-corpus-gate` | whether the **write** is refused at the commit boundary, by something that is not the agent | outside the process |
 
 They are not one axis, and treating them as one is the first thing to get
@@ -63,7 +63,7 @@ noticed, not what exists.
 **Measured**, by `bun run check:workflow-refs` — ask it, not this page:
 
 - Exclusive gateways split three ways: **computed** by a DMN table, **declared
-  judgement** (`folio:judgement`, with a reason), and **undeclared**.
+  judgement** (`cat-harness.processes:judgement`, with a reason), and **undeclared**.
 - The undeclared set is a **backlog**, not a finding. Every gateway predating
   the marker lands there, and it is the number this agenda most needs to
   shrink: an undeclared gateway is one where nobody has said whether a table
@@ -111,7 +111,7 @@ test this at the same time: ask of each whether its output is a result or a
 rule.
 
 **What it does not settle.** Which of the four axes dominates, whether "rule"
-is even well-defined for the judgements this repository makes (a `folio:raci`
+is even well-defined for the judgements this repository makes (a `cat-harness.processes:raci`
 annotation is not obviously either), and whether the distinction survives
 contact with a step whose output is prose. **Open.**
 
@@ -256,8 +256,8 @@ more than this page had before.
 
 The practical half, and the only part that is not research:
 
-**Say which point you are at.** A gateway is `folio:decision`, or
-`folio:judgement` with a reason, and an undeclared one is a gap somebody will
+**Say which point you are at.** A gateway is `cat-harness.processes:decision`, or
+`cat-harness.processes:judgement` with a reason, and an undeclared one is a gap somebody will
 have to measure later. The reason is what makes the corpus countable — and a
 corpus that cannot enumerate its judgement points cannot answer any of the
 three questions above.
@@ -273,9 +273,9 @@ consulted it; `workflow_gate` only answers agents that ask.
 ## See also
 
 - [`session-state-machine`](session-state-machine.md) — the worked case, and
-  where `folio:judgement` came from.
+  where `cat-harness.processes:judgement` came from.
 - [`bpmn-processes`](bpmn-processes.md) — strict vs advisory, the four steps no
   package may relax, and the commit-boundary gate.
-- [`content-context-and-state-graphs`](../folio-core/content-context-and-state-graphs.md)
+- [`content-context-and-state-graphs`](content-context-and-state-graphs.md)
   — the layer that makes "a controlled overlay of context" a thing you can name.
 {% endraw %}

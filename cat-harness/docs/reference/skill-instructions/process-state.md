@@ -24,7 +24,7 @@ authorised.
 | level | answers | where it lives |
 |---|---|---|
 | **process instance** | which run of which process is this? | `.folio/workflow/`, committed |
-| **swimlane / role** | am I the actor who may do this? | the lane on the activity; checked by the executor ([`task-authorization`](../folio-core/task-authorization.md)) |
+| **swimlane / role** | am I the actor who may do this? | the lane on the activity; checked by the executor ([`task-authorization`](task-authorization.md)) |
 | **task** | which step am I on, and is it enabled? | `workflow_next` |
 
 `workflow_next` reports what is enabled **now**, which lane owns it, and which
@@ -38,7 +38,14 @@ mismatch or a `deny`, and writes the verdict into the history. An `actor` you
 type is recorded as **asserted**, not authenticated. Say so rather than
 presenting it as identity. `workflow_gate` takes the same `actor` and `target`,
 so ask it before doing the work
-([`task-authorization`](../folio-core/task-authorization.md)).
+([`task-authorization`](task-authorization.md)).
+
+**The history is checked again afterwards.** `bun run prov:qaqc` turns every
+instance's history into a W3C PROV-O log and re-runs the same check on each
+step; `claude` or a login in `actor`, rather than a declared actor id, shows up
+there as `undeclared-actor`. It is advisory: the findings are listed on the
+`/prov-qaqc/` page, and CI fails only when that page is stale
+([`task-authorization`](task-authorization.md) §"The after-check").
 
 ## Say which process you are in — every turn
 
@@ -175,7 +182,7 @@ So, as part of recovery, before step 3's confirmation:
   a person who remembers; "everything is fine" is not.
 - **Do not move anything back on your own judgement.** Re-anchoring to undo is
   another unlogged move, and it is a durable change made to cover one — see
-  [`deletion-requires-confirmation.md`](../folio-core/deletion-requires-confirmation.md),
+  [`deletion-requires-confirmation.md`](deletion-requires-confirmation.md),
   which is the same rule about a different verb.
 
 **Considered and rejected: giving the note its own history.** A `movedFrom`
@@ -205,7 +212,7 @@ exactly what it needs to avoid re-deriving the same mistake.
 
 A bean that had been tidied to show only the correct conclusion would read as
 though the work had always been aimed there. That is the failure mode
-[`bean-coordination.md`](../folio-core/bean-coordination.md) names when it says unwanted work
+[`bean-coordination.md`](bean-coordination.md) names when it says unwanted work
 is `scrapped` **with its reasons** rather than deleted: a record that shows only
 outcomes cannot distinguish a dead end somebody ruled out from one nobody tried.
 
@@ -223,7 +230,7 @@ outcomes cannot distinguish a dead end somebody ruled out from one nobody tried.
 
 ## Relationship to the opening brief
 
-The brief you open a turn with ([`turn-reporting.md`](../folio-core/turn-reporting.md))
+The brief you open a turn with ([`turn-reporting.md`](turn-reporting.md))
 is what makes detector 5 usable: without a stated plan there is nothing for the
 current work to have diverged *from*. The two skills are one loop — brief the
 route, notice the divergence, confirm the recovery.

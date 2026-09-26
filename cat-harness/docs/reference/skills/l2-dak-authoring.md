@@ -23,7 +23,7 @@ Input schema for L2 Digital Adaptation Kit authoring. Translates WHO clinical gu
 | `sprintNumber` | integer | no | Current sprint/iteration number. (min: 1) |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/l2-dak-authoring/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/l2-dak-authoring/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/l2-dak-authoring/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/l2-dak-authoring/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -52,4 +52,4 @@ Output schema for L2 DAK authoring.
 | `location` | string | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/l2-dak-authoring/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/l2-dak-authoring/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/l2-dak-authoring/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/l2-dak-authoring/output.schema.json){: .fa-edit-source }

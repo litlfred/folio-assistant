@@ -23,7 +23,7 @@ Input schema for L3 FHIR IG authoring. Creates machine-readable FHIR artifacts f
 | `igRoot` | string | no | IG repository root directory. |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/l3-fhir-authoring/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/l3-fhir-authoring/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/l3-fhir-authoring/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/l3-fhir-authoring/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -61,4 +61,4 @@ Output schema for L3 FHIR IG authoring.
 | `url` | string | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/l3-fhir-authoring/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/l3-fhir-authoring/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/l3-fhir-authoring/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/l3-fhir-authoring/output.schema.json){: .fa-edit-source }

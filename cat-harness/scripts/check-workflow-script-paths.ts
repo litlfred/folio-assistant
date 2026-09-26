@@ -38,6 +38,8 @@
  *
  * **An empty workflow set exits 2.** A probe that found nothing must not print
  * a clean sweep — the `dh4f` shape, and the one this repository names most.
+ *
+ * @covers none — .github/workflows/ is not a declared graph kind
  */
 import { readdirSync, readFileSync, existsSync } from "node:fs";
 import { join, relative } from "node:path";

@@ -36,7 +36,7 @@ sequence of steps.
 
 Concretely, three things are not yours while you are in a process:
 the **next step** (the control plane's), the **branch** at a gateway carrying
-`<folio:decision>` (the table's), and whether a step may be **skipped** (its
+`<cat-harness.processes:decision>` (the table's), and whether a step may be **skipped** (its
 `relaxable` and the process's `enforcement`).
 
 ## This repository is ahead on policy and behind on contracts
@@ -44,15 +44,15 @@ the **next step** (the control plane's), the **branch** at a gateway carrying
 Both halves are worth knowing, because they change what you can rely on.
 
 **Ahead.** The paper gives each node one "node local policy". Here that is four
-distinct things — `folio:policy enforcement`, `relaxable`, `folio:decision`,
-`folio:judgement` — and `deterministic-and-agentic` is explicit that collapsing
+distinct things — `cat-harness.processes:policy enforcement`, `relaxable`, `cat-harness.processes:decision`,
+`cat-harness.processes:judgement` — and `deterministic-and-agentic` is explicit that collapsing
 them into one axis is the first mistake to make. Do not read the paper's single
 policy as a simplification to adopt.
 
 **Behind, and this is what to work around.** Two mechanisms the paper's control
 plane has and `workflow_next` does not:
 
-1. **No typed tool contract per node.** `<folio:skill ref>` names an instruction
+1. **No typed tool contract per node.** `<bootstrap.processes:skill ref>` names an instruction
    body; nothing declares what a step takes or returns, so nothing validates
    what you produced against what the next step needs. Until that exists, **say
    what you produced** in the turn report — a step whose output is only in your
@@ -109,7 +109,7 @@ it first looks:
 - [`deterministic-and-agentic`](deterministic-and-agentic.md) — the spectrum,
   the four mechanisms, and the open questions this is evidence for.
 - [`bpmn-processes`](bpmn-processes.md) — how a step is authored, and what
-  `<folio:skill ref>` and `<folio:bean>` are required for.
+  `<bootstrap.processes:skill ref>` and `<cat-harness.processes:bean>` are required for.
 - [`process-state`](process-state.md) — saying which process you are in, and
   the five detectors for being out of one.
 - [`hybrid-llm-deterministic`](../../methodologies/hybrid-llm-deterministic.md)

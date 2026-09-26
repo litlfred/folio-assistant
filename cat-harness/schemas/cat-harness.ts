@@ -677,31 +677,6 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    */
   needs?: string[];
 
-  /**
-   * Is this instance PUBLISHED for consumers outside this repository?
-   *
-   * `instance-versioning.md` §3.1, and the whole point is the THIRD STATE:
-   *
-   * > Absence is a third state, not a default. An instance that has not
-   * > declared `publishable` is *undecided*, never *false*, and a gate reports
-   * > it — the same rule `publication.host` already follows.
-   *
-   * So `undefined` here does NOT mean "internal". It means nobody has said,
-   * and `check:publishable` reports it rather than picking. That distinction is
-   * the field's reason to exist: **most instances genuinely are not
-   * publishable**, and minting a version for one nothing outside resolves is
-   * ceremony with no reader — but "we decided it is internal" and "nobody
-   * looked" are different facts, and a boolean defaulting to `false` would
-   * erase the second.
-   *
-   * Only a `true` here obliges {@link id} and {@link version}.
-   *
-   * **Which instances are publishable is NOT inferable and is not inferred.**
-   * §6 Q1 leaves it open — *"the rest are unclear and should be declared rather
-   * than inferred"* — so this ships with no instance declaring it, and the gate
-   * saying so.
-   */
-  publishable?: boolean;
 
   /**
    * The package identity — reverse-DNS, stable forever, never reused.
@@ -712,9 +687,26 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * FHIR rule 1 is that the id is the identity and never changes while the
    * version distinguishes snapshots of it.
    *
-   * Required when {@link publishable} is `true`, refused otherwise — declaring
-   * an identity for something nothing may depend on is the ceremony §3.1 is
-   * written against.
+   * **HELD, pending the ONE-reference design.** The owner ruled on 2026-09-23
+   * that every asset carries an id, under
+   * `io.github.litlfred.folio-assistant.<name>`. It was minted into all 17
+   * declarations and then REMOVED, because the owner's next ruling contradicts
+   * writing it there at all:
+   *
+   * > i want simplest so if someone wants to bootstrap a different harness,
+   * > there is only one place to change. ONE PLACE.
+   * > fork would only edit bootstrap/README.md and change ONE reference there.
+   *
+   * A namespace written into 17 files is 17 places. So the id must be DERIVED
+   * from that single reference, and the reference does not exist yet —
+   * `bootstrap/README.md` today has zero outward references and its own tests
+   * enforce that. Bean `iwtn` owns creating it.
+   *
+   * Minting ids before then would bake the wrong scheme into artefacts the
+   * schema itself calls *stable forever, never reused*.
+   *
+   * `skills/folio-core/instance-publication.md` carries the namespace rule and
+   * why a mirror never takes its subject's identity.
    */
   id?: string;
 
@@ -733,6 +725,22 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * {@link canonicalUrl} already plays the `uri` role (rule 6) and the version
    * deliberately does not appear in it: the canonical URL is stable ACROSS
    * versions.
+   *
+   * **Universal, and enforced by the GATE rather than by this type.** Owner's
+   * ruling, 2026-09-23: *"all assets get a version"*. All 17 carry one, and
+   * `check:publishable` fails an instance without one.
+   *
+   * It is not `required` HERE because making it so breaks **376 tests across
+   * 20+ files** — every fixture that builds a declaration without it. A sweep
+   * that size hides a real regression among the noise, and the property asked
+   * for is delivered either way: the corpus is complete, and a new instance
+   * with no version does not pass.
+   *
+   * §3.1 originally REFUSED one unless `publishable: true`, on the premise
+   * that a version reads as a publication claim. It does not — a version
+   * distinguishes snapshots; whether anyone outside may depend on them is
+   * {@link publication}, a separate question.
+   * `skills/folio-core/instance-publication.md`.
    */
   version?: string;
 }
@@ -1106,10 +1114,15 @@ export const SubgraphCoverageSchema = z.object({
    * behaviour rather than changing it.
    */
   visualiser: VisualiserDeclarationSchema.optional(),
-  /** The documentation entry, **relative to the REPOSITORY root** — as {@link visualiser}. */
-  docs: z.string().min(1).optional(),
-  /** The skill that governs it, by NAME rather than by path, so no base applies. */
-  skill: z.string().min(1).optional(),
+  // NO `docs`: the documentation page says what it documents — a
+  // `documents:` list in its front matter (generated pages get it from their
+  // WebPage manifest) or `<meta name="documents">` — #1168 B7c,
+  // `scripts/docs-declarations.ts`. A waiver is still `exempt.docs` below.
+  // NO `skill`: the governing skill is read from the SKILLS, whose front
+  // matter names the kinds (`graph-kinds:`) or the directory (`governs:`)
+  // they govern — #1168 B7b, `scripts/skill-governance.ts`. The directory
+  // named its skill until then, pointing at what depends on it. A waiver for
+  // a directory nobody governs on purpose is still `exempt.skill` below.
   /**
    * What produces this directory's SERIALISATIONS — `json`, `jsonld` and
    * `schema.json` at the directory's own URL.
@@ -1362,9 +1375,10 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    *
    * ## Judgement applied: the methodologies take `analyst`, and nothing else does
    *
-   * `methodologies`, `methodology-crdm`, `methodology-raci` and
-   * `smart-kg-methodologies` — the four directories that hold or index a
-   * methodology. MADR and SDLC are named in the instruction and do not exist
+   * `methodologies` and `folio-assistant-core-methodologies` — the
+   * directories that hold a methodology and carry a theme. (`methodology-crdm`
+   * and `methodology-raci` went 2026-09-22; `smart-kg-methodologies` went
+   * 2026-09-24, bean `wg7r`, when GRADE became a skill plus code lists.) MADR and SDLC are named in the instruction and do not exist
    * yet; they inherit the answer when they are declared, which is the point of
    * writing it on the directory rather than per page.
    *
@@ -1522,11 +1536,42 @@ export const PUBLICATION_HOSTS = [
 export type PublicationHost = (typeof PUBLICATION_HOSTS)[number];
 
 export interface Publication {
-  host: PublicationHost;
+  /**
+   * WHAT KIND of host serves the renderings. Optional: absent is a third
+   * state — the deployment has not said, NOT `github-pages`.
+   */
+  host?: PublicationHost;
+  /**
+   * WHAT STATE this instance's publication is in. `draft`, always, today.
+   *
+   * **The discipline is in the skill, not here** —
+   * `skills/folio-core/instance-publication.md`. Owner's ruling, 2026-09-23:
+   * *"all assets get a version and are in 'draft' publication. formal
+   * publication process needs to be deinfed/neeeds tools/depends on
+   * instance."*
+   *
+   * A sibling of {@link host} rather than a field of its own, because they are
+   * two facets of ONE question — what serves this, and how far along it is.
+   * This field's own docblock already lists `canonicalUrl`, `publication.host`
+   * and `readme.linkStyle` as three questions that are easy to run together;
+   * a fourth top-level name would have been a fourth.
+   *
+   * A LITERAL UNION OF ONE, and that is the point: `"published"` fails to
+   * PARSE. Not accepted-and-reported — refused, because the process that would
+   * back it does not exist, and a gate that merely grumbles about an unbacked
+   * flag is a gate somebody switches off. Absent means `draft`.
+   *
+   * It replaced the top-level `publishable?: boolean`, whose three states
+   * could not express what was true: all 17 instances reported `undecided`
+   * while the answer was known for every one of them. A third state that
+   * cannot say what is the case is a missing value, not a third state.
+   */
+  state?: "draft";
 }
 
 export const PublicationSchema = z.object({
-  host: z.enum(PUBLICATION_HOSTS),
+  host: z.enum(PUBLICATION_HOSTS).optional(),
+  state: z.literal("draft").optional(),
 });
 
 /**
@@ -2266,30 +2311,15 @@ export const CatHarnessDeclarationSchema = z.object({
    */
   needs: z.array(z.string().min(1)).optional(),
   /**
-   * Is this instance PUBLISHED for consumers outside this repository?
-   *
-   * `instance-versioning.md` §3.1. **Three states, and the third is the
-   * field's reason to exist**: absent is *undecided*, never *false*. Most
-   * instances here genuinely are not publishable, so a boolean defaulting to
-   * `false` would read correctly nearly always — and that is the trap. It
-   * would make "we decided this is internal" and "nobody looked" the same
-   * value, which is the `dh4f` shape one level up: a consumer sees a settled
-   * answer where none was given.
-   *
-   * §6 Q1 leaves WHICH instances are publishable open — *"the rest are
-   * unclear and should be declared rather than inferred"* — so nothing here
-   * declares it yet and `check:publishable` reports the undecided set rather
-   * than picking for the owner.
-   */
-  publishable: z.boolean().optional(),
-  /**
    * The package identity an EXTERNAL consumer depends on — reverse-DNS.
    *
-   * §3.2, and it is separate from `name` (the handle this repository resolves
-   * against) and from `stub` (which names published FILES) on purpose. FHIR
-   * rule 1: the id IS the identity, stable forever and never reused, while the
-   * version distinguishes snapshots of it. Collapsing it into `name` would
-   * make an internal rename a breaking change for everyone downstream.
+   * §3.2, separate from `name` (the handle this repository resolves against)
+   * and from `stub` (which names published FILES). FHIR rule 1: the id IS the
+   * identity, stable forever and never reused, while the version distinguishes
+   * snapshots of it.
+   *
+   * **HELD** pending `iwtn`'s ONE-reference design — see the interface field.
+   * An id derived from one place cannot be written into 17.
    */
   id: z.string().min(1).optional(),
   /**
@@ -2298,23 +2328,23 @@ export const CatHarnessDeclarationSchema = z.object({
    * §3.2, constrained by {@link ExactVersionSchema}. `canonicalUrl` already
    * plays FHIR's `uri` role and deliberately carries no version: the canonical
    * URL is stable ACROSS versions.
+   *
+   * **Universal, gate-enforced** — see the interface field for why this is not
+   * required here: 376 fixtures. `check:publishable` is what fails an instance
+   * without one.
    */
   version: ExactVersionSchema.optional(),
 })
   /**
-   * `publishable: true` OBLIGES an id and a version; neither is allowed
-   * without it.
+   * What the refinement still checks, now that `id` and `version` are required
+   * by the type and `publication` is a one-value union.
    *
-   * Both halves matter and the second is the one that gets dropped. Requiring
-   * them under `true` is what makes a published instance resolvable at all.
-   * REFUSING them otherwise is what keeps the declaration honest: an id and a
-   * version on something nothing outside may depend on look exactly like a
-   * published package to any consumer reading the export, and §3.1's whole
-   * argument is that minting that identity is ceremony with no reader.
-   *
-   * It is a refinement rather than a discriminated union because `publishable`
-   * has THREE states — a union on a two-valued discriminant cannot express
-   * "undecided", and undecided is the state every instance is in today.
+   * The old refinement carried §3.1's conditional obligations in both
+   * directions — id and version REQUIRED under `publishable: true` and REFUSED
+   * otherwise. Both are gone: the owner's 2026-09-23 ruling makes them
+   * universal, so there is nothing conditional left to express, and
+   * `"published"` is refused by the literal union rather than by a check
+   * somebody could relax.
    */
   .superRefine((d, ctx) => {
     // Issue #1146: an associated harness is referenced, never held. A name that
@@ -2329,46 +2359,15 @@ export const CatHarnessDeclarationSchema = z.object({
         });
       }
     });
-    if (d.publishable === true) {
-      // §3.2 names `id` and `version`; the third obligation is §3.4's, and it
-      // is the same rule rather than an extra one. The exported `dependsOn`
-      // record is `{packageId, version, uri}`, and `canonicalUrl` is what
-      // plays `uri` — so a publishable instance without one cannot be
-      // *expressed* as a dependency by anything that depends on it. Requiring
-      // it here fails at parse time rather than producing a record with a
-      // hole in it. (Interpretation, flagged as such on issue #1017: the
-      // proposal states it as "already exists" rather than as an obligation.)
-      if (d.canonicalUrl === undefined) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["canonicalUrl"],
-          message:
-            "required when `publishable: true` — it plays FHIR's `uri` role, and §3.4's `dependsOn` record cannot be emitted without it (instance-versioning.md §3.2, §3.4)",
-        });
-      }
-      for (const field of ["id", "version"] as const) {
-        if (d[field] === undefined) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            path: [field],
-            message: `required when \`publishable: true\` — a published instance nothing can resolve by ${field} is not published (instance-versioning.md §3.2)`,
-          });
-        }
-      }
-      return;
-    }
-    for (const field of ["id", "version"] as const) {
-      if (d[field] !== undefined) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: [field],
-          message:
-            d.publishable === undefined
-              ? `refused while \`publishable\` is undeclared — a declared \`${field}\` reads as a published identity, and nobody has said this instance is published (instance-versioning.md §3.1)`
-              : `refused when \`publishable: false\` — a declared \`${field}\` on an instance nothing outside may depend on is ceremony with no reader (instance-versioning.md §3.1)`,
-        });
-      }
-    }
+    // `id` and `version` are REQUIRED BY THE TYPE now, so there is nothing
+    // conditional left to check about them. What replaced the old branches:
+    // §3.1 refused both unless `publishable: true`, and the owner's ruling of
+    // 2026-09-23 makes them universal. See
+    // `skills/folio-core/instance-publication.md`.
+    //
+    // `publication` is a literal union of one value, so `"published"` is
+    // refused by the type rather than here — deliberately, because a refusal
+    // in the schema cannot be switched off the way a gate can.
   });
 
 /**
@@ -3460,7 +3459,7 @@ function pathContains(outer: string, inner: string): boolean {
  *
  * Scope matters and is honoured: a `repository`-scoped entry and an
  * instance-relative one resolve against different roots, so they are
- * compared by ABSOLUTE path where one is available. `smart-kg/methodologies/`
+ * compared by ABSOLUTE path where one is available. `smart-base/methodologies/`
  * is repository-scoped precisely so it lifts out whole, and reading it as a
  * child of an instance-relative `methodologies/` would be wrong on both the
  * path and the intent.
@@ -4945,6 +4944,56 @@ export function declaredKinds(
 function declaredKindsEntryRoot(root: string, d: { path: string; scope?: string }): string {
   const base = d.scope === "repository" ? repoRootFor(root) : root;
   return resolve(base, d.path);
+}
+
+/**
+ * The sub-graphs a declared directory names FROM WITHIN — its nested
+ * declaration's entries, with paths rebased onto the instance root.
+ *
+ * Issue #1164, under the owner's #980 ruling: nesting is sanctioned when a
+ * node inside the outer directory labels what it holds (`docs/docs.json`,
+ * `beans/beans.json`). {@link declaredKinds} already reads those files for
+ * KINDS; this returns the ENTRIES, for a consumer that needs a sub-graph's
+ * path — the navbar's folders, `check:requirements`.
+ *
+ * Only the file the kind names (`declarationFile`) is read, not the
+ * directory-name fallbacks `declaredKinds` tries: a consumer taking a PATH
+ * from here must not take it from a file nobody declared. A file that does
+ * not parse is skipped here and reported by the check that owns it.
+ */
+export function nestedDirectories(
+  root: string,
+  decl: CatHarnessDeclaration,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> {
+  const out: Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> = [];
+  for (const d of decl.directories ?? []) {
+    const files = (d.graphKinds ?? [])
+      .map((g) => registry.get(g)?.declarationFile)
+      .filter((f): f is string => typeof f === "string");
+    for (const f of [...new Set(files)]) {
+      const p = join(declaredKindsEntryRoot(root, d), f);
+      if (!existsSync(p)) continue;
+      let nested: { directories?: Array<{ id?: string; path?: string; graphKinds?: string[]; description?: string }> };
+      try {
+        nested = JSON.parse(readFileSync(p, "utf-8"));
+      } catch {
+        continue;
+      }
+      const parent = d.path.replace(/\/+$/, "");
+      for (const nd of nested.directories ?? []) {
+        if (!nd.id || !nd.path) continue;
+        out.push({
+          id: `${d.id}/${nd.id}`,
+          path: `${parent}/${nd.path.replace(/^\.\//, "").replace(/\/+$/, "")}/`,
+          graphKinds: nd.graphKinds ?? [],
+          ...(nd.description ? { description: nd.description } : {}),
+          parentId: d.id,
+        });
+      }
+    }
+  }
+  return out;
 }
 
 // ── Core's kinds, registered ────────────────────────────────────

@@ -91,25 +91,157 @@ rights decide whether the record lands.
 GitHub login to a declared actor is the data store's job (`policies/`
 deliberately never holds identity), and it is not built yet.
 
-## Advisory now, and what makes it strict
+## Asking who you are: the `auth_whoami` Tool
 
-Owner: *"Advisory now."* In advisory mode:
+Owner, 2026-09-24: *"need Tool fo user auth/auth"*, then *"do github"*. The
+`user-auth` Tool node (MCP `auth_whoami`, `src/tools/auth.ts`) answers three
+questions in one call:
 
-- **`deny` refuses**, and so does **a role the actor may not take**. Both are
-  decisions somebody wrote down.
-- **`unknown` is allowed and recorded as `unknown`.** It is never read as
-  permit. `unknown` means no rule speaks to the request (`schemas/odrl.ts`,
-  "three answers, never two").
-- An `asserted`, `none` or undeclared actor is allowed and recorded.
+1. **Who am I?** It asks GitHub (`src/core/github-auth.ts`). With a person's
+   own token, `GET /user` gives the login and the `permissions` block of
+   `GET /repos/{o}/{r}` gives their role. In an Actions job the token is the
+   workflow's, not the person's, so it asks
+   `GET …/collaborators/{GITHUB_ACTOR}/permission` instead.
+2. **What does GitHub let me do?** That role, mapped onto the gateway actors
+   `policies/http-gateway.jsonld` already grants: `admin` → `owner`;
+   `maintain` and `write` → `collaborator`; `triage` and `read` → `viewer`;
+   `none` → nobody. A GitHub caller and an HTTP-gateway caller therefore get
+   the same answer from the same policy, and no login is written into the
+   repository.
+3. **What does policy let me do here?** The ODRL answer for an action, or the
+   full four-check verdict for a BPMN step when `process` and `task` are given.
 
-**Measured 2026-09-23**, across all 615 tasks and gateways in `processes/`
-(counting each once, with every eligible actor asked): **0** have a
-`perform-task` permit, **574** are `unknown`, and **41** sit in a lane no
-declared actor may take. Strict mode today would stop every process. Strict
-(`mode: "strict"`) additionally refuses `unknown`, `asserted`, `none` and an
-undeclared actor. Turn it on once policies grant `perform-task` for the lanes
-in use, and **re-measure first**: quote the count from a run, not from this
-paragraph.
+It answers in three states: `authenticated`, `unauthenticated`, and `unknown`
+(GitHub could not be asked). `unknown` is never shown as a pass. A role that
+cannot be read stays unknown and maps to nobody; it is never guessed. An actor
+you name is reported as **claimed**, because GitHub vouched for the login, not
+for the BPMN actor.
+
+**There is no login-to-actor table, and there will not be one.** Owner,
+2026-09-24: *"just use github accounts and standard personal account
+permission levels"*. This repository is owned by a personal account, and
+GitHub gives such a repository exactly three levels. They are the whole
+mapping (`PERSONAL_ACCOUNT_LEVELS` in `src/core/github-auth.ts`):
+
+| GitHub level | GitHub role | actor |
+|---|---|---|
+| owner | `admin` | `owner` |
+| collaborator | `write` | `collaborator` |
+| anyone else, public repository | `read` | `viewer` |
+| anyone else, private repository | `none` | nobody |
+
+The consequence is stated in every `auth_whoami` answer: there is no
+read-only or triage collaborator on a personal-account repository, so **every
+collaborator can write the whole graph**. Telling an author from a reviewer is
+left to the per-lane ODRL rules.
+
+**Owner rulings on the analysis, 2026-09-24:**
+
+- **The actors are `owner`, `collaborator` and `viewer`.** They are the
+  personal-account levels above, and nothing finer is mapped from a login.
+- **Access granularity is a property of the tool that holds the data, not of
+  the actor.** Writing the static KG through a GitHub-backed tool is `owner` or
+  `collaborator`, and GitHub makes that write **all or nothing** for the whole
+  repository. A different tool, such as a future data store in front of the
+  graph, may offer finer grain. The same actor then gets a different
+  granularity from that tool.
+- **Every write role collapses into `collaborator`.** At the GitHub level,
+  author, reviewer, adjudicator and release manager are all `collaborator`.
+  Sign-off stays with `owner` by the merge, as the CRDM process has it.
+
+## GitHub as the auth layer: what it is good at, and where it stops
+
+The knowledge graph's data store is a git repository on GitHub, so GitHub is
+the authenticator and the outermost access control. That choice has real
+strengths and one structural weakness, and every answer `auth_whoami` gives
+ends by restating the weakness.
+
+**Strengths**
+
+- **Real identity at no extra cost.** Accounts with two-factor
+  authentication, organisation SSO where it is configured, per-repository
+  fine-grained tokens, and a runner-set `GITHUB_ACTOR` in Actions. There is no
+  second identity system to run.
+- **Access to the graph is access to the repository.** One place to grant,
+  and revoking a collaborator takes effect on the next request.
+- **Every write is attributable.** A change lands as a commit with an author,
+  and PR reviews and merges are recorded. That is the durable half of the
+  audit trail that the PROV-O report (above) reads.
+- **Write governance exists.** Branch protection and rulesets can require
+  reviews and passing checks before a merge, and `CODEOWNERS` makes review
+  requirements **path-scoped**.
+
+**The weakness: all of the knowledge graph, or none of it**
+
+- **Read is whole-repository.** Anyone with `read` sees every sub-graph,
+  every node and every file. GitHub cannot say "the glossary, but not the
+  unpublished chapters".
+- **Write is whole-repository too.** `write` lets a person push to any path on
+  any unprotected branch. Path scoping exists only for **reviews** (via
+  `CODEOWNERS`), and it binds merges into protected branches, not pushes.
+- **No query-path control.** GitHub serves files, not queries. It cannot
+  authorize a traversal that starts in a sub-graph you may read and reaches a
+  node you may not, because it does not know the edge exists.
+- **Five roles, no actions.** `admin`, `maintain`, `write`, `triage` and
+  `read` are its whole vocabulary. Authoring, adjudicating and releasing are
+  all just `write`. The ODRL profile's actions cannot be expressed in it.
+- **Once read, it is copied.** A clone or a fork keeps the data after access
+  is revoked. Revocation stops the next read, not the last one.
+- **A login is not an actor.** GitHub says who pushed, not which lane or role
+  they were acting in.
+
+**What follows from that**
+
+1. **Where a boundary must hold against a reader, it is a repository
+   boundary.** Sub-graphs with different read audiences belong in different
+   repositories. That is one more reason for the repo split already under way
+   (bean `vuip`).
+2. **Everything finer is ODRL, enforced in process.** The engine's
+   four-check verdict and the HTTP routes govern callers that go through
+   them. **They are not a security boundary against someone who can clone the
+   repository.** Do not describe a scoped ODRL rule as protecting data from a
+   GitHub reader.
+3. **Real per-node or per-query enforcement needs a data store in front of
+   the graph** (the auth-gateway, and later a relationship engine; the owner
+   ruled OpenFGA *later*). The policies do not change when it arrives. Only
+   the place that evaluates them does.
+
+## Strict since 2026-09-24, and how it got there
+
+The engine started **advisory** (owner, 2026-09-23: *"Advisory now."*): a
+`deny` or a role mismatch refused, while `unknown`, `asserted` and `none` were
+allowed and recorded. **Measured then**, across 615 tasks and gateways:
+**0** had a `perform-task` permit, **574** were `unknown`, and **41** sat in a
+lane no declared actor could take. Strict mode would have stopped every
+process.
+
+Three owner rulings on 2026-09-24 removed the reason:
+
+1. The actors are `owner`, `collaborator` and `viewer`, which are GitHub's
+   personal-account levels (see the table above).
+2. *"All write roles collapse"*, so `policies/http-gateway.jsonld` grants
+   `perform-task` to `owner` and `collaborator` in every lane. `viewer` gets
+   nothing beyond the anyone floor.
+3. The principal is the one **GitHub** vouches for (`githubPrincipalFor`), not
+   an actor name the caller types.
+
+So `workflow_gate` and `workflow_complete` run in **strict** mode
+(`ENGINE_MODE` in `src/tools/workflow.ts`). Strict refuses `deny`, a role
+mismatch, `unknown`, an asserted identity, nobody, and an undeclared actor.
+The `actor` a caller passes is still written to the history, as what it said
+it was acting as; it does not decide anything.
+
+**Measured 2026-09-24**, across all 628 tasks and gateways in `processes/`,
+with a GitHub-authenticated principal: `owner` 628 allowed, `collaborator`
+628 allowed, `viewer` 628 refused (`unknown`), nobody 628 refused.
+`scripts/tests/task-authorization-strict.test.ts` pins this, so re-run it
+rather than quoting this paragraph.
+
+**What strict costs:** if GitHub cannot be asked (no token, no network, rate
+limit), no step can be recorded. That is the price of authentication being
+real rather than typed. `authorizeTask` itself still defaults to advisory, so
+a reader that re-checks history (the PROV-O report below) is not strict by
+accident.
 
 ## The HTTP routes ask the same policies
 
@@ -139,17 +271,76 @@ pins that.
 1. Read the verdict line: it names which of the four checks said no.
 2. **Role mismatch:** you are acting as the wrong actor, or the lane binds a
    role you do not hold. Hand the step to an actor who may take the role
-   ([`process-state`](../workflow/process-state.md)). Do not edit your actor's
+   ([`process-state`](process-state.md)). Do not edit your actor's
    `roles` to get past it; that is `actor-role-administration.bpmn`, and it
    belongs to the administrator lane.
 3. **`deny`:** a prohibition was written on purpose. Ask the user; never
    remove it yourself ([`deletion-requires-confirmation`](deletion-requires-confirmation.md)).
+
+## The engine writes its own PROV-O record
+
+Since 2026-09-24 (bean `n2l9`), `complete()` attaches a `prov:Activity` to
+each history entry it records under an authorization context
+(`src/workflow/prov-record.ts`, `HistoryEntry.prov`):
+
+- `prov:agent` is the actor GitHub vouched for, not a typed name;
+- `prov:hadRole` is the lane's role, and `prov:hadPlan` is
+  `<process file stem>#<node id>`;
+- `cat-harness:underPolicy` is every policy in force, because `decide`
+  evaluated every one;
+- `prov:used` is the target, when the step names one.
+
+It is written **at the moment it is true**, which the after-check below
+cannot do from a name alone. The same no-invention rule applies: a refused
+step, a step with no actor, or a step in a lane that binds no role gets no
+activity.
+
+## The after-check: the PROV-O QA/QC report
+
+The engine checks **before** a step. An agent swarm acts first, so the same
+policy is checked **after**, from the record (issue #1180, step 5;
+`content/docs/agentic-harness/bpmn-execution.md`).
+`scripts/prov-qaqc.ts` reads every instance in `beans/workflows/`, including
+its subprocesses, and for each history entry on an activity or decision:
+
+- writes one `prov:Activity` (`schemas/prov.ts`): `prov:agent` is the entry's
+  actor, `prov:hadRole` is the role the lane binds (`laneBinding`),
+  `prov:hadPlan` is `<process file stem>#<node id>`, and
+  `cat-harness:underPolicy` is every policy evaluated. One log per instance
+  goes to `docs/assets/prov/<instance>.prov.jsonld`;
+- re-runs `authorizeTask` itself. For an entry recorded under a verdict it
+  re-checks **the principal that verdict recorded** (the actor GitHub vouched
+  for); only for an older entry, which records just a name, does it use that
+  name, `asserted`;
+- emits the engine's own `prov:Activity` when the entry carries one, and
+  derives one only for entries that predate it.
+
+Findings: `unknown`, `deny`, `not-eligible`, `undeclared-actor`, a recorded
+`authz` that disagrees with the recomputed one (`authz-disagrees`), and gaps
+in the record itself: `no-actor`, `no-role`, `node-not-in-model`,
+`source-moved` and `source-missing`. **An entry with no actor, or in a lane
+that binds no role, gets no `prov:Activity`**, because the schema requires
+both and a guessed value is fabrication. It gets a finding instead.
+
+```sh
+bun run prov:qaqc          # write docs/prov-qaqc/index.md and the logs
+bun run check:prov-qaqc    # CI: fail when they are stale
+```
+
+It is **advisory**, unlike the engine, which has been strict since 2026-09-24: findings are listed on the
+`/prov-qaqc/` page and never fail the build. `check:prov-qaqc` fails only on
+stale outputs, a `prov:Activity` that does not validate, or an internal
+error. Quote the counts from a run, not from the page you remember.
 
 ## Code
 
 - `src/workflow/authorize.ts`: `authorizeTask`, `describeVerdict`
 - `src/core/access.ts`: `loadAccessContext`, `principalFromEnv`
 - `src/core/rbac.ts`: `principalOf`, `authorize`, `allows`, `forbidden`
+- `src/core/github-auth.ts`: `githubIdentity`, `principalFromGithub`, `GITHUB_ROLE_ACTOR`
+- `src/tools/auth.ts`: `auth_whoami` (Tool node `user-auth`), `whoami`, `grainNote`
 - `schemas/odrl.ts`: `decide` (every policy; any `deny` wins), `PERFORM_TASK`
-- tests: `scripts/tests/task-authorization.test.ts`
+- `src/workflow/prov-record.ts`: `provActivityFor` (the engine's record)
+- `scripts/prov-qaqc.ts`: `buildReport`, `reportInstance` (the after-check)
+- tests: `scripts/tests/task-authorization.test.ts`, `scripts/tests/task-authorization-strict.test.ts`, `scripts/tests/user-auth.test.ts`, `scripts/tests/prov-qaqc.test.ts`, `scripts/tests/prov-record.test.ts`
 {% endraw %}

@@ -22,7 +22,7 @@ Input schema for the proof-verification skill. Verifies Lean proofs and tracks s
 | `trackSorries` | boolean | no | Whether to track and report sorry placeholders. (default: `true`) |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/proof-verification/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/proof-verification/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/proof-verification/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/proof-verification/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -53,4 +53,4 @@ Output schema for the proof-verification skill.
 | `message` | string | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/proof-verification/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/proof-verification/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/proof-verification/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/proof-verification/output.schema.json){: .fa-edit-source }

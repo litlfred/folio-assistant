@@ -15,6 +15,8 @@
  *
  *   bun run deps:python          # write both files
  *   bun run deps:python:check    # fail if either is stale
+ *
+ * @covers code
  */
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";

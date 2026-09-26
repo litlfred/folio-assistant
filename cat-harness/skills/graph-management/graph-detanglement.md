@@ -80,9 +80,10 @@ against its own directory, **so the whole graph relocates by moving one
 folder**.
 
 The worked example is in the tree and belongs to a repository that does not
-exist yet: `smart-kg/methodologies/grade.md`, declared at repository scope in
-`cat-harness/cat-harness.json`, whose own entry says *"separated so the extraction
-is literal — `smart-kg/` lifts out whole"*.
+exist yet: `smart-base/methodologies/diig.md`, declared at repository scope in
+`cat-harness/cat-harness.json` so that the directory lifts out whole with
+`smart-base`. (The example was `smart-kg/methodologies/grade.md` until
+2026-09-24, when GRADE became a skill plus code lists — bean `wg7r`.)
 
 **Declaring is cheap and extracting is expensive, which is the point.** The
 `methodology` graph kind is defined by exactly this property: *"extractable
@@ -254,8 +255,8 @@ too low — an `export {}` block the grep pattern missed, which `tsc` caught."*
 
 And the same failure once more, from a sibling session two days later, stated
 in its most compact form yet: *"describing a mechanism from its name and its
-position in a diagram, then reasoning about what it needs. `--payload
-<file.json>` settled in one line what three proposals had guessed at. A name
+position in a diagram, then reasoning about what it needs. `--payload <file.json>`
+settled in one line what three proposals had guessed at. A name
 says what something is for; an argument list says what it does."*
 
 That is move 9 and move 12 with the cost attached. Three proposals were made

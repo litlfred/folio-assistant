@@ -3,7 +3,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_DocsSite" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_Process_DocsSite">
@@ -18,13 +19,12 @@
            skipping either costs — every open PR's preview deleted by an
            unrelated merge, silently, for months. A process whose whole point
            is a compensation pair cannot be advisory about performing it. -->
-      <folio:policy enforcement="strict"/>
-      <folio:implements workflow=".github/workflows/docs-site.yml"/>
+      <cat-harness.processes:policy enforcement="strict"/>
     </bpmn:extensionElements>
     <bpmn:laneSet id="LaneSet_Process_DocsSite">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
         <bpmn:documentation>Before it will even attempt the risky part, GW_Complete can refuse outright and end at End_Refused if a maintained artefact is missing — so an incomplete build never reaches Task_Publish's full replace at all, which is a harder stop than the restore/verify pair further down the same lane makes for a partial one.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Push</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Regenerate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Build</bpmn:flowNodeRef>
@@ -45,9 +45,6 @@
     <bpmn:startEvent id="Start_Push" name="Push to main,&#10;or dispatch">
 
 
-      <bpmn:extensionElements>
-        <folio:job name="build-and-deploy"/>
-      </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:task id="Task_Regenerate" name="Regenerate every derived&#10;reference from its source">
@@ -55,7 +52,7 @@
 
       <bpmn:documentation>Regenerate every derived reference from its source before building: skill schema and instruction pages, content-backed docs pages, the graph projections and viewers, the handler and translation indexes, and the rendered BPMN diagrams. The published site is built from sources, never from committed copies that may be stale.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:no-skill reason="Five independent generators run from their own sources. Each is documented where it lives; there is no single procedure for &quot;regenerate everything&quot;, and inventing one here would name a skill nobody could open."/>
+        <cat-harness.processes:no-skill reason="Five independent generators run from their own sources. Each is documented where it lives; there is no single procedure for &quot;regenerate everything&quot;, and inventing one here would name a skill nobody could open."/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0</bpmn:incoming>
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
@@ -65,7 +62,7 @@
 
       <bpmn:documentation>Compose the docs layers, build the Jekyll site, mount instance-rendered content, and generate the TypeScript API reference with TypeDoc.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed, and a skill here would describe somebody else&apos;s behaviour."/>
+        <cat-harness.processes:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed, and a skill here would describe somebody else&apos;s behaviour."/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
@@ -75,7 +72,7 @@
 
       <bpmn:documentation>Export the knowledge graph and its schema into the published tree, then check every maintained artefact is present and no block-level markup escaped. The unpublished graph kinds are stripped on export.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed, and a skill here would describe somebody else&apos;s behaviour."/>
+        <cat-harness.processes:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed, and a skill here would describe somebody else&apos;s behaviour."/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
@@ -88,7 +85,7 @@
     </bpmn:exclusiveGateway>
     <bpmn:callActivity id="Call_Verify" name="Verify the export&#10;[publish-verification]" calledElement="Process_PublishVerification">
       <bpmn:documentation>Process_PublishVerification: the verifier set over the built tree, before anything is deployed. Owner, 2026-09-23: before deployment, blocking.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="publish-verification"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="publish-verification"/></bpmn:extensionElements>
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_V1</bpmn:outgoing>
     </bpmn:callActivity>
@@ -103,8 +100,8 @@
 
       <bpmn:documentation>Copy every OPEN pull request's STAGING/&lt;slug&gt;/ preview from gh-pages into the publish directory before the replace, once per publish attempt. Without it the full replace deletes every preview, silently (bean plj1). Only open PRs' previews are carried.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="feature-staging"/>
-      <folio:no-call reason="Re-deploys EVERY open PR's preview after a publish — a loop over many previews. A call runs feature-staging once, for one PR, from its first start event."/></bpmn:extensionElements>
+        <bootstrap.processes:skill ref="feature-staging"/>
+      <cat-harness.processes:no-call reason="Re-deploys EVERY open PR's preview after a publish — a loop over many previews. A call runs feature-staging once, for one PR, from its first start event."/></bpmn:extensionElements>
       <bpmn:incoming>Flow_V2</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
     </bpmn:task>
@@ -113,7 +110,7 @@
 
       <bpmn:documentation>Publish to gh-pages as a FULL REPLACE: anything on the branch this build did not produce is gone unless the restore put it back. The verify step that follows reads the deployed ref to confirm the previews survived.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:no-skill reason="A mechanical actor force-pushes the built tree. The DECISIONS around it are the two tasks either side — what to carry across the replace, and whether it survived — and those carry the skill. This step is the push itself."/>
+        <cat-harness.processes:no-skill reason="A mechanical actor force-pushes the built tree. The DECISIONS around it are the two tasks either side — what to carry across the replace, and whether it survived — and those carry the skill. This step is the push itself."/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_6</bpmn:incoming>
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
@@ -132,7 +129,7 @@
     </bpmn:exclusiveGateway>
     <bpmn:task id="Task_CloseAlert" name="Close the publication&#10;manager's alert, if open">
       <bpmn:documentation>A clean publish resolves whatever the last failure raised: close the open publication-manager tracking issue with a comment naming this run.</bpmn:documentation>
-      <bpmn:extensionElements><folio:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed."/></bpmn:extensionElements>
+      <bpmn:extensionElements><cat-harness.processes:no-skill reason="A mechanical actor runs this — GitHub Actions executes a command in a runner. There is no instruction body an agent could be handed."/></bpmn:extensionElements>
       <bpmn:incoming>Flow_8</bpmn:incoming>
       <bpmn:outgoing>Flow_C1</bpmn:outgoing>
     </bpmn:task>
@@ -141,7 +138,7 @@
     </bpmn:endEvent>
     <bpmn:callActivity id="Call_Alert" name="Alert the publication&#10;manager [publish-verification]" calledElement="Process_PublishAlert">
       <bpmn:documentation>Process_PublishAlert — the ONE alert every failing step after the publish button goes through, whichever step it was.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="publish-verification"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="publish-verification"/></bpmn:extensionElements>
       <bpmn:incoming>Flow_4</bpmn:incoming>
       <bpmn:incoming>Flow_V3</bpmn:incoming>
       <bpmn:incoming>Flow_D2</bpmn:incoming>

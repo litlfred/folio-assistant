@@ -6,8 +6,8 @@
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
   by `bun run render:bpmn` — never hand-edit the SVG.
 
-  The <folio:skill> extension on an activity names the folio-assistant skill
-  that implements it; <folio:bean> marks a step that reads or writes the shared
+  The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+  that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
   work plan in beans/.
 
   Bean xies. Six stages between "the graph is in the repository" and "a
@@ -37,7 +37,8 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:folio="https://litlfred.github.io/folio-assistant/bpmn"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_KgToPortal"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -57,18 +58,18 @@
   serves the rendering"; a cache answers "what stands between the server and
   the reader", and the canonical URL stays the origin's either way.</bpmn:documentation>
     <bpmn:extensionElements>
-      <folio:policy enforcement="advisory" />
+      <cat-harness.processes:policy enforcement="advisory" />
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_KgToPortal_LaneSet">
       <bpmn:lane id="Lane_Editorial" name="Editorial">
         <bpmn:documentation>Two decisions, not one: E_Scope bounds what may leave the repository before the pipeline runs, and E_HumanEyes — reached only after S_Sign — approves what a reader will actually see, which merging to main does not. When GW_Budget rejects a package as over budget, narrowing scope here is the only way back in, so this lane is doing gatekeeping at both ends of the pipeline rather than once.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="editor"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="editor"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>E_Scope</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>E_HumanEyes</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Deployment" name="Deployment owner">
         <bpmn:documentation>Owns the numbers every other gate in the pipeline checks against: GW_Budget measures the package against D_Constraints' figures, not a feeling. When GW_Transport has no default branch to take, this lane is the one that records the gap as still open — at D_Undetermined — rather than letting the build pick a transport nobody decided on.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="publication-manager"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="publication-manager"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_Graph</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>D_Constraints</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Transport</bpmn:flowNodeRef>
@@ -77,7 +78,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Pipeline" name="Build pipeline">
         <bpmn:documentation>Executes E_Scope's decision as bytes — cut, serialize, package — precisely enough that GW_Budget can weigh the actual package rather than guess from the graph's node count. Each step reports what it did rather than only succeeding, which is what lets an empty selection be told apart from one that never ran.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_Select</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Serialize</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_Package</bpmn:flowNodeRef>
@@ -86,17 +87,17 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_Attestation" name="Attestation (GDHCN / WHO SMART Trust)">
         <bpmn:documentation>Signs after A_Package and before E_HumanEyes, so what a human approves downstream is exactly what got signed — reordering the two would let a reviewer approve bytes the signature no longer covers. Whether that signature covers the whole package, each asset, or both composed is a deployment choice this lane executes rather than makes.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="attestation-service"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="attestation-service"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>S_Sign</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Target" name="Publish target">
         <bpmn:documentation>The one lane whose action makes a URL live, which is exactly why a CDN in front of it is not drawn as a second lane — folding the cache in as a participant would make its URL look like the published one, and the canonical URL is this lane's promise to keep, not the cache's. Uploading and exposing stay two separate moments here rather than one, so a bad layout is still catchable before a reader can reach it.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="publish-target"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="publish-target"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>A_Distribute</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Portal" name="Portal (external consumer)">
         <bpmn:documentation>The only lane outside this instance's control, so P_Verify checks against an external trust anchor — the GDHCN trustlist — rather than against anything the pipeline itself asserts. When that trustlist cannot be reached, this lane's answer is `unknown`, and GW_Verified routes it the same way as a mismatch: to the last good version, never to a guessed pass.</bpmn:documentation>
-        <bpmn:extensionElements><folio:role ref="external-registry"/></bpmn:extensionElements>
+        <bpmn:extensionElements><bootstrap.processes:role ref="external-registry"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>P_Verify</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Verified</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Served</bpmn:flowNodeRef>
@@ -110,35 +111,35 @@
 
     <bpmn:task id="D_Constraints" name="State the constraints,&#10;with denominators">
       <bpmn:documentation>Money, network traffic, graph size, latency. Each needs a NUMBER and each number needs a denominator, because a constraint with no denominator is a preference: "the graph is too big" is not a finding, "6.2 MB per publication against a 100 GB free tier" is. Say which figures were measured, which were quoted from a vendor, and which could not be obtained — a figure from a chat message is none of the three, and the who-iris catalogue carries the worked example where "0.7 TB" propagated through ten files and the measured figure was about half.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="kg-to-portal"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="kg-to-portal"/></bpmn:extensionElements>
       <bpmn:incoming>F1</bpmn:incoming>
       <bpmn:outgoing>F2</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:task id="E_Scope" name="Decide what may&#10;leave the repository">
       <bpmn:documentation>EDITORIAL, and it is stage 1 rather than a filter bolted to the exporter. kg-export produces the WHOLE graph because inspection wants the whole graph; a portal wants what its readers may see. Running the second as the first is how a QA verdict, a bean's blocking note or an unpublished draft reaches a public cache. Decided once, here, rather than at each consumer.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="kg-to-portal"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="kg-to-portal"/></bpmn:extensionElements>
       <bpmn:incoming>F2</bpmn:incoming>
       <bpmn:outgoing>F3</bpmn:outgoing>
     </bpmn:task>
 
     <bpmn:serviceTask id="A_Select" name="Cut the subgraph&#10;that leaves">
       <bpmn:documentation>Apply the editorial scope mechanically and report what it removed. A selection that reports nothing cannot be told from one that ran over an empty rule.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="kg-to-portal"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="kg-to-portal"/></bpmn:extensionElements>
       <bpmn:incoming>F3</bpmn:incoming>
       <bpmn:outgoing>F4</bpmn:outgoing>
     </bpmn:serviceTask>
 
     <bpmn:serviceTask id="A_Serialize" name="Serialize to JSON-LD">
       <bpmn:documentation>kg-export, already built and host-agnostic by design. Every edge term declared {"@type": "@id"} — without that coercion the document is a list of records that merely LOOKS linked, and the node IRIs are fragments of the document's own @id so the graph is mergeable with anyone else's.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="kg-export"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="kg-export"/></bpmn:extensionElements>
       <bpmn:incoming>F4</bpmn:incoming>
       <bpmn:outgoing>F5</bpmn:outgoing>
     </bpmn:serviceTask>
 
     <bpmn:serviceTask id="A_Package" name="Package: files plus&#10;a manifest of digests">
       <bpmn:documentation>The serialization alone is not a package. A package is an addressable set — the JSON-LD, the assets it references, and a manifest naming every file with its digest and byte count. The manifest is what makes a REMOVED file detectable, which a per-file signature cannot do on its own.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="kg-to-portal"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="kg-to-portal"/></bpmn:extensionElements>
       <bpmn:incoming>F5</bpmn:incoming>
       <bpmn:outgoing>F6</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -157,7 +158,7 @@
 
     <bpmn:serviceTask id="S_Sign" name="Sign the package&#10;and/or each asset">
       <bpmn:documentation>THE TRUST ANCHOR IS GDHCN, SPECIFIED BY THE WHO SMART TRUST IG (owner, 2026-09-20: `propsal signing = GDHCN`, then `smart-trust`). READ OFF THAT IG rather than from general knowledge: a GDHCN trustlist distributes KEY MATERIAL as W3C DID documents, and says nothing about what you wrap your bytes in — the health-certificate envelope is a separate specification in the same IG, and a document package is not a health certificate. So what is settled is where a verifier GETS THE KEY, not what it verifies. A portal that can fetch the bytes but not reach the trustlist cannot verify, which is `unknown` and not a failure — air-gapped is a declared deployment value, so that case is answered rather than assumed away. Still OPEN and unread: the rotation and revocation model, and whether a document-package signature can be expressed for a GDHCN-aware verifier at all. Two schemes with different properties remain to choose between, and the trustlist does not choose between them. A PACKAGE signature over the manifest verifies the SET — nothing added, removed or altered — and must be reissued whenever any file changes. A PER-ASSET signature verifies one file independently, which is what an edge cache serving one asset can actually check, and it cannot detect a removal because there is nothing left to verify. They compose; composing them is the safer and more expensive default, and it is the deployment's choice rather than the pipeline's.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="kg-to-portal"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="kg-to-portal"/></bpmn:extensionElements>
       <bpmn:incoming>F7</bpmn:incoming>
       <bpmn:outgoing>F9</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -165,8 +166,8 @@
     <bpmn:task id="E_HumanEyes" name="Human eyes on the&#10;rendered artefact">
       <bpmn:documentation>Bean xies, gate 3, and the one that is easy to drop because gate 2 (merge to main) looks like an approval. It is not: merging approves the CHANGE, and this approves what a reader will actually see. continual-progress measured why a description cannot stand in for it (PR #178, 2026-09-16).</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="continual-progress"/>
-        <folio:bean op="note"/>
+        <bootstrap.processes:skill ref="continual-progress"/>
+        <cat-harness.processes:bean op="note"/>
       </bpmn:extensionElements>
       <bpmn:incoming>F9</bpmn:incoming>
       <bpmn:outgoing>F10</bpmn:outgoing>
@@ -182,8 +183,8 @@
     <bpmn:task id="D_Undetermined" name="Record the decision&#10;as still open">
       <bpmn:documentation>An undetermined decision is DATA, not silence. It is recorded with what it waits on and what would settle it, so the next session can tell "nobody has chosen" from "somebody chose and did not write it down" — the same third state bean-blocking keeps for a block with no expiry.</bpmn:documentation>
       <bpmn:extensionElements>
-        <folio:skill ref="bean-blocking"/>
-        <folio:bean op="note"/>
+        <bootstrap.processes:skill ref="bean-blocking"/>
+        <cat-harness.processes:bean op="note"/>
       </bpmn:extensionElements>
       <bpmn:incoming>F12</bpmn:incoming>
       <bpmn:outgoing>F13</bpmn:outgoing>
@@ -195,14 +196,14 @@
 
     <bpmn:serviceTask id="A_Distribute" name="Publish to the origin&#10;(a cache may front it)">
       <bpmn:documentation>Reach host behaviour through publication.host, never by assuming GitHub Pages' behaviour — Pages CANNOT serve application/ld+json and a local server can. A CDN in front is a layer, not the host: the canonical URL stays the origin's, and the cache is an accelerated route to the same bytes. Uploading and exposing are separable steps on purpose (xies, gate 4), because collapsing them removes the last moment at which a bad URL layout can still be caught.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="kg-to-portal"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="kg-to-portal"/></bpmn:extensionElements>
       <bpmn:incoming>F11</bpmn:incoming>
       <bpmn:outgoing>F14</bpmn:outgoing>
     </bpmn:serviceTask>
 
     <bpmn:task id="P_Verify" name="Verify what arrived&#10;against what was signed">
       <bpmn:documentation>Against a GDHCN DID trustlist, which means the verifier needs THE NETWORK and not only the bytes — the key is resolved from the trustlist rather than read out of the package. The trustlist is itself static JSON served from a CDN (`tng-cdn.who.int`), and its path is a hierarchical filter — domain, participant, key usage, with `-` as a wildcard — so a verifier fetches the slice it needs rather than the whole list. WHO's own trust network is therefore the same shape as this diagram one layer down, which is the strongest argument the design has. The stage that gets dropped, because every other stage produces something visible and this one produces nothing when it passes. A package that is signed and never verified is a package whose signature is decoration. A portal that CANNOT verify reports `unknown` — a portal nobody asked is not a portal that checked.</bpmn:documentation>
-      <bpmn:extensionElements><folio:skill ref="kg-to-portal"/></bpmn:extensionElements>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="kg-to-portal"/></bpmn:extensionElements>
       <bpmn:incoming>F14</bpmn:incoming>
       <bpmn:outgoing>F15</bpmn:outgoing>
     </bpmn:task>
@@ -256,16 +257,16 @@
       <bpmndi:BPMNShape id="A_Select_di" bpmnElement="A_Select"><dc:Bounds x="490" y="350" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Serialize_di" bpmnElement="A_Serialize"><dc:Bounds x="680" y="350" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Package_di" bpmnElement="A_Package"><dc:Bounds x="870" y="350" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="GW_Budget_di" bpmnElement="GW_Budget"><dc:Bounds x="1065" y="365" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="1050" y="325" width="80" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Budget_di" bpmnElement="GW_Budget" isMarkerVisible="true"><dc:Bounds x="1065" y="365" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="1050" y="325" width="80" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="End_OverBudget_di" bpmnElement="End_OverBudget"><dc:Bounds x="960" y="432" width="36" height="36" /><bpmndi:BPMNLabel><dc:Bounds x="900" y="472" width="160" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="S_Sign_di" bpmnElement="S_Sign"><dc:Bounds x="1160" y="470" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="E_HumanEyes_di" bpmnElement="E_HumanEyes"><dc:Bounds x="1160" y="80" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="GW_Transport_di" bpmnElement="GW_Transport"><dc:Bounds x="1365" y="225" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="1300" y="160" width="180" height="40" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Transport_di" bpmnElement="GW_Transport" isMarkerVisible="true"><dc:Bounds x="1365" y="225" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="1300" y="160" width="180" height="40" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="D_Undetermined_di" bpmnElement="D_Undetermined"><dc:Bounds x="1470" y="210" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="End_Blocked_di" bpmnElement="End_Blocked"><dc:Bounds x="1680" y="232" width="36" height="36" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="A_Distribute_di" bpmnElement="A_Distribute"><dc:Bounds x="1315" y="570" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="P_Verify_di" bpmnElement="P_Verify"><dc:Bounds x="1315" y="670" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="GW_Verified_di" bpmnElement="GW_Verified"><dc:Bounds x="1520" y="685" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Verified_di" bpmnElement="GW_Verified" isMarkerVisible="true"><dc:Bounds x="1520" y="685" width="50" height="50" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="End_Served_di" bpmnElement="End_Served"><dc:Bounds x="1700" y="692" width="36" height="36" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="End_Rejected_di" bpmnElement="End_Rejected"><dc:Bounds x="1620" y="600" width="36" height="36" /></bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="F1_di" bpmnElement="F1"><di:waypoint x="236" y="250" /><di:waypoint x="290" y="250" /></bpmndi:BPMNEdge>

@@ -24,7 +24,7 @@ Input schema for content planning — scope, team, timeline, governance.
 | `sprintDuration` | `"1w"` \| `"2w"` \| `"3w"` \| `"4w"` | no | default: `"2w"` |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/content-plan/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/content-plan/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-plan/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-plan/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -60,4 +60,4 @@ Output schema for content planning.
 | `responsibilities` | array<string> | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/content-plan/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/content-plan/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-plan/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-plan/output.schema.json){: .fa-edit-source }

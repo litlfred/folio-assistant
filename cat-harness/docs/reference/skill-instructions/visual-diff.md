@@ -72,7 +72,7 @@ A missing picture is **said, never drawn blank**:
 | message | means | what to do |
 |---|---|---|
 | "Not on main: this block is new." | an added block has no before | nothing: there is nothing to compare |
-| "Its page is not in the published site" | the main site has no page for the block's document | the document is new, or main was never published |
+| "Its page is not in the published site" | the before side has no page for the block's document | the document is new, or main was never published. A folio publishes main when its staging caller lists `push` to main; the build log warns when `_main-site.json` is absent |
 | "Its anchor is not on the … page" | the page exists, but has no `<a id="<label>">` for the block | the block was renamed without `renamedFrom`, or the build dropped it. Check the `id-stable` QA criterion |
 
 ## How a picture is taken
@@ -100,9 +100,18 @@ next to the site. The review page reads `../visual-diff.json`.
 ## Where it runs in the processes
 
 - **`folio-staging.yml`**, step "Picture changed figures, diagrams and
-  tables". It runs after the publish branch is checked out, because the
-  published main site at that branch's root IS the before side. It installs
-  Chromium only when `--count` is above zero.
+  tables". It runs after the step "Choose the before side", which picks:
+  - **main's site**, at the publish branch's root, published by the same
+    workflow's `publish-main` job on every push to main;
+  - **for a stacked PR**, its base branch's preview, `STAGING/<base-slug>/`,
+    so the pictures and the ChangeSet compare with the same branch (bean
+    `5uuf`). When the base has no preview, main's site is used and the
+    banner, the review page and the PR comment all say so.
+
+  It installs Chromium only when `--count` is above zero.
+- **`publish-main`** (same workflow) deletes only files its own manifest,
+  `_main-site.json`, lists. `STAGING/`, `_render-log/` and anything a person
+  put at the root are never touched, and the first publish removes nothing.
 - **`content-change-review.bpmn`**, task *Compare main vs staging*. The
   reviewer's comparison names this skill beside `staging-review`, so a
   reviewer handed that task is told the pictures exist.

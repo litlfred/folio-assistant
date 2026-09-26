@@ -118,7 +118,7 @@ function newId(at: Date): string {
  * success is silent, and the loop costs nothing.
  *
  * `declaredCapture` is whatever the caller managed to resolve — a process's
- * `<folio:log capture>`, a config field, or nothing. Absent becomes `unknown`,
+ * `<cat-harness.processes:log capture>`, a config field, or nothing. Absent becomes `unknown`,
  * never `off`: see {@link resolveCapture}.
  */
 export function writeLogEntry(

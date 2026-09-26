@@ -28,6 +28,8 @@
  * the other says what a role means), and nothing but this makes them agree.
  *
  * @module scripts/check-asset-roles
+ * @covers cat-harness — `ASSET_ROLES` against what each instance's declaration restates on an
+ *   asset
  */
 
 import {

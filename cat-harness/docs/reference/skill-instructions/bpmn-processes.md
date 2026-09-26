@@ -27,14 +27,37 @@ Author it as **BPMN**, not as a diagram-in-a-fence. Fenced diagrams stay for the
 things that are *not* processes — component maps, an inheritance lattice, a
 navigation graph.
 
-Every activity carries **`<folio:skill ref="…">`** naming the skill that
-implements it, and **`<folio:bean …>`** where it touches the work plan. Add both
+Every activity carries **`<bootstrap.processes:skill ref="…">`** naming the skill that
+implements it, and **`<cat-harness.processes:bean …>`** where it touches the work plan. Add both
 when you add an activity; the audit reports an activity that names no skill, and
 the exemptions for the legitimate cases are *declarations*, not silence — see
-[`role-model`](../folio-core/role-model.md).
+[`role-model`](role-model.md).
 
 Lanes bind roles, not people. A lane is the role; an actor **takes it on** for
-the duration. [`role-model`](../folio-core/role-model.md) carries that model.
+the duration. [`role-model`](role-model.md) carries that model.
+
+### Binding the extension namespaces
+
+**An element's prefix names the Subgraph that declares it** (owner, 2026-09-24,
+bean `12s9`). A diagram binds one address per vocabulary it uses:
+
+```xml
+xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+```
+
+- `bootstrap.processes:` for `skill`, `role` and `precondition`, which bootstrap
+  declares in `bootstrap/processes/ns.jsonld`.
+- `cat-harness.processes:` for every other element (`bean`, `policy`,
+  `adjudication`, `raci`, …), declared in `cat-harness/processes/ns.jsonld`.
+
+Readers match **the address, never the prefix text**, so a diagram that binds a
+different prefix to the same address reads identically, and `folio:` bound to
+anyone else's address is not ours. The older single address,
+`…/folio-assistant/bpmn`, is **retired** (2026-09-24). An element under it is
+no longer read, and `external-schemas` reports a diagram that still binds it
+as drift. A test fails if an element is written under an address whose
+vocabulary does not define it.
 
 ## Edge routing: rectilinear, and never over a task
 
@@ -86,7 +109,7 @@ this process and task, and allowed to touch the target content? This is
 generic engine behaviour, so **do not draw an authorization task into a
 diagram**: a check drawn into some processes is a check missing from the rest.
 What a diagram owes the check is a lane bound to a declared role. See
-[`task-authorization`](../folio-core/task-authorization.md).
+[`task-authorization`](task-authorization.md).
 
 **Instance state is committed**, alongside the work plan, so a sibling session
 sees the same position. That is the whole reason not to hand-roll a second
@@ -94,7 +117,7 @@ tracker: a second answer to *where are we* is free to disagree with the first.
 
 ## Strict by default, and what a package may never relax
 
-Base processes carry **`<folio:policy enforcement="strict"/>`** — the gate
+Base processes carry **`<cat-harness.processes:policy enforcement="strict"/>`** — the gate
 refuses a step that is not enabled. Per-content-type processes are **advisory**:
 their package owns what *adequate* means in that domain. **Absent policy means
 strict.**
@@ -123,7 +146,7 @@ mode exists for gradual adoption.
 
 ## Some gateways are computed, not chosen
 
-A gateway carrying **`<folio:decision/>`** is backed by a decision table. Pass
+A gateway carrying **`<cat-harness.processes:decision/>`** is backed by a decision table. Pass
 the facts — the counts a QA sweep already produced — and the table returns the
 branch.
 
@@ -155,7 +178,7 @@ does claim → resolve — every one manufactures the condition and none
 discharges it, which is how **219** beans accumulated.
 
 Before reaching for an `archive` op, read
-[`todo-manager`](../folio-core/todo-manager.md) §"Archiving — two dispositions": an op and
+[`todo-manager`](todo-manager.md) §"Archiving — two dispositions": an op and
 a periodic sweep answer different questions, and for most processes the
 answer is the sweep. An op is worth an edge on your diagram only where your
 process's completion is *itself* the reason a bean is finished — and then the

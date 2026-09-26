@@ -5,7 +5,7 @@
     "id": "Process_FeatureStaging",
     "path": "processes/feature-staging.bpmn"
   },
-  "source_hash": "sha256:1d88a1d5199476aa1565ade7098fbdd39f3300c1ecbbc93be6b4222f100afdbd",
+  "source_hash": "sha256:d38ea6587f471f3ea1224092711466841c2556ff96ab8a5ce0466b7cd9c5c48c",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -101,7 +101,7 @@
       "findings": [
         {
           "where": "H_Confirm",
-          "detail": "\"Repeat the slug, exactly, to confirm\" — a ServiceTask is performed by agent or system, but its lane's role \"user\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"Repeat the slug, exactly, to confirm\" — a ServiceTask is performed by agent or system, but its lane's role \"user\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
         }
       ]
     },
@@ -138,13 +138,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/feature-staging.yml",
-          "detail": ".github/workflows/feature-staging.yml changed since cat-harness/processes/feature-staging.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -152,8 +147,8 @@
     }
   },
   "totals": {
-    "pass": 14,
-    "fail": 3,
+    "pass": 15,
+    "fail": 2,
     "n/a": 7,
     "unknown": 0
   },
@@ -162,8 +157,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/feature-staging.bpmn",
       "code": ".github/workflows/feature-staging.yml",
-      "prose_hash": "1d88a1d51994",
-      "code_hash": "3ccb7992291d",
+      "prose_hash": "d38ea6587f47",
+      "code_hash": "6ddd833a727e",
       "by": "baseline"
     }
   ]

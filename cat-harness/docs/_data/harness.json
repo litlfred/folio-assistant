@@ -146,23 +146,8 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 270,
+      "count": 357,
       "unit": "beans"
-    },
-    {
-      "id": "bootstrap-tools-schemas",
-      "directory": "bootstrap-tools-schemas",
-      "title": "bootstrap-tools-schemas",
-      "ref": "cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/schemas/bootstrap-tools/",
-      "hidden": false,
-      "count": 5,
-      "unit": "modules"
     },
     {
       "id": "docs",
@@ -261,7 +246,7 @@
       ],
       "href": "/cat-harness/schemas/large-datasets/",
       "hidden": false,
-      "count": 3,
+      "count": 5,
       "unit": "modules"
     },
     {
@@ -331,7 +316,7 @@
       ],
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
-      "count": 158,
+      "count": 169,
       "unit": "modules"
     },
     {
@@ -345,7 +330,8 @@
         "glass"
       ],
       "href": "/cat-harness/docs-auto/index/skills/cat-harness/",
-      "hidden": false
+      "hidden": false,
+      "readOnly": false
     },
     {
       "id": "swimlane-glossary",
@@ -416,7 +402,7 @@
       "href": "/cat-harness/uploads/",
       "hidden": false,
       "icon": "uploads",
-      "count": 17,
+      "count": 21,
       "unit": "waiting"
     },
     {
@@ -598,56 +584,6 @@
       ]
     },
     {
-      "name": "bootstrap-tools",
-      "title": "bootstrap-tools",
-      "label": "bootstrap-tools",
-      "description": "Zod for the shapes bootstrap carries as plain JSON. The JSON is generated; bootstrap knows nothing of the generator.",
-      "footer": false,
-      "icon": null,
-      "tone": 0,
-      "reads": "a question mark — no avatar is declared for this kind",
-      "genericAvatar": true,
-      "instantiated": false,
-      "href": "/cat-harness/schemas/bootstrap-tools/",
-      "hrefKind": "viewer",
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 1
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 1
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 1
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "schemas",
-          "path": "/cat-harness/schemas/bootstrap-tools/"
-        }
-      ],
-      "findings": [
-        "bootstrap-tools: no avatar declared for this instance — showing the generic mark.",
-        "bootstrap-tools: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/bootstrap-tools/) rather than the instance's own themed root.",
-        "bootstrap-tools: declares no `needs`, so its place in the stack is alphabetical rather than derived."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
       "name": "folio-assistant-sci",
       "title": "folio-assistant-sci",
       "label": "folio-assistant-sci",
@@ -718,12 +654,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 3
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -737,6 +673,10 @@
           "path": "/cat-harness/schemas/large-datasets/"
         },
         {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "schemas",
           "path": "/cat-harness/schemas/large-datasets/"
         },
@@ -746,7 +686,7 @@
         }
       ],
       "findings": [
-        "large-datasets: declares 1 graph(s) with no published viewer — skills. Declared and not rendered is a gap, not a dead link.",
+        "large-datasets: declares 2 graph(s) with no published viewer — code, skills. Declared and not rendered is a gap, not a dead link.",
         "large-datasets: no avatar declared for this instance — showing the generic mark.",
         "large-datasets: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/large-datasets/) rather than the instance's own themed root.",
         "large-datasets: declares no `needs`, so its place in the stack is alphabetical rather than derived."
@@ -1196,12 +1136,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 1
+          "value": 2
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 1
+          "value": 2
         },
         {
           "id": "views",
@@ -1211,11 +1151,16 @@
       ],
       "visualisations": [
         {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "uploads",
           "path": "/cat-harness/uploads/folio-assistant/"
         }
       ],
       "findings": [
+        "folio-assistant: declares 1 graph(s) with no published viewer — code. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it."
       ],
       "navbarIcons": [
@@ -1292,35 +1237,35 @@
       ],
       "icon": null,
       "avatar": {
-        "src": "/assets/img/harness/landing-library-card.webp",
-        "title": "Grumpy cat, librarian",
+        "src": "/assets/img/harness/landing-card.webp",
+        "title": "Grumpy cat",
         "region": {
-          "x": 0.14,
-          "y": 0.4,
-          "w": 0.42,
-          "h": 0.42
+          "x": 0,
+          "y": 0.46,
+          "w": 0.5,
+          "h": 0.5
         },
         "crop": {
-          "width": 238.0952,
-          "height": 238.0952,
-          "left": -33.3333,
-          "top": -95.2381
+          "width": 200,
+          "height": 200,
+          "left": 0,
+          "top": -92
         }
       },
       "mark": {
-        "src": "/assets/img/harness/landing-library-card.webp",
-        "title": "Grumpy cat, librarian",
+        "src": "/assets/img/harness/landing-card.webp",
+        "title": "Grumpy cat",
         "region": {
-          "x": 0.14,
-          "y": 0.4,
-          "w": 0.42,
-          "h": 0.42
+          "x": 0,
+          "y": 0.46,
+          "w": 0.5,
+          "h": 0.5
         },
         "crop": {
-          "width": 238.0952,
-          "height": 238.0952,
-          "left": -33.3333,
-          "top": -95.2381
+          "width": 200,
+          "height": 200,
+          "left": 0,
+          "top": -92
         }
       },
       "tone": 212,
@@ -1343,7 +1288,7 @@
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 4
+          "value": 5
         }
       ],
       "visualisations": [
@@ -1365,7 +1310,7 @@
         },
         {
           "kind": "library",
-          "note": "no viewer yet"
+          "path": "/cat-harness/library/folio-assistant-core/"
         },
         {
           "kind": "methodology",
@@ -1393,7 +1338,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 7 graph(s) with no published viewer — code, folio, library, methodology, processes, skills, tools. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-core: declares 6 graph(s) with no published viewer — code, folio, methodology, processes, skills, tools. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -1419,35 +1364,35 @@
         "title": "c@t"
       },
       "avatar": {
-        "src": "/assets/img/harness/landing-card.webp",
-        "title": "Grumpy cat",
+        "src": "/assets/img/harness/landing-grumpy-cyborg-agents-card.webp",
+        "title": "Grumpy cyborg agents",
         "region": {
-          "x": 0,
-          "y": 0.46,
-          "w": 0.5,
-          "h": 0.5
+          "x": 0.06,
+          "y": 0.34,
+          "w": 0.2,
+          "h": 0.2
         },
         "crop": {
-          "width": 200,
-          "height": 200,
-          "left": 0,
-          "top": -92
+          "width": 500,
+          "height": 500,
+          "left": -30,
+          "top": -170
         }
       },
       "mark": {
-        "src": "/assets/img/harness/landing-card.webp",
-        "title": "Grumpy cat",
+        "src": "/assets/img/harness/landing-grumpy-cyborg-agents-card.webp",
+        "title": "Grumpy cyborg agents",
         "region": {
-          "x": 0,
-          "y": 0.46,
-          "w": 0.5,
-          "h": 0.5
+          "x": 0.06,
+          "y": 0.34,
+          "w": 0.2,
+          "h": 0.2
         },
         "crop": {
-          "width": 200,
-          "height": 200,
-          "left": 0,
-          "top": -92
+          "width": 500,
+          "height": 500,
+          "left": -30,
+          "top": -170
         }
       },
       "tone": 268,
@@ -1460,17 +1405,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 45
+          "value": 47
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 27
+          "value": 29
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 19
+          "value": 21
         }
       ],
       "visualisations": [
@@ -1540,8 +1485,18 @@
           "path": "/processes/"
         },
         {
+          "kind": "proposals",
+          "within": "docs",
+          "path": "/proposals/"
+        },
+        {
           "kind": "qa",
           "path": "/qa/"
+        },
+        {
+          "kind": "requirements",
+          "within": "docs",
+          "path": "/requirements/"
         },
         {
           "kind": "scenarios",
@@ -1553,7 +1508,8 @@
         },
         {
           "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/large-datasets-skills/"
+          "path": "/cat-harness/docs-auto/index/skills/large-datasets-skills/",
+          "readOnly": false
         },
         {
           "kind": "swimlane-glossary",
@@ -1788,8 +1744,18 @@
         "path": "/processes/"
       },
       {
+        "kind": "proposals",
+        "within": "docs",
+        "path": "/proposals/"
+      },
+      {
         "kind": "qa",
         "path": "/qa/"
+      },
+      {
+        "kind": "requirements",
+        "within": "docs",
+        "path": "/requirements/"
       },
       {
         "kind": "scenarios",
@@ -1943,6 +1909,10 @@
           {
             "name": "document-publishing",
             "path": "/reference/skill-instructions/document-publishing.html"
+          },
+          {
+            "name": "instance-publication",
+            "path": "/reference/skill-instructions/instance-publication.html"
           }
         ]
       },
@@ -2017,17 +1987,12 @@
         ]
       },
       {
-        "key": "publishable",
-        "skills": [
-          {
-            "name": "directory-conventions",
-            "path": "/reference/skill-instructions/directory-conventions.html"
-          }
-        ]
-      },
-      {
         "key": "id",
         "skills": [
+          {
+            "name": "instance-publication",
+            "path": "/reference/skill-instructions/instance-publication.html"
+          },
           {
             "name": "directory-conventions",
             "path": "/reference/skill-instructions/directory-conventions.html"
@@ -2037,6 +2002,10 @@
       {
         "key": "version",
         "skills": [
+          {
+            "name": "instance-publication",
+            "path": "/reference/skill-instructions/instance-publication.html"
+          },
           {
             "name": "directory-conventions",
             "path": "/reference/skill-instructions/directory-conventions.html"
@@ -2076,6 +2045,10 @@
           {
             "key": "needs",
             "summary": "smart-ig"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2102,32 +2075,10 @@
           {
             "key": "directories",
             "summary": "2: library, voices"
-          }
-        ]
-      },
-      {
-        "name": "bootstrap-tools",
-        "title": "bootstrap-tools",
-        "group": "checkout",
-        "declaredIn": "bootstrap-tools/bootstrap-tools.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/bootstrap-tools.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/bootstrap-tools/bootstrap-tools.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "bootstrap-tools"
           },
           {
-            "key": "description",
-            "summary": "Zod for the shapes bootstrap carries as plain JSON. The JSON is generated; bootstrap know…"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, readme"
-          },
-          {
-            "key": "directories",
-            "summary": "1: bootstrap-tools-schemas"
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2154,6 +2105,10 @@
           {
             "key": "directories",
             "summary": "2: library, voices"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2179,7 +2134,11 @@
           },
           {
             "key": "directories",
-            "summary": "3: large-datasets-schemas, large-datasets-sources, large-datasets-skills"
+            "summary": "5: large-datasets-schemas, large-datasets-sources, large-datasets-skills, large-datasets-scr…"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2214,6 +2173,10 @@
           {
             "key": "directories",
             "summary": "7: library, who-iris-catalogue, who-iris-uploads, who-iris-skills, who-iris-themes, who-iris…"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2240,6 +2203,10 @@
           {
             "key": "directories",
             "summary": "1: voices"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2270,6 +2237,10 @@
           {
             "key": "needs",
             "summary": "smart-ig"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2300,6 +2271,10 @@
           {
             "key": "needs",
             "summary": "smart-base"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2330,6 +2305,10 @@
           {
             "key": "needs",
             "summary": "smart-base"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2360,6 +2339,10 @@
           {
             "key": "needs",
             "summary": "smart-base"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2398,6 +2381,10 @@
           {
             "key": "needs",
             "summary": "fhir-harness"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2427,7 +2414,7 @@
           },
           {
             "key": "directories",
-            "summary": "1: uploads"
+            "summary": "2: uploads, root-tools"
           },
           {
             "key": "stickies",
@@ -2436,6 +2423,10 @@
           {
             "key": "needs",
             "summary": "folio-assistant-core"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2474,6 +2465,10 @@
           {
             "key": "needs",
             "summary": "folio-assistant-core"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2508,6 +2503,10 @@
           {
             "key": "needs",
             "summary": "cat-harness"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2533,7 +2532,7 @@
           },
           {
             "key": "images",
-            "summary": "24: mark-small, mark, mark-mask, mark-dark, landing-laptop, landing-mobile, landing-card, lan…"
+            "summary": "28: mark-small, mark, mark-mask, mark-dark, landing-laptop, landing-mobile, landing-card, lan…"
           },
           {
             "key": "assets",
@@ -2574,6 +2573,10 @@
           {
             "key": "needs",
             "summary": "bootstrap"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       },
@@ -2612,6 +2615,10 @@
           {
             "key": "renderExemption",
             "summary": "{ of, reason, owes, reachableAt }"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
           }
         ]
       }

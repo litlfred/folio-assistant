@@ -47,7 +47,7 @@ that relaxed them would leave "strict base" meaning nothing.
 
 ## Compute the gate, do not assert it
 
-Where a gateway carries `<folio:decision/>`, pass the **facts** — e.g.
+Where a gateway carries `<cat-harness.processes:decision/>`, pass the **facts** — e.g.
 `{ failCritical: 0, failMajor: 2 }` from `qa_sweep` totals — and let the DMN
 table return the branch. `workflow_complete` refuses a hand-supplied `outcome`
 at such a gateway.

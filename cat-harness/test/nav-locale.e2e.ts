@@ -77,11 +77,53 @@ const GUIDE = INDEX.pages["guides/agent-onboarding"];
 /**
  * A nav item with no translation in ANY locale — the fallback case.
  *
- * Named, not counted: `getting-started` is a real page of this site that has
+ * **This fixture was `getting-started`, and it did exactly what its own
+ * docblock promised.** That note read: *"a real page of this site that has
  * never been translated. If it ever is, this test starts failing loudly rather
- * than silently verifying nothing, which is the correct direction to fail in.
+ * than silently verifying nothing, which is the correct direction to fail in."*
+ * On 2026-09-26 bean `t8g3` translated it into six languages and the test
+ * failed. The design was right; only the fixture had expired.
+ *
+ * ## What the illegible failure cost — TWO sessions, independently
+ *
+ * The failure surfaced as `element(s) not found` on a locator, which says
+ * nothing about why. A sibling session paid *"three environments and a bisect
+ * against `origin/main`"* to learn the page had simply been translated; this
+ * one paid a full local e2e run and a comparison against main's latest CI.
+ * Two people paying the same toll for the same missing sentence is the
+ * argument for the assertion in the test below, not the docblock's word for
+ * it — **main's copy of this file promises that sentence and its test body
+ * does not contain one**, which is how a fix gets believed and not made.
+ *
+ * ## Derived, not named
+ *
+ * `HOME` and `GUIDE` above are looked up in the real index; this was the one
+ * of the three still named by hand, which is why it is the one that rotted.
+ * Two cases:
+ *
+ * 1. An indexed page carrying no translations. Preferred, because it is a page
+ *    the generator has actually seen, and it self-heals: the moment such a page
+ *    exists this stops depending on any name at all.
+ * 2. When **every** indexed page is translated — true since `t8g3`, all seven
+ *    of them — no such entry exists. The index only records pages that HAVE
+ *    translations, so "untranslated" then means *absent from the index*, and
+ *    the fixture is a real page of this site the index does not list.
+ *
+ * `architecture` is the sibling's choice, kept over this branch's equivalent
+ * `agentic-harness`: both are untranslated and neither is better, so the one
+ * already on `main` wins and the next merge has one less thing to reconcile.
  */
-const UNTRANSLATED = { key: "getting-started", url: "/getting-started.html", title: "Getting started" };
+const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
+  const indexed = Object.entries(INDEX.pages).find(
+    ([, v]) => Object.keys(v.translations ?? {}).length === 0,
+  );
+  if (indexed !== undefined) {
+    const [key, v] = indexed;
+    return { key, url: v.sourceUrl, title: v.sourceTitle };
+  }
+  // Case 2. A real page of this site, deliberately one the index does not list.
+  return { key: "architecture", url: "/architecture.html", title: "Architecture" };
+})();
 
 /** just-the-docs' nav markup, reduced to what the filter touches. */
 function harness(indexIsland: string): string {
@@ -225,7 +267,30 @@ test.describe("the navbar shows the selected locale", () => {
     expect(box.height).toBeGreaterThan(0);
   });
 
+  test("...and the premise of that fixture still holds — it really is untranslated", () => {
+    // Asserted, not assumed. Without this the fallback test below fails with
+    // `element(s) not found`, which is true and tells you nothing: the locator
+    // misses because the JS correctly rewrote the href to a localised URL.
+    // This says what actually happened, so the fix is one line rather than a
+    // bisect. See UNTRANSLATED's docblock — the tripwire has fired once.
+    expect(
+      Object.keys(INDEX.pages),
+      `\`${UNTRANSLATED.key}\` now HAS a translation, so it can no longer stand for the ` +
+        `no-translation case. That is good news about the site and a two-line fix here: ` +
+        `re-point UNTRANSLATED at a page still absent from _data/translations.json.`,
+    ).not.toContain(UNTRANSLATED.key);
+  });
+
   test("a page with no translation falls back to the source language", async ({ page }) => {
+    // THE PREMISE, asserted rather than assumed. When this fixture acquired
+    // translations on 2026-09-26 the test failed as a 10-second locator
+    // timeout on a link that was correctly absent — a true failure wearing the
+    // costume of a broken selector. One sentence is cheaper than that triage.
+    expect(
+      Object.keys(INDEX.pages[UNTRANSLATED.key]?.translations ?? {}),
+      `this test needs a page with NO translation, and \`${UNTRANSLATED.key}\` now has some. ` +
+        "Pick another untranslated page — the derivation above prefers an indexed one.",
+    ).toEqual([]);
     await open(page, ISLAND, "fr");
     const link = page.locator(`${nav} a[href="${UNTRANSLATED.url}"]`);
     await expect(link).toBeVisible();

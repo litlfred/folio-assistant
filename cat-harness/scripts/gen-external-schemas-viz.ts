@@ -4,6 +4,7 @@
  * depends on, at which edition, and what in it would move if one bumped.
  *
  * @module cat-harness/scripts/gen-external-schemas-viz
+ * @covers external-schema
  *
  * ## The gap this closes
  *
@@ -24,25 +25,15 @@
  * checker never validated — the rule bean `zw4a` states for the adjacent case
  * and the one `gen-methodologies-viz.ts` follows for its own graph.
  *
- * ## The one thing this adds: does `usedBy` still resolve?
+ * ## The one thing this adds: who DECLARES each specification
  *
- * `usedBy` is the blast radius of a version bump — *"what in this repository
- * depends on it"* — and it is a hand-written list of paths. Nothing checked
- * them. A path that has since been renamed leaves the record claiming a
- * dependency that no longer exists, which is the `evidence`-dangling failure
- * one graph over: it reads as a resolved reference in every listing.
- *
- * THREE STATES, because two would lie about the third:
- *
- * | state | means |
- * |---|---|
- * | **resolves** | a path in this checkout, openable |
- * | **not a path** | a glob or a prose note (`processes/*.bpmn — the BPMNDI layout…`) — NOT checkable, and not a finding |
- * | **does not resolve** | spelled as a path and there is nothing there |
- *
- * Collapsing the middle into either of the others is the `dh4f` defect: a
- * deliberate prose entry reported as broken teaches a reader to ignore the
- * column, and one reported as fine hides the entries that really are.
+ * What depends on a specification is the blast radius of a version bump. It
+ * was a hand-written `usedBy` list on each record until bean `u63y` — the
+ * specification naming its dependents, 36 entries nothing kept current. Now
+ * each user declares the spec (`scripts/spec-users.ts`): a `@conformsTo` tag,
+ * a `conformsTo:` front-matter list, an `xmlns` binding, or — for a graph
+ * kind's files — the declaration of the module that types them. The page
+ * lists those, and a declaration naming a spec no record has is a finding.
  *
  * Usage:
  *   bun run cat-harness/scripts/gen-external-schemas-viz.ts
@@ -55,6 +46,8 @@ import { fileURLToPath } from "node:url";
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { docsLayers } from "./compose-docs.js";
 import { loadSpecs, namespacesInUse } from "./external-schemas.js";
+import { specUsers, type SpecUse, type SpecUseForm, type SpecUsers } from "./spec-users.js";
+import { BASE_GRAPH_KINDS } from "../schemas/graph-kind-registry.js";
 import {
   undeclaredNamespaces,
   unusedNamespaces,
@@ -67,54 +60,11 @@ const REPO = resolve(INSTANCE_ROOT, "..");
 /** The graph kind this renders. A KIND, never a path. */
 const KIND = "external-schema";
 
-/** One `usedBy` entry, and whether this checkout still holds it. */
-export interface UsedByRow {
-  readonly entry: string;
-  readonly state: "resolves" | "not-a-path" | "missing";
-}
-
-/**
- * Classify one `usedBy` entry.
- *
- * Exported because it is the only judgement on this page, and a test that went
- * through the rendered markdown would be testing the markdown.
- *
- * A glob or a prose note is NOT CHECKABLE and says so. The corpus already
- * holds both forms deliberately — `omg-dd-1.0` writes *"processes/*.bpmn — the
- * BPMNDI layout every diagram carries"*, which names a set and then explains
- * it — so treating anything non-resolving as broken would report a record that
- * is doing the right thing.
- *
- * Resolution is tried against the REPOSITORY root and then this instance's,
- * because the corpus spells both: `cat-harness/scripts/ns-export.ts` is
- * repo-relative and `processes/*.bpmn` is instance-relative. Trying one only
- * would report half the list missing, which is a wrong answer that looks like
- * a finding.
- */
-export function classifyUsedBy(entry: string, repoRoot: string, instanceRoot: string): UsedByRow {
-  // A glob, or a path with prose after it. Both name something this cannot
-  // open, and neither is a defect.
-  if (/[*?]/.test(entry) || /\s[—-]\s/.test(entry) || /\s/.test(entry.trim())) {
-    return { entry, state: "not-a-path" };
-  }
-  const found = existsSync(join(repoRoot, entry)) || existsSync(join(instanceRoot, entry));
-  return { entry, state: found ? "resolves" : "missing" };
-}
-
-/** Every `usedBy` entry across every spec, classified. */
-export function usedByRows(
-  specs: readonly ExternalSchema[],
-  repoRoot = REPO,
-  instanceRoot = INSTANCE_ROOT,
-): Map<string, UsedByRow[]> {
-  const out = new Map<string, UsedByRow[]>();
-  for (const s of specs) {
-    out.set(
-      s.id,
-      s.usedBy.map((e) => classifyUsedBy(e, repoRoot, instanceRoot)),
-    );
-  }
-  return out;
+/** Every declared user of every spec, read from the users (bean `u63y`). */
+export function declaredUsers(specs: readonly ExternalSchema[], repoRoot = REPO): SpecUsers {
+  const ls = Bun.spawnSync(["git", "ls-files"], { cwd: repoRoot });
+  const files = new TextDecoder().decode(ls.stdout).split("\n").filter(Boolean);
+  return specUsers(repoRoot, files, specs, BASE_GRAPH_KINDS, "cat-harness");
 }
 
 /** Where the page goes, read from the declaration that renders it. */
@@ -157,11 +107,12 @@ const CSS = `
 .xs-stat span{font-size:.75rem;opacity:.75}
 `;
 
-/** WORDS, not only colour — the three states are the point of the column. */
-const BADGE: Record<UsedByRow["state"], string> = {
-  resolves: '<span class="xs-tag xs-ok">resolves</span>',
-  "not-a-path": '<span class="xs-tag xs-na">not a path</span>',
-  missing: '<span class="xs-tag xs-missing">not in this checkout</span>',
+/** How a user declared the spec, in words. */
+const FORM: Record<SpecUseForm, string> = {
+  tag: "`@conformsTo` tag",
+  "front-matter": "`conformsTo:` front matter",
+  xmlns: "`xmlns` binding",
+  kind: "through the module that types it",
 };
 
 /** What each `use` value claims, in one line, so the column is readable. */
@@ -171,17 +122,41 @@ const USE_MEANS: Record<string, string> = {
   cites: "it is referenced, and nothing here is validated against it",
 };
 
+/**
+ * One row per `xmlns` directory rather than per diagram — `processes/*.bpmn`
+ * is how a reader thinks of 70 files that all bind BPMN — and the rest as-is.
+ */
+function collapse(uses: readonly SpecUse[]): SpecUse[] {
+  const out: SpecUse[] = [];
+  const dirs = new Map<string, number>();
+  for (const u of uses) {
+    if (u.form !== "xmlns") {
+      out.push(u);
+      continue;
+    }
+    const dir = u.user.slice(0, u.user.lastIndexOf("/") + 1);
+    const ext = u.user.slice(u.user.lastIndexOf("."));
+    const key = `${dir}*${ext}`;
+    dirs.set(key, (dirs.get(key) ?? 0) + 1);
+  }
+  for (const [glob, n] of [...dirs].sort()) out.push({ spec: "", user: `${glob} (${n})`, form: "xmlns" });
+  return out.sort((a, b) => a.user.localeCompare(b.user));
+}
+
 function cell(v: string): string {
   return v.replace(/\|/g, "\\|").replace(/\r?\n/g, " ").replace(/\s+/g, " ").trim();
 }
 
 export function page(
   specs: readonly ExternalSchema[],
-  used: ReadonlyMap<string, UsedByRow[]>,
+  users: SpecUsers,
   inUse: readonly string[],
 ): string {
-  const all = [...used.values()].flat();
-  const missing = all.filter((r) => r.state === "missing");
+  // One row per user and spec; a `.bpmn` per diagram would bury the rest, so
+  // `xmlns` users are counted per directory.
+  const bySpec = new Map<string, SpecUse[]>();
+  for (const u of users.uses) bySpec.set(u.spec, [...(bySpec.get(u.spec) ?? []), u]);
+  const undeclaredSpecs = specs.filter((s) => !bySpec.has(s.id));
   const undeclared = undeclaredNamespaces(inUse, specs);
   const unused = unusedNamespaces(inUse, specs);
   const terms = specs.reduce((n, s) => n + s.terms.length, 0);
@@ -205,8 +180,8 @@ export function page(
     '<div class="xs-grid">',
     `<div class="xs-stat"><b>${specs.length}</b><span>specifications</span></div>`,
     `<div class="xs-stat"><b>${terms}</b><span>operative terms in the graph</span></div>`,
-    `<div class="xs-stat"><b>${all.length}</b><span>declared dependents</span></div>`,
-    `<div class="xs-stat"><b>${missing.length}</b><span>dependents that no longer resolve</span></div>`,
+    `<div class="xs-stat"><b>${users.uses.length}</b><span>declared uses</span></div>`,
+    `<div class="xs-stat"><b>${users.unknown.length}</b><span>declarations naming no record</span></div>`,
     "</div>",
     "",
     "## The specifications",
@@ -224,37 +199,33 @@ export function page(
 
   b.push(
     "",
-    "## Does every declared dependent still exist?",
+    "## Who declares each specification",
     "",
-    "`usedBy` is the blast radius of a version bump, and it is hand-written. A",
-    "path that has since been renamed leaves the record claiming a dependency",
-    "that is not there — which reads as a resolved reference in every listing,",
-    "the same way a dangling citation does one graph over.",
-    "",
-    "**Three states, and the middle one is not a finding.** A glob or a path with",
-    "a note after it names something this cannot open and is written that way on",
-    "purpose; reporting it as broken would teach a reader to ignore the column.",
+    "A user declares the specification it depends on; the record names no user.",
+    "That is data-modelling step 8 — the dependent holds the pointer — and it is",
+    "why this list cannot drift from the code: a file that stops declaring stops",
+    "being listed. Four forms are read: a `@conformsTo` tag, a `conformsTo:`",
+    "front-matter list, an `xmlns` binding, and a graph kind whose typing module",
+    "declares the spec (bean `u63y`).",
     "",
   );
-
-  if (missing.length === 0) {
+  if (users.unknown.length > 0) {
     b.push(
-      `Every one of the **${all.filter((r) => r.state === "resolves").length}** entries spelled as a path`,
-      `resolves in this checkout. **${all.filter((r) => r.state === "not-a-path").length}** name a set or`,
-      "carry a note and were not checked.",
+      `**${users.unknown.length} declaration(s) name a specification no record has.**`,
+      "",
+      "| user | names |",
+      "|---|---|",
+      ...users.unknown.map((u) => `| \`${cell(u.user)}\` | \`${cell(u.spec)}\` |`),
       "",
     );
   } else {
+    b.push("Every declaration names a record on this page.", "");
+  }
+  if (undeclaredSpecs.length > 0) {
     b.push(
-      `**${missing.length} of ${all.length} do not.**`,
+      `**${undeclaredSpecs.length} record(s) nothing declares.** A version bump would move nothing that says so:`,
       "",
-      "| specification | declared dependent |",
-      "|---|---|",
-      ...specs.flatMap((s) =>
-        (used.get(s.id) ?? [])
-          .filter((r) => r.state === "missing")
-          .map((r) => `| \`${cell(s.id)}\` | \`${cell(r.entry)}\` |`),
-      ),
+      ...undeclaredSpecs.map((s) => `- [\`${cell(s.id)}\`](#${s.id})`),
       "",
     );
   }
@@ -293,7 +264,7 @@ export function page(
 
   b.push("## Each specification", "");
   for (const s of specs) {
-    const rows = used.get(s.id) ?? [];
+    const rows = collapse(bySpec.get(s.id) ?? []);
     b.push(
       // The record id IS the heading's id (kramdown `{#…}`), one element. A
       // separate `<a id>` beside the heading collided with kramdown's own slug
@@ -312,9 +283,13 @@ export function page(
     );
     if (s.note) b.push(`**Note.** ${cell(s.note)}`, "");
 
-    b.push("**What depends on it.**", "", "| entry | |", "|---|---|");
-    for (const r of rows) b.push(`| \`${cell(r.entry)}\` | ${BADGE[r.state]} |`);
-    b.push("");
+    if (rows.length === 0) {
+      b.push("**What depends on it.** Nothing here declares it.", "");
+    } else {
+      b.push("**What depends on it.**", "", "| user | declared by |", "|---|---|");
+      for (const r of rows) b.push(`| \`${cell(r.user)}\` | ${FORM[r.form]}${r.via ? ` (\`${cell(r.via)}\`)` : ""} |`);
+      b.push("");
+    }
 
     if (s.terms.length === 0) {
       // A DETERMINED ZERO, said as one. `omg-dd-1.0` declares no operative
@@ -362,8 +337,8 @@ if (import.meta.main) {
     process.exit(1);
   }
 
-  const used = usedByRows(specs);
-  const rendered = page(specs, used, namespacesInUse());
+  const users = declaredUsers(specs);
+  const rendered = page(specs, users, namespacesInUse());
   const out = join(baseDocs(REPO), PAGE);
 
   if (check) {
@@ -378,12 +353,7 @@ if (import.meta.main) {
   } else {
     mkdirSync(join(out, ".."), { recursive: true });
     writeFileSync(out, rendered);
-    const flat = [...used.values()].flat();
     console.log(`external-schemas viewer: ${specs.length} specification(s) → ${PAGE}`);
-    console.log(
-      `  ${flat.filter((r) => r.state === "resolves").length} dependent(s) resolve, ` +
-        `${flat.filter((r) => r.state === "not-a-path").length} not checkable, ` +
-        `${flat.filter((r) => r.state === "missing").length} missing`,
-    );
+    console.log(`  ${users.uses.length} declared use(s), ${users.unknown.length} naming no record`);
   }
 }

@@ -2,6 +2,8 @@
 layout: default
 title: Publication workflow
 nav_order: 6
+documents:
+  - processes
 lang: en
 available_locales: ["en"]
 ---
@@ -46,7 +48,7 @@ of those was wrong by **sixteen** when it was finally checked: it claimed
 thirty-nine against fifty-five.
 
 A count in prose is a claim; a derived index is evidence. So the number lives
-in [the derived process index](../cat-harness/docs-auto/index/processes/),
+in [the derived process index](cat-harness/docs-auto/index/processes/),
 which is generated from the declaration by `bun run docs:auto`, gated in CI,
 and cannot drift from the diagrams it counts. **This page's job is the half
 that cannot be generated** — what each process is *for*, when you would be in
@@ -88,8 +90,8 @@ bootstrap, or neither.**
 
 | Diagram | Answers |
 |---------|---------|
-| `bootstrap/workflows/bootstrap.bpmn` | An agent has been pointed at a repository and knows nothing. Is this already an instance — load it — or not, in which case what should it become? The only input is an **instance reference**; the harness type, the knowledge graph and the voice are read from *that* instance's declaration. See [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) and the [proposal](../proposals/bootstrap.html) |
-| `bootstrap/workflows/initialize-harness.bpmn` | An agent has been pointed at a repository and knows nothing. **The only process in bootstrap an actor STARTS** — a Bootstrapping Agent that has read `bootstrap/README.md` is at its start event and has nowhere else to begin. Three lanes: Bootstrapping Agent, Requestor, and the Knowledge Graph Data Store. See [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) and the [proposal](../proposals/bootstrap.html) |
+| `bootstrap/workflows/bootstrap.bpmn` | An agent has been pointed at a repository and knows nothing. Is this already an instance — load it — or not, in which case what should it become? The only input is an **instance reference**; the harness type, the knowledge graph and the voice are read from *that* instance's declaration. See [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) and the [proposal](proposals/bootstrap.html) |
+| `bootstrap/workflows/initialize-harness.bpmn` | An agent has been pointed at a repository and knows nothing. **The only process in bootstrap an actor STARTS** — a Bootstrapping Agent that has read `bootstrap/README.md` is at its start event and has nowhere else to begin. Three lanes: Bootstrapping Agent, Requestor, and the Knowledge Graph Data Store. See [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) and the [proposal](proposals/bootstrap.html) |
 | `bootstrap/workflows/discussion.bpmn` | Two facts have **no answer in any file a Bootstrapping Agent can reach** — which harness this repository should become, and which repositories are read from and written to. They are judgements held by whoever asked for the harness, so no instruction body produces them. Entered from within `initialize-harness` when such a fact is needed, which is why bootstrap holds a second process at all: it is *presupposed* by every task rather than indicated by one |
 | `bootstrap/workflows/log-message.bpmn` | **A sub-process, never an entry point** — reached by a call activity, never started, which is why bootstrap's README can still say there is one process you begin. Callable optionally from any task (an actor logging what it is doing needs no permission) or required by a diagram that draws the call explicitly; same sub-process either way, and the difference is whether the caller drew it. It lives in bootstrap rather than the harness because bootstrap may not import the harness, so a logger defined upstream would be unusable by the actor with the most need to say what it is doing |
 | `getting-started.bpmn` | Somebody said "create a folio". Which of the five things did they mean, and what has to be true before anything is written? |
@@ -135,7 +137,7 @@ These run alongside the content processes rather than inside them:
 | `crdm-close.bpmn` | Stakeholder sign-off, BA confirmation, and only then the close — an agent never assumes completion |
 | `diig-investment-path.bpmn` | WHO's Digital Implementation Investment Guide as a process: nine chapters from forming the team to the value proposition, with the Guide's OWN progress checks at 4.5 and 8.5 as gateways rather than gates added here. Chapter 3 builds on CRDM, which is why it sits beside the diagrams above. Lives in `smart-base`, because a domain method belongs to the repository that owns the domain |
 | `bean-lifecycle.bpmn` | When does an agent create, edit or scrap a bean — and why is one never deleted? See [Beans and todos](beans-and-todos.html) |
-| `session-state-machine.bpmn` | An agent **playing** a state machine, keeping a session's context current across a discussion. The shape is strict — the interpreter supports nine element types and throws on the rest — and what varies is **which enabled branch the agent takes**. Both gateways carry `folio:judgement`, the marker added with this diagram so that "no table because this is somebody's call" stops being indistinguishable from "no table yet". The machine **records** that a bean was claimed; it never claims one |
+| `session-state-machine.bpmn` | An agent **playing** a state machine, keeping a session's context current across a discussion. The shape is strict — the interpreter supports nine element types and throws on the rest — and what varies is **which enabled branch the agent takes**. Both gateways carry `cat-harness.processes:judgement`, the marker added with this diagram so that "no table because this is somebody's call" stops being indistinguishable from "no table yet". The machine **records** that a bean was claimed; it never claims one |
 | `activity-log.bpmn` | When does an agent write a log entry, and when is one kept? Persistence is **off by default**, and the gateway reads a three-valued setting — `off`, `on`, `unknown` — rather than assuming. Emptying the log is the one exception to the never-delete rule that governs the rest of `fsh-guts/` |
 | `content-change-review.bpmn` | One author's change, from description through staging to review-committee approval |
 | `code-change-review.bpmn` | The same loop for a change to the **platform** rather than to content: claim, branch, run the gates, open the PR at the first commit, drive CI green, answer review, merge. Drawn for bean `haya` after an audit found INTEGRATION and VERIFICATION unowned — not for want of vocabulary, but because the diagram above takes a *content* change as its subject. **No deployment lane**: that is the one part whose activities differ per topology |
@@ -221,12 +223,13 @@ catalogue, and `bootstrap` fetching a harness and landing it locally, with
 | `copy-out-materialized.bpmn` | Somebody wants to change content this repository holds a copy of. Materialized content is read-only, so the answer is a copy into their own `folio/` that records, in `provenance.local`, which original it came out of — the edge nothing downstream can reconstruct once it is missing |
 | `sample-import.bpmn` | Try a sample of a remote source before committing to it: scope it (which items, which store, **permanent or trial?**), let `materialize-remote` gate it — called, never copied — land it in the library or, for a trial, the kept unpublished trashcan, then import it and test the import. A check that could not run is a failure. Its second entry calls `refresh-materialized` for permanent samples only |
 
-**Post-MVP review** — what the delivered thing actually looks like, once
-stakeholders have accepted it and there is a render to judge:
+**Theme and UI review — at ingestion only** — what the arriving graphical
+assets will look like in the website or app design they are for, decided while
+it is still cheap:
 
 | Diagram | Answers |
 |---------|---------|
-| `theme-ui-review.bpmn` | Does what shipped read legibly, consistently and in every declared language? Accessibility measured rather than asserted, branding against the instance's own declaration, languages extracted and laid out. Called from `crdm-deliver.bpmn` on the single edge out of stakeholder acceptance — there is no role-to-theme mapping, so nothing could have been checked earlier |
+| `theme-ui-review.bpmn` | Will these ingested graphical assets read legibly, consistently and in every declared language, in the design they are for? Accessibility measured rather than asserted, branding against the instance's own declaration, languages extracted and laid out, at a web and a mobile width. Called from `ingest-theme.bpmn` — **at ingestion only**, by owner ruling (bean `9fdi`, 2026-09-24). It was post-MVP and called from `crdm-deliver.bpmn` until then; that call is gone, and the cost — no post-build look at what shipped — is recorded in the skill as accepted rather than missed |
 
 **Upstream dependencies** — what happens when somebody else's release changes
 what we ship. The first is the watcher and the second is the reusable
@@ -241,21 +244,23 @@ new tenant is a row in `upstream-pins.json` rather than a third diagram:
 **The CI workflows themselves** — `.github/workflows/*.yml` are processes
 too, with triggers, gateways and compensation paths, and until 2026-09-20 none
 was drawn. `bun run check:workflow-coverage` measures how many are, in three
-states; a diagram declares its subject with
-`<folio:implements workflow="…"/>` rather than being matched on its filename,
-because a mention is not coverage.
+states; a workflow names the diagram it implements with a
+`# bpmn: cat-harness/processes/….bpmn` line rather than being matched on its
+filename, because a mention is not coverage. The pointer is on the workflow
+because the workflow depends on the process it carries out, and the dependent
+holds the pointer (bean `61ca`; the diagram carried it until 2026-09-24).
 
 **Coverage alone would not have been worth having.** Bean `7yvd`: *"a diagram
 that is drawn once and then drifts is worse than none, because it is
-consulted."* So the node standing for a job declares it —
-`<folio:job name="stage"/>` — and the same check compares the two sets in
+consulted."* So each job names the node it stands for —
+`# bpmn-node: Start_PR` inside the job — and the same check compares the two in
 **both** directions: a job with no node is a diagram that has gone stale, a
-node naming a job the workflow does not have is one that was stale already.
-Both exit 1, in the same tier as a dangling `<folio:implements>`, because
+node the diagram does not have is one that was stale already. Both exit 1, in
+the same tier as a `# bpmn:` line naming a diagram that is not there, because
 both mislead a reader who follows them.
 
-Declaring is opt-in per diagram, and a covered workflow whose diagram names
-no job is reported as **undeclared** rather than as fully drifted: "nobody has
+Declaring is opt-in per workflow, and a covered workflow none of whose jobs
+names a node is reported as **undeclared** rather than as fully drifted: "nobody has
 said yet" and "said, and wrong" are different answers, and only the second is
 a finding. What is never allowed is a diagram declaring *some* of a
 workflow's jobs and reading as complete.
@@ -270,7 +275,7 @@ workflow's jobs and reading as complete.
 | `code-quality-gates.bpmn` | **Five independent jobs, and nothing in the YAML says so in one place.** No job declares `needs:`, so the workflow's wall-clock cost is the slowest job rather than the sum — the single most useful thing to know before adding a gate. Four are hard and one (`rust-wildcard`) is warn-only, so the gateway after the join asks specifically about the HARD ones; drawing five equal boxes would be a lie a reader would act on |
 | `ci-health-watch.bpmn` | Is CI actually working on `main`? **Only `unknown` fails the job** — a red `main` records the issue and this workflow stays green, which is invisible from the run list. `Could we tell?` is not simply the exit code: `bun` exits 1 on a crash too, so the REPORT FILE separates "found something red" from "crashed" |
 | `repository-health-watch.bpmn` | The same shape one level out — the repository rather than the workflows. **It reports and never acts**: there is no removal task on the diagram, and its absence is `deletion-requires-confirmation` being followed rather than an omission |
-| `jsonld-drift-check.bpmn` | Are the `.jsonld` siblings still in sync with their `.ts` manifests? **Deliberately small, and says so**: one job, no branch, nothing the YAML does not already show. It earns a diagram for drift detection — without one it carries no `<folio:job>`, so a job added here would tell nobody — not for exposition |
+| `jsonld-drift-check.bpmn` | Are the `.jsonld` siblings still in sync with their `.ts` manifests? **Deliberately small, and says so**: one job, no branch, nothing the YAML does not already show. It earns a diagram for drift detection — without one its job names no node, so a job added here would tell nobody — not for exposition |
 | `atomic-mass-drift-check.bpmn` | Is `AtomicMass.lean` still in sync with its data table? The smallest workflow here and the one whose output a proof depends on: part company, and a Lean file that compiles is carrying numbers nothing produced. Same minimal-by-design note as above |
 | `pr-checks-present.bpmn` | Which open pull requests have **no CI run on their head** — bean `3pqn`. Measured 2026-09-20: two of six had none. The **15-minute age gate** is the difference between useful and ignored, since a head pushed moments ago legitimately has no run and reporting those is how a sweep gets muted. Only `unknown` fails the job; a finding records itself and the workflow stays green. Two channels: the issue **edited in place**, the PR comment **once per (PR, head sha)** |
 
@@ -337,7 +342,7 @@ Ten exclusive gateways sit across the six diagrams, and they are not all the
 same kind of question. `Accept, revise or discard?` is the editor's call.
 `Build green, no sorries?` is arithmetic over `lean_build` and `proof_status`.
 
-A gateway carrying `<folio:decision ref="decisions/x.dmn#Decision_Id"/>` has its
+A gateway carrying `<cat-harness.processes:decision ref="decisions/x.dmn#Decision_Id"/>` has its
 outcome computed from a **DMN decision table** under
 [`processes/decisions/`](https://github.com/litlfred/folio-assistant/tree/main/processes/decisions).
 The agent supplies facts — `{ failCritical: 0, failMajor: 2 }` — and the table
@@ -359,7 +364,7 @@ tool emits looks authoritative and is not.
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/the-base-processes-are-strict.md){: .fa-node-edit title="Edit content/docs/publication-workflow/the-base-processes-are-strict.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="the-base-processes-are-strict.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/publication-workflow/the-base-processes-are-strict.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 The three content-agnostic diagrams — editing, draft-to-publication, lifecycle —
-carry `<folio:policy enforcement="strict"/>`. `workflow_gate` refuses a step
+carry `<cat-harness.processes:policy enforcement="strict"/>`. `workflow_gate` refuses a step
 they have not reached. The three per-content-type diagrams are `advisory`,
 because what counts as adequate review of a Lean proof and of a FHIR profile are
 different questions, and the package that knows the domain should answer them.
@@ -398,9 +403,9 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
   see [Who is who](#who-is-who).
 - **`[skill-name]` under an activity** is the folio-assistant skill that
   implements it. The same reference is carried machine-readably as a
-  `<folio:skill ref="…"/>` extension element on the BPMN activity.
+  `<bootstrap.processes:skill ref="…"/>` extension element on the BPMN activity.
 - **The "Work plan — beans" lane** is the shared to-do store. Steps in that
-  lane read and write `beans/`, and are marked `<folio:bean store="beans/"/>`
+  lane read and write `beans/`, and are marked `<cat-harness.processes:bean store="beans/"/>`
   in the source.
 - **A thick-bordered box is a call activity** — it expands into another diagram
   on this page.
@@ -607,7 +612,7 @@ The roles in the lanes, and the actor definition each one maps to. Roles
 **do** is not a property of its role: it is an ODRL rule in `policies/`, and
 before every task the BPMN executor checks that the actor is authenticated,
 eligible for the lane's role, permitted by policy and allowed to touch the
-content ([`task-authorization`](../../../skills/folio-core/task-authorization.md),
+content ([`task-authorization`](../skills/folio-core/task-authorization.md),
 issue #1207).
 
 ### People
@@ -673,8 +678,8 @@ in headless Chromium and writes `docs/assets/img/workflows/<diagram>.svg`. If
 the sandbox ships a Chromium that does not match the pinned Playwright build,
 point at it with `CHROMIUM_PATH=/path/to/chrome`.
 
-When you add an activity, add its `<folio:skill ref="…"/>` extension (and
-`<folio:bean store="beans/"/>` if it touches the work plan) and the matching
+When you add an activity, add its `<bootstrap.processes:skill ref="…"/>` extension (and
+`<cat-harness.processes:bean store="beans/"/>` if it touches the work plan) and the matching
 row in the tables above — the diagram and the skill list drifting apart is the
 failure this page exists to prevent.
 

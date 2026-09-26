@@ -55,11 +55,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `code`
 
-0 of 4 published.
+0 of 6 published.
 {: .fa-hx-dim }
 
 - C@T Harness — *declared, not published*
+- Folio Assistant — *declared, not published*
 - folio-assistant-core — *declared, not published*
+- large-datasets — *declared, not published*
 - smart-trust — *declared, not published*
 - WHO IRIS — *declared, not published*
 
@@ -140,12 +142,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `library`
 
-5 of 6 published.
+6 of 6 published.
 {: .fa-hx-dim }
 
 - [agent-skills]({{ '/cat-harness/library/agent-skills/' | relative_url }})
 - [C@T Harness]({{ '/cat-harness/library/cat-harness/' | relative_url }})
-- folio-assistant-core — *declared, not published*
+- [folio-assistant-core]({{ '/cat-harness/library/folio-assistant-core/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/library/folio-assistant-sci/' | relative_url }})
 - [SMART Base]({{ '/cat-harness/library/smart-base/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/library/who-iris/' | relative_url }})
@@ -190,12 +192,26 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - folio-assistant-core — *declared, not published*
 - SMART Base — *declared, not published*
 
+### `proposals`
+
+1 of 1 published.
+{: .fa-hx-dim }
+
+- [C@T Harness]({{ '/proposals/' | relative_url }})
+
 ### `qa`
 
 1 of 1 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/qa/' | relative_url }})
+
+### `requirements`
+
+1 of 1 published.
+{: .fa-hx-dim }
+
+- [C@T Harness]({{ '/requirements/' | relative_url }})
 
 ### `scenarios`
 
@@ -207,11 +223,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `schemas`
 
-4 of 5 published.
+3 of 4 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
-- [bootstrap-tools]({{ '/cat-harness/schemas/bootstrap-tools/' | relative_url }})
 - [C@T Harness]({{ '/cat-harness/schemas/cat-harness/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }})
 - [large-datasets]({{ '/cat-harness/schemas/large-datasets/' | relative_url }})

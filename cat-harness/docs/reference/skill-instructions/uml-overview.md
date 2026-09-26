@@ -54,8 +54,8 @@ empty shape. Close it by registering a node schema, not by editing the diagram.
 - `uml/overview/<instance>/<sub-graph>.puml|.mmd`: one sub-graph.
 - `docs/assets/img/uml/overview/…svg`: the PlantUML rendering of each
   `.puml`, laid out by ELK. This is the figure each page shows, in the same
-  `bpmn-figure` markup as the BPMN diagrams, so it gets the same zoom and
-  full-width controls. An overview with more than three sub-graphs is folded
+  `bpmn-figure` markup as the BPMN diagrams, so it gets the same zoom,
+  full-width and export controls (download SVG, download PNG, copy; #1270). An overview with more than three sub-graphs is folded
   into a near-square grid by hidden links between packages, because ELK
   otherwise lays unconnected packages in one row. Owner, 2026-09-23: "make the
   UML more condensed, more like the original one … need controls like in bpmn
@@ -163,9 +163,9 @@ check", and never passes. That is why it is not a CI gate.
 
 ## Related
 
-- [`graph-rendering`](../graph-management/graph-rendering.md): the general
+- [`graph-rendering`](graph-rendering.md): the general
   rules this generator is the first full application of.
-- [`graph-detanglement`](../graph-management/graph-detanglement.md): the
+- [`graph-detanglement`](graph-detanglement.md): the
   practice whose numbers (size, cohesion, links in and out) each page shows
   beside its sub-graphs, read from `detangle/results/`.
 

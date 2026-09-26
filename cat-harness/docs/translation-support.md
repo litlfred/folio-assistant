@@ -2,6 +2,8 @@
 layout: default
 title: Translation support
 nav_order: 12
+documents:
+  - translation-sources
 ---
 
 # Translation support
@@ -735,10 +737,10 @@ See the beans created for this work and the
 
 ## Related beans
 
-- [`folio-assistant-ktt2`](beans/folio-assistant-ktt2--ingest-round-trip-translation-qa-back-translate-to.md) — Round-trip translation QA
-- [`folio-assistant-1r0p`](beans/folio-assistant-1r0p--ingest-audio-transcription-and-translation.md) — Audio transcription + translation
-- [`folio-assistant-d5f1`](beans/folio-assistant-d5f1--ingest-narrative-description-per-image-localized-i.md) — Localized image descriptions
-- [`folio-assistant-p2en`](beans/folio-assistant-p2en--formal-rag-document-ingestion-layer-options-assess.md) — FRBR model for multilingual content
+- [`folio-assistant-ktt2`](https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio-assistant-ktt2--ingest-round-trip-translation-qa-back-translate-to.md) — Round-trip translation QA
+- [`folio-assistant-1r0p`](https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio-assistant-1r0p--ingest-audio-transcription-and-translation.md) — Audio transcription + translation
+- [`folio-assistant-d5f1`](https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio-assistant-d5f1--ingest-narrative-description-per-image-localized-i.md) — Localized image descriptions
+- [`folio-assistant-p2en`](https://github.com/litlfred/folio-assistant/blob/main/beans/defs/archive/folio-assistant-p2en--formal-rag-document-ingestion-layer-options-assess.md) — FRBR model for multilingual content
 
 ---
 

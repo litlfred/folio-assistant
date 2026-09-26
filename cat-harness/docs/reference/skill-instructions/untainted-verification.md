@@ -145,7 +145,7 @@ It is not a platform invention. Guideline methodology separates the systematic
 review team from the guideline development group for the same reason, and
 `8rwa` carries the identical rule into evidence-based literature review for
 living guidelines. When adding a domain's rules here, run them through
-[`domain-fencing`](../graph-management/domain-fencing.md)'s three questions
+[`domain-fencing`](domain-fencing.md)'s three questions
 first: a rule that fails all three is a folio's rule, correctly located, and
 fencing it and saying so is the honest move.
 

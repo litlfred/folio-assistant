@@ -3,7 +3,7 @@
  * Proof-axis QA dashboard — one-page summary of all proof criteria.
  *
  * Usage:
- *   bun run pipeline/proof-axis-dashboard.ts [paper-dir] [--json]
+ *   bun run cat-harness/content/pipeline/proof-axis-dashboard.ts [paper-dir] [--json]
  *
  * Reads all .qa.json sidecars and aggregates proof-* criterion results
  * into a structured summary for triage.

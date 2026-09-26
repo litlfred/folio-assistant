@@ -23,33 +23,53 @@ import { join } from "node:path";
 import {
   autoTriggered,
   compareJobs,
-  declaredJobs,
-  declaredWorkflows,
   surveyWorkflows,
   workflowJobs,
 } from "../check-workflow-coverage.js";
+import { bpmnIds, workflowBpmn } from "../workflow-bpmn.js";
 
-describe("a diagram DECLARES its subject", () => {
-  test("the declaration is read", () => {
-    const xml =
-      `<bpmn:process><bpmn:extensionElements>` +
-      `<folio:implements workflow=".github/workflows/docs-site.yml"/>` +
-      `</bpmn:extensionElements></bpmn:process>`;
-    expect(declaredWorkflows(xml)).toEqual([".github/workflows/docs-site.yml"]);
+describe("a workflow DECLARES its diagram (bean 61ca)", () => {
+  test("the `# bpmn:` header is read", () => {
+    expect(workflowBpmn("# bpmn: cat-harness/processes/x.bpmn\non:\n  push:\njobs: {}\n").diagrams)
+      .toEqual(["cat-harness/processes/x.bpmn"]);
   });
 
-  test("a MENTION in prose is not a declaration", () => {
-    const xml =
-      `<bpmn:documentation>Runs after ci-health.yml and reads ` +
-      `.github/workflows/docs-site.yml for context</bpmn:documentation>`;
-    expect(declaredWorkflows(xml)).toEqual([]);
+  test("a MENTION in a comment is not a declaration", () => {
+    const yaml = "# Runs after cat-harness/processes/x.bpmn is drawn — see bpmn.io\n#   bpmn: indented, so prose\njobs: {}\n";
+    expect(workflowBpmn(yaml).diagrams).toEqual([]);
   });
 
-  test("several declarations on one diagram are all read", () => {
-    const xml =
-      `<folio:implements workflow=".github/workflows/a.yml"/>` +
-      `<folio:implements workflow=".github/workflows/b.yml"/>`;
-    expect(declaredWorkflows(xml)).toEqual([".github/workflows/a.yml", ".github/workflows/b.yml"]);
+  test("several headers are all read", () => {
+    expect(workflowBpmn("# bpmn: a.bpmn\n# bpmn: b.bpmn\njobs: {}\n").diagrams).toEqual(["a.bpmn", "b.bpmn"]);
+  });
+});
+
+describe("a job DECLARES its node", () => {
+  const yaml =
+    "on:\n  push:\n" +
+    "jobs:\n" +
+    "  # bpmn-node: Above_Is_Prose\n" +
+    "  stage:\n    # bpmn-node: Start_PR\n    runs-on: x\n" +
+    "  cleanup:\n    runs-on: x\n    steps:\n      # bpmn-node: Start_Closed\n";
+
+  test("a node is attributed to the job that CONTAINS it, at any depth inside it", () => {
+    expect(workflowBpmn(yaml).nodes).toEqual([
+      { job: "stage", node: "Start_PR" },
+      { job: "cleanup", node: "Start_Closed" },
+    ]);
+  });
+
+  test("a comment ABOVE a job key belongs to no job — proximity is not containment", () => {
+    expect(workflowBpmn(yaml).nodes.map((n) => n.node)).not.toContain("Above_Is_Prose");
+  });
+
+  test("a `# bpmn-node:` outside `jobs:` is not read", () => {
+    expect(workflowBpmn("env:\n  X:\n    # bpmn-node: Nope\njobs: {}\n").nodes).toEqual([]);
+  });
+
+  test("bpmnIds reads every element id, and nothing that is not one", () => {
+    const xml = `<bpmn:process id="P"><bpmn:startEvent id="S" name="id=&quot;x&quot;"/><bpmn:documentation>id="Y"</bpmn:documentation></bpmn:process>`;
+    expect([...bpmnIds(xml)].sort()).toEqual(["P", "S"]);
   });
 });
 
@@ -102,24 +122,23 @@ describe("the survey's three states", () => {
     for (const [n, b] of Object.entries(diagrams)) writeFileSync(join(root, "processes", n), b);
     return root;
   }
-  const declares = (w: string): string =>
-    `<?xml version="1.0"?><bpmn:definitions><bpmn:process id="p"><bpmn:extensionElements>` +
-    `<folio:implements workflow="${w}"/></bpmn:extensionElements></bpmn:process></bpmn:definitions>`;
+  const names = (d: string, body: string): string => `# bpmn: ${d}\n${body}`;
+  const diagram = `<?xml version="1.0"?><bpmn:definitions><bpmn:process id="p"/></bpmn:definitions>`;
 
   test("COVERED — a declaration names it", () => {
     const root = repoWith(
-      { "a.yml": "on:\n  push:\njobs: {}\n" },
-      { "a.bpmn": declares(".github/workflows/a.yml") },
+      { "a.yml": names("processes/a.bpmn", "on:\n  push:\njobs: {}\n") },
+      { "a.bpmn": diagram },
     );
-    const { rows } = surveyWorkflows(root, root);
+    const { rows } = surveyWorkflows(root);
     expect(rows).toHaveLength(1);
     expect(rows[0]!.coverage).toBe("covered");
     expect(rows[0]!.auto).toBe(true);
   });
 
   test("UNCOVERED is a DETERMINED absence — the file read fine, nothing declares it", () => {
-    const root = repoWith({ "a.yml": "on:\n  push:\njobs: {}\n" }, {});
-    const { rows } = surveyWorkflows(root, root);
+    const root = repoWith({ "a.yml": "on:\n  push:\njobs: {}\n" }, { "a.bpmn": diagram });
+    const { rows } = surveyWorkflows(root);
     expect(rows[0]!.coverage).toBe("uncovered");
     expect(rows[0]!.reason).toBeUndefined();
   });
@@ -128,10 +147,10 @@ describe("the survey's three states", () => {
     // The declaration says a diagram exists, not that it still matches a file
     // nobody could parse.
     const root = repoWith(
-      { "a.yml": "on:\n  push:\n   bad\n    indent: [\n" },
-      { "a.bpmn": declares(".github/workflows/a.yml") },
+      { "a.yml": names("processes/a.bpmn", "on:\n  push:\n   bad\n    indent: [\n") },
+      { "a.bpmn": diagram },
     );
-    const { rows } = surveyWorkflows(root, root);
+    const { rows } = surveyWorkflows(root);
     expect(rows[0]!.coverage).toBe("unknown");
     expect(rows[0]!.reason).toBeDefined();
   });
@@ -145,26 +164,21 @@ describe("the survey's three states", () => {
           `see .github/workflows/a.yml</bpmn:documentation></bpmn:process></bpmn:definitions>`,
       },
     );
-    const { rows } = surveyWorkflows(root, root);
+    const { rows } = surveyWorkflows(root);
     expect(rows[0]!.coverage).toBe("uncovered");
   });
 
-  test("DANGLING — a declaration naming a workflow that is not there is reported", () => {
-    const root = repoWith(
-      { "a.yml": "on:\n  push:\njobs: {}\n" },
-      { "a.bpmn": declares(".github/workflows/gone.yml") },
-    );
-    const { rows, dangling } = surveyWorkflows(root, root);
-    expect(dangling).toEqual([
-      { diagram: "processes/a.bpmn", workflow: ".github/workflows/gone.yml" },
-    ]);
-    // And it does NOT accidentally count as coverage for the real workflow.
+  test("DANGLING — a workflow naming a diagram that is not there is reported", () => {
+    const root = repoWith({ "a.yml": names("processes/gone.bpmn", "on:\n  push:\njobs: {}\n") }, {});
+    const { rows, dangling } = surveyWorkflows(root);
+    expect(dangling).toEqual([{ diagram: "processes/gone.bpmn", workflow: ".github/workflows/a.yml" }]);
+    // And it does NOT count as coverage.
     expect(rows[0]!.coverage).toBe("uncovered");
   });
 
   test("no workflows directory is an empty survey, not a crash", () => {
     const root = mkdtempSync(join(tmpdir(), "wfcov-empty-"));
-    const { rows, dangling } = surveyWorkflows(root, root);
+    const { rows, dangling } = surveyWorkflows(root);
     expect(rows).toEqual([]);
     expect(dangling).toEqual([]);
   });
@@ -180,13 +194,11 @@ describe("this repository, right now", () => {
     expect(surveyWorkflows().dangling).toEqual([]);
   });
 
-  test("the diagrams are FOUND — the two roots differ here, and conflating them found none", () => {
-    // THE REGRESSION TEST for the defect above, and it has to live here
-    // because it is unreproducible in a scratch repo. `.github/workflows/` is
-    // at the repository root; the diagrams are in the graph `cat-harness/`
-    // declares. Passing the repository root for both found ZERO diagrams and
-    // reported 0/38 with declarations sitting on disk — a clean-looking run
-    // over a directory it never opened.
+  test("the diagrams are FOUND — a workflow's path resolves from the repository root", () => {
+    // The regression this guards changed shape with bean 61ca but not
+    // substance: `.github/workflows/` is at the repository root and the
+    // diagrams are inside `cat-harness/`, so a declaration spelled relative to
+    // the wrong root finds nothing and reports a clean-looking 0.
     //
     // Asserting "> 0" rather than a count: a number here would be a claim
     // about how many diagrams somebody has drawn, which changes, and
@@ -208,37 +220,6 @@ describe("drift — the diagram still matches the workflow it documents", () => 
    * own words are that a diagram which drifts is worse than none, because it
    * is consulted.
    */
-  const node = (id: string, job?: string): string =>
-    job === undefined
-      ? `<bpmn:startEvent id="${id}" name="x"><bpmn:outgoing>f</bpmn:outgoing></bpmn:startEvent>`
-      : `<bpmn:startEvent id="${id}" name="x"><bpmn:extensionElements>` +
-        `<folio:job name="${job}"/></bpmn:extensionElements></bpmn:startEvent>`;
-
-  describe("reading the declaration", () => {
-    test("a job is attributed to the element that CONTAINS it", () => {
-      expect(declaredJobs(node("Start_A", "stage"))).toEqual([{ node: "Start_A", job: "stage" }]);
-    });
-
-    test("a SELF-CLOSING node declares nothing, and does not steal the next job", () => {
-      // The near-miss a proximity match makes: walking back to the nearest
-      // preceding `id="…"` attributes a job to whatever was typed above it,
-      // which reads correct in every example somebody tries.
-      const xml = `<bpmn:endEvent id="End_X" name="x"/>` + node("Start_A", "stage");
-      expect(declaredJobs(xml)).toEqual([{ node: "Start_A", job: "stage" }]);
-    });
-
-    test("several nodes each declaring a job are all read", () => {
-      const xml = node("S1", "a") + node("S2", "b");
-      expect(declaredJobs(xml).map((j) => j.job)).toEqual(["a", "b"]);
-    });
-
-    test("a node with extension elements but no `folio:job` declares nothing", () => {
-      const xml = `<bpmn:task id="T" name="x"><bpmn:extensionElements>` +
-        `<folio:skill ref="s"/></bpmn:extensionElements></bpmn:task>`;
-      expect(declaredJobs(xml)).toEqual([]);
-    });
-  });
-
   describe("reading the workflow's real jobs", () => {
     test("the job names come back in order", () => {
       expect(workflowJobs("on:\n  push:\njobs:\n  stage:\n    runs-on: x\n  cleanup:\n    runs-on: x\n"))
@@ -265,32 +246,31 @@ describe("drift — the diagram still matches the workflow it documents", () => 
   });
 
   describe("comparing them, in BOTH directions", () => {
+    const ids = new Set(["S1", "S2"]);
+    const c = (job: string, node: string) => ({ job, node });
+
     test("matching sets drift in neither direction", () => {
-      expect(compareJobs(["a", "b"], ["b", "a"])).toEqual({
+      expect(compareJobs(["a", "b"], [c("b", "S2"), c("a", "S1")], ids)).toEqual({
         declared: true, missing: [], extra: [], duplicated: [],
       });
     });
 
     test("a job with NO node is missing — the workflow gained one", () => {
-      expect(compareJobs(["a", "b"], ["a"]).missing).toEqual(["b"]);
+      expect(compareJobs(["a", "b"], [c("a", "S1")], ids).missing).toEqual(["b"]);
     });
 
-    test("a node naming a job the workflow does NOT have is extra — it lost one", () => {
-      expect(compareJobs(["a"], ["a", "gone"]).extra).toEqual(["gone"]);
+    test("a node the diagram does NOT have is extra — the diagram lost one", () => {
+      expect(compareJobs(["a"], [c("a", "Gone")], ids).extra).toEqual(["Gone"]);
     });
 
-    test("two nodes claiming ONE job is reported rather than silently deduped", () => {
-      // Deduping would let a diagram claim complete coverage of two jobs with
-      // one of them named twice and the other not at all — and `missing`
-      // alone would still catch that, but the duplicate is the actual mistake
-      // and naming it is what tells somebody where to look.
-      expect(compareJobs(["a", "b"], ["a", "a", "b"]).duplicated).toEqual(["a"]);
+    test("one job naming TWO nodes is reported rather than silently deduped", () => {
+      expect(compareJobs(["a", "b"], [c("a", "S1"), c("a", "S2"), c("b", "S1")], ids).duplicated).toEqual(["a"]);
     });
 
     test("NOTHING declared is `declared: false`, not fully drifted", () => {
       // "Nobody has said yet" and "said, and wrong" are different answers,
       // and only the second is a finding.
-      const d = compareJobs(["a", "b"], []);
+      const d = compareJobs(["a", "b"], [], ids);
       expect([d.declared, d.missing]).toEqual([false, ["a", "b"]]);
     });
   });
@@ -304,34 +284,36 @@ describe("drift — the diagram still matches the workflow it documents", () => 
       writeFileSync(join(root, "processes/a.bpmn"), diagram);
       return root;
     }
-    const diagram = (body: string): string =>
-      `<?xml version="1.0"?><bpmn:definitions><bpmn:process id="p"><bpmn:extensionElements>` +
-      `<folio:implements workflow=".github/workflows/a.yml"/></bpmn:extensionElements>` +
-      `${body}</bpmn:process></bpmn:definitions>`;
-    const twoJobs = "on:\n  push:\njobs:\n  stage:\n    runs-on: x\n  cleanup:\n    runs-on: x\n";
+    const diagram =
+      `<?xml version="1.0"?><bpmn:definitions><bpmn:process id="p">` +
+      `<bpmn:startEvent id="S1"/><bpmn:startEvent id="S2"/></bpmn:process></bpmn:definitions>`;
+    const twoJobs = (stage?: string, cleanup?: string): string =>
+      "# bpmn: processes/a.bpmn\non:\n  push:\njobs:\n" +
+      `  stage:\n${stage ? `    # bpmn-node: ${stage}\n` : ""}    runs-on: x\n` +
+      `  cleanup:\n${cleanup ? `    # bpmn-node: ${cleanup}\n` : ""}    runs-on: x\n`;
 
-    test("a covered workflow whose jobs all have nodes reports no drift", () => {
-      const root = repo(twoJobs, diagram(node("S1", "stage") + node("S2", "cleanup")));
-      const j = surveyWorkflows(root, root).rows[0]!.jobs!;
+    test("a covered workflow whose jobs all name a node reports no drift", () => {
+      const j = surveyWorkflows(repo(twoJobs("S1", "S2"), diagram)).rows[0]!.jobs!;
       expect([j.declared, j.missing, j.extra]).toEqual([true, [], []]);
     });
 
     test("a job added to the workflow shows up as missing", () => {
-      const root = repo(twoJobs, diagram(node("S1", "stage")));
-      expect(surveyWorkflows(root, root).rows[0]!.jobs!.missing).toEqual(["cleanup"]);
+      expect(surveyWorkflows(repo(twoJobs("S1"), diagram)).rows[0]!.jobs!.missing).toEqual(["cleanup"]);
+    });
+
+    test("a node removed from the diagram shows up as extra", () => {
+      expect(surveyWorkflows(repo(twoJobs("S1", "S9"), diagram)).rows[0]!.jobs!.extra).toEqual(["S9"]);
     });
 
     test("an UNCOVERED workflow has no drift result — there is nothing to compare", () => {
-      const root = repo(twoJobs, "");
-      writeFileSync(join(root, "processes/a.bpmn"), "<bpmn:definitions/>");
-      expect(surveyWorkflows(root, root).rows[0]!.jobs).toBeUndefined();
+      const root = repo(twoJobs("S1", "S2").replace("# bpmn: processes/a.bpmn\n", ""), diagram);
+      expect(surveyWorkflows(root).rows[0]!.jobs).toBeUndefined();
     });
 
     test("a covered workflow whose `jobs:` cannot be read goes UNKNOWN, not drift-free", () => {
       // The pass-shaped blindness this whole file is against: reporting a
       // covered workflow as having nothing to say about its jobs.
-      const root = repo("on:\n  push:\njobs:\n  - a\n", diagram(node("S1", "stage")));
-      const row = surveyWorkflows(root, root).rows[0]!;
+      const row = surveyWorkflows(repo("# bpmn: processes/a.bpmn\non:\n  push:\njobs:\n  - a\n", diagram)).rows[0]!;
       expect(row.coverage).toBe("unknown");
       expect(row.jobs).toBeUndefined();
     });
@@ -346,7 +328,7 @@ describe("drift — the diagram still matches the workflow it documents", () => 
     });
 
     test("every documented workflow DECLARES its jobs — coverage without it is unchecked", () => {
-      // A diagram that names no job is one the drift check cannot see. That
+      // A workflow whose jobs name no node is one the drift check cannot see. That
       // is honest in the report, but it must not become the norm: a covered
       // workflow with no declaration is coverage nobody is verifying.
       const undeclared = surveyWorkflows().rows.filter((r) => r.jobs && !r.jobs.declared);

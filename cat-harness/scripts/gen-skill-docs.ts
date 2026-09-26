@@ -20,6 +20,7 @@
  * Dependency-free (bun + fs only). Never hand-edit the output.
  *
  * @module scripts/gen-skill-docs
+ * @covers skills, docs
  */
 
 import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
@@ -251,6 +252,12 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   workflow: "Workflow & process (workflow)",
   "graph-management": "Graph management (graph-management)",
   theming: "Theming (theming)",
+  // Keyed by basename: a package subdirectory of the declared `skills/`,
+  // like `theming` above. Bean `6bhf`, owner 2026-09-25 — "bean as
+  // ceybeesquity sub KG in tools ... consolidate". The heading names the
+  // BOUNDARY axis rather than a list of attacks, because that is the split
+  // the package is built on and a reader meeting it here should see which.
+  security: "Security — values crossing a boundary (security)",
   "folio-document-adapter": "Document adapter (folio-document-adapter)",
   "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
   "authoring-math": "Mathematical authoring (authoring-math)",
@@ -289,7 +296,12 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // how this was caught rather than shipped as two uncategorised packages.
   crdm: "CRDM requirements methodology (skills/crdm)",
   raci: "RACI involvement model (skills/raci)",
-  "remote-stubs": "Declared but not implemented here (stubs)",
+  // Synced from claude-scientific-skills at a pinned commit (issue #556):
+  // somebody else's bytes, one package per skill so upstream's relative links
+  // resolve. `remote-stubs` was retired when these arrived.
+  "hypothesis-generation": "Synced from claude-scientific-skills (pinned, read-only)",
+  "scientific-critical-thinking": "Synced from claude-scientific-skills (pinned, read-only)",
+  "scientific-visualization": "Synced from claude-scientific-skills (pinned, read-only)",
   // The entries below are declared kg directories that hold their skills
   // DIRECTLY rather than in package subdirectories, so they are keyed by the
   // directory's DECLARED ID — `bootstrap`, not `bootstrap/skills`.
@@ -346,7 +358,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
  * `authoring-who-smart-guidelines` (9) were absent, so all twelve of their
  * instruction bodies were NEVER PUBLISHED — and four of them
  * (`fhir-validation`, `l2-dak-authoring`, `bpmn-authoring`,
- * `latex-authoring`) are named by `<folio:skill ref>` in the BPMN diagrams.
+ * `latex-authoring`) are named by `<bootstrap.processes:skill ref>` in the BPMN diagrams.
  * An agent following `workflow_next` to one of those steps is handed a skill
  * whose published reference page 404s.
  *
@@ -483,7 +495,12 @@ const GROUPS: Group[] = [
  * a path that 404s there. The link rewrite below is the other half — a
  * relative `](name/part.md)` becomes an in-page anchor.
  */
-function withParts(dir: string, name: string, body: string): string {
+function withParts(
+  dir: string,
+  name: string,
+  body: string,
+  flat: ReadonlyMap<string, string>,
+): string {
   const partsDir = join(dir, name);
   if (!existsSync(partsDir)) return body;
   const parts = readdirSync(partsDir)
@@ -498,9 +515,65 @@ function withParts(dir: string, name: string, body: string): string {
   for (const part of parts) {
     const stem = basename(part, ".md");
     const text = stripFrontMatter(readFileSync(join(partsDir, part), "utf-8")).replace(/^\n+/, "");
-    out += `\n\n---\n\n<a id="part-${stem}"></a>\n\n${text}`;
+    // A part is authored one directory deeper than its skill, so its links
+    // are rebased against `partsDir`, not against the skill's own directory.
+    out += `\n\n---\n\n<a id="part-${stem}"></a>\n\n${rebaseLinks(partsDir, text, flat)}`;
   }
   return out;
+}
+
+/**
+ * A skill body's relative links, re-expressed for the FLAT output directory.
+ *
+ * Skills are authored in PACKAGES — `skills/workflow/process-state.md` links
+ * to a sibling package as `](../folio-core/task-authorization.md)` — and this
+ * generator publishes every one of them into a single flat directory. The
+ * link is correct where it is written and wrong once the page moves, so a
+ * body copied through verbatim arrives on the site addressing a directory
+ * layout the site does not have.
+ *
+ * Measured 2026-09-25 while closing bean `mi97`: **110** such links across the
+ * generated pages, every one a 404 for a reader. They were invisible for the
+ * same reason the `mi97` links were — `docs/` was undeclared until 2026-09-20,
+ * so no consumer walked them (the `dh4f` shape).
+ *
+ * RESOLVED against disk and looked up in the published set, never composed —
+ * the rule `repoRelative` keeps for the same reason (bean `oe98`). A target
+ * this cannot place is **left alone**, so it stays a finding in
+ * `check:subgraphs` rather than being quietly rewritten into a path that
+ * merely exists. Rewriting to something plausible is how a broken link
+ * becomes an undetectable one.
+ */
+/**
+ * Absolute source path → the flat page name it publishes under.
+ *
+ * Built from {@link GROUPS} by exactly the rule the writer below uses, so the
+ * two cannot disagree: the same `isSkillMd` predicate, the same
+ * `publishPrefix`, the same first-group-wins on a duplicate. Where two groups
+ * hold one basename the index calls them "(same page)" — so BOTH source paths
+ * map to that one page, and a link to either lands where the reader expects.
+ */
+function flatPublishedNames(): Map<string, string> {
+  const flat = new Map<string, string>();
+  for (const group of GROUPS) {
+    if (!existsSync(group.dir)) continue;
+    for (const file of readdirSync(group.dir)) {
+      if (!file.endsWith(".md") || !isSkillMd(join(group.dir, file))) continue;
+      flat.set(join(group.dir, file), `${group.publishPrefix ?? ""}${basename(file, ".md")}`);
+    }
+  }
+  return flat;
+}
+
+function rebaseLinks(baseDir: string, text: string, flat: ReadonlyMap<string, string>): string {
+  return text.replace(
+    /\]\((\.{0,2}[^)\s:]*?\.md)(#[^)\s]*)?\)/g,
+    (whole, target: string, anchor?: string) => {
+      if (isAbsolute(target) || target.startsWith("#")) return whole;
+      const published = flat.get(resolve(baseDir, target));
+      return published === undefined ? whole : `](${published}.md${anchor ?? ""})`;
+    },
+  );
 }
 
 /** Strip a leading YAML front-matter block (`---\n…\n---`) if present. */
@@ -531,7 +604,7 @@ function escapePipes(s: string): string {
 /**
  * The processes that run a skill, appended to its page (bean `ooq3`).
  *
- * The reverse of `<folio:skill ref>`, which `processes/index.md` tabulates and
+ * The reverse of `<bootstrap.processes:skill ref>`, which `processes/index.md` tabulates and
  * which a reader standing on the skill could not see. When a process shares the
  * skill's name it is the skill's OWN procedure, so its diagram is embedded
  * here rather than only linked — that is the case `adjudication` was in: a
@@ -574,6 +647,15 @@ async function main(): Promise<void> {
   // one source group (e.g. an agent skill that also has a folio-core copy), the
   // first group wins and later duplicates are listed as a cross-reference.
   const written = new Map<string, string>(); // skill name → category that emitted it
+
+  // WHERE EVERY SKILL LANDS, computed before a single body is written.
+  //
+  // `rebaseLinks` needs to answer "does this path publish, and under what
+  // name" for a target in ANOTHER package, which the group loop below has not
+  // reached yet. A one-pass generator can only answer it for groups already
+  // seen, and a link would then be rebased or not depending on alphabetical
+  // order — the worst kind of defect, because half the corpus looks correct.
+  const flat = flatPublishedNames();
 
   for (const group of GROUPS) {
     indexRows[group.category] = [];
@@ -624,7 +706,10 @@ async function main(): Promise<void> {
       // that publishes no banner, because a reader acts on it.
       const twin = SAME_BASENAME_DIFFERENT_DOCUMENT[name];
       const raw = readFileSync(join(group.dir, file), "utf-8");
-      let body = withParts(group.dir, name, stripFrontMatter(raw).replace(/^\n+/, ""));
+      // The body first, based at the skill's own package; then the parts, each
+      // based one level deeper. Two different bases, so two calls.
+      let body = rebaseLinks(group.dir, stripFrontMatter(raw).replace(/^\n+/, ""), flat);
+      body = withParts(group.dir, name, body, flat);
       if (twin) {
         const other = twin.find((t) => t.published !== published);
         const self = twin.find((t) => t.published === published);

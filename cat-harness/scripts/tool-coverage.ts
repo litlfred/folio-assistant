@@ -65,6 +65,7 @@
  *
  * @module scripts/tool-coverage
  */
+import { skillContracts } from "./skill-contracts.js";
 import { readdirSync, readFileSync, existsSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -110,6 +111,103 @@ export function declaredScripts(): [string, string][] {
  */
 export function scriptFor(skill: string, scripts: [string, string][]): string | undefined {
   return scripts.find(([k, v]) => k.split(":").includes(skill) || v.includes(`/${skill}.ts`))?.[0];
+}
+
+/**
+ * Why a tier-A skill is uncovered HERE and that is not a gap to close.
+ *
+ * Tier A is the list an agent works from: *"a serviceTask names it, so a Tool
+ * is warranted."* For most of it that is true. For a few it is permanently
+ * false, and until 2026-09-25 nothing said so — so each one cost a session the
+ * same re-derivation. Bean `w5h0` is the worked example: three possibilities
+ * proposed, two refuted by measurement, and the residue was *"this group has no
+ * entry point in this repository at all."* Owner's call, 2026-09-25: **record it
+ * nodeless and note what a folio owes.**
+ *
+ * Two states, not one, because they have different remedies and lumping them
+ * would hide that:
+ *
+ * | state | what is true | who closes it |
+ * |---|---|---|
+ * | `folio-mechanism` | a mechanism EXISTS and is a folio's; the diagram here invokes it | nobody — it is already satisfied, downstream |
+ * | `contract-unsatisfied` | no mechanism ANYWHERE accepts the contract | whoever writes one |
+ *
+ * The second is populated by nothing yet, deliberately: `latex-authoring` and
+ * `proof-verification` are its candidates and bean `jh2j` records the pattern —
+ * *"an authoring skill's contract names the artefact being created; the corpus
+ * has checking mechanisms"* — but the owner ruled on the first state only, and a
+ * declaration is not the place to settle a second question quietly.
+ *
+ * Every entry must match a skill that is currently **uncovered and tier A**, or
+ * the run fails. Same shape and same reason as `FOLIO_PATHS` in
+ * `check-workflow-paths.ts`: an annotation for a skill that has since gained a
+ * Tool is a claim about the present that stopped being true, and it would read
+ * as "do not bother" over work that is now real.
+ */
+export interface UncoveredByDesign {
+  skill: string;
+  state: "folio-mechanism" | "contract-unsatisfied";
+  reason: string;
+}
+
+export const UNCOVERED_BY_DESIGN: UncoveredByDesign[] = [
+  {
+    skill: "content-author",
+    state: "folio-mechanism",
+    reason:
+      "bean `w5h0`. Its group is 14 files: 13 are LIBRARIES (`block-module` alone " +
+      "is imported by `schemas/jsonld.ts`, `gen-block-jsonld`, `qa-utils`, " +
+      "`graph-index`, `verify-block-walk` and two audits) and the 14th, " +
+      "`check-voices.ts`, was a categoriser bug since re-filed. A Tool node needs " +
+      "an `invoke`, and the command that authors a block is in a folio's " +
+      "`package.json`, which this repository cannot read. `Task_AuthorBlocks` " +
+      "being a `serviceTask` is NOT a drafting error: `content-author` is named by " +
+      "five activities in three element types — `serviceTask` here and in " +
+      "`editing-hci-validation`, `userTask` at `evidence-retrieval`'s " +
+      "`Task_FramePico`, and `callActivity` in `content-lifecycle` and " +
+      "`draft-to-publication` — so the corpus already says it is agent-performed " +
+      "in some lanes and person-performed in others",
+  },
+  {
+    skill: "document-authoring",
+    state: "folio-mechanism",
+    reason:
+      "the document half of the same group, for the same reason: `satisfies` " +
+      "being an array is what would let one Tool name both, and there is no " +
+      "command here for either to name",
+  },
+  {
+    skill: "content-publish",
+    state: "folio-mechanism",
+    reason:
+      "bean `v7bg`. Its required `versionIncrement` is supplied by a PERSON at " +
+      "`draft-to-publication.bpmn`'s `Task_AuthorizeRelease` (a `userTask`, line " +
+      "176), one step upstream of `Task_PublishRelease` — *\"Version bump, release " +
+      "notes, tag, build the final artifacts, deploy to the publication " +
+      "platform.\"* So the contract describes the flow its own diagram draws, and " +
+      "the mechanism is a folio's. NOT to be confused with `package-release`, " +
+      "which versions CODE and does have Tool nodes here",
+  },
+];
+
+/** The annotation for a skill, if it is uncovered by design. */
+export function uncoveredByDesign(skill: string): UncoveredByDesign | undefined {
+  return UNCOVERED_BY_DESIGN.find((u) => u.skill === skill);
+}
+
+/**
+ * Entries matching no uncovered tier-A skill — each a stale claim.
+ *
+ * Returns the entry and why it no longer holds, rather than a bare list, so the
+ * reader is not left to work out which of the two failures they are looking at.
+ */
+export function staleAnnotations(rows: SkillTriage[]): { entry: UncoveredByDesign; why: string }[] {
+  return UNCOVERED_BY_DESIGN.flatMap((entry) => {
+    const row = rows.find((r) => r.skill === entry.skill);
+    if (!row) return [{ entry, why: "no longer in the uncovered set — it has a Tool now" }];
+    if (row.tier !== "A") return [{ entry, why: `now tier ${row.tier}, not A` }];
+    return [];
+  });
 }
 
 export type Tier = "A" | "B" | "C" | "D";
@@ -184,9 +282,9 @@ export async function triage(): Promise<SkillTriage[]> {
 
   const scripts = declaredScripts();
 
-  const io = new Set<string>();
-  const ioRoot = join(ROOT, "schemas", "skills");
-  if (existsSync(ioRoot)) for (const e of readdirSync(ioRoot, { withFileTypes: true })) if (e.isDirectory()) io.add(e.name);
+  // The skills that NAME a contract (`input:`/`output:`, #1168 B3b) — not the
+  // directories under `schemas/skills/`, which is the convention B3b retired.
+  const io = new Set(skillContracts(ROOT).keys());
 
   const auto = new Set<string>();
   const human = new Set<string>();
@@ -262,7 +360,36 @@ if (import.meta.main) {
     // pushes C off the screen. That is also why the D→C rule above matters more
     // than this printing change: a skill in D is not merely unprinted, it is
     // labelled as not worth reading.
-    if (t !== "D") for (const r of list) console.log(`  ${r.skill.padEnd(32)} ${r.evidence.join(", ")}`);
+    if (t !== "D")
+      for (const r of list) {
+        const u = uncoveredByDesign(r.skill);
+        // The annotation goes on the ROW rather than into a separate section,
+        // because the failure it fixes is an agent reading this list top to
+        // bottom and treating every line as work. A footnote it has already
+        // scrolled past does not reach it.
+        const mark = u ? `  ← by design (${u.state})` : "";
+        console.log(`  ${r.skill.padEnd(32)} ${r.evidence.join(", ")}${mark}`);
+      }
+  }
+
+  // Printed after the tiers and before the totals, so the count that follows
+  // can be read against it.
+  const byDesign = by("A").filter((r) => uncoveredByDesign(r.skill));
+  if (byDesign.length > 0) {
+    console.log(
+      `\n${byDesign.length} of the ${by("A").length} in A are uncovered BY DESIGN — not work:`,
+    );
+    for (const r of byDesign) {
+      const u = uncoveredByDesign(r.skill)!;
+      console.log(`  ${r.skill}  [${u.state}]`);
+      console.log(`      ${u.reason.replace(/\s+/g, " ")}`);
+    }
+  }
+
+  const stale = staleAnnotations(rows);
+  for (const { entry, why } of stale) {
+    console.error(`\n\u2717 UNCOVERED_BY_DESIGN names \`${entry.skill}\`, which is ${why}.`);
+    console.error("  Remove the entry: it reads as \"do not bother\" over work that is now real.");
   }
 
   const both = by("A").filter((r) => r.evidence.includes("userTask"));
@@ -275,4 +402,9 @@ if (import.meta.main) {
       `"which part of it is". Splitting the mechanism out is the work; the judgement stays.`,
   );
   console.log(`\nOnly tier C needs reading: ${by("C").length} files, not ${rows.length}.`);
+
+  // A report, not a CI gate — `tools:coverage` is in no workflow. It still exits
+  // non-zero on a stale annotation so a person running it sees the failure, and
+  // `tool-coverage-uncovered-by-design.test.ts` is what makes CI enforce it.
+  if (stale.length > 0) process.exit(1);
 }

@@ -124,6 +124,55 @@ describe("staging-preview-size", () => {
     expect(STAGING_CRITICAL_BYTES).toBeGreaterThan(STAGING_WARN_BYTES);
   });
 
+  it("the critical finding does NOT predict a failed publish — bean `qj9a`", () => {
+    // THE DEFECT THIS PINS, and it was live for two and a half days. The
+    // threshold's basis read: "the next deploy is the one that fails to publish
+    // — so something is about to be lost". That is a claim about GitHub's
+    // ENFORCEMENT, and nothing in this repository can observe it: the served
+    // site, `/repos/:o/:r/pages` and `/pages/builds` are all refused by egress
+    // policy. Measured 2026-09-25 off `origin/gh-pages` itself — 2.67 GB served,
+    // 2.7x the documented limit, crossed on 2026-09-23 — and nothing had been
+    // lost.
+    //
+    // Asserted on the TEXT because that is where the claim lives. A severity is
+    // a number and carries no argument; the basis is the argument, and this one
+    // was wrong in a way no type or count could catch.
+    const r = stagingSizeCheck(healthyContext({
+      staging: {
+        state: "ok",
+        value: {
+          branch: "present",
+          previews: [{ slug: "a", bytes: 777 * 1024 * 1024, files: 1 }],
+          command: "fixture",
+        },
+      },
+    }));
+    const f = r.findings[0];
+    expect(f.severity).toBe("critical");
+    // THE PREDICTION MUST NOT BE MADE where a reader acts — the summary and the
+    // action. This first version of the test also banned the phrase from the
+    // BASIS and failed, correctly: the basis QUOTES the old wording in order to
+    // record what was wrong, which is this repository's convention and is worth
+    // more than a clean grep. So the rule is about whether the claim is
+    // asserted, not whether the words occur.
+    const t = r.thresholds.find((x) => x.severity === "critical");
+    for (const text of [f.action, f.summary]) {
+      expect(text).not.toContain("about to be lost");
+      expect(text).not.toContain("the next deploy is the one that fails");
+    }
+    // In the basis the phrase may appear ONLY as a superseded quotation. If a
+    // later edit restores the prediction as the basis's own claim, the marker
+    // will be gone and this fails — which is the regression worth catching.
+    if ((t?.basis ?? "").includes("about to be lost")) {
+      expect(t?.basis).toContain("USED TO PREDICT");
+    }
+    // ...and the honest framing must be present rather than merely the wrong
+    // one absent: a check that said nothing at all would also pass the above.
+    expect(f.summary).toContain("DOCUMENTED");
+    expect(f.action).toContain("HAVE A PERSON OPEN THE SERVED SITE");
+    expect(t?.basis).toContain("NO INSTRUMENT FOR");
+  });
+
   it("a branch that was read and carries no previews is a determined `ok`", () => {
     const r = stagingSizeCheck(healthyContext({
       staging: { state: "ok", value: { branch: "present", previews: [], command: "fixture" } },

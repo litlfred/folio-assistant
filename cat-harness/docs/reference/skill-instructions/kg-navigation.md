@@ -83,7 +83,7 @@ against the server's own location. It is accurate today and it is a second
 answer to a question `<name>.json` already answers — so a directory the
 instance declares and the registry omits is invisible to `skill_fetch`. That
 has bitten: `content-lifecycle` was absent from the table until 2026-09-18
-while **52** `<folio:skill ref>` activities across the workflow diagrams named
+while **52** `<bootstrap.processes:skill ref>` activities across the workflow diagrams named
 its skills, so `workflow_next` handed an agent `content-validate` and
 `skill_fetch` answered *"package not found"* — for every step of every content
 process. `kg:audit`'s `skill-servable` criterion exists to keep that shut.
@@ -110,8 +110,8 @@ content, no server:
 Both Tools serve the same nodes. Neither is the skill: *knowing that a fallback
 exists* is the capability, and an agent that only knows the MCP route is an
 agent that stops when the server is absent. See
-[`skills-and-tools`](../folio-core/skills-and-tools.md) for why that distinction is enforced
-rather than merely preferred, and [`directory-conventions`](../folio-core/directory-conventions.md)
+[`skills-and-tools`](skills-and-tools.md) for why that distinction is enforced
+rather than merely preferred, and [`directory-conventions`](directory-conventions.md)
 for the declaration's schema and the full list of graph kinds.
 
 ## Not everything under the path is a skill
@@ -124,7 +124,7 @@ so they cannot disagree.
 - **`.claude/skills/` is not uniformly skills.** `actors/`, `capabilities/`,
   `roles/`, `hooks/` and `requirements/` are other node kinds that live there.
   Reading the tree as skills put 46 non-skills into the set, at which point
-  `<folio:skill ref="viewer"/>` resolved — to a capability probe.
+  `<bootstrap.processes:skill ref="viewer"/>` resolved — to a capability probe.
 - **A `.md` under the skills path that declares its own `$schema` is not a
   skill.** The agent-memory nodes under `memory/` declare
   `folio-memory/v1`. Without this rule the audit treated all 25 as skills and

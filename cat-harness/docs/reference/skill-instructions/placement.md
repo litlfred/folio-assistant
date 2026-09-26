@@ -184,7 +184,7 @@ resembles.
 | something a participant is or does | must the performer **know** it, or may the participant **do** it? | know → a **skill**, on the lane's role; do → a **permission**, on the actor |
 | a participant | does it persist across processes, or is it a position inside one? | persists → an **actor**; a position → a **role**, which is the BPMN swimlane |
 | a sequence of steps | does it have actors, activities and a control flow? | yes → **BPMN** under the workflows directory, not a Mermaid fence and not prose |
-| a branch at a gateway | is the answer **computed from facts**, or chosen by a person? | computed → a **DMN** table plus a `<folio:decision/>` ref; chosen → an ordinary gateway |
+| a branch at a gateway | is the answer **computed from facts**, or chosen by a person? | computed → a **DMN** table plus a `<cat-harness.processes:decision/>` ref; chosen → an ordinary gateway |
 | a durable fact for one agent | does it **govern**, or **summarise** what governs? | governs → a **skill**; summarises → a memory entry under the memory nodes |
 | subject matter | would a reader of one folio look for it? | yes → the **folio**, as data — never the platform |
 

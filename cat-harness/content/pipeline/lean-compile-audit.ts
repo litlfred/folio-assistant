@@ -10,13 +10,13 @@
  *   and feed results to this script's `--ingest` mode.
  *
  * Usage (CLI, ingestion mode):
- *   bun run pipeline/lean-compile-audit.ts --ingest <diagnostics.jsonl>
+ *   bun run cat-harness/content/pipeline/lean-compile-audit.ts --ingest <diagnostics.jsonl>
  *
  *   Each line of the JSONL input:
  *     { "file": "<repo-relative-path>", "diagnostics": [...] }
  *
  * Usage (CLI, list mode):
- *   bun run pipeline/lean-compile-audit.ts --list [content-root]
+ *   bun run cat-harness/content/pipeline/lean-compile-audit.ts --list [content-root]
  *
  * Output:
  *   docs/audits/lean-compile-diagnostics.json
@@ -243,15 +243,15 @@ if (args[0] === "--ingest" && args[1]) {
   console.log(`\n${files.length} .lean files with .ts siblings`);
 } else {
   console.log(`Usage:
-  bun run pipeline/lean-compile-audit.ts --list [content-root]
+  bun run cat-harness/content/pipeline/lean-compile-audit.ts --list [content-root]
     List all .lean files with .ts siblings
 
-  bun run pipeline/lean-compile-audit.ts --ingest <diagnostics.jsonl>
+  bun run cat-harness/content/pipeline/lean-compile-audit.ts --ingest <diagnostics.jsonl>
     Ingest MCP lean_diagnostic_messages output (JSONL).
     Each entry is stamped with the .lean source's 12-char SHA so the
     proof-lean-compiles checker can detect staleness.
 
-  bun run pipeline/lean-compile-audit.ts --stale
+  bun run cat-harness/content/pipeline/lean-compile-audit.ts --stale
     Report which cached entries are stale (lean_sha != live file),
     missing a SHA (legacy v1), or point at a deleted file. Exit 1 if
     any are unusable. Makes cache staleness visible without re-running

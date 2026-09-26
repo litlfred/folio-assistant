@@ -171,7 +171,7 @@ estimated churn: <files touched>
 
 ### 6. Surface to user with AskUserQuestion
 
-Per [`interaction-modality`](../folio-core/interaction-modality.md) — multiSelect: true, 🟡 marker,
+Per [`interaction-modality`](interaction-modality.md) — multiSelect: true, 🟡 marker,
 rich context. One question per finding group OR a consolidated
 "apply N findings" question when findings are independent.
 

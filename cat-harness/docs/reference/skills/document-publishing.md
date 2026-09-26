@@ -24,7 +24,7 @@ Input schema for the document-publishing skill: render a document folio without 
 | `toc` | boolean | no | default: `true` |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/document-publishing/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/document-publishing/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/document-publishing/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/document-publishing/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -44,4 +44,4 @@ Input schema for the document-publishing skill: render a document folio without 
 | `message` | string | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/document-publishing/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/document-publishing/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/document-publishing/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/document-publishing/output.schema.json){: .fa-edit-source }

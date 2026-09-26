@@ -23,7 +23,7 @@ Input schema for the latex-authoring skill.
 | `outputFormat` | `"pdf"` \| `"dvi"` \| `"ps"` | no | default: `"pdf"` |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/latex-authoring/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/latex-authoring/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/latex-authoring/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/latex-authoring/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -37,4 +37,4 @@ Output schema for the latex-authoring skill.
 | `pageCount` | integer | no | min: 0 |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/latex-authoring/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/latex-authoring/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/latex-authoring/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/latex-authoring/output.schema.json){: .fa-edit-source }

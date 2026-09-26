@@ -1,3 +1,10 @@
+---
+name: crdm-requirements-workflow
+graph-kinds:
+  - proposals
+  - requirements
+---
+
 # CRDM requirements workflow
 
 Once a feature request is detected (see `crdm-detect.md`), the agent follows
@@ -22,6 +29,7 @@ a real subprocess in its own file:
 | Link the work to an issue | `crdm-issue-linking.bpmn` | scan, then link or ask; never create without permission |
 | Phase 1 — needs | `crdm-needs.bpmn` | stakeholders, needs statement, loop until recognised |
 | Phases 2–4 — BPA + requirements | `crdm-requirements-definition.bpmn` | current workflow, requirements, impact, loop until approved |
+| Phase 4b — prioritization | *(inline in Phase 4 exit)* | dependency-order capability areas, formalize-first rule, BA confirms |
 | Phase 5 — beans + sign-off | `crdm-signoff.bpmn` | requirements become beans, BA signs off, branch announced |
 | Phase 6 — implement + acceptance | `crdm-deliver.bpmn` | implement, review increment, share MVP, take findings |
 | Close-out | `crdm-close.bpmn` | stakeholder sign-off, BA confirmation, then the close |
@@ -65,7 +73,7 @@ Three specific traps:
   posting a question whose answer requires reading it is how a one-character
   decision becomes a twenty-minute one.
 - **Options without their costs.** "A or B" is not a choice; "A, which changes
-  nothing here, or B, which rewrites every `folio:skill` ref in the diagrams"
+  nothing here, or B, which rewrites every `bootstrap.processes:skill` ref in the diagrams"
   is. The BA is deciding on the consequences, so the consequences are the
   question.
 
@@ -211,6 +219,66 @@ whole; per option is that same question once per row, so an agent that leaves
 the column empty is discarding work it has already done. And this phase breaks
 the rule more than any other, because the vocabulary it just built *feels*
 defined to the agent and is new to everybody else.
+## Phase 4b — Prioritization and dependency ordering
+
+**Input:** impact analysis complete, possibly multiple capability areas identified
+
+When a feature request decomposes into **more than one capability area** (as
+most non-trivial requests do), the agent must explicitly order them before
+creating beans. This is not optional — skipping it produces a flat bean list
+with no implementation sequence, and the first session that picks it up will
+either guess the order (often wrong) or ask the BA (wasting their time on a
+question the analysis already answered).
+
+### The prioritization protocol
+
+1. **Identify capability areas** — each is a coherent cluster of requirements
+   that can be implemented and reviewed independently. Name them.
+
+2. **Map dependencies** — draw the dependency graph:
+   - Does area A define concepts that area B assumes?
+   - Does area A produce artefacts that area B consumes?
+   - Does area A change structure that area B builds on?
+   If yes, A must precede B.
+
+3. **Apply the formalize-first rule** — within the dependency order:
+   - **Structural/organizational** work first (taxonomies, indexes, schemas)
+   - **Process/policy** formalization second (skills, workflows, conventions)
+   - **Implementation** third (code, pipelines, tools)
+   - **Visualization/UI** last (dashboards, pages, views)
+
+   This is not arbitrary — a visualization built before the process is
+   formalized will be rebuilt; a process formalized before the structure is
+   organized will reference the wrong paths.
+
+4. **Present the order to the BA** — as a dependency chain, not a list:
+   ```
+   Area 5 (structure) → Area 2 (process) → Area 3 (review) → Area 4 (planning) → Area 1 (visualization)
+   ```
+   With one sentence per arrow explaining **why** the dependency exists.
+
+5. **BA confirms or reorders** — the agent proposes, the BA decides. The BA
+   may override the dependency order (e.g. "I need the visualization first
+   even if it's throwaway") — that's a legitimate business decision, and
+   the agent records it as such rather than arguing.
+
+### What this step produces
+
+- A numbered list of capability areas in implementation order
+- A dependency rationale for each ordering decision
+- An estimate of scope per area (bean count)
+- A recommendation for which areas constitute the MVP release
+
+**Post to the issue** alongside the impact analysis. This becomes the
+input to Phase 5's bean creation — beans are created in dependency order,
+not in the order the BA mentioned them.
+
+### Cross-domain applicability
+
+This step applies identically to code features, paper milestones, and
+project deliverables. The formalize-first rule is domain-independent:
+a paper's structure (chapter order, block kinds) must precede its
+content (prose), which must precede its presentation (PDF layout).
 
 ## Phase 5 — Sign-off and bean creation
 
@@ -262,6 +330,68 @@ source, an API's full surface when the task touches three calls — is
 documentation. Both directions fail silently, so state which one you are
 writing before you write it.
 
+### A harness feature's documents: proposed in `docs/proposals/`, filed in `docs/requirements/` (STRICT)
+
+Owner, 2026-09-23 (issue #1164): when the feature is **the harness's own**, the
+documents this process produces (initial analysis, MVP, the options, the
+agreed requirements) **live and are updated under `docs/`**, in two declared
+sub-graphs of it.
+
+| stage | where | what it is | checked by |
+|---|---|---|---|
+| Phases 1–5, and while building | `docs/proposals/<slug>.md` | the argument: needs, options, MVP, what was agreed | — |
+| the feature ships | `docs/requirements/<slug>.md` | the promise: its front matter is a `Requirement` | `check:requirements` |
+
+Both kinds, `proposals` and `requirements`, declare `within: "docs"`. Every
+list of kinds (the navbar's Folders among them) therefore draws them inside
+the Docs row, **folded shut until the reader opens it**. That is general
+behaviour for any kind declaring `within`, not a special case for these two.
+
+**One proposal per feature, updated in place, never forked.** A later phase
+edits the same page rather than writing a second one, so the history of the
+argument is `git log` on one file.
+
+**Filing on ship is a MOVE, never a copy.** In Phase 6, once the owner has said
+to merge:
+
+1. `git mv docs/proposals/<slug>.md docs/requirements/<slug>.md`, so
+   `git log --follow` walks the requirement back through its argument.
+2. Add the `Requirement` fields to its front matter, from
+   `bootstrap/schemas/requirement.schema.json`:
+   - `id: req:<slug>`. The id IS the file name.
+   - `status: in-force`
+   - `proposedIn`: the old path.
+   - `actors`, `description`.
+   - `statements`: one per agreed requirement, each with a `key`, a
+     `conformance` level (`SHALL`, `SHOULD`, `MAY` or `SHALL NOT`) and one
+     `requirement` sentence a reviewer can say yes or no to. A `functional`
+     statement may add `activity`, `capability` ("I want") and `benefit`
+     ("so that"). A `non-functional` one may add a `category`.
+   Keep the body: the reasoning stays with the promise it produced.
+3. Point the feature's test runs at the statements they check, in
+   `folio-test-run/v1`'s `requirements` array, as `req:<slug>#<key>`. **The test
+   points at the requirement, never the reverse.**
+4. `bun run check:requirements`. It refuses a slug that is in both sub-graphs
+   (a copy, or a proposal landing on an existing requirement), an id that is
+   not its file name, and front matter the schema rejects.
+
+**The schema names no outside concept.** It lives in bootstrap, so every
+harness has it, and `check:bootstrap-concepts` fails if any bootstrap schema
+names a derivative's content model, layer names, organisation or interchange
+standard. A harness that follows a particular standard maps that standard's
+fields onto these fields **in its own layer**, never in the base.
+
+**Not yet decided, and not to be improvised:** how filed requirements are
+*organised* beyond one page per feature: grouping, numbering across features,
+traceability between requirements, retirement. The owner asked for a process
+and methodologies, and those wait on the literature search (bean `qh1s`) and on
+the assessment of open requirements standards (bean `1gf7`). Until then, file
+one page per shipped feature and use no further structure.
+
+**A folio's features are not filed here.** This applies to the harness's own
+feature work. A folio's subject matter lives in the folio, as Phase 5 already
+says.
+
 ## Phase 6 — Iterative development
 
 **Input:** beans
@@ -294,7 +424,9 @@ For each bean:
    to `adjudication`, and the coverage gate must pass before sign-off.
 7. **Ask user for explicit confirmation before merging to main**
 8. **Update documentation** — the OWNING instance's `docs/` pages and the
-   workflow BPMNs. If Phase 5's offer chose a `docs/` destination, this is
+   workflow BPMNs. For the harness's own feature, **file its proposal as its
+   requirements** once the merge is agreed: see *"A harness feature's
+   documents"* above. If Phase 5's offer chose a `docs/` destination, this is
    where that page is written and kept true; if the implementation diverged
    from what was agreed, the divergence is recorded there rather than
    smoothed.
@@ -308,14 +440,19 @@ For each bean:
    **Never remove a staging preview any other way, and never on your own
    initiative.**
 
-### After the MVP is accepted — review what it RENDERS
+### Theme and UI review is NOT a Phase 6 step — it happens at ingestion
 
-Acceptance is not the last step for anything with a UI.
-[`theme-ui-review`](../../skills/folio-core/theme-ui-review.md) sits on the single edge out of it in
-`crdm-deliver.bpmn`: accessibility **measured** rather than asserted, branding
-against the instance's own declaration, every declared locale. Post-MVP because
-nothing could have been checked earlier — theme choice is an authoring judgement
-per note, so there was never a mapping for an earlier gate to audit.
+This section used to put [`theme-ui-review`](../../skills/folio-core/theme-ui-review.md)
+on the single edge out of MVP acceptance in `crdm-deliver.bpmn`. **That call was
+removed on 2026-09-24.** The owner ruled that theme review happens *"at
+ingestion of graphical assets in context of website or app design"*, and, asked
+whether that meant only there: *"Yes only at ingestion"* (bean `9fdi`).
+
+So `GW_StakeholderOK`'s `accepted` branch now closes the phase directly. The
+review runs when the graphical assets arrive, from `ingest-theme.bpmn`, where a
+finding is a decision about what the assets will be rather than a defect in
+something that shipped. If you are looking for where accessibility, branding and
+locales get checked for a UI, look there — not here.
 
 When a round of implementation is complete (one or more beans resolved):
 1. **Post a round summary comment on the issue** — addressed to the BA and

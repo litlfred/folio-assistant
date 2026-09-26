@@ -88,16 +88,16 @@ So the split is **at the judgement**:
 
 ### What that means when you call it
 
-`A_Adjudicate` declares `<folio:adjudication defers="caller"/>` — it IS an
+`A_Adjudicate` declares `<cat-harness.processes:adjudication defers="caller"/>` — it IS an
 adjudication and the permitted answers are yours. Declared rather than left as
 a missing `codes`, so a marker lost by accident and a deferral on purpose do
 not parse the same.
 
 - **Asking the QA-criterion question?** Call `Process_CriterionAdjudication`
-  and declare `<folio:adjudication accepts="stands scope dispensation"/>`. The
+  and declare `<cat-harness.processes:adjudication accepts="stands scope dispensation"/>`. The
   engine compares your list with what that process actually offers.
 - **Asking something else?** Call `Process_Adjudication` and declare
-  `<folio:adjudication codes="…"/>` on your own call activity, with your own
+  `<cat-harness.processes:adjudication codes="…"/>` on your own call activity, with your own
   gateway coding the same set. The engine refuses a mismatch between the two,
   and refuses a partly-coded gateway, which reads as complete.
 - **Declaring nothing** is legal and **reported** by `check:workflow-refs` —
@@ -182,7 +182,7 @@ record the disagreement, lead with the judgement, keep the other entry.
 
 The outcome carries its reason. That mechanism already exists and is
 schema-backed — `block-qa/v1`'s multi-reviewer primitive, documented at length
-in [`q-usage-watcher`](../folio-paper-adapter/q-usage-watcher.md):
+in [`q-usage-watcher`](q-usage-watcher.md):
 
 - a `kind: "human"` entry with `result: "pass"` overrides the script's `fail`
   for the same criterion;
@@ -196,10 +196,13 @@ re-granted. So a dispensation never becomes precedent, and there is nothing to
 overturn later — the source moving overturns it.
 
 A dispensation with no `notes` is not a dispensation. It is an override
-somebody applied to get to green, and nobody can review it afterwards. This is
-the one step `adjudication.bpmn` marks `relaxable="false"`: **the judgement is
-free and the record is not**, because a judgement nobody wrote down is
-indistinguishable from a checker that was never run.
+somebody applied to get to green, and nobody can review it afterwards. So
+`A_Dispensation` is marked `relaxable="false"` — in
+**`criterion-adjudication.bpmn`**, with `A_RecordEntry`, since the 2026-09-23
+split; this paragraph said `adjudication.bpmn` until 2026-09-24, four sections
+after §"One judgement, six questions" had already recorded the move. **The
+judgement is free and the record is not**, because a judgement nobody wrote
+down is indistinguishable from a checker that was never run.
 
 ## Who adjudicates — a skill that spreads, an entitlement that does not
 
@@ -256,7 +259,7 @@ deliberately stops short of it.
 
 - [`untainted-verification`](untainted-verification.md) — the parties and what
   each is given. Adjudication is what happens when they disagree.
-- [`q-usage-watcher`](../folio-paper-adapter/q-usage-watcher.md) — the
+- [`q-usage-watcher`](q-usage-watcher.md) — the
   dispensation mechanism, documented where it was first applied.
 - [`code-node-review`](code-node-review.md), [`voice-editorial-review`](voice-editorial-review.md),
   [`voice-overlay-review`](voice-overlay-review.md) — the reviews that produce

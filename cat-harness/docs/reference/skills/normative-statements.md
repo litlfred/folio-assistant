@@ -26,7 +26,7 @@ Input schema for the normative-statements skill: carry one recommendation, requi
 | `uses` | array<string> | no | Blocks a reader must have read to act on this one — term definitions, the scope statement, the evidence summary. |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/normative-statements/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/normative-statements/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/normative-statements/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/normative-statements/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -38,4 +38,4 @@ Input schema for the normative-statements skill: carry one recommendation, requi
 | `citedBy` | array<string> | no | Labels whose uses[] names this statement. |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/normative-statements/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/normative-statements/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/normative-statements/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/normative-statements/output.schema.json){: .fa-edit-source }

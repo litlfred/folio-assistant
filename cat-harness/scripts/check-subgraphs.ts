@@ -29,10 +29,14 @@
  * Usage:
  *   bun run subgraphs            # the tree and the entanglement report
  *   bun run check:subgraphs      # same, non-zero only if something is unreadable
+ *
+ * @covers cat-harness
  */
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { Glob } from "bun";
+
+import { gitCorpus } from "./git-corpus.ts";
 
 import {
   isDerivedGraph,
@@ -155,7 +159,7 @@ export interface SubgraphReport {
    * moved to `fsh-guts/`, which is `scope: "repository"` and therefore sits
    * OUTSIDE this instance — and `owningDirectory` compares in the instance's
    * path space, so every repository-scoped directory was skipped without a
-   * word. `bootstrap/skills/`, `smart-kg/` and `uploads/` are skipped the
+   * word. `bootstrap/skills/` and `uploads/` are skipped the
    * same way.
    *
    * Skipping retired content is defensible; skipping it SILENTLY is not,
@@ -219,6 +223,86 @@ function linkTargets(raw: string): string[] {
   return out;
 }
 
+/**
+ * Resolve a link target in the SOURCE tree, or `undefined`.
+ *
+ * A `.html` target is a RENDERED PAGE, not a file here: jekyll builds
+ * `docs/skills.html` from `docs/skills.md`. Testing the `.html` on disk
+ * reports every correct site link as broken, and the first triage (bean
+ * `rl3h`) hit exactly that. Resolving to the source tells a page with a
+ * source apart from one that genuinely does not exist; skipping `.html`
+ * outright would hide the second.
+ *
+ * It is a FUNCTION rather than two inline blocks because `overDeepLinks`
+ * has to test a candidate repair under the SAME rule that put the link in
+ * the unresolved bucket. Two copies of that rule is two answers to "does
+ * this resolve", free to disagree — and the count below would then be
+ * measuring something other than what the scan measured.
+ */
+function resolveInTree(abs: string): string | undefined {
+  if (existsSync(abs)) return abs;
+  if (abs.endsWith(".html")) {
+    const asSource = `${abs.slice(0, -".html".length)}.md`;
+    if (existsSync(asSource)) return asSource;
+  }
+  return undefined;
+}
+
+/**
+ * Of the links that do not resolve, the ones carrying ONE `../` too many —
+ * the signature a directory move leaves behind, and the only kind of
+ * unresolved link in a renderable graph that is rot rather than a published
+ * address.
+ *
+ * **Computed, never remembered.** This number was a STRING LITERAL in the
+ * report for five days (bean `syrl`): measured once on 2026-09-20, written
+ * into the message, and printed unchanged beside a total that re-measured
+ * every run. A reader could not tell whether any of them had been repaired.
+ * That is the repository's own rule — `kg-audit`'s *never quote a count from
+ * prose*, `turn-reporting`'s *a count without its measurement is a claim* —
+ * broken by its own tooling, and with a longer half-life than the prose case
+ * because it arrives wearing the authority of a measurement.
+ *
+ * The repair is tested against disk, not inferred from the shape: a target
+ * that merely starts with `../` proves nothing, and a `../` dropped from a
+ * path that still does not resolve is a different defect.
+ */
+export function overDeepLinks(
+  root: string,
+  links: ReadonlyArray<{ from: string; fromDir: string; target: string }>,
+): Array<{ from: string; fromDir: string; target: string; repaired: string }> {
+  const out: Array<{ from: string; fromDir: string; target: string; repaired: string }> = [];
+  for (const link of links) {
+    if (!link.target.startsWith("../")) continue;
+    const repaired = link.target.slice("../".length);
+    if (repaired.length === 0) continue;
+    const abs = resolve(root, dirname(link.from), repaired);
+    if (resolveInTree(abs) !== undefined) out.push({ ...link, repaired });
+  }
+  return out;
+}
+
+/**
+ * The markdown nodes in {@link abs}, as paths relative to it.
+ *
+ * **Asked of git, not of the disk** (`gitCorpus`). A bare glob here was
+ * correct for as long as no declared directory happened to contain an
+ * untracked subtree — and stopped being correct the moment a gate installed a
+ * publishable package's devDependencies, at which point this sweep descended
+ * into `node_modules/` and reported **31 broken links**, every one inside a
+ * third-party README linking to its own repository's files. Bean `rsi6`; the
+ * same shape as `ramz` one directory over.
+ *
+ * Falls back to the glob when git cannot answer — a temp fixture is not a
+ * work tree, and refusing there would trade a false finding for an unrunnable
+ * check. The fallback is the LOOSER set, so it can only over-report.
+ */
+function markdownIn(abs: string): string[] {
+  const listed = gitCorpus(abs, ["*.md"]);
+  if (listed !== undefined) return listed.map((f) => relative(abs, f));
+  return [...new Glob("**/*.md").scanSync({ cwd: abs })];
+}
+
 export function scanSubgraphs(root: string = ROOT): SubgraphReport {
   const dirs = resolveDirectories([{ name: "(local)", root, own: true }]);
   const tree = subgraphTree(dirs);
@@ -240,7 +324,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
       continue;
     }
     let attributed = 0;
-    for (const rel of new Glob("**/*.md").scanSync({ cwd: abs })) {
+    for (const rel of markdownIn(abs)) {
       const file = join(abs, rel);
       // ABSOLUTE, not instance-relative. A `scope: "repository"` directory
       // resolves OUTSIDE this instance, so `relative(root, …)` yields a
@@ -267,20 +351,9 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
         continue;
       }
       for (const target of linkTargets(text)) {
-        let resolved = resolve(dirname(file), target);
-        // A `.html` target is a RENDERED PAGE, not a file in the tree:
-        // jekyll builds `docs/skills.html` from `docs/skills.md`. Testing the
-        // `.html` on disk reports every correct site link as broken, and the
-        // first triage (bean `rl3h`) hit exactly that — `../skills.html`
-        // flagged beside `../proposals/llm-authoring-tool-integration.html`,
-        // where the first has a source and the second genuinely does not.
-        // Resolving to the source tells those two apart; skipping `.html`
-        // outright would hide the second.
-        if (!existsSync(resolved) && resolved.endsWith(".html")) {
-          const asSource = `${resolved.slice(0, -".html".length)}.md`;
-          if (existsSync(asSource)) resolved = asSource;
-        }
-        if (!existsSync(resolved)) {
+        // `resolveInTree` carries the `.html` → `.md` rule and its reasoning.
+        const resolved = resolveInTree(resolve(dirname(file), target));
+        if (resolved === undefined) {
           // A renderable graph addresses the PUBLISHED tree, not this one.
           const renderable = owner.graphKinds.some((g) => isRenderable(g));
           // A DERIVED graph's links came from the SOURCE document rather than
@@ -307,7 +380,7 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
         });
       }
     }
-    if (attributed === 0 && [...new Glob("**/*.md").scanSync({ cwd: abs })].length > 0) {
+    if (attributed === 0 && markdownIn(abs).length > 0) {
       notExamined.push(`${dir.id} (${dir.path})`);
     }
   }
@@ -374,11 +447,25 @@ if (import.meta.main) {
       `\n· ${siteResolved.length} link(s) in RENDERABLE graph(s) do not resolve in the source tree:`,
     );
     for (const [id, n] of [...byDir].sort((a, b) => b[1] - a[1])) console.log(`    ${id}: ${n}`);
+    // MEASURED here, not remembered: bean `syrl`. The sentence below used to
+    // carry the count as a string literal, so it could not move when the
+    // links did.
+    const overDeep = overDeepLinks(ROOT, siteResolved);
     console.log(
       "  Not a finding: a renderable graph addresses the PUBLISHED tree, where the\n" +
         "  site build resolves `api/`, `*.html` and generated pages. NOT a clean bill\n" +
-        "  either — bean `mi97` audits them, and 23 carry one `../` too many.",
+        "  either — bean `mi97` audits them.",
     );
+    if (overDeep.length > 0) {
+      console.log(
+        `  Of those, ${overDeep.length} carry one \`../\` too many — dropping one resolves\n` +
+          "  on disk, which is the signature of a relocation that did not finish.",
+      );
+      for (const l of overDeep.slice(0, 5)) console.log(`         ${l.from}  →  ${l.target}`);
+      if (overDeep.length > 5) console.log(`         … and ${overDeep.length - 5} more`);
+    } else {
+      console.log("  None of them carries one `../` too many; the rest address the site.");
+    }
   }
 
   if (derivedLinks.length > 0) {

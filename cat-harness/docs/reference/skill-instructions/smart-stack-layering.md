@@ -162,5 +162,5 @@ non-WHO IG. There is no `layer` field and there should not be one — a second
 place to state it is a second place for it to be wrong.
 
 Conventions for the declaration itself:
-[`directory-conventions`](../folio-core/directory-conventions.md).
+[`directory-conventions`](directory-conventions.md).
 {% endraw %}

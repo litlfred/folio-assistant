@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/jsonld-drift-check.bpmn
 # Generated-file drift gate for the JSON-LD projection of content blocks.
 #
 # Each content block is authored as `<block>.ts` and published as a generated
@@ -93,10 +94,11 @@ permissions:
 
 jobs:
   drift-check:
+    # bpmn-node: Start_Change
     name: .jsonld siblings in sync with .ts manifests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:

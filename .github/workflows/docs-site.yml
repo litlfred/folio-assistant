@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/docs-site-publish.bpmn
 name: Docs site (GitHub Pages)
 
 # Builds and deploys the folio-assistant documentation site to GitHub Pages at
@@ -100,6 +101,7 @@ concurrency:
 
 jobs:
   build-and-deploy:
+    # bpmn-node: Start_Push
     runs-on: ubuntu-latest
     # Serialise on the CONTENDED RESOURCE — `gh-pages` — not on the branch.
     #
@@ -120,7 +122,7 @@ jobs:
       group: gh-pages-push
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -423,6 +425,35 @@ jobs:
           # it never overwrites: the graph's `.json` copy above has the same
           # name as bootstrap's declaration, and the graph keeps that address.
           bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}"
+          # bootstrap's diagram vocabulary at its extensionless address, which is
+          # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
+          # `.json` copy every rendering here carries for Pages.
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns"
+          cp "./_site/${BOOT_STUB}/processes/ns.jsonld" "./_site/${BOOT_STUB}/processes/ns.json"
+          # cat-harness's diagram vocabulary likewise (bean `12s9` stage 3). Its
+          # processes are not otherwise published, so it is copied from source.
+          mkdir -p "./_site/${STUB}/processes"
+          for f in ns ns.jsonld ns.json; do cp ./cat-harness/processes/ns.jsonld "./_site/${STUB}/processes/$f"; done
+
+          # THE HARNESS RAIL ON EVERY STANDALONE PAGE — bean `oi1y`, and it is
+          # here, after the line above, for a reason that cost a wrong claim.
+          #
+          # A page Jekyll copies through verbatim inherits no layout and so no
+          # sidebar. `mount-instance-docs.ts` rails the MOUNT ROUTES, and
+          # `viewer-page.ts` rails what the generators emit; everything else
+          # fell between them — 23 wireframe `as-is.html` pages with no
+          # navigation and no outward link at all, and bootstrap's 10.
+          #
+          # The first version called this from `mount-instance-docs.ts`, 142
+          # lines above, where bootstrap's pages DO NOT YET EXIST. It railed the
+          # wireframes (committed) and silently missed bootstrap (generated),
+          # and no unit test could see it because a fixture hands the pass a
+          # finished directory. Caught by counting the staged build.
+          #
+          # So: LAST, after every generator that writes a page. It is
+          # idempotent — `injectRail` refuses a page that already has one — so
+          # anything railed earlier is left byte-identical.
+          bun run cat-harness/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness
 
           # THE TRASHCAN, reachable BY NAME and by nothing else.
           #
@@ -655,7 +686,7 @@ jobs:
       # fetch, reset, restore against the current contents, lay `_site` down,
       # commit, push.
       - name: Check out the publish branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: gh-pages
           path: pages

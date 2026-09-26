@@ -7,8 +7,8 @@
  * matching the block kind. Preserves existing docstrings.
  *
  * Usage:
- *   bun run pipeline/generate-lean-stubs.ts <chapter-dir>
- *   bun run pipeline/generate-lean-stubs.ts <chapter-dir> --dry-run
+ *   bun run cat-harness/content/pipeline/generate-lean-stubs.ts <chapter-dir>
+ *   bun run cat-harness/content/pipeline/generate-lean-stubs.ts <chapter-dir> --dry-run
  */
 
 import { folioDir } from "../../schemas/cat-harness.js";
@@ -158,7 +158,7 @@ function generateDeclaration(
 function main() {
   const args = parseArgs(process.argv.slice(2));
   if (!args.root) {
-    console.error("Usage: bun run pipeline/generate-lean-stubs.ts <chapter-dir>");
+    console.error("Usage: bun run cat-harness/content/pipeline/generate-lean-stubs.ts <chapter-dir>");
     process.exit(2);
   }
 

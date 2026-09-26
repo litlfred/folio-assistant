@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/repository-health-watch.bpmn
 # Repository health watchdog — the daily half of what `ci-health.yml` does weekly.
 #
 # `ci-health.yml` watches whether the WORKFLOWS pass. This watches the
@@ -65,12 +66,13 @@ concurrency:
 
 jobs:
   report:
+    # bpmn-node: Start_Sweep
     name: Report repository health
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # REQUIRED, and not an optimisation to shave off. `repository-size`
           # measures the pack a full-history clone downloads; a shallow one
@@ -123,7 +125,7 @@ jobs:
       # `if: always()` rather than a verdict filter for exactly that reason.
       - name: Keep the report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: repository-health-report
           path: test/health/results/repository.health-report.json

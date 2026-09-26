@@ -19,6 +19,7 @@ Judging whether the prose side of a declared prose/code pair still says what the
 
 - **Called by:** [Review task](review-task.html)
 - **Calls:** [Criterion adjudication](criterion-adjudication.html)
+- **Presented on:** no docs page section shows this diagram
 
 ## Lanes — who acts
 

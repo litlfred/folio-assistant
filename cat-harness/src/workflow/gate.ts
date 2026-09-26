@@ -29,7 +29,7 @@
  * 1. **A reason is required.** A relaxation without one does not load, so the
  *    escape hatch cannot be taken silently — the file is the record.
  * 2. **Some steps cannot be relaxed at all.** Anything carrying
- *    `<folio:policy relaxable="false"/>` refuses to be named: the editor seeing
+ *    `<cat-harness.processes:policy relaxable="false"/>` refuses to be named: the editor seeing
  *    the findings, the accept/revise/discard decision, the commit itself, and
  *    release authorisation. If those were negotiable the base would not be
  *    strict, it would be a suggestion.

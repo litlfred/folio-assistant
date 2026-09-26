@@ -3,6 +3,7 @@
  * Give an instance a folio and a landing sticky — the last act of initiation.
  *
  * @module scripts/ensure-landing-sticky
+ * @covers folio
  *
  * The owner's ask, 2026-09-20: *"the sticky note is created dynamically on
  * initailzation by cat-harness bootstrap (as last thing). it creates an empty

@@ -34,7 +34,10 @@ export const PROPERTY_SKILLS = {
   stub: { skills: ["directory-conventions"] },
   canonicalUrl: { skills: ["directory-conventions"] },
   previewUrl: { skills: ["directory-conventions"] },
-  publication: { skills: ["document-publishing"] },
+  // TWO facets, two skills: `publication.host` is what kind of thing serves
+  // the rendering (document-publishing); `publication.state` is how far along
+  // it is, and why "published" does not parse (instance-publication).
+  publication: { skills: ["document-publishing", "instance-publication"] },
   topology: {
     skills: [],
     gap: "no skill edits `topology` yet: its axes are documented only in the schema (cat-harness.ts, TopologySchema)",
@@ -45,9 +48,13 @@ export const PROPERTY_SKILLS = {
   stickies: { skills: ["create-sticky-note"] },
   renderExemption: { skills: ["harness-tiles"] },
   needs: { skills: ["instance-kinds", "confirm-harness"] },
-  publishable: { skills: ["directory-conventions"] },
-  id: { skills: ["directory-conventions"] },
-  version: { skills: ["directory-conventions"] },
+  // `publishable` was here until 2026-09-24 and the field is gone — replaced
+  // by `publication.state`, which is a STATE rather than a boolean. The three
+  // below point at `instance-publication` rather than `directory-conventions`:
+  // the conventions skill says where a directory goes, this one says what
+  // publication means and why `published` does not parse.
+  id: { skills: ["instance-publication", "directory-conventions"] },
+  version: { skills: ["instance-publication", "directory-conventions"] },
 } as const satisfies Record<string, PropertySkills>;
 
 export type DeclarationProperty = keyof typeof PROPERTY_SKILLS;

@@ -62,6 +62,7 @@ classDiagram
       selection [0..1] object
       requires [0..1] object
       maintains [0..*] Maintain[]
+      renders [0..*] string[]
     }
   }
   fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Maintain : maintains

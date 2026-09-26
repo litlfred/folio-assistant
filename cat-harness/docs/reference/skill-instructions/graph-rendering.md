@@ -22,9 +22,9 @@ math proofs/lean etc"*.
 
 This skill is the general part. It says what any drawing of a graph owes its
 reader. The per-graph skills say how one generator meets it:
-[`uml-overview`](../folio-core/uml-overview.md) for schemas,
-[`bpmn-authoring`](../workflow/bpmn-authoring.md) for processes, and
-[`content-graph`](../folio-core/content-graph.md) for a paper's blocks.
+[`uml-overview`](uml-overview.md) for schemas,
+[`bpmn-authoring`](bpmn-authoring.md) for processes, and
+[`content-graph`](content-graph.md) for a paper's blocks.
 
 A drawing is how a person READS a graph. [`graph-detanglement`](graph-detanglement.md)
 is how the graph is RESTRUCTURED, and it needs the drawing: a partition you
@@ -53,7 +53,7 @@ prevents is stated beside it.
    than one kind of edge ([`edge-kinds-and-blast-radius`](edge-kinds-and-blast-radius.md)).
    Editorial `uses[]` and formal Lean edges, enforced and prose-only
    references, and a field-carried link versus one declared elsewhere (the
-   UML's dashed `folio:skill` edge) each get their own line style and a
+   UML's dashed `bootstrap.processes:skill` edge) each get their own line style and a
    legend. Merging two kinds into one line destroys the signal every metric
    on that graph is computed from.
 5. **Pick the layout engine by what the graph is, and write down why.**
@@ -75,7 +75,9 @@ prevents is stated beside it.
    block-graph SVGs do this through `scripts/plantuml-render.ts`, which every
    PlantUML generator shares, with its pinned jar and one JVM for all diagrams.
 9. **Show it in a zoomable figure.** On the site, use the `bpmn-figure`
-   markup so `docs-ui.js` adds zoom, reset and full-width controls. A pages
+   markup so `docs-ui.js` adds zoom, reset and full-width controls, and the
+   export ones: download the SVG, download a 2× PNG, or copy it (as an image
+   where the browser allows, else as SVG text, and it says which; #1270). A pages
    template missing `layout: default` renders with no site script and so no
    controls, and nothing reports it.
 10. **Put the measurement on the drawing.** When a graph is being partitioned,
@@ -126,7 +128,7 @@ which outranks the Lean status: the order the CI graph used.
 
 **Never populate `uses[]` from the formal graph to make a drawing look
 connected.** The editorial relation is authored; see `AGENTS.md` and
-[`uses-editorial-review`](../folio-core/uses-editorial-review.md). Rule 4 is how
+[`uses-editorial-review`](uses-editorial-review.md). Rule 4 is how
 the drawing keeps them apart.
 
 ## Related
@@ -135,8 +137,8 @@ the drawing keeps them apart.
   skill draws.
 - [`edge-kinds-and-blast-radius`](edge-kinds-and-blast-radius.md): why edge
   kinds must stay distinct (rule 4).
-- [`uml-overview`](../folio-core/uml-overview.md): the schema diagrams, where
+- [`uml-overview`](uml-overview.md): the schema diagrams, where
   these rules were first learned.
-- [`kg-viewer`](../folio-core/kg-viewer.md): the shared rule for an HTML
+- [`kg-viewer`](kg-viewer.md): the shared rule for an HTML
   viewer that fetches its projection by a path relative to itself.
 {% endraw %}

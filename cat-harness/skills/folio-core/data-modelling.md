@@ -160,15 +160,15 @@ the pointer lives on the task.
 
 | relation | written on | never on | why |
 |---|---|---|---|
-| a task implements a skill | the BPMN task (`<folio:skill ref>`) | the skill | a skill is reused by many tasks in many processes; listing them makes every new process an edit to the skill |
+| a task implements a skill | the BPMN task (`<bootstrap.processes:skill ref>`) | the skill | a skill is reused by many tasks in many processes; listing them makes every new process an edit to the skill |
 | a voice speaks for a role | the voice (`activeIn.roles`) | the role (`voice`) | a role is what an actor does in a lane; how it sounds is a separate, swappable thing |
-| a lane is played by a role | the lane (`<folio:role ref>`) | the role (`lanes`) | the role names diagrams it cannot know about |
+| a lane is played by a role | the lane (`<bootstrap.processes:role ref>`) | the role (`lanes`) | the role names diagrams it cannot know about |
 | a user story is for a role | the story (`role`, in `scenarios/stories.json`) | the role (`useCases`) | stories are added by whoever writes them, not by editing the role |
 | a Tool satisfies a skill | the Tool (`satisfies`) | the skill (`scripts`, `validators`, `mcpServices`) | several Tools may satisfy one skill, and a script is added without editing the skill |
 | a skill or capability discharges a requirement statement | the skill's front matter or the capability (`satisfies: req:<id>#<key>`) | the statement (`satisfiedBy`) | a requirement is written once; what discharges it arrives later |
 | a skill says how to read a graph kind | the skill's front matter (`graph-kinds:`) | the kind (`skill`) | a kind is registered once; skills that read it come and go |
 | a skill takes and produces a contract | the skill's front matter (`input:`, `output:` — a path into the instance or an https IRI) | a directory named after the skill | the skill can then say its contract is elsewhere, and a contract no skill names is visible as unclaimed |
-| a test checks a skill's contract | the test run | the skill | tests come and go; the contract does not |
+| a test checks a skill's contract | the test run (`skill`, with its `cases` checked against the skill's `input:`/`output:`) | the skill | tests come and go; the contract does not |
 
 **Prose counts.** A skill body that says *"the only step of
 initialize-harness"* knows its caller just as surely as a field does, and goes
@@ -180,6 +180,31 @@ fact about the skill, so it is declared there: an **input** and an **output**
 schema reference, each either a KG schema or a pinned external schema. Tasks,
 Tools and tests point at the skill and are checked against that contract. That
 is how a general node stays complete without naming its users.
+
+**Declare which nodes are general, and let the audit hold the line.** Which
+nodes are general is a modelling decision, so it is written down: the schema
+declaration's doc comment carries `@general`. Today that is Role, Skill,
+Requirement statement, Graph kind, Capability, Actor and Process (#1168, B5).
+`kg:audit`'s `arrow-direction` criterion then reports two things: a `@general`
+schema whose `@ref` names a declaration that is not general, and a BPMN
+`<folio:…>` element pointing from a process at anything but a skill, role,
+decision table, convention or precondition. It cannot see a bare string field
+with no `@ref` (step 9 is how those become visible) or prose, so a clean run
+is a claim about declared pointers only.
+
+**Prose may name a dependent; data may not.** The rule governs references,
+the things a tool follows. A general node's prose can still name a
+dependent to explain itself. For example, a process's documentation may say
+"`feature-staging.yml` publishes the branch" so the reader knows why a step
+exists. The owner kept those explanations on 2026-09-24, since deleting them
+loses the reason a step exists (bean `epbt`). If the relation matters to a
+tool, it must also exist as data held by the dependent, like a workflow's
+`# bpmn:` line. The prose then explains that data and does not replace it.
+What prose cannot do is notice a rename, so `kg:audit`'s advisory
+`prose-names-resolve` criterion lists a named path whose directory exists
+and whose file does not. A bare name that nothing in the repository carries
+is left undetermined, because it could be a run's output, a folio's file or
+an example.
 
 ### 9. Make every cross-node reference a typed KG reference
 

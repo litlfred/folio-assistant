@@ -12,7 +12,7 @@
  *
  * The joins in "an actor performs a task in a process as a role, using that
  * role's skills" were, until this module, checked at exactly one point:
- * `scripts/check-workflow-refs.ts` verified that a `<folio:skill ref>` names a
+ * `scripts/check-workflow-refs.ts` verified that a `<bootstrap.processes:skill ref>` names a
  * skill that exists. Everything else was unjoined, and the numbers say so —
  * measured 2026-09-18 across twenty diagrams: **60 distinct lane names**, bound
  * to nothing, for roughly two dozen actual positions; four `.dmn` files whose
@@ -55,6 +55,7 @@ import { join, relative, resolve } from "node:path";
 
 import { z } from "zod";
 
+import { KG_GRAPH_KIND } from "./cat-harness";
 import { portableSegment } from "./portable-path";
 
 /** Marker value carried by every sidecar written by `scripts/kg-audit.ts`. */
@@ -308,6 +309,56 @@ export function sweepOrphans(root: string, written: ReadonlySet<string>): Orphan
 export const KG_SUBJECT_KINDS = ["process", "decision", "role", "requirement", "skill", "graph", "tool"] as const;
 export type KgSubjectKind = (typeof KG_SUBJECT_KINDS)[number];
 
+/**
+ * Which declared GRAPH KIND a subject of each kind lives in.
+ *
+ * Two vocabularies meet here and they are not the same axis. `KG_SUBJECT_KINDS`
+ * above says what this audit judges — a process, a role, a skill. The graph-kind
+ * registry (`BASE_GRAPH_KINDS`) says what an instance DECLARES a directory of.
+ * A `skill` subject inhabits a `skills` graph; a `tool` subject inhabits a
+ * `tools` graph; nothing named `skill` or `tool` is a graph kind.
+ *
+ * ## Why this is declared and not derived
+ *
+ * `audit-coverage.ts` has to answer "how many criteria reach this KIND of
+ * directory", and the only bridge between the two vocabularies was the
+ * directory constants inside `kg-audit.ts` — resolved there, per subject, with
+ * no exported statement of the correspondence. Reading it back out of those
+ * constants means re-deriving a mapping from the shape of the code that uses
+ * it, which is a guess dressed as a lookup: `DECISION_DIR` is
+ * `join(WORKFLOW_DIR, "decisions")`, so a deriver sees a path and has to decide
+ * whether that is its own kind. It is not — there is no `decisions` graph kind,
+ * and a DMN file sits inside the `processes` graph.
+ *
+ * So the subject kind states which graph it inhabits, once, here. Every entry
+ * must name a registered graph kind, and `kg-qa.test.ts` checks that against
+ * the registry — a name that stops being a kind fails at the keyboard rather
+ * than becoming a coverage row about a graph that does not exist.
+ *
+ * `Record<KgSubjectKind, string>` and not a partial map, so adding a subject
+ * kind without saying where it lives does not compile. That is the
+ * `GraphKindDef.holds` discipline: a required field makes "did not say"
+ * impossible, where an optional one makes it indistinguishable from a default.
+ */
+export const KG_SUBJECT_GRAPH_KINDS: Readonly<Record<KgSubjectKind, string>> = {
+  // A `.bpmn` file in the `processes` graph.
+  process: "processes",
+  // A `.dmn` file in `processes/decisions/` — INSIDE the processes graph, and
+  // not a kind of its own. See the note above.
+  decision: "processes",
+  // `scenarios/roles.json`. Roles moved out of the skills tree 2026-09-21.
+  role: "scenarios",
+  // `skills/requirements/` — a requirement is authored beside the skills that
+  // satisfy it, and the skills tree is the `skills` graph.
+  requirement: "skills",
+  skill: "skills",
+  // The knowledge graph AS A WHOLE — the `graph` subject's findings are about
+  // the joins between nodes rather than about any one node, so its home is the
+  // kg graph itself rather than the directory its sidecar happens to sit in.
+  graph: KG_GRAPH_KIND,
+  tool: "tools",
+};
+
 /** Outcome of one criterion. `unknown` is never a pass. */
 export const KG_RESULTS = ["pass", "fail", "n/a", "unknown"] as const;
 export type KgResult = (typeof KG_RESULTS)[number];
@@ -439,7 +490,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["process"],
     severity: "major",
     summary:
-      "A lane declares <folio:role variable=\"true\"/> AND a `ref`. It cannot be both: a lane that names " +
+      "A lane declares <bootstrap.processes:role variable=\"true\"/> AND a `ref`. It cannot be both: a lane that names " +
       "a role has not got a varying performer, and reading either one first would make the other silently " +
       "have no effect. `n/a` when no lane in the diagram declares a varying performer, which is also how a " +
       "reader tells a lane that binds no role BY DESIGN from one nobody got round to.",
@@ -448,7 +499,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     id: "role-ref-resolves",
     applies: ["process"],
     severity: "critical",
-    summary: "A lane's explicit <folio:role ref> names a role that is not declared.",
+    summary: "A lane's explicit <bootstrap.processes:role ref> names a role that is not declared.",
   },
   {
     id: "activity-in-lane",
@@ -495,7 +546,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     // exists to replace. The check is that what IS bound resolves.
     severity: "critical",
     summary:
-      "A `<folio:convention ref>` on a process, lane or activity names a convention that is not in " +
+      "A `<cat-harness.processes:convention ref>` on a process, lane or activity names a convention that is not in " +
       "`.claude/skills/conventions/`. The agent is told a rule applies and cannot read it.",
   },
   {
@@ -507,7 +558,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     // from real gaps — a stakeholder's sign-off and an unwritten skill both
     // showed up as "names no skill", so gating would have forced a fake ref
     // onto a real step. That is no longer true: an `actedUpon` lane, a
-    // `judgementOnly` lane and `<folio:no-skill reason>` each SAY SO, and are
+    // `judgementOnly` lane and `<cat-harness.processes:no-skill reason>` each SAY SO, and are
     // recorded `n/a`. What remains is an activity whose performer is handed
     // nothing and which has not said why — a missing join, which is `major`.
     //
@@ -517,7 +568,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "An activity names no skill and declares no reason for having none. Exempt: a call activity (implemented " +
       "by the process it calls), a lane whose role is `actedUpon` (written to, never acts) or `judgementOnly` " +
-      "(acts, but no procedure yields the answer), and an activity carrying `<folio:no-skill reason=\"…\"/>`.",
+      "(acts, but no procedure yields the answer), and an activity carrying `<cat-harness.processes:no-skill reason=\"…\"/>`.",
   },
   {
     id: "raci-role-resolves",
@@ -530,7 +581,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     // depending on which attribute carries it.
     severity: "critical",
     summary:
-      "A `<folio:raci ref>` names a role that is in no role registry, so 'who is accountable' " +
+      "A `<cat-harness.processes:raci ref>` names a role that is in no role registry, so 'who is accountable' " +
       "dereferences to nothing.",
   },
   {
@@ -566,10 +617,10 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     // involvement somebody wrote had simply evaporated.
     severity: "major",
     summary:
-      "A `<folio:raci involvement>` is not in the vocabulary its process declares — a typo, or " +
+      "A `<cat-harness.processes:raci involvement>` is not in the vocabulary its process declares — a typo, or " +
       "`supportive` where only RACI's four letters are in force. The value is neither coerced to a " +
       "neighbouring letter nor silently dropped; a process opts in to the fifth letter with " +
-      "`<folio:involvement vocabulary=\"rasci\"/>`.",
+      "`<cat-harness.processes:involvement vocabulary=\"rasci\"/>`.",
   },
   {
     id: "activity-fulfilment-kind",
@@ -585,7 +636,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "human (BPMN: \"by a human being with the assistance of a software application\"); a `serviceTask` runs " +
       "without one, so an agentic or mechanical actor performs it. `bpmn:Task` and a call activity assert " +
       "nothing and are `n/a`, as is a lane whose role is `actedUpon` — a store is written to, never asked to " +
-      "perform. Override the derived answer with `<folio:fulfilment kinds=\"…\" reason=\"…\"/>`; the reason is " +
+      "perform. Override the derived answer with `<cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>`; the reason is " +
       "required at load time, because widening `kinds` is the cheapest way to make this criterion pass.",
   },
   {
@@ -648,7 +699,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "A single step names a skill that has its own process of the same name, but is a plain task rather than a " +
       "call activity — so the diagram re-describes the procedure instead of descending into it, and the called " +
-      "process's page cannot say who calls it. Exempt: a step carrying `<folio:no-call reason=\"…\"/>`, which " +
+      "process's page cannot say who calls it. Exempt: a step carrying `<cat-harness.processes:no-call reason=\"…\"/>`, which " +
       "records that it uses the skill for one slice rather than running its whole process.",
   },
   // ── Documentation completeness past activities (bean `6hq4`, issue #1044) ─
@@ -670,7 +721,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "A decision (an exclusive gateway with more than one way out) carries no `<bpmn:documentation>`, so its page " +
       "shows the question and not what answers it: who decides, from what evidence, and what each branch commits " +
-      "the process to. A DMN table or a `<folio:judgement reason>` is not a substitute — it says how the answer is " +
+      "the process to. A DMN table or a `<cat-harness.processes:judgement reason>` is not a substitute — it says how the answer is " +
       "reached, not what is being asked.",
   },
   {
@@ -717,7 +768,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     // not cry wolf — the lesson of bean `77ex`.
     severity: "minor",
     summary:
-      "A declared prose ↔ code pair — a diagram's <folio:implements workflow>, or a skill .md beside its same-stem .ts — " +
+      "A declared prose ↔ code pair — a diagram and the workflow whose `# bpmn:` line names it, or a skill .md beside its same-stem .ts — " +
       "had its CODE change since the prose was last seen or attested, and the prose did not. Re-read it, then " +
       "`pairs:attest` with a reason. A prose edit never raises this; a missing side of a declared pair is `unknown`.",
   },
@@ -733,7 +784,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "The prose of a declared prose ↔ code pair names something that does not exist: a symbol not declared in the module " +
       "it cites, a module missing from a directory that exists here, a `bun run` file that is not there, or a " +
-      "`<folio:job>` the workflow does not have. `unknown` when every parsed claim pointed outside this repository.",
+      "`# bpmn-node:` in the workflow naming an element the diagram does not have. `unknown` when every parsed claim pointed outside this repository.",
   },
   {
     id: "role-skills-resolve",
@@ -1086,6 +1137,51 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     summary:
       "A contract under `schemas/skills/` that no skill names as its `input:` or `output:` — specified " +
       "for nobody. The skill points at its contract, so this is visible only from the contract's side.",
+  },
+  {
+    id: "test-run-skill-resolves",
+    applies: ["graph"],
+    severity: "critical",
+    summary:
+      "A recorded test run does not parse, or names a skill that does not exist — a result attributed to " +
+      "nothing. The run points at the skill it tests; the skill names no test.",
+  },
+  {
+    id: "test-run-conforms",
+    applies: ["graph"],
+    severity: "major",
+    summary:
+      "A recorded test run's cases violate the input or output contract of the skill it names, so it " +
+      "measured something other than that skill as specified.",
+  },
+  {
+    id: "test-run-checkable",
+    applies: ["graph"],
+    severity: "minor",
+    summary:
+      "A recorded test run that cannot be checked against its skill's contract: the skill declares none, " +
+      "the contract is external, or the run records only aggregates. Could-not-check, never a pass.",
+  },
+  {
+    id: "arrow-direction",
+    applies: ["graph"],
+    severity: "major",
+    summary:
+      "A general node names one of its dependents: a `@general` schema `@ref`s a declaration that is not " +
+      "general, or a BPMN process points at something that implements or documents it. The dependent " +
+      "should hold the pointer (data-modelling step 8).",
+  },
+  {
+    id: "prose-names-resolve",
+    applies: ["graph"],
+    // `minor` and advisory (bean `epbt`). Prose may name a dependent as
+    // explanation — the arrow rule governs data — so this never says a name
+    // should not be there, only that it no longer resolves.
+    severity: "minor",
+    summary:
+      "A general node's prose — a BPMN process's documentation, or a `@general` declaration's doc comment — names " +
+      "a file whose directory is in this checkout and which is not: renamed, moved, or never written. A bare name " +
+      "nothing here carries is undetermined (a run's output, a folio's file, an example) and not reported.",
   },
   {
     id: "story-role-resolves",

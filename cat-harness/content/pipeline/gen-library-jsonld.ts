@@ -59,11 +59,12 @@
  * deliberate act that `document-intake` Stage 4 describes.
  *
  * Usage:
- *   bun run content/pipeline/gen-library-jsonld.ts
- *   bun run content/pipeline/gen-library-jsonld.ts --check
- *   bun run content/pipeline/gen-library-jsonld.ts --doc <doc-id>
+ *   bun run cat-harness/content/pipeline/gen-library-jsonld.ts
+ *   bun run cat-harness/content/pipeline/gen-library-jsonld.ts --check
+ *   bun run cat-harness/content/pipeline/gen-library-jsonld.ts --doc <doc-id>
  *
  * @module content/pipeline/gen-library-jsonld
+ * @covers library, uploads
  */
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "fs";
@@ -684,7 +685,7 @@ async function run(): Promise<number> {
         `\n${stale.length} library node(s) stale or missing:\n` +
           stale.slice(0, 20).map((s) => `  ${s}`).join("\n") +
           (stale.length > 20 ? `\n  … and ${stale.length - 20} more` : "") +
-          `\n\nRun: bun run content/pipeline/gen-library-jsonld.ts`,
+          `\n\nRun: bun run cat-harness/content/pipeline/gen-library-jsonld.ts`,
       );
       return 1;
     }

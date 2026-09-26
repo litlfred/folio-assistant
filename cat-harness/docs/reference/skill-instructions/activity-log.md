@@ -112,11 +112,11 @@ exactly the leak the section below warns about, and **an absent field is
 stronger than a warning.** The same caution applies to `command` itself: a
 command line carries its own arguments, and `--token=…` is a command line.
 
-## Turning it on — `<folio:log capture="on"/>` on the process
+## Turning it on — `<cat-harness.processes:log capture="on"/>` on the process
 
 Owner: *"need explicit like (capture log when agent runs this workflow)."*
 That is a declaration on the **process**, parsed at load and **throwing on a
-value the engine cannot honour**, exactly as `<folio:bean op>` does. A diagram
+value the engine cannot honour**, exactly as `<cat-harness.processes:bean op>` does. A diagram
 asking for a mode that does not exist must not load and quietly log nothing —
 worse here than elsewhere, because the missing artefact *is* the record.
 

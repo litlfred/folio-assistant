@@ -22,7 +22,7 @@ Input schema for FHIR validation — runs SUSHI, IG Publisher QA, and conformanc
 | `targetProfiles` | array<string> | no | Specific CRMI profiles to validate against (Shareable, Publishable, Computable, Executable). |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/fhir-validation/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/fhir-validation/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/fhir-validation/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/fhir-validation/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -63,4 +63,4 @@ Output schema for FHIR validation results.
 | `issues` | array<string> | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/fhir-validation/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/fhir-validation/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/fhir-validation/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/fhir-validation/output.schema.json){: .fa-edit-source }

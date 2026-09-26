@@ -139,7 +139,7 @@ ours go to the decision as they are.
 **A person decides, and the diagram says so.** `PM_Decide` is a `bpmn:userTask`
 in the publication manager's lane, and that role admits `person` only, so
 `activity-fulfilment-kind` fails the moment somebody tries to make an agent the
-accepting party. It also carries `<folio:policy relaxable="false"/>`: no
+accepting party. It also carries `<cat-harness.processes:policy relaxable="false"/>`: no
 package may relax it.
 
 The lane is the publication manager's rather than the editor's because the pin

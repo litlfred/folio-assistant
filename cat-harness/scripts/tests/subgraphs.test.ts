@@ -15,10 +15,17 @@
  *    reading as a clean disconnection.
  */
 import { describe, expect, test } from "bun:test";
+import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { isDerivedGraph, owningDirectory, resolveDirectories, subgraphTree } from "../../schemas/cat-harness.ts";
-import { scanSubgraphs } from "../check-subgraphs.ts";
+import {
+  isDerivedGraph,
+  owningDirectory,
+  resolveDirectories,
+  siteDirFor,
+  subgraphTree,
+} from "../../schemas/cat-harness.ts";
+import { overDeepLinks, scanSubgraphs } from "../check-subgraphs.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 const dirs = resolveDirectories([{ name: "(local)", root: ROOT, own: true }]);
@@ -52,11 +59,13 @@ describe("subgraph containment is derived from declared paths", () => {
   });
 
   test("a repository-scoped directory is not a child of an instance-relative one", () => {
-    // `smart-kg/methodologies/` is repository-scoped so the extraction is
+    // `smart-base/methodologies/` is repository-scoped so the extraction is
     // literal. Reading it as a child of `methodologies/` would be wrong on
-    // the path AND on the intent.
+    // the path AND on the intent. (The example was `smart-kg/methodologies/`
+    // until it was removed, bean `wg7r`.)
     const tree = subgraphTree(dirs);
-    for (const r of tree) expect(r.children).not.toContain("smart-kg-methodologies");
+    for (const r of tree) expect(r.children).not.toContain("smart-base-methodologies");
+    expect(dirs.find((d) => d.id === "smart-base-methodologies"), "the scoped entry did not resolve — vacuous").toBeDefined();
   });
 
   // The real declaration no longer nests anything, so the two properties
@@ -206,11 +215,11 @@ describe("repository-scoped directories are attributed", () => {
   });
 
   test("the x4v4 separation survives the change", () => {
-    // Making scoped paths attributable must NOT make `smart-kg/methodologies/`
+    // Making scoped paths attributable must NOT make `smart-base/methodologies/`
     // read as a child of `methodologies/` — that separation is deliberate and
     // was settled in bean `x4v4`. This is the trap the bean named in advance.
     for (const r of report.tree) {
-      expect(r.children).not.toContain("smart-kg-methodologies");
+      expect(r.children).not.toContain("smart-base-methodologies");
     }
     // The positive half USED to be `methodologies` → [methodology-crdm,
     // methodology-raci]. Both declarations went on 2026-09-22.
@@ -222,8 +231,59 @@ describe("repository-scoped directories are attributed", () => {
     // child" mean something. The tree is non-empty again since `main`
     // declared `test/` as a `code` graph, but this test does not depend on
     // that either way.
-    const scoped = dirs.find((d) => d.id === "smart-kg-methodologies");
+    const scoped = dirs.find((d) => d.id === "smart-base-methodologies");
     expect(scoped, "the repository-scoped entry did not resolve — the check above is vacuous").toBeDefined();
     expect(Array.isArray(report.tree), "containment was not computed at all").toBe(true);
+  });
+});
+
+describe("the `../` too many count is COMPUTED (bean `syrl`)", () => {
+  // The report carried this number as a STRING LITERAL for five days: "23
+  // carry one `../` too many", measured once on 2026-09-20 and printed
+  // unchanged beside a total that re-measured every run. When it was finally
+  // computed it read **27** — so the literal had been wrong for most of its
+  // life, and nothing could say so.
+  //
+  // Both halves are asserted, because a fix that returns nothing would pass
+  // the first on its own and would be indistinguishable from a clean corpus.
+  // ASKED, not spelled: `site-dir-single-answer` refuses a literal here, and
+  // it is right to — a test naming the output root by hand is one more place
+  // the answer can disagree with the declaration.
+  const siteDir = resolve(ROOT, siteDirFor(ROOT));
+
+  test("a target that resolves after dropping one `../` IS one", () => {
+    // From `docs/reference/skill-instructions/`, `../../skill-instructions/…`
+    // lands in `docs/` — nothing there — while dropping one `../` lands on
+    // the page's own directory, where `index.md` is.
+    const found = overDeepLinks(ROOT, [
+      {
+        from: "docs/reference/skill-instructions/x.md",
+        fromDir: "docs",
+        target: "../../skill-instructions/index.md",
+      },
+    ]);
+    expect(found.map((f) => f.repaired)).toEqual(["../skill-instructions/index.md"]);
+  });
+
+  test("a target that still does not resolve after dropping one is NOT", () => {
+    const found = overDeepLinks(ROOT, [
+      { from: "docs/x.md", fromDir: "docs", target: "../../no-such-directory/no-such-file.md" },
+    ]);
+    expect(found, "a repair is tested against disk, never inferred from shape").toEqual([]);
+  });
+
+  test("a target with no `../` at all is never one", () => {
+    const found = overDeepLinks(ROOT, [
+      { from: "docs/x.md", fromDir: "docs", target: "reference/index.md" },
+    ]);
+    expect(found).toEqual([]);
+  });
+
+  test("the real corpus carries none — the repair of `mi97` holds", () => {
+    // Falsifier for `mi97`, which said the count must fall to zero once the
+    // 27 were repaired. It is checkable ONLY because the number is live.
+    expect(existsSync(siteDir), `${siteDir} must exist or this asserts nothing`).toBe(true);
+    const { siteResolved } = scanSubgraphs(ROOT);
+    expect(overDeepLinks(ROOT, siteResolved).map((l) => `${l.from} -> ${l.target}`)).toEqual([]);
   });
 });

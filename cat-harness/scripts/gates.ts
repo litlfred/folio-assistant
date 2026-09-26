@@ -56,6 +56,14 @@ import { join, resolve } from "node:path";
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { parse } from "yaml";
 
+import {
+  diffReadings,
+  formatMutations,
+  formatUndetermined,
+  readTree,
+  type GateMutation,
+} from "./gate-tree-guard.js";
+
 // The REPOSITORY root. `GATES_WORKFLOW` is `.github/workflows/…`, which
 // belongs to the repository rather than to this instance, and the gates
 // themselves are npm scripts run from the repository root. This arrived from
@@ -125,9 +133,12 @@ export const WORKFLOW_DIR = join(".github", "workflows");
  * wrong program. `check:workflow-paths` records that as a `FOLIO_PATHS`
  * exemption with the same reason, and a test pins it.
  *
- * What the rename does NOT yet reach — `scripts/init-folio.ts` still
- * scaffolds `content/<slug>/`, and these workflows still `cd content` — is
- * `52dz`'s open half and the owner's call, not this table's to settle.
+ * `52dz`'s owner ruling (2026-09-24) settled the rest: the generic QA
+ * workflows and the Lean workflows that `cd content` were moved OUT of
+ * `.github/workflows/` into the platform's `templates/`, which `folio_init`
+ * writes into a new folio pointed at `folio/`. Their entries left this table
+ * with them — an exemption for a step no workflow here runs is the stale
+ * claim `gates.test.ts` refuses.
  *
  * These steps are not broken and not runnable here, and until this table
  * existed nothing could tell either from a real gap.
@@ -147,6 +158,27 @@ export interface StepExemption {
 }
 
 export const STEP_EXEMPTIONS: StepExemption[] = [
+  {
+    // Bean `oi1y`. Rails the pages Jekyll copies through verbatim — wireframe
+    // `as-is.html` and bootstrap's `.md`-rendered siblings — which inherit no
+    // layout and so no sidebar.
+    //
+    // `ci-only` for the same reason as `mount-instance-docs`: it WRITES INTO a
+    // built `./_site`, which only the deploy and staging jobs produce, so there
+    // is nothing for it to operate on in the fast set. Its logic is pinned by
+    // `standalone-rail.test.ts` in `bun test`, over a fixture site carrying one
+    // page per case, and `bun run preview:site` builds a site to run it on.
+    //
+    // Its ORDERING is the part no unit test can hold: it must run after every
+    // generator that writes a page, and a version that ran 142 lines earlier
+    // missed ten pages silently. That is asserted by
+    // `check:invocation-parity`, which requires both workflows to run it.
+    match: "rail-standalone-pages",
+    kind: "ci-only",
+    reason:
+      "writes into the built ./_site that only the deploy and staging jobs produce; its logic is " +
+      "pinned by standalone-rail.test.ts in `bun test`, and its ordering by check:invocation-parity",
+  },
   {
     // The unattended PR sweep and its `gh` plumbing. `ci-only` rather than a
     // gate, for the same reason the script itself is exempt: a CI job asking
@@ -341,10 +373,11 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
   // workflows and prose; it is true of these and now declared.
   //
   // WORTH SAYING PLAINLY: several of these were authored for `litlfred/qou`
-  // and live here. One names `quantum-observable-universe` outright. Whether
-  // they belong in the platform repository at all is bean `52dz` — this table
-  // records what they are, and does not pretend that is the same as deciding
-  // where they go.
+  // and lived here. Bean `52dz` decided where they go (owner, 2026-09-24):
+  // `qa-sweep.yml`, `qa-sweep-nightly.yml`, `section-title-audit.yml` and the
+  // four Lean workflows are now templates `folio_init` writes, so the
+  // `qa-staleness` and `qa-section-title-audit.ts` entries went with them.
+  // What remains below still matches a workflow in `.github/workflows/`.
   {
     match: "pipeline/build.ts",
     kind: "no-folio",
@@ -355,16 +388,14 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "(bean `52dz`, 2026-09-20)",
   },
   {
+    // Since `52dz` the only match is the reusable `folio-staging.yml`, which
+    // runs inside a FOLIO's staging job and sweeps that folio's `folio_dir`.
     match: "qa-sweep",
     kind: "no-folio",
     reason:
-      "sweeps a folio's blocks from `content/`, a root the convention has " +
-      "retired in favour of `folio/` (owner, 2026-09-20)",
-  },
-  {
-    match: "qa-staleness",
-    kind: "no-folio",
-    reason: "as `qa-sweep` — a verdict's freshness against blocks the platform does not have",
+      "runs inside a FOLIO's staging job (`folio-staging.yml`, a reusable " +
+      "workflow) over that folio's blocks; the platform carries no folio. " +
+      "The standalone qa-sweep workflows are folio_init templates (bean `52dz`)",
   },
   {
     match: "check-witnesses",
@@ -380,13 +411,6 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     match: "latex-overfull-report.ts",
     kind: "no-folio",
     reason: "reads `main.log` from a folio's LaTeX run",
-  },
-  {
-    match: "qa-section-title-audit.ts",
-    kind: "no-folio",
-    reason:
-      "audits section titles from a root `content/` — retired; the " +
-      "convention is `folio/`, which this instance declares",
   },
   {
     match: "scripts/audit-wiring.ts",
@@ -498,6 +522,16 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason:
       "runs inside a FOLIO's staging job over that folio's published site and staging build; the platform carries no folio. " +
       "Covered by block-screenshots.test.ts in `bun test` and block-screenshots.e2e.ts in the e2e job",
+  },
+  {
+    // Bean `5uuf`: publishes a FOLIO's main site at its publish branch's root,
+    // the before side of every preview. The platform has no folio, and no
+    // publish branch checked out in a gate run.
+    match: "publish-main-site.ts",
+    kind: "no-folio",
+    reason:
+      "runs inside a FOLIO's publish-main job over that folio's built site and its publish branch; the platform carries no folio. " +
+      "Covered by publish-main-site.test.ts in `bun test`: the manifest, the reserved paths, and the refusals",
   },
   {
     match: "staging-banner.ts",
@@ -746,6 +780,30 @@ export interface ScriptExemption {
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
   {
+    script: "check:quiet-claims",
+    kind: "report",
+    reason:
+      "A REPORT, and deliberately not a gate — bean `omki`. It supplies the NETWORK half of `bean-quiet-claims` (an open pull request naming a bean, an unmerged branch changing its file), so it needs a reachable GitHub API and a token, and it fetches before it reads because `pomp` makes ref freshness part of the evidence. Gating on it would make every PR depend on api.github.com being up, and it would redden when a SIBLING's branch merges rather than when this author forgot anything — the property `schema:viz:check` is exempt for. Its findings exit 0 on purpose: a quiet claim is a fact about the repository, not a defect in a diff. Could-not-determine exits 2, so a caller cannot read a blind sweep as a clean one. Run it by hand, or from a goal-review sweep",
+  },
+  {
+    script: "check:kind-validators",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `check:kind-validators:require-all`, which CI runs: the same script with a flag that adds one assertion — that no kind has stayed silent about a validator — and performs this one's entire job besides. Kept as a script because the bare form is the REPORT, and a contributor adding a kind wants to read the three states without the non-zero exit while they are still deciding which one applies. Bean `rj0n`",
+  },
+  {
+    script: "check:harness-state",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `check:harness-state:check`, which CI runs: the same script with `--check`, so it examines exactly the same four families and fails on a finding instead of reporting it. Kept as a script because the writer is what refreshes the committed sidecar, and a contributor wants the report without the non-zero exit while they are still fixing things. Bean `h1wq`",
+  },
+  {
+    script: "audit:coverage:check",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `audit:coverage:require-all`, which CI runs: that is the same script with `--check --require-all`, so it performs this check's entire job and one more assertion on top. Kept as a script because it is what a contributor runs locally when they want the staleness answer WITHOUT being told about a gate somebody else left undeclared — the two questions have different owners. Bean `3srh`",
+  },
+  {
     script: "schema:viz:check",
     kind: "covered-by",
     reason:
@@ -831,22 +889,6 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "report",
     reason:
       "prints every backdrop role and what intake found; `check:theme-art:check` is the gating form",
-  },
-  {
-    script: "check:theme-art:check",
-    kind: "report",
-    // NOT a permanent exemption, and the unblocking condition is exact rather
-    // than "when somebody gets round to it": it refuses `landing-architecture`,
-    // which is declared with laptop and card and NO mobile crop.
-    // `resolveThemeBackdrop` refuses an incomplete backdrop wholesale, so that
-    // theme would render with no art at all — a real finding, not a false one.
-    //
-    // Gating on it today would make CI red over art that is MISSING rather than
-    // over a regression somebody introduced, which is the one thing a ratchet
-    // must not do. Wire it the moment the architecture mobile crop lands, or
-    // the incomplete declaration is withdrawn.
-    reason:
-      "refuses `landing-architecture`, whose mobile crop has never been supplied; gating would make CI red over missing art rather than over a regression. Wire it when that crop lands",
   },
   {
     script: "check:undeclared-files",
@@ -1101,19 +1143,76 @@ if (import.meta.main) {
     process.exit(0);
   }
 
+  // ── Which gate changed the repository (bean `ymsu`) ────────────────────
+  //
+  // Snapshot the working tree between gates, so a gate that writes to the tree
+  // it is being judged on is attributed to ITSELF rather than discovered later
+  // as a mystery dirty file. `gate-tree-guard.ts` carries why this can only
+  // live here — no gate can observe what another gate did, which is the
+  // definition of the blind spot — and why the predicate is a per-gate DELTA
+  // rather than "the tree is dirty", since running gates on your own
+  // uncommitted work is the normal case.
+  //
+  // A failure to read the tree is carried as `undetermined` and reported, not
+  // thrown: `gates` has to stay runnable where the question cannot be asked.
+  const baseline = readTree(ROOT);
+  let seen: ReadonlyMap<string, string> | undefined = baseline.ok ? baseline.entries : undefined;
+  const undetermined: string[] = baseline.ok ? [] : formatUndetermined(baseline.why);
+  const mutations: GateMutation[] = [];
+
   const failed: { gate: Gate; why: string[] }[] = [];
   for (const g of gates) {
     process.stdout.write(`▸ ${g.command}\n`);
     const [cmd, ...args] = g.command.split(/\s+/);
     const r = await runTee(cmd!, args);
     if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
+
+    if (seen !== undefined) {
+      const now = readTree(ROOT);
+      if (!now.ok) {
+        // The baseline read fine and this one did not, so the question stops
+        // being answerable PART WAY THROUGH. Reported with the gate it stopped
+        // at, and the comparison is abandoned rather than continued against a
+        // snapshot that is now of unknown age.
+        undetermined.push(...formatUndetermined(`${now.why} (after \`${g.command}\`)`));
+        seen = undefined;
+      } else {
+        const changes = diffReadings(seen, now.entries);
+        if (changes.length > 0) mutations.push({ gate: g.command, changes });
+        seen = now.entries;
+      }
+    }
   }
 
   console.log("");
+  for (const line of undetermined) console.log(line);
+  if (undetermined.length) console.log("");
+  const mutationReport = formatMutations(mutations);
+  for (const line of mutationReport) console.log(line);
+  if (mutationReport.length) console.log("");
   if (failed.length === 0) {
-    console.log(`✓ ${gates.length} gate(s) pass — the ${all ? "whole" : "fast"} set.`);
-    if (!all) console.log("  `bun run gates --all` adds the browser jobs before you push.");
-    process.exit(0);
+    // Every gate passed AND nothing moved underneath them. Only this pair earns
+    // the clean line.
+    if (mutations.length === 0) {
+      console.log(`✓ ${gates.length} gate(s) pass — the ${all ? "whole" : "fast"} set.`);
+      if (!all) console.log("  `bun run gates --all` adds the browser jobs before you push.");
+      process.exit(0);
+    }
+    // `152 gate(s) pass` is TRUE here and it is the wrong thing to print: the
+    // gates that ran after the mutation were handed a repaired tree, so their
+    // passing is a verdict about a state the repository does not contain. The
+    // whole of bean `ymsu` is that this sentence was printed anyway, 152 times
+    // out of 152, over a value nobody had committed.
+    console.log(
+      `✗ every gate passed, and the run is NOT clean — ${mutations.length} gate(s) changed the tree.`,
+    );
+    console.log(
+      `  ${gates.length} verdict(s) above were reached against a tree that a gate had already`,
+    );
+    console.log(
+      `  repaired, so the later ones describe a state you have not committed. Details above.`,
+    );
+    process.exit(1);
   }
   console.log(`✗ ${failed.length} of ${gates.length} failed:`);
   for (const { gate, why } of failed) {

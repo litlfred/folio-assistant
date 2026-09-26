@@ -82,6 +82,15 @@ The target, per the owner's 2026-09-23 decisions:
 Until then the whitelists stay authoritative, and the table below still
 describes the running gateway.
 
+## Asking GitHub directly: `auth_whoami`
+
+Without the gateway, the `auth_whoami` MCP tool (Tool node `user-auth`) asks
+GitHub for the caller's login and repository role, and maps the role onto the
+same three gateway actors: `admin` → `owner`; `maintain` and `write` →
+`collaborator`; `triage` and `read` → `viewer`. A GitHub role covers the whole
+repository, never a sub-graph, node or query path. The trade-off is argued in
+[`task-authorization`](task-authorization.md) §"GitHub as the auth layer".
+
 ## CRITICAL: Whitelist Protection
 
 **NEVER modify these files:**

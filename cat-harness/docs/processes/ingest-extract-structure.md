@@ -11,7 +11,7 @@ nav_exclude: true
 
 `Process_ExtractStructure` · advisory · 5 step(s)
 
-folio-assistant — Ingestion subprocess — extract structure. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <folio:skill> extension on an activity names the folio-assistant skill that implements it; <folio:bean> marks a step that reads or writes the shared work plan in beans/.
+folio-assistant — Ingestion subprocess — extract structure. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/.
 
 <img src="../assets/img/workflows/ingest-extract-structure.svg" alt="BPMN diagram: Ingestion subprocess — extract structure" style="max-width:100%">
 
@@ -19,6 +19,7 @@ folio-assistant — Ingestion subprocess — extract structure. Source of truth:
 
 - **Called by:** [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html)
 - **Calls:** none
+- **Presented on:** [Document ingestion — Extract structure](../document-ingestion.html#extract-structure)
 
 ## Lanes — who acts
 

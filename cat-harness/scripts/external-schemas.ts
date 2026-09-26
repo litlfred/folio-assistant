@@ -19,6 +19,7 @@
  *   bun run cat-harness/scripts/external-schemas.ts --check    # CI
  *
  * @module scripts/external-schemas
+ * @covers external-schema
  */
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
@@ -29,7 +30,7 @@ import {
   type ExternalSchema,
 } from "../../folio-assistant-core/schemas/external-schema.js";
 
-import { FOLIO_BPMN_NS, OWN_NAMESPACE_VALUES, OWN_XML_NAMESPACES, WORKFLOWS_NS } from "../schemas/namespaces.js";
+import { isOwnExtensionNamespace, OWN_BPMN_EXTENSION_NAMESPACES, OWN_NAMESPACE_VALUES, OWN_XML_NAMESPACES, WORKFLOWS_NS } from "../schemas/namespaces.js";
 import { portableSegment } from "../schemas/portable-path";
 import { directoriesForGraph } from "../schemas/cat-harness.js";
 import { workflowFiles } from "./known-skills.js";
@@ -379,7 +380,10 @@ function run(argv: string[]): number {
   // Drift, not absence: an XML namespace is compared by STRING, so a second
   // spelling means a consumer matching on the first skips every element in the
   // second — silently, and while parsing without error.
-  const drifted = own.filter((ns) => ns !== FOLIO_BPMN_NS);
+  // Since bean 12s9 there is more than one address ON PURPOSE (a prefix names
+  // the declaring Subgraph), so drift is "ours but not an active extension
+  // namespace" — the retired spelling — rather than "not the one address".
+  const drifted = own.filter((ns) => !isOwnExtensionNamespace(ns));
   // The diagram's IDENTITY drifting is a different defect with the same shape:
   // a call is a QName, so two diagrams in two namespaces cannot call each
   // other without an import a standards tool would demand.
@@ -428,16 +432,29 @@ function run(argv: string[]): number {
     }
     console.error("  Conforming to a specification nobody named is the defect this registry ends.");
   }
-  if (unused.length > 0) {
-    console.log(`\n· ${unused.length} declared namespace(s) nothing uses — a record outliving its dependency:`);
-    for (const ns of unused) console.log(`    ${ns}`);
+  // A `cites` record is pinned AHEAD of use on purpose (bean `4sim`: DCAT,
+  // "reference only"), so nothing using it yet is its expected state, not a
+  // record that outlived its dependency. Said in different words so the
+  // remedy the second line offers — drop the record — is never read as
+  // applying to the first.
+  const citedAhead = new Set(specs.filter((s) => s.use === "cites").flatMap((s) => s.namespaces));
+  const ahead = unused.filter((ns) => citedAhead.has(ns));
+  const outlived = unused.filter((ns) => !citedAhead.has(ns));
+  if (ahead.length > 0) {
+    console.log(`\n· ${ahead.length} namespace(s) cited AHEAD of use — pinned by decision, nothing emits them yet:`);
+    for (const ns of ahead) console.log(`    ${ns}`);
+  }
+  if (outlived.length > 0) {
+    console.log(`\n· ${outlived.length} declared namespace(s) nothing uses — a record outliving its dependency:`);
+    for (const ns of outlived) console.log(`    ${ns}`);
   }
 
   if (drifted.length > 0) {
-    console.error(`\n✗ our OWN namespace is spelt ${drifted.length + 1} ways, not one:`);
-    console.error(`    ${FOLIO_BPMN_NS}   (canonical — schemas/namespaces.ts)`);
-    for (const ns of drifted) console.error(`    ${ns}   ✗`);
-    console.error("  Rebind every `xmlns:folio` to the canonical IRI. This is not cosmetic:");
+    console.error(`\n✗ a diagram binds ${drifted.length} of our namespace(s) that is not active:`);
+    for (const ns of OWN_BPMN_EXTENSION_NAMESPACES) console.error(`    ${ns}   (active — schemas/namespaces.ts)`);
+    for (const ns of drifted) console.error(`    ${ns}   ✗ retired`);
+    console.error("  Bind bootstrap.processes: for skill, role and precondition, and");
+    console.error("  cat-harness.processes: for every other element (bean 12s9). This is not cosmetic:");
     console.error("  an extension element under the other IRI is invisible to a consumer");
     console.error("  matching on this one, and the file still parses.");
   }

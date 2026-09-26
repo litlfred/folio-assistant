@@ -5,6 +5,8 @@
  * binds it, with our own namespaces spelt as their instance stubs.
  *
  * @module scripts/check-context-emission
+ * @covers schemas — the thing graded is `CONTENT_CONTEXT` in `schemas/jsonld.ts`: a prefix it
+ *   binds that nothing emits, and a prefix a document speaks that it does not bind
  *
  * ## The defect, and why nothing broke
  *
@@ -51,7 +53,7 @@
  * that indistinguishable from an oversight — which is the whole shape of the
  * bug. So a forward declaration is declared, with a reason naming what would
  * emit it, in {@link FORWARD_DECLARED}. Reason required, same discipline as
- * `command-path-ok:` and `<folio:no-skill reason="…"/>`: silencing the check
+ * `command-path-ok:` and `<cat-harness.processes:no-skill reason="…"/>`: silencing the check
  * costs more than satisfying it, and the exempted set is REPORTED rather than
  * disappearing.
  *
@@ -60,6 +62,8 @@
  *   bun run cat-harness/scripts/check-context-emission.ts --json
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
+
+import { gitCorpus } from "./git-corpus.ts";
 import { join, resolve } from "node:path";
 
 import { CONTENT_CONTEXT, CONTENT_CONTEXT_URL } from "../schemas/jsonld.js";
@@ -110,8 +114,43 @@ export const FORWARD_DECLARED: Readonly<Record<string, string>> = {
   // `folio-assistant-core` since that bean — the instance's stub.
 };
 
-/** Every `.jsonld` document in the tree, excluding build outputs. */
+/**
+ * Every `.jsonld` document in the REPOSITORY — asked of git, not of the disk.
+ *
+ * **The corpus of a repository is what git says it is.** Bean `ramz`: this
+ * walked the filesystem behind a hand-written denylist
+ * (`node_modules`, `_kg`, `_site`, `_docs`, `.git`) and therefore swept every
+ * gitignored path the list did not happen to name. On 2026-09-25 a clean
+ * checkout of `main` failed `bun test` on **145 documents** under
+ * `cat-harness/ingest-staging/` — gitignored, untracked, residue of one
+ * machine's ingestion five days earlier. The assertion is named *"the real
+ * corpus"*, and what it read was not the repository's.
+ *
+ * Two failures in one, and the second is the worse: a denylist is wrong
+ * whenever somebody adds an ignored directory it does not name (a false
+ * finding about code the contributor did not touch), and it cannot tell
+ * anybody WHICH set it read, so a pass over the wrong corpus reads exactly
+ * like a pass over the right one.
+ *
+ * `--cached --others --exclude-standard` is tracked files PLUS untracked ones
+ * git would not ignore. Not `--cached` alone: a `.jsonld` a contributor has
+ * just written and not yet staged is part of the change under test, and a
+ * check that cannot see it passes on the file it exists to examine.
+ *
+ * The git half is `gitCorpus`, shared rather than restated: `xd1g` counted 11
+ * scanners here walking a root with no gitignore awareness and said the rule
+ * wants stating once. It was copied a second time within a day of being
+ * written (bean `rsi6`, `check-subgraphs`), which settled the question.
+ *
+ * **Falls back to the walk, and says so**, when `repo` is not a git work tree
+ * — every test fixture is such a directory, and refusing there would trade a
+ * false finding for an unrunnable check. The fallback is the LOOSER set, so
+ * it can only over-report; could-not-determine is never rendered as clean.
+ */
 export function contentDocuments(repo = REPO): string[] {
+  const listed = gitCorpus(repo, ["*.jsonld"]);
+  if (listed !== undefined) return listed;
+
   const out: string[] = [];
   const skip = new Set(["node_modules", "_kg", "_site", "_docs", ".git"]);
   const walk = (dir: string): void => {
@@ -125,6 +164,7 @@ export function contentDocuments(repo = REPO): string[] {
   walk(repo);
   return out;
 }
+
 
 const curiePrefix = (s: string): string | undefined => {
   // An absolute IRI is not a CURIE, and `https:` would otherwise read as one.

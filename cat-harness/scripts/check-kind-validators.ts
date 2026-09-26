@@ -20,10 +20,14 @@
  * to be closed.
  *
  * @module folio-assistant/scripts/check-kind-validators
+ * @covers computed — it sweeps whichever kinds declare `nodeSchemas`, so a literal list would go
+ *   stale silently
  */
 
 import { BASE_GRAPH_KINDS } from "../schemas/cat-harness.js";
 import { readdirSync, readFileSync, statSync } from "node:fs";
+
+import { gitCorpus } from "./git-corpus.ts";
 import { join, relative } from "node:path";
 
 import { directoriesForGraph, instanceRootsIn } from "../schemas/cat-harness.js";
@@ -34,18 +38,45 @@ const instanceRoot = new URL("..", import.meta.url).pathname.replace(/\/$/, "");
 
 export interface ValidatorSweep {
   resolved: string[];
+  /**
+   * A kind that has DECIDED a runtime validator cannot apply, with its reason.
+   *
+   * Bean `rj0n`. These were counted as `undeclared` until 2026-09-24, which made
+   * the gap read as seven items over a real backlog of zero and made
+   * `--require-all` a flag that could never pass. Kept as its own list rather
+   * than folded into `resolved`, because "a schema parses these nodes" and "no
+   * schema can" are different facts and a reader needs both.
+   */
+  notApplicable: { kind: string; reason: string }[];
+  /** Has NOT said — the only state `--require-all` fails on. */
   undeclared: string[];
   unresolvable: { kind: string; reason: string }[];
+  /**
+   * A kind claiming BOTH a runnable schema and that none can exist. Reported
+   * rather than resolved by precedence: picking a winner would let a
+   * contradiction ship silently, and there is no reading under which both are
+   * true.
+   */
+  contradictory: string[];
 }
 
 export async function sweep(root: string): Promise<ValidatorSweep> {
-  const out: ValidatorSweep = { resolved: [], undeclared: [], unresolvable: [] };
+  const out: ValidatorSweep = { resolved: [], notApplicable: [], undeclared: [], unresolvable: [], contradictory: [] };
   for (const kind of Object.keys(BASE_GRAPH_KINDS)) {
+    const def = BASE_GRAPH_KINDS[kind];
+    const na = def?.validatorNotApplicable;
+    // The contradiction first, because everything below would otherwise pick a
+    // winner between two claims that cannot both hold.
+    if (na && (def?.validator || def?.nodeSchemas)) {
+      out.contradictory.push(kind);
+      continue;
+    }
     const r = await resolveKindValidator(kind, root);
     if (r.state === "resolved") out.resolved.push(kind);
     // A kind that names its `$schema` families is checked per family above,
     // so it is not "undeclared" merely for having no kind-level validator.
-    else if (r.state === "undeclared" && BASE_GRAPH_KINDS[kind]?.nodeSchemas) out.resolved.push(`${kind} (per $schema family)`);
+    else if (r.state === "undeclared" && def?.nodeSchemas) out.resolved.push(`${kind} (per $schema family)`);
+    else if (r.state === "undeclared" && na) out.notApplicable.push({ kind, reason: na });
     else if (r.state === "undeclared") out.undeclared.push(kind);
     else out.unresolvable.push({ kind: r.kind, reason: r.reason });
   }
@@ -67,7 +98,31 @@ export interface FamilySweep {
   noDirectory?: boolean;
 }
 
+/**
+ * The JSON nodes in {@link dir} — asked of git, not of the disk.
+ *
+ * Two defects, both hit on 2026-09-26 the moment a gate installed a
+ * publishable package's devDependencies (bean `rsi6`):
+ *
+ * 1. **It swept `node_modules/`.** A declared directory containing an
+ *    untracked subtree meant thousands of third-party `.json` files routed
+ *    through this repository's `$schema` map — and a tag the map does not
+ *    name is a FAILURE here, so every one of them would have been a finding.
+ * 2. **A dangling symlink CRASHED it.** `statSync` on `node_modules/.bin/`
+ *    threw `ENOENT` and took the whole sweep with it, so the check reported
+ *    nothing at all rather than reporting what it could not read. A checker
+ *    that dies is strictly worse than one that says "could not determine".
+ *
+ * `gitCorpus` fixes the first; `statSync` is now guarded for the second,
+ * because a broken symlink is a fact about the tree and not a reason to stop.
+ */
 function jsonFiles(dir: string): string[] {
+  const listed = gitCorpus(dir, ["*.json"]);
+  if (listed !== undefined) return listed;
+
+  // Fallback for a directory git cannot answer about — a temp fixture, or a
+  // path outside any work tree. Looser than the git answer, so it can only
+  // over-report.
   let entries: string[];
   try {
     entries = readdirSync(dir);
@@ -76,7 +131,13 @@ function jsonFiles(dir: string): string[] {
   }
   return entries.flatMap((e) => {
     const p = join(dir, e);
-    return statSync(p).isDirectory() ? jsonFiles(p) : p.endsWith(".json") ? [p] : [];
+    let isDir: boolean;
+    try {
+      isDir = statSync(p).isDirectory();
+    } catch {
+      return []; // dangling symlink, or a race: not readable is not a crash
+    }
+    return isDir ? jsonFiles(p) : p.endsWith(".json") ? [p] : [];
   });
 }
 
@@ -142,9 +203,7 @@ async function main(): Promise<number> {
       console.log(
         c.checked
           ? `  ✓ ${tag}: ${c.parsed}/${c.checked} parse`
-          : c.state === "untyped"
-            ? `  · ${tag}: ${c.nodes} node(s), NO declared type — could not determine`
-            : c.state === "external"
+          : c.state === "external"
               ? `  · ${tag}: ${c.nodes} node(s), an external specification — named, not run here`
               : `  · ${tag}: ${c.nodes} node(s), a TypeScript shape, not runnable — could not determine`,
       );
@@ -163,7 +222,7 @@ async function main(): Promise<number> {
   }
   if (families.length) console.log("");
   const r = await sweep(instanceRoot);
-  const total = r.resolved.length + r.undeclared.length + r.unresolvable.length;
+  const total = r.resolved.length + r.notApplicable.length + r.undeclared.length + r.unresolvable.length + r.contradictory.length;
 
   if (total === 0) {
     // A sweep over no kinds has not passed. This repository has paid three
@@ -172,8 +231,23 @@ async function main(): Promise<number> {
     return 1;
   }
 
-  console.log(`${total} graph kind(s): ${r.resolved.length} with a validator that loads`);
+  console.log(
+    `${total} graph kind(s): ${r.resolved.length} with a validator that loads, ` +
+      `${r.notApplicable.length} where one cannot apply`,
+  );
   for (const k of r.resolved) console.log(`  ✓ ${k}`);
+  // Printed with the REASON, never as a bare count. A reader has to be able to
+  // check the claim — the reason names a file format or an absent subject, so
+  // "not applicable" cannot become the polite way to launder a real gap.
+  for (const n of r.notApplicable) console.log(`  · ${n.kind} — no runtime validator applies: ${n.reason}`);
+
+  if (r.contradictory.length > 0) {
+    console.log(
+      `\n✗ ${r.contradictory.length} kind(s) claim BOTH a runnable schema and that none can exist — ` +
+        `there is no reading under which both hold: ${r.contradictory.join(", ")}`,
+    );
+    return 1;
+  }
 
   if (r.unresolvable.length > 0) {
     console.log(`\n✗ ${r.unresolvable.length} declare a validator that does not resolve:`);
@@ -182,9 +256,9 @@ async function main(): Promise<number> {
   }
 
   const msg =
-    `${r.undeclared.length} kind(s) declare no validator — a node of those kinds ` +
-    `cannot be checked, and must be reported as "could not determine" rather than ` +
-    `as valid: ${r.undeclared.join(", ")}`;
+    `${r.undeclared.length} kind(s) have said NOTHING about a validator — a node of those kinds ` +
+    `cannot be checked, and must be reported as "could not determine" rather than as valid. ` +
+    `Give it a validator, or say in \`validatorNotApplicable\` why one cannot apply: ${r.undeclared.join(", ")}`;
   if (r.undeclared.length > 0) {
     if (requireAll) {
       console.log(`\n✗ ${msg}`);
@@ -196,7 +270,9 @@ async function main(): Promise<number> {
     console.log(`\n✗ a declared $schema family is unmapped, unresolvable, or has a node that fails it`);
     return 1;
   }
-  console.log(`\n✓ every declared validator resolves to a runnable Zod schema`);
+  console.log(
+    `\n✓ every declared validator resolves to a runnable Zod schema, and every kind without one says why`,
+  );
   return 0;
 }
 

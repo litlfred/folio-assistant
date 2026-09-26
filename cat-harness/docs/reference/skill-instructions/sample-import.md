@@ -21,7 +21,7 @@ instance (`who-iris/`); nothing here is WHO-specific.
 ## The gates are not here
 
 Size, restrictions, copyright, retention and source loss are asked **once**,
-by [`materialize-remote`](../../../large-datasets/skills/materialize-remote.md),
+by [`materialize-remote`](materialize-remote.md),
 and this process only reads the outcome. Bean `hpax`: *"neither has its own
 copy of the four gates."* A second copy would be a second answer free to
 disagree with the first.

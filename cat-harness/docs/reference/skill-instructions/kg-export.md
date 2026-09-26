@@ -303,7 +303,7 @@ owner's standing rule: **a downstream consumer must never have to
 string-manipulate or infer a rule to follow a link.** A rule a consumer has to
 know is a rule a consumer can get wrong, and the cost is paid by someone who
 cannot see the code that made the assumption look reasonable. See
-[`crdm-requirements-workflow`](../crdm/crdm-requirements-workflow.md) §"Consumer burden
+[`crdm-requirements-workflow`](crdm-requirements-workflow.md) §"Consumer burden
 is a requirement".
 
 **Vocabulary nodes get no `alternateOf`.** Graph kinds are minted under the
@@ -357,7 +357,7 @@ worth a pipeline. What makes the export worth having is the relations that
 already exist on disk and that **no tool surfaces**:
 
 - **activity → skill.** Every BPMN activity may carry
-  `<folio:skill ref="…"/>`, so the export can say which process step is
+  `<bootstrap.processes:skill ref="…"/>`, so the export can say which process step is
   implemented by which skill.
 - **activity → role.** A BPMN lane is the role that performs the step.
 - **skill → package**, and a skill's **two facets**: its instruction body

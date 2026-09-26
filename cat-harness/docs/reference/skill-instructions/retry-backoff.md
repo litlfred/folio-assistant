@@ -111,8 +111,8 @@ not that a timer elapsed.
 | `scripts/check-head-has-run.ts` | asks GitHub whether a commit has a run; a blip would read as could-not-ask |
 | `scripts/check-prs-have-runs.ts` | the PR listing fails the WHOLE sweep, where one PR's failure only makes that row `unknown` |
 
-Git operations follow the same shape by convention — `git push -u origin
-<branch>`, retried with 2s, 4s, 8s, 16s on a **network** error, never on a
+Git operations follow the same shape by convention —
+`git push -u origin <branch>`, retried with 2s, 4s, 8s, 16s on a **network** error, never on a
 rejected push.
 
 ## Related

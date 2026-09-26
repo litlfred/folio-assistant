@@ -29,7 +29,7 @@ Input schema for DMN (Decision Model and Notation) decision table authoring.
 | `type` | `"string"` \| `"integer"` \| `"boolean"` \| `"date"` \| `"codeable-concept"` | **yes** |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/dmn-authoring/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/dmn-authoring/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/dmn-authoring/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/dmn-authoring/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -43,4 +43,4 @@ Output schema for DMN decision table authoring.
 | `hitPolicy` | `"UNIQUE"` \| `"FIRST"` \| `"PRIORITY"` \| `"ANY"` \| `"COLLECT"` \| `"RULE ORDER"` | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/dmn-authoring/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/dmn-authoring/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/dmn-authoring/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/dmn-authoring/output.schema.json){: .fa-edit-source }

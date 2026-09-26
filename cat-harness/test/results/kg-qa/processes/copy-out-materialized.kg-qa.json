@@ -5,7 +5,7 @@
     "id": "Process_CopyOutMaterialized",
     "path": "processes/copy-out-materialized.bpmn"
   },
-  "source_hash": "sha256:749cdc191aeeba1348f33b1f426384a74421e2965ecba2ebe8fb37ce74add87c",
+  "source_hash": "sha256:f242901aaaf31f1f93f95a3dcf4389d95a7455b28878c7dacb904d015d788e9a",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -85,11 +85,11 @@
       "findings": [
         {
           "where": "Task_Land",
-          "detail": "\"Land the bytes in the copier's own folio/\" — a ServiceTask is performed by agent or system, but its lane's role \"author\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"Land the bytes in the copier's own folio/\" — a ServiceTask is performed by agent or system, but its lane's role \"author\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
         },
         {
           "where": "Task_RecordProvenance",
-          "detail": "\"Record provenance.local — what this is a copy OF\" — a ServiceTask is performed by agent or system, but its lane's role \"author\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <folio:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "detail": "\"Record provenance.local — what this is a copy OF\" — a ServiceTask is performed by agent or system, but its lane's role \"author\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
         }
       ]
     },

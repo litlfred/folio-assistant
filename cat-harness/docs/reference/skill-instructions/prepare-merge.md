@@ -141,7 +141,10 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
 
    This does not change what you do next — step 7 dispatches either way. It
    changes what you can honestly SAY. A push here can silently produce no run
-   at all (bean `3pqn`, observed three times), and a pull request showing zero
+   at all (beans `3pqn` and `yv4z`, **six observations** between 2026-09-19 and
+   2026-09-20 — this said "three times" until 2026-09-24, which is `3pqn`'s
+   original figure and understates how routine it is; §Guardrails
+   below carries them), and a pull request showing zero
    checks is indistinguishable from one whose checks have not started, so a
    reviewer cannot tell "CI is coming" from "CI is never coming". If the check
    reports **no run**, write that in the PR body alongside the dispatched run's

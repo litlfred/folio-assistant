@@ -28,8 +28,21 @@ rather than containing them.
 
 Shape: `schemas/session-context.ts`. Graph kind: `session-state`, layer
 `state` — a session writes its own record as it goes, which is exactly what
-[`content-context-and-state-graphs`](../folio-core/content-context-and-state-graphs.md)
+[`content-context-and-state-graphs`](content-context-and-state-graphs.md)
 means by live state.
+
+## The fields — read them off the schema, never off this page
+
+`SessionContextSchema` in `schemas/session-context.ts` is authoritative. This
+description said *"the six fields"* until 2026-09-24, by which point there were
+**eight** — `waitingOn` and `$schema` had joined `id`, `actor`, `startedAt`,
+`updatedAt`, `open`, `claimed`. Bean `s8mo` carried the same "six" and drifted
+with it, so the bean and this skill agreed with each other and both disagreed
+with the code, which is the one shape comparing them cannot catch.
+
+No count is given here on purpose. A field list in prose beside a Zod object is
+a second answer to a question the schema already answers, and it is wrong the
+first time somebody adds a field.
 
 ## `actor` is required, and it is the point of the record
 
@@ -74,13 +87,13 @@ one.
 
 **`claimed` is by reference because a claim announces rather than reserves.**
 The bean is the authority on its own status
-([`bean-coordination`](../folio-core/bean-coordination.md)); a status copied
+([`bean-coordination`](bean-coordination.md)); a status copied
 here would be free to contradict it, and a sibling reading the copy would act
 on a claim that had already been released.
 
 **`waitingOn` carries `since` or it carries nothing.** A wait with no start
 cannot be told from abandoned work — the same argument
-[`bean-blocking`](../folio-core/bean-blocking.md) makes for requiring an
+[`bean-blocking`](bean-blocking.md) makes for requiring an
 expiry. `what` is free text on purpose: a human answer, a CI run, a sibling's
 PR is an open set no enum would survive.
 

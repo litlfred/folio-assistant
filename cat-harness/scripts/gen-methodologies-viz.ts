@@ -4,6 +4,7 @@
  * came from, and whether this checkout holds the source it rests on.
  *
  * @module cat-harness/scripts/gen-methodologies-viz
+ * @covers methodology
  *
  * ## The gap this closes
  *
@@ -80,7 +81,7 @@ export interface MethodologyRow {
   readonly origin: string;
   readonly appliesWhen: string;
   /**
-   * WHICH instance declared it — `cat-harness`, `smart-base`, `smart-kg`.
+   * WHICH instance declared it — `cat-harness`, `smart-base`, `folio-assistant-core`.
    *
    * The graph spans all three, and a page that did not say which would make
    * `grade` read as this instance's own adoption when it is the WHO material's.
@@ -216,10 +217,27 @@ function cell(v: string): string {
   return v.replace(/\|/g, "\\|").replace(/\r?\n/g, " ").replace(/\s+/g, " ").trim();
 }
 
-/** A long prose field, trimmed for a table cell with the full text below it. */
-function short(v: string, n = 150): string {
+/**
+ * A long prose field, trimmed for a table cell with the full text below it.
+ *
+ * ## The cut never leaves a span open
+ *
+ * A fixed-length cut landed INSIDE a code span on the `madr` row — `(see
+ * \`kepner-tregoe…` — and the unmatched backtick paired with the next one on the
+ * line, in the `declared by` cell. Everything between became one code span, the
+ * cell pipes inside it stopped being cell boundaries, and kramdown rendered the
+ * WHOLE table as a paragraph of pipes (owner, 2026-09-24, bean `7w1a`). So an
+ * odd backtick count cuts back to before the unmatched backtick, and an odd `**`
+ * count likewise: an open bold run does not break the table, but it does print
+ * two stray asterisks.
+ */
+export function short(v: string, n = 150): string {
   const one = cell(v);
-  return one.length <= n ? one : one.slice(0, n - 1).trimEnd() + "…";
+  if (one.length <= n) return one;
+  let cut = one.slice(0, n - 1);
+  if ((cut.match(/`/g) ?? []).length % 2 === 1) cut = cut.slice(0, cut.lastIndexOf("`"));
+  if ((cut.match(/\*\*/g) ?? []).length % 2 === 1) cut = cut.slice(0, cut.lastIndexOf("**"));
+  return cut.trimEnd() + "…";
 }
 
 export function page(rows: readonly MethodologyRow[], report: EvidenceReport): string {

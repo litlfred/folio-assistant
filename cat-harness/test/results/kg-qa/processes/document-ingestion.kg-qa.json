@@ -5,7 +5,7 @@
     "id": "Process_Ingestion",
     "path": "processes/document-ingestion.bpmn"
   },
-  "source_hash": "sha256:a07f86d55b9248c4978316316819d55ab6c2e1bb35c9d0846a8a5f6461101f1b",
+  "source_hash": "sha256:229ce5bf7f2af1170e253c44ca19c0cf2b82222568252a3d8785d316ade5a002",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -52,13 +52,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "CallActivity_IngestTheme",
-          "detail": "needs skill \"theme-art-intake\", but its lane's role \"ingestion-agent\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -110,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 1,
+    "pass": 16,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   }

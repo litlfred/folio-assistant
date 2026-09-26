@@ -22,7 +22,7 @@ Input schema for quality control checks across content lifecycle.
 | `checklistSections` | array<`"L1"` \| `"L2"` \| `"L3"` \| `"L4"` \| `"global"`> | no | Publication checklist sections to review. |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/quality-control/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/quality-control/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/quality-control/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/quality-control/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -45,4 +45,4 @@ Output schema for quality control results.
 | `remediation` | string | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/quality-control/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/quality-control/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/quality-control/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/quality-control/output.schema.json){: .fa-edit-source }

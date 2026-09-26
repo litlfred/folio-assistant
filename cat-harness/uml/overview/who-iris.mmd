@@ -14,6 +14,17 @@ classDiagram
       inspected_at [1] string
       verdicts [1] Record~string, Record~string, Verdict~~
     }
+    class who_iris_library_folio_withheld_v1_Path["Path"] {
+      <<json: WithheldSchema>>
+      path [1] string
+      reason [1] string
+    }
+    class who_iris_library_folio_withheld_v1_folio_withheld_v1["folio-withheld/v1"] {
+      <<json: WithheldSchema>>
+      $schema [1] 'folio-withheld/v1'
+      _comment [0..1] string
+      paths [0..*] Path[]
+    }
   }
   namespace who_iris__who_iris_catalogue {
     class who_iris_who_iris_catalogue_folio_dublin_core_v1_Value["Value"] {
@@ -111,9 +122,26 @@ classDiagram
       assets [0..*] Asset[]
       omitted [0..*] Omitted[]
     }
-    class who_iris_who_iris_uploads_folio_intake_v1["folio-intake/v1"] {
-      <<untyped: written by scripts/library-graph.ts>>
-      no schema declared, shape is whatever scripts/library-graph.ts writes
+    class who_iris_who_iris_uploads_folio_intake_v1_File["File"] {
+      <<json: IntakeSchema>>
+      path [1] string
+      bytes [0..1] integer
+      sha256 [0..1] string | null
+      mimetype_sniffed [0..1] string | null
+      type [1] string
+      role [1] string
+      note [0..1] string
+    }
+    class who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1["folio-intake/v1"] {
+      <<json: IntakeSchema>>
+      $schema [1] 'folio-intake/v1'
+      doc_id [1] string
+      item [0..1] string
+      record [0..1] string
+      title [0..1] string
+      _comment [0..1] string
+      source [1] object
+      files [0..*] File[]
     }
   }
   namespace who_iris__who_iris_skills {
@@ -152,8 +180,11 @@ classDiagram
       <<could not determine>>
     }
   }
+  who_iris_library_folio_withheld_v1_folio_withheld_v1 *-- "0..*" who_iris_library_folio_withheld_v1_Path : paths
   cssClass "who_iris_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "who_iris_library_folio_image_verdicts_v1" fa_uml_kind_library
+  cssClass "who_iris_library_folio_withheld_v1_Path" fa_uml_kind_library
+  cssClass "who_iris_library_folio_withheld_v1_folio_withheld_v1" fa_uml_kind_library
   who_iris_who_iris_catalogue_folio_dublin_core_v1_Field *-- "1..*" who_iris_who_iris_catalogue_folio_dublin_core_v1_Value : values
   who_iris_who_iris_catalogue_folio_dublin_core_v1_folio_dublin_core_v1 *-- "1..*" who_iris_who_iris_catalogue_folio_dublin_core_v1_Field : fields
   who_iris_who_iris_catalogue_folio_catalogue_node_v1_Bitstream *-- "1..*" who_iris_who_iris_catalogue_folio_catalogue_node_v1_MaskedRegion : maskedRegions
@@ -167,10 +198,12 @@ classDiagram
   cssClass "who_iris_who_iris_catalogue_folio_catalogue_v1_folio_catalogue_v1" fa_uml_kind_catalogue
   who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Asset : assets
   who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Omitted : omitted
+  who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" who_iris_who_iris_uploads_folio_intake_v1_File : files
   cssClass "who_iris_who_iris_uploads_folio_extraction_v1_Asset" fa_uml_kind_uploads
   cssClass "who_iris_who_iris_uploads_folio_extraction_v1_Omitted" fa_uml_kind_uploads
   cssClass "who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1" fa_uml_kind_uploads
-  cssClass "who_iris_who_iris_uploads_folio_intake_v1" fa_uml_kind_uploads
+  cssClass "who_iris_who_iris_uploads_folio_intake_v1_File" fa_uml_kind_uploads
+  cssClass "who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1" fa_uml_kind_uploads
   cssClass "n_who_iris_who_iris_skills_skills" fa_uml_kind_skills
   cssClass "n_who_iris_who_iris_skills_skills" fa_uml_undetermined
   who_iris_who_iris_themes_Theme *-- "0..*" who_iris_who_iris_themes_Override : overrides

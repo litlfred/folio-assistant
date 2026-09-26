@@ -72,6 +72,31 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
     $schema [1] : 'folio-model-registry/v1'
     models [0..*] : Model[]
   }
+  class "Statement" as bootstrap_schemas_requirement_schema_json_Statement <<schema: requirement.schema.json>> #e9edf3 {
+    key [1] : string
+    label [1] : string
+    conformance [1] : SHALL | SHOULD | MAY | SHALL NOT
+    requirement [1] : string
+    kind [0..1] : functional | non-functional
+    activity [0..1] : string
+    capability [0..1] : string
+    benefit [0..1] : string
+    category [0..1] : string
+    actors [0..*] : string[]
+    dependsOn [0..*] : string[]
+  }
+  class "Requirement" as bootstrap_schemas_requirement_schema_json_Requirement <<schema: requirement.schema.json>> #e9edf3 {
+    id [1] : string
+    title [1] : string
+    description [1] : string
+    status [0..1] : proposed | in-force | superseded | retired
+    derivedFrom [0..*] : string[]
+    actors [0..*] : string[]
+    statements [1..*] : Statement[]
+    tags [0..*] : string[]
+    proposedIn [0..1] : string
+    supersededBy [0..1] : string
+  }
 }
 
 bootstrap_schemas_discussion_input_schema_json_Discussion_Input *-- "0..*" bootstrap_schemas_discussion_input_schema_json_KnownRepository : knownRepositories
@@ -80,4 +105,5 @@ bootstrap_schemas_discussion_output_schema_json_Discussion_Output *-- "1..*" boo
 bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration *-- "0..*" bootstrap_schemas_graph_schema_json_Directory : directories
 bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration *-- "0..*" bootstrap_schemas_graph_schema_json_Asset : assets
 bootstrap_schemas_model_registry_schema_json_Model_Registry *-- "0..*" bootstrap_schemas_model_registry_schema_json_Model : models
+bootstrap_schemas_requirement_schema_json_Requirement *-- "1..*" bootstrap_schemas_requirement_schema_json_Statement : statements
 @enduml

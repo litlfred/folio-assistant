@@ -15,7 +15,7 @@ import {
   dcFieldName,
   dcValues,
 } from "./dublin-core.js";
-import { MaterializationSchema, freshness, refusedGates, unansweredGates } from "./materialization.js";
+import { MaterializationSchema, freshness, publicationBlockers, refusedGates, unansweredGates } from "./materialization.js";
 import { CATALOGUE_NODE_SCHEMA_TAG, CatalogueNodeSchema, materializationCensus } from "./catalogue.js";
 
 /** The measured record, trimmed to the fields that carry the three hard cases. */
@@ -237,5 +237,23 @@ describe("catalogue — the model must not disagree with the corpus", () => {
       CatalogueNodeSchema.parse(node({ id: "b", materialization: { state: "unknown", provenance: { upstream: "https://b" } } })),
     ];
     expect(materializationCensus(nodes)).toEqual({ unknown: 1, referenced: 1, materialized: 0 });
+  });
+});
+
+describe("publicationBlockers — held is not published (bean cw35)", () => {
+  const gate = (verdict: "unknown" | "refused" | "permitted") => ({ verdict, basis: "test" });
+  const all = (v: "unknown" | "refused" | "permitted") => ({
+    size: gate("permitted"), retention: gate("permitted"), sourceLoss: gate("permitted"),
+    copyright: gate(v), restrictions: gate(v),
+  });
+  it("only copyright and restrictions decide, and only `permitted` passes", () => {
+    expect(publicationBlockers(all("permitted"))).toEqual([]);
+    expect(publicationBlockers(all("refused"))).toEqual(["copyright", "restrictions"]);
+    // an unanswered licence is not a licence
+    expect(publicationBlockers(all("unknown"))).toEqual(["copyright", "restrictions"]);
+    expect(publicationBlockers({ ...all("permitted"), size: gate("refused") })).toEqual([]);
+  });
+  it("no gates at all blocks on both", () => {
+    expect(publicationBlockers(undefined)).toEqual(["copyright", "restrictions"]);
   });
 });

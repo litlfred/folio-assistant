@@ -1,3 +1,4 @@
+# bpmn: cat-harness/processes/code-quality-gates.bpmn
 # Code-quality gates — cheap, fast static checks that protect compute infra.
 #
 # Four jobs (the first three per
@@ -74,10 +75,11 @@ permissions:
 
 jobs:
   lean-bare-import:
+    # bpmn-node: Task_Lean
     name: Lean bare-import gate (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # HARD GATE: a bare `import Mathlib` (optionally trailing whitespace)
       # at the start of a line is forbidden in content Lean files. Use
@@ -131,12 +133,13 @@ jobs:
           echo "OK — no bare 'import Mathlib' in $count Lean file(s)"
 
   python-imports:
+    # bpmn-node: Task_Python
     name: Python unused/wildcard imports (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -213,10 +216,11 @@ jobs:
           exit $rc
 
   typescript:
+    # bpmn-node: Task_TypeScript
     name: TypeScript — tests, lint, types (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -376,7 +380,20 @@ jobs:
       # folio-assistant-core"): every `folio-glossary/v1` document validates,
       # and the glossary/ page and its SKOS JSON-LD are current.
       - name: glossary page and SKOS
-        run: bun run check:glossary
+        run: |
+          bun run check:glossary
+          # Bean `lqo9` (owner, 2026-09-24: "Authored terms only"): every
+          # authored term's labels and definition have a current .pot in
+          # every locale, beside the BPMN templates.
+          bun run glossary:pot:check
+
+      # The agentic engine's after-check (#1180 step 5): every workflow
+      # instance's history as W3C PROV-O, with authorizeTask re-run on each
+      # step. ADVISORY (owner, 2026-09-23): findings are reported on the
+      # prov-qaqc/ page, never fatal. This fails only on stale outputs, a
+      # prov:Activity that does not validate, or an internal error.
+      - name: PROV-O QA/QC report
+        run: bun run check:prov-qaqc
 
       # The graph per locale -- bean `jmpb`, on the owner's ruling. This gate
       # is NOT about how much is translated (nothing is, measured 2026-09-22:
@@ -512,6 +529,22 @@ jobs:
       - name: workflow script paths
         run: bun run check:workflow-paths
 
+      # The same defect one layer in, and the one a READER hits first: a script
+      # whose own usage string names a path that is not the script. 178
+      # occurrences across 67 files when this was added, every one a casualty of
+      # the #223 split moving the platform under `cat-harness/` while the usage
+      # strings kept the pre-split spelling.
+      #
+      # A separate step from the one above for the reason those two are separate
+      # from each other: this needs no cwd model and no exemptions, because a
+      # self-reference has no audience to guess at. `check:command-paths` PASSES
+      # over all 178 by design — `aboutThisTree` judges a path only when its
+      # first segment is a directory that exists at the root, so these land in
+      # its folio-relative bucket (306 of them, counted rather than judged). The
+      # general question is bean `52dz`'s open half and is NOT gated here.
+      - name: usage strings name their own script
+        run: bun run check:usage-paths
+
       # THE OTHER DIRECTION FROM `ovkk`, and the reason it needs a gate at all
       # is that this direction is silent.
       #
@@ -566,6 +599,60 @@ jobs:
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 
+      # WHICH audits reach which kind of node — the neighbour of the audit
+      # above, not a second answer to it. `kg:audit:check` judges the nodes it
+      # covers; this measures WHAT IS COVERED AT ALL, which nothing asked
+      # before bean `xutg` and which got answered by inference instead: an
+      # agent read a sidecar count of zero over the bean store and reported
+      # beans "effectively unaudited", while eight gates audit them.
+      #
+      # `--check` and NOT `--strict`: it fails on a STALE SIDECAR, which is the
+      # half a reviewer needs (it is what lets "never audited" be told from
+      # "lost its audit in this commit"). The findings are reported — 4 kinds
+      # hold files nothing audits, and a gate refusing every push until
+      # somebody writes criteria for `interaction/` is a gate that gets
+      # switched off. `audit:coverage:strict` is for the day that closes.
+      # `--require-all` as of bean `3srh`: every one of the 145 gates CI runs now
+      # DECLARES what kind of node it covers, so the flag that was "for the day
+      # the gap is closed" enforces a property this tree HAS rather than
+      # demanding work — the same reasoning as `check:skills` above.
+      #
+      # What it buys is the report's own honesty. While any gate was undeclared,
+      # every "unaudited" verdict was only an UPPER BOUND and the output said so.
+      # With none undeclared the four remaining kinds are a verdict, and this
+      # step is what stops a new gate arriving undeclared and quietly turning
+      # them back into an upper bound.
+      - name: audit coverage is measured, current, and every gate has declared
+        run: bun run audit:coverage:require-all
+
+      # The four graphs `audit:coverage` reported as `typed-only` — a schema
+      # parses their nodes and nothing had an opinion about what they SAY.
+      # Bean `h1wq`, at the owner's ask (2026-09-24).
+      #
+      # Three of its four families are determined empties on this tree, and the
+      # fourth caught a real one: the committed health report was written by a
+      # checker that no longer existed, so its staging remedy still told a reader
+      # to apply `staging:cleanup` to an orphaned preview — which bean `7umv`
+      # had already proved cannot work. Stale advice presented as the fix.
+      #
+      # Exit 2 (a family that could not be read) is a FAILURE here, not a pass:
+      # could-not-determine outranks a finding, because a sweep blind on one
+      # family has not cleared the others.
+      - name: harness state graphs are judged, not just typed
+        run: bun run check:harness-state:check
+
+      # And `--strict` too, now that it is GREEN — the four `typed-only` kinds
+      # were the only thing holding it red, and the step above judges them. Wired
+      # on the same reasoning as `check:skills`: it locks in a property this tree
+      # HAS rather than demanding work.
+      #
+      # A SECOND step rather than a third flag on the one above, because the two
+      # lock different things and a reader should be able to see which broke:
+      # `--require-all` that every gate has declared, `--strict` that every kind
+      # with files is JUDGED and not merely typed.
+      - name: every kind with files is judged, not merely typed
+        run: bun run audit:coverage:strict
+
       # The detangle measurements are PINNED, not graded. This fails on a STALE
       # sidecar or an orphaned one — never on a number being "wrong", because
       # the carve is an adjudication a person makes (`detangle.ts`, "taste is a
@@ -591,9 +678,9 @@ jobs:
       - name: namespace vocabulary is complete
         run: bun run ns:check
 
-      # `bootstrap`'s two JSON Schemas are GENERATED from Zod in
-      # `bootstrap-tools`, because bootstrap promises a Bootstrapping Agent it needs
-      # no tools and therefore cannot hold a `.ts` of its own. This is the
+      # `bootstrap`'s JSON Schemas are GENERATED from Zod in
+      # `cat-harness/schemas/`, because bootstrap promises a Bootstrapping Agent it
+      # needs no tools and therefore cannot hold a `.ts` of its own. This is the
       # `--check` twin `schema-management` requires of any new rendering:
       # three schema generators rotted here before, because nothing ever asked
       # whether their output still matched their input.
@@ -601,7 +688,7 @@ jobs:
       # A red here means the Zod moved and the published document did not —
       # and that document sits at an `$id` consumers already follow.
       - name: bootstrap schemas are current
-        run: bun run bootstrap-tools:schemas:check
+        run: bun run bootstrap:schemas:check
 
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
@@ -717,7 +804,23 @@ jobs:
           bun run translate-bpmn:bootstrap:check
           bun run landing:sticky:check
           bun run landing:data:check
+          # `sjic`: the Jekyll sidebar's navbar is RENDERED by the same module
+          # every mounted page uses, and committed as an include. Gated here
+          # because a stale include is a sidebar that disagrees with the rail
+          # about what a harness holds -- which is the defect the bean is
+          # about, arriving again through the back door.
+          bun run navbar:include:check
           bun run check:agents-xref
+          # Bean `rsi6`: `@litlfred/block-qa-schema` is the only package here
+          # that ships to npm, and NO workflow built it. PR #914 bumped its
+          # typescript 5.9.3 -> 7.0.2, passed TEN checks, and left the package
+          # unbuildable -- `tsup --dts` delegates to rollup-plugin-dts, which
+          # bundles its own TypeScript 5.7.3 and dies on TypeScript 7's
+          # compiler API. Ten green checks, not one of which read the file the
+          # PR changed. The set is derived from the git index, and an EMPTY
+          # set fails rather than passing: a sweep that examined nothing has
+          # not cleared anything.
+          bun run check:published-packages
           # Bean `b963`: a path inside a fenced COMMAND is not a link, not a
           # symbol claim and not a literal in a .ts file, so all three
           # neighbouring checks miss it by design. The cold-start line every
@@ -810,6 +913,19 @@ jobs:
           # here; the general reverse needs the API and prints as undetermined
           # rather than as clean.
           bun run check:bean-issue-links
+          # Bean `8v0y`: a bean that carries a SKILL'S CONTRACT instead of
+          # pointing at it. `kn0t` held a second copy of
+          # ig-publisher-reduction.md and it had drifted in four places; the P1
+          # one turned "the navigation is DIFFED, and the difference is empty
+          # or explained entry by entry" into "navigation matches", which would
+          # have let a phase be declared done on an impression -- the first
+          # entry in that skill's own `Do not` list. NOT a similarity check:
+          # kn0t's three real drifts score Jaccard 0.25/0.54/0.33, all below
+          # any usable floor, because semantic drift is a REWRITE. Structural
+          # instead -- a table enumerating phases, each row carrying its own
+          # exit condition. Measured over the whole store: 0 of 888 beans, and
+          # 1 of 1 on kn0t as it stood before PR #1185.
+          bun run check:bean-restates-skill
           bun run check:python-deps
           bun run deps:python:check
           bun run check:l1-complete
@@ -822,7 +938,19 @@ jobs:
           bun run check:docs-populated
           bun run check:declared-paths
           bun run check:fallback-roles
-          bun run check:kind-validators
+          # `--require-all` as of bean `rj0n`. The flag existed "for the day the gap
+          # is meant to be closed" and could NEVER have passed: all seven kinds it
+          # counted were either not JSON (`.bpmn`, `.puml`, `.md`, `.ts`) or had no
+          # nodes at all, so the count read as a seven-item backlog over a real
+          # backlog of zero. Each now declares WHY a runtime validator cannot
+          # apply, naming the file format or the absent subject — a fact a reader
+          # can check, so "not applicable" cannot launder a real gap.
+          #
+          # Safe to wire because it is GREEN on this tree, as with `check:skills`:
+          # it locks in a property the repo HAS. What it buys is that a kind added
+          # tomorrow without deciding shows up as `undeclared` rather than joining
+          # a backlog nobody reads.
+          bun run check:kind-validators:require-all
           # The UML overview is drawn from the declarations and the kind
           # validators just checked, so it goes stale when either changes.
           bun run uml:overview:check
@@ -836,6 +964,14 @@ jobs:
           # The tools index is generated from the Tool nodes, so it goes stale
           # the moment one is added or its `satisfies` changes.
           bun run tools:viz:check
+          # The themes page renders every theme in schemas/themes.ts with its
+          # declared art, so it goes stale the moment a theme, a palette or a
+          # crop changes.
+          bun run theme:page:check
+          # Theme art intake over every declared backdrop role. Reported but
+          # ungated until 2026-09-24 because `landing-architecture` had no mobile
+          # crop; the owner supplied it, so a refusal here is now a regression.
+          bun run check:theme-art:check
           # The methodologies index renders the `methodology` graph across
           # EVERY instance that declares one, so it goes stale when any of them
           # adopts a method, ingests a source, or changes an `applies-when`.
@@ -855,9 +991,18 @@ jobs:
           # in the same change, which is what makes the exception checkable
           # instead of a carve-out.
           bun run check:materialized-fixity
+          # Every skill a remote-package wrapper declares is MATERIALIZED at the
+          # commit that wrapper pins — offline, no fetch (issue #556).
+          bun run check:remote-skills
           bun run check:read-only-graphs
           bun run check:actor-reach
           bun run check:harness-dirs
+          # A bootstrap schema names no outside concept — no derivative's
+          # content model, layer names or standards (owner, issue #1164).
+          bun run check:bootstrap-concepts
+          # A filed requirement parses as one, its id is its file name, and no
+          # name is both a proposal and a requirement (issue #1164).
+          bun run check:requirements
           # Does a path-filtered workflow rebuild when the scripts it RUNS
           # change? `docs-site.yml` named eight generators and ran 22, so a
           # fix to `kg-export.ts` -- the script producing both graph documents
@@ -1068,6 +1213,11 @@ jobs:
           # render, and this one carries byte counts and download links -- the
           # two things a reader would take on trust.
           bun run iris:pages:check
+          # The prefix-sharded identifier lookup over who-iris's REFERENCED
+          # nodes (bean `4pm8`). Gated because a stale shard still answers:
+          # it finds a node the catalogue no longer references, and a reader
+          # cannot tell a stale hit from a current one.
+          bun run id-lookup:check
           # The cover thumbnails, checked against the sha256, byte count and
           # PNG dimensions the catalogue nodes declare. The narrow half of
           # `yl5w` this script owns: a `materialized` claim it makes is a claim
@@ -1238,10 +1388,11 @@ jobs:
   # `docs-site` and `feature-staging` already make to render BPMN, so this
   # introduces no new capability requirement.
   e2e:
+    # bpmn-node: Task_E2E
     name: End-to-end + accessibility (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -1268,10 +1419,11 @@ jobs:
         run: bunx playwright test
 
   rust-wildcard:
+    # bpmn-node: Task_Rust
     name: Rust wildcard imports (warn-only)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # WARN-ONLY ratchet: count non-test `use ...::*;` wildcard imports in
       # tools/. Test modules (`#[cfg(test)]` / `use super::*;`) are the bulk
@@ -1304,10 +1456,11 @@ jobs:
           fi
 
   dependency-advisories:
+    # bpmn-node: Task_Advisories
     name: Dependency advisories (warn-only)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest

@@ -48,9 +48,9 @@
  * that nothing else changed.
  *
  * Usage:
- *   bun run content/pipeline/fsh-cone.ts <ig-root> [--top N] [--csv out.csv]
- *   bun run content/pipeline/fsh-cone.ts <ig-root> --changed input/fsh/a.fsh,input/cql/B.cql
- *   bun run content/pipeline/fsh-cone.ts <ig-root> --history 400
+ *   bun run cat-harness/content/pipeline/fsh-cone.ts <ig-root> [--top N] [--csv out.csv]
+ *   bun run cat-harness/content/pipeline/fsh-cone.ts <ig-root> --changed input/fsh/a.fsh,input/cql/B.cql
+ *   bun run cat-harness/content/pipeline/fsh-cone.ts <ig-root> --history 400
  *
  * `--changed` prints the forward cone of everything declared in those files
  * (what to rebuild) and the backward cone as files (what to check out).
@@ -133,14 +133,139 @@ function walkDir(dir: string, ext: string, out: string[] = []): string[] {
 }
 
 // The name stops at `(` so a parameterised `RuleSet: Name(p1, p2)` is the node
-// `Name` — which is what `insert Name(a, b)` refers to.
-const DECL_RE = /^(Profile|Extension|Logical|Resource|ValueSet|CodeSystem|Instance|Mapping|RuleSet|Invariant):\s*([^\s(]+)/;
+// `Name` — which is what `insert Name(a, b)` refers to. The parameter list is
+// captured separately, for the expansion described on {@link expandInsert}.
+const DECL_RE = /^(Profile|Extension|Logical|Resource|ValueSet|CodeSystem|Instance|Mapping|RuleSet|Invariant):\s*([^\s(]+)(?:\s*\(([^)]*)\))?/;
 const ALIAS_RE = /^Alias:\s*(\$?\S+)\s*=\s*(\S+)/;
 
 interface Block {
   node: FshNode;
   lines: string[];
   instanceOf?: string;
+  /** Declared parameter names, for a `RuleSet: Name(a, b)`. */
+  params: string[];
+}
+
+/** An `insert R(...)` call site: the RuleSet name and its positional arguments. */
+const INSERT_CALL_RE = /^\s*\*?\s*insert\s+([A-Za-z0-9_-]+)\s*\(([\s\S]*)\)\s*$/;
+
+/**
+ * Split an `insert` argument list at TOP-LEVEL commas only.
+ *
+ * FSH arguments carry commas inside `[[…]]` multi-line strings, inside quoted
+ * strings and inside nested parentheses, and a naive `split(",")` mis-aligns
+ * every parameter after the first such argument — which substitutes the wrong
+ * token into a canonical and invents an edge to a node that was never
+ * referenced. A WRONG edge is worse here than a missing one: a missing edge
+ * makes a rebuild too large, a wrong one makes it wrong.
+ */
+export function splitInsertArgs(s: string): string[] {
+  const out: string[] = [];
+  let depth = 0;
+  let brackets = 0;
+  let quoted = false;
+  let cur = "";
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (s.startsWith("[[", i)) { brackets++; cur += "[["; i++; continue; }
+    if (s.startsWith("]]", i)) { brackets--; cur += "]]"; i++; continue; }
+    if (c === '"') quoted = !quoted;
+    if (!quoted && brackets === 0) {
+      if (c === "(") depth++;
+      else if (c === ")") depth--;
+      else if (c === "," && depth === 0) { out.push(cur.trim()); cur = ""; continue; }
+    }
+    cur += c;
+  }
+  if (cur.trim()) out.push(cur.trim());
+  return out;
+}
+
+/** Strip an argument's `[[…]]` or `"…"` wrapper — the value is what substitutes. */
+function unwrapArg(a: string): string {
+  return a.replace(/^\[\[([\s\S]*)\]\]$/, "$1").replace(/^"([\s\S]*)"$/, "$1").trim();
+}
+
+/**
+ * Substitute a RuleSet's positional arguments into its body — what SUSHI does
+ * before the Publisher ever sees a resource.
+ *
+ * ## Why this is not optional
+ *
+ * Measured on smart-immunizations (bean `f4gj`): every PlanDefinition and every
+ * Measure writes its dependency on its logic Library **inside** a parameterised
+ * RuleSet — `* library = Canonical({library}Logic)` in `PlanDefMain(library,
+ * version)`, and a string-URL form in `MeasureProportionBasic` reached through
+ * a second level. Read literally, the token is `{library}Logic`, which resolves
+ * to nothing, so the edge was attributed to the RuleSet and 179 of the IG's 458
+ * logic artefacts reached no logic artefact at all.
+ *
+ * ## What it does NOT do, and why that is stated rather than hidden
+ *
+ * This is positional `{param}` → argument substitution and nothing more. It is
+ * **not** SUSHI. It does not evaluate soft indexing (`[+]`, `[=]`), does not
+ * apply a RuleSet's own defaults, and does not know which of SUSHI's
+ * context-sensitive rules would have applied. An edge it derives is therefore a
+ * claim about the SOURCE, not about the compiled resource — the same standing
+ * this whole module has, and the reason its header says a cone is a lower
+ * bound.
+ *
+ * Expansion is depth-limited because a RuleSet may insert another (measured:
+ * `MeasureProportion` → `MeasureProportionBasic`), and a cycle would otherwise
+ * not terminate.
+ */
+function expandInsert(
+  lines: string[],
+  rulesets: Map<string, Block>,
+  depth = 0,
+): string[] {
+  if (depth > MAX_INSERT_DEPTH) return [];
+  const out: string[] = [];
+  for (const line of lines) {
+    const m = line.match(INSERT_CALL_RE);
+    if (!m) continue;
+    const rs = rulesets.get(m[1]);
+    if (!rs || rs.params.length === 0) continue;
+    const args = splitInsertArgs(m[2]).map(unwrapArg);
+    const body = rs.lines.map((l) => {
+      let r = l;
+      rs.params.forEach((param, i) => {
+        r = r.split(`{${param}}`).join(args[i] ?? "");
+      });
+      return r;
+    });
+    // A substituted line may itself be an `insert` with a forwarded parameter.
+    out.push(...body, ...expandInsert(body, rulesets, depth + 1));
+  }
+  return out;
+}
+
+/** A RuleSet inserting a RuleSet is normal; a cycle is not. Measured max: 2. */
+const MAX_INSERT_DEPTH = 6;
+
+/**
+ * Join an `insert` whose argument list runs over several lines into one.
+ *
+ * FSH allows a `[[…]]` argument to span lines, and smart-immunizations uses it
+ * heavily — `insert PlanDefCommunicationRequestAction([[…]], [[…]])` runs to a
+ * dozen. Scanning such a call line-by-line sees an unbalanced fragment and
+ * matches no parameters at all.
+ */
+function joinInsertCalls(lines: string[]): string[] {
+  const out: string[] = [];
+  let buf = "";
+  for (const line of lines) {
+    const t = buf ? `${buf} ${line.trim()}` : line;
+    if (/\binsert\s+[A-Za-z0-9_-]+\s*\(/.test(t)) {
+      const open = (t.match(/\(/g) ?? []).length;
+      const close = (t.match(/\)/g) ?? []).length;
+      if (open > close) { buf = t; continue; }
+    }
+    buf = "";
+    out.push(t);
+  }
+  if (buf) out.push(buf);
+  return out;
 }
 
 /** Build the graph from an IG root (the directory holding `sushi-config.yaml`). */
@@ -172,7 +297,7 @@ export function buildFshGraph(root: string): FshGraph {
       if (d) {
         const node: FshNode = { name: d[2], kind: d[1] as FshKind, file: relative(root, file), deps: new Set() };
         nodes.set(node.name, node);
-        current = { node, lines: [] };
+        current = { node, lines: [], params: (d[3] ?? "").split(",").map((x) => x.trim()).filter(Boolean) };
         blocks.push(current);
         continue;
       }
@@ -216,9 +341,18 @@ export function buildFshGraph(root: string): FshGraph {
       bump(edgeKinds, "cql include");
     }
   }
+  // SUSHI defaults an Instance's id to its NAME when no `Id:` is declared, so
+  // the id to match on is `node.id ?? node.name`. Guarding on `node.id` alone
+  // made this whole edge kind dead on the IG it was written for: measured on
+  // smart-immunizations 2026-09-23 (bean `f4gj`), ALL 279 Library instances
+  // omit `Id:` and ALL 279 names match a CQL library, so the edge fired 0
+  // times and was absent from `edgeKinds` entirely. Every Library's only
+  // dependency was the shared `LogicLibrary` RuleSet it inserts — one target
+  // for 279 artefacts, which cannot distinguish any of them.
   for (const node of nodes.values()) {
-    if (node.kind === "Instance" && node.id && cqlByName.has(node.id)) {
-      node.deps.add(cqlByName.get(node.id)!);
+    const instanceId = node.id ?? node.name;
+    if (node.kind === "Instance" && cqlByName.has(instanceId)) {
+      node.deps.add(cqlByName.get(instanceId)!);
       bump(edgeKinds, "Library ↔ cql (by name)");
     }
   }
@@ -260,20 +394,37 @@ export function buildFshGraph(root: string): FshGraph {
     [new RegExp(String.raw`^\*\s*(?:[A-Za-z0-9_\-+\[\]=.^ ]*?[.\^\s])?(?:${CANONICAL_PROPS})\s*=\s*"?(?<ref>[^"\s()]+)"?`, "g"), "canonical assignment"],
     [/(?<ref>\$[A-Za-z0-9_\-]+)#/g, "code system ($alias#code)"],
   ];
+  const scanLine = (node: FshNode, line: string, insertKind?: string): void => {
+    for (const [re, kind] of patterns) {
+      // The `insert` pattern names the RuleSet itself. Inside an EXPANDED body
+      // that edge belongs to whoever inserted it and has already been recorded
+      // at the call site, so re-recording it here would attribute a RuleSet's
+      // own `insert` to the artefact and inflate `edgeKinds`.
+      if (insertKind && kind === "insert") continue;
+      for (const m of line.matchAll(re)) {
+        const ref = m.groups?.ref;
+        if (ref) addDep(node, ref, insertKind ?? kind);
+      }
+    }
+    for (const m of line.matchAll(/\bReference\(\s*([^)]+)\)/g)) {
+      for (const part of m[1].split(/\s+or\s+/)) addDep(node, part, insertKind ?? "Reference()");
+    }
+    for (const m of line.matchAll(/\bobeys\s+([A-Za-z0-9_\-]+(?:\s*,\s*[A-Za-z0-9_\-]+)*)/g)) {
+      for (const inv of m[1].split(/\s*,\s*/)) addDep(node, inv, insertKind ?? "obeys");
+    }
+  };
+
+  const rulesets = new Map(blocks.filter((b) => b.node.kind === "RuleSet").map((b) => [b.node.name, b]));
   for (const { node, lines } of blocks) {
-    for (const line of lines) {
-      for (const [re, kind] of patterns) {
-        for (const m of line.matchAll(re)) {
-          const ref = m.groups?.ref;
-          if (ref) addDep(node, ref, kind);
-        }
-      }
-      for (const m of line.matchAll(/\bReference\(\s*([^)]+)\)/g)) {
-        for (const part of m[1].split(/\s+or\s+/)) addDep(node, part, "Reference()");
-      }
-      for (const m of line.matchAll(/\bobeys\s+([A-Za-z0-9_\-]+(?:\s*,\s*[A-Za-z0-9_\-]+)*)/g)) {
-        for (const inv of m[1].split(/\s*,\s*/)) addDep(node, inv, "obeys");
-      }
+    const joined = joinInsertCalls(lines);
+    for (const line of joined) scanLine(node, line);
+    // ...then again over the RuleSet bodies this block inserts, with the call's
+    // arguments substituted. Edges found there are the INSERTING artefact's:
+    // SUSHI expands a RuleSet into its user at compile time, so a canonical
+    // written `Canonical({library}Logic)` is that artefact's dependency, not
+    // the RuleSet's. Tagged separately so the two can always be told apart.
+    for (const line of expandInsert(joined, rulesets)) {
+      scanLine(node, line, "insert (parameter expanded)");
     }
   }
 
@@ -518,7 +669,7 @@ if (import.meta.main) {
   const args = process.argv.slice(2);
   const root = args.find((a) => !a.startsWith("--"));
   if (!root) {
-    console.error("usage: bun run content/pipeline/fsh-cone.ts <ig-root> [--top N] [--csv out.csv] [--changed f1,f2,…]");
+    console.error("usage: bun run cat-harness/content/pipeline/fsh-cone.ts <ig-root> [--top N] [--csv out.csv] [--changed f1,f2,…]");
     process.exit(2);
   }
   const opt = (name: string): string | undefined => {
