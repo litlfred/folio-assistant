@@ -331,6 +331,8 @@
     "translation:pot": "bun run cat-harness/content/pipeline/pot-for-pages.ts",
     "translation:pot:check": "bun run cat-harness/content/pipeline/pot-for-pages.ts --check",
     "translation:index": "bun run cat-harness/content/pipeline/translation-index.ts",
+    "translated-links:check": "bun run cat-harness/scripts/check-translated-link-depth.ts --check",
+    "translated-links:fix": "bun run cat-harness/scripts/check-translated-link-depth.ts",
     "translation:index:check": "bun run cat-harness/content/pipeline/translation-index.ts --check",
     "translation:status": "bun run cat-harness/scripts/gen-translation-status.ts",
     "translation:status:check": "bun run cat-harness/scripts/gen-translation-status.ts --check",

@@ -51,13 +51,13 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 | 工作流 | BPMN 源文件 | 进入时机 |
 |---|---|---|
-| **撰写（论文）** | [`authoring-a-paper.bpmn`](../processes/authoring-a-paper.bpmn) | 用户请求在论文 folio 中撰写内容 |
-| **撰写（文档）** | [`authoring-a-document.bpmn`](../processes/authoring-a-document.bpmn) | 用户请求在文档 folio 中撰写内容 |
-| **内容生命周期** | [`content-lifecycle.bpmn`](../processes/content-lifecycle.bpmn) | 内容经过 validate → render → publish 阶段 |
-| **文档摄取** | [`document-ingestion.bpmn`](../processes/document-ingestion.bpmn) | 用户将文件放入 `uploads/` |
-| **草稿至发布** | [`draft-to-publication.bpmn`](../processes/draft-to-publication.bpmn) | 内容从草稿状态转为已发布状态 |
-| **CRDM 需求** | [`crdm-requirements.bpmn`](../processes/crdm-requirements.bpmn) | 智能体检测到功能需求 |
-| **证据检索** | [`evidence-retrieval.bpmn`](../processes/evidence-retrieval.bpmn) | 智能体检索证据以支持某项主张 |
+| **撰写（论文）** | [`authoring-a-paper.bpmn`](../../processes/authoring-a-paper.bpmn) | 用户请求在论文 folio 中撰写内容 |
+| **撰写（文档）** | [`authoring-a-document.bpmn`](../../processes/authoring-a-document.bpmn) | 用户请求在文档 folio 中撰写内容 |
+| **内容生命周期** | [`content-lifecycle.bpmn`](../../processes/content-lifecycle.bpmn) | 内容经过 validate → render → publish 阶段 |
+| **文档摄取** | [`document-ingestion.bpmn`](../../processes/document-ingestion.bpmn) | 用户将文件放入 `uploads/` |
+| **草稿至发布** | [`draft-to-publication.bpmn`](../../processes/draft-to-publication.bpmn) | 内容从草稿状态转为已发布状态 |
+| **CRDM 需求** | [`crdm-requirements.bpmn`](../../processes/crdm-requirements.bpmn) | 智能体检测到功能需求 |
+| **证据检索** | [`evidence-retrieval.bpmn`](../../processes/evidence-retrieval.bpmn) | 智能体检索证据以支持某项主张 |
 
 **状态转换：** 当用户要求切换上下文时，工作流可以被**挂起**。智能体会记录当前所在位置（当前的 BPMN 活动），以便稍后恢复。同一时刻只能有一个处于活动状态的工作流，但挂起的工作流会构成一个栈——最近挂起的工作流最先被恢复。
 
@@ -96,7 +96,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 | **内容撰写** | 编写、编辑、扩充 folio 内容（章节、块、小节） | 撰写工作流（论文或文档） |
 | **内容评审** | 评审、验证现有内容并提供反馈 | 内容生命周期 / editing-HCI 工作流 |
 | **内容摄取** | 将源文档摄取到 folio 中 | 文档摄取工作流 |
-| **功能需求** | 请求新的平台功能（参见 [crdm-detect](../skills/crdm/crdm-detect.md)） | CRDM 需求工作流 |
+| **功能需求** | 请求新的平台功能（参见 [crdm-detect](../../skills/crdm/crdm-detect.md)） | CRDM 需求工作流 |
 | **信息咨询** | 询问有关平台、内容或流程的问题 | 无工作流 — 直接回答 |
 | **工具调用** | 运行特定工具（`content_validate`、`qa_sweep` 等） | 无工作流 — 执行并报告 |
 | **工作计划管理** | 创建、更新或查询 beans | 无工作流 — 执行并报告 |
@@ -104,7 +104,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 ### 功能需求检测规则
 
-最关键的分类边界存在于**内容撰写**与**功能需求**之间。`crdm-detect` 技能（[`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md)）提供了详细的检测信号。总结性规则如下：
+最关键的分类边界存在于**内容撰写**与**功能需求**之间。`crdm-detect` 技能（[`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md)）提供了详细的检测信号。总结性规则如下：
 
 > 如果实现该请求需要修改 **folio-assistant**（平台仓库）而非 **folio 仓库**，则该请求属于新功能，智能体应当进入 CRDM 工作流。
 
@@ -142,7 +142,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 现在网关会指明其属于哪一种。`<cat-harness.processes:decision>` 意味着由表格进行计算，手工提供的结果将被拒绝；`<cat-harness.processes:judgement reason="…">` 意味着这是某人的主观判断，且必须提供原因。在该标记出现之前，“没有表格是因为这属于主观判断”与“没有表格是因为没人编写”之间是无法区分的——现在 `bun run check:workflow-refs` 会打印三向分类结果，因此“*其中有多少是由模型决定的？*”这个问题有了一个经过统计而非仅凭主观宣称的答案。
 
-**这一统计数据的用途在于研究，且该议题保持开放。** 哪些判断节点存在安全风险、有多少内容必须是确定性的，以及在受控的上下文和记忆叠加下模型在各个子工作流中的表现如何对比，这是当前仓库能够提出但尚未解答的三个问题。包含每项主张（标记为已测量、已决定或假设）的研究议程见 [`deterministic-and-agentic`](reference/skill-instructions/deterministic-and-agentic.html)。请将其视为一份议程：其中假设多于实测，文内亦已如实说明。
+**这一统计数据的用途在于研究，且该议题保持开放。** 哪些判断节点存在安全风险、有多少内容必须是确定性的，以及在受控的上下文和记忆叠加下模型在各个子工作流中的表现如何对比，这是当前仓库能够提出但尚未解答的三个问题。包含每项主张（标记为已测量、已决定或假设）的研究议程见 [`deterministic-and-agentic`](../reference/skill-instructions/deterministic-and-agentic.html)。请将其视为一份议程：其中假设多于实测，文内亦已如实说明。
 
 ## BPMN 执行：一项技能，两个引擎
 {: #bpmn-execution data-fa-label="sec:harness-bpmn_execution" }
@@ -153,7 +153,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 > **BPMN 执行技能：** 给定流程、上下文、状态和角色，运用一项或多项技能以执行任务。
 
-![BPMN 执行，从确定性到智能体化。一条色带从“确定性”（蓝色，左侧：托管智能体执行单一任务）延伸至“智能体化”（绿色，右侧：智能体跨越大部分或所有任务）。左侧，在齿轮与引擎图标下方：“BPMN 执行工具：任何开源 BPMN 引擎，严格强制执行状态和泳道”，下方是带有便签、bean 集群、泳道旁的真人及猫机器人的 folio 生命周期平视泳道图。右侧，在猫机器人图标下方：“BPMN 执行工具：状态非托管的智能体集群。智能体‘放宽’泳道限制，由机械 + 智能体 QA/QC 报告进行缓解”，下方是相同的图表（以透视倾斜呈现），beans 分散在每个泳道中，其下方有许多猫机器人。](assets/img/bpmn-execution-spectrum.webp)
+![BPMN 执行，从确定性到智能体化。一条色带从“确定性”（蓝色，左侧：托管智能体执行单一任务）延伸至“智能体化”（绿色，右侧：智能体跨越大部分或所有任务）。左侧，在齿轮与引擎图标下方：“BPMN 执行工具：任何开源 BPMN 引擎，严格强制执行状态和泳道”，下方是带有便签、bean 集群、泳道旁的真人及猫机器人的 folio 生命周期平视泳道图。右侧，在猫机器人图标下方：“BPMN 执行工具：状态非托管的智能体集群。智能体‘放宽’泳道限制，由机械 + 智能体 QA/QC 报告进行缓解”，下方是相同的图表（以透视倾斜呈现），beans 分散在每个泳道中，其下方有许多猫机器人。](../assets/img/bpmn-execution-spectrum.webp)
 
 **一项技能，两类工具。** 两端的技能是相同的：获取流程、上下文、当前状态和角色，选取技能，并执行任务。发生变化的是运行它的**工具**，正如这里的其他所有工具一样，技能背后的工具是可以替换的。
 
@@ -165,7 +165,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 | **泳道** | 强制执行：仅泳道对应的角色可执行其任务 | 放宽限制：智能体可跨泳道操作 |
 | **保障机制** | 引擎在步骤发生之前予以拒绝 | 机械 + 智能体 QA/QC 报告在事后从记录中发现 |
 
-**两种极端在规则检查的*时机*上有所不同，而非检查*何种*规则。** 相同的流程、相同的角色和相同的权限对两者均适用。引擎在任务启动**之前**检查规则并进行拒绝；智能体集群先行操作，而 QA/QC 报告在**事后**根据操作记录进行检查。这仅在规则和记录均为报告可读取的数据时方可生效，而作为权限语言的 [W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) 和作为执行日志的 [W3C PROV-O](https://www.w3.org/TR/prov-o/) 正是如此（所有者，2026-09-23；此举所蕴含的 Schema 即为[参与者、ODRL 与 PROV-O 提案](proposals/odrl-prov-actor-model.html)）。
+**两种极端在规则检查的*时机*上有所不同，而非检查*何种*规则。** 相同的流程、相同的角色和相同的权限对两者均适用。引擎在任务启动**之前**检查规则并进行拒绝；智能体集群先行操作，而 QA/QC 报告在**事后**根据操作记录进行检查。这仅在规则和记录均为报告可读取的数据时方可生效，而作为权限语言的 [W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) 和作为执行日志的 [W3C PROV-O](https://www.w3.org/TR/prov-o/) 正是如此（所有者，2026-09-23；此举所蕴含的 Schema 即为[参与者、ODRL 与 PROV-O 提案](../proposals/odrl-prov-actor-model.html)）。
 
 **大多数实际运行介于两端之间**，并且是针对单个任务而非整个流程：[上一节](#deterministic-and-agentic)已经统计了哪些网关是计算得出的，哪些是主观判断。在通常由智能体自主执行的运行中，签名步骤可以由引擎强制执行，这是该任务本身的属性，而非整张流程图的属性。
 
@@ -176,13 +176,13 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/agentic-harness/feature-request-workflow.md){: .fa-node-edit title="Edit content/docs/agentic-harness/feature-request-workflow.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="feature-request-workflow.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/agentic-harness/feature-request-workflow.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/agentic-harness/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-当请求被归类为功能需求时，智能体进入 **CRDM 需求工作流**（[完整文档](https://litlfred.github.io/folio-assistant/crdm-methodology.html)，[BPMN](../processes/crdm-requirements.bpmn)）。
+当请求被归类为功能需求时，智能体进入 **CRDM 需求工作流**（[完整文档](https://litlfred.github.io/folio-assistant/crdm-methodology.html)，[BPMN](../../processes/crdm-requirements.bpmn)）。
 
 功能需求工作流是本框架文档价值最显著之处，因为它描述了一种此前一直处于隐性状态的行为。撰写和评审工作流数月前就已形成文档；而需求工作流此前仅存在于零散的对话中。
 
 ### 智能体如何进入 CRDM
 
-检测逻辑位于 [`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md)。三种场景：
+检测逻辑位于 [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md)。三种场景：
 
 **新会话，首个请求即为功能需求：**
 → 确认请求，说明将首先协助梳理需求，进入阶段 1。
@@ -283,17 +283,17 @@ CRDM 工作流在满足以下条件时退出：
 | 行为 | 源技能 / 文档 | 位置 |
 |---|---|---|
 | 会话启动巡检 | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
-| Bean 协议 | `todo-manager.md`、`bean-coordination.md` | [`skills/folio-core/`](../skills/folio-core/) |
+| Bean 协议 | `todo-manager.md`、`bean-coordination.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | 提交与 PR 纪律 | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| 功能需求检测 | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md) |
-| CRDM 需求工作流 | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../skills/crdm/crdm-requirements-workflow.md) |
-| 内容撰写（论文） | authoring-math 技能 | [`skills/authoring-math/`](../skills/authoring-math/) |
-| 内容撰写（文档） | folio-document-adapter 技能 | [`skills/folio-document-adapter/`](../skills/folio-document-adapter/) |
-| 内容生命周期 | content-lifecycle 技能 | [`skills/content-lifecycle/`](../skills/content-lifecycle/) |
-| 文档摄取 | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../skills/folio-core/docs-generation.md) |
-| 调度与协调 | `dispatch-agent.md`、`coordinate.md` | [`skills/folio-core/`](../skills/folio-core/) |
+| 功能需求检测 | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md) |
+| CRDM 需求工作流 | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../../skills/crdm/crdm-requirements-workflow.md) |
+| 内容撰写（论文） | authoring-math 技能 | [`skills/authoring-math/`](../../skills/authoring-math/) |
+| 内容撰写（文档） | folio-document-adapter 技能 | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
+| 内容生命周期 | content-lifecycle 技能 | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
+| 文档摄取 | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../../skills/folio-core/docs-generation.md) |
+| 调度与协调 | `dispatch-agent.md`、`coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | 内容类型与适配器 | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |
-| BPMN 图绘制 | `bpmn-authoring` 技能 | [`skills/folio-core/`](../skills/folio-core/) |
+| BPMN 图绘制 | `bpmn-authoring` 技能 | [`skills/folio-core/`](../../skills/folio-core/) |
 
 **当某项技能与本页面存在分歧时，以技能为准。** 本页面属于综合汇编，并非新的权威源。如果您发现差异，请修正本页面。
 

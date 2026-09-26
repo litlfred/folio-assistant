@@ -20,14 +20,14 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 > **Les règles derrière cette page.** L'architecture décrit la forme ; les compétences
 > régissent les décisions. Les adaptateurs par rapport aux profils —
-> [`content-profiles`](reference/skill-instructions/content-profiles.html).
+> [`content-profiles`](../reference/skill-instructions/content-profiles.html).
 > L'emplacement d'un nouveau nœud avant sa création —
-> [`placement`](reference/skill-instructions/placement.html). L'agencement
+> [`placement`](../reference/skill-instructions/placement.html). L'agencement
 > du dépôt et chaque type de graphe —
-> [`directory-conventions`](reference/skill-instructions/directory-conventions.html).
+> [`directory-conventions`](../reference/skill-instructions/directory-conventions.html).
 > Composition et vérification de la surface MCP —
-> [`mcp-assembly`](reference/skill-instructions/mcp-assembly.html) et
-> [`mcp-contract`](reference/skill-instructions/mcp-contract.html).
+> [`mcp-assembly`](../reference/skill-instructions/mcp-assembly.html) et
+> [`mcp-contract`](../reference/skill-instructions/mcp-contract.html).
 > En cas de désaccord entre cette page et une compétence, la compétence l'emporte.
 
 folio-assistant est un **serveur MCP** doté d'une couche d'**adaptateurs de contenu** enfichable,
@@ -60,19 +60,19 @@ en cinq instances composables de folio-assistant. Les pages filles le détaillen
 
 | page | ce à quoi elle répond |
 |---|---|
-| [Taxonomie des dépôts](architecture/repo-taxonomy.html) | Quels types de dépôts existent — Outils, Tests, Contenu, Consommateur — et ce que chacun peut contenir |
-| [État actuel](architecture/current-state.html) | Ce qui se trouve réellement dans ce dépôt aujourd'hui, mesures à l'appui, et où se situe le mélange |
-| [État futur](architecture/future-state.html) | Les cinq dépôts cibles et dans lequel chaque répertoire atterrit |
-| [Plan de migration](architecture/migration-plan.html) | Phases 0/I/II/III, les étapes clés (gates) et ce qui reste à trancher |
-| [`cat-harness` minimal](architecture/cat-harness-minimum.html) | Ce qui subsiste dans le harnais une fois que le critère « non auto-documenté » est appliqué comme test |
-| [Instances de harnais](architecture/harness-instances.html) | Ce qu'EST une instance — schémas, visualisations, outils ; les quatre répertoires ; le rendu par défaut |
+| [Taxonomie des dépôts](../architecture/repo-taxonomy.html) | Quels types de dépôts existent — Outils, Tests, Contenu, Consommateur — et ce que chacun peut contenir |
+| [État actuel](../architecture/current-state.html) | Ce qui se trouve réellement dans ce dépôt aujourd'hui, mesures à l'appui, et où se situe le mélange |
+| [État futur](../architecture/future-state.html) | Les cinq dépôts cibles et dans lequel chaque répertoire atterrit |
+| [Plan de migration](../architecture/migration-plan.html) | Phases 0/I/II/III, les étapes clés (gates) et ce qui reste à trancher |
+| [`cat-harness` minimal](../architecture/cat-harness-minimum.html) | Ce qui subsiste dans le harnais une fois que le critère « non auto-documenté » est appliqué comme test |
+| [Instances de harnais](../architecture/harness-instances.html) | Ce qu'EST une instance — schémas, visualisations, outils ; les quatre répertoires ; le rendu par défaut |
 
 Les deux dernières semblent se contredire — le minimum indique qu'un harnais ne produit
 rien qu'un humain regarde, et la page des instances indique qu'une instance effectue un rendu
 par défaut. Ce n'est pas le cas : l'exigence est un **plancher qui s'élève**,
 `bootstrap` étant exempté du visualiseur et devant fournir ses propres `.json`/`.jsonld`
 à la place, et `cat-harness` étant la couche où le reste commence à s'appliquer. Voir
-[Où commence l'exigence](architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
+[Où commence l'exigence](../architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
 
 Le reste de cette page décrit l'architecture **telle qu'elle est actuellement**.
 
@@ -106,7 +106,7 @@ enregistrer. L'adaptateur `document` (`adapters/document/`) constitue la base po
 de prose ; l'adaptateur `paper` (`adapters/paper/`) l'étend et fournit les outils du cycle de vie Lean
 (`lean_setup`/`build`/`check`/`status`), la validation et le rendu
 (`paper_render_pdf`/`html`, `formula_render`). Les nouveaux types de contenu ajoutent un nouvel
-adaptateur — voir [Ajouter un type de contenu](guides/new-content-type.html).
+adaptateur — voir [Ajouter un type de contenu](../guides/new-content-type.html).
 
 ## Compétences et paquets de compétences
 
@@ -117,7 +117,7 @@ compétences avec `skill_list` et charge les instructions avec `skill_fetch`. La
 des compétences et des rôles — ainsi que la manière dont ils se composent avec le LLM (RBAC, capacités,
 exigences) — se trouve sur la page [Compétences et rôles](skills.html) ; le contrat
 d'entrée/sortie de chaque compétence est publié dans la
-[Référence des schémas de compétences](reference/skills/).
+[Référence des schémas de compétences](../reference/skills/).
 
 ## Le modèle d'objets de contenu
 
@@ -147,7 +147,7 @@ dans `skills/permissions/permissions.json`, les autorisations dans `policies/*.j
 
 Jusqu'au ticket #1207 (23-09-2026), `rbac.ts` était une hiérarchie distincte viewer < collaborator
 < owner et l'exécuteur ne vérifiait rien. La règle de conduite est définie par la compétence
-[`task-authorization`](reference/skill-instructions/task-authorization.html).
+[`task-authorization`](../reference/skill-instructions/task-authorization.html).
 
 ## Amorçage du plan de travail (inter-harnais)
 

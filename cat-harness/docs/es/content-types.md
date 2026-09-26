@@ -50,7 +50,7 @@ paquete transversal de habilidades **`content-lifecycle`**:
        alt="Diagrama de carriles BPMN de un ciclo de folio: el responsable del programa planifica, el plan se siembra como beans, la edición y la validación de HCI se ejecutan por cada cambio propuesto, sigue una prueba de integración y un barrido de QA, luego borrador-revisión-publicación; la retroalimentación se clasifica y registra como beans, y el ciclo se repite o el folio se retira.">
 </div>
 
-[Fuente BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [SVG a tamaño completo](assets/img/workflows/content-lifecycle.svg)
+[Fuente BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/content-lifecycle.bpmn) · [SVG a tamaño completo](../assets/img/workflows/content-lifecycle.svg)
 {: .bpmn-source }
 
 | Etapa | Habilidad | Qué ocurre |
@@ -84,7 +84,7 @@ borrador ensamblado. Ambos se amplían en sus propios diagramas en la página de
 
 **Paquete de habilidades:** `folio-document-adapter` ·
 **Adaptador:** `document` ·
-**Guía:** [Redacción de un documento](guides/writing-a-document.html)
+**Guía:** [Redacción de un documento](../guides/writing-a-document.html)
 
 Prosa estructurada: directrices de políticas de salud (por ejemplo, una guía L1), un estándar,
 un informe, un manual, el capítulo de un libro. Todo lo que es un artículo, menos la capa
@@ -103,17 +103,17 @@ formal —y, por lo tanto, menos las dos cadenas de herramientas que la atienden
   campo `lean` o archivo hermano `.lean`, y se ejecuta en cada `content_validate`.
 
 Esquemas de habilidades pertinentes:
-[`document-authoring`](reference/skills/document-authoring.html),
-[`document-structure`](reference/skills/document-structure.html),
-[`normative-statements`](reference/skills/normative-statements.html),
-[`document-publishing`](reference/skills/document-publishing.html).
+[`document-authoring`](../reference/skills/document-authoring.html),
+[`document-structure`](../reference/skills/document-structure.html),
+[`normative-statements`](../reference/skills/normative-statements.html),
+[`document-publishing`](../reference/skills/document-publishing.html).
 
 <div class="bpmn-figure" id="figure-documents-policy-guidance">
   <img src="assets/img/workflows/authoring-a-document.svg"
        alt="Diagrama de carriles BPMN de autoría de documentos: el autor planifica, el plan se siembra como beans, un agente genera la estructura del folio y redacta los bloques, la canalización de compilación comprueba el perfil declarado antes de validar y renderizar a Markdown, HTML y PDF, y un revisor autoriza la publicación.">
 </div>
 
-[Fuente BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [SVG a tamaño completo](assets/img/workflows/authoring-a-document.svg)
+[Fuente BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/authoring-a-document.bpmn) · [SVG a tamaño completo](../assets/img/workflows/authoring-a-document.svg)
 {: .bpmn-source }
 
 ### Portar una declaración normativa
@@ -128,7 +128,7 @@ teorema, porque nada lo demuestra.
 
 No existe **un tipo de bloque `recommendation` de primera clase**. Hoy en día, el portador es un
 bloque `prose` con una etiqueta y un título; la habilidad
-[`normative-statements`](reference/skill-instructions/normative-statements.html)
+[`normative-statements`](../reference/skill-instructions/normative-statements.html)
 establece la convención y sus límites. Las orientaciones anteriores en
 `document-intake` mapeaban las recomendaciones de las guías a `definition` —eso
 es anterior a este tipo de contenido y es incorrecto para un folio de documento, donde
@@ -143,7 +143,7 @@ es anterior a este tipo de contenido y es incorrecto para un folio de documento,
 
 **Paquete de habilidades:** `authoring-math` ·
 **Adaptador:** `paper` ·
-**Guía:** [Redacción de un artículo](guides/writing-a-paper.html)
+**Guía:** [Redacción de un artículo](../guides/writing-a-paper.html)
 
 Artículos científicos y libros rigurosos donde la prosa y las matemáticas están respaldadas por
 una formalización en **Lean 4** verificada por máquina y renderizadas mediante **LaTeX**.
@@ -190,9 +190,9 @@ permite lo que el perfil prohíbe, razón por la cual `content_profile_check` ti
 segunda regla más allá de «¿está permitido este tipo?».
 
 Esquemas de habilidades pertinentes:
-[`latex-authoring`](reference/skills/latex-authoring.html),
-[`lean-formalization`](reference/skills/lean-formalization.html),
-[`proof-verification`](reference/skills/proof-verification.html).
+[`latex-authoring`](../reference/skills/latex-authoring.html),
+[`lean-formalization`](../reference/skills/lean-formalization.html),
+[`proof-verification`](../reference/skills/proof-verification.html).
 
 ---
 
@@ -202,7 +202,7 @@ Esquemas de habilidades pertinentes:
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/l2-dak-authoring.bpmn){: .fa-node-edit title="Edit processes/l2-dak-authoring.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="who-smart-guidelines-daks-l2.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/content-types/who-smart-guidelines-daks-l2.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="who-smart-guidelines-daks-l2.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/content-types/who-smart-guidelines-daks-l2.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 **Paquete de habilidades:** `authoring-who-smart-guidelines` ·
-**Guía:** [Autoría de un DAK de SMART de la OMS](guides/who-smart-dak.html)
+**Guía:** [Autoría de un DAK de SMART de la OMS](../guides/who-smart-dak.html)
 
 Un **Kit de Adaptación Digital (DAK)** es la representación *L2* (legible por máquina,
 pero neutra respecto a la implementación) de una directriz de la OMS. folio-assistant
@@ -215,17 +215,17 @@ genera los artefactos L2:
 - **Personas, escenarios, indicadores, requisitos**
 
 Esquemas de habilidades pertinentes:
-[`l2-dak-authoring`](reference/skills/l2-dak-authoring.html),
-[`bpmn-authoring`](reference/skills/bpmn-authoring.html),
-[`dmn-authoring`](reference/skills/dmn-authoring.html),
-[`terminology-management`](reference/skills/terminology-management.html).
+[`l2-dak-authoring`](../reference/skills/l2-dak-authoring.html),
+[`bpmn-authoring`](../reference/skills/bpmn-authoring.html),
+[`dmn-authoring`](../reference/skills/dmn-authoring.html),
+[`terminology-management`](../reference/skills/terminology-management.html).
 
 <div class="bpmn-figure" id="figure-who-smart-guidelines-daks-l2">
   <img src="assets/img/workflows/l2-dak-authoring.svg"
        alt="Diagrama de carriles BPMN de autoría de DAK L2: una compuerta paralela despliega personas, procesos BPMN, lógica de decisión DMN, el diccionario de datos e indicadores a lo largo del carril del analista de negocio junto con las vinculaciones del terminólogo; luego, la validación por parte de expertos clínicos (SME) autoriza el ensamblaje del DAK.">
 </div>
 
-[Fuente BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn) · [SVG a tamaño completo](assets/img/workflows/l2-dak-authoring.svg)
+[Fuente BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn) · [SVG a tamaño completo](../assets/img/workflows/l2-dak-authoring.svg)
 {: .bpmn-source }
 
 ---
@@ -236,7 +236,7 @@ Esquemas de habilidades pertinentes:
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/processes/l3-fhir-pipeline.bpmn){: .fa-node-edit title="Edit processes/l3-fhir-pipeline.bpmn" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="who-smart-implementation-guides-l3.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/content-types/who-smart-implementation-guides-l3.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span> <button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-kg" data-qa-family="kg" data-qa-key="who-smart-implementation-guides-l3.kg" data-qa-label="Knowledge-graph QA" data-qa-noun="diagram" data-qa-src="{{ '/assets/qa/content-types/who-smart-implementation-guides-l3.kg.json' | relative_url }}" data-qa-index="{{ '/assets/qa/content-types/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Knowledge-graph QA: loading the verdict…" aria-label="Knowledge-graph QA: loading the verdict…"><span class="fa-qa-tag">KG</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button></span>
 
 **Paquete de habilidades:** `authoring-who-smart-guidelines` ·
-**Guía:** [Autoría de una IG SMART de la OMS](guides/who-smart-ig.html)
+**Guía:** [Autoría de una IG SMART de la OMS](../guides/who-smart-ig.html)
 
 La capa *L3* convierte un DAK L2 en una **Guía de Implementación FHIR** computable:
 
@@ -247,17 +247,17 @@ La capa *L3* convierte un DAK L2 en una **Guía de Implementación FHIR** comput
 - **Compuertas de control de calidad** (`quality-control`)
 
 Esquemas de habilidades pertinentes:
-[`l3-fhir-authoring`](reference/skills/l3-fhir-authoring.html),
-[`fhir-validation`](reference/skills/fhir-validation.html),
-[`ig-publication`](reference/skills/ig-publication.html),
-[`quality-control`](reference/skills/quality-control.html).
+[`l3-fhir-authoring`](../reference/skills/l3-fhir-authoring.html),
+[`fhir-validation`](../reference/skills/fhir-validation.html),
+[`ig-publication`](../reference/skills/ig-publication.html),
+[`quality-control`](../reference/skills/quality-control.html).
 
 <div class="bpmn-figure" id="figure-who-smart-implementation-guides-l3">
   <img src="assets/img/workflows/l3-fhir-pipeline.svg"
        alt="Diagrama de carriles BPMN de la canalización L3: mapear L2 a L3, autoría de FSH, compilación con SUSHI, validación frente a perfiles con retorno a FSH en caso de error, compuertas de QC que registran hallazgos como beans, compilación con IG Publisher y publicación del sitio de la IG.">
 </div>
 
-[Fuente BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [SVG a tamaño completo](assets/img/workflows/l3-fhir-pipeline.svg)
+[Fuente BPMN 2.0](https://github.com/litlfred/folio-assistant/blob/main/processes/l3-fhir-pipeline.bpmn) · [SVG a tamaño completo](../assets/img/workflows/l3-fhir-pipeline.svg)
 {: .bpmn-source }
 
 ---
@@ -269,4 +269,4 @@ Esquemas de habilidades pertinentes:
 
 Los nuevos tipos de contenido son de primera clase: agrega un **adaptador** de contenido y
 un **paquete** de habilidades, y el ciclo de vida, RBAC y la infraestructura de MCP vienen
-incluidos sin costo alguno. Consulta [Agregar un tipo de contenido](guides/new-content-type.html).
+incluidos sin costo alguno. Consulta [Agregar un tipo de contenido](../guides/new-content-type.html).

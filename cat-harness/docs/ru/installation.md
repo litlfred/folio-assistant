@@ -17,11 +17,11 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 > Установка — это более простая половина. То, что нужно запустить **перед push**, — это
-> [`platform-gates`](reference/skill-instructions/platform-gates.html) —
+> [`platform-gates`](../reference/skill-instructions/platform-gates.html) —
 > успешное прохождение `bun test` не означает прохождение гейтов платформы, а сам их список выводится из
 > рабочего процесса CI, а не просто где-то записан. Если вы разворачиваете folio-assistant
 > поверх уже существующего репозитория, сначала прочитайте
-> [`repo-conversion`](reference/skill-instructions/repo-conversion.html).
+> [`repo-conversion`](../reference/skill-instructions/repo-conversion.html).
 
 ## Предварительные требования
 
@@ -36,7 +36,7 @@ MCP. Самой платформе требуется только Bun; отде
 | Git + git-lfs | репозитории контента | `apt install git git-lfs` | `winget install Git.Git GitHub.GitLFS` |
 | LaTeX (`latexmk`, `texlive`) | рендеринг статей | `apt install texlive-full latexmk biber` | `winget install MiKTeX.MiKTeX` |
 | Lean 4 (через `elan`) | формализация статей | `curl …/elan-init.sh \| sh -s -- -y` | см. [релизы elan](https://github.com/leanprover/elan/releases) |
-| Java 21 + IG Publisher + SUSHI | WHO SMART IG (L3) | см. [руководство по WHO SMART IG](guides/who-smart-ig.html) | `winget install EclipseAdoptium.Temurin.21.JDK`, затем руководство |
+| Java 21 + IG Publisher + SUSHI | WHO SMART IG (L3) | см. [руководство по WHO SMART IG](../guides/who-smart-ig.html) | `winget install EclipseAdoptium.Temurin.21.JDK`, затем руководство |
 | `pandoc`, `ripgrep` | преобразования, поиск | `apt install pandoc ripgrep` | `winget install JohnMacFarlane.Pandoc BurntSushi.ripgrep.MSVC` |
 
 Вам не обязательно всё это устанавливать — устанавливайте только то, что требуется
