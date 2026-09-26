@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-22T05:57:48Z
-updated_at: 2026-09-22T21:40:00Z
+updated_at: 2026-09-26T09:00:43Z
 parent: folio-assistant-1xhc
 ---
 
@@ -302,3 +302,16 @@ owner ruled on the path. This is recorded for its own decision.
       it changes published output**
 - [ ] Not dispatched, by ruling. Whoever dispatches first should know all three
       jobs push to `gh-pages`
+
+
+
+## The two installs are pinned — 2026-09-26, salvaged from #1040
+
+#1040 carried this and went 590 commits stale; the owner chose to salvage its live parts into one new PR rather than resolve it. Both TypeDoc steps now run `bun install --frozen-lockfile` with **no** npm fallback, and both baseline entries are removed from `lockfile-pinning-baseline.json` (3 known → 1).
+
+Verified rather than carried over from #1040's text:
+- a frozen install **from `cat-harness/`** (the steps' `working-directory`) exits 0 on a clean worktree of `origin/main` — there is no `cat-harness/bun.lock`, bun walks up to the root one;
+- `check:lockfile-pinning`: 16 → 18 pinned, 3 → 1 deliberately unpinned, exit 0;
+- falsified: putting the old command back in `publish.yml` exits 1 with `NEW unpinned install: publish.yml: …`; restoring exits 0.
+
+The conditional box above (*"If it fails: … the two installs pinned"*) is left unticked on purpose: its condition is a dispatch the owner ruled out, so ticking it would claim an observation nobody made. The dead `adapters/paper/schemas/` entry point is still the owner's, untouched.
