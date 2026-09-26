@@ -270,39 +270,58 @@ export function withoutKey(src: string, key: string): string {
 /**
  * The generator chain, in dependency order, as package scripts.
  *
- * Order is not cosmetic: each writes something a later one reads. It is also
- * not sufficient — see {@link CHECKS}. Every entry must be a script
- * `package.json` declares, which {@link missingScripts} asserts rather than
- * assumes, because a renamed script would otherwise make this chain silently
- * skip a step.
+ * **These five are MEASURED, and the nine this listed first were not.** The
+ * original set was inferred from what went red in this session's incidents,
+ * which is precisely the method `skill-register.ts` records failing three times:
+ * *"it named `gen-docs-pages`, `docs:harness`, `translation:index` and
+ * `state:visualizer`, none of which adding a skill stales. They had gone red in
+ * the same sessions for unrelated reasons and were attributed here."* My four
+ * extras — `glossary:export`, `uml:overview`, `prov:qaqc`, `tools:viz` — were
+ * the same error: they staled in the runs I watched because that branch also
+ * added three Tool nodes and merged 20 translated pages, not because a skill
+ * was added.
+ *
+ * Their method, which mine was not: add a throwaway skill to a green tree, run
+ * each check **individually**, and subtract a baseline measured the same way.
+ * `bun run gates` cannot derive it, because `bun test` runs the detangle and
+ * kg-audit writers, so by the time those checks execute the artefacts are
+ * already repaired — bean `ymsu`'s blind spot.
+ *
+ * Order is for deterministic output, NOT dependency: they measured all five in
+ * reverse and re-checked green. I had asserted order-dependence from watching
+ * `docs:auto` stale behind `glossary:page`, and that observation was real but
+ * belonged to a tree changing for four reasons at once.
+ *
+ * {@link CHECKS} still verifies rather than assumes, which costs one extra pass
+ * and is the difference between "ran the chain" and "the chain landed".
+ *
+ * Every entry must be a script `package.json` declares, which
+ * {@link missingScripts} asserts rather than assumes, because a renamed script
+ * would otherwise make this chain silently skip a step.
  */
 export const CHAIN = [
   "skills:docs",
-  "kg:audit",
-  "glossary:export",
   "glossary:page",
   "docs:auto",
-  "uml:overview",
-  "prov:qaqc",
-  "tools:viz",
+  "kg:audit",
   "kg:detangle",
 ] as const;
 
 /**
  * The `--check` form of each step that has one, used to decide convergence.
  *
- * Convergence is ASSERTED, never assumed after a fixed number of passes. One
- * pass is not a fixed point — measured directly: `docs:auto` went stale behind
- * `glossary:page` on 2026-09-26, and `#1376`'s author records the same lesson
- * from four earlier PRs.
+ * Convergence is ASSERTED, never assumed. One pass is expected to suffice for a
+ * skill — `skill-register.ts` measured these five as order-independent — so this
+ * loop is not there to shuffle a dependency; it is there so the command can say
+ * the chain LANDED rather than that it RAN. A writer exiting 0 over an artefact
+ * it failed to update is the case that costs a CI cycle, and only the `:check`
+ * form catches it.
  */
 export const CHECKS = [
   "skills:docs:check",
-  "kg:audit:check",
   "glossary:check",
   "docs:auto:check",
-  "uml:overview:check",
-  "tools:viz:check",
+  "kg:audit:check",
   "kg:detangle:check",
 ] as const;
 

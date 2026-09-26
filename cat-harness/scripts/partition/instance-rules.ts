@@ -864,6 +864,18 @@ export const RULES: Rule[] = [
       // its subject twice over: it reads THIS repository's workflows,
       // and what it runs are the harness's own generators.
       "scripts/check-ci-invocations.ts",
+      // Builds every package this REPOSITORY publishes to npm (bean `rsi6`).
+      // Harness by its subject: the thing it builds is this repository's own
+      // shipped artefact, and a folio publishes prose and proofs rather than
+      // a package. Its neighbour above reads the workflows; this one reads
+      // what the workflows were failing to build.
+      "scripts/check-published-packages.ts",
+      // "what files does this REPOSITORY contain", asked of git rather than of
+      // the disk (bean `rsi6`). Harness by its subject: the corpus it reports
+      // is a checkout's, and its whole point is that a folio's material and a
+      // machine's untracked residue are not the same set. Four scanners here
+      // shared a denylist-shaped version of this before it was one module.
+      "scripts/git-corpus.ts",
       // Which `.github/workflows/*.yml` carry a BPMN diagram — bean `7yvd`.
       // Harness by its subject: it reads THIS REPOSITORY's CI processes and
       // its knowledge graph, and a folio has neither of those as content.
@@ -1224,6 +1236,7 @@ export const RULES: Rule[] = [
       "scripts/render-selection.ts",        // WHICH of them must re-run against a seed, and why (bean `9c34`). Harness machinery: it computes a decision and writes no page, so it belongs beside the pipeline rather than with the renderers
       "scripts/gates.ts",                   // the gate runner itself
       "scripts/gate-tree-guard.ts",         // ...and which gate changed the tree under it (bean `ymsu`). Harness for the same reason the runner is: it asks a question only the runner is positioned to ask, since no gate can observe what another gate did
+      "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales (bean `v625`). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the five artefacts before their checks read them
       "scripts/check-merged.ts",            // the gate runner, on the merged tree (bean `nytj`)
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
       "scripts/gen-bootstrap-graph.ts", // writes bootstrap/bootstrap.jsonld

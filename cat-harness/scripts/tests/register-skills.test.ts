@@ -208,11 +208,22 @@ describe("the chain names real scripts", () => {
     expect(missingScripts()).toEqual([]);
   });
 
-  test("the chain and its checks are non-empty, and the checks are a subset in spirit", () => {
-    expect(CHAIN.length).toBeGreaterThan(5);
-    expect(CHECKS.length).toBeGreaterThan(4);
-    // Every check is the `:check` form of something, so a step cannot be
-    // verified by an unrelated command.
+  /**
+   * **This asserted `CHAIN.length > 5` and that floor was wrong.** It encoded
+   * the nine-step chain I had inferred, so when the chain was corrected to the
+   * five that `skill-register.ts` measured, a correct change failed a test —
+   * which is the exact failure the sibling test above warns about in prose: *"a
+   * count in a test goes stale exactly as a count in prose does."* I wrote the
+   * warning and then wrote the count.
+   *
+   * So the assertions are properties now. Non-empty, because an empty chain
+   * would make the command a no-op that reports success; and every check is a
+   * `:check` form, so a step cannot be verified by an unrelated command. Neither
+   * moves when the measured chain does.
+   */
+  test("the chain is non-empty and every check is a `:check` form", () => {
+    expect(CHAIN.length).toBeGreaterThan(0);
+    expect(CHECKS.length).toBeGreaterThan(0);
     for (const c of CHECKS) expect(c.endsWith(":check")).toBe(true);
   });
 });

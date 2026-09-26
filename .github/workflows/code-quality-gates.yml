@@ -823,6 +823,16 @@ jobs:
           # about, arriving again through the back door.
           bun run navbar:include:check
           bun run check:agents-xref
+          # Bean `rsi6`: `@litlfred/block-qa-schema` is the only package here
+          # that ships to npm, and NO workflow built it. PR #914 bumped its
+          # typescript 5.9.3 -> 7.0.2, passed TEN checks, and left the package
+          # unbuildable -- `tsup --dts` delegates to rollup-plugin-dts, which
+          # bundles its own TypeScript 5.7.3 and dies on TypeScript 7's
+          # compiler API. Ten green checks, not one of which read the file the
+          # PR changed. The set is derived from the git index, and an EMPTY
+          # set fails rather than passing: a sweep that examined nothing has
+          # not cleared anything.
+          bun run check:published-packages
           # Bean `b963`: a path inside a fenced COMMAND is not a link, not a
           # symbol claim and not a literal in a .ts file, so all three
           # neighbouring checks miss it by design. The cold-start line every

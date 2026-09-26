@@ -4,7 +4,7 @@ title: 11 root-rooted scans have no gitignore awareness — ramz's sibling audit
 status: todo
 type: task
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-25T16:22:33Z
+updated_at: 2026-09-26T04:01:08Z
 parent: folio-assistant-ahvw
 ---
 
@@ -51,3 +51,58 @@ Tracked-PLUS-untracked-not-ignored, never `--cached` alone: a file written and
 not yet staged is part of the change under test. And `undefined` (ask
 something else) must stay distinct from `[]` (git looked, there are none) —
 collapsing them is how a check reports a clean corpus it never read.
+
+## Four of the eleven are done — and three fired on ONE day
+
+2026-09-26, while fixing bean `rsi6`. The trigger was not a sweep of this
+list: a new gate installed a publishable package's devDependencies, and three
+scanners on it broke within minutes of each other, all on the same
+`node_modules/`.
+
+| scanner | what it did |
+|---|---|
+| `check-subgraphs` | reported **31 broken links**, every one inside a third-party README pointing at its own repository (`sucrase` → `./CONTRIBUTING.md`, `expect-type` → `./src/index.ts`) |
+| `check-kind-validators` | **crashed** — `ENOENT` from `statSync` on a dangling `node_modules/.bin/tsserver` symlink, killing the sweep entirely |
+| `gen-uml-overview` | crashed the same way, producing no overview at all |
+
+**That is the argument this bean was missing.** The list read as eleven latent
+risks; what it actually describes is eleven scanners that are correct only
+while nothing untracked appears in a declared directory — a condition no one
+controls and any contributor can break by running `bun install` one level
+down. Two of the three did not merely over-report: they DIED, so the check
+reported nothing rather than reporting too much.
+
+And the second failure mode is worth naming separately, because gitignore
+awareness does not fix it: **a dangling symlink is a fact about the tree, not
+a reason to stop.** Both crashes were an unguarded `statSync` in a walk. The
+fallback paths now catch it.
+
+## Done
+
+- [x] `check-context-emission` (bean `ramz`) — first, and the one that named
+      the rule.
+- [x] `check-subgraphs`
+- [x] `check-kind-validators`
+- [x] `gen-uml-overview`
+- [x] **The rule is stated once**: `cat-harness/scripts/git-corpus.ts`,
+      `gitCorpus(dir, pathspec)`. This bean asked for that *"before it is
+      copied"*; it was copied a second time within a day of being written, so
+      the extraction happened at the third caller rather than the second.
+
+## Still open — TEN of the original eleven
+
+`check-agents-claims`, `check-code-accounting`, `check-docs-templates`,
+`check-image-roles`, `check-lane-documentation`, `check-process-documentation`,
+`check-source-licence`, `check-viewer-backticks`, `glossary-export`,
+`ns-export` — minus any that turn out to walk a directory where a bare walk is
+RIGHT.
+
+Note the arithmetic, because it is the finding and not a bookkeeping detail:
+**one** of the four fixed above was on this bean's list (`check-subgraphs`).
+`check-kind-validators` and `gen-uml-overview` were NOT — they were found by
+breaking, not by the survey. The survey's own method is a syntactic filter
+over `scripts/*.ts`, and it said so; two misses on the first day it was tested
+is what that caveat is worth in practice. The list is a floor. That question is still per-scanner: a build-output scanner legitimately
+wants files git ignores, and this bean's second Done-when has always allowed a
+written reason instead of a fix.
+
