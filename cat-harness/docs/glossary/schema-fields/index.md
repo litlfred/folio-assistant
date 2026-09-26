@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1421 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1428 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1601 terms and is 868 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1608 terms and is 872 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1601</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1608</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -5896,6 +5896,27 @@ NoteTagsSchema.tasks <span class="fa-gloss-status">candidate, extracted</span>
 
 <h2 id="letter-O">O</h2>
 <dl class="fa-gloss">
+<dt id="cat-harness--kg-schema-fields--reference-direction.occurrence.from" data-fa-state="extracted" data-fa-gloss="">
+Occurrence.from <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The instance the FILE belongs to.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/reference-direction.ts"><code>cat-harness/schemas/reference-direction.ts#Occurrence.from</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--reference-direction.occurrence.text" data-fa-state="extracted" data-fa-gloss="">
+Occurrence.text <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The whole line, which is what an exemption matches against.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/reference-direction.ts"><code>cat-harness/schemas/reference-direction.ts#Occurrence.text</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--reference-direction.occurrence.to" data-fa-state="extracted" data-fa-gloss="">
+Occurrence.to <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The instance whose NAME was found.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/reference-direction.ts"><code>cat-harness/schemas/reference-direction.ts#Occurrence.to</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--odrl.odrlpolicyschema.assigner" data-fa-state="extracted" data-fa-gloss="">
 OdrlPolicySchema.assigner <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -7216,6 +7237,34 @@ RefactorStrategyFile.family <span class="fa-gloss-status">candidate, extracted</
 <dd>
 <p>Grouping label, e.g. `mechanical`, `structural`.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/refactor-strategy.ts"><code>cat-harness/schemas/refactor-strategy.ts#RefactorStrategyFile.family</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--reference-direction.referenceexemption.file" data-fa-state="extracted" data-fa-gloss="">
+ReferenceExemption.file <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Matches the FILE the occurrence sits in, repo-relative. Omitted means any file.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/reference-direction.ts"><code>cat-harness/schemas/reference-direction.ts#ReferenceExemption.file</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--reference-direction.referenceexemption.pattern" data-fa-state="extracted" data-fa-gloss="">
+ReferenceExemption.pattern <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Matches the LINE the occurrence sits on. Omitted means any line, and then `file` must be set.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/reference-direction.ts"><code>cat-harness/schemas/reference-direction.ts#ReferenceExemption.pattern</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--reference-direction.referenceexemption.reason" data-fa-state="extracted" data-fa-gloss="">
+ReferenceExemption.reason <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Why this is not a reference to the instance. Required.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/reference-direction.ts"><code>cat-harness/schemas/reference-direction.ts#ReferenceExemption.reason</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--reference-direction.referenceexemption.to" data-fa-state="extracted" data-fa-gloss="">
+ReferenceExemption.to <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Limit to one target instance; omitted means any.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/reference-direction.ts"><code>cat-harness/schemas/reference-direction.ts#ReferenceExemption.to</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--changeset.refschema.commit" data-fa-state="extracted" data-fa-gloss="">
 RefSchema.commit <span class="fa-gloss-status">candidate, extracted</span>

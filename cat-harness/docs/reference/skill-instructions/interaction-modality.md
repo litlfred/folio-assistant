@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: '/interaction-modality'
 parent: Skill instructions
 ---
@@ -306,7 +307,7 @@ than silence.
 decision has handed it over, whatever the framing sentence says. Either the
 options and their costs are there, or the name comes out and a count goes in.
 
-#### Enforced, not remembered — the three layers added 2026-09-20
+#### Enforced, not remembered — the layers
 
 This section was STRICT and complete on 2026-09-20, and was broken the same day
 by the agent implementing its neighbours. The owner: *"ask specific questiosn w/
@@ -324,10 +325,33 @@ tool's labels); and nothing sat between the agent and the question tool.
 | `PreToolUse` on `AskUserQuestion` → `scripts/ask-well.sh` | prints the six parts at the one moment the rule certainly applies, on every agent and every session | it sees the tool call, not the prose written before it, so it REMINDS and never blocks — a gate that cannot tell must not refuse |
 | `schemas/decision-request.ts` | makes the comparison **unomittable**: no optionals, so a decision with two options and one comparison does not parse, and `renderDecision` emits the prose table and the selection from ONE object so they cannot drift | it cannot tell a good `con` from a lazy one, and does not try — it checks that the question was asked, never that the answer is honest |
 
-None of the three is sufficient and the omissions are stated rather than
-implied, which is the same three-state discipline the rest of this skill asks
-for. `bun test cat-harness/scripts/tests/decision-request.test.ts` asserts each
+| `Stop` → `scripts/decisions-named-not-asked.ts` | reads the turn that just ENDED and names the paragraph that handed decisions over bare — the one path the three above cannot see | it reads prose, so it is a heuristic; it reminds and never blocks, and a paragraph that happens to carry a comparison suppresses it |
+
+None of these is sufficient and the omissions are stated rather than implied,
+which is the same three-state discipline the rest of this skill asks for.
+`bun test cat-harness/scripts/tests/decision-request.test.ts` asserts each
 refusal, because a schema whose refusals are untested quietly stops refusing.
+
+**The fourth layer was added 2026-09-26, after the owner named this failure a
+SECOND time in one session** — *"you have yet again provided unanswered
+questions as blockers but have not provided exactly what the questions are pros
+cons recommendations and down steam impact"*. Nothing in this section was
+missing: part 3 already required `downstream`, §"More than one decision pending"
+already forbade the list of names, and the no-exemption clause was already
+there.
+
+**Read the middle column of the first three rows and the gap is structural.**
+Each is keyed on the agent CHOOSING to ask — a tool call, or a rendered schema.
+The failure shape touches neither: a closing paragraph of an ordinary turn,
+*"still yours: `bf5l`'s layering ruling, task #26, the orphan branch, `e8m3`,
+`6ptx`, #951, #1340"*. This section had already predicted that surface —
+*"those are where it is most often broken, because they feel like reporting
+rather than asking"* — and had built no guard on it. A predicted failure with no
+layer against it is a prediction, not an enforcement.
+
+Its fixtures are **real turns from that session** rather than invented strings,
+for the reason bean `yx9p` paid for the same day: a guard tested only on the
+author's idea of the defect passed on the defect itself for ten minutes.
 
 ##### The posture, and the condition that revisits it
 
