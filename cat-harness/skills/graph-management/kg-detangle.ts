@@ -32,7 +32,7 @@
  * @module skills/graph-management/kg-detangle
  * @covers cat-harness, skills
  */
-import { readdirSync, readFileSync, statSync, existsSync, mkdirSync, writeFileSync } from "fs";
+import { readdirSync, readFileSync, existsSync, mkdirSync, writeFileSync } from "fs";
 import { gitCorpus } from "../../scripts/git-corpus.js";
 import { join, relative, resolve, dirname } from "path";
 import { detangleResultsDir, sidecarFor, sidecarPathFor, staleFields } from "../../schemas/detangle-sidecar.ts";

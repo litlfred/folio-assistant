@@ -1069,7 +1069,7 @@ Deduplicate, and keep what is actually relevant <span class="fa-gloss-status">ca
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/deep-document-research.bpmn"><code>folio-assistant-core/processes/deep-document-research.bpmn#A_Refine</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_advisories" data-fa-state="extracted" data-fa-gloss="">
-Dependency advisories&amp;#10;(WARN-ONLY) <span class="fa-gloss-status">candidate, extracted</span>
+Dependency advisories (WARN-ONLY) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner's ruling on bean `j41m` — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. `.github/dependabot.yml` is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot's schedule.</p>
@@ -1283,7 +1283,7 @@ Editing and HCI validation [content-author] <span class="fa-gloss-status">candid
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/draft-to-publication.bpmn"><code>cat-harness/processes/draft-to-publication.bpmn#CallActivity_Editing</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_e2e" data-fa-state="extracted" data-fa-gloss="">
-End-to-end +&amp;#10;accessibility (HARD) <span class="fa-gloss-status">candidate, extracted</span>
+End-to-end + accessibility (HARD) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR.</p>
@@ -1724,7 +1724,7 @@ Languages: extracted, rendered, and RTL <span class="fa-gloss-status">candidate,
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/theme-ui-review.bpmn"><code>cat-harness/processes/theme-ui-review.bpmn#A_Locales</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_lean" data-fa-state="extracted" data-fa-gloss="">
-Lean: no bare&amp;#10;`import Mathlib` (HARD) <span class="fa-gloss-status">candidate, extracted</span>
+Lean: no bare `import Mathlib` (HARD) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently.</p>
@@ -2419,7 +2419,7 @@ Put the question, with its candidates named <span class="fa-gloss-status">candid
 <p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_PutQuestion</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_python" data-fa-state="extracted" data-fa-gloss="">
-Python: unused and&amp;#10;wildcard imports (HARD) <span class="fa-gloss-status">candidate, extracted</span>
+Python: unused and wildcard imports (HARD) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>ruff F401 (unused) and F403 (wildcard) imports over the Python trees that exist, then the Python tests. A tree that is absent is dropped rather than passed to ruff, and an empty set says SKIP — a missing path must not be swallowed as a pass.</p>
@@ -3225,7 +3225,7 @@ Run the rule's mechanical half <span class="fa-gloss-status">candidate, extracte
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/voice-review.bpmn"><code>cat-harness/processes/voice-review.bpmn#Task_MechanicalHalf</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_rust" data-fa-state="extracted" data-fa-gloss="">
-Rust wildcard imports&amp;#10;(WARN-ONLY) <span class="fa-gloss-status">candidate, extracted</span>
+Rust wildcard imports (WARN-ONLY) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Report non-test `use …::*;` in tools/**/*.rs, excluding `use super::*;`. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs.</p>
@@ -3474,7 +3474,7 @@ SIZE what fraction, and what the whole would cost <span class="fa-gloss-status">
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/materialize-remote.bpmn"><code>cat-harness/processes/materialize-remote.bpmn#Task_Size</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_skillchain" data-fa-state="extracted" data-fa-gloss="">
-Skill-registration chain&amp;#10;(UNMASKED) <span class="fa-gloss-status">candidate, extracted</span>
+Skill-registration chain (UNMASKED) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Runs the five `--check` commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, docs:auto:check, kg:audit:check, kg:detangle:check. A SEPARATE job rather than a step in Task_TypeScript, and that is the whole point of drawing it: every one of the five is already a step there, but all of them run after `bun test`, which executes the kg-audit and detangle WRITERS and so repairs two of the artefacts before their checks read them (bean `ymsu`). This job never runs `bun test`, so it is the only place those five are read against the tree as checked out. Measured 2026-09-26: 13s, and green on a clean tree. Drawn beside Task_Advisories rather than inside Task_TypeScript for a second reason — a red step placed BEFORE `bun test` would skip the 45 gates behind it, turning one named failure into forty-five unevaluated ones. Bean `v625` for why the chain needs a command at all; `fjwi` for the placement measurement.</p>
@@ -3653,7 +3653,7 @@ Triage the failure: hold or fix forward <span class="fa-gloss-status">candidate,
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/publish-alert.bpmn"><code>cat-harness/processes/publish-alert.bpmn#U_Triage</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_typescript" data-fa-state="extracted" data-fa-gloss="">
-TypeScript: tests, lint, types,&amp;#10;and ~30 repository gates (HARD) <span class="fa-gloss-status">candidate, extracted</span>
+TypeScript: tests, lint, types, and ~30 repository gates (HARD) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>bun test, lint, tsc --noEmit, then the repository gates (workflow refs, lane and process documentation, kg:audit:check, detangle, skills, …). `bun run gates` derives its list from this job, so it is the local way to run the same set before pushing.</p>
