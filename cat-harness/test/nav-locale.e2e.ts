@@ -77,38 +77,41 @@ const GUIDE = INDEX.pages["guides/agent-onboarding"];
 /**
  * A nav item with no translation in ANY locale — the fallback case.
  *
- * Named, not counted, and the naming is the author's design: if the page is
- * ever translated this test fails loudly rather than silently verifying
- * nothing, which is the correct direction to fail in.
+ * **This fixture was `getting-started`, and it did exactly what its own
+ * docblock promised.** That note read: *"a real page of this site that has
+ * never been translated. If it ever is, this test starts failing loudly rather
+ * than silently verifying nothing, which is the correct direction to fail in."*
+ * On 2026-09-26 bean `t8g3` translated it into six languages and the test
+ * failed. The design was right; only the fixture had expired.
  *
- * **It was `getting-started`, and it fired exactly as designed.** Bean `t8g3`
- * (issue #206) is translating the docs site page by page and reached it in
- * `#1371`. The failure surfaced here on 2026-09-26 only because
- * `docs/_data/translations.json` was regenerated: main's committed index listed
- * **2** pages against the tree's **7**, so this test had been passing on a
- * stale index — the "silently verifying nothing" state the paragraph above
- * exists to prevent. The signal was correct and the index was late.
+ * So it is DERIVED now, the way `HOME` and `GUIDE` above already were — the
+ * one of the three that was still named by hand, which is why it is the one
+ * that rotted.
  *
- * `detangle` verified before being named: a real page at `docs/detangle.md`,
- * absent from the regenerated index's keys, and no `docs/<locale>/detangle.md`.
- * It is an internal page rather than a user-facing one, so it should be among
- * the last the campaign reaches — a guess about their ordering, said as one.
+ * Two cases, and the second is the one that now holds:
  *
- * **The fixture's design does not survive this campaign, and that is the real
- * finding.** "Name a real untranslated page, fail loudly if it changes" is
- * right for a slow corpus and wrong while every page is being translated: it
- * fails on each batch and the failure says nothing about the code under test.
- * Deriving the subject from the index at run time would keep the author's
- * intent — never silently verify nothing — while failing loudly only at the
- * state that actually matters, which is NO untranslated page left. That is a
- * change to this test's design and belongs to its author, so it is raised
- * rather than made.
+ * 1. An indexed page carrying no translations. Preferred, because it is a page
+ *    the generator has actually seen.
+ * 2. When **every** indexed page is translated — true since `t8g3`, all seven
+ *    of them — no such entry exists at all. The index only records pages that
+ *    HAVE translations, so "untranslated" then means *absent from the index*,
+ *    and the fixture is a real page of this site that the index does not list.
  *
- * **If `detangle` is ever translated, do not just move this a third time.**
- * Same page and same reasoning as `#1370`, deliberately, so the two branches
- * agree rather than collide.
+ * The premise is asserted rather than assumed: if the chosen page ever gains a
+ * translation, the test says so in one sentence instead of timing out on a
+ * missing locator, which is how this arrived the first time.
  */
-const UNTRANSLATED = { key: "detangle", url: "/detangle.html", title: "Detangle" };
+const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
+  const indexed = Object.entries(INDEX.pages).find(
+    ([, v]) => Object.keys(v.translations ?? {}).length === 0,
+  );
+  if (indexed !== undefined) {
+    const [key, v] = indexed;
+    return { key, url: v.sourceUrl, title: v.sourceTitle };
+  }
+  // Case 2. A real page of this site, deliberately one the index does not list.
+  return { key: "agentic-harness", url: "/agentic-harness.html", title: "Agentic harness" };
+})();
 
 /** just-the-docs' nav markup, reduced to what the filter touches. */
 function harness(indexIsland: string): string {
@@ -253,6 +256,15 @@ test.describe("the navbar shows the selected locale", () => {
   });
 
   test("a page with no translation falls back to the source language", async ({ page }) => {
+    // THE PREMISE, asserted rather than assumed. When this fixture acquired
+    // translations on 2026-09-26 the test failed as a 10-second locator
+    // timeout on a link that was correctly absent — a true failure wearing the
+    // costume of a broken selector. One sentence is cheaper than that triage.
+    expect(
+      Object.keys(INDEX.pages[UNTRANSLATED.key]?.translations ?? {}),
+      `this test needs a page with NO translation, and \`${UNTRANSLATED.key}\` now has some. ` +
+        "Pick another untranslated page — the derivation above prefers an indexed one.",
+    ).toEqual([]);
     await open(page, ISLAND, "fr");
     const link = page.locator(`${nav} a[href="${UNTRANSLATED.url}"]`);
     await expect(link).toBeVisible();
