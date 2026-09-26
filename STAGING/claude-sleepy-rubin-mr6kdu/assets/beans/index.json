@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 361,
+      "count": 362,
       "unit": "beans"
     }
   },
@@ -265,14 +265,14 @@
     {
       "id": "folio-assistant-1s5s",
       "title": "The published package's PYTHON half runs nowhere — CI's pytest job globs a directory that does not contain it",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T09:13:49Z",
-      "updatedAt": "2026-09-26T09:14:15Z",
+      "updatedAt": "2026-09-26T09:54:40Z",
       "preview": "Split out of `rsi6` 2026-09-26. **That bean was closed `completed` carrying two\nunchecked boxes**, which the store's own rule forbids — \"ONLY if the bean has\nno unchecked todo items left\". Recorded here rather than quietly re-ticked,\nbecause a completed bean holding live work is exactly the shape that makes the\nstore unreadable, and this session has spent the day filing that class against\nother pe",
       "file": "beans/defs/folio-assistant-1s5s--the-published-packages-python-half-runs-nowhere-ci.md"
     },
@@ -1271,6 +1271,20 @@
       "updatedAt": "2026-09-20T17:17:15Z",
       "preview": "Owner, 2026-09-20, verbatim:\n\n> agent should be aware of how ui is deployed (e.g. ghpages , no XSS, etc),\n> local server, w/ or w/o mcp, chat discussion only.  part of skills to know\n> which tools\n\n## What this adds to the parent epic\n\n`5a3l` establishes that **topology** (where things live) and **operating\nmode** (what the harness is doing) are orthogonal, and that named scenarios\nare their produ",
       "file": "beans/defs/folio-assistant-81vy--deployment-awareness-the-agent-must-know-its-ui-su.md"
+    },
+    {
+      "id": "folio-assistant-872t",
+      "title": "The Python half's WHEEL BUILD is unchecked — rsi6's lesson applied to only one of the two halves",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T09:53:40Z",
+      "updatedAt": "2026-09-26T09:53:56Z",
+      "preview": "Split out of `1s5s` 2026-09-26, while wiring the Python half into\n`check:published-packages`. Recorded rather than decided, because the answer\ncosts something on every CI run and nobody has been asked.\n\n## The asymmetry\n\n`rsi6`'s finding was that **a package that ships and is not built lands green\nand broken** — measured, not predicted: PR #914 bumped `typescript` 5.9.3 →\n7.0.2, passed ten checks,",
+      "file": "beans/defs/folio-assistant-872t--the-python-halfs-wheel-build-is-unchecked-rsi6s-le.md"
     },
     {
       "id": "folio-assistant-88mg",
