@@ -184,6 +184,14 @@ export const RULES: Rule[] = [
       "scripts/block-screenshots.ts",    // pictures of changed visual blocks, compared in Chromium (bean `0rxe`)
       "scripts/publish-main-site.ts",    // a folio's main site at the publish root: the before side (bean `5uuf`)
       "scripts/repo-partition.ts",           // this tool; platform meta
+      // The prose half of the same arrow this tool measures for imports, and
+      // harness for the same reason `repo-partition.ts` is: its subject is
+      // which INSTANCE a file belongs to and what that instance declares it
+      // needs, which is platform meta. It reads no folio material, and its
+      // rule (`schemas/reference-direction.ts`) consumes `layer-direction.ts`
+      // — the module this tool already shares — so both axes are classified
+      // by the same test and answer to the same declaration (bean `zhg2`).
+      "scripts/check-reference-direction.ts",
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
       // this repository's own Jekyll templates and the baseurl its site is
@@ -838,6 +846,11 @@ export const RULES: Rule[] = [
       // authors.
       "scripts/bean-store-read.ts",
       "scripts/check-bean-bodies.ts",
+      // Same half again: it reads the declared `bean-defs` graph and asks
+      // whether a bean claiming a block carries the four fields that make the
+      // block readable — what it waits on, since, expires, handoff. Nothing in
+      // it is about any folio's subject matter; a folio has no beans to block.
+      "scripts/check-bean-blocks.ts",
       "scripts/check-bean-front-matter.ts",
       "scripts/check-stale-paths.ts",
       "scripts/check-bean-issue-links.ts",
@@ -1235,6 +1248,7 @@ export const RULES: Rule[] = [
       "scripts/render-selection.ts",        // WHICH of them must re-run against a seed, and why (bean `9c34`). Harness machinery: it computes a decision and writes no page, so it belongs beside the pipeline rather than with the renderers
       "scripts/gates.ts",                   // the gate runner itself
       "scripts/gate-tree-guard.ts",         // ...and which gate changed the tree under it (bean `ymsu`). Harness for the same reason the runner is: it asks a question only the runner is positioned to ask, since no gate can observe what another gate did
+      "scripts/decisions-named-not-asked.ts", // the `Stop` layer of `interaction-modality` §4.1 (bean `ahvw`). Harness: it reads a transcript and enforces how a QUESTION is put, which no content type varies
       "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales (bean `v625`). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the five artefacts before their checks read them
       "scripts/check-merged.ts",            // the gate runner, on the merged tree (bean `nytj`)
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes

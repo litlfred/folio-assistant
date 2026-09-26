@@ -5,7 +5,7 @@
     "id": "Process_PrChecksPresent",
     "path": "processes/pr-checks-present.bpmn"
   },
-  "source_hash": "sha256:470b15af76ff3b92d7caac53a3794242a0781b057870e58f5b5dc180cbf9cfe7",
+  "source_hash": "sha256:2796013c06269af561779acaf25607f27fbab48d61446a9414cba663ef961d4a",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -126,13 +126,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/pr-checks-present.yml",
-          "detail": ".github/workflows/pr-checks-present.yml changed since cat-harness/processes/pr-checks-present.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -140,8 +135,8 @@
     }
   },
   "totals": {
-    "pass": 14,
-    "fail": 3,
+    "pass": 15,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   },
@@ -150,10 +145,9 @@
       "kind": "implements",
       "prose": "cat-harness/processes/pr-checks-present.bpmn",
       "code": ".github/workflows/pr-checks-present.yml",
-      "prose_hash": "470b15af76ff",
-      "code_hash": "29db2fa46226",
-      "by": "agent",
-      "reason": "The change is to the WORDING of one advice branch inside the comment body (the UNKNOWN mergeability case), aligning it with check-head-has-run.ts per bean fx5r. No step, gateway, lane or ordering changed: the diagram's five activities — ask per open PR whether HEAD has a run, ensure the label, open-or-edit the one tracking issue, comment once per (PR, head sha), close the issue when every head has a run — all still describe exactly what the workflow does. Re-read the diagram against the workflow to confirm rather than assuming."
+      "prose_hash": "2796013c0626",
+      "code_hash": "b167678d9c0e",
+      "by": "baseline"
     }
   ]
 }

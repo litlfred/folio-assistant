@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-uml-overview.ts — do not hand-edit
 title: "UML — folio-assistant/root-tools"
 nav_exclude: true
 ---

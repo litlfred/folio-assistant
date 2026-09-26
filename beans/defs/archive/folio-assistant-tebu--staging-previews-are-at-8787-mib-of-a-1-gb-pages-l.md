@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: high
 created_at: 2026-09-22T06:03:07Z
-updated_at: 2026-09-22T10:51:00Z
+updated_at: 2026-09-23T17:03:10Z
 parent: folio-assistant-1xhc
 ---
 
@@ -378,3 +378,73 @@ Two causes, and they must not be conflated: three of the eight are now `neither`
 - [x] The share of branches touching none of the five carry paths — 32 % of 120 merges
 - [x] **The nav bonus on `reference/` measured** — +6.4 MiB, so 52.4 rather than the 46.0 floor
 - [ ] 19 % still does not make the threshold unreachable on a bad day: eight carrying previews alone would be 744 MiB, 73 % of the cap, with no headroom for a ninth. The next lever remains the owner's call
+
+
+_2026-09-22T11:50:00Z_ — **AN ORPHAN SWEEP IS NOT THE NEXT LEVER — measured, and the candidate is closed off.**
+
+`bun run health` on `6a8378b94d` raised a **new** finding, `staging-preview-orphans`, clean an hour earlier:
+
+> `STAGING/claude-kind-bohr-cyt1s4` (92.1 MB, 3793 files) — no open pull request; `claude/kind-bohr-cyt1s4` is already in `main`, tip 41 min old.
+
+92.1 MB is 11 % of the tree for a review nobody can be doing, and for about ten minutes this looked like the answer to the open box: **a lever that deletes nothing anybody is using**, unlike every candidate I had listed.
+
+**It is not, because there were no standing orphans to sweep.** Measured against the live API — 18 open PR head refs, slugified the way the deploy does (`/` → `-`), against all 10 published previews:
+
+    TOTAL      732.5 MiB across 10 previews  = 72% of the 1024 MiB cap
+    ORPHANED     0.0 MiB  (0% of the tree)
+
+Every preview belongs to an open pull request. The one the check named is **gone**, and the publish ref says exactly when and why:
+
+    402386ed22  11:45  staging(cleanup): remove STAGING/claude-kind-bohr-cyt1s4 (PR #934 closed)
+    57493fad36  11:45  staging(cleanup): remove STAGING/claude-peaceful-heisenberg-dzgsf1 (PR #906 closed)
+
+The second line is this branch's own preview, swept when #906 merged. **The cleanup mechanism works and fires on PR close.** What the health check caught was the 41-minute window between a merge and its sweep — a transient, correctly reported as a finding at the moment it was true, and already false by the time it was read.
+
+## Why this is worth recording rather than dropping
+
+Three things, and only the first is about previews.
+
+**The candidate is closed off.** The next-lever question keeps its shape: every remaining option still either deletes somebody's artefact or changes what a reviewer sees. Nothing cheap is hiding.
+
+**A `minor` finding that resolves itself is not noise.** Left unexplained, the next reader sees `staging-preview-orphans` fire, goes looking, finds nothing, and learns to distrust the check. The honest reading is that the finding was *correct and short-lived*, which is a third state beside "real" and "false positive" — and this is the same shape as `fkjo`'s limitation two beans over: a store-only check cannot see that a forge event is already in flight.
+
+**My first attempt at this measurement was wrong and produced garbage**, and the numbers never left the terminal. A shell loop stripped a `claude-` prefix the dependabot slugs do not carry, and `grep -c` returned a two-line count that broke the `[` test, so it reported `no-open-PR 0 MiB (0%)` over a listing where it had also printed `NO OPEN PR` beside five previews. **The right answer by luck, from a broken instrument.** It was redone in python against the real API. A measurement that agrees with the truth is not thereby a measurement.
+
+## Done when
+
+- [ ] The next lever is chosen — **unchanged**, and now with one fewer candidate: an orphan sweep buys **0 MiB**, because cleanup already runs on PR close
+
+
+---
+
+## Re-cut onto current `main`, 2026-09-23 — and the staging numbers are re-measured, not carried
+
+_Owner ruled "split and fix then merge" on #944, which carried this bean and
+`oe98` on one branch. This is the work-plan half; the generator fix is #1128._
+
+**Why the split, in one measurement.** #944 was merged with `main` and green at
+135 of 135. Within the hour it was `dirty` again: **403 commits and 22
+conflicts**. A 266-file PR cannot be held mergeable by merging, because `main`
+moves faster than the merge plus its gate run takes. The two halves were
+unrelated work sharing a branch — a one-line generator fix with its mechanical
+regeneration, and this bean record — and only one of them was time-sensitive.
+
+Nothing in this bean's own analysis changed. What changed is that it is now
+separable from 259 generated files, so it can be read.
+
+### The finding above stands, and the reason to keep it stands with it
+
+This bean records a candidate for `tebu`'s next lever that **closed off**:
+`staging-preview-orphans` fired, looked like a lever that deletes nothing
+anybody is using, and measured at **0.0 MiB orphaned across all 10 previews** —
+every one belonging to an open pull request. What the check caught was the
+41-minute window between a merge and its sweep.
+
+A `minor` finding that self-resolves is not noise. Left unexplained, the next
+reader sees `staging-preview-orphans` fire, goes looking, finds nothing, and
+learns to distrust the check — which is the expensive outcome, not the finding.
+
+**Not re-run here.** The percentages above were measured against the live API
+at a stated time, and this PR changes no code that could move them; re-running
+them from a different hour would replace a dated measurement with an undated
+one. `bun run health` is the command, and it is in the gate set.

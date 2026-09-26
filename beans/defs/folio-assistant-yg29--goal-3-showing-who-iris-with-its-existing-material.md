@@ -66,6 +66,17 @@ rather than by reading a previous session's report:
 - **"It renders on the IRIS theme rather than the default"** — measured above.
 - **"`check:voices` is green across the instance boundary"** — exit 0.
 
+- **waits on:** the owner — `hqku`, and the disposition of `xffc` / `d3yq`
+- **since:** 2026-09-20
+- **expires:** 2026-09-29 — a REVIEW date, not a takeover date; see the handoff
+- **handoff:** on expiry, re-raise. NOTE: `hqku` is already `completed` on main, so the stated blocker has partly happened — re-derive before assuming this is still waiting on it.
+
+
+`hqku` (*"is `library/` active content a sweep should judge, or derived
+material it should skip?"* — it bears directly on the rendering), and the
+disposition of `xffc` and `d3yq`, whose premise the owner withdrew with
+*"no formal role/theme mapping per se. that is authoring (human/agentic)
+decision/judgement."*
 **The badge carries the WORD as well as the colour**, so `j66n`'s own constraint
 — *"a theme sets the stripe's hue; it never sets its width to zero"*, SC 1.4.1 —
 holds on the rendering as well as on the theme. Checked rather than assumed.

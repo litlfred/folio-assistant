@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Acquisition is the step before ingestion, and it had no home'
 parent: Skill instructions
 ---

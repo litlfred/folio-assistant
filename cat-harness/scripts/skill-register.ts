@@ -51,9 +51,23 @@
  * | `kg:audit` | `kg:audit:check` |
  * | `kg:detangle` | `kg:detangle:check` |
  *
- * `check:ci-invocations` also goes green, and is not a sixth step: it re-runs
- * the CI invocations, one of which is `gen-skill-docs --check`, so it is
- * downstream of step 1 rather than an obligation of its own.
+ * `check:ci-invocations` also goes green, and is not a step of its own: it
+ * re-runs the CI invocations, one of which is `gen-skill-docs --check`, so it
+ * is downstream of step 1.
+ *
+ * **`gen-uml-overview` was added as a sixth step on the day this shipped**, and
+ * how it was missed is the same lesson one turn later. The per-check sweep that
+ * derived the first five ran the checks IN SEQUENCE, and sequence perturbs —
+ * something earlier in that loop wrote, so `uml:overview:check` read as green.
+ * It surfaced an hour later when an ordinary skill EDIT moved the kg-qa and
+ * detangle sidecars and the UML overview, which renders that tree, went stale
+ * behind them.
+ *
+ * So the derivation method has a stated limit: isolating one check against a
+ * known tree is necessary and was not sufficient, because a check can be
+ * perturbed by a NEIGHBOUR in the same sweep. The runtime verification below is
+ * what catches that — it reports the checks' verdicts, so an under-declared
+ * list fails loudly rather than passing quietly.
  *
  * ## They are NOT order-dependent, and the earlier claim that they were is wrong
  *
@@ -136,6 +150,11 @@ export const STEPS: readonly Step[] = [
     write: ["kg:detangle"],
     verify: ["kg:detangle:check"],
     because: "the skills subgraph gains a node, so its detangle sidecar moves",
+  },
+  {
+    write: ["cat-harness/scripts/gen-uml-overview.ts"],
+    verify: ["uml:overview:check"],
+    because: "the UML overview renders the QA tree the two steps above just wrote",
   },
 ];
 
