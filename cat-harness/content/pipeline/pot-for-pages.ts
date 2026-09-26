@@ -49,7 +49,7 @@
  * @module content/pipeline/pot-for-pages
  * @covers cat-harness
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -73,14 +73,24 @@ function translationsRoot(root: string): string {
 /**
  * The English source a locale's page is a translation OF.
  *
- * `siteDirFor`, not a `docs` literal. The site root is ONE answer and a second
- * copy is free to disagree with it — `site-dir-single-answer` refuses the
- * literal, and it refused this one: I wrote `join(root, "docs", ...)` here and
- * the test caught it, which is the third time in this session's work that the
- * same invariant caught the same reflex.
+ * `siteDirFor`, not a `docs` literal — the site root is ONE answer and a second
+ * copy is free to disagree with it. `site-dir-single-answer` refuses the
+ * literal, and it refused this one twice.
+ *
+ * **`siteDirFor` returns a path RELATIVE to the instance root, so it must be
+ * joined to one.** The first version of this returned `join(siteDirFor(root),
+ * ...)` and the missing root is not a cosmetic slip: with no root the result is
+ * resolved against the process's CWD, so the function answered correctly only
+ * while the CWD happened to be an instance that happened to hold a `docs/`.
+ * It did, for one run — which is how 25 templates were extracted through a path
+ * that was wrong, and why the accessor is now used the way the other eleven
+ * call sites in this repository use it (`join(INSTANCE_ROOT, siteDirFor(...))`).
+ * A relative accessor that silently falls back to the CWD is the failure
+ * `site-dir-single-answer` guards from the other side: not a second literal,
+ * but one answer read against the wrong origin.
  */
 export function sourceFor(root: string, page: string): string {
-  return join(siteDirFor(root), `${page}.md`);
+  return join(root, siteDirFor(root), `${page}.md`);
 }
 
 export interface PotPlan {
@@ -118,9 +128,71 @@ export function needingCatalogue(root: string): Array<{ locale: string; page: st
     .filter((x) => x.locale.length > 0 && x.page.length > 0);
 }
 
+/**
+ * Page templates this module ALREADY OWNS, whatever the trigger set says today.
+ *
+ * ## Why the derived set alone is not the subject
+ *
+ * `needingCatalogue` answers *"which page needs a catalogue NOW"*, and that set
+ * moves: a page that gains a `.po` leaves it, which is the property that makes
+ * the derivation right. But the `.pot` beside that `.po` does not stop being
+ * this module's output — and a generator that stops maintaining an artefact the
+ * moment its trigger clears is a generator that MANUFACTURES stale files.
+ *
+ * Measured 2026-09-26, which is why this exists: 25 templates were written for
+ * the five pages then uncatalogued; `main` then reworked `pot-extract.ts` by 284
+ * lines and four of those five pages left the set. All 20 of their templates
+ * went stale, no gate could see it, and `translation:pot -- --check` reported
+ * clean because the pairs were no longer in scope. A `--check` whose SCOPE
+ * shrinks away from its own output cannot fail on it.
+ *
+ * ## The boundary is a DIRECTORY, not a name pattern
+ *
+ * `translations/<locale>/processes/*.pot` belongs to `translate-bpmn.ts`, whose
+ * subject is a `.bpmn` rather than a page. Reading only the top level of each
+ * locale — `readdirSync` with no recursion — puts that ownership split in the
+ * traversal instead of in a filter, so the two generators cannot collide by
+ * one of them being taught a new name. A pattern would have had to guess, and
+ * `docs/processes/<name>.md` DOES exist, so a source-exists test alone would
+ * have adopted all 58 of the other module's templates.
+ */
+function adopted(root: string): Array<{ locale: string; page: string }> {
+  const dir = translationsRoot(root);
+  if (!existsSync(dir)) return [];
+  const out: Array<{ locale: string; page: string }> = [];
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    if (!e.isDirectory()) continue;
+    for (const f of readdirSync(join(dir, e.name), { withFileTypes: true })) {
+      // Top level only — the subdirectory is another module's graph.
+      if (!f.isFile() || !f.name.endsWith(".pot")) continue;
+      out.push({ locale: e.name, page: f.name.slice(0, -".pot".length) });
+    }
+  }
+  return out;
+}
+
+/**
+ * Every (locale, page) this module is responsible for: the pages the gate names
+ * plus the templates already committed, deduplicated.
+ *
+ * Order is the derived set first, so the output reads as "what the gate asked
+ * for, then what was already here".
+ */
+export function owned(root: string): Array<{ locale: string; page: string }> {
+  const seen = new Set<string>();
+  const out: Array<{ locale: string; page: string }> = [];
+  for (const x of [...needingCatalogue(root), ...adopted(root)]) {
+    const k = `${x.locale}/${x.page}`;
+    if (seen.has(k)) continue;
+    seen.add(k);
+    out.push(x);
+  }
+  return out;
+}
+
 export function plan(root = INSTANCE_ROOT): PotPlan[] {
   const dir = translationsRoot(root);
-  return needingCatalogue(root).map(({ locale, page }) => {
+  return owned(root).map(({ locale, page }) => {
     const source = sourceFor(root, page);
     const pot = join(dir, locale, `${page}.pot`);
     const sourceExists = existsSync(source);

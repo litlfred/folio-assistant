@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: folio\n"
-"POT-Creation-Date: 2026-09-26T14:29:51.762Z\n"
+"POT-Creation-Date: 2026-09-26T14:57:06.534Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -91,7 +91,7 @@ msgid "A — decision-per-gateway (built)"
 msgstr ""
 
 #: docs/accessibility.md:208
-msgid "A conversation is not a wizard. A user must always be able to say"
+msgid "A conversation is not a wizard. A user must always be able to say something the table did not anticipate. That is what the \"tell me more\" option is for, and it is not optional garnish."
 msgstr ""
 
 #: docs/accessibility.md:65
@@ -99,11 +99,11 @@ msgid "a person who does not want to decide can pick the first thing and be righ
 msgstr ""
 
 #: docs/accessibility.md:43
-msgid "A question's cost is paid by the person answering it. Design the question"
+msgid "A question's cost is paid by the person answering it. Design the question so that the cheapest possible answer is still a complete one."
 msgstr ""
 
 #: docs/accessibility.md:186
-msgid "A skipped question is auditable. The facts are recorded; replay the table"
+msgid "A skipped question is auditable. The facts are recorded; replay the table and see which rule fired."
 msgstr ""
 
 #: docs/accessibility.md:9
@@ -114,20 +114,12 @@ msgstr ""
 msgid "Agent-facing preferences, committed, read at session start"
 msgstr ""
 
-#: docs/accessibility.md:182
-msgid "already uses:  is an outcome of the table, so the agent cannot route past it. An agent that decides for itself whether to ask will, under any pressure to seem helpful, decide not to."
-msgstr ""
-
 #: docs/accessibility.md:31
 msgid "An agent that asks a good question in an unusable form has asked nothing."
 msgstr ""
 
 #: docs/accessibility.md:206
-msgid "An open question is not a decision. \"What is this paper about?\" does not"
-msgstr ""
-
-#: docs/accessibility.md:187
-msgid "and see which rule fired."
+msgid "An open question is not a decision. \"What is this paper about?\" does not belong in a table, and forcing it there produces a worse interview."
 msgstr ""
 
 #: docs/accessibility.md:68
@@ -139,7 +131,7 @@ msgid "Answers that read aloud cleanly: no code fences inside prose, no tables, 
 msgstr ""
 
 #: docs/accessibility.md:181
-msgid "Asking becomes obligatory rather than optional. This is the trick"
+msgid "Asking becomes obligatory rather than optional. This is the trick  already uses:  is an outcome of the table, so the agent cannot route past it. An agent that decides for itself whether to ask will, under any pressure to seem helpful, decide not to."
 msgstr ""
 
 #: docs/accessibility.md:112
@@ -151,11 +143,7 @@ msgid "ATAG Part B is worth dwelling on, because it is the part a content platfo
 msgstr ""
 
 #: docs/accessibility.md:146
-msgid "Audio modality is described, not implemented. The rules are written down;"
-msgstr ""
-
-#: docs/accessibility.md:212
-msgid "available is the question you did not have to ask — every fact the agent reads from the filesystem is one fewer. That win is invisible, unrewarded, and larger than any stylesheet."
+msgid "Audio modality is described, not implemented. The rules are written down; no voice channel is wired up."
 msgstr ""
 
 #: docs/accessibility.md:196
@@ -164,10 +152,6 @@ msgstr ""
 
 #: docs/accessibility.md:67
 msgid "Batch decisions so one answer covers several"
-msgstr ""
-
-#: docs/accessibility.md:207
-msgid "belong in a table, and forcing it there produces a worse interview."
 msgstr ""
 
 #: docs/accessibility.md:64
@@ -180,10 +164,6 @@ msgstr ""
 
 #: docs/accessibility.md:109
 msgid "cognitive and learning disabilities"
-msgstr ""
-
-#: docs/accessibility.md:180
-msgid "condition."
 msgstr ""
 
 #: docs/accessibility.md:68
@@ -202,6 +182,10 @@ msgstr ""
 msgid "D — full DMN/BPMN interview engine"
 msgstr ""
 
+#: docs/accessibility.md:61
+msgid "do"
+msgstr ""
+
 #: docs/accessibility.md:108
 msgid "dragging, target size, redundant entry"
 msgstr ""
@@ -218,20 +202,12 @@ msgstr ""
 msgid "EN 301 549"
 msgstr ""
 
-#: docs/accessibility.md:203
-msgid "equality, comparison and one-of. Ranges,  and function calls are refused rather than silently mis-evaluated — a table that returns an answer and is not the table on the page is worse than one that throws."
-msgstr ""
-
 #: docs/accessibility.md:110
 msgid "EU public-sector procurement"
 msgstr ""
 
 #: docs/accessibility.md:63
 msgid "Every question is a selection, numbered"
-msgstr ""
-
-#: docs/accessibility.md:18
-msgid "follow DMN logic and can serve several interaction modalities?"
 msgstr ""
 
 #: docs/accessibility.md:53
@@ -255,11 +231,7 @@ msgid "Getting started — the intent decision table in use"
 msgstr ""
 
 #: docs/accessibility.md:211
-msgid "Guided does not mean interrogating. The largest accessibility win"
-msgstr ""
-
-#: docs/accessibility.md:144
-msgid "have not been driven with NVDA, JAWS or VoiceOver. Built to spec is not the same as verified."
+msgid "Guided does not mean interrogating. The largest accessibility win available is the question you did not have to ask — every fact the agent reads from the filesystem is one fewer. That win is invisible, unrewarded, and larger than any stylesheet."
 msgstr ""
 
 #: docs/accessibility.md:161
@@ -271,11 +243,7 @@ msgid "In rendered output: WCAG 2.2 SC 2.5.8 Target Size (Minimum) — 24 × 24 
 msgstr ""
 
 #: docs/accessibility.md:179
-msgid "It terminates. A table whose output can be  has a stopping"
-msgstr ""
-
-#: docs/accessibility.md:177
-msgid "know every question the agent is able to ask. An improvising agent offers no such guarantee, and cannot be reviewed before it meets a user."
+msgid "It terminates. A table whose output can be  has a stopping condition."
 msgstr ""
 
 #: docs/accessibility.md:77
@@ -295,11 +263,11 @@ msgid "needs a fact schema and a renderer per modality; the table is unchanged"
 msgstr ""
 
 #: docs/accessibility.md:139
-msgid "No ATAG Part B checks in the QA sweep. Nothing yet verifies that a"
+msgid "No ATAG Part B checks in the QA sweep. Nothing yet verifies that a published folio has alt text, correct heading order or table headers."
 msgstr ""
 
 #: docs/accessibility.md:141
-msgid "No audit of generated PDFs. The document render path goes through"
+msgid "No audit of generated PDFs. The document render path goes through weasyprint/prince/wkhtmltopdf and tagged-PDF output has not been checked."
 msgstr ""
 
 #: docs/accessibility.md:195
@@ -307,11 +275,7 @@ msgid "no interview state machine — the process is the state. Cannot express \
 msgstr ""
 
 #: docs/accessibility.md:143
-msgid "No screen-reader testing. The site controls are built to the criteria and"
-msgstr ""
-
-#: docs/accessibility.md:147
-msgid "no voice channel is wired up."
+msgid "No screen-reader testing. The site controls are built to the criteria and have not been driven with NVDA, JAWS or VoiceOver. Built to spec is not the same as verified."
 msgstr ""
 
 #: docs/accessibility.md:102
@@ -340,10 +304,6 @@ msgstr ""
 
 #: docs/accessibility.md:220
 msgid "Publication workflow — every process in the repo"
-msgstr ""
-
-#: docs/accessibility.md:140
-msgid "published folio has alt text, correct heading order or table headers."
 msgstr ""
 
 #: docs/accessibility.md:125
@@ -386,14 +346,6 @@ msgstr ""
 msgid "skill"
 msgstr ""
 
-#: docs/accessibility.md:44
-msgid "so that the cheapest possible answer is still a complete one."
-msgstr ""
-
-#: docs/accessibility.md:209
-msgid "something the table did not anticipate. That is what the \"tell me more\" option is for, and it is not optional garnish."
-msgstr ""
-
 #: docs/accessibility.md:105
 msgid "standard"
 msgstr ""
@@ -415,7 +367,7 @@ msgid "the baseline everything else references"
 msgstr ""
 
 #: docs/accessibility.md:202
-msgid "The FEEL subset is small.  implements"
+msgid "The FEEL subset is small.  implements equality, comparison and one-of. Ranges,  and function calls are refused rather than silently mis-evaluated — a table that returns an answer and is not the table on the page is worse than one that throws."
 msgstr ""
 
 #: docs/accessibility.md:125
@@ -431,7 +383,7 @@ msgid "the option list is a floor, not a ceiling"
 msgstr ""
 
 #: docs/accessibility.md:176
-msgid "The question set is finite and reviewable. You can read the table and"
+msgid "The question set is finite and reviewable. You can read the table and know every question the agent is able to ask. An improvising agent offers no such guarantee, and cannot be reviewed before it meets a user."
 msgstr ""
 
 #: docs/accessibility.md:107
@@ -498,16 +450,12 @@ msgstr ""
 msgid "WCAG 2.2's new SC — 2.5.7, 2.5.8, 3.3.7"
 msgstr ""
 
-#: docs/accessibility.md:142
-msgid "weasyprint/prince/wkhtmltopdf and tagged-PDF output has not been checked."
-msgstr ""
-
 #: docs/accessibility.md:16
 msgid "What are the options for disability support here, and what is best practice?"
 msgstr ""
 
 #: docs/accessibility.md:17
-msgid "What are the options for forcing agentic Q&A into guided questions that"
+msgid "What are the options for forcing agentic Q&A into guided questions that follow DMN logic and can serve several interaction modalities?"
 msgstr ""
 
 #: docs/accessibility.md:105
