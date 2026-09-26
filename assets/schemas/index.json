@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 176,
+      "count": 177,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -1062,6 +1062,14 @@
       "name": "session-context",
       "graphNode": "schema",
       "summary": "What a state machine tracks across a SESSION, as opposed to an instance.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/session-survey.ts",
+      "instance": "cat-harness",
+      "name": "session-survey",
+      "graphNode": "schema",
+      "summary": "A PUBLISHED SURVEY of a commit window — so the next session reads it instead",
       "isTest": false
     },
     {
@@ -24170,6 +24178,160 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/session-survey.ts#ObjectName",
+      "name": "ObjectName",
+      "module": "cat-harness/schemas/session-survey.ts",
+      "kind": "zod-scalar",
+      "doc": "A full git object name — never a ref, for the reason in the module docblock.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/session-survey.ts#SessionSurvey",
+      "name": "SessionSurvey",
+      "module": "cat-harness/schemas/session-survey.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/session-survey.ts#SessionSurveySchema",
+      "name": "SessionSurveySchema",
+      "module": "cat-harness/schemas/session-survey.ts",
+      "kind": "zod-object",
+      "doc": "A survey of one commit window, published for other sessions to reuse.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(SESSION_SURVEY_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "from",
+          "type": "ObjectName",
+          "optional": false,
+          "array": false,
+          "doc": "The window's LOWER edge — the last commit the surveyor already knew."
+        },
+        {
+          "name": "to",
+          "type": "ObjectName",
+          "optional": false,
+          "array": false,
+          "doc": "The window's UPPER edge — the newest commit the survey actually read. Inclusive."
+        },
+        {
+          "name": "branch",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The branch the window is on, so a reader knows which history `from`/`to` live in."
+        },
+        {
+          "name": "takenAt",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "When it was taken, ISO-8601. Not the staleness test — `to` is — but it dates the prose."
+        },
+        {
+          "name": "by",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Who took it, so a reader can ask. A session URL or id."
+        },
+        {
+          "name": "commits",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false,
+          "doc": "How many commits the window held, as counted at publication."
+        },
+        {
+          "name": "axes",
+          "type": "z.array(SurveyAxisSchema).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "Per-axis findings. Empty is refused: a survey that covered nothing is not a survey."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/session-survey.ts#ObjectName",
+        "cat-harness/schemas/session-survey.ts#SurveyAxisSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "SESSION_SURVEY_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/session-survey.ts#SurveyAxis",
+      "name": "SurveyAxis",
+      "module": "cat-harness/schemas/session-survey.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/session-survey.ts#SurveyAxisSchema",
+      "name": "SurveyAxisSchema",
+      "module": "cat-harness/schemas/session-survey.ts",
+      "kind": "zod-object",
+      "doc": "One axis the survey actually covered, and what it concluded.",
+      "fields": [
+        {
+          "name": "axis",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What was examined — `beans`, `ci`, `prs`, `issues`, `branches`, …"
+        },
+        {
+          "name": "covered",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "False means NOT LOOKED AT; `finding` then says why, not what was found."
+        },
+        {
+          "name": "finding",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What it found, or — when `covered` is false — why it was skipped."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
       "name": "BeanIndexItemSchema",
       "module": "cat-harness/schemas/site-indexes.ts",
@@ -43551,6 +43713,30 @@
       "from": "cat-harness/schemas/session-context.ts#SessionContextSchema",
       "to": "cat-harness/schemas/session-context.ts#OpenInstanceSchema",
       "via": "open",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/session-survey.ts#SessionSurveySchema",
+      "to": "cat-harness/schemas/session-survey.ts#ObjectName",
+      "via": "from",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/session-survey.ts#SessionSurveySchema",
+      "to": "cat-harness/schemas/session-survey.ts#ObjectName",
+      "via": "to",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/session-survey.ts#SessionSurveySchema",
+      "to": "cat-harness/schemas/session-survey.ts#SurveyAxisSchema",
+      "via": "axes",
       "kind": "field",
       "optional": false,
       "array": true

@@ -25,7 +25,7 @@ but one: <strong><code>folio-assistant</code> is declared AT the repository root
 one, <code>dirname</code> climbs out of the checkout, and a name lookup built on it
 sees no siblings at all.</p>
 <p>Measured on <code>main</code> at <code>80c18ac</code>, before this existed:</p>
-<pre><code><span class="hl-8">repoRootFor</span><span class="hl-0">(</span><span class="hl-2">&quot;/home/user/folio-assistant&quot;</span><span class="hl-0">)  -&gt; </span><span class="hl-2">&quot;/home/user&quot;</span><br/><span class="hl-8">instanceRootsIn</span><span class="hl-0">(</span><span class="hl-2">&quot;/home/user&quot;</span><span class="hl-0">)              -&gt; </span><span class="hl-10">1</span><span class="hl-0">   (</span><span class="hl-7">only</span><span class="hl-0"> </span><span class="hl-7">folio</span><span class="hl-0">-</span><span class="hl-7">assistant</span><span class="hl-0">)</span>
+<pre><code><span class="hl-8">repoRootFor</span><span class="hl-0">(</span><span class="hl-2">&quot;/home/user/folio-assistant&quot;</span><span class="hl-0">)  -&gt; </span><span class="hl-2">&quot;/home/user&quot;</span><br/><span class="hl-8">instanceRootsIn</span><span class="hl-0">(</span><span class="hl-2">&quot;/home/user&quot;</span><span class="hl-0">)              -&gt; </span><span class="hl-9">1</span><span class="hl-0">   (</span><span class="hl-7">only</span><span class="hl-0"> </span><span class="hl-7">folio</span><span class="hl-0">-</span><span class="hl-7">assistant</span><span class="hl-0">)</span>
 </code><button>Copy</button></pre>
 
 <p>so the root instance's <code>needs: [&quot;folio-assistant-core&quot;]</code> derived <strong>nothing</strong>,
@@ -55,7 +55,7 @@ wrong for that same instance, in the other direction.</p>
 <li><span><span class="tsd-kind-parameter">instanceRoot</span>: <span class="tsd-signature-type">string</span></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/ce0ae3366fb7a665fa7775dff5f2c2286ba8a2ef/cat-harness/schemas/cat-harness.ts#L2539">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:2539</a></li></ul></aside></div></li></ul></section></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/abee3acee29e15ad7ae540e254fe31f2cf31cc40/cat-harness/schemas/cat-harness.ts#L2539">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:2539</a></li></ul></aside></div></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
