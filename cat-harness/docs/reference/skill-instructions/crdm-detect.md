@@ -15,8 +15,43 @@ parent: Skill instructions
 
 Detect when a user request is a **feature request** (platform capability change)
 rather than a **content request** (writing, editing, reviewing folio content).
-When a feature request is detected, the agent enters the CRDM requirements
-workflow rather than implementing directly.
+When a feature request is detected, the agent works through requirements rather
+than implementing directly.
+
+## Applies when
+
+Requirements that come from **stakeholders who must sign them off**, on work tied
+to a folio's domain — WHO SMART Guidelines, an IG, a programme's content. The
+requester is a content developer working through a BA, and the answer depends on
+what the folio says. **Not** for a platform capability change raised by somebody
+building the tooling with a content-agnostic answer — that is `spec-kit`.
+
+## Which requirements methodology — the fork this detection now carries
+
+**Detecting a feature request no longer selects CRDM by itself.** Since
+2026-09-21 (issue #730, the owner's option A) there are **two** parallel
+requirements methodologies, and `methodology-adoption` forbids blending them.
+The signals below tell you a request needs requirements; this fork tells you
+whose.
+
+| | governs | requester | the answer depends on |
+|---|---|---|---|
+| **`crdm`** — this methodology | stakeholder-facing WHO/IG work: needs assessment, BPA, stakeholder sign-off | content developers, via a BA | a folio's subject matter |
+| **[`spec-kit`](spec-kit.md)** | folio-assistant feature development; software-development best practice, closer to a scrum process | **tool developers** | nothing a folio says — **content-agnostic** |
+
+The owner's words, 2026-09-21: *"CRDM stays for stkaeholder facing WHO/IG
+work…..spec-kit is specific to folio assistant feature development requests by
+tool developers not content developers (content agnostic, more scrum methodology
+process) for best practives of software development"*.
+
+**Most of the signals listed below are now spec-kit's**, not CRDM's — the
+"Platform-level change requests" and "Direct capability requests" categories
+especially, since both describe somebody building the tooling. Read the
+categories as *this needs requirements*, then apply the fork.
+
+Two things bind under **either** methodology and are not a reason to pick one:
+the issue-association rules at the end of this file, and the spec-before-code
+gate.
 
 ## Detection signals
 

@@ -296,6 +296,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // how this was caught rather than shipped as two uncategorised packages.
   crdm: "CRDM requirements methodology (skills/crdm)",
   raci: "RACI involvement model (skills/raci)",
+  "spec-kit": "Spec Kit spec-driven development (skills/spec-kit)",
   // Synced from claude-scientific-skills at a pinned commit (issue #556):
   // somebody else's bytes, one package per skill so upstream's relative links
   // resolve. `remote-stubs` was retired when these arrived.

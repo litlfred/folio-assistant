@@ -87,6 +87,18 @@ on purpose so it is not made a third time.
 
 ## Withdrawn from the path, 2026-09-22, with reasons
 
+- **waits on:** the owner — `yj32`, `6lb8`, `v1hw`, `jbx2`, `h32d`, `g196`, plus three items needing a look at a deployed page
+- **since:** 2026-09-20
+- **expires:** 2026-09-29 — a REVIEW date, not a takeover date; see the handoff
+- **handoff:** on expiry, re-raise the list with the owner rather than deciding any of it. A milestone's critical path going stale is exactly what `k59d` was opened to catch.
+
+
+`yj32` (*"i wanted bootsrap/ harness/ etc as todos, not landing page info"*,
+and what the writable store is), `6lb8` (the board's persistence — a position
+is state, and `todos/` is committed, so two sessions moving one note is a
+merge conflict in a generated file), `v1hw` and `jbx2` (which write path),
+`h32d`, `g196`. Plus three that need somebody to LOOK at a deployed page:
+`alox`, `rptk` and `o3xy` as a class.
 Re-verified with `bun run check:stale-paths` on `main` (193 open beans), which
 reported this milestone's chain as routing through four finished beans, and
 then bean by bean against the store. `k59d` predicted this class and its last
