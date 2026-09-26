@@ -2,6 +2,8 @@
 layout: default
 title: Installation
 nav_order: 2
+supported_locales: ["ar", "zh", "en", "fr", "ru", "es"]
+available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 # Installation
