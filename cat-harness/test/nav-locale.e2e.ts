@@ -145,16 +145,28 @@ const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
     if (key in INDEX.pages) continue;
     const head = readFileSync(join(dir, f), "utf8").slice(0, 2000);
     if (/^nav_exclude:\s*true\s*$/m.test(head)) continue;
-    // And it must not CLAIM a locale either. `crdm-methodology` is absent from
-    // the index and declares `available_locales: ["en","fr"]` with no
-    // `docs/fr/crdm-methodology.md` behind it — so it would be the one
-    // candidate that asserts the very thing this fixture stands for the absence
-    // of. The index is the authority here, but a page contradicting it is the
-    // wrong page to reason from, whichever of the two is wrong. Bean `9x01`.
-    const claimed = /^available_locales:\s*(.+)$/m.exec(head)?.[1] ?? "";
-    if (claimed.replace(/[["'\]\s]/g, "").split(",").filter((l) => l !== "" && l !== INDEX.sourceLocale).length > 0) {
-      continue;
-    }
+    // There was a fourth filter here, and it is GONE rather than forgotten.
+    //
+    // It skipped any candidate claiming a non-source locale, because
+    // `crdm-methodology` was absent from the index while declaring
+    // `available_locales: ["en","fr"]` with no `docs/fr/crdm-methodology.md`
+    // behind it — the one candidate that asserted the very thing this fixture
+    // stands for the absence of. Its comment gave the general reason too: the
+    // index is the authority, but a page contradicting it is the wrong page to
+    // reason from, whichever of the two is wrong.
+    //
+    // That reason is DISCHARGED, not waived. #1431 fixed the page — the
+    // generator now derives `available_locales` from the rendered corpus rather
+    // than from `existsSync` on a `.po` — and, more to the point here, added
+    // `check:available-locales`, which fails CI for ANY page claiming a locale
+    // the index does not back. So the contradiction this filter hand-checked on
+    // one page is now impossible corpus-wide, and if it ever recurs the gate
+    // fails before this test runs.
+    //
+    // Keeping the skip would have been the worse outcome: a workaround whose
+    // cause is gone still narrows what the fixture covers, and reads to the next
+    // author as a rule about locales rather than as scar tissue. Bean `9x01`
+    // box 68.
     const title = /^title:\s*(.+)$/m.exec(head)?.[1].trim().replace(/^["']|["']$/g, "");
     if (title === undefined || title === "") continue;
     return { key, url: `/${key}.html`, title };
