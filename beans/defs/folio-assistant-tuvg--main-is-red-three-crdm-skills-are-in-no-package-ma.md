@@ -1,10 +1,11 @@
 ---
 # folio-assistant-tuvg
 title: 'MAIN IS RED: three crdm skills are in no package manifest and carry a retired roles: field'
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-26T04:09:28Z
-updated_at: 2026-09-26T04:09:28Z
+updated_at: 2026-09-26T07:10:10Z
 parent: folio-assistant-1xhc
 ---
 
@@ -125,3 +126,81 @@ in `UNCATALOGED` with a reason and a date.
       `bun run check:retired-front-matter` green.
 - [ ] A decision on catching an unlisted skill at authoring time — **third**
       occurrence of that shape in two days.
+
+## RESOLVED 2026-09-26 — and the count of occurrences is the finding
+
+Owner authorised fixing all three here rather than waiting for the package
+owners. What actually happened:
+
+| cause | outcome |
+|---|---|
+| **A** retired `roles:` in 4 files | **already fixed on main** in the 11 intervening commits — patch not applied |
+| **B** 3 crdm skills unlisted | **already fixed on main** — manifest now lists all 6 |
+| **C** 25 translations with no `.po` | **fixed here** — recorded in `UNCATALOGED` |
+| **D** `workflow/release-epic-planning.md` | **NEW, fixed here** — arrived unlisted AND carrying `roles:`, hours after A and B were repaired |
+
+### Cause C, and why the reason is a measurement rather than a borrowed sentence
+
+The precedent entry (`es/agent-onboarding`) reads *"the page's structure matches
+its source, so it is current but untracked"*. Repeating that of 25 other pages
+would be a claim, so it was checked: `translation-drift` compares
+`sameStructure(src, got)` at line 298 and reports a mismatch as **drift**,
+on a separate branch from the missing-catalogue report at line 308. None of the
+25 reported drift. So "structurally current" is derived, not assumed.
+
+Recorded as a **backlog**, not a dispensation — writing the catalogues is still
+the fix. The file's own comment supplies the guard: an entry whose page has been
+fixed must not survive, *"that is how a backlog turns into a set of claims about
+a corpus that has moved on"*.
+
+### The pattern, now measured across four occurrences in two days
+
+| when | file(s) | unlisted | retired `roles:` |
+|---|---|---|---|
+| 09-25 | `folio-core/decision-methodology-selector.md` | yes | — |
+| 09-26 | 3 × `skills/crdm/crdm-*.md` | yes | yes |
+| 09-26 | `skills/workflow/branch-freshness.md` | — | yes |
+| 09-26 | `skills/workflow/release-epic-planning.md` | yes | yes |
+
+**Four in two days, and the last one landed hours after the previous three were
+repaired.** Each repair is two minutes; the class is not going away, because a
+skill file and its manifest entry are one change and nothing makes an author
+write both — and `roles:` is a field a template or an example is still teaching
+people to write, since it keeps reappearing on brand-new files.
+
+That second point is the sharper one, and I went looking for the cause before
+asserting it. **The search came back empty, so the claim is withdrawn.**
+
+I had written here that four fresh files carrying a retired field "is not four
+mistakes, it is one unfixed generator, template or example". Then I checked:
+
+| searched | result |
+|---|---|
+| `roles: [` across `cat-harness/`, `.claude/` (templates, skills, tools, schemas) | no emitter — only `role-graph`/`todo`/`degradation` uses of an unrelated `roles` field, and `assistant-types.ts` DISCUSSING the retirement |
+| the exact triple `reader, collaborator, owner` as a live template | **nothing** |
+| `^roles:` in `docs/`, `templates/`, `.claude/` outside generated output | **nothing** |
+| `^roles:` in the GENERATED reference (`docs/reference/`) — the copy an agent reading published docs would imitate | **0 files** |
+
+So there is no readable source in this checkout that teaches the field. The
+cause is **could not determine**, and the likeliest remaining explanations —
+agents pattern-matching from pre-retirement files still visible in git history,
+or reproducing it from outside the repo entirely — are not verifiable from in
+here. Recorded as undetermined rather than as the tidy single-generator story,
+which is what I would have written had I not looked.
+
+What that changes about the remedy: if nothing in the repo emits it, no edit to
+the repo prevents the next occurrence — only a **check** does. Which makes the
+authoring-time gate below the whole answer rather than a nice-to-have.
+
+## Done when
+
+- [x] `roles:` gone from all affected files (A by main, D here)
+- [x] crdm skills listed (main), `release-epic-planning` listed (here)
+- [x] Every published translation has a catalogue or an `UNCATALOGED` record
+- [x] `translation:drift:check` green, falsified in both directions
+- [x] `bun run gates` 153/153 and `bunx playwright test` 700 passed
+- [x] Looked for what keeps writing `roles:` onto new skill files — **no emitter
+      exists in this checkout**, including in the generated reference. Recorded
+      above as could-not-determine; the single-generator hypothesis is withdrawn.
+- [ ] Decide whether an unlisted skill should fail at authoring time rather than
+      in the next PR's CI — four occurrences in two days.
