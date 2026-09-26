@@ -234,6 +234,6 @@ to begin.
 
 | process | step(s) that name it |
 |---|---|
-| [A sub-graph wants to leave](../../processes/graph-detanglement.html) | Brief the topic before&#10;touching anything |
+| [A sub-graph wants to leave](../../processes/graph-detanglement.html) | Brief the topic before touching anything |
 | [Options analysis](../../processes/options-analysis.html) | Frame the decision and check the trigger |
 

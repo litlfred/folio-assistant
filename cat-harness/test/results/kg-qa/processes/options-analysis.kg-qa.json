@@ -31,6 +31,27 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Frame",
+          "detail": "names skill \"opening-brief\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Select",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_CheckEvidence",
+          "detail": "names skill \"literature-search\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Apply",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -111,7 +132,7 @@
   },
   "totals": {
     "pass": 13,
-    "fail": 1,
+    "fail": 2,
     "n/a": 10,
     "unknown": 0
   }

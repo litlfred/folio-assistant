@@ -31,6 +31,47 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "BA_Submit",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Detect",
+          "detail": "names skill \"crdm-detect\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_Issue",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_Needs",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_Requirements",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_DataModel",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_Signoff",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_Deliver",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_Close",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -106,7 +147,7 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 0,
+    "fail": 1,
     "n/a": 9,
     "unknown": 0
   }
