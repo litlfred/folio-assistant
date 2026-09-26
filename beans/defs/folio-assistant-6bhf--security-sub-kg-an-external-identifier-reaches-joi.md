@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6bhf
 title: 'SECURITY SUB-KG: an external identifier reaches join() unvalidated in three HTTP handlers, and the containment helper that fixes it already exists in one script'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-25T16:38:20Z
-updated_at: 2026-09-26T11:14:23Z
+updated_at: 2026-09-26T14:31:39Z
 parent: folio-assistant-1xhc
 ---
 
@@ -383,3 +383,21 @@ Out of scope and written down rather than silently skipped: `actions/github-scri
 character-class constrained, so neither closes that string today. Split into bean
 `j0zs` rather than absorbed here — the question is whether the gate should read a
 second language, which is a decision about its scope, not a missed sink.
+
+## Closed 2026-09-26 — merged as 93431bfc6f (PR #1408)
+
+All six boxes, with the last two done in this session:
+
+- the gate (`server-path-sinks.test.ts` 13 tests + `tar-member-guard.test.ts` 10
+  against real `tar`; 8 of 13 fail against the pre-fix server)
+- `steps.*.outputs` — asked for a NOTE, delivered a FIX, because measuring first
+  showed the laundering was live rather than latent
+
+Evidence, not authorship: the merge commit carries `resolveProvenance`, the four
+`env:` bindings, the tests and the skill text. Verified before merge: 4 free-text
+findings against the pre-fix tree and 0 after, 15 producers over the real corpus
+(10 carrying free text) asserted as a test, 22 injection tests green.
+
+Split out rather than absorbed: `j0zs` (should the gate read `script:` blocks —
+a scope decision, not a missed sink) and `9x01` (a page claiming a locale with no
+file behind it).
