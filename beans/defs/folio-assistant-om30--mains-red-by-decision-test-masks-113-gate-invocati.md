@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T09:42:57Z
-updated_at: 2026-09-26T14:46:46Z
+updated_at: 2026-09-26T19:34:36Z
 parent: folio-assistant-1xhc
 ---
 
@@ -407,3 +407,24 @@ and its method are on `xm31`.
 So the caveat was right to be there and still understated the case: it named the
 tree as the unstable half when the unstable half is the POSITION of the first red
 step.
+
+
+## The unit was STEPS and it should have been CHECKS — `cpss`, 2026-09-26
+
+Every masking figure on this bean and on `xm31` counted **steps after the failing
+one**. Measured independently from the workflow file: the failing step
+*"gates that were registered and never run"* (line 928) is a `set -e` batch of
+**106 commands**, and `translation:drift:check` is the **3rd**. So **103 gates
+inside that one step never run**, on top of the five or six steps after it.
+
+    om30's merge commit   "45 -> 6"                    steps
+    xm31                  "35 masked at step 8"        steps
+    xm31                  "42 -> 44, count still 6"    steps
+
+All three are the smaller half. `cpss` (sibling, 18:09, `priority: high`) states it
+as 108 checks and carries the decision, including the fix that makes the invariant
+structural: **a deliberately-red gate must be the LAST step in its job**, not the
+3rd command of a batch in the middle.
+
+Recorded here because this bean is where the masking finding started and its own
+numbers are the ones a reader will find first.
