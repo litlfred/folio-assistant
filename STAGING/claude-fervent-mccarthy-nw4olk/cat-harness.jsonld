@@ -273,14 +273,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-26T08:14:01.468Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/af820ad99f6d45ea3d9dd526e82281d76ac91589",
-  "sourceCommitSha": "af820ad99f6d45ea3d9dd526e82281d76ac91589",
-  "sourceCommitAt": "2026-09-26T08:11:30Z",
+  "generatedAt": "2026-09-26T08:26:44.883Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e3796d4dcc41cd83c8e252d95567e618beb6e7d5",
+  "sourceCommitSha": "e3796d4dcc41cd83c8e252d95567e618beb6e7d5",
+  "sourceCommitAt": "2026-09-26T08:24:15Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 271,
+    "Skill": 272,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
@@ -1994,6 +1994,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-heatmap"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/skill-registration",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "skill-registration",
+      "title": "Adding a skill",
+      "description": "Adding a skill is never a one-file change. What a new skill file owes, the one command that performs all of it, why running that command once is not enough, and the two orphan directions it reports rather than fixes. Read this before adding, renaming or removing a skill.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/skill-registration.md",
+      "instructionLines": 97,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skill-registration"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/glossary-build",
@@ -6349,6 +6366,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/one-voice-style-guide",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/ontologist",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/opening-brief",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/package-release",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/pending-show",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/pickup",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/placement",
@@ -6374,6 +6392,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/scientific-accuracy",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/serving-renderings",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/session-intent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/skill-registration",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/surprise-to-corpus",
@@ -6406,9 +6425,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/watch",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/where-a-proposal-goes",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/where-does-this-go",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/wireframe-design-review",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/package-release",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/decision-methodology-selector"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#skill/wireframe-design-review"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness.jsonld#capability/git-push",
@@ -43646,8 +43663,8 @@
   ],
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "13e1763e2fa49be488ccfb984450a1849036d244",
+    "sha": "55fd3919e838e19598b89f61527b33ea42a4b3d4",
     "pr": "1361/merge",
-    "run": "36229042335"
+    "run": "36229677317"
   }
 }

@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(7)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(34)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(15) > ul > li:nth-child(7) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(34) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(15) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(15) > ul > li:nth-child(7) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(34) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(15) > ul.nav-list > li.nav-list-item:nth-child(7) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(34) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Theming | folio-assistant</title>
+<title>Adding a | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Theming" />
+<meta property="og:title" content="Adding a" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Theming" />
+<meta property="twitter:title" content="Adding a" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -787,8 +787,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <div class="main-content-wrap">
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
-    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/architecture.html">Architecture</a></li>
-    <li class="breadcrumb-nav-list-item"><span>Theming</span></li>
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Adding a</span></li>
   </ol>
 </nav>
 
@@ -796,209 +796,157 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 class="no_toc" id="theming--split-on-the-stage-it-fails-at">
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/skill-registration.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/folio-core/skill-registration.md</code></a> — do not edit here.</p>
+
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/skill-registration.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="adding-a-skill">
   
   
-    <a href="#theming--split-on-the-stage-it-fails-at" class="anchor-heading" aria-labelledby="theming--split-on-the-stage-it-fails-at"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Theming — split on the stage it fails at
+    <a href="#adding-a-skill" class="anchor-heading" aria-labelledby="adding-a-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding a skill
   
   
 </h1>
     
 
-<ol id="markdown-toc">
-  <li><a href="#the-axis-and-why-the-ordering-matters-more-than-the-names" id="markdown-toc-the-axis-and-why-the-ordering-matters-more-than-the-names">The axis, and why the ordering matters more than the names</a></li>
-  <li><a href="#one-flat-directory-not-one-per-stage" id="markdown-toc-one-flat-directory-not-one-per-stage">One flat directory, not one per stage</a></li>
-  <li><a href="#what-moved-and-what-deliberately-did-not" id="markdown-toc-what-moved-and-what-deliberately-did-not">What moved, and what deliberately did not</a></li>
-  <li><a href="#looking-at-it--the-themes-page" id="markdown-toc-looking-at-it--the-themes-page">Looking at it — the Themes page</a></li>
-  <li><a href="#contrast-is-measured-over-pure-black" id="markdown-toc-contrast-is-measured-over-pure-black">Contrast is measured over PURE BLACK</a></li>
-  <li><a href="#related" id="markdown-toc-related">Related</a></li>
-</ol><hr />
+<p>One command, before you commit:</p>
 
-<blockquote>
-  <p><strong>The documentation entry for the <code class="language-plaintext highlighter-rouge">theming</code> subgraph.</strong> Bean <code class="language-plaintext highlighter-rouge">2krx</code>: every
-time an instance names a directory as a subgraph it owes a <strong>visualiser</strong> and
-a <strong>documentation entry</strong>. <code class="language-plaintext highlighter-rouge">cat-harness/skills/theming/</code> arrives owing both, and
-shipping it without them would manufacture the finding rather than clear it.
-This is the entry; the visualiser is the <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/themes/">Themes page</a>,
-generated by <code class="language-plaintext highlighter-rouge">bun run theme:page</code> (and, as a standalone file, <code class="language-plaintext highlighter-rouge">bun run theme:sheet</code>).</p>
-</blockquote>
-<h2 id="the-axis-and-why-the-ordering-matters-more-than-the-names">
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run skills:register
+</code></pre></div></div>
+
+<p>It declares the skill, generates everything derived from it, and iterates until
+the generators agree. <code class="language-plaintext highlighter-rouge">bun run skills:register:check</code> is the same question
+without writing, and it is a gate — a skill that arrives undeclared fails CI.</p>
+<h2 id="what-a-skill-file-owes-and-why-you-cannot-see-it">
   
   
-    <a href="#the-axis-and-why-the-ordering-matters-more-than-the-names" class="anchor-heading" aria-labelledby="the-axis-and-why-the-ordering-matters-more-than-the-names"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The axis, and why the ordering matters more than the names
+    <a href="#what-a-skill-file-owes-and-why-you-cannot-see-it" class="anchor-heading" aria-labelledby="what-a-skill-file-owes-and-why-you-cannot-see-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a skill file owes, and why you cannot see it
   
   
 </h2>
     
 
-<p>The owner asked for theming skills <em>“broken up thematically”</em> on 2026-09-20,
-and then chose the axis: <strong>“1 + 2, then specialized to 3”</strong> — three levels, not
-a choice between three options.</p>
+<p>Three things nothing derives for you, and none of them is in the file you just
+wrote:</p>
 
 <div class="table-wrapper"><table>
   <thead>
     <tr>
-      <th> </th>
-      <th>stage</th>
-      <th>faces</th>
-      <th>owns</th>
+      <th>artefact</th>
+      <th>where</th>
+      <th>produced by</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>1</td>
-      <td><code class="language-plaintext highlighter-rouge">theme-art-intake</code></td>
-      <td><strong>producer</strong></td>
-      <td>art arrives; accepted with its declaration written, or refused with a named reason</td>
+      <td>a <code class="language-plaintext highlighter-rouge">skills</code> entry</td>
+      <td>the package’s <code class="language-plaintext highlighter-rouge">package-manifest.json</code></td>
+      <td>declared, not generated</td>
     </tr>
     <tr>
-      <td>2</td>
-      <td><code class="language-plaintext highlighter-rouge">theme-declaration</code></td>
-      <td><strong>producer</strong></td>
-      <td>what a theme IS as data — palette, three layouts, <code class="language-plaintext highlighter-rouge">textRegion</code>, <code class="language-plaintext highlighter-rouge">avatarRegion</code></td>
+      <td>a published reference page</td>
+      <td><code class="language-plaintext highlighter-rouge">docs/reference/skill-instructions/&lt;name&gt;.md</code></td>
+      <td><code class="language-plaintext highlighter-rouge">skills:docs</code></td>
     </tr>
     <tr>
-      <td>3</td>
-      <td><code class="language-plaintext highlighter-rouge">theme-generation</code></td>
-      <td><strong>consumer</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">themes.css</code>, and the fallback that paints over its own art</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td><code class="language-plaintext highlighter-rouge">theme-contrast</code></td>
-      <td><strong>consumer</strong></td>
-      <td>scrims, WCAG, and why the measurement is over pure black</td>
-    </tr>
-    <tr>
-      <td>—</td>
-      <td><code class="language-plaintext highlighter-rouge">theme-artefacts</code></td>
-      <td>specialisation</td>
-      <td>sticky, landing board, docs background, navbar avatar — only what DIFFERS</td>
+      <td>a <code class="language-plaintext highlighter-rouge">kg-qa</code> sidecar</td>
+      <td><code class="language-plaintext highlighter-rouge">test/results/kg-qa/skills/&lt;pkg&gt;/&lt;name&gt;.kg-qa.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">kg:audit</code></td>
     </tr>
   </tbody>
 </table></div>
 
-<p><strong>Stage is primary because that is how the failures arrive.</strong> Four rounds of
-<em>“still not image”</em> were one cause, and each round was one stage.</p>
+<p>Then a cascade: the schema reference, the glossary and its SKOS export, the
+docs-auto index, the UML overview, the PROV-QAQC report, the tools viewer and the
+detangle measurements all read something that just changed.</p>
 
-<p><strong>Artefact-first would duplicate intake and contrast into every surface</strong> —
-the shape that put the scrim rule in one skill’s prose and let it be
-rediscovered rather than read. Stage-first with specialisation last means a new
-artefact inherits the stages and declares only its difference. The avatar crop
-boxes are the worked example: the <em>rule</em> that a crop is declared data belongs
-to declaration, and the <em>boxes themselves</em> are navbar-avatar specialisation.</p>
-
-<p><strong>Producer/consumer is not a second partition of the same set.</strong> It says which
-direction a stage faces, and it is what makes <em>“a theme with no CSS rule falls
-back to an opaque surface and paints over its own art”</em> a <strong>consumer</strong> fact
-rather than a generation detail: the generator did its job, and the reader of a
-missing rule is where it goes wrong.</p>
-<h2 id="one-flat-directory-not-one-per-stage">
+<p><strong>The reason this needs a skill at all is that the feedback arrives somewhere
+else.</strong> CI judges the <em>merge</em> of each pull request’s head into the base, so an
+undeclared skill on <code class="language-plaintext highlighter-rouge">main</code> fails the gate set on <strong>every open pull request</strong> — and
+the author who sees the failure is whoever opens the next one. Between 2026-09-24
+and 2026-09-26 that happened <strong>seven times</strong>, and seven different sessions each
+diagnosed it from scratch.</p>
+<h2 id="why-one-pass-is-not-enough">
   
   
-    <a href="#one-flat-directory-not-one-per-stage" class="anchor-heading" aria-labelledby="one-flat-directory-not-one-per-stage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One flat directory, not one per stage
+    <a href="#why-one-pass-is-not-enough" class="anchor-heading" aria-labelledby="why-one-pass-is-not-enough"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why one pass is not enough
   
   
 </h2>
     
 
-<p><code class="language-plaintext highlighter-rouge">cat-harness/skills/theming/</code> is a single declared directory whose <em>files</em> carry the
-split. Five declarations would owe five visualisers and five documentation
-entries under <code class="language-plaintext highlighter-rouge">2krx</code>, which manufactures findings on a repository that is
-trying to clear nineteen. <em>“Broken up thematically”</em> is satisfied by the files.</p>
+<p>The generators feed each other. Run them in order once and the earliest is stale
+against the latest — measured on 2026-09-26, when <code class="language-plaintext highlighter-rouge">docs:auto</code> went stale behind
+<code class="language-plaintext highlighter-rouge">glossary:page</code> and a green-looking chain still failed CI. <code class="language-plaintext highlighter-rouge">#1376</code>’s author
+records the same lesson from four earlier pull requests.</p>
 
-<p><code class="language-plaintext highlighter-rouge">overview.md</code> is authored <strong>as a skill</strong>, not as a <code class="language-plaintext highlighter-rouge">README.md</code>, and that is not
-a formality: <code class="language-plaintext highlighter-rouge">isSkillMd</code> is declaration-over-location, so a markdown file here
-with no <code class="language-plaintext highlighter-rouge">$schema:</code> enters the graph as a skill either way — a README would be
-one with no <code class="language-plaintext highlighter-rouge">name</code> to be fetched by, and the one orientation file an agent
-could not reach through <code class="language-plaintext highlighter-rouge">skill_fetch</code>.</p>
-<h2 id="what-moved-and-what-deliberately-did-not">
+<p><code class="language-plaintext highlighter-rouge">skills:register</code> iterates and <strong>asserts</strong> convergence by re-running each
+<code class="language-plaintext highlighter-rouge">:check</code>, rather than running a fixed number of passes and hoping. If it reports
+non-convergence, that is a finding to report — not a reason to run it again.</p>
+<h2 id="do-not-re-add-roles">
   
   
-    <a href="#what-moved-and-what-deliberately-did-not" class="anchor-heading" aria-labelledby="what-moved-and-what-deliberately-did-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What moved, and what deliberately did not
+    <a href="#do-not-re-add-roles" class="anchor-heading" aria-labelledby="do-not-re-add-roles"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Do not re-add <code class="language-plaintext highlighter-rouge">roles:</code>
   
   
 </h2>
     
 
-<p><code class="language-plaintext highlighter-rouge">theme-art-intake</code> moved from <code class="language-plaintext highlighter-rouge">skills/folio-core/</code> and <strong>kept its name</strong>. Ids
-are stable across a relocation while paths are not, so <code class="language-plaintext highlighter-rouge">skill_fetch</code> and
-<code class="language-plaintext highlighter-rouge">roles.json</code> resolve unchanged.</p>
+<p><code class="language-plaintext highlighter-rouge">roles:</code> is <strong>retired</strong>. It carried 325 annotations across 140 files, was read by
+nothing, and pointed at actor ids — <code class="language-plaintext highlighter-rouge">reader</code>, <code class="language-plaintext highlighter-rouge">collaborator</code>, <code class="language-plaintext highlighter-rouge">owner</code> — that have
+never existed in any commit.</p>
 
-<p><code class="language-plaintext highlighter-rouge">theme-ui-review</code> stayed in <code class="language-plaintext highlighter-rouge">folio-core</code>. It is a UI review skill covering
-branding, languages and findings discipline, for which theming is one subject
-rather than <em>the</em> subject. <strong>A directory that takes every file with <code class="language-plaintext highlighter-rouge">theme</code> in
-the name is a directory nobody can describe.</strong></p>
-<h2 id="looking-at-it--the-themes-page">
+<p>It keeps coming back, and <code class="language-plaintext highlighter-rouge">check-retired-front-matter.ts</code> says why in its own
+docblock: <em>“the corpus that taught every agent here to write it is the corpus in
+front of them: copy an adjacent skill’s front matter and the field is back.”</em>
+Three of the seven merges above reintroduced it exactly that way.
+<code class="language-plaintext highlighter-rouge">skills:register</code> strips it and tells you it did.</p>
+
+<p>If a skill <em>should</em> declare who performs it, that is bean <code class="language-plaintext highlighter-rouge">y1w9</code>, and the field
+has to be declared before it is written.</p>
+<h2 id="removing-or-renaming-a-skill-two-orphans-and-they-are-yours">
   
   
-    <a href="#looking-at-it--the-themes-page" class="anchor-heading" aria-labelledby="looking-at-it--the-themes-page"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Looking at it — the <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/themes/">Themes page</a>
+    <a href="#removing-or-renaming-a-skill-two-orphans-and-they-are-yours" class="anchor-heading" aria-labelledby="removing-or-renaming-a-skill-two-orphans-and-they-are-yours"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Removing or renaming a skill: two orphans, and they are yours
   
   
 </h2>
     
 
-<p>Published on this site at <code class="language-plaintext highlighter-rouge">themes/</code>, generated by <code class="language-plaintext highlighter-rouge">bun run theme:page</code> and
-gated by <code class="language-plaintext highlighter-rouge">theme:page:check</code>, so it cannot describe themes that no longer exist.
-<code class="language-plaintext highlighter-rouge">bun run theme:sheet</code> writes the same rows as one standalone file with the art
-inlined, for opening offline or attaching to a review. Both go through one
-renderer, so the page and the sheet cannot disagree.</p>
-
-<p>Every theme: palette swatches, the scrim’s contrast against the binding case,
-and each layout’s art with its <code class="language-plaintext highlighter-rouge">textRegion</code> (blue) and <code class="language-plaintext highlighter-rouge">avatarRegion</code> (pink)
-drawn, plus that clip at 46px navbar size.</p>
-
-<p><strong>It prints and never gates</strong>, and that is deliberate. The schema proves a
-scrim parses and a crop box is square and inside the frame; it cannot see what
-a picture shows. Two of the first seven avatar boxes framed scenery, and the
-operations box was square, in bounds, and clipped the crown off a hard hat —
-caught by the owner looking at a render. A check that cannot answer the
-question should not pretend to, and one made fatal on a judgement gets switched
-off.</p>
-
-<p>Numbers that <em>can</em> be gated are gated elsewhere and not restated: the contrast
-ratios are computed in <code class="language-plaintext highlighter-rouge">schemas/themes.test.ts</code>, so the sheet shows them
-against the AAA floor rather than claiming them. Run independently, the sheet
-reproduces the recorded 9.25–9.36:1 range, which is the cheapest confirmation
-there is that the comments beside those values are still true.</p>
-
-<p><code class="language-plaintext highlighter-rouge">bun run avatar:crops</code> is the narrower sibling — the navbar-avatar
-specialisation on its own.</p>
-<h2 id="contrast-is-measured-over-pure-black">
-  
-  
-    <a href="#contrast-is-measured-over-pure-black" class="anchor-heading" aria-labelledby="contrast-is-measured-over-pure-black"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Contrast is measured over PURE BLACK
-  
-  
-</h2>
-    
-
-<p>An instance can declare its own art for a role, so the art a value was tuned
-against is <strong>not</strong> the art it will meet. Measuring against today’s storm-grey
-cloud yields a number true of one picture; measuring against pure black yields
-one true of any. The shipped scrims measure <strong>9.25–9.36:1</strong> there, against
-roughly 14:1 on pure white — the dark end is binding, by a wide margin — and
-the <strong>AAA 7:1 floor</strong> is a floor rather than a target.</p>
-
-<p>The <code class="language-plaintext highlighter-rouge">high-contrast-light</code> / <code class="language-plaintext highlighter-rouge">high-contrast-dark</code> pair declares <strong>no backdrop at
-all</strong>, deliberately: art behind ink is the thing those two exist to remove, and
-a scrim strong enough to make an arbitrary photograph safe at their ratios
-would hide the photograph anyway.</p>
-<h2 id="related">
-  
-  
-    <a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
-  
-  
-</h2>
-    
+<p><code class="language-plaintext highlighter-rouge">skills:register</code> <strong>reports</strong> these and does not fix them. That is deliberate,
+not an omission.</p>
 
 <ul>
-  <li><a href="harness-instances.html">Harness instances</a> — the rendering obligation this
-subgraph discharges, and bootstrap’s exemption from it</li>
-  <li>Beans: <code class="language-plaintext highlighter-rouge">1hvo</code> (this split), <code class="language-plaintext highlighter-rouge">2krx</code> (the QA axis), <code class="language-plaintext highlighter-rouge">603s</code> (<code class="language-plaintext highlighter-rouge">avatarRegion</code>),
-<code class="language-plaintext highlighter-rouge">ivfw</code> (the theme surviving a pin), <code class="language-plaintext highlighter-rouge">5y4b</code> (themed todo stickies)</li>
+  <li><strong>A manifest entry with no file.</strong> <code class="language-plaintext highlighter-rouge">kg:audit</code> calls this
+<code class="language-plaintext highlighter-rouge">manifest-skill-exists</code> at severity <strong>critical</strong>. Pruning it automatically
+would decide, on your behalf, that nothing referenced the name — and
+<code class="language-plaintext highlighter-rouge">KNOWN_DANGLING</code> in <code class="language-plaintext highlighter-rouge">skill-manifest-coverage.test.ts</code> is empty on purpose <em>“so
+a future entry is added here consciously, with the reason, instead of the check
+being loosened”</em>.</li>
+  <li><strong>A derived artefact whose subject is gone.</strong> <code class="language-plaintext highlighter-rouge">kg:audit</code> reports <code class="language-plaintext highlighter-rouge">SUBJECT GONE</code>
+and refuses to delete it. That is
+<a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/reference/skill-instructions/deletion-requires-confirmation.html"><code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code></a>: an agent
+never removes a durable artefact on its own initiative. No amount of
+regenerating settles it, which is why the chain reports non-convergence rather
+than looping.</li>
 </ul>
+
+<p>Both were found by breaking the tool rather than by designing it — registering a
+probe skill and then deleting it produced one of each.</p>
+<h2 id="what-this-does-not-decide">
+  
+  
+    <a href="#what-this-does-not-decide" class="anchor-heading" aria-labelledby="what-this-does-not-decide"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this does not decide
+  
+  
+</h2>
+    
+
+<p>Whether a skill should exist, what it should say, or which package it belongs in.
+This is about the declarations a skill owes once you have decided to add it. For
+where a new thing goes at all, start at
+<a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/reference/skill-instructions/where-does-this-go.html"><code class="language-plaintext highlighter-rouge">where-does-this-go</code></a>.</p>
 
           
 
