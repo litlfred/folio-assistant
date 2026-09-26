@@ -11,7 +11,7 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1439 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 162 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1445 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 **Size:** this page holds 1619 terms and is 878 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
@@ -5507,7 +5507,7 @@ MaterializationSchema.note <span class="fa-gloss-status">candidate, extracted</s
 MaterializationSchema.provenance <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>WHERE THIS CAME FROM — see &#123;@link ProvenanceSchema}.</p>
+<p>WHERE THIS CAME FROM — see &#123;@link SourceProvenanceSchema}.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/materialization.ts"><code>folio-assistant-core/schemas/materialization.ts#MaterializationSchema.provenance</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--materialization.materializationschema.purpose" data-fa-state="extracted" data-fa-gloss="">
@@ -6599,20 +6599,6 @@ ProvActivitySchema.cat-harness:underPolicy <span class="fa-gloss-status">candida
 <dd>
 <p>The ODRL policy uid(s) the run was under. Required: a run under no policy cannot be checked. An array when several policies were in force, which is how JSON-LD writes several values of one property: `decide` evaluates every policy an instance holds, so naming only one would misstate what the verdict was computed against.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/prov.ts"><code>cat-harness/schemas/prov.ts#ProvActivitySchema.cat-harness:underPolicy</code></a></p>
-</dd>
-<dt id="folio-assistant-core--kg-schema-fields--materialization.provenanceschema.local" data-fa-state="extracted" data-fa-gloss="">
-ProvenanceSchema.local <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The original **in this repository** this was taken from.</p>
-<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/materialization.ts"><code>folio-assistant-core/schemas/materialization.ts#ProvenanceSchema.local</code></a></p>
-</dd>
-<dt id="folio-assistant-core--kg-schema-fields--materialization.provenanceschema.upstream" data-fa-state="extracted" data-fa-gloss="">
-ProvenanceSchema.upstream <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not &quot;there is none&quot;.</p>
-<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/materialization.ts"><code>folio-assistant-core/schemas/materialization.ts#ProvenanceSchema.upstream</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.publication.host" data-fa-state="extracted" data-fa-gloss="">
 Publication.host <span class="fa-gloss-status">candidate, extracted</span>
@@ -8446,33 +8432,33 @@ SheetAnchorSchema.cell <span class="fa-gloss-status">candidate, extracted</span>
 <p>A1-style reference, when the format has one.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tabular-csvw.ts"><code>cat-harness/schemas/tabular-csvw.ts#SheetAnchorSchema.cell</code></a></p>
 </dd>
-<dt id="folio-assistant-core--kg-schema-fields--materialization.signatureschema.format" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--source-provenance.signatureschema.format" data-fa-state="extracted" data-fa-gloss="">
 SignatureSchema.format <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>How to interpret `value` — a media type or a named scheme.</p>
-<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/materialization.ts"><code>folio-assistant-core/schemas/materialization.ts#SignatureSchema.format</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/source-provenance.ts"><code>cat-harness/schemas/source-provenance.ts#SignatureSchema.format</code></a></p>
 </dd>
-<dt id="folio-assistant-core--kg-schema-fields--materialization.signatureschema.signer" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--source-provenance.signatureschema.signer" data-fa-state="extracted" data-fa-gloss="">
 SignatureSchema.signer <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Who signed, as a key identifier.</p>
-<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/materialization.ts"><code>folio-assistant-core/schemas/materialization.ts#SignatureSchema.signer</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/source-provenance.ts"><code>cat-harness/schemas/source-provenance.ts#SignatureSchema.signer</code></a></p>
 </dd>
-<dt id="folio-assistant-core--kg-schema-fields--materialization.signatureschema.value" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--source-provenance.signatureschema.value" data-fa-state="extracted" data-fa-gloss="">
 SignatureSchema.value <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The signature itself, or a URI that resolves to it.</p>
-<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/materialization.ts"><code>folio-assistant-core/schemas/materialization.ts#SignatureSchema.value</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/source-provenance.ts"><code>cat-harness/schemas/source-provenance.ts#SignatureSchema.value</code></a></p>
 </dd>
-<dt id="folio-assistant-core--kg-schema-fields--materialization.signatureschema.verifiedat" data-fa-state="extracted" data-fa-gloss="">
+<dt id="cat-harness--kg-schema-fields--source-provenance.signatureschema.verifiedat" data-fa-state="extracted" data-fa-gloss="">
 SignatureSchema.verifiedAt <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>When it was last CHECKED against the signer's key — never when it was recorded. Same discipline as &#123;@link FixitySchema.verifiedAt}.</p>
-<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/materialization.ts"><code>folio-assistant-core/schemas/materialization.ts#SignatureSchema.verifiedAt</code></a></p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/source-provenance.ts"><code>cat-harness/schemas/source-provenance.ts#SignatureSchema.verifiedAt</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--types.simulatorblock.defaultview" data-fa-state="extracted" data-fa-gloss="">
 SimulatorBlock.defaultView <span class="fa-gloss-status">candidate, extracted</span>
@@ -8879,6 +8865,20 @@ SourceDescriptorSchema.termsUrl <span class="fa-gloss-status">candidate, extract
 <dd>
 <p>Whether the source states terms, and where. Feeds the `restrictions` and `copyright` gates; `unknown` stays unknown.</p>
 <p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>large-datasets/schemas/source-descriptor.ts#SourceDescriptorSchema.termsUrl</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--source-provenance.sourceprovenanceschema.local" data-fa-state="extracted" data-fa-gloss="">
+SourceProvenanceSchema.local <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The original **in this repository** this was taken from.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/source-provenance.ts"><code>cat-harness/schemas/source-provenance.ts#SourceProvenanceSchema.local</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--source-provenance.sourceprovenanceschema.upstream" data-fa-state="extracted" data-fa-gloss="">
+SourceProvenanceSchema.upstream <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not &quot;there is none&quot;.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/source-provenance.ts"><code>cat-harness/schemas/source-provenance.ts#SourceProvenanceSchema.upstream</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--assistant-workflow.stageskillbinding.skills" data-fa-state="extracted" data-fa-gloss="">
 StageSkillBinding.skills <span class="fa-gloss-status">candidate, extracted</span>

@@ -19506,6 +19506,120 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/source-provenance.signatureschema.format",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SignatureSchema.format"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How to interpret `value` — a media type or a named scheme."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/source-provenance.ts#SignatureSchema.format",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/source-provenance.signatureschema.signer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SignatureSchema.signer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who signed, as a key identifier."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/source-provenance.ts#SignatureSchema.signer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/source-provenance.signatureschema.value",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SignatureSchema.value"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The signature itself, or a URI that resolves to it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/source-provenance.ts#SignatureSchema.value",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/source-provenance.signatureschema.verifiedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SignatureSchema.verifiedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When it was last CHECKED against the signer's key — never when it was recorded. Same discipline as {@link FixitySchema.verifiedAt}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/source-provenance.ts#SignatureSchema.verifiedAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/source-provenance.sourceprovenanceschema.local",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SourceProvenanceSchema.local"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The original **in this repository** this was taken from."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/source-provenance.ts#SourceProvenanceSchema.local",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/source-provenance.sourceprovenanceschema.upstream",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SourceProvenanceSchema.upstream"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not \"there is none\"."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/source-provenance.ts#SourceProvenanceSchema.upstream",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/staging-preview.stagingdeployfactsschema.branch",
       "@type": "skos:Concept",
       "skos:inScheme": {
