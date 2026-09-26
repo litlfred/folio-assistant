@@ -32,6 +32,7 @@
         <bpmn:flowNodeRef>Task_E2E</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Rust</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Advisories</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SkillChain</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Join</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_Hard</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Pass</bpmn:flowNodeRef>
@@ -98,6 +99,14 @@
       <bpmn:incoming>Flow_14</bpmn:incoming>
       <bpmn:outgoing>Flow_15</bpmn:outgoing>
     </bpmn:task>
+    <bpmn:task id="Task_SkillChain" name="Skill-registration chain&amp;#10;(UNMASKED)">
+      <bpmn:documentation>Runs the five `--check` commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, docs:auto:check, kg:audit:check, kg:detangle:check. A SEPARATE job rather than a step in Task_TypeScript, and that is the whole point of drawing it: every one of the five is already a step there, but all of them run after `bun test`, which executes the kg-audit and detangle WRITERS and so repairs two of the artefacts before their checks read them (bean `ymsu`). This job never runs `bun test`, so it is the only place those five are read against the tree as checked out. Measured 2026-09-26: 13s, and green on a clean tree. Drawn beside Task_Advisories rather than inside Task_TypeScript for a second reason — a red step placed BEFORE `bun test` would skip the 45 gates behind it, turning one named failure into forty-five unevaluated ones. Bean `v625` for why the chain needs a command at all; `fjwi` for the placement measurement.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="platform-gates"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_16</bpmn:incoming>
+      <bpmn:outgoing>Flow_17</bpmn:outgoing>
+    </bpmn:task>
     <bpmn:parallelGateway id="GW_Join" name="">
       <bpmn:incoming>Flow_6</bpmn:incoming>
       <bpmn:incoming>Flow_7</bpmn:incoming>
@@ -135,14 +144,16 @@
     <bpmn:sequenceFlow id="Flow_13" sourceRef="GW_Hard" targetRef="End_Fail" name="yes"/>
     <bpmn:sequenceFlow id="Flow_14" sourceRef="GW_Fork" targetRef="Task_Advisories"/>
     <bpmn:sequenceFlow id="Flow_15" sourceRef="Task_Advisories" targetRef="GW_Join"/>
+    <bpmn:sequenceFlow id="Flow_16" sourceRef="GW_Fork" targetRef="Task_SkillChain"/>
+    <bpmn:sequenceFlow id="Flow_17" sourceRef="Task_SkillChain" targetRef="GW_Join"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_CodeQualityGates">
     <bpmndi:BPMNPlane id="Plane_Process_CodeQualityGates" bpmnElement="Collaboration_Process_CodeQualityGates">
       <bpmndi:BPMNShape id="Shape_Participant_Process_CodeQualityGates" bpmnElement="Participant_Process_CodeQualityGates" isHorizontal="true">
-        <dc:Bounds x="60" y="60" width="1640" height="830"/>
+        <dc:Bounds x="60" y="60" width="1640" height="950"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Ci" bpmnElement="Lane_Ci" isHorizontal="true">
-        <dc:Bounds x="90" y="60" width="1610" height="720"/>
+        <dc:Bounds x="90" y="60" width="1610" height="840"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_Change" bpmnElement="Start_Change">
         <dc:Bounds x="122" y="332" width="36" height="36"/>
@@ -167,6 +178,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Task_Advisories" bpmnElement="Task_Advisories">
         <dc:Bounds x="550" y="670" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_SkillChain" bpmnElement="Task_SkillChain">
+        <dc:Bounds x="550" y="790" width="180" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_Join" bpmnElement="GW_Join">
         <dc:Bounds x="865" y="325" width="50" height="50"/>

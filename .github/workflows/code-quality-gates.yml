@@ -1486,3 +1486,44 @@ jobs:
       # baseline it had never computed."
       - name: Known advisories against the resolved tree
         run: bun run check:dependency-advisories
+
+  skill-registration-chain:
+    # bpmn-node: Task_SkillChain
+    name: Skill-registration chain, unmasked (hard)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # A SEPARATE JOB, and the separation is the entire gate. Every one of the
+      # five commands this runs is already a step in the `typescript` job --
+      # `check:glossary` (17), `kg:audit:check` (33), `kg:detangle:check` (37),
+      # `docs:auto:check` (40), `gen-skill-docs --check` (45). All five run
+      # AFTER `bun test`, which executes the kg-audit and detangle WRITERS, so
+      # by the time two of those gates read their artefacts they have been
+      # repaired in-process and are comparing the writer's output to the
+      # writer's output (bean `ymsu`, measured both ways). This job never runs
+      # `bun test`, so it is the only place in CI those five are read against
+      # the tree as checked out.
+      #
+      # Why not a step at the front of `typescript`, which would be free:
+      # measured 2026-09-26, a failing step there SKIPS every step behind it --
+      # on main's run 36234052354 a red `bun test` left steps 6-50 `skipped`,
+      # 45 gates returning no verdict and the job reporting as one red. Putting
+      # this in front would widen that cascade rather than add a verdict. A
+      # separate job cannot skip anything, and it runs in parallel: 13s
+      # measured, against the ~2.5min `typescript` takes.
+      #
+      # HARD, not warn-only. Unlike the advisories job above, every failure
+      # here names a generated artefact in THIS repository that the author's
+      # own change staled -- there is no third party to wait on, and bean
+      # `v625` is the measured cost of leaving it to be noticed: six skills
+      # landed unregistered, four gates went red, and every red named a
+      # generated file rather than the skill that caused it.
+      - name: the registration chain is current, read unmasked
+        run: bun run skill:register:check

@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-26T04:54:43Z
+updated_at: 2026-09-26T10:34:42Z
 parent: folio-assistant-1xhc
 ---
 
@@ -194,3 +194,130 @@ would attribute an author's own `git add` to whichever gate was running. Commit
 before or after a run, not during.
 
 _2026-09-26T04:54:43Z_ — Claimed by claude/ymsu-gates-tree-guard — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## Third instance, and it is CI's step sequence rather than a writer — 45 gates unevaluated on main
+
+Measured 2026-09-26 while deciding where a new chain gate could go. The bean's
+open sweep clause asks *"which other `:check` gates have their subject written
+by an earlier gate in the same run"*. This is the same consequence reached by a
+different mechanism, so it is filed here: in CI the subject is not repaired, it
+is **never looked at**.
+
+`Code-quality gates` run 36234052354, head `e53bba8028466cf8093e546a18945b1da05094a0`
+— main's latest completed run, and the base of this session's branch. Job
+`TypeScript — tests, lint, types (hard)`:
+
+| step | name | conclusion |
+|---|---|---|
+| 5 | `bun test` | **failure** |
+| 6 | `bun run lint` | skipped |
+| … | … | skipped |
+| 33 | knowledge-graph audit | skipped |
+| 37 | detangle measurements are current | skipped |
+| … | … | skipped |
+| 50 | translation index is current | skipped |
+
+**Steps 6 through 50 are all `skipped`** — 45 gates — because step 5 failed and
+no step carries `if: always()`. The job reports as one red.
+
+### Why this is the same defect and not a new subject
+
+The bean's parent `1xhc` line is *"a gate that does not fire is
+indistinguishable from one that passed."* From the job summary a reader sees
+`TypeScript — tests, lint, types (hard): failure` and one named failing test.
+Nothing says that forty-five further gates returned no verdict. So the same
+third state this bean describes — advertised, wired, load-bearing for nothing —
+is reached without any writer being involved.
+
+It matters right now because `main` has been red on ONE deliberately-accepted
+test (`no NEW drift`, bean `ngxj` / issue #206) since 2026-09-25. For as long as
+that holds, **every gate after `bun test` in that job has been unevaluated on
+main.** `kg:detangle:check`'s state on main is therefore not "green" and not
+"red" — it is unknown from CI, and the only first-hand evidence is a local run.
+
+### Measured locally, on that same commit
+
+`bun run kg:detangle:check` alone, tree clean apart from three files outside any
+declared graph directory (`scripts/skill-register.ts`, `package.json`, a
+workflow): **exit 1**, six sidecars STALE —
+
+    bootstrap/skills — proseMentions
+    cat-harness/schemas — size, internal, outbound, cohesion, recordedBoundary, proseMentions
+    cat-harness/skills/folio-core — inbound, recordedBoundary, proseMentions
+    cat-harness/skills/folio-paper-adapter — inbound, recordedBoundary
+    cat-harness/skills/hypothesis-generation — proseMentions
+    cat-harness/skills/scientific-critical-thinking — proseMentions
+
+Pre-existing rather than caused by those three files, and that is structural
+rather than asserted: `size`, `internal`, `outbound` and `cohesion` on
+`cat-harness/schemas` are functions of files under `cat-harness/schemas/`, which
+this tree does not touch. The sidecars were last committed
+2026-09-26T08:54:47Z and main has moved since.
+
+### What I am NOT claiming
+
+That the skip cascade caused the staleness — it did not, it **hid** it. And not
+that `if: always()` is the remedy: 45 steps that each `bun install`-depend on a
+green tree may fail for reasons that are all one cause, which is a different
+report rather than a better one. The remedy is a decision, recorded on the child
+bean of `v625` rather than assumed here.
+
+### Adds to "Done when"
+
+- [ ] the sweep clause above is widened a second time: for each `:check`, ask
+      also *"is it reachable in CI when an earlier step in its job fails?"* —
+      45 of this job's steps answer no today
+- [ ] main's job reports which gates returned NO VERDICT, distinctly from those
+      that passed and those that failed. MEASURED AFTER: with one test failing,
+      the run's own summary names a count of unevaluated gates rather than only
+      the failure
+
+
+### CORRECTION to the block above — the "six stale sidecars" measurement does not reproduce
+
+Written the same session, before pushing. The §"Measured locally, on that same
+commit" block above reported `bun run kg:detangle:check` exiting 1 with six
+STALE sidecars, and drew from it that `kg:detangle:check` is stale on `main`.
+**Re-measured three times on the same commit with the committed sidecars
+byte-identical to `HEAD`: exit 0, `✓ 28 pinned measurement(s) current`.**
+
+The reading is withdrawn. What the two observations jointly establish is
+weaker and more interesting than either:
+
+| run | committed sidecar (`cat-harness/schemas`) | verdict |
+|---|---|---|
+| earlier this session | `size: 1441` (= `HEAD`) | **exit 1**, six STALE |
+| three times after | `size: 1441` (= `HEAD`) | **exit 0**, 28 current |
+
+Same commit, same committed bytes, opposite verdicts — so **the check's verdict
+is not a function of the committed tree alone.** That is this bean's subject
+arriving from a third direction, and it is worse than the masking already
+recorded: masking made the check unable to fail, and this makes it able to
+fail spuriously.
+
+**The mechanism is NOT established and is not guessed at here.** The candidate
+is some earlier writer run in this session's working tree, but `git status`
+showed the sidecars unmodified at the time of the red run, which does not fit.
+Recorded as could-not-determine rather than as a cause.
+
+One consequence IS established, and it is the useful half: a downstream artefact
+inherits the instability. After a `bun run gates` in this tree, `bun test`
+repaired the six sidecars (1441 → 227), and `uml:overview:check` — whose page
+carries the detangler's pinned numbers — went **red**, naming
+`cat-harness/docs/uml/overview/cat-harness.md` and `.../cat-harness/schemas.md`
+as stale. On the restored tree it is green. So `bun test`'s repair does not only
+hide a failure in the gate that reads the sidecar; it **manufactures** one in
+the gate that reads the sidecar's consumer. I regenerated that page and reverted
+it once the cause was traced — committing it would have pinned 227 into a page
+whose sidecar says 1441.
+
+### Adds to "Done when"
+
+- [ ] `kg:detangle:check` gives the same verdict twice on one commit with a
+      clean tree. MEASURED AFTER — the two runs above disagree today, and until
+      that is reproducible nothing else in this bean can be confirmed or
+      refuted
+- [ ] the spurious direction is covered too: after a `bun test`, no `:check`
+      over a DOWNSTREAM artefact goes red on a tree that was clean before it.
+      `uml:overview:check` is the measured instance

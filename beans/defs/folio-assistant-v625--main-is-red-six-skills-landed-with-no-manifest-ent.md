@@ -5,8 +5,8 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T05:10:48Z
+updated_at: 2026-09-26T10:41:09Z
 parent: folio-assistant-1xhc
-updated_at: 2026-09-26T05:11:00Z
 ---
 
 `main` was red in CI, and four of its seven failures had one cause: **six skill
@@ -217,3 +217,93 @@ reintroduction. Recorded rather than built.
 - `AGENTS.md` — the pointer, with the warning not to re-derive through `gates`.
 - Idempotent: run on a clean tree, zero generated files change.
 
+
+## The command gains flags, a QA sidecar, and tests — 2026-09-26
+
+`skill:register` was a runner that printed. It now records.
+
+| flag | what it does |
+|---|---|
+| `--help` | the chain and the flags, without running anything |
+| `--check` | verify only, never regenerate (wired as `skill:register:check`) |
+| `--dry-run` | list the chain and write a report saying nothing ran |
+| `--json` | the verdicts as JSON |
+| `--no-report` | skip the sidecar |
+
+### The sidecar, and the one invariant it exists for
+
+`cat-harness/test/results/skill-register.qa-results.json`, family
+`registration-chain`, one entry per step carrying `verify`, `because`, `ran` and
+— only when `ran` — `current`.
+
+**`ran` is emitted on every entry, including when it is `false`.** That is the
+whole point rather than a detail. A printed verdict scrolls away, which makes
+*"never verified"* and *"verified clean"* the same observation — the confusion
+this repository builds sidecars to prevent, and the confusion a report that
+omitted `ran` would reproduce *inside* the sidecar. `--dry-run` is the case that
+tempts the omission, so it is the case with a test. Conversely `current` is
+**absent** when `ran: false`: a step that did not run has no verdict, and
+`current: false` would report it as measured and red.
+
+The report is written **before** the exit branches, so a red run is recorded and
+not only printed.
+
+### A defect found and fixed in the same change
+
+`writeReport` was first called with `process.cwd()`. `writeQaResult` composes
+`<root>/test/results/`, so run from the repository root it wrote a fresh
+top-level `test/results/skill-register.qa-results.json` — a directory no
+instance declares and no sweep reads, which is the `dh4f` shape arriving from
+the writing side. Now derived from the module's own path, as
+`check-layout-norms.ts` and every sibling here already do. Pinned by a test that
+asserts the composed path rather than that the file exists somewhere.
+
+Nine tests added over the new surface (20 in the file, all green): flag
+defaults, each flag alone, an unrelated argument setting nothing (`bun run`
+passes its own arguments through, and a loose matcher would turn `--help` into a
+silent `--check`), the report's location, the `ran` invariant over the real
+`STEPS`, and a red verdict reaching the file.
+
+### The CI gate is NOT here, and that is measured rather than deferred
+
+I wired `skill:register:check` into `code-quality-gates.yml` and then reverted
+it, unpushed. All five of its commands are already their own steps in the same
+job, all after `bun test`, so an appended step can only go red where an earlier
+one already did — and GitHub Actions skips it, since no step carries
+`if: always()`. It would have been a gate structurally incapable of failing
+independently: the exact "looks like coverage, is not" shape the parent epic
+`1xhc` is about.
+
+The one placement that would be real — **before** `bun test`, the only unmasked
+read of those five artefacts in CI — is red on arrival, because
+`kg:detangle:check` is stale on `main` today. Split to **`fjwi`** with the four
+options, the recommendation, and a 72h expiry, because the cost being weighed is
+a collision with other sessions' open PRs rather than a technical unknown.
+
+Also recorded on `ymsu` as its third instance: on main's latest completed run,
+`bun test` failed and **steps 6–50 were all skipped** — 45 gates returning no
+verdict, reported as one red.
+
+
+### CORRECTION, same session: the gate IS here, as a separate job
+
+The section above ends *"The CI gate is NOT here"* and says the only real
+placement is red on arrival. **The second half was a bad measurement and the
+first half is no longer true.** `kg:detangle:check` exits 0 on a clean tree
+(three runs, committed sidecars identical to `HEAD`), and the whole chain runs
+in **13s** leaving the tree untouched — so the gate landed:
+
+`skill-registration-chain`, a **separate job** in `code-quality-gates.yml`, with
+`Task_SkillChain` drawn beside `Task_Advisories` in
+`processes/code-quality-gates.bpmn`.
+
+Separate rather than a step, for two measured reasons. It never runs `bun test`,
+so it is the only place in CI where these five artefacts are read **unmasked** —
+which is the verdict the appended-step version could not produce, since all five
+already run later in the `typescript` job after the writers have repaired two of
+them. And a step placed in FRONT of `bun test` to get that unmasked read would
+have skipped every step behind a failure: 45 gates, measured on main's run
+36234052354. A separate job skips nothing and costs no wall-clock.
+
+Details and the withdrawn premise are on `fjwi`, which resolved itself rather
+than reaching the owner.
