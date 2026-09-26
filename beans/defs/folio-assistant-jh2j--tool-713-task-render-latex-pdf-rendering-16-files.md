@@ -26,11 +26,33 @@ single Tool must not claim both.
 `scripts/docker-latex-build/` (5 HOST files that render TeX in a container).
 
 ## Done when
-- [ ] a Tool node for the TeX render path
-- [ ] `satisfies` includes `latex-authoring`
-- [ ] it does NOT claim `authoring-a-document · Task_Render`
-- [ ] `requires` names the TeX distribution honestly, container arm included
-- [ ] `tool-coverage` reflects it
+
+**One checklist, and this is it.** A ticked restatement used to sit at the bottom
+of this bean under `### Done when` while these items read open — the
+`shadow-checklist` shape, which `check:bean-bodies` failed on 2026-09-26. The
+section a reader and every tool consult said "not done" about work that had
+landed six days earlier. Merged upward rather than re-ticked in place, because a
+second checklist is free to disagree with the first and this one did.
+
+- [x] a Tool node for the TeX render path — **three**, with `satisfies` read
+      from the script bodies rather than assumed
+- [x] the render path's `satisfies` is settled: **`latex-validation`**, and
+      `latex-authoring` is **WITHDRAWN with its reason** rather than quietly
+      reworded. This item originally read *"`satisfies` includes
+      `latex-authoring`"* — a presumed answer, and the wrong one. That skill's
+      contract requires `documentClass` and `mainFile`, what you are AUTHORING,
+      and nothing in the corpus accepts either (`generate-main-tex` takes
+      `--preamble`, `--chapters-dir`, `--out`). Forcing the edge would make the
+      node lie about its interface. Same shape as `proof-verification` one group
+      over, and the argument is in `tools/index.ts` at the TeX group.
+      `latex-validation` matches the two nodes exactly and has no contract to
+      contradict.
+- [x] it does NOT claim `authoring-a-document · Task_Render` — none of the three does
+- [x] `requires` honest — `chromium` on the Playwright one, `bun` on the others;
+      `--compile` notes that pdflatex is NOT claimed by the base `requires`
+- [x] `tool-coverage` reflects it — `rendered-verification` left the uncovered list
+- [ ] **the exit-2 contract across the family** — owner's call, Finding 1
+- [ ] **a skill for compiling, or `latexmk-compile.sh` recorded as unsatisfiable** — owner's call, Finding 2
 
 ---
 
@@ -178,13 +200,11 @@ it (`content/` is in `FOLIO_OWNED`). The script runs INSIDE a folio, so the
 folio-correct spelling depends on layout I would be guessing at — which is the
 audience ambiguity `check:command-paths` declines on purpose. Left for `52dz`.
 
-### Done when
+### Status
 
-- [x] a Tool node for the TeX render path — three, with `satisfies` read from bodies
-- [x] `satisfies` includes `latex-validation` — twice
-- [x] it does NOT claim `authoring-a-document · Task_Render` — none of the three does
-- [x] `requires` honest — `chromium` on the Playwright one, `bun` on the others;
-      `--compile` notes that pdflatex is NOT claimed by the base `requires`
-- [x] `tool-coverage` reflects it — `rendered-verification` left the uncovered list
-- [ ] **the exit-2 contract across the family** — owner's call, Finding 1
-- [ ] **a skill for compiling, or `latexmk-compile.sh` recorded as unsatisfiable** — owner's call, Finding 2
+Merged into the canonical `## Done when` at the top of this bean on 2026-09-26.
+A checklist here restated that one and diverged from it — it recorded
+`latex-validation` where the canonical item still asked for `latex-authoring`,
+so the divergence was a CHANGED GOAL hiding as a duplicate. That is what
+`shadow-checklist` is for, and it is why the remedy was to merge the two rather
+than to tick the original five in place.
