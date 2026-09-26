@@ -183,72 +183,6 @@ function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADIN
 }
 
 /**
- * Wait until the sidebar has stopped MOVING, however long its stylesheet says
- * that takes.
- *
- * ## Why a wait is needed at all
- *
- * The strip animates, and these tests read the DOM the instant the call before
- * them returns. Measured on this fixture: `.side-bar` itself carries 0.4s
- * transitions, and `fa-site-title`, `fa-glass-handle__label`, `fa-doc-index`,
- * `fa-nav-folders` and `site-nav` carry 0.12s. A read taken immediately samples
- * values mid-flight, and WHICH elements it catches depends on how the run was
- * scheduled.
- *
- * That is what the evidence showed rather than a guess about slow runners: the
- * same assertion failed in two CI runs naming DIFFERENT elements — first
- * `SPAN: x`, `fa-harness-tab__label`, `fa-harness-graph__link`; then
- * `fa-nav-folders__link`, `fa-nav-folders__note`, `A`. A deterministic
- * difference between browsers would name the same ones both times; a varying
- * set is a race.
- *
- * ## Two halves, and the second was found by fixing the first
- *
- * Waiting at rest made the at-rest assertions honest and broke
- * "every one of them comes back on hover", which had waited a flat 250ms after
- * `page.hover`. Measured on the reopen: `.fa-harness-tab__label` reports
- * `opacity: 0` with `--fa-nav-text: 1` at +250ms, gets its box at +300ms and
- * only reaches 0.94 at +350ms. So 250ms was never the hover animation's
- * length — it was enough only because the strip had never fully CLOSED, and
- * reopening from closed is the slower path. The same helper therefore serves
- * both directions, which is also why it is one function and not two constants.
- *
- * ## How it decides
- *
- * The floor is DERIVED FROM THE CSS, so it follows the stylesheet instead of
- * going stale beside it, and it costs nothing on a fixture with no transitions.
- * Then `getAnimations({ subtree: true })` — the browser's own list of running
- * transitions — is polled to empty, which is what gives a slow machine more
- * time without anyone tuning a number for it. The CSS floor comes FIRST for a
- * reason: the label above starts its transition ~50ms late, and an empty
- * animation list cannot tell "finished" from "not started yet".
- */
-async function settleNav(p: import("@playwright/test").Page): Promise<void> {
-  const settleMs = await p.evaluate(() => {
-    const bar = document.querySelector(".side-bar");
-    if (!bar) return 0;
-    const longest = (v: string) =>
-      Math.max(0, ...v.split(",").map((x) => (parseFloat(x) || 0) * 1000));
-    let ms = 0;
-    for (const n of [bar, ...Array.from(bar.querySelectorAll("*"))]) {
-      const cs = getComputedStyle(n);
-      ms = Math.max(ms, longest(cs.transitionDuration) + longest(cs.transitionDelay));
-    }
-    return Math.ceil(ms);
-  });
-  if (settleMs > 0) await p.waitForTimeout(settleMs + 50);
-  await p.waitForFunction(
-    () => {
-      const bar = document.querySelector(".side-bar");
-      if (!bar) return true;
-      return bar.getAnimations({ subtree: true }).length === 0;
-    },
-    undefined,
-    { timeout: 5000 },
-  );
-}
-
-/**
  * Load a fixture and hand back everything the page said on the way up.
  *
  * `pageerror` is the one that matters: an exception in `init()` produces a
@@ -275,31 +209,28 @@ async function load(
     r.fulfill({ contentType: "text/html", body: page(row, main, staging) }),
   );
   await p.goto("http://navbar.fixture/nav", { waitUntil: "load" });
-  // PARK THE POINTER, because "at rest" is a precondition this file asserts
-  // ~and never stated~. The sidebar is a 3.5rem strip against the left edge, so
-  // it CONTAINS the origin, and the strip opens on `:hover` — a pure-CSS
-  // mechanism with no script to wait for. A browser that starts its pointer at
-  // (0, 0) therefore renders the bar OPEN at load, and three tests here read
-  // that as the app being wrong.
-  //
-  // Found on 2026-09-26 by bumping `@playwright/test` 1.61.1 -> 1.63.0, whose
-  // `playwright install` fetches a newer Chromium: CI failed
-  // "NO text region is visible until the bar is opened" (3 labels, expected
-  // none), "the icon row STACKS at rest" (1 distinct top, expected 4) and
-  // "[x] is offered whenever the bar is OPEN" (visible, expected hidden) —
-  // while all 700 passed locally on the older pinned Chromium. One cause, three
-  // symptoms, and the app unchanged.
-  //
-  // Reproduced on the OLD browser by moving the pointer to (0, 0) before the
-  // assertion, which fails identically — so this is the mechanism rather than a
-  // guess about browser versions, and the fix is verified where the bug could
-  // not otherwise be seen.
-  //
-  // (600, 400) is outside the strip at every width this file uses (the viewport
-  // is asserted wider than 800). Tests that WANT the bar open call
-  // `page.hover(".side-bar")` themselves and are unaffected.
-  await p.mouse.move(600, 400);
-  await settleNav(p);
+  // AT REST MEANS THE POINTER IS NOT OVER THE STRIP, and that is now stated
+  // rather than inherited. The strip sits at the left edge, where the pointer
+  // starts. With Playwright 1.63's Chromium, the "at rest" tests found the bar
+  // already open, as if hovered, on the bump PR (bean x89e) and passed on the
+  // same main without it. Parking the pointer in the far corner makes "no hover"
+  // a precondition these tests set, not one a browser revision decides.
+  const vp = p.viewportSize();
+  if (vp) await p.mouse.move(vp.width - 5, vp.height - 5);
+  // Moving away from a bar the browser already considered hovered STARTS its
+  // close transition. Asserting "at rest" while that runs sees a half-closed
+  // bar, which was the one failure left after the pointer was parked. So
+  // wait for every running animation or transition to finish, after two
+  // frames so a transition the move just queued is already registered.
+  await p.evaluate(async () => {
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    // An infinite animation (a spinner) never finishes, so it is left out:
+    // only something that ends can be waited for.
+    const settling = document
+      .getAnimations()
+      .filter((a) => a.effect?.getTiming().iterations !== Infinity);
+    await Promise.all(settling.map((a) => a.finished.catch(() => undefined)));
+  });
   return { errors, console: logs };
 }
 
@@ -713,7 +644,7 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     // would look correct in the screenshot that prompted this.
     await load(page, CUSTOM);
     await page.hover(".side-bar");
-    await settleNav(page);
+    await page.waitForTimeout(250);
     const shown = (await page.evaluate(visibleText)).join(" | ");
     for (const region of ["fa-site-title", "fa-doc-index__heading", "fa-nav-folders__heading",
                           "fa-harness-tabs__heading", "fa-harness-tab__label", "fa-nav-home__label"]) {
@@ -762,7 +693,7 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     const rest = await tops();
     expect(new Set(rest).size).toBe(rest.length);
     await page.hover(".side-bar");
-    await settleNav(page);
+    await page.waitForTimeout(250);
     const open = await tops();
     expect(new Set(open).size).toBe(1);
   });
@@ -779,7 +710,7 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     await page.setViewportSize({ width: 1200, height: 500 });
     await load(page, CUSTOM);
     await page.hover(".side-bar");
-    await settleNav(page);
+    await page.waitForTimeout(250);
     const fits = await page.evaluate(() => {
       const box = document.querySelector(".fa-doc-index");
       const sum = document.querySelector(".fa-doc-index__heading");
@@ -803,7 +734,7 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     const barBottom = await page.locator(".side-bar").evaluate((n) => Math.round(n.getBoundingClientRect().bottom));
     expect(barBottom - (await homeBottom())).toBeLessThan(24);
     await page.hover(".side-bar");
-    await settleNav(page);
+    await page.waitForTimeout(250);
     expect(barBottom - (await homeBottom())).toBeLessThan(24);
   });
 });
