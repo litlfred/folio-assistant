@@ -67,7 +67,25 @@ const MD_LIQUID_OUTPUT_RE = /\{\{\s*(.*?)\s*\}\}/gs;
 
 const MD_FRONT_MATTER_DELIM = /^---\s*$/;
 const MD_HEADING_RE = /^(#{1,6}\s+)(.+)$/;
-const MD_CODE_FENCE_RE = /^(`{3,}|~{3,})/;
+/**
+ * A fenced code block's delimiter.
+ *
+ * **Exported because `po-inject.ts` had its own copy of it.** One fact in two
+ * places is free to drift, and this one had: `ig4a` fixed the anchor here, and
+ * the injector's copy would have kept the old one.
+ *
+ * **What that divergence was NOT.** The first version of this comment said the
+ * injector would substitute into an indented code block and corrupt the command.
+ * That was asserted, then measured, and it is false: with the old anchor the
+ * injector substitutes nothing inside an indented fence, for prose or for code
+ * (`derive-po.test.ts` §"the two halves ... agree"). Something else already
+ * protects it. So this consolidation is hygiene rather than a bug fix, and saying
+ * otherwise would have made a stronger claim than the evidence carries.
+ *
+ * The `^` is matched against the STRIPPED line at both call sites, not the raw
+ * one — see the comment at the fence branch in {@link extractMarkdown}.
+ */
+export const MD_CODE_FENCE_RE = /^(`{3,}|~{3,})/;
 const MD_HTML_SKIP_OPEN_RE = /<(style|script|pre)\b/i;
 const MD_HTML_CLOSE_TAG_RE = /<\/(\w+)\s*>/i;
 const MD_HLINE_RE = /^[-*_]{3,}\s*$/;

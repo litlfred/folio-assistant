@@ -14,20 +14,22 @@ import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 
 import { derive, write, formatReport, firstKindDivergence, formatDerivedPo, LOCALE_NAMES } from "./derive-po.ts";
-import { extractMarkdown } from "./pot-extract.ts";
+import { extractMarkdown, MD_CODE_FENCE_RE } from "./pot-extract.ts";
+import { SITE_DIR } from "./translation-index.ts";
+import { injectMarkdown } from "./po-inject.ts";
 
 /** A throwaway instance with a source page and whichever translations are given. */
 function fixture(source: string, translations: Record<string, string>): { root: string; cleanup: () => void } {
   const root = mkdtempSync(join(tmpdir(), "derive-po-"));
-  mkdirSync(join(root, "docs"), { recursive: true });
+  mkdirSync(join(root, SITE_DIR), { recursive: true });
   // `siteRoot` CONFIRMS a site by finding `_config.yml` rather than trusting the
   // path, so the fixture has to carry one — which is the point: a tree that only
   // looks like a site is reported as no site at all.
-  writeFileSync(join(root, "docs", "_config.yml"), "title: fixture\n");
-  writeFileSync(join(root, "docs", "page.md"), source);
+  writeFileSync(join(root, SITE_DIR, "_config.yml"), "title: fixture\n");
+  writeFileSync(join(root, SITE_DIR, "page.md"), source);
   for (const [locale, text] of Object.entries(translations)) {
-    mkdirSync(join(root, "docs", locale), { recursive: true });
-    writeFileSync(join(root, "docs", locale, "page.md"), text);
+    mkdirSync(join(root, SITE_DIR, locale), { recursive: true });
+    writeFileSync(join(root, SITE_DIR, locale, "page.md"), text);
   }
   return { root, cleanup: () => rmSync(root, { recursive: true, force: true }) };
 }
@@ -106,8 +108,8 @@ describe("it REFUSES rather than guesses", () => {
 
   it("an absent source refuses every locale, rather than reporting none", () => {
     const root = mkdtempSync(join(tmpdir(), "derive-po-nosrc-"));
-    mkdirSync(join(root, "docs"), { recursive: true });
-    writeFileSync(join(root, "docs", "_config.yml"), "title: fixture\n");
+    mkdirSync(join(root, SITE_DIR), { recursive: true });
+    writeFileSync(join(root, SITE_DIR, "_config.yml"), "title: fixture\n");
     const r = derive(root, ["page"], ["fr", "es"]);
     expect(r.refused.map((f) => f.reason)).toEqual(["source-missing", "source-missing"]);
     expect(r.derived).toEqual([]);
@@ -294,5 +296,61 @@ describe("this repository's five uncatalogued pages", () => {
     const r = derive(root, PAGES, LOCALES);
     const derivedKeys = new Set(r.derived.map((d) => `${d.locale}/${d.page}`));
     for (const f of r.refused) expect(derivedKeys.has(`${f.locale}/${f.page}`)).toBe(false);
+  });
+});
+
+describe("the two halves of the round trip agree about where the code is (`ig4a`)", () => {
+  // `po-inject.ts` carried its OWN copy of `MD_CODE_FENCE_RE`, also anchored at
+  // column 0, so fixing the extractor alone would have left the two halves of a
+  // round trip using different definitions of a fence.
+  //
+  // **What this does NOT pin, having checked.** The first version of this block
+  // asserted that the old injector would substitute a translation into an
+  // indented code block and corrupt the command. Measured against the old anchor
+  // on this exact input, and on a fence whose body is ordinary prose: it
+  // substitutes NOTHING inside an indented fence either way. Something else
+  // already protects the injector, so that test would have passed before the fix
+  // as well — a test that cannot fail is not evidence, and the claim is withdrawn
+  // rather than left standing because it read well.
+  //
+  // What is left is worth pinning: the extractor's behaviour, the injector's
+  // behaviour, and that there is one definition rather than two.
+  const MD = [
+    "- An item introducing a command:",
+    "",
+    "  ```sh",
+    "  bun run scripts/gen-schema-docs.ts",
+    "  ```",
+    "",
+    "- Real prose in the second item.",
+  ].join("\n");
+
+  it("the extractor offers nothing from inside an indented fence", () => {
+    const ids = extractMarkdown(MD, "x").map((e) => e.msgid);
+    expect(ids.some((m) => m.includes("gen-schema-docs"))).toBe(false);
+    expect(ids).toContain("Real prose in the second item.");
+  });
+
+  it("the injector leaves an indented fence alone while translating the prose beside it", () => {
+    // Not a claim about the fix — a claim about the CONTRACT, which must keep
+    // holding through `lvk9` and whatever follows it. The hostile catalogue names
+    // the command on purpose, as a catalogue written before `ig4a` would.
+    const hostile = new Map([
+      ["bun run scripts/gen-schema-docs.ts", "CORRUPTED"],
+      ["Real prose in the second item.", "Prose traduite."],
+    ]);
+    const out = injectMarkdown(MD, hostile).translated;
+    expect(out).toContain("bun run scripts/gen-schema-docs.ts");
+    expect(out).not.toContain("CORRUPTED");
+    expect(out).toContain("Prose traduite.");
+  });
+
+  it("both halves read ONE definition of a fence", () => {
+    // The finding that survives. A duplicated regex is a fact free to drift, and
+    // this one had drifted within a single change.
+    const inject = readFileSync(new URL("./po-inject.ts", import.meta.url).pathname, "utf-8");
+    expect(MD_CODE_FENCE_RE).toBeInstanceOf(RegExp);
+    expect(inject).toContain('MD_CODE_FENCE_RE } from "./pot-extract"');
+    expect(inject).not.toMatch(/const MD_CODE_FENCE_RE\s*=/);
   });
 });

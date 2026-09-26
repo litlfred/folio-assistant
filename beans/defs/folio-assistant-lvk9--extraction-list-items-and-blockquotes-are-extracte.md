@@ -3,9 +3,12 @@
 title: 'EXTRACTION: list items and blockquotes are extracted PER LINE, so a msgid depends on the author''s hard wrap — translators get sentences in halves'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-09-26T09:20:19Z
-updated_at: 2026-09-26T09:20:19Z
+updated_at: 2026-09-26T10:03:36Z
 parent: folio-assistant-bzyu
+blocked_by:
+    - folio-assistant-wlyg
 ---
 
 Found 2026-09-26 while diagnosing bean `7x8o` at the owner's instruction to find

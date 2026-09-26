@@ -33,7 +33,7 @@
  * @module content/pipeline/po-inject
  */
 
-import { cleanMarkdownText } from "./pot-extract";
+import { cleanMarkdownText, MD_CODE_FENCE_RE } from "./pot-extract";
 
 // ── Liquid restoration ──────────────────────────────────────────
 
@@ -200,11 +200,17 @@ function unescapePo(s: string): string {
     .replace(/\\\\/g, "\\");
 }
 
-// ── Structural patterns (mirrors pot-extract.ts / smart-base) ───
+// ── Structural patterns ─────────────────────────────────────────
+//
+// These MIRROR `pot-extract.ts` (and smart-base before it) rather than being
+// imported from it, and "mirror" is doing real work in that sentence: nine of
+// these are byte-identical to the extractor's copy today, and `MD_CODE_FENCE_RE`
+// was too until `ig4a` changed one side. It is imported above for that reason.
+// The rest is bean `wlyg`, ordered BEFORE `lvk9` because `lvk9` changes how list
+// items and blockquotes are recognised — two of the duplicates below.
 
 const MD_FRONT_MATTER_DELIM = /^---\s*$/;
 const MD_HEADING_RE = /^(#{1,6}\s+)(.+)$/;
-const MD_CODE_FENCE_RE = /^(`{3,}|~{3,})/;
 const MD_HTML_SKIP_OPEN_RE = /<(style|script|pre)\b/i;
 const MD_HTML_CLOSE_TAG_RE = /<\/(\w+)\s*>/i;
 const MD_HLINE_RE = /^[-*_]{3,}\s*$/;
@@ -307,13 +313,23 @@ export function injectMarkdown(
     }
 
     // --- Fenced code blocks ---
-    const fenceMatch = line.match(MD_CODE_FENCE_RE);
+    // `stripped`, not `line` — mirroring `extractMarkdown`, so both halves of the
+    // round trip recognise an indented fence.
+    //
+    // Two things measured before changing it, because the obvious story was wrong.
+    // The old column-0 anchor did NOT let a translation through into an indented
+    // fence: nothing is substituted there, for a command or for ordinary prose, so
+    // something else already protects this. And the change is behaviour-neutral —
+    // every one of this instance's 16 real (catalogue, source) pairs injects
+    // BYTE-IDENTICALLY either way. It is here so the two halves cannot disagree
+    // about where the code is, not because a corruption was observed. Bean `ig4a`.
+    const fenceMatch = stripped.match(MD_CODE_FENCE_RE);
     if (fenceMatch) {
       if (!inCodeBlock) {
         flushParagraph();
         inCodeBlock = true;
         codeFence = fenceMatch[1];
-      } else if (codeFence && line.startsWith(codeFence[0].repeat(codeFence.length))) {
+      } else if (codeFence && stripped.startsWith(codeFence[0].repeat(codeFence.length))) {
         inCodeBlock = false;
         codeFence = null;
       }
