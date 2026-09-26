@@ -5,7 +5,6 @@ description: >
   changed upstream, and re-analyse the session workplan. Prevents stale
   assumptions, merge conflicts, and duplicated work — especially after
   session restarts, long idle periods, or heavy sibling activity on main.
-roles: [reader, collaborator, owner]
 ---
 
 # Branch freshness — stay current with main

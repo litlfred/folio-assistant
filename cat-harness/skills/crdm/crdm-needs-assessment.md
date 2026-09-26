@@ -1,6 +1,5 @@
 ---
 name: crdm-needs-assessment
-roles: [reader, collaborator, owner]
 description: >-
   Facilitate Phase 1 (Needs Assessment) of the CRDM requirements workflow.
   Guide the BA through stakeholder identification, source material gathering,

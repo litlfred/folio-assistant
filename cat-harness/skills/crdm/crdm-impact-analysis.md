@@ -1,6 +1,5 @@
 ---
 name: crdm-impact-analysis
-roles: [reader, collaborator, owner]
 description: >
   Guide for CRDM Phase 4 — Impact Analysis and Migration Planning.
   Systematic scan across 7 dimensions: schema, pipeline, adapter, folio,
