@@ -1,10 +1,10 @@
 ---
 # folio-assistant-tbdg
 title: 'main is RED on translation-drift: #1374 published 27 translated pages with no .po catalogue, and the backlog list is not the fix'
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-09-26T04:22:55Z
-updated_at: 2026-09-26T04:22:55Z
+updated_at: 2026-09-26T08:50:20Z
 parent: folio-assistant-1xhc
 ---
 
@@ -157,3 +157,5 @@ would make that PR's own account of itself false.
       (and the clock accepted, with that stated) or a synthetic page inside
       `harness()` (and the corpus dependency removed)
 - [ ] MEASURED AFTER: translating one more real page does not turn this test red
+
+_2026-09-26T08:50:20Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
