@@ -493,32 +493,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790444126">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790445337">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790444126">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790445337">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790444126">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790445337">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790444126">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790445337">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790444126">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790445337">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790444126">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790445337">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -535,7 +535,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790444126" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790445337" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -759,13 +759,13 @@
 
 <blockquote>
   <p><strong>本页背后的规则。</strong> 架构描述形态；技能掌管决策。针对画像的适配器 ——
-<a href="reference/skill-instructions/content-profiles.html"><code class="language-plaintext highlighter-rouge">content-profiles</code></a>。
+<a href="../reference/skill-instructions/content-profiles.html"><code class="language-plaintext highlighter-rouge">content-profiles</code></a>。
 在创建新节点之前确定其归属 ——
-<a href="reference/skill-instructions/placement.html"><code class="language-plaintext highlighter-rouge">placement</code></a>。仓库布局及每种图类型 ——
-<a href="reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a>。
+<a href="../reference/skill-instructions/placement.html"><code class="language-plaintext highlighter-rouge">placement</code></a>。仓库布局及每种图类型 ——
+<a href="../reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a>。
 组装并验证 MCP 接口界面 ——
-<a href="reference/skill-instructions/mcp-assembly.html"><code class="language-plaintext highlighter-rouge">mcp-assembly</code></a> 与
-<a href="reference/skill-instructions/mcp-contract.html"><code class="language-plaintext highlighter-rouge">mcp-contract</code></a>。
+<a href="../reference/skill-instructions/mcp-assembly.html"><code class="language-plaintext highlighter-rouge">mcp-assembly</code></a> 与
+<a href="../reference/skill-instructions/mcp-contract.html"><code class="language-plaintext highlighter-rouge">mcp-contract</code></a>。
 当本页面与某项技能存在分歧时，以技能为准。</p>
 </blockquote>
 
@@ -807,27 +807,27 @@
   </thead>
   <tbody>
     <tr>
-      <td><a href="architecture/repo-taxonomy.html">仓库分类体系</a></td>
+      <td><a href="../architecture/repo-taxonomy.html">仓库分类体系</a></td>
       <td>存在哪些类型的仓库 —— 工具（Tool）、测试（Test）、内容（Content）、消费者（Consumer） —— 以及各仓库可包含的内容</td>
     </tr>
     <tr>
-      <td><a href="architecture/current-state.html">当前状态</a></td>
+      <td><a href="../architecture/current-state.html">当前状态</a></td>
       <td>本仓库当前的实际内容、度量数据以及混杂之处</td>
     </tr>
     <tr>
-      <td><a href="architecture/future-state.html">未来规划</a></td>
+      <td><a href="../architecture/future-state.html">未来规划</a></td>
       <td>五个目标仓库以及各目录分别落入哪个仓库</td>
     </tr>
     <tr>
-      <td><a href="architecture/migration-plan.html">迁移计划</a></td>
+      <td><a href="../architecture/migration-plan.html">迁移计划</a></td>
       <td>Phase 0/I/II/III、各项关卡以及尚未决定的事项</td>
     </tr>
     <tr>
-      <td><a href="architecture/cat-harness-minimum.html">最小化 <code class="language-plaintext highlighter-rouge">cat-harness</code></a></td>
+      <td><a href="../architecture/cat-harness-minimum.html">最小化 <code class="language-plaintext highlighter-rouge">cat-harness</code></a></td>
       <td>将“非自说明性”作为检验标准时，harness 中保留下来的内容</td>
     </tr>
     <tr>
-      <td><a href="architecture/harness-instances.html">Harness 实例</a></td>
+      <td><a href="../architecture/harness-instances.html">Harness 实例</a></td>
       <td>实例的本质是什么 —— 原理图、可视化、工具；四个目录；默认渲染</td>
     </tr>
   </tbody>
@@ -835,7 +835,7 @@
 
 <p>最后两项看似相互矛盾 —— 最小化页面指出 harness 不产出供人类查看的任何内容，而实例页面指出实例默认会进行渲染。但它们并无矛盾：这项要求是一个<strong>不断上升的基线</strong>，其中
 <code class="language-plaintext highlighter-rouge">bootstrap</code> 免于可视化器约束，并改由其自身提供 <code class="language-plaintext highlighter-rouge">.json</code>/<code class="language-plaintext highlighter-rouge">.jsonld</code>，而 <code class="language-plaintext highlighter-rouge">cat-harness</code> 则是其余要求开始适用的层级。参见
-<a href="architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception">要求从何处开始</a>。</p>
+<a href="../architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception">要求从何处开始</a>。</p>
 
 <p>本页的其余部分描述<strong>当前现状</strong>下的架构。</p>
 <h2 id="仓库布局">
@@ -916,7 +916,7 @@
 </h2>
     
 
-<p>内容适配器封装了所有与特定类型相关的逻辑：存在哪些制品、如何验证它们、如何构建/渲染它们，以及注册哪些额外的 MCP 工具。<code class="language-plaintext highlighter-rouge">document</code> 适配器（<code class="language-plaintext highlighter-rouge">adapters/document/</code>）是散文类 folio 的基础；<code class="language-plaintext highlighter-rouge">paper</code> 适配器（<code class="language-plaintext highlighter-rouge">adapters/paper/</code>）对其进行了扩展，并提供 Lean 生命周期工具（<code class="language-plaintext highlighter-rouge">lean_setup</code>/<code class="language-plaintext highlighter-rouge">build</code>/<code class="language-plaintext highlighter-rouge">check</code>/<code class="language-plaintext highlighter-rouge">status</code>）、验证以及渲染（<code class="language-plaintext highlighter-rouge">paper_render_pdf</code>/<code class="language-plaintext highlighter-rouge">html</code>、<code class="language-plaintext highlighter-rouge">formula_render</code>）。添加新的内容类型需要新增适配器 —— 参见<a href="guides/new-content-type.html">添加内容类型</a>。</p>
+<p>内容适配器封装了所有与特定类型相关的逻辑：存在哪些制品、如何验证它们、如何构建/渲染它们，以及注册哪些额外的 MCP 工具。<code class="language-plaintext highlighter-rouge">document</code> 适配器（<code class="language-plaintext highlighter-rouge">adapters/document/</code>）是散文类 folio 的基础；<code class="language-plaintext highlighter-rouge">paper</code> 适配器（<code class="language-plaintext highlighter-rouge">adapters/paper/</code>）对其进行了扩展，并提供 Lean 生命周期工具（<code class="language-plaintext highlighter-rouge">lean_setup</code>/<code class="language-plaintext highlighter-rouge">build</code>/<code class="language-plaintext highlighter-rouge">check</code>/<code class="language-plaintext highlighter-rouge">status</code>）、验证以及渲染（<code class="language-plaintext highlighter-rouge">paper_render_pdf</code>/<code class="language-plaintext highlighter-rouge">html</code>、<code class="language-plaintext highlighter-rouge">formula_render</code>）。添加新的内容类型需要新增适配器 —— 参见<a href="../guides/new-content-type.html">添加内容类型</a>。</p>
 <h2 id="技能与技能包">
   
   
@@ -926,7 +926,7 @@
 </h2>
     
 
-<p><strong>技能</strong>（skill）是一个经过文档记录、受模式（schema）约束的工作单元（例如 <code class="language-plaintext highlighter-rouge">lean-formalization</code>）。多项技能组合为<strong>技能包</strong>（packages），技能包通过 <code class="language-plaintext highlighter-rouge">package-manifest.json</code> 声明其 Docker/运行时依赖。LLM 通过 <code class="language-plaintext highlighter-rouge">skill_list</code> 发现技能，并通过 <code class="language-plaintext highlighter-rouge">skill_fetch</code> 加载指令。完整的技能与角色列表 —— 以及它们如何与 LLM 组合协同（RBAC、能力、需求） —— 详见<a href="skills.html">技能与角色</a>页面；每项技能的输入/输出契约发布在<a href="reference/skills/">技能模式参考</a>中。</p>
+<p><strong>技能</strong>（skill）是一个经过文档记录、受模式（schema）约束的工作单元（例如 <code class="language-plaintext highlighter-rouge">lean-formalization</code>）。多项技能组合为<strong>技能包</strong>（packages），技能包通过 <code class="language-plaintext highlighter-rouge">package-manifest.json</code> 声明其 Docker/运行时依赖。LLM 通过 <code class="language-plaintext highlighter-rouge">skill_list</code> 发现技能，并通过 <code class="language-plaintext highlighter-rouge">skill_fetch</code> 加载指令。完整的技能与角色列表 —— 以及它们如何与 LLM 组合协同（RBAC、能力、需求） —— 详见<a href="skills.html">技能与角色</a>页面；每项技能的输入/输出契约发布在<a href="../reference/skills/">技能模式参考</a>中。</p>
 <h2 id="内容对象模型">
   
   
@@ -961,7 +961,7 @@
   <li><strong>HTTP 路由</strong>，通过 <code class="language-plaintext highlighter-rouge">src/core/rbac.ts</code> 调用：每个路由指明其执行的操作（<code class="language-plaintext highlighter-rouge">content-authoring</code>、<code class="language-plaintext highlighter-rouge">review-comments</code>、<code class="language-plaintext highlighter-rouge">adjudication</code>），且认证网关的会话被声明为参与者，其授权规则来自 <code class="language-plaintext highlighter-rouge">policies/http-gateway.jsonld</code>。在此处，<code class="language-plaintext highlighter-rouge">unknown</code> 会被拒绝。</li>
 </ul>
 
-<p>在 issue #1207（2026-09-23）之前，<code class="language-plaintext highlighter-rouge">rbac.ts</code> 是一套独立的 viewer &lt; collaborator &lt; owner 阶梯式权限，而执行器不做任何检查。现在的规范原则见 <a href="reference/skill-instructions/task-authorization.html"><code class="language-plaintext highlighter-rouge">task-authorization</code></a> 技能。</p>
+<p>在 issue #1207（2026-09-23）之前，<code class="language-plaintext highlighter-rouge">rbac.ts</code> 是一套独立的 viewer &lt; collaborator &lt; owner 阶梯式权限，而执行器不做任何检查。现在的规范原则见 <a href="../reference/skill-instructions/task-authorization.html"><code class="language-plaintext highlighter-rouge">task-authorization</code></a> 技能。</p>
 <h2 id="工作计划引导跨-harness">
   
   
@@ -1181,7 +1181,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36259492116"><code>f27a13d</code></a> &middot; 2026-09-26T17:35:18Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36260675201"><code>ce0ae33</code></a> &middot; 2026-09-26T17:55:32Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
