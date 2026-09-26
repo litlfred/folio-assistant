@@ -114,7 +114,7 @@ The default creates NOTHING. An agent that decides on its own that a requirement
     <bpmn:sequenceFlow id="SF_Kg_2" sourceRef="BA_ChooseKg" targetRef="GW_KgChosen"/>
     <bpmn:sequenceFlow id="SF_Kg_3" name="a graph" sourceRef="GW_KgChosen" targetRef="A_RecordKg"/>
     <bpmn:sequenceFlow id="SF_Kg_4" sourceRef="A_RecordKg" targetRef="A_AnnounceBranch"/>
-    <bpmn:sequenceFlow id="SF_Kg_None" name="none &#8212; recorded&#10;as an answer" sourceRef="GW_KgChosen" targetRef="A_AnnounceBranch"/>
+    <bpmn:sequenceFlow id="SF_Kg_None" name="none — recorded&#10;as an answer" sourceRef="GW_KgChosen" targetRef="A_AnnounceBranch"/>
     <bpmn:sequenceFlow id="SF_Process_CRDM_Signoff_4" sourceRef="A_AnnounceBranch" targetRef="End_Process_CRDM_Signoff"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_CRDM_Signoff">

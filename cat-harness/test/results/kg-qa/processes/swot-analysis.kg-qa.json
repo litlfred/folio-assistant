@@ -31,6 +31,39 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_FrameSubject",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_ScanExternal",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_ScanInternal",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_GroupReview",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_RecordAmbiguous",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Cross",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_HandOff",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -131,7 +164,7 @@
   },
   "totals": {
     "pass": 13,
-    "fail": 1,
+    "fail": 2,
     "n/a": 10,
     "unknown": 0
   }

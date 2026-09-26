@@ -31,6 +31,27 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_SearchBeans",
+          "detail": "names skill \"related-work-coordination\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_SearchIssues",
+          "detail": "names skill \"related-work-coordination\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Categorize",
+          "detail": "names skill \"related-work-coordination\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Record",
+          "detail": "names skill \"related-work-coordination\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -111,7 +132,7 @@
   },
   "totals": {
     "pass": 11,
-    "fail": 1,
+    "fail": 2,
     "n/a": 12,
     "unknown": 0
   }

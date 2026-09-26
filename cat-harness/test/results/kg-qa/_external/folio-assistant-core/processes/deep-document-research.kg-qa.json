@@ -31,6 +31,27 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Plan",
+          "detail": "names skill \"deep-document-research\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Search",
+          "detail": "names skill \"deep-document-research\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Refine",
+          "detail": "names skill \"deep-document-research\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Report",
+          "detail": "names skill \"deep-document-research\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -106,7 +127,7 @@
   },
   "totals": {
     "pass": 14,
-    "fail": 0,
+    "fail": 1,
     "n/a": 10,
     "unknown": 0
   }

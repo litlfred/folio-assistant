@@ -37,7 +37,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [Board: relocate content to the trashcan](board-relocate.html) | 5 | — |
 | [Is CI actually working on the default branch?](ci-health-watch.html) | 4 | — |
 | [Code change and review](code-change-review.html) | 11 | — |
-| [The gates a change must pass before it can merge](code-quality-gates.html) | 7 | — |
+| [The gates a change must pass before it can merge](code-quality-gates.html) | 8 | — |
 | [Content acquisition](content-acquisition.html) | 6 | — |
 | [Content Change and Review](content-change-review.html) | 29 | — |
 | [Content lifecycle](content-lifecycle.html) | 8 | — |

@@ -37,6 +37,45 @@ the exemptions for the legitimate cases are *declarations*, not silence — see
 Lanes bind roles, not people. A lane is the role; an actor **takes it on** for
 the duration. [`role-model`](../folio-core/role-model.md) carries that model.
 
+### There is no `tool` element, and that is a decision
+
+An activity names a **skill**. A Tool declares `satisfies: ["<skill>"]`. So the
+activity→Tool join **already exists and is derivable** — `activity → skill →
+Tool` — and a `<…:tool ref>` on an activity would be a second, independent edge
+answering the same question, free to disagree with the first.
+
+It would also put the edge on the wrong side. `satisfies` is owned by the Tool,
+which knows what it implements and is versioned with it; a `tool` ref would be
+owned by the diagram author, who would have to track Tools across every
+instance — measured 2026-09-26, **116** Tools are discovered from four
+`tools/` graphs (`cat-harness`, `smart-base`, `folio-assistant-core`,
+`fhir-harness`), so a diagram in one instance would be asserting facts about
+three others.
+
+**What is NOT being claimed** is that the join is well populated. Measured the
+same day over the authoritative registry (`tools/discover.ts`, never a grep):
+
+| | |
+|---|---|
+| distinct skills named by an activity, across all 74 `.bpmn` | **99** |
+| …of those, some Tool satisfies | **32** |
+| …of those, no Tool satisfies | **67** |
+| distinct skills some Tool satisfies, corpus-wide | 69 |
+
+The gap is real and is reported rather than gated —
+`activity-skill-has-tool` (`minor`) locates it per activity, and
+`check:tools` carries the corpus-wide count with the ruling that a skill with
+no Tool is **not** an error, since plenty of skills are pure judgement. Those
+two are a location and a count, not two answers: a corpus total cannot say
+*which* activity hands a performer a skill whose mechanism is still inlined in
+its prose.
+
+One number here disagrees with `check:tools`, which reports "64 skill(s) have a
+Tool" against the 69 above, and the disagreement is recorded rather than
+reconciled away: the two count different sets (a `satisfies` naming a skill
+that does not resolve is in one and not the other), and neither is wrong for
+its own question.
+
 ### Binding the extension namespaces
 
 **An element's prefix names the Subgraph that declares it** (owner, 2026-09-24,

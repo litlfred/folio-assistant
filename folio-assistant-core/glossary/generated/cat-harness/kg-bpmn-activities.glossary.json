@@ -143,7 +143,7 @@
     },
     {
       "id": "process_atomicmassdrift.task_check",
-      "prefLabel": "Regenerate AtomicMass.lean&#10;from the data table &#8212; and diff",
+      "prefLabel": "Regenerate AtomicMass.lean from the data table — and diff",
       "definition": "Run gen_atomic_mass.py --check: regenerate AtomicMass.lean from the data table and diff it against the committed file. Any divergence exits 1 with a unified diff and fails the PR — a Lean file that compiles must not carry numbers the table no longer produces.",
       "notation": "Task_Check",
       "source": "cat-harness/processes/atomic-mass-drift-check.bpmn#Task_Check",
@@ -375,7 +375,7 @@
     },
     {
       "id": "process_cihealth.task_check",
-      "prefLabel": "Run check:ci-health,&#10;WRITING the report file",
+      "prefLabel": "Run check:ci-health, WRITING the report file",
       "definition": "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check.",
       "notation": "Task_Check",
       "source": "cat-harness/processes/ci-health-watch.bpmn#Task_Check",
@@ -383,7 +383,7 @@
     },
     {
       "id": "process_cihealth.task_close",
-      "prefLabel": "Close the&#10;tracking issue",
+      "prefLabel": "Close the tracking issue",
       "definition": "Clean: close the open ci-health issue, if any, saying why (main is clean). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.",
       "notation": "Task_Close",
       "source": "cat-harness/processes/ci-health-watch.bpmn#Task_Close",
@@ -391,7 +391,7 @@
     },
     {
       "id": "process_cihealth.task_label",
-      "prefLabel": "Ensure the tracking&#10;label exists",
+      "prefLabel": "Ensure the tracking label exists",
       "definition": "Create the ci-health label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict.",
       "notation": "Task_Label",
       "source": "cat-harness/processes/ci-health-watch.bpmn#Task_Label",
@@ -399,7 +399,7 @@
     },
     {
       "id": "process_cihealth.task_track",
-      "prefLabel": "Open or EDIT the one&#10;tracking issue",
+      "prefLabel": "Open or EDIT the one tracking issue",
       "definition": "Findings: EDIT the one open issue labelled ci-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed.",
       "notation": "Task_Track",
       "source": "cat-harness/processes/ci-health-watch.bpmn#Task_Track",
@@ -495,7 +495,7 @@
     },
     {
       "id": "process_codequalitygates.task_advisories",
-      "prefLabel": "Dependency advisories&#10;(WARN-ONLY)",
+      "prefLabel": "Dependency advisories (WARN-ONLY)",
       "definition": "Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner's ruling on bean `j41m` — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. `.github/dependabot.yml` is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot's schedule.",
       "notation": "Task_Advisories",
       "source": "cat-harness/processes/code-quality-gates.bpmn#Task_Advisories",
@@ -503,7 +503,7 @@
     },
     {
       "id": "process_codequalitygates.task_e2e",
-      "prefLabel": "End-to-end +&#10;accessibility (HARD)",
+      "prefLabel": "End-to-end + accessibility (HARD)",
       "definition": "Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR.",
       "notation": "Task_E2E",
       "source": "cat-harness/processes/code-quality-gates.bpmn#Task_E2E",
@@ -511,7 +511,7 @@
     },
     {
       "id": "process_codequalitygates.task_lean",
-      "prefLabel": "Lean: no bare&#10;`import Mathlib` (HARD)",
+      "prefLabel": "Lean: no bare `import Mathlib` (HARD)",
       "definition": "Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently.",
       "notation": "Task_Lean",
       "source": "cat-harness/processes/code-quality-gates.bpmn#Task_Lean",
@@ -519,7 +519,7 @@
     },
     {
       "id": "process_codequalitygates.task_python",
-      "prefLabel": "Python: unused and&#10;wildcard imports (HARD)",
+      "prefLabel": "Python: unused and wildcard imports (HARD)",
       "definition": "ruff F401 (unused) and F403 (wildcard) imports over the Python trees that exist, then the Python tests. A tree that is absent is dropped rather than passed to ruff, and an empty set says SKIP — a missing path must not be swallowed as a pass.",
       "notation": "Task_Python",
       "source": "cat-harness/processes/code-quality-gates.bpmn#Task_Python",
@@ -527,7 +527,7 @@
     },
     {
       "id": "process_codequalitygates.task_repositorygates",
-      "prefLabel": "Repository gates&#10;(HARD)",
+      "prefLabel": "Repository gates (HARD)",
       "definition": "The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 `bun run` invocations in all. A SEPARATE job from Task_TypeScript since bean `om30`: they were one job in which `bun test` came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on `main` meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is `xom7` at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. `bun run gates` derives its list from BOTH jobs, so the local set still cannot drift from CI's.",
       "notation": "Task_RepositoryGates",
       "source": "cat-harness/processes/code-quality-gates.bpmn#Task_RepositoryGates",
@@ -535,15 +535,23 @@
     },
     {
       "id": "process_codequalitygates.task_rust",
-      "prefLabel": "Rust wildcard imports&#10;(WARN-ONLY)",
+      "prefLabel": "Rust wildcard imports (WARN-ONLY)",
       "definition": "Report non-test `use …::*;` in tools/**/*.rs, excluding `use super::*;`. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs.",
       "notation": "Task_Rust",
       "source": "cat-harness/processes/code-quality-gates.bpmn#Task_Rust",
       "status": "candidate"
     },
     {
+      "id": "process_codequalitygates.task_skillchain",
+      "prefLabel": "Skill-registration chain (UNMASKED)",
+      "definition": "Runs the five `--check` commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, docs:auto:check, kg:audit:check, kg:detangle:check. CORRECTED 2026-09-26, after main split this workflow: the original justification is GONE. It read \"the only place those five are read against the tree as checked out\", because at the time all six lived in one job behind `bun test`, which runs the kg-audit and detangle WRITERS and repaired two artefacts before their checks read them (bean `ymsu`). Task_RepositoryGates is now a separate job that runs all six and never runs `bun test`, so they are unmasked THERE. What survives is narrower and is the reason this is kept: one command a skill author runs (`bun run skill:register`) that regenerates and verifies the chain together, a committed QA sidecar saying which steps ran, and ONE named failure instead of six unrelated generated files — which is bean `v625`'s actual complaint. The unmasking argument belongs to Task_RepositoryGates now. Its first CI run earned the place: it went red on `kg:detangle:check` and the cause was `kg-detangle.ts` counting 1214 files of a gitignored `node_modules/` as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of `bun test` either: measured on main's run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans `v625`, `fjwi`.",
+      "notation": "Task_SkillChain",
+      "source": "cat-harness/processes/code-quality-gates.bpmn#Task_SkillChain",
+      "status": "candidate"
+    },
+    {
       "id": "process_codequalitygates.task_typescript",
-      "prefLabel": "TypeScript: lint, types&#10;and tests (HARD)",
+      "prefLabel": "TypeScript: lint, types and tests (HARD)",
       "definition": "Three checks and nothing else: `bun run lint`, `tsc --noEmit`, then `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Order inside the job is load-bearing rather than stylistic: Actions stops a job at its first failing step, so `bun test` — red on `main` by the owner's decision — runs LAST, with nothing behind it to mask. While it ran first, lint and typecheck did not execute on `main` at all.",
       "notation": "Task_TypeScript",
       "source": "cat-harness/processes/code-quality-gates.bpmn#Task_TypeScript",
@@ -1935,7 +1943,7 @@
     },
     {
       "id": "process_graphdetanglement.task_brief",
-      "prefLabel": "Brief the topic before&#10;touching anything",
+      "prefLabel": "Brief the topic before touching anything",
       "definition": "What am I doing and why is it worth doing; what do I already know, with each measurement's provenance; how do I plan to do it and WHAT WOULD FALSIFY THE APPROACH. A falsifier that never fires is decoration &#8212; this practice's own fired, took edges 5 to 12, and rewrote the plan.",
       "notation": "Task_Brief",
       "source": "cat-harness/processes/graph-detanglement.bpmn#Task_Brief",
@@ -1943,7 +1951,7 @@
     },
     {
       "id": "process_graphdetanglement.task_declare",
-      "prefLabel": "1 &#183; Declare in place&#10;(nothing moves)",
+      "prefLabel": "1 · Declare in place (nothing moves)",
       "definition": "A `<name>.json` entry with its `graphs[]` kinds. A sub-graph that owns its own layout gains a NESTED declaration whose paths resolve against its own directory, so the whole graph relocates by moving one folder.",
       "notation": "Task_Declare",
       "source": "cat-harness/processes/graph-detanglement.bpmn#Task_Declare",
@@ -1951,7 +1959,7 @@
     },
     {
       "id": "process_graphdetanglement.task_extract",
-      "prefLabel": "4 &#183; Extract &#8212; a directory move,&#10;not a file-by-file sift",
+      "prefLabel": "4 · Extract — a directory move, not a file-by-file sift",
       "definition": "Only once edges are zero and the declaration stands alone: move the sub-graph out as one directory move, not a file-by-file sift. Its nested declaration resolves paths against its own directory, so moving the folder moves the graph. The five-point gate is in migration-plan.md Phase II.",
       "notation": "Task_Extract",
       "source": "cat-harness/processes/graph-detanglement.bpmn#Task_Extract",
@@ -1959,7 +1967,7 @@
     },
     {
       "id": "process_graphdetanglement.task_isolate",
-      "prefLabel": "3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact",
+      "prefLabel": "3 · Isolate — own declaration, namespace, artefact",
       "definition": "Only once cross-edges measure zero: give the sub-graph its own declaration, its own namespace and its own published artefact, as bootstrap/ has (its own declaration, bs: namespace and graph document). Nothing moves yet; the sub-graph now stands alone in place.",
       "notation": "Task_Isolate",
       "source": "cat-harness/processes/graph-detanglement.bpmn#Task_Isolate",
@@ -1967,7 +1975,7 @@
     },
     {
       "id": "process_graphdetanglement.task_measure",
-      "prefLabel": "2a &#183; Measure &#8212; unassigned&#10;column FIRST",
+      "prefLabel": "2a · Measure — unassigned column FIRST",
       "definition": "`bun run check:partition`. Read the unassigned column before the edge count, and quote BOTH numbers rather than only the one that improved. The count rising when the measurement improves is correct: 43 to 49 when thirteen previously-unjudged edges were folded in.",
       "notation": "Task_Measure",
       "source": "cat-harness/processes/graph-detanglement.bpmn#Task_Measure",
@@ -1975,7 +1983,7 @@
     },
     {
       "id": "process_graphdetanglement.task_move",
-      "prefLabel": "2b &#183; Prune, merge, factor&#10;&#8212; or the classification is wrong",
+      "prefLabel": "2b · Prune, merge, factor — or the classification is wrong",
       "definition": "The only four moves. Move the shared TARGET first and the importers after; check the target's layer before the importer's; a schema moves with its script. The fix is never an exemption, it is the right owner.",
       "notation": "Task_Move",
       "source": "cat-harness/processes/graph-detanglement.bpmn#Task_Move",
@@ -1983,7 +1991,7 @@
     },
     {
       "id": "process_graphdetanglement.task_propose",
-      "prefLabel": "Report what would move&#10;&#8212; sizes, and what breaks",
+      "prefLabel": "Report what would move — sizes, and what breaks",
       "definition": "The agent reports and waits. `deletion-requires-confirmation` is not a courtesy to waive: an agent never removes or relocates a durable artefact on its own initiative.",
       "notation": "Task_Propose",
       "source": "cat-harness/processes/graph-detanglement.bpmn#Task_Propose",
@@ -2391,7 +2399,7 @@
     },
     {
       "id": "process_jsonlddrift.task_check",
-      "prefLabel": "Regenerate the context, block,&#10;library and site graphs &#8212; and diff",
+      "prefLabel": "Regenerate the context, block, library and site graphs — and diff",
       "definition": "Run the five --check generators in one job — the JSON-LD context, block siblings, library nodes, site graph, then the label-resolution and emitter tests. Any committed .jsonld that differs from what its generator now produces fails the PR, because a stale generated file is still consulted.",
       "notation": "Task_Check",
       "source": "cat-harness/processes/jsonld-drift-check.bpmn#Task_Check",
@@ -3062,7 +3070,7 @@
     },
     {
       "id": "process_prcheckspresent.task_close",
-      "prefLabel": "Close the&#10;tracking issue",
+      "prefLabel": "Close the tracking issue",
       "definition": "Clean: close the open pr-no-checks issue, if any, saying why (every open pull request's head now has a CI run). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.",
       "notation": "Task_Close",
       "source": "cat-harness/processes/pr-checks-present.bpmn#Task_Close",
@@ -3070,7 +3078,7 @@
     },
     {
       "id": "process_prcheckspresent.task_comment",
-      "prefLabel": "Comment ONCE per&#10;(PR, head sha)",
+      "prefLabel": "Comment ONCE per (PR, head sha)",
       "definition": "Comment on each affected open PR once per (PR, head sha): a hidden marker carrying the sha is checked first, so a re-run on the same head stays silent and a new push can be reported again. A PR that is no longer open is skipped.",
       "notation": "Task_Comment",
       "source": "cat-harness/processes/pr-checks-present.bpmn#Task_Comment",
@@ -3078,7 +3086,7 @@
     },
     {
       "id": "process_prcheckspresent.task_label",
-      "prefLabel": "Ensure the tracking&#10;label exists",
+      "prefLabel": "Ensure the tracking label exists",
       "definition": "Create the pr-no-checks label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict.",
       "notation": "Task_Label",
       "source": "cat-harness/processes/pr-checks-present.bpmn#Task_Label",
@@ -3086,7 +3094,7 @@
     },
     {
       "id": "process_prcheckspresent.task_sweep",
-      "prefLabel": "Ask, per open PR, whether its&#10;HEAD has a run &#8212; skipping&#10;heads younger than 15 min",
+      "prefLabel": "Ask, per open PR, whether its HEAD has a run — skipping heads younger than 15 min",
       "definition": "Run check:prs-have-runs --min-age-minutes 15, writing the report file first. A head younger than 15 minutes legitimately has no run yet and is skipped. Exit 0 clean, 1 findings, 2 could not determine; an exit 1 with no report file is a crash and is treated as could-not-determine.",
       "notation": "Task_Sweep",
       "source": "cat-harness/processes/pr-checks-present.bpmn#Task_Sweep",
@@ -3094,7 +3102,7 @@
     },
     {
       "id": "process_prcheckspresent.task_track",
-      "prefLabel": "Open or EDIT the one&#10;tracking issue",
+      "prefLabel": "Open or EDIT the one tracking issue",
       "definition": "Findings: EDIT the one open issue labelled pr-no-checks if there is one, otherwise create it, with the sweep's report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed.",
       "notation": "Task_Track",
       "source": "cat-harness/processes/pr-checks-present.bpmn#Task_Track",
@@ -3421,7 +3429,7 @@
     },
     {
       "id": "process_repohealth.task_check",
-      "prefLabel": "Run the health checks,&#10;keeping the report either way",
+      "prefLabel": "Run the health checks, keeping the report either way",
       "definition": "Run bun run health --out and upload the JSON report whatever the verdict — on unknown it is the only evidence of why the sweep went blind. Exit 0 clean, 1 gating findings, 2 could not check; exit 1 with no report is a crash. The checks report and never act: every finding names something a person does.",
       "notation": "Task_Check",
       "source": "cat-harness/processes/repository-health-watch.bpmn#Task_Check",
@@ -3429,7 +3437,7 @@
     },
     {
       "id": "process_repohealth.task_close",
-      "prefLabel": "Close the&#10;tracking issue",
+      "prefLabel": "Close the tracking issue",
       "definition": "Clean: close the open repo-health issue, if any, saying why (every check ran and none had anything to report). Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean.",
       "notation": "Task_Close",
       "source": "cat-harness/processes/repository-health-watch.bpmn#Task_Close",
@@ -3437,7 +3445,7 @@
     },
     {
       "id": "process_repohealth.task_label",
-      "prefLabel": "Ensure the tracking&#10;label exists",
+      "prefLabel": "Ensure the tracking label exists",
       "definition": "Create the repo-health label with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict.",
       "notation": "Task_Label",
       "source": "cat-harness/processes/repository-health-watch.bpmn#Task_Label",
@@ -3445,7 +3453,7 @@
     },
     {
       "id": "process_repohealth.task_track",
-      "prefLabel": "Open or EDIT the one&#10;tracking issue",
+      "prefLabel": "Open or EDIT the one tracking issue",
       "definition": "Findings: EDIT the one open issue labelled repo-health if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. The body states that nothing in it has been acted on.",
       "notation": "Task_Track",
       "source": "cat-harness/processes/repository-health-watch.bpmn#Task_Track",

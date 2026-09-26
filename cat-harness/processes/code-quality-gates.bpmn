@@ -30,6 +30,7 @@
         <bpmn:flowNodeRef>Task_Python</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_TypeScript</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_RepositoryGates</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SkillChain</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_E2E</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Rust</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Advisories</bpmn:flowNodeRef>
@@ -39,10 +40,10 @@
         <bpmn:flowNodeRef>End_Fail</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:startEvent id="Start_Change" name="Pull request, push to main,&amp;#10;or dispatch">
+    <bpmn:startEvent id="Start_Change" name="Pull request, push to main,&#10;or dispatch">
       <bpmn:outgoing>Flow_0</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:parallelGateway id="GW_Fork" name="All seven,&amp;#10;in parallel">
+    <bpmn:parallelGateway id="GW_Fork" name="All eight,&#10;in parallel">
       <bpmn:incoming>Flow_0</bpmn:incoming>
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
@@ -52,7 +53,7 @@
       <bpmn:outgoing>Flow_14</bpmn:outgoing>
       <bpmn:outgoing>Flow_16</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:task id="Task_Lean" name="Lean: no bare&amp;#10;`import Mathlib` (HARD)">
+    <bpmn:task id="Task_Lean" name="Lean: no bare&#10;`import Mathlib` (HARD)">
       <bpmn:documentation>Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="platform-gates"/>
@@ -60,7 +61,7 @@
       <bpmn:incoming>Flow_1</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="Task_Python" name="Python: unused and&amp;#10;wildcard imports (HARD)">
+    <bpmn:task id="Task_Python" name="Python: unused and&#10;wildcard imports (HARD)">
       <bpmn:documentation>ruff F401 (unused) and F403 (wildcard) imports over the Python trees that exist, then the Python tests. A tree that is absent is dropped rather than passed to ruff, and an empty set says SKIP — a missing path must not be swallowed as a pass.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="platform-gates"/>
@@ -68,7 +69,7 @@
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="Task_TypeScript" name="TypeScript: lint, types&amp;#10;and tests (HARD)">
+    <bpmn:task id="Task_TypeScript" name="TypeScript: lint, types&#10;and tests (HARD)">
       <bpmn:documentation>Three checks and nothing else: `bun run lint`, `tsc --noEmit`, then `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Order inside the job is load-bearing rather than stylistic: Actions stops a job at its first failing step, so `bun test` — red on `main` by the owner's decision — runs LAST, with nothing behind it to mask. While it ran first, lint and typecheck did not execute on `main` at all.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="platform-gates"/>
@@ -76,7 +77,7 @@
       <bpmn:incoming>Flow_3</bpmn:incoming>
       <bpmn:outgoing>Flow_8</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="Task_E2E" name="End-to-end +&amp;#10;accessibility (HARD)">
+    <bpmn:task id="Task_E2E" name="End-to-end +&#10;accessibility (HARD)">
       <bpmn:documentation>Install Chromium, check the rendered BPMN SVGs are current, then run the Playwright suite, which includes the accessibility checks. Hard: a failure blocks the PR.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="platform-gates"/>
@@ -84,7 +85,7 @@
       <bpmn:incoming>Flow_4</bpmn:incoming>
       <bpmn:outgoing>Flow_9</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="Task_Rust" name="Rust wildcard imports&amp;#10;(WARN-ONLY)">
+    <bpmn:task id="Task_Rust" name="Rust wildcard imports&#10;(WARN-ONLY)">
       <bpmn:documentation>Report non-test `use …::*;` in tools/**/*.rs, excluding `use super::*;`. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="platform-gates"/>
@@ -92,7 +93,7 @@
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_10</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="Task_Advisories" name="Dependency advisories&amp;#10;(WARN-ONLY)">
+    <bpmn:task id="Task_Advisories" name="Dependency advisories&#10;(WARN-ONLY)">
       <bpmn:documentation>Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner's ruling on bean `j41m` — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. `.github/dependabot.yml` is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot's schedule.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="platform-gates"/>
@@ -100,13 +101,21 @@
       <bpmn:incoming>Flow_14</bpmn:incoming>
       <bpmn:outgoing>Flow_15</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="Task_RepositoryGates" name="Repository gates&amp;#10;(HARD)">
+    <bpmn:task id="Task_RepositoryGates" name="Repository gates&#10;(HARD)">
       <bpmn:documentation>The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 `bun run` invocations in all. A SEPARATE job from Task_TypeScript since bean `om30`: they were one job in which `bun test` came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on `main` meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is `xom7` at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. `bun run gates` derives its list from BOTH jobs, so the local set still cannot drift from CI's.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="platform-gates"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_16</bpmn:incoming>
       <bpmn:outgoing>Flow_17</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_SkillChain" name="Skill-registration chain&#10;(UNMASKED)">
+      <bpmn:documentation>Runs the five `--check` commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, docs:auto:check, kg:audit:check, kg:detangle:check. CORRECTED 2026-09-26, after main split this workflow: the original justification is GONE. It read "the only place those five are read against the tree as checked out", because at the time all six lived in one job behind `bun test`, which runs the kg-audit and detangle WRITERS and repaired two artefacts before their checks read them (bean `ymsu`). Task_RepositoryGates is now a separate job that runs all six and never runs `bun test`, so they are unmasked THERE. What survives is narrower and is the reason this is kept: one command a skill author runs (`bun run skill:register`) that regenerates and verifies the chain together, a committed QA sidecar saying which steps ran, and ONE named failure instead of six unrelated generated files — which is bean `v625`'s actual complaint. The unmasking argument belongs to Task_RepositoryGates now. Its first CI run earned the place: it went red on `kg:detangle:check` and the cause was `kg-detangle.ts` counting 1214 files of a gitignored `node_modules/` as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of `bun test` either: measured on main's run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans `v625`, `fjwi`.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="platform-gates"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_18</bpmn:incoming>
+      <bpmn:outgoing>Flow_19</bpmn:outgoing>
     </bpmn:task>
     <bpmn:parallelGateway id="GW_Join" name="">
       <bpmn:incoming>Flow_6</bpmn:incoming>
@@ -118,7 +127,7 @@
       <bpmn:incoming>Flow_17</bpmn:incoming>
       <bpmn:outgoing>Flow_11</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:exclusiveGateway id="GW_Hard" name="Any HARD&amp;#10;gate red?">
+    <bpmn:exclusiveGateway id="GW_Hard" name="Any HARD&#10;gate red?">
       <bpmn:documentation>Asked once every parallel gate has joined: did any gate marked HARD fail? `no` is mergeable; `yes` blocks the merge. Warn-only gates do not decide this branch.</bpmn:documentation>
       <bpmn:incoming>Flow_11</bpmn:incoming>
       <bpmn:outgoing>Flow_12</bpmn:outgoing>
@@ -148,14 +157,16 @@
     <bpmn:sequenceFlow id="Flow_15" sourceRef="Task_Advisories" targetRef="GW_Join"/>
     <bpmn:sequenceFlow id="Flow_16" sourceRef="GW_Fork" targetRef="Task_RepositoryGates"/>
     <bpmn:sequenceFlow id="Flow_17" sourceRef="Task_RepositoryGates" targetRef="GW_Join"/>
+    <bpmn:sequenceFlow id="Flow_18" sourceRef="GW_Fork" targetRef="Task_SkillChain"/>
+    <bpmn:sequenceFlow id="Flow_19" sourceRef="Task_SkillChain" targetRef="GW_Join"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_CodeQualityGates">
     <bpmndi:BPMNPlane id="Plane_Process_CodeQualityGates" bpmnElement="Collaboration_Process_CodeQualityGates">
       <bpmndi:BPMNShape id="Shape_Participant_Process_CodeQualityGates" bpmnElement="Participant_Process_CodeQualityGates" isHorizontal="true">
-        <dc:Bounds x="60" y="60" width="1640" height="950"/>
+        <dc:Bounds x="60" y="60" width="1640" height="1070"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Ci" bpmnElement="Lane_Ci" isHorizontal="true">
-        <dc:Bounds x="90" y="60" width="1610" height="840"/>
+        <dc:Bounds x="90" y="60" width="1610" height="960"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_Change" bpmnElement="Start_Change">
         <dc:Bounds x="122" y="332" width="36" height="36"/>
@@ -183,6 +194,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Task_RepositoryGates" bpmnElement="Task_RepositoryGates">
         <dc:Bounds x="550" y="790" width="180" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_SkillChain" bpmnElement="Task_SkillChain">
+        <dc:Bounds x="550" y="910" width="180" height="80"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_Join" bpmnElement="GW_Join">
         <dc:Bounds x="865" y="325" width="50" height="50"/>

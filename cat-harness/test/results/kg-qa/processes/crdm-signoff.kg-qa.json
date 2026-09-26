@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Signoff",
     "path": "processes/crdm-signoff.bpmn"
   },
-  "source_hash": "sha256:0db81f86d64f883337b0b7dfa14e3512c0e3a33c52f111f43f0e3857084ae63f",
+  "source_hash": "sha256:2ed2bf6feb273af26d62096c6106b8fa95a95e30a3804309ad76f9abd4cb35a8",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,27 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_AnnounceBranch",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_OfferKg",
+          "detail": "names skill \"kg-contribution-offer\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "BA_ChooseKg",
+          "detail": "names skill \"kg-contribution-offer\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_RecordKg",
+          "detail": "names skill \"placement\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -115,7 +136,7 @@
   },
   "totals": {
     "pass": 14,
-    "fail": 1,
+    "fail": 2,
     "n/a": 9,
     "unknown": 0
   }

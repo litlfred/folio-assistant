@@ -138,5 +138,5 @@ about manufacturing an issue for every bean.
 | process | step(s) that name it |
 |---|---|
 | [Code change and review](../../processes/code-change-review.html) | Branch, and announce it |
-| [Which open pull requests have no CI run on their head?](../../processes/pr-checks-present.html) | Comment ONCE per&#10;(PR, head sha) |
+| [Which open pull requests have no CI run on their head?](../../processes/pr-checks-present.html) | Comment ONCE per (PR, head sha) |
 

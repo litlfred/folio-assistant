@@ -231,7 +231,7 @@ This step has nothing to do for content that carries no recommendations -- a mat
       <bpmn:incoming>Flow_20</bpmn:incoming>
       <bpmn:outgoing>Flow_21</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:callActivity id="Call_OptionsAnalysis" name="Options analysis&#10;accept &#183; revise &#183; discard" calledElement="Process_OptionsAnalysis">
+    <bpmn:callActivity id="Call_OptionsAnalysis" name="Options analysis&#10;accept · revise · discard" calledElement="Process_OptionsAnalysis">
       <bpmn:documentation>On the edge out of `Task_ReviewFindings` and before `Task_RecordDecision`: the findings are the evidence, so the options can only be weighed once they exist, and after `Task_RecordDecision` the decision is already written down.
 
 NOT between `Gateway_EditorDecision` and `Task_RecordDecision`, which is the pair the work-plan named — in this diagram those run the OTHER WAY ROUND. `Flow_21b` goes `Task_RecordDecision` -&gt; `Gateway_EditorDecision`, so the gateway reads a decision that has already been recorded, and interposing there would analyse options after the choice was made.

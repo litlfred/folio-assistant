@@ -505,6 +505,12 @@ export const RULES: Rule[] = [
       // and it runs across EVERY instance in the repository rather than for
       // one folio.
       "scripts/check-layout-norms.ts",
+      // Whether a rendered workflow diagram shows an XML character reference
+      // as literal text (bean `li5y`). Harness for the same reason as the
+      // layout norm above: its input is this instance's own process diagrams
+      // under `workflows/`, it reads no folio content of any kind, and what it
+      // judges is the harness's own published SVGs.
+      "scripts/check-rendered-labels.ts",
       // Issue #1023. Both read every instance's declaration (visualisers) or
       // every declared library (manifests), and hold no folio's content: the
       // same reason as the layout norm above.

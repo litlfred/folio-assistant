@@ -33,7 +33,7 @@ Every one of the 1 step(s) is documented.
 
 | step | lane | skill / sub-process | what it does |
 |---|---|---|---|
-| **Regenerate the context, block,&#10;library and site graphs &#8212; and diff**<br>`Task_Check` | CI/CD Pipeline | — | Run the five --check generators in one job — the JSON-LD context, block siblings, library nodes, site graph, then the label-resolution and emitter tests. Any committed .jsonld that differs from what its generator now produces fails the PR, because a stale generated file is still consulted. |
+| **Regenerate the context, block, library and site graphs — and diff**<br>`Task_Check` | CI/CD Pipeline | — | Run the five --check generators in one job — the JSON-LD context, block siblings, library nodes, site graph, then the label-resolution and emitter tests. Any committed .jsonld that differs from what its generator now produces fails the PR, because a stale generated file is still consulted. |
 
 ## Decisions
 
@@ -41,6 +41,6 @@ Every one of the 1 decision(s) is documented.
 
 | decision | what decides it | branches |
 |---|---|---|
-| **Did anything&#10;change?**<br>`GW_Drift` | Answered by the diff Task_Check takes after regenerating the context, block, library and site graphs. No difference ends clean; any difference ends the job red, because a committed file is stale against its source. | **no &#8212; in sync** → Every sibling in sync<br>**yes &#8212; drifted** → Job RED &#8212; the generated&#10;file is stale |
+| **Did anything change?**<br>`GW_Drift` | Answered by the diff Task_Check takes after regenerating the context, block, library and site graphs. No difference ends clean; any difference ends the job red, because a committed file is stale against its source. | **no — in sync** → Every sibling in sync<br>**yes — drifted** → Job RED — the generated file is stale |
 
 {% endraw %}

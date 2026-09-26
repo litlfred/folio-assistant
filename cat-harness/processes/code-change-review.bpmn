@@ -161,7 +161,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
       <bpmn:outgoing>f4</bpmn:outgoing>
     </bpmn:task>
 
-    <bpmn:task id="Task_RunGates" name="Run the platform&#39;s own gates">
+    <bpmn:task id="Task_RunGates" name="Run the platform's own gates">
       <bpmn:documentation>
         Before pushing, not after CI says so. `bun test` passing is NOT the
         gates passing: measured 2026-09-19, a green unit suite sat beside a

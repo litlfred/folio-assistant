@@ -605,6 +605,33 @@ async function auditProcess(
     }
   }
 
+  // WHICH ACTIVITY hands a performer a skill with no MECHANISM.
+  //
+  // Read from `tools()` — the same discovery `check-tools.ts` uses — rather
+  // than from a grep over `satisfies: [`, because that grep also matches test
+  // fixtures and docstring examples and would credit coverage to nothing.
+  // Measured 2026-09-26 both ways: the grep found 72 distinct satisfied
+  // skills, the registry 69, and the activity-named split (32 with, 67
+  // without) was the same either way.
+  //
+  // Deliberately NOT the corpus-wide count, which `check:tools` already
+  // reports with the ruling that a skill having no Tool is not an error. This
+  // is the LOCATED form of the same relation, and the location is the point.
+  const toolBacked = new Set<string>();
+  for (const t of tools()) for (const sk of t.satisfies) toolBacked.add(sk);
+  const noTool: KgFinding[] = [];
+  for (const n of activities) {
+    for (const ref of n.skills) {
+      if (!skills.has(ref)) continue; // a dangling ref is `skill-ref-resolves`
+      if (!toolBacked.has(ref)) {
+        noTool.push({
+          where: n.id,
+          detail: `names skill "${ref}", which no Tool declares \`satisfies\` for — the step's mechanism is still prose.`,
+        });
+      }
+    }
+  }
+
   // CONVENTION REFS. The dangling direction only — see the criterion's note
   // in `kg-qa.ts` for why absence is deliberately not a finding.
   const conventionDir = join(repoRootFor(root), ".claude", "skills", CONVENTION_GROUP);
@@ -656,6 +683,10 @@ async function auditProcess(
     "convention-ref-resolves": entry(danglingConvention, conventionRefs > 0),
     "skill-ref-resolves": entry(danglingSkill),
     "skill-servable": entry(unservable),
+    // `n/a` for a diagram whose activities name no RESOLVING skill — there is
+    // nothing whose mechanism could be asked about, which is not the same as
+    // every step having one.
+    "activity-skill-has-tool": entry(noTool, activities.some((n) => n.skills.some((r) => skills.has(r)))),
     "decision-ref-resolves": entry(danglingDecision, decisionRefs.length > 0),
     "role-ref-resolves": entry(danglingRoleRef, Boolean(graph)),
     "activity-in-lane": entry(noLane, m.lanes.length > 0),
