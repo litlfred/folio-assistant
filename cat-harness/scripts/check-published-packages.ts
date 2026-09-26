@@ -52,6 +52,8 @@ export interface PublishablePackage {
   name: string;
   /** `undefined` when the package declares no `build` script. */
   build: string | undefined;
+  /** `undefined` when the package declares no `test` script. */
+  test: string | undefined;
 }
 
 /**
@@ -80,7 +82,7 @@ export function publishablePackages(root: string = ROOT): PublishablePackage[] {
     }
     if (raw.private === true || typeof raw.name !== "string") continue;
     const scripts = (raw.scripts ?? {}) as Record<string, string>;
-    out.push({ dir: dirname(rel), name: raw.name, build: scripts.build });
+    out.push({ dir: dirname(rel), name: raw.name, build: scripts.build, test: scripts.test });
   }
   return out;
 }
@@ -104,10 +106,6 @@ if (import.meta.main) {
   const skipped: string[] = [];
   for (const pkg of pkgs) {
     const abs = join(ROOT, pkg.dir);
-    if (pkg.build === undefined) {
-      skipped.push(`${pkg.name} (${pkg.dir}) — no \`build\` script`);
-      continue;
-    }
     if (!existsSync(join(abs, "node_modules"))) {
       const install = spawnSync("bun", ["install"], { cwd: abs, encoding: "utf-8" });
       if (install.status !== 0) {
@@ -116,20 +114,38 @@ if (import.meta.main) {
         continue;
       }
     }
-    const build = spawnSync("bun", ["run", "build"], { cwd: abs, encoding: "utf-8" });
-    if (build.status === 0) {
-      console.log(`  ✓ ${pkg.name}  (${pkg.dir})`);
-    } else {
-      failed.push(`${pkg.name}: \`bun run build\` exited ${build.status ?? "?"}`);
-      console.log(`  ✗ ${pkg.name}  (${pkg.dir})`);
+    // BUILD then TEST. A package that compiles and does not work is the state
+    // this gate was built during: `rsi6` fixed the build, and the `test`
+    // script it left behind had never passed in the package's life — `vitest
+    // run` reporting "No test files found, exiting with code 1". Checking only
+    // the build would have gone green over exactly that.
+    const steps: Array<{ name: "build" | "test"; declared: string | undefined }> = [
+      { name: "build", declared: pkg.build },
+      { name: "test", declared: pkg.test },
+    ];
+    let ok = true;
+    for (const step of steps) {
+      if (step.declared === undefined) {
+        // Reported, never passed over: whether a shipped package should have
+        // this script is a question this check does not answer, and silence
+        // would answer it.
+        skipped.push(`${pkg.name} (${pkg.dir}) — no \`${step.name}\` script`);
+        continue;
+      }
+      const r = spawnSync("bun", ["run", step.name], { cwd: abs, encoding: "utf-8" });
+      if (r.status === 0) continue;
+      ok = false;
+      failed.push(`${pkg.name}: \`bun run ${step.name}\` exited ${r.status ?? "?"}`);
+      console.log(`  ✗ ${pkg.name}  (${pkg.dir})  — ${step.name}`);
       // The error, not just the exit code: a reader must not have to re-run it.
-      const tail = `${build.stdout ?? ""}${build.stderr ?? ""}`.trimEnd().split("\n").slice(-12);
+      const tail = `${r.stdout ?? ""}${r.stderr ?? ""}`.trimEnd().split("\n").slice(-12);
       for (const line of tail) console.log(`        ${line}`);
     }
+    if (ok) console.log(`  ✓ ${pkg.name}  (${pkg.dir})`);
   }
 
   if (skipped.length > 0) {
-    console.log(`\n· ${skipped.length} package(s) declare no \`build\`, so none was run:`);
+    console.log(`\n· ${skipped.length} script(s) a package does not declare, so none was run:`);
     for (const s of skipped) console.log(`    ${s}`);
     console.log("  Reported rather than passed over — whether a shipped package should");
     console.log("  build is a question this check does not answer, and silence would.");
@@ -139,12 +155,12 @@ if (import.meta.main) {
     console.error(`\n✗ ${failed.length} publishable package(s) do not build:`);
     for (const f of failed) console.error(`    ${f}`);
     console.error(
-      "\n  A package that ships to npm and builds nowhere in CI is one whose next\n" +
-        "  dependency bump lands green and broken. That already happened once —\n" +
+      "\n  A package that ships to npm and is neither built nor tested in CI is one\n" +
+        "  whose next dependency bump lands green and broken. That already happened —\n" +
         `  see the header of ${relative(ROOT, import.meta.path)}.`,
     );
     process.exit(1);
   }
 
-  console.log(`\n✓ ${pkgs.length - skipped.length} publishable package(s) build.`);
+  console.log(`\n✓ ${pkgs.length} publishable package(s) build and test.`);
 }
