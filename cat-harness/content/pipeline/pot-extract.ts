@@ -58,7 +58,32 @@ const MD_ANGLE_LINK_RE = /<https?:\/\/[^>]+>/g;
 const MD_INLINE_CODE_RE = /`[^`]+`/g;
 const MD_BOLD_RE = /\*{2,3}([^*]+)\*{2,3}/g;
 const MD_ITALIC_STAR_RE = /(?<!\*)\*([^*]+)\*(?!\*)/g;
-const MD_ITALIC_UNDER_RE = /(?<!_)_([^_]+)_(?!_)/g;
+/**
+ * `_emphasis_`, with CommonMark's INTRAWORD rule — bean `o29r`.
+ *
+ * A `_` cannot OPEN emphasis when preceded by an alphanumeric, and cannot CLOSE
+ * when followed by one. That is what makes `$a_1$ and $b_2$` literal text in
+ * every conforming renderer, and `snake_case_name` an identifier rather than a
+ * word with emphasis inside it.
+ *
+ * Without the guard, ANY TWO underscores in one extracted string paired up and
+ * both were deleted. One subscript alone was safe because the regex needs a
+ * second `_` to close on, so **two is the threshold** — and two is the ordinary
+ * case in mathematical prose. Measured, current extractor against this one with
+ * only this line changed: 229 corrupted msgids of 46306 here, and 13251 of
+ * 211139 in `litlfred/qou`.
+ *
+ * The severity is set by what it does to mathematics rather than to spelling:
+ * `$w_\lambda$` became `$w\lambda$`, and `\sum_{\lambda_i}` became
+ * `\sum{\lambdai}` — a DIFFERENT expression, and `\sum{...}` is not valid LaTeX
+ * at all, so a translator handed the msgid could not reconstruct the source.
+ * Here it mangled ids instead: `Process_CodeChangeReview/Task_ClaimBean`
+ * extracted as `ProcessCodeChangeReview/TaskClaimBean`.
+ *
+ * The site was right and the gate was wrong — kramdown renders the subscript
+ * this regex stripped, so the corrupted msgid never matched the page.
+ */
+const MD_ITALIC_UNDER_RE = /(?<![_\w])_([^_]+)_(?!\w)/g;
 const MD_HTML_TAG_RE = /<[^>]+>/g;
 const MD_LIQUID_TAG_RE = /\{%.*?%\}/gs;
 const MD_LIQUID_OUTPUT_RE = /\{\{\s*(.*?)\s*\}\}/gs;

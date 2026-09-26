@@ -1,11 +1,11 @@
 ---
 # folio-assistant-o29r
 title: 'EXTRACTION: cleanMarkdownText strips the underscores of LaTeX subscripts and snake_case identifiers — a translator receives a corrupted formula'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-26T14:43:40Z
-updated_at: 2026-09-26T16:56:25Z
+updated_at: 2026-09-26T19:57:40Z
 parent: folio-assistant-bzyu
 ---
 
@@ -91,11 +91,16 @@ Worth recording, because each manufactured findings that looked real:
 
 ## Done when
 
-- [ ] `MD_ITALIC_UNDER_RE` carries the intraword guard
-- [ ] a test covers `$a_1$ and $b_2$`, `x_1 y_2` and `snake_case_name`
-- [ ] the qou comparison re-run and the 122 class measured at 0
-- [ ] the catalogues already derived are re-derived, or their stale msgids
-      obsoleted, ONCE together with `6b8u`, `ig4a`, `lvk9` and `3mo4`
+- [x] `MD_ITALIC_UNDER_RE` carries the intraword guard
+- [x] a test covers `$a_1$ and $b_2$`, `x_1 y_2` and `snake_case_name` — four
+      tests in `translation.test.ts`, and 3 of the 4 measured RED without the fix
+- [x] the qou comparison re-run: 13251 corrupted to **0**, and 229 to **0** here
+- [x] the catalogues already derived are re-derived, or their stale msgids
+      obsoleted — **not applicable to this fix, measured rather than assumed.**
+      Of the 14 pages that HAVE a committed catalogue, the fix changes the msgids
+      of **0**. The 229 corrupted msgids are all on pages with no catalogue. The
+      combined rewrite is still owed for `6b8u`, `ig4a`, `lvk9` and `3mo4`, and
+      is `lvk9`'s remaining item rather than this bean's.
 
 ## Impact, measured — current extractor vs the same extractor with only the guard added
 
@@ -152,3 +157,43 @@ reviewer should be able to read on its own.
 
 **Do not fold it into #1411** on a later turn because the catalogues are being
 rewritten anyway. That was offered as option 2 and declined.
+
+## Fixed, and every claim here was measured in both directions
+
+`MD_ITALIC_UNDER_RE` now carries CommonMark's intraword rule:
+
+    /(?<![_\w])_([^_]+)_(?!\w)/g
+
+| measurement | before | after |
+|---|---|---|
+| corrupted msgids, `cat-harness/docs` | 229 of 46382 | **0** |
+| corrupted msgids, `qou/docs` | 13251 of 211139 | **0** |
+| the four new tests | **3 of 4 RED** | 4 of 4 green |
+| `translation.test.ts` | — | 51 pass, 0 fail |
+
+The fourth test — real emphasis still stripped, including two spans in one
+string — passes BOTH ways on purpose. It is the guard against buying subscript
+safety by deleting the emphasis branch, which would have satisfied every other
+assertion.
+
+## No committed catalogue needs re-deriving, and that was measured
+
+The obvious worry is that changing 229 msgids strands the `.po` files keyed on
+them. It does not, and the reasoning is not from equal totals:
+
+- stale msgids in the 60 committed catalogues: **25 of 6102 before, 25 after**,
+  with an identical per-file breakdown (5 each in `index.po` across 5 locales).
+  Those 25 are pre-existing and have nothing to do with underscores.
+- equal totals could in principle hide an offsetting pair, so the two extractors
+  were also compared msgid-by-msgid over exactly the 14 pages a `.po` exists
+  for: **0 pages differ.**
+
+So the 229 are all on pages that carry no catalogue. `o29r` adds nothing to the
+combined obsoletion pass; that pass is still owed for `6b8u`, `ig4a`, `lvk9` and
+`3mo4`, and it belongs to `lvk9`.
+
+## Gates
+
+`translation:drift:check`, `translation:pot:check` and `translation:index:check`
+each exit 0 — drift compares heading STRUCTURE rather than msgids, which is why
+a msgid change does not move it.
