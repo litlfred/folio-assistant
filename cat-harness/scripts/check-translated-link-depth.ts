@@ -129,6 +129,23 @@ export function depthSensitive(target: string): boolean {
   return !/^[a-z][a-z0-9+.-]*:/i.test(target);
 }
 
+/**
+ * Index of the locale segment in a page's path RELATIVE TO THE SITE ROOT, or
+ * `-1` when there is none.
+ *
+ * Exported so the rule can be tested directly. The first version of this
+ * check asked `segs[0] === locale`, which covered `docs/fr/x.md` and missed
+ * `docs/guides/ar/x.md` — 24 links across four pages, found by re-measuring
+ * for `mi97` rather than by any check, because the only check that could have
+ * found them was this one. A rule that lives inline is a rule with no test.
+ *
+ * The LAST segment is never a candidate: it is the filename, and a page
+ * called `fr.md` is not a locale directory.
+ */
+export function localeSegmentIndex(segs: readonly string[], locales: readonly string[]): number {
+  return segs.findIndex((seg, i) => i < segs.length - 1 && locales.includes(seg));
+}
+
 export function translatedLinkDepth(root: string = ROOT): DepthReport {
   const locales = knownLocales(root);
   const report = scanSubgraphs(root);
@@ -158,15 +175,32 @@ export function translatedLinkDepth(root: string = ROOT): DepthReport {
     const within = relative(join(root, base), join(root, link.from));
     const segs = within.split(/[\\/]/);
     if (segs.length < 2) continue;
-    const locale = segs[0];
-    if (!locales.includes(locale)) continue;
+    // The locale segment at ANY depth, not just the first. `docs/fr/x.md` and
+    // `docs/guides/ar/x.md` are the same defect, and the first version of this
+    // check only looked at `segs[0]` — so it reported the 745 at depth 1 and
+    // said nothing about 24 more nested a level in, across four pages.
+    //
+    // That is this file's own docblock coming true one merge later: a guard
+    // that covers one of two writers reports the covered one and says nothing
+    // about the other, which is indistinguishable from a pass. Found by
+    // re-measuring for `mi97` rather than by any check, because the only
+    // check that could have found it was this one.
+    //
+    // Never the LAST segment: that is the filename, and a page that happens to
+    // be called `fr.md` is not a locale directory.
+    const localeAt = localeSegmentIndex(segs, locales);
+    if (localeAt < 0) continue;
+    const locale = segs[localeAt];
     if (!depthSensitive(link.target)) continue;
 
     const ownDir = dirname(join(root, link.from));
     // The control: the SAME link, read from the page this one was translated
-    // from — the locale segment removed, so `<site>/fr/a/b.md` becomes
-    // `<site>/a/b.md`.
-    const sourceDir = dirname(join(root, base, ...segs.slice(1)));
+    // from — that one locale segment removed, so `<site>/fr/a/b.md` becomes
+    // `<site>/a/b.md` and `<site>/guides/ar/b.md` becomes `<site>/guides/b.md`.
+    // One segment either way, which is why the repair stays exactly one `../`.
+    const sourceDir = dirname(
+      join(root, base, ...segs.filter((_, i) => i !== localeAt)),
+    );
 
     if (resolvesFrom(ownDir, link.target)) continue;
     if (!resolvesFrom(sourceDir, link.target)) {
