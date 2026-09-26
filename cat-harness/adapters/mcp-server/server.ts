@@ -43,6 +43,7 @@ import { leanStatusBucket } from "../../schemas/types";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { REPO_ROOT, BUILD_DIR, FEEDBACK_DIR, FEEDBACK_WORKTREE, MAIN_TEX, FOLIO_PORT, LIBRARY_DIRS, UPLOADS_DIR } from "./paths.js";
+import { safeSegment, joinSegments } from "../../src/core/safe-path.js";
 import { executeGraphTool } from "./tools/graph.js";
 import {
   currentBranch, listBranches, fetchOrigin, isCurrentBranch,
@@ -70,9 +71,22 @@ import Anthropic from "@anthropic-ai/sdk";
 
 import { spawnSync } from "child_process";
 
-/** Resolve feedback .ts path relative to a base dir. */
-function feedbackPath(paperId: string, rootName: string, base = FEEDBACK_DIR): string {
-  return join(base, paperId, `${rootName}.ts`);
+/**
+ * Resolve feedback .ts path relative to a base dir, or `undefined`.
+ *
+ * **BOTH arguments come from outside and neither was checked** — bean `6bhf`,
+ * measured 2026-09-25. `paperId` and `rootName` reach here straight from
+ * `GET /api/feedback?paperId=&rootName=` and from the POST body, so this one
+ * `join` was a read primitive and, through `writeFeedback`, a write one.
+ *
+ * Returns `undefined` rather than throwing or repairing: the caller owns the
+ * 400, and `safe-path.ts` §"Refuse, never repair" says why sanitising is worse.
+ */
+function feedbackPath(paperId: string, rootName: string, base = FEEDBACK_DIR): string | undefined {
+  const seg = safeSegment(paperId);
+  const name = safeSegment(rootName);
+  if (seg === undefined || name === undefined) return undefined;
+  return join(base, seg, `${name}.ts`);
 }
 
 /** Parse a feedback .ts file → array of FeedbackItems. */
@@ -111,6 +125,14 @@ function serializeFeedbackTs(items: FeedbackItem[]): string {
  */
 function readFeedback(paperId: string, rootName: string): FeedbackItem[] {
   const p = feedbackPath(paperId, rootName);
+  // A refused id is indistinguishable from an absent store TO THIS FUNCTION,
+  // which already returns `[]` for "nothing there" and has no channel for an
+  // error. Logged so a refusal is not silent, because a traversal attempt and
+  // a typo look identical in an empty array.
+  if (p === undefined) {
+    log("feedback", `refused unsafe identifier`, `paperId=${JSON.stringify(paperId)} rootName=${JSON.stringify(rootName)}`);
+    return [];
+  }
   if (!existsSync(p)) return [];
   let items: unknown[];
   try { items = parseFeedbackTs(readFileSync(p, "utf-8")); } catch { return []; }
@@ -126,12 +148,23 @@ function readFeedback(paperId: string, rootName: string): FeedbackItem[] {
 }
 
 function writeFeedback(paperId: string, rootName: string, todos: FeedbackItem[]): void {
+  // THROWS rather than returning quietly, unlike `readFeedback` — the two are
+  // deliberately different. A refused read has a correct empty answer; a
+  // refused write does NOT have a correct no-op, because the caller believes
+  // the item was saved and will report success to a person. Bean `6bhf`.
+  const target = feedbackPath(paperId, rootName);
+  const dir = joinSegments(FEEDBACK_DIR, paperId);
+  if (target === undefined || dir === undefined) {
+    throw new Error(
+      `refusing to write feedback: paperId or rootName is not one safe path segment ` +
+        `(paperId=${JSON.stringify(paperId)}, rootName=${JSON.stringify(rootName)})`,
+    );
+  }
   const ts = serializeFeedbackTs(todos);
 
   // Write to main repo feedback/ (for immediate reads)
-  const dir = join(FEEDBACK_DIR, paperId);
   mkdirSync(dir, { recursive: true });
-  writeFileSync(feedbackPath(paperId, rootName), ts, "utf-8");
+  writeFileSync(target, ts, "utf-8");
 
   // Write to worktree and commit to main
   commitFeedbackToMain(paperId, rootName, ts);
@@ -2968,7 +3001,18 @@ These become clickable buttons so users don't have to type. Make them specific t
       const categories = [...xml.matchAll(/<category[^>]*term="([^"]+)"/g)].map(m => m[1]);
       const published = xml.match(/<published>(.*?)<\/published>/)?.[1] || "";
 
-      const id = body.paperId || `arxiv-${arxivId.replace(/[/.]/g, "-")}`;
+      // THE SUPPLIED ID IS CHECKED; THE FALLBACK IS ALREADY SAFE. Bean `6bhf`:
+      // `body.paperId` reached `join()` unvalidated, and the next two lines are
+      // `mkdirSync(recursive)` and a `writeFileSync` — an arbitrary directory
+      // creation and file write for anyone who can POST here. The fallback
+      // spells `/` and `.` out of the value itself, so only the supplied branch
+      // needs the guard; checking both anyway costs nothing and means a later
+      // edit to the fallback cannot reopen this.
+      const rawId = body.paperId || `arxiv-${arxivId.replace(/[/.]/g, "-")}`;
+      const id = safeSegment(rawId);
+      if (id === undefined) {
+        return Response.json({ error: "paperId must be one safe path segment" }, { status: 400 });
+      }
       const uploadDir = join(UPLOADS_DIR(), id);
       mkdirSync(uploadDir, { recursive: true });
 
@@ -2983,9 +3027,40 @@ These become clickable buttons so users don't have to type. Make them specific t
           if (contentType.includes("gzip") || contentType.includes("tar")) {
             writeFileSync(join(uploadDir, "source.tar.gz"), srcBuf);
             // Extract using tar
-            const { execSync } = await import("child_process");
+            const { execFileSync } = await import("child_process");
             try {
-              execSync(`tar xzf source.tar.gz`, { cwd: uploadDir, timeout: 15000 });
+              // LIST BEFORE EXTRACTING, and refuse rather than repair — bean
+              // `6bhf`. This archive is fetched from arxiv.org, so its member
+              // names are not ours. GNU tar already refuses a `..` member and
+              // strips a leading `/`, which covers traversal BY SPELLING; what
+              // it does not cover is a symlink member followed by a regular
+              // file of the same name, which writes through the link. That is
+              // the residual `serve-rendering.ts`'s own test found by getting
+              // 200 from a link pointing out of its root.
+              //
+              // `execFileSync` with an argv rather than `execSync` with a
+              // string: there is no shell to parse, so a filename can never be
+              // program. Nothing here is attacker-controlled today; the point
+              // is that it cannot become so by an edit elsewhere.
+              const members = execFileSync("tar", ["tzf", "source.tar.gz"], {
+                cwd: uploadDir,
+                timeout: 15000,
+                encoding: "utf-8",
+                maxBuffer: 16 * 1024 * 1024,
+              })
+                .split("\n")
+                .map((m) => m.trim())
+                .filter((m) => m.length > 0);
+              const unsafe = members.filter(
+                (m) => m.startsWith("/") || m.split("/").includes("..") || m.includes("\0"),
+              );
+              if (unsafe.length > 0) {
+                throw new Error(`refusing archive: ${unsafe.length} member(s) name a path outside the upload directory, first ${JSON.stringify(unsafe[0])}`);
+              }
+              execFileSync("tar", ["xzf", "source.tar.gz", "--no-same-owner", "--no-same-permissions"], {
+                cwd: uploadDir,
+                timeout: 15000,
+              });
               const { readdirSync } = await import("fs");
               sourceFiles = readdirSync(uploadDir).filter(f => f.endsWith(".tex"));
               format = "latex";

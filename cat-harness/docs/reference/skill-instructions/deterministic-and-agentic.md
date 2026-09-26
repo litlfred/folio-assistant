@@ -275,6 +275,6 @@ consulted it; `workflow_gate` only answers agents that ask.
   where `cat-harness.processes:judgement` came from.
 - [`bpmn-processes`](bpmn-processes.md) — strict vs advisory, the four steps no
   package may relax, and the commit-boundary gate.
-- [`content-context-and-state-graphs`](../folio-core/content-context-and-state-graphs.md)
+- [`content-context-and-state-graphs`](content-context-and-state-graphs.md)
   — the layer that makes "a controlled overlay of context" a thing you can name.
 {% endraw %}

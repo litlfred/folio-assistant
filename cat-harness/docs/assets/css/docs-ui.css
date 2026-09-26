@@ -893,7 +893,8 @@
   .side-bar .fa-nav-group > summary,
   .side-bar .fa-nav-label,
   .side-bar .fa-nav-kids,
-  .side-bar .fa-nav-home__label {
+  .side-bar .fa-nav-home__label,
+  .side-bar .fa-glass-handle__label {
     opacity: var(--fa-nav-text, 1);
     transition: opacity .12s ease;
   }
@@ -1041,7 +1042,15 @@
   .side-bar > .fa-nav-icons {
     width: var(--fa-nav-collapsed);
     flex-wrap: wrap;
-    padding-top: 2rem;
+    padding-top: var(--fa-nav-head-clear, 2rem);
+  }
+  /* THE FOLIO HANDLE, when a page has no icon row, sits right after the
+   * header (owner, 2026-09-24: "folio handle on LHS on navbar"), and then IT
+   * must clear the absolutely-placed ☰, as the row would have. With a row,
+   * `docs-ui.js` puts the handle after it and the row keeps clearing the ☰.
+   * One custom property, so the two can never clear different heights. */
+  .side-bar > .site-header + .fa-glass-handle.fa-glass-handle--in-nav {
+    margin-top: var(--fa-nav-head-clear, 2rem);
   }
   .side-bar:hover > .fa-nav-icons,
   .side-bar:focus-within > .fa-nav-icons,
@@ -4052,6 +4061,36 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
 .fa-glass-handle:focus-visible {
   outline: 2px solid var(--link-color, #7253ed);
   outline-offset: 2px;
+}
+
+/* IN THE LEFT NAVBAR — owner, 2026-09-24: "folio handle on LHS on navbar".
+ * `docs-ui.js` (`placeHandle`) puts the handle in the harness rail or the
+ * theme's sidebar and adds this class. It keeps its fill, border and weight,
+ * so it is still the one control on the page that is not page ("pronounced").
+ * What it drops is the overhang: it is an item in the navigation's flow, so it
+ * covers nothing. It stays above an open glass (z-index) so the control that
+ * opened the glass can always close it. */
+.fa-glass-handle.fa-glass-handle--in-nav {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+  display: block;
+  /* Both navbars rest as a 3.5rem strip (`NAV_COLLAPSED_PX`, and the
+     theme's sidebar strip). Sized to the strip, the handle is whole at rest
+     rather than a sliver of a wider button, and at this width the label
+     stacks as "▾" over "Folio". */
+  width: 3rem;
+  margin: 0.25rem;
+  min-height: 2.75rem;
+  padding: 0.2rem 0.1rem;
+  border: 2px solid #8c74f0;
+  border-radius: 8px;
+  box-shadow: none;
+  font-size: 0.72rem;
+  line-height: 1.15;
+  white-space: normal;
+  text-align: center;
 }
 
 /* RESERVE THE HANDLE'S BAND on the harness's own standalone viewers — bean

@@ -8,12 +8,12 @@
  *   - Optional pdflatex compilation for full verification (--compile flag)
  *
  * Usage:
- *   bun run pipeline/validate-tex.ts                          # validate all
- *   bun run pipeline/validate-tex.ts --paper quantum-observable-universe
- *   bun run pipeline/validate-tex.ts --file path/to/file.md   # single file
- *   bun run pipeline/validate-tex.ts --compile                # also compile with pdflatex
- *   bun run pipeline/validate-tex.ts --json                   # JSON output
- *   bun run pipeline/validate-tex.ts --warnings-log out.log   # QA-compatible log
+ *   bun run cat-harness/content/pipeline/validate-tex.ts                          # validate all
+ *   bun run cat-harness/content/pipeline/validate-tex.ts --paper quantum-observable-universe
+ *   bun run cat-harness/content/pipeline/validate-tex.ts --file path/to/file.md   # single file
+ *   bun run cat-harness/content/pipeline/validate-tex.ts --compile                # also compile with pdflatex
+ *   bun run cat-harness/content/pipeline/validate-tex.ts --json                   # JSON output
+ *   bun run cat-harness/content/pipeline/validate-tex.ts --warnings-log out.log   # QA-compatible log
  *
  * @module content/pipeline/validate-tex
  */

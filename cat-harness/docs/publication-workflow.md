@@ -48,7 +48,7 @@ of those was wrong by **sixteen** when it was finally checked: it claimed
 thirty-nine against fifty-five.
 
 A count in prose is a claim; a derived index is evidence. So the number lives
-in [the derived process index](../cat-harness/docs-auto/index/processes/),
+in [the derived process index](cat-harness/docs-auto/index/processes/),
 which is generated from the declaration by `bun run docs:auto`, gated in CI,
 and cannot drift from the diagrams it counts. **This page's job is the half
 that cannot be generated** — what each process is *for*, when you would be in
@@ -90,8 +90,8 @@ bootstrap, or neither.**
 
 | Diagram | Answers |
 |---------|---------|
-| `bootstrap/workflows/bootstrap.bpmn` | An agent has been pointed at a repository and knows nothing. Is this already an instance — load it — or not, in which case what should it become? The only input is an **instance reference**; the harness type, the knowledge graph and the voice are read from *that* instance's declaration. See [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) and the [proposal](../proposals/bootstrap.html) |
-| `bootstrap/workflows/initialize-harness.bpmn` | An agent has been pointed at a repository and knows nothing. **The only process in bootstrap an actor STARTS** — a Bootstrapping Agent that has read `bootstrap/README.md` is at its start event and has nowhere else to begin. Three lanes: Bootstrapping Agent, Requestor, and the Knowledge Graph Data Store. See [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) and the [proposal](../proposals/bootstrap.html) |
+| `bootstrap/workflows/bootstrap.bpmn` | An agent has been pointed at a repository and knows nothing. Is this already an instance — load it — or not, in which case what should it become? The only input is an **instance reference**; the harness type, the knowledge graph and the voice are read from *that* instance's declaration. See [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) and the [proposal](proposals/bootstrap.html) |
+| `bootstrap/workflows/initialize-harness.bpmn` | An agent has been pointed at a repository and knows nothing. **The only process in bootstrap an actor STARTS** — a Bootstrapping Agent that has read `bootstrap/README.md` is at its start event and has nowhere else to begin. Three lanes: Bootstrapping Agent, Requestor, and the Knowledge Graph Data Store. See [`bootstrap/README.md`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md) and the [proposal](proposals/bootstrap.html) |
 | `bootstrap/workflows/discussion.bpmn` | Two facts have **no answer in any file a Bootstrapping Agent can reach** — which harness this repository should become, and which repositories are read from and written to. They are judgements held by whoever asked for the harness, so no instruction body produces them. Entered from within `initialize-harness` when such a fact is needed, which is why bootstrap holds a second process at all: it is *presupposed* by every task rather than indicated by one |
 | `bootstrap/workflows/log-message.bpmn` | **A sub-process, never an entry point** — reached by a call activity, never started, which is why bootstrap's README can still say there is one process you begin. Callable optionally from any task (an actor logging what it is doing needs no permission) or required by a diagram that draws the call explicitly; same sub-process either way, and the difference is whether the caller drew it. It lives in bootstrap rather than the harness because bootstrap may not import the harness, so a logger defined upstream would be unusable by the actor with the most need to say what it is doing |
 | `getting-started.bpmn` | Somebody said "create a folio". Which of the five things did they mean, and what has to be true before anything is written? |
@@ -612,7 +612,7 @@ The roles in the lanes, and the actor definition each one maps to. Roles
 **do** is not a property of its role: it is an ODRL rule in `policies/`, and
 before every task the BPMN executor checks that the actor is authenticated,
 eligible for the lane's role, permitted by policy and allowed to touch the
-content ([`task-authorization`](../../../skills/folio-core/task-authorization.md),
+content ([`task-authorization`](../skills/folio-core/task-authorization.md),
 issue #1207).
 
 ### People

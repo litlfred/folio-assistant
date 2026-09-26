@@ -61,6 +61,7 @@
  *   bun run cat-harness/scripts/check-context-emission.ts
  *   bun run cat-harness/scripts/check-context-emission.ts --json
  */
+import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
@@ -112,8 +113,38 @@ export const FORWARD_DECLARED: Readonly<Record<string, string>> = {
   // `folio-assistant-core` since that bean — the instance's stub.
 };
 
-/** Every `.jsonld` document in the tree, excluding build outputs. */
+/**
+ * Every `.jsonld` document in the REPOSITORY — asked of git, not of the disk.
+ *
+ * **The corpus of a repository is what git says it is.** Bean `ramz`: this
+ * walked the filesystem behind a hand-written denylist
+ * (`node_modules`, `_kg`, `_site`, `_docs`, `.git`) and therefore swept every
+ * gitignored path the list did not happen to name. On 2026-09-25 a clean
+ * checkout of `main` failed `bun test` on **145 documents** under
+ * `cat-harness/ingest-staging/` — gitignored, untracked, residue of one
+ * machine's ingestion five days earlier. The assertion is named *"the real
+ * corpus"*, and what it read was not the repository's.
+ *
+ * Two failures in one, and the second is the worse: a denylist is wrong
+ * whenever somebody adds an ignored directory it does not name (a false
+ * finding about code the contributor did not touch), and it cannot tell
+ * anybody WHICH set it read, so a pass over the wrong corpus reads exactly
+ * like a pass over the right one.
+ *
+ * `--cached --others --exclude-standard` is tracked files PLUS untracked ones
+ * git would not ignore. Not `--cached` alone: a `.jsonld` a contributor has
+ * just written and not yet staged is part of the change under test, and a
+ * check that cannot see it passes on the file it exists to examine.
+ *
+ * **Falls back to the walk, and says so**, when `repo` is not a git work tree
+ * — every test fixture is such a directory, and refusing there would trade a
+ * false finding for an unrunnable check. The fallback is the LOOSER set, so
+ * it can only over-report; could-not-determine is never rendered as clean.
+ */
 export function contentDocuments(repo = REPO): string[] {
+  const listed = gitListed(repo);
+  if (listed !== undefined) return listed;
+
   const out: string[] = [];
   const skip = new Set(["node_modules", "_kg", "_site", "_docs", ".git"]);
   const walk = (dir: string): void => {
@@ -126,6 +157,29 @@ export function contentDocuments(repo = REPO): string[] {
   };
   walk(repo);
   return out;
+}
+
+/**
+ * The `.jsonld` files git accounts for under {@link dir}, or `undefined` when
+ * git cannot answer — not a git work tree, no git on PATH, a non-zero exit.
+ *
+ * `undefined` and `[]` are DIFFERENT answers and the caller must keep them
+ * apart: the first means "ask something else", the second means "git looked
+ * and there are none". Collapsing them is how a check reports a clean corpus
+ * it never read.
+ */
+function gitListed(dir: string): string[] | undefined {
+  if (!existsSync(dir)) return undefined;
+  const r = spawnSync(
+    "git",
+    ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", "*.jsonld"],
+    { cwd: dir, encoding: "utf-8" },
+  );
+  if (r.error !== undefined || r.status !== 0) return undefined;
+  return r.stdout
+    .split("\0")
+    .filter((p) => p.length > 0)
+    .map((p) => join(dir, p));
 }
 
 const curiePrefix = (s: string): string | undefined => {

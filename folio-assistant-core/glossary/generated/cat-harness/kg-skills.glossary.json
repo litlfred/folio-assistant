@@ -481,6 +481,14 @@
       "status": "candidate"
     },
     {
+      "id": "decision-methodology-selector",
+      "prefLabel": "decision-methodology-selector",
+      "definition": "Given a decision context, select the applicable methodology from the methodology graph. Reads the graph's applies-when declarations, matches them against the context, and returns the ranked applicable methods with rationale. Extends methodology-adoption's four-question protocol with quantitative method-selection criteria from the MCDM literature.",
+      "notation": "decision-methodology-selector",
+      "source": "cat-harness/skills/folio-core/decision-methodology-selector.md",
+      "status": "candidate"
+    },
+    {
       "id": "definition-clarity-audit",
       "prefLabel": "definition-clarity-audit",
       "definition": "Definition / statement clarity + concision audit. A content block can validate (schema-clean, refs resolve, formal-proof sibling present) and still read badly: the defined term is never emphasised, the definition is buried under paragraphs of motivation, or one `definition` block silently bundles three or four distinct definienda. No existing QA axis (voice / structure / bib / proof / …) measures clarity of the statement itself. Use when asked to \"bold defined terms\", \"tighten definitions\", \"no rambling definitions\", \"one definition per block\", \"tight theorem/proposition/lemma statements\", or to set up / run a clarity audit. Also runs the inverse audit — a non-`definition` block that secretly carries a definition (`clarity-defn-misplaced`) — plus a statement-purity check (`clarity-stmt-pure`: a theorem/prop/lemma/conjecture carries only its claim; embedded remark / interpretation moves to a follow-on `remark`) and a register check (`clarity-grad-style`: graduate-level formal-math prose — no contractions, second-person, hype, colloquialism, or emoji). Emits per-block QA sidecar params under the `clarity-*` criteria via `content/pipeline/definition-clarity-audit.ts`.",
@@ -841,6 +849,14 @@
       "definition": "Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH KINDS rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.",
       "notation": "incremental-render",
       "source": "cat-harness/skills/folio-core/incremental-render.md",
+      "status": "candidate"
+    },
+    {
+      "id": "injection-boundaries",
+      "prefLabel": "injection-boundaries",
+      "definition": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the existing gate covers, the one latent gap in its model, and the argv rule.",
+      "notation": "injection-boundaries",
+      "source": "cat-harness/skills/security/injection-boundaries.md",
       "status": "candidate"
     },
     {
@@ -1219,6 +1235,14 @@
       "status": "candidate"
     },
     {
+      "id": "path-containment",
+      "prefLabel": "path-containment",
+      "definition": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check.",
+      "notation": "path-containment",
+      "source": "cat-harness/skills/security/path-containment.md",
+      "status": "candidate"
+    },
+    {
       "id": "pending-show",
       "prefLabel": "pending-show",
       "definition": "Show the current session's pending work — beans list + ledger intent. Read-only.",
@@ -1561,6 +1585,14 @@
       "definition": "Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning.",
       "notation": "scientific-visualization",
       "source": "cat-harness/skills/scientific-visualization/scientific-visualization.md",
+      "status": "candidate"
+    },
+    {
+      "id": "security",
+      "prefLabel": "security",
+      "definition": "The security sub-KG's entry point. What the boundaries are, which machinery already guards each one, and the single rule that unifies them — refuse, never repair. Read this before adding a check, so the answer that already exists is reused rather than rebuilt in a fourth place.",
+      "notation": "security",
+      "source": "cat-harness/skills/security/security.md",
       "status": "candidate"
     },
     {

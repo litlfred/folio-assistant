@@ -454,7 +454,7 @@ Directory names are **descriptive slugs** with NO chapter numbers:
 
 `bun run content:graph:uml --root <content dir> --out <dir> [--status proof-objects.json]`
 (Tool `content-graph-uml`) draws this graph under the
-[`graph-rendering`](../graph-management/graph-rendering.md) rules:
+[`graph-rendering`](graph-rendering.md) rules:
 - chapters as packages;
 - `uses[]` and `interprets` solid, Lean `type` and `value` dashed purple;
 - status fills from `proof-objects.json`;
