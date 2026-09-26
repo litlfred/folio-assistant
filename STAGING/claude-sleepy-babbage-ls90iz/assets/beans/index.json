@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 391,
+      "count": 395,
       "unit": "beans"
     }
   },
@@ -259,6 +259,20 @@
       "updatedAt": "2026-09-23T19:34:01Z",
       "preview": "Issue #1164. Owner, 2026-09-23, choosing markdown front matter for requirement documents: '1 for now. need bean to assess open stds for requirements/methodologies that fit in'.\n\nThe bootstrap Requirement is deliberately free of outside concepts. This bean asks which open standards a harness could MAP it to or from, in a layer above bootstrap, and at what cost.\n\n## Done when\n- [ ] a survey of open ",
       "file": "beans/defs/folio-assistant-1gf7--assess-open-standards-for-requirements-and-methodo.md"
+    },
+    {
+      "id": "folio-assistant-1h6u",
+      "title": "main red after 2c295f8 + translation batches #1404/#1409: 6 dangling skill links, 9 stale derived sets",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T14:30:05Z",
+      "updatedAt": "2026-09-26T14:34:12Z",
+      "preview": "Measured on pristine main f850f721a06, 2026-09-26. The failing checks were glossary-page, gen-skill-docs, gen-docs-pages, docs:auto, translation:index, check:ci-invocations (which re-runs the two generators), check:subgraphs, state:visualizer and docs:harness. Every open PR inherited them through its merge ref.\n\nCauses:\n- **2c295f8**, committed straight to main, rewrote skill script paths as `../.",
+      "file": "beans/defs/folio-assistant-1h6u--main-red-after-2c295f8-translation-batches-1404140.md"
     },
     {
       "id": "folio-assistant-1l13",
@@ -1889,6 +1903,20 @@
       "file": "beans/defs/folio-assistant-bgrz--translation-status-visualiser-6-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-biz4",
+      "title": "An untracked _kg/ at the container root silently inflates local detangle counts — 229 becomes 1443, and the gate reads as a code defect",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T11:26:16Z",
+      "updatedAt": "2026-09-26T13:49:29Z",
+      "preview": "Found 2026-09-26 while establishing whether `kg:detangle:check` was `hloc`'s\nfailure or `main`'s. It was neither — it was the container.\n\n## The measurement\n\n`bun run gates` in this checkout rewrote\n`cat-harness/test/results/detangle/cat-harness/schemas.detangle.json`:\n\n```\n-  \"size\": 229,       +  \"size\": 1443,\n-  \"internal\": 125,   +  \"internal\": 709,\n-  \"cohesion\": 0.82,  +  \"cohesion\": 0.96,\n`",
+      "file": "beans/defs/folio-assistant-biz4--an-untracked-kg-at-the-container-root-silently-inf.md"
+    },
+    {
       "id": "folio-assistant-bkje",
       "title": "ACTOR FACTS: a declared actor fact with no consuming process",
       "status": "todo",
@@ -2537,14 +2565,14 @@
     {
       "id": "folio-assistant-gw8h",
       "title": "A scripts/ -> cat-harness/scripts/ rewrite doubled six hrefs and left the glossary stale — two red checks on every open PR, one cause",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T14:16:58Z",
-      "updatedAt": "2026-09-26T14:25:57Z",
+      "updatedAt": "2026-09-26T14:33:46Z",
       "preview": "## Two red checks on `main`, in two different jobs, from one edit\n\nMeasured 2026-09-26 in a clean worktree of pristine `origin/main` at\n`f850f721a06`, so neither is any PR's:\n\n| job | check | failure |\n|---|---|---|\n| `TypeScript — tests, lint, types (hard)` | `bun test` | `the entanglement report > the dangling category exists and is computed, not skipped` — 6 dangling links |\n| `Repository gates",
       "file": "beans/defs/folio-assistant-gw8h--a-scripts-cat-harnessscripts-rewrite-doubled-six-h.md"
     },
@@ -2929,6 +2957,20 @@
       "file": "beans/defs/folio-assistant-jwox--changeset-a-block-level-diff-of-the-folio-graph-be.md"
     },
     {
+      "id": "folio-assistant-k3tw",
+      "title": "GATE RED ON MAIN: docs/_data/translations.json is stale — the batch PRs add locale pages without regenerating the index",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T13:56:51Z",
+      "updatedAt": "2026-09-26T13:56:51Z",
+      "preview": "## What is red\n\n`bun test cat-harness/content/pipeline/translation-index.test.ts`\n→ `this repository's own corpus > the committed index is up to date and valid`\n\n```\nexpect(r.state, `run: bun run translation:index`).toBe(\"ok\")\nExpected: \"ok\"   Received: \"stale\"\n```\n\nIt runs inside the `TypeScript — tests, lint, types (hard)` job, so every open\nPR's merged tree is red on it, on top of the `t8g3` dr",
+      "file": "beans/defs/folio-assistant-k3tw--gate-red-on-main-docs-datatranslationsjson-is-stal.md"
+    },
+    {
       "id": "folio-assistant-k59d",
       "title": "MILESTONE CRITICAL PATHS GO STALE: p5wm and yg29 both advertise blockers that are completed or settled, and check:bean-bodies cannot see them",
       "status": "in-progress",
@@ -3153,6 +3195,20 @@
       "file": "beans/defs/folio-assistant-lvk9--extraction-list-items-and-blockquotes-are-extracte.md"
     },
     {
+      "id": "folio-assistant-lvw0",
+      "title": "PUBLISHING BLOCKED: the locale .jsonld exports re-publish the QA findings the core strips, and add an undeclared sourceLanguage",
+      "status": "completed",
+      "type": "bug",
+      "priority": "critical",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T13:57:48Z",
+      "updatedAt": "2026-09-26T14:33:46Z",
+      "preview": "## What is blocked\n\n`publish:verify` fails on the built site, so `deploy to gh-pages` is **skipped**\nand nothing is published. The live site is a previous publish. Tracking issue\nopened automatically by `processes/publish-alert.bpmn`:\n[#1406](https://github.com/litlfred/folio-assistant/issues/1406), on main's own\npublish of `430052ad`.\n\n```\njsonld-expand: 20 finding(s) — 156 document(s) checked\n  ",
+      "file": "beans/defs/folio-assistant-lvw0--publishing-blocked-the-locale-jsonld-exports-re-pu.md"
+    },
+    {
       "id": "folio-assistant-lx2s",
       "title": "Feature-branch staging under gh-pages (issue #215)",
       "status": "in-progress",
@@ -3197,14 +3253,14 @@
     {
       "id": "folio-assistant-m5gx",
       "title": "One red test at step 5 makes 149 gate commands unreachable in CI — the typescript job stops and 45 of its 50 steps never run",
-      "status": "in-progress",
+      "status": "scrapped",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T10:20:26Z",
-      "updatedAt": "2026-09-26T12:15:44Z",
+      "updatedAt": "2026-09-26T13:39:46Z",
       "preview": "Found 2026-09-26 while wiring bean `1s5s` (the published package's Python half)\ninto `check:published-packages`. Noticed because the new gate **could not be\nverified on a runner** — not because it failed, but because it never ran.\n\n## The measurement\n\n`.github/workflows/code-quality-gates.yml`, job `typescript`, parsed rather\nthan eyeballed:\n\n- `bun test` is **step 5 of 50**, with no `continue-on-",
       "file": "beans/defs/folio-assistant-m5gx--one-red-test-at-step-5-makes-149-gate-commands-unr.md"
     },
