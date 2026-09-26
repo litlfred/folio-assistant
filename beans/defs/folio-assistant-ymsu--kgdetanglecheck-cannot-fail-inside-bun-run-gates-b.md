@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-26T14:04:42Z
+updated_at: 2026-09-26T15:15:42Z
 parent: folio-assistant-1xhc
 ---
 
@@ -563,3 +563,46 @@ is the evidence.
       state legible, which is this bean's and `1xhc`'s actual subject. MEASURED
       AFTER: with one step red, the run's summary names how many gates returned
       no verdict
+
+
+## The 6-step cascade CONFIRMED in CI, and it is no longer a parse of the workflow
+
+The block above measured the cascade at 6 by parsing `code-quality-gates.yml`.
+CI has now produced it directly. Run 36250420858, head `a21d2fcbb40`, job
+`Repository gates (hard)`:
+
+| step | name | conclusion |
+|---|---|---|
+| 43 | gates that were registered and never run | **failure** |
+| 44 | generated docs pages are current | skipped |
+| 45 | voices projection and viewer are current | skipped |
+| 46 | folio projection and viewer are current | skipped |
+| 47 | viewer pages keep the navbar they had | skipped |
+| 48 | handler namespace index is current | skipped |
+| 49 | translation index is current | skipped |
+
+**Six, named.** A parse said "six steps" and could not say which; the run says
+which, and that matters because a reader can now see that `translation index is
+current` — a gate about the very subject the failing step is about — is one of
+the six returning no verdict. The instrument and the run agree, which is the
+first time on this bean that a prediction of mine about the cascade has been
+confirmed rather than corrected.
+
+## And the position-of-the-failure argument held a second time
+
+`translation:pot:check` had only ever run on one laptop, which by this bean's own
+standard is not evidence that it runs. It is line 910 of that step, three lines
+above `translation:drift:check`, and the step opens with `set -e`. So the drift
+check producing its 36 findings PROVES `translation:pot:check` exited 0 — the
+failure's position is the verdict on everything before it, the same reasoning
+used for `check:rendered-labels` at step 22.
+
+That is worth naming as a general move, because it is the cheap way around this
+bean's whole subject: **inside a `set -e` step, a later command's output is a
+pass certificate for every earlier one.** It does not work across steps, which is
+exactly why the cascade above is opaque and this is not.
+
+All three gates added on this branch ran in that CI run and passed:
+`check:rendered-labels` (step 22), `translation:pot:check` (step 43, by the
+argument above), and the whole `Skill-registration chain, unmasked (hard)` job
+(10s, green).
