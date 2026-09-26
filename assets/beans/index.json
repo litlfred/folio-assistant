@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 396,
+      "count": 397,
       "unit": "beans"
     }
   },
@@ -231,6 +231,20 @@
       "updatedAt": "2026-09-21T07:36:38Z",
       "preview": "FOUND 2026-09-21 while sweeping `a6kl`.\n\n`cat-harness/schemas/cat-harness.ts:2495` exports:\n\n    /** {@link findInstanceRoot}, throwing rather than returning `undefined`. */\n    export function instanceRootFor(start: string): string\n\n`cat-harness/scripts/check-l1-complete.ts:718` declares its own:\n\n    export function instanceRootFor(cwd: string): string | undefined\n\nThey are genuinely different f",
       "file": "beans/defs/folio-assistant-12ws--one-name-two-meanings-check-l1-complete-declares-a.md"
+    },
+    {
+      "id": "folio-assistant-197s",
+      "title": "Dependabot cannot run Bun here: 'could not run Bun … configuration error' on #908, and the npm ecosystem never touches bun.lock",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T16:58:15Z",
+      "updatedAt": "2026-09-26T16:58:15Z",
+      "preview": "Measured 2026-09-26.\n\n## What happened\n\n- At 15:26Z dependabot commented on #908: *\"Dependabot could not run Bun to update your dependencies due to a configuration error.\"* That came about 13 minutes after #1407 put the same bumps on main.\n- **This is not evidence of a defect in our config.** The same message appeared on 25–26 Sep across many unrelated repos with different setups. Examples: [bun-c",
+      "file": "beans/defs/folio-assistant-197s--dependabot-cannot-run-bun-here-could-not-run-bun-c.md"
     },
     {
       "id": "folio-assistant-1dre",
@@ -2789,14 +2803,14 @@
     {
       "id": "folio-assistant-j0zs",
       "title": "INJECTION: the gate reads `run:` only — `actions/github-script` blocks are JavaScript and carry the same laundering",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T13:59:53Z",
-      "updatedAt": "2026-09-26T13:59:53Z",
+      "updatedAt": "2026-09-26T16:57:07Z",
       "preview": "Split out of `6bhf` rather than widened into it, because extending the scanner to\na second language changes what the gate CLAIMS to read, and that is a decision\nrather than a fix.\n\n## What is true today, measured 2026-09-26\n\n`check-workflow-injection.ts` grades `${{ }}` expressions inside `run:` blocks.\nIts docblock says so, and `scanWorkflows` enforces it. That was the right scope\nwhen the surfac",
       "file": "beans/defs/folio-assistant-j0zs--injection-the-gate-reads-run-only-actionsgithub-sc.md"
     },
@@ -5095,14 +5109,14 @@
     {
       "id": "folio-assistant-x89e",
       "title": "deps: land #908's two bumps with both bun.lock files regenerated",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T13:41:12Z",
-      "updatedAt": "2026-09-26T14:45:43Z",
+      "updatedAt": "2026-09-26T16:58:15Z",
       "preview": "#908 (dependabot, minor-and-patch group) bumps @anthropic-ai/sdk ^0.104.2 -> ^0.127.0 in the root and mcp-server manifests, and @playwright/test 1.61.1 -> 1.63.0 in the root. It changes package.json only, never bun.lock, so under --frozen-lockfile it cannot go green, and it conflicts with main. Two @dependabot commands posted through the GitHub MCP tool arrived defanged (with middle dots inserted)",
       "file": "beans/defs/folio-assistant-x89e--deps-land-908s-two-bumps-with-both-bunlock-files-r.md"
     },
