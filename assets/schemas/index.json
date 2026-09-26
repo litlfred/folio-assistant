@@ -17557,6 +17557,20 @@
           "doc": "Subject kinds it applies to. Anything else records `n/a`."
         },
         {
+          "name": "scope",
+          "type": "KgCriterionScope",
+          "optional": false,
+          "array": false,
+          "doc": "WHICH INSTANCE ROOT can answer it — the second axis beside {@link applies}."
+        },
+        {
+          "name": "scopeBasis",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Why this criterion is `repo`-scoped. Required for `repo`, absent for"
+        },
+        {
           "name": "severity",
           "type": "KgSeverity",
           "optional": false,
@@ -17573,6 +17587,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/kg-qa.ts#KgCriterionScope",
         "cat-harness/schemas/kg-qa.ts#KgSeverity",
         "cat-harness/schemas/kg-qa.ts#KgSubjectKind"
       ],
@@ -17639,6 +17654,19 @@
         "KG_RESULTS",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/kg-qa.ts#KgCriterionScope",
+      "name": "KgCriterionScope",
+      "module": "cat-harness/schemas/kg-qa.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -42851,6 +42879,14 @@
       "via": "image",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/kg-qa.ts#KgCriterionDefinition",
+      "to": "cat-harness/schemas/kg-qa.ts#KgCriterionScope",
+      "via": "scope",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
