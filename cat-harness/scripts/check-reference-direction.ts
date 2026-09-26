@@ -103,9 +103,15 @@ const SKIP_DIRS = new Set([".git", "node_modules", "translations"]);
  * Every `$schema` a graph kind declares a GENERATOR writes.
  *
  * The second half of the machine-written question, at file granularity, and
- * read from the same declarations as the first — `nodeSchemas[…].writtenBy`
- * in the graph-kind registry, which already names the script that produces
- * each family. Nine families across `docs`, `qa` and `uploads`.
+ * read from the same declarations as the first — `nodeSchemas[…].generated`
+ * in the graph-kind registry. Eight families across `docs` and `qa`.
+ *
+ * It read `writtenBy` until main removed that form (#1168 B6b, beans `dv8v`,
+ * `d4lb`): the registry is a `@general` node, and naming each family's writer
+ * named its dependents. `generated: true` says the same fact without the edge.
+ * It is also STRICTER than what it replaced: `writtenBy` could name a
+ * family's consumer, so `folio-intake/v1` — authored files that
+ * `library-graph.ts` only reads — was skipped as if generated. It is now read.
  *
  * Derived rather than listed, and that is the point: the three projections
  * this was written for are `folio-schema-graph/v1`, `folio-bean-index/v1` and
@@ -123,7 +129,7 @@ const SKIP_DIRS = new Set([".git", "node_modules", "translations"]);
 const GENERATOR_WRITTEN: ReadonlySet<string> = new Set(
   Object.values(BASE_GRAPH_KINDS).flatMap((k) =>
     Object.entries(k.nodeSchemas ?? {})
-      .filter(([, d]) => (d as { writtenBy?: string }).writtenBy !== undefined)
+      .filter(([, d]) => (d as { generated?: true }).generated === true)
       .map(([schema]) => schema),
   ),
 );
@@ -506,7 +512,7 @@ function main(): void {
   console.log(`  undetermined      ${String(undet.length).padStart(5)}   declined to judge — NOT clean`);
   console.log(`\n  Not read, both answered from a declaration rather than a path:`);
   console.log(`    ${report.skippedMachineWritten} file(s) — their DIRECTORY declares a graph a process writes (holds state/derived)`);
-  console.log(`    ${report.skippedGeneratorWritten} file(s) — the FILE declares itself generator output (\`$schema\` writtenBy, \`_generated\`, or \`generated:\` front matter)`);
+  console.log(`    ${report.skippedGeneratorWritten} file(s) — the FILE declares itself generator output (\`$schema\` declared generated, \`_generated\`, or \`generated:\` front matter)`);
 
   if (wrong.length > 0) {
     const byPair = new Map<string, number>();

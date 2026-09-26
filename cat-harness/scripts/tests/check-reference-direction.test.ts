@@ -227,8 +227,8 @@ describe("analyse over a synthetic tree", () => {
   });
 });
 
-describe("a file whose own `$schema` is declared `writtenBy` a generator is not read", () => {
-  /** `folio-schema-graph/v1` is declared `writtenBy: scripts/gen-schema-viz.ts` in the graph-kind registry. */
+describe("a file whose own `$schema` is declared `generated` is not read", () => {
+  /** `folio-schema-graph/v1` is declared `generated: true` in the graph-kind registry. */
   const GENERATED = "folio-schema-graph/v1";
 
   test("it is skipped even though its DIRECTORY holds authored content", () => {
@@ -239,6 +239,16 @@ describe("a file whose own `$schema` is declared `writtenBy` a generator is not 
     ]);
     expect(analyse(r).classified).toEqual([]);
     expect(analyse(r).skippedGeneratorWritten).toBe(1);
+  });
+
+  test("an AUTHORED family is read — `folio-intake/v1` is not declared generated", () => {
+    // It was skipped while the checker read `writtenBy`, which for this family
+    // named its CONSUMER (library-graph.ts reads intake files; nothing writes them).
+    const r = tree({ "low/index.json": JSON.stringify({ $schema: "folio-intake/v1", x: "high" }) }, [
+      { id: "d", path: "", graphKinds: ["docs"] },
+    ]);
+    expect(analyse(r).skippedGeneratorWritten).toBe(0);
+    expect(verdicts(r)).toEqual(["low/index.json wrong-direction"]);
   });
 
   test("the same file with an UNDECLARED $schema is read", () => {

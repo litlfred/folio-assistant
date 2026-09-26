@@ -1,10 +1,10 @@
 ---
 # folio-assistant-hloc
 title: gen-skill-docs flattens packages but leaves 120 non-skill links addressing the source layout
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-25T16:22:33Z
+updated_at: 2026-09-26T10:39:59Z
 parent: folio-assistant-ahvw
 ---
 
@@ -60,3 +60,5 @@ verifiable against disk before it is made. This is four different questions
 about where a non-skill artefact lives on the site, and answering them wrong
 is worse than leaving the links broken, because a rewritten link stops being
 reported.
+
+_2026-09-26T10:39:59Z_ — Claimed by claude/sleepy-rubin-mr6kdu — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
