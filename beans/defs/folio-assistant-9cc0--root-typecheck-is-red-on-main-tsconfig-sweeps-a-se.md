@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9cc0
 title: 'ROOT TYPECHECK IS RED ON MAIN: tsconfig sweeps a separately-published sub-package whose vitest dep is not installed at the root'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T11:06:36Z
-updated_at: 2026-09-26T11:42:38Z
+updated_at: 2026-09-26T12:54:56Z
 parent: folio-assistant-1xhc
 ---
 
@@ -121,3 +121,49 @@ here as evidence for it rather than as a second answer to it.
 
 Measured 2026-09-26 by reading the job's step list, not inferred from the
 conclusion.
+
+
+
+--------
+
+## 2026-09-26T12:50Z — FIXED ON MAIN, by a narrower patch than the one proposed here
+
+`1e0deb26f8` on `main`: *"tsconfig: stop typechecking block-qa-schema's tests — it
+unmasks `bun test`"*.
+
+    root tsconfig.json exclude
+      before   ["dist", "node_modules"]
+      after    ["cat-harness/schemas/block-qa-schema/tests", "dist", "node_modules"]
+
+Verified on this branch after merging: **`bunx tsc --noEmit` exits 0**, the first
+clean typecheck this branch has had.
+
+### Their scope is narrower than mine, and narrower is right
+
+This bean proposed excluding `cat-harness/schemas/block-qa-schema` — the whole
+package. They excluded only its `tests` directory. **That is the better patch and
+mine was one directory too wide.**
+
+The reasoning I did not finish: the sub-package's non-test sources *should* be
+typechecked by the root, because they are ordinary TypeScript that the root can
+resolve. Only the `vitest` suite cannot be, because that one dependency is declared
+one level down and not installed at the root. Excluding the package would have
+quietly stopped typechecking its real code to fix a problem confined to its tests
+— a wider silence than the defect.
+
+So: the measurement here was right (reproduced on pristine `main`, in a clean
+worktree), the diagnosis was right (root glob sweeping a separately-published
+package whose dependency is declared one level down), and the remedy was too broad.
+Worth keeping, because "I verified the patch fixes it" is not the same as "I
+verified the patch fixes only it" — I tested that `tsc` exits 0 and never asked
+what else my exclude would stop checking.
+
+### The second masking layer this bean recorded is unaffected
+
+`tsc` was ALSO skipped in CI behind a failing `bun test`, which this bean documented
+from run `36238697037`'s step list. That is still true and still `m5gx`'s subject —
+their commit message names the same theme (*"it unmasks `bun test`"*). Nothing here
+claims that half is fixed.
+
+Closed on **evidence, not authorship** (`bean-coordination`): the defect is gone
+from `main` and verified gone here.
