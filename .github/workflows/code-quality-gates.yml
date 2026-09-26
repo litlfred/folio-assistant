@@ -480,6 +480,28 @@ jobs:
       - name: workflow BPMN coverage
         run: bun run check:workflow-coverage
 
+      # CURRENCY IS NOT VALIDITY, and this is the pair that proves it.
+      # `render:bpmn:check` asks whether the committed SVG is what the renderer
+      # produces. It was GREEN across 68 labels reading
+      # `Dependency advisories&#10;(WARN-ONLY)` in published diagrams, and
+      # correctly so — the renderer faithfully produced the wrong thing. This
+      # asks about the OUTPUT'S CONTENT, which is the question a reader has.
+      # Bean `li5y`.
+      #
+      # In the FAST SET, not beside `render:bpmn:check` in the e2e job, and that
+      # placement was corrected after measuring it: `render:bpmn:check` lives
+      # there because bpmn-js renders through a BROWSER. This check needs none —
+      # it reads committed SVG text — so putting it there bought cohesion and
+      # cost reach, since `bun run gates` is the fast set and would never have
+      # run it. A contributor editing a diagram runs that, not `--all`.
+      #
+      # A ratchet, not a gate on the whole corpus: six diagrams are already
+      # affected and fixing them is a sweep with a five-locale translation
+      # consequence. Known counts are baselined; a NEW file, or a baselined file
+      # GAINING a label, fails.
+      - name: no rendered label shows a character reference as literal text
+        run: bun run check:rendered-labels
+
       # Every Tool's `satisfies` names a skill that exists, and every io port
       # references a type the shared vocabulary declares. The schema can require
       # `satisfies` to be non-empty; it cannot know whether the names resolve,
@@ -1440,24 +1462,6 @@ jobs:
       # test's output.
       - name: rendered BPMN SVGs are current
         run: bun run render:bpmn:check
-
-      # CURRENCY IS NOT VALIDITY, and this is the pair that proves it. The step
-      # above asks whether the committed SVG is what the renderer produces; it
-      # was GREEN across 68 labels reading `Dependency advisories&#10;(WARN-ONLY)`
-      # in published diagrams, and correctly so — the renderer faithfully
-      # produced the wrong thing. This step asks about the OUTPUT'S CONTENT,
-      # which is the question a reader has. Bean `li5y`.
-      #
-      # Placed HERE rather than in the TypeScript job on purpose: it reads the
-      # rendered SVGs, so it belongs beside the step that renders them, and this
-      # job is where a diagram change is already being judged.
-      #
-      # A ratchet, not a gate on the whole corpus: six diagrams are already
-      # affected and fixing them is a sweep with a five-locale translation
-      # consequence. Known counts are baselined; a NEW file, or a baselined file
-      # GAINING a label, fails.
-      - name: no rendered label shows a character reference as literal text
-        run: bun run check:rendered-labels
 
       - name: playwright test
         run: bunx playwright test
