@@ -11,6 +11,14 @@
       "description": "Work items — one Markdown file each, in the layout the `beans` CLI reads."
     },
     {
+      "id": "archive",
+      "path": "defs/archive",
+      "graphKinds": [
+        "bean-defs"
+      ],
+      "description": "The same kind as `defs`, moved aside. Bean `e8m3`: the owner ruled 2026-09-26 that archiving is a VIEW rather than a terminal state, so an archived bean keeps its status and is still part of the store. Declared because it holds 631 bean-defs and nothing declared it — a present-but-undeclared directory, which the directory checks cannot see because they compare declarations against disk and not the reverse. `check:bean-archive` holds the invariant the ruling implies: every bean in here is terminal, because a non-terminal one is open work invisible to every count."
+    },
+    {
       "id": "workflows",
       "path": "workflows",
       "graphKinds": [

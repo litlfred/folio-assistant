@@ -842,6 +842,9 @@ export const RULES: Rule[] = [
       // but `node:fs` and `node:path`, and the advice it sweeps is this
       // platform's skills and workflows.
       "scripts/check-stale-field-advice.ts",
+      // Bean `e8m3`. Harness by subject: it reads the declared `bean-defs` graph
+      // and the work plan is the harness's own, not any folio's content.
+      "scripts/check-bean-archive.ts",
       // Bean `6ptx`. Harness by subject: a survey is of THIS repository's own
       // commit history and work plan, which no folio has as content.
       "scripts/survey.ts",
