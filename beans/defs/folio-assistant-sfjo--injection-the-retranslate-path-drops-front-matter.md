@@ -3,7 +3,7 @@
 title: 'INJECTION: the retranslate path DROPS front-matter keys — 5 locales lost `description:`, and `ar` lost `dir: rtl`'
 status: todo
 type: bug
-priority: high
+priority: normal
 parent: folio-assistant-bzyu
 created_at: 2026-09-26T19:43:43Z
 updated_at: 2026-09-26T19:43:43Z
@@ -32,12 +32,48 @@ per file:
 The bodies were retranslated as intended. The front matter was not meant to
 change at all, and nothing in the PR mentions it.
 
-## Why `dir:` is the serious one
+## CORRECTION 2026-09-26 — `dir:` is NOT the serious one. I overstated it.
 
-`ar/index.md` carried `dir: rtl`. Without it the Arabic landing page renders
-**left-to-right**. That is not a cosmetic diff; it is the page being wrong for
-its readers, and no gate here asserts that an RTL locale declares its
-direction.
+This bean first said: *"Without it the Arabic landing page renders
+left-to-right. That is not a cosmetic diff; it is the page being wrong for
+its readers."*
+
+**That is false, and the wrong version is kept here on purpose** — the
+reusable lesson is the reasoning error, not the conclusion.
+
+`cat-harness/docs/assets/js/docs-ui.js:9805` in `init()`:
+
+```js
+var pageLang = (meta && meta.lang) || "en";
+var RTL_LANGS = ["ar", "he", "fa", "ur"];
+if (RTL_LANGS.indexOf(pageLang) !== -1) {
+  document.documentElement.setAttribute("dir", "rtl");
+```
+
+`lang: ar` was NOT dropped by #1427, so the JS fallback still fires and the
+page still ends up RTL. `docs-ui.css:1387` says so in as many words: *"Applied
+when `<html dir="rtl">` or when docs-ui.js detects lang=ar."*
+
+**How the error was made: I inferred the consequence from the KEY'S NAME and
+never asked whether anything else supplied the same thing.** A missing
+attribute is only a regression if nothing else provides it, and that is a
+question about the whole page, not about the diff.
+
+What is left, and it is smaller:
+
+- the direction now arrives at `init()` rather than at parse, so a reader can
+  see a left-to-right frame before it flips;
+- with JavaScript off there is no fallback at all;
+- **UNVERIFIED either way**: whether `dir:` front matter even reaches `<html>`
+  in `just-the-docs@v0.12.0`. The theme is a remote gem, not vendored here,
+  and egress to it is blocked from this container. Nothing in this repository
+  reads `page.dir` — `grep -rn "page\.dir"` over every `.html`/`.md`/`.yml`
+  outside `node_modules` returns **zero**. So the server-side half of this may
+  do nothing at all.
+
+Restoring the key is still right — it returns a file to the state its author
+intended, and a parse-time attribute beats a runtime flip. But this is a minor
+defect, not a broken page, and the priority is lowered to match.
 
 ## Why the gate red is the SYMPTOM and the obvious fix hides it
 
@@ -72,4 +108,7 @@ keys. Whether one fix covers both is unmeasured — do not assume it.
 - [ ] `docs:auto:check` is green WITHOUT regenerating away the descriptions.
 - [ ] The injection path is fixed so it preserves front-matter keys it was not
       asked to change — or, if that is `rmor`'s fix, measured to be so.
-- [ ] A gate asserts an RTL locale's page declares `dir: rtl`. Nothing does.
+- [ ] Settle whether `dir:` front matter reaches `<html>` in just-the-docs
+      v0.12.0 at all. If it does NOT, the key is decorative and the real
+      question is whether the JS fallback is the intended mechanism — in
+      which case there is nothing to gate.
