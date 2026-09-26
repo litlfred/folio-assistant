@@ -9075,6 +9075,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/detangle-sidecar.detanglesidecar.undetermineddirection",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DetangleSidecar.undeterminedDirection"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Outbound edges whose direction cannot be decided, because the source instance declares no `needs`. Not clean."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/detangle-sidecar.ts#DetangleSidecar.undeterminedDirection",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/detangle-sidecar.detanglesidecar.wrongdirection",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DetangleSidecar.wrongDirection"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Outbound edges `directionOf` called `wrong-direction` — the layering is inverted."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/detangle-sidecar.ts#DetangleSidecar.wrongDirection",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/detangle.classifiededge.basis",
       "@type": "skos:Concept",
       "skos:inScheme": {

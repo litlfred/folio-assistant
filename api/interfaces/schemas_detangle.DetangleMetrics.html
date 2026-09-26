@@ -13,7 +13,7 @@
 <h1>Interface DetangleMetrics</h1></div>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">DetangleMetrics</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#cohesion">cohesion</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#directionality">directionality</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#distincttargetgroups">distinctTargetGroups</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#distincttargets">distinctTargets</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#enforcedboundary">enforcedBoundary</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#group">group</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#inbound">inbound</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#internal">internal</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#onewayness">oneWayness</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#outbound">outbound</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#prosementions">proseMentions</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#recordedboundary">recordedBoundary</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#role">role</a><span class="tsd-signature-symbol">:</span> <a href="../types/schemas_detangle.BoundaryRole.html" class="tsd-signature-type tsd-kind-type-alias">BoundaryRole</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#size">size</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#worklist">worklist</a><span class="tsd-signature-symbol">:</span> <a href="schemas_detangle.DetangleEdge.html" class="tsd-signature-type tsd-kind-interface">DetangleEdge</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L217">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:217</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L217">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:217</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -46,7 +46,7 @@
 <div class="tsd-comment tsd-typography"><p>internal / (internal + inbound + outbound). Zero when the group has no edges at all — which is a folder, not a subgraph.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L227">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:227</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L227">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:227</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="directionality"><span>directionality</span><a href="#directionality" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">directionality</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
@@ -60,61 +60,61 @@ out (perfectly one-way, pointing outward). Measured 2026-09-20,
 one-way group in the repository.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L241">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:241</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L241">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:241</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="distincttargetgroups"><span>distinct<wbr/>Target<wbr/>Groups</span><a href="#distincttargetgroups" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">distinctTargetGroups</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 <div class="tsd-comment tsd-typography"><p>Distinct groups outside that are referenced. What a declared dependency list would actually hold.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L261">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:261</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L261">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:261</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="distincttargets"><span>distinct<wbr/>Targets</span><a href="#distincttargets" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">distinctTargets</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 <div class="tsd-comment tsd-typography"><p>Distinct nodes outside the group that are referenced. The DEPENDENCY count, as against the reference count.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L259">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:259</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L259">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:259</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="enforcedboundary"><span>enforced<wbr/>Boundary</span><a href="#enforcedboundary" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">enforcedBoundary</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 <div class="tsd-comment tsd-typography"><p>Boundary edges whose direction is a fact. <code>role</code> is read off these ALONE.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L245">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:245</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L245">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:245</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="group"><span>group</span><a href="#group" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">group</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L218">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:218</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L218">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:218</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="inbound"><span>inbound</span><a href="#inbound" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">inbound</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 <div class="tsd-comment tsd-typography"><p>Edges from outside INTO the group. High is good.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L223">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:223</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L223">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:223</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="internal"><span>internal</span><a href="#internal" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">internal</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 <div class="tsd-comment tsd-typography"><p>Edges with both ends inside the group.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L221">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:221</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L221">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:221</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="onewayness"><span>one<wbr/>Wayness</span><a href="#onewayness" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">oneWayness</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 <div class="tsd-comment tsd-typography"><p>inbound / (inbound + outbound). Reported with the raw counts, never instead of them.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L229">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:229</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L229">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:229</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="outbound"><span>outbound</span><a href="#outbound" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">outbound</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 <div class="tsd-comment tsd-typography"><p>Edges from the group OUT. Must be near zero; each is a worklist item.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L225">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:225</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L225">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:225</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="prosementions"><span>prose<wbr/>Mentions</span><a href="#prosementions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">proseMentions</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
@@ -123,7 +123,7 @@ sentences that name something living elsewhere. High means &quot;look at whether
 this prose is in the right file&quot;, not &quot;this group is entangled&quot;.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L257">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:257</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L257">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:257</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="recordedboundary"><span>recorded<wbr/>Boundary</span><a href="#recordedboundary" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">recordedBoundary</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
@@ -132,26 +132,26 @@ COUPLING — a real finding about how tied together two groups are — never as
 directed dependency.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L251">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:251</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L251">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:251</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="role"><span>role</span><a href="#role" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">role</span><span class="tsd-signature-symbol">:</span> <a href="../types/schemas_detangle.BoundaryRole.html" class="tsd-signature-type tsd-kind-type-alias">BoundaryRole</a></div>
 <div class="tsd-comment tsd-typography"><p>Which way the arrows point. See <a href="../types/schemas_detangle.BoundaryRole.html" class="tsd-kind-type-alias">BoundaryRole</a>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L243">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:243</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L243">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:243</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="size"><span>size</span><a href="#size" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">size</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L219">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:219</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L219">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:219</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="worklist"><span>worklist</span><a href="#worklist" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">worklist</span><span class="tsd-signature-symbol">:</span> <a href="schemas_detangle.DetangleEdge.html" class="tsd-signature-type tsd-kind-interface">DetangleEdge</a><span class="tsd-signature-symbol">[]</span></div>
 <div class="tsd-comment tsd-typography"><p>The outbound edges themselves — the detangling worklist.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/772b14accd294d79661755c4a53d2427fe93b2d1/cat-harness/schemas/detangle.ts#L263">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:263</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/1b962ab310c997ba3b8a3b8b428a1ea2676ae158/cat-harness/schemas/detangle.ts#L263">work/folio-assistant/folio-assistant/cat-harness/schemas/detangle.ts:263</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
