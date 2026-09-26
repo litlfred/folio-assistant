@@ -1,11 +1,11 @@
 ---
 # folio-assistant-o29r
 title: 'EXTRACTION: cleanMarkdownText strips the underscores of LaTeX subscripts and snake_case identifiers — a translator receives a corrupted formula'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-26T14:43:40Z
-updated_at: 2026-09-26T16:56:25Z
+updated_at: 2026-09-26T19:54:35Z
 parent: folio-assistant-bzyu
 ---
 
@@ -152,3 +152,5 @@ reviewer should be able to read on its own.
 
 **Do not fold it into #1411** on a later turn because the catalogues are being
 rewritten anyway. That was offered as option 2 and declined.
+
+_2026-09-26T19:54:35Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
