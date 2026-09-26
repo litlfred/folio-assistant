@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-uml-overview.ts — do not hand-edit
 title: "UML — cat-harness/large-datasets-skills"
 nav_exclude: true
 ---

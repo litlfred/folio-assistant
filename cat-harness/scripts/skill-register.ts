@@ -46,10 +46,20 @@
  *
  * `nfv3` then made the same error a **fourth** time from the other direction,
  * inferring nine steps — `glossary:export`, `uml:overview`, `prov:qaqc` and
- * `tools:viz` on top of these five — from what went red in a branch that had
- * also added three Tool nodes and merged 20 translated pages. Four independent
- * attempts to remember this list, four wrong answers. The five below are the
- * measured ones and no entry joins them without the same experiment.
+ * `tools:viz` on top of the five — from what went red in a branch that had also
+ * added three Tool nodes and merged 20 translated pages.
+ *
+ * **And one of those four was right.** `uml:overview` IS staled by adding a
+ * skill, measured the same day and added below as step 6. So the fourth wrong
+ * answer was wrong by including three, and the five it was corrected to were
+ * wrong by excluding one — the correction dropped a correct entry on the
+ * authority of a sweep that had been perturbed. Neither list was arrived at
+ * badly and neither was right.
+ *
+ * That is the reason the limit above is stated as a limit rather than a
+ * procedure: no entry joins this chain without an isolated red-then-green run,
+ * and an isolated run is still not proof, so {@link main} verifies at runtime
+ * instead of trusting the list.
  *
  * ## `bun run gates` CANNOT derive this, and that is the subtle part
  *
@@ -64,7 +74,7 @@
  * **Only an isolated run of one check against a known tree measures anything**,
  * which is why the table below cites per-check runs and not a `gates` summary.
  *
- * ## The five, each measured alone, red before and green after
+ * ## The six, each measured alone, red before and green after
  *
  * | writer | the check it clears |
  * |---|---|
@@ -73,15 +83,30 @@
  * | `docs:auto` | `docs:auto:check` |
  * | `kg:audit` | `kg:audit:check` |
  * | `kg:detangle` | `kg:detangle:check` |
+ * | `uml:overview` | `uml:overview:check` |
  *
- * `check:ci-invocations` also goes green, and is not a sixth step: it re-runs
- * the CI invocations, one of which is `skills:docs:check`, so it is downstream
- * of step 1 rather than an obligation of its own.
+ * `check:ci-invocations` also goes green, and is not a step of its own: it
+ * re-runs the CI invocations, one of which is step 1, so it is downstream of it.
  *
  * Step 1 was measured as a direct `gen-skill-docs.ts` invocation and is now the
- * `skills:docs` npm script. Same program; routing it through a script is what
+ * `skills:docs` npm script; step 6 likewise names `uml:overview` rather than
+ * `gen-uml-overview.ts`. Same programs. Routing them through scripts is what
  * `check:ci-invocations` asks of every CI step, and a chain that names scripts
  * uniformly can be asserted against `package.json` — {@link missingScripts}.
+ *
+ * **`gen-uml-overview` was added as a sixth step on the day this shipped**, and
+ * how it was missed is the same lesson one turn later. The per-check sweep that
+ * derived the first five ran the checks IN SEQUENCE, and sequence perturbs —
+ * something earlier in that loop wrote, so `uml:overview:check` read as green.
+ * It surfaced an hour later when an ordinary skill EDIT moved the kg-qa and
+ * detangle sidecars and the UML overview, which renders that tree, went stale
+ * behind them.
+ *
+ * So the derivation method has a stated limit: isolating one check against a
+ * known tree is necessary and was not sufficient, because a check can be
+ * perturbed by a NEIGHBOUR in the same sweep. The runtime verification below is
+ * what catches that — it reports the checks' verdicts, so an under-declared
+ * list fails loudly rather than passing quietly.
  *
  * ## They are NOT order-dependent, and the earlier claim that they were is wrong
  *
@@ -422,6 +447,11 @@ export const STEPS: readonly Step[] = [
     write: "kg:detangle",
     verify: "kg:detangle:check",
     because: "the skills subgraph gains a node, so its detangle sidecar moves",
+  },
+  {
+    write: "uml:overview",
+    verify: "uml:overview:check",
+    because: "the UML overview renders the QA tree the two steps above just wrote",
   },
 ];
 

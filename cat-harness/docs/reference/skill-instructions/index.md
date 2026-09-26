@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: Skill instructions
 nav_order: 6
 has_children: true
@@ -331,6 +332,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Injection](injection-boundaries.html) | `injection-boundaries` | — |  |
 | [Path containment](path-containment.html) | `path-containment` | — | `src/core/safe-path.ts` is the implementation. This is when to reach for which, |
 | [Security](security.html) | `security` | — | > **This value came from outside. What may I do with it?** |
+
+## Spec Kit spec-driven development (skills/spec-kit)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Spec Kit](spec-kit.html) | `spec-kit` | — |  |
 
 ## Theming (theming)
 

@@ -130,10 +130,26 @@ export type GraphLayer = "content" | "context" | "state" | "derived";
  * that used it (beans `dv8v`, `d4lb`) and removed the form, so an untyped
  * family can no longer be registered: it is either typed or it is not listed.
  */
-export type NodeSchemaRef =
+export type NodeSchemaRef = (
   | { validator: string; shape?: never; external?: never }
   | { shape: string; validator?: never; external?: never }
-  | { external: string; validator?: never; shape?: never };
+  | { external: string; validator?: never; shape?: never }
+) & {
+  /**
+   * Files of this family are GENERATOR OUTPUT — a script writes every one, so
+   * nothing in them is authored and a reader must not judge them as prose.
+   *
+   * It says THAT a generator writes the family, never WHICH one: naming the
+   * writer is what the removed `writtenBy` form did, and it made this registry
+   * (a `@general` node) name its dependents (#1168 B6b). A boolean carries the
+   * fact a consumer needs without the edge. Absent means authored or unknown —
+   * never assume generated. `folio-intake/v1` is the case that shows why the
+   * two differ: `writtenBy` named its CONSUMER, and its files are authored.
+   *
+   * Read by `check-reference-direction` to skip generated files (bean `zhg2`).
+   */
+  generated?: true;
+};
 
 /**
  * @general — a node others depend on: it points only at other general nodes,
@@ -690,18 +706,18 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-semantic-zoom/v1": { validator: "schemas/semantic-zoom.ts#SemanticZoomSchema" },
       "folio-qa-graph/v1": { shape: "content/pipeline/qa-graph-index.ts#QaGraphIndex" },
       "folio-translation-index/v1": { shape: "content/pipeline/translation-index.ts#TranslationIndex" },
-      "folio-bean-index/v1": { validator: "schemas/site-indexes.ts#BeanIndexSchema" },
-      "folio-translation-status/v1": { validator: "schemas/site-indexes.ts#TranslationStatusSchema" },
-      "folio-schema-graph/v1": { validator: "schemas/site-indexes.ts#SchemaGraphIndexSchema" },
-      "folio-library-index/v1": { validator: "schemas/site-indexes.ts#LibraryIndexSchema" },
+      "folio-bean-index/v1": { validator: "schemas/site-indexes.ts#BeanIndexSchema", generated: true },
+      "folio-translation-status/v1": { validator: "schemas/site-indexes.ts#TranslationStatusSchema", generated: true },
+      "folio-schema-graph/v1": { validator: "schemas/site-indexes.ts#SchemaGraphIndexSchema", generated: true },
+      "folio-library-index/v1": { validator: "schemas/site-indexes.ts#LibraryIndexSchema", generated: true },
       // The per-entry block graph, one file per library entry (bean `7nvr`).
       // Same writer as the index and deliberately a SEPARATE family: the index
       // answers "what entries are there" and this answers "what is in one",
       // and the corpus holds 1715 blocks over ~1 MB against a 44 KB index, so
       // they are fetched at different times by different questions.
-      "folio-library-entry/v1": { validator: "schemas/site-indexes.ts#LibraryEntrySchema" },
-      "folio-voices-index/v1": { validator: "schemas/site-indexes.ts#VoicesIndexSchema" },
-      "folio-graph-projection/v1": { validator: "schemas/site-indexes.ts#FolioGraphProjectionSchema" },
+      "folio-library-entry/v1": { validator: "schemas/site-indexes.ts#LibraryEntrySchema", generated: true },
+      "folio-voices-index/v1": { validator: "schemas/site-indexes.ts#VoicesIndexSchema", generated: true },
+      "folio-graph-projection/v1": { validator: "schemas/site-indexes.ts#FolioGraphProjectionSchema", generated: true },
     },
     summary:
       "Documentation ABOUT the knowledge graph — how the harness works, what its " +
@@ -866,7 +882,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // Written inline by two call sites and typed by neither — recorded,
       // not invented. `qa-graph-index.ts` names the tag only to say it is
       // NOT its own (`NOT_TO_BE_CONFUSED_WITH`).
-      "folio-qa-index/v1": { validator: "schemas/site-indexes.ts#QaIndexSchema" },
+      "folio-qa-index/v1": { validator: "schemas/site-indexes.ts#QaIndexSchema", generated: true },
       // The detangle sidecars, in cat-harness
       // qa directory. `detangle` was its own instance until 2026-09-23 and is
       // now a directory of this harness (bean `byql`), so the shape is an
