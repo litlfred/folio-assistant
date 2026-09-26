@@ -493,32 +493,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/docs-ui.css?v=1790445406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/docs-ui.css?v=1790445755">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/narrow-viewport.css?v=1790445406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/narrow-viewport.css?v=1790445755">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/work-plan.css?v=1790445406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/work-plan.css?v=1790445755">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/themes.css?v=1790445406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/themes.css?v=1790445755">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/uml.css?v=1790445406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/uml.css?v=1790445755">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/avatars.css?v=1790445406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/avatars.css?v=1790445755">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -535,7 +535,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/js/docs-ui.js?v=1790445406" defer></script>
+<script src="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/js/docs-ui.js?v=1790445755" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -803,14 +803,14 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <blockquote>
   <p><strong>Les règles derrière cette page.</strong> L’architecture décrit la forme ; les compétences
 régissent les décisions. Les adaptateurs par rapport aux profils —
-<a href="reference/skill-instructions/content-profiles.html"><code class="language-plaintext highlighter-rouge">content-profiles</code></a>.
+<a href="../reference/skill-instructions/content-profiles.html"><code class="language-plaintext highlighter-rouge">content-profiles</code></a>.
 L’emplacement d’un nouveau nœud avant sa création —
-<a href="reference/skill-instructions/placement.html"><code class="language-plaintext highlighter-rouge">placement</code></a>. L’agencement
+<a href="../reference/skill-instructions/placement.html"><code class="language-plaintext highlighter-rouge">placement</code></a>. L’agencement
 du dépôt et chaque type de graphe —
-<a href="reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a>.
+<a href="../reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a>.
 Composition et vérification de la surface MCP —
-<a href="reference/skill-instructions/mcp-assembly.html"><code class="language-plaintext highlighter-rouge">mcp-assembly</code></a> et
-<a href="reference/skill-instructions/mcp-contract.html"><code class="language-plaintext highlighter-rouge">mcp-contract</code></a>.
+<a href="../reference/skill-instructions/mcp-assembly.html"><code class="language-plaintext highlighter-rouge">mcp-assembly</code></a> et
+<a href="../reference/skill-instructions/mcp-contract.html"><code class="language-plaintext highlighter-rouge">mcp-contract</code></a>.
 En cas de désaccord entre cette page et une compétence, la compétence l’emporte.</p>
 </blockquote>
 
@@ -856,27 +856,27 @@ en cinq instances composables de folio-assistant. Les pages filles le détaillen
   </thead>
   <tbody>
     <tr>
-      <td><a href="architecture/repo-taxonomy.html">Taxonomie des dépôts</a></td>
+      <td><a href="../architecture/repo-taxonomy.html">Taxonomie des dépôts</a></td>
       <td>Quels types de dépôts existent — Outils, Tests, Contenu, Consommateur — et ce que chacun peut contenir</td>
     </tr>
     <tr>
-      <td><a href="architecture/current-state.html">État actuel</a></td>
+      <td><a href="../architecture/current-state.html">État actuel</a></td>
       <td>Ce qui se trouve réellement dans ce dépôt aujourd’hui, mesures à l’appui, et où se situe le mélange</td>
     </tr>
     <tr>
-      <td><a href="architecture/future-state.html">État futur</a></td>
+      <td><a href="../architecture/future-state.html">État futur</a></td>
       <td>Les cinq dépôts cibles et dans lequel chaque répertoire atterrit</td>
     </tr>
     <tr>
-      <td><a href="architecture/migration-plan.html">Plan de migration</a></td>
+      <td><a href="../architecture/migration-plan.html">Plan de migration</a></td>
       <td>Phases 0/I/II/III, les étapes clés (gates) et ce qui reste à trancher</td>
     </tr>
     <tr>
-      <td><a href="architecture/cat-harness-minimum.html"><code class="language-plaintext highlighter-rouge">cat-harness</code> minimal</a></td>
+      <td><a href="../architecture/cat-harness-minimum.html"><code class="language-plaintext highlighter-rouge">cat-harness</code> minimal</a></td>
       <td>Ce qui subsiste dans le harnais une fois que le critère « non auto-documenté » est appliqué comme test</td>
     </tr>
     <tr>
-      <td><a href="architecture/harness-instances.html">Instances de harnais</a></td>
+      <td><a href="../architecture/harness-instances.html">Instances de harnais</a></td>
       <td>Ce qu’EST une instance — schémas, visualisations, outils ; les quatre répertoires ; le rendu par défaut</td>
     </tr>
   </tbody>
@@ -887,7 +887,7 @@ rien qu’un humain regarde, et la page des instances indique qu’une instance 
 par défaut. Ce n’est pas le cas : l’exigence est un <strong>plancher qui s’élève</strong>,
 <code class="language-plaintext highlighter-rouge">bootstrap</code> étant exempté du visualiseur et devant fournir ses propres <code class="language-plaintext highlighter-rouge">.json</code>/<code class="language-plaintext highlighter-rouge">.jsonld</code>
 à la place, et <code class="language-plaintext highlighter-rouge">cat-harness</code> étant la couche où le reste commence à s’appliquer. Voir
-<a href="architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception">Où commence l’exigence</a>.</p>
+<a href="../architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception">Où commence l’exigence</a>.</p>
 
 <p>Le reste de cette page décrit l’architecture <strong>telle qu’elle est actuellement</strong>.</p>
 <h2 id="agencement-du-dépôt">
@@ -977,7 +977,7 @@ enregistrer. L’adaptateur <code class="language-plaintext highlighter-rouge">d
 de prose ; l’adaptateur <code class="language-plaintext highlighter-rouge">paper</code> (<code class="language-plaintext highlighter-rouge">adapters/paper/</code>) l’étend et fournit les outils du cycle de vie Lean
 (<code class="language-plaintext highlighter-rouge">lean_setup</code>/<code class="language-plaintext highlighter-rouge">build</code>/<code class="language-plaintext highlighter-rouge">check</code>/<code class="language-plaintext highlighter-rouge">status</code>), la validation et le rendu
 (<code class="language-plaintext highlighter-rouge">paper_render_pdf</code>/<code class="language-plaintext highlighter-rouge">html</code>, <code class="language-plaintext highlighter-rouge">formula_render</code>). Les nouveaux types de contenu ajoutent un nouvel
-adaptateur — voir <a href="guides/new-content-type.html">Ajouter un type de contenu</a>.</p>
+adaptateur — voir <a href="../guides/new-content-type.html">Ajouter un type de contenu</a>.</p>
 <h2 id="compétences-et-paquets-de-compétences">
   
   
@@ -994,7 +994,7 @@ compétences avec <code class="language-plaintext highlighter-rouge">skill_list<
 des compétences et des rôles — ainsi que la manière dont ils se composent avec le LLM (RBAC, capacités,
 exigences) — se trouve sur la page <a href="skills.html">Compétences et rôles</a> ; le contrat
 d’entrée/sortie de chaque compétence est publié dans la
-<a href="reference/skills/">Référence des schémas de compétences</a>.</p>
+<a href="../reference/skills/">Référence des schémas de compétences</a>.</p>
 <h2 id="le-modèle-dobjets-de-contenu">
   
   
@@ -1040,7 +1040,7 @@ définis dans <code class="language-plaintext highlighter-rouge">policies/http-g
 
 <p>Jusqu’au ticket #1207 (23-09-2026), <code class="language-plaintext highlighter-rouge">rbac.ts</code> était une hiérarchie distincte viewer &lt; collaborator
 &lt; owner et l’exécuteur ne vérifiait rien. La règle de conduite est définie par la compétence
-<a href="reference/skill-instructions/task-authorization.html"><code class="language-plaintext highlighter-rouge">task-authorization</code></a>.</p>
+<a href="../reference/skill-instructions/task-authorization.html"><code class="language-plaintext highlighter-rouge">task-authorization</code></a>.</p>
 <h2 id="amorçage-du-plan-de-travail-inter-harnais">
   
   

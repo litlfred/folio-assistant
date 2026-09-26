@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/docs-ui.css?v=1790445406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/docs-ui.css?v=1790445755">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/narrow-viewport.css?v=1790445406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/narrow-viewport.css?v=1790445755">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/work-plan.css?v=1790445406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/work-plan.css?v=1790445755">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/themes.css?v=1790445406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/themes.css?v=1790445755">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/uml.css?v=1790445406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/uml.css?v=1790445755">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/avatars.css?v=1790445406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/css/avatars.css?v=1790445755">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/js/docs-ui.js?v=1790445406" defer></script>
+<script src="/folio-assistant/STAGING/claude-wonderful-gauss-7frcrw/assets/js/docs-ui.js?v=1790445755" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -840,7 +840,7 @@ de ces affirmations comportait une erreur de <strong>seize</strong> lorsqu’ell
 trente-neuf alors qu’il y en avait cinquante-cinq.</p>
 
 <p>Un décompte en prose est une affirmation ; un index dérivé est une preuve. Le nombre réside
-donc dans <a href="cat-harness/docs-auto/index/processes/">l’index dérivé des processus</a>,
+donc dans <a href="../cat-harness/docs-auto/index/processes/">l’index dérivé des processus</a>,
 qui est généré à partir de la déclaration par <code class="language-plaintext highlighter-rouge">bun run docs:auto</code>, contrôlé en CI,
 et ne peut pas diverger des diagrammes qu’il dénombre. <strong>Le rôle de cette page est la moitié
 qui ne peut pas être générée</strong> — à quoi <em>sert</em> chaque processus, dans quel cas vous vous y
@@ -890,11 +890,11 @@ bootstrap, ou aucune des deux.</strong></p>
   <tbody>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">bootstrap/workflows/bootstrap.bpmn</code></td>
-      <td>Un agent a été orienté vers un dépôt et ne sait rien. Est-ce déjà une instance — la charger — ou non, auquel cas que doit-elle devenir ? La seule entrée est une <strong>référence d’instance</strong> ; le type de harness, le graphe de connaissances et la voix sont lus depuis la déclaration de <em>cette</em> instance. Voir <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md"><code class="language-plaintext highlighter-rouge">bootstrap/README.md</code></a> et la <a href="proposals/bootstrap.html">proposition</a></td>
+      <td>Un agent a été orienté vers un dépôt et ne sait rien. Est-ce déjà une instance — la charger — ou non, auquel cas que doit-elle devenir ? La seule entrée est une <strong>référence d’instance</strong> ; le type de harness, le graphe de connaissances et la voix sont lus depuis la déclaration de <em>cette</em> instance. Voir <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md"><code class="language-plaintext highlighter-rouge">bootstrap/README.md</code></a> et la <a href="../proposals/bootstrap.html">proposition</a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">bootstrap/workflows/initialize-harness.bpmn</code></td>
-      <td>Un agent a été orienté vers un dépôt et ne sait rien. <strong>Le seul processus d’amorçage qu’un acteur DÉMARRE</strong> — un agent d’amorçage (Bootstrapping Agent) ayant lu <code class="language-plaintext highlighter-rouge">bootstrap/README.md</code> se trouve à son événement de début et n’a nulle part ailleurs où commencer. Trois couloirs : Bootstrapping Agent, Requestor, et Knowledge Graph Data Store. Voir <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md"><code class="language-plaintext highlighter-rouge">bootstrap/README.md</code></a> et la <a href="proposals/bootstrap.html">proposition</a></td>
+      <td>Un agent a été orienté vers un dépôt et ne sait rien. <strong>Le seul processus d’amorçage qu’un acteur DÉMARRE</strong> — un agent d’amorçage (Bootstrapping Agent) ayant lu <code class="language-plaintext highlighter-rouge">bootstrap/README.md</code> se trouve à son événement de début et n’a nulle part ailleurs où commencer. Trois couloirs : Bootstrapping Agent, Requestor, et Knowledge Graph Data Store. Voir <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/README.md"><code class="language-plaintext highlighter-rouge">bootstrap/README.md</code></a> et la <a href="../proposals/bootstrap.html">proposition</a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">bootstrap/workflows/discussion.bpmn</code></td>
@@ -962,27 +962,27 @@ se situent <em>au sein</em> de <code class="language-plaintext highlighter-rouge
     <tr>
       <td><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></td>
       <td>Documents et directives politiques</td>
-      <td><a href="guides/writing-a-document.html">Rédiger un document</a></td>
+      <td><a href="../guides/writing-a-document.html">Rédiger un document</a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></td>
       <td>Articles scientifiques et livres</td>
-      <td><a href="guides/writing-a-paper.html#the-end-to-end-workflow">Rédiger un article</a></td>
+      <td><a href="../guides/writing-a-paper.html#the-end-to-end-workflow">Rédiger un article</a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></td>
       <td>DAK des directives SMART de l’OMS (L2)</td>
-      <td><a href="guides/who-smart-dak.html#the-l2-artifacts">Rédiger un DAK SMART de l’OMS</a></td>
+      <td><a href="../guides/who-smart-dak.html#the-l2-artifacts">Rédiger un DAK SMART de l’OMS</a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></td>
       <td>Guide d’implémentation SMART de l’OMS (L3)</td>
-      <td><a href="guides/who-smart-ig.html#the-l3-pipeline">Rédiger un IG SMART de l’OMS</a></td>
+      <td><a href="../guides/who-smart-ig.html#the-l3-pipeline">Rédiger un IG SMART de l’OMS</a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">ig-incremental-build.bpmn</code></td>
       <td>IG SMART de l’OMS (L3) — couloir de compilation, incrémentiel par cône de dépendances (proposé)</td>
-      <td><a href="guides/who-smart-ig.html#making-the-build-incremental">Rendre la compilation incrémentielle</a> · <a href="proposals/ig-incremental-build-overview.html">vue d’ensemble</a></td>
+      <td><a href="../guides/who-smart-ig.html#making-the-build-incremental">Rendre la compilation incrémentielle</a> · <a href="proposals/ig-incremental-build-overview.html">vue d’ensemble</a></td>
     </tr>
   </tbody>
 </table></div>
@@ -1000,7 +1000,7 @@ Ceux-ci s’exécutent en parallèle des processus de contenu plutôt qu’à l�
   <tbody>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code></td>
-      <td>Une demande de fonctionnalité est arrivée. Comment est-elle transformée en exigences validées, et qui signe l’approbation ? Le processus externe ; ses six phases sont les activités d’appel ci-dessous. Voir <a href="crdm-methodology.html">Méthodologie CRDM</a></td>
+      <td>Une demande de fonctionnalité est arrivée. Comment est-elle transformée en exigences validées, et qui signe l’approbation ? Le processus externe ; ses six phases sont les activités d’appel ci-dessous. Voir <a href="../crdm-methodology.html">Méthodologie CRDM</a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">crdm-issue-linking.bpmn</code></td>
@@ -1705,37 +1705,37 @@ compilation en échec.</p>
     <tr>
       <td>Prendre en charge ou ouvrir le bean</td>
       <td>Plan de travail</td>
-      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+      <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
     </tr>
     <tr>
       <td>Rédiger la modification du bloc</td>
       <td>Agent de rédaction</td>
-      <td><a href="reference/skills/content-author.html"><code class="language-plaintext highlighter-rouge">content-author</code></a></td>
+      <td><a href="../reference/skills/content-author.html"><code class="language-plaintext highlighter-rouge">content-author</code></a></td>
     </tr>
     <tr>
       <td>Vérifications de schéma et de contraintes</td>
       <td>Validation mécanique</td>
-      <td><a href="reference/skills/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
+      <td><a href="../reference/skills/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
     </tr>
     <tr>
       <td>Syntaxe, orthographe et liens</td>
       <td>Validation mécanique</td>
-      <td><a href="reference/skills/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
+      <td><a href="../reference/skills/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
     </tr>
     <tr>
       <td>Compilation et points de contrôle QA</td>
       <td>Validation mécanique</td>
-      <td><a href="reference/skills/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a></td>
+      <td><a href="../reference/skills/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a></td>
     </tr>
     <tr>
       <td>Relecture de la modification par l’agent</td>
       <td>Validation non mécanique</td>
-      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+      <td><a href="../reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
     </tr>
     <tr>
       <td>Relecture humaine / par un expert métier</td>
       <td>Validation non mécanique</td>
-      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+      <td><a href="../reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
     </tr>
     <tr>
       <td>Rassembler les conclusions dans un rapport</td>
@@ -1745,7 +1745,7 @@ compilation en échec.</p>
     <tr>
       <td>Consigner les conclusions sur le bean</td>
       <td>Plan de travail</td>
-      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+      <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
     </tr>
     <tr>
       <td>Examiner les conclusions</td>
@@ -1755,7 +1755,7 @@ compilation en échec.</p>
     <tr>
       <td>Réviser la modification proposée</td>
       <td>Agent de rédaction</td>
-      <td><a href="reference/skills/content-author.html"><code class="language-plaintext highlighter-rouge">content-author</code></a></td>
+      <td><a href="../reference/skills/content-author.html"><code class="language-plaintext highlighter-rouge">content-author</code></a></td>
     </tr>
     <tr>
       <td>Valider (commit) dans le corpus</td>
@@ -1765,18 +1765,18 @@ compilation en échec.</p>
     <tr>
       <td>Résoudre ou rouvrir le bean</td>
       <td>Plan de travail</td>
-      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+      <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
     </tr>
   </tbody>
 </table></div>
 
 <p>Les vérifications spécifiques au domaine dépendent de <code class="language-plaintext highlighter-rouge">content-validate</code> / <code class="language-plaintext highlighter-rouge">content-test</code>
 selon le type de contenu :
-<a href="reference/skills/lean-formalization.html"><code class="language-plaintext highlighter-rouge">lean-formalization</code></a> et
-<a href="reference/skills/proof-verification.html"><code class="language-plaintext highlighter-rouge">proof-verification</code></a> pour les articles,
-<a href="reference/skills/fhir-validation.html"><code class="language-plaintext highlighter-rouge">fhir-validation</code></a> et
-<a href="reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a> pour les IG,
-<a href="reference/skills/latex-authoring.html"><code class="language-plaintext highlighter-rouge">latex-authoring</code></a> pour le rendu.</p><hr />
+<a href="../reference/skills/lean-formalization.html"><code class="language-plaintext highlighter-rouge">lean-formalization</code></a> et
+<a href="../reference/skills/proof-verification.html"><code class="language-plaintext highlighter-rouge">proof-verification</code></a> pour les articles,
+<a href="../reference/skills/fhir-validation.html"><code class="language-plaintext highlighter-rouge">fhir-validation</code></a> et
+<a href="../reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a> pour les IG,
+<a href="../reference/skills/latex-authoring.html"><code class="language-plaintext highlighter-rouge">latex-authoring</code></a> pour le rendu.</p><hr />
 <h2 id="from-corpus-to-published-folio" data-fa-label="sec:publication-workflow-from-corpus-to-published-folio">
   
   
@@ -1826,17 +1826,17 @@ que la relecture a demandé.</li>
     <tr>
       <td>Ouvrir ou prendre en charge le bean de publication</td>
       <td>Plan de travail</td>
-      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+      <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
     </tr>
     <tr>
       <td>Compiler la publication brouillon</td>
       <td>Corpus + pipeline de compilation</td>
-      <td><a href="reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a></td>
+      <td><a href="../reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a></td>
     </tr>
     <tr>
       <td>Exécuter les points de contrôle QA de publication</td>
       <td>Corpus + pipeline de compilation</td>
-      <td><a href="reference/skills/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a> · <a href="reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a></td>
+      <td><a href="../reference/skills/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a> · <a href="../reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a></td>
     </tr>
     <tr>
       <td>Édition et validation IHM</td>
@@ -1846,37 +1846,37 @@ que la relecture a demandé.</li>
     <tr>
       <td>Diffuser le brouillon</td>
       <td>Gestionnaire de publication</td>
-      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+      <td><a href="../reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
     </tr>
     <tr>
       <td>Relire la publication brouillon</td>
       <td>Équipe de relecture</td>
-      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+      <td><a href="../reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
     </tr>
     <tr>
       <td>Validation clinique / scientifique</td>
       <td>Experts métier (SME)</td>
-      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+      <td><a href="../reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
     </tr>
     <tr>
       <td>Ouvrir des beans pour les demandes de modification</td>
       <td>Plan de travail</td>
-      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a> · <a href="reference/skills/content-feedback.html"><code class="language-plaintext highlighter-rouge">content-feedback</code></a></td>
+      <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a> · <a href="../reference/skills/content-feedback.html"><code class="language-plaintext highlighter-rouge">content-feedback</code></a></td>
     </tr>
     <tr>
       <td>Autoriser la publication (release)</td>
       <td>Gestionnaire de programme</td>
-      <td><a href="reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a></td>
+      <td><a href="../reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a></td>
     </tr>
     <tr>
       <td>Numéroter, étiqueter et publier</td>
       <td>Gestionnaire de publication</td>
-      <td><a href="reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a> · <a href="reference/skills/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a></td>
+      <td><a href="../reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a> · <a href="../reference/skills/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a></td>
     </tr>
     <tr>
       <td>Fermer les beans de publication</td>
       <td>Plan de travail</td>
-      <td><a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+      <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
     </tr>
   </tbody>
 </table></div>
@@ -1972,7 +1972,7 @@ agent ne l’est pas.</li>
 charge le bean avant de travailler, et ne résolvez jamais le bean de quelqu’un d’autre.</li>
   <li><strong><code class="language-plaintext highlighter-rouge">beans create</code> n’est pas idempotent.</strong> Vérifiez l’existence d’un bean par son titre exact
 avant d’en créer un nouveau — la garde, et l’incident qui la motive, sont décrits dans
-<a href="reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a>.</li>
+<a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a>.</li>
   <li><strong>Les beans ne sont pas des sidecars.</strong> Les files d’attente générées par machine (QA
 <code class="language-plaintext highlighter-rouge">*.qa.json</code>, fichiers témoins, files de surveillance) restent du JSON brut ; elles ne
 deviennent jamais des beans.</li>
@@ -1993,7 +1993,7 @@ rôles <strong>héritent</strong> les uns des autres (<code class="language-plai
 acteur peut <strong>faire</strong> ne constitue pas une propriété de son rôle : c’est une règle ODRL
 dans <code class="language-plaintext highlighter-rouge">policies/</code>, et avant chaque tâche, l’exécuteur BPMN vérifie que l’acteur est
 authentifié, éligible au rôle du couloir, autorisé par la politique et habilité à toucher
-au contenu (<a href="../skills/folio-core/task-authorization.md"><code class="language-plaintext highlighter-rouge">task-authorization</code></a>, ticket #1207).</p>
+au contenu (<a href="../../skills/folio-core/task-authorization.md"><code class="language-plaintext highlighter-rouge">task-authorization</code></a>, ticket #1207).</p>
 <h3 id="people" data-fa-label="sec:publication-workflow-people">
   
   
@@ -2196,12 +2196,12 @@ d’eux ne comporte :</p>
       <td>Graphe de navigation</td>
     </tr>
     <tr>
-      <td><a href="guides/new-content-type.html">Ajouter un type de contenu</a> — « Ce que vous fournissez »</td>
+      <td><a href="../guides/new-content-type.html">Ajouter un type de contenu</a> — « Ce que vous fournissez »</td>
       <td>Mermaid</td>
       <td>Ce que vous transmettez, non ce que vous faites</td>
     </tr>
     <tr>
-      <td><a href="guides/writing-a-paper.html">Rédiger un article</a> — la session Lean</td>
+      <td><a href="../guides/writing-a-paper.html">Rédiger un article</a> — la session Lean</td>
       <td>Mermaid <code class="language-plaintext highlighter-rouge">sequenceDiagram</code></td>
       <td>Une transcription d’interaction entre vous, l’assistant et le serveur MCP. L’équivalent BPMN — une collaboration avec des flux de messages — ajouterait du formalisme sans apporter de sens</td>
     </tr>
@@ -2224,8 +2224,8 @@ flux de contrôle, il a sa place dans <code class="language-plaintext highlighte
 <ul>
   <li><a href="content-types.html">Types de contenu</a> — le cycle de vie linéaire et ce que chaque type produit</li>
   <li><a href="skills.html">Compétences et rôles</a> — chaque compétence et rôle, et comment ils s’articulent avec le LLM</li>
-  <li><a href="reference/skills/">Référence des schémas de compétences</a> — entrées/sorties typées par compétence</li>
-  <li><a href="guides/agent-onboarding.html">Intégration d’un agent</a> — orientation pour un agent introduit dans un folio</li>
+  <li><a href="../reference/skills/">Référence des schémas de compétences</a> — entrées/sorties typées par compétence</li>
+  <li><a href="../guides/agent-onboarding.html">Intégration d’un agent</a> — orientation pour un agent introduit dans un folio</li>
 </ul>
 
           

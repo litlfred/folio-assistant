@@ -1765,14 +1765,14 @@
     {
       "id": "folio-assistant-ahab",
       "title": "Translated pages carry 225 unresolved links — 43 distinct, five near-copies each, and the English sources do not carry them",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T10:40:05Z",
-      "updatedAt": "2026-09-26T16:56:28Z",
+      "updatedAt": "2026-09-26T17:29:28Z",
       "preview": "Found 2026-09-26 while re-deriving `hloc`'s premise. `hloc` records the `docs/`\nunresolved-link count as **120** after `mi97` took it from 246. Re-measured\ntoday with `scanSubgraphs()` it is **340** — higher than the pre-`mi97` figure.\n\nThat is not an `mi97` regression. It is a different population, and it splits:\n\n| source | links |\n|---|---|\n| translated pages — `docs/{ar,es,fr,ru,zh}/` | **225*",
       "file": "beans/defs/folio-assistant-ahab--translated-pages-carry-225-unresolved-links-43-dis.md"
     },
@@ -3043,14 +3043,14 @@
     {
       "id": "folio-assistant-k3tw",
       "title": "GATE RED ON MAIN: docs/_data/translations.json is stale — the batch PRs add locale pages without regenerating the index",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T13:56:51Z",
-      "updatedAt": "2026-09-26T13:56:51Z",
+      "updatedAt": "2026-09-26T14:36:43Z",
       "preview": "## What is red\n\n`bun test cat-harness/content/pipeline/translation-index.test.ts`\n→ `this repository's own corpus > the committed index is up to date and valid`\n\n```\nexpect(r.state, `run: bun run translation:index`).toBe(\"ok\")\nExpected: \"ok\"   Received: \"stale\"\n```\n\nIt runs inside the `TypeScript — tests, lint, types (hard)` job, so every open\nPR's merged tree is red on it, on top of the `t8g3` dr",
       "file": "beans/defs/folio-assistant-k3tw--gate-red-on-main-docs-datatranslationsjson-is-stal.md"
     },
