@@ -193,6 +193,74 @@
       }
     },
     {
+      "id": "library/arxiv-2504.07199v3/blocks/figure-img-p007-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../images/img-p007-1.png",
+      "narrative": "draft",
+      "content": "Figure 1(a): Recall@5 on the RECORD-TYPE ablation. Grouped bars for the fourteen teams — Annif, DNB-AI-Project, DUTIR831, Homa, icip, Jim, LA²I²F, last_minute, NBF, RUC Team, silp_nlp, TartuNLP, TSOTSALAB and YNU-HPCC — in alphabetical order on the x-axis. Ten bars per team: A (article), B (book), C (conference), R (report) and T (thesis), each once for the all-subjects dataset and once for tib-core. The y-axis runs 0 to 0.8 and no bar carries a printed value. The tallest group is RUC Team, whose A all-subjects bar reaches about 0.69; Annif, DUTIR831, Jim and LA²I²F sit around 0.6 for A all-subjects; last_minute and TSOTSALAB are near zero throughout, and Homa, DNB-AI-Project, Jim and NBF have bars missing for several record types. READ OFF THE PAGE, not a claim about the work: the sub-caption under this panel says \"based on the language ablation\", but the legend is the record types and Figure 2 is the language ablation.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/figure-img-p007-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../images/img-p007-2.png",
+      "narrative": "draft",
+      "content": "Figure 1(b): Precision@5 on the RECORD-TYPE ablation. The same fourteen teams and the same ten series as panel (a) — A/B/C/R/T × all-subjects/tib-core — with the y-axis running 0 to 0.5 and no printed values. Values are roughly half those of the recall panel: DUTIR831, Annif, Jim and RUC Team peak near 0.3, and RUC Team's A tib-core bar is the tallest at about 0.48. The same sub-caption mismatch as panel (a).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/figure-img-p007-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../images/img-p007-3.png",
+      "narrative": "draft",
+      "content": "Figure 2(a): Recall@5 on the LANGUAGE ablation. Four bars per team — de all-subjects (blue), en all-subjects (red), de tib-core (yellow), en tib-core (green) — over the same fourteen teams in alphabetical order, y-axis 0 to 0.6, each bar labelled with its value. DUTIR831 is highest on en tib-core at 0.510 and Annif close behind at 0.502; RUC Team reads 0.447 / 0.421 / 0.494 / 0.461. Several teams submitted for only part of the grid: DNB-AI-Project and Jim have no tib-core bars, Homa and last_minute no all-subjects bars, NBF no tib-core bars. The lowest non-empty values are TSOTSALAB at 0.034 (en tib-core) and last_minute at 0.048. Some printed labels overlap their neighbours and are only partly legible; the ones quoted here are the ones that are not occluded.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/figure-img-p007-4",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../images/img-p007-4.png",
+      "narrative": "draft",
+      "content": "Figure 2(b): Precision@5 on the LANGUAGE ablation. Same four series and same fourteen teams as panel (a), y-axis 0 to 0.3, values printed. Annif leads on de all-subjects at 0.269, with DUTIR831 at 0.263 and DNB-AI-Project at 0.254; RUC Team's de tib-core bar is the single tallest at 0.278. icip reads 0.216 / 0.164 / 0.187 / 0.163 and TartuNLP 0.142 / 0.113 / 0.146 / 0.134. The same teams are missing the same parts of the grid as in panel (a). As with the recall panel, some labels overlap and only the legible ones are quoted.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
       "id": "library/arxiv-2504.07199v3/blocks/prose-sec-009",
       "types": [
         "folio-assistant-core:Prose",
@@ -248,6 +316,57 @@
       "summary": {
         "status": "not-summarised"
       }
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/figure-img-p009-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../images/img-p009-1.png",
+      "narrative": "draft",
+      "content": "Figure 3: overall qualitative evaluation. Six bars per team — P@5, R@5, F1@5 and the averages over k = 5, 10, 15, 20 of precision, recall and F1 — for thirteen teams, ordered left to right by average recall@k rather than alphabetically: DNB-AI-Project, DUTIR831, RUC Team, Annif, Jim, icip, TartuNLP, LA²I²F, NBF, Homa, last_minute, YNU-HPCC, TSOTSALAB. The y-axis runs 0 to 0.6 and every bar is labelled. DNB-AI-Project leads with P@5 0.53 and Avg. R@k 0.51; DUTIR831 follows at 0.49 / 0.49 and RUC Team at 0.48 / 0.46. TSOTSALAB is last at about 0.04 across the board. Avg. R@k exceeds P@5 for the mid-table teams, which is what a recall measure over a larger k does. silp_nlp, present in Figures 1, 2 and 4, does not appear here.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/figure-img-p009-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../images/img-p009-2.png",
+      "narrative": "draft",
+      "content": "Figure 4(a): average recall@k per domain, over k = 5, 10, 15, 20. Fourteen bars per team, one for each subject domain — arc (architecture), che (chemistry), elt (electrical engineering), fer (material science), his (history), inf (computer science), lin (linguistics), lit (literature studies), mat (mathematics), oek (economics), phy (physics), sow (social sciences), tec (engineering), ver (traffic engineering) — for thirteen teams in alphabetical order. No printed values; the y-axis runs 0 to 0.8. Computer science (inf, teal) is the tallest bar in most teams' groups, reaching about 0.65 for DNB-AI-Project and icip and about 0.62 for RUC Team; mathematics (mat) is also consistently high. TSOTSALAB and YNU-HPCC are low across every domain, and Homa's bars are missing for several. Which domain is easiest is not uniform across teams, and the figure carries no aggregate.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2504.07199v3/blocks/figure-img-p009-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../images/img-p009-3.png",
+      "narrative": "draft",
+      "content": "Figure 4(b): average precision@k per domain, over k = 5, 10, 15, 20. The same fourteen domain series and the same thirteen teams as panel (a), on the same 0-to-0.8 axis, with no printed values. The bars are lower throughout — most teams peak between 0.4 and 0.6 rather than 0.6 and 0.7 — and the ordering within a team's group differs from the recall panel: architecture (arc, blue) is the tallest bar for most teams here, where computer science led on recall. RUC Team's social sciences (sow) bar is the tallest single bar at about 0.61, and DUTIR831's architecture bar reaches about 0.67.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
     },
     {
       "id": "library/arxiv-2504.07199v3/blocks/prose-sec-012",
