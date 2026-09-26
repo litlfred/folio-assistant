@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:00Z
-updated_at: 2026-09-25T16:46:42Z
+updated_at: 2026-09-26T03:23:23Z
 parent: folio-assistant-ahvw
 ---
 
@@ -365,3 +365,50 @@ shapes, but the three findings are real and belong to their owners, and
 `k59d`'s own second Done-when asks that what cannot be drawn is reported as
 *could not determine* rather than guessed — which is still the standing state
 for free prose.
+
+## Round 3, 2026-09-26 — a FOURTH shape, measured and deliberately NOT built
+
+The owner released the `kupb` re-parenting this bean had been carrying as their
+call. It was already done: commit `9fe74a7be8d` — *"kupb narrowed to
+IRIS-catalogue work, so GOAL 3 can close"* — moved `eof6` and `xies` to `5a3l`
+and `j79e` to `zzmr`, about nine hours after `yg29`'s table was written, by the
+session owning that work. `kupb`'s two remaining children (`08u4`, `xlg2`) are
+genuine IRIS work, so GOAL 3's last clause now blocks on real work rather than
+on an unanswered filing decision. `yg29` is corrected; nothing was re-done.
+
+**That is the fourth time in two days a premise dissolved on re-measurement**
+(`r1vw` re-implemented, `check:stale-paths` nearly rebuilt, `4pm8` closing
+mid-edit, and now this). Each was caught by re-deriving first. The pattern is
+this bean's whole subject, and it is not slowing down.
+
+### The shape the new rule cannot see
+
+`done-when` fires on a clause naming a **closed** bean as a precondition. It
+does not fire here and should not: `eof6`, `j79e` and `xies` are all still
+`in-progress`. They are not finished — they are **somebody else's children
+now**. A body asserting a parent relation the store contradicts is a distinct
+defect, and unlike free prose a parent edge is *structured data*, so it is
+drawable.
+
+### Measured before proposing it, and the measurement says WAIT
+
+Over the whole store — open beans claiming an open bean as a child whom the
+store parents elsewhere:
+
+| | count |
+|---|---|
+| raw hits | 3 |
+| distinct lines behind them | **1** |
+| distinct beans | **1** (`yg29`, corrected in this round) |
+
+**So the class has one instance and it is already fixed.** Building a gate for
+it now would be a rule with no measured backlog and no second witness —
+exactly the speculative shape this file's own guards were narrowed to avoid.
+Recorded as drawable, not built.
+
+**And a design note for whoever does build it**, because it is not obvious: it
+must not fire on a *superseded* record. `yg29` keeps the wrong line and marks
+it superseded beside a correction, deliberately, so a reader sees the question
+was answered rather than dropped — which means the naive rule reports the
+repaired bean forever. It needs the same attribution guard the `chain` rule
+already has, and that guard is the hard part, not the parent comparison.

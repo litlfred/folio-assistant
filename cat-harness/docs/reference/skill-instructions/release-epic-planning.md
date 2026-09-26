@@ -1,12 +1,15 @@
 ---
-name: release-epic-planning
-description: >
-  Plan and track releases using bean epics. Covers epic creation,
-  story/task decomposition, release readiness tracking, and the
-  relationship between epics and GitHub milestones. Applies to code
-  releases, paper publications, and project milestones.
+layout: default
+title: 'Release epic planning'
+parent: Skill instructions
 ---
 
+{: .note }
+> Generated from [`cat-harness/skills/workflow/release-epic-planning.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/release-epic-planning.md) — do not edit here.
+>
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/release-epic-planning.md){: .fa-edit-source }
+
+{% raw %}
 # Release epic planning
 
 A release epic groups all the work for a specific release version.
@@ -141,6 +144,7 @@ The hierarchy and readiness tracking are identical.
 
 - [`release-lifecycle`](release-lifecycle.md) — semver, release types, changelog
 - [`code-review-process`](code-review-process.md) — review within release context
-- [`../../skills/crdm/crdm-requirements-workflow.md`](../../skills/crdm/crdm-requirements-workflow.md) — Phase 4b ordering
-- [`../../skills/folio-core/todo-manager.md`](../../skills/folio-core/todo-manager.md) — bean creation protocol
-- [`../../skills/folio-core/bean-coordination.md`](../../skills/folio-core/bean-coordination.md) — cross-session coordination
+- [`../../skills/crdm/crdm-requirements-workflow.md`](crdm-requirements-workflow.md) — Phase 4b ordering
+- [`../../skills/folio-core/todo-manager.md`](todo-manager.md) — bean creation protocol
+- [`../../skills/folio-core/bean-coordination.md`](bean-coordination.md) — cross-session coordination
+{% endraw %}
