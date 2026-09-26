@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-26T06:46:02Z
-updated_at: 2026-09-26T10:50:27Z
+updated_at: 2026-09-26T14:23:25Z
 parent: folio-assistant-1xhc
 ---
 
@@ -188,3 +188,60 @@ exactly 25 findings — 5 locales (ar, es, fr, ru, zh) × 5 pages (accessibility
 content-types, contributing, getting-started, installation). `f6r1` merging did
 not change the count, and was never going to: it answered whether a remedy was
 possible, not whether one had been applied.
+
+
+
+--------
+
+## 2026-09-26T14:35Z — THE GAP HAS GROWN: 25 → 36, and 5 pages → 8
+
+Measured on **pristine `origin/main`** in a clean detached worktree with
+`bun install --frozen-lockfile`, via `bun run translation:drift:check`:
+
+    70 translation(s) compared, 36 NEWLY drifted, 0 could not be read,
+    0 drifted and recorded, 2 uncatalogued and recorded
+
+Identical on this branch, so **none of the growth is mine.** Earlier today this
+bean and the `t8g3` ask were framed around **25** findings over five pages
+(accessibility, content-types, contributing, getting-started, installation). The
+pages now reported are eight:
+
+    agentic-harness · architecture · beans-and-todos · document-ingestion
+    evidence · getting-started · publication-workflow · skills
+
+Not a clean 8 × 5 — `getting-started` appears for `zh` only, so the set is
+page-and-locale specific rather than uniform.
+
+### Why this is recorded rather than acted on
+
+The owner's decision stands and is not re-opened: ask the `t8g3` campaign (issue
+#206 comment 5844010805), expiry 2026-09-28 06:45, and recording in `UNCATALOGED`
+only on the owner's own instruction — a sibling landed those entries in `#1381`
+and `main` reverted them (`e9f30a78c1`) precisely because they collided with it.
+
+But **the scale the decision was taken against has changed by 44 %**, and two
+things the owner may want to weigh follow from that:
+
+- `f6r1` measured derivability over **27** catalogues and found 19 provably not
+  derivable, 8 undetermined, 0 derivable. Its 27 no longer covers the set. Whether
+  the newly-drifted pages fall the same way is **unmeasured** — I have not
+  re-derived it, and saying they probably do would be exactly the inference `f6r1`
+  spent a session refuting.
+- If the answer ends up being fresh authoring, the cost moved from 25 page-locale
+  pairs to 36 while the decision sat open. That is the same shape bean `u2ol`
+  records for the TypeScript 7 call: *"the cost of the rewrite option grows while
+  the decision sits open. A hold is not the static side of this choice."*
+
+### Where it now surfaces, which is new
+
+`translation:drift:check` runs in main's new `Repository gates (hard)` job (bean
+`om30`), at a step AFTER the ones this branch owns. So on head `68e4a42446` the
+job's red is this gap and not this branch: a job fails at its first failing step,
+and every step before it — including `skill:register:check` at 27 and
+`audit:coverage` at 29 — had to have passed for execution to reach line 894.
+
+Before `om30` this gate was among the ~45 skipped behind a failing `bun test`, so
+the growth from 25 to 36 happened in a window where the gate that would have
+reported it was not running. That is `1xhc` doing real damage rather than
+hypothetical damage, and it is worth stating plainly: **the number grew while the
+instrument was switched off.**
