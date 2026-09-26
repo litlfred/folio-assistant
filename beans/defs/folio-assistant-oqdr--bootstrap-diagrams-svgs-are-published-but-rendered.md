@@ -1,11 +1,11 @@
 ---
 # folio-assistant-oqdr
 title: Bootstrap diagrams' SVGs are published but rendered by nothing since the split
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-24T17:52:19Z
-updated_at: 2026-09-26T09:51:47Z
+updated_at: 2026-09-26T09:54:12Z
 parent: folio-assistant-vke6
 ---
 
@@ -20,3 +20,21 @@ Seen 2026-09-24 while deriving subprocess links (bean `xl55`): `initialize-harne
 Bootstrap's diagrams are rendered and checked (by render-bpmn over every instance, as gen-processes-viz already does with `instanceRoots`), or their SVGs move to bootstrap's own site layer; and the owner has decided about `bootstrap.svg`.
 
 _2026-09-26T09:51:47Z_ — Claimed by claude/oqdr-render-bootstrap-diagrams — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+
+## Summary of Changes — 2026-09-26 (branch claude/oqdr-render-bootstrap-diagrams)
+
+**Done when, both halves:**
+- [x] Bootstrap's diagrams are rendered and checked — by `render-bpmn` over every instance (`instanceRootsIn`), the first of the two options this bean offered.
+- [x] The owner decided about `bootstrap.svg`: **delete** (2026-09-26, selected). Its source `bootstrap.bpmn` was deleted in `7d57e2d2790` ("bootstrap: one process…"); its element ids (`Start_Pointed`, `Gate_IsInstance`) exist in no current `.bpmn`, and nothing links to it. The two apparent references are to `/assets/img/uml/overview/bootstrap.svg`, a different file.
+
+**What changed.** `bpmnSources()` walks `workflowFiles` for every instance root instead of cat-harness's alone. Measured first: the union is exactly the 74 committed `.bpmn`, and the only additions are bootstrap's three (`folio-assistant-core` and `smart-base` were already reached through cat-harness's overlay). The basename collision the old docblock called latent is now **refused**: two same-named diagrams in different instances throw, naming both.
+
+**Verified, both directions, with a control:**
+- the re-render changed exactly the three bootstrap SVGs and no other — nothing outside the widened source set moved;
+- `initialize-harness.svg`: `Initiator` 2 → 0, `Bootstrapping Agent` 0 → 1; its sub-process link `assets/img/workflows/log-message.svg` (resolved to nothing, per this bean) → `../../../processes/log-message.html`;
+- a bootstrap label mutated without re-rendering: this branch's `render:bpmn:check` exits **1** naming `log-message.svg`; main's script on the same mutation exits **0**;
+- a same-named `activity-log.bpmn` added to `bootstrap/processes/`: exits 1 naming both paths; removed: 0.
+
+**Not done:** moving the SVGs to bootstrap's own site layer (the bean's alternative — a publishing-layout change nobody asked for). The bootstrap declaration says `initialize-harness` *calls* `discussion`, but it holds one call activity (`A_LogFailure` → `log-message`); whatever `discussion` is reached by, it is not a BPMN call, so no second link is expected.
