@@ -732,6 +732,17 @@ to spend the words: **do not start the topic.**
 - Watching a sibling PR — `/watch <pr|branch>` subscribes to a PR's CI / review /
   comment activity and follows through until it's merged or closed:
   `.claude/commands/watch.md`.
+- **Adding a skill? Run `bun run skill:register`.** Five artefacts go stale
+  when a skill is added, and each red one names a GENERATED file rather than
+  your skill, so the cause is invisible from the symptom. The command
+  regenerates all five and verifies each one, then tells you if a
+  package-manifest entry is still missing — the one step it deliberately does
+  not do for you, because which package a file belongs to is your assertion.
+  Bean `v625`: this was a documented list before it was a command, and the list
+  was wrong three times AND recurred forty minutes after being fixed.
+  **Do not re-derive the chain through `bun run gates`** — `bun test` runs two
+  of the five writers, so gates reports their artefacts current when they are
+  not (bean `ymsu`). Measure one check at a time.
 - User-facing docs site (README + install + guides + generated schema/API
   reference): `docs/` → published to <https://litlfred.github.io/folio-assistant/>
   by `.github/workflows/docs-site.yml`. Regenerate the generated references with
