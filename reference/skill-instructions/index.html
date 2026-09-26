@@ -509,32 +509,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790420834">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790422003">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790420834">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790422003">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790420834">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790422003">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790420834">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790422003">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790420834">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790422003">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790420834">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790422003">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -551,7 +551,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790420834" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790422003" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1101,7 +1101,7 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
 | <a href="flushable-containers.html">Flushable containers</a> | <code class="language-plaintext highlighter-rouge">flushable-containers</code> | — | <strong>A flushable container is a named store whose whole point is that it keeps |
 | <a href="fsh-guts.html"><code class="language-plaintext highlighter-rouge">fsh-guts/</code></a> | <code class="language-plaintext highlighter-rouge">fsh-guts</code> | — | **Delete means relocate.</strong> Nothing in this repository is removed with <code class="language-plaintext highlighter-rouge">rm</code> |
 | <a href="generalise-the-fix.html">Generalise the fix, then attack the generalisation</a> | <code class="language-plaintext highlighter-rouge">generalise-the-fix</code> | — | A fix that repairs one instance and leaves its siblings is half a fix. A fix |
-| <a href="getting-started.html">/getting-started</a> | <code class="language-plaintext highlighter-rouge">getting-started</code> | — | Process: <a href="../../processes/getting-started.bpmn"><code class="language-plaintext highlighter-rouge">processes/getting-started.bpmn</code></a>. |
+| <a href="getting-started.html">/getting-started</a> | <code class="language-plaintext highlighter-rouge">getting-started</code> | — | Process: <a href="../../processes/getting-started.html"><code class="language-plaintext highlighter-rouge">processes/getting-started.bpmn</code></a>. |
 | <a href="github-state-inspection.html">Reading GitHub state</a> | <code class="language-plaintext highlighter-rouge">github-state-inspection</code> | — | &gt; Skill id: <code class="language-plaintext highlighter-rouge">github-state-inspection</code> · Capability: <code class="language-plaintext highlighter-rouge">review</code> · Package: <code class="language-plaintext highlighter-rouge">folio-core</code> |
 | <a href="glossary-build.html">Glossary Build</a> | <code class="language-plaintext highlighter-rouge">glossary-build</code> | — |  |
 | <a href="glossary-terms.html">Glossary terms</a> | <code class="language-plaintext highlighter-rouge">glossary-terms</code> | — | The owner, 2026-09-23: <em>“put glossary into folio-assistant-core”</em>, <em>“it should |
@@ -1117,7 +1117,7 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
 | <a href="integration-backlog.html">/integration-backlog</a> | <code class="language-plaintext highlighter-rouge">integration-backlog</code> | — | A workflow skill that turns each integration-watcher’s open findings |
 | <a href="integration-watch.html">/integration-watch</a> | <code class="language-plaintext highlighter-rouge">integration-watch</code> | — | A thin dispatcher in front of <a href="/folio-assistant/reference/skill-instructions/integration-watcher.html"><code class="language-plaintext highlighter-rouge">integration-watcher</code></a> |
 | <a href="integration-watcher.html">integration-watcher (abstract parent)</a> | <code class="language-plaintext highlighter-rouge">integration-watcher</code> | — | A concrete watcher (this skill’s child) **watches incoming activity</strong> |
-| <a href="interaction-modality.html">/interaction-modality</a> | <code class="language-plaintext highlighter-rouge">interaction-modality</code> | — | Process: <a href="../../processes/getting-started.bpmn"><code class="language-plaintext highlighter-rouge">processes/getting-started.bpmn</code></a>, |
+| <a href="interaction-modality.html">/interaction-modality</a> | <code class="language-plaintext highlighter-rouge">interaction-modality</code> | — | Process: <a href="../../processes/getting-started.html"><code class="language-plaintext highlighter-rouge">processes/getting-started.bpmn</code></a>, |
 | <a href="issue-working.html">Working an issue</a> | <code class="language-plaintext highlighter-rouge">issue-working</code> | — | Two rules. Both exist because <strong>your view of an issue and everyone else’s |
 | <a href="kg-contribution-offer.html">Offering the knowledge graph</a> | <code class="language-plaintext highlighter-rouge">kg-contribution-offer</code> | — | Owner, 2026-09-20: *“update CRDM process that when a user is done with |
 | <a href="kg-export.html">KG export</a> | <code class="language-plaintext highlighter-rouge">kg-export</code> | — | **<code class="language-plaintext highlighter-rouge">agentic-harness</code> has no renderer.</strong> <code class="language-plaintext highlighter-rouge">folio</code> is the only <code class="language-plaintext highlighter-rouge">renderable</code> graph |
@@ -1155,7 +1155,7 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
 | <a href="render-logging.html">Render logging</a> | <code class="language-plaintext highlighter-rouge">render-logging</code> | — | Owner, 2026-09-20: *“a specialised Logger skill for the gh-pages rendering |
 | <a href="render-order.html">Render order</a> | <code class="language-plaintext highlighter-rouge">render-order</code> | — | Two things live here, and they are deliberately one skill: **the general |
 | <a href="rendered-verification.html">/rendered-verification</a> | <code class="language-plaintext highlighter-rouge">rendered-verification</code> | — | <a href="/folio-assistant/reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a> argues that **a human cannot |
-| <a href="repo-conversion.html">/repo-conversion</a> | <code class="language-plaintext highlighter-rouge">repo-conversion</code> | — | Process: <a href="../../processes/getting-started.bpmn"><code class="language-plaintext highlighter-rouge">processes/getting-started.bpmn</code></a>, |
+| <a href="repo-conversion.html">/repo-conversion</a> | <code class="language-plaintext highlighter-rouge">repo-conversion</code> | — | Process: <a href="../../processes/getting-started.html"><code class="language-plaintext highlighter-rouge">processes/getting-started.bpmn</code></a>, |
 | <a href="retry-backoff.html">A falling-off retry rate, on every error</a> | <code class="language-plaintext highlighter-rouge">retry-backoff</code> | — | Owner, 2026-09-20: **“as rule, use logarithmic fall-off on all errors. core |
 | <a href="review-comments.html">Review comments</a> | <code class="language-plaintext highlighter-rouge">review-comments</code> | — | &gt; Skill id: <code class="language-plaintext highlighter-rouge">review-comments</code> · Capability: <code class="language-plaintext highlighter-rouge">review</code> · Package: <code class="language-plaintext highlighter-rouge">folio-core</code> |
 | <a href="review-heatmap.html">Review heat map</a> | <code class="language-plaintext highlighter-rouge">review-heatmap</code> | — | &gt; Skill id: <code class="language-plaintext highlighter-rouge">review-heatmap</code> · Capability: <code class="language-plaintext highlighter-rouge">review</code> · Package: <code class="language-plaintext highlighter-rouge">folio-core</code> · Bean: <code class="language-plaintext highlighter-rouge">qbfi</code> · Epic: ` |
@@ -1196,7 +1196,7 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
 | [/watch](watch.html) | </code>watch<code class="language-plaintext highlighter-rouge"> | — | A unified watcher that handles **branches** (poll </code>git ls-remote<code class="language-plaintext highlighter-rouge">) and |
 | [Where a proposal goes](where-a-proposal-goes.html) | </code>where-a-proposal-goes<code class="language-plaintext highlighter-rouge"> | — | **A design proposal is a comment on the issue it is for.** Not a page in |
 | [Where does this go?](where-does-this-go.html) | </code>where-does-this-go<code class="language-plaintext highlighter-rouge"> | — | &gt; Skill id: </code>where-does-this-go<code class="language-plaintext highlighter-rouge"> · Package: </code>folio-core<code class="language-plaintext highlighter-rouge"> |
-| [Wireframe design review](wireframe-design-review.html) | </code>wireframe-design-review<code class="language-plaintext highlighter-rouge"> | — | Method: [</code>wiregen<code class="language-plaintext highlighter-rouge">](../../methodologies/wiregen.md). Process: [</code>processes/wireframe-design-review.bp |</p>
+| [Wireframe design review](wireframe-design-review.html) | </code>wireframe-design-review<code class="language-plaintext highlighter-rouge"> | — | Method: [</code>wiregen`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/ |</p>
 <h2 id="document-adapter-folio-document-adapter">
   
   
@@ -1949,7 +1949,7 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
       <td><a href="specification-compiled-agents.html">Specification-compiled agents</a></td>
       <td><code class="language-plaintext highlighter-rouge">specification-compiled-agents</code></td>
       <td>—</td>
-      <td>Renders [<code class="language-plaintext highlighter-rouge">methodologies/specification-compiled-agents.md</code>](../../methodologies/specification-compile</td>
+      <td>Renders [<code class="language-plaintext highlighter-rouge">methodologies/specification-compiled-agents.md</code>](https://github.com/litlfred/folio-assista</td>
     </tr>
     <tr>
       <td><a href="workflow-state.html">State in a running process</a></td>
@@ -3405,7 +3405,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36237741442"><code>42ccfb3</code></a> &middot; 2026-09-26T11:07:07Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36238780392"><code>40b33b4</code></a> &middot; 2026-09-26T11:26:37Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
