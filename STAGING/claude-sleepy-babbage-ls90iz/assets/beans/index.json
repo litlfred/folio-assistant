@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 389,
+      "count": 390,
       "unit": "beans"
     }
   },
@@ -1593,6 +1593,20 @@
       "updatedAt": "2026-09-23T21:30:16Z",
       "preview": "Owner ruling, 2026-09-23: *\"all assets get a version and are in 'draft' publication. formal publication process needs to be deinfed/neeeds tools/depends on instance\"*.\n\nCorrects §3.1 as `snjh` shipped it. Not a gap in that work — a different model.\n\n## What §3.1 got wrong, precisely\n\nIt models `publishable?: boolean` with three states, and REFUSES id and version unless `publishable: true`:\n\n    re",
       "file": "beans/defs/folio-assistant-9wb0--publication-is-a-state-not-a-boolean-every-asset-c.md"
+    },
+    {
+      "id": "folio-assistant-9x01",
+      "title": "available_locales claims a locale with no translated page behind it, and nothing checks the two against each other",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T14:26:44Z",
+      "updatedAt": "2026-09-26T14:26:44Z",
+      "preview": "Found while fixing an e2e fixture (bean `6bhf`, PR #1408), not while looking for\nit — so the measurement below is narrow on purpose and the sweep is part of the\nwork.\n\n## The contradiction\n\n`cat-harness/docs/crdm-methodology.md` declares\n\n    available_locales: [\"en\",\"fr\"]\n\nand there is **no `cat-harness/docs/fr/crdm-methodology.md`**. It is also absent\nfrom `docs/_data/translations.json`, which i",
+      "file": "beans/defs/folio-assistant-9x01--available-locales-claims-a-locale-with-no-translat.md"
     },
     {
       "id": "folio-assistant-9x9r",
