@@ -526,6 +526,14 @@
       "status": "candidate"
     },
     {
+      "id": "process_codequalitygates.task_repositorygates",
+      "prefLabel": "Repository gates&#10;(HARD)",
+      "definition": "The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 `bun run` invocations in all. A SEPARATE job from Task_TypeScript since bean `om30`: they were one job in which `bun test` came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on `main` meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is `xom7` at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. `bun run gates` derives its list from BOTH jobs, so the local set still cannot drift from CI's.",
+      "notation": "Task_RepositoryGates",
+      "source": "cat-harness/processes/code-quality-gates.bpmn#Task_RepositoryGates",
+      "status": "candidate"
+    },
+    {
       "id": "process_codequalitygates.task_rust",
       "prefLabel": "Rust wildcard imports&#10;(WARN-ONLY)",
       "definition": "Report non-test `use …::*;` in tools/**/*.rs, excluding `use super::*;`. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs.",
@@ -535,8 +543,8 @@
     },
     {
       "id": "process_codequalitygates.task_typescript",
-      "prefLabel": "TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD)",
-      "definition": "bun test, lint, tsc --noEmit, then the repository gates (workflow refs, lane and process documentation, kg:audit:check, detangle, skills, …). `bun run gates` derives its list from this job, so it is the local way to run the same set before pushing.",
+      "prefLabel": "TypeScript: lint, types&#10;and tests (HARD)",
+      "definition": "Three checks and nothing else: `bun run lint`, `tsc --noEmit`, then `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Order inside the job is load-bearing rather than stylistic: Actions stops a job at its first failing step, so `bun test` — red on `main` by the owner's decision — runs LAST, with nothing behind it to mask. While it ran first, lint and typecheck did not execute on `main` at all.",
       "notation": "Task_TypeScript",
       "source": "cat-harness/processes/code-quality-gates.bpmn#Task_TypeScript",
       "status": "candidate"

@@ -63,7 +63,7 @@
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 
-import { gitCorpus } from "./git-corpus.ts";
+import { gitCorpus } from "../schemas/git-corpus.ts";
 import { join, resolve } from "node:path";
 
 import { CONTENT_CONTEXT, CONTENT_CONTEXT_URL } from "../schemas/jsonld.js";
