@@ -16,7 +16,7 @@
  * Output: folio-assistant/computations/wall-violations.witness.json
  *
  * Usage (from repo root):
- *   bun run content/pipeline/wall-violations-sweep.ts
+ *   bun run cat-harness/content/pipeline/wall-violations-sweep.ts
  *
  * Pair: docs/audits/2026-05-01-wall-violations-sweep.md
  */

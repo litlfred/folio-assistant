@@ -8,7 +8,7 @@
  * (script candidates are preserved; the freshest entry whose field_hash
  * matches the current sources wins, per the block-qa/v1 convention).
  *
- *   bun run content/pipeline/qa-agent-entry.ts \
+ *   bun run cat-harness/content/pipeline/qa-agent-entry.ts \
  *     --block   <path to block .md>            (required)
  *     --criterion <criterion-id>               (required)
  *     --result  pass|fail|warn|n/a             (required)
