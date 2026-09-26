@@ -75,8 +75,8 @@ describe("uncatalogued reports exactly the added translations with no catalogue"
   test("a translation with no catalogue is reported, with the path to author", () => {
     const { root, cleanup } = fixture();
     try {
-      const byFile = new Map([[resolve(join(siteDir(), "fr", "none.md")), { locale: "fr", page: "none" }]]);
-      const got = uncatalogued(root, [join(siteDir(), "fr", "none.md")], byFile);
+      const byFile = new Map([[resolve(join(siteDir({ name: "3sm2-fixture" }), "fr", "none.md")), { locale: "fr", page: "none" }]]);
+      const got = uncatalogued(root, [join(siteDir({ name: "3sm2-fixture" }), "fr", "none.md")], byFile);
       expect(got.map((g) => g.subject)).toEqual(["fr/none"]);
       expect(got[0]!.catalogue).toContain(join("translations", "fr", "none.po"));
     } finally {
@@ -87,8 +87,8 @@ describe("uncatalogued reports exactly the added translations with no catalogue"
   test("a translation WHOSE catalogue the change already carries is not reported", () => {
     const { root, cleanup } = fixture();
     try {
-      const byFile = new Map([[resolve(join(siteDir(), "fr", "has-one.md")), { locale: "fr", page: "has-one" }]]);
-      expect(uncatalogued(root, [join(siteDir(), "fr", "has-one.md")], byFile)).toEqual([]);
+      const byFile = new Map([[resolve(join(siteDir({ name: "3sm2-fixture" }), "fr", "has-one.md")), { locale: "fr", page: "has-one" }]]);
+      expect(uncatalogued(root, [join(siteDir({ name: "3sm2-fixture" }), "fr", "has-one.md")], byFile)).toEqual([]);
     } finally {
       cleanup();
     }
@@ -100,7 +100,7 @@ describe("uncatalogued reports exactly the added translations with no catalogue"
   test("an added file that is not a published translation is ignored entirely", () => {
     const { root, cleanup } = fixture();
     try {
-      const byFile = new Map([[resolve(join(siteDir(), "fr", "none.md")), { locale: "fr", page: "none" }]]);
+      const byFile = new Map([[resolve(join(siteDir({ name: "3sm2-fixture" }), "fr", "none.md")), { locale: "fr", page: "none" }]]);
       expect(uncatalogued(root, ["cat-harness/scripts/whatever.ts", "README.md"], byFile)).toEqual(
         [],
       );
@@ -112,7 +112,7 @@ describe("uncatalogued reports exactly the added translations with no catalogue"
   test("no additions at all is a determined empty, not a finding", () => {
     const { root, cleanup } = fixture();
     try {
-      const byFile = new Map([[resolve(join(siteDir(), "fr", "none.md")), { locale: "fr", page: "none" }]]);
+      const byFile = new Map([[resolve(join(siteDir({ name: "3sm2-fixture" }), "fr", "none.md")), { locale: "fr", page: "none" }]]);
       expect(uncatalogued(root, [], byFile)).toEqual([]);
     } finally {
       cleanup();
