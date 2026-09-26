@@ -499,6 +499,14 @@ export const RULES: Rule[] = [
       // declaration, so it knows which directories publish a site and
       // nothing at all about what any folio put in them.
       "scripts/check-translated-link-depth.ts",
+      // Whether a page's `available_locales` names a locale a reader can
+      // actually read it in (bean `9x01`). Harness by the same route as the two
+      // above: it resolves the site root from the declaration, builds the
+      // translation index from what the pages themselves declare (`lang` and
+      // `translation_source`), and compares a page's claim with that index. The
+      // CLAIM is structural — "is this readable in French" — so it says nothing
+      // about what any folio wrote in French.
+      "scripts/check-available-locales.ts",
       // Whether each methodology's cited `origin` resolves to an ingested
       // source. Harness for the same reason as the two above: it reads the
       // declaration for the `methodology` and `library` graphs and fans out

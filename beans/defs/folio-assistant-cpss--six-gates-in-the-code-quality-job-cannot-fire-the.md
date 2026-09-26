@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-26T18:09:12Z
-updated_at: 2026-09-26T18:35:08Z
+updated_at: 2026-09-26T20:01:56Z
 parent: folio-assistant-1xhc
 ---
 
@@ -161,3 +161,52 @@ Every number above is from `grep`/`sed` over the committed file at
 error suppression and conditionals that found none. The CI side is job
 `108460536992` (run `36262379984`): step #45 fails, its log ends at
 `translation:drift:check` exit 1, and steps #46–#50 are `skipped`.
+
+
+---
+
+## 2026-09-26 20:05Z — the batch went GREEN, and its first live run caught a real defect
+
+`translation:drift:check` now exits 0. #1411 (`9rrb`) replaced the CLI's
+hard-coded list of five page names with discovery from the tree — 5×5 to 13×5 —
+and took drift from 36 findings to 0 new. Measured on a merged tree, not read
+off the PR title.
+
+So the 103 gates this bean counted are **live for the first time since they were
+registered**. What happened on the very first run is the argument this bean was
+making, in one line:
+
+> `check:partition` — workflow line **1366**, which is **414 lines after** the
+> drift gate at 952 — failed immediately, on a real omission: a script added
+> hours earlier (`scripts/check-available-locales.ts`, #1431) was `unassigned`,
+> with 2 import edges the tool declined to judge.
+
+The gate was correct, the finding was mine, and it was **one command away from
+being caught at any point that afternoon.** It could not fire, so it did not.
+Fixed by classifying the module in `partition/instance-rules.ts`; the gate now
+reports 0 unassigned and 0 wrong-direction edges.
+
+That is the cost of masking stated without any need for analogy: **a gate in the
+masked region does not merely fail to protect, it accumulates unreported
+defects, and they all arrive at once when the mask lifts.** A sibling session's
+commit message the same day lists `check:partition` among the gates its chosen
+subset had missed — so this gate has now caught two sessions' omissions in one
+afternoon, having been unable to report either.
+
+## This bean does NOT close
+
+The masking is **latent, not fixed.** The step is still one `run: |` block of 106
+gates under `set -e`, and `translation:drift:check` is still its third member.
+Nothing structural changed: the next member that goes red — deliberately or
+otherwise — re-masks every gate after it, and which gates those are is still not
+chosen but merely whatever happens to be later in the file.
+
+What changed is the **price of the fix**, and it went down. Splitting
+`translation:drift:check` out and making it the LAST step in the job can now be
+done while the batch is green, so the change is verifiable end to end: every one
+of the 106 can be observed passing before and after. Doing it while the batch was
+dead meant moving gates whose behaviour nobody could see.
+
+**So this is the moment to do it, and it is still not mine to do** — it
+restructures 106 gates that are not mine, on the owner's call. Recorded here
+rather than acted on.
