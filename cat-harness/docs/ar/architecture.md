@@ -20,14 +20,14 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 > **القواعد الكامنة وراء هذه الصفحة.** تصف الهندسة المعمارية الهيكل؛ بينما تحكم
 > المهارات القرارات. المحولات مقابل ملفات التعريف —
-> [`content-profiles`](reference/skill-instructions/content-profiles.html).
+> [`content-profiles`](../reference/skill-instructions/content-profiles.html).
 > أين تنتمي العقدة الجديدة قبل إنشائها —
-> [`placement`](reference/skill-instructions/placement.html). وتخطيط المستودع
+> [`placement`](../reference/skill-instructions/placement.html). وتخطيط المستودع
 > وكل نوع من أنواع الرسوم البيانية —
-> [`directory-conventions`](reference/skill-instructions/directory-conventions.html).
+> [`directory-conventions`](../reference/skill-instructions/directory-conventions.html).
 > وتركيب واجهة MCP والتحقق منها —
-> [`mcp-assembly`](reference/skill-instructions/mcp-assembly.html) و
-> [`mcp-contract`](reference/skill-instructions/mcp-contract.html).
+> [`mcp-assembly`](../reference/skill-instructions/mcp-assembly.html) و
+> [`mcp-contract`](../reference/skill-instructions/mcp-contract.html).
 > وحيثما تختلف هذه الصفحة مع إحدى المهارات، فإن المهارة هي التي تسود.
 
 إن folio-assistant هو **خادم MCP** يضم طبقة **محولات محتوى** قابلة للتوصيل،
@@ -60,15 +60,15 @@ flowchart TD
 
 | الصفحة | ما تجيب عليه |
 |---|---|
-| [تصنيف المستودعات](architecture/repo-taxonomy.html) | ما هي أنواع المستودعات الموجودة — أداة (Tool)، واختبار (Test)، ومحتوى (Content)، ومستهلك (Consumer) — وما قد يحتويه كل منها |
-| [الوضع الحالي](architecture/current-state.html) | ما هو موجود بالفعل في هذا المستودع اليوم، بالأرقام المقاسة، وأين يكمن المزيج |
-| [الوضع المستقبلي](architecture/future-state.html) | المستودعات الخمسة المستهدفة وأي دليل يستقر في أيّ منها |
-| [خطة الانتقال](architecture/migration-plan.html) | المراحل 0/I/II/III، والبوابات، وما لم يُحسم بعد |
-| [الحد الأدنى لـ `cat-harness`](architecture/cat-harness-minimum.html) | ما يتبقى في إطار العمل (harness) بمجرد تطبيق معيار "ليس توثيقًا ذاتيًا" كاختبار |
-| [حالات إطار العمل](architecture/harness-instances.html) | ما هي الحالة (instance) في واقعها — المخططات، والتصورات المرئية، والأدوات؛ والأدلة الأربعة؛ والتصيير الافتراضي |
+| [تصنيف المستودعات](../architecture/repo-taxonomy.html) | ما هي أنواع المستودعات الموجودة — أداة (Tool)، واختبار (Test)، ومحتوى (Content)، ومستهلك (Consumer) — وما قد يحتويه كل منها |
+| [الوضع الحالي](../architecture/current-state.html) | ما هو موجود بالفعل في هذا المستودع اليوم، بالأرقام المقاسة، وأين يكمن المزيج |
+| [الوضع المستقبلي](../architecture/future-state.html) | المستودعات الخمسة المستهدفة وأي دليل يستقر في أيّ منها |
+| [خطة الانتقال](../architecture/migration-plan.html) | المراحل 0/I/II/III، والبوابات، وما لم يُحسم بعد |
+| [الحد الأدنى لـ `cat-harness`](../architecture/cat-harness-minimum.html) | ما يتبقى في إطار العمل (harness) بمجرد تطبيق معيار "ليس توثيقًا ذاتيًا" كاختبار |
+| [حالات إطار العمل](../architecture/harness-instances.html) | ما هي الحالة (instance) في واقعها — المخططات، والتصورات المرئية، والأدوات؛ والأدلة الأربعة؛ والتصيير الافتراضي |
 
 يبدو البندان الأخيران وكأنهما يتعارضان — فالحد الأدنى ينص على أن إطار العمل لا ينتج شيئًا ينظر إليه إنسان، بينما تنص صفحة الحالات على أن الحالة تقوم بالتصيير افتراضيًا. لكنهما لا يتعارضان: فالمتطلب هو **حد أدنى يرتفع تدريجيًا**، مع إعفاء `bootstrap` من أداة التصور المرئي مع التزامه بتقديم `.json`/`.jsonld` الخاصة به بدلاً من ذلك، في حين يمثل `cat-harness` الطبقة التي يبدأ عندها تطبيق الباقي. راجع
-[أين يبدأ المتطلب](architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
+[أين يبدأ المتطلب](../architecture/harness-instances.html#where-the-requirement-starts--bootstrap-is-the-exception).
 
 يصف باقي هذه الصفحة الهندسة المعمارية **كما هي عليه الآن**.
 
@@ -93,11 +93,11 @@ flowchart TD
 
 ## محولات المحتوى
 
-يغلف محول المحتوى كل ما يخص نوعًا معينًا: ما هي المخرجات (artifacts) الموجودة، وكيفية التحقق منها، وكيفية بنائها/تصييرها، وما هي أدوات MCP الإضافية التي يجب تسجيلها. ويعد محول `document` (`adapters/document/`) هو الأساس لملفات المحتوى النثرية؛ بينما يوسعه محول `paper` (`adapters/paper/`) ويوفر أدوات دورة حياة Lean (`lean_setup`/`build`/`check`/`status`)، والتحقق، والتصيير (`paper_render_pdf`/`html`، و`formula_render`). وتضيف أنواع المحتوى الجديدة محولاً جديدًا — راجع [إضافة نوع محتوى](guides/new-content-type.html).
+يغلف محول المحتوى كل ما يخص نوعًا معينًا: ما هي المخرجات (artifacts) الموجودة، وكيفية التحقق منها، وكيفية بنائها/تصييرها، وما هي أدوات MCP الإضافية التي يجب تسجيلها. ويعد محول `document` (`adapters/document/`) هو الأساس لملفات المحتوى النثرية؛ بينما يوسعه محول `paper` (`adapters/paper/`) ويوفر أدوات دورة حياة Lean (`lean_setup`/`build`/`check`/`status`)، والتحقق، والتصيير (`paper_render_pdf`/`html`، و`formula_render`). وتضيف أنواع المحتوى الجديدة محولاً جديدًا — راجع [إضافة نوع محتوى](../guides/new-content-type.html).
 
 ## المهارات وحزم المهارات
 
-الـ **مهارة** (skill) هي وحدة عمل موثقة ومقيدة بمخطط بياني (مثل `lean-formalization`). وتُجمع المهارات في **حزم** تعلن عن تبعات Docker وبيئة التشغيل الخاصة بها عبر ملف `package-manifest.json`. ويكتشف النموذج اللغوي الكبير (LLM) المهارات عبر `skill_list` ويحمّل التعليمات عبر `skill_fetch`. وتوجد القائمة الكاملة للمهارات والأدوار — وكيفية تكاملها مع النموذج اللغوي الكبير (RBAC، والقدرات، والمتطلبات) — في صفحة [المهارات والأدوار](skills.html)؛ كما يُنشر عقد المدخلات/المخرجات لكل مهارة في [مرجع مخططات المهارات](reference/skills/).
+الـ **مهارة** (skill) هي وحدة عمل موثقة ومقيدة بمخطط بياني (مثل `lean-formalization`). وتُجمع المهارات في **حزم** تعلن عن تبعات Docker وبيئة التشغيل الخاصة بها عبر ملف `package-manifest.json`. ويكتشف النموذج اللغوي الكبير (LLM) المهارات عبر `skill_list` ويحمّل التعليمات عبر `skill_fetch`. وتوجد القائمة الكاملة للمهارات والأدوار — وكيفية تكاملها مع النموذج اللغوي الكبير (RBAC، والقدرات، والمتطلبات) — في صفحة [المهارات والأدوار](skills.html)؛ كما يُنشر عقد المدخلات/المخرجات لكل مهارة في [مرجع مخططات المهارات](../reference/skills/).
 
 ## نموذج كائنات المحتوى
 
@@ -116,7 +116,7 @@ flowchart TD
 - **مُنفِّذ BPMN**، قبل كل مهمة وقرار (`src/workflow/authorize.ts`): هل الفاعل موثق، ومؤهل لدور المسار (lane)، ومصرح له بـ `perform-task` هنا، ومسموح له بلمس المحتوى؟ وهو استشاري اليوم: فالرفض `deny` أو عدم تطابق الدور يؤدي إلى الرفض، ويتم تسجيل الحالة `unknown`.
 - **مسارات HTTP**، من خلال `src/core/rbac.ts`: يحدد كل مسار الإجراء الذي ينفذه (`content-authoring`، و`review-comments`، و`adjudication`)، وتُعد جلسات بوابة المصادقة (auth-gateway) فاعلين معلنين تكمن منحهم في `policies/http-gateway.jsonld`. وهنا تؤدي الحالة `unknown` إلى الرفض.
 
-حتى المسألة #1207 (2026-09-23)، كان `rbac.ts` سلمًا منفصلاً من viewer < collaborator < owner، ولم يكن المنفذ يتحقق من أي شيء. والانضباط المتبع هو مهارة [`task-authorization`](reference/skill-instructions/task-authorization.html).
+حتى المسألة #1207 (2026-09-23)، كان `rbac.ts` سلمًا منفصلاً من viewer < collaborator < owner، ولم يكن المنفذ يتحقق من أي شيء. والانضباط المتبع هو مهارة [`task-authorization`](../reference/skill-instructions/task-authorization.html).
 
 ## تهيئة خطة العمل (عبر أطر العمل المختلفة)
 

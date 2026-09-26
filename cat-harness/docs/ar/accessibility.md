@@ -21,7 +21,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 وتبين أنهما السؤال نفسه مطروحاً من طرفين مختلفين، ولهذا السبب يشتركان
 في صفحة واحدة. المهارة المنفّذة لذلك هي
-[`interaction-modality`](reference/skill-instructions/interaction-modality.html).
+[`interaction-modality`](../reference/skill-instructions/interaction-modality.html).
 
 1. TOC
 {:toc}
@@ -123,7 +123,7 @@ W3C الخاصة بـ **COGA** ومعيار **WCAG 3.1** — وهو أيضاً �
 | | أين |
 |---|---|
 | تفضيلات موجهة للوكيل، محفوظة في المستودع، وتُقرأ عند بدء الجلسة | `interaction/interaction.json`، وتُوفَّر عبر `scripts/session-start-coord-sweep.sh` |
-| القواعد التي يتبعها الوكيل عند طرح الأسئلة | [`interaction-modality`](reference/skill-instructions/interaction-modality.html) |
+| القواعد التي يتبعها الوكيل عند طرح الأسئلة | [`interaction-modality`](../reference/skill-instructions/interaction-modality.html) |
 | عناصر تحكم موجهة للقارئ في هذا الموقع | رمز الترس في رأس الشريط الجانبي — نص أكبر، تباين أعلى، خط تحت الروابط، تقليل الحركة |
 | مراعاة تقليل الحركة دون الحاجة لطلب ذلك | استعلام الوسائط `prefers-reduced-motion`، وهو الذي يُعيّن القيمة الافتراضية للوحة |
 
@@ -218,6 +218,6 @@ W3C الخاصة بـ **COGA** ومعيار **WCAG 3.1** — وهو أيضاً �
 ## انظر أيضاً
 
 - [البدء](getting-started.html) — جدول قرارات النية قيد الاستخدام
-- [مهارة `interaction-modality`](reference/skill-instructions/interaction-modality.html)
+- [مهارة `interaction-modality`](../reference/skill-instructions/interaction-modality.html)
 - [سير عمل النشر](publication-workflow.html) — كل عملية في المستودع
-- [خيارات حالة سير العمل في beans](proposals/workflow-state-in-beans.html)
+- [خيارات حالة سير العمل في beans](../proposals/workflow-state-in-beans.html)

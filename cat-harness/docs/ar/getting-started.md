@@ -212,7 +212,7 @@ bun run scan:repo -- --json  # the same, as facts
 `relaxable="false"` في مخطط BPMN، فلا يمكن لأي حزمة محتوى إسقاطها.
 
 الانضباط الكامل: مهارة
-[`repo-conversion`](reference/skill-instructions/repo-conversion.html).
+[`repo-conversion`](../reference/skill-instructions/repo-conversion.html).
 
 ## 7. رؤيته منشورًا
 
@@ -338,7 +338,7 @@ beans <id> --status in-progress   # claim an item
 > يزيل التكرار أبدًا. وإعادة تنفيذ خطوة برمجية دون التحقق من الوجود المسبق
 > أنتج **14,688** عنصر bean مكرر في folio واحد خلال ظهيرة يوم واحد. ويوجد
 > التحقق في مهارة
-> [`todo-manager`](reference/skill-instructions/todo-manager.html).
+> [`todo-manager`](../reference/skill-instructions/todo-manager.html).
 
 يُظهر خطاف `SessionStart` الخطة في بداية كل جلسة، وتُتيح أداة
 `work_plan_prime` في MCP الواجهة نفسها لأي وكيل متصل.
@@ -346,8 +346,8 @@ beans <id> --status in-progress   # claim an item
 ## الخطوات التالية
 
 - **[إمكانية الوصول](accessibility.html)** — كيف يسأل الوكيل، وأداة التحكم في الإعدادات على هذا الموقع
-- **[درس تعليمي — كتابة ورقة علمية](guides/writing-a-paper.html)**
-- **[كتابة مستند](guides/writing-a-document.html)**
+- **[درس تعليمي — كتابة ورقة علمية](../guides/writing-a-paper.html)**
+- **[كتابة مستند](../guides/writing-a-document.html)**
 - **[أنواع المحتوى](content-types.html)** — الصياغة الشكلية لكل مجال
 - **[مسار عمل النشر](publication-workflow.html)** — كل عملية في المستودع
 - **[البنية الهندسية](architecture.html)** — المحولات، والمهارات، ونموذج الكتل البرمجية
