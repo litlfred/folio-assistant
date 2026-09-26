@@ -59,4 +59,48 @@ has no error channel — but it *logs*, since a traversal attempt and a typo loo
 identical in an empty array. `writeFeedback` **throws**, because a refused write
 has no correct no-op: the caller believes the item was saved and will tell a
 person so.
+
+## Then two MORE sinks, 2026-09-26 — and this is the lesson, not the list
+
+The three above were fixed. **Two others in the same file were not**, and were
+found only by re-reading every `join()` rather than the ones the bean named:
+
+| route | sink | primitive |
+|---|---|---|
+| `POST /api/import/upload` | `id = paperId \|\| <slugified>` → `join()`; `filename = file.name` → `writeFileSync` | **arbitrary file write, path AND content** |
+| `POST /api/import/scan` | `join(UPLOADS_DIR(), body.paperId)`, then `join(uploadDir, tf)` for each `meta.files` member | **arbitrary file read, two chained** |
+
+> **A fix aimed at the sinks an audit LISTED leaves the sinks it did not.** The
+> bean that found the first three also wrote the helper, and the helper was
+> correct, and the routes it did not name stayed broken. Enumerate the sink
+> shape — every `join()` reached from a request — not the instances a previous
+> pass happened to catch.
+
+Three specifics worth carrying:
+
+**The fallback was sanitised and the supplied value was not.** `id = paperId ||
+file.name.replace(/[^a-z0-9-]/gi, "-")` reads as defended, and the branch that
+is defended is the one nobody attacks. Check the value you were *given*, not the
+one you would have invented.
+
+**A file name needs `basename` AND `safeSegment`, in that order.** `basename`
+reduces `../../etc/passwd` to `passwd`, which is contained — but
+`basename("..")` is `".."`, which is not a name. Either alone admits something.
+
+**A second traversal can survive fixing the first.** `/api/import/scan` reads
+`meta.files` out of `import-meta.json`, which `/api/import/upload` writes from
+the uploaded file's own name. So validating `paperId` left the read primitive
+fully reachable through a member name, with no traversal in the identifier at
+all. **Ask where each element of a parsed structure came from, not just the
+parameter.** That one is `realPathWithin` rather than `safeSegment`, because a
+`.tex` may legitimately sit in `sections/`: the question there is containment,
+not single-segment-ness.
+
+### The gate, and what it cannot do
+
+`scripts/tests/server-path-sinks.test.ts` — 8 of its 13 tests fail against the
+pre-fix server and all 13 pass after, verified by reverting the file. It is a
+**source ratchet** and says so: it proves the guard has not been deleted, never
+that a value is checked on every path to a sink. It asserts its own non-vacuity,
+because a renamed server would otherwise make every `not.toContain` pass.
 {% endraw %}

@@ -119,8 +119,9 @@ repository today and is not a property of the class.
       member-type whitelist
 - [ ] A gate finds an external value reaching a path join, so the property does
       not drift back
-- [ ] A `security` skill package exists and points at all of the above instead of
-      the knowledge sitting in four unrelated files
+- [x] A `security` skill package exists and points at all of the above instead of
+      the knowledge sitting in four unrelated files — **built by a sibling
+      session**, 2026-09-26 10:34; extended here with today's findings
 - [ ] `steps.*.outputs` laundering is recorded on `1wef`'s gate as a known model
       gap with its measurement
 
@@ -248,3 +249,49 @@ Its weakness is stated in its own header: the extraction logic is inline in the
 server's `fetch`, so the predicates are restated in the test. It pins the RULES
 against real tar; `server-path-sinks.test.ts` pins that the server still applies
 them. Neither is sufficient alone.
+
+## The `security` package box — a sibling built it; this extended it
+
+`skills/security/` existed before I looked: `security.md`, `path-containment.md`,
+`injection-boundaries.md`, manifest listing all three, created 2026-09-26 10:34
+while I was sweeping stale PRs. **Eleventh near-duplication of the session, and
+the first one caught by looking before building rather than after pushing.**
+
+Its axis is better than the one I would have reached for: split on **where a
+value crosses a boundary**, not on attack name, because an attack-name split
+files one rule in three places — the same value at the same boundary is XSS,
+traversal or command injection depending only on the sink.
+
+What it could not contain was work done after it was written, so three of its
+statements had gone stale in the hour between:
+
+| it said | now |
+|---|---|
+| the path boundary is "guarded, not yet gated" | narrowly gated — `server-path-sinks.test.ts` |
+| the archive boundary is "guarded at one site" | **closed** at that site by a member-TYPE whitelist |
+| `..`-refusal is the residual, listed as open | closed, with the real `tvzf` listing showing why names cannot substitute |
+
+A stale gap notice is worse than none — `AGENTS.md` says so about itself — so
+those are corrected rather than appended to.
+
+Added to `path-containment.md`, as the lesson rather than a longer list:
+
+> **A fix aimed at the sinks an audit LISTED leaves the sinks it did not.** The
+> bean that found the first three also wrote the helper, and the helper was
+> correct, and the routes it did not name stayed broken.
+
+plus the three specifics worth carrying — the sanitised fallback beside the
+unchecked supplied value; `basename` AND `safeSegment`, in that order, since
+either alone admits something; and a second traversal surviving the fix to the
+first, because `meta.files` comes out of a file the upload route writes.
+
+## The derived-artefact chain, again
+
+Editing three skill BODIES staled six generated files. Ran the full chain —
+`gen-skill-docs`, `gen-schema-docs`, `glossary:export`, `glossary:page`,
+`docs:auto`, `docs:harness`, `gen:jsonld`, `kg:detangle`, `kg:audit` — and
+`uml:overview:check` was STILL red. As on #1290, `bun run uml:overview` does not
+clear it and `bun run cat-harness/scripts/gen-uml-overview.ts` does: 320 files.
+**That is twice today the same gotcha cost a round**, and it is the #1348/#1365
+shape in miniature — the chain is longer than the file list suggests, and the
+`:check` variant is the only thing that says so.
