@@ -3,8 +3,9 @@
 title: Contention inflates a per-test budget ~35x, and vxho fixed ONE of 505 files — two more just failed on main
 status: todo
 type: bug
+priority: normal
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-26T03:31:40Z
+updated_at: 2026-09-26T17:53:41Z
 parent: folio-assistant-1xhc
 ---
 
@@ -100,3 +101,40 @@ somebody stops, with no way to know when it is done.
 
 Recorded and left `todo`. The session that found it was doing unrelated work
 (`ymsu`) and deliberately did not pivot.
+
+
+## Third independent confirmation, and one piece of evidence the bean does not yet have — 2026-09-26, ~17:30
+
+Seen again on `81461747918` (a beans-only branch, no source change), inside
+`bun run gates`. Same two files. **Not appending a duplicate observation: the new
+element is that the failing SET VARIES between runs of the identical commit.**
+
+    full run A   buildReport — absence is absence
+                 the sweep's profile gate … > a paper-only criterion is n/a'd in a document folio
+    full run B   the sweep's profile gate … > the same criterion runs in a paper folio
+                 the sweep's profile gate … > a folio whose config cannot be read keeps its coverage
+
+Four distinct test names across two runs, drawn from the same two files, same
+commit, same container. Then `bun test cat-harness/scripts/tests/profile-scoping.test.ts`
+alone: **16 pass / 0 fail, three times.**
+
+"Passes in isolation" is consistent with a deterministic environment difference.
+**A set that varies run to run is not** — it rules that out and leaves contention,
+which is what this bean already says. The same discriminator settled a navbar e2e
+question earlier today from the opposite direction: a deterministic browser
+difference names the same elements every time, so a varying set meant a race.
+
+CI on that same commit reported **1** `bun test` failure, not 3 — main's `t8g3`
+drift and nothing else — so the runner does not reproduce it and the local gate set
+is the surface that misreports.
+
+Consequence worth recording for whoever takes this: **`bun run gates` and
+`check:merged` inherit it.** A session comparing a local gate run against CI sees
+2-of-158 locally against CI's 2 and has to establish, by hand and per run, that the
+extra names are not findings. That is the third time in one session that a local
+gate reading had to be discounted against CI — the other two were `xd1g`-class
+residue (`3vc1`) and the `pull_request` merge-ref discovery (`g5o5`).
+
+Status untouched, no claim taken — this is somebody else's to work; the evidence is
+recorded here rather than in a new bean because `check before you create` would have
+had me open a duplicate of it.
