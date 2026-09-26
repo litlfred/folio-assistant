@@ -552,6 +552,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/headless-render-qc",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Headless render QC (Playwright)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering."
+        }
+      ],
+      "skos:notation": "headless-render-qc",
+      "dcterms:source": "cat-harness/tools/index.ts#headless-render-qc",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/ingest-extended",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1489,6 +1509,46 @@
       ],
       "skos:notation": "tabular-xlsx",
       "dcterms:source": "cat-harness/tools/index.ts#tabular-xlsx",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/tex-snippet-validate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TeX snippet validation (AST)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one."
+        }
+      ],
+      "skos:notation": "tex-snippet-validate",
+      "dcterms:source": "cat-harness/tools/index.ts#tex-snippet-validate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/tex-source-audit",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TeX-source hazard audit"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion."
+        }
+      ],
+      "skos:notation": "tex-source-audit",
+      "dcterms:source": "cat-harness/tools/index.ts#tex-source-audit",
       "skos:note": "candidate"
     },
     {

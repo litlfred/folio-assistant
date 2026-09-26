@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-26T18:09:12Z
-updated_at: 2026-09-26T18:35:08Z
+updated_at: 2026-09-26T20:10:30Z
 parent: folio-assistant-1xhc
 ---
 
@@ -161,3 +161,136 @@ Every number above is from `grep`/`sed` over the committed file at
 error suppression and conditionals that found none. The CI side is job
 `108460536992` (run `36262379984`): step #45 fails, its log ends at
 `translation:drift:check` exit 1, and steps #46–#50 are `skipped`.
+
+
+---
+
+## 2026-09-26 20:05Z — the batch went GREEN, and its first live run caught a real defect
+
+`translation:drift:check` now exits 0. #1411 (`9rrb`) replaced the CLI's
+hard-coded list of five page names with discovery from the tree — 5×5 to 13×5 —
+and took drift from 36 findings to 0 new. Measured on a merged tree, not read
+off the PR title.
+
+So the 103 gates this bean counted are **live for the first time since they were
+registered**. What happened on the very first run is the argument this bean was
+making, in one line:
+
+> `check:partition` — workflow line **1366**, which is **414 lines after** the
+> drift gate at 952 — failed immediately, on a real omission: a script added
+> hours earlier (`scripts/check-available-locales.ts`, #1431) was `unassigned`,
+> with 2 import edges the tool declined to judge.
+
+The gate was correct, the finding was mine, and it was **one command away from
+being caught at any point that afternoon.** It could not fire, so it did not.
+Fixed by classifying the module in `partition/instance-rules.ts`; the gate now
+reports 0 unassigned and 0 wrong-direction edges.
+
+That is the cost of masking stated without any need for analogy: **a gate in the
+masked region does not merely fail to protect, it accumulates unreported
+defects, and they all arrive at once when the mask lifts.** A sibling session's
+commit message the same day lists `check:partition` among the gates its chosen
+subset had missed — so this gate has now caught two sessions' omissions in one
+afternoon, having been unable to report either.
+
+## This bean does NOT close
+
+The masking is **latent, not fixed.** The step is still one `run: |` block of 106
+gates under `set -e`, and `translation:drift:check` is still its third member.
+Nothing structural changed: the next member that goes red — deliberately or
+otherwise — re-masks every gate after it, and which gates those are is still not
+chosen but merely whatever happens to be later in the file.
+
+What changed is the **price of the fix**, and it went down. Splitting
+`translation:drift:check` out and making it the LAST step in the job can now be
+done while the batch is green, so the change is verifiable end to end: every one
+of the 106 can be observed passing before and after. Doing it while the batch was
+dead meant moving gates whose behaviour nobody could see.
+
+**So this is the moment to do it, and it is still not mine to do** — it
+restructures 106 gates that are not mine, on the owner's call. Recorded here
+rather than acted on.
+
+
+---
+
+## CORRECTION 2026-09-26 20:12Z — the anecdote above is wrong, and the count moved again
+
+Two errors in the entry directly above, both mine, both published before they
+were checked.
+
+### 1. `check:partition` was NOT unreachable. It has an unmasked test twin.
+
+I wrote that its finding was *"one command away from being caught at any point
+that afternoon, by a gate that could not run."* False.
+`scripts/tests/adapter-layering.test.ts:42` calls the **same** `analyse()` and
+asserts `nothing is unassigned`, and it runs under `bun test` — the `TypeScript`
+job, which masking never touched. CI proved it: on `f54e8c812c` the TypeScript
+job failed naming that exact test, alongside the gate.
+
+So the defect was catchable the whole time, and the real cause of its late
+discovery was **mine**: I pushed after running a chosen handful of gates and
+killed the full run before it reached the test phase. That is
+*"a subset of the gate set is not the gate set"* — committed while writing a bean
+entry about masking, which is the more useful lesson and the reason the wrong
+version stays here rather than being edited away.
+
+### 2. 106 and 103 are now 107 and 104
+
+Re-measured by locating the step **by name** rather than by the line numbers
+recorded above — which had shifted, because this branch inserted a step of its
+own at line 941:
+
+| | |
+|---|---|
+| step `gates that were registered and never run` | lines 944–1498 (555 lines) |
+| `bun run` invocations | **107** |
+| `translation:drift:check` | **#3**, line 968 |
+| masked after it | **104** |
+| `check:partition` | line 1366 |
+
+One of the two is main's 39-commit merge adding a gate to the batch; the other is
+that my original extraction overran the step boundary into the next step's `run:`
+block. **That is the third time a count in this bean has gone stale inside two
+hours**, which is the strongest available argument for its own standing rule: do
+not quote a count from prose, re-derive it.
+
+### What replaces the anecdote — a bounded measurement
+
+For each of the 104 masked gates, whether any test file references the same
+script (matched on script basename):
+
+- **86** — a test references it. Masking removes one of two lines of defence.
+- **18** — no test references it. **Masking is their only line of defence**, and
+  these are the gates where a red in the batch genuinely means nothing is
+  watching: `landing:data:check`, `check:declaration-claims`,
+  `check:ready-to-close`, `check:waivers`, `check:artifact-index`,
+  `smart-trust:pages:check`, `check:theme-art:check`,
+  `check:workflow-script-paths`, `check:portable-paths`,
+  `check:instance-config`, `check:avatar-instances`, `check:folio-mount`,
+  `check:instance-graph`, `check:ci-invocations`, `check:schema-nodes`,
+  `check:source-licence`, `check:wireframes`, `gen:jsonld:check`.
+
+**Both numbers are bounds, not counts.** A test that merely mentions the script's
+basename counts as a twin, so 86 is an UPPER bound on protection and 18 a LOWER
+bound on the truly unprotected. Stated as bounds because the alternative is a
+precise-looking number that a reader would take for a census — the same mistake
+the entry above made.
+
+So the cost of masking is **18 gates outright**, not 104. Smaller than I claimed,
+still worth fixing, and now stated in a form that does not need retracting.
+
+## The un-masking, OBSERVED rather than predicted
+
+CI on `897129e7e9`, `Repository gates`, all steps green:
+
+- step 46, the batch: **84 seconds** (20:03:44 → 20:05:08) rather than dying in
+  one — so all 107 members ran.
+- steps 47–51: **success**, where every prior run recorded `skipped`. Among them
+  step 51, **`translation index is current`** — the gate this bean singled out,
+  whose masking is why a stale `docs/_data/translations.json` had to be repaired
+  by hand earlier the same day. It had never executed.
+
+That is the whole of this bean's claim, confirmed by observation. The
+recommendation is unchanged and the masking is still latent, for the reasons in
+the entry above.

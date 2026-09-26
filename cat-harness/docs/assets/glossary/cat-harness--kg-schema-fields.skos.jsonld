@@ -14775,6 +14775,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/kg-qa.kgcriteriondefinition.scope",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgCriterionDefinition.scope"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "WHICH INSTANCE ROOT can answer it — the second axis beside {@link applies}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/kg-qa.ts#KgCriterionDefinition.scope",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/kg-qa.kgcriteriondefinition.scopebasis",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgCriterionDefinition.scopeBasis"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why this criterion is `repo`-scoped. Required for `repo`, absent for `instance`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/kg-qa.ts#KgCriterionDefinition.scopeBasis",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/kg-qa.kgcriteriondefinition.summary",
       "@type": "skos:Concept",
       "skos:inScheme": {

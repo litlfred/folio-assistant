@@ -40,10 +40,12 @@ import type { WebPage, WebPageNode } from "../schemas/webpage.ts";
 import { resolveTarget } from "../schemas/todo-index.js";
 import { renderTodoListing } from "./todo-listing.js";
 import { SEMANTIC_ZOOM_FILE, readSemanticZoom } from "../schemas/semantic-zoom.js";
-import { availableLocales } from "../content/pipeline/po-resolve.ts";
 import {
-  localesAvailableFor,
+  buildTranslationIndex,
+  localesReadableFor,
+  pageKey,
   sourceLocale,
+  type TranslationIndex,
 } from "../content/pipeline/translation-index.ts";
 import {
   QA_FAMILY_LABEL,
@@ -701,23 +703,64 @@ function manifestRef(page: WebPage): string {
   return `content/docs/${page.slug.replace(/\//g, "-")}/`;
 }
 
+/**
+ * The rendered corpus's translation index, built ONCE and lazily.
+ *
+ * Lazily because five test files import this module, and walking the whole site
+ * directory at import time is a cost every one of them would pay for nothing —
+ * the `654 subprocesses at import` shape, one module over.
+ *
+ * It **throws** rather than degrading when the index cannot be determined, and
+ * that choice is the load-bearing one. Falling back to the source locale alone
+ * would stamp a NARROWER claim than the truth and look perfectly clean doing
+ * it: every page would read "English only", no gate would fire, and the
+ * language bar would quietly lose every translation in the corpus. That is the
+ * `dh4f` defect exactly — a consumer scanning nothing and reporting a clean run
+ * over it. An unreadable index is a third state, not an empty one.
+ */
+let TRANSLATION_INDEX: TranslationIndex | undefined;
+function translationIndex(): TranslationIndex {
+  if (TRANSLATION_INDEX !== undefined) return TRANSLATION_INDEX;
+  const { index, findings } = buildTranslationIndex(REPO_ROOT);
+  const hard = findings.filter((f) => f.severity !== "note");
+  if (hard.length > 0) {
+    throw new Error(
+      "the translation index could not be determined, so `available_locales` " +
+        "cannot be stamped:\n" +
+        hard.map((f) => `  ${f.severity}  ${f.where}: ${f.message}`).join("\n"),
+    );
+  }
+  TRANSLATION_INDEX = index;
+  return index;
+}
+
 function renderPage(page: WebPage): string {
   const lines: string[] = [];
-  // Auto-detect available translations for this page.
+  // Which languages can a reader read THIS page in — asked of the rendered
+  // corpus, not of the catalogue directory.
   //
-  // `localesAvailableFor` folds in the SOURCE language, which `availableLocales`
-  // cannot: it resolves `translations/<locale>/<stem>.po`, and the source
-  // language has no such directory by construction. Stamping the PO-derived
-  // list alone is what made the coverage badge read `0/5` on a page that
-  // plainly exists in English, and it disagreed with what the hand-authored
-  // translated pages stamp — those carry the full set they are available in,
-  // which is the meaning this now writes for both halves of the corpus.
-  // Issue #687, bean `czct`.
-  const stem = page.slug.replace(/\//g, "-");
-  const locales = localesAvailableFor(REPO_ROOT, [
-    SOURCE_LOCALE,
-    ...availableLocales(REPO_ROOT, stem),
-  ]);
+  // `available_locales` is defined by `translation-manager.md` as *"which
+  // languages can I read this page in"*, and it deliberately includes the
+  // source language. A `.po` file does not answer that question: it is intent
+  // to translate. Stamping the PO-derived list conflated the two in BOTH
+  // directions — `crdm-methodology` claimed French on the strength of a
+  // 25-line catalogue with one filled entry and no French page anywhere, while
+  // five pages rendered in all five target locales with no catalogue stamped
+  // `["en"]` and hid their own translations from the language bar. Bean `9x01`.
+  //
+  // Issue #687 and bean `czct` are still why the SOURCE language is folded in
+  // rather than left out, and why both halves of the corpus must stamp the same
+  // meaning: the PO-derived list alone made the coverage badge read `0/5` on a
+  // page that plainly exists in English, and disagreed with what the
+  // hand-authored translated pages stamp. That rule is unchanged. What changed
+  // is where the target locales come from.
+  //
+  // `pageKey(page.slug)` and NOT the `.po` stem: the stem is
+  // `slug.replace(/\//g, "-")`, so `guides/who-smart-ig` becomes
+  // `guides-who-smart-ig` — a key that matches no page and silently resolves to
+  // "source language only". Measured on this corpus the two happen to give the
+  // same answer, which is precisely why it needs saying.
+  const locales = localesReadableFor(REPO_ROOT, translationIndex(), pageKey(page.slug));
 
   lines.push("---");
   lines.push("layout: default");
