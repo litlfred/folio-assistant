@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-09-26T07:38:20Z
-updated_at: 2026-09-26T12:21:59Z
+updated_at: 2026-09-26T14:17:46Z
 parent: folio-assistant-1xhc
 ---
 
@@ -325,3 +325,57 @@ green.
 
 Recorded rather than silently fixed, because a reviewer reading "a gate refuses an
 undeclared skill" should know it currently does not.
+
+
+
+--------
+
+## 2026-09-26T14:20Z — CORRECTION TO THE CORRECTION: the gate RAN, and passed
+
+The entry above says `skill:register:check` *"has not executed once"*. **That was
+true when written and is no longer true.** Evidence:
+
+    run 36247786373, head 0ae70b6be2, job `Repository gates (hard)`
+      step 31  every skill is declared, and declares nothing absent   SUCCESS
+
+First execution, and it passed.
+
+### What changed, and it was not me
+
+Main split the workflow (bean `om30`): the gates moved out of `typescript` into a
+new `Repository gates (hard)` job with **deliberately no `needs: typescript`**, on
+exactly the argument this bean recorded — *"`bun test` was step 2 of 47 here, and
+Actions stops a job at its first failing step … 113 `bun run` invocations did not
+execute at all."*
+
+So my gate is now step 31 of 45 in a job that never runs `bun test`. It is no
+longer structurally inert.
+
+**Two independent sessions reached the same finding within the hour** — `om30` from
+main, and this bean plus `9cc0` from here, each measuring a different run
+(`36234052354` and `36238697037`). Neither knew of the other. That is the tenth
+collision of the session and the first where both parties were right and the fix
+came from the one who owned the workflow.
+
+### It still was not free of the shape, one level in
+
+On the PREVIOUS head `56e6c4bde7` the same job failed at **step 11**, *"glossary
+page and SKOS"* — three stale `kg-skills` glossary files, **mine** — so steps 12-45
+were skipped and my gate at 31 did not run *again*, now behind my own staleness
+rather than behind `bun test`. First-failure-skips-rest applies inside the new job
+too; what changed is that a red `bun test` no longer reaches it.
+
+Fixed by the merge that regenerated those three files, which is why step 31 shows
+success on `0ae70b6be2`.
+
+### And step 33 caught something real of mine in the same run
+
+`audit:coverage` failed there: an earlier `--theirs` merge resolution on
+`audit-coverage.qa-results.json` had dropped this branch's two entries, and
+**`audit:coverage` is not one of the six steps in `skill:register`**, so the chain I
+run after every merge could not restore it. Regenerated in a clean worktree;
+`require-all` and `:strict` both exit 0 at `49e58e76c2`.
+
+Worth keeping as a rule: taking `--theirs` on a generated file is correct for a
+parseable base, but it needs a regeneration to follow, and the registration chain
+does not cover every generated artefact.
