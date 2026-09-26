@@ -2,6 +2,8 @@
 layout: default
 title: Getting started
 nav_order: 3
+supported_locales: ["ar", "zh", "en", "fr", "ru", "es"]
+available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 # Getting started
