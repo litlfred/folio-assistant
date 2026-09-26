@@ -12,7 +12,7 @@ import { join } from "node:path";
 
 import { describe, expect, test } from "bun:test";
 
-import { classify, resolveProvenance, scanWorkflows, yieldsOnlyLiterals } from "../check-workflow-injection.ts";
+import { baselineKey, classify, resolveProvenance, scanWorkflows, yieldsOnlyLiterals } from "../check-workflow-injection.ts";
 
 function workflows(body: string): string {
   const dir = mkdtempSync(join(tmpdir(), "injection-"));
@@ -363,5 +363,97 @@ describe("a value bound ABOVE the step still reaches its output", () => {
     expect(prov.get("a.v")).toBe("free-text");
     // `w` binds nothing and sits under no wider env — it must stay clean.
     expect(prov.has("a.w")).toBe(false);
+  });
+});
+
+describe("`script:` blocks are JavaScript, and the same values land in them (bean `j0zs`)", () => {
+  // Live here, not hypothetical: `feature-staging.yml` interpolated the RAW fork
+  // branch name into a JS TEMPLATE LITERAL, where `${…}` is evaluated — and
+  // `git check-ref-format --branch 'a${process.exit(1)}b'` is LEGAL. Meanwhile
+  // `folio-staging.yml`, doing the same job, had used `process.env` all along.
+  test("free text in a `script:` block is reported, and the surface says so", () => {
+    const f = scanWorkflows(
+      workflows(
+        [
+          "jobs:",
+          "  a:",
+          "    steps:",
+          "      - uses: actions/github-script@v9",
+          "        with:",
+          "          script: |",
+          "            const t = '${{ github.event.pull_request.title }}';",
+          "",
+        ].join("\n"),
+      ),
+    );
+    expect(f.map((i) => [i.severity, i.surface])).toEqual([["free-text", "script"]]);
+  });
+
+  test("a `run:` finding still says `run:` — the surface is read, not assumed", () => {
+    const f = scanWorkflows(
+      workflows(
+        ["jobs:", "  a:", "    steps:", "      - run: echo '${{ github.event.comment.body }}'", ""].join("\n"),
+      ),
+    );
+    expect(f.map((i) => i.surface)).toEqual(["run"]);
+  });
+
+  test("an ordinary `with:` input is still NOT graded — only `script:` is code", () => {
+    // The scope line and the remedy line collided at exactly one key, and this
+    // pins that only that one key moved. Widening to all of `with:` would flag
+    // the remedy itself.
+    const f = scanWorkflows(
+      workflows(
+        [
+          "jobs:",
+          "  a:",
+          "    steps:",
+          "      - uses: x@v1",
+          "        with:",
+          "          title: ${{ github.event.issue.title }}",
+          "",
+        ].join("\n"),
+      ),
+    );
+    expect(f).toEqual([]);
+  });
+
+  test("the baseline key carries the surface, so one decision cannot baseline the other", () => {
+    const base = { workflow: "w.yml", line: 1, expression: "github.head_ref", severity: "constrained" } as const;
+    expect(baselineKey({ ...base, surface: "run" })).toBe("w.yml (run): github.head_ref");
+    expect(baselineKey({ ...base, surface: "script" })).toBe("w.yml (script): github.head_ref");
+    expect(baselineKey({ ...base, surface: "run" })).not.toBe(baselineKey({ ...base, surface: "script" }));
+  });
+
+  test("a `script:` block ends at its indentation, like a `run:` block", () => {
+    // Otherwise the walker keeps scanning into the next step and attributes its
+    // expressions to the wrong surface — which is a wrong remedy, not just a
+    // wrong label.
+    const f = scanWorkflows(
+      workflows(
+        [
+          "jobs:",
+          "  a:",
+          "    steps:",
+          "      - uses: actions/github-script@v9",
+          "        with:",
+          "          script: |",
+          "            const ok = 1;",
+          "      - run: echo '${{ github.event.comment.body }}'",
+          "",
+        ].join("\n"),
+      ),
+    );
+    expect(f.map((i) => i.surface)).toEqual(["run"]);
+  });
+
+  test("the real corpus HAS `script:` blocks that are scanned — else this is inert", () => {
+    // The guard that matters. If the `script:` detection breaks, every finding
+    // in that surface silently disappears and the gate goes green having looked
+    // at one of two surfaces. `could not determine` is never rendered as clean,
+    // and neither is `did not look`.
+    const found = scanWorkflows();
+    const scripts = found.filter((i) => i.surface === "script");
+    expect(scripts.length).toBeGreaterThan(0);
   });
 });
