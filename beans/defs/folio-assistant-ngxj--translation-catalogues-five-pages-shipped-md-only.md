@@ -106,3 +106,30 @@ A person, not a process — stated with an expiry per `bean-blocking`:
 - [ ] `v625`'s open item (*"`translation:drift:check`'s 25 … are somebody's"*) can
       point here rather than at nobody
 
+---
+
+## 2026-09-26, later: the recording was landed and then REVERTED, citing this decision
+
+A sibling recorded all 25 in `UNCATALOGED` (`#1381`) and it merged, which briefly
+took `translation-drift` to 18 pass / 0 fail and made this bean's ask look moot. It
+was then undone: `e9f30a78c1` — **"Revert the 25 UNCATALOGED entries — they
+collided with a decision and with PR #1381"**.
+
+So the owner's choice was honoured by the corpus rather than only by the sessions
+that read it. Measured after, in a clean worktree at `origin/main` `e925d8ec81`:
+
+    UNCATALOGED                     2 entries (the pre-existing agent-onboarding pair)
+    translation:drift:check          25 findings, exit 1
+    translation-drift.test.ts        17 pass / 1 fail
+
+Identical to the state this bean was opened on. **Nothing about the ask changed,
+and nothing about the measurement needs re-deriving** — the per-page table above
+and the regression evidence (`index.po` 2026-09-19, `agent-onboarding.po`
+2026-09-21, then five `.md`-only batches on 2026-09-26) are unaffected by who
+recorded what in between.
+
+The one thing that DID change is the strength of the record: an agent reading this
+bean now has a merged commit saying the recording route was taken and withdrawn,
+so it does not have to re-litigate option 2 from scratch. Recording is still
+available and still only on the owner's own instruction.
+
