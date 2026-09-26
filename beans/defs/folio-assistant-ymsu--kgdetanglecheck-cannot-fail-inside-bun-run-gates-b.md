@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-26T15:15:42Z
+updated_at: 2026-09-26T18:36:04Z
 parent: folio-assistant-1xhc
 ---
 
@@ -606,3 +606,57 @@ All three gates added on this branch ran in that CI run and passed:
 `check:rendered-labels` (step 22), `translation:pot:check` (step 43, by the
 argument above), and the whole `Skill-registration chain, unmasked (hard)` job
 (10s, green).
+
+
+## The declaration gate CANNOT FIRE in CI — which is how `main` landed a gate without one
+
+2026-09-26, PR #1425. A clean instance of this bean's mechanism, and the
+consequence is already visible on `main`.
+
+`check:artefact-verification` exists to catch exactly one thing: a NEW
+generated-artefact check registered with no statement of what verifies it for a
+consumer. It is red right now, naming `translated-links:check`, which `main`
+landed the same day.
+
+**It is red on `main` too** — measured in a clean worktree of `origin/main`, not
+inferred. So `main` shipped a gate without its declaration, and the gate whose
+whole purpose is catching that omission did not stop it.
+
+### Why it could not stop it
+
+Both live in step 44 of the `gates` job, `gates that were registered and never
+run`, which opens `set -e`. The command order inside it:
+
+| position in the step | command |
+|---|---|
+| 3rd | `translation:drift:check` — **RED on `main` by decision** (bean `ngxj`) |
+| … | … |
+| far below | `check:artefact-verification` |
+
+So the step dies at the third command and `check:artefact-verification` is never
+executed in CI, on `main` or on any branch. It is registered, it is wired, and it
+has no reachable verdict — this bean's third state exactly, and `1xhc`'s
+sentence: a gate that does not fire is indistinguishable from one that passed.
+
+### The part that makes this measurable rather than theoretical
+
+`bun run gates` locally reported **3** failures; CI's `Repository gates` reports
+**1**. The difference is not the tree — it is that bun's script runner executes
+every gate while a GitHub step stops at its first failure. So the only instrument
+that saw `main`'s missing declaration was a local full run, and nothing in CI
+will report it until the accepted drift red clears.
+
+That inverts the usual worry on this bean. The familiar hazard is CI being
+LENIENT where local is strict (`bun test` repairing an artefact). Here local is
+strictly more informative than CI, for a structural reason, and an agent that
+trusts CI over its own gate run will conclude the repository is cleaner than it
+is.
+
+### Adds to "Done when"
+
+- [ ] `check:artefact-verification` is reachable — moved ABOVE the accepted drift
+      red, or given its own step. MEASURED AFTER: with drift still red, CI reports
+      the missing-declaration failure by name
+- [ ] the count of gates in step 44 that sit BELOW the drift command is reported
+      somewhere a reader sees. They are all in the same position and none of them
+      can fail today
