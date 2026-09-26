@@ -23,7 +23,7 @@
  * @covers skills, docs
  */
 
-import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
 import { join, resolve, basename, relative, isAbsolute, sep } from "path";
 
 import { isSkillMd, kgDirectories } from "./known-skills.js";
@@ -653,7 +653,12 @@ function publishedLocation(
   //    only `index.md`, so those nine sources publish NOWHERE, and the bean's
   //    instruction to give them a site-relative path would have composed nine
   //    links to pages that do not exist.
-  return `https://github.com/litlfred/folio-assistant/blob/main/${rel}`;
+  // `tree` for a directory, `blob` for a file. GitHub serves a directory under
+  // `blob/` as a 404, so getting this wrong would trade one broken link for
+  // another — and the directory case only started arriving here when the
+  // matcher below learned to see it.
+  const kind = statSync(abs).isDirectory() ? "tree" : "blob";
+  return `https://github.com/litlfred/folio-assistant/${kind}/main/${rel}`;
 }
 
 function rebaseLinks(
@@ -663,7 +668,7 @@ function rebaseLinks(
   processPages: ReadonlyMap<string, string>,
 ): string {
   return text.replace(
-    /\]\((\.{0,2}[^)\s:]*?\.[A-Za-z0-9]+)(#[^)\s]*)?\)/g,
+    /\]\((\.{0,2}[^)\s:]*?(?:\.[A-Za-z0-9]+|\/))(#[^)\s]*)?\)/g,
     (whole, target: string, anchor?: string) => {
       if (isAbsolute(target) || target.startsWith("#")) return whole;
       const published = publishedLocation(baseDir, target, flat, processPages);
