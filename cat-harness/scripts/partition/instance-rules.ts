@@ -845,6 +845,9 @@ export const RULES: Rule[] = [
       // Bean `e8m3`. Harness by subject: it reads the declared `bean-defs` graph
       // and the work plan is the harness's own, not any folio's content.
       "scripts/check-bean-archive.ts",
+      // Bean `6ptx`. Harness by subject: a survey is of THIS repository's own
+      // commit history and work plan, which no folio has as content.
+      "scripts/survey.ts",
       // Its subject is the harness's OWN declaration filename — which file
       // names an instance — so it is harness by subject as well as by
       // dependency: it imports `schemas/cat-harness.js` for the constant and
