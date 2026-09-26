@@ -1,11 +1,11 @@
 ---
 # folio-assistant-thsz
 title: 'PAGES REPORT: a cancellation share cannot tell coalescing from starvation, and it read as alarming to its own author'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-25T16:28:41Z
-updated_at: 2026-09-25T16:29:01Z
+updated_at: 2026-09-26T03:54:28Z
 parent: folio-assistant-1xhc
 ---
 
@@ -60,14 +60,14 @@ succeed?"* already is in this same function.
 
 ## Done when
 
-- [ ] the section says whether the **newest settled** deployment succeeded, and
+- [x] the section says whether the **newest settled** deployment succeeded, and
       when the last success was
-- [ ] `latest` and newest-settled are kept apart — `latest` is `pages[0]`, which
+- [x] `latest` and newest-settled are kept apart — `latest` is `pages[0]`, which
       is routinely still in flight (it was, in the run that produced this bean)
-- [ ] a reader can tell coalescing from starvation **without** knowing how
+- [x] a reader can tell coalescing from starvation **without** knowing how
       GitHub Pages schedules deployments
-- [ ] still no graded share, and no staleness threshold
-- [ ] a mutation over each new branch is caught by a NAMED test
+- [x] still no graded share, and no staleness threshold
+- [x] a mutation over each new branch is caught by a NAMED test
 
 ## Not in scope
 
@@ -75,3 +75,26 @@ Reducing the cancellations. That is the publish-ref contention (`yzsj`, closed;
 anything past it is new ground), and this bean is about the report being
 readable, not about the number being smaller.
 
+---
+
+## Summary of Changes — re-derived and closed 2026-09-26
+
+Shipped in [PR #1350](https://github.com/litlfred/folio-assistant/pull/1350),
+merged. Like `c3d7` beside it, this bean was left `in-progress` with every box
+unticked after its work landed — the `4d22` orphan shape, twice in one PR, by
+the session that wrote both. Recorded rather than quietly corrected.
+
+Re-derived against merged `main`, not ticked from memory:
+
+| box | evidence |
+|---|---|
+| the section says whether the **newest settled** deployment succeeded, and when the last success was | live output: *"The newest deployment to settle did NOT succeed (cancelled, 2026-09-26T03:51:39Z), and the site is as of 2026-09-26T03:38:00Z"* |
+| `latest` and newest-settled kept apart | `ci-health.ts:981` `latest: pages[0]`; `:994` `newestSettled = pages.find(r => r.status === "completed")` — two different reads |
+| a reader can tell coalescing from starvation without knowing how Pages schedules | the same output names both by word and says which applies, with the last-success time to judge from |
+| still no graded share, no staleness cutoff | 0 matches for a percentage, `stale for N`, or `more than N minutes` across the whole section |
+| a mutation over each new branch caught by a NAMED test | 51 pass in `pages-health.test.ts`; 8 of 8 mutations caught, each named |
+
+**What the live run shows is worth keeping**: 13 minutes behind, newest settled
+cancelled, a build in flight. Before this change the same state printed a bare
+cancellation share, and the first reader to meet it — me — took it for a
+ten-hour outage that was a quiet afternoon.

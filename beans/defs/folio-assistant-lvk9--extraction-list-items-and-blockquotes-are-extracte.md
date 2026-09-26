@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T09:20:19Z
-updated_at: 2026-09-26T10:03:36Z
+updated_at: 2026-09-26T10:42:14Z
 parent: folio-assistant-bzyu
 blocked_by:
     - folio-assistant-wlyg
@@ -107,3 +107,13 @@ line each with a measured effect in both directions, and this is a parser change
       with tooling, not dropped
 - [ ] `7x8o` re-measured afterwards; expect 8 pairs or fewer to remain
 - [ ] checked against a folio other than this one — extraction is shared
+
+
+### From bean `f6r1` — check the INJECT side too
+
+`f6r1`'s roundtrip control failed on known-good catalogues because
+`injectMarkdown` *"collapses a multi-line paragraph onto its first line and blanks
+the continuations, so re-extraction legitimately re-segments"*. Same hard-wrap
+sensitivity, from the injecting half. A fix that makes a msgid survive a re-wrap on
+the extract side must be checked against inject as well, or the round trip stays
+non-identical for a new reason. Adds to `wlyg`'s case for one definition.

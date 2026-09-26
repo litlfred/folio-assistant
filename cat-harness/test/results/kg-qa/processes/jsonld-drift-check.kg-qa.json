@@ -5,7 +5,7 @@
     "id": "Process_JsonLdDrift",
     "path": "processes/jsonld-drift-check.bpmn"
   },
-  "source_hash": "sha256:7b26ce2ed7f94fab872830acaee99f8f4085fe929017a4f5ed98b4ec6f110dee",
+  "source_hash": "sha256:1d3b0f0e994bc8e115b37a8f1826a92b6893dc6cab15a4863648198089577f69",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -96,13 +96,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/jsonld-gen-check.yml",
-          "detail": ".github/workflows/jsonld-gen-check.yml changed since cat-harness/processes/jsonld-drift-check.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -110,8 +105,8 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 1,
+    "pass": 16,
+    "fail": 0,
     "n/a": 8,
     "unknown": 0
   },
@@ -120,8 +115,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/jsonld-drift-check.bpmn",
       "code": ".github/workflows/jsonld-gen-check.yml",
-      "prose_hash": "7b26ce2ed7f9",
-      "code_hash": "b9a596fb65da",
+      "prose_hash": "1d3b0f0e994b",
+      "code_hash": "cd8cfb1ee403",
       "by": "baseline"
     }
   ]

@@ -16,6 +16,10 @@ import { tmpdir } from "node:os";
 import { derive, write, formatReport, firstKindDivergence, formatDerivedPo, LOCALE_NAMES } from "./derive-po.ts";
 import { extractMarkdown, MD_CODE_FENCE_RE } from "./pot-extract.ts";
 import { SITE_DIR } from "./translation-index.ts";
+
+/** The five pages and five locales this instance publishes, for corpus-wide tests. */
+const PAGES_ALL = ["accessibility", "content-types", "contributing", "getting-started", "installation"];
+const LOCALES_ALL = ["ar", "es", "fr", "ru", "zh"];
 import { injectMarkdown } from "./po-inject.ts";
 
 /** A throwaway instance with a source page and whichever translations are given. */
@@ -352,5 +356,57 @@ describe("the two halves of the round trip agree about where the code is (`ig4a`
     expect(MD_CODE_FENCE_RE).toBeInstanceOf(RegExp);
     expect(inject).toContain('MD_CODE_FENCE_RE } from "./pot-extract"');
     expect(inject).not.toMatch(/const MD_CODE_FENCE_RE\s*=/);
+  });
+});
+
+describe("a repeated msgid translated two ways is REFUSED, not deduped (`f6r1`)", () => {
+  // Found by a sibling session, not by me — bean `f6r1` measured
+  // `ru/getting-started` as needing `msgctxt`. My dedup kept the first
+  // translation and documented that it did, which described the behaviour
+  // without noticing it was lossy: a `.po` is keyed by msgid, so keeping one of
+  // two different translations discards a real difference and the file is
+  // well-formed and wrong.
+  //
+  // It has not shipped a wrong catalogue — 0 conflicts across all 10 derived
+  // here — and that is luck, not design: the one pair with the collision is
+  // refused for `count-differs` today, and `lvk9` would align it.
+
+  it("identical translations of a repeated msgid stay benign", () => {
+    const src = ["# Same words here", "", "Some prose that is long enough.", "", "# Same words here"].join("\n");
+    const tr = ["# Mêmes mots ici", "", "Une prose assez longue.", "", "# Mêmes mots ici"].join("\n");
+    const { root, cleanup } = fixture(src, { fr: tr });
+    const r = derive(root, ["page"], ["fr"]);
+    expect(r.refused).toEqual([]);
+    expect((r.derived[0].po.match(/msgid "Same words here"/g) ?? []).length).toBe(1);
+    cleanup();
+  });
+
+  it("DIFFERENT translations of a repeated msgid refuse the pair", () => {
+    const src = ["# Same words here", "", "Some prose that is long enough.", "", "# Same words here"].join("\n");
+    // Same English heading, two different French renderings — the `f6r1` case.
+    const tr = ["# Mêmes mots ici", "", "Une prose assez longue.", "", "# Les mêmes mots, autrement"].join("\n");
+    const { root, cleanup } = fixture(src, { fr: tr });
+    const r = derive(root, ["page"], ["fr"]);
+    expect(r.derived).toEqual([]);
+    expect(r.refused[0].reason).toBe("msgid-conflict");
+    // The detail must name BOTH translations, so a reader can see the choice the
+    // tool declined to make for them.
+    expect(r.refused[0].detail).toContain("Mêmes mots ici");
+    expect(r.refused[0].detail).toContain("Les mêmes mots, autrement");
+    expect(r.refused[0].detail).toContain("msgctxt");
+    cleanup();
+  });
+
+  it("no catalogue this tool has written carries a conflicting duplicate", () => {
+    // The anti-vacuity floor, against the real corpus: it must be true, and it
+    // must be true because nothing conflicts rather than because nothing derived.
+    const root = resolve(import.meta.dir, "..", "..");
+    const r = derive(root, PAGES_ALL, LOCALES_ALL);
+    expect(r.derived.length).toBeGreaterThan(0);
+    for (const d of r.derived) {
+      const ids = [...d.po.matchAll(/^msgid "(.*)"$/gm)].map((m) => m[1]).filter((m) => m !== "");
+      expect(new Set(ids).size).toBe(ids.length);
+    }
+    expect(r.refused.filter((f) => f.reason === "msgid-conflict")).toEqual([]);
   });
 });

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 365,
+      "count": 369,
       "unit": "beans"
     }
   },
@@ -860,7 +860,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T12:32:20Z",
-      "updatedAt": "2026-09-20T22:56:24Z",
+      "updatedAt": "2026-09-26T03:51:27Z",
       "preview": "Owner, 2026-09-20, verbatim — the structure is specific enough that paraphrase\nwould lose the parts that constrain the design:\n\n> then landing page rendering is now cleaer... scan the root of the repo, look\n> for <harness>.config.json as named instances. do their rendering (in\n> depdendcy ordering). on LHS navbar, there is global section (w/ themed color)\n> for each harness. when collapsed on LHS ",
       "file": "beans/defs/folio-assistant-603s--landing-the-lhs-navbar-is-one-themed-section-per-i.md"
     },
@@ -1025,12 +1025,12 @@
       "title": "COORDINATION: eight sessions woke into the same 2435-commit gap and all eight re-surveyed it independently",
       "status": "todo",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T15:44:18Z",
-      "updatedAt": "2026-09-25T15:44:18Z",
+      "updatedAt": "2026-09-26T07:38:23Z",
       "preview": "## Measured 2026-09-25, from the session API\n\n`list_sessions` returned 30 sessions, of which **eight were RUNNING at the same\nminute** (15:38–15:39Z). Their own `task_summary` fields, verbatim:\n\n```\nrebasing from main; 2369 commits (PR #477→#1306); facts before plan\nreviewing PR #542 impact; fast-forward reset blocked; surveying origin/main\nre-fetching main after date change; will propose next ste",
       "file": "beans/defs/folio-assistant-6ptx--coordination-eight-sessions-woke-into-the-same-243.md"
     },
@@ -1597,7 +1597,7 @@
     {
       "id": "folio-assistant-ajx9",
       "title": "WHO IG CHROME: the blue bar, DRAFT watermark and publish box, ingested from the template chain rather than transcribed",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
@@ -1821,14 +1821,14 @@
     {
       "id": "folio-assistant-c3d7",
       "title": "CLAIM STOMPING: 97 of 100 claims record no holder, so beans:claim reports '✓ claimed' for work a sibling is doing",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T16:08:51Z",
-      "updatedAt": "2026-09-25T16:25:31Z",
+      "updatedAt": "2026-09-26T03:53:36Z",
       "preview": "Found while acting on the owner's decision (2026-09-25) to *\"add the\nre-read-before-claim rule\"*. **The rule is already implemented** — `35nj` built\n`bun run beans:claim`, which reads the default branch first and has an\n`already-claimed` outcome that refuses and names the holder. This bean is the\nhole that makes it vacuous for almost the whole store.\n\n## Measured 2026-09-25, on `origin/main`\n\n| | ",
       "file": "beans/defs/folio-assistant-c3d7--claim-stomping-97-of-100-claims-record-no-holder-s.md"
     },
@@ -2096,7 +2096,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T10:05:01Z",
-      "updatedAt": "2026-09-26T10:27:21Z",
+      "updatedAt": "2026-09-26T10:38:02Z",
       "preview": "Found 2026-09-26 by paying the cost, then reading PR #1361 and finding the\nmechanism already built for a sibling problem.\n\n## What it cost, measured on one change\n\nAdding 10 `.po` catalogues (#206, PR #1369) left **six** generated artefacts\nstale. I discovered them one at a time, from failing gates, across three full\n`bun run gates` runs:\n\n| gate that went red | what regenerates it |\n|---|---|\n| `",
       "file": "beans/defs/folio-assistant-do70--translation-siblings-adding-a-po-catalogue-stales.md"
     },
@@ -2253,6 +2253,20 @@
       "updatedAt": "2026-09-23T21:19:50Z",
       "preview": "## Brief\n\n**The question.** `fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md` §\"P3 is\nBLOCKED on more than a fork\" infers, from 458 export artefacts carrying no dependency\nedges, that **P3 depends on `ig-publisher-fork` delivering the logic-layer edges**.\n`cat-harness/content/pipeline/fsh-cone.ts` — merged on `main`, from archived bean `267x` —\nbuilds a dependency graph from IG **source",
       "file": "beans/defs/folio-assistant-f4gj--measured-fsh-cone-is-a-second-route-to-logic-layer.md"
+    },
+    {
+      "id": "folio-assistant-f6r1",
+      "title": "TRANSLATION CATALOGUES: 19 of 27 are provably not derivable, 8 undetermined — and the roundtrip test that says otherwise fails on known-good catalogues",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T09:59:36Z",
+      "updatedAt": "2026-09-26T10:42:14Z",
+      "preview": "Asked whether `main`'s 27 uncatalogued translations could be resolved by\nDERIVING their `.po` catalogues, rather than by recording their absence (which\nthe owner ruled out, bean `ngxj`) or by fresh authoring.\n\n**Answer: 19 provably not, 8 undetermined, 0 demonstrated derivable.** The\nundetermined 8 are undetermined *because the test that would decide them is\ninvalid* — see below. Three states, and",
+      "file": "beans/defs/folio-assistant-f6r1--translation-catalogues-19-of-27-are-provably-not-d.md"
     },
     {
       "id": "folio-assistant-fgkb",
@@ -2432,7 +2446,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T19:31:09Z",
-      "updatedAt": "2026-09-21T05:29:17Z",
+      "updatedAt": "2026-09-26T03:57:20Z",
       "preview": "The owner, 2026-09-20, after four questions that broke the rule:\n\n> *\"ask specific questiosn w/ context/ recommendations/pros/cons (see skills,\n> why not invoked?)\"*\n>\n> *\"fix skills so interaction modality would be triggered\"*\n>\n> *\"can we struture schema better to help enforce?\"*\n\n## The measurement\n\n`interaction-modality` §4.1 was STRICT and complete, and was broken the same day\nby the agent im",
       "file": "beans/defs/folio-assistant-hajp--interaction-the-asking-rule-is-enforced-by-three-l.md"
     },
@@ -2533,6 +2547,20 @@
       "updatedAt": "2026-09-26T10:14:10Z",
       "preview": "Found while deriving `.po` catalogues for #206 (bean `tbdg`). Measured\n2026-09-26. Same family as `lrbx` — the extractor's segmentation is not the\nreader's — and a separate cause.\n\n`MD_CODE_FENCE_RE = /^(`{3,}|~{3,})/` is anchored at column 0 and is matched\nagainst `line`, not `stripped`:\n\n```ts\nconst fenceMatch = line.match(MD_CODE_FENCE_RE);\n```\n\nAn **indented** fence — the ordinary way to put a",
       "file": "beans/defs/folio-assistant-ig4a--extraction-an-indented-code-fence-is-not-recognise.md"
+    },
+    {
+      "id": "folio-assistant-ih6x",
+      "title": "RENDERED BPMN: 46 exclusive gateways drew as blank diamonds — isMarkerVisible was never set",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T09:00:59Z",
+      "updatedAt": "2026-09-26T09:01:15Z",
+      "preview": "Salvaged from #1340 (owner's choice, 2026-09-26), which fixed 7 shapes in 5 diagrams when the repo had 18. Re-measured on origin/main: 46 exclusive-gateway BPMNShapes across 25 of 74 .bpmn files carry no isMarkerVisible, and none is explicitly false. bpmn-js draws the X only when it is true, so each rendered as an empty diamond — the notation's way of NOT saying exclusive.\n\n## Done when\n- [x] ever",
+      "file": "beans/defs/folio-assistant-ih6x--rendered-bpmn-46-exclusive-gateways-drew-as-blank.md"
     },
     {
       "id": "folio-assistant-iwtn",
@@ -2952,7 +2980,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T09:20:19Z",
-      "updatedAt": "2026-09-26T10:03:36Z",
+      "updatedAt": "2026-09-26T10:42:14Z",
       "preview": "Found 2026-09-26 while diagnosing bean `7x8o` at the owner's instruction to find\nthe cause before touching any translation. **It is the third and largest member of\nthe `6b8u`/`ig4a` family, and it refutes most of `7x8o`.**\n\n`extractMarkdown` accumulates a PARAGRAPH until a blank line, so a hard-wrapped\nparagraph is correctly one entry. **List items and blockquotes are not\naccumulated** — each matc",
       "file": "beans/defs/folio-assistant-lvk9--extraction-list-items-and-blockquotes-are-extracte.md"
     },
@@ -2969,6 +2997,20 @@
       "updatedAt": "2026-09-20T14:37:30Z",
       "preview": "_2026-09-19T00:41:01Z_ — Verified RESOLVED, 2026-09-19 on main at 17dc1e6. .github/workflows/feature-staging.yml exists with 32 STAGING references and is demonstrably working — it deployed previews for PRs #298 and #308 in this session, each commenting the STAGING URL. Note this bean has an EMPTY body: title and issue #215 only, no statement of what 'done' means, so this verification is against ob",
       "file": "beans/defs/folio-assistant-lx2s--feature-branch-staging-under-gh-pages-issue-215.md"
+    },
+    {
+      "id": "folio-assistant-m1k4",
+      "title": "DUPLICATE manifest entry survives every gate — the uniqueness check uses a Set, which collapses it",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T08:05:18Z",
+      "updatedAt": "2026-09-26T08:54:33Z",
+      "preview": "Measured on `origin/main` at `0c5086db6c1`, 2026-09-26.\n\n`cat-harness/skills/workflow/package-manifest.json` lists **14** skills of which\n**13 are distinct**. `release-epic-planning` appears **twice**.\n\n    skills entries: 14 | distinct: 13\n    DUPLICATES: {'release-epic-planning': 2}\n\n## Why no gate sees it\n\n`scripts/tests/skill-manifest-coverage.test.ts:133`:\n\n    const listed = new Set(p.listed",
+      "file": "beans/defs/folio-assistant-m1k4--duplicate-manifest-entry-survives-every-gate-the-u.md"
     },
     {
       "id": "folio-assistant-m4xy",
@@ -3309,14 +3351,14 @@
     {
       "id": "folio-assistant-oqdr",
       "title": "Bootstrap diagrams' SVGs are published but rendered by nothing since the split",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T17:52:19Z",
-      "updatedAt": "2026-09-24T17:52:19Z",
+      "updatedAt": "2026-09-26T09:54:12Z",
       "preview": "## What\n`cat-harness/docs/assets/img/workflows/` holds `initialize-harness.svg`, `log-message.svg` and `discussion.svg`, whose sources are `bootstrap/processes/*.bpmn`. `render-bpmn.ts` renders `workflowFiles(cat-harness)`, which does not reach bootstrap, so these three are never re-rendered and `render:bpmn:check` cannot see them drift. The generated process pages (`docs/processes/initialize-harn",
       "file": "beans/defs/folio-assistant-oqdr--bootstrap-diagrams-svgs-are-published-but-rendered.md"
     },
@@ -3731,6 +3773,20 @@
       "file": "beans/defs/folio-assistant-rq8s--a-session-blocked-on-the-owner-is-invisible-four-s.md"
     },
     {
+      "id": "folio-assistant-rsi6",
+      "title": "PUBLISHED PACKAGE, UNBUILT: block-qa-schema ships to npm and no gate built it — #914 merged green and broken",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T03:24:48Z",
+      "updatedAt": "2026-09-26T04:01:27Z",
+      "preview": "Measured 2026-09-26, by building the package rather than by reading about it.\n\n`@litlfred/block-qa-schema` is the **only** package in this repository that\nships to npm. It is named in no `.github/workflows/*.yml`, and the root\n`package.json` declares no `workspaces`, so its devDependencies had never been\ninstalled on a runner and its `build` and `test` scripts had never run. Its\n`node_modules/` di",
+      "file": "beans/defs/folio-assistant-rsi6--published-package-unbuilt-block-qa-schema-ships-to.md"
+    },
+    {
       "id": "folio-assistant-rtuo",
       "title": "State tags and badges fail colour contrast on the dark theme",
       "status": "todo",
@@ -4029,14 +4085,14 @@
     {
       "id": "folio-assistant-thsz",
       "title": "PAGES REPORT: a cancellation share cannot tell coalescing from starvation, and it read as alarming to its own author",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T16:28:41Z",
-      "updatedAt": "2026-09-25T16:29:01Z",
+      "updatedAt": "2026-09-26T03:54:28Z",
       "preview": "`3yi4` built the Pages section so somebody could ask *\"are the previews\nactually building?\"*. It reports the counts and deliberately grades no share —\nthere is no calibrated threshold for \"too many cancellations\", the same refusal\nthat stopped `6xaz` inventing a size threshold.\n\n**That refusal was right and it is not enough.** The number it prints is the\none a reader forms a judgement from anyway,",
       "file": "beans/defs/folio-assistant-thsz--pages-report-a-cancellation-share-cannot-tell-coal.md"
     },
@@ -4134,7 +4190,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T05:57:48Z",
-      "updatedAt": "2026-09-22T21:40:00Z",
+      "updatedAt": "2026-09-26T09:00:43Z",
       "preview": "Found 2026-09-22 while re-deriving `j41m`'s own numbers adversarially, in the\nspirit of `w4tq`. **Not fixed, because it cannot be confirmed from here** —\nsee §\"Why this is a bean and not a push\".\n\n## What the files say\n\n    .github/workflows/discoverability-docs.yml:206   working-directory: folio-assistant\n    .github/workflows/publish.yml:566                working-directory: folio-assistant\n\nNei",
       "file": "beans/defs/folio-assistant-u9r9--two-typedoc-steps-name-a-working-directory-that-do.md"
     },
@@ -4752,7 +4808,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T16:21:48Z",
-      "updatedAt": "2026-09-25T16:22:33Z",
+      "updatedAt": "2026-09-26T04:01:08Z",
       "preview": "`ramz`'s third box, asked and answered 2026-09-25.\n\n`ramz` fixed ONE scanner: `check-context-emission` walked the filesystem behind\na hand-written denylist and swept 145 gitignored documents as repository\ncontent. It was found by accident — a clean checkout failing a test about code\nnobody had touched — so the bean asked *\"which others?\"*.\n\n**Eleven**, under `cat-harness/scripts/`, each walking fr",
       "file": "beans/defs/folio-assistant-xd1g--11-root-rooted-scans-have-no-gitignore-awareness-r.md"
     },

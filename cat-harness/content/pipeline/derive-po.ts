@@ -115,7 +115,12 @@ import { siteRoot } from "./translation-index.ts";
 export interface Refusal {
   page: string;
   locale: string;
-  reason: "source-missing" | "translation-missing" | "count-differs" | "kind-diverges";
+  reason:
+    | "source-missing"
+    | "translation-missing"
+    | "count-differs"
+    | "kind-diverges"
+    | "msgid-conflict";
   detail: string;
 }
 
@@ -155,6 +160,47 @@ export function firstKindDivergence(src: PotEntry[], tr: PotEntry[]): number {
     if (src[i].kind !== tr[i].kind) return i;
   }
   return -1;
+}
+
+/**
+ * The first msgid that occurs twice in the source with DIFFERENT translations.
+ *
+ * A `.po` is keyed by msgid, so it cannot represent two translations of one
+ * string — that is what `msgctxt` is for. Deduplicating by keeping the first
+ * would therefore silently discard a real difference, and the resulting
+ * catalogue would be well-formed and wrong.
+ *
+ * **Found by a sibling session, not by me** (bean `f6r1`, 2026-09-26). It
+ * measured `ru/getting-started` as needing `msgctxt`: *"a repeated source msgid
+ * whose two occurrences are translated DIFFERENTLY, which a msgid-keyed `.po`
+ * cannot represent"*. My dedup kept the first and said so in a comment, which
+ * described the behaviour without noticing it was lossy.
+ *
+ * **It has not shipped a wrong catalogue** — checked across all 10 derived here,
+ * 0 conflicts — and the reason is luck rather than design: `ru/getting-started`
+ * is refused for `count-differs` today, so the collision never got the chance.
+ * `lvk9` would align that pair and activate it. Hence a refusal now.
+ *
+ * A repeated msgid translated the SAME way is benign and common; only a
+ * divergence is a refusal.
+ */
+export function conflictingDuplicate(
+  src: PotEntry[],
+  tr: PotEntry[],
+): { index: number; msgid: string; first: string; second: string } | undefined {
+  const seen = new Map<string, { at: number; tr: string }>();
+  for (let i = 0; i < src.length; i += 1) {
+    const id = src[i].msgid;
+    const prev = seen.get(id);
+    if (prev === undefined) {
+      seen.set(id, { at: i, tr: tr[i].msgid });
+      continue;
+    }
+    if (prev.tr !== tr[i].msgid) {
+      return { index: i, msgid: id, first: prev.tr, second: tr[i].msgid };
+    }
+  }
+  return undefined;
 }
 
 /** Escape a string for a `.po` literal. */
@@ -205,11 +251,11 @@ export function formatDerivedPo(
     '"Content-Transfer-Encoding: 8bit\\n"',
     "",
   ];
-  // Deduplicate by msgid, keeping the FIRST translation seen. A repeated msgid
-  // with two different translations cannot both be right, and gettext permits
-  // only one — so the duplicate is dropped rather than silently overwriting,
-  // and the count in the header stays the count of constructs rather than of
-  // emitted entries.
+  // Deduplicate by msgid. A repeated msgid translated IDENTICALLY is benign —
+  // gettext permits one entry and either copy is the same entry. A repeated
+  // msgid translated DIFFERENTLY is not, and {@link conflictingDuplicate}
+  // refuses the pair before this function is reached, so by here every
+  // duplicate is benign and dropping it loses nothing.
   const seen = new Set<string>();
   for (let i = 0; i < src.length; i += 1) {
     const id = src[i].msgid;
@@ -300,6 +346,20 @@ export function derive(
           detail:
             `same count (${src.length}) but the structures differ: at construct ${at} the source is ` +
             `a ${src[at].kind} and the translation is a ${tr[at].kind}`,
+        });
+        continue;
+      }
+      const clash = conflictingDuplicate(src, tr);
+      if (clash !== undefined) {
+        refused.push({
+          page,
+          locale,
+          reason: "msgid-conflict",
+          detail:
+            `the source string ${JSON.stringify(clash.msgid.slice(0, 60))} occurs more than once and ` +
+            `is translated two different ways (${JSON.stringify(clash.first.slice(0, 40))} and ` +
+            `${JSON.stringify(clash.second.slice(0, 40))} at construct ${clash.index}); a msgid-keyed ` +
+            `.po cannot represent both, so this needs \`msgctxt\` rather than a derivation`,
         });
         continue;
       }

@@ -567,7 +567,9 @@ jobs:
       - name: TypeDoc generate
         working-directory: cat-harness
         run: |
-          bun install || npm install
+          # Pinned 2026-09-26 (salvaged from #1040, bean u9r9) — same reasoning as
+          # the twin TypeDoc step in discoverability-docs.yml.
+          bun install --frozen-lockfile
           npx --yes typedoc@0.28.20 --out ../schema-docs \
             --entryPointStrategy expand \
             --readme none --hideGenerator \

@@ -3,9 +3,10 @@
 title: 'COORDINATION: eight sessions woke into the same 2435-commit gap and all eight re-surveyed it independently'
 status: todo
 type: bug
-parent: folio-assistant-ahvw
+priority: normal
 created_at: 2026-09-25T15:44:18Z
-updated_at: 2026-09-25T15:44:18Z
+updated_at: 2026-09-26T07:38:23Z
+parent: folio-assistant-ahvw
 ---
 
 
@@ -138,3 +139,46 @@ by instruments whose answers were already stale when read.
 - [ ] `goal-review` says what to do when the API shows siblings mid-survey.
 - [ ] A session arriving into a large gap can find out, before sweeping,
       whether the sweep already exists.
+
+
+## Sharper instance, 2026-09-26: redundant FIXING, not just redundant surveying
+
+The entry above measured eight sessions re-surveying the same gap. Today the
+same shape produced two pull requests that are **byte-identical**.
+
+| | |
+|---|---|
+| **#1376** | *"Unbreak main: #1365's seven skills landed without their derived artefacts"* — 27 files |
+| **#1383** | *"main's gate set: 7 of 153 failing → 2. One skill landed without its siblings, again"* — 27 files |
+
+Measured with `git diff` between the two heads, not inferred from the titles:
+**26 files in common, 25 of them identical**, one differing. #1376 carries one
+extra bean; #1383 carries one extra health report. Two sessions, two branches,
+two PRs, one fix.
+
+And they were not alone. **Five open PRs were converging on the same red
+`main`** at 07:00Z — #1376, #1383, #1381 (the 25 uncatalogued translations),
+#1363 (the gates tree guard) and #1372 (which had ported three of main's
+failures into itself). A sixth, #1364, is the one that actually landed and
+turned main green at 07:19Z.
+
+## Why the existing claim mechanism does not catch this
+
+`bean-coordination` says **claim before you work**, and that is sound for work
+that HAS a bean. None of this work did at the moment it started: each session
+saw a red gate on `main` and reacted. Reactive repair has no id to claim, so
+the protocol has nothing to bind to — the claim is not weak here, it is
+*absent*.
+
+That is a different gap from the one above and wants a different answer. A
+survey is wasteful; a duplicated fix is wasteful **and** produces a merge
+conflict for whichever session loses, which is a second cost the first entry
+does not measure.
+
+## Not proposing the remedy here
+
+Several are plausible — a claim keyed on the failing GATE rather than on a
+bean, a "who is already on main's red?" question in the session-start sweep,
+or nothing at all on the grounds that duplicated repair is cheaper than
+coordination. Choosing between them is the owner's, and this bean is where the
+evidence belongs, not the decision.

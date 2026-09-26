@@ -61,8 +61,9 @@
  *   bun run cat-harness/scripts/check-context-emission.ts
  *   bun run cat-harness/scripts/check-context-emission.ts --json
  */
-import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
+
+import { gitCorpus } from "./git-corpus.ts";
 import { join, resolve } from "node:path";
 
 import { CONTENT_CONTEXT, CONTENT_CONTEXT_URL } from "../schemas/jsonld.js";
@@ -136,13 +137,18 @@ export const FORWARD_DECLARED: Readonly<Record<string, string>> = {
  * just written and not yet staged is part of the change under test, and a
  * check that cannot see it passes on the file it exists to examine.
  *
+ * The git half is `gitCorpus`, shared rather than restated: `xd1g` counted 11
+ * scanners here walking a root with no gitignore awareness and said the rule
+ * wants stating once. It was copied a second time within a day of being
+ * written (bean `rsi6`, `check-subgraphs`), which settled the question.
+ *
  * **Falls back to the walk, and says so**, when `repo` is not a git work tree
  * — every test fixture is such a directory, and refusing there would trade a
  * false finding for an unrunnable check. The fallback is the LOOSER set, so
  * it can only over-report; could-not-determine is never rendered as clean.
  */
 export function contentDocuments(repo = REPO): string[] {
-  const listed = gitListed(repo);
+  const listed = gitCorpus(repo, ["*.jsonld"]);
   if (listed !== undefined) return listed;
 
   const out: string[] = [];
@@ -159,28 +165,6 @@ export function contentDocuments(repo = REPO): string[] {
   return out;
 }
 
-/**
- * The `.jsonld` files git accounts for under {@link dir}, or `undefined` when
- * git cannot answer — not a git work tree, no git on PATH, a non-zero exit.
- *
- * `undefined` and `[]` are DIFFERENT answers and the caller must keep them
- * apart: the first means "ask something else", the second means "git looked
- * and there are none". Collapsing them is how a check reports a clean corpus
- * it never read.
- */
-function gitListed(dir: string): string[] | undefined {
-  if (!existsSync(dir)) return undefined;
-  const r = spawnSync(
-    "git",
-    ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", "*.jsonld"],
-    { cwd: dir, encoding: "utf-8" },
-  );
-  if (r.error !== undefined || r.status !== 0) return undefined;
-  return r.stdout
-    .split("\0")
-    .filter((p) => p.length > 0)
-    .map((p) => join(dir, p));
-}
 
 const curiePrefix = (s: string): string | undefined => {
   // An absolute IRI is not a CURIE, and `https:` would otherwise read as one.

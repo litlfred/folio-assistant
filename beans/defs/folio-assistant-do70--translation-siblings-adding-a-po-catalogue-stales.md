@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-26T10:05:01Z
-updated_at: 2026-09-26T10:27:21Z
+updated_at: 2026-09-26T10:38:02Z
 parent: folio-assistant-bzyu
 ---
 
@@ -109,3 +109,54 @@ not exist would be justified by nothing.
 - the dependency set is per-READER, not per-directory — which is why writing it
   down as a list in a comment would be wrong, and why the last Done-when item asks
   for it DERIVED or asserted.
+
+
+## THIRD correction — the ordering dependency is real, and my retraction over-corrected
+
+The section above says *"I nearly recorded an ordering cycle that does not exist"*
+and that `gen-docs-pages` alone leaves `docs:harness:check` green. **That test was a
+no-op, and the conclusion drawn from it was too strong.**
+
+Established by reading the code rather than by running it again:
+`sync-docs-harness.ts` calls `readTileCounts(parsed)`, and the projection it parses
+is `docs/assets/beans/index.json` — **which `gen-docs-pages` writes.** So
+`harness.json` embeds counts derived from another generator's output, and the
+order is fixed:
+
+```
+gen-docs-pages  →  docs:harness
+```
+
+Run the other way, `harness.json` keeps the previous count and
+`docs:harness:check` is red. Demonstrated on the 2026-09-26 merge of `origin/main`
+(38 commits, which brought new beans): `docs:harness` → `gen-docs-pages` →
+`state:visualizer` left `docs:harness:check` FAILING, and a second `docs:harness`
+cleared it.
+
+### Why the earlier test proved nothing, which is the part worth keeping
+
+I ran `gen-docs-pages` alone on a tree where **nothing had changed the bean or QA
+counts**. It rewrote the projections with identical numbers, `harness.json` was
+already consistent with them, and the check stayed green — so the run exercised the
+dependency with **nothing to propagate**. A dependency test needs a change to
+propagate, and mine had none. The green was information about my fixture, not about
+the pipeline.
+
+### What is and is not true
+
+| | |
+|---|---|
+| an ordering dependency `gen-docs-pages` → `docs:harness` | **yes**, derived from the reader |
+| a CYCLE (mutual staling) | no — not observed, and not implied by the above |
+| "one pass is not a fixed point" in the #1361 sense | **yes, in the wrong order**; one pass suffices in the right one |
+
+So the design requirement stands and is sharper than before: the command must
+**assert** convergence, and its order is **derivable** — from which generator reads
+whose output, exactly as the last Done-when item asks. `readTileCounts` is the
+edge, written down in one place, which is why deriving it is possible rather than
+aspirational.
+
+This is the third correction on this bean, all three from trying to satisfy it.
+Left in sequence rather than rewritten into a clean account, because the sequence
+is the evidence for the last Done-when item: an order recorded in prose drifts, and
+mine drifted twice inside one session.
