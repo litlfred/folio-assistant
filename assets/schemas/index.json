@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 173,
+      "count": 174,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -454,6 +454,15 @@
       "name": "fsh-guts",
       "graphNode": "schema",
       "summary": "A node of the trashcan — what `fsh-guts/` holds, and what may leave it.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/git-corpus.ts",
+      "instance": "cat-harness",
+      "name": "git-corpus",
+      "graphNode": "none",
+      "reason": "asks git which files exist: a corpus rule, not a schema",
+      "summary": "What files this REPOSITORY contains — asked of git, never of the disk.",
       "isTest": false
     },
     {

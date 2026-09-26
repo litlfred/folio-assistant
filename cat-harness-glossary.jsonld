@@ -1701,7 +1701,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates",
       "label": "CI/CD Pipeline",
-      "scopeNote": "Joins all six jobs before asking anything, then GW_Hard asks specifically about the four HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the five-are-not-four asymmetry actually bites.",
+      "scopeNote": "Joins all seven jobs before asking anything, then GW_Hard asks specifically about the five HARD ones — both warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red job it also ran, which is where the seven-are-not-five asymmetry actually bites. These counts read six-and-four with the asymmetry called five-are-not-four, which was already inconsistent before `om30` split the gates job out; both are corrected here rather than incremented.",
       "source": "cat-harness/processes/code-quality-gates.bpmn"
     },
     {
