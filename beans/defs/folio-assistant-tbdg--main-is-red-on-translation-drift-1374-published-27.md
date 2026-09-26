@@ -98,3 +98,62 @@ Three candidate remedies, and none is an agent's to take:
 
 Recorded and left `todo`. The session that found it was fixing the unrelated
 #1365 breakage and deliberately did not widen that PR to include this.
+
+## SECOND failure from the same merge — the e2e locale-fallback fixture
+
+`main` is red on TWO tests from #1374, not one. Found 2026-09-26 after the first.
+
+```
+[chromium] cat-harness/test/nav-locale.e2e.ts:228
+  the navbar shows the selected locale > a page with no translation falls back
+  to the source language
+    waiting for locator('.site-nav a[href="/getting-started.html"]')
+    Error: element(s) not found
+  698 passed, 1 failed
+```
+
+**The test fired exactly as its author designed.** Its fixture docblock says so in
+advance:
+
+> *"`getting-started` is a real page of this site that has never been translated.
+> If it ever is, this test starts failing loudly rather than silently verifying
+> nothing, which is the correct direction to fail in."*
+
+#1374 published `fr/getting-started.md`, so the page the test needs to be
+UNTRANSLATED is now translated. Nothing is broken about the test; its premise was
+consumed.
+
+## Repairable today, and that is the less interesting half
+
+Measured over `cat-harness/docs/`: **29 source pages, 6 translated in at least one
+locale** (`accessibility`, `content-types`, `contributing`, `getting-started`,
+`index`, `installation`), leaving **23** with no translation in any locale. So a
+replacement fixture exists.
+
+**But naming a real page makes this test a clock rather than a check.** Translation
+coverage went from roughly one page to six in a single merge, and the same author
+is actively adding more. Whichever of the 23 is picked, the test is red again the
+week that page is translated — and the next agent will read the docblock, pick
+another page, and reset the clock. Three cycles of that and the docblock is
+describing a habit rather than a decision.
+
+The alternative the author should weigh: the test already builds its own nav
+markup from a `harness()` template and injects a synthetic
+`fa-translation-meta` island. A fixture page that exists only inside that harness
+would test the fallback BEHAVIOUR without depending on the corpus's translation
+coverage at all. That is a change to their test's design, so it is theirs to make,
+not something to impose while fixing an unrelated breakage.
+
+## Why this was not fixed alongside it
+
+It is a one-constant change and it would unblock **nothing**: the drift failure
+above is still red, so `main` stays red either way. Fixing one of #1374's two
+failures and not the other, inside a PR whose body says it does not fix #1374's,
+would make that PR's own account of itself false.
+
+### Adds to "Done when"
+
+- [ ] the e2e fallback fixture is settled by its author — a different named page
+      (and the clock accepted, with that stated) or a synthetic page inside
+      `harness()` (and the corpus dependency removed)
+- [ ] MEASURED AFTER: translating one more real page does not turn this test red
