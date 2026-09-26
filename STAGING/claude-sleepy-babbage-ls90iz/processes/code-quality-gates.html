@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790425700">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790429515">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790425700">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790429515">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790425700">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790429515">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790425700">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790429515">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790425700">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790429515">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790425700">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790429515">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790425700" defer></script>
+<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790429515" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -782,7 +782,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h1>
     
 
-<p><code class="language-plaintext highlighter-rouge">Process_CodeQualityGates</code> · strict · 6 step(s)</p>
+<p><code class="language-plaintext highlighter-rouge">Process_CodeQualityGates</code> · strict · 7 step(s)</p>
 
 <p>SIX INDEPENDENT JOBS, AND NOTHING IN THE YAML SAYS SO IN ONE PLACE. Bean <code class="language-plaintext highlighter-rouge">7yvd</code>. The file reads as a long sequence; it is not one. No job declares <code class="language-plaintext highlighter-rouge">needs:</code>, so all six start together and the wall-clock cost of the whole workflow is the SLOWEST job, not the sum. That is the single most useful thing to know before adding a gate, and it is recoverable today only by checking five <code class="language-plaintext highlighter-rouge">needs:</code> keys that are not there.
 
@@ -832,7 +832,7 @@ Mechanical throughout. Nothing here waits on a person, which is what makes <code
     <tr>
       <td>CI/CD Pipeline</td>
       <td><code class="language-plaintext highlighter-rouge">build-pipeline</code></td>
-      <td>Joins all six jobs before asking anything, then GW_Hard asks specifically about the four HARD ones — both warn-only results reach the same join but never the gate, so this lane’s merge/block call is deliberately blind to a red job it also ran, which is where the five-are-not-four asymmetry actually bites.</td>
+      <td>Joins all seven jobs before asking anything, then GW_Hard asks specifically about the five HARD ones — both warn-only results reach the same join but never the gate, so this lane’s merge/block call is deliberately blind to a red job it also ran, which is where the seven-are-not-five asymmetry actually bites. These counts read six-and-four with the asymmetry called five-are-not-four, which was already inconsistent before <code class="language-plaintext highlighter-rouge">om30</code> split the gates job out; both are corrected here rather than incremented.</td>
     </tr>
   </tbody>
 </table></div>
@@ -845,7 +845,7 @@ Mechanical throughout. Nothing here waits on a person, which is what makes <code
 </h2>
     
 
-<p>Every one of the 6 step(s) is documented.</p>
+<p>Every one of the 7 step(s) is documented.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -872,11 +872,11 @@ wildcard imports (HARD)</strong><br /><code class="language-plaintext highlighte
       <td>ruff F401 (unused) and F403 (wildcard) imports over the Python trees that exist, then the Python tests. A tree that is absent is dropped rather than passed to ruff, and an empty set says SKIP — a missing path must not be swallowed as a pass.</td>
     </tr>
     <tr>
-      <td><strong>TypeScript: tests, lint, types,
-and ~30 repository gates (HARD)</strong><br /><code class="language-plaintext highlighter-rouge">Task_TypeScript</code></td>
+      <td><strong>TypeScript: lint, types
+and tests (HARD)</strong><br /><code class="language-plaintext highlighter-rouge">Task_TypeScript</code></td>
       <td>CI/CD Pipeline</td>
       <td><a href="../reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a></td>
-      <td>bun test, lint, tsc –noEmit, then the repository gates (workflow refs, lane and process documentation, kg:audit:check, detangle, skills, …). <code class="language-plaintext highlighter-rouge">bun run gates</code> derives its list from this job, so it is the local way to run the same set before pushing.</td>
+      <td>Three checks and nothing else: <code class="language-plaintext highlighter-rouge">bun run lint</code>, <code class="language-plaintext highlighter-rouge">tsc --noEmit</code>, then <code class="language-plaintext highlighter-rouge">bun test</code>. The repository gates it used to carry are Task_RepositoryGates now (bean <code class="language-plaintext highlighter-rouge">om30</code>). Order inside the job is load-bearing rather than stylistic: Actions stops a job at its first failing step, so <code class="language-plaintext highlighter-rouge">bun test</code> — red on <code class="language-plaintext highlighter-rouge">main</code> by the owner’s decision — runs LAST, with nothing behind it to mask. While it ran first, lint and typecheck did not execute on <code class="language-plaintext highlighter-rouge">main</code> at all.</td>
     </tr>
     <tr>
       <td><strong>End-to-end +
@@ -898,6 +898,13 @@ accessibility (HARD)</strong><br /><code class="language-plaintext highlighter-r
       <td>CI/CD Pipeline</td>
       <td><a href="../reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a></td>
       <td>Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner’s ruling on bean <code class="language-plaintext highlighter-rouge">j41m</code> — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. <code class="language-plaintext highlighter-rouge">.github/dependabot.yml</code> is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot’s schedule.</td>
+    </tr>
+    <tr>
+      <td><strong>Repository gates
+(HARD)</strong><br /><code class="language-plaintext highlighter-rouge">Task_RepositoryGates</code></td>
+      <td>CI/CD Pipeline</td>
+      <td><a href="../reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a></td>
+      <td>The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 <code class="language-plaintext highlighter-rouge">bun run</code> invocations in all. A SEPARATE job from Task_TypeScript since bean <code class="language-plaintext highlighter-rouge">om30</code>: they were one job in which <code class="language-plaintext highlighter-rouge">bun test</code> came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on <code class="language-plaintext highlighter-rouge">main</code> meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is <code class="language-plaintext highlighter-rouge">xom7</code> at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. <code class="language-plaintext highlighter-rouge">bun run gates</code> derives its list from BOTH jobs, so the local set still cannot drift from CI’s.</td>
     </tr>
   </tbody>
 </table></div>

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 372,
+      "count": 377,
       "unit": "beans"
     }
   },
@@ -21,6 +21,20 @@
       "updatedAt": "2026-09-24T17:45:58Z",
       "preview": "The Folio glass handle is fixed at the top and overlaps each page's heading, and at 390 px the glass's own first controls. Reserve space for it, or move it out of the reading flow.\n\nObserved on: `external-schemas`, `folio`, `library`, `navbar`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.\n\n## Done when\n\n- [x] No pag",
       "file": "beans/defs/folio-assistant-015u--the-fixed-folio-handle-covers-page-titles-and-cont.md"
+    },
+    {
+      "id": "folio-assistant-065p",
+      "title": "SWEEP TRAP: a stale local `main` ref makes every branch look like it carries unmerged beans",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T15:48:01Z",
+      "updatedAt": "2026-09-25T15:48:30Z",
+      "preview": "Found 2026-09-25 during a `/goal-review` sweep, by axis 4's own instruction —\n*\"Items that exist only on a branch … Sweep the open branches' stores too, or\nthe review is blind to the largest workstream.\"*\n\n## The trap\n\nThe natural way to write that comparison is the way the skill's prose implies:\n\n```sh\ngit diff --name-only --diff-filter=A main..origin/<branch> -- beans/defs/\n```\n\nIn this containe",
+      "file": "beans/defs/folio-assistant-065p--sweep-trap-a-stale-local-main-ref-makes-every-bran.md"
     },
     {
       "id": "folio-assistant-06e3",
@@ -265,14 +279,14 @@
     {
       "id": "folio-assistant-1s5s",
       "title": "The published package's PYTHON half runs nowhere — CI's pytest job globs a directory that does not contain it",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T09:13:49Z",
-      "updatedAt": "2026-09-26T09:54:40Z",
+      "updatedAt": "2026-09-26T10:38:03Z",
       "preview": "Split out of `rsi6` 2026-09-26. **That bean was closed `completed` carrying two\nunchecked boxes**, which the store's own rule forbids — \"ONLY if the bean has\nno unchecked todo items left\". Recorded here rather than quietly re-ticked,\nbecause a completed bean holding live work is exactly the shape that makes the\nstore unreadable, and this session has spent the day filing that class against\nother pe",
       "file": "beans/defs/folio-assistant-1s5s--the-published-packages-python-half-runs-nowhere-ci.md"
     },
@@ -569,6 +583,20 @@
       "updatedAt": "2026-09-24T13:08:48Z",
       "preview": "`bun run audit:coverage` (bean `xutg`) reports coverage per declared graph kind\nfrom `@covers` lines gates carry in their own module docblocks. 118 scripts\ndeclare; **10 gates have not said**, measured 2026-09-24:\n\n- `check:agents-claims`\n- `check:context-emission`\n- `check:image-roles`\n- `check:avatar-instances`\n- `check:asset-roles`\n- `check:retired-front-matter`\n- `check:wireframes`\n- `check:pa",
       "file": "beans/defs/folio-assistant-3srh--ten-gates-have-not-declared-covers-so-every-audit.md"
+    },
+    {
+      "id": "folio-assistant-3x2o",
+      "title": "Two generated skill pages name a source directory that does not exist — the oe98 banner bug recurs for remote stubs",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T10:44:49Z",
+      "updatedAt": "2026-09-26T10:45:07Z",
+      "preview": "Found 2026-09-26 while verifying `hloc`'s link rewriting — by checking that\nevery rewritten link points at something that EXISTS, which also swept the\nlinks the generator already composed.\n\n## The measurement\n\n`cat-harness/docs/reference/skill-instructions/fhir-client-operations.md` and\n`smart-launch.md` each open with:\n\n    > Generated from [`cat-harness/skills/remote-stubs/<name>.md`](\n    >   h",
+      "file": "beans/defs/folio-assistant-3x2o--two-generated-skill-pages-name-a-source-directory.md"
     },
     {
       "id": "folio-assistant-423d",
@@ -1581,6 +1609,20 @@
       "file": "beans/defs/folio-assistant-aazi--workflow-statemgmt-rendering-a-status-dashboard-at.md"
     },
     {
+      "id": "folio-assistant-ahab",
+      "title": "Translated pages carry 225 unresolved links — 43 distinct, five near-copies each, and the English sources do not carry them",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T10:40:05Z",
+      "updatedAt": "2026-09-26T10:40:21Z",
+      "preview": "Found 2026-09-26 while re-deriving `hloc`'s premise. `hloc` records the `docs/`\nunresolved-link count as **120** after `mi97` took it from 246. Re-measured\ntoday with `scanSubgraphs()` it is **340** — higher than the pre-`mi97` figure.\n\nThat is not an `mi97` regression. It is a different population, and it splits:\n\n| source | links |\n|---|---|\n| translated pages — `docs/{ar,es,fr,ru,zh}/` | **225*",
+      "file": "beans/defs/folio-assistant-ahab--translated-pages-carry-225-unresolved-links-43-dis.md"
+    },
+    {
       "id": "folio-assistant-ahvw",
       "title": "PROCESS: how an agent decides what it is doing, and what governs each step",
       "status": "in-progress",
@@ -2271,14 +2313,14 @@
     {
       "id": "folio-assistant-fx5r",
       "title": "The PR endpoint keeps serving a merged PR's pre-merge view, and merge_pull_request reports success on it",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T18:09:14Z",
-      "updatedAt": "2026-09-26T03:20:56Z",
+      "updatedAt": "2026-09-26T12:12:45Z",
       "preview": "## What happened, 2026-09-25\n\nI reported merging PR #1317. **It had been merged an hour earlier, by somebody\nelse.** Every check I made before saying so came from the PR endpoint, and the\nPR endpoint was serving a view from before the merge — with nothing marking it\nstale.\n\n## The measurements, in the order they misled me\n\nPR #1317's true state, read later from the same endpoint:\n\n```\nstate=closed",
       "file": "beans/defs/folio-assistant-fx5r--the-pr-endpoint-keeps-serving-a-merged-prs-pre-mer.md"
     },
@@ -2460,7 +2502,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T16:21:48Z",
-      "updatedAt": "2026-09-26T10:39:59Z",
+      "updatedAt": "2026-09-26T10:40:01Z",
       "preview": "Measured 2026-09-25, after `mi97` took `check:subgraphs`' unresolved-link count\nin `docs/` from **246** to **120**.\n\nThe 120 that remain are NOT published-tree addresses, which is what the\n`siteResolved` bucket assumes of them. Classified by target:\n\n| target kind | count |\n|---|---|\n| directory or generated path | 33 |\n| `.md` | 32 |\n| `.html` | 19 |\n| `.bpmn` | 17 |\n| `.ts` | 12 |\n| `.json` | 4 ",
       "file": "beans/defs/folio-assistant-hloc--gen-skill-docs-flattens-packages-but-leaves-120-no.md"
     },
@@ -2987,14 +3029,14 @@
     {
       "id": "folio-assistant-m5gx",
       "title": "One red test at step 5 makes 149 gate commands unreachable in CI — the typescript job stops and 45 of its 50 steps never run",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T10:20:26Z",
-      "updatedAt": "2026-09-26T10:20:44Z",
+      "updatedAt": "2026-09-26T12:15:44Z",
       "preview": "Found 2026-09-26 while wiring bean `1s5s` (the published package's Python half)\ninto `check:published-packages`. Noticed because the new gate **could not be\nverified on a runner** — not because it failed, but because it never ran.\n\n## The measurement\n\n`.github/workflows/code-quality-gates.yml`, job `typescript`, parsed rather\nthan eyeballed:\n\n- `bun test` is **step 5 of 50**, with no `continue-on-",
       "file": "beans/defs/folio-assistant-m5gx--one-red-test-at-step-5-makes-149-gate-commands-unr.md"
     },
@@ -3307,6 +3349,20 @@
       "file": "beans/defs/folio-assistant-oi3h--fsh-guts-visualiser-7-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-om30",
+      "title": "MAIN'S RED-BY-DECISION TEST MASKED 151 GATE INVOCATIONS, lint and tsc among them: bun test was step 2 of 47 with nothing continue-on-error — SPLIT, owner's choice",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T09:42:57Z",
+      "updatedAt": "2026-09-26T12:26:27Z",
+      "preview": "## What\n\n`main`'s `typescript` job fails at **step 2 of 47**, and GitHub Actions stops a job\nat its first failing step. So every later step in that job does not run — and on\n`main` that failure is red **by the owner's decision**, not by accident.\n\nMeasured on `.github/workflows/code-quality-gates.yml` at `74f27e4c7fb`:\n\n| | |\n|---|---|\n| `bun test` | step 2 (line 234) of the `typescript` job |\n| s",
+      "file": "beans/defs/folio-assistant-om30--mains-red-by-decision-test-masks-113-gate-invocati.md"
+    },
+    {
       "id": "folio-assistant-omki",
       "title": "QUIET CLAIMS, THE NETWORK HALF: the check's own basis calls its count an upper bound — supply the signal it cannot see",
       "status": "in-progress",
@@ -3573,6 +3629,20 @@
       "updatedAt": "2026-09-25T18:10:30Z",
       "preview": "`health` reports `staging-preview-size` as **critical** while every deploy keeps\nsucceeding. I went looking for a wrong number and did not find one: **the\nmeasurement is sound.** What is wrong is one level up, in what `critical` is\nasserting.\n\n## Measured first-hand, 2026-09-25\n\nDirectly off the publish ref — `git ls-tree -r -l origin/gh-pages`, not the\ncheck's own report:\n\n| | files | size |\n|---",
       "file": "beans/defs/folio-assistant-qj9a--staging-size-the-measurement-is-right-and-the-seve.md"
+    },
+    {
+      "id": "folio-assistant-qook",
+      "title": "check:merged reports uml:overview:check red on a merged tree that is green — a sweep artefact, twice",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T11:04:49Z",
+      "updatedAt": "2026-09-26T12:24:17Z",
+      "preview": "## What was measured, 2026-09-26\n\n`bun run check:merged` (bean `nytj`) reported `uml:overview:check` red on the\nmerged tree for **two unrelated branches within the same hour** — PR #1392's\n`claude/ask-well-fourth-layer` and PR #1395's `claude/fx5r-stale-field-advice`.\nNeither branch touches the UML overview's inputs in a way the other does.\n\nIt is a false positive. Every isolated measurement on th",
+      "file": "beans/defs/folio-assistant-qook--checkmerged-reports-umloverviewcheck-red-on-a-merg.md"
     },
     {
       "id": "folio-assistant-qrnz",
@@ -4162,7 +4232,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T01:37:44Z",
-      "updatedAt": "2026-09-23T01:37:44Z",
+      "updatedAt": "2026-09-26T09:18:41Z",
       "preview": "## What\n\nDependabot #910 and #914 raise `typescript` 6 → 7. The owner ruled *\"everything,\nincluding the TS 7 rewrite\"* (issue #956, 2026-09-22), with the stated escape:\n*if TS 7 ships no supported compiler-API equivalent, pin to 6 and say so.*\n\n**Neither branch of that ruling is what the measurement found.** An equivalent\nexists, it works, and its own package path says `unstable`.\n\n## Measured 202",
       "file": "beans/defs/folio-assistant-u2ol--typescript-7-the-compiler-api-exists-and-every-pat.md"
     },
@@ -4817,12 +4887,12 @@
       "title": "11 root-rooted scans have no gitignore awareness — ramz's sibling audit, answered",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T16:21:48Z",
-      "updatedAt": "2026-09-26T04:01:08Z",
+      "updatedAt": "2026-09-26T10:42:54Z",
       "preview": "`ramz`'s third box, asked and answered 2026-09-25.\n\n`ramz` fixed ONE scanner: `check-context-emission` walked the filesystem behind\na hand-written denylist and swept 145 gitignored documents as repository\ncontent. It was found by accident — a clean checkout failing a test about code\nnobody had touched — so the bean asked *\"which others?\"*.\n\n**Eleven**, under `cat-harness/scripts/`, each walking fr",
       "file": "beans/defs/folio-assistant-xd1g--11-root-rooted-scans-have-no-gitignore-awareness-r.md"
     },

@@ -1312,6 +1312,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_repositorygates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Repository gates&#10;(HARD)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 `bun run` invocations in all. A SEPARATE job from Task_TypeScript since bean `om30`: they were one job in which `bun test` came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on `main` meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is `xom7` at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. `bun run gates` derives its list from BOTH jobs, so the local set still cannot drift from CI's."
+        }
+      ],
+      "skos:notation": "Task_RepositoryGates",
+      "dcterms:source": "cat-harness/processes/code-quality-gates.bpmn#Task_RepositoryGates",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_codequalitygates.task_rust",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1339,12 +1359,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD)"
+          "@value": "TypeScript: lint, types&#10;and tests (HARD)"
         }
       ],
       "skos:definition": [
         {
-          "@value": "bun test, lint, tsc --noEmit, then the repository gates (workflow refs, lane and process documentation, kg:audit:check, detangle, skills, …). `bun run gates` derives its list from this job, so it is the local way to run the same set before pushing."
+          "@value": "Three checks and nothing else: `bun run lint`, `tsc --noEmit`, then `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Order inside the job is load-bearing rather than stylistic: Actions stops a job at its first failing step, so `bun test` — red on `main` by the owner's decision — runs LAST, with nothing behind it to mask. While it ran first, lint and typecheck did not execute on `main` at all."
         }
       ],
       "skos:notation": "Task_TypeScript",
