@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Processes are BPMN, and the diagrams are executable'
 parent: Skill instructions
 ---

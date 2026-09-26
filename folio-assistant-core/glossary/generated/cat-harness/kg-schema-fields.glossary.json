@@ -6474,6 +6474,55 @@
       "status": "candidate"
     },
     {
+      "id": "reference-direction.occurrence.from",
+      "prefLabel": "Occurrence.from",
+      "definition": "The instance the FILE belongs to.",
+      "source": "cat-harness/schemas/reference-direction.ts#Occurrence.from",
+      "status": "candidate"
+    },
+    {
+      "id": "reference-direction.occurrence.text",
+      "prefLabel": "Occurrence.text",
+      "definition": "The whole line, which is what an exemption matches against.",
+      "source": "cat-harness/schemas/reference-direction.ts#Occurrence.text",
+      "status": "candidate"
+    },
+    {
+      "id": "reference-direction.occurrence.to",
+      "prefLabel": "Occurrence.to",
+      "definition": "The instance whose NAME was found.",
+      "source": "cat-harness/schemas/reference-direction.ts#Occurrence.to",
+      "status": "candidate"
+    },
+    {
+      "id": "reference-direction.referenceexemption.file",
+      "prefLabel": "ReferenceExemption.file",
+      "definition": "Matches the FILE the occurrence sits in, repo-relative. Omitted means any file.",
+      "source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.file",
+      "status": "candidate"
+    },
+    {
+      "id": "reference-direction.referenceexemption.pattern",
+      "prefLabel": "ReferenceExemption.pattern",
+      "definition": "Matches the LINE the occurrence sits on. Omitted means any line, and then `file` must be set.",
+      "source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.pattern",
+      "status": "candidate"
+    },
+    {
+      "id": "reference-direction.referenceexemption.reason",
+      "prefLabel": "ReferenceExemption.reason",
+      "definition": "Why this is not a reference to the instance. Required.",
+      "source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "reference-direction.referenceexemption.to",
+      "prefLabel": "ReferenceExemption.to",
+      "definition": "Limit to one target instance; omitted means any.",
+      "source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.to",
+      "status": "candidate"
+    },
+    {
       "id": "render-log.renderlogentryschema.branch",
       "prefLabel": "RenderLogEntrySchema.branch",
       "definition": "Branch the render came from.",

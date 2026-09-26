@@ -66,13 +66,21 @@ restored script passes, exit 0.
 - [x] **Four scanners that broke when the gate created `node_modules/`** are
       fixed and share one statement of the rule (`scripts/git-corpus.ts`).
       Recorded against `xd1g`, which is where that survey lives.
-- [ ] **Its `test` script is a second, untouched defect.** `vitest run` reports
-      *"No test files found, exiting with code 1"* — the only test in the
-      package is `tests/test_python.py`, a Python test, and nothing runs that
-      either. So the package has a `test` script that has never passed. Not
-      fixed here: whether the JS half wants tests, or the script should run the
-      Python one, is a decision about what this package promises, and this bean
-      is about the build.
-- [ ] Whether a published package should also be **version-checked** against
-      the platform it ships beside — it pins `typescript ^7` while the root
-      pins `^6` — is a question this raises and does not answer.
+## Corrected 2026-09-26 — this bean was closed with open boxes
+
+It was marked `completed` while still carrying two unchecked items, which the
+store's rule forbids. Both are now `folio-assistant-1s5s`:
+
+- the package's **Python half runs nowhere** — CI's pytest step globs
+  `cat-harness/scripts/tests/*.test.py`, which does not reach it;
+- whether a published package should be **version-checked** against the
+  platform it ships beside (`typescript ^7` here against the root's `^6`,
+  which is what made this bean's breakage possible).
+
+**The JS half is done, and was the half this bean could reach.** `bun run test`
+had never passed in the package's life — `vitest run` reporting *"No test files
+found, exiting with code 1"*. `tests/parity.test.ts` now holds the Zod half to
+every case the Pydantic suite pins, case by case and named for its counterpart,
+because the package's promise is that the two agree rather than that either
+works alone. `check:published-packages` runs `test` as well as `build`, and was
+falsified by making a test fail.

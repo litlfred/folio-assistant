@@ -596,6 +596,12 @@ function page(opts: {
   const L = [
     "---",
     "layout: default",
+    // Says it is generated, so a consumer reads a declaration rather than
+    // inferring one from `docs/uml/`. The two copies this script writes --
+    // `uml/overview/` and `docs/uml/overview/` -- are the same pages, and
+    // 195 of them were reporting to `check:reference-direction` as authored
+    // prose naming instances above this one (2026-09-24).
+    "generated: scripts/gen-uml-overview.ts — do not hand-edit",
     `title: "UML — ${opts.title}"`,
     // Menu: the index and one entry per harness. The ~85 sub-graph pages stay
     // out of it and are reached from their harness page, because a menu that
@@ -709,6 +715,7 @@ async function build(): Promise<Map<string, string>> {
   const index = [
     "---",
     "layout: default",
+    "generated: scripts/gen-uml-overview.ts — do not hand-edit",
     `title: "${NAV_PARENT}"`,
     // After the numbered top-level pages (the highest is 14 today): a
     // reference, not a first read.
