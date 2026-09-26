@@ -131,3 +131,43 @@ The 97 existing unattributed claims are **untouched**, per the owner's decision
 of 2026-09-25 to leave them and revisit: there is no basis for a staleness
 cutoff, and `held-unknown` now makes each one visible at the moment somebody
 tries to claim it, which is when it matters.
+
+## A second shape, measured 2026-09-26 — the claim store is not where the collision happens
+
+Added at the owner's request after a session hit this **nine times in one
+window**. It belongs here because it is the same failure one level out, and it
+matters because **fixing `beans:claim` would have prevented none of the nine.**
+
+`beans:claim` guards *"is a sibling working this BEAN"*. Six of the nine
+collisions never went near a bean:
+
+| # | what was duplicated | how it was announced |
+|---|---|---|
+| 1 | `bm6d` | already merged as #552 |
+| 2 | `85im` | open as #563, with a better implementation |
+| 3 | the #1344 sidecar fix | #1353 |
+| 4 | a six-skill manifest + artefact fix | #1376, opened **one minute earlier** |
+| 5 | the bean sweep | 3 of 6 already done by a sibling |
+| 6 | claim expiry | shipped in `omki` |
+| 7–8 | two more, same window | open PRs |
+| 9 | the 25 `UNCATALOGED` entries | **#1364 — whose title names beans `k59d` / `tuvg` and gives no sign it carried the fix** |
+
+**#9 is the one that defeats every remedy this bean proposes.** The work was
+announced only as a diff inside a PR about something else. A subject search over
+open PRs cannot see it; a bean claim cannot see it; the PR list was read before
+building and still did not show it. It then compounded: the entries were merged
+on the owner's instruction and **reverted forty minutes later on the owner's
+instruction** (#1384), because a third and fourth session held the opposite
+decision under bean `ngxj` and none of the three could see the others' open
+question. The owner answered both truthfully; the answers contradicted because
+each was asked alone, with seven sessions running.
+
+So the state that needs publishing is not only "who holds this bean" but **"what
+is this session about to change, and what has it asked the owner"** — the second
+being the one with no store at all. `tuvg` carries the open item for it.
+
+**Not proposing a mechanism here.** This bean's subject is the claim store and
+its four `Done when` boxes are sound; widening it to cross-session question
+visibility would give it two subjects, which is the shape `sa8y` paid for with
+three disagreeing `Done when` lists. Recorded as evidence that the claim store
+is necessary and **not sufficient**.
