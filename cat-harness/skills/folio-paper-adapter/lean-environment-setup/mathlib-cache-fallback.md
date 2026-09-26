@@ -24,7 +24,7 @@ MCP times out at 60 s because no prebuilt oleans are available.
 > source until you have tried this.**
 >
 > ```sh
-> scripts/lake-cache.sh restore
+> cat-harness/scripts/lake-cache.sh restore
 > ```
 >
 > That is the whole procedure — it derives the package and branch from
@@ -37,7 +37,7 @@ MCP times out at 60 s because no prebuilt oleans are available.
 >
 > **This is the single most common wasted hour** — the from-source
 > sections below are a *fallback*, not the default. If you do end up
-> building, run `scripts/lake-cache.sh seed` afterwards so the next
+> building, run `cat-harness/scripts/lake-cache.sh seed` afterwards so the next
 > agent restores in 2 minutes instead of rebuilding.
 >
 > The hand-written git recipe that used to live here has been removed:
@@ -298,7 +298,7 @@ you on switch-back).
 
 **RESTORE first (before any from-source build):**
 ```bash
-scripts/lake-cache.sh restore     # exit 1 = not seeded yet; 3 = corrupt
+cat-harness/scripts/lake-cache.sh restore     # exit 1 = not seeded yet; 3 = corrupt
 ```
 Do not hand-roll this. The earlier hand-written version raced on
 `FETCH_HEAD` and used a cwd-relative `git ls-tree` that returned nothing
@@ -365,7 +365,7 @@ git worktree remove --force "$WT"                      # main branch never left
 > # Restore into a scratch Lake root and let the script do the verifying:
 > # it counts oleans and exits 3 if the extract produced none, which is
 > # exactly the paper-oleans-missing bug this step exists to catch.
-> scripts/lake-cache.sh restore --lake-root "$T" --branch "$BR"; echo "exit=$?"
+> cat-harness/scripts/lake-cache.sh restore --lake-root "$T" --branch "$BR"; echo "exit=$?"
 > ```
 > Seeding to a `-test` branch suffix first (then a ref-only force-push
 > cutover to production — the blobs are already on the remote, so the cutover
