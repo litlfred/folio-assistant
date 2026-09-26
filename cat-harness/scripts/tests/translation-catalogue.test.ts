@@ -14,7 +14,12 @@ import { join, resolve } from "node:path";
 
 import { siteDir } from "../../schemas/cat-harness.ts";
 
-import { addedFiles, translationsByFile, uncatalogued } from "../check-translation-catalogue.ts";
+import {
+  addedFiles,
+  baseFromEnv,
+  translationsByFile,
+  uncatalogued,
+} from "../check-translation-catalogue.ts";
 
 const HARNESS = resolve(import.meta.dir, "../..");
 
@@ -139,5 +144,29 @@ describe("uncatalogued reports exactly the added translations with no catalogue"
     } finally {
       cleanup();
     }
+  });
+});
+
+describe("baseFromEnv — the step registers ONE gate, so the range comes from the env", () => {
+  // THE DEFECT THIS GUARDS, measured 2026-09-26. `gatesFrom` takes every `bun …`
+  // LINE of a workflow step as its own gate and runs it verbatim, so choosing the
+  // range with an `if`/`else` around two invocations registered this check twice,
+  // ran both locally with the variable unset, and the `--base "$BASE_SHA"` half
+  // exited 2. It also moved the gate census 167 -> 168 and stranded
+  // `audit-coverage`'s sidecar. One line in the step, one source for the base.
+  test("a sha is returned", () => {
+    expect(baseFromEnv({ CATALOGUE_BASE_SHA: "deadbeef" })).toBe("deadbeef");
+  });
+
+  // The exact shape that broke it: GitHub expands
+  // `github.event.pull_request.base.sha` to "" on a `push` run, and an empty
+  // string reaching `git diff` as a ref is the failure, not a range.
+  test("an EMPTY string is no base at all, which is how the argv version failed", () => {
+    expect(baseFromEnv({ CATALOGUE_BASE_SHA: "" })).toBeUndefined();
+    expect(baseFromEnv({ CATALOGUE_BASE_SHA: "   " })).toBeUndefined();
+  });
+
+  test("an absent variable is no base, so the run falls back to three dots", () => {
+    expect(baseFromEnv({})).toBeUndefined();
   });
 });

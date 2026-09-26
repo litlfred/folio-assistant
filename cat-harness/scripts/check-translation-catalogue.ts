@@ -60,7 +60,8 @@
  * bun run translation:catalogue:check                 # against origin/main
  * bun run translation:catalogue:check -- --staged     # pre-commit
  * bun run translation:catalogue:check -- --since HEAD~5
- * bun run translation:catalogue:check -- --base "$BASE_SHA"   # CI: no merge base needed
+ * bun run translation:catalogue:check -- --base <sha>  # two dots; no merge base needed
+ * CATALOGUE_BASE_SHA=<sha> bun run translation:catalogue:check   # how CI passes it
  * bun run translation:catalogue:check -- --warn       # report, exit 0
  * ```
  *
@@ -176,6 +177,32 @@ export function addedFiles(
 }
 
 /**
+ * The base commit CI handed us, or `undefined` when it handed us none.
+ *
+ * ## Why the environment and not argv
+ *
+ * `gatesFrom` in `gates.ts` reads the gate set out of the workflow by taking
+ * **every `bun …` LINE** of a step body as its own gate and running it verbatim.
+ * So a step that chose its range with an `if`/`else` around two invocations
+ * registered this one check TWICE, ran both locally with the variable unset, and
+ * the `--base "$BASE_SHA"` half exited 2 with *"--base needs a ref"*. Measured
+ * 2026-09-26; the same pair took the gate census from 167 to 168 and stranded
+ * `audit-coverage`'s committed sidecar, which was recording the truth.
+ *
+ * One command line in the step is therefore not a tidiness preference — it is
+ * what makes `bun run gates` run what CI runs, which is the entire premise of
+ * deriving the local gate set from the workflow.
+ *
+ * **An empty string is `undefined`, not a ref.** GitHub expands
+ * `github.event.pull_request.base.sha` to `""` on a `push` run, so treating
+ * empty as present is exactly how the argv version failed.
+ */
+export function baseFromEnv(env: Record<string, string | undefined>): string | undefined {
+  const v = env.CATALOGUE_BASE_SHA?.trim();
+  return v ? v : undefined;
+}
+
+/**
  * The added files that publish a translation carrying no catalogue.
  *
  * A catalogue counts as present when it is on disk — added by this same change
@@ -210,15 +237,17 @@ if (import.meta.main) {
   const sinceAt = argv.indexOf("--since");
   const baseAt = argv.indexOf("--base");
   const since = sinceAt >= 0 ? argv[sinceAt + 1] : "origin/main";
-  const base = baseAt >= 0 ? argv[baseAt + 1] : undefined;
   if (sinceAt >= 0 && !since) {
     console.error("--since needs a ref");
     process.exit(2);
   }
-  if (baseAt >= 0 && !base) {
+  if (baseAt >= 0 && !argv[baseAt + 1]) {
     console.error("--base needs a ref");
     process.exit(2);
   }
+  // The base comes from the ENVIRONMENT when it is not on argv, and the CI step
+  // sets it that way on purpose — see `baseFromEnv`.
+  const base = baseAt >= 0 ? argv[baseAt + 1] : baseFromEnv(process.env);
 
   const byFile = translationsByFile(INSTANCE_ROOT);
   if (!byFile) {

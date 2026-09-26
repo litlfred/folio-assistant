@@ -979,28 +979,36 @@ jobs:
           # BOUND, not interpolated into the `run:` body — bean `j0zs` hardened
           # exactly this surface, and the rule there is to refuse the SHAPE rather
           # than judge each value, even for something as inert as a SHA.
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          #
+          # Read by the SCRIPT rather than spliced into its argv, and that is the
+          # load-bearing part. `gatesFrom` in `gates.ts` takes every `bun …` LINE
+          # of a step body as its own gate and runs it verbatim, so an `if`/`else`
+          # holding two invocations registers the same check twice and runs both
+          # with this variable unset — measured 2026-09-26, one of the two exited 2
+          # locally with `--base needs a ref`, and the pair also took the gate
+          # census from 167 to 168 and stranded `audit-coverage`'s sidecar. One
+          # command line is what makes `bun run gates` run what CI runs.
+          CATALOGUE_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
-          # FIRST CI RUN FAILED HERE, exit 2, and the fix is in the range not the
-          # fetch. `--depth=200 origin main` created the ref — the log shows
-          # `* [new branch] main -> origin/main` — and `origin/main...HEAD` still
-          # could not resolve, because three dots need a merge base and a grafted
-          # shallow history has no common ancestor to find.
+          # THE FETCH is conditional; the invocation is not. On a `pull_request`
+          # checkout HEAD is the merge commit, so it already CONTAINS the base:
+          # `merge-base(base, HEAD) == base`, which makes `base..HEAD` the same SET
+          # as `base...HEAD` while computing no merge base at all. That matters
+          # because this gate's first CI run exited 2 — `--depth=200 origin main`
+          # created the ref (`* [new branch] main -> origin/main`) and
+          # `origin/main...HEAD` still could not resolve, a grafted shallow history
+          # having no common ancestor to find. Two dots need none, so one commit
+          # is enough to fetch.
           #
-          # On a `pull_request` checkout HEAD is the merge commit, so it already
-          # CONTAINS the base: `merge-base(base, HEAD) == base`, which makes
-          # `base..HEAD` the same SET as `base...HEAD` while computing no merge
-          # base at all. So fetch that one commit and pass `--base`.
-          #
-          # The `push` fallback keeps three dots against `main`, where the history
-          # is connected and the base is not handed to us.
-          if [ -n "$BASE_SHA" ]; then
-            git fetch --no-tags --depth=1 origin "$BASE_SHA"
-            bun run translation:catalogue:check -- --base "$BASE_SHA"
+          # With no base handed to us (a `push` run, or locally) the script falls
+          # back to three dots against `main`, where the history is connected, and
+          # names the range it used either way.
+          if [ -n "$CATALOGUE_BASE_SHA" ]; then
+            git fetch --no-tags --depth=1 origin "$CATALOGUE_BASE_SHA"
           else
             git fetch --no-tags --prune --depth=200 origin main || true
-            bun run translation:catalogue:check
           fi
+          bun run translation:catalogue:check
 
       - name: gates that were registered and never run
         run: |
