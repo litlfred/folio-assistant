@@ -33,6 +33,7 @@
  * @covers cat-harness, skills
  */
 import { readdirSync, readFileSync, statSync, existsSync, mkdirSync, writeFileSync } from "fs";
+import { gitCorpus } from "../../scripts/git-corpus.js";
 import { join, relative, resolve, dirname } from "path";
 import { detangleResultsDir, sidecarFor, sidecarPathFor, staleFields } from "../../schemas/detangle-sidecar.ts";
 import {
@@ -77,15 +78,57 @@ const EXT = /\.(md|bpmn|dmn|json|ts)$/;
 /** Per-directory file names that name no node — see the name index below. */
 const CONVENTIONAL = new Set(["README", "AGENTS"]);
 
-function walk(dir: string, out: string[] = []): string[] {
-  if (!existsSync(dir)) return out;
-  for (const e of readdirSync(dir)) {
-    if (e.startsWith(".")) continue;
-    const p = join(dir, e);
-    if (statSync(p).isDirectory()) walk(p, out);
-    else if (EXT.test(e)) out.push(p);
+/**
+ * The files under {@link dir} that git accounts for, filtered to node kinds.
+ *
+ * ASKED OF GIT, NEVER OF THE DISK, and that is a fix rather than a style
+ * choice. This was a bare `readdirSync` recursion, which made a PINNED
+ * measurement depend on what happened to be lying in the working tree.
+ *
+ * Measured 2026-09-26, and it is why the new `skill-registration-chain` job
+ * was red on its first CI run while every local run was green:
+ *
+ * | `cat-harness/schemas` | `size` |
+ * |---|---|
+ * | fresh checkout (CI) | **227** |
+ * | this author's container, after a gate ran `bun install` in a publishable subpackage | **1441** |
+ *
+ * The 1214 extra "nodes" were `cat-harness/schemas/block-qa-schema/node_modules/`
+ * — 2719 files, gitignored, one machine's residue reported as this
+ * repository's graph. A measurement that moves when you install
+ * devDependencies cannot be pinned, and the committed sidecar had the polluted
+ * number in it.
+ *
+ * `git-corpus.ts`'s own docblock already names this exact failure (`rsi6`) and
+ * says `xd1g` counted **11** scanners walking a root with no gitignore
+ * awareness, the rule wanting stating once rather than copying eleven times.
+ * This was one of the eleven.
+ *
+ * `--others --exclude-standard` keeps a NEW, not-yet-committed node in the
+ * graph — the corpus is what git accounts for, not what it has recorded — so
+ * authoring a skill and measuring before committing it still works.
+ *
+ * REFUSES rather than falling back. A silent fall back to the filesystem is
+ * how the pollution arrived, and `undefined` from `gitCorpus` means git could
+ * not answer, which is never the same as an empty directory (`dh4f`). `ROOT`
+ * is this repository, never a temp fixture, so there is no legitimate case
+ * here for the third state.
+ */
+function walk(dir: string): string[] {
+  if (!existsSync(dir)) return [];
+  const corpus = gitCorpus(dir);
+  if (corpus === undefined) {
+    console.error(
+      `UNDETERMINED: git could not list files under ${dir}.\n` +
+        "This is not an empty directory and not a pass — nothing was measured. " +
+        "A pinned measurement must not be taken from a filesystem walk; see this " +
+        "function's note and scripts/git-corpus.ts.",
+    );
+    process.exit(2);
   }
-  return out;
+  return corpus.filter(
+    (p) => EXT.test(p) && !relative(dir, p).split("/").some((seg) => seg.startsWith(".")),
+  );
 }
 
 const nodes: DetangleNode[] = [];

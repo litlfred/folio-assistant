@@ -307,17 +307,33 @@ function main(): number {
 
   if (red.length > 0) {
     console.error(
-      `\n${red.length} check(s) still red after regenerating:\n` +
+      // The wording must state WHICH mode ran, and that is a correction rather
+      // than a nicety. Under `--check` nothing is regenerated, so "still red
+      // after regenerating" was false in exactly the mode CI runs — measured
+      // on this gate's first CI run, where it also pointed the reader at a
+      // missing package-manifest entry that was not the cause. A diagnostic
+      // that names the wrong remedy costs more than none.
+      (checking
+        ? `\n${red.length} check(s) red — nothing was regenerated (\`--check\`):\n`
+        : `\n${red.length} check(s) still red after regenerating:\n`) +
         red.map((r) => `    ${r}`).join("\n") +
-        `\n\nThe usual cause is a MISSING PACKAGE-MANIFEST ENTRY — this command\n` +
-        `deliberately does not add one, because which package a file belongs to\n` +
-        `is your assertion, not a derivable fact. Add the skill's slug to its\n` +
-        `\`skills/<package>/package-manifest.json\` and run this again.\n\n` +
+        (checking
+          ? `\n\nRun \`bun run skill:register\` (without \`--check\`) to regenerate, then\n` +
+            `commit what it writes. If a check is STILL red after that, read on.\n\n`
+          : `\n\nThe usual cause is a MISSING PACKAGE-MANIFEST ENTRY — this command\n` +
+            `deliberately does not add one, because which package a file belongs to\n` +
+            `is your assertion, not a derivable fact. Add the skill's slug to its\n` +
+            `\`skills/<package>/package-manifest.json\` and run this again.\n\n`) +
         `If the entry is there and a check is still red, the chain above is\n` +
         `incomplete: measure it by running that ONE check against a clean tree\n` +
         `with and without your skill. Do NOT measure through \`bun run gates\` —\n` +
         `\`bun test\` runs some of these writers and repairs what later gates\n` +
-        `read (bean \`ymsu\`), so gates reports artefacts as current that are not.\n`,
+        `read (bean \`ymsu\`), so gates reports artefacts as current that are not.\n\n` +
+        `And if it is red in CI but green here: ask git what the corpus is, not\n` +
+        `the disk. A gitignored \`node_modules/\` in a subpackage inflated\n` +
+        `\`cat-harness/schemas\` from 227 nodes to 1441 in one container while a\n` +
+        `fresh checkout saw 227 — see \`kg-detangle.ts\`'s \`walk\` and\n` +
+        `\`scripts/git-corpus.ts\`.\n`,
     );
     return 1;
   }
