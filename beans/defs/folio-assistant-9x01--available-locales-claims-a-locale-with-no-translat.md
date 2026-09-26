@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9x01
 title: available_locales claims a locale with no translated page behind it, and nothing checks the two against each other
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T14:26:44Z
-updated_at: 2026-09-26T19:33:36Z
+updated_at: 2026-09-26T20:14:52Z
 parent: folio-assistant-bzyu
 ---
 
@@ -60,13 +60,30 @@ was left. `git log` on the file will say, and the answer decides the fix:
       explained. See §"Swept 2026-09-26"
 - [x] The direction of the error is established for each finding, with provenance
       — and it is **not the direction this bean assumed**
-- [ ] A gate refuses a page whose `available_locales` names a locale with no file,
+- [x] A gate refuses a page whose `available_locales` names a locale with no file,
       or `available_locales` is redefined so the claim is not about existence —
-      **the sweep says REDEFINE, and the blast radius makes it the owner's call**
-- [ ] falsified by breaking: adding a bogus locale to a page's front matter must
-      make the new gate red
-- [ ] `nav-locale.e2e.ts`'s skip of locale-claiming candidates is revisited — it
-      is a workaround and should say whether it still earns its place
+      **BOTH, #1431.** Redefined where it mattered (the generator derives the field
+      from the rendered corpus, not from `existsSync` on a `.po`) AND gated, because
+      the redefinition only reaches the 24 generated pages and 70 hand-authored
+      translations stamp their own list. It was NOT the semantics change the sweep
+      feared: `translation-manager.md` already defined the field as "which languages
+      can I read this page in", so the code was wrong about a settled meaning rather
+      than the meaning being open
+- [x] falsified by breaking: adding a bogus locale to a page's front matter must
+      make the new gate red — **three controls, all exit 1**: a hand-authored SOURCE
+      page (`docs/index.md`), a TRANSLATED page (`docs/fr/architecture.md`), and this
+      bean's own case restored (`crdm-methodology` claiming `fr`), which the gate
+      names by page and locale. Two roles rather than one, because a gate that fails
+      in one says nothing about the other
+- [x] `nav-locale.e2e.ts`'s skip of locale-claiming candidates is revisited — it
+      does NOT earn its place, and is removed. Its reason is **discharged rather than
+      waived**: the skip cited this bean and gave a general principle too ("a page
+      contradicting the index is the wrong page to reason from"), and
+      `check:available-locales` now enforces that corpus-wide, so the contradiction
+      it hand-checked on one page fails CI before this test runs. 11 e2e tests pass
+      in real Chromium. The fixture now selects **`crdm-methodology`** — the page the
+      skip existed to avoid, eligible again because its claim is honest — with 12
+      candidates behind it
 - [x] **finding 4 fixed**: `docs:pages` and `docs:pages:check` added, so the
       command every generated page's banner names resolves. Guarded by
       `scripts/tests/generated-banner-commands.test.ts` over the CORPUS rather
@@ -193,3 +210,55 @@ files. That is a decision about what the site promises its consumers, so it is
 recorded here and put to the owner rather than chosen.
 
 _2026-09-26T19:33:33Z_ — Claimed by claude/sleepy-babbage-ls90iz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+---
+
+## Summary of Changes — six of six, 2026-09-26
+
+**The bean's premise turned out to be half right, and the half it missed was
+larger.** It opened on a page claiming French it could not deliver. The cause —
+`available_locales` computed as `existsSync(translations/<locale>/<stem>.po)` —
+was also making **five** fully-translated pages stamp `["en"]`, hiding
+translations that exist from the language bar. Over-claiming was one page;
+under-claiming was five.
+
+**It was never a semantics change.** `translation-manager.md` already defined the
+field as *"which languages can I read this page in"*, source language folded in
+deliberately. The code asked a different question. So the fix made the
+computation match a definition already written down, which is why the blast
+radius this bean feared (a published JSON-LD key, a badge, two e2e files) never
+materialised.
+
+### What landed
+
+| | |
+|---|---|
+| #1420 | `docs:pages` / `docs:pages:check` — the command ~20 generated pages' banners name now exists, guarded as a class over the corpus (finding 4) |
+| #1431 | `localesReadableFor`, the generator reading the rendered corpus, six corrected pages, `check:available-locales` + 11 tests, and the `nav-locale.e2e.ts` skip removed |
+
+`localesAvailableFor` **stays** beside the new function: `translation-qa-sweep.ts`
+asks which locales have catalogue material to QA, which is a `.po` question
+correctly answered by the catalogue. Two callers, two questions.
+
+### Four things I got wrong, each caught by a control rather than by reasoning
+
+1. **"Render the missing French page from its existing catalogue"** — offered as
+   the recommended fix. No renderer exists, and the catalogue is 25 lines with
+   one filled entry.
+2. **The `.po` stem as the index key.** `guides/who-smart-ig` has the stem
+   `guides-who-smart-ig`, which matches no page and resolves silently to
+   "source language only". Caught by reading `manifestRef`.
+3. **Two measurements that reported clean over nothing** — an `unreadable` index,
+   then a zero over an empty file list, because `translation-index` is rooted at
+   the INSTANCE and `SITE_DIR` is the site directory's NAME.
+4. **31 verdict sidecars read as a `main` regression.** Pristine `main` moved the
+   same files, and the criterion was added deliberately to locate that gap.
+
+### Not done, and not this bean's
+
+The 36 missing `.po` catalogues (`ngxj`, #206) are untouched: this makes
+availability correct *despite* them. A catalogue arriving for a page with no
+rendering still does not make it readable, and a rendering with no catalogue
+still does — verified after #1411 landed 13x5 catalogues and moved none of the
+six pages.
