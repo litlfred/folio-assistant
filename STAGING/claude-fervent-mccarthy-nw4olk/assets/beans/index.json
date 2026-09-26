@@ -3281,14 +3281,14 @@
     {
       "id": "folio-assistant-oqdr",
       "title": "Bootstrap diagrams' SVGs are published but rendered by nothing since the split",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T17:52:19Z",
-      "updatedAt": "2026-09-24T17:52:19Z",
+      "updatedAt": "2026-09-26T09:51:47Z",
       "preview": "## What\n`cat-harness/docs/assets/img/workflows/` holds `initialize-harness.svg`, `log-message.svg` and `discussion.svg`, whose sources are `bootstrap/processes/*.bpmn`. `render-bpmn.ts` renders `workflowFiles(cat-harness)`, which does not reach bootstrap, so these three are never re-rendered and `render:bpmn:check` cannot see them drift. The generated process pages (`docs/processes/initialize-harn",
       "file": "beans/defs/folio-assistant-oqdr--bootstrap-diagrams-svgs-are-published-but-rendered.md"
     },
