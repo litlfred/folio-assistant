@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T04:14:07Z
-updated_at: 2026-09-26T12:35:30Z
+updated_at: 2026-09-26T14:05:33Z
 parent: folio-assistant-d308
 ---
 
@@ -283,3 +283,111 @@ from the repository root with no gitignore awareness (`xd1g`).
 [ ] `nested-instance-audited` stops firing for an instance that IS audited —
     cannot be tested until the loop lands; note it still fired (15) inside the
     bootstrap run, which is itself suspect and unexamined
+
+
+
+--------
+
+## 2026-09-26T13:30Z — ALL 68 CRITERIA CLASSIFIED, at the owner's direction
+
+Asked which of four shapes to use and **the owner chose classifying all 68**, over my
+recommendation to declare only the one measured to misfire. Their choice was better,
+and the reason is measurable: my recommendation would have caught 73 of the 76 false
+criticals and left 3.
+
+### What was added
+
+`KgCriterionDefinition` gains **`scope: KgCriterionScope`** — `"instance" | "repo"` —
+**required**, so a criterion that has not decided does not compile, the same argument
+that makes `renderable` and `holds` required on a graph kind. Plus `scopeBasis`,
+required for `repo` and asserted absent for `instance`.
+
+    68 criteria   63 instance   5 repo
+
+The five: `actor-roles-resolve`, `actor-capabilities-resolve`,
+`actor-permissions-resolve`, `actor-is-not-a-role`, `nested-instance-audited`.
+
+### The rule, and the case that proves it is the right rule
+
+**Scope follows the SUBJECT, not the data consulted.** Reading repository-level data
+is not the defect — `.claude/skills/local`, the convention refs and `git ls-files` are
+all repo-wide by design and correct. The defect is comparing a repository-level SET
+against an instance-level one.
+
+`actor-kind-fits-role` is the case that tests it: `applies: ["role"]`, so its subject
+is one instance's role, yet it consults the repository actor set. Classified
+`instance` — and measured to produce **no** findings in the bootstrap run, because it
+degrades to `n/a` when no actor declares the role. Safe per instance rather than
+arguably so.
+
+And the actor criteria all carry `applies: ["graph"]`, which is why scope **cannot**
+be derived from the subject kind: the graph roll-up holds both
+`skill-in-role-or-process`, which every instance answers about itself, and
+`actor-roles-resolve`, which only the repository can. That killed the "derive it
+mechanically" option on evidence rather than taste.
+
+### Suppression is LOUD, which is the mitigation for the risk the owner accepted
+
+A `repo` criterion in an instance run records **`n/a` plus a finding naming the scope
+and its basis**, and the run prints a counted line:
+
+    instance run: bootstrap — 5 `repo`-scoped criterion result(s) recorded n/a, each
+    with its basis in the sidecar. 5 of 68 criteria are `repo`-scoped.
+
+`n/a` rather than a fifth `KgResult`, because this is `applies` on another axis —
+not-applicable-here, not could-not-determine — and a new state would change every
+consumer. But never a SILENT `n/a`: the whole hazard of a scope field is that a wrong
+`repo` reads as clean forever, so the count is a number a reader can challenge.
+Applied in `report()` **before `tally()`**, so totals describe what the run judged.
+
+### Running it caught a misclassification of mine — the same way the 73 were caught
+
+After the scope field, bootstrap still reported **3 criticals**, all
+`satisfies-resolves` citing `../.claude/skills/capabilities/*.json` — a `where` that
+escapes the instance, which is the tell. Decisive check: **at the root that criterion
+passes with 0 findings**, so the 3 were created by the instance run.
+
+Fixed at the data rather than by suppressing the criterion: `readSatisfiers()` skips
+repository-level `CAPABILITY_DIR` when `INSTANCE_RUN`. Suppressing
+`satisfies-resolves` outright would have thrown away the instance half — a
+front-matter `satisfies` inside the instance is a real question.
+
+    bootstrap criticals   76 → 3 (scope field) → 0 (satisfier scoping)
+    root run              byte-identical: pass 3051 fail 144 n/a 1477 unknown 10
+
+### And my own test broke a sibling test
+
+`kg-criterion-scope.test.ts` first spawned the WRITING form and deleted
+`bootstrap/test/` afterwards. `bun test` runs files in parallel, so for the length of
+the run bootstrap transiently held sidecars naming paths above it — and
+`graph.test.ts > only the listed structural names remain` (bean `iwtn`) reads exactly
+that. **Passed alone, failed in the suite**: the `ymsu` shape, a test that writes what
+another test reads. Now it spawns `--check`, which writes nothing, and asserts that it
+wrote nothing. Root cause removed rather than cleaned up after.
+
+Same pollution also silently changed bootstrap's generated UML and detangle
+artefacts, which reverted once regenerated over a clean tree — `xd1g` a third time in
+one day, and the first time it reached files I nearly committed.
+
+### Falsified by mutation, both directions
+
+    actor-roles-resolve → "instance"        2 tests fail, incl. the spawned run
+    suppression line made unreachable        the spawned run fails
+    restored                                 5 pass
+
+## Done when
+
+[x] each declared instance can be audited from its OWN root, sidecars under its own
+    results directory
+[x] the auditor hash survives a non-auditor root
+[x] `instance-graph-isolation.test.ts` unaffected — a separate RUN, not a wider walk
+[x] **per-instance criteria are scoped** — all 68 classified, `repo` requires a basis,
+    suppression is counted and visible, falsified by mutation
+[ ] a nested instance DECLARES its results directory before its sidecars are
+    committed — still open, and still the reason no loop exists
+[ ] a zero-diagram instance's state is determined rather than absent (`dh4f`) — only
+    becomes live once a loop exists
+[ ] `nested-instance-audited` stops firing for an instance that IS audited — now
+    `repo`-scoped, so it no longer fires INSIDE an instance run (which was the
+    unexamined 15). Whether the ROOT's copy should stop naming an instance that has
+    its own sidecar is a different question and untouched

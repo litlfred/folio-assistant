@@ -74,6 +74,7 @@ import {
   type OrphanSidecar,
   KG_QA_MANIFEST_SCHEMA,
   KG_QA_MANIFEST_PATH,
+  KG_CRITERIA,
   KG_CRITERIA_BY_ID,
   criteriaFor,
   tally,
@@ -282,6 +283,67 @@ function allUnknown(kind: KgSubjectKind, reason: string): Record<string, KgCrite
   return out;
 }
 
+/**
+ * Is this run scoped to an instance other than the one the auditor lives in?
+ *
+ * The question a `repo`-scoped criterion cannot answer. Compared as resolved
+ * paths rather than on the presence of `--instance`, so
+ * `--instance ./cat-harness` from the repository root behaves as the default run
+ * does instead of silently suppressing five criteria.
+ */
+const INSTANCE_RUN = root !== AUDITOR_ROOT;
+
+/**
+ * How many criteria this run did not evaluate because they are `repo`-scoped.
+ *
+ * Counted, because the whole risk of a scope field is that a wrong `repo` reads
+ * as a clean `n/a` forever. The count is printed in the summary, so suppression
+ * is a number a reader can challenge rather than an absence nobody sees.
+ */
+let scopeSuppressed = 0;
+
+/**
+ * Replace a `repo`-scoped criterion's verdict with `n/a` in an instance run,
+ * keeping WHY in the findings.
+ *
+ * `n/a` rather than a fifth `KgResult`: this is the same idea as `applies` on a
+ * different axis — not-applicable-here, not could-not-determine — and adding a
+ * state would change every consumer of the sidecar for a distinction the two
+ * existing ones already carry.
+ *
+ * **But not a silent `n/a`.** An ordinary `n/a` has empty findings; this one
+ * carries a detail naming the scope and the basis, so a reader walking the
+ * sidecar can tell "this criterion does not apply to this kind of node" from
+ * "this criterion was withheld from this instance, and here is the argument".
+ * Bean `bjzs`: the owner chose classifying all 68 over declaring only the one
+ * measured to misfire, and the cost of that choice is a wrong `repo` suppressing
+ * a real finding — which this makes loud rather than preventing.
+ */
+function scoped(criteria: Record<string, KgCriterionEntry>): Record<string, KgCriterionEntry> {
+  if (!INSTANCE_RUN) return criteria;
+  const out: Record<string, KgCriterionEntry> = {};
+  for (const [id, e] of Object.entries(criteria)) {
+    const def = KG_CRITERIA_BY_ID[id];
+    if (def?.scope !== "repo") {
+      out[id] = e;
+      continue;
+    }
+    scopeSuppressed += 1;
+    out[id] = {
+      result: "n/a",
+      findings: [
+        {
+          where: "—",
+          detail:
+            `not evaluated: \`${id}\` is \`repo\`-scoped and this run is scoped to ` +
+            `${relative(repoRootFor(AUDITOR_ROOT), root) || "."}. ${def.scopeBasis ?? ""}`.trim(),
+        },
+      ],
+    };
+  }
+  return out;
+}
+
 function report(
   kind: KgSubjectKind,
   id: string,
@@ -289,12 +351,15 @@ function report(
   sourceHash: string | null,
   criteria: Record<string, KgCriterionEntry>,
 ): KgQaReport {
+  // Scoped BEFORE the tally, so the totals a consumer reads describe what this
+  // run actually judged rather than what it would have judged at the root.
+  const scopedCriteria = scoped(criteria);
   return {
     $schema: KG_QA_SCHEMA,
     subject: { kind, id, path },
     source_hash: sourceHash,
-    criteria,
-    totals: tally(criteria),
+    criteria: scopedCriteria,
+    totals: tally(scopedCriteria),
   };
 }
 
@@ -1481,7 +1546,22 @@ interface Satisfier {
  */
 function readSatisfiers(): Satisfier[] {
   const out: Satisfier[] = frontMatterLists("satisfies").map(({ value, from }) => ({ ref: value, from }));
-  if (existsSync(CAPABILITY_DIR)) {
+  // CAPABILITY_DIR is repository-level (`repoRootFor`), so its claims are the
+  // REPOSITORY's to judge — and it judges them correctly: `satisfies-resolves`
+  // passes with 0 findings at the root.
+  //
+  // Reading them in an instance run compares a repository-level satisfier set
+  // against ONE instance's requirement set, which is the same cross-level shape
+  // as `actor-roles-resolve`. MEASURED 2026-09-26 on `--instance ./bootstrap`:
+  // three criticals, every one citing `../.claude/skills/capabilities/*.json` —
+  // a `where` that escapes the instance being audited, which is the tell.
+  //
+  // Skipped rather than suppressing the criterion, because the instance half is
+  // a real question: a front-matter `satisfies` inside this instance still
+  // resolves against this instance's requirements. Suppressing
+  // `satisfies-resolves` outright would have thrown that away to fix the repo
+  // half.
+  if (!INSTANCE_RUN && existsSync(CAPABILITY_DIR)) {
     for (const f of readdirSync(CAPABILITY_DIR)) {
       if (!f.endsWith(".json")) continue;
       const path = join(CAPABILITY_DIR, f);
@@ -2342,6 +2422,19 @@ if (asJson) {
 
   console.log(`Knowledge-graph audit  (${reports.length} subjects, ${skills.size} skills, ${graph?.roles.length ?? 0} roles)\n`);
   console.log(`  pass ${counts.pass}   fail ${counts.fail}   n/a ${counts["n/a"]}   unknown ${counts.unknown}\n`);
+  // The scope line, printed only when it has something to say. A run at the
+  // auditor's own root suppresses nothing, so a `0 suppressed` line there would
+  // be noise; an instance run states the number and where to read the argument,
+  // because a suppression nobody can see is the failure mode of the scope field
+  // itself (bean `bjzs`).
+  if (INSTANCE_RUN) {
+    console.log(
+      `  instance run: ${relative(repoRootFor(AUDITOR_ROOT), root) || "."} — ` +
+        `${scopeSuppressed} \`repo\`-scoped criterion result(s) recorded n/a, each with its basis ` +
+        `in the sidecar. ${KG_CRITERIA.filter((c) => c.scope === "repo").length} of ${KG_CRITERIA.length} ` +
+        `criteria are \`repo\`-scoped; see \`scopeBasis\` in schemas/kg-qa.ts.\n`,
+    );
+  }
 
   const bySeverity = new Map<KgSeverity, { subject: string; criterion: string; findings: number }[]>();
   for (const r of reports) {
