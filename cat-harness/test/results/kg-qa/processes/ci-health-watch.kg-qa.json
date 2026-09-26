@@ -5,7 +5,7 @@
     "id": "Process_CiHealth",
     "path": "processes/ci-health-watch.bpmn"
   },
-  "source_hash": "sha256:0ab519e08abe25172abac1ec8224fba4483c1303ede7cb48f92754bf767948cd",
+  "source_hash": "sha256:9f1f02351c6ce4f82f32399238d5d9049c4c7c25960aae44551c2acbe6ea6a09",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -113,13 +113,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/ci-health.yml",
-          "detail": ".github/workflows/ci-health.yml changed since cat-harness/processes/ci-health-watch.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -127,8 +122,8 @@
     }
   },
   "totals": {
-    "pass": 14,
-    "fail": 2,
+    "pass": 15,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   },
@@ -137,8 +132,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/ci-health-watch.bpmn",
       "code": ".github/workflows/ci-health.yml",
-      "prose_hash": "0ab519e08abe",
-      "code_hash": "13257f52fe55",
+      "prose_hash": "9f1f02351c6c",
+      "code_hash": "89678bcdc781",
       "by": "baseline"
     }
   ]

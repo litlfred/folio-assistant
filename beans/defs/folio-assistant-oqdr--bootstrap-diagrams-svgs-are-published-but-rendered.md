@@ -19,6 +19,14 @@ Seen 2026-09-24 while deriving subprocess links (bean `xl55`): `initialize-harne
 ## Done when
 Bootstrap's diagrams are rendered and checked (by render-bpmn over every instance, as gen-processes-viz already does with `instanceRoots`), or their SVGs move to bootstrap's own site layer; and the owner has decided about `bootstrap.svg`.
 
+
+
+## Re-measured 2026-09-26 (session_01ERf1yH3k69x37rXCrb6GYt, while salvaging #1340/#1040)
+
+Still true, and now visibly wrong. `cat-harness/docs/assets/img/workflows/initialize-harness.svg` was last written by `cf04dd6e9b6` (2026-09-20); `bootstrap/processes/initialize-harness.bpmn` has had **10 commits** since, including the Initiator → Bootstrapping Agent rename (`ad278cb23a5`). `cat-harness/docs/processes/initialize-harness.md` embeds it, so the published page shows a pre-rename diagram.
+
+Found because a repo-wide fix could not reach it: the gateway-marker salvage set `isMarkerVisible="true"` on 46 exclusive-gateway shapes in 25 diagrams. `render:bpmn` re-rendered 24 SVGs (X-marker paths 3 → 46), and the 3 shapes in `initialize-harness.bpmn` changed nothing in its SVG. `render:bpmn:check` still exits 0, because it checks only what `workflowFiles(ROOT)` returns for the cat-harness instance. **A stale SVG from a dependency instance is invisible to the only gate that checks SVG staleness.**
+
 _2026-09-26T09:51:47Z_ — Claimed by claude/oqdr-render-bootstrap-diagrams — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 
