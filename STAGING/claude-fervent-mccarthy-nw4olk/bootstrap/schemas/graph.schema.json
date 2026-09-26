@@ -1,0 +1,141 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/bootstrap/schemas/graph.schema.json",
+  "title": "Knowledge Graph declaration",
+  "description": "Information kept as files in a repository: things, and the named relations between them. It is declared by one file at its root, `<name>.json`, which gives its name and lists its Subgraphs. This schema is the shape of that declaration, and its `$defs` define every term bootstrap uses.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The Knowledge Graph's name. The declaration file is `<name>.json`."
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "directories": {
+      "description": "Its Subgraphs: zero or more.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The Subgraph's name, unique within its Knowledge Graph."
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The directory, relative to the declaration."
+          },
+          "graphKinds": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": "The Graph Kinds it holds."
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "path",
+          "graphKinds"
+        ],
+        "additionalProperties": {},
+        "description": "A named directory of a Knowledge Graph, declared with the Graph Kind or Kinds it holds. A Knowledge Graph has zero or more."
+      }
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "src": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The file, relative to the declaration."
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The part the file plays, such as `instance-readme`."
+          }
+        },
+        "required": [
+          "id",
+          "src",
+          "role"
+        ],
+        "additionalProperties": {},
+        "description": "A single file a Knowledge Graph declares as its own, together with the part it plays, such as its README."
+      }
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "additionalProperties": {},
+  "$defs": {
+    "KnowledgeGraph": {
+      "title": "KnowledgeGraph",
+      "description": "Information kept as files in a repository: things, and the named relations between them. It is declared by one file at its root, `<name>.json`, which gives its name and lists its Subgraphs."
+    },
+    "Subgraph": {
+      "title": "Subgraph",
+      "description": "A named directory of a Knowledge Graph, declared with the Graph Kind or Kinds it holds. A Knowledge Graph has zero or more."
+    },
+    "GraphKind": {
+      "title": "GraphKind",
+      "description": "What a Subgraph holds, such as skills, processes or schemas. A reader matches on it to decide whether to look inside."
+    },
+    "Asset": {
+      "title": "Asset",
+      "description": "A single file a Knowledge Graph declares as its own, together with the part it plays, such as its README."
+    },
+    "Harness": {
+      "title": "Harness",
+      "description": "What an Actor uses to work with a Knowledge Graph: Skills, Processes, Roles and Tools. A Harness is itself a Knowledge Graph, declared the same way; bootstrap is the first Harness."
+    },
+    "Actor": {
+      "title": "Actor",
+      "description": "A participant, whether a person, an agent or a program, that takes a Role in each Process it takes part in."
+    },
+    "Role": {
+      "title": "Role",
+      "description": "The part an Actor plays in a Process. A Process diagram draws each Role as one lane, and a Role carries the Skills its lane needs."
+    },
+    "Process": {
+      "title": "Process",
+      "description": "A diagram of the steps, decisions and order of some work, with one lane per Role. It is written in Business Process Model and Notation (BPMN), a standard diagram format, in a `.bpmn` file."
+    },
+    "ProcessNode": {
+      "title": "ProcessNode",
+      "description": "One element of a Process: a step, a decision, a start or an end."
+    },
+    "SequenceFlow": {
+      "title": "SequenceFlow",
+      "description": "An arrow in a Process, from one Process Node to the next."
+    },
+    "Skill": {
+      "title": "Skill",
+      "description": "Written instructions an Actor follows to carry out one step of a Process, in a `.md` file."
+    },
+    "Tool": {
+      "title": "Tool",
+      "description": "A program an Actor calls to carry out a step. A Harness may declare Tools; bootstrap declares none, because it runs nothing."
+    }
+  }
+}
