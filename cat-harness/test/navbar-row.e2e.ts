@@ -209,6 +209,28 @@ async function load(
     r.fulfill({ contentType: "text/html", body: page(row, main, staging) }),
   );
   await p.goto("http://navbar.fixture/nav", { waitUntil: "load" });
+  // AT REST MEANS THE POINTER IS NOT OVER THE STRIP, and that is now stated
+  // rather than inherited. The strip sits at the left edge, where the pointer
+  // starts. With Playwright 1.63's Chromium, the "at rest" tests found the bar
+  // already open, as if hovered, on the bump PR (bean x89e) and passed on the
+  // same main without it. Parking the pointer in the far corner makes "no hover"
+  // a precondition these tests set, not one a browser revision decides.
+  const vp = p.viewportSize();
+  if (vp) await p.mouse.move(vp.width - 5, vp.height - 5);
+  // Moving away from a bar the browser already considered hovered STARTS its
+  // close transition. Asserting "at rest" while that runs sees a half-closed
+  // bar, which was the one failure left after the pointer was parked. So
+  // wait for every running animation or transition to finish, after two
+  // frames so a transition the move just queued is already registered.
+  await p.evaluate(async () => {
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    // An infinite animation (a spinner) never finishes, so it is left out:
+    // only something that ends can be waited for.
+    const settling = document
+      .getAnimations()
+      .filter((a) => a.effect?.getTiming().iterations !== Infinity);
+    await Promise.all(settling.map((a) => a.finished.catch(() => undefined)));
+  });
   return { errors, console: logs };
 }
 
