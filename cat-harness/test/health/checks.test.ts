@@ -27,10 +27,9 @@ import {
   BEAN_OPEN_LIMIT,
   BEAN_RESOLVED_INLINE_LIMIT,
   HEALTH_CHECKS,
+  pagesPublishHealthCheck,
   ORPHAN_THRESHOLDS,
   RECENT_COMMIT_MINUTES,
-  STAGING_CRITICAL_BYTES,
-  STAGING_WARN_BYTES,
   TRACKED_MAJOR_BYTES,
   TRACKED_WARN_BYTES,
   beanStoreCheck,
@@ -112,19 +111,34 @@ describe("staging-preview-size", () => {
     expect(r.state).toBe("ok");
   });
 
-  it("escalates to `critical` past three-quarters of the Pages limit, and reports ONE breach not two", () => {
-    const r = stagingSizeCheck(healthyContext({
-      staging: { state: "ok", value: { branch: "present", previews: previews(21, 37 * MB), command: "fixture" } },
-    }));
-    expect(r.state).toBe("finding");
-    // 777 MB is over BOTH thresholds. One finding, not two: otherwise the
-    // count would track how many thresholds happen to be declared.
-    expect(r.findings).toHaveLength(1);
-    expect(r.findings[0].severity).toBe("critical");
-    expect(STAGING_CRITICAL_BYTES).toBeGreaterThan(STAGING_WARN_BYTES);
+  it("NEVER escalates past `major`, however far over — the split, bean `qj9a`", () => {
+    // This test used to assert `critical` at 777 MB, over a second threshold at
+    // three-quarters of GitHub's documented 1 GB. That threshold's whole
+    // justification was a publish consequence nothing here can observe, so it
+    // moved to `pages-publish-health` along with its argument. What is left is
+    // the owner's 500 MB budget, and being over a budget is `major`.
+    //
+    // Asserted at an ABSURD size rather than just past the line: 21 previews is
+    // ~777 MB, but 100 of them is 3.7 GB and still must not manufacture a
+    // `critical`. A test at 777 MB alone would pass against a check that
+    // escalated at some higher number nobody had noticed.
+    for (const n of [21, 100]) {
+      const r = stagingSizeCheck(healthyContext({
+        staging: { state: "ok", value: { branch: "present", previews: previews(n, 37 * MB), command: "fixture" } },
+      }));
+      expect(r.state).toBe("finding");
+      // ONE breach, not one per threshold: the count must track what is wrong,
+      // not how many thresholds happen to be declared.
+      expect(r.findings).toHaveLength(1);
+      expect(r.findings[0].severity).toBe("major");
+      // Asserted on the RESULT's thresholds rather than on the module constant:
+      // that is what a consumer reads, and a constant could be exported while
+      // the check served a different list.
+      expect(r.thresholds.some((t) => t.severity === "critical")).toBe(false);
+    }
   });
 
-  it("the critical finding does NOT predict a failed publish — bean `qj9a`", () => {
+  it("the size finding does NOT predict a failed publish — bean `qj9a`", () => {
     // THE DEFECT THIS PINS, and it was live for two and a half days. The
     // threshold's basis read: "the next deploy is the one that fails to publish
     // — so something is about to be lost". That is a claim about GitHub's
@@ -148,14 +162,14 @@ describe("staging-preview-size", () => {
       },
     }));
     const f = r.findings[0];
-    expect(f.severity).toBe("critical");
+    expect(f.severity).toBe("major");
     // THE PREDICTION MUST NOT BE MADE where a reader acts — the summary and the
     // action. This first version of the test also banned the phrase from the
     // BASIS and failed, correctly: the basis QUOTES the old wording in order to
     // record what was wrong, which is this repository's convention and is worth
     // more than a clean grep. So the rule is about whether the claim is
     // asserted, not whether the words occur.
-    const t = r.thresholds.find((x) => x.severity === "critical");
+    const t = r.thresholds.find((x) => x.metric === "staging-total-bytes");
     for (const text of [f.action, f.summary]) {
       expect(text).not.toContain("about to be lost");
       expect(text).not.toContain("the next deploy is the one that fails");
@@ -166,11 +180,14 @@ describe("staging-preview-size", () => {
     if ((t?.basis ?? "").includes("about to be lost")) {
       expect(t?.basis).toContain("USED TO PREDICT");
     }
-    // ...and the honest framing must be present rather than merely the wrong
-    // one absent: a check that said nothing at all would also pass the above.
-    expect(f.summary).toContain("DOCUMENTED");
-    expect(f.action).toContain("HAVE A PERSON OPEN THE SERVED SITE");
-    expect(t?.basis).toContain("NO INSTRUMENT FOR");
+    // ...and the finding must still SAY something rather than merely omit the
+    // wrong thing: a check whose summary was empty would pass the bans above.
+    // What it says now is the owner's budget, which is all this check owns after
+    // the split — the serving language moved to `pages-publish-health`, and the
+    // test for it lives with that check rather than here.
+    expect(f.summary).toContain("warning point");
+    expect(f.action).toContain("staging:cleanup");
+    expect(t?.basis).toBeDefined();
   });
 
   it("a branch that was read and carries no previews is a determined `ok`", () => {
@@ -1154,5 +1171,67 @@ describe("the registry and the report", () => {
   it("formats bytes the way the report reads them", () => {
     expect(formatBytes(222 * MB)).toBe("222.0 MB");
     expect(formatBytes(2 * 1024 * MB)).toBe("2.00 GB");
+  });
+});
+
+describe("pages-publish-health — the split, bean `qj9a`", () => {
+  it("reports a finding, because zero instruments is a determined answer", () => {
+    const r = pagesPublishHealthCheck(healthyContext({}));
+    expect(r.state).toBe("finding");
+    expect(r.findings).toHaveLength(1);
+    expect(r.findings[0].severity).toBe("major");
+    expect(r.measurements.find((m) => m.metric === "pages-serving-instruments")?.value).toBe(0);
+  });
+
+  it("NEVER reports `unknown` — a blind check here would break the whole family", () => {
+    // THE FALSIFIER, and it is the reason this check's subject is the instrument
+    // rather than the site. `healthVerdict` takes the ENTIRE report to `unknown`
+    // on a single `unknown` check, `run.ts` exits 2, and the tracking issue is
+    // left untouched — `health-check.yml`'s own comment calls that "correctly,
+    // and uselessly". A check that is permanently blind about its subject would
+    // make the daily sweep permanently useless.
+    //
+    // Asserted across a range of contexts, including ones where OTHER probes
+    // failed, because the tempting implementation reaches for the network and
+    // inherits its failures.
+    for (const ctx of [
+      healthyContext({}),
+      healthyContext({ staging: { state: "unknown", reason: "no branch" } }),
+      healthyContext({ openPrHeads: { state: "unknown", reason: "403" } }),
+    ]) {
+      expect(pagesPublishHealthCheck(ctx).state).not.toBe("unknown");
+    }
+  });
+
+  it("does not read `ok` while it cannot see — the dh4f defect this exists to prevent", () => {
+    // The other direction of the same rule. `ok` would mean "the published site
+    // is fine", which is precisely what nothing here can establish.
+    expect(pagesPublishHealthCheck(healthyContext({})).state).not.toBe("ok");
+  });
+
+  it("the action says to build the probe IN CI, not here", () => {
+    // Because it cannot be written or tested locally: every route from an
+    // agent's container is refused by egress policy. An action that read "write
+    // a probe" would send the next session into the same wall.
+    const a = pagesPublishHealthCheck(healthyContext({})).findings[0].action;
+    expect(a).toContain("in CI");
+    expect(a).toContain("egress");
+  });
+
+  it("its threshold refuses `critical`, and says why", () => {
+    // The severity ceiling is the whole point of the split. `critical` on this
+    // scale means something is about to be lost, and re-asserting that without
+    // an instrument is the defect that was live for two and a half days.
+    const r = pagesPublishHealthCheck(healthyContext({}));
+    expect(r.thresholds.some((t) => t.severity === "critical")).toBe(false);
+    const t = r.thresholds.find((m) => m.metric === "pages-serving-instruments");
+    expect(t?.severity).toBe("major");
+    expect(t?.basis).toContain("REMAINS UNKNOWN");
+  });
+
+  it("is registered, so it actually runs", () => {
+    // A check absent from the registry is a check that never fires — the
+    // `1xhc` shape, and the reason this is asserted rather than assumed.
+    expect(HEALTH_CHECKS.map((c) => c.id)).toContain("pages-publish-health");
   });
 });
