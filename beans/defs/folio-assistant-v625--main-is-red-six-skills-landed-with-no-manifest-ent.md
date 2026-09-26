@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T05:10:48Z
-updated_at: 2026-09-26T10:41:09Z
+updated_at: 2026-09-26T14:02:01Z
 parent: folio-assistant-1xhc
 ---
 
@@ -307,3 +307,44 @@ have skipped every step behind a failure: 45 gates, measured on main's run
 
 Details and the withdrawn premise are on `fjwi`, which resolved itself rather
 than reaching the owner.
+
+
+## The owner DECIDED to keep the chain job after its justification changed — 2026-09-26
+
+Recorded because the next reader will notice the redundancy and reach for the
+delete, and the argument that survives is not the one the job was built on.
+
+**What changed.** `skill-registration-chain` was added because all six chain
+checks lived in the `typescript` job behind `bun test`, which runs the kg-audit
+and detangle WRITERS and repaired two artefacts before their checks read them
+(`ymsu`). That made it "the only place those five are read against the tree as
+checked out". Then `main` split the workflow: `bun test` is now the LAST step of
+a six-step `typescript` job, and all 43 repository gates moved to a separate
+`gates` job which runs all six chain checks and no tests. **They are unmasked
+there.** The original justification is gone, and the 45-gate skip cascade this
+bean's neighbours describe is gone with it.
+
+**What the owner was asked, and answered.** Put as three options — keep, retire
+the CI job and keep the local command, or defer — with the redundancy stated
+plainly: one runner, 13s, re-running six checks CI already runs. The answer was
+**keep**.
+
+**The argument that survives**, and the only one that should be cited for it
+from now on:
+
+- ONE command (`bun run skill:register`) that regenerates AND verifies the chain
+  together, which is what a skill author needs and what six separate CI steps
+  cannot be
+- a committed QA sidecar saying which steps ran, so "never verified" and
+  "verified clean" stay distinguishable after the terminal scrolls
+- **ONE named failure** — "the registration chain" — instead of six unrelated
+  generated-file failures. That is this bean's ACTUAL complaint, in its own
+  words: *"every one of those reds names a generated file rather than the skill
+  they added — so the cause is invisible from the symptom."* The `gates` job
+  reproduces exactly that symptom, six steps at a time.
+
+**Not claimed:** that the job earns its runner on unmasking. It does not, any
+more. Both places that said so — the BPMN documentation and the workflow comment
+— were corrected in the same change rather than left to rot, because a job whose
+stated reason is false is a job somebody deletes for the right reason on the
+wrong evidence.
