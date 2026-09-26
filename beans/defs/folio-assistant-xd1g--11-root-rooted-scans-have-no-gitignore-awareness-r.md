@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-26T10:42:54Z
+updated_at: 2026-09-26T11:19:41Z
 parent: folio-assistant-ahvw
 ---
 
@@ -255,3 +255,38 @@ for the owner because correcting guidance is not a side effect of a fix:
 names three files; there are at least eight in `schemas/` alone. A count in prose
 gone stale, which is the failure mode this repository warns about in its own
 conventions.
+
+## The same finding arrived TWICE in one hour, from two instruments — and the counts disagreed
+
+Recorded because the convergence is evidence about this bean's method, not just
+about `kg-detangle`.
+
+The section above found it via the between-gates tree guard while `bun run gates`
+judged the tree, and numbered it the **thirteenth**. A second session
+(PR #1399) found the SAME defect in the SAME file about an hour later by a
+different route entirely: a new `skill-registration-chain` CI job, built to run
+five `--check` commands without `bun test` masking them, went red on
+`kg:detangle:check` on its first run. That session numbered it the **twelfth**.
+
+**Twelfth vs thirteenth is not a disagreement about the defect** — both name
+`cat-harness/skills/graph-management/kg-detangle.ts`, both measured
+`cat-harness/schemas` at 1441 against a clean checkout's 227, and both traced it
+to `block-qa-schema/node_modules`. The counts differ because this bean's
+enumeration was a syntactic filter over `scripts/*.ts` and neither count is
+re-derivable from it: one of us was counting the original eleven plus this,
+the other had a different starting list. **Neither number should be quoted.**
+The enumeration is the thing to distrust, which is what the `Done when` below
+already says — re-scope from `scripts/` to every walk in the repository, and
+replace the file list with the experiment (install a subpackage's
+devDependencies, run the writers, diff the committed artefacts).
+
+That two independent instruments caught it within the hour, and that BOTH were
+built for other purposes, is the argument for the experiment over the list: the
+list found it never, and the list is what this bean shipped with.
+
+The duplicate fixes converged too — that PR called `gitCorpus` and REFUSED
+(exit 2) where `main`'s keeps the walk as a declared fallback via `corpusOf`.
+`main`'s is the incumbent and the merge takes it; the refusing variant is noted
+here only because the choice is real: a fallback that is documented and reached
+only when git cannot answer is not the silent one that caused this.
+

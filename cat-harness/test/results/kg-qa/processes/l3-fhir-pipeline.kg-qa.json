@@ -31,6 +31,39 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_MapL2",
+          "detail": "names skill \"l3-fhir-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_AuthorFsh",
+          "detail": "names skill \"l3-fhir-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Sushi",
+          "detail": "names skill \"l3-fhir-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_QcGates",
+          "detail": "names skill \"quality-control\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_IgPublisher",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_PublishIg",
+          "detail": "names skill \"content-publish\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_PublishIg",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -106,7 +139,7 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 0,
+    "fail": 1,
     "n/a": 9,
     "unknown": 0
   }

@@ -31,6 +31,131 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Restore",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_FullBuild",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Cone",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Cone",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Cone",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ConeReport",
+          "detail": "names skill \"quality-control\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ConeReport",
+          "detail": "names skill \"quality-control\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ConeReport",
+          "detail": "names skill \"quality-control\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Checkout",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Checkout",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Checkout",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Sushi",
+          "detail": "names skill \"l3-fhir-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ContextLoad",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ContextLoad",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ContextLoad",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Render",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Render",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Render",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Merge",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Index",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Index",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Index",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Site",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Qa",
+          "detail": "names skill \"quality-control\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_DeployPreview",
+          "detail": "names skill \"content-publish\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Deploy",
+          "detail": "names skill \"content-publish\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Deploy",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Seed",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Seed",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Seed",
+          "detail": "names skill \"ig-publication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -106,7 +231,7 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 0,
+    "fail": 1,
     "n/a": 9,
     "unknown": 0
   }

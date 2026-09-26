@@ -31,6 +31,23 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_StateFinding",
+          "detail": "names skill \"content-feedback\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Dispatch",
+          "detail": "names skill \"untainted-verification\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Adjudicate",
+          "detail": "names skill \"adjudication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -106,7 +123,7 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 0,
+    "fail": 1,
     "n/a": 9,
     "unknown": 0
   }
