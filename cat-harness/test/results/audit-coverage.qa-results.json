@@ -8,10 +8,10 @@
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-27T05:17:12.668Z",
+  "updated_at": "2026-09-27T05:01:47.215Z",
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 45 of 45 declared kind(s), 166 gate(s), 69 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 45 of 45 declared kind(s), 167 gate(s), 69 criteria.",
       "count": 45,
       "entries": [
         {
@@ -543,7 +543,6 @@
           "kind": "qa",
           "state": "covered",
           "directories": [
-            "bootstrap/test/results",
             "cat-harness/test/results"
           ],
           "criteria": [],
@@ -806,6 +805,7 @@
             "tool"
           ],
           "gates": [
+            "bun run check:red-gate-is-last",
             "bun run check:tools",
             "bun run kg:audit:check",
             "bun run tools:viz:check"
@@ -1016,7 +1016,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 166 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 167 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }

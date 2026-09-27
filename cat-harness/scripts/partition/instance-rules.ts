@@ -507,6 +507,11 @@ export const RULES: Rule[] = [
       // CLAIM is structural — "is this readable in French" — so it says nothing
       // about what any folio wrote in French.
       "scripts/check-available-locales.ts",
+      // Whether a gate that may be red BY DECISION sits last in its job, so the
+      // set it masks is empty (bean `cpss`). Harness for the plainest reason in
+      // this block: its subject is `.github/workflows/`, the harness's own CI
+      // definition, and it reads no folio content of any kind.
+      "scripts/check-red-gate-is-last.ts",
       // Whether each methodology's cited `origin` resolves to an ingested
       // source. Harness for the same reason as the two above: it reads the
       // declaration for the `methodology` and `library` graphs and fans out
