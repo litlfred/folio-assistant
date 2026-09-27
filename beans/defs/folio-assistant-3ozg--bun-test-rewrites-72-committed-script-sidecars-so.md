@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-27T05:06:01Z
-updated_at: 2026-09-27T05:20:13Z
+updated_at: 2026-09-27T05:43:18Z
 parent: folio-assistant-1xhc
 ---
 
@@ -67,3 +67,23 @@ regeneration writes before committing it.** Committing this churn stamps a
 main's — as though it were a fresh measurement. That is why the standing practice has
 been to discard rather than commit, and why option 4 is not merely a cop-out: it at
 least makes the discard deliberate.
+
+
+## Independent confirmation, 2026-09-27 (session on `claude/3x2o-remote-stub-banner`)
+
+Measured this from the other direction while establishing whether the tree-guard
+finding on PR #1437 was mine: a detached `git worktree` of pristine
+`origin/main` at `81586293ea5`, full `bun test`, then `git status`. **72 paths,
+exactly the ones this bean names**, and the same three fields -- `last_run_at`,
+`last_run_sha`, `engine_version` (`bun-1.3.11` here against the committed
+`bun-1.3.14`). `script_hash` unchanged throughout, so no script content moved.
+
+Two containers, two branches, one shape. Nothing to add to the diagnosis; this
+is only evidence that it is not container-local.
+
+One consequence worth stating for whoever fixes it: **committing the rewrite is
+not a neutral option**, because it would downgrade the recorded `engine_version`
+to whichever bun the committing container happens to run. That makes the field
+a record of the last committer's toolchain rather than of the run, so the fix
+has to be on the writer side (`saveQaScriptSidecar`), not "regenerate and
+commit".
