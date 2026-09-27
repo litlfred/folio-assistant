@@ -48,6 +48,45 @@ const inFolioNs = (iri: string): boolean => Object.values(NS_PREFIXES).some((ns)
 // test below, which is the test doing its job.
 const BASE = readDeclaration(join(import.meta.dir, "../.."))!.canonicalUrl!;
 const EXPORT = await buildExport();
+
+/**
+ * The three OTHER export configurations this file asserts over, each built once.
+ *
+ * Bean `sff8`. These were eight `await buildExport(...)` calls inside test bodies,
+ * and measured 2026-09-27 six of those tests cost **2.0–2.6 s each** quietly —
+ * 42–53 % of bun's 5000 ms default budget with the machine idle. Two of them timed
+ * out in a loaded full-suite run (5009 ms and 6215 ms); which two was luck, since
+ * all six sit at roughly half the budget. `EXPORT` above was already hoisted for
+ * this reason, so this only finishes the job.
+ *
+ * Module scope belongs to NO test's timeout, which is why this is the remedy and a
+ * raised timeout is not (`sff8` `## What a fix is NOT`: a bigger number decays as
+ * the corpus grows).
+ *
+ * **The names are explicit because the old call sites were NOT interchangeable,
+ * and looked it.** `BASE` above is the repo's real `canonicalUrl` — and the
+ * `exporting ANOTHER instance's graph` block USED TO declare its own `BASE` of
+ * `https://example.invalid/fa`, shadowing it. So the identical text
+ * `buildExport({ baseUrl: BASE })` meant two different things depending on which
+ * block it sat in: a canonical export in one and a preview in the other, which the
+ * self-identification test distinguishes by `@type` and its 968 `alternateOf`
+ * links. Collapsing those eight calls by counting matching call TEXT would have
+ * swapped one for the other silently — the same trap as "a matching failure count
+ * is not a matching failure set".
+ *
+ * The shadowing is now GONE rather than documented: that block reads `ALT_BASE`,
+ * so there is one declaration of each base and the hazard cannot recur. This
+ * paragraph is kept because the reason the three constants are named separately is
+ * not visible from the names alone.
+ */
+const ALT_BASE = "https://example.invalid/fa";
+const BOOT_ROOT = join(import.meta.dir, "../../../bootstrap");
+/** Canonical base, explicit — distinct from `EXPORT`, which passes no `baseUrl`. */
+const EXPORT_CANONICAL = await buildExport({ baseUrl: BASE });
+/** The preview base, this instance's content. */
+const EXPORT_ALT = await buildExport({ baseUrl: ALT_BASE });
+/** The preview base, BOOTSTRAP's content — the pair the size comparison needs. */
+const EXPORT_ALT_BOOT = await buildExport({ baseUrl: ALT_BASE, instanceRoot: BOOT_ROOT });
 // Minted through `termIri`, exactly as the exporter mints it. Rebuilding the
 // IRI from a namespace constant is what made this helper silently return zero
 // rows for every type once the namespaces split — a green-looking suite over
@@ -625,7 +664,7 @@ describe("every self-URL the export publishes resolves to something published", 
   }
 
   test("no absolute self-URL names a path the deploy does not write", async () => {
-    const doc = await buildExport({ baseUrl: BASE });
+    const doc = EXPORT_CANONICAL;
     const seen = new Set<string>();
     const walk = (o: unknown) => {
       if (Array.isArray(o)) o.forEach(walk);
@@ -659,7 +698,7 @@ describe("every self-URL the export publishes resolves to something published", 
   test("nothing published still names the retired `kg/` directory", async () => {
     // Pinned as a literal, not derived: the point is that this exact string
     // stopped being a path, and a derived check would move with the mistake.
-    const doc = await buildExport({ baseUrl: BASE });
+    const doc = EXPORT_CANONICAL;
     expect(JSON.stringify(doc)).not.toContain("/kg/");
   });
 });
@@ -864,13 +903,10 @@ describe("exporting ANOTHER instance's graph", () => {
   // it did not do is let a DOCUMENT be built for another instance, and the
   // owner's `pve3` ruling ("neither") made that necessary: this graph now
   // links into bootstrap's, so bootstrap's has to exist.
-  const BOOT = join(import.meta.dir, "../../../bootstrap");
-  const BASE = "https://example.invalid/fa";
 
   test("it takes the OTHER instance's identity", async () => {
-    const { buildExport } = await import("../kg-export.js");
-    const e = await buildExport({ baseUrl: BASE, instanceRoot: BOOT });
-    expect(e["@id"]).toBe(`${BASE}/bootstrap/bootstrap.jsonld`);
+    const e = EXPORT_ALT_BOOT;
+    expect(e["@id"]).toBe(`${ALT_BASE}/bootstrap/bootstrap.jsonld`);
   });
 
   test("and the other instance's CONTENT — not this one's under that name", async () => {
@@ -883,9 +919,8 @@ describe("exporting ANOTHER instance's graph", () => {
     // with 2079 nodes — this instance's 222 skills and 55 processes — instead
     // of 85. A size comparison is the check, because every other signal
     // (`@id`, stub, published path) was correct in that run.
-    const { buildExport } = await import("../kg-export.js");
-    const mine = await buildExport({ baseUrl: BASE });
-    const theirs = await buildExport({ baseUrl: BASE, instanceRoot: BOOT });
+    const mine = EXPORT_ALT;
+    const theirs = EXPORT_ALT_BOOT;
     const n = (e: { "@graph": unknown[] }) => e["@graph"].length;
     expect(n(theirs)).toBeGreaterThan(0);
     expect(n(theirs)).toBeLessThan(n(mine) / 4);
@@ -895,7 +930,7 @@ describe("exporting ANOTHER instance's graph", () => {
     // `skillHome` follows `exportIdentity`, so repointing the document moved
     // every link into it — which is the half of `dyd3`'s option B that needed
     // no separate change.
-    expect(ids.has(`${BASE}/bootstrap/bootstrap.jsonld#skill/discussion`)).toBe(true);
+    expect(ids.has(`${ALT_BASE}/bootstrap/bootstrap.jsonld#skill/discussion`)).toBe(true);
   });
 
   test("it emits no link to a collector it did not run", async () => {
@@ -903,8 +938,7 @@ describe("exporting ANOTHER instance's graph", () => {
     // instance-bound and omitted. Left alone that was SEVEN dangling links in
     // bootstrap's export, every skill pointing at a package node the
     // document cannot contain.
-    const { buildExport } = await import("../kg-export.js");
-    const e = await buildExport({ baseUrl: BASE, instanceRoot: BOOT });
+    const e = EXPORT_ALT_BOOT;
     expect(e.danglingLinks).toEqual([]);
     expect((e["@graph"] as Array<Record<string, unknown>>).some((n) => "inPackage" in n)).toBe(false);
   });
@@ -913,8 +947,7 @@ describe("exporting ANOTHER instance's graph", () => {
     // The edge `pve3` created: the skills live in bootstrap so an
     // Bootstrapping Agent can read them with nothing installed, the Tool nodes live here
     // because a Tool is cat-harness's vocabulary (`gn4l`).
-    const { buildExport } = await import("../kg-export.js");
-    const e = await buildExport({ baseUrl: BASE });
+    const e = EXPORT_ALT;
     // The document's OWN `@id`, never a spelled-out stub. Main renamed this
     // instance's stub from `folio-assistant` to `cat-harness` while this
     // branch was open and the hardcoded literal took two tests down with it —
@@ -923,21 +956,20 @@ describe("exporting ANOTHER instance's graph", () => {
     const tool = (e["@graph"] as Array<Record<string, unknown>>).find(
       (n) => n["@id"] === `${e["@id"]}#tool/discuss`,
     )!;
-    expect(tool.satisfies).toEqual([`${BASE}/bootstrap/bootstrap.jsonld#skill/discussion`]);
+    expect(tool.satisfies).toEqual([`${ALT_BASE}/bootstrap/bootstrap.jsonld#skill/discussion`]);
   });
 
   test("a skill THIS instance also declares stays here", async () => {
     // Own-first, and it is not academic: `agent-skills` and `kg-navigation`
     // declare ids this instance also declares, and without the own-first
     // check their documents appeared as link targets the deploy never writes.
-    const { buildExport } = await import("../kg-export.js");
-    const e = await buildExport({ baseUrl: BASE });
+    const e = EXPORT_ALT;
     const own = String(e["@id"]);
     for (const n of e["@graph"] as Array<Record<string, unknown>>) {
       for (const s of (n.satisfies ?? []) as string[]) {
         if (s.startsWith(`${own}#`)) continue;
         // The only legitimate foreign home in this corpus.
-        expect(s.startsWith(`${BASE}/bootstrap/bootstrap.jsonld#`)).toBe(true);
+        expect(s.startsWith(`${ALT_BASE}/bootstrap/bootstrap.jsonld#`)).toBe(true);
       }
     }
   });
