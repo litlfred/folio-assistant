@@ -884,6 +884,7 @@
   .side-bar .site-nav,
   .side-bar .fa-doc-index,
   .side-bar .fa-nav-folders,
+  .side-bar .fa-nav-pages,
   .side-bar .fa-harness-tabs__heading,
   .side-bar .fa-harness-tab__label,
   .side-bar .fa-harness-tab__graphs,
@@ -941,6 +942,7 @@
 
   .side-bar .fa-doc-index,
   .side-bar .fa-nav-folders,
+  .side-bar .fa-nav-pages,
   .side-bar .fa-harness-tabs__heading,
   .side-bar .fa-harness-tab__label,
   .side-bar .fa-harness-tab__graphs,
@@ -1254,6 +1256,49 @@
 
 @media (min-width: 50rem) and (prefers-reduced-motion: no-preference) {
   .side-bar { transition: width .14s ease; }
+}
+
+/* THE [x]'S WORDS ARE FOR A SCREEN READER, NOT FOR THE EYE.
+ *
+ * Owner, 2026-09-27: the close control overlaps -- with the sidebar open,
+ * *"× Close navigatio"* showed next to the icon row, the words wrapped over
+ * two lines on top of the grey box and over the icons.
+ *
+ * The generated markup (`scripts/lib/navbar.ts`) is `<label class=
+ * "fa-nav-close"><span aria-hidden>×</span><span class="fa-nav-sr">Close
+ * navigation</span></label>`, and `.fa-nav-sr` is clipped by the RAIL's
+ * stylesheet -- which the docs site does not load. Here nothing hid it, so
+ * a 1.75rem flex box centred a 74px-wide line of text on itself and it spilled
+ * out both sides, over the icons. The e2e fixture had been written without
+ * the span, so the one test that looks at this box measured a control the
+ * site never renders.
+ *
+ * Clipped, not removed: the span is the control's accessible name, and the
+ * `title` alone is not one every screen reader announces. Written as a
+ * descendant of `.fa-nav-close` rather than as a bare `.fa-nav-sr` so it is
+ * NOT one of the selectors both navbar stylesheets declare -- that shared set
+ * is held at three on purpose (`navbar-css-single-source.test.ts`). */
+.fa-nav-close .fa-nav-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* BELOW 50rem THE [x] HAS NOTHING TO CLOSE. Every rule that places and shows
+ * it lives in the `min-width: 50rem` block above, so on a phone the label fell
+ * back to an inline box in the sidebar's footer -- "×Close navigation" loose
+ * in the middle of the page at rest, measured at 390px. The phone menu is the
+ * theme's own ☰, which already opens AND closes it; this label would only
+ * toggle the desktop pin and write the desktop stay-closed preference, which
+ * is `gjli` -- a thing that reads as a control and does nothing you can see. */
+@media not all and (min-width: 50rem) {
+  .fa-nav-close { display: none; }
 }
 
 @media print {
@@ -3518,20 +3563,24 @@ a.fa-tile[data-fa-readonly]:focus-visible {
  * HIGH CONTRAST HAS NO PATTERN, deliberately: it is the usability theme, and
  * nothing decorative may sit behind it. The cards stay solid on every theme,
  * so no pattern ever sits behind text. Pure CSS: no image to fetch or drift. */
-.fa-sticky-layer {
+.fa-sticky-layer,
+.fa-glass-handle {
   --fa-glass-pattern:
     conic-gradient(from 210deg at 30% 38%, rgba(255,255,255,.18) 0 12%, transparent 12% 30%, rgba(255,255,255,.08) 30% 41%, transparent 41% 62%, rgba(0,0,0,.18) 62% 78%, transparent 78%),
     conic-gradient(from 40deg at 72% 64%, rgba(0,0,0,.2) 0 14%, transparent 14% 36%, rgba(255,255,255,.12) 36% 48%, transparent 48% 70%, rgba(255,255,255,.06) 70% 84%, transparent 84%),
     linear-gradient(135deg, #3b1d6e 0%, #6a3fc4 45%, #8c74f0 70%, #4a2690 100%);
 }
 :root[data-fa-scheme="light"] .fa-sticky-layer,
-.fa-sticky-layer[data-fa-glass-theme="paper"] {
+.fa-sticky-layer[data-fa-glass-theme="paper"],
+:root[data-fa-scheme="light"] .fa-glass-handle:is(:not([data-fa-glass-theme]), [data-fa-glass-theme="glass"]),
+.fa-glass-handle[data-fa-glass-theme="paper"] {
   --fa-glass-pattern:
     linear-gradient(115deg, transparent 0 58%, rgba(255,210,240,.55) 60%, rgba(200,230,255,.5) 63%, rgba(220,255,230,.45) 66%, transparent 69%),
     radial-gradient(120% 90% at 15% 10%, #efe8ff 0%, transparent 60%),
     linear-gradient(160deg, #d9ccfb 0%, #b7a3ef 50%, #9d8ae0 100%);
 }
-.fa-sticky-layer[data-fa-glass-theme="night"] {
+.fa-sticky-layer[data-fa-glass-theme="night"],
+.fa-glass-handle[data-fa-glass-theme="night"] {
   --fa-glass-pattern:
     radial-gradient(3px 3px at 18% 24%, rgba(190,160,255,.9), transparent),
     radial-gradient(2px 2px at 64% 18%, rgba(140,220,255,.8), transparent),
@@ -3541,7 +3590,8 @@ a.fa-tile[data-fa-readonly]:focus-visible {
     radial-gradient(45% 55% at 25% 30%, rgba(70,110,210,.28), transparent 70%),
     linear-gradient(150deg, #141019 0%, #1f1830 55%, #120e18 100%);
 }
-.fa-sticky-layer[data-fa-glass-theme="rose"] {
+.fa-sticky-layer[data-fa-glass-theme="rose"],
+.fa-glass-handle[data-fa-glass-theme="rose"] {
   --fa-glass-tint: 28, 20, 38;
   --fa-glass-card: #e8e8e0;
   --fa-glass-ink: #1c2630;
@@ -3553,7 +3603,8 @@ a.fa-tile[data-fa-readonly]:focus-visible {
     repeating-conic-gradient(from 0deg at 50% 50%, #1c1426 0 1.2deg, transparent 1.2deg 30deg),
     conic-gradient(from 0deg at 50% 50%, #5b2fb0 0 30deg, #7a4ad8 30deg 60deg, #9b2d5c 60deg 90deg, #5b2fb0 90deg 120deg, #2f4fa8 120deg 150deg, #7a4ad8 150deg 180deg, #5b2fb0 180deg 210deg, #9b2d5c 210deg 240deg, #7a4ad8 240deg 270deg, #2f4fa8 270deg 300deg, #5b2fb0 300deg 330deg, #7a4ad8 330deg 360deg);
 }
-.fa-sticky-layer[data-fa-glass-theme="leaded"] {
+.fa-sticky-layer[data-fa-glass-theme="leaded"],
+.fa-glass-handle[data-fa-glass-theme="leaded"] {
   --fa-glass-tint: 34, 26, 46;
   --fa-glass-card: #fdfbf0;
   --fa-glass-ink: #1a372d;
@@ -3567,7 +3618,8 @@ a.fa-tile[data-fa-readonly]:focus-visible {
     linear-gradient(90deg, #b9a8f2 0 22%, #6b4bc9 22% 61%, #c6a54a 61%) 0 55.74% / 100% 39% no-repeat,
     linear-gradient(90deg, #4d2e9e 0 22%, #a38ef0 22% 61%, #6b4bc9 61%) bottom / 100% 27% no-repeat;
 }
-.fa-sticky-layer[data-fa-glass-theme="contrast"] { --fa-glass-pattern: none; }
+.fa-sticky-layer[data-fa-glass-theme="contrast"],
+.fa-glass-handle[data-fa-glass-theme="contrast"] { --fa-glass-pattern: none; }
 .fa-sticky-layer[data-fa-glass="open"]::before {
   content: "";
   position: absolute;
@@ -3991,7 +4043,11 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
    that. */
 .fa-glass-handle {
   position: fixed;
-  top: 0;
+  /* BELOW the staging banner, which is sticky at z-index 9999 and publishes
+     its height as `--fa-staging-offset` (`staging-banner.ts`). At `top: 0`
+     the handle sat under it, and on a preview there was no Folio at all
+     (owner, 2026-09-27: "no folio"). 0 on the canonical site. */
+  top: var(--fa-staging-offset, 0px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 91;
@@ -4022,7 +4078,15 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
      bar of its own — without one it reads as printed ON the page instead of
      as something held above it and pullable. */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
-  background: #4a34b8;
+  /* STAINED GLASS, the glass theme's own pattern (owner, 2026-09-27:
+     "appropriate theme stained glass, not solid purple"). A VEIL over it
+     keeps the label readable on every pane: a pattern runs light and dark,
+     and the label has to clear 4.5:1 against the lightest of them. The solid
+     #4a34b8 is the fallback where the pattern is `none` (a page with no
+     theme set, or high contrast). */
+  background: var(--fa-handle-veil), var(--fa-glass-pattern, none) #4a34b8;
+  --fa-handle-veil: linear-gradient(rgba(16, 8, 36, 0.45), rgba(16, 8, 36, 0.45));
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
   /* AN EXPLICIT FOREGROUND, never `inherit`, and this cost an a11y failure
      before it was written: axe measured 1.39:1, `#000000` on `#27262b`.
      The handle is appended to `document.body`, so there is nothing above it
@@ -4030,7 +4094,7 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
      BACKGROUND and leans on an inherited FOREGROUND is `23bc` again, and
      being body-level is what makes it certain rather than likely.
      12.46:1 on the dark chrome, computed rather than eyeballed. */
-  color: #ffffff;
+  color: var(--fa-handle-ink, #ffffff);
   font-size: 0.85rem;
   white-space: nowrap;
   cursor: pointer;
@@ -4056,6 +4120,20 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
  *
  * Drop the border and the handle vanishes into a dark page. It is not
  * decoration. */
+/* The light panes (Paper, and any page in the light scheme) take dark ink
+   under a light veil, the way the glass itself does. */
+:root[data-fa-scheme="light"] .fa-glass-handle:is(:not([data-fa-glass-theme]), [data-fa-glass-theme="glass"]),
+.fa-glass-handle[data-fa-glass-theme="paper"] {
+  --fa-handle-veil: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
+  --fa-handle-ink: #1b1b1f;
+  text-shadow: none;
+}
+.fa-glass-handle[data-fa-glass-theme="contrast"] {
+  --fa-handle-veil: linear-gradient(#000, #000);
+  --fa-handle-ink: #ffffff;
+  border-color: #ffffff;
+  text-shadow: none;
+}
 .fa-glass-handle:focus-visible {
   outline: 2px solid var(--link-color, #7253ed);
   outline-offset: 2px;
@@ -4651,7 +4729,13 @@ html:has(style[data-folio-narrow-viewport]) body:has(> .fa-glass-handle) {
  * renderer, which would take it off the mounted pages where the rail is the
  * only thing naming the instance. */
 .fa-sr-only,
-.side-bar .fa-nav-head .fa-nav-name {
+.side-bar .fa-nav-head .fa-nav-name,
+/* The close control's words, `lib/navbar.ts`'s own screen-reader class. Its
+ * rule lives in `navbarCss()`, which this page does not load, so the words
+ * were painted: "Close navigation" spilling out of the 1.75rem `×` in the
+ * icon row, seen in the same screenshot as the owner's 2026-09-27 harnesses
+ * report. */
+.side-bar .fa-nav-sr {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -5154,6 +5238,46 @@ html:has(style[data-folio-narrow-viewport]) body:has(> .fa-glass-handle) {
   overflow-x: hidden;
 }
 
+/* THE SAME STACK, AS `lib/navbar.ts` RENDERS IT — and until this rule it had
+ * no scroll box at all.
+ *
+ * Owner, 2026-09-27: *"navbar component below harnesses is cut-off"*. The
+ * rule above scrolls `.fa-nav-bottom__stack`, a class the hand-written Liquid
+ * emitted and the renderer does not (`sjic`). The renderer's bottom is
+ * `.fa-nav-in > .fa-nav-bottom > details.fa-nav-group`, three ordinary BLOCKS
+ * inside the capped footer — so the cap held (`max-height: 50%`,
+ * `overflow: hidden`) and nothing inside it could shrink or scroll. MEASURED at
+ * 1280x800 with the group open: the footer 400px, its content **2575px**, and
+ * the harnesses heading plus ONE row were all a reader could reach. The rest
+ * was clipped, not scrolled.
+ *
+ * So the regions wrapper and the bottom region become columns that may shrink
+ * (`min-height: 0`, for the reason stated on the middle region: a flex child
+ * otherwise refuses to go below its content), and the harnesses disclosure is
+ * the one that scrolls. Home is `flex: 0 0 auto` in its own rule above and
+ * stays pinned below it, which is the property that rule exists for.
+ * `.fa-nav-top` keeps its height; the one control in it is painted elsewhere
+ * (`.side-bar .fa-nav-head`). */
+.site-footer .fa-nav-in,
+.site-footer .fa-nav-bottom {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.site-footer .fa-nav-top { flex: 0 0 auto; }
+
+.site-footer .fa-nav-bottom > .fa-nav-group {
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* A wheel at the end of the list must not start scrolling the page behind
+     an open navbar. */
+  overscroll-behavior: contain;
+}
+
 /* HOME, PINNED BELOW THE STACK — *"keep home at bottom for who iris."*
  *
  * `flex: 0 0 auto`, so folding or scrolling the harnesses cannot take it with
@@ -5267,6 +5391,55 @@ html:has(style[data-folio-narrow-viewport]) body:has(> .fa-glass-handle) {
   text-transform: uppercase;
 }
 
+/* THE PAGES HEADING — owner, 2026-09-27: "no title on the navbar component
+ * w/ pages", then "cant minimize them either". "On this page" and "Folders"
+ * each had a titled disclosure; the page list under them had neither. A
+ * BUTTON in front of `.site-nav` rather than a `<details>` around it, because
+ * `.fa-nav-middle > .site-nav` is the shape the scroll rules and their tests
+ * are written against. Looks like the other two headings on purpose. */
+.fa-nav-pages {
+  /* Its own resting metrics, published the way `.fa-nav-folders` publishes
+     them: the strip rule scales each region's padding and floor by these, and
+     a region that publishes none is squeezed to its text (it measured 16px). */
+  --fa-nav-rest-pad: 0.75rem;
+  --fa-nav-rest-min: 1.5rem;
+  display: flex;
+  flex: 0 0 auto;
+  width: 100%;
+  gap: 0.5rem;
+  align-items: center;
+  min-height: var(--fa-nav-rest-min);
+  margin: 0;
+  padding: var(--fa-nav-rest-pad) var(--fa-nav-pad, 1rem);
+  border: 0;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.25);
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: start;
+  cursor: pointer;
+}
+.fa-nav-pages::before {
+  content: "\25be";
+  display: inline-block;
+  transition: transform .12s ease;
+}
+.fa-nav-pages[aria-expanded="false"]::before { transform: rotate(-90deg); }
+.fa-nav-pages:focus-visible {
+  outline: 2px solid var(--link-color, #7253ed);
+  outline-offset: -2px;
+}
+.site-nav[data-fa-folded] { display: none !important; }
+/* The theme pads the nav's top to clear its own header; under a heading of
+   its own that padding is the blank band the owner's screenshot shows between
+   "Pages" and the first page. */
+.fa-nav-pages + .site-nav { padding-top: 0.25rem; }
+
+.fa-nav-pages__count,
 .fa-nav-folders__count {
   padding: 0 0.375rem;
   border-radius: 0.625rem;
@@ -5942,6 +6115,148 @@ a.fa-harness-tab__body:focus-visible {
   font-size: 0.75em;
   font-style: italic;
   opacity: 0.6;
+}
+
+/* THE RENDERER'S HARNESS ROWS, which this file had never styled.
+ *
+ * Owner, 2026-09-27: *"expanded harnesses looks ugly. hard to tell whats
+ * going on. need to be compacted"*. Since `sjic` the sidebar's harnesses are
+ * `lib/navbar.ts` markup — `.fa-nav-row`, `.fa-nav-dead`, `.fa-nav-note`,
+ * `.fa-nav-action` — and the shape for those classes lives in `navbarCss()`,
+ * which the Jekyll page does not load. Only the rules above that were given a
+ * second selector (`.side-bar .fa-nav-glyph`, `.fa-nav-tone`, `.fa-nav-kids`)
+ * reached it, and they reached it WRONG: `.fa-nav-tone` is `display: flex`,
+ * a block-level box, so every mark took a line of its own; the graph letters
+ * were centred in whatever width their inline parent happened to have, which
+ * is why "C", "D" and "F" sat at three different x positions; and with no rule
+ * for `.fa-nav-note` it ran straight into its label — the owner's
+ * *"codeno viewer yetdocs"*.
+ *
+ * THE RAIL'S SHAPE, not a new one: one line per harness (mark, name, ⚙) with
+ * its graphs full-width beneath — `navbarCss()` states it as a grid for the
+ * reason given there (a row and its control share one line while the children
+ * take a second, which is two-dimensional) — and one line per graph with its
+ * note pushed to the end of the row. Stated here in this file's tokens so the
+ * mark column is `--fa-nav-mark` and the strip still lines up at rest. */
+.side-bar .fa-nav-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.side-bar .fa-nav-row > a,
+.side-bar .fa-nav-row > .fa-nav-dead {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  /* The harness is the destination a low-dexterity reader reaches for, so it
+     keeps the 2.5rem home gives its own row rather than a sub-row's height. */
+  min-height: 2.5rem;
+  padding: 0 var(--fa-nav-pad);
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.side-bar .fa-nav-row > a:hover,
+.side-bar .fa-nav-row > a:focus-visible {
+  background: rgba(128, 128, 128, 0.18);
+  text-decoration: none;
+}
+
+/* A mark with no avatar is its tone with the initial knocked out. The tone
+ * arrives inline (`style="background:hsl(...)"`) when declared; otherwise the
+ * `--fa-tile-ink` pair is only defined under `.fa-harness-tab`, which this
+ * markup does not carry, so both fall back to a neutral pair rather than to
+ * an invalid `var()` that paints nothing. */
+.side-bar .fa-nav-row > a > .fa-nav-tone,
+.side-bar .fa-nav-row > .fa-nav-dead > .fa-nav-tone {
+  background: var(--fa-tile-ink, hsl(0 0% 40%));
+  color: var(--fa-tile-ink-on, #f6f8fa);
+}
+
+/* THE ⚙, beside the row and never inside it (#1146). 2rem square: it is a
+ * separate target from the row it sits on, so it gets its own clear of the
+ * 24px floor rather than borrowing the row's. */
+.side-bar .fa-nav-action {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.25rem;
+  background: none;
+  color: inherit;
+  font-size: 0.875rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.side-bar .fa-nav-action:hover,
+.side-bar .fa-nav-action:focus-visible {
+  background: rgba(128, 128, 128, 0.18);
+  opacity: 1;
+}
+
+/* THE GRAPHS: a full-width second line of the grid, indented so each small
+ * badge sits under the harness NAME rather than under its avatar. */
+.side-bar .fa-nav-row > .fa-nav-kids {
+  grid-column: 1 / -1;
+  margin: 0 0 0.25rem;
+  padding: 0 var(--fa-nav-pad) 0 calc(var(--fa-nav-pad) + var(--fa-nav-mark) + 0.5rem);
+}
+
+.side-bar .fa-nav-kids > a,
+.side-bar .fa-nav-kids > .fa-nav-dead {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  min-height: 1.5rem;
+  padding: 0.125rem 0;
+  font-weight: 400;
+  opacity: 0.72;
+}
+
+.side-bar .fa-nav-kids > a:hover,
+.side-bar .fa-nav-kids > a:focus-visible {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* Same dim and cursor as `.fa-harness-graph__link--unlinked`, and for the
+   reasons given there: not a link, and the dim is never the only signal. */
+.side-bar .fa-nav-kids > .fa-nav-dead {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.side-bar .fa-nav-kids .fa-nav-glyph {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin: 0;
+  background: rgba(128, 128, 128, 0.22);
+  color: inherit;
+  font-size: 0.625rem;
+}
+
+.side-bar .fa-nav-kids .fa-nav-label { flex: 0 1 auto; min-width: 0; }
+
+/* The note is the same meaning as `.fa-harness-graph__note`, so the same
+ * look — pushed to the row's end so it can never run into the label, and
+ * `nowrap` so the row keeps the one-line shape. */
+.side-bar .fa-nav-note {
+  flex: none;
+  margin-left: auto;
+  padding-left: 0.5rem;
+  font-size: 0.9em;
+  font-style: italic;
+  white-space: nowrap;
 }
 
 /* ═══ WHAT EACH HARNESS HOLDS — `harness_details.html` ═════════════════════
@@ -7081,6 +7396,76 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 .fa-search-home .search { position: relative; }
+
+/* ── ONE SEARCH ROW, not three controls ─────────────────────────────────
+ *
+ * Owner, 2026-09-27: *"search is wonky"* -- a small square magnifier on the
+ * left, a full-width field, a "Hide search" button on the right, and on a
+ * preview a note under them, all at DIFFERENT HEIGHTS, reading as three
+ * unrelated controls.
+ *
+ * Measured on a local build before this block (getting-started.html):
+ *
+ *   1280px   magnifier 28px, field 36px, Hide search 28px -- three heights.
+ *            On a preview `align-items: center` centred both buttons against
+ *            the field PLUS the notice, so they dropped 21px below the field
+ *            and sat level with the notice instead.
+ *   390px    the theme's below-50rem rules were still live: `.search` is
+ *            `height: 4rem; padding: 0.5rem` and `.search-input-wrap` is
+ *            `height: 3rem` with a drop shadow, so the field floated 7px down
+ *            inside a 56px box, shadowed, beside two 25px buttons.
+ *
+ * The fix is geometry, not new controls:
+ *
+ *   - Everything is 2.25rem tall -- the field's own height, already chosen
+ *     above for the low-dexterity profile -- so no control is smaller than
+ *     the field it sits beside.
+ *   - Top-aligned, so a notice under the field grows the row DOWNWARDS and
+ *     never pulls the buttons off the field's line.
+ *   - The magnifier is ATTACHED to the field: no gap, shared edge, the outer
+ *     corners rounded and the inner ones square, so it reads as the field's
+ *     own icon. It keeps its job (focuses the field; in the corner, opens it)
+ *     and its name, so nothing about keyboard access changes.
+ *   - The theme's mobile box (padding, 4rem/3rem heights, shadow) is undone
+ *     here, where search is ours. That the same `.search` rule used to go
+ *     full-screen on focus below 50rem was ALREADY overridden by
+ *     `position: relative` above; this only removes the leftovers.
+ *
+ * NAVBAR ONLY for the attached look. The corner card is its own bordered
+ * box with the field collapsed behind the magnifier; fusing them there would
+ * fuse the icon to nothing. */
+.fa-search-home .search {
+  height: auto;
+  padding: 0;
+}
+.fa-search-home .search-input-wrap {
+  height: 2.25rem;
+  box-shadow: none;
+  border-radius: 0;
+  /* `hidden` in the theme clipped the input's own focus ring. The theme's
+     magnifier label that the clip was for is already a 1px sr-only box. */
+  overflow: visible;
+}
+
+.fa-search-home[data-place="navbar"] {
+  align-items: flex-start;
+  gap: 0;
+}
+.fa-search-home[data-place="navbar"] .fa-search-peek {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-right: 0;
+  border-radius: 4px 0 0 4px;
+}
+.fa-search-home[data-place="navbar"] .fa-search-peek svg { width: 1.1rem; height: 1.1rem; }
+.fa-search-home[data-place="navbar"] .search-input { border-radius: 0 4px 4px 0; }
+.fa-search-home[data-place="navbar"] .fa-search-slide {
+  height: 2.25rem;
+  margin-left: 0.4rem;
+}
+/* The notice belongs to the field, so it starts under the field's own left
+   edge, and a little closer: 0.4rem read as a gap between two things. */
+.fa-search-home[data-place="navbar"] .fa-search-notice { margin-top: 0.25rem; }
 
 /* ── A board nested in the sticky panel has no chrome of its own ──────────
  *
