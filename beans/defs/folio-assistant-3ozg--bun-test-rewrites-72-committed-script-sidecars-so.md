@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-27T05:06:01Z
-updated_at: 2026-09-27T06:17:38Z
+updated_at: 2026-09-27T06:52:46Z
 parent: folio-assistant-1xhc
 ---
 
@@ -317,3 +317,58 @@ step 1, not asked to notice between steps 2 and 4. It does **not** stop the chur
 clean' and the boxes above stay unticked. Repinning to `1.3.11` remains the option
 that would make both CI and agent containers clean; it was declined in favour of
 keeping the artefacts' own engine, and that is recorded rather than re-argued.
+
+
+## The local guard's CLAIM is retracted by #1452 — the guard is kept, reworded
+
+Appended from `claude/brave-hypatia-r820sf` after merging #1452. Status untouched.
+
+The section above records a guard added on the owner's choice of "keep the pin at
+1.3.14, add a local guard", because #1442's pin could not reach a container the
+repository does not control and the churn therefore persisted locally. **#1452
+removed `engine_version` from `saveQaScriptSidecar`'s write-skip comparison, which
+fixes the churn at the writer for every container — so the thing the guard was
+built to announce no longer happens, and its message was false the moment that
+merged.**
+
+Measured here rather than taken from #1452's commit message: sidecars clean, then
+`bun test cat-harness/scripts/tests/init-folio-qa.test.ts` — the sweep #1452 names
+as the trigger — then sidecars clean again. **0 rewritten, where this container had
+produced 72 an hour earlier.**
+
+### What was removed, in four places
+
+The false claim was printed in four, which is the argument for fixing all of them
+rather than the script alone: `check-bun-runtime.ts`'s message and module header,
+`bun-runtime.test.ts`'s assertions, the `SCRIPT_EXEMPTIONS` reason in `gates.ts`,
+and the `session-start-coord-sweep.sh` section comment. A retracted claim left
+standing in three of four is a claim the next reader still finds.
+
+Gone: *"72 of 86 script sidecars will be rewritten by any sweep here … discard
+them; do not commit them"*, and with it the `git checkout --` remedy and the
+warning about `git status | grep -v script-sidecars`. A test now asserts the old
+wording is ABSENT, so it cannot drift back.
+
+### What the guard says now, and why it is still worth running
+
+1. **You are not running the code that will judge your push.** `check:bun-pin`
+   asserts all 22 `setup-bun` sites install `.bun-version`, so CI runs exactly the
+   pin. A test passing at 1.3.11 can fail at 1.3.14 and the reverse. No commit
+   changes this, which is why it is not a gate.
+2. **A checker changed HERE stamps its sidecar with the older local engine.**
+   `engine_version` is now a record of the last CONTENT change's engine, so a real
+   content change on an older bun commits a stamp that goes backwards relative to
+   the 72 carrying CI's — `rmcf`'s downgrade concern and `#1430`'s `sfjo` rule.
+   Rare, because it needs a content change, and no longer an every-run event.
+
+The printed count is now named `stampedElsewhere` rather than `willRewrite`, in the
+type as well as the output, so it cannot be read as the churn prediction it used to
+be.
+
+### Retiring it entirely is the owner's call, and is NOT taken here
+
+The purpose the guard was asked for is discharged. Keeping it is a judgement that
+the two facts above earn a script, a test file, an exemption entry and a sweep
+section; deleting it is defensible and would be one commit. Left in place because
+the owner asked for a guard and it still reports something true, and flagged here
+rather than decided quietly.

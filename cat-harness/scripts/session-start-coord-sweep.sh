@@ -336,17 +336,19 @@ fi
 # ── 3-ter. Bun runtime vs the pin ───────────────────────────────────────────
 #
 # Bean `3ozg`. #1442 pinned Bun at `.bun-version` and at all 22 `setup-bun`
-# sites, which fixes the sidecar churn WHERE CI OBSERVES IT. It cannot reach a
-# container image the repository does not control, so in a mismatched agent
-# container `bun test` still rewrites every sidecar whose stamp differs, and
-# `bun run gates` still ends 'NOT clean'.
+# sites; #1452 then removed `engine_version` from `saveQaScriptSidecar`'s
+# write-skip comparison, which fixed the churn at the WRITER for every
+# container, including the ones the repository does not control.
 #
-# The standing remedy was "discard them locally", and it has a window: a
-# BACKGROUND `gates` run writes the sidecars between a clean `git status` and a
-# `git add -A`. Measured 2026-09-27 — 72 sidecars entered a commit about
-# something else, and the idiom used to check for them,
-# `git status --porcelain | grep -v script-sidecars`, filtered out its own
-# subject. No `git status` can close that; being told at session start can.
+# THIS SECTION'S ORIGINAL PURPOSE IS THEREFORE DISCHARGED, and the claim it
+# carried — that a mismatched bun rewrites 72 of 86 sidecars on every sweep,
+# so discard them before committing — is retracted. Measured after merging
+# #1452: 0 rewritten, where this container had produced 72.
+#
+# It is kept for the smaller facts that are still true, and that an agent
+# cannot read off its own tree: that it is not running the bun CI will judge
+# its push with, and that a checker changed here stamps its sidecar with the
+# older local engine. `check:bun-runtime`'s module header carries both.
 #
 # NOTE THE INVERTED EXIT CONVENTION, which is why this does not copy the CI
 # health block above. `check:bun-runtime` exits 1 on a real mismatch — the

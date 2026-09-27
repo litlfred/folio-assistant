@@ -2,64 +2,76 @@
 /**
  * Is the Bun RUNNING HERE the one `.bun-version` pins?
  *
+ * ## What this said until #1452 landed, and why it was retracted
+ *
+ * **This check was built to warn that a mismatched bun would rewrite 72 of the
+ * 86 committed script sidecars on any sweep. It no longer does, and that claim
+ * is withdrawn rather than quietly edited out.**
+ *
+ * The owner chose "keep the pin at 1.3.14, add a local guard" on bean `3ozg`,
+ * because #1442's pin fixes the churn where CI observes it and cannot reach a
+ * container image the repository does not control. Hours later #1452 fixed the
+ * same defect at the WRITER: `saveQaScriptSidecar`'s write-skip comparison no
+ * longer includes `engine_version`, so all three run-provenance fields are now
+ * excluded and a sweep from any bun rewrites nothing. Measured here after
+ * merging it — sidecars clean, `init-folio-qa.test.ts` (the sweep #1452 names as
+ * the trigger) run, sidecars clean again: **0 rewritten, where this container
+ * had produced 72.**
+ *
+ * So the consequence this check was created to announce is gone. What remains is
+ * smaller, still true, and still worth saying at session start.
+ *
+ * ## What it reports now
+ *
+ * 1. **The runtime differs from CI's.** `check:bun-pin` asserts all 22
+ *    `setup-bun` sites install `.bun-version`, so CI runs exactly that. An agent
+ *    on another bun is running different code than the gate that will judge its
+ *    push — a test that passes here can fail there, and the reverse. That is a
+ *    reproducibility fact no commit can change.
+ * 2. **A sidecar whose CONTENT changes here will be stamped with the local
+ *    engine.** Because `engine_version` is no longer compared, it is now a
+ *    record of the last content change's engine. Change a checker on an older
+ *    bun and the sidecar's stamp goes BACKWARDS relative to the 72 that carry
+ *    CI's — the "downgrade stamped as a fresh measurement" concern from `rmcf`
+ *    and `#1430`'s `sfjo` rule. Rare, because it needs a real content change,
+ *    and no longer the every-run event it was.
+ *
+ * The count it prints is therefore **not a prediction of churn**. It is how many
+ * committed sidecars record an engine other than the one running, which means
+ * "their last content change was made elsewhere" — nothing more.
+ *
  * ## Why this is not part of `check:bun-pin`, and not a gate at all
  *
  * `check:bun-pin` asks a question about the CORPUS: do the 22 `setup-bun` sites
  * agree with `.bun-version`? Every checkout answers that identically, so it is
  * gateable, and it belongs in `bun run gates`.
  *
- * This asks a question about the ENVIRONMENT: does the engine that is about to
- * run `bun test` match the pin? The answer differs per container and no commit
- * can change it. Two consequences, both deliberate:
+ * This asks about the ENVIRONMENT. The answer differs per container and no
+ * commit can change it, so as a gate it would go red on every agent container
+ * while every reviewer read it as a verdict on the diff — a second always-red
+ * signal, which is what #1442 removed the first one for. In CI it is worse than
+ * useless: the runner installs the pin, so `running === pinned` always and the
+ * gate would exercise nothing. It is declared in `SCRIPT_EXEMPTIONS` for exactly
+ * that reason, and it is not unrun: `session-start-coord-sweep.sh` runs it with
+ * `--markdown` at every session start.
  *
- * 1. **It is not in the gate set.** A gate that fails on a fact about the
- *    machine would go red on every agent container while every reviewer read it
- *    as a verdict on the diff — and the whole point of the pin (#1442) was to
- *    stop an always-red signal, not to install a second one.
- * 2. **It is printed at SESSION START**, by `session-start-coord-sweep.sh`,
- *    because the cost it prevents is paid at `git add`, not at review. An agent
- *    told up front that its Bun differs knows the 72 sidecar rewrites it is
- *    about to see are noise; an agent not told discovers them in a diff and has
- *    to work out whether they are its own.
- *
- * ## The failure this exists to stop
- *
- * Bean `3ozg`, and the near-miss recorded on it 2026-09-27. The pin cannot reach
- * a container image the repository does not control, so `bun test` in a
- * mismatched container still rewrites every sidecar whose stamp differs. The
- * standing remedy was "discard them locally", and it has a timing window:
- *
- * 1. `bun run gates` is started in the BACKGROUND while other work continues.
- * 2. `git status` is checked — clean, the run has not reached the writer yet.
- * 3. The run reaches `saveQaScriptSidecar` and rewrites the sidecars.
- * 4. `git add -A` sweeps them into a commit about something else.
- *
- * Measured: 72 sidecars entered a commit about `check:anchor-names`, caught only
- * on inspection afterwards. The idiom used to inspect —
- * `git status --porcelain | grep -v 'script-sidecars'` — filtered out its own
- * subject. Being told at step 0 is what closes that, since no `git status` at
- * step 2 can.
- *
- * ## `bun-` is a prefix, and getting it wrong would make this silently useless
+ * ## `bun-` is a prefix, and getting it wrong would make the count meaningless
  *
  * A sidecar records `engine_version: "bun-1.3.14"`; `.bun-version` holds the
- * bare `1.3.14`. Comparing the two directly never matches, so a naive version
- * of this check would report every sidecar as due for a rewrite in every
- * container, including a correctly-matched one. That is the same shape as the
- * `PinDef.tagPrefix` defect #1442 found in the pin machinery while using it
- * (`setup-bun` takes `1.3.14`, upstream tags `bun-v1.3.14`), which is why the
- * prefix is a named constant with its own test rather than an inline template.
+ * bare `1.3.14`. Comparing them directly never matches, so a naive version would
+ * report every sidecar as stamped elsewhere in every container, a matched one
+ * included. That is the same shape as the `PinDef.tagPrefix` defect #1442 found
+ * in the pin machinery while using it (`setup-bun` takes `1.3.14`, upstream tags
+ * `bun-v1.3.14`), which is why the prefix is a named constant with its own test.
  *
  * ## Three states, and `cannot-tell` is not `match`
  *
  *     match        the running engine is the pinned one            exit 0
- *     mismatch     they differ — with the rewrite count            exit 1
+ *     mismatch     they differ                                     exit 1
  *     cannot-tell  no pin, unparseable pin, or no Bun to ask       exit 2
  *
- * `cannot-tell` exits 2 rather than 0 for the reason the rest of this
- * repository does: an unanswered question rendered as a clean answer is the
- * `dh4f` defect, and it is worse here than a plain failure, because the thing
- * being silently declared fine is the agent's own tree.
+ * `cannot-tell` exits 2 rather than 0 for the reason the rest of this repository
+ * does: an unanswered question rendered as a clean answer is the `dh4f` defect.
  *
  * @module folio-assistant/scripts/check-bun-runtime
  */
@@ -76,8 +88,8 @@ const REPO_ROOT = resolve(INSTANCE_ROOT, "..");
 /**
  * What a sidecar's `engine_version` puts in front of the version.
  *
- * Named because it is the difference between this check working and this check
- * reporting every sidecar stale in every container — see the module header.
+ * Named because it is the difference between the count meaning something and
+ * the count being every sidecar in every container — see the module header.
  */
 export const ENGINE_PREFIX = "bun-";
 
@@ -93,8 +105,15 @@ export interface RuntimeReport {
   reason?: string;
   /** Sidecars read. A scan that matched nothing must not read clean. */
   sidecars: number;
-  /** Of those, how many carry an `engine_version` the running engine will change. */
-  willRewrite: number;
+  /**
+   * Of those, how many record an engine other than the one running.
+   *
+   * **This is not a churn prediction.** It was, until #1452 stopped
+   * `engine_version` from causing a write; now it says only that their last
+   * CONTENT change was made on another engine. Named for what it measures so a
+   * reader cannot take it for the old meaning.
+   */
+  stampedElsewhere: number;
 }
 
 /**
@@ -111,16 +130,17 @@ export function judge(
 ): RuntimeReport {
   const sidecars = engineVersions.length;
   if (pinned === undefined) {
-    return { verdict: "cannot-tell", running, reason: `${PIN_FILE} is absent or holds no bare X.Y.Z`, sidecars, willRewrite: 0 };
+    return { verdict: "cannot-tell", running, reason: `${PIN_FILE} is absent or holds no bare X.Y.Z`, sidecars, stampedElsewhere: 0 };
   }
   if (running === undefined) {
-    return { verdict: "cannot-tell", pinned, reason: "the running engine did not report a Bun version", sidecars, willRewrite: 0 };
+    return { verdict: "cannot-tell", pinned, reason: "the running engine did not report a Bun version", sidecars, stampedElsewhere: 0 };
   }
-  // Counted against RUNNING, not against the pin: what rewrites the tree is the
-  // engine doing the writing, and in a mismatched container that is not the pin.
+  // Counted against RUNNING rather than the pin: the question is which engine
+  // stamped the committed record, as against the one that would stamp a change
+  // made here.
   const stamp = `${ENGINE_PREFIX}${running}`;
-  const willRewrite = engineVersions.filter((v) => v !== stamp).length;
-  return { verdict: pinned === running ? "match" : "mismatch", pinned, running, sidecars, willRewrite };
+  const stampedElsewhere = engineVersions.filter((v) => v !== stamp).length;
+  return { verdict: pinned === running ? "match" : "mismatch", pinned, running, sidecars, stampedElsewhere };
 }
 
 /** Every committed sidecar's `engine_version`, `undefined` where it has none. */
@@ -164,21 +184,21 @@ export function markdown(r: RuntimeReport): string {
     );
   }
   if (r.verdict === "match") {
-    return head + `Running Bun **${r.running}** matches \`${PIN_FILE}\`. Sidecar writes here are real changes.\n`;
+    return head + `Running Bun **${r.running}** matches \`${PIN_FILE}\`, so this container runs what CI runs.\n`;
   }
   return (
     head +
-    `**This container runs Bun ${r.running}; \`${PIN_FILE}\` pins ${r.pinned}.**\n\n` +
-    `\`bun test\` and \`bun run gates\` will rewrite **${r.willRewrite}** of ${r.sidecars} ` +
-    `committed script sidecars here, changing only \`last_run_at\`, \`last_run_sha\` and ` +
-    `\`engine_version\`. That is bean \`3ozg\`: not your change, and not to be committed.\n\n` +
-    "```sh\n" +
-    `git checkout -- ${SCRIPT_SIDECAR_DIR.replace(/^/, "cat-harness/")}\n` +
-    "```\n\n" +
-    "**Do not verify this with `git status --porcelain | grep -v script-sidecars`** — that " +
-    "filter hides exactly what it is being used to check, and a background `gates` run can " +
-    "write the sidecars after you look and before you `git add`. Prefer explicit paths, or " +
-    "`git add -A -- . ':(exclude)cat-harness/content/pipeline/script-sidecars'`.\n"
+    `**This container runs Bun ${r.running}; \`${PIN_FILE}\` pins ${r.pinned}.** CI installs the pin at ` +
+    "every `setup-bun` site, so you are running different code from the gates that will judge your " +
+    "push — a test that passes here can fail there, and the reverse.\n\n" +
+    `Of ${r.sidecars} committed script sidecars, **${r.stampedElsewhere}** record a different engine. ` +
+    "**That is not churn and will not dirty your tree**: since #1452, `engine_version` is excluded from " +
+    "`saveQaScriptSidecar`'s write-skip comparison, so a sweep from any bun rewrites nothing. It means " +
+    "their last CONTENT change was made elsewhere.\n\n" +
+    "What to watch for instead: if you change a checker and its sidecar is rewritten here, the new stamp " +
+    `is \`${ENGINE_PREFIX}${r.running}\` — older than the ${r.stampedElsewhere} above. Read what a ` +
+    "regeneration writes before committing it (`rmcf`, and `#1430`'s `sfjo` rule), rather than committing " +
+    "a downgrade as though it were a fresh measurement.\n"
   );
 }
 
@@ -194,9 +214,9 @@ if (import.meta.main) {
     console.log(`Bun runtime — ${r.running} matches ${PIN_FILE}; ${r.sidecars} sidecar(s) read.`);
   } else {
     console.error(
-      `Bun runtime — this container runs ${r.running}, ${PIN_FILE} pins ${r.pinned}.\n` +
-        `  ${r.willRewrite} of ${r.sidecars} script sidecar(s) will be rewritten by any sweep here (bean 3ozg).\n` +
-        `  Discard them; do not commit them.`,
+      `Bun runtime — this container runs ${r.running}, ${PIN_FILE} pins ${r.pinned}, so you are not\n` +
+        `  running what CI runs. ${r.stampedElsewhere} of ${r.sidecars} script sidecar(s) record another engine;\n` +
+        `  since #1452 that is a record, NOT pending churn. A checker you change here stamps ${ENGINE_PREFIX}${r.running}.`,
     );
   }
   process.exit(r.verdict === "match" ? 0 : r.verdict === "mismatch" ? 1 : 2);

@@ -20,23 +20,25 @@ function stamped(version: string, n: number): string[] {
 }
 
 describe("the three states", () => {
-  test("equal versions are a match, and nothing is due for a rewrite", () => {
+  test("equal versions are a match, and nothing is stamped elsewhere", () => {
     const r = judge("1.3.14", "1.3.14", stamped("1.3.14", 86));
     expect(r.verdict).toBe("match");
-    expect(r.willRewrite).toBe(0);
+    expect(r.stampedElsewhere).toBe(0);
     expect(r.sidecars).toBe(86);
   });
 
-  test("differing versions are a mismatch, and it COUNTS what will move", () => {
+  test("differing versions are a mismatch, and it COUNTS what was stamped elsewhere", () => {
     // The real corpus on 2026-09-27: 72 at 1.3.14, 14 at 1.3.11, container 1.3.11.
     const r = judge("1.3.14", "1.3.11", [...stamped("1.3.14", 72), ...stamped("1.3.11", 14)]);
     expect(r.verdict).toBe("mismatch");
     expect(r.pinned).toBe("1.3.14");
     expect(r.running).toBe("1.3.11");
-    // 72, not 86: the 14 already stamped with the RUNNING engine are skipped by
-    // saveQaScriptSidecar's write-skip guard. That is where the bean's "72"
-    // comes from — the count not already at the local engine, not a blast radius.
-    expect(r.willRewrite).toBe(72);
+    // 72, not 86: the 14 already stamped with the RUNNING engine are not counted.
+    // Until #1452 this was also the churn count, because engine_version was
+    // compared in saveQaScriptSidecar's write-skip guard. It no longer is, so
+    // this is a record of where the last CONTENT change happened and NOT a
+    // prediction that anything will move.
+    expect(r.stampedElsewhere).toBe(72);
     expect(r.sidecars).toBe(86);
   });
 
@@ -59,17 +61,17 @@ describe("the `bun-` prefix", () => {
   test("the count is against the PREFIXED stamp, so a match reads 0 and not everything", () => {
     // THE POINT OF THIS TEST. `.bun-version` holds `1.3.14`; a sidecar holds
     // `bun-1.3.14`. Compare them bare and every sidecar looks due for a rewrite
-    // in every container, a matched one included — the check would fire always
-    // and therefore mean nothing. Same shape as the tagPrefix defect #1442
-    // found in the pin machinery: `1.3.14` against an upstream `bun-v1.3.14`.
-    expect(judge("1.3.14", "1.3.14", stamped("1.3.14", 40)).willRewrite).toBe(0);
+    // in every container, a matched one included — the count would be every
+    // sidecar always and therefore mean nothing. Same shape as the tagPrefix
+    // defect #1442 found in the pin machinery: `1.3.14` vs `bun-v1.3.14`.
+    expect(judge("1.3.14", "1.3.14", stamped("1.3.14", 40)).stampedElsewhere).toBe(0);
     // And a sidecar carrying the BARE version is genuinely not what this engine
     // writes, so it does count.
-    expect(judge("1.3.14", "1.3.14", ["1.3.14"]).willRewrite).toBe(1);
+    expect(judge("1.3.14", "1.3.14", ["1.3.14"]).stampedElsewhere).toBe(1);
   });
 
-  test("a sidecar with no engine_version at all counts as due", () => {
-    expect(judge("1.3.14", "1.3.14", [undefined]).willRewrite).toBe(1);
+  test("a sidecar with no engine_version at all counts as stamped elsewhere", () => {
+    expect(judge("1.3.14", "1.3.14", [undefined]).stampedElsewhere).toBe(1);
   });
 });
 
@@ -78,27 +80,44 @@ describe("an empty scan does not read clean", () => {
     const r = judge("1.3.14", "1.3.11", []);
     // Still a mismatch — the versions differ whatever the corpus holds — but
     // `sidecars: 0` is what tells a reader the count means "found none", not
-    // "found none due".
+    // "found none stamped elsewhere".
     expect(r.verdict).toBe("mismatch");
     expect(r.sidecars).toBe(0);
-    expect(r.willRewrite).toBe(0);
+    expect(r.stampedElsewhere).toBe(0);
   });
 });
 
 describe("the session-start section", () => {
-  test("a mismatch names the count, the bean, and the remedy", () => {
+  test("a mismatch says you are not running what CI runs", () => {
     const md = markdown(judge("1.3.14", "1.3.11", stamped("1.3.14", 72)));
-    expect(md).toContain("72");
-    expect(md).toContain("3ozg");
-    expect(md).toContain("git checkout --");
+    expect(md).toContain("1.3.11");
+    expect(md).toContain("1.3.14");
+    expect(md).toContain("different code from the gates");
   });
 
-  test("it warns AGAINST the grep idiom that hid this once", () => {
-    // The near-miss recorded on 3ozg: the filter used to make the churn
-    // tolerable is the filter that hides it at the moment of committing.
+  test("it states that the count is NOT churn — the retraction, asserted", () => {
+    // THE POINT OF THIS TEST. Until #1452 this section told the reader that
+    // 72 sidecars would be rewritten by any sweep, and instructed them to
+    // discard. The write-skip comparison no longer includes `engine_version`,
+    // so nothing is rewritten, and a guard that still said so would be a
+    // false claim printed at every session start — worse than no guard. The
+    // wording is pinned here so it cannot drift back.
     const md = markdown(judge("1.3.14", "1.3.11", stamped("1.3.14", 72)));
-    expect(md).toContain("grep -v script-sidecars");
-    expect(md).toContain(":(exclude)");
+    expect(md).toContain("72");
+    expect(md).toContain("not churn and will not dirty your tree");
+    expect(md).toContain("#1452");
+    // And the old instruction must be gone, not merely de-emphasised.
+    expect(md).not.toContain("git checkout --");
+    expect(md).not.toContain("Discard them");
+  });
+
+  test("it names the residue that IS still live — a downgraded stamp", () => {
+    // What survived #1452: `engine_version` is now the last CONTENT change's
+    // engine, so changing a checker on an older bun commits a stamp that goes
+    // backwards. Rare, because it needs a real content change.
+    const md = markdown(judge("1.3.14", "1.3.11", stamped("1.3.14", 72)));
+    expect(md).toContain("bun-1.3.11");
+    expect(md).toContain("sfjo");
   });
 
   test("`cannot-tell` says unknown rather than matched", () => {
@@ -109,7 +128,7 @@ describe("the session-start section", () => {
 
   test("a match is one line and raises no alarm", () => {
     const md = markdown(judge("1.3.14", "1.3.14", stamped("1.3.14", 86)));
-    expect(md).toContain("matches");
-    expect(md).not.toContain("3ozg");
+    expect(md).toContain("runs what CI runs");
+    expect(md).not.toContain("sfjo");
   });
 });
