@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 429,
+      "count": 430,
       "unit": "beans"
     }
   },
@@ -1101,6 +1101,20 @@
       "updatedAt": "2026-09-19T09:01:53Z",
       "preview": "**Strawperson.** From [#363](https://github.com/litlfred/folio-assistant/issues/363):\n\"self-soveringn mode: like soveregion cloud but hosted on own infrastructure, in\nL4-L5 context may have data stores like hapi. not designed for external facing\nservices. more for managing wallets. have incoming DAK content. bean up to may\nstrwperson and create issue to review these.\"\n\n## Strawperson position, to ",
       "file": "beans/defs/folio-assistant-61tg--topology-self-sovereign-own-infrastructure-inward.md"
+    },
+    {
+      "id": "folio-assistant-676g",
+      "title": "kg:validate cannot own a NESTED instance's path, so 15 instances' committed QA sidecars are consumer-validated by nothing",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T16:50:03Z",
+      "updatedAt": "2026-09-27T16:50:03Z",
+      "preview": "## What was measured\n\n`kg:validate` resolves declared directories from ONE instance root, so a sidecar\nin a nested instance is refused rather than validated. Measured 2026-09-27, from\nthe repository root:\n\n    bun run cat-harness/scripts/kg-validate.ts cat-harness/test/results/kg-qa/processes/adjudication.kg-qa.json\n      ✓ … [qa]\n\n    bun run cat-harness/scripts/kg-validate.ts bootstrap/test/resu",
+      "file": "beans/defs/folio-assistant-676g--kgvalidate-cannot-own-a-nested-instances-path-so-1.md"
     },
     {
       "id": "folio-assistant-6b8u",
@@ -3048,7 +3062,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T07:36:35Z",
-      "updatedAt": "2026-09-27T07:52:24Z",
+      "updatedAt": "2026-09-27T09:03:41Z",
       "preview": "FOUND 2026-09-21 by the sweep that closed `a6kl`'s open question.\n\nAn empty corpus makes every count zero, and zero reads as a clean run. That is\n`6tkl`, and this repository has already paid for it three times — `6tkl` itself\n(`check-declared-assets` hardcoding two instances of eight), `pzdv` (two HARD\ngates green over zero titles and zero flagged lines), and `a6kl` (an L1 gate\nreporting `nothing ",
       "file": "beans/defs/folio-assistant-iym1--vacuity-is-guarded-one-script-at-a-time-no-cross-g.md"
     },
