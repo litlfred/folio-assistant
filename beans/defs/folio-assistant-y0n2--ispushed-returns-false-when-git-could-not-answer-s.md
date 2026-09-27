@@ -1,10 +1,11 @@
 ---
 # folio-assistant-y0n2
 title: isPushed() returns false when git COULD NOT ANSWER, so a transient git failure reads as 'you never pushed' — and it made a test fail in the suite and pass alone
-status: todo
+status: completed
 type: bug
+priority: normal
 created_at: 2026-09-27T05:11:35Z
-updated_at: 2026-09-27T05:11:35Z
+updated_at: 2026-09-27T07:46:48Z
 parent: folio-assistant-1xhc
 ---
 
@@ -95,9 +96,34 @@ shape).
 
 ## Done when
 
-- [ ] `isPushed` cannot return a verdict when git did not answer. MEASURED AFTER:
+- [x] `isPushed` cannot return a verdict when git did not answer. MEASURED AFTER:
       with `git` made to fail (an unreadable `.git`, or a stubbed failing
       `execFileSync`), the caller reports could-not-tell and NOT "not pushed"
-- [ ] the failure reason is available — stderr captured rather than discarded
-- [ ] the test no longer depends on a boolean that swallows errors, so it stops
+- [x] the failure reason is available — stderr captured rather than discarded
+- [x] the test no longer depends on a boolean that swallows errors, so it stops
       being suite-only flaky
+
+
+## Summary of Changes
+
+Landed on `claude/brave-hypatia-r820sf` (commit `97c11285841`), and CI green on that
+head and every one since. Closed on EVIDENCE re-measured after the fact rather than
+on authorship — the three boxes above were ticked against the tree, not from memory.
+
+`isPushed(): boolean` became `pushedState(): "pushed" | "not-pushed" | "cannot-tell"`,
+using `spawnSync` so a non-zero exit is DATA rather than a throw. The caller exits
+**2** on `cannot-tell`, matching the `cannot-ask` idiom already used elsewhere in the
+same script, so a transient git failure can no longer be read as "you never pushed".
+
+`lastPushedReason()` exposes the reason, which was previously discarded outright:
+the old call passed `stdio: ["ignore", "pipe", "ignore"]`, so stderr went nowhere and
+a failure had no diagnosis at all.
+
+The test now asserts `toBe("pushed")` rather than `not.toBe("not-pushed")`. That is
+the point of the third box and not a style preference: with three states, a negative
+assertion is satisfied by `cannot-tell`, which would reinstate exactly the defect
+this bean is about. A new case, *"git unable to answer is `cannot-tell`, NOT
+`not-pushed`"*, points the function at a non-repository and pins the third state.
+
+Verified on the current head: `pushedState` present at 2 call sites, no `isPushed`
+function remains, and both assertions are in `head-has-run.test.ts`.

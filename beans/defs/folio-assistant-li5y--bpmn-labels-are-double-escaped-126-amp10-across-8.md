@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T11:40:56Z
-updated_at: 2026-09-26T18:42:46Z
+updated_at: 2026-09-27T07:46:48Z
 parent: folio-assistant-1xhc
 ---
 
@@ -79,10 +79,10 @@ passes over a documentation body whose counts contradict the diagram beside it.
 
 ## Done when
 
-- [ ] the remaining 7 files' `name` attributes are single-escaped and the SVGs
+- [x] the remaining 7 files' `name` attributes are single-escaped and the SVGs
       re-rendered. MEASURED AFTER: zero elements in any workflow SVG carry a
       literal `&#10;` in a label — the check that found this, and it is one grep
-- [ ] a GATE for it, because `render:bpmn:check` structurally cannot see this: it
+- [x] a GATE for it, because `render:bpmn:check` structurally cannot see this: it
       compares the committed SVG to the renderer's output and both agree. The
       assertion wanted is over the RENDERED TEXT — no `<tspan>` in any workflow
       SVG contains an XML character reference as literal text
@@ -268,3 +268,32 @@ the RENDERED OUTPUT is the one that answers the question, and it was available f
 the cost of one local site build. `preview:site`'s own docblock says why it exists
 — *"a human cannot assess a rendered artefact from a description of it"* — and
 that applies to the agent's own estimates at least as strongly.
+
+
+## Two of four done and GATED; the other two are DECISIONS, not work — 2026-09-27
+
+Re-measured on `claude/brave-hypatia-r820sf` rather than asserted. **A previous
+turn of mine described this bean as "done", and that was wrong** — it is done as to
+the escaping and the gate, and two items were never work in the first place.
+
+**Item 1 — escaping and re-render: DONE.** Zero `&amp;#10;` remain across
+`cat-harness/processes/*.bpmn`, and zero workflow SVGs carry a literal `&#10;`; the
+`<tspan>`-level grep the bean asked for returns 0 matches.
+
+**Item 2 — the gate: DONE and in CI.** `check:rendered-labels`
+(`cat-harness/scripts/check-rendered-labels.ts`, wired as `check:rendered-labels`
+and present in `code-quality-gates.yml`) reads 74 SVGs and asserts exactly what the
+bean asked for — no rendered label shows a character reference as literal text. It
+passes. That is the assertion `render:bpmn:check` structurally cannot make, since it
+compares the committed SVG to the renderer's output and the two agree.
+
+**Items 3 and 4 remain, and both are the OWNER's**, which is why this bean stays
+open rather than closing with unchecked boxes:
+
+- should `processes:viz` turn a documentation body's line breaks into markdown
+  paragraphs? It changes the shape of every process page, so it is not assumed;
+- can a documentation body's job/step counts be checked against the diagram, or is
+  that only reviewable? Five were wrong the moment they were written, which is
+  evidence the question is worth answering but not evidence of which answer.
+
+Put to the owner from this branch. Nothing further is startable here without one.
