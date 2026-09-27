@@ -32,11 +32,12 @@
  * silently returned zero would read exactly like a clean run, which is the
  * shape this repository has paid for twice (`dh4f`, `xom7`).
  */
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { FhirArtifactIndexSchema, materializationCensus } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
 import { declarationPathIn, repoRootFor } from "../schemas/cat-harness.js";
+import { gitTopLevelDirs } from "../schemas/git-corpus.ts";
 
 const ROOT = repoRootFor(join(import.meta.dir, ".."));
 
@@ -50,8 +51,14 @@ const ROOT = repoRootFor(join(import.meta.dir, ".."));
  */
 function declaredIndexes(): string[] {
   const out: string[] = [];
-  for (const entry of readdirSync(ROOT).sort()) {
-    if (!statSync(join(ROOT, entry)).isDirectory()) continue;
+  // ASKED OF GIT (bean `qrlc`), rather than listing the directory. This one
+  // was already saved downstream — it keeps only an entry carrying a
+  // declaration, and `_kg` has none — so the conversion changes no answer
+  // today. It is made anyway for the reason the comment below already gives
+  // about composing a path: a scan that admits whatever is on the machine is
+  // one whose result depends on who ran a build, and the filter that happens
+  // to save it is not visible from here.
+  for (const entry of gitTopLevelDirs(ROOT).names) {
     // RESOLVED, never composed: since #695 an instance declares itself in
     // `<name>.config.json`, so there is no single filename to join. Composing
     // one is how a reader stops seeing every instance the moment the

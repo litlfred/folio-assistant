@@ -73,20 +73,44 @@ const ROOT_BOUND = /\b(?:REPO_ROOT|INSTANCE_ROOT|ROOT)\s*[:=]/;
 /**
  * Enumerating the filesystem by ANY means, git-aware spellings included.
  *
- * The git forms are in here deliberately, and leaving them out was a defect
- * this census had for one run. A converted scanner no longer contains
- * `readdirSync` or `new Glob` — that is the whole of the conversion — so a
- * bare-walk-only pattern DROPS IT FROM THE DENOMINATOR. The first run read
- * "57 enumerating scripts, 1 asks git" on a tree where eleven had just been
- * converted: the fixed ones had left the population rather than moved to its
- * good side.
+ * ## Both halves are DERIVED from `git-corpus.ts`, and that is the repair
  *
- * A measurement whose headline gets WORSE as the corpus improves is worse than
- * no measurement, which is the failure this whole bean is about, committed in
- * the census reporting on it.
+ * The git spellings were a hardcoded roster — `gitFiles|gitScan|gitCorpus|
+ * corpusPredicate` — and it went stale the first time a helper was added.
+ * Bean `qrlc`, measured the same hour: `gitTopLevelDirs` landed, three
+ * scanners were converted to call it, and this census read **66 enumerating,
+ * 10 ask git** before and **65 enumerating, 10 ask git** after. The three had
+ * dropped out of the population instead of joining its good side, and the
+ * git-aware count had not moved.
+ *
+ * That is the SECOND time this file has had that defect — the first was the
+ * bare-walk-only pattern it shipped with — and it is the class this whole bean
+ * family is about: a list of names kept by hand beside the thing it is meant
+ * to track. A roster is a dead key waiting to happen.
+ *
+ * So the names are read from `git-corpus.ts`'s own exports. Adding a helper
+ * there is now enough; nothing here has to be remembered.
  */
-const ENUMERATES =
-  /\bnew Glob\(|\breaddirSync\(|\.scanSync\(|\bgitFiles\(|\bgitScan\(|\bgitCorpus\(|\bcorpusPredicate\(/;
+function gitCorpusExports(): string[] {
+  const src = readFileSync(join(INSTANCE_ROOT, "schemas", "git-corpus.ts"), "utf-8");
+  const names = [...src.matchAll(/^export function (\w+)/gm)].map((m) => m[1]!);
+  // NOT a silent empty. If the read or the match ever returns nothing, every
+  // scanner reads as not-git-aware and the census reports a corpus-wide
+  // regression that did not happen — the `dh4f` shape, in the file whose
+  // subject is exactly that.
+  if (names.length === 0) {
+    throw new Error(
+      "no exported helper found in schemas/git-corpus.ts — the census cannot tell " +
+        "git-aware from not without them, and an empty answer here reads as a repository-wide regression",
+    );
+  }
+  return names;
+}
+
+const GIT_HELPERS = gitCorpusExports();
+const HELPER_CALL = GIT_HELPERS.map((n) => `\\b${n}\\(`).join("|");
+
+const ENUMERATES = new RegExp(`\\bnew Glob\\(|\\breaddirSync\\(|\\.scanSync\\(|${HELPER_CALL}`);
 
 /**
  * The enumeration's start argument IS a root constant — the dangerous shape.
@@ -103,8 +127,11 @@ const SEEDED_AT_ROOT = [
   /\bwalk\(\s*(?:REPO_ROOT|INSTANCE_ROOT|ROOT)\b/,
 ];
 
-/** Asking git what the corpus is, in every spelling this repository has. */
-const GIT_AWARE = /\bgitCorpus\b|\bgitFiles\b|\bgitScan\b|\bcorpusPredicate\b|\bgitListed\b|ls-files/;
+/**
+ * Asking git what the corpus is — the same DERIVED list, plus the two raw
+ * spellings a caller may use without going through a helper.
+ */
+const GIT_AWARE = new RegExp(`${HELPER_CALL}|\\bgitListed\\b|ls-files`);
 
 export interface ScanRow {
   file: string;

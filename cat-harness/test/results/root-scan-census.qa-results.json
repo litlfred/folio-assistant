@@ -2,16 +2,16 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/root-scan-census.ts",
-    "script_hash": "ee1c78eda427"
+    "script_hash": "9c075525d82f"
   },
   "subject": {
     "kind": "root-scan-census",
     "id": "scripts"
   },
-  "updated_at": "2026-09-27T10:31:35.029Z",
+  "updated_at": "2026-09-27T16:41:42.429Z",
   "families": {
     "enumerating-scripts": {
-      "summary": "Every script that binds a root constant and enumerates the filesystem, with whether its scan is SEEDED at that root and whether it asks git. A FLOOR, not a count: both filters are syntactic, so a scanner spelled differently is missed — which is not hypothetical, since `xd1g`'s own list of eleven was one short (`kg-audit`, found by a sibling session). The two filters disagree by design: 3 seeded at a root against 66 enumerating at all, and that GAP is the finding — it is why a syntactic check cannot answer this question and the guard lives in `scripts/tests/git-corpus-conversions.test.ts` instead.",
+      "summary": "Every script that binds a root constant and enumerates the filesystem, with whether its scan is SEEDED at that root and whether it asks git. A FLOOR, not a count: both filters are syntactic, so a scanner spelled differently is missed — which is not hypothetical, since `xd1g`'s own list of eleven was one short (`kg-audit`, found by a sibling session). The two filters disagree by design: 0 seeded at a root against 66 enumerating at all, and that GAP is the finding — it is why a syntactic check cannot answer this question and the guard lives in `scripts/tests/git-corpus-conversions.test.ts` instead.",
       "count": 66,
       "entries": [
         {
@@ -36,8 +36,8 @@
         },
         {
           "file": "cat-harness/scripts/check-artifact-index.ts",
-          "seededAtRoot": true,
-          "gitAware": false
+          "seededAtRoot": false,
+          "gitAware": true
         },
         {
           "file": "cat-harness/scripts/check-bean-issue-links.ts",
@@ -221,8 +221,8 @@
         },
         {
           "file": "cat-harness/scripts/gen-default-boards.ts",
-          "seededAtRoot": true,
-          "gitAware": false
+          "seededAtRoot": false,
+          "gitAware": true
         },
         {
           "file": "cat-harness/scripts/gen-docs-auto.ts",
@@ -326,8 +326,8 @@
         },
         {
           "file": "cat-harness/scripts/sync-docs-harness.ts",
-          "seededAtRoot": true,
-          "gitAware": false
+          "seededAtRoot": false,
+          "gitAware": true
         },
         {
           "file": "cat-harness/scripts/tests/helpers.ts",
@@ -347,20 +347,10 @@
       ]
     },
     "seeded-at-root-not-git-aware": {
-      "summary": "The shape that actually costs something: a scan whose start argument IS a root constant, that does not ask git. 3 of 3 such scans, 66 enumerating scripts in all. Reported and NEVER failed — the owner's ruling of 2026-09-27, over the objection that a check which cannot fail is the 1xhc pattern; what CAN fail here is the sidecar going stale.",
-      "count": 3,
-      "entries": [
-        {
-          "file": "cat-harness/scripts/check-artifact-index.ts"
-        },
-        {
-          "file": "cat-harness/scripts/gen-default-boards.ts"
-        },
-        {
-          "file": "cat-harness/scripts/sync-docs-harness.ts"
-        }
-      ]
+      "summary": "The shape that actually costs something: a scan whose start argument IS a root constant, that does not ask git. 0 of 0 such scans, 66 enumerating scripts in all. Reported and NEVER failed — the owner's ruling of 2026-09-27, over the objection that a check which cannot fail is the 1xhc pattern; what CAN fail here is the sidecar going stale.",
+      "count": 0,
+      "entries": []
     }
   },
-  "total": 69
+  "total": 66
 }
