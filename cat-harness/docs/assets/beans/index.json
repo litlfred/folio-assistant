@@ -1639,14 +1639,14 @@
     {
       "id": "folio-assistant-9rnf",
       "title": "DISCOVERY: publishedPairs scans the site root only, so a translated page in a subdirectory is invisible to every catalogue tool",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-27T04:59:40Z",
-      "updatedAt": "2026-09-27T05:00:01Z",
+      "updatedAt": "2026-09-27T06:02:12Z",
       "preview": "## The gap\n\n`publishedPairs` in `cat-harness/content/pipeline/derive-po.ts` reads the site\ndirectory with a single `readdirSync`, so it sees pages at the root and nothing\nbelow it. Measured on `main` at `c6960465301`:\n\n| | |\n|---|---|\n| published translated pages | **14** |\n| of those, found by discovery | 13 (top level) |\n| **invisible** | **1** — `guides/agent-onboarding.md`, in ar, es, fr, ru, ",
       "file": "beans/defs/folio-assistant-9rnf--discovery-publishedpairs-scans-the-site-root-only.md"
     },
