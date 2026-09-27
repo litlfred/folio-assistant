@@ -256,6 +256,16 @@ describe("there is exactly one declaration pattern", () => {
     //   qa-utils                       misses example
     //   lean-coverage                  misses axiom, example, inductive, opaque
     //
+    // 🛑 One row RENAMED, 2026-09-27, and this is the reason to read the line
+    // below rather than the count. `qa-utils` -> `lean-formal-ref`: the pattern
+    // did not appear, converge or multiply — the ~327 lines carrying it moved
+    // out of core into the science layer on the owner ruling that the `lean.ref`
+    // grammar is science vocabulary, and core kept one-line delegations. Still
+    // FIVE non-canonical patterns, still the same five defects, still missing
+    // `example`. A reader seeing a name change in a list that "may only shrink"
+    // should not conclude the rule was broken; nothing about the inventory
+    // changed except which file holds one of the rows.
+    //
     // `axiom` and `opaque` are the two that cost 243 declarations in the
     // corpus sweep, and three of the five miss one or both.
     //
@@ -270,9 +280,9 @@ describe("there is exactly one declaration pattern", () => {
     expect(patternFiles()).toEqual([
       "cat-harness/content/pipeline/conjectural-propagation-audit.ts",
       "cat-harness/content/pipeline/generate-lean-stubs.ts",
+      "cat-harness/content/pipeline/lean-formal-ref.ts",
       "cat-harness/content/pipeline/lean-lexer.ts",
       "cat-harness/content/pipeline/proof-narrative-lean-equiv-sweep.ts",
-      "cat-harness/content/pipeline/qa-utils.ts",
       "cat-harness/scripts/lean-coverage.ts",
     ]);
   });
