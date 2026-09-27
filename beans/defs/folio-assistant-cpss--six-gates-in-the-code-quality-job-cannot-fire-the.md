@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: high
 created_at: 2026-09-26T18:09:12Z
-updated_at: 2026-09-27T05:02:36Z
+updated_at: 2026-09-27T05:14:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -371,3 +371,81 @@ that fails still masks the members after it — bounded now by that step rather
 than by the rest of the job. Whether that block should be split further is a
 separate question, and `check:red-gate-is-last` will say so the moment anything
 in it is declared red by decision.
+
+## The six steps HAVE now run — latent when written, STRUCTURALLY CLOSED since
+
+> **Superseded, and by the right thing.** This section was written at 05:09Z warning
+> that the six steps ran only because the corpus happened to be undrifted, and that
+> one new drifted translation would hide them again — so the bean must not be closed
+> on green steps alone. The holder then landed option (b) (#1436): the drift is no
+> longer in the batch at all, it is the LAST step, and a gate enforces that it stays
+> there. **That is the structural fix, not the lucky state**, so the warning below no
+> longer applies to this bean — it applies to anyone who later moves a
+> deliberately-red gate back into a batch, which is now what the new gate refuses.
+> The measurement is left standing because it is the before-and-after.
+
+Evidence appended by another session (PR #1422). **Status deliberately untouched;
+this is not mine to resolve** — and as of 04:55Z it is held by
+`claude/sleepy-babbage-ls90iz`, so this is addressed to them. It is written because
+a reader who sees the six steps green may conclude the bean is done, which would be
+the wrong reading.
+
+**The claim above and this append collided**, which is worth one line since #1422
+is the PR that implements the rule for it: their claim landed on `main` at 04:55
+and this append was written at 05:09 on a branch, so the two met as a merge
+conflict in this file. Resolved by keeping both, their claim first. That is
+`dx5j`'s scenario exactly — the open-PR search would not have found them, because
+they pushed the claim to `main` precisely *because* their branch had no PR yet
+(their note says so, bean `35nj`). Two mechanisms aimed at the same window from
+opposite ends, and they still crossed.
+
+### What is now observed
+
+`translation:drift:check` is currently **passing** — 70 compared, 0 NEWLY drifted,
+0 could not be read, 0 drifted and recorded, 8 uncatalogued and recorded — so the
+`set -e` batch reaches its end and every step after it executes. Measured by step
+NAME in `Repository gates (hard)` on two runs (`66f5f09cab6` at 21:37Z and
+`6b4c89309ed` at 04:57Z, both green):
+
+| step | name | |
+|---|---|---|
+| 45 | generated docs pages are current | success |
+| 49 | voices projection and viewer are current | success |
+| 50 | folio projection and viewer are current | success |
+| 51 | viewer pages keep the navbar they had | success |
+| 52 | handler namespace index is current | success |
+| 53 | translation index is current | success |
+
+All six of this bean's population, including the one it singled out as proving
+the cost — *"translation index is current"*. The batch step itself now takes **81
+seconds** (21:37:43 → 21:39:04) where it previously died at its 3rd command, which
+is the same fact from the other side.
+
+### Why that does not close it
+
+**The gate did not stop being red by decision; the corpus stopped being drifted.**
+`ngxj` and issue #206 are untouched, and the 8 uncatalogued are *recorded* rather
+than resolved. So the batch is green for a reason that a single new drifted
+translation reverses — at which point all six steps silently vanish again, and
+nothing in CI will say so.
+
+That is this bean's own argument, now with a second demonstration: the masking is
+not a state somebody chose, it is **whatever happens to be later in the file**, and
+it came and went here without anybody deciding either transition. A hole that
+closes by luck is still a hole.
+
+### One partial instance of the remedy has landed
+
+#1422 adds `translation:catalogue:check` **above** the batch, for exactly this
+reason, stated in its docblock: registered below it, a check about the drift's
+silence would itself be silenced by it. That is one gate placed correctly, not a
+fix for the six — the ordering question this bean raises is untouched.
+
+### A correction to a figure this bean is cited alongside
+
+`om30` and `xm31` counted masked **steps**; the unit is **checks**. Verified
+independently from the workflow: the failing step is a `set -e` batch of **106**
+commands with `translation:drift:check` the **3rd**, so **103** gates inside one
+step never ran. This bean's title already says 108 checks and is right; the sibling
+beans' "45 → 6" and "35 masked at step 8" were the smaller half, and `xm31` has
+been closed with its decision moved here.
