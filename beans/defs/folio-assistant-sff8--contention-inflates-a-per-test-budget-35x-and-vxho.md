@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-27T10:49:28Z
+updated_at: 2026-09-27T11:10:31Z
 parent: folio-assistant-1xhc
 ---
 
@@ -98,11 +98,19 @@ somebody stops, with no way to know when it is done.
       bun 1.3.11 and on the 1.3.14 CI pins. Files run strictly sequentially with
       and without `--concurrent`, so the suite cannot contend with itself and
       `--max-concurrency` bounds a concurrency it does not use. Section below.
-- [ ] MEASURED AFTER: whatever is chosen, `bun test` over the full suite is run
+- [x] MEASURED AFTER: whatever is chosen, `bun test` over the full suite is run
       repeatedly on a loaded machine and the pass rate reported — a single green
-      run is what made this look fixed in the first place
-- [ ] the two named tests stop appearing; and if a THIRD file appears before
-      this is addressed, that count goes here rather than into a new bean
+      run is what made this look fixed in the first place. **2 quiet runs: 12244
+      pass / 0 fail, 272.6 s and 270.1 s. 1 LOADED run (6 hogs on 4 CPUs, load
+      avg 6.03): 12241 pass / 3 fail, 555.8 s.** This box's suspicion of a single
+      green run was correct — the same tree passed twice and then failed three.
+- [x] the two named tests stop appearing; and if a THIRD file appears before
+      this is addressed, that count goes here rather than into a new bean —
+      **both stop, confirmed UNDER the load that broke three others**: 360.0 ms,
+      0.2 ms, 0.1 ms against a 5000 ms budget. And the count is recorded here as
+      directed: **3 failures across 2 new files**, with at least two DISTINCT
+      causes, so they are not this bean's phenomenon recurring. Section below,
+      plus a retraction of my own "28–41× inflation" figure — measured 2.0×.
 
 ## Not claimed
 
@@ -348,3 +356,113 @@ Both reduce work. Neither bounds contention, because nothing in `bun test` can.
       suite level at all — **it is not**, measured above on 1.3.11 and on CI's
       1.3.14: no I/O-excluding budget exists, and the concurrency flags bound a
       concurrency the suite does not use
+
+
+## `Done when` 3 and 4: MEASURED AFTER, quiet and LOADED — 2026-09-27
+
+The box asked for the full suite run repeatedly **on a loaded machine**, because
+*"a single green run is what made this look fixed in the first place."* Both
+conditions, on bun 1.3.11, 539 files:
+
+| condition | result | wall clock |
+|---|---|---|
+| quiet, run 1 | 12244 pass / 56 skip / **0 fail** | 272.6 s |
+| quiet, run 2 | 12244 pass / 56 skip / **0 fail** | 270.1 s |
+| **loaded** — 6 hogs on 4 CPUs, load avg **6.03** | 12241 pass / 56 skip / **3 fail** | **555.8 s** (2.05×) |
+
+The load was deliberately two kinds: four CPU spinners (= `nproc`) **and two
+process-churn loops**, because this bean's second half is about `execFileSync`
+queuing behind process CREATION and a pure CPU hog does not exercise that.
+
+**Two green quiet runs are worth almost nothing here** — that is this box's whole
+point, and the loaded run proves it: the same tree that passed twice failed three
+tests when the machine was busy.
+
+### The two named tests STOP APPEARING — under the load that broke three others
+
+| test | before | quiet now | **loaded now** |
+|---|---|---|---|
+| `…NO round-trip verdict` | **5031 ms** (timeout) | 178.2 ms | **360.0 ms** |
+| `a paper-only criterion is n/a'd…` | 5170 / **12314 ms** | <50 ms | **0.2 ms** |
+| `a folio whose config cannot be read…` | **5047 ms** | <50 ms | **0.1 ms** |
+
+Neither named file appears among the failures. `Done when` 4's primary clause is
+met, and met under the discriminating condition rather than in a quiet run.
+
+### A CORRECTION TO MY OWN CLAIM, and it was load-bearing
+
+I wrote that the surviving 178 ms test *"would still cross 5000 ms under a 28–41×
+inflation."* **Measured: it inflates 2.0×**, to 360 ms — a factor of 14 below the
+budget, under a load that timed out three other tests.
+
+**The 28–41× was never an inflation FACTOR.** It was the ratio of the observed
+PRE-fix timeout to the POST-fix quiet runtime — two different populations. Before
+the memoisation `buildReport` made ~6 `git` spawns; now it makes far fewer, and
+spawns are precisely what degrades under load. So the ratio cannot be carried
+across the fix that changed the spawn count, and I carried it. Retracted.
+
+### THREE new files appear, and per this box the count goes HERE — but they are NOT one cause
+
+    activity-log.test.ts   no node mentions the log directory                   5211 ms
+    kg-export.test.ts      nothing published still names the retired `kg/` dir   5009 ms
+    kg-export.test.ts      and the other instance's CONTENT…                    6215 ms
+
+Same signature as the originals — 5000 ms plus a small remainder (5211, 5009,
+6215, against the original 5031 / 5047 / 5170). But the causes differ, and that
+is the finding:
+
+- `activity-log.test.ts` contains **zero** `execFileSync`/`spawnSync`/`Bun.spawn`.
+  Its failing test calls `await buildExport()` — a full KG export — **inside the
+  test body**. That is `vxho`'s I/O shape, not this bean's spawn shape.
+- `kg-export.test.ts` has 2 spawns, one of them `git rev-parse HEAD`.
+
+**So "a 5000 ms timeout under load" is at least two phenomena, and treating them
+as one is what made the ~35× look like a single thing to fix.**
+
+### The corpus already contains the answer for the case that MUST spawn
+
+The three slowest tests under load did **not** fail: **22158 ms**, 18914 ms,
+12576 ms. The first is
+`declared-directory-resolves.test.ts` — *"each one resolves `library` in a FRESH
+process"* — and it survives because its budget is **DERIVED from the module count
+(600 ms/module)**, not written as a number. Its own docblock states this bean's
+failure mode better than this bean did:
+
+> Bun's default test timeout is **5 s**, so this test has been over budget for as
+> long as the corpus has been this size and passed only where the machine was fast
+> enough — which is the worst failure mode available: green on CI, red on a
+> contributor's laptop, and nothing saying which.
+
+That answers `## What a fix is NOT` precisely. Its objection to a raised timeout
+is that *"a bigger number buys months and decays as the repo grows"* — and a
+**derived** budget is the one form that does not decay, because it grows with the
+population it measures. A derived budget is not a raised number.
+
+### The three remedies, now distinguishable
+
+| cause | remedy | precedent in this repo |
+|---|---|---|
+| spawns it does not need | eliminate them | `gitFileCommitSha` memoisation, this bean |
+| spawns it genuinely needs | derive the budget from the population | `declared-directory-resolves.test.ts` |
+| expensive shared work in a test body | hoist to module scope | `profile-scoping.test.ts`, `vxho` |
+
+`## What a fix is NOT` rules out per-file hoisting **"505 times"** — as a
+programme, not as a targeted fix. Two of the three above are not hoisting at all.
+
+### What this does NOT establish
+
+The load here is hogs I started on a 4-CPU container. CI's contention is other
+jobs on a runner, which I cannot reproduce. So "3 fail under this load" is a
+demonstration that the class is live, **not** a prediction of CI's failure rate.
+
+- [x] MEASURED AFTER: the full suite run repeatedly on a loaded machine and the
+      pass rate reported — 2 quiet runs 0 fail, **1 loaded run 3 fail**, tables
+      above. The box's suspicion of a single green run was correct.
+- [x] the two named tests stop appearing — **confirmed under load**, 360.0 / 0.2 /
+      0.1 ms against budget 5000; and the THIRD-file count is recorded here rather
+      than in a new bean, as this box directs: **3 failures across 2 new files**.
+- [ ] **OWNER DECISION:** the three above are a DIFFERENT cause set. Pursue them
+      under this bean (its own instruction keeps the count here), open a bean per
+      cause now that the causes are distinguishable, or leave them recorded and
+      unworked? Not chosen here — it is a scope call, and the evidence for each
+      remedy is in the table above.
