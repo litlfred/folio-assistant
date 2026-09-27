@@ -67,24 +67,19 @@ regeneration writes before committing it.** Committing this churn stamps a
 main's — as though it were a fresh measurement. That is why the standing practice has
 been to discard rather than commit, and why option 4 is not merely a cop-out: it at
 least makes the discard deliberate.
-
-
 ## Independent confirmation from a SECOND container, 2026-09-27
-
 Measured on the session branch `claude/3x2o-remote-stub-banner` while
 establishing whether the tree-guard finding on PR #1437 was that branch's: a
 detached `git worktree` of pristine `origin/main` at `81586293ea5`, full
 `bun test`, then `git status`. **72 paths, exactly the ones above**, with
 `bun-1.3.11` locally against the committed `bun-1.3.14`, and `script_hash`
 unchanged throughout.
-
 Recorded only as evidence that the shape is not container-local. The reading
 that went with it -- that the fix had to be on the writer side rather than a
 pin -- is **superseded by the entry below**, which is later and has the part
 this measurement lacked: `saveQaScriptSidecar` already skips the write unless a
 substantive field changes, so `engine_version` was the whole cause and pinning
 it is the cause-level fix.
-
 ---
 
 ## 2026-09-27 — the CAUSE is pinned. Not closed, and the reason is precise.
@@ -301,6 +296,168 @@ Written without seeing the sections before it. Kept as written, with two correct
 
 ---
 
+## A second way the discard fails — and its own recommendation is RETRACTED
+
+Appended from `claude/brave-hypatia-r820sf`, 2026-09-27, after the pin above had
+landed as #1442. Status untouched: this is evidence, not a claim on the bean.
+
+**The recommendation this note originally carried was wrong, and it is left named
+rather than deleted.** It read: *"this strengthens remedies 2 and 3 over 4"* —
+stamp only on a real change, or move run provenance out of the committed file. Both
+were put to the owner from this branch before the pin was visible here, and the
+measurement above refutes them:
+
+- **Remedy 2 already exists.** `saveQaScriptSidecar`'s write-skip guard
+  (`qa-utils.ts:1769`) is exactly "stamp only on a real change" — read directly,
+  not taken on trust. It compares `source_file`, `script_hash`,
+  `script_commit_sha`, `deps_hash`, `engine_version` and `extra_inputs`, and
+  returns without writing when all agree.
+- **`last_run_at` and `last_run_sha` are PASSENGERS, never causes.** The guard
+  deliberately excludes them, and its own comment says so: *"Everything except the
+  two `last_run_*` fields is content-derived, so comparing on those alone is the
+  right test."* So moving them out of the committed file — remedy 3 — would change
+  nothing about the churn.
+- Moving `engine_version` out would be worse than a no-op: it is the one field the
+  guard needs in order to notice that a different engine produced the sidecar.
+
+So the pin is cause-level and the two remedies this branch argued for were
+symptom-level. The one fact I had that the bean did not — 86 committed sidecars, 72
+at `bun-1.3.14` and 14 at `bun-1.3.11` — also has a better explanation above than
+the one offered with it. I inferred *"the churn has been committed at least once
+before, partially"*; the sufficient explanation is that the write-skip guard
+compares `engine_version`, so the 14 already matching the local Bun are skipped and
+the 72 are not. **72 is the count not already at the local engine, not a blast
+radius.** My extra hypothesis was never needed and was not established.
+
+### What survives, because it is independent of the remedy
+
+Remedy 4 — *"always discarded locally"* — relies on the agent being able to SEE the
+churn at the moment it commits, and there is a timing window where it cannot:
+
+1. `bun run gates` is started in the BACKGROUND while other work continues.
+2. `git status --porcelain` is checked — clean, because the run has not reached the
+   writer yet.
+3. The run reaches `saveQaScriptSidecar` and rewrites the sidecars.
+4. `git add -A` sweeps them into a commit about something else.
+
+Measured here: 72 sidecars entered a commit about `check:anchor-names`, caught and
+amended before any push. What nearly hid it is the inspection idiom itself —
+
+    git status --porcelain | grep -v 'script-sidecars'
+
+— the filter that makes the churn tolerable day to day is the same filter that
+hides it at the moment it matters, and it is the pipeline remedy 4 invites. The
+same run was contaminated a second way: committing a file while gates was live made
+the detector report `bun run lint` as having "reverted" a path, attributing an
+agent's own commit to a gate.
+
+This is an argument for the pin reaching agent containers too — the open question
+in *"the version is a judgement"* above — rather than for either retracted remedy.
+While an agent container's Bun differs from `.bun-version`, step 2 keeps lying, and
+no amount of documenting the discard closes that window.
+
+
+## The local guard the owner chose — landed 2026-09-27 (`claude/brave-hypatia-r820sf`)
+
+Status untouched. The owner was given the residual question above — the pin cannot
+reach an agent container — with four options, and chose **keep `1.3.14`, add a local
+guard**: a check that says the running Bun differs from the pin, so an agent is told
+at session start instead of finding out in a diff.
+
+`bun run check:bun-runtime`, and a `## Bun runtime vs the pin` section in
+`session-start-coord-sweep.sh`. On this container it prints, derived from the corpus
+rather than quoted from this bean:
+
+    This container runs Bun 1.3.11; .bun-version pins 1.3.14.
+    bun test and bun run gates will rewrite 72 of 86 committed script sidecars here
+
+**It is deliberately NOT a gate**, and the reason is the one that made the churn
+worth fixing. `check:bun-pin` asks a question about the CORPUS — do the 22
+`setup-bun` sites agree with `.bun-version`? — which every checkout answers
+identically, so it is gateable. This asks about the ENVIRONMENT, and no commit can
+change the answer. A gate failing on a fact about the machine would go red in every
+agent container while every reviewer read it as a verdict on the diff: a second
+always-red signal, which is what #1442 existed to remove.
+
+Three states, `cannot-tell` exiting 2 rather than 0 — no pin, an unparseable pin, or
+no Bun to ask are all *unknown*, never *matched*.
+
+**One detail decided whether this worked at all.** A sidecar records
+`engine_version: "bun-1.3.14"` while `.bun-version` holds the bare `1.3.14`.
+Compared directly they never match, so a naive version would report every sidecar
+due for a rewrite in every container including a correctly-matched one — firing
+always, and therefore meaning nothing. That is the same shape as the
+`PinDef.tagPrefix` defect #1442 found in the pin machinery while using it, so the
+prefix is a named constant with its own test rather than an inline template.
+
+11 tests, each BUILDING the state rather than describing it, because this check's
+interesting states are unreachable by pointing it at this repository: in CI it always
+matches and in an agent container it always mismatches.
+
+### What this does and does not close
+
+It closes the window in remedy 4 that no `git status` could: the agent is told before
+step 1, not asked to notice between steps 2 and 4. It does **not** stop the churn —
+72 files still move on every sweep here — so `bun run gates` is still locally 'NOT
+clean' and the boxes above stay unticked. Repinning to `1.3.11` remains the option
+that would make both CI and agent containers clean; it was declined in favour of
+keeping the artefacts' own engine, and that is recorded rather than re-argued.
+
+
+## The local guard's CLAIM is retracted by #1452 — the guard is kept, reworded
+
+Appended from `claude/brave-hypatia-r820sf` after merging #1452. Status untouched.
+
+The section above records a guard added on the owner's choice of "keep the pin at
+1.3.14, add a local guard", because #1442's pin could not reach a container the
+repository does not control and the churn therefore persisted locally. **#1452
+removed `engine_version` from `saveQaScriptSidecar`'s write-skip comparison, which
+fixes the churn at the writer for every container — so the thing the guard was
+built to announce no longer happens, and its message was false the moment that
+merged.**
+
+Measured here rather than taken from #1452's commit message: sidecars clean, then
+`bun test cat-harness/scripts/tests/init-folio-qa.test.ts` — the sweep #1452 names
+as the trigger — then sidecars clean again. **0 rewritten, where this container had
+produced 72 an hour earlier.**
+
+### What was removed, in four places
+
+The false claim was printed in four, which is the argument for fixing all of them
+rather than the script alone: `check-bun-runtime.ts`'s message and module header,
+`bun-runtime.test.ts`'s assertions, the `SCRIPT_EXEMPTIONS` reason in `gates.ts`,
+and the `session-start-coord-sweep.sh` section comment. A retracted claim left
+standing in three of four is a claim the next reader still finds.
+
+Gone: *"72 of 86 script sidecars will be rewritten by any sweep here … discard
+them; do not commit them"*, and with it the `git checkout --` remedy and the
+warning about `git status | grep -v script-sidecars`. A test now asserts the old
+wording is ABSENT, so it cannot drift back.
+
+### What the guard says now, and why it is still worth running
+
+1. **You are not running the code that will judge your push.** `check:bun-pin`
+   asserts all 22 `setup-bun` sites install `.bun-version`, so CI runs exactly the
+   pin. A test passing at 1.3.11 can fail at 1.3.14 and the reverse. No commit
+   changes this, which is why it is not a gate.
+2. **A checker changed HERE stamps its sidecar with the older local engine.**
+   `engine_version` is now a record of the last CONTENT change's engine, so a real
+   content change on an older bun commits a stamp that goes backwards relative to
+   the 72 carrying CI's — `rmcf`'s downgrade concern and `#1430`'s `sfjo` rule.
+   Rare, because it needs a content change, and no longer an every-run event.
+
+The printed count is now named `stampedElsewhere` rather than `willRewrite`, in the
+type as well as the output, so it cannot be read as the churn prediction it used to
+be.
+
+### Retiring it entirely is the owner's call, and is NOT taken here
+
+The purpose the guard was asked for is discharged. Keeping it is a judgement that
+the two facts above earn a script, a test file, an exemption entry and a sweep
+section; deleting it is defensible and would be one commit. Left in place because
+the owner asked for a guard and it still reports something true, and flagged here
+rather than decided quietly.
+
 ---
 
 ## 2026-09-27 — the owner asked where this belongs. It is a SKILL, and now it is one.
@@ -387,4 +544,5 @@ made it.
 
 Not reopening: the boxes are closed on evidence I did not produce, which is
 `bean-coordination`'s rule working as intended.
+
 

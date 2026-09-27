@@ -11,7 +11,13 @@ nav_exclude: true
 
 `Process_MaterializeRemote` · strict · 10 step(s)
 
-One process, called wherever remote content is landed locally. The owner, 2026-09-20: "so if large remote collection, and no restrictions known in context, user can import/maertialize locally. size considerations apply. similar concept in bootstrapping harness... it is remtoe. content. bootstrape materelaiz cat-harness locally (or other harness)... similar, should share common subprocess." Two callers today and they are genuinely the same shape: sample-import.bpmn landing three items out of an ~0.7 TB catalogue, and bootstrap fetching a harness. upstream-pins.json is half of the second one's refresh and names itself neither. STRICT, and the five gates are why. Each is a decision a person makes and none is answerable from a file, so a gate that only warned would be a gate nobody fails — the xom7 shape, a workflow that failed all thirty times it ran with nothing in the repository saying so. The three states (referenced / materialized / unknown) and the five gates are schemas/materialization.ts in folio-assist-core. Nothing here restates them.
+One process, called wherever remote content is landed locally. The owner, 2026-09-20: "so if large remote collection, and no restrictions known in context, user can import/maertialize locally. size considerations apply. similar concept in bootstrapping harness... it is remtoe. content. bootstrape materelaiz cat-harness locally (or other harness)... similar, should share common subprocess."
+
+Two callers today and they are genuinely the same shape: sample-import.bpmn landing three items out of an ~0.7 TB catalogue, and bootstrap fetching a harness. upstream-pins.json is half of the second one's refresh and names itself neither.
+
+STRICT, and the five gates are why. Each is a decision a person makes and none is answerable from a file, so a gate that only warned would be a gate nobody fails — the xom7 shape, a workflow that failed all thirty times it ran with nothing in the repository saying so.
+
+The three states (referenced / materialized / unknown) and the five gates are schemas/materialization.ts in folio-assist-core. Nothing here restates them.
 
 <img src="../assets/img/workflows/materialize-remote.svg" alt="BPMN diagram: Materialize remote content — the shared subprocess" style="max-width:100%">
 

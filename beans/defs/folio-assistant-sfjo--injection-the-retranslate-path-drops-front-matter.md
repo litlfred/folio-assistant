@@ -1,12 +1,12 @@
 ---
 # folio-assistant-sfjo
 title: 'INJECTION: the retranslate path DROPS front-matter keys — 5 locales lost `description:`, and `ar` lost `dir: rtl`'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 parent: folio-assistant-bzyu
 created_at: 2026-09-26T19:43:43Z
-updated_at: 2026-09-26T19:43:43Z
+updated_at: 2026-09-27T08:20:47Z
 ---
 
 Found 2026-09-26 by bisecting `docs:auto:check` red on main.
@@ -151,3 +151,5 @@ those. `nytj` — the merged state neither party evaluates.
 
 **Verifying a generated artefact on the branch tip is not verifying it.** Merge
 main first, then regenerate, then check.
+
+_2026-09-27T08:20:47Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

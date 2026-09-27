@@ -76,7 +76,7 @@
       <bpmn:outgoing>Flow_02</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:userTask id="Task_FramePico" name="Frame the question as PICO&#10;[content-author]">
-      <bpmn:documentation>Population, Intervention, Comparator, Outcome. The PICO is what makes the search reproducible and the evidence auditable: without it, &#x27;we looked for evidence&#x27; is not a claim anyone can check. WHO guideline development states the question this way before any retrieval.</bpmn:documentation>
+      <bpmn:documentation>Population, Intervention, Comparator, Outcome. The PICO is what makes the search reproducible and the evidence auditable: without it, 'we looked for evidence' is not a claim anyone can check. WHO guideline development states the question this way before any retrieval.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="content-author" />
       </bpmn:extensionElements>
@@ -90,7 +90,7 @@
       <bpmn:outgoing>Flow_06</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:serviceTask id="Task_L1Sources" name="Search trusted SOURCES — L1&#10;[document-intake]">
-      <bpmn:documentation>Ingested primary literature under library/: the sections/*.md tree and, where a document was scanned, ocr/page-NNN.txt. NOTE the known blind spot — a document OCR&#x27;d but never re-run through pdf-structure.py has only a stub in sections/, so a sections-only search misses it.</bpmn:documentation>
+      <bpmn:documentation>Ingested primary literature under library/: the sections/*.md tree and, where a document was scanned, ocr/page-NNN.txt. NOTE the known blind spot — a document OCR'd but never re-run through pdf-structure.py has only a stub in sections/, so a sections-only search misses it.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="document-intake" />
       </bpmn:extensionElements>
@@ -130,7 +130,7 @@ a plausible-looking wrong answer. Left uncovered until the skill is written.</bp
       <bpmn:outgoing>Flow_10</bpmn:outgoing>
     </bpmn:parallelGateway>
     <bpmn:serviceTask id="Task_VerifyAuthority" name="Verify authority against the observatory / registry API">
-      <bpmn:documentation>Each candidate is resolved against the standard API of the body that publishes it, so that &#x27;authoritative&#x27; is a RESOLVED FACT rather than an assertion in the citation. What is checked: that the identifier resolves at the publisher; that the retrieved record matches what the citation claims; that the version and date are the ones cited; and that the publisher is one this folio has declared trusted. STRAWPERSON: the concrete registry list and endpoints are not settled here -- see the cat-harness.processes:policy note.</bpmn:documentation>
+      <bpmn:documentation>Each candidate is resolved against the standard API of the body that publishes it, so that 'authoritative' is a RESOLVED FACT rather than an assertion in the citation. What is checked: that the identifier resolves at the publisher; that the retrieved record matches what the citation claims; that the version and date are the ones cited; and that the publisher is one this folio has declared trusted. STRAWPERSON: the concrete registry list and endpoints are not settled here -- see the cat-harness.processes:policy note.</bpmn:documentation>
       <bpmn:extensionElements>
         <cat-harness.processes:policy enforcement="strict" />
       </bpmn:extensionElements>

@@ -11,7 +11,11 @@ nav_exclude: true
 
 `Process_VoiceReview` · strict (defaulted) · 6 step(s)
 
-The voice axis: load whichever editorial voices are active, run each rule's mechanical half, and decide — for each finding — whether the prose is wrong, the rule does not apply to this content, or this block is a stated exception. You are in this process after the base voice has been adjudicated, and only if a voice is active at all: the first gateway ends the process honestly when none is, rather than reporting a clean review of nothing. Three outcomes, all legitimate, and the third is the one that needs recording: an exception without a reviewer entry is indistinguishable from a rule nobody ran. There is also a fourth path the diagram draws deliberately — if the rule's own citation does not support it, the RULE is the defect, and that becomes a bean rather than a finding against the prose.
+The voice axis: load whichever editorial voices are active, run each rule's mechanical half, and decide — for each finding — whether the prose is wrong, the rule does not apply to this content, or this block is a stated exception.
+
+You are in this process after the base voice has been adjudicated, and only if a voice is active at all: the first gateway ends the process honestly when none is, rather than reporting a clean review of nothing.
+
+Three outcomes, all legitimate, and the third is the one that needs recording: an exception without a reviewer entry is indistinguishable from a rule nobody ran. There is also a fourth path the diagram draws deliberately — if the rule's own citation does not support it, the RULE is the defect, and that becomes a bean rather than a finding against the prose.
 
 <img src="../assets/img/workflows/voice-review.svg" alt="BPMN diagram: Voice overlay review" style="max-width:100%">
 

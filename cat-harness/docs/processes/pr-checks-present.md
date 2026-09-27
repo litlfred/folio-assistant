@@ -11,7 +11,15 @@ nav_exclude: true
 
 `Process_PrChecksPresent` · strict · 5 step(s)
 
-A PULL REQUEST WITH ZERO CHECKS IS INVISIBLE PRECISELY BECAUSE NOBODY IS LOOKING. Bean `3pqn`. `check:head-has-run` answers this for one commit when somebody remembers to ask; this is the half that asks when nobody does, which is the only placement that addresses the defect rather than the symptom.&#10;&#10;MEASURED 2026-09-20 over the six open pull requests here: TWO had no run of any kind on their head, both updated minutes earlier. A third of the open set, with nothing to merge on.&#10;&#10;THE 15-MINUTE AGE GATE IS THE DIFFERENCE BETWEEN USEFUL AND IGNORED. A head pushed thirty seconds ago legitimately has no run yet, and a sweep that reports those is one nobody reads &#8212; this bean's own failure, reproduced by its fix. A younger head is NOT JUDGED rather than called clean, which is the third state again.&#10;&#10;ONLY `unknown` FAILS THE JOB. A finding records itself and the workflow stays GREEN, the same inversion as `ci-health`: the repository speaks through the tracking issue, while a sweep that could not look turns red. And a sweep blind on one pull request has not cleared the others, so ONE unreadable answer makes the whole run unknown &#8212; never a partial clean.&#10;&#10;TWO CHANNELS, ON THE OWNER'S INSTRUCTION, AND THEY BEHAVE DIFFERENTLY. The tracking issue is EDITED IN PLACE, never appended to. The per-PR comment is posted ONCE PER (PULL REQUEST, HEAD SHA), keyed by a marker in the body: hourly comments without that key would put twenty-four notifications a day on one unchanged pull request, which is how a warning gets muted.
+A PULL REQUEST WITH ZERO CHECKS IS INVISIBLE PRECISELY BECAUSE NOBODY IS LOOKING. Bean `3pqn`. `check:head-has-run` answers this for one commit when somebody remembers to ask; this is the half that asks when nobody does, which is the only placement that addresses the defect rather than the symptom.
+
+MEASURED 2026-09-20 over the six open pull requests here: TWO had no run of any kind on their head, both updated minutes earlier. A third of the open set, with nothing to merge on.
+
+THE 15-MINUTE AGE GATE IS THE DIFFERENCE BETWEEN USEFUL AND IGNORED. A head pushed thirty seconds ago legitimately has no run yet, and a sweep that reports those is one nobody reads — this bean's own failure, reproduced by its fix. A younger head is NOT JUDGED rather than called clean, which is the third state again.
+
+ONLY `unknown` FAILS THE JOB. A finding records itself and the workflow stays GREEN, the same inversion as `ci-health`: the repository speaks through the tracking issue, while a sweep that could not look turns red. And a sweep blind on one pull request has not cleared the others, so ONE unreadable answer makes the whole run unknown — never a partial clean.
+
+TWO CHANNELS, ON THE OWNER'S INSTRUCTION, AND THEY BEHAVE DIFFERENTLY. The tracking issue is EDITED IN PLACE, never appended to. The per-PR comment is posted ONCE PER (PULL REQUEST, HEAD SHA), keyed by a marker in the body: hourly comments without that key would put twenty-four notifications a day on one unchanged pull request, which is how a warning gets muted.
 
 <img src="../assets/img/workflows/pr-checks-present.svg" alt="BPMN diagram: Which open pull requests have no CI run on their head?" style="max-width:100%">
 
