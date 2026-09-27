@@ -37,6 +37,8 @@ import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from "
 import { join, relative } from "node:path";
 
 import { extractMarkdown } from "./pot-extract.ts";
+import { directoryForGraph } from "../../schemas/cat-harness.ts";
+import { siteRoot } from "./translation-index.ts";
 
 /** Locale directories, which are never a source page. */
 const LOCALE_DIR_RE = /(^|\/)(ar|es|fr|ru|zh)(\/|$)/;
@@ -131,11 +133,17 @@ export function resolveSource(
   root: string,
   ref: string,
 ): { path: string } | { unresolved: "source-absent" | "ambiguous" } {
-  for (const cand of [join(root, ref), join(root, "docs", ref)]) {
+  // `siteRoot` rather than a `docs` literal, for the reason `derive-po.ts` gives
+  // at its own call site: two directories in this instance declare that path, and
+  // `siteRoot` CONFIRMS a site by finding `_config.yml` rather than trusting the
+  // name. The `site-dir-single-answer` gate exists because a hardcoded "docs"
+  // silently stops being the site root the moment the declaration moves — and it
+  // caught this file on its first push.
+  const docs = siteRoot(root);
+  if (docs === undefined) return { unresolved: "source-absent" };
+  for (const cand of [join(root, ref), join(docs, ref)]) {
     if (existsSync(cand) && statSync(cand).isFile()) return { path: cand };
   }
-  const docs = join(root, "docs");
-  if (!existsSync(docs)) return { unresolved: "source-absent" };
   const hits = walk(docs, (f) => f.endsWith(".md")).filter(
     (c) => !LOCALE_DIR_RE.test(relative(docs, c)) && c.endsWith(`/${ref}`),
   );
@@ -144,9 +152,19 @@ export function resolveSource(
 }
 
 /** Classify and measure every committed catalogue under `translations/`. */
-export function survey(root: string): Catalogue[] {
-  const dir = join(root, "translations");
-  if (!existsSync(dir)) return [];
+export function survey(root: string, opts: { translationsDir?: string } = {}): Catalogue[] {
+  // The declaration, not the name. `translations/` is the `translation-sources`
+  // graph, and `directoryForGraph` resolves it — and THROWS if more than one
+  // directory declares the kind rather than picking the first, which is bean
+  // `wggr`: resolving `cat-harness` to `schemas/` silently wrote 37 sidecars
+  // against the wrong subjects on a run that exited 0.
+  //
+  // `opts.translationsDir` is what the tests pass, following `derive-po.ts`'s
+  // `opts.docsDir` for the same reason: a temp-dir fixture carries no instance
+  // declaration, so resolving through it there would test the declaration
+  // machinery rather than this module's classification.
+  const dir = opts.translationsDir ?? directoryForGraph(root, "translation-sources");
+  if (dir === undefined || !existsSync(dir)) return [];
   const out: Catalogue[] = [];
   for (const po of walk(dir, (f) => f.endsWith(".po")).sort()) {
     const text = readFileSync(po, "utf8");

@@ -11,6 +11,7 @@ import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 
+import { SITE_DIR } from "./translation-index.ts";
 import {
   activeMsgids,
   declaredSources,
@@ -124,8 +125,13 @@ describe("declaredSources", () => {
 /** A throwaway instance: `docs/` plus whichever catalogues are given. */
 function fixture(pages: Record<string, string>, cats: Record<string, string>): { root: string; cleanup: () => void } {
   const root = mkdtempSync(join(tmpdir(), "obsolete-po-"));
+  // `siteRoot` CONFIRMS a site by finding `_config.yml` rather than trusting the
+  // directory name, so the fixture carries one — which is the point: a tree that
+  // merely looks like a site is reported as no site at all.
+  mkdirSync(join(root, SITE_DIR), { recursive: true });
+  writeFileSync(join(root, SITE_DIR, "_config.yml"), "title: fixture\n");
   for (const [rel, text] of Object.entries(pages)) {
-    const abs = join(root, "docs", rel);
+    const abs = join(root, SITE_DIR, rel);
     mkdirSync(abs.slice(0, abs.lastIndexOf("/")), { recursive: true });
     writeFileSync(abs, text);
   }
@@ -177,7 +183,7 @@ describe("survey classifies rather than counting zero", () => {
       { "p.md": "# A heading here\n" },
       { "ar/ui.po": '#: scripts/ui-strings.ts:4\nmsgid "Save"\nmsgstr "حفظ"\n' },
     );
-    const rows = survey(root);
+    const rows = survey(root, { translationsDir: join(root, "translations") });
     expect(rows).toHaveLength(1);
     expect(rows[0].source).toBe("other-sourced");
     expect(isUnresolved(rows[0].source)).toBe(true);
@@ -187,7 +193,7 @@ describe("survey classifies rather than counting zero", () => {
 
   it("marks a catalogue that declares no source at all", () => {
     const { root, cleanup } = fixture({ "p.md": "# A heading here\n" }, { "ar/bare.po": 'msgid "Save"\nmsgstr "حفظ"\n' });
-    expect(survey(root)[0].source).toBe("undeclared");
+    expect(survey(root, { translationsDir: join(root, "translations") })[0].source).toBe("undeclared");
     cleanup();
   });
 
@@ -207,8 +213,8 @@ describe("survey classifies rather than counting zero", () => {
         ].join("\n"),
       },
     );
-    const rows = survey(root);
-    expect(rows[0].source).toBe("docs/guides/p.md");
+    const rows = survey(root, { translationsDir: join(root, "translations") });
+    expect(rows[0].source).toBe(`${SITE_DIR}/guides/p.md`);
     expect(rows[0].stale).toEqual(["a fragment no longer present"]);
     expect(rows[0].live).toBe(1);
     cleanup();
