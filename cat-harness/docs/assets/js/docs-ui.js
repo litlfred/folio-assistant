@@ -4502,46 +4502,17 @@
   }
 
   /**
-   * Where the handle lives: IN THE LEFT NAVBAR. Owner, 2026-09-24: *"folio
-   * handle on LHS on navbar"*.
+   * Where the handle lives: FIXED AT THE TOP CENTRE of the viewport, as a
+   * short pill. Owner, 2026-09-27: *"i want purple folio button, not on
+   * navbar but at top middle of display screen. not so tall"*.
    *
-   * Fixed at the top centre, it sat over whatever a page put there: a
-   * viewer's h1 (bean `015u`) and a replica's INGESTED COPY banner (bean
-   * `269z`). Each fix moved the PAGE or the handle around the other; this
-   * gives the handle a place of its own, in the navigation every page
-   * already has.
-   *
-   *  - the harness rail (`.fa-nav`, standalone viewers and mounted pages):
-   *    at the top, right under the ☰ head;
-   *  - the theme's sidebar (`.side-bar`, just-the-docs pages): under its
-   *    icon row, or under the site header when the page has no row.
-   *
-   * A page with NEITHER keeps the old place, fixed at the top centre, so the
-   * glass is never unreachable. `fa-glass-handle--in-nav` is the only
-   * difference in styling, and it is set here, where the decision is made.
+   * This reverses the 2026-09-24 placement in the left navbar (bean `269z`),
+   * which rendered as a tall purple block with only a ▾ in the strip. The
+   * overlap that placement was solving (a viewer's h1, `015u`; a replica's
+   * banner, `269z`) is answered by HEIGHT instead: the pill is about 1.75rem
+   * tall, and viewers still reserve its band in `docs-ui.css`.
    */
   function placeHandle(handle) {
-    var railTop = document.querySelector(".fa-nav .fa-nav-top");
-    if (railTop) {
-      var head = railTop.querySelector(".fa-nav-head");
-      handle.classList.add("fa-glass-handle--in-nav");
-      if (head) head.insertAdjacentElement("afterend", handle);
-      else railTop.insertBefore(handle, railTop.firstChild);
-      return;
-    }
-    // In the theme's sidebar, AFTER the icon row when there is one. The ☰ is
-    // painted absolutely at a fixed offset, and the icon row is the element
-    // built to clear it; right after the header, the handle's position
-    // depended on the header's height and could land on the ☰ and take its
-    // clicks (measured in `navbar-row.e2e`). The row is mounted before the
-    // glass (`mountNavIconRow` runs first in `init`).
-    var sideRow = document.querySelector(".side-bar > .fa-nav-icons");
-    var siteHeader = document.querySelector(".side-bar > .site-header");
-    if (sideRow || siteHeader) {
-      handle.classList.add("fa-glass-handle--in-nav");
-      (sideRow || siteHeader).insertAdjacentElement("afterend", handle);
-      return;
-    }
     document.body.appendChild(handle);
   }
 
@@ -4587,9 +4558,8 @@
       "aria-label": "Pull down your folio",
       title: "Pull down your folio",
     });
-    // A MARK and a LABEL, not one string: in a navbar strip at rest only
-    // marks show (the owner's "only icons/avatars so compat"), so the label
-    // must be separable from the ▾. The accessible name is the aria-label.
+    // A MARK and a LABEL, not one string, so the stylesheet can size the ▾
+    // apart from the word. The accessible name is the aria-label.
     handle.appendChild(el("span", { class: "fa-glass-handle__mark", "aria-hidden": "true" }, "▾"));
     handle.appendChild(document.createTextNode(" "));
     handle.appendChild(el("span", { class: "fa-glass-handle__label" }, "Folio"));

@@ -893,8 +893,7 @@
   .side-bar .fa-nav-group > summary,
   .side-bar .fa-nav-label,
   .side-bar .fa-nav-kids,
-  .side-bar .fa-nav-home__label,
-  .side-bar .fa-glass-handle__label {
+  .side-bar .fa-nav-home__label {
     opacity: var(--fa-nav-text, 1);
     transition: opacity .12s ease;
   }
@@ -1043,14 +1042,6 @@
     width: var(--fa-nav-collapsed);
     flex-wrap: wrap;
     padding-top: var(--fa-nav-head-clear, 2rem);
-  }
-  /* THE FOLIO HANDLE, when a page has no icon row, sits right after the
-   * header (owner, 2026-09-24: "folio handle on LHS on navbar"), and then IT
-   * must clear the absolutely-placed ☰, as the row would have. With a row,
-   * `docs-ui.js` puts the handle after it and the row keeps clearing the ☰.
-   * One custom property, so the two can never clear different heights. */
-  .side-bar > .site-header + .fa-glass-handle.fa-glass-handle--in-nav {
-    margin-top: var(--fa-nav-head-clear, 2rem);
   }
   .side-bar:hover > .fa-nav-icons,
   .side-bar:focus-within > .fa-nav-icons,
@@ -4014,11 +4005,17 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
      more now. That floor is a minimum, not a target, and this instance's
      profile is low-dexterity — a control a reader is meant to find without
      looking for it should be bigger than the rule requires. */
-  min-height: 3.25rem;
-  padding: 0 1.6rem;
+  /* NOT SO TALL — owner, 2026-09-27: "top middle of display screen. not so
+     tall". A short pill: 1.75rem clears SC 2.5.8's 24px floor, and the
+     1.2rem-wide padding keeps the target wide for a low-dexterity reader.
+     The height is what used to cover a viewer's h1 (`015u`) and a replica's
+     banner (`269z`); halving it is what lets the handle sit here again. */
+  min-height: 1.75rem;
+  padding: 0 1.2rem;
+  line-height: 1;
   border: 2px solid #8c74f0;
   border-top: 0;
-  border-radius: var(--fa-folio-radius, 0);
+  border-radius: 0 0 0.75rem 0.75rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   /* A shadow, because the handle overhangs content rather than sitting in a
@@ -4034,7 +4031,8 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
      being body-level is what makes it certain rather than likely.
      12.46:1 on the dark chrome, computed rather than eyeballed. */
   color: #ffffff;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
   cursor: pointer;
 }
 
@@ -4063,36 +4061,6 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
   outline-offset: 2px;
 }
 
-/* IN THE LEFT NAVBAR — owner, 2026-09-24: "folio handle on LHS on navbar".
- * `docs-ui.js` (`placeHandle`) puts the handle in the harness rail or the
- * theme's sidebar and adds this class. It keeps its fill, border and weight,
- * so it is still the one control on the page that is not page ("pronounced").
- * What it drops is the overhang: it is an item in the navigation's flow, so it
- * covers nothing. It stays above an open glass (z-index) so the control that
- * opened the glass can always close it. */
-.fa-glass-handle.fa-glass-handle--in-nav {
-  position: relative;
-  top: auto;
-  left: auto;
-  transform: none;
-  display: block;
-  /* Both navbars rest as a 3.5rem strip (`NAV_COLLAPSED_PX`, and the
-     theme's sidebar strip). Sized to the strip, the handle is whole at rest
-     rather than a sliver of a wider button, and at this width the label
-     stacks as "▾" over "Folio". */
-  width: 3rem;
-  margin: 0.25rem;
-  min-height: 2.75rem;
-  padding: 0.2rem 0.1rem;
-  border: 2px solid #8c74f0;
-  border-radius: 8px;
-  box-shadow: none;
-  font-size: 0.72rem;
-  line-height: 1.15;
-  white-space: normal;
-  text-align: center;
-}
-
 /* RESERVE THE HANDLE'S BAND on the harness's own standalone viewers — bean
  * `015u`.
  *
@@ -4114,10 +4082,10 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
  * The replica's banner is still under the handle. Whether that is acceptable
  * is the owner's call against `jpjt`, not this rule's to settle.
  *
- * 3.5rem clears the handle at both of its heights (3.25rem min, 46 px under
- * the phone rule) with a few pixels of air. */
+ * 2.25rem clears the 1.75rem pill (owner, 2026-09-27: "not so tall") with a
+ * few pixels of air. */
 html:has(style[data-folio-narrow-viewport]) body:has(> .fa-glass-handle) {
-  padding-top: 3.5rem;
+  padding-top: 2.25rem;
 }
 
 /* A pinned sticky sits OVER page content, so it must be opaque — and which
