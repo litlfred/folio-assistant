@@ -755,14 +755,14 @@
     {
       "id": "folio-assistant-46l0",
       "title": "The same commit fails DIFFERENTLY in three environments, so a green run cannot be read as a green tree",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T06:33:48Z",
-      "updatedAt": "2026-09-26T06:33:48Z",
+      "updatedAt": "2026-09-27T09:45:54Z",
       "preview": "Measured 2026-09-26 on ONE commit, `3c2523a8071`, three ways:\n\n| where | `bun test` failures |\n|---|---|\n| GitHub Actions | **7** |\n| a clean `git worktree` of that exact sha, full suite | **8** |\n| the two disagreeing files, run alone | **0** |\n\nThe sets are not nested. CI had two the worktree did not (`this repository's own\ncorpus`, `the real corpus`); the worktree had three CI did not (`FOLIO_R",
       "file": "beans/defs/folio-assistant-46l0--the-same-commit-fails-differently-in-three-environ.md"
     },

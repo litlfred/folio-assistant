@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/docs-ui.css?v=1790501305">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/docs-ui.css?v=1790502983">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/narrow-viewport.css?v=1790501305">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/narrow-viewport.css?v=1790502983">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/work-plan.css?v=1790501305">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/work-plan.css?v=1790502983">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/themes.css?v=1790501305">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/themes.css?v=1790502983">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/uml.css?v=1790501305">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/uml.css?v=1790502983">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/avatars.css?v=1790501305">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/css/avatars.css?v=1790502983">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/docs-ui.js?v=1790501305" defer></script>
+<script src="/folio-assistant/STAGING/claude-brave-hypatia-r820sf/assets/js/docs-ui.js?v=1790502983" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1026,6 +1026,88 @@ dispatch-only repo it is evidence of the opposite.</p>
   <li><strong>Stop here</strong> unless a PR / merge was explicitly requested. If a PR <em>was</em>
 requested, see below.</li>
 </ol>
+<h2 id="what-a-green-local-run-entitles-you-to-claim">
+  
+  
+    <a href="#what-a-green-local-run-entitles-you-to-claim" class="anchor-heading" aria-labelledby="what-a-green-local-run-entitles-you-to-claim"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a green LOCAL run entitles you to claim
+  
+  
+</h2>
+    
+
+<p>Bean <code class="language-plaintext highlighter-rouge">46l0</code>. The same commit, <code class="language-plaintext highlighter-rouge">3c2523a8071</code>, measured three ways on 2026-09-26:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>where</th>
+      <th><code class="language-plaintext highlighter-rouge">bun test</code> failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GitHub Actions</td>
+      <td><strong>7</strong></td>
+    </tr>
+    <tr>
+      <td>a clean <code class="language-plaintext highlighter-rouge">git worktree</code> of that exact sha, full suite</td>
+      <td><strong>8</strong></td>
+    </tr>
+    <tr>
+      <td>the two disagreeing files, run alone</td>
+      <td><strong>0</strong></td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><strong>The sets were not nested.</strong> CI had two the worktree did not; the worktree had
+three CI did not. So a green local run is not a weaker version of a green CI run
+— it is a different measurement, and either can be the one that is wrong.</p>
+
+<p>What it entitles you to say, exactly:</p>
+
+<blockquote>
+  <p><em>The gates I ran passed, on the tree I ran them on, in this environment.</em></p>
+</blockquote>
+
+<p>And what it does <strong>not</strong> entitle, each with what it costs:</p>
+
+<ul>
+  <li><strong>“CI will pass.”</strong> CI tests <code class="language-plaintext highlighter-rouge">refs/pull/N/merge</code>, not your head — a tree
+neither parent holds. A staleness that exists only in the merge tree cannot be
+seen from any checkout, however pristine (bean <code class="language-plaintext highlighter-rouge">1xhc</code>).</li>
+  <li><strong>“The gate set passed.”</strong> Only if you ran the gate set. A subset chosen by
+hand is chosen from memory: 2026-09-27, <code class="language-plaintext highlighter-rouge">tsc</code>, <code class="language-plaintext highlighter-rouge">eslint</code> and a dozen named
+<code class="language-plaintext highlighter-rouge">check:*</code> scripts all passed and CI went red twice — first on
+<code class="language-plaintext highlighter-rouge">check:partition</code> (a new script must be classified in
+<code class="language-plaintext highlighter-rouge">scripts/partition/instance-rules.ts</code>), then on <code class="language-plaintext highlighter-rouge">no check script is unrun</code> (a
+new <code class="language-plaintext highlighter-rouge">check:*</code> needs a <code class="language-plaintext highlighter-rouge">SCRIPT_EXEMPTIONS</code> entry when no workflow runs it).
+Neither is visible to any of the three. <code class="language-plaintext highlighter-rouge">bun run gates</code> derives its list from
+the workflow, which is why it cannot drift from what CI runs.</li>
+  <li><strong>“Nothing is failing, so nothing is wrong.”</strong> A <em>conflicted</em> head produces no
+merge ref, so <code class="language-plaintext highlighter-rouge">pull_request</code> workflows never fire and the PR shows <strong>zero</strong>
+check runs — measured the same day. That reads as untested, not as red, and
+the two look identical if you only glance at the absence of a red mark.</li>
+  <li><strong>“It passed in isolation, so the failure is not mine.”</strong> Running the file
+alone removes the only condition under which it failed. <code class="language-plaintext highlighter-rouge">9v4m</code> is that shape,
+and <code class="language-plaintext highlighter-rouge">sff8</code> measured a case of it: four tests at 77-82 % of a 5 s budget, which
+ordinary jitter crossed only under load.</li>
+</ul>
+
+<p><strong>Your environment is part of the claim, and it can now be checked.</strong> Re-measured
+2026-09-27 at a much later commit: CI <strong>0</strong> failures, normal checkout <strong>0</strong>,
+detached worktree at the same sha with real dependencies <strong>0</strong> — 12231 pass, 56
+skip. The 2026-09-26 divergence does not reproduce, so this section is not a
+standing warning about those five tests; it is about the inference.</p>
+
+<p>The one failure that <em>did</em> appear in that worktree was caused by the measurement
+itself: <code class="language-plaintext highlighter-rouge">node_modules</code> symlinked in, which <code class="language-plaintext highlighter-rouge">check:environment</code> named on sight —
+<em>“the root <code class="language-plaintext highlighter-rouge">node_modules</code> is a SYMLINK, so any tool that resolves a real path
+through it reports a location this repository does not contain”</em> (bean <code class="language-plaintext highlighter-rouge">qook</code>).
+<strong>Confirming the symlink is git-ignored is not enough</strong>: that addresses corpus
+scanning, and path resolution is a separate confound. Run <code class="language-plaintext highlighter-rouge">bun run
+check:environment</code> before trusting a run from any hand-built tree, and install
+dependencies rather than borrowing them.</p>
 <h2 id="a-clean-merge-can-produce-a-wrong-artefact-strict">
   
   
