@@ -1,11 +1,11 @@
 ---
 # folio-assistant-zru7
 title: 'ACCESSIBILITY: all 70 translated pages serve html lang=en-US; 56 are never corrected even at runtime'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-27T08:24:45Z
-updated_at: 2026-09-27T08:24:45Z
+updated_at: 2026-09-27T10:30:26Z
 parent: folio-assistant-bzyu
 ---
 
@@ -82,3 +82,5 @@ the whole docs site rather than part of the translation pipeline, and
   declared locale, so this cannot return silently
 - [ ] Settle whether `dir` belongs on `<html>` at build time as well as at
   runtime — `sfjo` established that `dir:` front matter currently reaches nothing
+
+_2026-09-27T10:30:26Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
