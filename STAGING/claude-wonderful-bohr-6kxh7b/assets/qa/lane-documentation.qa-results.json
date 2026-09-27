@@ -1,0 +1,35 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "cat-harness/scripts/check-lane-documentation.ts",
+    "script_hash": "d49634fc22ea"
+  },
+  "subject": {
+    "kind": "corpus",
+    "id": "bpmn-lanes"
+  },
+  "updated_at": "2026-09-24T05:43:41.676Z",
+  "families": {
+    "activity-outside-any-lane": {
+      "summary": "An activity in no lane. The containing-lane question cannot be asked about it, so it is reported as UNDETERMINED rather than counted as passing.",
+      "count": 0,
+      "entries": []
+    },
+    "lane-string-not-extracted": {
+      "summary": "A lane `name` or `<documentation>` the extractor does not produce a msgid for — so no translator could ever see it, in any locale. This asks about EXTRACTION, never about a translation existing: catalogues here ship with an empty `msgstr` awaiting a person, and gating on that would be a gate on somebody else's unfinished work. It asks `extractBpmn` rather than searching a `.pot`'s bytes, because gettext wraps a long msgid across quoted lines and escapes every `\"` — a substring search reported 13 correctly-extracted lanes as missing on 2026-09-21, and a false finding is worse than no check. WHETHER A TEMPLATE ON DISK CARRIES IT is a different question, owned by `translate-bpmn --check`; for the three `bootstrap/` diagrams that check does not scan, it is bean `j28g` and awaits a ruling.",
+      "count": 0,
+      "entries": []
+    },
+    "lane-without-name": {
+      "summary": "A lane containing an activity, with no usable `name`. The glossary term has no LABEL — a separate failure from having no definition, so a fix for one is not read as a fix for the other.",
+      "count": 0,
+      "entries": []
+    },
+    "undocumented-lane": {
+      "summary": "A lane containing at least one activity, carrying a `name` but no `<bpmn:documentation>`. A reader meeting the task cannot learn what the lane is, and the glossary has a label with no definition.",
+      "count": 0,
+      "entries": []
+    }
+  },
+  "total": 0
+}
