@@ -53,15 +53,23 @@ import { existsSync, statSync } from "fs";
 import { resolve, relative, dirname } from "path";
 import { fileURLToPath } from "url";
 
-// Stable anchor for path normalisation: repo root, computed from
-// this file's location (`content/pipeline/qa-sweep.ts` → repo root
-// is two levels up). Using `process.cwd()` instead would make the
-// emitted `.qa.json` paths sensitive to the directory from which
-// the sweep is invoked (sweep run from `content/` produced bare
-// paths, sweep run from repo root produced `content/...` paths —
-// noisy diffs in CI vs local). The repo-root anchor is invariant.
+// Stable anchor for path normalisation: the INSTANCE root, computed
+// from this file's location (`cat-harness/content/pipeline/qa-sweep.ts`
+// → `cat-harness/`, two levels up). Using `process.cwd()` instead
+// would make the emitted `.qa.json` paths sensitive to the directory
+// from which the sweep is invoked (sweep run from `content/` produced
+// bare paths, sweep run from the root produced `content/...` paths —
+// noisy diffs in CI vs local). An anchor tied to this file is invariant
+// under the invocation directory, which is the property wanted here.
+//
+// It was named `REPO_ROOT` and described as the repo root until
+// 2026-09-27, and both were true BEFORE the split moved this file under
+// `cat-harness/`: two levels up used to be the repository. The split
+// changed what it lands on and left the name behind — the `b963`
+// re-rooted-ascent shape — and `check:anchor-names` could not see it,
+// because its base alternation did not match `dirname(__filename)`.
 const __filename = fileURLToPath(import.meta.url);
-const REPO_ROOT = resolve(dirname(__filename), "..", "..");
+const INSTANCE_ROOT = resolve(dirname(__filename), "..", "..");
 
 import { GIT_SHA_UNKNOWN, applicabilityGap, computeCriterionScriptHashes, entryIsFresh, freshnessKeys, gitHeadSha, hashBlockFiles, loadQaReport, loadQaScriptSidecar, missingCompanionNote, preserveNonScriptEntries, sameScriptVerdict, saveQaReport, saveQaScriptSidecar, sweepActor, type CriterionScriptHashes, walkBlocks } from "./qa-utils.ts";
 import {
@@ -189,7 +197,7 @@ async function run(): Promise<void> {
   // split that file lives in another package and still has to be there. Bean
   // `zlmp` measured five such runtime edges; this drains one of them.
   const contributions = await loadContributions<FolioContribution, ContributionRegistry>(
-    REPO_ROOT,
+    INSTANCE_ROOT,
     new ContributionRegistry(),
   );
   const discovery = await discoverBlockCheckers(contributions);
@@ -197,7 +205,7 @@ async function run(): Promise<void> {
   const rootAbs = resolve(args.root);
   // Anchor for recorded block paths: the content repo that owns the
   // swept blocks (NOT this platform checkout — see findContentRepoRoot).
-  const contentRepoRoot = findContentRepoRoot(rootAbs, REPO_ROOT);
+  const contentRepoRoot = findContentRepoRoot(rootAbs, INSTANCE_ROOT);
   // The folio's declared content profile, read ONCE per run from the same
   // repo root the block paths are anchored to. `profile` is `undefined` when
   // the folio does not say — see the profile gate below for what that means
@@ -248,14 +256,14 @@ async function run(): Promise<void> {
   // sidecar, and — worst — the voice gate would see `{}` and a criterion naming
   // no voice always runs, so a WHO criterion would sweep a folio that never
   // adopted WHO style. Read once per run; the derivation is memoised anyway.
-  const criteriaById = qaCriteriaByIdFor(REPO_ROOT);
+  const criteriaById = qaCriteriaByIdFor(INSTANCE_ROOT);
 
   const criteriaSelected: string[] =
     args.only && args.only.length > 0
       ? args.only.filter((id) => criteriaById[id])
       : args.axis && args.axis.length > 0
         ? args.axis.flatMap((a) => WATCHER_CRITERIA_BY_AXIS[a] ?? [])
-        : qaCriteriaFor(REPO_ROOT).map((c) => c.id);
+        : qaCriteriaFor(INSTANCE_ROOT).map((c) => c.id);
 
   // VOICE GATE, applied ONCE here rather than per block, because the question is
   // a property of the folio and not of any block: which editorial registers did
@@ -303,7 +311,7 @@ async function run(): Promise<void> {
     // this repo's root would read the wrong bytes — or none — and a
     // `script_hash` that does not track its checker is a verdict that can
     // never go stale, which is the defect `source_file` exists to prevent.
-    const located = resolveCriterionSource(id, REPO_ROOT, contributions);
+    const located = resolveCriterionSource(id, INSTANCE_ROOT, contributions);
     if (isCriterionSourceMiss(located)) continue;
     scriptHashesByCriterion[id] = computeCriterionScriptHashes(
       id,
@@ -718,7 +726,7 @@ async function run(): Promise<void> {
       // one — measured 2026-09-18, a sweep in a 102-commit checkout
       // flattened 77 of 78 sidecars from nine distinct shas to the single
       // boundary sha. An older true answer beats a fresh false one.
-      const previous = loadQaScriptSidecar(id, REPO_ROOT);
+      const previous = loadQaScriptSidecar(id, INSTANCE_ROOT);
       const commitSha =
         hashes.script_commit_sha === GIT_SHA_UNKNOWN && previous?.script_commit_sha
           ? previous.script_commit_sha
@@ -739,10 +747,10 @@ async function run(): Promise<void> {
         // that verdict is about content at that commit). Stamping the
         // content SHA here recorded a foreign repo's commit as this repo's
         // "HEAD at last run".
-        last_run_sha: gitHeadSha(REPO_ROOT),
+        last_run_sha: gitHeadSha(INSTANCE_ROOT),
         engine_version: engineVersion,
       };
-      saveQaScriptSidecar(sidecar, REPO_ROOT);
+      saveQaScriptSidecar(sidecar, INSTANCE_ROOT);
     }
   }
 
