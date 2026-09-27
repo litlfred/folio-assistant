@@ -16,7 +16,7 @@
 </div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">FormalRefResolverAPI</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#refpattern">refPattern</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#refpatternmessage">refPatternMessage</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-call-signature" href="#listsourcefiles-1">listSourceFiles</a><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">repoRoot</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-call-signature" href="#resolve-1">resolve</a><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">ref</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <a href="schemas_formal-ref.FormalRefResolution.html" class="tsd-signature-type tsd-kind-interface">FormalRefResolution</a> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-call-signature" href="#resolvecanonical-1">resolveCanonical</a><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">(</span><br/>        <span class="tsd-kind-parameter">ref</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-kind-parameter">repoRoot</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-kind-parameter">cache</span><span class="tsd-signature-symbol">?:</span> <a href="../types/schemas_formal-ref.FormalTreeCache.html" class="tsd-signature-type tsd-kind-type-alias">FormalTreeCache</a><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-call-signature" href="#statementhash-1">statementHash</a><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">file</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4e6b926290c0dd0c5ce648eeefeaa79e2115a204/cat-harness/schemas/formal-ref.ts#L151">work/folio-assistant/folio-assistant/cat-harness/schemas/formal-ref.ts:151</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/5389038361734e09679cd7318f0c600839dcfa30/cat-harness/schemas/formal-ref.ts#L151">work/folio-assistant/folio-assistant/cat-harness/schemas/formal-ref.ts:151</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -50,14 +50,14 @@ can install itself, so a <code>z.string().regex(pattern)</code> freezes whatever
 could not take an injected pattern until it moved to <code>superRefine</code>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4e6b926290c0dd0c5ce648eeefeaa79e2115a204/cat-harness/schemas/formal-ref.ts#L185">work/folio-assistant/folio-assistant/cat-harness/schemas/formal-ref.ts:185</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/5389038361734e09679cd7318f0c600839dcfa30/cat-harness/schemas/formal-ref.ts#L185">work/folio-assistant/folio-assistant/cat-harness/schemas/formal-ref.ts:185</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="refpatternmessage"><code class="tsd-tag">Optional</code><span>ref<wbr/>Pattern<wbr/>Message</span><a href="#refpatternmessage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">refPatternMessage</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Failure message for <a href="#refpattern" class="tsd-kind-property">refPattern</a>, in the layer's own vocabulary.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4e6b926290c0dd0c5ce648eeefeaa79e2115a204/cat-harness/schemas/formal-ref.ts#L187">work/folio-assistant/folio-assistant/cat-harness/schemas/formal-ref.ts:187</a></li></ul></aside></section></section></details>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/5389038361734e09679cd7318f0c600839dcfa30/cat-harness/schemas/formal-ref.ts#L187">work/folio-assistant/folio-assistant/cat-harness/schemas/formal-ref.ts:187</a></li></ul></aside></section></section></details>
 <details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Methods"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
 <h2 class="tsd-anchor-link" id="methods-1">Methods<a href="#methods-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
 <section>
@@ -81,7 +81,7 @@ that from &quot;configured, and genuinely none&quot; asks
 <li><span><span class="tsd-kind-parameter">repoRoot</span>: <span class="tsd-signature-type">string</span></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4e6b926290c0dd0c5ce648eeefeaa79e2115a204/cat-harness/schemas/formal-ref.ts#L216">work/folio-assistant/folio-assistant/cat-harness/schemas/formal-ref.ts:216</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/5389038361734e09679cd7318f0c600839dcfa30/cat-harness/schemas/formal-ref.ts#L216">work/folio-assistant/folio-assistant/cat-harness/schemas/formal-ref.ts:216</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="resolve"><span>resolve</span><a href="#resolve" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -99,7 +99,7 @@ caller reporting a diagnostic needs to say which one it hit.</p>
 <li><span><span class="tsd-kind-parameter">ref</span>: <span class="tsd-signature-type">string</span></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="schemas_formal-ref.FormalRefResolution.html" class="tsd-signature-type tsd-kind-interface">FormalRefResolution</a> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4e6b926290c0dd0c5ce648eeefeaa79e2115a204/cat-harness/schemas/formal-ref.ts#L158">work/folio-assistant/folio-assistant/cat-harness/schemas/formal-ref.ts:158</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/5389038361734e09679cd7318f0c600839dcfa30/cat-harness/schemas/formal-ref.ts#L158">work/folio-assistant/folio-assistant/cat-harness/schemas/formal-ref.ts:158</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="resolvecanonical"><code class="tsd-tag">Optional</code><span>resolve<wbr/>Canonical</span><a href="#resolvecanonical" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -125,7 +125,7 @@ every checker passed vacuously (bean <code>qou-cu0a</code>).</p>
 <li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">cache</span>: <a href="../types/schemas_formal-ref.FormalTreeCache.html" class="tsd-signature-type tsd-kind-type-alias">FormalTreeCache</a></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4e6b926290c0dd0c5ce648eeefeaa79e2115a204/cat-harness/schemas/formal-ref.ts#L201">work/folio-assistant/folio-assistant/cat-harness/schemas/formal-ref.ts:201</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/5389038361734e09679cd7318f0c600839dcfa30/cat-harness/schemas/formal-ref.ts#L201">work/folio-assistant/folio-assistant/cat-harness/schemas/formal-ref.ts:201</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="statementhash"><code class="tsd-tag">Optional</code><span>statement<wbr/>Hash</span><a href="#statementhash" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -150,7 +150,7 @@ ignores.</p>
 <li><span><span class="tsd-kind-parameter">file</span>: <span class="tsd-signature-type">string</span></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">undefined</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4e6b926290c0dd0c5ce648eeefeaa79e2115a204/cat-harness/schemas/formal-ref.ts#L173">work/folio-assistant/folio-assistant/cat-harness/schemas/formal-ref.ts:173</a></li></ul></aside></div></li></ul></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/5389038361734e09679cd7318f0c600839dcfa30/cat-harness/schemas/formal-ref.ts#L173">work/folio-assistant/folio-assistant/cat-harness/schemas/formal-ref.ts:173</a></li></ul></aside></div></li></ul></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
