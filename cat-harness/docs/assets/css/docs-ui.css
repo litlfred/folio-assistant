@@ -5355,14 +5355,19 @@ html:has(style[data-folio-narrow-viewport]) body:has(> .fa-glass-handle) {
  * `.fa-nav-middle > .site-nav` is the shape the scroll rules and their tests
  * are written against. Looks like the other two headings on purpose. */
 .fa-nav-pages {
+  /* Its own resting metrics, published the way `.fa-nav-folders` publishes
+     them: the strip rule scales each region's padding and floor by these, and
+     a region that publishes none is squeezed to its text (it measured 16px). */
+  --fa-nav-rest-pad: 0.75rem;
+  --fa-nav-rest-min: 1.5rem;
   display: flex;
   flex: 0 0 auto;
   width: 100%;
   gap: 0.5rem;
   align-items: center;
-  min-height: 1.5rem;
+  min-height: var(--fa-nav-rest-min);
   margin: 0;
-  padding: 0.75rem var(--fa-nav-pad, 1rem);
+  padding: var(--fa-nav-rest-pad) var(--fa-nav-pad, 1rem);
   border: 0;
   border-bottom: 1px solid rgba(128, 128, 128, 0.25);
   background: none;
@@ -5391,6 +5396,7 @@ html:has(style[data-folio-narrow-viewport]) body:has(> .fa-glass-handle) {
    "Pages" and the first page. */
 .fa-nav-pages + .site-nav { padding-top: 0.25rem; }
 
+.fa-nav-pages__count,
 .fa-nav-folders__count {
   padding: 0 0.375rem;
   border-radius: 0.625rem;

@@ -9758,7 +9758,7 @@
       "aria-controls": nav.id,
       "aria-expanded": "true",
     }, "Pages");
-    btn.appendChild(el("span", { class: "fa-nav-folders__count" }, String(top)));
+    btn.appendChild(el("span", { class: "fa-nav-pages__count" }, String(top)));
     function set(open) {
       btn.setAttribute("aria-expanded", open ? "true" : "false");
       if (open) nav.removeAttribute("data-fa-folded");
