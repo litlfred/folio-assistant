@@ -32,6 +32,8 @@ import { dirname, join, resolve } from "node:path";
 
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 
+import { orphanPages } from "../gen-skill-docs.ts";
+
 const HARNESS = resolve(import.meta.dir, "../..");
 const GENERATED = join(HARNESS, siteDirFor(HARNESS), "reference", "skill-instructions");
 
@@ -100,5 +102,58 @@ describe("generated skill instruction pages", () => {
       }
     }
     expect(unrebased).toEqual([]);
+  });
+});
+
+/**
+ * `3x2o` — a page produced by NO source is the failure `--check` could not see.
+ *
+ * `emit` compares content per path and reports what differs. A page whose
+ * source has become unreachable is never emitted, so it is never compared, and
+ * the drift report reads "up to date" over it. Two such pages
+ * (`fhir-client-operations`, `smart-launch`) sat on the published site with a
+ * "Generated from … — do not edit here" banner pointing at a directory nothing
+ * declared.
+ *
+ * The unit cases carry the whole assertion, because the corpus case cannot: the
+ * real answer is now the empty set, which is also what a guard computing
+ * nothing returns. Falsified against the corpus by deleting the
+ * `fhir-ig-skills` declaration — six named orphans, exactly the pages that
+ * declaration reaches — but a test may not leave the tree in that state, so the
+ * discrimination is asserted here instead.
+ */
+describe("orphanPages", () => {
+  test("a page nothing produced is an orphan", () => {
+    expect(orphanPages(["a.md", "b.md"], ["a"])).toEqual(["b.md"]);
+  });
+
+  test("index.md is the generator's own and is never an orphan", () => {
+    // Without this the guard fails on every clean run, since no group produces
+    // `index.md` — and the cheapest wrong fix is to add it to `written`, which
+    // would make a genuinely missing index invisible instead.
+    expect(orphanPages(["index.md", "a.md"], ["a"])).toEqual([]);
+  });
+
+  test("non-markdown is not judged", () => {
+    // The output directory is Jekyll's; an asset beside the pages is not a
+    // page this generator claims to produce.
+    expect(orphanPages(["a.md", "diagram.svg"], ["a"])).toEqual([]);
+  });
+
+  test("the PUBLISHED name is what is compared, not the source basename", () => {
+    // `written` is keyed on the published name, so a prefixed group's page is
+    // `local-todo-manager.md`. Comparing against the basename would report
+    // every prefixed page as an orphan on a clean tree.
+    expect(orphanPages(["local-todo-manager.md"], ["local-todo-manager"])).toEqual([]);
+    expect(orphanPages(["local-todo-manager.md"], ["todo-manager"])).toEqual([
+      "local-todo-manager.md",
+    ]);
+  });
+
+  test("it is DISCRIMINATING over the real output directory", () => {
+    // The vacuity control. `orphanPages(onDisk, [])` over the live tree must
+    // name essentially all of it; a guard that returned `[]` unconditionally
+    // would pass every assertion above this one's absence.
+    expect(orphanPages(readdirSync(GENERATED), []).length).toBeGreaterThan(10);
   });
 });
