@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sci-owns-lean-grammar-probe-2026-09-27/skills/fhir-validation/output.schema.json",
+  "title": "FHIR Validation Output",
+  "description": "Output schema for FHIR validation results.",
+  "type": "object",
+  "required": [
+    "overallStatus"
+  ],
+  "properties": {
+    "overallStatus": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "warnings",
+        "errors"
+      ]
+    },
+    "sushiResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "errors": {
+          "type": "integer"
+        },
+        "warnings": {
+          "type": "integer"
+        }
+      }
+    },
+    "publisherResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "qaHtmlPath": {
+          "type": "string"
+        },
+        "errorCount": {
+          "type": "integer"
+        },
+        "warningCount": {
+          "type": "integer"
+        },
+        "infoCount": {
+          "type": "integer"
+        }
+      }
+    },
+    "conformanceResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "type": "string"
+          },
+          "profile": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "conformant",
+              "non-conformant"
+            ]
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/sci-owns-lean-grammar-probe-2026-09-27",
+    "sha": "84e27db502172ceb8673183e0461a8b0379cf4f8",
+    "pr": "1453/merge",
+    "run": "36300819262"
+  }
+}
