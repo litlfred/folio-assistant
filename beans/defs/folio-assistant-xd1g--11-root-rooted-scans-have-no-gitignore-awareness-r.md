@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-27T08:09:12Z
+updated_at: 2026-09-27T11:01:10Z
 parent: folio-assistant-ahvw
 ---
 
@@ -666,3 +666,56 @@ is the question every one of these measurements had to answer by hand.
       output change when gitignored content exists beneath its scan root?
       MEASURED AFTER: it reports `kg-detangle`'s pre-fix state as live and the
       latent ones as latent, distinguishing them WITHOUT a hand measurement
+
+
+## Done-when 3 SHIPPED on the owner's ruling -- 2026-09-27
+
+The owner chose (options "1 3") to ship the syntactic census despite my
+objection that a check which cannot fail is the `1xhc` pattern. Recorded here
+as their decision, and in `scripts/root-scan-census.ts`'s own docblock, rather
+than re-argued.
+
+**Built so it fails on something real.** Advisory on the findings -- gating on
+a backlog is the wall somebody switches off, which is `2krx`'s reasoning and it
+is right. HARD on the drift: the sidecar at
+`cat-harness/test/results/root-scan-census.qa-results.json` is committed and
+`root-scan-census:check` exits 1 when it disagrees with the tree. That is
+`audit-coverage`'s arrangement, and it is what "cannot drift" actually
+requires.
+
+### The defect it had for one run, and why it matters here of all places
+
+First output: **"57 enumerating scripts, 1 asks git"** -- on a tree where eleven
+had just been converted. A conversion REMOVES the `readdirSync` the population
+was keyed on, so every fixed scanner dropped out of the denominator instead of
+moving to its good side. **The headline would have got worse as the corpus
+improved.** That is this bean's own failure shape, committed inside the census
+built to report on it. `ENUMERATES` now admits the git spellings and the first
+test pins the property.
+
+Now: **66 enumerating, 10 ask git; 3 seeded at a root and not git-aware** --
+`check-artifact-index`, `gen-default-boards`, `sync-docs-harness`. **None was in
+this bean's eleven.** So the census found three candidates on its first honest
+run, which is the strongest argument for the owner's call over my objection.
+
+### Still a floor, and it says so in its own output
+
+Both filters are syntactic: the loose one over-counts (a walk over one declared
+directory is fine), the tight one under-counts (a recursion helper or a root
+passed as a parameter defeats it -- a test asserts that miss rather than
+papering over it). The GAP between 66 and 3 is the finding: it is why a
+syntactic check cannot answer this question, and why the real guard stays
+behavioural in `scripts/tests/git-corpus-conversions.test.ts`.
+
+### Obligations the new gate owes, both met
+
+`check:artefact-verification` -- declared under `verified` with the four
+consumer-side questions its test asks. `check:partition` -- harness, for
+`check-subgraphs.ts`' reason.
+
+### One CI red worth keeping
+
+My own test asserted `swept > 0`, true only because this container has build
+residue a clean checkout does not. **This bean's defect, in the test guarding
+the fix for it.** Reproduced by moving `dist/` aside; fixed so the suite passes
+both with the residue and without.
