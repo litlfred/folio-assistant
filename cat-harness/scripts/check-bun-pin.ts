@@ -46,7 +46,7 @@
  * Usage:
  *   bun run check:bun-pin
  *
- * @covers tools
+ * @covers none — .github/workflows/ is not a declared graph kind
  * @graphNode tool
  */
 import { readFileSync, readdirSync } from "node:fs";
@@ -56,7 +56,9 @@ import { parse } from "yaml";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const REPO_ROOT = resolve(INSTANCE_ROOT, "..");
-const PIN_FILE = ".bun-version";
+/** The ONE answer to which Bun this repository runs. Exported so `check:bun-runtime`
+ *  names the same file rather than repeating the literal. */
+export const PIN_FILE = ".bun-version";
 const WORKFLOW_DIR = join(REPO_ROOT, ".github", "workflows");
 
 export interface Finding {

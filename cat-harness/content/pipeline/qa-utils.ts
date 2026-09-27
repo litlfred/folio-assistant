@@ -1816,6 +1816,14 @@ export function saveQaScriptSidecar(
   // uses a script sidecar's `engine_version` for freshness (`entryIsFresh`
   // compares hashes), so it is left as a record of the last CONTENT change's
   // engine rather than the last run's.
+  //
+  // Why this took two beans to find (`rmcf`, then `3ozg`; #1451): the comment
+  // here used to say everything but the two `last_run_*` fields was
+  // content-derived. That was false for `engine_version`, which comes from the
+  // ENVIRONMENT, and it ruled the environment out, so the hunt went looking
+  // for a test alone. Both halves were needed: the WRITER is a test, the
+  // TRIGGER was this term plus an off-pin engine. The pin (`.bun-version`)
+  // and this skip are kept together, on the owner's choice.
   const prev = loadQaScriptSidecar(sidecar.criterion_id, repoRoot);
   if (
     prev &&

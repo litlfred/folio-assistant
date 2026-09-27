@@ -58,7 +58,7 @@
  * Usage:
  *   bun run check:red-gate-is-last
  *
- * @covers tools
+ * @covers none — .github/workflows/ is not a declared graph kind
  * @graphNode tool
  */
 import { readFileSync } from "node:fs";

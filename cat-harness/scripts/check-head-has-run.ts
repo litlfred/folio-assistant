@@ -160,7 +160,7 @@
  *
  * Usage:  bun run check:head-has-run [<sha>]
  */
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 
 import { classifyResponse, withBackoff, type BackoffOptions } from "../src/core/retry.js";
@@ -357,17 +357,63 @@ export function mergeStateForHead(
 }
 
 /** Is this commit on any remote-tracking ref — i.e. has it been pushed? */
-export function isPushed(repo: string, sha: string): boolean {
-  try {
-    return (
-      execFileSync("git", ["-C", repo, "branch", "-r", "--contains", sha], {
-        encoding: "utf8",
-        stdio: ["ignore", "pipe", "ignore"],
-      }).trim() !== ""
-    );
-  } catch {
-    return false;
+/** Whether a commit is on a remote-tracking ref — with the third state kept. */
+export type PushedState = "pushed" | "not-pushed" | "cannot-tell";
+
+/**
+ * Is this commit on a remote-tracking ref?
+ *
+ * ## Why this is not a boolean — bean `y0n2`
+ *
+ * It was, and it returned `false` from a bare `catch`, which conflated two
+ * different facts: *git answered, and no remote-tracking branch contains this
+ * commit* with *git did not answer*. The second is a could-not-determine, and
+ * this repository states the rule everywhere — `ci-health`, `health`,
+ * `audit-coverage` — as **could-not-determine is never rendered as clean**. Here
+ * it was rendered as a VERDICT, and the wrong one.
+ *
+ * It also discarded stderr (`stdio: ["ignore", "pipe", "ignore"]`), so the reason
+ * git failed was not merely unreported but UNAVAILABLE. That is what made the
+ * measured failure undiagnosable: `head-has-run.test.ts`'s
+ * `a commit on a remote-tracking ref reads as pushed` failed once inside a full
+ * `bun test` at 22671 ms and passed when run directly, and no route existed to
+ * the reason. A 523-file suite runs plenty of concurrent git, and `.git` lock
+ * contention is exactly the transient the old `catch` ate.
+ *
+ * The consequence was not cosmetic. This value chooses what a person is TOLD:
+ * `not-pushed` sends them to *"Push it, then ask again"*, which is the wrong
+ * advice for somebody who has pushed — and bean `sddf` is the record of how much
+ * care the OTHER branch of this decision already needed.
+ *
+ * `cannot-tell` follows the `cannot-ask` state this same script already has for
+ * the run verdict, deliberately: one idiom, not two.
+ */
+export function pushedState(repo: string, sha: string): PushedState {
+  const r = spawnSync("git", ["-C", repo, "branch", "-r", "--contains", sha], {
+    encoding: "utf8",
+  });
+  // `spawnSync` rather than `execFileSync` so a non-zero exit is DATA instead of
+  // an exception — the shape that made the old `catch` possible at all.
+  if (r.error !== undefined || r.status !== 0) {
+    const why = r.error?.message ?? (r.stderr ?? "").trim() ?? "";
+    lastPushedFailure = `git branch -r --contains exited ${r.status ?? "null"}${why ? `: ${why}` : ""}`;
+    return "cannot-tell";
   }
+  return r.stdout.trim() !== "" ? "pushed" : "not-pushed";
+}
+
+/**
+ * Why the last `cannot-tell` happened, for the message to quote.
+ *
+ * Module-level rather than returned alongside the state, because every caller
+ * wants the state and only the failing one wants the reason — and a tuple would
+ * put the reason in the way of the comparison that matters.
+ */
+let lastPushedFailure = "";
+
+/** The reason behind the most recent `cannot-tell`, or `""`. */
+export function lastPushedReason(): string {
+  return lastPushedFailure;
 }
 
 /**
@@ -548,7 +594,19 @@ if (import.meta.main) {
   }
   if (verdict.state === "no-run") {
     console.error(`✗ ${sha.slice(0, 10)} has NO workflow run of any kind.`);
-    if (!isPushed(REPO, sha)) {
+    const pushed = pushedState(REPO, sha);
+    if (pushed === "cannot-tell") {
+      // Bean `y0n2`: this used to read as `not-pushed` and tell somebody who HAD
+      // pushed to push again. Exits 2, matching `cannot-ask` above — the same
+      // third state, one idiom.
+      console.error(
+        `\n  ? COULD NOT TELL whether it is pushed: ${lastPushedReason()}.\n` +
+          "  That is not the same as being unpushed, and it must not be read as\n" +
+          "  either answer. Nothing has been established about where this commit is.",
+      );
+      process.exit(2);
+    }
+    if (pushed === "not-pushed") {
       // The ordinary explanation, and it is not bean `3pqn`. Saying "GitHub
       // dropped your event" to somebody who has not pushed teaches them to
       // ignore the message.

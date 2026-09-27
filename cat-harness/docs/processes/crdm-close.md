@@ -37,6 +37,6 @@ Every one of the 3 step(s) is documented.
 |---|---|---|---|
 | **Feature sign-off on issue**<br>`S_FeatureSignoff` | Stakeholders | — | Stakeholders sign off on the delivered feature on the issue, having tested the built artefact rather than a description of it. |
 | **Confirm all criteria met**<br>`BA_Confirm` | BA / Feature Requestor | [`decision-audit`](../reference/skill-instructions/decision-audit.html) | The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so. |
-| **Close issue ONLY on BA authorisation**<br>`A_Close` | Agent | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | Reachable only through BA_Confirm, which is the BA saying every criterion is met. An agent must never close an issue without that explicit authorisation — the gate is the preceding task, and this name says so rather than leaving a reader to trace the flow for it. |
+| **Close issue ONLY on BA authorisation**<br>`A_Close` | Agent | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | Reachable only through BA_Confirm, which is the BA<br>saying every criterion is met. An agent must never close an issue without<br>that explicit authorisation — the gate is the preceding task, and this name<br>says so rather than leaving a reader to trace the flow for it. |
 
 {% endraw %}
