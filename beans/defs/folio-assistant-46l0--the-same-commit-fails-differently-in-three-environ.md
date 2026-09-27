@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T06:33:48Z
-updated_at: 2026-09-27T09:45:54Z
+updated_at: 2026-09-27T14:27:06Z
 parent: folio-assistant-1xhc
 ---
 
@@ -146,9 +146,29 @@ any hand-built tree, and install dependencies rather than borrowing them.
 
 This bean may now be closeable on the ground that the shape is guarded and the
 instances are gone — but that is a judgement about whether items 1 and 2 still
-want doing, and it is not mine to make. It also asked, in "Its relation to
-`sff8`", whether the two should be folded together; `sff8` has since been
-measured and closed, which is an input to that.
+want doing, and it is not mine to make.
+
+**Correction, and it removes the second half of the question.** The line above
+read *"`sff8` has since been measured and closed, which is an input to that"*.
+**`sff8` is not closed** — `status: in-progress` on `main`, `updated_at`
+2026-09-27T11:10:31Z, and [#1473](https://github.com/litlfred/folio-assistant/pull/1473)
+(11:39Z, a sibling session) adds a measurement to it with its last box still
+open and four options on it. Saying "closed" was the defect this whole branch is
+about: a confident report of something I had not read.
+
+Read, it answers the fold question outright, and the answer is **no**. #1473
+reframes `sff8` as a **budget-to-cost mismatch**: at least **nine** tests
+already run past the 5000 ms default and do **not** fail, because they derive
+their own budget — `declared-directory-resolves.test.ts` at 22158 ms, at
+600 ms/module — while everything else silently inherits 5000 ms, so the failure
+is whichever default-budget test sits nearest the line when the machine is
+busiest. That is a property of how a budget is **declared**. This bean's
+failures are assertion failures that differ **by environment at the same load**,
+and its remedy is a test SAYING which environment it depends on. Folding would
+put those two remedies under one bean and give it no falsifier.
+
+So one question remains rather than two: do items 1 and 2 still want doing, with
+nothing currently failing to classify?
 
 Verified: `skill:register` (6 artefacts current, 276 skills / 19 packages),
 `skill:register:check`, `skills:docs:check`, `check:bean-restates-skill`,
