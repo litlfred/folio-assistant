@@ -113,7 +113,8 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
-import { repoRootFor, DECLARATION_SUFFIX,  resolveDirectories, instanceDirectoriesForGraph} from "../schemas/cat-harness.js";
+import { repoRootFor, DECLARATION_SUFFIX,  resolveDirectories, instanceDirectoriesForGraph, readDeclaration} from "../schemas/cat-harness.js";
+import { orderedDependencies } from "../schemas/harness-config.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
 
@@ -474,13 +475,29 @@ async function auditProcess(
       ? m.lanes.filter((l) => roleForLane(graph, l.name, l.roleRef)?.judgementOnly === true).map((l) => l.id)
       : [],
   );
+  /** Refs no declared layering can settle — `unknown`, kept apart from a failure. */
+  const unjudgeableSkill: KgFinding[] = [];
   const judgementNode = (n: { laneId?: string }): boolean =>
     n.laneId !== undefined && judgementLanes.has(n.laneId);
   for (const n of activities) {
     for (const ref of n.skills) {
-      if (!skills.has(ref)) {
-        danglingSkill.push({ where: n.id, detail: `names skill "${ref}", which resolves to no skill in this instance.` });
+      if (resolvableSkills.has(ref)) continue;
+      if (refUnjudgeable(ref)) {
+        // Third state, not a pass and not a failure: the ref is absent from
+        // everything reachable, but what IS reachable was never declared.
+        unjudgeableSkill.push({
+          where: n.id,
+          detail:
+            `names skill "${ref}", which this instance does not hold — and whether a dependency holds it ` +
+            `cannot be decided, because this instance declares no \`needs\`. Declare the layering in ` +
+            `its \`<name>.json\` and this criterion becomes answerable.`,
+        });
+        continue;
       }
+      danglingSkill.push({
+        where: n.id,
+        detail: `names skill "${ref}", which resolves to no skill in this instance or anything it \`needs\`.`,
+      });
     }
     // A call activity is implemented by the process it calls, not by a skill.
     // Demanding a `<bootstrap.processes:skill ref>` of it asks the diagram to name a second,
@@ -635,7 +652,7 @@ async function auditProcess(
       if (!roleId) continue; // already reported as an unbound lane or a laneless activity
       const carried = new Set(resolveRoleSkills(graph, roleId).map((s) => s.skill));
       for (const ref of n.skills) {
-        if (!skills.has(ref)) continue; // a dangling ref is a different finding
+        if (!resolvableSkills.has(ref)) continue; // a dangling ref is a different finding
         if (!carried.has(ref)) {
           skillNotCarried.push({
             where: n.id,
@@ -730,7 +747,7 @@ async function auditProcess(
   const unservable: KgFinding[] = [];
   for (const n of activities) {
     for (const ref of n.skills) {
-      if (!skills.has(ref)) continue; // a dangling ref is a different finding
+      if (!resolvableSkills.has(ref)) continue; // a dangling ref is a different finding
       if (!servable.has(ref)) {
         unservable.push({
           where: n.id,
@@ -757,7 +774,7 @@ async function auditProcess(
   const noTool: KgFinding[] = [];
   for (const n of activities) {
     for (const ref of n.skills) {
-      if (!skills.has(ref)) continue; // a dangling ref is `skill-ref-resolves`
+      if (!resolvableSkills.has(ref)) continue; // a dangling ref is `skill-ref-resolves`
       if (!toolBacked.has(ref)) {
         noTool.push({
           where: n.id,
@@ -816,12 +833,17 @@ async function auditProcess(
     // from `pass`, because a process with nothing to resolve has not been
     // shown to resolve anything.
     "convention-ref-resolves": entry(danglingConvention, conventionRefs > 0),
-    "skill-ref-resolves": entry(danglingSkill),
+    // `unknown` outranks both: an instance whose layering is undeclared has
+    // not been SHOWN to resolve its refs, and reporting that as a pass is the
+    // `dh4f` defect — a clean verdict over a question nobody asked.
+    "skill-ref-resolves": unjudgeableSkill.length
+      ? { result: "unknown", findings: [...unjudgeableSkill, ...danglingSkill] }
+      : entry(danglingSkill),
     "skill-servable": entry(unservable),
     // `n/a` for a diagram whose activities name no RESOLVING skill — there is
     // nothing whose mechanism could be asked about, which is not the same as
     // every step having one.
-    "activity-skill-has-tool": entry(noTool, activities.some((n) => n.skills.some((r) => skills.has(r)))),
+    "activity-skill-has-tool": entry(noTool, activities.some((n) => n.skills.some((r) => resolvableSkills.has(r)))),
     "decision-ref-resolves": entry(danglingDecision, decisionRefs.length > 0),
     "role-ref-resolves": entry(danglingRoleRef, Boolean(graph)),
     "activity-in-lane": entry(noLane, m.lanes.length > 0),
@@ -1266,8 +1288,11 @@ function auditRoles(
 
   return graph.roles.map((r) => {
     const badSkills = r.skills
-      .filter((s) => !skills.has(s))
-      .map((s) => ({ where: s, detail: `role "${r.id}" carries skill "${s}", which resolves to no skill in this instance.` }));
+      .filter((s) => !resolvableSkills.has(s))
+      .map((s) => ({
+        where: s,
+        detail: `role "${r.id}" carries skill "${s}", which resolves to no skill in this instance or anything it \`needs\`.`,
+      }));
     const badParents = (r.inherits ?? [])
       .filter((i) => !declared.has(i))
       .map((i) => ({ where: i, detail: `role "${r.id}" inherits "${i}", which is not declared.` }));
@@ -2204,6 +2229,104 @@ const asJson = args.includes("--json");
 
 const auditorHash = sha256(readFileSync(join(AUDITOR_ROOT, "scripts", "kg-audit.ts"), "utf-8"));
 const skills = knownSkills(root);
+
+/**
+ * The skills a REFERENCE in this instance may resolve to: its own, plus every
+ * instance it declares `needs` on, transitively.
+ *
+ * ## Why resolution is wider than ownership
+ *
+ * A skill ref names a body an activity's performer must read, and a body in a
+ * DEPENDENCY is one this instance may read — that is what depending on it
+ * means. Resolving refs against `knownSkills(root)` alone made every such ref
+ * dangle: measured 2026-09-27, `smart-base` reported `skill-ref-resolves`
+ * **fail (9)** on nine activities of `diig-investment-path.bpmn`, all naming
+ * the one skill `methodology-adoption`, which lives at
+ * `cat-harness/skills/folio-core/methodology-adoption.md` — four layers down
+ * its own declared `needs` chain. Nine criticals against a diagram that is
+ * correct.
+ *
+ * The auditor's own run already knew: `test/results/kg-qa/_external/smart-base/`
+ * records `skill-ref-resolves` **pass (0)** for that same diagram, because from
+ * here the skill is local. So the two runs disagreed about one file, and the
+ * instance-scoped one was wrong.
+ *
+ * ## This is the FIFTH cross-instance defect, and the only DOWNWARD one
+ *
+ * The other four leaked things an instance should not see (a repo's actors, its
+ * capabilities, 119 phantom tool sidecars, 23 skills from `.claude/skills/`) and
+ * were fixed by NARROWING. This one is the opposite polarity: an instance could
+ * not see what is legitimately BELOW it. A narrowing fix cannot find it, which
+ * is why it survived all four.
+ *
+ * ## Ownership stays narrow, deliberately
+ *
+ * `manifest-skill-exists` and `remote-skill-is-servable` keep reading
+ * {@link skills}, because both ask whether THIS instance holds a BODY for a
+ * name it publishes. A dependency's skill is not this instance's to serve, so
+ * widening those would excuse exactly the defect they exist to catch. Same
+ * split, and the same ruling (`pve3` — *"not in my overlay is not does not
+ * exist"*), as `satisfiableSkills` in `check-tools.ts`: resolution widens,
+ * coverage does not.
+ *
+ * ## `orderedDependencies` rather than a closure written here
+ *
+ * It already walks `needs` transitively — measured: `smart-base` yields
+ * `bootstrap, cat-harness, folio-assistant-core, fhir-harness`, its whole
+ * chain; `cat-harness` yields `bootstrap` alone. A second walker would be a
+ * second answer to one question, which is the `j79e` defect.
+ */
+const resolvableSkills: Set<string> = (() => {
+  const out = new Set(skills);
+  for (const dep of orderedDependencies(root)) {
+    for (const s of knownSkills(dep.rootPath)) out.add(s);
+  }
+  return out;
+})();
+
+/**
+ * Has this instance declared where it sits in the stack?
+ *
+ * `needs` is OPTIONAL with a documented THIRD STATE: an absent value is
+ * UNDETERMINED, never `[]` — `[]` is an assertion that this instance is the
+ * floor, absent is nobody having said (`schemas/cat-harness.ts`, `needs`;
+ * `schemas/layer-direction.ts` refuses the same collapse for edges).
+ *
+ * Read straight from the declaration rather than inferred from
+ * {@link resolvableSkills} being no wider than {@link skills}, because
+ * `dependenciesFromNeeds` collapses the two states with `?? []` — an instance
+ * that declares nothing and one that declares the floor both derive zero
+ * dependencies, and only one of them has said so.
+ *
+ * MEASURED 2026-09-27: **5 of 16** instances here declare no `needs` —
+ * `agent-skills`, `folio-assistant-sci`, `large-datasets`, `who-iris`,
+ * `who-style-guide`. So this is a third of the subject, not a hypothetical.
+ */
+const layeringUndetermined = ((): boolean => {
+  try {
+    return readDeclaration(root)?.needs === undefined;
+  } catch {
+    // An unreadable declaration is not this script's to diagnose
+    // (`check:declaration-filename` reports it), but it is certainly not a
+    // DECLARED layering — so undetermined, never "needs nothing".
+    return true;
+  }
+})();
+
+/**
+ * Can a ref that is not in this instance's own set be judged at all?
+ *
+ * Monotone, and that is the whole point: a closure only ever ADDS skills, so a
+ * ref already in {@link skills} resolves no matter what the layering turns out
+ * to be. Only a ref that MISSES the own set depends on it — and then an
+ * undeclared layering makes the answer unknown rather than a failure.
+ *
+ * Without this split, `who-iris` (1 own skill) and `large-datasets` (3) would
+ * have their true passes converted into `unknown`, which is a report getting
+ * worse while looking more careful.
+ */
+const refUnjudgeable = (ref: string): boolean =>
+  layeringUndetermined && !resolvableSkills.has(ref);
 const actors = readActors(ACTOR_DIR, readPolicyGrants(POLICY_DIR));
 
 let graph: RoleGraph | undefined;

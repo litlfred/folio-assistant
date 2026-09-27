@@ -1,0 +1,413 @@
+/**
+ * A skill ref resolves against this instance AND everything it `needs`.
+ *
+ * ## The defect this pins
+ *
+ * `kg-audit.ts` resolved every `<bootstrap.processes:skill ref>` against
+ * `knownSkills(root)` — the audited instance's OWN skills and nothing else. A
+ * skill that legitimately lives in a DEPENDENCY therefore dangled.
+ *
+ * Measured 2026-09-27, before the fix: `kg:audit --instance ./smart-base`
+ * reported `skill-ref-resolves` **fail (9)** on nine activities of
+ * `methodologies/processes/diig-investment-path.bpmn`. All nine named the one
+ * skill `methodology-adoption`, which lives at
+ * `cat-harness/skills/folio-core/methodology-adoption.md` — four layers down
+ * smart-base's own declared `needs` chain (`smart-base → fhir-harness →
+ * folio-assistant-core → cat-harness → bootstrap`). Nine criticals against a
+ * diagram that is correct.
+ *
+ * The auditor's own run already disagreed, in a committed artefact:
+ * `cat-harness/test/results/kg-qa/_external/smart-base/…/diig-investment-path.kg-qa.json`
+ * records `skill-ref-resolves` **pass (0)** for that same file, because from
+ * the auditor's root the skill is local. **Two runs, one diagram, two answers**
+ * — and the instance-scoped one was wrong.
+ *
+ * ## Why this is the FIFTH cross-instance defect and none of the first four
+ *
+ * The other four leaked things an instance should NOT see — a repository's
+ * actors read as one instance's roles (73 false criticals), its capabilities,
+ * 119 phantom tool sidecars, 23 skills from `.claude/skills/`. Every one was
+ * fixed by NARROWING. This one is the opposite polarity: an instance could not
+ * see what is legitimately BELOW it. No narrowing fix could find it, which is
+ * exactly why it survived all four.
+ *
+ * ## Why an invariant and not the nine findings
+ *
+ * Asserting "smart-base reports zero" pins today's corpus: the diagram may be
+ * edited, the skill may move, and the test then passes for the wrong reason.
+ * The rule is that **no ref is reported dangling when the instance's own
+ * `needs` closure holds it**, stated over every instance that declares one —
+ * with an anti-vacuity floor, because on a corpus where every ref happens to
+ * be local the invariant holds trivially and would keep passing through a
+ * regression. That floor is the shape whose absence let the original defect
+ * sit unnoticed.
+ *
+ * @module scripts/tests/skill-resolution-across-needs
+ */
+import { afterAll, beforeAll, describe, expect, test } from "bun:test";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, relative, resolve } from "node:path";
+
+import { instanceRootsIn, readDeclaration } from "../../schemas/cat-harness.js";
+import { orderedDependencies } from "../../schemas/harness-config.js";
+import { knownSkills } from "../known-skills.js";
+
+const REPO = resolve(import.meta.dir, "../../..");
+
+/**
+ * Every spawn below passes `--check`, and that is not a detail.
+ *
+ * Without it the audit WRITES: `kg-audit.ts` writes `skills/kg-qa.manifest.json`
+ * into the audited instance unless `--check` is set, so a test that spawned it
+ * across sixteen instances left sixteen untracked manifests behind — including
+ * one in a `skills/` directory it created at the REPOSITORY ROOT, which
+ * `check:undeclared-files` then fails on. A test that dirties the tree it is
+ * judging is the defect `bun run gates` warns about in its own failure
+ * summary, one level down.
+ *
+ * `--check --json` still emits the full report array, verified: 12 reports for
+ * `smart-base` with `skill-ref-resolves` decided. It is the same choice
+ * `no-silent-first-directory.test.ts` made, for the same reason.
+ */
+const WRITE_FREE = ["--check", "--json"] as const;
+
+/**
+ * The skills a ref in `root` may resolve to — own plus every declared `needs`.
+ *
+ * Deliberately recomputed here from the same two published helpers the audit
+ * uses, rather than imported from it: the audit's set is built at module scope
+ * behind a `--instance` argument and is not exported, so there is nothing to
+ * import. That does mean this shares `orderedDependencies` with the subject, so
+ * it checks the audit's OUTPUT against the closure rather than proving the
+ * closure itself — which is what {@link REACHES_DOWN} is the floor for.
+ */
+function closureSkills(root: string): Set<string> {
+  const out = new Set(knownSkills(root));
+  for (const dep of orderedDependencies(root)) {
+    for (const s of knownSkills(dep.rootPath)) out.add(s);
+  }
+  return out;
+}
+
+/** Does this instance declare where it sits? Absent `needs` is UNDETERMINED, never `[]`. */
+function declaresLayering(root: string): boolean {
+  try {
+    return readDeclaration(root)?.needs !== undefined;
+  } catch {
+    return false;
+  }
+}
+
+const INSTANCES = instanceRootsIn(REPO);
+
+/**
+ * The instance declared at the repository root, which cannot be audited today.
+ *
+ * `kg:audit --instance .` exits 1 before auditing anything: `kg-audit.ts`
+ * computes `const repoRoot = resolve(root, "..")`, which for THIS instance —
+ * the only one declared at the checkout root — lands on the parent of the
+ * checkout, where there is no `package.json`. Bean `pgzn`, measured on `main`
+ * as well as here, so it is pre-existing rather than caused by the widening
+ * this file tests.
+ *
+ * Excluded BY NAME rather than by swallowing any instance whose audit fails: a
+ * catch-all exclusion would absorb the next crash silently, which is the
+ * failure mode this file exists to close. The invariant still has subjects —
+ * see the anti-vacuity floor below — and `pgzn`'s "Done when" is to delete
+ * this constant.
+ */
+const ROOT_INSTANCE = resolve(REPO);
+
+/** A name no instance holds, used by the constructed third-state case below. */
+const MISSING_SKILL = "a-skill-that-exists-nowhere";
+
+/** Instances whose closure is strictly wider than their own skills. */
+const REACHES_DOWN = INSTANCES.filter(
+  (i) => i !== ROOT_INSTANCE && declaresLayering(i) && closureSkills(i).size > knownSkills(i).size,
+);
+
+describe("skill refs resolve across the `needs` chain", () => {
+  test("some instance's closure is strictly wider than its own skills", () => {
+    // Anti-vacuity, and the floor the whole file rests on. Measured 2026-09-27:
+    // smart-base 0 own → 287 in closure; folio-assistant-core 1 → 287;
+    // cat-harness 280 → 287 (bootstrap's seven). With no such instance the
+    // invariant below is about nothing.
+    expect(
+      REACHES_DOWN.length,
+      "no instance reaches skills through `needs` — the invariant below measures nothing",
+    ).toBeGreaterThan(0);
+  });
+
+  test("a skill held anywhere in an instance's `needs` closure is not reported dangling", async () => {
+    const offences: string[] = [];
+
+    for (const inst of REACHES_DOWN) {
+      const rel = `./${relative(REPO, inst)}`;
+      const reachable = closureSkills(inst);
+
+      const p = Bun.spawn(
+        ["bun", "run", "cat-harness/scripts/kg-audit.ts", "--instance", rel, ...WRITE_FREE],
+        { cwd: REPO, stdout: "pipe", stderr: "pipe" },
+      );
+      const out = await new Response(p.stdout).text();
+      const err = await new Response(p.stderr).text();
+      await p.exited;
+
+      // A run that did not report cannot clear the instance — "could not
+      // determine" is never a pass, so it is recorded as an offence of its own
+      // rather than skipped.
+      // `--json` emits `{ reports, stale }`; the subjects are under `reports`.
+      let reports: { subject?: { id?: string }; criteria?: Record<string, { findings?: { detail?: string }[] }> }[];
+      try {
+        reports = (JSON.parse(out) as { reports?: typeof reports }).reports ?? [];
+      } catch {
+        offences.push(`${rel}: audit produced no JSON report:\n${err.slice(0, 300)}`);
+        continue;
+      }
+
+      for (const r of reports) {
+        for (const f of r.criteria?.["skill-ref-resolves"]?.findings ?? []) {
+          // The finding names the skill in quotes; anything else is a different
+          // finding and not this rule's business.
+          const named = /names skill "([^"]+)"/.exec(f.detail ?? "")?.[1];
+          if (named !== undefined && reachable.has(named)) {
+            offences.push(
+              `${rel} ${r.subject?.id ?? "?"}: "${named}" is in the \`needs\` closure but reported dangling`,
+            );
+          }
+        }
+      }
+    }
+
+    expect(offences).toEqual([]);
+  }, 120_000);
+
+  /**
+   * The third state, which is a rule rather than a courtesy.
+   *
+   * `needs` is OPTIONAL and an absent value is UNDETERMINED — `[]` asserts this
+   * instance is the floor, absent is nobody having said
+   * (`schemas/cat-harness.ts`; `schemas/layer-direction.ts` refuses the same
+   * collapse for edges). MEASURED 2026-09-27: **5 of 16** instances here
+   * declare no `needs`, so this governs a third of the subject.
+   *
+   * Such an instance cannot have a ref judged dangling: what it reaches was
+   * never declared, so the honest answer is `unknown`. Reporting `fail` would
+   * blame a diagram for a declaration nobody wrote.
+   *
+   * **This test is VACUOUS on today's corpus and is kept anyway**, which is
+   * worth stating rather than discovering: measured 2026-09-27, it passes with
+   * the fix REVERTED, because no undeclared instance here happens to name a ref
+   * it does not hold. So it guards the invariant against a future corpus and
+   * proves nothing now. The test below it is the one that proves the mechanism,
+   * by building the instance this corpus does not contain.
+   */
+  test("an instance that declares no `needs` reports unknown, never a dangling failure", async () => {
+    const undeclared = INSTANCES.filter((i) => i !== ROOT_INSTANCE && !declaresLayering(i));
+    expect(
+      undeclared.length,
+      "every instance declares `needs` — the third state below is untested",
+    ).toBeGreaterThan(0);
+
+    const offences: string[] = [];
+    for (const inst of undeclared) {
+      const rel = `./${relative(REPO, inst)}`;
+      const p = Bun.spawn(
+        ["bun", "run", "cat-harness/scripts/kg-audit.ts", "--instance", rel, ...WRITE_FREE],
+        { cwd: REPO, stdout: "pipe", stderr: "pipe" },
+      );
+      const out = await new Response(p.stdout).text();
+      await p.exited;
+
+      let reports: { subject?: { id?: string }; criteria?: Record<string, { result?: string }> }[];
+      try {
+        reports = (JSON.parse(out) as { reports?: typeof reports }).reports ?? [];
+      } catch {
+        continue; // an instance with nothing to audit is not a counter-example
+      }
+      for (const r of reports) {
+        const e = r.criteria?.["skill-ref-resolves"];
+        if (e?.result === "fail") {
+          offences.push(`${rel} ${r.subject?.id ?? "?"}: reported \`fail\` with no declared layering`);
+        }
+      }
+    }
+    expect(offences).toEqual([]);
+  }, 120_000);
+
+  /**
+   * Resolution widened; OWNERSHIP did not.
+   *
+   * `manifest-skill-exists` and `remote-skill-is-servable` both ask whether
+   * THIS instance holds a BODY for a name it publishes, and a dependency's
+   * skill is not this instance's to serve — widening them would excuse exactly
+   * the defect they exist to catch. Same split, same ruling (`pve3`, *"not in
+   * my overlay is not does not exist"*), as `satisfiableSkills` in
+   * `check-tools.ts`.
+   *
+   * Pinned at the SOURCE because the two criteria pass on this corpus either
+   * way: nothing here publishes a manifest entry that only a dependency
+   * satisfies, so a behavioural test would be vacuous today and silent when it
+   * stopped being so.
+   */
+  test("the two ownership criteria still read the instance's own skills", () => {
+    const src = readFileSync(resolve(REPO, "cat-harness/scripts/kg-audit.ts"), "utf8");
+    for (const criterion of ["manifest-skill-exists", "remote-skill-is-servable"]) {
+      const at = src.indexOf(`"${criterion}"`);
+      expect(at, `${criterion} is no longer declared — this guard is stale`).toBeGreaterThan(0);
+      // The criterion's own block, bounded generously rather than parsed: the
+      // filter that matters sits within a few lines of the declaration.
+      const block = src.slice(at, at + 1600);
+      expect(
+        block,
+        `${criterion} resolves against the \`needs\` closure — ownership must stay narrow`,
+      ).not.toContain("resolvableSkills");
+      expect(
+        block.includes("!skills.has("),
+        `${criterion} no longer reads the instance's own skill set`,
+      ).toBe(true);
+    }
+  });
+
+  /**
+   * The third state, PROVED — by building the instance the corpus lacks.
+   *
+   * Two runs over one synthetic instance whose diagram names a skill nothing
+   * holds. The only difference between them is its declaration:
+   *
+   * | `needs`   | result    | because                                    |
+   * |-----------|-----------|--------------------------------------------|
+   * | absent    | `unknown` | nobody said what this instance reaches     |
+   * | `[]`      | `fail`    | it asserts it IS the floor, so nothing else holds the skill |
+   *
+   * That pair is the whole rule. A implementation that collapsed absent into
+   * `[]` — the `?? []` that `dependenciesFromNeeds` does deliberately, for a
+   * different question — passes every other test in this file and fails this
+   * one, which is why it exists.
+   *
+   * Built under `tmpdir()` with its own `package.json`, following
+   * `schemas/harness-config.test.ts`. The `package.json` is not decoration:
+   * `kg-audit.ts` reads one from `resolve(root, "..")`, so a synthetic instance
+   * needs a parent that has it — the same resolution that makes bean `pgzn`
+   * crash on the repository-root instance.
+   */
+  describe("absent `needs` and `needs: []` are different answers", () => {
+    let dir: string;
+    let inst: string;
+
+    /**
+     * The declaration, with `needs` supplied or deliberately omitted.
+     *
+     * **Not named `declare`.** It was, and every call VANISHED: `declare` is a
+     * TypeScript keyword, so `declare([]);` at statement position parses as an
+     * ambient declaration and the transpiler erases it. Both tests below then
+     * ran against an instance with NO declaration file at all — which reads
+     * `needs` as `undefined` and so reported `unknown`, making the absent-needs
+     * case pass for entirely the wrong reason. That is why each case reads its
+     * declaration back before asserting.
+     */
+    const writeDeclaration = (needs: string[] | undefined): void => {
+      writeFileSync(
+        join(inst, "inst.json"),
+        JSON.stringify(
+          {
+            name: "inst",
+            version: "0.0.1",
+            title: "Synthetic instance",
+            description: "Names one skill that nothing anywhere holds.",
+            // Spread, so an absent `needs` is genuinely ABSENT from the JSON
+            // rather than present as `null` — which the schema would reject and
+            // which is a third thing again.
+            ...(needs === undefined ? {} : { needs }),
+            directories: [{ id: "processes", path: "processes/", dependents: "skip", graphKinds: ["processes"] }],
+          },
+          null,
+          2,
+        ),
+      );
+    };
+
+    beforeAll(() => {
+      dir = mkdtempSync(join(tmpdir(), "needs-third-state-"));
+      inst = join(dir, "inst");
+      mkdirSync(join(inst, "processes"), { recursive: true });
+      writeFileSync(join(dir, "package.json"), JSON.stringify({ name: "synth-repo", scripts: {} }));
+      // A LOADABLE diagram: `skill-ref-resolves` is `unknown` for a diagram that
+      // will not parse, which would make either expectation below pass for the
+      // wrong reason. Start event, user task, end event, both flows.
+      writeFileSync(
+        join(inst, "processes", "p.bpmn"),
+        `<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  id="Defs_1" targetNamespace="http://example.com/synth">
+  <bpmn:process id="Process_Synth" isExecutable="true">
+    <bpmn:startEvent id="S_1" name="Start"><bpmn:outgoing>F_1</bpmn:outgoing></bpmn:startEvent>
+    <bpmn:userTask id="A_Do" name="Do the thing">
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="${MISSING_SKILL}"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F_1</bpmn:incoming><bpmn:outgoing>F_2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="E_1" name="Done"><bpmn:incoming>F_2</bpmn:incoming></bpmn:endEvent>
+    <bpmn:sequenceFlow id="F_1" sourceRef="S_1" targetRef="A_Do"/>
+    <bpmn:sequenceFlow id="F_2" sourceRef="A_Do" targetRef="E_1"/>
+  </bpmn:process>
+</bpmn:definitions>
+`,
+      );
+    });
+
+    afterAll(() => {
+      rmSync(dir, { recursive: true, force: true });
+    });
+
+    /** `skill-ref-resolves` for the synthetic process, as the audit reports it. */
+    async function audit(): Promise<{ result?: string; findings?: { detail?: string }[] }> {
+      const p = Bun.spawn(
+        ["bun", "run", "cat-harness/scripts/kg-audit.ts", "--instance", inst, ...WRITE_FREE],
+        { cwd: REPO, stdout: "pipe", stderr: "pipe" },
+      );
+      const out = await new Response(p.stdout).text();
+      const err = await new Response(p.stderr).text();
+      await p.exited;
+
+      let reports: { subject?: { id?: string }; criteria?: Record<string, { result?: string; findings?: { detail?: string }[] }> }[];
+      try {
+        reports = (JSON.parse(out) as { reports?: typeof reports }).reports ?? [];
+      } catch {
+        throw new Error(`the audit produced no JSON report:\n${err.slice(0, 800)}`);
+      }
+      const r = reports.find((x) => x.subject?.id === "Process_Synth");
+      expect(r, `no report for Process_Synth in ${reports.length} report(s)`).toBeDefined();
+      return r!.criteria?.["skill-ref-resolves"] ?? {};
+    }
+
+    test("no declared `needs` — the ref is unknown, not a failure", async () => {
+      writeDeclaration(undefined);
+      // Read back, for the reason on `writeDeclaration`: a missing FILE and a
+      // file missing `needs` both read as `undefined`, and only one of them is
+      // what this test is about.
+      const onDisk = readFileSync(join(inst, "inst.json"), "utf8");
+      expect(onDisk, `declaration did not land:\n${onDisk}`).toContain('"name": "inst"');
+      expect(onDisk, `\`needs\` should be ABSENT here:\n${onDisk}`).not.toContain('"needs"');
+      const e = await audit();
+      expect(e.result).toBe("unknown");
+      // The message must say WHY, or the verdict sends nobody anywhere.
+      expect(e.findings?.[0]?.detail ?? "").toContain("declares no `needs`");
+    }, 60_000);
+
+    test("`needs: []` — the same ref is a failure, because the floor is asserted", async () => {
+      writeDeclaration([]);
+      // The declaration is the only variable between this case and the one
+      // above, so it is read back rather than assumed: a `writeDeclaration` that did not
+      // land would make this test report the OTHER state's answer.
+      const onDisk = readFileSync(join(inst, "inst.json"), "utf8");
+      expect(onDisk, `\`needs\` missing from the declaration:\n${onDisk}`).toContain('"needs": []');
+      const e = await audit();
+      expect(e.result).toBe("fail");
+      expect(e.findings?.[0]?.detail ?? "").toContain("no skill in this instance or anything it `needs`");
+    }, 60_000);
+  });
+});
