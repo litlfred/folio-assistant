@@ -67,6 +67,19 @@ regeneration writes before committing it.** Committing this churn stamps a
 main's — as though it were a fresh measurement. That is why the standing practice has
 been to discard rather than commit, and why option 4 is not merely a cop-out: it at
 least makes the discard deliberate.
+## Independent confirmation from a SECOND container, 2026-09-27
+Measured on the session branch `claude/3x2o-remote-stub-banner` while
+establishing whether the tree-guard finding on PR #1437 was that branch's: a
+detached `git worktree` of pristine `origin/main` at `81586293ea5`, full
+`bun test`, then `git status`. **72 paths, exactly the ones above**, with
+`bun-1.3.11` locally against the committed `bun-1.3.14`, and `script_hash`
+unchanged throughout.
+Recorded only as evidence that the shape is not container-local. The reading
+that went with it -- that the fix had to be on the writer side rather than a
+pin -- is **superseded by the entry below**, which is later and has the part
+this measurement lacked: `saveQaScriptSidecar` already skips the write unless a
+substantive field changes, so `engine_version` was the whole cause and pinning
+it is the cause-level fix.
 ---
 
 ## 2026-09-27 — the CAUSE is pinned. Not closed, and the reason is precise.
