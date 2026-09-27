@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-26T21:03:15Z
-updated_at: 2026-09-27T05:36:35Z
+updated_at: 2026-09-27T05:48:16Z
 parent: folio-assistant-1xhc
 ---
 
@@ -134,3 +134,9 @@ Two things worth having here even if this bean is later scrapped as the duplicat
 Residual, and why `3ozg` stays open: a pin cannot reach a container image the
 repository does not control, so an agent whose Bun differs from the pin still
 sees the rewrite.
+
+_2026-09-27T05:55Z, cross-reference from bean `3ozg`. A note, not a claim: status untouched, nothing ticked._
+
+**Option 2 is implemented**, on the owner's choice of *"skip no-op writes"* (put to them in the session that filed `3ozg`). `saveQaScriptSidecar` no longer counts `engine_version` as a change, so a script sidecar is rewritten only when its source file, hashes or extra inputs move. The writer this bean never named is `init-folio-qa.test.ts`, which runs a real `qa-sweep`. It was found by bisecting 432 test files. With the fix, `bun run gates` passes 167/167 and ends clean.
+
+Whether this bean closes on that evidence is for its owner, per `bean-coordination` §"Closing a bean whose work has already landed".

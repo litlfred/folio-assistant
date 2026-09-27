@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T04:14:07Z
-updated_at: 2026-09-26T19:58:26Z
+updated_at: 2026-09-27T05:18:22Z
 parent: folio-assistant-d308
 ---
 
@@ -536,3 +536,68 @@ defect I should settle inside a merge.
 - [ ] THEN declare bootstrap's `qa` → `test/results/`, with the sidecars in the
       same commit (`dh4f`)
 - [ ] only then the loop, and the zero-diagram question
+
+
+## 2026-09-27: the fourth leak closed, and the last box landed
+
+**The fourth leak was declared, not a judgement call.** `knownSkills` read
+`.claude/skills/` from `repoRootFor(root)` — the REPOSITORY — so every nested
+instance inherited the repo's agent-level skills. 23 of bootstrap's 30 came from
+`.claude/skills/local/`; its own are **7**.
+
+I had banked this as the owner's on the grounds that AGENTS.md says an instance
+inherits its dependencies' skills. The answer was in a field I had not opened:
+
+    cat-harness.needs = ["bootstrap"]      bootstrap.needs = []
+    _needs_comment: "So bootsteap, cat harness, fa-core, f-a, from bottom to top."
+
+Bootstrap is the bottom layer, so it inherits nothing and the read was inheriting
+UPWARD. **Fourth time "this needs a decision" was wrong where a declaration
+already answered it.** The test is not size and not how architectural it feels.
+
+Guarded on `OWN_INSTANCE`, derived from the module's own path (the device
+`AUDITOR_ROOT` and `INSTANCE_ROOT` use). All 23 `local/` names also exist as
+`.md` under the layer above, so the scan adds no name at root — redundant in this
+corpus, kept because the deny-list exists so a new json-declared group is picked
+up automatically.
+
+| | before | after |
+|---|---|---|
+| bootstrap skills | 30 (23 leaked) | **7** |
+| the layer above | 274 | **274 unchanged** |
+| root `kg:audit` | — | exit 0, **0** changes across committed sidecars |
+| `iwtn` | FAILS | **25 pass / 0 fail** |
+
+**A SECOND site deliberately not fixed.** `skillMdDirs` discovers
+`.claude/skills/<group>` from the repo root and returns RELATIVE parts, which are
+joined onto the INSTANCE root — where they exist for nobody, including the layer
+above. So `.claude/skills/interaction-modality/SKILL.md` is invisible to every
+instance. Repairing it naively would add a skill named `SKILL`, so it is a
+question about Claude-Code-format skill directories, not a path fix. Recorded.
+
+**The last box landed**: `qa` → `test/results/` declared WITH its files.
+16 generated files of TWO kinds in TWO directories — 15 `kg-qa/v1` sidecars under
+`test/results/kg-qa/` (skills 7, processes 3, scenarios 5) plus one
+`kg-qa-manifest/v1` at `skills/kg-qa.manifest.json`, which is OUTSIDE the declared
+directory and matches the precedent's shape.
+
+Two of my own claims were wrong en route and both are corrected in the commits:
+I called the manifest pre-existing and tracked (it was never tracked), and the
+`audit:coverage` comparison I first wrote keyed on a field the sidecar does not
+have, so it reported "nothing moved" for all 45 rows.
+
+And `iwtn` failed on the declaration written to satisfy it — the description named
+the layer above four times. When a rule forbids naming something, the prose
+EXPLAINING the rule is the likeliest place to name it.
+
+## Done when
+
+- [x] `check:workflow-refs` audits a path that exists (71→74 diagrams, 273→303 skills)
+- [x] the render:bpmn half — resolved in main's favour (`oqdr`, #1394)
+- [x] `kg:audit --instance`, all 68 criteria scoped `instance|repo` (63/5)
+- [x] `checkTools()` takes an instance root — 119 phantom tool sidecars → 0
+- [x] `knownSkills()` stops inheriting the repo's `.claude/` upward — 23 → 0
+- [x] bootstrap declares `qa` → `test/results/`, with its files, `iwtn` green
+- [ ] the loop: run the per-instance audit for the remaining declared instances
+- [ ] the `dh4f` zero-diagram question — an instance that declares `processes/`
+      and has none: is that `unknown` or a finding?
