@@ -493,32 +493,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790497116">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790497116">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790497116">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790497116">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790497116">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790497116">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -535,7 +535,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790496595" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790497116" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -741,7 +741,11 @@
 
 <p><code class="language-plaintext highlighter-rouge">Process_Translation</code> · strict (defaulted) · 10 step(s)</p>
 
-<p>The machine half of translation, end to end: extract the translatable strings, inject a catalogue back, check the result by back-translating it, and track whether the source has moved since. You are in this process whenever translation happens without a person having to be present. Two of its steps are the exception and are drawn in their own lane: a flagged passage is ADJUDICATED by a human, and a translation becomes official only when a human signs it off. <code class="language-plaintext highlighter-rouge">human-translation-workflow</code> is what happens when a person is doing the translating rather than checking it. Staleness is an END state that re-enters at the beginning, not a failure. A source change does not invalidate a translation’s accuracy; it invalidates its currency, which is a different fact and is why it is recorded rather than thrown away.</p>
+<p>The machine half of translation, end to end: extract the translatable strings, inject a catalogue back, check the result by back-translating it, and track whether the source has moved since.</p>
+
+<p>You are in this process whenever translation happens without a person having to be present. Two of its steps are the exception and are drawn in their own lane: a flagged passage is ADJUDICATED by a human, and a translation becomes official only when a human signs it off. <code class="language-plaintext highlighter-rouge">human-translation-workflow</code> is what happens when a person is doing the translating rather than checking it.</p>
+
+<p>Staleness is an END state that re-enters at the beginning, not a failure. A source change does not invalidate a translation’s accuracy; it invalidates its currency, which is a different fact and is why it is recorded rather than thrown away.</p>
 
 <p><img src="../assets/img/workflows/translation-workflow.svg" alt="BPMN diagram: Translation Workflow" style="max-width:100%" /></p>
 <h2 id="how-it-connects">
@@ -784,12 +788,12 @@
     <tr>
       <td>Agent / platform (automated)</td>
       <td><code class="language-plaintext highlighter-rouge">authoring-agent</code></td>
-      <td>Everything in this process that runs without asking: extraction to a template, injection of a catalogue, the staleness comparison, and writing the official rendering once sign-off exists. It decides nothing a person would disagree about — every branch it takes is computed from a hash or a file’s presence. It is one lane rather than two because agentic and mechanical is a judgement rather than a line (see the role model), and nothing in THIS process turns on which of the two ran a step. Where that distinction does matter, the process says so by putting the step in the reviewer’s lane instead.</td>
+      <td>Everything in this process that runs without asking: extraction to a template, injection of a catalogue, the staleness comparison, and writing the official rendering once sign-off exists. It decides nothing a person would disagree about — every branch it takes is computed from a hash or a file’s presence.<br />It is one lane rather than two because agentic and mechanical is a judgement rather than a line (see the role model), and nothing in THIS process turns on which of the two ran a step. Where that distinction does matter, the process says so by putting the step in the reviewer’s lane instead.</td>
     </tr>
     <tr>
       <td>Human reviewer / adjudicator</td>
       <td><code class="language-plaintext highlighter-rouge">translation-adjudicator</code></td>
-      <td>The only lane here that JUDGES. Mechanical translation QA produces candidates — a flagged passage, a terminology miss, a staleness verdict — and a candidate is not a finding until somebody decides it is. This lane is where that decision is made, and it is the lane that signs the translation off, because the actor who resolves a disputed passage is the one who can say the whole is fit to publish. Adjudicator rather than reviewer alone, and the distinction is the accountability: a reviewer reports, an adjudicator settles. The word is used here because the passage reaching this lane is one where a checker and a translator disagree, and somebody has to choose between them WITH a reason. That reason is the record, not the choice.</td>
+      <td>The only lane here that JUDGES. Mechanical translation QA produces candidates — a flagged passage, a terminology miss, a staleness verdict — and a candidate is not a finding until somebody decides it is. This lane is where that decision is made, and it is the lane that signs the translation off, because the actor who resolves a disputed passage is the one who can say the whole is fit to publish.<br />Adjudicator rather than reviewer alone, and the distinction is the accountability: a reviewer reports, an adjudicator settles. The word is used here because the passage reaching this lane is one where a checker and a translator disagree, and somebody has to choose between them WITH a reason. That reason is the record, not the choice.</td>
     </tr>
   </tbody>
 </table></div>
@@ -818,61 +822,61 @@
       <td><strong>Extract translatable strings (POT generation)</strong><br /><code class="language-plaintext highlighter-rouge">Task_PotExtract</code></td>
       <td>Agent / platform (automated)</td>
       <td><a href="../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a></td>
-      <td>Scans content nodes and extracts translatable strings to .pot files. Excludes math, labels, code, and Lean companions. Tool: translation_extract MCP tool or bun run content/pipeline/pot-extract.ts</td>
+      <td>Scans content nodes and extracts translatable strings<br />to .pot files. Excludes math, labels, code, and Lean companions.<br />Tool: translation_extract MCP tool or bun run content/pipeline/pot-extract.ts</td>
     </tr>
     <tr>
       <td><strong>Produce translation (PO file)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Translate</code></td>
       <td>Agent / platform (automated)</td>
       <td><a href="../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a></td>
-      <td>Translation of .pot → .po by one of: 1. Existing PO from smart-base (Weblate/Crowdin/Launchpad) 2. FHIR/translation-utils po-translate CLI (DeepL/Google, tagged #fuzzy) 3. Agent (LLM) translation 4. Human translator Result: <locale>/block.po with msgid/msgstr pairs.</locale></td>
+      <td>Translation of .pot → .po by one of:<br />1. Existing PO from smart-base (Weblate/Crowdin/Launchpad)<br />2. FHIR/translation-utils po-translate CLI (DeepL/Google, tagged #fuzzy)<br />3. Agent (LLM) translation<br />4. Human translator<br />Result: <locale>/block.po with msgid/msgstr pairs.</locale></td>
     </tr>
     <tr>
       <td><strong>Inject translations (PO → Markdown)</strong><br /><code class="language-plaintext highlighter-rouge">Task_PoInject</code></td>
       <td>Agent / platform (automated)</td>
       <td><a href="../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a></td>
-      <td>Reads .po file and source .md, substitutes msgstr for msgid, preserves non-translatable elements, writes translated .md to translations/<locale>/block.md. Tool: translation_inject MCP tool or bun run content/pipeline/po-inject.ts</locale></td>
+      <td>Reads .po file and source .md, substitutes msgstr for<br />msgid, preserves non-translatable elements, writes translated .md to<br />translations/<locale>/block.md.<br />Tool: translation_inject MCP tool or bun run content/pipeline/po-inject.ts</locale></td>
     </tr>
     <tr>
       <td><strong>Round-trip translation QA (back-translate)</strong><br /><code class="language-plaintext highlighter-rouge">Task_RoundTripQA</code></td>
       <td>Agent / platform (automated)</td>
       <td><a href="../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a></td>
-      <td>Bean: folio-assistant-ktt2 Back-translates the target-language .md into the source language and compares meaning with the original. Detects semantic drift and terminology misses that a forward-only fluency check cannot see. Tool: translation_validate MCP tool</td>
+      <td>Bean: folio-assistant-ktt2<br />Back-translates the target-language .md into the source language and<br />compares meaning with the original. Detects semantic drift and<br />terminology misses that a forward-only fluency check cannot see.<br />Tool: translation_validate MCP tool</td>
     </tr>
     <tr>
       <td><strong>Adjudicate flagged passage (human reviewer)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Adjudicate</code></td>
       <td>Human reviewer / adjudicator</td>
       <td>calls <a href="adjudication.html">Adjudication</a><br /><a href="../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a><br /><a href="../reference/skill-instructions/adjudication.html"><code class="language-plaintext highlighter-rouge">adjudication</code></a></td>
-      <td>A human SME or editor reviews the flagged passage. They may: - Accept the translation as-is (false positive) - Edit the translation and re-run QA - Reject and request re-translation The round trip establishes that two readings differ. Which one is right is a human call.</td>
+      <td>A human SME or editor reviews the flagged passage.<br />They may:<br />- Accept the translation as-is (false positive)<br />- Edit the translation and re-run QA<br />- Reject and request re-translation<br />The round trip establishes that two readings differ. Which one is<br />right is a human call.</td>
     </tr>
     <tr>
       <td><strong>Edit the flagged passage and re-inject</strong><br /><code class="language-plaintext highlighter-rouge">Task_EditTranslation</code></td>
       <td>Human reviewer / adjudicator</td>
       <td><a href="../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a></td>
-      <td>The reviewer corrects the passage in the PO rather than sending the whole translation back. Flows to Task_PoInject, so the round-trip QA runs again over the corrected text — “edit the translation and re-run QA”, which is what the adjudication step has always offered and what this process could not do. A userTask, not a service task: this is the one step here where a person edits content, and the lane’s actor is the reviewer who just adjudicated.</td>
+      <td>The reviewer corrects the passage in the PO rather than sending the whole translation back. Flows to Task_PoInject, so the round-trip QA runs again over the corrected text — “edit the translation and re-run QA”, which is what the adjudication step has always offered and what this process could not do.<br />A userTask, not a service task: this is the one step here where a person edits content, and the lane’s actor is the reviewer who just adjudicated.</td>
     </tr>
     <tr>
       <td><strong>Write status.json (unofficial)</strong><br /><code class="language-plaintext highlighter-rouge">Task_WriteUnofficial</code></td>
       <td>Agent / platform (automated)</td>
       <td><a href="../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a></td>
-      <td>Records the translation as unofficial in translations/<locale>/status.json: { official: false, generatedBy: "...", generatedAt: "..." } The translation is usable but carries a visible warning badge.</locale></td>
+      <td>Records the translation as unofficial in<br />translations/<locale>/status.json:<br />{ official: false, generatedBy: "...", generatedAt: "..." }<br />The translation is usable but carries a visible warning badge.</locale></td>
     </tr>
     <tr>
       <td><strong>Sign off translation (human adjudicator)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Signoff</code></td>
       <td>Human reviewer / adjudicator</td>
       <td><a href="../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a></td>
-      <td>A human reviewer signs off the translation at the chosen hierarchy level (block, section, chapter, or folio). Updates status.json: { official: true, signedOffBy: “…”, signedOffAt: “…”, sourceHash: “…” } Tool: translation_signoff MCP tool</td>
+      <td>A human reviewer signs off the translation at the<br />chosen hierarchy level (block, section, chapter, or folio).<br />Updates status.json:<br />{ official: true, signedOffBy: “…”, signedOffAt: “…”, sourceHash: “…” }<br />Tool: translation_signoff MCP tool</td>
     </tr>
     <tr>
       <td><strong>Write status.json (official)</strong><br /><code class="language-plaintext highlighter-rouge">Task_WriteOfficial</code></td>
       <td>Agent / platform (automated)</td>
       <td><a href="../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a></td>
-      <td>Records the sign-off with the SHA-256 of the source .md, enabling staleness detection on future source changes.</td>
+      <td>Records the sign-off with the SHA-256 of the source<br />.md, enabling staleness detection on future source changes.</td>
     </tr>
     <tr>
       <td><strong>Check staleness (source hash)</strong><br /><code class="language-plaintext highlighter-rouge">Task_StalenessCheck</code></td>
       <td>Agent / platform (automated)</td>
       <td><a href="../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a></td>
-      <td>On source content change: computes sha256(source.md) and compares to each translation’s status.json sourceHash. If they differ, sets stale: true. The translation remains visible with a “stale — needs re-adjudication” indicator.</td>
+      <td>On source content change: computes sha256(source.md)<br />and compares to each translation’s status.json sourceHash. If they<br />differ, sets stale: true. The translation remains visible with a<br />“stale — needs re-adjudication” indicator.</td>
     </tr>
   </tbody>
 </table></div>
@@ -903,7 +907,7 @@
     </tr>
     <tr>
       <td><strong>Which of the three?</strong><br /><code class="language-plaintext highlighter-rouge">Gateway_PostQA</code></td>
-      <td>The three this diagram’s own adjudication step has always promised — <em>“Accept the translation as-is (false positive) / Edit the translation and re-run QA / Reject and request re-translation”</em> — and until 2026-09-23 it offered TWO. <code class="language-plaintext highlighter-rouge">edit</code> had no branch, so a reviewer who wanted to correct a passage had to choose between accepting a wrong one and discarding a good translation wholesale. Bean <code class="language-plaintext highlighter-rouge">bvuk</code>, found while wiring the codes. <code class="language-plaintext highlighter-rouge">edit</code> and <code class="language-plaintext highlighter-rouge">retranslate</code> re-enter at different points, which is the difference: an edit keeps the translation and re-injects, so QA re-runs over the corrected PO; a re-translation goes back to Task_Translate and produces a new one. Renamed from “QA passed?”, which was the wrong question: its only incoming flow is the adjudication’s, so it never read a QA result.</td>
+      <td>The three this diagram’s own adjudication step has always promised — <em>“Accept the translation as-is (false positive) / Edit the translation and re-run QA / Reject and request re-translation”</em> — and until 2026-09-23 it offered TWO. <code class="language-plaintext highlighter-rouge">edit</code> had no branch, so a reviewer who wanted to correct a passage had to choose between accepting a wrong one and discarding a good translation wholesale. Bean <code class="language-plaintext highlighter-rouge">bvuk</code>, found while wiring the codes.<br /><code class="language-plaintext highlighter-rouge">edit</code> and <code class="language-plaintext highlighter-rouge">retranslate</code> re-enter at different points, which is the difference: an edit keeps the translation and re-injects, so QA re-runs over the corrected PO; a re-translation goes back to Task_Translate and produces a new one.<br />Renamed from “QA passed?”, which was the wrong question: its only incoming flow is the adjudication’s, so it never read a QA result.</td>
       <td><strong>Reject — re-translate</strong> → Produce translation (PO file)<br /><strong>Accept as-is (false positive)</strong> → Write status.json (unofficial)<br /><strong>Edit and re-run QA</strong> → Edit the flagged passage and re-inject</td>
     </tr>
     <tr>
@@ -1104,7 +1108,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36305287228"><code>da6f666</code></a> &middot; 2026-09-27T08:09:52Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36305731493"><code>fb5bff2</code></a> &middot; 2026-09-27T08:18:28Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

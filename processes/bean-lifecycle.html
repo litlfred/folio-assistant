@@ -493,32 +493,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790497116">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790497116">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790497116">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790497116">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790497116">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790497116">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -535,7 +535,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790496595" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790497116" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -741,7 +741,11 @@
 
 <p><code class="language-plaintext highlighter-rouge">Process_BeanLifecycle</code> · strict (defaulted) · 8 step(s)</p>
 
-<p>The whole life of a work-plan item, and the rules that make one agent’s bean legible to another: check before you create, claim before you work, keep the body current as you go, and end it in a state that says why. You are in this process the moment durable work is identified — which is before the first tool call, not after the work is done. The second lane exists because a bean you did not open is not yours to close: coordination replaces a decision you are not entitled to make. The one irreversible thing is refused outright. Unwanted work is SCRAPPED with its reasons, never deleted, because a scrapped bean stops the next agent re-entering a dead end while a deleted one leaves a sibling unable to tell abandonment from accident.</p>
+<p>The whole life of a work-plan item, and the rules that make one agent’s bean legible to another: check before you create, claim before you work, keep the body current as you go, and end it in a state that says why.</p>
+
+<p>You are in this process the moment durable work is identified — which is before the first tool call, not after the work is done. The second lane exists because a bean you did not open is not yours to close: coordination replaces a decision you are not entitled to make.</p>
+
+<p>The one irreversible thing is refused outright. Unwanted work is SCRAPPED with its reasons, never deleted, because a scrapped bean stops the next agent re-entering a dead end while a deleted one leaves a sibling unable to tell abandonment from accident.</p>
 
 <p><img src="../assets/img/workflows/bean-lifecycle.svg" alt="BPMN diagram: Agent bean lifecycle" style="max-width:100%" /></p>
 <h2 id="how-it-connects">
@@ -813,49 +817,49 @@
       <td><strong>Check before you create (exact-title search)</strong><br /><code class="language-plaintext highlighter-rouge">Task_CheckExists</code></td>
       <td>Agent (this session)</td>
       <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
-      <td>STRICT. <code class="language-plaintext highlighter-rouge">beans create</code> is not idempotent: it mints a fresh id every call and dedupes on nothing, so re-entering a step duplicates the plan instead of no-op’ing. In the qou folio an unguarded re-run produced 14,688 duplicate beans — 92% of every open bean — which starved the idle-backlog policy of signal and collided with 15 real ids.</td>
+      <td>STRICT. <code class="language-plaintext highlighter-rouge">beans create</code> is not idempotent: it mints a<br />fresh id every call and dedupes on nothing, so re-entering a step duplicates<br />the plan instead of no-op’ing. In the qou folio an unguarded re-run produced<br />14,688 duplicate beans — 92% of every open bean — which starved the<br />idle-backlog policy of signal and collided with 15 real ids.</td>
     </tr>
     <tr>
       <td><strong>Create the bean (agent CLI, not an engine op)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Create</code></td>
       <td>Agent (this session)</td>
       <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
-      <td><code class="language-plaintext highlighter-rouge">beans create "&lt;title&gt;"</code>. This is the AGENT’s call. The workflow engine has no <code class="language-plaintext highlighter-rouge">create</code> op — its vocabulary is claim, note and resolve, all of which act on an instance’s existing bean.</td>
+      <td><code class="language-plaintext highlighter-rouge">beans create "&lt;title&gt;"</code>. This is the AGENT’s call.<br />The workflow engine has no <code class="language-plaintext highlighter-rouge">create</code> op — its vocabulary is claim, note and<br />resolve, all of which act on an instance’s existing bean.</td>
     </tr>
     <tr>
       <td><strong>Leave it alone (coordinate instead)</strong><br /><code class="language-plaintext highlighter-rouge">Task_LeaveAlone</code></td>
       <td>Sibling session or human (not yours to close)</td>
       <td><a href="../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a></td>
-      <td>Never resolve, scrap or delete a bean another session or a human owns. Claiming is how two sessions avoid picking the same item; closing someone else’s is how one of them loses work it had not finished reporting.</td>
+      <td>Never resolve, scrap or delete a bean another session<br />or a human owns. Claiming is how two sessions avoid picking the same item;<br />closing someone else’s is how one of them loses work it had not finished<br />reporting.</td>
     </tr>
     <tr>
       <td><strong>Claim it (status: in-progress)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Claim</code></td>
       <td>Agent (this session)</td>
       <td><a href="../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a></td>
-      <td>Idempotent. Claim BEFORE working, and note the branch, so a sibling session can see the item is taken rather than discovering it by collision.</td>
+      <td>Idempotent. Claim BEFORE working, and note the branch,<br />so a sibling session can see the item is taken rather than discovering it by<br />collision.</td>
     </tr>
     <tr>
       <td><strong>Work, keeping the body current (this is ‘edit’)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Work</code></td>
       <td>Agent (this session)</td>
       <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
-      <td>Editing a bean is not a separate ceremony: check off todo items as they happen, append measurements with the command and date that produced them, and record what you now know that the next agent does not. A bean whose body is a title is a placeholder, not a plan.</td>
+      <td>Editing a bean is not a separate ceremony: check off<br />todo items as they happen, append measurements with the command and date that<br />produced them, and record what you now know that the next agent does not. A<br />bean whose body is a title is a placeholder, not a plan.</td>
     </tr>
     <tr>
       <td><strong>Complete (no unchecked todos left)</strong><br /><code class="language-plaintext highlighter-rouge">Task_Complete</code></td>
       <td>Agent (this session)</td>
       <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
-      <td>Only once nothing is unchecked, and with a summary of what changed. The engine’s <code class="language-plaintext highlighter-rouge">resolve</code> completes a bean only after the instance itself has completed — whether work is done is a judgement, and a bean is not closed on someone else’s say-so.</td>
+      <td>Only once nothing is unchecked, and with a summary of<br />what changed. The engine’s <code class="language-plaintext highlighter-rouge">resolve</code> completes a bean only after the instance<br />itself has completed — whether work is done is a judgement, and a bean is not<br />closed on someone else’s say-so.</td>
     </tr>
     <tr>
       <td><strong>Scrap with reasons NEVER delete</strong><br /><code class="language-plaintext highlighter-rouge">Task_Scrap</code></td>
       <td>Agent (this session)</td>
       <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
-      <td><code class="language-plaintext highlighter-rouge">status: scrapped</code>, plus a “Reasons for Scrapping” section. This is what “disable” means here — the CLI has no disabled state; its vocabulary is draft, todo, in-progress, completed, scrapped. DELETION IS NEVER THE ANSWER, even though <code class="language-plaintext highlighter-rouge">beans delete</code> exists. A scrapped bean records that the work was considered and rejected, and why; a deleted one leaves a sibling session unable to tell abandonment from accident, and leaves the next agent free to re-open the same dead end.</td>
+      <td><code class="language-plaintext highlighter-rouge">status: scrapped</code>, plus a “Reasons for Scrapping”<br />section. This is what “disable” means here — the CLI has no disabled state;<br />its vocabulary is draft, todo, in-progress, completed, scrapped.<br />DELETION IS NEVER THE ANSWER, even though <code class="language-plaintext highlighter-rouge">beans delete</code> exists. A scrapped<br />bean records that the work was considered and rejected, and why; a deleted one<br />leaves a sibling session unable to tell abandonment from accident, and leaves<br />the next agent free to re-open the same dead end.</td>
     </tr>
     <tr>
       <td><strong>Record the blocker and hand back</strong><br /><code class="language-plaintext highlighter-rouge">Task_RecordBlocker</code></td>
       <td>Agent (this session)</td>
       <td><a href="../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a></td>
-      <td>Blocked is not scrapped. Set <code class="language-plaintext highlighter-rouge">--blocked-by</code>, say in the body what would unblock it, and return it to <code class="language-plaintext highlighter-rouge">todo</code> so it is visible to whoever can act. An in-progress bean nobody is progressing reads as active work.</td>
+      <td>Blocked is not scrapped. Set <code class="language-plaintext highlighter-rouge">--blocked-by</code>, say in the<br />body what would unblock it, and return it to <code class="language-plaintext highlighter-rouge">todo</code> so it is visible to whoever<br />can act. An in-progress bean nobody is progressing reads as active work.</td>
     </tr>
   </tbody>
 </table></div>
@@ -1087,7 +1091,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36305287228"><code>da6f666</code></a> &middot; 2026-09-27T08:09:52Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36305731493"><code>fb5bff2</code></a> &middot; 2026-09-27T08:18:28Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

@@ -493,32 +493,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790497116">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790497116">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790497116">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790497116">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790497116">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790497116">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -535,7 +535,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790496595" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790497116" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -741,7 +741,13 @@
 
 <p><code class="language-plaintext highlighter-rouge">Process_SwotAnalysis</code> · strict (defaulted) · 7 step(s)</p>
 
-<p>Situation analysis over two axes — internal/external and helpful/harmful — producing the raw material a decision is made from, and NEVER the decision. THE ONE STRUCTURAL CLAIM THIS DIAGRAM MAKES: there is no path through it that decides anything. Every completed run ends either at a recorded situation or at a handoff into <code class="language-plaintext highlighter-rouge">options-analysis</code>, which selects a decision methodology. That is not a modelling preference; it is the <code class="language-plaintext highlighter-rouge">swot</code> methodology’s stated refusal drawn so it cannot be skipped. Gürel and Tat’s conclusion is that SWOT gives “the raw material needed to perform more in-depth strategic analysis” but “cannot show them how to achieve a competitive advantage”, and that it must not become “an end in itself”. A diagram with a decide-here activity would contradict the methodology it implements. WHY EXTERNAL IS SCANNED FIRST: Weihrich (1982), reported in the source, holds that the only logical starting point is opportunities and threats — they are outside the organisation and largely beyond its control, and must be managed using its strengths and weaknesses. The order is his argument, rendered; it is not a house preference. WHAT IT DOES NOT DO: it does not rank the factors it finds. The source is explicit that SWOT has no way to prioritise — “quantity does not mean quality” — and the long list of quantitative extensions it surveys (AHP, ANP, their fuzzy variants, SMART, SMAA-O, MADM, TRIZ) is NOT adopted here. An activity that scored or weighted factors would be inventing the part of the method that does not exist.</p>
+<p>Situation analysis over two axes — internal/external and helpful/harmful — producing the raw material a decision is made from, and NEVER the decision.</p>
+
+<p>THE ONE STRUCTURAL CLAIM THIS DIAGRAM MAKES: there is no path through it that decides anything. Every completed run ends either at a recorded situation or at a handoff into <code class="language-plaintext highlighter-rouge">options-analysis</code>, which selects a decision methodology. That is not a modelling preference; it is the <code class="language-plaintext highlighter-rouge">swot</code> methodology’s stated refusal drawn so it cannot be skipped. Gürel and Tat’s conclusion is that SWOT gives “the raw material needed to perform more in-depth strategic analysis” but “cannot show them how to achieve a competitive advantage”, and that it must not become “an end in itself”. A diagram with a decide-here activity would contradict the methodology it implements.</p>
+
+<p>WHY EXTERNAL IS SCANNED FIRST: Weihrich (1982), reported in the source, holds that the only logical starting point is opportunities and threats — they are outside the organisation and largely beyond its control, and must be managed using its strengths and weaknesses. The order is his argument, rendered; it is not a house preference.</p>
+
+<p>WHAT IT DOES NOT DO: it does not rank the factors it finds. The source is explicit that SWOT has no way to prioritise — “quantity does not mean quality” — and the long list of quantitative extensions it surveys (AHP, ANP, their fuzzy variants, SMART, SMAA-O, MADM, TRIZ) is NOT adopted here. An activity that scored or weighted factors would be inventing the part of the method that does not exist.</p>
 
 <p><img src="../assets/img/workflows/swot-analysis.svg" alt="BPMN diagram: SWOT situation analysis" style="max-width:100%" /></p>
 <h2 id="how-it-connects">
@@ -814,43 +820,43 @@
       <td><strong>Name the subject and the level</strong><br /><code class="language-plaintext highlighter-rouge">A_FrameSubject</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/swot-analysis.html"><code class="language-plaintext highlighter-rouge">swot-analysis</code></a></td>
-      <td>One sentence naming WHAT is being analysed and at WHICH level — individual, organisational, national, international. The source requires this before anything is listed: “the classification of a variable also depends on the purpose of the practice”, and the criteria for assigning a variable to a quadrant “may be more difficult to clarify if the methodology is not used for a company but for a country”. It also bounds the known limitation that SWOT “is rarely deployed at lower than the organization level”, where one scan drives strategy for units its factors do not hold equally for. Naming the level does not remove that risk; it makes it visible in the record.</td>
+      <td>One sentence naming WHAT is being analysed and at WHICH level — individual, organisational, national, international. The source requires this before anything is listed: “the classification of a variable also depends on the purpose of the practice”, and the criteria for assigning a variable to a quadrant “may be more difficult to clarify if the methodology is not used for a company but for a country”.<br />It also bounds the known limitation that SWOT “is rarely deployed at lower than the organization level”, where one scan drives strategy for units its factors do not hold equally for. Naming the level does not remove that risk; it makes it visible in the record.</td>
     </tr>
     <tr>
       <td><strong>Scan the environment opportunities and threats</strong><br /><code class="language-plaintext highlighter-rouge">A_ScanExternal</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/swot-analysis.html"><code class="language-plaintext highlighter-rouge">swot-analysis</code></a></td>
-      <td>The external axis, first, per Weihrich. Work the source’s categories of environmental change rather than free-associating: societal, governmental, economic, competitive, supplier and market changes, each item recorded with what it impacts. An opportunity is an external element that gives benefit; a threat is one that could cause trouble. Both are outside the subject and largely beyond its control — that is what puts them on this axis, not whether they feel good or bad.</td>
+      <td>The external axis, first, per Weihrich. Work the source’s categories of environmental change rather than free-associating: societal, governmental, economic, competitive, supplier and market changes, each item recorded with what it impacts.<br />An opportunity is an external element that gives benefit; a threat is one that could cause trouble. Both are outside the subject and largely beyond its control — that is what puts them on this axis, not whether they feel good or bad.</td>
     </tr>
     <tr>
       <td><strong>Scan the subject strengths and weaknesses</strong><br /><code class="language-plaintext highlighter-rouge">A_ScanInternal</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/swot-analysis.html"><code class="language-plaintext highlighter-rouge">swot-analysis</code></a></td>
-      <td>The internal axis. Work the source’s functional checklist rather than a blank page: marketing, research and development, management information systems, management team, operations, finance, human resources. A strength gives advantage over others in the field; a weakness places the subject at a disadvantage relative to others. Both are attributes OF the subject. The source’s warning belongs to this step specifically: listing strengths on paper “is very different from testing the organization and experiencing the strengths at work”, so a strength recorded here is a claim, and where evidence for it exists it is cited.</td>
+      <td>The internal axis. Work the source’s functional checklist rather than a blank page: marketing, research and development, management information systems, management team, operations, finance, human resources.<br />A strength gives advantage over others in the field; a weakness places the subject at a disadvantage relative to others. Both are attributes OF the subject. The source’s warning belongs to this step specifically: listing strengths on paper “is very different from testing the organization and experiencing the strengths at work”, so a strength recorded here is a claim, and where evidence for it exists it is cited.</td>
     </tr>
     <tr>
       <td><strong>Pool knowledge across participants</strong><br /><code class="language-plaintext highlighter-rouge">A_GroupReview</code></td>
       <td>Stakeholder</td>
       <td><a href="../reference/skill-instructions/swot-analysis.html"><code class="language-plaintext highlighter-rouge">swot-analysis</code></a></td>
-      <td>The four lists are reviewed by more than the person who wrote them. This is the method’s own answer to its own bias limitation, and it is a distinct activity rather than advice attached to the scans, because an activity can be recorded as not performed and a recommendation cannot. Disagreement about which quadrant a factor belongs in is an OUTPUT of this step, not a failure of it — it feeds A_RecordAmbiguous.</td>
+      <td>The four lists are reviewed by more than the person who wrote them. This is the method’s own answer to its own bias limitation, and it is a distinct activity rather than advice attached to the scans, because an activity can be recorded as not performed and a recommendation cannot.<br />Disagreement about which quadrant a factor belongs in is an OUTPUT of this step, not a failure of it — it feeds A_RecordAmbiguous.</td>
     </tr>
     <tr>
       <td><strong>Record what did not classify cleanly</strong><br /><code class="language-plaintext highlighter-rouge">A_RecordAmbiguous</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/swot-analysis.html"><code class="language-plaintext highlighter-rouge">swot-analysis</code></a></td>
-      <td>Factors that sit in two quadrants, or in none, are written down as such. The source states this as inherent rather than as analyst error: “the same factor can be fitted in two categories. A factor can be a strength and a weakness at the same time.” It adds the two drifts — strengths not maintained become weaknesses, and opportunities not taken but taken by competitors become threats. A scan that silently forced every factor into one quadrant would report a cleanliness the method does not have. This is the same third-state discipline the rest of this repository applies to “could not determine”: an unclassifiable factor is a finding, not a blank.</td>
+      <td>Factors that sit in two quadrants, or in none, are written down as such. The source states this as inherent rather than as analyst error: “the same factor can be fitted in two categories. A factor can be a strength and a weakness at the same time.” It adds the two drifts — strengths not maintained become weaknesses, and opportunities not taken but taken by competitors become threats.<br />A scan that silently forced every factor into one quadrant would report a cleanliness the method does not have. This is the same third-state discipline the rest of this repository applies to “could not determine”: an unclassifiable factor is a finding, not a blank.</td>
     </tr>
     <tr>
       <td><strong>Cross the axes into SO, WO, ST, WT</strong><br /><code class="language-plaintext highlighter-rouge">A_Cross</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/swot-analysis.html"><code class="language-plaintext highlighter-rouge">swot-analysis</code></a></td>
-      <td>The TOWS matching step, and the only step that produces anything actionable. Strengths and weaknesses across, opportunities and threats down, and each cell names the strategy the pairing implies: SO — achieve opportunities that greatly match the strengths; WO — overcome weaknesses to attain opportunities; ST — use strengths to reduce vulnerability to threats; WT — prevent weaknesses, to avoid becoming more susceptible to threats. A SWOT that stops at four lists is the failure the source names as its central one. This step is what the process exists to reach. It produces CANDIDATE strategies, not a chosen one, and they are not ranked — see the process documentation on why no scoring activity exists.</td>
+      <td>The TOWS matching step, and the only step that produces anything actionable. Strengths and weaknesses across, opportunities and threats down, and each cell names the strategy the pairing implies: SO — achieve opportunities that greatly match the strengths; WO — overcome weaknesses to attain opportunities; ST — use strengths to reduce vulnerability to threats; WT — prevent weaknesses, to avoid becoming more susceptible to threats.<br />A SWOT that stops at four lists is the failure the source names as its central one. This step is what the process exists to reach.<br />It produces CANDIDATE strategies, not a chosen one, and they are not ranked — see the process documentation on why no scoring activity exists.</td>
     </tr>
     <tr>
       <td><strong>Hand the candidates to a decision methodology</strong><br /><code class="language-plaintext highlighter-rouge">A_HandOff</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/methodology-adoption.html"><code class="language-plaintext highlighter-rouge">methodology-adoption</code></a></td>
-      <td>The candidate strategies go to <code class="language-plaintext highlighter-rouge">options-analysis</code>, which selects the decision methodology by context and applies it. SWOT does not make that selection and does not make the decision. What is handed over includes the ambiguities from A_RecordAmbiguous and the fact that the candidates are UNRANKED. A receiving methodology that assumed an ordered list would be reading a priority SWOT never established.</td>
+      <td>The candidate strategies go to <code class="language-plaintext highlighter-rouge">options-analysis</code>, which selects the decision methodology by context and applies it. SWOT does not make that selection and does not make the decision.<br />What is handed over includes the ambiguities from A_RecordAmbiguous and the fact that the candidates are UNRANKED. A receiving methodology that assumed an ordered list would be reading a priority SWOT never established.</td>
     </tr>
   </tbody>
 </table></div>
@@ -876,7 +882,7 @@
   <tbody>
     <tr>
       <td><strong>Does a decision follow?</strong><br /><code class="language-plaintext highlighter-rouge">GW_DecisionFollows</code></td>
-      <td>Is this scan feeding a choice that has to be made now, or is it standing situation analysis? DELIBERATELY NOT DMN-BACKED. Whether a decision follows is a fact about the caller’s intent, not a function of the analysis’s contents, so there is nothing recurring for a table to compute. <code class="language-plaintext highlighter-rouge">dmn</code>’s own test — would the same inputs have to produce the same branch next month — fails here, and a table would assert a repeatability this does not have. Both branches are completed runs. Neither is a skipped step.</td>
+      <td>Is this scan feeding a choice that has to be made now, or is it standing situation analysis?<br />DELIBERATELY NOT DMN-BACKED. Whether a decision follows is a fact about the caller’s intent, not a function of the analysis’s contents, so there is nothing recurring for a table to compute. <code class="language-plaintext highlighter-rouge">dmn</code>’s own test — would the same inputs have to produce the same branch next month — fails here, and a table would assert a repeatability this does not have.<br />Both branches are completed runs. Neither is a skipped step.</td>
       <td><strong>yes</strong> → Hand the candidates to a decision methodology<br /><strong>no</strong> → Situation recorded; no decision in play</td>
     </tr>
   </tbody>
@@ -1072,7 +1078,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36305287228"><code>da6f666</code></a> &middot; 2026-09-27T08:09:52Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36305731493"><code>fb5bff2</code></a> &middot; 2026-09-27T08:18:28Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

@@ -493,32 +493,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790497116">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790497116">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790497116">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790497116">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790497116">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790496595">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790497116">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -535,7 +535,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790496595" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790497116" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -741,7 +741,15 @@
 
 <p><code class="language-plaintext highlighter-rouge">Process_FeatureStaging</code> · strict (defaulted) · 12 step(s)</p>
 
-<p>THE LIFECYCLE OF A REVIEW PREVIEW, drawn rather than described. Bean <code class="language-plaintext highlighter-rouge">7yvd</code>, owner: “make sure all workflows documented as bpmn”. This is the first <code class="language-plaintext highlighter-rouge">.github/workflows/*.yml</code> documented here, and it was chosen because its shape was the least visible: three jobs, eight <code class="language-plaintext highlighter-rouge">if:</code> branches, a confirmation gate and a deletion trigger, written down only in a sixty-line YAML comment. Three entry points, and they are three different processes sharing a file. A pull request opened or pushed to STAGES a preview. A pull request CLOSED asks whether the preview should go. A dispatch removes ONE preview that the first two can no longer reach — bean <code class="language-plaintext highlighter-rouge">w2g5</code>: the health sweep can only ever report a preview whose pull request is already closed, so by the time anybody reads the finding the event has fired, the job has run and the label was absent. Labelling afterwards fires nothing. TWO GATEWAYS, and both are three-state rather than yes/no. <code class="language-plaintext highlighter-rouge">Removal confirmed?</code> reads a merge as confirmation in its own right (bean <code class="language-plaintext highlighter-rouge">1feu</code>) while still requiring a label for a close without a merge. <code class="language-plaintext highlighter-rouge">Still in use?</code> refuses on a live signal AND on could-not-tell, because a preflight that has gone blind must not read as permission. EVERY PATH THAT CHANGES <code class="language-plaintext highlighter-rouge">STAGING/</code> WRITES TO THE RENDER LOG, and the two removal paths write the record in the SAME COMMIT as the removal. A separate log push can fail alone and leave a preview that vanished with nothing saying why, which is the state bean <code class="language-plaintext highlighter-rouge">plj1</code> left the publish branch in for months. The single human step is the dispatch confirmation. Everything else is mechanical, which is what makes <code class="language-plaintext highlighter-rouge">build-pipeline</code> the right lane rather than a convenient one.</p>
+<p>THE LIFECYCLE OF A REVIEW PREVIEW, drawn rather than described. Bean <code class="language-plaintext highlighter-rouge">7yvd</code>, owner: “make sure all workflows documented as bpmn”. This is the first <code class="language-plaintext highlighter-rouge">.github/workflows/*.yml</code> documented here, and it was chosen because its shape was the least visible: three jobs, eight <code class="language-plaintext highlighter-rouge">if:</code> branches, a confirmation gate and a deletion trigger, written down only in a sixty-line YAML comment.</p>
+
+<p>Three entry points, and they are three different processes sharing a file. A pull request opened or pushed to STAGES a preview. A pull request CLOSED asks whether the preview should go. A dispatch removes ONE preview that the first two can no longer reach — bean <code class="language-plaintext highlighter-rouge">w2g5</code>: the health sweep can only ever report a preview whose pull request is already closed, so by the time anybody reads the finding the event has fired, the job has run and the label was absent. Labelling afterwards fires nothing.</p>
+
+<p>TWO GATEWAYS, and both are three-state rather than yes/no. <code class="language-plaintext highlighter-rouge">Removal confirmed?</code> reads a merge as confirmation in its own right (bean <code class="language-plaintext highlighter-rouge">1feu</code>) while still requiring a label for a close without a merge. <code class="language-plaintext highlighter-rouge">Still in use?</code> refuses on a live signal AND on could-not-tell, because a preflight that has gone blind must not read as permission.</p>
+
+<p>EVERY PATH THAT CHANGES <code class="language-plaintext highlighter-rouge">STAGING/</code> WRITES TO THE RENDER LOG, and the two removal paths write the record in the SAME COMMIT as the removal. A separate log push can fail alone and leave a preview that vanished with nothing saying why, which is the state bean <code class="language-plaintext highlighter-rouge">plj1</code> left the publish branch in for months.</p>
+
+<p>The single human step is the dispatch confirmation. Everything else is mechanical, which is what makes <code class="language-plaintext highlighter-rouge">build-pipeline</code> the right lane rather than a convenient one.</p>
 
 <p><img src="../assets/img/workflows/feature-staging.svg" alt="BPMN diagram: Staging a feature branch preview, and taking it down" style="max-width:100%" /></p>
 <h2 id="how-it-connects">
@@ -907,7 +915,7 @@
   <tbody>
     <tr>
       <td><strong>Removal confirmed?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Confirmed</code></td>
-      <td>THREE inputs, two outcomes, and bean <code class="language-plaintext highlighter-rouge">1feu</code> set the split: a MERGED pull request needs no label, because the merge IS the confirmation — a person decided the content belongs on <code class="language-plaintext highlighter-rouge">main</code>, which says more about the preview than a label does. A pull request closed WITHOUT merging still needs <code class="language-plaintext highlighter-rouge">staging:cleanup</code>, because there the preview is the only rendering of that work: not redundant, the last copy. The branch taken is emitted as <code class="language-plaintext highlighter-rouge">reason=merged \| labelled \| closed-unmerged-and-unlabelled</code> and written into the log entry, so an audit of a removal can tell which rule did it.</td>
+      <td>THREE inputs, two outcomes, and bean <code class="language-plaintext highlighter-rouge">1feu</code> set the split: a MERGED pull request needs no label, because the merge IS the confirmation — a person decided the content belongs on <code class="language-plaintext highlighter-rouge">main</code>, which says more about the preview than a label does. A pull request closed WITHOUT merging still needs <code class="language-plaintext highlighter-rouge">staging:cleanup</code>, because there the preview is the only rendering of that work: not redundant, the last copy.<br />The branch taken is emitted as <code class="language-plaintext highlighter-rouge">reason=merged \| labelled \| closed-unmerged-and-unlabelled</code> and written into the log entry, so an audit of a removal can tell which rule did it.</td>
       <td><strong>merged, or labelled</strong> → Remove the preview AND append <code class="language-plaintext highlighter-rouge">removed</code> — one commit<br /><strong>closed unmerged, no label</strong> → Append <code class="language-plaintext highlighter-rouge">retained</code>, with why it stays</td>
     </tr>
     <tr>
@@ -1108,7 +1116,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36305287228"><code>da6f666</code></a> &middot; 2026-09-27T08:09:52Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36305731493"><code>fb5bff2</code></a> &middot; 2026-09-27T08:18:28Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
