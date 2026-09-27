@@ -1091,14 +1091,14 @@
     {
       "id": "folio-assistant-6b8u",
       "title": "EXTRACTION: MD_MIN_TEXT_LEN is a threshold in CHARACTERS, so the same table cell is translatable in Arabic and not in English",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T08:56:25Z",
-      "updatedAt": "2026-09-26T13:21:47Z",
+      "updatedAt": "2026-09-27T07:34:04Z",
       "preview": "Found while deriving `.po` catalogues for #206 (bean `tbdg`). Measured\n2026-09-26 on `main` + this branch.\n\n`MD_MIN_TEXT_LEN = 3` in `content/pipeline/pot-extract.ts` gates every one of the\nfour emission paths (heading, paragraph, list-item, blockquote, table-cell). It is\na minimum in **characters**, used as a proxy for \"is there translatable text\nhere\". A character count is not script-neutral, so",
       "file": "beans/defs/folio-assistant-6b8u--extraction-md-min-text-len-is-a-threshold-in-chara.md"
     },
@@ -2038,7 +2038,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T04:14:07Z",
-      "updatedAt": "2026-09-27T05:18:22Z",
+      "updatedAt": "2026-09-27T07:11:26Z",
       "preview": "Split out of `sa8y` 2026-09-26. It was `sa8y`'s last genuinely open item and the\nonly one of its four; the other three are done and `sa8y` closed on the wording\nfix that is its actual subject. It gets its own bean because it is a different\nsubject — `sa8y` is about a finding's **wording**, this is about a gate's\n**range** — and because a wording bean carrying an infrastructure item is how\n`sa8y` c",
       "file": "beans/defs/folio-assistant-bjzs--per-instance-gates-kgaudit-renderbpmn-and-checkwor.md"
     },
@@ -3372,7 +3372,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T11:40:56Z",
-      "updatedAt": "2026-09-26T18:42:46Z",
+      "updatedAt": "2026-09-27T07:46:48Z",
       "preview": "Found 2026-09-26 by LOOKING at a rendered SVG, not by any gate. `render:bpmn:check`\nwas green throughout: it grades whether the committed SVG matches what the\nrenderer produces, and the renderer faithfully produced the wrong thing. That is\nthe currency-vs-validity split `check:artefact-verification` exists for, arriving\nin the diagrams.\n\n## What renders\n\nA BPMN `name` attribute written `&amp;#10;`",
       "file": "beans/defs/folio-assistant-li5y--bpmn-labels-are-double-escaped-126-amp10-across-8.md"
     },
@@ -4470,7 +4470,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T03:31:40Z",
-      "updatedAt": "2026-09-27T05:20:00Z",
+      "updatedAt": "2026-09-27T07:02:49Z",
       "preview": "Measured 2026-09-26 on a clean checkout of `main` at `0ef9543ccf3`, while\nstarting unrelated work. `bun test` **exited 1**:\n\n```\ncat-harness/content/pipeline/translation-block-qa.test.ts:\n(fail) buildReport — absence is absence > a translated block reports coverage,\n       terms and echo — and NO round-trip verdict [5031.09ms]\n  ^ this test timed out after 5000ms.\n\ncat-harness/scripts/tests/profil",
       "file": "beans/defs/folio-assistant-sff8--contention-inflates-a-per-test-budget-35x-and-vxho.md"
     },
@@ -5659,14 +5659,14 @@
     {
       "id": "folio-assistant-y0n2",
       "title": "isPushed() returns false when git COULD NOT ANSWER, so a transient git failure reads as 'you never pushed' — and it made a test fail in the suite and pass alone",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-27T05:11:35Z",
-      "updatedAt": "2026-09-27T05:11:35Z",
+      "updatedAt": "2026-09-27T07:46:48Z",
       "preview": "Found 2026-09-27 while hunting `9v4m`'s remaining clause. Not the test I was\nlooking for, and a better finding than the one I was after.\n\n## The defect\n\n`isPushed` in `cat-harness/scripts/check-head-has-run.ts:360`:\n\n    export function isPushed(repo: string, sha: string): boolean {\n      try {\n        return execFileSync(\"git\", [\"-C\", repo, \"branch\", \"-r\", \"--contains\", sha], {\n          encoding",
       "file": "beans/defs/folio-assistant-y0n2--ispushed-returns-false-when-git-could-not-answer-s.md"
     },
