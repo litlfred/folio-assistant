@@ -37,6 +37,36 @@ Run alone, none of these writes the sidecars: `qa-review`, `profile-conformance-
 
 _2026-09-27T05:19:35Z_ — Claimed by claude/sleepy-babbage-ls90iz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
+## `rmcf` is the same defect, filed a day earlier — and it holds four unanswered remedies
+
+Cross-reference added by another session; **status untouched, this is not mine to
+resolve.** `rmcf` (2026-09-26) records the identical churn: 72 files, the same three
+fields, the same `bun-1.3.14` committed against `bun-1.3.11` local.
+
+**This bean is the better record** — `rmcf` never named the writer, and it only saw
+the churn on a branch, where this one measured pristine `main` at two commits. So
+work this one.
+
+What `rmcf` has that this does not is **four remedies put to the owner and still
+unanswered**:
+
+1. stop recording `engine_version` at all;
+2. stamp only on a real change (the `script_hash` / `source_file` fields, which do
+   **not** move — verified across all 72 on 2026-09-27);
+3. move run provenance out of the committed sidecar entirely;
+4. document the discard as intended behaviour.
+
+Option 2 looked right to the session that filed `rmcf`, on the ground that the three
+churning fields are provenance while the two stable ones are the measurement — so a
+sidecar that stamped only on a real change would stop moving without losing anything
+a reader uses.
+
+One caution that belongs with the remedy, from `#1430`'s `sfjo` rule: **read what a
+regeneration writes before committing it.** Committing this churn stamps a
+*downgrade* — `engine_version` goes backwards whenever the local bun is older than
+main's — as though it were a fresh measurement. That is why the standing practice has
+been to discard rather than commit, and why option 4 is not merely a cop-out: it at
+least makes the discard deliberate.
 
 ## Named, 2026-09-27: `init-folio-qa.test.ts`, and why
 
@@ -54,3 +84,5 @@ The cause was already half-fixed: `saveQaScriptSidecar` skipped a write when not
 - `engine_version` is dropped from the comparison, together with the two `last_run_*` fields. All three describe the run rather than the checker, and no reader uses a script sidecar's `engine_version` for freshness.
 - The test that asserted *"DOES rewrite when the engine version changes"* now asserts the opposite, and its comment says why the reversal was made. A new test checks that a real content change still records the engine it ran under.
 - Verified: the sidecar tests pass 9/9; `init-folio-qa.test.ts` now leaves 0 sidecars changed; and `bun run gates` passes 167/167 and ends clean, which it has not done on any branch while this bean was open.
+
+**This implements `rmcf`'s option 2** (stamp only on a real change), on the owner's choice of "skip no-op writes" put to them in this session. It was built before the cross-reference above was seen, and arrived at the same remedy independently. `rmcf`'s option 1 (stop recording `engine_version`) is NOT taken: the field is still written whenever a real change writes, so a reader still sees the engine of the last content change. The `sfjo` caution holds too: this fix means there is no churn left to commit or discard.
