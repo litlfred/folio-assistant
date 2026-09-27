@@ -97,11 +97,35 @@ export type Criterion = (typeof CRITERIA)[number];
 
 export type Severity = "major" | "minor";
 
+/**
+ * WHY a criterion is unmet, and the two answers are not the same kind of thing.
+ *
+ * `undeclared` — nobody has said yet. A backlog item, and the reason this
+ * whole check is advisory (`2krx`): 2 of 22 directories declare a renderer,
+ * and a hard gate on day one is a wall somebody switches off.
+ *
+ * `unresolvable` — somebody DID say, and what they said points at nothing.
+ * That is never a backlog item; it is a wrong declaration, and this file's own
+ * exit comment already said so — *"a declared-but-missing target is already a
+ * defect rather than a backlog item"* — while having no way to act on it,
+ * because both kinds were `major` and `--strict` is all-or-nothing. So the
+ * backlog held the broken pointers hostage, which is how two of them sat in a
+ * green report: `skills` still named the `cat-harness/` path its id carried
+ * before `iwtn` renamed it, and `swimlane-glossary` named `glossary/`. Bean
+ * `bsay`.
+ *
+ * A FIELD rather than a test on `detail`, because a rule that reads prose is a
+ * rule that breaks when the prose is improved — and this repository has paid
+ * for measuring a thing by its wording before.
+ */
+export type Unmet = "undeclared" | "unresolvable";
+
 export interface CoverageFinding {
   instance: string;
   directory: string;
   criterion: Criterion;
   severity: Severity;
+  unmet: Unmet;
   detail: string;
 }
 
@@ -467,6 +491,7 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
           directory: dir.id,
           criterion,
           severity: unmetObligation ? "major" : "minor",
+          unmet: "undeclared",
           detail:
             criterion === "serialisations"
               ? `no serialisations declared — every declared directory owes json, jsonld and ` +
@@ -494,6 +519,7 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
           directory: dir.id,
           criterion,
           severity: "major",
+          unmet: "unresolvable",
           detail:
             broken.length === refs.length
               ? `declares ${criterion} "${broken.join('", "')}" and it does not resolve`
@@ -626,6 +652,35 @@ if (import.meta.main) {
     process.exit(2);
   }
   console.log(process.argv.includes("--json") ? JSON.stringify(rs, null, 2) : formatReport(rs));
+  // A DECLARATION THAT POINTS AT NOTHING IS FATAL, with no switch — and this
+  // is not a tightening of the advisory, it is the half that was never
+  // advisory in intent. The comment below has always said "a declared-but-
+  // missing target is already a defect rather than a backlog item"; what it
+  // lacked was a way to act on it, since `undeclared` and `unresolvable` were
+  // both `major` and `--strict` fails on either. With the backlog at 20 of 22
+  // that switch cannot be turned on, so the backlog held the broken pointers
+  // hostage and two sat in a green report until bean `bsay`.
+  //
+  // FREE, and only now: both were repaired in the same change, so the count
+  // is zero at the moment of promotion — this repository's rule for every
+  // ratchet, and the only moment it costs nothing.
+  //
+  // It runs BEFORE the `undetermined` exit below on purpose. An instance whose
+  // declaration will not parse is `2`, and a wrong ref inside one that parses
+  // fine is a different repair; reporting the softer one first would hide it.
+  const unresolvable = rs.flatMap((r) => r.findings.filter((f) => f.unmet === "unresolvable"));
+  if (unresolvable.length > 0) {
+    console.error(
+      `\n✗ ${unresolvable.length} declaration(s) name a target that does not resolve.\n` +
+        `  Not a backlog item: somebody DID declare it, and what they declared is wrong.\n` +
+        `  Most often an id was renamed and the ref, which is keyed on the id, was not.\n`,
+    );
+    for (const f of unresolvable) {
+      console.error(`  ${f.instance} / ${f.directory} / ${f.criterion}: ${f.detail}`);
+    }
+    process.exit(1);
+  }
+
   // ADVISORY, by the rule at the top of this file. `--strict` is for the day
   // the minor count is low enough to hold, and for a caller who wants to pin
   // "no MAJOR findings" now — a declared-but-missing target is already a

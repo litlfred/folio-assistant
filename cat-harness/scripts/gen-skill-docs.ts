@@ -181,6 +181,68 @@ export function orphanPages(onDisk: readonly string[], produced: Iterable<string
  * Fails in writing mode too, for `reportCollisions`' reason: a re-run does not
  * fix it, so exiting 0 would bury it.
  */
+/**
+ * Twin entries naming a page this run does not produce.
+ *
+ * Pure and exported, for the reason {@link orphanPages} is: on the real corpus
+ * the answer is the empty set, and an empty set is also what a guard computing
+ * nothing returns.
+ *
+ * Both halves matter and they fail differently. A `published` name nothing
+ * produces is the `bsay` defect — a banner asserting a document that is not
+ * there, with a link to it. An entry whose OWN name is not among the twins is
+ * a table that contradicts itself, which would make `other`/`self` below pick
+ * the wrong side silently.
+ */
+export function unpublishedTwins(
+  table: Readonly<Record<string, ReadonlyArray<{ published: string }>>>,
+  produced: Iterable<string>,
+): string[] {
+  const made = new Set(produced);
+  const out: string[] = [];
+  for (const [name, twins] of Object.entries(table)) {
+    if (!twins.some((t) => t.published === name)) out.push(`${name}: no twin publishes under "${name}" itself`);
+    for (const t of twins) if (!made.has(t.published)) out.push(`${name} -> ${t.published}`);
+  }
+  return out.sort();
+}
+
+/**
+ * A twin entry is only true while BOTH its pages are produced.
+ *
+ * Bean `bsay`. `kg-navigation` named a second document that stopped publishing
+ * when `pve3` ruled bootstrap's skills out of this instance, and the generator
+ * kept emitting a banner for it — naming a page and linking to it — because
+ * the table is consulted for a name being PUBLISHED and never asked whether
+ * the partner is. So the check ran on the wrong side of the relation.
+ *
+ * Distinct from {@link reportOrphans}, which compares the output DIRECTORY
+ * against this run. An orphan is a page with no source; this is a LINK to a
+ * page that was never a page, so no sweep of the directory can see it.
+ *
+ * Fatal, and in writing mode too, for `reportCollisions`' reason: the wrong
+ * banner is already written by the time this runs, and a re-run does not
+ * unwrite it. The count is zero once `kg-navigation` is out, so the ratchet is
+ * free — this repository's rule for every promotion.
+ */
+function reportUnpublishedTwins(produced: Iterable<string>): void {
+  const bad = unpublishedTwins(SAME_BASENAME_DIFFERENT_DOCUMENT, produced);
+  if (bad.length === 0) return;
+  console.error(
+    `\n✗ ${bad.length} SAME_BASENAME_DIFFERENT_DOCUMENT entr(y/ies) name a page this run did not produce.\n` +
+      `  Each makes the OTHER page carry a banner asserting a document that is not there,\n` +
+      `  with a link to it — which a reader acts on.\n`,
+  );
+  for (const b of bad) console.error(`  ${b}`);
+  console.error(
+    `\n  Either the twin stopped publishing (remove the entry, and SAY WHY — the entry is\n` +
+      `  the record of a real collision), or it should publish and its group is missing.\n` +
+      `  Do not "fix" it by renaming the target: a banner naming a page that exists but is\n` +
+      `  not the twin is the same lie, harder to find.`,
+  );
+  process.exit(1);
+}
+
 function reportOrphans(produced: Iterable<string>): void {
   const orphans = orphanPages(readdirSync(OUT_DIR), produced);
   if (orphans.length === 0) return;
@@ -277,20 +339,29 @@ const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
       label: "todo-manager (local stub)",
     },
   ],
-  // Collided exactly as `todo-manager` did and carried NO banner, so a reader
-  // landing on either page could not tell the other existed. Added with the
-  // `tdmg` resolution.
-  "kg-navigation": [
-    {
-      published: "kg-navigation",
-      label: "Reading the knowledge graph (tooled)",
-      canonical: true,
-    },
-    {
-      published: "local-kg-navigation",
-      label: "Reading a knowledge graph before you have anything (bootstrap)",
-    },
-  ],
+  // THERE IS NO `kg-navigation` ENTRY, and removing it was the `bsay` repair.
+  //
+  // It was added with `tdmg` for a real collision: bootstrap's copy and the
+  // tooled one are different documents, and neither page said the other
+  // existed. Then `pve3` ruled bootstrap's skills out of this instance
+  // entirely, and the SECOND DOCUMENT STOPPED PUBLISHING HERE while this entry
+  // stayed. Nothing downstream checks that a twin's page is produced, so the
+  // generator went on emitting the banner:
+  //
+  // > **This is the skill `skill_fetch` serves.** A stub of the same name is
+  // > published as [Reading a knowledge graph before you have anything
+  // > (bootstrap)](local-kg-navigation.html); it only points here.
+  //
+  // `local-kg-navigation.html` does not exist and cannot: that name comes from
+  // the `local-` prefixed group, and `.claude/skills/local/` holds three
+  // skills of which `kg-navigation` is not one. So the live page a reader is
+  // sent to for "how to find the skill you need" asserted a document that is
+  // not there and linked a 404 — worse than the `bootstrap` heading's silence,
+  // because a reader ACTS on a banner.
+  //
+  // {@link twinsPublish} is the guard, and it is the reason this is a comment
+  // rather than a quiet deletion: an entry here is only meaningful while BOTH
+  // its pages are produced, and until now nothing said so.
   "bean-coordination": [
     {
       published: "bean-coordination",
@@ -1058,6 +1129,7 @@ async function main(): Promise<void> {
   // after it is unreachable in exactly the run that matters, `--check` on a
   // tree whose only defect is an orphan.
   reportOrphans(written.keys());
+  reportUnpublishedTwins(written.keys());
   reportDrift();
   console.log(`\nWrote skill instruction docs to ${OUT_DIR}`);
 }
