@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T10:44:49Z
-updated_at: 2026-09-26T20:02:44Z
+updated_at: 2026-09-27T05:30:59Z
 parent: folio-assistant-ahvw
 ---
 
@@ -73,3 +73,81 @@ links, so they are outside what that sweep resolves.
 Whether `skills/remote-packages` should be synced at all — bean `wlqd`.
 
 _2026-09-26T20:02:44Z_ — Claimed by claude/3x2o-remote-stub-banner — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## 2026-09-27 — the diagnosis in this bean is wrong; PR #1437
+
+https://github.com/litlfred/folio-assistant/pull/1437
+
+**Not mis-composed banners. ORPHANS.** The two pages were generated from
+`cat-harness/skills/remote-stubs/`, retired at #556, and survived its deletion
+as pages no source produces -- 280 committed against 278 produced. Proved by
+deleting one and regenerating: it did not come back.
+
+What the site therefore served, for a skill this repository DOES implement at
+`fhir-harness/skills/fhir-client/`: *"This skill is declared, not implemented
+here. Do not follow it as guidance; there is none to follow."*
+
+**Cause: a missing DECLARATION, not a generator bug.** `gen-skill-docs` calls
+`kgDirectories(INSTANCE_ROOT)` -- the root instance's declaration only -- so a
+sibling instance's skills reach the site only if `cat-harness/cat-harness.json`
+declares their directory. Three already do (`folio-assistant-core-skills`,
+`large-datasets-skills`, `who-iris-skills`); `large-datasets-skills`' own
+description states the reason. `fhir-harness` never did, so all six of its
+skills published nowhere: two as stale orphans under the retired stubs' names,
+and all four of `fhir-harness/skills/fhir-ig-base/` not at all -- while
+`dak-preprocessing` and two other pages link `ig-render-jekyll` by name.
+
+## What I got wrong, and what caught it
+
+Measuring every in-repo instance root found ELEVEN reachable-but-unpublished
+skill bodies, not two: fhir-harness's four plus bootstrap's seven. I declared
+`bootstrap/skills/` too, and was wrong to.
+
+**Bean `pve3`, 2026-09-21 -- "both halves or neither", and the owner's answer
+was NEITHER.** The root carrying bootstrap's skills without its process minted
+three dangling `bindsLane` links and the `v3se` collision; carrying both would
+undo #432's isolation. Bootstrap's skills publish through `bootstrap.jsonld`
+alone, so their absence from this site is the DECISION, not a gap. Three
+existing tests state it and all three failed -- `tools.test.ts`'s deliberately
+INVERTED `expect(s.has("confirm-harness")).toBe(false)`, and
+`kg-export.test.ts`'s *a Tool satisfying a sibling's skill links into the
+SIBLING's document*, where `#tool/discuss` stopped pointing into bootstrap's
+document the moment this instance claimed the skill. Reverted.
+
+**The lure was a dead key.** `SKILLS_CATEGORIES` carried
+`"bootstrap": "CatBootstrap (read before anything else is known)"`, reaching
+nothing since `pve3`. `discoverGroups` throws on an id with no heading and never
+on a heading with no id, so a stale heading is unfalsifiable from that file and
+reads as an unfinished job. REMOVED rather than rekeyed, replaced by a comment
+recording the ruling and this reversal.
+
+## Done
+
+- One declaration: `fhir-ig-skills` -> `fhir-harness/skills/`, same id
+  `fhir-harness.json` uses.
+- Two category headings, `fhir-ig-base` and `fhir-client`.
+- `reportOrphans`: `--check` was STRUCTURALLY blind here, because `emit`
+  compares content per path and a page nothing produces is never compared.
+  Reports and never deletes -- an orphan has two opposite causes (skill gone,
+  or directory no longer declared) and this cannot tell them apart; the second
+  is what happened, and `rm` would have destroyed the only trace.
+- Falsified by deleting the declaration: six named orphans, exactly the pages it
+  reaches. It then caught its own author -- reverting the bootstrap half made it
+  name all seven pages at once.
+- Full `bun run gates`: 166 gates, 0 failed. The 72 provenance sidecars
+  `bun test` rewrites reproduce identically on pristine `origin/main` (measured
+  in a detached worktree), so that tree-guard note is base, not this branch --
+  and committing them would downgrade the recorded `engine_version` from
+  `bun-1.3.14` to this container's `bun-1.3.11`.
+- 278 pages produced -> 281. `dak-preprocessing`, `session-context` and
+  `smart-stack-layering` now link `ig-render-jekyll` and siblings as published
+  pages rather than GitHub blob URLs.
+
+## Note to self
+
+Earlier in this turn I ran `git checkout -- beans/defs ...` to clear the tree
+after a gates run and discarded an earlier version of this note. A bean is a
+durable artefact; a blanket `checkout --` over a declared graph is exactly the
+move `deletion-requires-confirmation` exists to stop. Restore by path, or
+`git stash`, not by directory.
