@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-26T18:09:12Z
-updated_at: 2026-09-26T20:10:30Z
+updated_at: 2026-09-27T05:09:21Z
 parent: folio-assistant-1xhc
 ---
 
@@ -294,3 +294,61 @@ CI on `897129e7e9`, `Repository gates`, all steps green:
 That is the whole of this bean's claim, confirmed by observation. The
 recommendation is unchanged and the masking is still latent, for the reasons in
 the entry above.
+
+
+## The six steps HAVE now run — and the hole is latent, not closed. Do not close this on that evidence.
+
+Evidence appended by another session (PR #1422). **Status deliberately untouched;
+this is not mine to resolve.** It is written because the next reader will see
+green steps and may conclude the bean is done, which would be the wrong reading.
+
+### What is now observed
+
+`translation:drift:check` is currently **passing** — 70 compared, 0 NEWLY drifted,
+0 could not be read, 0 drifted and recorded, 8 uncatalogued and recorded — so the
+`set -e` batch reaches its end and every step after it executes. Measured by step
+NAME in `Repository gates (hard)` on two runs (`66f5f09cab6` at 21:37Z and
+`6b4c89309ed` at 04:57Z, both green):
+
+| step | name | |
+|---|---|---|
+| 45 | generated docs pages are current | success |
+| 49 | voices projection and viewer are current | success |
+| 50 | folio projection and viewer are current | success |
+| 51 | viewer pages keep the navbar they had | success |
+| 52 | handler namespace index is current | success |
+| 53 | translation index is current | success |
+
+All six of this bean's population, including the one it singled out as proving
+the cost — *"translation index is current"*. The batch step itself now takes **81
+seconds** (21:37:43 → 21:39:04) where it previously died at its 3rd command, which
+is the same fact from the other side.
+
+### Why that does not close it
+
+**The gate did not stop being red by decision; the corpus stopped being drifted.**
+`ngxj` and issue #206 are untouched, and the 8 uncatalogued are *recorded* rather
+than resolved. So the batch is green for a reason that a single new drifted
+translation reverses — at which point all six steps silently vanish again, and
+nothing in CI will say so.
+
+That is this bean's own argument, now with a second demonstration: the masking is
+not a state somebody chose, it is **whatever happens to be later in the file**, and
+it came and went here without anybody deciding either transition. A hole that
+closes by luck is still a hole.
+
+### One partial instance of the remedy has landed
+
+#1422 adds `translation:catalogue:check` **above** the batch, for exactly this
+reason, stated in its docblock: registered below it, a check about the drift's
+silence would itself be silenced by it. That is one gate placed correctly, not a
+fix for the six — the ordering question this bean raises is untouched.
+
+### A correction to a figure this bean is cited alongside
+
+`om30` and `xm31` counted masked **steps**; the unit is **checks**. Verified
+independently from the workflow: the failing step is a `set -e` batch of **106**
+commands with `translation:drift:check` the **3rd**, so **103** gates inside one
+step never ran. This bean's title already says 108 checks and is right; the sibling
+beans' "45 → 6" and "35 masked at step 8" were the smaller half, and `xm31` has
+been closed with its decision moved here.
