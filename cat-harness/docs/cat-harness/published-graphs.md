@@ -278,10 +278,9 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `translation-sources`
 
-1 of 2 published.
+1 of 1 published.
 {: .fa-hx-dim }
 
-- Bootstrap — *declared, not published*
 - [C@T Harness]({{ '/translation-status/' | relative_url }})
 
 ### `uml`
