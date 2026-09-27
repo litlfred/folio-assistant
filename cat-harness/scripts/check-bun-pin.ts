@@ -46,7 +46,7 @@
  * Usage:
  *   bun run check:bun-pin
  *
- * @covers tools
+ * @covers none — .github/workflows/ is not a declared graph kind
  * @graphNode tool
  */
 import { readFileSync, readdirSync } from "node:fs";
