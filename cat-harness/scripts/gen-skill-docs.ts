@@ -386,18 +386,26 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // `cat-harness` while the declaration gave that id to `skills/`: one name,
   // two real directories. `corpus-grep` now sits in `folio-core` with its
   // siblings and needs no category of its own.
-  // Keyed `bootstrap-skills`, the id `cat-harness.json` declares
-  // `bootstrap/skills/` under — and it was `bootstrap` until 2026-09-27, a key
-  // NOTHING REACHED. That is worse than a missing heading and the reason this
-  // comment is long: the entry looked like evidence that bootstrap publishes.
-  // A category key is only ever read as `SKILLS_CATEGORIES[decl.id]` or
-  // `SKILLS_CATEGORIES[basename]`, so a key matching neither is unfalsifiable
-  // from this file — and `discoverGroups` throws on an id with NO heading,
-  // never on a heading with no id. All seven of bootstrap's skills were
-  // unpublished under it (bean `3x2o`), including `bootstrap-kg-navigation`,
-  // which CatBootstrap's README sends a cold agent to read before anything
-  // else is known.
-  "bootstrap-skills": "CatBootstrap (read before anything else is known)",
+  // THERE IS NO `bootstrap` HEADING, AND THERE MUST NOT BE — the owner ruled
+  // it out. `pve3`, 2026-09-21: the root declares BOTH halves of bootstrap or
+  // NEITHER, and the answer was neither. Carrying its skills without its
+  // process minted three dangling `bindsLane` links and the `v3se` collision;
+  // carrying both would undo #432's isolation and put a process this instance
+  // does not own into its published graph. So bootstrap's skills publish
+  // through `bootstrap.jsonld` alone, and their absence from this site is the
+  // DECISION, not a gap.
+  //
+  // A heading survived that ruling, keyed `bootstrap`, reaching nothing. On
+  // 2026-09-27 I read it as evidence that bootstrap publishes, declared
+  // `bootstrap/skills/` here to make the seven pages appear, and three tests
+  // caught it: `tools.test.ts`'s deliberately INVERTED
+  // `expect(s.has("confirm-harness")).toBe(false)`, and `kg-export.test.ts`'s
+  // `a Tool satisfying a sibling's skill links into the SIBLING's document` —
+  // `#tool/discuss` stopped pointing into bootstrap's document the moment this
+  // instance claimed the skill. Removing the key rather than rekeying it is
+  // the fix, because the key WAS the lure: `discoverGroups` throws on an id
+  // with no heading and never on a heading with no id, so a stale one is
+  // unfalsifiable from this file and reads as an unfinished job.
   // CatBootstrap's SECOND declared directory, and the one that constitutes its
   // exemption rather than describing it: the layer is excused a visualiser and
   // owes its own `.jsonld`/`.json` instead, so the skills governing that
