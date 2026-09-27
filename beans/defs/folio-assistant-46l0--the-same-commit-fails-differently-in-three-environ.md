@@ -1,10 +1,10 @@
 ---
 # folio-assistant-46l0
 title: The same commit fails DIFFERENTLY in three environments, so a green run cannot be read as a green tree
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-09-26T06:33:48Z
-updated_at: 2026-09-26T06:33:48Z
+updated_at: 2026-09-27T09:31:55Z
 parent: folio-assistant-1xhc
 ---
 
@@ -65,3 +65,5 @@ them as one, fold this in.
 
 Recorded and left `todo`. Found while driving three PRs through `main`'s red on
 2026-09-26.
+
+_2026-09-27T09:31:55Z_ — Claimed by claude/brave-hypatia-r820sf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
