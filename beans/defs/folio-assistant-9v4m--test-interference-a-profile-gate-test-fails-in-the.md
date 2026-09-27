@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T03:40:20Z
-updated_at: 2026-09-27T04:58:35Z
+updated_at: 2026-09-27T05:12:05Z
 parent: folio-assistant-1swy
 ---
 
@@ -430,3 +430,45 @@ Two smaller facts for whoever does it: the two top-level `await`s mean `main()`
 must be async and awaited at the call site, and the terminal `process.exit(0)`
 has to move inside the guard or importing the module will still kill the
 importing process.
+
+
+## A FOURTH hypothesis closed, and a sibling flake found with the mechanism this bean wanted
+
+2026-09-27, continuing the hunt for `profile-scoping`'s cause.
+
+**Closed: shared in-process state.** `bun test` runs files in ONE process, so
+module-level state is shared — a channel my earlier contention test could not
+reach, because it spawned SEPARATE background processes. Ran
+`profile-scoping.test.ts` and `declared-directory-resolves.test.ts` together in one
+invocation, three times: **19/19 pass, three times.** Not supported.
+
+That is four: the shared `/tmp` path (refuted), the dirty tree (n=1), CPU
+contention (16/16), and now shared in-process state (19/19).
+
+**And then the full suite failed on a DIFFERENT test**, which turned out to be the
+more useful result. `12104 pass / 56 skip / 1 fail`, the failure being
+`a commit on a remote-tracking ref reads as pushed` at 22671 ms — passing when run
+directly. Its mechanism IS establishable and is now bean `y0n2`: `isPushed()`
+catches every error and returns `false`, so a transient `git` failure is
+indistinguishable from "never pushed", and `stdio: ["ignore","pipe","ignore"]`
+throws the reason away.
+
+**Why that matters to THIS bean.** It is the same shape — suite-only, passes
+alone — with a cause that is a swallowed error rather than interference. So the
+shape is not evidence of interference at all, and I have been treating it as if it
+were since this bean was opened. `profile-scoping` also shells out
+(`spawnSync("bun", [...])`) and also throws on a non-zero exit while reading only
+`res.stdout`; `res.stderr` reaches the message but nothing establishes the child's
+failure MODE. The next hypothesis to test is therefore not interference but
+**whether the spawned sweep failed and the reason was discarded** — which is
+`y0n2`'s defect in a second place, and it is checkable by capturing the child's
+stderr rather than by running the suite again.
+
+### Replaces the previous clause
+
+- [ ] ~~capture the failure text by repeating the full suite until it fires~~ —
+      still the fallback, but no longer the cheapest route
+- [ ] FIRST: determine whether `sweepOutcomes`' spawn can fail in a way the test
+      reports as a wrong OUTCOME rather than as a throw. MEASURED AFTER: the child's
+      exit status and stderr are recorded on every run, failing or not, so the next
+      occurrence is diagnosable from the log instead of needing a reproduction
