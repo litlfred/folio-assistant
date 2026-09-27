@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-27T07:14:31Z
+updated_at: 2026-09-27T08:09:12Z
 parent: folio-assistant-ahvw
 ---
 
@@ -354,3 +354,64 @@ declaration on every filesystem-enumerating script, `3srh`-style (63 files, one
 line each, but the classification is the real work); or accept the syntactic
 floor as advisory, which is the `1xhc` shape this repository has just spent a
 PR arguing against.
+
+
+## All eleven converted -- 2026-09-27, PR #1456
+
+Done-when 1 is met: every one of the eleven enumerates from git.
+
+| scanner | before | after | swept |
+|---|---|---|---|
+| check-source-licence | 35 | 34 | planted `_kg/.../manifest.jsonld` |
+| check-code-accounting | 1472 | 1471 | `block-qa-schema/dist/index.d.ts` |
+| check-viewer-backticks | 890 | 889 | the same file |
+| ns-export (minted terms) | 936 | 935 | the same file |
+| check-agents-claims | 1290 | 1290 | -- |
+| check-image-roles | 1294 | 1294 | -- |
+| check-docs-templates | 6 | 6 | -- |
+| bpmnFiles x3 (lane, process, glossary-export) | 74 | 74 | -- |
+| audit-coverage / census | -- | -- | -- |
+
+Nothing gained anywhere, so every one is a strict narrowing. Two live
+instances: `check-code-accounting`, whose subject IS accounting for code, was
+counting gitignored build output as repository source; and `ns-export` would
+have minted a namespace term from a generated `.d.ts`.
+
+Done-when 2: `gitScan(root, pattern)` for the glob caller and
+`gitFiles(root, keep)` for the ten walks, both in `schemas/git-corpus.ts`. The
+dot rule deliberately does NOT come for free -- git's corpus includes
+`.github/` and `.claude/`, so folding one in would silently change what several
+scanners read.
+
+## Done-when 3 -- ANSWERED, and the answer is not a gate
+
+The syntactic check failed its own falsifier (62 loose / 4 tight, the tight one
+missing eleven of twelve; numbers in the earlier entry). The guard is
+behavioural and lives with the conversions:
+`scripts/tests/git-corpus-conversions.test.ts`, one case per scanner,
+asserting BOTH directions -- nothing the new corpus admits was absent from the
+old, and everything the old admitted and the new does not is gitignored. Plus a
+case asserting the control itself still discriminates, so it cannot go vacuous.
+
+A scanner that regresses to a bare walk fails its own case. That is "number
+twelve is caught" by a different mechanism than the bean assumed, and the
+reason the assumed one does not work is recorded above rather than left for the
+next agent to rediscover.
+
+## A correction worth keeping
+
+I measured `audit-coverage`'s `census` over the REPOSITORY ROOT -- 31437 files
+before, 14135 after, 17302 swept, all gitignored -- and nearly committed it as
+what that scanner had been doing. It is not: `census` is called on declared
+graph directories only, none of which holds ignored content, and the sidecar
+moves by timestamp and script hash alone. Caught by diffing the sidecar
+numerically rather than trusting the number in hand. A measured number on the
+wrong input is worse than none, because it reads as evidence.
+
+## Still open
+
+The standing warning *"never run audit:coverage in this container"* is now
+unexplained rather than answered: with `census` asking git, and with every
+declared directory clean, I could not reproduce what it warns about. It may be
+stale, or about a container whose declaration set differs. Left recorded rather
+than deleted.
