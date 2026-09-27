@@ -276,14 +276,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-27T06:24:44.004Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/50bf4bcc01b89b21d0c7b6b492ea55ead8e8fcae",
-  "sourceCommitSha": "50bf4bcc01b89b21d0c7b6b492ea55ead8e8fcae",
-  "sourceCommitAt": "2026-09-27T06:22:32Z",
+  "generatedAt": "2026-09-27T06:43:51.526Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/21c149c5b9bb768aa0a536f5d57b5564601ab324",
+  "sourceCommitSha": "21c149c5b9bb768aa0a536f5d57b5564601ab324",
+  "sourceCommitAt": "2026-09-27T06:41:24Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 279,
+    "Skill": 280,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
@@ -1553,7 +1553,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/platform-gates.md",
-      "instructionLines": 334,
+      "instructionLines": 354,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3366,6 +3366,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/readme-sections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/gate-tree-mutation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "gate-tree-mutation",
+      "title": "\"NOT clean\" is a verdict about the RUN, not about your diff",
+      "description": "Reading `bun run gates`' \"NOT clean\" verdict. Why every gate can pass and the run still exit 1, the two causes and how to tell them apart in one command, and why the QA script-sidecar churn in an agent container is discarded rather than committed.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/gate-tree-mutation.md",
+      "instructionLines": 135,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/gate-tree-mutation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/decision-audit",
@@ -6469,6 +6486,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/feature-staging",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/filing-dublin-core",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/flushable-containers",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/gate-tree-mutation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/generalise-the-fix",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/getting-started",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/github-state-inspection",
@@ -42877,6 +42895,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/document-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/document-structure",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/feature-staging",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/gate-tree-mutation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/github-state-inspection",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/graph-detanglement",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/cat-harness.jsonld#skill/issue-working",
