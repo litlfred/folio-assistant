@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/skills/l2-dak-authoring/output.schema.json",
+  "title": "L2 DAK Authoring Output",
+  "description": "Output schema for L2 DAK authoring.",
+  "type": "object",
+  "required": [
+    "artifacts",
+    "status"
+  ],
+  "properties": {
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "type"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "bpmn",
+              "dmn",
+              "spreadsheet",
+              "markdown",
+              "fsh"
+            ]
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "ready-for-review",
+        "approved"
+      ]
+    },
+    "validationIssues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/epic-archimedes-h3r5la",
+    "sha": "801682537c657aa8033bc0cb622f54c652c7a529",
+    "pr": "1454/merge",
+    "run": "36301868955"
+  }
+}
