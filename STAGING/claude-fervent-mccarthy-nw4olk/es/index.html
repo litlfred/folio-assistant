@@ -493,32 +493,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/docs-ui.css?v=1790528008">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/docs-ui.css?v=1790528325">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/narrow-viewport.css?v=1790528008">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/narrow-viewport.css?v=1790528325">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/work-plan.css?v=1790528008">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/work-plan.css?v=1790528325">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/themes.css?v=1790528008">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/themes.css?v=1790528325">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/uml.css?v=1790528008">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/uml.css?v=1790528325">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/avatars.css?v=1790528008">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/css/avatars.css?v=1790528325">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -535,7 +535,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/docs-ui.js?v=1790528008" defer></script>
+<script src="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/assets/js/docs-ui.js?v=1790528325" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -939,17 +939,17 @@ de objetos de contenido tipado.</p>
 </h3>
     <p class="fa-harness-section__description">WHO SMART Trust (smart.who.int.trust) v1.8.0 — the published IG's artefact index, reconstructed: 674 artefacts known, 19 materialized.</p><dl class="fa-harness-section__stats"><div class="fa-harness-section__stat" data-fa-stat="directories">
         <dt>declared directories</dt>
-        <dd>3</dd>
+        <dd>4</dd>
       </div><div class="fa-harness-section__stat" data-fa-stat="kinds">
         <dt>declared graph kinds</dt>
-        <dd>3</dd>
+        <dd>4</dd>
       </div><div class="fa-harness-section__stat" data-fa-stat="views">
         <dt>visualisations you can open</dt>
         <dd>1</dd>
       </div></dl><ul class="fa-harness-section__viewers"><li>
         <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness/docs-auto/index/docs/smart-trust-docs/">docs</a></li></ul><details class="fa-harness-section__findings">
       <summary>Gaps in this instance's declaration (3)</summary>
-      <ul><li>smart-trust: declares 2 graph(s) with no published viewer — code, fhir-artifact-index. Declared and not rendered is a gap, not a dead link.</li><li>smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.</li><li>smart-trust: no avatar declared for this instance — showing the generic mark.</li></ul>
+      <ul><li>smart-trust: declares 3 graph(s) with no published viewer — code, fhir-artifact-index, qa. Declared and not rendered is a gap, not a dead link.</li><li>smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.</li><li>smart-trust: no avatar declared for this instance — showing the generic mark.</li></ul>
     </details></section><section class="fa-harness-section" id="harness-who-iris" style="--fa-tile-tone: 199; --fa-tile-on: 1">
 <h3 class="fa-harness-section__title" id="harness-who-iris-heading">
   
@@ -960,10 +960,10 @@ de objetos de contenido tipado.</p>
 </h3>
     <p class="fa-harness-section__description">The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, three materialized.</p><dl class="fa-harness-section__stats"><div class="fa-harness-section__stat" data-fa-stat="directories">
         <dt>declared directories</dt>
-        <dd>7</dd>
+        <dd>8</dd>
       </div><div class="fa-harness-section__stat" data-fa-stat="kinds">
         <dt>declared graph kinds</dt>
-        <dd>7</dd>
+        <dd>8</dd>
       </div><div class="fa-harness-section__stat" data-fa-stat="views">
         <dt>visualisations you can open</dt>
         <dd>4</dd>
@@ -973,7 +973,7 @@ de objetos de contenido tipado.</p>
         <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness/library/who-iris/">library</a></li><li>
         <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness/library/who-iris/">uploads</a></li></ul><details class="fa-harness-section__findings">
       <summary>Gaps in this instance's declaration (3)</summary>
-      <ul><li>who-iris: declares 3 graph(s) with no published viewer — code, skills, themes. Declared and not rendered is a gap, not a dead link.</li><li>who-iris: 1 graph(s) hold materialized content and are READ-ONLY — catalogue. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.</li><li>who-iris: declares no `needs`, so its place in the stack is alphabetical rather than derived.</li></ul>
+      <ul><li>who-iris: declares 4 graph(s) with no published viewer — code, qa, skills, themes. Declared and not rendered is a gap, not a dead link.</li><li>who-iris: 1 graph(s) hold materialized content and are READ-ONLY — catalogue. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.</li><li>who-iris: declares no `needs`, so its place in the stack is alphabetical rather than derived.</li></ul>
     </details></section><section class="fa-harness-section" id="harness-smart-base" style="--fa-tile-tone: 199; --fa-tile-on: 1">
 <h3 class="fa-harness-section__title" id="harness-smart-base-heading">
   
@@ -984,10 +984,10 @@ de objetos de contenido tipado.</p>
 </h3>
     <p class="fa-harness-section__description">The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.</p><dl class="fa-harness-section__stats"><div class="fa-harness-section__stat" data-fa-stat="directories">
         <dt>declared directories</dt>
-        <dd>6</dd>
+        <dd>7</dd>
       </div><div class="fa-harness-section__stat" data-fa-stat="kinds">
         <dt>declared graph kinds</dt>
-        <dd>6</dd>
+        <dd>7</dd>
       </div><div class="fa-harness-section__stat" data-fa-stat="views">
         <dt>visualisations you can open</dt>
         <dd>2</dd>
@@ -995,7 +995,7 @@ de objetos de contenido tipado.</p>
         <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness/library/smart-base/">library</a></li><li>
         <a href="/folio-assistant/STAGING/claude-fervent-mccarthy-nw4olk/cat-harness/voices/smart-base/">voices</a></li></ul><details class="fa-harness-section__findings">
       <summary>Gaps in this instance's declaration (3)</summary>
-      <ul><li>smart-base: declares 4 graph(s) with no published viewer — fhir-artifact-index, methodology, processes, tools. Declared and not rendered is a gap, not a dead link.</li><li>smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.</li><li>smart-base: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/smart-base/) rather than the instance's own themed root.</li></ul>
+      <ul><li>smart-base: declares 5 graph(s) with no published viewer — fhir-artifact-index, methodology, processes, qa, tools. Declared and not rendered is a gap, not a dead link.</li><li>smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.</li><li>smart-base: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/smart-base/) rather than the instance's own themed root.</li></ul>
     </details></section><section class="fa-harness-section" id="harness-folio-assistant" style="--fa-tile-tone: 236; --fa-tile-on: 1">
 <h3 class="fa-harness-section__title" id="harness-folio-assistant-heading">
   
