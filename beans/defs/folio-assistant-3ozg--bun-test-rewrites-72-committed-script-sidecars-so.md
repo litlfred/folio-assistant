@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-27T05:06:01Z
-updated_at: 2026-09-27T05:27:36Z
+updated_at: 2026-09-27T05:36:35Z
 parent: folio-assistant-1xhc
 ---
 
@@ -35,6 +35,38 @@ Run alone, none of these writes the sidecars: `qa-review`, `profile-conformance-
 - [ ] it writes into a temp directory, as the profile-conformance tests do, or the three volatile fields stop being committed
 - [ ] `bun run gates` on pristine main ends clean, not 'NOT clean'
 
+_2026-09-27T05:19:35Z_ — Claimed by claude/sleepy-babbage-ls90iz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## `rmcf` is the same defect, filed a day earlier — and it holds four unanswered remedies
+
+Cross-reference added by another session; **status untouched, this is not mine to
+resolve.** `rmcf` (2026-09-26) records the identical churn: 72 files, the same three
+fields, the same `bun-1.3.14` committed against `bun-1.3.11` local.
+
+**This bean is the better record** — `rmcf` never named the writer, and it only saw
+the churn on a branch, where this one measured pristine `main` at two commits. So
+work this one.
+
+What `rmcf` has that this does not is **four remedies put to the owner and still
+unanswered**:
+
+1. stop recording `engine_version` at all;
+2. stamp only on a real change (the `script_hash` / `source_file` fields, which do
+   **not** move — verified across all 72 on 2026-09-27);
+3. move run provenance out of the committed sidecar entirely;
+4. document the discard as intended behaviour.
+
+Option 2 looked right to the session that filed `rmcf`, on the ground that the three
+churning fields are provenance while the two stable ones are the measurement — so a
+sidecar that stamped only on a real change would stop moving without losing anything
+a reader uses.
+
+One caution that belongs with the remedy, from `#1430`'s `sfjo` rule: **read what a
+regeneration writes before committing it.** Committing this churn stamps a
+*downgrade* — `engine_version` goes backwards whenever the local bun is older than
+main's — as though it were a fresh measurement. That is why the standing practice has
+been to discard rather than commit, and why option 4 is not merely a cop-out: it at
+least makes the discard deliberate.
 
 ---
 
@@ -118,3 +150,24 @@ ADOPTION, and `processes/upstream-version-adoption.bpmn` makes the accepting ste
 a `bpmn:userTask` in a person-only lane.
 
 Put to the owner as a follow-up rather than decided here.
+
+
+---
+
+## Duplicate found on merge: `rmcf` is the same defect
+
+Merging `origin/main` brought in bean `rmcf` — *"72 script sidecars churn on
+every gates run because engine_version records the CONTAINER, and it went
+1.3.14 -> 1.3.11"* — opened by another session with the **same measurement**:
+72 files, the same three changed fields, the same two engine values.
+
+Not deleted and not merged. Neither is wrong, and a scrapped or deleted bean
+stops a sibling reconstructing the reasoning. This one holds the claim and the
+fix (the Bun pin, `check:bun-pin`, and `PinDef.tagPrefix`), so `rmcf` carries a
+pointer here rather than the reverse.
+
+Worth noting that THREE beans reached this population independently within a
+day — `3ozg`, `rmcf`, and `ymsu` for a different defect over the same files.
+That is not three people being careless; it is what an always-red signal does:
+every session that runs `bun run gates` on a clean tree sees it, and nothing
+told them it was already written down.
