@@ -6,52 +6,175 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/remote-stubs/smart-launch.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/remote-stubs/smart-launch.md) — do not edit here.
+> Generated from [`fhir-harness/skills/fhir-client/smart-launch.md`](https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-client/smart-launch.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/remote-stubs/smart-launch.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/fhir-harness/skills/fhir-client/smart-launch.md){: .fa-edit-source }
 
 {% raw %}
-# smart-launch — a stub, and it is not working
+# smart-launch
 
-**This skill is declared, not implemented here.** Do not follow it as guidance;
-there is none to follow. It exists so that an agent that asks for it gets an
-answer it can act on, rather than `skill_fetch` failing partway through a task.
+> Skill id: `smart-launch` · Package: `fhir-client` · Instance:
+> `fhir-harness`
 
-## What it would be
+## Provenance — read this first
 
-The SMART on FHIR launch sequence — authorisation, context, scopes.
+| | |
+|---|---|
+| Library | `@topologyhealth/smarterfhir` **0.4.3** (`package.json`) |
+| Source | <https://github.com/TopologyHealth/SMARTerFHIR> |
+| Pinned commit | `506463af4bd82848f414649dac608d578c8aae44` (2025-12-02) |
+| License | **Apache-2.0** — `LICENSE` is the Apache License 2.0 text, `package.json` says `"license": "Apache-2.0"`, and the README agrees |
+| Built on | `fhirclient` `^2.5.2` (a peer dependency) — SMARTerFHIR wraps its `FHIR.oauth2.authorize` and `FHIR.oauth2.ready` |
 
-## Where it actually lives
+Every name below is from `src/` at that commit; each section cites its file.
+Upstream ships no skill files, which is why this skill is authored here
+(issue #556, bean `wlqd`). **If the pinned commit moves, re-read the source
+before trusting any signature here.** Where the source leaves a behaviour to
+`fhirclient`, this skill says so rather than describing `fhirclient` from
+memory.
 
-Upstream, in **https://github.com/smarter-fhir**, maintained by **smarter-fhir**. This instance wraps that
-package in `skills/remote-packages/smarter-fhir.json`, which declares the
-name in `wrapper.skills`.
+## The public surface
 
-## Why there is no body
+`src/index.ts` exports exactly: `BaseClient`, `ClientFactory`, `EMR`, `LAUNCH`,
+`SmartLaunchHandler`, `ClientUtils`. The vendor client classes are **not**
+exported; you get one from `ClientFactory`.
 
-The wrapper's `sync` block declares a weekly shallow clone, and **nothing
-performs it.** So the name is published while the content is absent — bean
-`wlqd`. That is the gap, stated here rather than discovered at the call site.
+- `LAUNCH` (`src/Client/ClientFactory.ts`): `EMR`, `STANDALONE`, `BACKEND`.
+- `EMR` (`src/Launcher/SmartLaunchHandler.ts`): `CERNER = "cerner"`,
+  `EPIC = "epic"`, `SMART = "smart"`, `ECW = "ecw"`,
+  `ATHENA = "platform.athena"`, `ATHENAPRACTICE = "fhirapi.athena"`,
+  `MEDITECH = "meditech"`, `NONE = "none"`.
+- `new SmartLaunchHandler(clientID: string, clientSecret?: string, scope?: string | string[])`
+- `authorizeEMR(launchType: LAUNCH = LAUNCH.EMR, redirectPath?: string, emrType?: EMR): Promise<void>`
+- `new ClientFactory().createEMRClient(launchType: LAUNCH.EMR | LAUNCH.STANDALONE): Promise<BaseClient>`
 
-## What to do instead, right now
+## Steps
 
-Treat the capability as unavailable. If the task needs it:
+The launch is **two pages**: a launch page that sends the browser to the
+authorisation server, and a redirect page that turns the returned code into a
+client.
 
-1. Say so, rather than improvising a substitute and presenting it as this skill.
-2. If a local skill genuinely covers the need, name that one instead.
-3. If it does not, the work is blocked on a **platform capability change** —
-   GitHub issue and the CRDM workflow first, not an inline fix.
+1. **Launch page.** Construct a `SmartLaunchHandler` with your registered
+   client id, and call `authorizeEMR`.
+   - EHR launch: `authorizeEMR(LAUNCH.EMR, redirectPath)`.
+   - Standalone launch: `authorizeEMR(LAUNCH.STANDALONE, redirectPath, emrType)`.
+2. **What `authorizeEMR` does** (`executeWebLaunch`, then the private
+   `launchEMR`):
+   - reads `iss` from `window.location.search`, and **throws** if it is absent —
+     for *both* launch types;
+   - infers the EHR vendor from the `iss` URL unless you pass `emrType`, and
+     throws `"EMR type cannot be inferred from the ISS"` when neither yields one;
+   - builds the scope string (below), calls `FHIR.oauth2.authorize` with
+     `noRedirect: true`, then sets `self.location.href` to the returned URL.
+3. **Redirect page.** Call `new ClientFactory().createEMRClient(launchType)`.
+   It calls `FHIR.oauth2.ready()` and wraps the result in the vendor client
+   chosen by `ClientUtils.getEMRType(client)`; `EMR.NONE` throws
+   `"Unsupported provider for EMR Client creation"`.
 
-## How this stub stays visible
+```ts
+import { SmartLaunchHandler, ClientFactory, LAUNCH, EMR } from "@topologyhealth/smarterfhir";
 
-`kg:audit` reports it under `skill-is-a-stub`, severity `minor`: printed every
-run, gating nothing. That is deliberate. A stub that gated would make stubbing
-turn CI red, and a stub that reported nothing would be worse than the gap it
-filled — it would look finished.
+// launch page — the URL must carry ?iss=<FHIR base> (and, for EHR launch, the EHR's launch param)
+const handler = new SmartLaunchHandler("my-client-id");      // no secret in a browser app
+await handler.authorizeEMR(LAUNCH.EMR, "/redirect");          // browser navigates away
 
-> **The knowledge graph is always a work in progress. QA is what shows where to
-> work next.**
+// redirect page
+const client = await new ClientFactory().createEMRClient(LAUNCH.EMR);
+client.getEMRType();       // e.g. EMR.EPIC
+client.getR4Endpoint();    // URL of the FHIR server the token is for
+```
 
-Deleting this file does not close the gap; it reopens the call-time failure and
-removes the record. Finish the sync, or drop the declaration.
+## Scopes
+
+Built in `launchEMR` / `generatePreconfiguredScopes`
+(`src/Launcher/SmartLaunchHandler.ts`):
+
+- **Always** prefixed with `openid fhirUser`, then de-duplicated and
+  space-joined.
+- **A `scope` passed to the constructor replaces the vendor defaults** (a
+  string is split on spaces), but `openid fhirUser` is still prepended. It does
+  **not** add `launch` for you — include it yourself for an EHR launch.
+- Otherwise, the vendor defaults:
+
+| `EMR` | EHR launch (`LAUNCH.EMR`) | standalone (`LAUNCH.STANDALONE`) |
+|---|---|---|
+| `EPIC`, `SMART`, default | `launch online_access` | `launch/practitioner online_access` |
+| `CERNER` | the Epic set plus the per-resource `user/<Resource>.read` and `.write` scopes named in `src/Launcher/Config.ts` (`cerner.scopes`, mapped through `scopes.json`) | same, with `launch/practitioner` |
+| `ECW` | `launch user/Patient.read user/Encounter.read user/Practitioner.read` | `launch/patient` + the same reads |
+| `ATHENA` | `profile offline_access launch user/Patient.read` | `launch/patient` in place of `launch` |
+| `ATHENAPRACTICE` | `launch profile offline_access user/Patient.read` | the same without `launch` |
+| `MEDITECH` | `launch/patient patient/*.read` | the same |
+
+Scope strings for single resources are produced by `FhirScopePermissions.get`
+(`src/Launcher/Scopes.ts`), which renders `<actor>/<Resource>.<action>` with
+SMART v1 `.read`/`.write` suffixes only. Note that `FhirScopePermissions` is
+not exported from the package root.
+
+## Redirect handling
+
+From `executeWebLaunch`:
+
+- an **absolute** `redirectPath` is used as-is (it may be another domain);
+- a relative one is joined to `window.location.origin`, adding a leading `/`
+  if missing;
+- **no** `redirectPath` means the redirect URI is the bare origin.
+
+Register exactly that computed URI with the EHR. PKCE: `pkceMode: 'ifSupported'`
+for every vendor except ECW, which gets `pkceMode: 'unsafeV1'` and
+`completeInTarget: true` (`getEMRSpecificAuthorizeParams`).
+
+## Where the token lands
+
+SMARTerFHIR does not store a token itself. The code exchange and the token live
+in the `fhirclient` `Client` that `FHIR.oauth2.ready()` returns; SMARTerFHIR
+keeps that object as `client.fhirClientDefault` and reads
+`fhirClientDefault.state.serverUrl` from it. Where `fhirclient` persists its
+state between the two pages, and how it refreshes, is `fhirclient`'s behaviour
+and is **not** covered by this source — check `fhirclient`'s own documentation
+rather than assuming.
+
+For a **server-side** app that already holds a token response,
+`createEMRClientBackend(req, res, serverConfig)` builds the client from a
+`FhirClientConfig` — `{ serverUrl, tokenUri, tokenResponse, clientId }`
+(`src/types.ts`) — using `fhirclient`'s Node entry point. It performs no
+authorisation.
+
+## What the library does NOT do
+
+- **No backend-services launch.** `authorizeEMR(LAUNCH.BACKEND)` throws
+  `"Direct Backend Authorization not supported yet."`; no JWT client-assertion
+  flow exists in `src/`.
+- **No SMART v2 scopes** (`.rs`, `.cruds`) — `FhirScopePermissions` emits only
+  `.read`/`.write`.
+- **No endpoint discovery of its own.** `ClientUtils.getEndpointsForEmr` is
+  `@deprecated` and always throws; the vendor is inferred from the `iss` URL
+  text, not from `.well-known/smart-configuration` or a CapabilityStatement
+  (the README says "metadata/capabilities"; the code does a substring match).
+- **No token storage or refresh logic** — both are `fhirclient`'s.
+- **Browser only** for the launch half: `executeWebLaunch` reads `window` and
+  writes `self.location`.
+
+## Pitfalls
+
+- **Standalone still needs `?iss=`.** The same `executeWebLaunch` runs for
+  both types, so a standalone launch page without an `iss` query parameter
+  throws. Put the FHIR base URL in the link that opens the page.
+- **Vendor inference is a substring match** (`ClientUtils.getEMRType`): the
+  `EMR` values are tried longest-first against the whole `iss` string. A
+  sandbox or proxy URL that does not contain `epic`, `cerner`, `smart`, … is
+  `EMR.NONE`; one that contains two of them picks the longer. Pass `emrType`
+  when the host is not self-describing — and note `createEMRClient` re-infers
+  from `serverUrl` with no override, so an un-inferable server fails there too.
+- **`clientSecret` in a browser is public.** The constructor forwards it to
+  `FHIR.oauth2.authorize`; in a SPA that ships it to every user. Pass
+  `undefined` for public clients.
+- **The authorise promise does not reject on a bad URL.** If `authorize` does
+  not return a string, `launchEMR` only `console.error`s
+  `"Failed to build authorize URL"` and resolves — check that navigation
+  actually happened.
+- **Athena Practice's `response_mode=query` appears never to be appended.**
+  `addSearchParams` iterates `Object.keys(new URLSearchParams(...))`, which
+  yields no keys for a `URLSearchParams`. This is a reading of the source, not a
+  runtime observation; verify against the vendor before relying on either
+  behaviour.
 {% endraw %}

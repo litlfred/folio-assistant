@@ -390,6 +390,22 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [IRIS, DSpace and Dublin Core](iris-dspace.html) | `iris-dspace` | — | **Every claim here was read off one captured record** — the DSpace full item |
 
+## FHIR client & SMART launch (fhir-harness/skills/fhir-client)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [fhir-client-operations](fhir-client-operations.html) | `fhir-client-operations` | — | > Skill id: `fhir-client-operations` · Package: `fhir-client` · Instance: |
+| [smart-launch](smart-launch.html) | `smart-launch` | — | > Skill id: `smart-launch` · Package: `fhir-client` · Instance: |
+
+## FHIR IG build (fhir-harness/skills/fhir-ig-base)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [ig-build-pipeline](ig-build-pipeline.html) | `ig-build-pipeline` | — | > Skill id: `ig-build-pipeline` · Package: `fhir-ig-base` · Instance: |
+| [ig-publisher-fork](ig-publisher-fork.html) | `ig-publisher-fork` | — | > Skill id: `ig-publisher-fork` · Package: `fhir-ig-base` · Instance: |
+| [ig-publisher-reduction](ig-publisher-reduction.html) | `ig-publisher-reduction` | — | > Skill id: `ig-publisher-reduction` · Package: `fhir-ig-base` · Instance: |
+| [ig-render-jekyll](ig-render-jekyll.html) | `ig-render-jekyll` | — | > Skill id: `ig-render-jekyll` · Package: `fhir-ig-base` · Instance: |
+
 ## Local skills (.claude/skills/local)
 
 | Skill | Id | Schema | Summary |
