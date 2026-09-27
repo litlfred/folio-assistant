@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 417,
+      "count": 418,
       "unit": "beans"
     }
   },
@@ -713,14 +713,14 @@
     {
       "id": "folio-assistant-3x2o",
       "title": "Two generated skill pages name a source directory that does not exist — the oe98 banner bug recurs for remote stubs",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T10:44:49Z",
-      "updatedAt": "2026-09-27T05:30:59Z",
+      "updatedAt": "2026-09-27T06:12:28Z",
       "preview": "Found 2026-09-26 while verifying `hloc`'s link rewriting — by checking that\nevery rewritten link points at something that EXISTS, which also swept the\nlinks the generator already composed.\n\n## The measurement\n\n`cat-harness/docs/reference/skill-instructions/fhir-client-operations.md` and\n`smart-launch.md` each open with:\n\n    > Generated from [`cat-harness/skills/remote-stubs/<name>.md`](\n    >   h",
       "file": "beans/defs/folio-assistant-3x2o--two-generated-skill-pages-name-a-source-directory.md"
     },
@@ -2055,6 +2055,20 @@
       "updatedAt": "2026-09-25T16:22:38Z",
       "preview": "## Measured 2026-09-18, on `claude/festive-galileo-s7ibx0`\n\n```\ngrep -rn \"stripLeanComments\" --include=*.ts . | grep -v node_modules\n```\n\nSix independent implementations of a Lean comment stripper:\n\n| file | line | shape |\n|---|---|---|\n| `content/pipeline/lean-lexer.ts` | 23 | **canonical** — extracted this session from `lean-atlas-ingest.ts` |\n| `content/pipeline/qa-checkers-extended.ts` | 2925 ",
       "file": "beans/defs/folio-assistant-bqrg--stripleancomments-is-implemented-six-times-converg.md"
+    },
+    {
+      "id": "folio-assistant-bsay",
+      "title": "A declaration that points at nothing, where nothing can fail: three live cases and the gate that reports two of them and exits 0",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T06:13:41Z",
+      "updatedAt": "2026-09-27T06:26:57Z",
+      "preview": "## The three cases, measured on `8cce91e4eab`\n\n### 1. A banner naming a page that does not exist -- detected by NOTHING\n\n`SAME_BASENAME_DIFFERENT_DOCUMENT[\"kg-navigation\"]` in `gen-skill-docs.ts`\nnamed a twin published as `local-kg-navigation`. That page does not exist and\ncannot: the `local-` prefix comes from `.claude/skills/local/`, which holds\nthree skills and `kg-navigation` is not one. So th",
+      "file": "beans/defs/folio-assistant-bsay--a-declaration-that-points-at-nothing-where-nothing.md"
     },
     {
       "id": "folio-assistant-byql",
@@ -5435,14 +5449,14 @@
     {
       "id": "folio-assistant-xd1g",
       "title": "11 root-rooted scans have no gitignore awareness — ramz's sibling audit, answered",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T16:21:48Z",
-      "updatedAt": "2026-09-26T11:19:41Z",
+      "updatedAt": "2026-09-27T07:09:15Z",
       "preview": "`ramz`'s third box, asked and answered 2026-09-25.\n\n`ramz` fixed ONE scanner: `check-context-emission` walked the filesystem behind\na hand-written denylist and swept 145 gitignored documents as repository\ncontent. It was found by accident — a clean checkout failing a test about code\nnobody had touched — so the bean asked *\"which others?\"*.\n\n**Eleven**, under `cat-harness/scripts/`, each walking fr",
       "file": "beans/defs/folio-assistant-xd1g--11-root-rooted-scans-have-no-gitignore-awareness-r.md"
     },
