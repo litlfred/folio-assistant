@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6b8u
 title: 'EXTRACTION: MD_MIN_TEXT_LEN is a threshold in CHARACTERS, so the same table cell is translatable in Arabic and not in English'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T08:56:25Z
-updated_at: 2026-09-26T13:21:47Z
+updated_at: 2026-09-27T07:34:06Z
 parent: folio-assistant-bzyu
 ---
 
@@ -181,3 +181,42 @@ and nowhere else.
 - [ ] decide the one-character-word case on its merits — a single Han character is
       a word where a single Latin letter is not — with the measurement above
       recorded, and NOT justified by alignment, which it does not improve
+
+
+## Re-measured 2026-09-27 — the numbers above were stale, the CONCLUSION holds
+
+The measurements in this bean were taken before `o29r` (229 msgids) and `3mo4`
+(209 msgids) changed extraction, so they no longer describe the corpus. Re-run on
+the current tree. **Nothing was shipped**; `isTranslatable` was patched
+temporarily to measure the candidate and restored, verified by an empty diff.
+
+| | bean, 2026-09-26 | now |
+|---|---|---|
+| msgids admitted by the current rule (≥2 letters) | 40 939 | **46 800** |
+| cells the candidate would newly admit | "6 msgids" | **8 cells, 2 distinct strings** |
+| pairs derived / refused, CURRENT rule | 19 aligned /25 | **57 derived, 13 refused** |
+| pairs derived / refused, CANDIDATE rule | 19 aligned /25 | **57 derived, 13 refused** |
+| `zh/getting-started` | 149 / 145 → 149 / 150 | **149 / 145 → 149 / 150** |
+
+So the bean's two load-bearing claims are confirmed rather than assumed:
+**alignment does not move at all** — 57/13 under both rules, byte-identical
+refusal breakdown (`count-differs` 10, `msgid-conflict` 3) — and on the one pair
+the candidate was meant to help it **swaps one misalignment for another**, short by
+4 becoming long by 1.
+
+## The decision is now concrete rather than abstract
+
+The candidate admits **exactly two strings**, each four times:
+
+    "是"  (yes) x4
+    "否"  (no)  x4
+
+in `docs/guides/zh/agent-onboarding.md`, `docs/zh/document-ingestion.md` and
+`docs/zh/getting-started.md` — all of them yes/no cells in comparison tables.
+
+That is the whole question, stated without an alignment argument as this bean
+requires: **is a single Han character a word a translator should be offered, where
+a single Latin letter is not?** 是 and 否 are complete words; `y` and `n` are not.
+Eight cells either way, and no measurement can settle it.
+
+**Put to the owner 2026-09-27. Unanswered — nothing shipped.**
