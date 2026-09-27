@@ -608,6 +608,119 @@ argument above), and the whole `Skill-registration chain, unmasked (hard)` job
 (10s, green).
 
 
+## The declaration gate CANNOT FIRE in CI — which is how `main` landed a gate without one
+
+2026-09-26, PR #1425. A clean instance of this bean's mechanism, and the
+consequence is already visible on `main`.
+
+`check:artefact-verification` exists to catch exactly one thing: a NEW
+generated-artefact check registered with no statement of what verifies it for a
+consumer. It is red right now, naming `translated-links:check`, which `main`
+landed the same day.
+
+**It is red on `main` too** — measured in a clean worktree of `origin/main`, not
+inferred. So `main` shipped a gate without its declaration, and the gate whose
+whole purpose is catching that omission did not stop it.
+
+### Why it could not stop it
+
+Both live in step 44 of the `gates` job, `gates that were registered and never
+run`, which opens `set -e`. The command order inside it:
+
+| position in the step | command |
+|---|---|
+| 3rd | `translation:drift:check` — **RED on `main` by decision** (bean `ngxj`) |
+| … | … |
+| far below | `check:artefact-verification` |
+
+So the step dies at the third command and `check:artefact-verification` is never
+executed in CI, on `main` or on any branch. It is registered, it is wired, and it
+has no reachable verdict — this bean's third state exactly, and `1xhc`'s
+sentence: a gate that does not fire is indistinguishable from one that passed.
+
+### The part that makes this measurable rather than theoretical
+
+`bun run gates` locally reported **3** failures; CI's `Repository gates` reports
+**1**. The difference is not the tree — it is that bun's script runner executes
+every gate while a GitHub step stops at its first failure. So the only instrument
+that saw `main`'s missing declaration was a local full run, and nothing in CI
+will report it until the accepted drift red clears.
+
+That inverts the usual worry on this bean. The familiar hazard is CI being
+LENIENT where local is strict (`bun test` repairing an artefact). Here local is
+strictly more informative than CI, for a structural reason, and an agent that
+trusts CI over its own gate run will conclude the repository is cleaner than it
+is.
+
+### Adds to "Done when"
+
+- [ ] `check:artefact-verification` is reachable — moved ABOVE the accepted drift
+      red, or given its own step. MEASURED AFTER: with drift still red, CI reports
+      the missing-declaration failure by name
+- [ ] the count of gates in step 44 that sit BELOW the drift command is reported
+      somewhere a reader sees. They are all in the same position and none of them
+      can fail today
+
+
+## The blast radius is 109 CHECKS, not 6 steps — my own framing corrected, twice over
+
+I have described this cascade as **45 steps**, then corrected it to **6 steps**, and
+both numbers were answers to the wrong question. Measured 2026-09-26 with the step
+boundaries verified:
+
+| | |
+|---|---|
+| the step | `gates that were registered and never run`, workflow lines **911–1433** |
+| `bun run` invocations inside it | **106** |
+| `translation:drift:check` position | **3rd** |
+| unreachable INSIDE the step, under `set -e` | **103** |
+| whole steps skipped AFTER it | **6** |
+| **checks that cannot run at all** | **109** |
+
+`set -e` is present; there is no `|| true` and no `set +e` anywhere in the step, so
+nothing resets the failure. Controlled for.
+
+### Why my earlier numbers were the wrong unit
+
+45 and 6 both count **STEPS**. A step is not a check: this one step holds 106
+checks. So "the cascade shrank from 45 to 6" was true of steps and badly misleading
+as a statement of how much goes unevaluated — the real figure went from a
+job-sized cascade to a **step-sized one that is larger than the job cascade it
+replaced**, because 103 gates were consolidated into a single `run: |` block.
+
+That is the same error I made on `cell()` the same day (recorded on `li5y`: "one
+instance" was 238). Both times I counted the coarse unit that was easy to see and
+published it as the exposure. **The unit a reader cares about is the CHECK, and it
+is never the unit a workflow makes convenient to count.**
+
+### Two verification notes, because the measurement itself nearly went wrong
+
+**My first slice was wrong and gave the right answer by luck.** I detected the
+step's end with an indentation heuristic that ran to line 1683 instead of 1433,
+swallowing the `rust-wildcard` and `dependency-advisories` steps. It still reported
+106 — because those later steps use raw shell rather than `bun run`, so the
+over-wide slice contained no extra matches. I only noticed because the same scan
+reported `|| true` and `continue-on-error` present, which contradicted the claim I
+was checking. **A count that survives a boundary bug is not a count that was
+measured correctly**, and the thing that exposed it was an incidental flag, not the
+number.
+
+**The figure reached me second-hand first.** Another session's check-in asserted
+106/3rd/103. I re-derived it rather than adopting it, which is what caught the
+boundary bug. The independent agreement is worth more than either measurement
+alone; the adoption would have been worth nothing.
+
+### Done when
+
+- [x] the count of gates below the drift command is measured and recorded —
+      **103 inside the step, 6 steps after, 109 checks total**
+- [ ] `check:artefact-verification` is reachable. Unchanged, and now with a number:
+      it is one of the 103
+- [ ] the 103 are not a single `run: |` block. The remedy a sibling session
+      proposes on `cpss` — split `translation:drift:check` out and make it the LAST
+      step — is recorded here as the candidate, NOT adopted: it restructures gates
+      that are not mine, and it is an owner decision
+
 ## 2026-09-27 — measured on pristine main, and the runner now DETECTS it
 
 `bun run gates` on a pristine `origin/main` worktree at `c6960465301`

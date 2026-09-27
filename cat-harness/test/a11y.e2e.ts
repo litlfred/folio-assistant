@@ -223,7 +223,7 @@ test.describe("accessibility — a translated, right-to-left interface", () => {
  * backgrounds that differ per scheme, and a token checked in one scheme and
  * not the other is the trap this project has already paid for once.
  */
-const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
+const INSTANCE_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 /**
  * The harness page, as a function of THE SITE'S scheme rather than the OS's.
@@ -258,7 +258,7 @@ const tilesPage = (scheme: "light" | "dark") => `<!doctype html><html lang="en" 
      sidebar is a harness artefact, and leaving it in would have this gate
      failing on markup the site does not ship. */
   .site-nav a { color: inherit; }
-  ${readFileSync(join(REPO, siteDirFor(REPO), "assets/css/docs-ui.css"), "utf8")}
+  ${readFileSync(join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "assets/css/docs-ui.css"), "utf8")}
 </style></head><body>
   <script type="application/json" id="fa-translation-meta">{"lang":"en","availableLocales":["fr","es"]}<\/script>
   <script type="application/json" id="fa-site-links">{"kg":"/folio-assistant/folio-assistant/","jsonld":"/folio-assistant/folio-assistant.jsonld","source":"https://example.invalid/r"}<\/script>
@@ -278,8 +278,8 @@ const tilesPage = (scheme: "light" | "dark") => `<!doctype html><html lang="en" 
   </div><div class="main-content"><h1>Harness</h1></div></div>
   <script>window.jtd = { theme: "${scheme}", getTheme: function () { return this.theme; },
     setTheme: function (t) { this.theme = t; } };<\/script>
-  <script>${readFileSync(join(REPO, siteDirFor(REPO), "assets/js/vendor/qrcode.js"), "utf8")}<\/script>
-  <script>${readFileSync(join(REPO, siteDirFor(REPO), "assets/js/docs-ui.js"), "utf8")}<\/script>
+  <script>${readFileSync(join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "assets/js/vendor/qrcode.js"), "utf8")}<\/script>
+  <script>${readFileSync(join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "assets/js/docs-ui.js"), "utf8")}<\/script>
 </body></html>`;
 
 test.describe("accessibility — the docs-site UI", () => {

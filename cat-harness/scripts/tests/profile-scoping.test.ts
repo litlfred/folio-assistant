@@ -177,19 +177,67 @@ describe("readDeclaredFolioProfile — undetermined is not `paper`", () => {
 
 // ── End to end: the sweep itself ─────────────────────────────────
 
-/** Outcome of every criterion for one block, as the sweep reports it. */
+/**
+ * Outcome of every criterion for one block, as the sweep reports it.
+ *
+ * ## Why this records the child on EVERY run, including passes
+ *
+ * It SPAWNS the real sweep script against a temporary folio, so its verdict
+ * depends on a separate process whose only trace used to be `res.stdout`. The
+ * record is written unconditionally rather than on failure, because writing it
+ * only when something looks wrong is what makes the next occurrence need a
+ * reproduction: by the time an assertion fails, the process is gone.
+ *
+ * **The question it was opened for has since been ANSWERED, by `sff8` (#1447),
+ * and the docblock said otherwise until this merge.** It claimed a failure in
+ * this file was reproducible only inside a full `bun test`, that five attempts
+ * across two sessions had produced the test NAME and nothing else, and that it
+ * was still unknown whether the child reported a different OUTCOME or FAILED
+ * with its reason discarded. `sff8` measured it with `--reporter=junit`: the
+ * four end-to-end tests were **4.0s of their own work**, sitting at 77-82 % of a
+ * 5s budget in a quiet process, so ordinary jitter crossed it. Not contention,
+ * not an outcome mismatch, and not a discarded child failure. The hoist to
+ * module scope below is that fix, and it is why the timeout no longer fires.
+ *
+ * So this stays for the case it still covers rather than the one it was built
+ * for: a child that dies for any OTHER reason. `signal` is the discriminator —
+ * a timeout reports status `null`, which reads as "no status" rather than
+ * "killed" — and the third state below is a zero exit whose stdout is not JSON.
+ * That is bean `y0n2`'s defect avoided in a second place: there a `catch` turned
+ * "the tool could not answer" into a verdict; here silence turned it into an
+ * absence.
+ *
+ * `console.error`, not `console.log`, so the line survives a `--json` consumer
+ * reading stdout.
+ */
 function sweepOutcomes(root: string, blockRoot: string): Record<string, string> {
   const res = spawnSync(
     "bun",
     ["run", SWEEP, blockRoot + ".ts", "--dry-run", "--json"],
     { cwd: root, encoding: "utf-8", timeout: 600_000 },
   );
+  // `signal` is the timeout case, which reports status `null` and would
+  // otherwise read as "no status" rather than "killed at 600s".
+  const stderr = (res.stderr ?? "").trim();
+  console.error(
+    `  · qa-sweep: status=${res.status} signal=${res.signal ?? "-"} ` +
+      `stdout=${(res.stdout ?? "").length}B stderr=${stderr.length}B` +
+      (stderr ? `\n    stderr: ${stderr.split("\n").slice(0, 6).join("\n    ")}` : ""),
+  );
   if (res.status !== 0) {
-    throw new Error(`qa-sweep exited ${res.status}\n${res.stderr}`);
+    throw new Error(`qa-sweep exited ${res.status} (signal ${res.signal ?? "-"})\n${stderr}`);
   }
-  const report = JSON.parse(res.stdout) as {
-    results: Array<{ details: Array<{ criterion: string; outcome: string }> }>;
-  };
+  let report: { results: Array<{ details: Array<{ criterion: string; outcome: string }> }> };
+  try {
+    report = JSON.parse(res.stdout) as typeof report;
+  } catch (e) {
+    // A zero exit with unparseable stdout is a THIRD state, and it used to
+    // surface as a bare `SyntaxError` naming neither the child nor its output.
+    throw new Error(
+      `qa-sweep exited 0 but its stdout is not JSON (${e instanceof Error ? e.message : String(e)})\n` +
+        `first 400B of stdout: ${(res.stdout ?? "").slice(0, 400)}\nstderr: ${stderr}`,
+    );
+  }
   // A THROW rather than `expect`, because this now runs at module scope where
   // `expect` is not available. The check itself is load-bearing and stays: a
   // sweep that reported two blocks, or none, would make every outcome lookup
