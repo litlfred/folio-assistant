@@ -112,7 +112,11 @@ import {
  * bean is repaired — the check says so when an entry no longer matches, so a
  * stale baseline cannot quietly excuse a fresh defect under the same id.
  */
-const DUPLICATE_KEY_BASELINE = new Set(["folio-assistant-1hvo", "folio-assistant-7u3g"]);
+// `7u3g` left this set 2026-09-27: its duplicate was `updated_at`, which the
+// FIELD settles rather than the owner (bean `kfkh` — see `classifyDuplicate`),
+// so it was collapsed to the later write. `1hvo` remains: two authored titles,
+// and choosing between them is an editorial act nobody else can make.
+const DUPLICATE_KEY_BASELINE = new Set(["folio-assistant-1hvo"]);
 
 /** What a loader objected to, and how much it costs. */
 export type DefectKind =
@@ -133,6 +137,87 @@ export type DefectKind =
   | "unfenced";
 
 /** One bean whose front matter a YAML loader objected to. */
+/**
+ * Which duplicated keys have an answer that is NOT the owner's to give.
+ *
+ * `updated_at` is written by `beans` on every change, so two values are two
+ * writes and the LATER one is the current state. `created_at` is immutable once
+ * set, so two values are one truth and a re-statement, and the EARLIER one is
+ * it. Neither is a preference, which is what makes them mechanical.
+ *
+ * Nothing else goes here. `title`, `status`, `type`, `priority` and `parent` are
+ * authored: two differing values are two intentions and choosing between them is
+ * an editorial act.
+ */
+export const MECHANICAL_KEYS: Readonly<Record<string, "later" | "earlier">> = {
+  updated_at: "later",
+  created_at: "earlier",
+};
+
+/** What can be done about a duplicated front-matter key, and by whom. */
+export type DuplicateResolution =
+  /** Both values agree — collapsing loses nothing, so anyone who meets it may. */
+  | "collapsible"
+  /** The values differ but the FIELD decides which is right (see {@link MECHANICAL_KEYS}). */
+  | "mechanical"
+  /** The values differ and choosing is an editorial act — the owner's. */
+  | "authored";
+
+/**
+ * Classify one duplicated key.
+ *
+ * ## Why three states and not the two bean `kfkh` proposed
+ *
+ * It proposed *identical-value → collapsible* and *differing-value → the
+ * owner's call*. Measured over the two duplicates the store actually carries,
+ * 2026-09-27, that split puts both in the owner's lap and one of them does not
+ * belong there:
+ *
+ * | bean | key | values | by the two-way split | actually |
+ * |---|---|---|---|---|
+ * | `1hvo` | `title` | `…cat-harness/theming/ subgraph…` vs `…cat-harness theming subgraph…` | owner | owner — two authored titles |
+ * | `7u3g` | `updated_at` | `15:26:13Z` vs `15:32:27Z` | owner | **mechanical** — the later write is the state |
+ *
+ * "Repairing one means choosing which value was meant" is true of a title and
+ * false of a monotonic timestamp: `beans update` bumps `updated_at` on every
+ * change, so there is nothing to choose. Keeping it in the owner's queue is a
+ * question nobody needs to answer, sitting in a report that is read for the
+ * questions that do.
+ */
+export function classifyDuplicate(key: string, values: readonly string[]): DuplicateResolution {
+  if (new Set(values).size === 1) return "collapsible";
+  return key in MECHANICAL_KEYS ? "mechanical" : "authored";
+}
+
+/**
+ * The value a `mechanical` duplicate collapses to, or `undefined` if the key is
+ * not mechanical. Lexicographic comparison is exact for the RFC3339 `Z` stamps
+ * `beans` writes, and no other shape is accepted by the front-matter schema.
+ */
+export function mechanicalWinner(key: string, values: readonly string[]): string | undefined {
+  const rule = MECHANICAL_KEYS[key];
+  if (rule === undefined) return undefined;
+  const sorted = [...values].sort();
+  return rule === "later" ? sorted[sorted.length - 1] : sorted[0];
+}
+
+/**
+ * Every top-level key repeated in a raw front-matter block, with its values.
+ *
+ * Deliberately a line scan rather than a YAML parse: the block does not parse,
+ * which is how we got here. Indented lines and list items are continuations of
+ * the key above, so only column-0 `key: value` lines count.
+ */
+export function duplicatedKeys(frontMatter: string): Array<{ key: string; values: string[] }> {
+  const seen = new Map<string, string[]>();
+  for (const line of frontMatter.split(/\r?\n/)) {
+    if (/^[ \t#-]/.test(line) || !line.includes(":")) continue;
+    const [k, ...rest] = line.split(":");
+    seen.set(k!.trim(), [...(seen.get(k!.trim()) ?? []), rest.join(":").trim()]);
+  }
+  return [...seen.entries()].filter(([, v]) => v.length > 1).map(([key, values]) => ({ key, values }));
+}
+
 export interface FrontMatterDefect {
   readonly kind: DefectKind;
   /** The bean's id, as its `# <id>` line gives it. */
@@ -153,6 +238,18 @@ export interface FrontMatterDefect {
   readonly message: string;
   /** True for a `duplicate-key` already in {@link DUPLICATE_KEY_BASELINE}. */
   readonly baselined: boolean;
+  /**
+   * For a `duplicate-key`: the repeated keys, their values, and who can settle
+   * each. Absent for every other kind. Reported so a reader can tell a question
+   * that needs them from one the field already answers (bean `kfkh`).
+   */
+  readonly duplicates?: ReadonlyArray<{
+    readonly key: string;
+    readonly values: readonly string[];
+    readonly resolution: DuplicateResolution;
+    /** The value a `mechanical` duplicate collapses to. */
+    readonly winner?: string;
+  }>;
 }
 
 export interface FrontMatterReport {
@@ -270,6 +367,11 @@ export function checkBeanFrontMatter(root: string): FrontMatterReport {
           line: lineOf(strict),
           message: firstLine(strict),
           baselined: DUPLICATE_KEY_BASELINE.has(b.id),
+          duplicates: duplicatedKeys(b.frontMatter).map(({ key, values }) => {
+            const resolution = classifyDuplicate(key, values);
+            const winner = resolution === "mechanical" ? mechanicalWinner(key, values) : undefined;
+            return { key, values, resolution, ...(winner === undefined ? {} : { winner }) };
+          }),
         });
       } catch (tolerant) {
         defects.push({
@@ -386,6 +488,22 @@ function main(): void {
   }
   for (const d of outstanding) {
     console.log(`  · outstanding ${d.id} [duplicate-key]: ${d.message} — ${d.file}${at(d)}`);
+    // WHO can settle it, per key. A mechanical duplicate is not a question for
+    // anybody — the field decides — and printing it as though it were puts a
+    // non-question in a list read for the real ones (bean `kfkh`).
+    for (const dup of d.duplicates ?? []) {
+      if (dup.resolution === "collapsible") {
+        console.log(`      \`${dup.key}\` x${dup.values.length}, SAME value — collapsible by whoever meets it`);
+      } else if (dup.resolution === "mechanical") {
+        console.log(
+          `      \`${dup.key}\` x${dup.values.length}, and the FIELD settles it: keep ` +
+            `${JSON.stringify(dup.winner)} (${MECHANICAL_KEYS[dup.key]} wins). Not an owner decision.`,
+        );
+      } else {
+        console.log(`      \`${dup.key}\` x${dup.values.length}, values DIFFER — the owner chooses:`);
+        for (const v of dup.values) console.log(`        ${JSON.stringify(v)}`);
+      }
+    }
   }
   for (const id of report.staleBaseline) {
     console.log(
@@ -419,8 +537,11 @@ function main(): void {
   }
   if (outstanding.length > 0) {
     console.log(
-      "\n  Outstanding duplicates are repaired by the bean's OWNER, not by this check and " +
-        "not by whoever ran it — repairing one means choosing which value was meant.",
+      "\n  An `authored` duplicate is repaired by the bean's OWNER, not by this check and " +
+        "not by whoever ran it — repairing one means choosing which value was meant.\n" +
+        "  A `collapsible` or `mechanical` one is NOT that: the values agree, or the field " +
+        "decides.\n  Those want repairing by whoever meets them, and then removing from " +
+        "DUPLICATE_KEY_BASELINE in this file.",
     );
   }
 
