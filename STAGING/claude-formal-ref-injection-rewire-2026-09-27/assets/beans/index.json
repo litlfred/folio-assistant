@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 422,
+      "count": 423,
       "unit": "beans"
     }
   },
@@ -3965,6 +3965,20 @@
       "updatedAt": "2026-09-21T20:12:17Z",
       "preview": "Reported by the owner, 2026-09-21, as a bare fact: the staging URL **404s**.\nIt was not propagation.\n\n## Measured on `gh-pages`, not inferred\n\nThis branch's preview has been **deleted four times today**, each time by the\n`cleanup` job firing when one of this session's own PRs merged:\n\n```\ncf39207d  staging(cleanup): remove STAGING/claude-lhs-…  (PR #786 closed)\n05f5cfae  staging(cleanup): remove S",
       "file": "beans/defs/folio-assistant-oz5w--staging-cleanup-vs-branch-reuse-merging-pr-n-delet.md"
+    },
+    {
+      "id": "folio-assistant-p11x",
+      "title": "check:partition cannot see cross-instance edges: its ROOT is cat-harness/, so every 0 it reports is scoped to one instance",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T09:52:20Z",
+      "updatedAt": "2026-09-27T09:52:59Z",
+      "preview": "Opened 2026-09-27 because **`bf5l` asked for it and it did not exist.** That\nbean's closing section says, of making the blind checks see the edge it found:\n*\"Making the blind checks see it is NOT done here … it wants its own bean.\"* A\ncorpus-grep across `beans/defs/` and `beans/defs/archive/` found no such bean, so\n`bf5l` completed with its follow-up unrecorded.\n\n## What is measured\n\nVerified dire",
+      "file": "beans/defs/folio-assistant-p11x--checkpartition-cannot-see-cross-instance-edges-its.md"
     },
     {
       "id": "folio-assistant-p5wm",
