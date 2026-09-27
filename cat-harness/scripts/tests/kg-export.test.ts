@@ -953,13 +953,13 @@ describe("schemas and standards are nodes, and graphs link to them", () => {
   const graph = EXPORT["@graph"] as Array<Record<string, unknown>>;
   const byType = (t: string) => graph.filter((n) => n["@type"] === termIri(t));
   const specs = byType("ExternalSchema");
-  const idOf = (name: string) => specs.find((n) => n.name === name)?.["@id"];
+  const idOf = (name: string): string => String(specs.find((n) => n.name === name)?.["@id"]);
 
   test("every external-schemas record is an ExternalSchema node, DMN 1.3 among them", () => {
     const records = readdirSync(resolve(import.meta.dir, "..", "..", "external-schemas")).filter((f) => f.endsWith(".json"));
     expect(specs.length).toBe(records.length);
-    expect(idOf("omg-bpmn-2.0")).toBeDefined();
-    expect(idOf("omg-dmn-1.3")).toBeDefined();
+    expect(specs.map((n) => n.name)).toContain("omg-bpmn-2.0");
+    expect(specs.map((n) => n.name)).toContain("omg-dmn-1.3");
   });
 
   test("the processes GraphKind conforms to BPMN AND DMN, and says why it has no validator", () => {
