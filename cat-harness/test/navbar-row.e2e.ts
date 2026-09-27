@@ -381,7 +381,10 @@ test.describe("the middle — controlled folders, then the harness navigation, O
       .locator(".fa-nav-middle > *")
       .evaluateAll((ns) => ns.map((n) => n.className));
     expect(order[0]).toContain("fa-nav-folders");
-    expect(order[1]).toContain("site-nav");
+    // The page list's own heading (owner, 2026-09-27: "no title on the
+    // navbar component w/ pages"), then the list.
+    expect(order[1]).toContain("fa-nav-pages");
+    expect(order[2]).toContain("site-nav");
   });
 
   test("every declared kind is listed; one with no viewer is a non-link", async ({ page }) => {
@@ -1050,5 +1053,22 @@ test.describe("a sub-graph is drawn INSIDE its parent's row, folded — issue #1
     const f = (LIVE?.folders ?? []);
     expect(f.find((x) => x.kind === "proposals")?.within).toBe("docs");
     expect(f.find((x) => x.kind === "requirements")?.within).toBe("docs");
+  });
+});
+
+test.describe("the page list has a heading and folds — owner, 2026-09-27", () => {
+  test("a 'Pages' button with a count sits in front of the nav and folds it", async ({ page }) => {
+    const { errors } = await load(page, CUSTOM);
+    expect(errors).toEqual([]);
+    const btn = page.locator(".fa-nav-pages");
+    await expect(btn).toHaveCount(1);
+    await expect(btn).toContainText("Pages");
+    await expect(btn).toHaveAttribute("aria-expanded", "true");
+    await page.hover(".side-bar");
+    await btn.click();
+    await expect(btn).toHaveAttribute("aria-expanded", "false");
+    await expect(page.locator(".site-nav")).toBeHidden();
+    await page.locator(".fa-nav-pages").click();
+    await expect(page.locator(".site-nav")).toBeVisible();
   });
 });

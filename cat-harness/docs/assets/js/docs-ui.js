@@ -396,6 +396,10 @@
       var badges = mainContent.querySelector(".fa-translation-badges");
       insertTarget = badges ? badges.nextSibling : mainContent.firstChild;
     }
+    // The badges row can ALSO sit outside `mainContent` (it is lifted under
+    // the h1), so its sibling is no safer than the h1's. Checked again, 2026-09-27:
+    // the throw was back on the home page, measured with a `pageerror` listener.
+    if (insertTarget && insertTarget.parentNode !== mainContent) insertTarget = mainContent.firstChild;
     mainContent.insertBefore(container, insertTarget);
   }
 
@@ -4441,6 +4445,11 @@
     layer.setAttribute("data-fa-glass-avatars", p.avatars);
     layer.setAttribute("data-fa-glass-blur", p.blur ? "on" : "off");
     layer.style.setProperty("--fa-glass-opacity", String(p.opacity / 100));
+    // The handle wears the SAME stained glass as the layer (owner,
+    // 2026-09-27: "appropriate theme stained glass, not solid purple"). It is
+    // a sibling of the layer, not a child, so the theme is mirrored onto it.
+    var h = document.querySelector(".fa-glass-handle");
+    if (h) h.setAttribute("data-fa-glass-theme", p.theme);
   }
 
   /**
@@ -4601,6 +4610,7 @@
     handle.appendChild(document.createTextNode(" "));
     handle.appendChild(el("span", { class: "fa-glass-handle__label" }, "Folio"));
     placeHandle(handle);
+    applyGlassPrefs(layer, prefs);
 
     // The glass's own chrome, so an open glass is never `:empty`.
     var sheet = el("div", { class: "fa-glass-sheet", role: "region", "aria-label": "Your folio" });
@@ -9726,6 +9736,48 @@
     middle.appendChild(nav);
   }
 
+  /**
+   * A TITLED, FOLDABLE PAGE LIST — owner, 2026-09-27: *"no title on the
+   * navbar component w/ pages"* and *"cant minimize them either"*. The two
+   * regions above it ("On this page", "Folders") are disclosures with a
+   * count; the theme's page list was bare. This puts a heading button in
+   * front of `.site-nav`, wherever the nav now lives, and folds the list with
+   * it. Open by default, since the pages are what most readers came for;
+   * a fold is remembered per browser (`fa-nav-pages`), guarded like every
+   * other storage call here.
+   */
+  var NAV_PAGES_KEY = "fa-nav-pages";
+  function mountNavPagesHeading() {
+    var nav = document.querySelector(".side-bar .site-nav");
+    if (!nav || !nav.parentNode || nav.parentNode.querySelector(":scope > .fa-nav-pages")) return;
+    if (!nav.id) nav.id = "site-nav";
+    var top = nav.querySelectorAll(":scope > .nav-list > .nav-list-item").length;
+    var btn = el("button", {
+      type: "button",
+      class: "fa-nav-pages",
+      "aria-controls": nav.id,
+      "aria-expanded": "true",
+    }, "Pages");
+    btn.appendChild(el("span", { class: "fa-nav-folders__count" }, String(top)));
+    function set(open) {
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) nav.removeAttribute("data-fa-folded");
+      else nav.setAttribute("data-fa-folded", "");
+    }
+    var stored = null;
+    try { stored = window.localStorage.getItem(NAV_PAGES_KEY); } catch (_e) { /* default open */ }
+    set(stored !== "closed");
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") !== "true";
+      set(open);
+      try {
+        if (open) window.localStorage.removeItem(NAV_PAGES_KEY);
+        else window.localStorage.setItem(NAV_PAGES_KEY, "closed");
+      } catch (_e) { /* this page only */ }
+    });
+    nav.parentNode.insertBefore(btn, nav);
+  }
+
   /* ── STAY CLOSED, REMEMBERED ─────────────────────────────────────────────
    *
    * Owner, 2026-09-23: *"need mechansim for closing harness navabar (e.g. w/
@@ -9848,6 +9900,8 @@
     // line rather than the only one.
     mountDocumentIndex();
     mountInstanceGraphs();
+    // AFTER the wrapper exists, so the heading lands beside the nav inside it.
+    mountNavPagesHeading();
     // Before the badges: both read the same translation metadata, and the nav
     // is the thing a reader sees first.
     mountNavLocale();
