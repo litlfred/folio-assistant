@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-27T05:06:01Z
-updated_at: 2026-09-27T06:50:55Z
+updated_at: 2026-09-27T07:15:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -214,6 +214,93 @@ The cause was already half-fixed: `saveQaScriptSidecar` skipped a write when not
 
 On #1442's reason for keeping `engine_version` substantive (*"a verdict produced by a different engine is a different verdict"*): script sidecars hold no verdicts. Verdicts live in block sidecars, and nothing reads a script sidecar's `engine_version` for freshness; `entryIsFresh` compares hashes. So the field now records the engine of the last real checker change, and the two changes do not conflict.
 
+## Done-when 1 has no test to name — 2026-09-27, from a different session
+
+`[ ] the test (or interaction) that triggers the write is named`
+
+**There is no such test.** The trigger is the `engine_version` term in
+`saveQaScriptSidecar`'s write-skip guard plus an off-pin engine. That was
+already implicit in `df579167c71`'s own analysis; it is stated here because the
+Done-when list still asks for a test and the next agent will go looking.
+
+I went looking. Bisecting `bun test` by directory, resetting the sidecars
+between each:
+
+    cat-harness/schemas      dirty=0
+    cat-harness/src          dirty=0
+    cat-harness/test         dirty=0
+    cat-harness/adapters     dirty=0
+    folio-assistant-core     dirty=0
+    who-iris                 dirty=0
+    large-datasets           dirty=0
+    smart-trust              dirty=0
+
+which narrows it to `cat-harness/scripts/tests/` — 435 files — and would never
+have terminated, because the cause is not in any of them. Reading
+`.bun-version`'s git log took one command and answered it.
+
+## What made the hunt possible, and it is now fixed
+
+`qa-utils.ts` justified the guard with *"Everything except the two
+`last_run_*` fields is content-derived, so comparing on those alone is the
+right test."* That sentence rules the environment out **by construction**, so
+both `rmcf` and this bean concluded a test must be doing it. PR #1451 corrects
+it in place — not by deleting it, since deleting leaves the term unexplained and
+re-opens the DROP-the-field fix the owner already rejected.
+
+## The residue, measured, and I cannot fix it here
+
+The pin is 1.3.14 and CI runs it. The committed corpus does not agree with it:
+
+    72 sidecars   engine_version: bun-1.3.14
+    14 sidecars   engine_version: bun-1.3.11   <- pre-pin residue
+
+The 14: detangler-archimedean-wall, framework-canonical, proof-compile-cost,
+proof-no-cost-regression, proof-no-placeholder-stub, q-usage-archimedean-in-
+categorical-chapter, q-usage-fixed-q0-leak, q-usage-modulus-vs-real-mismatch,
+q-usage-narrative-chapter-mismatch, q-usage-positivity-implicit,
+q-usage-regime-detected, q-usage-root-of-unity-undeclared, wall-base-ring-minimal,
+wall-side-correct.
+
+They need one `qa:sweep` on a machine at the pin. **This container is at 1.3.11**
+and installing 1.3.14 is refused by the environment's network policy (403 from
+the proxy on `bun.sh/install`), so I cannot produce them. Hand-writing
+`bun-1.3.14` into them would assert that an engine which never ran produced the
+measurement — a worse defect than the one it tidies, and precisely the
+`sfjo` caution recorded above (*read what a regeneration writes before
+committing it*).
+
+## And nothing checks it, which is the gap worth a decision
+
+`check:bun-pin` verifies that **22 workflow sites** agree with `.bun-version`.
+Nothing verifies that the **86 sidecars** do. So the 14 are invisible to every
+gate: `1xhc` again — a disagreement no check can see is indistinguishable from
+agreement.
+
+The gate is easy; making it green is not, because it reddens `main` until the
+14 are regenerated. That is the owner's call, not mine, so it is recorded rather
+than shipped. NOT taken unilaterally and NOT filed as a separate bean, because
+it is the same fact this bean is already about.
+
+### Reconciled on merge, 2026-09-27 — the section above predates #1452
+
+Written without seeing the sections before it. Kept as written, with two corrections:
+
+- **There is such a test.** `init-folio-qa.test.ts:41` spawns the real `qa-sweep.ts`
+  (not `--dry-run`), and a sweep saves script sidecars under the platform's
+  `REPO_ROOT` whatever it swept. The directory bisection above stopped at
+  `cat-harness/scripts/tests/`; halving inside it ends at that one file in nine
+  steps. Both halves are true: the test is the WRITER, the `engine_version` term
+  plus an off-pin engine was the TRIGGER — which is the point the corrected
+  `qa-utils.ts` comment now makes.
+- **The 14 pre-pin sidecars are now harmless.** Since #1452 no run rewrites a
+  sidecar for its engine alone and no reader uses `engine_version` for freshness,
+  so the residue changes on the next real checker change. The proposed
+  sidecar-vs-pin gate is therefore not needed to stop churn; it stays the owner's
+  call, unshipped.
+
+---
+
 ---
 
 ## 2026-09-27 — the owner asked where this belongs. It is a SKILL, and now it is one.
@@ -300,3 +387,4 @@ made it.
 
 Not reopening: the boxes are closed on evidence I did not produce, which is
 `bean-coordination`'s rule working as intended.
+
