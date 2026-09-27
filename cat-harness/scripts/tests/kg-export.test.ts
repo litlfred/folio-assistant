@@ -23,7 +23,7 @@
 import { describe, expect, test } from "bun:test";
 import { readRoleGraph } from "../../schemas/role-graph.ts";
 import { join, resolve } from "node:path";
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 
@@ -940,5 +940,47 @@ describe("exporting ANOTHER instance's graph", () => {
         expect(s.startsWith(`${BASE}/bootstrap/bootstrap.jsonld#`)).toBe(true);
       }
     }
+  });
+});
+
+/*
+ * THE STANDARDS A GRAPH IS WRITTEN IN, reachable from the graph. Owner,
+ * 2026-09-27, on the `processes` GraphKind: "i would have expected to see
+ * schemas more accessible (e.g. bpmn, or others) when viewing". The registry
+ * knew `processes` is BPMN; the export dropped it.
+ */
+describe("schemas and standards are nodes, and graphs link to them", () => {
+  const graph = EXPORT["@graph"] as Array<Record<string, unknown>>;
+  const byType = (t: string) => graph.filter((n) => n["@type"] === termIri(t));
+  const specs = byType("ExternalSchema");
+  const idOf = (name: string) => specs.find((n) => n.name === name)?.["@id"];
+
+  test("every external-schemas record is an ExternalSchema node, DMN 1.3 among them", () => {
+    const records = readdirSync(resolve(import.meta.dir, "..", "..", "external-schemas")).filter((f) => f.endsWith(".json"));
+    expect(specs.length).toBe(records.length);
+    expect(idOf("omg-bpmn-2.0")).toBeDefined();
+    expect(idOf("omg-dmn-1.3")).toBeDefined();
+  });
+
+  test("the processes GraphKind conforms to BPMN AND DMN, and says why it has no validator", () => {
+    const kind = byType("GraphKind").find((n) => n.name === "processes")!;
+    const to = kind.conformsTo as string[];
+    expect(to).toContain(idOf("omg-bpmn-2.0"));
+    expect(to).toContain(idOf("omg-dmn-1.3"));
+    expect(typeof kind.validatorNotApplicable).toBe("string");
+  });
+
+  test("a kind with a runtime validator links to its Schema node", () => {
+    const schemas = new Set(byType("Schema").map((n) => n["@id"]));
+    const withValidator = byType("GraphKind").filter((n) => n.validator !== undefined);
+    expect(withValidator.length).toBeGreaterThan(0);
+    for (const k of withValidator) expect(schemas.has(k.validator)).toBe(true);
+  });
+
+  test("every Process links to the standard its own file declares", () => {
+    const bpmn = idOf("omg-bpmn-2.0");
+    const procs = byType("Process");
+    expect(procs.length).toBeGreaterThan(0);
+    for (const p of procs) expect(p.conformsTo as string[]).toContain(bpmn);
   });
 });

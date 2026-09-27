@@ -24,9 +24,9 @@ So each record answers three questions — **which edition**, **what here
 depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
-<div class="xs-stat"><b>16</b><span>specifications</span></div>
+<div class="xs-stat"><b>17</b><span>specifications</span></div>
 <div class="xs-stat"><b>98</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>183</b><span>declared uses</span></div>
+<div class="xs-stat"><b>192</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -38,6 +38,7 @@ depends on it**, and **which of its terms this repository branches on**.
 | **[HL7 FHIR](#hl7-fhir)**<br>`hl7-fhir` | HL7 | [unpinned](https://hl7.org/fhir/) | `reads` — this repository parses documents written in it |
 | **[Business Process Model and Notation (BPMN)](#omg-bpmn-2.0)**<br>`omg-bpmn-2.0` | OMG | [2.0](https://www.omg.org/spec/BPMN/2.0/) | `conforms` — this repository's artefacts are valid against it |
 | **[Diagram Definition (DD)](#omg-dd-1.0)**<br>`omg-dd-1.0` | OMG | [1.0](https://www.omg.org/spec/DD/1.0/) | `conforms` — this repository's artefacts are valid against it |
+| **[Decision Model and Notation (DMN)](#omg-dmn-1.3)**<br>`omg-dmn-1.3` | OMG | [1.3](https://www.omg.org/spec/DMN/1.3/) | `conforms` — this repository's artefacts are valid against it |
 | **[Schema.org](#schema-org)**<br>`schema-org` | other | [unpinned](https://schema.org/) | `conforms` — this repository's artefacts are valid against it |
 | **[SPAR Ontologies: DoCO, DEO and CiTO](#spar-doco-deo-cito)**<br>`spar-doco-deo-cito` | other | [unpinned](http://www.sparontologies.net/) | `conforms` — this repository's artefacts are valid against it |
 | **[Metadata Vocabulary for Tabular Data](#w3c-csvw)**<br>`w3c-csvw` | W3C | [2015-12-17](https://www.w3.org/TR/tabular-metadata/) | `conforms` — this repository's artefacts are valid against it |
@@ -64,7 +65,7 @@ Every declaration names a record on this page.
 
 ## Namespaces the corpus uses against the ones it declares
 
-Read from the BPMN and DMN files themselves — **4** namespace IRI(s)
+Read from the BPMN and DMN files themselves — **6** namespace IRI(s)
 are in use. Derived rather than listed, so a diagram that adopts a new
 vocabulary shows up here instead of going unnoticed.
 
@@ -238,6 +239,27 @@ a subset of the edition rather than a transcription of it.
 | `cat-harness/scripts/render-bpmn.ts` | `@conformsTo` tag |
 | `folio-assistant-core/processes/*.bpmn (1)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
+
+**No operative terms.** This repository conforms to the specification
+without branching on any of its terms, so none is materialised into the
+graph. That is a determined zero, not an unfilled field.
+
+### Decision Model and Notation (DMN) {#omg-dmn-1.3}
+
+`omg-dmn-1.3` — OMG, edition [1.3](https://www.omg.org/spec/DMN/1.3/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `https://www.omg.org/spec/DMN/20191111/MODEL/`
+- `https://www.omg.org/spec/DMN/20191111/DMNDI/`
+
+**Note.** The decision tables under processes/decisions/ that BPMN gateways compute from. Added 2026-09-27 when the knowledge graph began linking each process graph to the standards its files declare; until then the DMN namespaces went unregistered because namespacesInUse read only the top of processes/.
+
+**What depends on it.**
+
+| user | declared by |
+|---|---|
+| `cat-harness/processes/decisions/*.dmn (9)` | `xmlns` binding |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the
