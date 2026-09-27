@@ -83,6 +83,7 @@ the whole docs site rather than part of the translation pipeline, and
 - [x] Settle whether `dir` belongs on `<html>` at build time as well as at
   runtime — `sfjo` established that `dir:` front matter currently reaches nothing
 
+_2026-09-27T10:30:26Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 ## Fixed 2026-09-27 — a post-build pass, `cat-harness/scripts/set-html-lang.ts`
 
