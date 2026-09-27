@@ -186,19 +186,37 @@ export function markdown(r: RuntimeReport): string {
   if (r.verdict === "match") {
     return head + `Running Bun **${r.running}** matches \`${PIN_FILE}\`, so this container runs what CI runs.\n`;
   }
-  return (
+  const lead =
     head +
     `**This container runs Bun ${r.running}; \`${PIN_FILE}\` pins ${r.pinned}.** CI installs the pin at ` +
     "every `setup-bun` site, so you are running different code from the gates that will judge your " +
-    "push — a test that passes here can fail there, and the reverse.\n\n" +
+    "push — a test that passes here can fail there, and the reverse.\n\n";
+
+  // The sidecar clause is only worth printing when the corpus actually
+  // disagrees with this engine. It read "older than the 0 above" for one
+  // commit, after main normalised all 86 stamps to `bun-1.3.11` — a sentence
+  // that cannot be true and that no test covered, because every fixture here
+  // had been built with a non-zero count.
+  if (r.stampedElsewhere === 0) {
+    return (
+      lead +
+      `All ${r.sidecars} committed script sidecars already record \`${ENGINE_PREFIX}${r.running}\`, so a ` +
+      "checker you change here stamps its sidecar consistently with the rest and there is nothing to " +
+      "watch for on that axis. Nothing will be rewritten either way: since #1452, `engine_version` is " +
+      "excluded from `saveQaScriptSidecar`'s write-skip comparison.\n"
+    );
+  }
+
+  return (
+    lead +
     `Of ${r.sidecars} committed script sidecars, **${r.stampedElsewhere}** record a different engine. ` +
     "**That is not churn and will not dirty your tree**: since #1452, `engine_version` is excluded from " +
     "`saveQaScriptSidecar`'s write-skip comparison, so a sweep from any bun rewrites nothing. It means " +
     "their last CONTENT change was made elsewhere.\n\n" +
     "What to watch for instead: if you change a checker and its sidecar is rewritten here, the new stamp " +
-    `is \`${ENGINE_PREFIX}${r.running}\` — older than the ${r.stampedElsewhere} above. Read what a ` +
+    `is \`${ENGINE_PREFIX}${r.running}\`, which differs from the ${r.stampedElsewhere} above. Read what a ` +
     "regeneration writes before committing it (`rmcf`, and `#1430`'s `sfjo` rule), rather than committing " +
-    "a downgrade as though it were a fresh measurement.\n"
+    "a stamp that moves backwards as though it were a fresh measurement.\n"
   );
 }
 

@@ -177,49 +177,35 @@ describe("readDeclaredFolioProfile — undetermined is not `paper`", () => {
 
 // ── End to end: the sweep itself ─────────────────────────────────
 
-/** Scaffold a folio and return `{ root, blockRoot }`. */
-function scaffoldFolio(contentType: "paper" | "document"): {
-  root: string;
-  blockRoot: string;
-} {
-  const d = mkdtempSync(join(tmpdir(), `profile-sweep-${contentType}-`));
-  dirs.push(d);
-  initFolio({
-    targetDir: d,
-    contentType,
-    slug: "cold-chain-guidance",
-    title: "Cold Chain Guidance",
-    authors: ["A. Author"],
-    link: "sibling",
-    assistantPath: "folio-assistant",
-    skipVcs: true,
-  });
-  return {
-    root: d,
-    blockRoot: join(d, "folio", "cold-chain-guidance", "introduction", "overview"),
-  };
-}
-
 /**
  * Outcome of every criterion for one block, as the sweep reports it.
  *
  * ## Why this records the child on EVERY run, including passes
  *
- * This is not a fixture test in the usual sense: it SPAWNS the real sweep
- * script against a temporary folio, so its verdict depends on a separate
- * process whose only trace used to be `res.stdout`. Bean `9v4m` has a failure
- * in this file that is reproducible only inside a full `bun test` — five
- * attempts across two sessions produced the test NAME and nothing else, so it
- * is still unknown whether it fails because the child reported a different
- * OUTCOME or because the child FAILED and its reason was discarded. Those have
- * disjoint causes and no further hypothesis is worth forming without knowing
- * which.
- *
- * So the record is written unconditionally rather than on failure. Writing it
+ * It SPAWNS the real sweep script against a temporary folio, so its verdict
+ * depends on a separate process whose only trace used to be `res.stdout`. The
+ * record is written unconditionally rather than on failure, because writing it
  * only when something looks wrong is what makes the next occurrence need a
- * reproduction: by the time the assertion fails, the process is gone. This is
- * bean `y0n2`'s defect avoided in a second place — there a `catch` turned "the
- * tool could not answer" into a verdict; here silence turned it into an absence.
+ * reproduction: by the time an assertion fails, the process is gone.
+ *
+ * **The question it was opened for has since been ANSWERED, by `sff8` (#1447),
+ * and the docblock said otherwise until this merge.** It claimed a failure in
+ * this file was reproducible only inside a full `bun test`, that five attempts
+ * across two sessions had produced the test NAME and nothing else, and that it
+ * was still unknown whether the child reported a different OUTCOME or FAILED
+ * with its reason discarded. `sff8` measured it with `--reporter=junit`: the
+ * four end-to-end tests were **4.0s of their own work**, sitting at 77-82 % of a
+ * 5s budget in a quiet process, so ordinary jitter crossed it. Not contention,
+ * not an outcome mismatch, and not a discarded child failure. The hoist to
+ * module scope below is that fix, and it is why the timeout no longer fires.
+ *
+ * So this stays for the case it still covers rather than the one it was built
+ * for: a child that dies for any OTHER reason. `signal` is the discriminator —
+ * a timeout reports status `null`, which reads as "no status" rather than
+ * "killed" — and the third state below is a zero exit whose stdout is not JSON.
+ * That is bean `y0n2`'s defect avoided in a second place: there a `catch` turned
+ * "the tool could not answer" into a verdict; here silence turned it into an
+ * absence.
  *
  * `console.error`, not `console.log`, so the line survives a `--json` consumer
  * reading stdout.
@@ -252,14 +238,92 @@ function sweepOutcomes(root: string, blockRoot: string): Record<string, string> 
         `first 400B of stdout: ${(res.stdout ?? "").slice(0, 400)}\nstderr: ${stderr}`,
     );
   }
-  expect(report.results).toHaveLength(1);
+  // A THROW rather than `expect`, because this now runs at module scope where
+  // `expect` is not available. The check itself is load-bearing and stays: a
+  // sweep that reported two blocks, or none, would make every outcome lookup
+  // below read from the wrong place, or from undefined.
+  if (report.results.length !== 1) {
+    throw new Error(`qa-sweep reported ${report.results.length} block(s), expected exactly 1`);
+  }
   return Object.fromEntries(report.results[0].details.map((d) => [d.criterion, d.outcome]));
 }
 
+/**
+ * The end-to-end sweeps, run ONCE at module scope — `vxho`'s fix, applied here
+ * on its own measurement rather than by analogy.
+ *
+ * ## Why, with the numbers
+ *
+ * Each of the four tests below used to call `sweepOutcomes`, and each call
+ * `spawnSync`s a whole `bun` process that imports the QA pipeline. Measured
+ * 2026-09-27 with `--reporter=junit` (bean `sff8`): the four tests took
+ * **4013, 4015, 4049 and 4061 ms** — that is **77-82 % of the 5000 ms per-test
+ * budget**, and any jitter crossed it. Four distinct test names have failed this
+ * way across runs of one commit.
+ *
+ * **The inflation factor is 1.0x, not the ~35x this was assumed to be.** Isolated
+ * and inside the full 533-file suite the same tests measure within noise of each
+ * other, and `--smol` (which this container sets and CI does not) changes nothing:
+ * suite totals 308 s against 303 s. So the cost is not contention for a disk — it
+ * is four process spawns sitting INSIDE four per-test budgets.
+ *
+ * Hoisting them out is the whole fix. Module-scope work belongs to no test's
+ * timeout, so the tests become assertions on captured data and the wall-clock cost
+ * is paid once, at import. THREE sweeps cover FOUR tests: the first two scaffold
+ * an identical document folio and only assert different things about it.
+ *
+ * Each case removes its own temp directory as soon as its outcomes are captured —
+ * the `afterEach` above drains `dirs` for the OTHER describe, and a module-scope
+ * directory pushed there would be deleted after the first test while later tests
+ * still needed it.
+ */
+function sweepOnce(
+  contentType: "paper" | "document",
+  corruptConfig = false,
+): { out: Record<string, string>; profileAfterCorruption?: undefined | ReturnType<typeof readDeclaredFolioProfile>["profile"]; configText?: string } {
+  const d = mkdtempSync(join(tmpdir(), `profile-sweep-${contentType}-`));
+  try {
+    initFolio({
+      targetDir: d,
+      contentType,
+      slug: "cold-chain-guidance",
+      title: "Cold Chain Guidance",
+      authors: ["A. Author"],
+      link: "sibling",
+      assistantPath: "folio-assistant",
+      skipVcs: true,
+    });
+    const blockRoot = join(d, "folio", "cold-chain-guidance", "introduction", "overview");
+    let configText: string | undefined;
+    let profileAfterCorruption: ReturnType<typeof readDeclaredFolioProfile>["profile"] | undefined;
+    if (corruptConfig) {
+      // Named after the SLUG the scaffold declared, not after the temp
+      // directory it landed in: `folio_init` writes the declaration and the
+      // config together, and the declaration is what the filename comes from.
+      const configPath = join(d, instanceConfigFilename("cold-chain-guidance"));
+      configText = readFileSync(configPath, "utf-8");
+      // Corrupted rather than deleted, because deleting it also removes the
+      // marker `findContentRepoRoot` walks up to — and a test that changed two
+      // things at once would not show which one the gate reacted to.
+      appendFileSync(configPath, "\n{ truncated", "utf-8");
+      profileAfterCorruption = readDeclaredFolioProfile(d).profile;
+    }
+    return { out: sweepOutcomes(d, blockRoot), profileAfterCorruption, configText };
+  } finally {
+    rmSync(d, { recursive: true, force: true });
+  }
+}
+
+const DOCUMENT_SWEEP = sweepOnce("document");
+const PAPER_SWEEP = sweepOnce("paper");
+const CORRUPTED_SWEEP = sweepOnce("document", true);
+
 describe("the sweep's profile gate, end to end", () => {
+  // Every test here asserts on a sweep captured at module scope — see
+  // `sweepOnce`. They used to run the sweep themselves at ~4.0 s each against a
+  // 5.0 s budget (bean `sff8`).
   test("a paper-only criterion is n/a'd in a document folio, under its OWN outcome", () => {
-    const { root, blockRoot } = scaffoldFolio("document");
-    const out = sweepOutcomes(root, blockRoot);
+    const out = DOCUMENT_SWEEP.out;
     expect(out[PAPER_ONLY]).toBe("n/a-wrong-profile");
     // Not the adapter's string. A downstream reader — the per-block QA icons
     // this was built for — has to be able to say WHICH axis excluded it:
@@ -273,8 +337,10 @@ describe("the sweep's profile gate, end to end", () => {
     // ever defaults narrow, or a bulk annotation sweeps the registry, this is
     // where it shows up — and nowhere else, because the symptom of the bug is
     // silence.
-    const { root, blockRoot } = scaffoldFolio("document");
-    const out = sweepOutcomes(root, blockRoot);
+    //
+    // The SAME sweep as the test above: an identical document folio, asserted
+    // differently. That is why three sweeps cover four tests.
+    const out = DOCUMENT_SWEEP.out;
     expect(out[EVERY_PROFILE]).toBeDefined();
     expect(out[EVERY_PROFILE]).not.toBe("n/a-wrong-profile");
     // And the gate is narrow in fact, not just in principle: the great
@@ -286,27 +352,20 @@ describe("the sweep's profile gate, end to end", () => {
   test("the same criterion runs in a paper folio — the gate is profile-driven", () => {
     // Without this, a criterion that had simply stopped working everywhere
     // would pass the document-folio assertion above.
-    const { root, blockRoot } = scaffoldFolio("paper");
-    const out = sweepOutcomes(root, blockRoot);
+    const out = PAPER_SWEEP.out;
     expect(out[PAPER_ONLY]).not.toBe("n/a-wrong-profile");
     expect(out[EVERY_PROFILE]).not.toBe("n/a-wrong-profile");
   });
 
   test("a folio whose config cannot be read keeps its coverage", () => {
-    // Third state, end to end. The config is corrupted rather than deleted,
-    // because deleting it also removes the marker `findContentRepoRoot` walks
-    // up to — and a test that changed two things at once would not show which
-    // one the gate reacted to.
-    const { root, blockRoot } = scaffoldFolio("document");
-    // Named after the SLUG the scaffold declared, not after the temp
-    // directory it landed in: `folio_init` writes the declaration and the
-    // config together, and the declaration is what the filename comes from.
-    const configPath = join(root, instanceConfigFilename("cold-chain-guidance"));
-    expect(readFileSync(configPath, "utf-8")).toContain("document");
-    appendFileSync(configPath, "\n{ truncated", "utf-8");
-    expect(readDeclaredFolioProfile(root).profile).toBeUndefined();
-    const out = sweepOutcomes(root, blockRoot);
-    for (const outcome of Object.values(out)) {
+    // Third state, end to end. The corruption and the pre-sweep read both happen
+    // in `sweepOnce`, because the sweep has to see the corrupted config — so what
+    // that step OBSERVED is carried out here rather than re-derived, and both
+    // halves are still asserted: the config really said `document` before it was
+    // truncated, and the profile really became undetermined after.
+    expect(CORRUPTED_SWEEP.configText).toContain("document");
+    expect(CORRUPTED_SWEEP.profileAfterCorruption).toBeUndefined();
+    for (const outcome of Object.values(CORRUPTED_SWEEP.out)) {
       expect(outcome).not.toBe("n/a-wrong-profile");
     }
   });

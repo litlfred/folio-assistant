@@ -132,3 +132,25 @@ describe("the session-start section", () => {
     expect(md).not.toContain("sfjo");
   });
 });
+
+describe("a mismatch with a UNIFORM corpus", () => {
+  test("zero stamped elsewhere does not produce \"older than the 0 above\"", () => {
+    // Measured, not imagined. #1452's merge normalised all 86 committed
+    // sidecars to `bun-1.3.11`, which is this container's engine, so the count
+    // went to 0 and the mismatch text read "older than the 0 above" — a
+    // sentence that cannot be true. No fixture here had a zero count, so
+    // nothing caught it. This is that fixture.
+    const md = markdown(judge("1.3.14", "1.3.11", stamped("1.3.11", 86)));
+    expect(md).not.toContain("older than the 0");
+    expect(md).not.toContain("**0**");
+    expect(md).toContain("All 86 committed script sidecars already record");
+    // The pin mismatch is still the point and must survive the special case.
+    expect(md).toContain("different code from the gates");
+  });
+
+  test("a non-zero count still names the axis to watch", () => {
+    const md = markdown(judge("1.3.14", "1.3.11", [...stamped("1.3.14", 72), ...stamped("1.3.11", 14)]));
+    expect(md).toContain("**72**");
+    expect(md).toContain("moves backwards");
+  });
+});
