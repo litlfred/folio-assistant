@@ -458,6 +458,93 @@ section; deleting it is defensible and would be one commit. Left in place becaus
 the owner asked for a guard and it still reports something true, and flagged here
 rather than decided quietly.
 
+---
+
+## 2026-09-27 — the owner asked where this belongs. It is a SKILL, and now it is one.
+
+*"3ozg, that should be in tools/skills, no? how resolve?"* — two halves, and the
+answers went in opposite directions.
+
+**The `tools` half: the premise was wrong, and I was the one who made it wrong.**
+`@covers` names the graph kind a gate **audits**, and `cat-harness/tools/` holds
+Tool definitions. `check:bun-pin` and `check:red-gate-is-last` read
+`.github/workflows/`, which is not a declared graph kind at all — the three gates
+already doing exactly that (`check-ci-invocations`, `check-workflow-policy`,
+`check-workflow-script-paths`) say `@covers none` with that reason in as many
+words, and I had declared `tools` on both of mine without looking. The committed
+`audit-coverage.qa-results.json` therefore attributed the `tools` kind to **five**
+gates when three audit it — a false claim in the one artefact whose stated design
+is that the gate half is *declared* so the number is a verdict rather than an
+upper bound (`3srh`). Corrected in #1450; the row now reads three.
+
+**The `skills` half: yes, and this is the resolution.** What survived the pin was
+never code, it was a *reading rule* — and it was living in my check-in prompts and
+commit messages, which is to say nowhere a next session looks. New skill
+[`gate-tree-mutation`](../../cat-harness/skills/folio-core/gate-tree-mutation.md),
+carried by the `authoring-agent` role, `platform-gates` pointing at it:
+
+- `NOT clean` is a verdict about the **run**, not the diff — the gates after a
+  mutation were handed a repaired tree (`ymsu`, 152 of 152).
+- Two causes, told apart by `git status --short`: a missed regeneration, or a
+  container whose Bun differs from `.bun-version`.
+- The second is **discarded, never committed**, because it stamps a *downgrade*
+  as a fresh measurement — `sfjo` applied to a regeneration that is faithful and
+  still wrong to keep.
+- The count is a fact about your container: 86 sidecars, 72 at `bun-1.3.14`, 14
+  at `bun-1.3.11`, and what moves is whichever set disagrees with you. **This
+  bean's title says 72 and that is not a constant.**
+
+### Why it is a separate skill rather than a section in `platform-gates`
+
+Because the first attempt WAS a section, and `kg:audit` refused it: 82 lines took
+`platform-gates.md` from 334 to 416, past p90 (391), flipping
+`skill-not-a-document` from `pass` to a `major` fail — *"at that length it is a
+document, and an agent that skims it follows the part it happened to read."* Read
+before committing, per `sfjo`, and reverted rather than pushed. The criterion was
+right: the subject is distinct (how to read a run's cleanliness verdict, not which
+gates to run), so it got a name findable by `skill_fetch`. 134 lines, 4 pass / 0
+fail, and `platform-gates` keeps a 20-line pointer.
+
+### The three boxes are still unticked, and this does not tick them
+
+Nothing here names the triggering test, nothing moves the write to a temp
+directory, and `bun run gates` in this container still rewrites 72 files. What
+changed is that a session that sees it now finds it written down instead of
+filing it a fourth time.
+
+### Correction to the section above, after merging #1452 — 2026-09-27
+
+Two claims in my own entry are now false, and one was never right. Correcting
+rather than editing, because the reasoning is what a next session reads.
+
+**False now, fixed by #1452:** *"nothing here names the triggering test"* — it is
+`init-folio-qa.test.ts`, bisected over 432 files, and the entry above this one
+says so. And *"`bun run gates` in this container still rewrites 72 files"* — it
+does not; `engine_version` no longer counts as substantive.
+
+**Never right:** my justification for keeping it substantive, carried into #1442,
+was *"a verdict produced by a different engine is a different verdict"*. True, and
+about a different artefact. A **script** sidecar holds no verdict — source file,
+hashes, dependencies. Verdicts live in block sidecars. Verified independently
+before accepting it: `entryIsFresh` compares `field_hash` and the script hashes,
+and `engine_version` appears nowhere else in `qa-utils.ts`. So there was no
+reader, and the field was provenance the whole time.
+
+**The skill was revised, not merged as written.** `gate-tree-mutation` now carries
+the general rule rather than this container's symptom:
+
+> Does this field describe the SUBJECT the artefact is about, or the RUN that
+> produced it? Only the first is a reason to write.
+
+`3ozg` is its worked example, marked fixed, with both halves (#1442's pin, #1452's
+skip) and what each one answers. Discarding a churn is documented as a
+**workaround whose habit is the defect** — three filings in one day is what
+discard-and-move-on produced — rather than as the standing practice my first draft
+made it.
+
+Not reopening: the boxes are closed on evidence I did not produce, which is
+`bean-coordination`'s rule working as intended.
+
 ## CORRECTION 2026-09-27 — Done-when 1 DOES have an answer, and my earlier note here said it did not
 
 An earlier append to this bean, from session `05ca3417`, said:
