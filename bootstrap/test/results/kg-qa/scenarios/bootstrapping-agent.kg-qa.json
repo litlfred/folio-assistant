@@ -1,0 +1,55 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "role",
+    "id": "bootstrapping-agent",
+    "path": "scenarios/roles.json"
+  },
+  "source_hash": "sha256:ba28d68a5e811c8d667244c6d8637509f852846f690bf5ffe61571fdd81305ef",
+  "criteria": {
+    "role-skills-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-inherits-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-binds-a-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-has-persona": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-has-story": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "bootstrapping-agent",
+          "detail": "no user story in scenarios/stories.json is told as role \"bootstrapping-agent\" — nothing says what this reader came to do."
+        }
+      ]
+    },
+    "role-has-actor": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "bootstrapping-agent",
+          "detail": "no declared actor lists role \"bootstrapping-agent\" as one it can take on."
+        }
+      ]
+    },
+    "actor-kind-fits-role": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 4,
+    "fail": 2,
+    "n/a": 1,
+    "unknown": 0
+  }
+}
