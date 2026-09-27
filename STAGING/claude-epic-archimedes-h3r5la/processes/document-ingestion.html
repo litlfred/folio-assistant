@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/docs-ui.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/docs-ui.css?v=1790501165">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/narrow-viewport.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/narrow-viewport.css?v=1790501165">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/work-plan.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/work-plan.css?v=1790501165">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/themes.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/themes.css?v=1790501165">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/uml.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/uml.css?v=1790501165">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/avatars.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/avatars.css?v=1790501165">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/js/docs-ui.js?v=1790497668" defer></script>
+<script src="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/js/docs-ui.js?v=1790501165" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -780,7 +780,15 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><code class="language-plaintext highlighter-rouge">Process_Ingestion</code> · advisory · 10 step(s)</p>
 
-<p>folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by <code class="language-plaintext highlighter-rouge">bun run render:bpmn</code> — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/.</cat-harness.processes:bean></bootstrap.processes:skill></p>
+<p>folio-assistant — Document ingestion — uploads/ to the L1 source knowledge graph.</p>
+
+<p>Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+by <code class="language-plaintext highlighter-rouge">bun run render:bpmn</code> — never hand-edit the SVG.</p>
+
+<p>The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
+work plan in beans/.</cat-harness.processes:bean></bootstrap.processes:skill></p>
 
 <p><img src="../assets/img/workflows/document-ingestion.svg" alt="BPMN diagram: Document ingestion — uploads/ to the L1 source knowledge graph" style="max-width:100%" /></p>
 <h2 id="how-it-connects">
@@ -892,7 +900,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>L1 completeness gate</strong><br /><code class="language-plaintext highlighter-rouge">CallActivity_Gate</code></td>
       <td>Ingestion Engine (agent, runs unattended)</td>
       <td>calls <a href="ingest-l1-completeness-gate.html">Ingestion subprocess — the L1 completeness gate</a></td>
-      <td>See ingest-l1-completeness-gate.bpmn. NOT YET SKILL-BACKED. This step named <code class="language-plaintext highlighter-rouge">paper-relevance-triage</code>, which has never existed, and is not <code class="language-plaintext highlighter-rouge">proof-triage</code> (that one triages proofs). Left uncovered until the skill is written. The gate contains one adjudication (Task_FlagDrift: <code class="language-plaintext highlighter-rouge">real</code>, <code class="language-plaintext highlighter-rouge">spurious</code> or <code class="language-plaintext highlighter-rouge">source-wrong</code>), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate’s completeness verdict instead.</td>
+      <td>See ingest-l1-completeness-gate.bpmn.<br />NOT YET SKILL-BACKED. This step named <code class="language-plaintext highlighter-rouge">paper-relevance-triage</code>, which has<br />never existed, and is not <code class="language-plaintext highlighter-rouge">proof-triage</code> (that one triages proofs). Left<br />uncovered until the skill is written.<br />The gate contains one adjudication (Task_FlagDrift: <code class="language-plaintext highlighter-rouge">real</code>, <code class="language-plaintext highlighter-rouge">spurious</code> or <code class="language-plaintext highlighter-rouge">source-wrong</code>), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate’s completeness verdict instead.</td>
     </tr>
     <tr>
       <td><strong>Record the gap as a bean</strong><br /><code class="language-plaintext highlighter-rouge">Task_OpenBean</code></td>
@@ -910,7 +918,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Prose blocks enter the summary queue</strong><br /><code class="language-plaintext highlighter-rouge">Task_SummaryQueue</code></td>
       <td>Ingestion Engine (agent, runs unattended)</td>
       <td><a href="../reference/skill-instructions/library-ingestion.html"><code class="language-plaintext highlighter-rouge">library-ingestion</code></a></td>
-      <td>Owner, 2026-09-24: “Make as QA sidecar as part of general doc ingestion to slowly drain.” Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record’s source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: <code class="language-plaintext highlighter-rouge">bun run summaries:next -- --n K</code> hands it the next K blocks with their text, it writes a short summary of each in its own words, and <code class="language-plaintext highlighter-rouge">bun run summaries:record</code> writes them into library/<bib-slug>/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and `ingested`. ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (`block-summaries`) without failing on it. Confirming or rejecting a draft is a person's act, in `bun run narratives`.</bib-slug></td>
+      <td>Owner, 2026-09-24: “Make as QA sidecar as part of general doc ingestion to slowly drain.”<br />Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record’s source_hash no longer matches.<br />What an agent doing ingestion work does here is DRAIN a few: <code class="language-plaintext highlighter-rouge">bun run summaries:next -- --n K</code> hands it the next K blocks with their text, it writes a short summary of each in its own words, and <code class="language-plaintext highlighter-rouge">bun run summaries:record</code> writes them into library/<bib-slug>/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and `ingested`.<br />ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (`block-summaries`) without failing on it. Confirming or rejecting a draft is a person's act, in `bun run narratives`.</bib-slug></td>
     </tr>
     <tr>
       <td><strong>Available to cite as an L1 source</strong><br /><code class="language-plaintext highlighter-rouge">Task_Citeable</code></td>
@@ -942,7 +950,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <tbody>
     <tr>
       <td><strong>A theme source? (author’s judgement)</strong><br /><code class="language-plaintext highlighter-rouge">Gateway_ThemeSource</code></td>
-      <td>Wired 2026-09-23 on the owner’s ruling for bean <code class="language-plaintext highlighter-rouge">j66n</code>, choosing “human/agentic judgement at the gateway” over a declared predicate. THE PREDICATE IS DELIBERATELY ABSENT. The alternative on offer was a testable rule — a captured web deployment, or a document that STATES palette and typography rules — and it was refused for the reason the owner had already given when withdrawing <code class="language-plaintext highlighter-rouge">xffc</code>/<code class="language-plaintext highlighter-rouge">d3yq</code>: “no formal role/theme mapping per se. that is authoring (human/agentic) decision/judgement.” So this gateway is answered by whoever is ingesting, not computed. An arbitrary branded PDF is not a theme source because a rule says so; it is not one because the author says it is not. WHY IT IS A GATEWAY AND NOT A FILTER INSIDE THE SUBPROCESS. <code class="language-plaintext highlighter-rouge">ingest-theme.bpmn</code> starts at “Theme source in hand” and can refuse as incomplete. Routing every document into it would make “this is not a theme” and “this theme is malformed” the same refusal, and the second is a defect while the first is the normal case.</td>
+      <td>Wired 2026-09-23 on the owner’s ruling for bean <code class="language-plaintext highlighter-rouge">j66n</code>, choosing “human/agentic judgement at the gateway” over a declared predicate.<br />THE PREDICATE IS DELIBERATELY ABSENT. The alternative on offer was a testable rule — a captured web deployment, or a document that STATES palette and typography rules — and it was refused for the reason the owner had already given when withdrawing <code class="language-plaintext highlighter-rouge">xffc</code>/<code class="language-plaintext highlighter-rouge">d3yq</code>: “no formal role/theme mapping per se. that is authoring (human/agentic) decision/judgement.”<br />So this gateway is answered by whoever is ingesting, not computed. An arbitrary branded PDF is not a theme source because a rule says so; it is not one because the author says it is not.<br />WHY IT IS A GATEWAY AND NOT A FILTER INSIDE THE SUBPROCESS. <code class="language-plaintext highlighter-rouge">ingest-theme.bpmn</code> starts at “Theme source in hand” and can refuse as incomplete. Routing every document into it would make “this is not a theme” and “this theme is malformed” the same refusal, and the second is a defect while the first is the normal case.</td>
       <td><strong>yes</strong> → Ingest the theme<br /><strong>no</strong> → Build the L1 knowledge graph</td>
     </tr>
     <tr>

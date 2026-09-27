@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/docs-ui.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/docs-ui.css?v=1790501165">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/narrow-viewport.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/narrow-viewport.css?v=1790501165">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/work-plan.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/work-plan.css?v=1790501165">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/themes.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/themes.css?v=1790501165">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/uml.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/uml.css?v=1790501165">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/avatars.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/avatars.css?v=1790501165">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/js/docs-ui.js?v=1790497668" defer></script>
+<script src="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/js/docs-ui.js?v=1790501165" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -780,7 +780,11 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><code class="language-plaintext highlighter-rouge">Process_NarrativeReview</code> · strict (defaulted) · 6 step(s)</p>
 
-<p>Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translation still says what the source does. You are in this process when prose changed. <code class="language-plaintext highlighter-rouge">review-code</code> is its sibling for code nodes and <code class="language-plaintext highlighter-rouge">review-task</code> is what dispatches to either, so arriving here means somebody has already decided the change is narrative. Everything this lane produces is ADVICE. The reviewer records findings; accepting or refusing the change belongs to the editor’s lane in <code class="language-plaintext highlighter-rouge">review-task</code>. The separation is why a review can be thorough without being a veto.</p>
+<p>Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translation still says what the source does.</p>
+
+<p>You are in this process when prose changed. <code class="language-plaintext highlighter-rouge">review-code</code> is its sibling for code nodes and <code class="language-plaintext highlighter-rouge">review-task</code> is what dispatches to either, so arriving here means somebody has already decided the change is narrative.</p>
+
+<p>Everything this lane produces is ADVICE. The reviewer records findings; accepting or refusing the change belongs to the editor’s lane in <code class="language-plaintext highlighter-rouge">review-task</code>. The separation is why a review can be thorough without being a veto.</p>
 
 <p><img src="../assets/img/workflows/review-narrative.svg" alt="BPMN diagram: Narrative review" style="max-width:100%" /></p>
 <h2 id="how-it-connects">
@@ -847,37 +851,37 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Read the sidecar findings</strong><br /><code class="language-plaintext highlighter-rouge">Task_ReadFindings</code></td>
       <td>Narrative reviewer</td>
       <td><a href="../reference/skill-instructions/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
-      <td>Open the block’s <code class="language-plaintext highlighter-rouge">.qa.json</code>, not just the evidence line: register is a property of the passage, and the sidecar quotes one line of it.</td>
+      <td>Open the block’s <code class="language-plaintext highlighter-rouge">.qa.json</code>, not just the evidence line: register is a<br />property of the passage, and the sidecar quotes one line of it.</td>
     </tr>
     <tr>
       <td><strong>Adjudicate the voice findings</strong><br /><code class="language-plaintext highlighter-rouge">Task_AdjudicateVoice</code></td>
       <td>Narrative reviewer</td>
       <td>calls <a href="criterion-adjudication.html">Criterion adjudication</a><br /><a href="../reference/skill-instructions/voice-editorial-review.html"><code class="language-plaintext highlighter-rouge">voice-editorial-review</code></a><br /><a href="../reference/skill-instructions/adjudication.html"><code class="language-plaintext highlighter-rouge">adjudication</code></a></td>
-      <td>Three outcomes, all legitimate: the register is wrong for this genre; the criterion does not belong in this genre and should carry <code class="language-plaintext highlighter-rouge">profiles</code>; or the block is a stated exception and a reviewer entry records why.</td>
+      <td>Three outcomes, all legitimate: the register is wrong for this genre;<br />the criterion does not belong in this genre and should carry <code class="language-plaintext highlighter-rouge">profiles</code>;<br />or the block is a stated exception and a reviewer entry records why.</td>
     </tr>
     <tr>
       <td><strong>Voice overlay review</strong><br /><code class="language-plaintext highlighter-rouge">Call_VoiceOverlay</code></td>
       <td>Narrative reviewer</td>
       <td>calls <a href="voice-review.html">Voice overlay review</a><br /><a href="../reference/skill-instructions/voice-overlay-review.html"><code class="language-plaintext highlighter-rouge">voice-overlay-review</code></a></td>
-      <td>Descend into Process_VoiceReview for whichever named voices the folio has ACTIVATED — the WHO editorial style, the guideline-development register, the publication design conventions, the Milnor exposition standard. No new role is taken on: register is what this lane already judges, and a voice is a register. Placed after the base voice adjudication because a voice OVERLAYS the house voice rather than replacing it, so the house finding has to be settled first. Its own first gateway leaves immediately when no voice is active, which is this instance’s case and the default everywhere.</td>
+      <td>Descend into Process_VoiceReview for whichever named voices the folio has ACTIVATED — the WHO editorial style, the guideline-development register, the publication design conventions, the Milnor exposition standard. No new role is taken on: register is what this lane already judges, and a voice is a register.<br />Placed after the base voice adjudication because a voice OVERLAYS the house voice rather than replacing it, so the house finding has to be settled first. Its own first gateway leaves immediately when no voice is active, which is this instance’s case and the default everywhere.</td>
     </tr>
     <tr>
       <td><strong>Review the editorial dependencies</strong><br /><code class="language-plaintext highlighter-rouge">Task_ReviewUses</code></td>
       <td>Narrative reviewer</td>
       <td><a href="../reference/skill-instructions/uses-editorial-review.html"><code class="language-plaintext highlighter-rouge">uses-editorial-review</code></a></td>
-      <td><code class="language-plaintext highlighter-rouge">uses[]</code> is what a READER must have read to follow the block — never populated from the formal dependency graph.</td>
+      <td><code class="language-plaintext highlighter-rouge">uses[]</code> is what a READER must have read to follow the block — never<br />populated from the formal dependency graph.</td>
     </tr>
     <tr>
       <td><strong>Review the translation</strong><br /><code class="language-plaintext highlighter-rouge">Task_ReviewTranslation</code></td>
       <td>Narrative reviewer</td>
       <td><a href="../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a></td>
-      <td>Coverage, preserved terms and echoes are mechanical. A semantic round trip needs a back-translator that has not seen the original; where none has run, the criterion carries no verdict and that is the honest state.</td>
+      <td>Coverage, preserved terms and echoes are mechanical. A semantic round<br />trip needs a back-translator that has not seen the original; where none<br />has run, the criterion carries no verdict and that is the honest state.</td>
     </tr>
     <tr>
       <td><strong>Record findings as advice</strong><br /><code class="language-plaintext highlighter-rouge">Task_RecordFindings</code></td>
       <td>Narrative reviewer</td>
       <td><a href="../reference/skill-instructions/content-feedback.html"><code class="language-plaintext highlighter-rouge">content-feedback</code></a></td>
-      <td>A reviewer cannot accept a change — that is the editor’s lane — so the output is findings on the sidecar, not a commit.</td>
+      <td>A reviewer cannot accept a change — that is the editor’s lane — so the<br />output is findings on the sidecar, not a commit.</td>
     </tr>
   </tbody>
 </table></div>

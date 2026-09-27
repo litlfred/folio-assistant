@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/docs-ui.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/docs-ui.css?v=1790501165">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/narrow-viewport.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/narrow-viewport.css?v=1790501165">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/work-plan.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/work-plan.css?v=1790501165">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/themes.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/themes.css?v=1790501165">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/uml.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/uml.css?v=1790501165">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/avatars.css?v=1790497668">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/css/avatars.css?v=1790501165">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/js/docs-ui.js?v=1790497668" defer></script>
+<script src="/folio-assistant/STAGING/claude-epic-archimedes-h3r5la/assets/js/docs-ui.js?v=1790501165" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -869,7 +869,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Close issue ONLY on BA authorisation</strong><br /><code class="language-plaintext highlighter-rouge">A_Close</code></td>
       <td>Agent</td>
       <td><a href="../reference/skill-instructions/crdm-requirements-workflow.html"><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code></a></td>
-      <td>Reachable only through BA_Confirm, which is the BA saying every criterion is met. An agent must never close an issue without that explicit authorisation — the gate is the preceding task, and this name says so rather than leaving a reader to trace the flow for it.</td>
+      <td>Reachable only through BA_Confirm, which is the BA<br />saying every criterion is met. An agent must never close an issue without<br />that explicit authorisation — the gate is the preceding task, and this name<br />says so rather than leaving a reader to trace the flow for it.</td>
     </tr>
   </tbody>
 </table></div>
