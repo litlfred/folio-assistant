@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-27T07:02:49Z
+updated_at: 2026-09-27T10:49:28Z
 parent: folio-assistant-1xhc
 ---
 
@@ -83,14 +83,21 @@ somebody stops, with no way to know when it is done.
 
 ## Done when
 
-- [ ] the two files above are measured the way `vxho` measured its one — the
+- [x] the two files above are measured the way `vxho` measured its one — the
       test's own work timed in a quiet process, against its runtime under the
       full suite — so the ~35x is confirmed or corrected rather than assumed
-      from `vxho`
-- [ ] a decision is recorded on whether the general shape is addressable at the
+      from `vxho`. **CORRECTED, both halves, and neither was `vxho`'s cause.**
+      `profile-scoping`: 4.0 s of the tests' OWN work at a 1.0× factor, not
+      contention. `translation-block-qa`: two `git` subprocesses per criterion
+      (`git log -n 1` at 20.05 ms warm / **158.61 ms cold**), ~66 ms per
+      `buildReport` — the filesystem scaffolding is 0.5 ms of it. Sections below.
+- [x] a decision is recorded on whether the general shape is addressable at the
       suite level at all: does `bun test` offer a per-test budget that excludes
       I/O, or concurrency limits that bound contention, or is per-file hoisting
-      genuinely the only lever?
+      genuinely the only lever? — **NO suite-level lever exists**, measured on
+      bun 1.3.11 and on the 1.3.14 CI pins. Files run strictly sequentially with
+      and without `--concurrent`, so the suite cannot contend with itself and
+      `--max-concurrency` bounds a concurrency it does not use. Section below.
 - [ ] MEASURED AFTER: whatever is chosen, `bun test` over the full suite is run
       repeatedly on a loaded machine and the pass rate reported — a single green
       run is what made this look fixed in the first place
@@ -271,3 +278,73 @@ than chosen here.
 this bean's `## What a fix is NOT` section rules out. It is neither a raised timeout
 nor per-file hoisting — the work is 66 ms of subprocess spawning inside a function
 that should not be spawning at all.
+
+
+## `Done when` 2 answered: there is NO suite-level lever, and that is the useful answer — 2026-09-27
+
+The box asked three things: *does `bun test` offer a per-test budget that excludes
+I/O, or concurrency limits that bound contention, or is per-file hoisting genuinely
+the only lever?*
+
+Measured, not read off the docs. **On both this container's bun 1.3.11 AND the
+1.3.14 that CI pins** (`oven-sh/setup-bun@v2`, four call sites in
+`code-quality-gates.yml`) — downloaded and run side by side, because a claim about
+the scheduler made on the wrong version is not a claim about CI.
+
+### The three flags that exist
+
+    --timeout=<val>           per-test timeout, ms, default 5000
+    --concurrent              treat all tests as `test.concurrent()`
+    --max-concurrency=<val>   max concurrent tests, default 20
+
+### The probe: three files, one test each, 300 ms of pure CPU spin, no I/O
+
+    1.3.11 default       START b …432  END b …732  START c …733   →  960 ms
+    1.3.14 default       START b …463  END b …763  START c …764   →  965 ms
+    1.3.14 --concurrent  START b …432  END b …732  START c …733   →  963 ms
+
+**One millisecond between one file's END and the next file's START, and 3 × 300 ms
+of wall clock.** Files are executed strictly sequentially, and `--concurrent` does
+not change it on either version.
+
+The same three tests moved into **one** file, with `--concurrent`:
+
+    START x …564   START y …564   START z …564   →  360 ms
+
+All three start in the same millisecond. So `--concurrent` interleaves tests
+*within* a file and never *across* files.
+
+### Answers, in the order asked
+
+1. **A per-test budget that excludes I/O: does not exist.** `--timeout` is
+   wall-clock. There is no CPU-time or I/O-excluding variant.
+2. **Concurrency limits that bound contention: not a lever here.**
+   `--max-concurrency` bounds only within-file concurrency, which is **OFF by
+   default** — there is nothing concurrent for it to bound. `--concurrent` would
+   *create* contention, not bound it.
+3. **"Per-file hoisting is genuinely the only lever" is false**, but not because a
+   better suite-level lever exists. No suite-level lever exists at all.
+
+### The corollary is worth more than the answer
+
+Two tests never run at the same instant by default, so **the suite cannot contend
+with itself.** That retires the framing this bean inherited from `vxho` —
+*"hundreds of test files against one disk"* — for synchronous work: the files are
+not simultaneous, so they cannot be simultaneously on the disk.
+
+The 28–41× inflation is therefore contention with processes **outside** the suite
+— other jobs on the runner, the runner's own load — and **no `bun test` flag can
+bound that.** Which is why the two fixes already made are the whole available set,
+and why the second one matters more than it looked:
+
+- **hoisting** reduces the amount of work (profile-scoping: 4061/4049/4015/4013 ms
+  → 0.1/0.0/0.2/0.1 ms);
+- **not spawning `git`** removes the work that degrades *worst* under external
+  load, since process creation is what queues behind an unrelated job.
+
+Both reduce work. Neither bounds contention, because nothing in `bun test` can.
+
+- [x] a decision is recorded on whether the general shape is addressable at the
+      suite level at all — **it is not**, measured above on 1.3.11 and on CI's
+      1.3.14: no I/O-excluding budget exists, and the concurrency flags bound a
+      concurrency the suite does not use
