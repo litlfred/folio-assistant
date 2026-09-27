@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-27T07:09:15Z
+updated_at: 2026-09-27T10:00:31Z
 parent: folio-assistant-ahvw
 ---
 
@@ -498,3 +498,46 @@ is the question every one of these measurements had to answer by hand.
       output change when gitignored content exists beneath its scan root?
       MEASURED AFTER: it reports `kg-detangle`'s pre-fix state as live and the
       latent ones as latent, distinguishing them WITHOUT a hand measurement
+
+
+## A 3-command reproduction, measured 2026-09-27 (PR #1462)
+
+`audit:coverage` is one of the gitignore-unaware root-rooted scans, and the
+failure it produces is *indistinguishable from a stale committed sidecar* — it
+even tells you to commit the wrong thing.
+
+Symptom: `bun run audit:coverage:require-all` and `:strict` both exit 1 with
+
+    the committed sidecar at cat-harness/test/results/audit-coverage.qa-results.json
+    disagrees with this run — run `bun run audit:coverage` and commit it.
+
+The whole disagreement is ONE directory. Diffed semantically rather than by
+`git diff`, which calls the sidecar binary:
+
+    cat-harness.directories   committed:   [cat-harness/schemas, folio-assistant-core/schemas, large-datasets/schemas]
+                              regenerated: [... , "schemas"]
+    schemas.directories       committed:   [bootstrap/schemas, cat-harness/schemas, folio-assistant-core/schemas,
+                                            large-datasets/schemas, large-datasets/sources]
+                              regenerated: [... , "schemas"]
+
+`schemas/` is `schemas/generated/` — **ignored by `.gitignore:25`** and holding
+8 generated files (`SKILLS.md`, `index.json`, the `*.schema.json` several
+package manifests reference). A fresh CI clone has no generated output, so the
+committed sidecar cannot contain it, and any checkout that has run the
+generators cannot match the committed sidecar.
+
+Proof, non-destructive:
+
+    mv schemas /tmp/held && bun run audit:coverage:require-all   # -> 0
+                            bun run audit:coverage:strict        # -> 0
+    mv /tmp/held schemas  && bun run audit:coverage:require-all  # -> 1
+
+## Why this one is worth its own line
+
+The other scans in this bean report a wrong COUNT. This one reports a wrong
+REMEDY: following the message commits a gitignored directory into the sidecar,
+which then disagrees with CI in the other direction. So the gate is not merely
+noisy locally — acting on it breaks the branch.
+
+Noted while verifying PR #1462 (kg:audit needs-closure skill resolution). Not
+fixed there: it is this bean's subject, not that PR's.
