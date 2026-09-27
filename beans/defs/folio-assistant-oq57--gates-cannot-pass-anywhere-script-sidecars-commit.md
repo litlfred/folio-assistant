@@ -1,10 +1,11 @@
 ---
 # folio-assistant-oq57
 title: 'GATES CANNOT PASS ANYWHERE: script sidecars commit engine_version, so main''s new tree-write detector fails on whichever bun version is in the minority'
-status: todo
+status: completed
 type: bug
+priority: normal
 created_at: 2026-09-26T20:07:20Z
-updated_at: 2026-09-26T20:07:20Z
+updated_at: 2026-09-27T06:07:18Z
 parent: folio-assistant-1swy
 ---
 
@@ -93,3 +94,44 @@ exactly that reason, so (1) finishes a line of reasoning the code has half made.
 - [ ] `bun run gates` is clean on two machines with DIFFERENT bun versions, from
       the same commit. MEASURED AFTER: both runs report no tree write
 - [ ] the `72 / 14` split is gone — one value, or no value
+
+
+## Resolved by #1442, and this bean was the THIRD independent filing — 2026-09-27
+
+The cause is identified and pinned. `3ozg` is the record to read; this one carries
+nothing it does not, so it closes with a pointer rather than staying open.
+
+**What the cause actually was**, established by another session and re-read here
+rather than taken on trust: `saveQaScriptSidecar`'s write-skip guard
+(`qa-utils.ts:1769`) compares `engine_version` along with the content hashes, and
+deliberately excludes `last_run_at` / `last_run_sha`. So `engine_version` was the
+only one of the three fields that could ever CAUSE a write, and the other two were
+passengers. Nothing pinned Bun — `engines.bun` was a `>=1.0.0` floor and 22
+`setup-bun` sites resolved a version at runtime, 18 of them saying `latest` — so CI
+itself would have rewritten all 86 sidecars to whatever Bun shipped next.
+
+#1442 landed `.bun-version` at `1.3.14`, that literal at all 22 sites, an
+`upstream-pins.json` row and `check:bun-pin`. Verified on this branch after merging:
+
+    Bun pin — .bun-version says 1.3.14; 22 setup-bun site(s) across 33 workflow(s)
+      ✓ every site installs it
+
+**This bean's own framing was wrong in one respect worth naming.** It offered
+"schema change, weaker detector, or pinned toolchain" as the remedies and read the
+detector as the thing at fault. The detector was right every time it fired: a gate
+WAS writing to the tree under test. The defect was upstream of it.
+
+**What does NOT close, and it is tracked on `3ozg`, not here.** The pin cannot reach
+a container image the repository does not control. Measured on this branch after the
+merge: `.bun-version` says `1.3.14`, this container runs `1.3.11`, so `bun test`
+here still rewrites the 72 sidecars whose stamp differs, and `bun run gates` still
+ends 'NOT clean' locally. `3ozg` holds that as an open owner question — pin `1.3.14`
+(status quo; CI clean, agent containers not) versus `1.3.11` (both clean, at the
+cost of one commit regenerating 72 sidecars and pinning an older patch than the
+artefacts record). Adoption of `1.4.2` is a separate, person-only path under
+`processes/upstream-version-adoption.bpmn`.
+
+Three beans reached this population independently inside a day — `rmcf` (09-26),
+`3ozg` (09-27) and this one — which is what an always-red signal does: every session
+that runs `gates` on a clean tree sees it, and nothing told them it was already
+written down.
