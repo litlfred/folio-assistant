@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 416,
+      "count": 417,
       "unit": "beans"
     }
   },
@@ -947,6 +947,20 @@
       "updatedAt": "2026-09-22T21:05:00Z",
       "preview": "Opened 2026-09-19 from [issue #363](https://github.com/litlfred/folio-assistant/issues/363),\n\"self-sovereign compute + test harness deployments\", at the owner's direction:\n\"bean up to may strwperson and create issue to review these\".\n\n## The claim this epic rests on\n\n#363 lists roughly ten deployment and utilization scenarios — local git only,\nprivate GitHub, sovereign cloud, self-sovereign, devel",
       "file": "beans/defs/folio-assistant-5a3l--deployment-topologies-and-operating-modes-are-two.md"
+    },
+    {
+      "id": "folio-assistant-5gqn",
+      "title": "MERGE FRICTION: beans index.json should join oxka -merge set; harness.json must NOT",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T06:16:21Z",
+      "updatedAt": "2026-09-27T06:16:21Z",
+      "preview": "Measured 2026-09-27 while driving #1439: **three** merges of `origin/main` in\nabout forty minutes, and `docs/assets/beans/index.json` conflicted on the third\none. `oxka` fixed this for three files and marked them\n`linguist-generated=true -diff -merge` in `.gitattributes`. This file is a fourth\nwith the same shape and is not marked.\n\n| file | conflicts paid today | marked `-merge`? |\n|---|---|---|\n",
+      "file": "beans/defs/folio-assistant-5gqn--merge-friction-beans-indexjson-should-join-oxka-me.md"
     },
     {
       "id": "folio-assistant-5uuf",
