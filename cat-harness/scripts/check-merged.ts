@@ -43,11 +43,32 @@ import { existsSync, mkdtempSync, rmSync, symlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, join, resolve } from "node:path";
 
+import { diffReadings, readTree, type TreeReading } from "./gate-tree-guard.ts";
+
 const REPO = resolve(import.meta.dir, "..", "..");
 
 function git(args: string[], cwd = REPO): { ok: boolean; out: string } {
   const r = spawnSync("git", args, { cwd, encoding: "utf-8" });
   return { ok: r.status === 0, out: `${r.stdout ?? ""}${r.stderr ?? ""}`.trim() };
+}
+
+/**
+ * Did a gate write to the tree while it was being judged?
+ *
+ * Three inputs, two answers, and the third input is why this is a function
+ * rather than an inline `&&`: if EITHER reading could not be taken, the honest
+ * answer is `false` — "no mutation was observed" — and NOT "no mutation
+ * happened". The caller then falls through to the ordinary failure message,
+ * which is the safe direction: it tells a reader to look at their own branch
+ * rather than blaming a writing gate this script never actually saw.
+ *
+ * Reporting an unobserved mutation as observed would be the worse error. It
+ * would send somebody hunting a writer that may not exist, and `ymsu` is hard
+ * enough to see without false sightings of it.
+ */
+export function mutatedDuring(before: TreeReading, after: TreeReading): boolean {
+  if (!before.ok || !after.ok) return false;
+  return diffReadings(before.entries, after.entries).length > 0;
 }
 
 /** The base branch: `--base <name>`, else `main`. */
@@ -156,8 +177,26 @@ function main(): number {
     }
 
     console.log("  running `bun run gates` on the merged tree…\n");
+    // The merge worktree is freshly built and therefore clean. Reading it
+    // before and after is what lets the two non-zero cases below be told
+    // apart, and it is a question only THIS script can answer cheaply: it
+    // owns the worktree, so it needs no parsing of the runner's output.
+    const before = readTree(wt);
     const gates = spawnSync("bun", ["run", "gates"], { cwd: wt, stdio: "inherit" });
     if (gates.status !== 0) {
+      // `gates` exits 1 for two different things, and the advice differs. The
+      // exit code is NOT the discriminator and must not be made one: #1363
+      // made the mutation case FATAL ON PURPOSE, to force `ymsu` clause 1
+      // rather than let a gate go on writing to the tree it is judged on.
+      // Softening it to exit 2 would defeat the guard where it is working.
+      if (mutatedDuring(before, readTree(wt))) {
+        console.error(`\n✗ a gate CHANGED the merged tree while the gates were judging it — bean \`ymsu\`.`);
+        console.error(`This is NOT a stale artefact on your branch, and there is nothing here to regenerate:`);
+        console.error(`every gate may well have passed. The verdicts after the write describe a tree that`);
+        console.error(`was repaired mid-run, so the run cannot say whether the COMMITTED state is good.`);
+        console.error(`The defect is the writing gate, not this branch. See \`ymsu\` clause 1.`);
+        return 1;
+      }
       console.error(`\n✗ the MERGED tree fails the gates, though this branch may pass alone.`);
       console.error(`Merge the base into the branch, regenerate what the failing gates name, run \`bun run gates\`, push.`);
       return 1;
