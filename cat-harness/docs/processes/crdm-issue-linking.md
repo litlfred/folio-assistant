@@ -35,7 +35,7 @@ Every one of the 4 step(s) is documented.
 |---|---|---|---|
 | **Related work: find, sort, ask**<br>`Call_RelatedWork` | Agent | calls [Related work: find, sort, summarize, ask to coordinate](related-work.html) | When the requirement is initiated or updated through a human-agent chat, search the beans and the repository's issues and open PRs for relevance, categorize and summarize them, and ask the user whether and how to coordinate. Judgement decides the categories; the user decides the coordination. Owner, 2026-09-23 (issue #1023). |
 | **Scan open issues for match**<br>`A_ScanIssues` | Agent | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | Search open issues, then recently closed ones, by title and body keywords for one this request belongs to. Requirements may span several issues; note every relevant one. |
-| **Ask BA to create or link issue**<br>`A_AskCreate` | Agent | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | Ask — never create. Creating an issue without the BA's permission is the thing this step exists to prevent. |
+| **Ask BA to create or link issue**<br>`A_AskCreate` | Agent | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | Ask — never create. Creating an issue without the<br>BA's permission is the thing this step exists to prevent. |
 | **Link to existing issue**<br>`A_LinkIssue` | Agent | [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | A match was found: ask the person whether the requirements go on #NNN, then link the work there. The issue is where stakeholders sign off, so no phase proceeds without one. |
 
 ## Decisions

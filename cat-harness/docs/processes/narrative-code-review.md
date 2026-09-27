@@ -11,7 +11,11 @@ nav_exclude: true
 
 `Process_NarrativeCodeReview` · advisory · 5 step(s)
 
-Judging whether the prose side of a declared prose/code pair still says what the code does, once the machine has done what it can. You are in this process when a change touches both sides of a declared pair — a diagram and the workflow it implements, a skill and the code beside it — and review-task has sent it here. The mechanical half is already on the subject's kg-qa sidecar: prose-reviewed-since-code-changed says whether the code moved while the prose stood still, and prose-claims-resolve says which claims the prose makes about the code hold, are false, or could not be determined. This process judges only what is left — the stale pairs, the false claims and the undetermined ones — and never re-derives what the checks already settled. Three outcomes, each leaving a record: the prose holds (attested, with a reason), the two really disagree (a finding against the side that is wrong), or the reviewer disagrees with a checker's verdict (adjudication, which keeps the checker's entry beneath the judgement). A proof and its Lean are the one pair kind a proof assistant can settle; that specialisation is proof-narrative-lean-equivalence, not this diagram.
+Judging whether the prose side of a declared prose/code pair still says what the code does, once the machine has done what it can. You are in this process when a change touches both sides of a declared pair — a diagram and the workflow it implements, a skill and the code beside it — and review-task has sent it here.
+
+The mechanical half is already on the subject's kg-qa sidecar: prose-reviewed-since-code-changed says whether the code moved while the prose stood still, and prose-claims-resolve says which claims the prose makes about the code hold, are false, or could not be determined. This process judges only what is left — the stale pairs, the false claims and the undetermined ones — and never re-derives what the checks already settled.
+
+Three outcomes, each leaving a record: the prose holds (attested, with a reason), the two really disagree (a finding against the side that is wrong), or the reviewer disagrees with a checker's verdict (adjudication, which keeps the checker's entry beneath the judgement). A proof and its Lean are the one pair kind a proof assistant can settle; that specialisation is proof-narrative-lean-equivalence, not this diagram.
 
 <img src="../assets/img/workflows/narrative-code-review.svg" alt="BPMN diagram: Prose and the code it describes" style="max-width:100%">
 

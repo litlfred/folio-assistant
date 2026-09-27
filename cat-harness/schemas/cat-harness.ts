@@ -4838,6 +4838,41 @@ export function deferResolution<T>(
  * symptom would be a generator writing its output into another instance's
  * tree, with a clean exit code.
  */
+/**
+ * Every directory of `graph` that is genuinely THIS instance's — the plural of
+ * {@link instanceDirectoryForGraph}, with the identical `scope` filter.
+ *
+ * It exists because the singular THROWS when an instance declares more than one,
+ * deliberately: taking `[0]` is the `dh4f` shape, where a second declared
+ * directory is scanned by nobody and the run reports clean. That refusal is
+ * right, and it makes the singular the wrong accessor for a caller whose
+ * question is plural — which is how `kg:audit --instance ./large-datasets`
+ * CRASHED rather than auditing (measured 2026-09-27):
+ *
+ *     instance at .../large-datasets declares 2 directories for graph "schemas"
+ *     at its own root, and this call site expects one:
+ *       large-datasets-schemas → .../large-datasets/schemas
+ *       large-datasets-sources → .../large-datasets/sources
+ *
+ * Both are legal — a kind may be declared by several directories, and
+ * `cat-harness.json` does exactly that for `schemas` — so the caller had to stop
+ * asking for one. `unclaimedSkillContracts` in `kg-audit.ts` is that caller.
+ *
+ * Filtered on `scope` and not on `own`, for the reason spelled out on the
+ * singular: from a root that stages sibling instances, all of them are `own`,
+ * and `scope` is the discriminator that actually asks "resolves against THIS
+ * root".
+ */
+export function instanceDirectoriesForGraph(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): string[] {
+  return matchingDirectories(root, graph, registry)
+    .filter((d) => d.own && d.scope !== "repository")
+    .map((d) => d.absPath);
+}
+
 export function instanceDirectoryForGraph(
   root: string,
   graph: string,

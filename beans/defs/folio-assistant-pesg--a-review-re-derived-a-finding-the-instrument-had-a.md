@@ -1,11 +1,11 @@
 ---
 # folio-assistant-pesg
 title: A review re-derived a finding the instrument had already computed, and got it wrong
-status: todo
+status: in-progress
 type: bug
 parent: folio-assistant-ahvw
 created_at: 2026-09-25T16:05:34Z
-updated_at: 2026-09-25T16:05:34Z
+updated_at: 2026-09-27T08:18:52Z
 ---
 
 
@@ -79,3 +79,5 @@ list put to the owner is true; nothing checks that it came from the instrument.
       being presented as a measured one.
 - [ ] Consider whether `health`'s findings should carry the check id in a form
       a report can cite, so quoting is easier than re-deriving.
+
+_2026-09-27T08:18:52Z_ — Claimed by claude/brave-hypatia-r820sf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
