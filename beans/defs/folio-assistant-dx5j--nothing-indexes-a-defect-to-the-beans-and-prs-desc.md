@@ -1,11 +1,11 @@
 ---
 # folio-assistant-dx5j
 title: Nothing indexes a defect to the beans and PRs describing it — three duplicate-work collisions in one window
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T14:32:59Z
-updated_at: 2026-09-26T15:25:37Z
+updated_at: 2026-09-26T17:52:18Z
 parent: folio-assistant-1xhc
 ---
 
@@ -58,8 +58,8 @@ session that happened to trip over it.
 
 - [x] the owner has chosen whether the relation is over beans, PRs, or time —
       **TIME**, 2026-09-26: a re-check at a second point, not a new relation
-- [ ] the re-check is written into `bean-coordination`, beside the two checks
-      that skill already names
+- [x] the re-check is written into `bean-coordination`, beside the two checks
+      that skill already names — §"And ASK AGAIN before you open the PR"
 
 
 ## A FOURTH collision, and this one cost a wrong finding — 2026-09-26
@@ -124,3 +124,24 @@ them rather than in a new section — and `AGENTS.md` is a pointer, not the home
 NOT written yet, and deliberately not bundled into the PR carrying this bean: that
 PR is beans-only by the owner's decision, and a skill edit would make it something
 else.
+
+## Implemented, 2026-09-26
+
+`skills/folio-core/bean-coordination.md` §"And ASK AGAIN before you open the PR —
+looking once is not enough", placed inside §"A claim is branch-local" beside the
+two checks that section already names, and before `beans:claim`. It carries the
+rule, the one collision that settles why it is TIME rather than an edge (the
+search ran and found nothing because the sibling's PR did not exist yet), the
+three rejected alternatives with why each fails so nobody re-proposes one as new,
+and the observation-contamination cost.
+
+Placement, not a new section: `AGENTS.md` is a pointer and this is a third check
+at a later moment in a sequence the skill already describes. The generated
+reference page and the `kg-qa` sidecar were regenerated with `skill:register`
+rather than by hand — 6 artefacts current.
+
+**One cost stated rather than hidden:** that skill was already over the corpus
+p90 at 623 lines and its own QA sidecar says *"At this length it is a document"*.
+This adds 42 lines. The finding is advisory and pre-existing, the addition was
+trimmed once after measuring it, and splitting the skill is not something to do
+in passing while implementing somebody else's decision.
