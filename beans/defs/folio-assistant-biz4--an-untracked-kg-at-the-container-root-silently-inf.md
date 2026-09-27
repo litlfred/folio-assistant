@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-26T11:26:16Z
-updated_at: 2026-09-27T07:08:21Z
+updated_at: 2026-09-27T09:37:00Z
 parent: folio-assistant-1xhc
 blocked_by:
     - folio-assistant-xd1g
@@ -240,3 +240,71 @@ rather than leaving it, but it is not this bean's.
   broader: eleven root-rooted scanners, a shared rule rather than eleven
   copies, and a check so number twelve is caught rather than discovered by a
   contributor with residue on their machine.
+
+---
+
+## 2026-09-27 — THIRD INSTANCE, and this one flips a QA VERDICT rather than a count
+
+Found while moving the Lean `lean.ref` resolver out of core (PR #1465). Same
+class as this bean's `_kg/`, and the differences are worth recording because one
+of them makes it worse and the other makes it catchable.
+
+### The measurement
+
+`bun run skill:register` in this container wrote a **seventh** file beyond the
+six the change actually stales:
+
+```
+cat-harness/test/results/kg-qa/skills/folio-paper-adapter/lean-generation.kg-qa.json
+
+  "prose-claims-resolve":
+-   "result": "unknown"          +  "result": "fail"
+-   "detail": "content/schema/references.ts is not in this repository (a folio's file?)"
++   "detail": "content/schema/references.ts declares no `key`"
+  totals:  fail 2 -> 3,  unknown 1 -> 0      (and one finding DROPPED)
+```
+
+Nothing in that branch touches the `lean-generation` skill.
+
+**Diagnosed, not assumed.** Moved the offending directory aside, re-ran
+`kg:audit`: **no change written to that file at all**. Moved it back, the diff
+returns. So the cause is container state, exactly as this bean's control
+established for `_kg/`.
+
+### The culprit, and why it is not `_kg/`
+
+An untracked **`content/`** at the repository root — four
+`*.script.json` sidecars dated 2026-09-12, residue from `c25761d2cfc`'s move of
+the instance under `cat-harness/`. They are **not** duplicates of their
+same-named counterparts under `cat-harness/content/pipeline/script-sidecars/`:
+each names a *different* checker in `source_file` (`qa-checkers-extended.ts` vs
+`qa-checkers-vacuity.ts`) and carries `bun-1.3.11` against the other's
+`bun-1.3.14`. Two generations, not two copies.
+
+**Distinct from `folio-assistant-oq57` and `-3ozg`**, which are both `completed`
+and both about the **tracked** `cat-harness/content/pipeline/script-sidecars/`
+being rewritten by `bun test` on volatile fields. This is the untracked ROOT
+copy, and neither fix touches it.
+
+### Two differences from the `_kg/` instance
+
+**Worse:** `_kg/` inflates a `size` count — plausible but obviously numeric.
+This one flips an adjudication `unknown -> fail` and *drops a finding*, so it
+reads as a real QA regression in a skill the branch never went near. A count
+invites suspicion; a verdict invites a fix to the wrong thing.
+
+**Better, and it is the useful half:** this residue is untracked-but-NOT-gitignored,
+so `git status` shows `?? content/`, and **`check-undeclared-files.test.ts`
+catches it** — it is the one difference this bean's own analysis turns on
+(*"it is gitignored, so `git status` is clean"*). So the guard that exists does
+cover the non-gitignored case and structurally cannot cover the gitignored one.
+That is a coverage statement about the guard, not a new guard proposal.
+
+### Status
+
+Left in place, deliberately: the four files are not deletable duplicates, and
+removing another session's untracked files is not PR #1465's call. The
+regeneration in that PR was done with the directory moved aside, so its six
+committed artefacts are what CI writes — verified by the two hard gates going
+green on the push.
+

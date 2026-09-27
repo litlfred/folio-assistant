@@ -1385,30 +1385,37 @@ export const RULES: Rule[] = [
   //    makes that field on those kinds part of the science vocabulary.
   //
   //    The test was applied FIVE times in this block ("Same test again",
-  //    "Same test a third time"), so the ruling reaches four entries, not one.
-  //    Two have moved to the sci block above and cost NOTHING — measured, zero
-  //    new wrong-direction edges. The remaining two stay here for now and the
-  //    reason is a measurement, not a disagreement: reassigning
-  //    `schemas/lean-packages.ts` and `content/pipeline/lean-signature.ts`
-  //    yields SIX core -> sci edges --
+  //    "Same test a third time"), so the ruling reached four entries, not one.
+  //    Two moved to the sci block above and cost NOTHING. The other two --
+  //    `schemas/lean-packages.ts` and `content/pipeline/lean-signature.ts` --
+  //    cost SIX core -> sci edges, measured twice (at `.folio-assistant-pin`
+  //    and on current `main`, so not a pin artifact):
   //      schemas/constraints.ts          -> lean-packages
   //      adapters/mcp-server/server.ts   -> lean-packages
   //      adapters/document/resolver.ts   -> lean-packages
   //      adapters/manifest-entries.ts    -> lean-packages
   //      content/pipeline/qa-utils.ts    -> lean-packages
   //      content/pipeline/qa-utils.ts    -> lean-signature
-  //    -- because the header above is, as a statement of FACT about today's
-  //    code, correct: core really does reach into the grammar. Honouring the
-  //    ruling therefore needs core to carry a formal reference whose
-  //    vocabulary it does not own -- `lean` off `BlockBase` and behind the
-  //    same injection `configureLeanPackages` already established for the
-  //    LIST, extended to the GRAMMAR. That changes `BlockBase`, so it is the
-  //    owner's call and is not made here. qou bean `qou-7ko6`.
   //
-  //    NOTE for whoever picks this up: the two entries left below now carry a
-  //    rationale their own header says is overruled. That is deliberate -- the
-  //    classification still matches the code -- but do not cite it as the
-  //    reason they are core. The reason is the six edges.
+  //    🟩 PAID. All six are gone and both modules are now `sci` (they fall
+  //    there on the `lean` keyword rule below, so they need no entry at all).
+  //    `schemas/formal-ref.ts` is the injection point core reaches instead --
+  //    the third instance of the `references-registry-di` / `value-registry-di`
+  //    pattern -- and `content/pipeline/lean-formal-ref.ts` is the sci-side
+  //    implementation, which is where the resolution bodies moved verbatim from
+  //    `qa-utils.ts`. `BlockBase` is UNCHANGED: core still carries a field
+  //    named `lean`, it simply no longer knows the grammar of its `ref`. The
+  //    earlier note here said the ruling "changes `BlockBase`, so it is the
+  //    owner's call" -- that was wrong, and the whole cost was five call sites,
+  //    one of which dissolved by deleting a helper. qou bean `qou-7ko6`.
+  //
+  //    NOTE: NINE core modules import `lean-packages`, not six. The other
+  //    three -- `export-json.ts`, `conjectural-propagation-audit.ts`,
+  //    `conditional-class-banner-audit.ts` -- are composition roots
+  //    (`import.meta.main`), and `engine.ts` exempts a composition root from
+  //    the direction rule while still counting its edge in `totalEdges`. So a
+  //    reader who greps importers finds nine; re-measure with `--edges`, and
+  //    do not read six as an undercount.
   {
     repo: "core",
     triaged: true,
@@ -1430,12 +1437,6 @@ export const RULES: Rule[] = [
       // is subject matter, which is what its own comment says. This is one
       // module whose NAME collides with it.
       "content/pipeline/validate-simulator.ts",
-      "schemas/lean-packages.ts",           // the `lean.ref` grammar + the DI registry
-      // Statement-level hashing for `.lean` files, by the same test: the
-      // `lean_granularity: "statement"` field is on `QaCriterionDefinition` in
-      // core, and `qa-utils` consults it on every freshness check. The
-      // grammar belongs wherever the field does.
-      "content/pipeline/lean-signature.ts",
       // The QA sidecar PROJECTION — the families (`block`, `translation`,
       // `script`, `kg`), their states and freshness, read by `gen-docs-pages`
       // to publish one file per (subject, family). Nothing in it is science:

@@ -22,12 +22,12 @@ import type {
   ChapterDetail,
   SectionStub,
 } from "../../src/types.js";
-import { leanPackageByName } from "../../schemas/lean-packages.js";
+import { resolveFormalRef } from "../../schemas/formal-ref.js";
 import type { Block, Chapter, Folio, Paper, Section } from "../../schemas/types.js";
 import { leanStatusBucket } from "../../schemas/types.js";
 import {
   blockCaption, blockExamples, blockLean, blockProofs, blockTex,
-  isSectionRef, sectionBlockNames, tryParseLeanRef,
+  isSectionRef, sectionBlockNames,
 } from "../manifest-entries.js";
 
 
@@ -403,42 +403,44 @@ export class PaperResolver {
         const feedback = this.feedbackStore.read(paperId, rootName);
         const blockTodos = feedback.length ? [...feedback] : undefined;
 
-        // Read Lean source if available.  Resolution order:
+        // Read the formal source if available.  Resolution order:
         //   1. sibling .lean file (primary authoring convention)
-        //   2. package-rooted path derived from parsed `lean.ref`
-        //      (<lakeRoot>/<Decl/Path>.lean)
-        //   3. grep the package's Lean source dir for the bare name
+        //   2. the layer's candidate paths, in its own priority order
+        //   3. grep the layer's source dir for the bare declaration name
+        //
+        // Steps 2 and 3 were built here from `leanPackageByName` and a decl-
+        // prefix walk. That is the FORMALISM LAYER's vocabulary — a Lake root, a
+        // module path, a dot separator — and core no longer holds it (owner
+        // ruling 2026-09-27). `resolveFormalRef` hands back the same paths in
+        // the same order; the file access stays here, because reading across a
+        // git branch is this class's job and not the layer's.
+        //
+        // `fallbackPaths` is deliberately NOT consulted: it is the module-path
+        // candidate that may be an import-only aggregator, and serving an
+        // `import` list as a block's source is worse than serving nothing.
         let leanSource: string | undefined;
         const blkLean = blockLean(blk);
         if (blkLean) {
-          const parsed = tryParseLeanRef(blk);
+          const res = resolveFormalRef(blkLean.ref);
           leanSource = this.gitHelper.readFileBranch(br, `${chRel}/${rootName}.lean`) ?? undefined;
-          if (!leanSource && parsed) {
-            const pkg = leanPackageByName(parsed.package);
-            if (pkg) {
-              const parts = parsed.decl.split(".");
-              for (let i = parts.length; i >= 2; i--) {
-                const candidate = `${pkg.lakeRoot}/${parts.slice(0, i).join("/")}.lean`;
-                leanSource = this.gitHelper.readFileBranch(br, candidate) ?? undefined;
-                if (leanSource) break;
-              }
+          if (!leanSource && res) {
+            for (const candidate of res.candidatePaths) {
+              leanSource = this.gitHelper.readFileBranch(br, candidate) ?? undefined;
+              if (leanSource) break;
             }
           }
           // Grep fallback for current branch only
-          if (!leanSource && parsed && this.gitHelper.isCurrentBranch(br)) {
-            const pkg = leanPackageByName(parsed.package);
-            if (pkg) {
-              try {
-                const leanSrcDir = join(this.repoRoot, pkg.lakeRoot, pkg.lib);
-                if (existsSync(leanSrcDir)) {
-                  const result = Bun.spawnSync(["grep", "-rl", parsed.name, leanSrcDir]);
-                  const files = result.stdout.toString().trim().split("\n").filter(Boolean);
-                  if (files.length > 0 && existsSync(files[0])) {
-                    leanSource = readFileSync(files[0], "utf-8");
-                  }
+          if (!leanSource && res?.searchDir && this.gitHelper.isCurrentBranch(br)) {
+            try {
+              const leanSrcDir = join(this.repoRoot, res.searchDir);
+              if (existsSync(leanSrcDir)) {
+                const result = Bun.spawnSync(["grep", "-rl", res.declName, leanSrcDir]);
+                const files = result.stdout.toString().trim().split("\n").filter(Boolean);
+                if (files.length > 0 && existsSync(files[0])) {
+                  leanSource = readFileSync(files[0], "utf-8");
                 }
-              } catch {}
-            }
+              }
+            } catch {}
           }
         }
 
