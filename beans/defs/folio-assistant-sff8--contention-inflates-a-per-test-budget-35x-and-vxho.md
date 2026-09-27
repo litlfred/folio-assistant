@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-27T11:38:38Z
+updated_at: 2026-09-27T17:05:57Z
 parent: folio-assistant-1xhc
 ---
 
@@ -533,3 +533,101 @@ owner's call, not an agent's.
       failure (`skill-coverage`) and stop; keep fixing per-test as they surface;
       build the instrument that makes cost-vs-budget visible; or leave it recorded.
       Not chosen here.
+
+
+## The owner chose BOTH: the instrument, and keep fixing as they surface — 2026-09-27
+
+### `check:test-budgets`, and the distinction it rests on
+
+`cat-harness/scripts/check-test-budgets.ts`. It reads a junit report and, for every
+case, decides from the SOURCE whether the test declares its own budget — then gives
+a share of the 5000 ms default only to the ones that do not.
+
+That split is the whole tool. Assuming 5000 ms everywhere is what made the earlier
+counting useless: **it reports nine-plus correct tests as the worst offenders.**
+`declared-directory-resolves.test.ts` runs 22 s green on `modules.length * 600`.
+
+The budget is read from the AST and never evaluated. A declared budget is an
+arbitrary expression, so its VALUE is not statically knowable — and does not need to
+be, because the only question is whether the author budgeted the test at all, which
+is the presence of a third argument. Ranges rather than lines, because the runner
+attributes a case to the call's line or its name's, and a `test(` spanning thirty
+lines makes those differ — which is exactly the shape of the one test this most needs
+to classify correctly.
+
+### It cross-validates the arithmetic on this bean
+
+Earlier I derived *"at least nine tests already run past the default and carry their
+own"* from 12 over-budget cases against 3 failures. Measured directly by the tool:
+**30 cases declare a budget** (24 in the earlier run). Two independent methods, and
+the bound holds.
+
+    run 1 (3 fail)   12300 cases   24 declared   4 default-budget over 5000 ms
+    run 2 (1 fail)   12348 cases   30 declared   1 default-budget over 5000 ms
+
+### THE OBVIOUS READING IS WRONG, and it is measured
+
+A share over 100 % does **not** predict a timeout. Run 1 had **four**
+default-budget cases over 5000 ms and **three** failures. The fourth —
+`tests/tools.test.ts:204` at **5.22 s**, declaring no budget anywhere in its file —
+**passed**, and passed again at 4.23 s in run 2.
+
+So junit's `time` and the quantity bun charges against the timeout are not the same:
+`time` is the outer measurement and includes work the budget does not. The share is
+therefore a **ranking of exposure, not a prediction**, and the tool says so in its
+docblock and in its own output. Calling >100 % "will fail" would have been a
+confident false claim about a passing test, on the very run that motivated the tool.
+
+The ranking still does the job: the three highest-share default-budget cases in run 1
+were exactly the three that timed out.
+
+### Two deliberate refusals, both with precedent here
+
+**No sidecar.** Every other auditing tool here commits one, and the reason is sound —
+a printed verdict cannot tell "never measured" from "measured clean". It does not
+apply, because **a timing is a fact about the machine, not the repository**.
+Committing the milliseconds would pin this container's numbers as the corpus's, which
+is `3vc1`'s defect. `check:ci-health` carries the precedent: a fact *about* the
+repository rather than one it *holds* is asked externally every run and cached
+nowhere.
+
+**Not a pass/fail gate.** ~32 cases sit at half the default under load. A threshold
+gate needs all of them acknowledged on day one, and 50 exemptions nobody has read is
+the empty exemption `xd1g` removed a gate for. Exit 0 or 2, never 1 (`nytj`); 0 cases
+is exit 2, not a clean run over nothing (`6tkl`).
+
+Named `check:test-budgets` rather than `test:budgets` after the census caught it:
+`checkScriptNames` selects `check:*` / `*:check`, so the original name sat outside the
+wiring audit entirely and its `SCRIPT_EXEMPTIONS` row was stale by construction.
+`check:environment` and `check:bun-runtime` are the precedent — reports that exit 0/2
+and still carry `check:` names so the census sees them.
+
+### The live failure, fixed — the FOURTH in this family
+
+    skill-coverage.test.ts:94   every resolvable skill is a node in the exported graph
+    5312 ms (timed out)  ->  19.3 ms
+
+Same remedy as the other three: `await buildExport(...)` hoisted out of the test body
+to module scope, which belongs to no test's timeout.
+
+### And the next ones are now NAMED rather than waiting to be discovered
+
+From run 2, default-budget cases by share — this is the deliverable:
+
+    4.77 s   95 %  tests/fsh-guts-export.test.ts:100   the main graph still does not mention fsh-guts at all
+    4.45 s   89 %  tests/tools.test.ts:43              every satisfies names a skill that exists
+    4.43 s   89 %  tests/kg-export.test.ts:479         a preview says so in its type and links every node back
+    4.27 s   85 %  tests/fallback-roles.test.ts:55     a skill with no human-only lane derives nothing
+    4.23 s   85 %  tests/tools.test.ts:204             io IRIs follow the publication base
+
+### Verification
+
+15 new tests (fixtures plus one corpus case asserting
+`declared-directory-resolves` IS seen to declare a budget — if it were not, the tool
+would report the repository's best-behaved slow test as its worst offender).
+`bun run gates` **170 of 170**, tree clean afterwards. `tsc` and `eslint` clean.
+
+- [x] **OWNER DECISION** — **BOTH (1 and 3)**, 2026-09-27: the instrument is built
+      (`check:test-budgets`) and the live failure is fixed (`skill-coverage`).
+- [ ] Standing, per that decision: keep fixing per-test as they surface. The five
+      named above are the queue, worst first, and no longer need a red run to find.

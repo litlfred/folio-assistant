@@ -193,6 +193,12 @@ export const RULES: Rule[] = [
       // is its only caller and is itself harness, so the edge runs
       // harness -> harness.
       "scripts/check-environment.ts",
+      // HARNESS, by the same test again: its subject is a TEST RUN's timings and
+      // the budgets this repository's own test files declare — harness meta, not
+      // any folio's content. It reads a junit report and `.test.ts` sources, and
+      // imports `node:fs`, `node:path` and `typescript` (for the AST) and nothing
+      // else, so it cannot drag a folio in. Bean `sff8`.
+      "scripts/check-test-budgets.ts",
       // The prose half of the same arrow this tool measures for imports, and
       // harness for the same reason `repo-partition.ts` is: its subject is
       // which INSTANCE a file belongs to and what that instance declares it
