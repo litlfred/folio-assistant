@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6b8u
 title: 'EXTRACTION: MD_MIN_TEXT_LEN is a threshold in CHARACTERS, so the same table cell is translatable in Arabic and not in English'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T08:56:25Z
-updated_at: 2026-09-26T13:21:47Z
+updated_at: 2026-09-27T07:34:04Z
 parent: folio-assistant-bzyu
 ---
 
@@ -181,3 +181,5 @@ and nowhere else.
 - [ ] decide the one-character-word case on its merits — a single Han character is
       a word where a single Latin letter is not — with the measurement above
       recorded, and NOT justified by alignment, which it does not improve
+
+_2026-09-27T07:34:04Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

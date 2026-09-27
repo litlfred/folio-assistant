@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-27T05:09:31Z
+updated_at: 2026-09-27T05:55:41Z
 parent: folio-assistant-1xhc
 ---
 
@@ -651,3 +651,123 @@ directory named `folio-assistant` (the name matters — see below), symlinked
 `node_modules` confirmed git-ignored first so the `qook` corpus defect could
 not confound it. `git status --porcelain` after the run: 72 paths; after
 `git checkout -- .`: 0.
+
+
+## 2026-09-27 — clause 3's exit code is RIGHT; `check:merged`'s MESSAGE was wrong
+
+Coordination first, because this bean is claimed. `bun run beans:claim
+folio-assistant-ymsu` refused: *ALREADY CLAIMED by
+claude/ymsu-gates-tree-guard*. That session is not reachable from here
+(`ListAgents`: none running). Basis for proceeding on clause 1 anyway, recorded
+rather than assumed: **PR #1363 is MERGED and its own Scope paragraph scopes
+clause 1 OUT** — *"Clause 1 is untouched … This guard makes that defect visible
+and fatal; it does not fix it."* The holder delivered clause 3 and said clause 1
+is not theirs. The owner authorised taking it 2026-09-27.
+
+### A proposal I made and then withdrew — read this before making it again
+
+I proposed making `gates.ts`'s mutation path exit **2** instead of 1, on the
+grounds that verdicts describing a repaired tree are a could-not-determine, and
+that `gates` already reserves 2 for "could not tell".
+
+**That is wrong, and #1363 says why in its own words.** The exit is fatal ON
+PURPOSE, to force clause 1 rather than let a writing gate be tolerated.
+Softening it to a could-not-determine would defeat the guard exactly where it is
+working. Recorded here because the argument for 2 is genuinely tempting — it
+cites this repository's own three-state discipline — and the next agent will
+reach for it.
+
+### What WAS wrong, and is now fixed
+
+`check-merged.ts` branched on `gates.status !== 0` and nothing else, so it
+printed the same thing for both meanings of that exit:
+
+```
+✗ the MERGED tree fails the gates, though this branch may pass alone.
+Merge the base into the branch, regenerate what the failing gates name, ...
+```
+
+Measured on `claude/qook-verify-backwards`: **every gate passed**, one gate
+changed the tree, and that was the message. It names failing gates that do not
+exist and prescribes regenerating nothing.
+
+Fixed by OBSERVATION, not by exit code: `check:merged` owns the merge worktree,
+so it reads porcelain before and after and reports the mutation case in its own
+words, pointing at clause 1. Extracted as `mutatedDuring(before, after)` so it
+is testable.
+
+**Unreadable is not a sighting.** If either reading fails, `mutatedDuring`
+answers `false` — "no mutation observed", not "none happened" — and the caller
+falls through to the ordinary message. That is the safe direction: telling
+somebody to look at their own branch is recoverable, sending them hunting a
+writer that may not exist is not.
+
+Falsified: 6 tests including the anti-vacuity pair; always-`true` fails 4,
+always-`false` fails 2, the real implementation passes 6. The
+disappearing-entry direction (#1363's own near-miss, where a writer restoring a
+correct value makes the entry vanish from porcelain) has its own case.
+
+### Clause 1 — the writer is NOT yet identified, and that is a finding
+
+`bun test` on a clean pristine worktree at `410199a1de2` left it **clean**, and
+`portable-path.test.ts` and `qa-witness.test.ts` each write nothing. Yet inside
+`bun run gates` the guard attributes **72** `content/pipeline/script-sidecars/`
+paths to `bun test`. So the write is conditional on something the gates run sets
+up earlier, not on `bun test` alone — which means clause 1 cannot be fixed by
+reading the test files and needs the gates context reproduced. Not yet done; do
+not assume a single test file is the culprit.
+
+### CORRECTION, same day — `bun test` alone DOES write the 72 paths
+
+The paragraph above says `bun test` on a clean pristine worktree leaves it clean
+and the write must be conditional on gates setup. **False.** I read
+`git status` MID-RUN, before the writing test had executed, and took that as
+clean. Measured to completion on a clean pristine worktree at `410199a1de2`:
+
+```
+bun test rc=0
+72 dirty paths
+ M cat-harness/content/pipeline/script-sidecars/assertions_are_falsifiable.script.json
+```
+
+Clause 1 is reproducible with ONE command and no gates context. That makes it
+easier to fix than I said, not harder.
+
+**A status read taken while the thing is still running is not a measurement of
+the thing.** Same family as the vacuous same-commit comparison recorded on
+`qook` today: both looked like evidence and neither was.
+
+### What changes, and why the obvious fix is ALSO wrong
+
+```diff
+-  "last_run_at": "2026-09-26T19:43:36.482Z",
+-  "last_run_sha": "abee3acee29e15ad7ae540e254fe31f2cf31cc40",
+-  "engine_version": "bun-1.3.14"
++  "last_run_at": "2026-09-27T05:52:05.836Z",
++  "last_run_sha": "410199a1de2ed5725af1705434cecce0007c04e8",
++  "engine_version": "bun-1.3.11"
+```
+
+Per-run provenance — timestamp, HEAD, engine version. Unstable by construction.
+
+I first read that as `do70`'s shape (a recorded value that moves on every commit,
+which `AGENTS.md` rules against: *"counts are printed rather than recorded"*) and
+concluded the fields should come out. **Withdrawn.** They belong to
+`block-qa-schema`, a PUBLISHED dual-language contract with a `dist/` and a
+Pydantic parity half; removing fields there breaks two languages. The fields
+legitimately record a real sweep.
+
+So #1363's prescription stands and my reframe was half-true: the defect is that
+a TEST performs a real sweep into the tree, not that the fields exist.
+
+### Narrowing, for whoever takes it next
+
+| | dirty |
+|---|---|
+| full `bun test` | **72** |
+| `bun test cat-harness/content/pipeline/` (holds both the sidecars and `script-sweep.ts`) | **0** |
+| `qa-witness.test.ts`, the only test importing `script-sweep` | **0** |
+
+The writer is OUTSIDE `content/pipeline/` and fires only in the full suite. Not
+identified. Do not assume it is one of the three above — each was measured to
+write nothing.
