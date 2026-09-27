@@ -1604,12 +1604,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 7
+          "value": 8
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 7
+          "value": 8
         },
         {
           "id": "views",
@@ -1624,6 +1624,10 @@
         },
         {
           "kind": "processes",
+          "note": "no viewer by design"
+        },
+        {
+          "kind": "qa",
           "note": "no viewer by design"
         },
         {
@@ -1648,7 +1652,7 @@
         }
       ],
       "findings": [
-        "bootstrap: 7 graph(s) render no viewer — models, processes, scenarios, schemas, skills, swimlane-glossary, translation-sources — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
+        "bootstrap: 8 graph(s) render no viewer — models, processes, qa, scenarios, schemas, skills, swimlane-glossary, translation-sources — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
         "bootstrap: renders nothing of its own (render-exempt), so its tab opens one of its own files as published (/bootstrap/README.html), declared as `reachableAt`."
       ],
       "navbarIcons": [
@@ -2606,7 +2610,7 @@
           },
           {
             "key": "directories",
-            "summary": "7: skills, schemas, scenarios, processes, models, swimlane-glossary, bootstrap-translations"
+            "summary": "8: skills, schemas, scenarios, processes, models, swimlane-glossary, bootstrap-translations,…"
           },
           {
             "key": "stickies",
