@@ -74,8 +74,8 @@
 import { Glob } from "bun";
 
 import { spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
-import { join, relative } from "node:path";
+import { existsSync, readdirSync } from "node:fs";
+import { join, relative, sep } from "node:path";
 
 /**
  * The files git accounts for under {@link dir}, as absolute paths — or
@@ -160,4 +160,70 @@ export function gitScan(
       .sort(),
     source: "git",
   };
+}
+
+/**
+ * Every file git accounts for under `root` that `keep` admits, as ABSOLUTE
+ * paths — the walk-shaped half of {@link gitScan}.
+ *
+ * `xd1g`'s ten remaining scanners are recursive `readdirSync` walks, not glob
+ * scans, so the glob form does not fit them. What they all share is a
+ * hand-written skip list — `node_modules`, `.git`, a dot-directory rule — and
+ * a predicate on the filename. This replaces the walk and keeps the
+ * predicate.
+ *
+ * ## `keep` receives a `/`-joined path RELATIVE to `root`
+ *
+ * Relative, so a predicate cannot accidentally match something in the absolute
+ * prefix — `/home/runner/node_modules/checkout/...` would defeat an
+ * `includes("node_modules")` test written against an absolute path, and a
+ * scanner whose corpus depends on where the checkout lives is the class of bug
+ * this whole file exists for. `/`-joined so one predicate reads the same on
+ * either platform.
+ *
+ * ## The dot-directory rule does NOT come for free, and that is deliberate
+ *
+ * Every one of these walks skips dot-directories. Git does not: `.github/`,
+ * `.claude/` and `.beans.yml` are tracked content, so the git corpus is WIDER
+ * there than the walk it replaces. Folding a dot rule in here would silently
+ * change what several scanners read, and folding it in *invisibly* is worse
+ * than either choice — so the caller states its own rule in `keep`, and the
+ * two-sided control (nothing swept that git ignores, nothing LOST that the
+ * walk admitted) is what proves it kept it.
+ *
+ * @param root  directory to enumerate
+ * @param keep  admits a repo-relative, `/`-joined path
+ */
+export function gitFiles(
+  root: string,
+  keep: (rel: string) => boolean,
+): { files: string[]; source: "git" | "walk" } {
+  const tracked = gitCorpus(root);
+  if (tracked !== undefined) {
+    return {
+      files: tracked.filter((abs) => keep(relative(root, abs).split(sep).join("/"))).sort(),
+      source: "git",
+    };
+  }
+  // The fallback, and it skips only what git could not have told us about
+  // anyway: `.git` itself is never content, and `node_modules` is ignored in
+  // every checkout this runs in. Everything else is left to `keep`, so the two
+  // paths admit the same set wherever git can answer.
+  const out: string[] = [];
+  const walk = (dir: string): void => {
+    let entries;
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const e of entries) {
+      if (e.name === ".git" || e.name === "node_modules") continue;
+      const abs = join(dir, e.name);
+      if (e.isDirectory()) walk(abs);
+      else if (keep(relative(root, abs).split(sep).join("/"))) out.push(abs);
+    }
+  };
+  if (existsSync(root)) walk(root);
+  return { files: out.sort(), source: "walk" };
 }
