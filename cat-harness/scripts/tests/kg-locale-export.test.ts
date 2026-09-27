@@ -17,11 +17,11 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
+import { localeDirIn, translationsHomeFor } from "../../schemas/cat-harness.ts";
 import { undeclaredRootTerms } from "../kg-export.ts";
 import {
   buildLocaleExports,
   catalogueFor,
-  declaresTranslationSources,
   isIri,
   knownLocales,
   localeDocPath,
@@ -338,50 +338,68 @@ describe("localeDocPath", () => {
   });
 });
 
-describe("declaresTranslationSources — the two empties are not one answer", () => {
+describe("hosted translations — an instance's templates may live in its HOST's corpus", () => {
   /**
-   * `knownLocales` returning `[]` has TWO causes and the CLI owes them
-   * different exit codes. `6tkl` argued the first: an instance that DECLARES a
-   * translations directory and has no locale under it is a build over an empty
-   * set, so calling it clean is a pass over nothing — exit 2. The second is an
-   * instance that declares nothing, which has no per-locale export to be stale
-   * — a determined empty, exit 0.
+   * `bootstrap` declares no `translation-sources`. Its 15 `.pot` templates sit
+   * in cat-harness's corpus under `<locale>/bootstrap/processes/`, because a
+   * `.pot` is tooling output and bootstrap is a floor an agent reads.
    *
-   * They looked identical because `translationsRootFor` falls back to the
-   * `translations/` convention, so both arrive having found no directory. This
-   * predicate is the only thing that separates them, which is why it is tested
-   * in both directions rather than only on the case that motivated it.
-   *
-   * Measured 2026-09-27: collapsing them turned three CI jobs red on a PR that
-   * moved bootstrap's 15 `.pot` templates out, over an instance whose
-   * per-locale build `jmpb` had already recorded as writing nothing.
+   * Three things are asserted separately because they fail separately, and the
+   * middle one is the whole point: a hosted instance's locale set is its HOST's,
+   * not an empty set and not the host's set unfiltered.
    */
-  test("an instance declaring a translations directory says so", () => {
-    expect(declaresTranslationSources(HARNESS)).toBe(true);
+  test("cat-harness owns its corpus — scope is empty", () => {
+    const home = translationsHomeFor(HARNESS, HARNESS);
+    expect(home.by).toBe("own");
+    expect(home.scope).toEqual([]);
   });
 
-  test("an instance declaring none says so, and that is not an error", () => {
-    expect(declaresTranslationSources(join(REPO, "bootstrap"))).toBe(false);
+  test("bootstrap is HOSTED by cat-harness, scoped by its stub", () => {
+    const home = translationsHomeFor(join(REPO, "bootstrap"), HARNESS);
+    expect(home.by).toBe("hosted");
+    expect(home.scope).toEqual(["bootstrap"]);
+    expect(home.root).toBe(join(HARNESS, "translations"));
   });
 
-  test("a directory with no declaration at all is false, not a throw", () => {
+  test("with no host offered, bootstrap falls back to the convention and SAYS so", () => {
+    const home = translationsHomeFor(join(REPO, "bootstrap"));
+    expect(home.by).toBe("convention");
+    expect(home.scope).toEqual([]);
+  });
+
+  test("a hosted instance's locales are its host's, and it finds them", () => {
+    // The regression this whole change exists to stop: after the templates
+    // moved, this returned [] and `6tkl`'s refusal took three CI jobs red.
+    expect(knownLocales(join(REPO, "bootstrap")).length).toBeGreaterThan(0);
+  });
+
+  test("localeDirIn inserts the scope for a hosted instance and not for an owner", () => {
+    const hosted = translationsHomeFor(join(REPO, "bootstrap"), HARNESS);
+    const own = translationsHomeFor(HARNESS, HARNESS);
+    expect(localeDirIn(hosted, "fr")).toBe(join(HARNESS, "translations", "fr", "bootstrap"));
+    expect(localeDirIn(own, "fr")).toBe(join(HARNESS, "translations", "fr"));
+  });
+
+  /**
+   * The anti-vacuity pair. Each test above passes for a resolver that answered
+   * one constant shape; this asserts the two real instances DISAGREE on both
+   * fields, which no constant satisfies.
+   */
+  test("the two real instances disagree on `by` AND on `scope`", () => {
+    const hosted = translationsHomeFor(join(REPO, "bootstrap"), HARNESS);
+    const own = translationsHomeFor(HARNESS, HARNESS);
+    expect(hosted.by).not.toBe(own.by);
+    expect(hosted.scope).not.toEqual(own.scope);
+  });
+
+  test("a directory that declares nothing and is hosted by nobody is the convention", () => {
     const dir = mkdtempSync(join(tmpdir(), "no-decl-"));
     try {
-      expect(declaresTranslationSources(dir)).toBe(false);
+      const home = translationsHomeFor(dir, HARNESS);
+      expect(home.by).toBe("convention");
+      expect(home.root).toBe(join(dir, "translations"));
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
-  });
-
-  /**
-   * The anti-vacuity pair. A predicate that answered one constant would pass
-   * one of the two tests above and fail the other, so neither alone proves it
-   * reads the declaration. This asserts they DISAGREE on the two real
-   * instances, which no constant can satisfy.
-   */
-  test("the two real instances disagree, so no constant passes", () => {
-    expect(declaresTranslationSources(HARNESS)).not.toBe(
-      declaresTranslationSources(join(REPO, "bootstrap")),
-    );
   });
 });
