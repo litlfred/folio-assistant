@@ -46,7 +46,7 @@
  * @conformsTo w3c-xsd11-datatypes
  */
 import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
-import { join, dirname, relative, resolve, sep } from "node:path";
+import { basename, join, dirname, relative, resolve, sep } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
@@ -87,6 +87,7 @@ import { skillIoIri } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
 import { buildQaResult, writeQaResult } from "./qa-results.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
+import { listDecisions } from "../src/workflow/decision-table.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -413,13 +414,17 @@ export function buildContext(): Record<string, unknown> {
     relaxable: { "@id": termIri("relaxable"), "@type": `${XSD}boolean` },
     nodeCount: { "@id": termIri("nodeCount"), "@type": `${XSD}integer` },
     flowCount: { "@id": termIri("flowCount"), "@type": `${XSD}integer` },
-    // A LITERAL, and the one term here whose call is expected to change. The
-    // value is a repo-relative DMN path plus the decision's own id
-    // (`decisions/draft-qa-gate.dmn#Decision_DraftQaGate`) and this graph emits
-    // no Decision nodes at all, so coercing it would mint four IRIs that
-    // resolve to nothing -- `makeIri`'s rule applied to a value rather than to
-    // an `@id`. It becomes a link on the day decision tables are nodes.
+    // A LITERAL: the ref as authored, a DMN path relative to the diagram plus
+    // the decision's own id (`decisions/draft-qa-gate.dmn#Decision_DraftQaGate`).
+    // Coercing it would resolve that path against the document IRI and mint
+    // an IRI nothing serves. The comment here said it "becomes a link on the
+    // day decision tables are nodes"; that day is 2026-09-27 (owner: each DMN
+    // table a node, linked to its gateway and to DMN 1.3), and the link is a
+    // SEPARATE term, `decidedBy`, so this one's published meaning does not
+    // change under anybody reading it.
     decisionRef: termIri("decisionRef"),
+    decidedBy: { "@id": termIri("decidedBy"), ...link },
+    hitPolicy: termIri("hitPolicy"),
     // WHERE A NODE CAME FROM, and the two senses are not one term. A Process
     // carries the `.bpmn` path it was loaded from; a lane-derived Role carries
     // the string `bpmn-lane`, which is a provenance KIND and not a path. Both
@@ -1489,6 +1494,60 @@ async function collectProcesses(
       problems.push(`declared knowledge-graph directory is absent: ${d.path}`);
     }
   }
+  // EACH DMN DECISION IS A NODE. Owner, 2026-09-27: add each DMN decision
+  // table to the knowledge graph as its own node, linked to the BPMN gateway
+  // that uses it and to the DMN 1.3 standard. Before this a gateway carried
+  // only `decisionRef`, a path-and-fragment string, so the rule that computes
+  // a branch was the one thing about the branch a reader could not walk to.
+  //
+  // Keyed by the RESOLVED file path plus the decision id, which is exactly
+  // how `loadDecisions` in `process-model.ts` resolves a gateway's ref — so a
+  // `decidedBy` link is written only when the table it names was emitted
+  // here, and a ref to a file or id nobody declares stays a literal rather
+  // than becoming a dangling link. Collected per workflow directory, BEFORE
+  // its diagrams, so both export paths (this instance's and a foreign one's,
+  // via `collectInstanceNodes`) get the same guarantee from the same code.
+  const decisionIri = new Map<string, string>();
+  const decisionOwner = new Map<string, string>();
+  const collectDecisions = async (dir: string): Promise<void> => {
+    for (const dmn of diagramFiles(dir).filter((f) => f.endsWith(".dmn"))) {
+      try {
+        for (const d of await listDecisions(dmn)) {
+          const key = `${resolve(dmn)}#${d.id}`;
+          if (decisionIri.has(key)) continue;
+          // The IRI is `<file-stem>/<decisionId>`, readable and stable. Two
+          // files with one stem in different directories would mint one IRI
+          // for two tables — reported rather than silently merged.
+          const iri = makeIri(doc, "decision", `${basename(dmn, ".dmn")}/${d.id}`);
+          const prior = decisionOwner.get(iri);
+          if (prior !== undefined && prior !== key) {
+            problems.push(`decision IRI collision: ${relative(root, dmn)}#${d.id} and ${prior}`);
+            continue;
+          }
+          decisionOwner.set(iri, key);
+          decisionIri.set(key, iri);
+          nodes.push({
+            "@id": iri,
+            "@type": termIri("Decision"),
+            name: d.name,
+            hitPolicy: d.hitPolicy,
+            sourcePath: relative(root, dmn),
+            // `conformsTo` → DMN 1.3 is written by `linkSchemas`, from the
+            // file's own namespace, and only when that node is in the graph.
+          });
+        }
+      } catch (e) {
+        problems.push(`unloadable decision table ${relative(root, dmn)}: ${e instanceof Error ? e.message : String(e)}`);
+      }
+    }
+  };
+  const decidedBy = (bpmnPath: string, ref: string | undefined): string | undefined => {
+    if (!ref) return undefined;
+    const [file, id] = ref.split("#");
+    if (!file || !id) return undefined;
+    return decisionIri.get(`${resolve(dirname(bpmnPath), file)}#${id}`);
+  };
+
   for (const rel of dirs) {
   const dir = join(root, rel);
   // A directory that was found and then vanished, or one a declaration names
@@ -1498,6 +1557,7 @@ async function collectProcesses(
     problems.push(`declared workflow directory is absent: ${rel}`);
     continue;
   }
+  await collectDecisions(dir);
   for (const f of readdirSync(dir)) {
     if (!f.endsWith(".bpmn")) continue;
     const path = join(dir, f);
@@ -1572,6 +1632,12 @@ async function collectProcesses(
           workPlanOp: n.workPlanOp,
           relaxable: n.relaxable,
           decisionRef: n.decisionRef,
+          // The same ref as a LINK to the Decision node, written only when
+          // that node was emitted above (owner, 2026-09-27). `decisionRef`
+          // stays beside it as the literal as authored: removing it would
+          // move a published term, and it is what a reader needs when the
+          // link is absent because the table was not found.
+          decidedBy: decidedBy(m.source, n.decisionRef),
           incoming: n.incoming.map((f) => makeIri(doc, "process", `${m.id}/flow/${f}`)),
           outgoing: n.outgoing.map((f) => makeIri(doc, "process", `${m.id}/flow/${f}`)),
         });
@@ -1815,7 +1881,8 @@ function diagramFiles(dir: string): string[] {
  * - A `GraphKind` `validator` links to the Schema node for its registry
  *   `validator` module; one with no node here keeps the reference as text,
  *   and `validatorNotApplicable` says why a kind has none.
- * - A `Process` `conformsTo` the specification its own file's namespace names.
+ * - A `Process` or `Decision` `conformsTo` the specification its own file's
+ *   namespace names.
  */
 function linkSchemas(graph: Node[], root: string = ROOT): void {
   const specIri = new Map<string, string>();
@@ -1858,7 +1925,12 @@ function linkSchemas(graph: Node[], root: string = ROOT): void {
       }
       if (def.validatorNotApplicable) n.validatorNotApplicable = def.validatorNotApplicable;
     }
-    if (n["@type"] === termIri("Process") && typeof n.sourcePath === "string") {
+    // A Decision reaches DMN 1.3 the same way a Process reaches BPMN 2.0:
+    // from the namespace its own file binds (owner, 2026-09-27).
+    if (
+      (n["@type"] === termIri("Process") || n["@type"] === termIri("Decision")) &&
+      typeof n.sourcePath === "string"
+    ) {
       const iris = specsIn([join(root, n.sourcePath)]);
       if (iris.length > 0) n.conformsTo = iris;
     }
