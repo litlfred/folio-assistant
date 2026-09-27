@@ -1,10 +1,10 @@
 ---
 # folio-assistant-sff8
 title: Contention inflates a per-test budget ~35x, and vxho fixed ONE of 505 files — two more just failed on main
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-26T03:31:40Z
+updated_at: 2026-09-27T05:16:34Z
 parent: folio-assistant-1xhc
 ---
 
@@ -100,3 +100,5 @@ somebody stops, with no way to know when it is done.
 
 Recorded and left `todo`. The session that found it was doing unrelated work
 (`ymsu`) and deliberately did not pivot.
+
+_2026-09-27T05:16:34Z_ — Claimed by claude/wonderful-bohr-6kxh7b — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
