@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-27T18:00:42Z
+updated_at: 2026-09-27T18:32:29Z
 parent: folio-assistant-1xhc
 ---
 
@@ -765,3 +765,62 @@ sample as entries rather than asserting the non-null away. `eslint` clean.
       wrong and is retracted above.
 - [ ] Re-run `check:test-budgets` on a loaded suite: every round so far has revealed
       the next-nearest test, which is what the list is for.
+
+
+## The loop CLOSED: the instrument predicted the next failure, and the class shrank — 2026-09-27
+
+Third loaded run, same recipe (6 hogs on 4 CPUs), after the five queue items landed:
+
+    12370 pass / 56 skip / 1 fail    632.4 s    547 files
+
+### The instrument named the failure BEFORE it happened
+
+The one failure is `staging-stamp.test.ts:52` at **5097 ms** — and it was **7th on the
+exposure list** from the previous run, at 4.02 s (80 %), with no red run anywhere in its
+history. That is the whole purpose of `check:test-budgets` discharged: the next failure
+arrived from a list rather than from a surprise.
+
+### The CLASS shrank, which the whack-a-mole reading did not predict
+
+Default-budget cases by share, as the tool reports them across all three loaded runs:
+
+| ≥ share of the 5000 ms default | run 1 | run 2 | run 3 |
+|---|---|---|---|
+| ≥ 5000 ms (100 %) | 4 | 1 | **1** |
+| ≥ 4000 ms (80 %) | 11 | 7 | **1** |
+| ≥ 3000 ms (60 %) | 22 | 12 | **5** |
+| ≥ 2500 ms (50 %) | 37 | 32 | **14** |
+| ≥ 2000 ms (40 %) | 56 | 51 | **35** |
+
+**Fixing five tests improved dozens.** Hoisting `checkTools()` and the exports removed
+work that many tests in those files SHARED, so the population at ≥80 % went 11 → 1 and
+at ≥50 % went 37 → 14. Earlier entries on this bean framed each round as revealing the
+next-nearest test, which was true and incomplete: it also moved the whole distribution.
+
+### This round
+
+    staging-stamp.test.ts:52       5097 ms (timed out)  ->  off the file's top 3
+    fallback-roles.test.ts:56      3.93 s (79 %)        ->  off the file's top 3
+
+`staging-stamp` is the same hoist as the five before it. `fallback-roles.test.ts:56` was
+two full passes over 74 diagrams, and the second — `no-such-skill-anywhere` — asserted a
+claim the absence test added in the previous commit already makes **through both paths
+rather than one**. So that line moved rather than went, and the comment left in its place
+says so; the file still contains the skill name.
+
+### One thing about my OWN addition, so it is not read as an oversight
+
+The bounded cross-check `the same roles come back for 6 sampled skills` is now the
+largest test in `fallback-roles.test.ts` at **6858.5 ms** — 6 single-skill passes at
+~1.15 s each. It passes because it DECLARES a derived budget
+(`SAMPLE.length * 5000`), which also means **`check:test-budgets` will never surface
+it**, by design: the tool gives a share only to tests inheriting the default.
+
+That is ~2.5 % of a ~270 s suite spent cross-checking an ~18x production change, and it
+is deliberate. Recorded here because a budgeted test is invisible to the instrument, so
+the next reader would have no way to tell a considered cost from a forgotten one.
+
+- [x] Re-run `check:test-budgets` on a loaded suite — done, and it predicted the
+      failure it was built to predict.
+- [ ] Standing: `instance-render.test.ts:212` (68 %) and `audit-coverage.test.ts:265`
+      (66 %) now head the list. Nothing is over budget but the one just fixed.
