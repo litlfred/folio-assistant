@@ -13,8 +13,8 @@ import {
   formatPot,
 } from "./pot-extract";
 import { parsePo, injectMarkdown } from "./po-inject";
-import { existsSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { join, relative, resolve } from "node:path";
 import { publishedPairs } from "./derive-po.ts";
 import { siteRoot, sourceLocale, supportedLocales } from "./translation-index.ts";
 
@@ -127,6 +127,116 @@ describe("cleanMarkdownText", () => {
 });
 
 // ── extractMarkdown ─────────────────────────────────────────────
+
+// ── bean `3mo4`: a code span WRAPPED in emphasis ──────────────────
+//
+// The code span was removed before emphasis was stripped, so the emphasis pair
+// was left with nothing between its markers. `MD_BOLD_RE` requires `[^*]+`
+// there, so it did not match and the asterisks survived into the msgid — noise
+// the translator is asked to reproduce, and part of the catalogue key. The
+// repair tokenises code spans the way Liquid expressions were already
+// tokenised, so emphasis sees something opaque rather than nothing.
+//
+// The four rows the bean tabulated are pinned below, plus a fifth it did not
+// list and the case that proves the fix cannot reach inside a code span.
+
+describe("cleanMarkdownText — emphasis around a code span (bean `3mo4`)", () => {
+  test("bold wrapping a code span leaves no asterisks", () => {
+    // Was `"**** — fail if x"`. Now identical to the bare-code-span row below,
+    // which is the point: one construct, one answer.
+    expect(cleanMarkdownText("**`clarity-defn-single`** — fail if x")).toBe("— fail if x");
+  });
+
+  test("italic wrapping a code span leaves no asterisks", () => {
+    // Not in the bean's table — found while reproducing it. Was `"** trailing"`.
+    expect(cleanMarkdownText("*`italic-code`* trailing")).toBe("trailing");
+  });
+
+  test("bold around ordinary text is unaffected", () => {
+    expect(cleanMarkdownText("**bold** — fail if x")).toBe("bold — fail if x");
+  });
+
+  test("a bare code span is unaffected", () => {
+    expect(cleanMarkdownText("`code` — fail if x")).toBe("— fail if x");
+  });
+
+  test("the construct TWICE in one string — and the double space is deliberate", () => {
+    // The bean asked for this row's spacing to be fixed as well. It is not, on
+    // purpose. The double space is not specific to this defect — removing ANY
+    // code span leaves one — and 8188 of this instance's 46780 msgids already
+    // contain a double space. Collapsing would rewrite 17.5 % of the corpus and
+    // obsolete that many catalogue entries, which is a reformatting decision for
+    // the owner rather than part of a bug fix. Pinned as it is so the choice is
+    // visible rather than forgotten.
+    expect(cleanMarkdownText("**`a`** and **`b`** both")).toBe("and  both");
+  });
+
+  test("TWO bold runs, the first wrapping a code span, left the markers asymmetric", () => {
+    // The shape the bean did not have, and 19 of the 209 msgids this changed. It
+    // needs two emphasis runs to reproduce, which is why this fixture is the real
+    // line rather than a constructed one: my first attempt used a single run and
+    // produced identical output before and after, so it pinned nothing while its
+    // comment claimed to pin the defect. Taken verbatim from
+    // `docs/reference/skill-instructions/kg-navigation.md:70`.
+    //
+    // Emptying the FIRST run to `****` let `MD_BOLD_RE` start one character late
+    // and pair its opening `**` with the SECOND run's closing one, so it consumed
+    // the text between and left a single `*` at the front and `**` before the
+    // comma. Measured before the fix:
+    //   "* — every servable skill with its one-line summary**,"
+    const real = "**`skill_list`** — every servable skill **with its one-line summary**,";
+    expect(cleanMarkdownText(real)).toBe("— every servable skill with its one-line summary,");
+  });
+
+  test("a glob INSIDE a code span is never reached by the emphasis regexes", () => {
+    // Why the repair tokenises rather than reordering. Stripping emphasis first
+    // would point `MD_BOLD_RE` at the inside of code spans, where
+    // `content/**/*.lean` lives. A token containing no `*` is unreachable by
+    // construction — a property, not a case that happens to pass.
+    //
+    // This passes on the OLD code too, and that is expected rather than a
+    // weakness: the old order removed the span whole, so the glob was safe there
+    // as well. It guards the repair that was NOT chosen — reordering the regexes —
+    // which is the one a later reader is most likely to reach for.
+    expect(cleanMarkdownText("see `content/**/*.lean` glob")).toBe("see  glob");
+    expect(cleanMarkdownText("`a/**/b` and `c/**/d`")).toBe("and");
+  });
+
+  test("over the REAL corpus: no msgid carries a run of four asterisks", () => {
+    // Measured before the fix: 190 did, across 660 files and 46780 msgids, and
+    // the defect had already reached the translations — a translator copied the
+    // asterisks into `es/skills.md` and `ru/architecture.md`.
+    //
+    // Asserted as ZERO rather than as a reduction, and separately from the 95
+    // msgids that carry `**` WITHOUT `****`: those are prose emphasis spanning a
+    // construct boundary, a different question that this must not touch.
+    const root = resolve(import.meta.dir, "..", "..");
+    const docs = siteRoot(root);
+    expect(docs).toBeDefined();
+    const files: string[] = [];
+    const walk = (d: string): void => {
+      for (const e of readdirSync(d, { withFileTypes: true })) {
+        const p = join(d, e.name);
+        if (e.isDirectory()) {
+          if (!e.name.startsWith("_")) walk(p);
+        } else if (e.name.endsWith(".md")) files.push(p);
+      }
+    };
+    walk(docs!);
+    let msgids = 0;
+    const offenders: string[] = [];
+    for (const f of files) {
+      for (const e of extractMarkdown(readFileSync(f, "utf-8"), relative(docs!, f))) {
+        msgids++;
+        if (/\*{4}/.test(e.msgid)) offenders.push(`${relative(docs!, f)}:${e.line}`);
+      }
+    }
+    expect(offenders).toEqual([]);
+    // Anti-vacuity: a walk that found nothing would satisfy the line above.
+    expect(files.length).toBeGreaterThan(500);
+    expect(msgids).toBeGreaterThan(40000);
+  });
+});
 
 describe("extractMarkdown", () => {
   test("extracts headings", () => {

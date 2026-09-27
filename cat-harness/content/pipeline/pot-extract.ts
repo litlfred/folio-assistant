@@ -261,12 +261,41 @@ export function cleanMarkdownText(text: string): string {
   result = result.replace(MD_LINK_RE, "$1");
   // Remove angle-bracket autolinks
   result = result.replace(MD_ANGLE_LINK_RE, "");
-  // Remove inline code spans
-  result = result.replace(MD_INLINE_CODE_RE, "");
+  // Tokenise inline code spans rather than removing them here, for the same
+  // reason the Liquid expressions above are tokenised: what follows strips
+  // emphasis, and emphasis WRAPPING a code span has to see something between its
+  // markers. Bean `3mo4`.
+  //
+  // Removing the span first left the emphasis pair empty, and `MD_BOLD_RE`
+  // requires `[^*]+` between its runs, so `**`x`**` became four literal
+  // asterisks in the msgid — noise the translator is asked to reproduce, and part
+  // of the catalogue key. Measured over 660 files / 46 780 msgids before the fix:
+  // **190** msgids carried a run of four or more asterisks, and the defect had
+  // already reached the translations — `es/skills.md` and `ru/architecture.md`
+  // among them, where a translator faithfully copied the asterisks across.
+  //
+  // The obvious alternative, stripping emphasis BEFORE removing code spans, is
+  // declined: it points the emphasis regexes at the inside of code spans, where
+  // `content/**/*.lean` lives. A token containing no `*` is unreachable by them
+  // by construction, which is a property rather than a case that happens to pass.
+  //
+  // Position is deliberately unchanged from the removal it replaces, so no other
+  // construct's handling moves. The pre-existing consequence — the link and image
+  // regexes above still reach inside a code span — is left as it is rather than
+  // fixed silently here.
+  const codeTokens: string[] = [];
+  result = result.replace(MD_INLINE_CODE_RE, () => `\x00CODE${codeTokens.push("") - 1}\x00`);
   // Strip bold/italic markers (keep content)
   result = result.replace(MD_BOLD_RE, "$1");
   result = result.replace(MD_ITALIC_STAR_RE, "$1");
   result = result.replace(MD_ITALIC_UNDER_RE, "$1");
+  // Now drop the code spans. The whitespace this leaves is NOT collapsed: 8188 of
+  // this instance's 46 780 msgids already contain a double space, so collapsing
+  // would rewrite 17.5 % of the corpus and obsolete that many catalogue entries —
+  // a corpus-wide reformatting decision rather than part of this fix.
+  for (let i = 0; i < codeTokens.length; i++) {
+    result = result.replace(`\x00CODE${i}\x00`, "");
+  }
   // Remove remaining HTML tags
   result = result.replace(MD_HTML_TAG_RE, "");
 
