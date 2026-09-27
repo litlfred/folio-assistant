@@ -87,6 +87,20 @@ const EXPORT_CANONICAL = await buildExport({ baseUrl: BASE });
 const EXPORT_ALT = await buildExport({ baseUrl: ALT_BASE });
 /** The preview base, BOOTSTRAP's content — the pair the size comparison needs. */
 const EXPORT_ALT_BOOT = await buildExport({ baseUrl: ALT_BASE, instanceRoot: BOOT_ROOT });
+/**
+ * A STAGING-shaped preview export, built once.
+ *
+ * Bean `sff8`, finishing what bean `w82m` started in the test below: that session
+ * hoisted the CANONICAL half out of the body (its comment there records the test at
+ * ~5.2 s, over budget) and left this one in. Measured 2026-09-27 the test was still
+ * **4.43 s of a 5000 ms default budget** (89 %) — over budget again as soon as the
+ * machine is busy, for the same reason, one build later.
+ *
+ * The base must stay STAGING-shaped: the assertion is that a preview SAYS it is one
+ * in its `@type` and links every node back to canonical, so a canonical base here
+ * would make it pass while testing nothing.
+ */
+const EXPORT_PREVIEW = await buildExport({ baseUrl: "https://example.invalid/fa/STAGING/demo" });
 // Minted through `termIri`, exactly as the exporter mints it. Rebuilding the
 // IRI from a namespace constant is what made this helper silently return zero
 // rows for every type once the namespaces split — a green-looking suite over
@@ -476,11 +490,11 @@ describe("kg export", () => {
     expect(String(schema.$id ?? "https://x")).toMatch(/^https?:\/\//);
   });
 
-  test("a preview says so in its type and links every node back to canonical", async () => {
+  test("a preview says so in its type and links every node back to canonical", () => {
     // The owner's standing rule: a downstream consumer must never have to
     // string-manipulate or infer a rule to follow a link. So the preview→
     // canonical relation is written out per node, not left derivable.
-    const preview = await buildExport({ baseUrl: "https://example.invalid/fa/STAGING/demo" });
+    const preview = EXPORT_PREVIEW;
     // The shared fixture IS the canonical export; building it again here put
     // this test at ~5.2 s alone, over bun's timeout (bean `w82m`).
     const canonical = EXPORT;
