@@ -135,6 +135,134 @@ function reportCollisions(): void {
   process.exit(1);
 }
 
+/**
+ * Pages sitting in the output directory that THIS RUN did not produce.
+ *
+ * `index.md` is the generator's own, so it is never an orphan.
+ *
+ * Pure and exported so the guard can be falsified without a corpus: on the real
+ * tree the answer is now the empty set, and an empty set is exactly what a
+ * guard that computes nothing also returns.
+ */
+export function orphanPages(onDisk: readonly string[], produced: Iterable<string>): string[] {
+  const made = new Set(produced);
+  return onDisk
+    .filter((f) => f.endsWith(".md") && f !== "index.md" && !made.has(f.slice(0, -".md".length)))
+    .sort();
+}
+
+/**
+ * A committed page no source produces is a STALE DOCUMENT, and it is the one
+ * failure `--check` was structurally unable to see.
+ *
+ * `emit` compares content per path and collects what DIFFERS. A page whose
+ * source has gone is never emitted at all, so it is never compared: the drift
+ * report reads "up to date" over it, for as many months as nobody looks. Bean
+ * `3x2o` measured it — `fhir-client-operations.md` and `smart-launch.md`, two
+ * pages produced by nothing, dated to the commit that last regenerated them
+ * while the skills they were generated from had become unreachable.
+ *
+ * The danger is not the stale bytes, it is the BANNER. Every page carries
+ * "Generated from `<path>` — do not edit here" with an edit link; on an orphan
+ * that is an instruction to go and edit a source that is not the source of
+ * anything published. A reader cannot tell it apart from a live page.
+ *
+ * It REPORTS and never deletes. That is
+ * `deletion-requires-confirmation` — an agent does not remove a durable
+ * artefact on its own initiative — and it is not timidity here: an orphan has
+ * two opposite causes. Either the skill was removed and the page should go, or
+ * the DIRECTORY STOPPED BEING DECLARED and the page is the only surviving
+ * evidence that it used to publish. This generator cannot tell which, and the
+ * second case is what actually happened: `rm`-ing these two would have
+ * destroyed the trace that led to the missing declaration.
+ *
+ * Promoted to a hard failure while the count is ZERO, which is this
+ * repository's rule for every ratchet and also the only moment it is free.
+ * Fails in writing mode too, for `reportCollisions`' reason: a re-run does not
+ * fix it, so exiting 0 would bury it.
+ */
+/**
+ * Twin entries naming a page this run does not produce.
+ *
+ * Pure and exported, for the reason {@link orphanPages} is: on the real corpus
+ * the answer is the empty set, and an empty set is also what a guard computing
+ * nothing returns.
+ *
+ * Both halves matter and they fail differently. A `published` name nothing
+ * produces is the `bsay` defect — a banner asserting a document that is not
+ * there, with a link to it. An entry whose OWN name is not among the twins is
+ * a table that contradicts itself, which would make `other`/`self` below pick
+ * the wrong side silently.
+ */
+export function unpublishedTwins(
+  table: Readonly<Record<string, ReadonlyArray<{ published: string }>>>,
+  produced: Iterable<string>,
+): string[] {
+  const made = new Set(produced);
+  const out: string[] = [];
+  for (const [name, twins] of Object.entries(table)) {
+    if (!twins.some((t) => t.published === name)) out.push(`${name}: no twin publishes under "${name}" itself`);
+    for (const t of twins) if (!made.has(t.published)) out.push(`${name} -> ${t.published}`);
+  }
+  return out.sort();
+}
+
+/**
+ * A twin entry is only true while BOTH its pages are produced.
+ *
+ * Bean `bsay`. `kg-navigation` named a second document that stopped publishing
+ * when `pve3` ruled bootstrap's skills out of this instance, and the generator
+ * kept emitting a banner for it — naming a page and linking to it — because
+ * the table is consulted for a name being PUBLISHED and never asked whether
+ * the partner is. So the check ran on the wrong side of the relation.
+ *
+ * Distinct from {@link reportOrphans}, which compares the output DIRECTORY
+ * against this run. An orphan is a page with no source; this is a LINK to a
+ * page that was never a page, so no sweep of the directory can see it.
+ *
+ * Fatal, and in writing mode too, for `reportCollisions`' reason: the wrong
+ * banner is already written by the time this runs, and a re-run does not
+ * unwrite it. The count is zero once `kg-navigation` is out, so the ratchet is
+ * free — this repository's rule for every promotion.
+ */
+function reportUnpublishedTwins(produced: Iterable<string>): void {
+  const bad = unpublishedTwins(SAME_BASENAME_DIFFERENT_DOCUMENT, produced);
+  if (bad.length === 0) return;
+  console.error(
+    `\n✗ ${bad.length} SAME_BASENAME_DIFFERENT_DOCUMENT entr(y/ies) name a page this run did not produce.\n` +
+      `  Each makes the OTHER page carry a banner asserting a document that is not there,\n` +
+      `  with a link to it — which a reader acts on.\n`,
+  );
+  for (const b of bad) console.error(`  ${b}`);
+  console.error(
+    `\n  Either the twin stopped publishing (remove the entry, and SAY WHY — the entry is\n` +
+      `  the record of a real collision), or it should publish and its group is missing.\n` +
+      `  Do not "fix" it by renaming the target: a banner naming a page that exists but is\n` +
+      `  not the twin is the same lie, harder to find.`,
+  );
+  process.exit(1);
+}
+
+function reportOrphans(produced: Iterable<string>): void {
+  const orphans = orphanPages(readdirSync(OUT_DIR), produced);
+  if (orphans.length === 0) return;
+  console.error(
+    `\n✗ ${orphans.length} page(s) in the output directory were produced by NO source.\n` +
+      `  Each carries a "Generated from … — do not edit here" banner naming a source that\n` +
+      `  publishes nothing, which a reader cannot distinguish from a live page.\n`,
+  );
+  for (const f of orphans) console.error(`  ${join(OUT_DIR, f)}`);
+  console.error(
+    `\n  TWO opposite causes, and this cannot tell them apart, so it removes nothing:\n` +
+      `    - the skill was deleted, and the page should be deleted too; or\n` +
+      `    - its directory stopped being DECLARED, and the page is the only evidence\n` +
+      `      that it used to publish — which is what bean \`3x2o\` found.\n` +
+      `  Check the declaration first. If the source really is gone, a person deletes the\n` +
+      `  page; \`deletion-requires-confirmation\` is why this does not.`,
+  );
+  process.exit(1);
+}
+
 function reportDrift(): void {
   if (!CHECK_ONLY) return;
   if (drifted.length === 0) {
@@ -211,20 +339,29 @@ const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
       label: "todo-manager (local stub)",
     },
   ],
-  // Collided exactly as `todo-manager` did and carried NO banner, so a reader
-  // landing on either page could not tell the other existed. Added with the
-  // `tdmg` resolution.
-  "kg-navigation": [
-    {
-      published: "kg-navigation",
-      label: "Reading the knowledge graph (tooled)",
-      canonical: true,
-    },
-    {
-      published: "local-kg-navigation",
-      label: "Reading a knowledge graph before you have anything (bootstrap)",
-    },
-  ],
+  // THERE IS NO `kg-navigation` ENTRY, and removing it was the `bsay` repair.
+  //
+  // It was added with `tdmg` for a real collision: bootstrap's copy and the
+  // tooled one are different documents, and neither page said the other
+  // existed. Then `pve3` ruled bootstrap's skills out of this instance
+  // entirely, and the SECOND DOCUMENT STOPPED PUBLISHING HERE while this entry
+  // stayed. Nothing downstream checks that a twin's page is produced, so the
+  // generator went on emitting the banner:
+  //
+  // > **This is the skill `skill_fetch` serves.** A stub of the same name is
+  // > published as [Reading a knowledge graph before you have anything
+  // > (bootstrap)](local-kg-navigation.html); it only points here.
+  //
+  // `local-kg-navigation.html` does not exist and cannot: that name comes from
+  // the `local-` prefixed group, and `.claude/skills/local/` holds three
+  // skills of which `kg-navigation` is not one. So the live page a reader is
+  // sent to for "how to find the skill you need" asserted a document that is
+  // not there and linked a 404 — worse than the `bootstrap` heading's silence,
+  // because a reader ACTS on a banner.
+  //
+  // {@link twinsPublish} is the guard, and it is the reason this is a comment
+  // rather than a quiet deletion: an entry here is only meaningful while BOTH
+  // its pages are produced, and until now nothing said so.
   "bean-coordination": [
     {
       published: "bean-coordination",
@@ -320,7 +457,26 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // `cat-harness` while the declaration gave that id to `skills/`: one name,
   // two real directories. `corpus-grep` now sits in `folio-core` with its
   // siblings and needs no category of its own.
-  "bootstrap": "CatBootstrap (read before anything else is known)",
+  // THERE IS NO `bootstrap` HEADING, AND THERE MUST NOT BE — the owner ruled
+  // it out. `pve3`, 2026-09-21: the root declares BOTH halves of bootstrap or
+  // NEITHER, and the answer was neither. Carrying its skills without its
+  // process minted three dangling `bindsLane` links and the `v3se` collision;
+  // carrying both would undo #432's isolation and put a process this instance
+  // does not own into its published graph. So bootstrap's skills publish
+  // through `bootstrap.jsonld` alone, and their absence from this site is the
+  // DECISION, not a gap.
+  //
+  // A heading survived that ruling, keyed `bootstrap`, reaching nothing. On
+  // 2026-09-27 I read it as evidence that bootstrap publishes, declared
+  // `bootstrap/skills/` here to make the seven pages appear, and three tests
+  // caught it: `tools.test.ts`'s deliberately INVERTED
+  // `expect(s.has("confirm-harness")).toBe(false)`, and `kg-export.test.ts`'s
+  // `a Tool satisfying a sibling's skill links into the SIBLING's document` —
+  // `#tool/discuss` stopped pointing into bootstrap's document the moment this
+  // instance claimed the skill. Removing the key rather than rekeying it is
+  // the fix, because the key WAS the lure: `discoverGroups` throws on an id
+  // with no heading and never on a heading with no id, so a stale one is
+  // unfalsifiable from this file and reads as an unfinished job.
   // CatBootstrap's SECOND declared directory, and the one that constitutes its
   // exemption rather than describing it: the layer is excused a visualiser and
   // owes its own `.jsonld`/`.json` instead, so the skills governing that
@@ -347,6 +503,14 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "folio-assistant-core-skills": "Content layer (folio-assistant-core)",
   "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
   "who-iris-skills": "WHO IRIS (catalogue instance)",
+  // The `fhir-harness` instance's two packages, keyed by BASENAME because they
+  // are package subdirectories of a declared root (`fhir-ig-skills`), not roots
+  // holding skills directly. Two headings rather than one "FHIR IG" because the
+  // packages answer different questions — how an IG is BUILT versus how a
+  // client TALKS to a server — and a reader meeting `smart-launch` under "IG
+  // build pipeline" would reasonably conclude it is a build step.
+  "fhir-ig-base": "FHIR IG build (fhir-harness/skills/fhir-ig-base)",
+  "fhir-client": "FHIR client & SMART launch (fhir-harness/skills/fhir-client)",
 };
 
 /**
@@ -961,6 +1125,11 @@ async function main(): Promise<void> {
   // BEFORE the drift report: a dropped document is not staleness, and a run
   // that exits 0 on "up to date" would bury it.
   reportCollisions();
+  // BEFORE `reportDrift`, which `process.exit(0)`s on a clean tree — anything
+  // after it is unreachable in exactly the run that matters, `--check` on a
+  // tree whose only defect is an orphan.
+  reportOrphans(written.keys());
+  reportUnpublishedTwins(written.keys());
   reportDrift();
   console.log(`\nWrote skill instruction docs to ${OUT_DIR}`);
 }

@@ -578,9 +578,14 @@ export function renderIndex(c: ReturnType<typeof collect>, typePages: ReadonlyMa
       (s) =>
         `<li><strong>${esc(s.glossary.title)}</strong> (${s.instance}, ${s.glossary.terms.length} term${s.glossary.terms.length === 1 ? "" : "s"}${s.glossary.members?.length ? `, ${s.glossary.members.length} external members` : ""}) · <a href="{{ '/${skosAsset(s)}' | relative_url }}">SKOS JSON-LD</a> · <code>${esc(s.file)}</code></li>`,
     ),
+    // `swimlane-glossary`, not `glossary`. `docs-auto` names its sub-page
+    // after the DECLARED ID, and this href carried the wrong one — a third
+    // instance of `bsay`'s class, found because repointing the declaration
+    // made `check:wireframes` name it. A composed path is not resolved by
+    // anything, so the link 404ed on the published glossary the whole time.
     ...c.ledgers.map(
       (l) =>
-        `<li><strong>Swimlane roles</strong> (${l.instance}, ${l.terms} terms) · <a href="{{ '/cat-harness/docs-auto/glossary/glossary/' | relative_url }}">rendered here</a> · <code>${esc(l.path)}</code></li>`,
+        `<li><strong>Swimlane roles</strong> (${l.instance}, ${l.terms} terms) · <a href="{{ '/cat-harness/docs-auto/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>${esc(l.path)}</code></li>`,
     ),
     ...c.external.map((e) => `<li><strong>${esc(e.title ?? e.id)}</strong> (external SKOS, referenced by ${e.instance}) · ${link(e.url)}</li>`),
   ];

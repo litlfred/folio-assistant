@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3ozg
 title: bun test rewrites 72 committed script-sidecars, so bun run gates reports NOT clean on every branch, main included
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-27T05:06:01Z
-updated_at: 2026-09-27T05:36:35Z
+updated_at: 2026-09-27T05:47:35Z
 parent: folio-assistant-1xhc
 ---
 
@@ -31,9 +31,9 @@ Run alone, none of these writes the sidecars: `qa-review`, `profile-conformance-
 
 ## Done when
 
-- [ ] the test (or interaction) that triggers the write is named
-- [ ] it writes into a temp directory, as the profile-conformance tests do, or the three volatile fields stop being committed
-- [ ] `bun run gates` on pristine main ends clean, not 'NOT clean'
+- [x] the test that triggers the write is named — `init-folio-qa.test.ts`, by bisection (below)
+- [x] the volatile fields stop causing writes — `saveQaScriptSidecar` no longer counts `engine_version` as a change (owner chose this over a temp-root override for the test alone)
+- [x] `bun run gates` ends clean — 167 of 167, exit 0, no tree mutation (measured on this branch, based on main)
 
 _2026-09-27T05:19:35Z_ — Claimed by claude/sleepy-babbage-ls90iz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
@@ -67,6 +67,23 @@ regeneration writes before committing it.** Committing this churn stamps a
 main's — as though it were a fresh measurement. That is why the standing practice has
 been to discard rather than commit, and why option 4 is not merely a cop-out: it at
 least makes the discard deliberate.
+
+
+## Independent confirmation from a SECOND container, 2026-09-27
+
+Measured on the session branch `claude/3x2o-remote-stub-banner` while
+establishing whether the tree-guard finding on PR #1437 was that branch's: a
+detached `git worktree` of pristine `origin/main` at `81586293ea5`, full
+`bun test`, then `git status`. **72 paths, exactly the ones above**, with
+`bun-1.3.11` locally against the committed `bun-1.3.14`, and `script_hash`
+unchanged throughout.
+
+Recorded only as evidence that the shape is not container-local. The reading
+that went with it -- that the fix had to be on the writer side rather than a
+pin -- is **superseded by the entry below**, which is later and has the part
+this measurement lacked: `saveQaScriptSidecar` already skips the write unless a
+substantive field changes, so `engine_version` was the whole cause and pinning
+it is the cause-level fix.
 
 ---
 
@@ -171,3 +188,28 @@ day — `3ozg`, `rmcf`, and `ymsu` for a different defect over the same files.
 That is not three people being careless; it is what an always-red signal does:
 every session that runs `bun run gates` on a clean tree sees it, and nothing
 told them it was already written down.
+
+## Named, 2026-09-27: `init-folio-qa.test.ts`, and why
+
+Bisection over `cat-harness/scripts/tests/` (432 files, 9 halvings) ends at one file, and that file alone reproduces all 72 rewrites. Its second test, *"swept from the repository root, as CI does, a subfolder folio's verdicts land at ITS root"*, spawns the real `qa-sweep.ts` against a throwaway folio in a temp directory.
+
+The sweep then saves every script sidecar under its **own** `REPO_ROOT` (`qa-sweep.ts` near line 745, `saveQaScriptSidecar(sidecar, REPO_ROOT)`), which is the platform checkout, whatever it swept. The code comment says this is deliberate: those sidecars describe the platform's own checker scripts. So a sweep of **any** folio, including a test fixture, restamps the platform's committed sidecars with the current time, HEAD and bun version.
+
+That is why none of the other candidates wrote them alone: this is the one test that runs a real sweep rather than a helper.
+
+
+## Summary of Changes
+
+The cause was already half-fixed: `saveQaScriptSidecar` skipped a write when nothing substantive changed. But it counted `engine_version` as substantive, and the committed sidecars carry CI's `bun-1.3.14`, so any run under another bun rewrote all 72. `init-folio-qa.test.ts` performs a real sweep, which is how `bun test` came to do it.
+
+- `engine_version` is dropped from the comparison, together with the two `last_run_*` fields. All three describe the run rather than the checker, and no reader uses a script sidecar's `engine_version` for freshness.
+- The test that asserted *"DOES rewrite when the engine version changes"* now asserts the opposite, and its comment says why the reversal was made. A new test checks that a real content change still records the engine it ran under.
+- Verified: the sidecar tests pass 9/9; `init-folio-qa.test.ts` now leaves 0 sidecars changed; and `bun run gates` passes 167/167 and ends clean, which it has not done on any branch while this bean was open.
+
+**This implements `rmcf`'s option 2** (stamp only on a real change), on the owner's choice of "skip no-op writes" put to them in this session. It was built before the cross-reference above was seen, and arrived at the same remedy independently. `rmcf`'s option 1 (stop recording `engine_version`) is NOT taken: the field is still written whenever a real change writes, so a reader still sees the engine of the last content change. The `sfjo` caution holds too: this fix means there is no churn left to commit or discard.
+
+## Combined with #1442's pin, 2026-09-27 — owner's choice "keep both"
+
+#1442 pinned Bun to 1.3.14, which makes CI consistent, and left this bean open for the residual: *"This container runs 1.3.11, so `bun test` here still rewrites 72 files. The pin cannot reach a container image the repository does not control."* The write-skip change above closes that residual. The owner chose to keep both: the pin makes the recorded engine consistent where the repository controls it, and the skip stops a run under any other engine from rewriting files whose checker did not change.
+
+On #1442's reason for keeping `engine_version` substantive (*"a verdict produced by a different engine is a different verdict"*): script sidecars hold no verdicts. Verdicts live in block sidecars, and nothing reads a script sidecar's `engine_version` for freshness; `entryIsFresh` compares hashes. So the field now records the engine of the last real checker change, and the two changes do not conflict.

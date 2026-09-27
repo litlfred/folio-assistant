@@ -183,7 +183,53 @@ function graftBoundary(repoRoot: string): Set<string> {
   return value;
 }
 
+/**
+ * `<repoRoot>\0<relPath>` -> the answer, and the HEAD it was computed AT.
+ *
+ * ## Why this is cached, with the measurement
+ *
+ * `git log -n 1` costs **20.05 ms** (measured 2026-09-27, bean `sff8`), and
+ * `entry()` in `translation-block-qa.ts` calls this once PER CRITERION, so one
+ * `buildReport` spent ~66 ms of subprocess time re-asking two questions whose
+ * answers do not change. That is a production cost, not a test one: the QA sweep
+ * runs `buildReport` per block per locale, so a sweep over N subjects paid 66N ms
+ * for it. It surfaced as a test that is 4 % of its budget on an idle machine and
+ * was twice seen at 28-41x over it, because PROCESS CREATION is what degrades
+ * under load — the spawns queue behind every other test file's work.
+ *
+ * ## Why it is keyed on HEAD rather than cached for the process lifetime
+ *
+ * The owner's decision of 2026-09-27, and the reason is a failure mode this
+ * repository has twice: a **stale provenance recorded as a fresh verdict** is what
+ * `sfjo` and `rmcf` are both about. `qa-utils.ts` is reachable from the
+ * long-running MCP server, where a commit can land mid-process — and a verdict
+ * stamped with the previous HEAD would be confidently wrong rather than unknown.
+ *
+ * Keying on HEAD is sound because the answer — the last commit that touched a path
+ * — can only change when a new commit lands, which moves HEAD. And it is cheap
+ * because `git rev-parse HEAD` costs **1.96 ms** against that 20.05 ms, so the
+ * probe stays UNCACHED as the invalidation signal and only the expensive half is
+ * memoised: ~66 ms per `buildReport` becomes ~6 ms.
+ *
+ * `GIT_SHA_UNKNOWN` is cached like any other answer. A non-git directory returns it
+ * for every path under one key, which is correct: the question has one answer there.
+ */
+const fileCommitCache = new Map<string, { head: string; sha: string }>();
+
 export function gitFileCommitSha(relPath: string, repoRoot: string): string {
+  // The invalidation probe, deliberately NOT memoised — it is what makes the
+  // memo safe, and at 1.96 ms it is a tenth of what it protects.
+  const head = gitHeadSha(repoRoot);
+  const key = `${repoRoot}\u0000${relPath}`;
+  const hit = fileCommitCache.get(key);
+  if (hit && hit.head === head) return hit.sha;
+  const sha = computeFileCommitSha(relPath, repoRoot);
+  fileCommitCache.set(key, { head, sha });
+  return sha;
+}
+
+/** The uncached body — every `git` call this function ever made lives here. */
+function computeFileCommitSha(relPath: string, repoRoot: string): string {
   try {
     const out = execFileSync(
       "git",
@@ -1756,9 +1802,20 @@ export function saveQaScriptSidecar(
   // change. That churn is not free: it is indistinguishable, in `git
   // status`, from an actual checker-hash movement.
   //
-  // Everything except the two `last_run_*` fields is content-derived, so
-  // comparing on those alone is the right test: identical hashes mean the
-  // recorded state is already accurate and the timestamp adds nothing.
+  // The comparison is over the CONTENT-derived fields only: the source file,
+  // the three hashes and the extra inputs. Identical there means the recorded
+  // state is already accurate. `last_run_at`, `last_run_sha` and
+  // `engine_version` describe the RUN, not the checker, so on their own they
+  // are not a reason to write.
+  //
+  // `engine_version` was compared too until bean `3ozg` (2026-09-27), and that
+  // kept the churn alive: the committed sidecars carried CI's `bun-1.3.14`, a
+  // local run is `bun-1.3.11`, so every sweep from a different bun rewrote all
+  // 72. `init-folio-qa.test.ts` runs a real sweep, which made `bun test` dirty
+  // the tree and `bun run gates` report "NOT clean" on every branch. No reader
+  // uses a script sidecar's `engine_version` for freshness (`entryIsFresh`
+  // compares hashes), so it is left as a record of the last CONTENT change's
+  // engine rather than the last run's.
   const prev = loadQaScriptSidecar(sidecar.criterion_id, repoRoot);
   if (
     prev &&
@@ -1766,7 +1823,6 @@ export function saveQaScriptSidecar(
     prev.script_hash === sidecar.script_hash &&
     prev.script_commit_sha === sidecar.script_commit_sha &&
     prev.deps_hash === sidecar.deps_hash &&
-    prev.engine_version === sidecar.engine_version &&
     JSON.stringify(prev.extra_inputs ?? []) ===
       JSON.stringify(sidecar.extra_inputs ?? [])
   ) {

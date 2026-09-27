@@ -11,11 +11,6 @@ parent: Skill instructions
 > [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg-navigation/kg-navigation.md){: .fa-edit-source }
 
 {% raw %}
-> **This is the skill `skill_fetch` serves.** A stub of the same name
-> is published as
-> [Reading a knowledge graph before you have anything (bootstrap)](local-kg-navigation.html); it only points here.
-> Edit this page's source, never the stub.
-
 # Reading the knowledge graph — how to find the skill you need
 
 You are in a fresh container. You have a task, a filesystem, and no memory of

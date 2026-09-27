@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-27T05:20:00Z
+updated_at: 2026-09-27T07:02:49Z
 parent: folio-assistant-1xhc
 ---
 
@@ -201,3 +201,73 @@ table as a shortcut.
 
 _2026-09-27T05:16:34Z_ — Claimed by claude/wonderful-bohr-6kxh7b — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
+
+## The SECOND half, diagnosed — and it is not contention for a disk either
+
+`translation-block-qa.test.ts`'s *"absence is absence > a translated block reports
+coverage, terms and echo"* is the case this bean stayed open for. Measured
+2026-09-27 on `128b52fe2c3`.
+
+### Where its time goes, measured rather than assumed
+
+    mkdtempSync                            0.12 ms
+    the two writeFileSync                  0.25 ms
+    rmSync recursive on the temp dir       0.14 ms
+    buildReport alone                    ~50 ms warm, 194 ms cold
+
+**The filesystem scaffolding is 0.5 ms of it.** So `vxho`'s account — hundreds of
+test files against one disk — does not explain this test, and the obvious remedy of
+sharing one temp directory across the file would save half a millisecond.
+
+Inside `buildReport`, the parts that look expensive are not:
+
+    measureBlock (glossary prebuilt)       0.12 ms
+    readGlossary(root, "fr")               3.4 ms
+
+### The cause: two git SUBPROCESSES per criterion
+
+`entry()` — built once per criterion — calls `reviewer()`, which calls
+`gitFileCommitSha`, and `gitHeadSha(INSTANCE_ROOT)`. Both are uncached
+`execFileSync("git", …)` in `qa-utils.ts`:
+
+    gitHeadSha(root)     git rev-parse HEAD             1.96 ms/call
+    gitFileCommitSha     git log -n 1 --format=%H -- p 20.05 ms/call
+    one entry()                                        22.0 ms
+    buildReport, ~3 criteria entries                  ~66 ms of git
+
+That is the ~50 ms warm cost, and the answers are **invariant for the whole
+process**: the same HEAD, the same script's last commit, re-asked per criterion per
+block.
+
+### Why this model fits what the bean could not explain
+
+| observation | explanation |
+|---|---|
+| 4 % of budget when the machine is idle | 66 ms of git is cheap on a quiet machine |
+| seen at **5031 ms** and **7463 ms** — 28–41× | PROCESS CREATION is what degrades catastrophically under load; the spawns queue behind every other test file's work |
+| its three neighbours in the same file do not blow up | the two "no report" tests return `undefined` BEFORE reaching `entry()`, so they spawn nothing |
+| the test that calls `buildReport` TWICE is 108 ms, less than this one's 181 | ≈ 2 × 50 ms warm, while this test pays the 194 ms COLD call — it runs first |
+
+So contention is real, and it is contention for the **process table** rather than a
+disk — and it is caused by the code spawning `git` at all, not by the suite.
+
+### This is a PRODUCTION cost, not a test-budget quirk
+
+`buildReport` is what the QA sweep runs per block per locale. At ~66 ms of git each,
+a sweep over N subjects spends 66N ms re-answering two constant questions. The test
+is only where it became visible.
+
+### Not fixed here, because the fix has a trade-off that is not mine
+
+Memoising `gitHeadSha` (per root) and `gitFileCommitSha` (per root+path) in
+`qa-utils.ts` would take this test from ~50 ms to ~22 ms and a sweep from 66N to
+~66 ms. But `qa-utils.ts` is also reachable from the long-running MCP server, where
+a process-lifetime cache holds a stale HEAD after a commit — and "stale provenance
+recorded as a fresh verdict" is the failure mode `sfjo` and `rmcf` are both about.
+So the scope of the cache is a design decision, and it is put to the owner rather
+than chosen here.
+
+**What is NOT in question**: the numbers above, and that the remedy is not the one
+this bean's `## What a fix is NOT` section rules out. It is neither a raised timeout
+nor per-file hoisting — the work is 66 ms of subprocess spawning inside a function
+that should not be spawning at all.
