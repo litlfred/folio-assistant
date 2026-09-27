@@ -32,7 +32,7 @@ import { dirname, join, resolve } from "node:path";
 
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 
-import { orphanPages } from "../gen-skill-docs.ts";
+import { orphanPages, unpublishedTwins } from "../gen-skill-docs.ts";
 
 const HARNESS = resolve(import.meta.dir, "../..");
 const GENERATED = join(HARNESS, siteDirFor(HARNESS), "reference", "skill-instructions");
@@ -155,5 +155,58 @@ describe("orphanPages", () => {
     // name essentially all of it; a guard that returned `[]` unconditionally
     // would pass every assertion above this one's absence.
     expect(orphanPages(readdirSync(GENERATED), []).length).toBeGreaterThan(10);
+  });
+});
+
+
+/**
+ * `bsay` — a twin entry is only true while BOTH its pages are produced.
+ *
+ * `SAME_BASENAME_DIFFERENT_DOCUMENT` says "these two names are different
+ * documents", and the generator turns that into a banner on each page naming
+ * and LINKING the other. It is consulted for a name being published and never
+ * asked whether the partner is, so the check ran on the wrong side of the
+ * relation.
+ *
+ * `kg-navigation` sat that way from `pve3` — which ruled bootstrap's skills
+ * out of this instance — until 2026-09-27. The live page carried *"A stub of
+ * the same name is published as [Reading a knowledge graph before you have
+ * anything (bootstrap)](local-kg-navigation.html)"*, and that page does not
+ * exist and cannot: the `local-` prefix comes from `.claude/skills/local/`,
+ * which holds three skills, none of them `kg-navigation`. A reader ACTS on a
+ * banner, which is what makes this worse than the silently-dead
+ * `SKILLS_CATEGORIES["bootstrap"]` heading of the same week.
+ *
+ * `reportOrphans` cannot see it. An orphan is a page with no source; this is a
+ * LINK to a page that was never a page, so no sweep of the output directory
+ * reaches it.
+ */
+describe("unpublishedTwins", () => {
+  const ok = { "a": [{ published: "a" }, { published: "local-a" }] };
+
+  test("both twins produced is clean", () => {
+    expect(unpublishedTwins(ok, ["a", "local-a"])).toEqual([]);
+  });
+
+  test("a twin nothing produces is named, with the entry it belongs to", () => {
+    // The `kg-navigation` case exactly: the canonical page publishes, the
+    // partner does not, and the banner still goes out.
+    expect(unpublishedTwins(ok, ["a"])).toEqual(["a -> local-a"]);
+  });
+
+  test("an entry whose OWN name is not among its twins is reported too", () => {
+    // A different failure and it must not be silent: `other`/`self` are picked
+    // by comparing against the published name, so a table that does not
+    // contain its own key makes the generator choose the wrong side and emit
+    // the stub banner on the canonical page.
+    expect(unpublishedTwins({ "a": [{ published: "x" }, { published: "y" }] }, ["x", "y"])).toEqual([
+      'a: no twin publishes under "a" itself',
+    ]);
+  });
+
+  test("it is DISCRIMINATING over a table that is entirely unpublished", () => {
+    // The vacuity control, and the reason both halves are asserted above: a
+    // function returning `[]` unconditionally satisfies the first test.
+    expect(unpublishedTwins(ok, []).length).toBe(2);
   });
 });
