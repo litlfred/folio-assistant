@@ -1,12 +1,12 @@
 ---
 # folio-assistant-sfjo
 title: 'INJECTION: the retranslate path DROPS front-matter keys — 5 locales lost `description:`, and `ar` lost `dir: rtl`'
-status: todo
+status: completed
 type: bug
 priority: normal
-parent: folio-assistant-bzyu
 created_at: 2026-09-26T19:43:43Z
-updated_at: 2026-09-26T19:43:43Z
+updated_at: 2026-09-27T08:25:15Z
+parent: folio-assistant-bzyu
 ---
 
 Found 2026-09-26 by bisecting `docs:auto:check` red on main.
@@ -101,14 +101,14 @@ keys. Whether one fix covers both is unmeasured — do not assume it.
 
 ## Done when
 
-- [ ] The six dropped keys are restored VERBATIM from `3f0518b81ea` (not
+- [x] The six dropped keys are restored VERBATIM from `3f0518b81ea` (not
       re-translated — the strings already existed in translated form, so this
       is byte restoration, and #206 reserves translation adjudication to a
       human).
-- [ ] `docs:auto:check` is green WITHOUT regenerating away the descriptions.
-- [ ] The injection path is fixed so it preserves front-matter keys it was not
+- [x] `docs:auto:check` is green WITHOUT regenerating away the descriptions.
+- [x] The injection path is fixed so it preserves front-matter keys it was not
       asked to change — or, if that is `rmor`'s fix, measured to be so.
-- [ ] Settle whether `dir:` front matter reaches `<html>` in just-the-docs
+- [x] Settle whether `dir:` front matter reaches `<html>` in just-the-docs
       v0.12.0 at all. If it does NOT, the key is decorative and the real
       question is whether the JS fallback is the intended mechanism — in
       which case there is nothing to gate.
@@ -151,3 +151,74 @@ those. `nytj` — the merged state neither party evaluates.
 
 **Verifying a generated artefact on the branch tip is not verifying it.** Merge
 main first, then regenerate, then check.
+
+
+## Worked 2026-09-27 — two items already satisfied, one ANSWERED, one refuted
+
+### Items 1 and 2 are done, by somebody else
+
+Compared front-matter KEYS per file against `3f0518b81ea`, the pre-loss reference
+this bean names: all five `docs/<locale>/index.md` have the same key count as
+then, **nothing lost**, and only `title` differs — which is the intended
+retranslation. `docs:auto:check` exits 0 **with** the descriptions present, so the
+gate was not turned green by regenerating the loss away, which is what this bean
+warned about. Verified rather than assumed.
+
+**But the explanatory comment block was NOT restored.** Measured across all five:
+6 comment lines inside the front matter at `3f0518b81ea`, **1** now. #1427 deleted
+the block explaining what `lang` and `nav_exclude` do and citing
+`skills/folio-core/translation-manager.md`. The keys came back; the documentation
+did not. Not restored here — five files of authored prose is the owner's call, not
+an agent's.
+
+### Item 3 is REFUTED — it is not `rmor`'s fix, and it is not `injectMarkdown` at all
+
+The bean says *"Whether one fix covers both is unmeasured — do not assume it."* So
+it was measured, both ways, on the exact case bisected here (`docs/index.md`
+injected with `translations/ar/index.po`):
+
+| | keys lost | front matter byte-identical |
+|---|---|---|
+| with `rmor`'s fix | **none** | yes |
+| with `rmor`'s fix reverted | **none** | yes |
+
+`injectMarkdown` **never** dropped a front-matter key. It has an `inFrontMatter`
+branch that `continue`s without touching the line, so the block passes through
+unchanged either way. `rmor`'s fix is irrelevant to this bean.
+
+**The real cause, read from the commit rather than from the PR subject.**
+`f949a5d06c4` (the non-merge commit under #1427) rewrote the front matter by hand
+while retranslating the body — dropping `dir:`, `description:` and the comment
+block, and changing `title:`. Its own message says *"Retranslated with explicit
+instructions to preserve full content"*, and the front matter was not in scope for
+those instructions.
+
+**So there is no code defect to fix.** This is an agent rewriting a file it was
+asked to translate the body of. The remedy is process, not a patch: a retranslation
+must not author front matter. Item 3's premise — that *"the injection path"* loses
+keys — does not hold, and the bean title says so too.
+
+### Item 4 is SETTLED: `dir:` front matter reaches nothing
+
+This bean recorded it UNVERIFIED because egress to the theme gem was blocked.
+Egress to rubygems works from this container, so the pinned gem was downloaded and
+read, and then the site was BUILT (`bun run preview:site`) rather than reasoned
+about:
+
+  * `just-the-docs` 0.12.0 `_layouts/default.html:7` is
+    `<html lang="{{ site.lang | default: 'en-US' }}">` — no `dir` attribute
+    anywhere in `_layouts` or `_includes`, and `page.dir` appears nowhere.
+  * The repository has no `docs/_layouts/`, so nothing overrides it.
+  * In the built site, **70 of 70** translated pages carry **no `dir` attribute at
+    all**.
+
+So `dir: rtl` is decorative, exactly as this bean suspected, and the JS fallback is
+the only mechanism. Restoring the key was still right — it returns the file to its
+author's intent — but it changes nothing that renders.
+
+### And a finding beyond this bean: bean `zru7`
+
+The same build shows all **70** translated pages serving `<html lang="en-US">`, and
+`docs-ui.js` patches `lang` only inside the RTL branch — so 56 pages (es, fr, ru,
+zh) are **never** corrected, with JS on or off. WCAG 3.1.1. Filed as `zru7` rather
+than fixed here: it is a change to how every page in the site renders.
