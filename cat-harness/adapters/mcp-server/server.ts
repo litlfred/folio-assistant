@@ -323,10 +323,10 @@ const GRAPH_ROOTS = [
     dir,
   })),
 ];
-import { leanPackageByName } from "../../schemas/lean-packages.js";
+import { resolveFormalRef } from "../../schemas/formal-ref.js";
 import {
   blockCaption, blockExamples, blockLean, blockProofs, blockTex,
-  isSectionRef, sectionBlockNames, tryParseLeanRef,
+  isSectionRef, sectionBlockNames,
 } from "../manifest-entries.js";
 
 /**
@@ -343,41 +343,42 @@ function resolveLeanSource(
   // Declaring it `string` was simply narrower than every party involved.
   branch: string | undefined,
 ): string | undefined {
-  if (!bLean(blk)) return undefined;
-  const parsed = tryParseLeanRef(blk);
+  const blkLean = bLean(blk);
+  if (!blkLean) return undefined;
+  // Steps 2 and 3 were built here from `leanPackageByName` and a decl-prefix
+  // walk — the FORMALISM LAYER's vocabulary, which core no longer holds (owner
+  // ruling 2026-09-27). `resolveFormalRef` returns the same paths in the same
+  // order; the branch-backed reading stays, because that is this function's job.
+  //
+  // `fallbackPaths` is deliberately NOT consulted: it is the module-path
+  // candidate that may be an import-only aggregator, and serving an `import`
+  // list as a block's source is worse than serving nothing.
+  const res = resolveFormalRef(blkLean.ref);
 
   // 1. sibling .lean file
   let leanSource = readFileBranch(branch, `${chRel}/${rootName}.lean`) ?? undefined;
   if (leanSource) return leanSource;
 
-  // 2. package-rooted path derived from parsed ref
-  if (parsed) {
-    const pkg = leanPackageByName(parsed.package);
-    if (pkg) {
-      const parts = parsed.decl.split(".");
-      for (let i = parts.length; i >= 2; i--) {
-        const candidate = `${pkg.lakeRoot}/${parts.slice(0, i).join("/")}.lean`;
-        leanSource = readFileBranch(branch, candidate) ?? undefined;
-        if (leanSource) return leanSource;
-      }
+  // 2. the layer's candidate paths, in its own priority order
+  if (res) {
+    for (const candidate of res.candidatePaths) {
+      leanSource = readFileBranch(branch, candidate) ?? undefined;
+      if (leanSource) return leanSource;
     }
   }
 
   // 3. grep fallback (current branch + disk-backed package only)
-  if (parsed && isCurrentBranch(branch)) {
-    const pkg = leanPackageByName(parsed.package);
-    if (pkg) {
-      try {
-        const leanSrcDir = resolve(REPO_ROOT, pkg.lakeRoot, pkg.lib);
-        if (existsSync(leanSrcDir)) {
-          const result = Bun.spawnSync(["grep", "-rl", parsed.name, leanSrcDir]);
-          const files = result.stdout.toString().trim().split("\n").filter(Boolean);
-          if (files.length > 0 && existsSync(files[0])) {
-            return readFileSync(files[0], "utf-8");
-          }
+  if (res?.searchDir && isCurrentBranch(branch)) {
+    try {
+      const leanSrcDir = resolve(REPO_ROOT, res.searchDir);
+      if (existsSync(leanSrcDir)) {
+        const result = Bun.spawnSync(["grep", "-rl", res.declName, leanSrcDir]);
+        const files = result.stdout.toString().trim().split("\n").filter(Boolean);
+        if (files.length > 0 && existsSync(files[0])) {
+          return readFileSync(files[0], "utf-8");
         }
-      } catch {}
-    }
+      }
+    } catch {}
   }
 
   return undefined;

@@ -185,6 +185,19 @@ describe("formatMutations", () => {
     expect(out).toContain("makes every LATER gate");
     expect(out).toContain("Regenerate and COMMIT what is stale");
   });
+
+  it("names the reader's OWN edit as the first thing to rule out", () => {
+    // The finding accuses a gate by name, and this guard cannot tell a gate's
+    // write from any other change made during the run — the limitation on the
+    // module docblock. Measured 2026-09-27: an edit to a bean file made while a
+    // background run was in flight came back as `bun test` writing, and was read
+    // as a gate's defect before being checked. The docblock already said not to
+    // touch the tree mid-run; nobody reads a docblock when a run goes red, which
+    // is why the message has to say it and why this test exists.
+    const out = formatMutations(one).join("\n");
+    expect(out).toContain("First rule out YOURSELF");
+    expect(out).toContain("the gate named is innocent");
+  });
 });
 
 describe("formatUndetermined", () => {

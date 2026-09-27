@@ -71,9 +71,11 @@
  * @graphNode none — asks git which files exist: a corpus rule, not a schema
  * @covers cat-harness
  */
+import { Glob } from "bun";
+
 import { spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { existsSync, readdirSync } from "node:fs";
+import { join, relative, resolve, sep } from "node:path";
 
 /**
  * The files git accounts for under {@link dir}, as absolute paths — or
@@ -110,6 +112,120 @@ export function inWorkTree(dir: string): boolean {
     encoding: "utf-8",
   });
   return r.error === undefined && r.status === 0 && r.stdout.trim() === "true";
+}
+
+/**
+ * A glob scan over the files GIT accounts for — the shared form of the rule
+ * `xd1g` asks to be stated once rather than re-implemented eleven times.
+ *
+ * ## Why this and not a git pathspec
+ *
+ * Handing the same pattern to `gitCorpus` as a PATHSPEC looks equivalent and
+ * is not: a git pathspec's star crosses a path separator by default, while a
+ * Bun `Glob` single star does not. So a caller porting a pattern from one to
+ * the other changes what it matches without changing a character of it. This keeps the PATTERN semantics exactly as the caller
+ * wrote them and changes only where the candidate list comes from, which is
+ * the whole of the conversion and the only part that can be verified by
+ * comparing counts.
+ *
+ * ## The fallback is recorded, not silent
+ *
+ * `git` answering is not guaranteed — a temp fixture is not a work tree, and
+ * `gates` must stay runnable where git cannot be asked. So an unavailable git
+ * falls back to the bare scan and SAYS SO in `source`. A measurement pinned
+ * from a bare walk counts whatever is on the machine and has to be legible as
+ * such; that is `kg-detangle`'s `corpusFallbacks` rule, and collapsing the two
+ * into one silent answer is the `dh4f` shape.
+ *
+ * @param root     directory the pattern is relative to
+ * @param pattern  a Bun `Glob` pattern, exactly as a `scanSync` caller writes it
+ * @returns paths RELATIVE to `root`, sorted, and which corpus they came from
+ */
+export function gitScan(
+  root: string,
+  pattern: string,
+): { files: string[]; source: "git" | "walk" } {
+  const glob = new Glob(pattern);
+  const tracked = gitCorpus(root);
+  if (tracked === undefined) {
+    return {
+      files: [...glob.scanSync({ cwd: root, onlyFiles: true })].sort(),
+      source: "walk",
+    };
+  }
+  return {
+    files: tracked
+      .map((abs) => relative(root, abs).split(/[\\/]/).join("/"))
+      .filter((rel) => glob.match(rel))
+      .sort(),
+    source: "git",
+  };
+}
+
+/**
+ * Every file git accounts for under `root` that `keep` admits, as ABSOLUTE
+ * paths — the walk-shaped half of {@link gitScan}.
+ *
+ * `xd1g`'s ten remaining scanners are recursive `readdirSync` walks, not glob
+ * scans, so the glob form does not fit them. What they all share is a
+ * hand-written skip list — `node_modules`, `.git`, a dot-directory rule — and
+ * a predicate on the filename. This replaces the walk and keeps the
+ * predicate.
+ *
+ * ## `keep` receives a `/`-joined path RELATIVE to `root`
+ *
+ * Relative, so a predicate cannot accidentally match something in the absolute
+ * prefix — `/home/runner/node_modules/checkout/...` would defeat an
+ * `includes("node_modules")` test written against an absolute path, and a
+ * scanner whose corpus depends on where the checkout lives is the class of bug
+ * this whole file exists for. `/`-joined so one predicate reads the same on
+ * either platform.
+ *
+ * ## The dot-directory rule does NOT come for free, and that is deliberate
+ *
+ * Every one of these walks skips dot-directories. Git does not: `.github/`,
+ * `.claude/` and `.beans.yml` are tracked content, so the git corpus is WIDER
+ * there than the walk it replaces. Folding a dot rule in here would silently
+ * change what several scanners read, and folding it in *invisibly* is worse
+ * than either choice — so the caller states its own rule in `keep`, and the
+ * two-sided control (nothing swept that git ignores, nothing LOST that the
+ * walk admitted) is what proves it kept it.
+ *
+ * @param root  directory to enumerate
+ * @param keep  admits a repo-relative, `/`-joined path
+ */
+export function gitFiles(
+  root: string,
+  keep: (rel: string) => boolean,
+): { files: string[]; source: "git" | "walk" } {
+  const tracked = gitCorpus(root);
+  if (tracked !== undefined) {
+    return {
+      files: tracked.filter((abs) => keep(relative(root, abs).split(sep).join("/"))).sort(),
+      source: "git",
+    };
+  }
+  // The fallback, and it skips only what git could not have told us about
+  // anyway: `.git` itself is never content, and `node_modules` is ignored in
+  // every checkout this runs in. Everything else is left to `keep`, so the two
+  // paths admit the same set wherever git can answer.
+  const out: string[] = [];
+  const walk = (dir: string): void => {
+    let entries;
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const e of entries) {
+      if (e.name === ".git" || e.name === "node_modules") continue;
+      const abs = join(dir, e.name);
+      if (e.isDirectory()) walk(abs);
+      else if (keep(relative(root, abs).split(sep).join("/"))) out.push(abs);
+    }
+  };
+  if (existsSync(root)) walk(root);
+  return { files: out.sort(), source: "walk" };
 }
 
 /**
