@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-27T17:05:57Z
+updated_at: 2026-09-27T17:23:44Z
 parent: folio-assistant-1xhc
 ---
 
@@ -631,3 +631,53 @@ would report the repository's best-behaved slow test as its worst offender).
       (`check:test-budgets`) and the live failure is fixed (`skill-coverage`).
 - [ ] Standing, per that decision: keep fixing per-test as they surface. The five
       named above are the queue, worst first, and no longer need a red run to find.
+
+
+## Working the named queue — 3 of 5 down, and the 4th is NOT a hoist — 2026-09-27
+
+`check:test-budgets` named five default-budget tests by exposure. Three are fixed by
+the module-scope hoist, measured individually:
+
+| test | before | after |
+|---|---|---|
+| `fsh-guts-export.test.ts:100` | **4.77 s** (95 %) | **16.9 ms** |
+| `tools.test.ts:43` | **4.45 s** (89 %) | **23.4 ms** (file max) |
+| `tools.test.ts:204` | 4.23 s (85 %) | — same file, same change |
+| `kg-export.test.ts:479` | **4.43 s** (89 %) | **96.1 ms** (file max) |
+
+`tools.test.ts` was two of the five in one file, and the cause was **five tests each
+calling `checkTools()`** and paying the full scan. Safe to share because nothing in
+that file mutates the corpus — all five calls are no-arg and no test writes a fixture
+— so five runs could only ever produce the same answer.
+
+`kg-export.test.ts:479` **finishes what bean `w82m` started.** That session hoisted
+the CANONICAL export out of this very test, recording in a comment that building it
+in the body put the test at ~5.2 s, over budget — and left the PREVIEW build in.
+Measured a year of commits later: 4.43 s, over budget again, same reason, one build
+down. A hoist that leaves a sibling build in the body buys one round.
+
+### The fifth is a PRODUCTION fix, not a test one — and it is the more valuable find
+
+`fallback-roles.test.ts:55` at **4.27 s** (85 %) does not yield to a hoist, because
+its three calls pass DIFFERENT skill names. Read the callee:
+
+`fallbackRoleFor(root, skill)` in `check-fallback-roles.ts:240` iterates
+`workflowFiles(root)` and `await loadProcessModel(f)` for **every `.bpmn` in the
+repository**, and only then filters by `skill`. So the expensive half — parsing every
+diagram — is identical on every call and redone each time. The skill argument narrows
+nothing that was not already computed.
+
+That is the `gitFileCommitSha` shape exactly: not a test-budget quirk but a cost every
+caller pays, with the test merely being where it became visible. The remedy is
+memoising the parsed model per path, and **mtime invalidation is available here**,
+which is better than the HEAD-keyed cache that question needed for git — it is
+per-file and precise, so a long-running MCP server cannot hold a stale diagram.
+
+Deliberately NOT done in the same change as three test hoists: it touches production
+code on a path the MCP server uses, and bundling it would put a behavioural change
+in a commit whose stated subject is test scoping.
+
+- [ ] Standing queue, updated: `fallback-roles.test.ts:55` remains, and it wants
+      `loadProcessModel` memoised per path with mtime invalidation rather than a
+      hoist. Re-run `check:test-budgets` on a loaded suite afterwards — each round so
+      far has revealed the next-nearest, which is the point of having the list.
