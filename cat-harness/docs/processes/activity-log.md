@@ -11,7 +11,11 @@ nav_exclude: true
 
 `Process_ActivityLog` · advisory · 8 step(s)
 
-What an agent writes down about its own run, and what a person can do with it afterwards: task starts and ends, messages and errors, persisted where somebody can read them. You are in this process on every task, whether or not capture is on — the first gateway is what decides, and an agent that does not check it logs into nothing. The log operator's lane is the other half: a person discards one entry or a whole session, and the scheduled sweep does neither on its own. This is not the work plan. `beans` records WHAT is being worked on and survives the session; this records what happened during it. The two answer different questions and a reader reaching for one is badly served by the other.
+What an agent writes down about its own run, and what a person can do with it afterwards: task starts and ends, messages and errors, persisted where somebody can read them.
+
+You are in this process on every task, whether or not capture is on — the first gateway is what decides, and an agent that does not check it logs into nothing. The log operator's lane is the other half: a person discards one entry or a whole session, and the scheduled sweep does neither on its own.
+
+This is not the work plan. `beans` records WHAT is being worked on and survives the session; this records what happened during it. The two answer different questions and a reader reaching for one is badly served by the other.
 
 <img src="../assets/img/workflows/activity-log.svg" alt="BPMN diagram: Agent activity log" style="max-width:100%">
 

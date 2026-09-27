@@ -213,6 +213,11 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   Schema: {
     gloss: "A schema definition, itself a node in the knowledge graph rather than an island beside one.",
   },
+  ExternalSchema: {
+    gloss:
+      "A published specification this corpus conforms to or reads — BPMN, DMN, ODRL, PROV-O — recorded by name and edition rather than copied in.",
+    seeAlso: "/external-schemas/",
+  },
   Capability: {
     gloss: "Something an actor's environment provides — a binary, a service, a credential — probed rather than assumed.",
   },
@@ -443,6 +448,17 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   maintains: { gloss: "An artefact this tool generates and keeps current." },
   maintainsFrom: { gloss: "The source a maintained artefact is generated from." },
   maintainedBy: { gloss: "The tool that generates and keeps this artefact current." },
+
+  // ── Schemas and the standards a graph conforms to ────────────────────
+  conformsTo: { gloss: "A published specification this node's files are written in, e.g. BPMN 2.0 for a process." },
+  validator: { gloss: "The schema node that runtime-validates a node of this kind." },
+  validatorRef: { gloss: "The `module#Export` a kind names as its validator, where no schema node for it is in this graph." },
+  validatorNotApplicable: { gloss: "Why no runtime validator applies to this kind, and what grades it instead." },
+  authority: { gloss: "The body that publishes a specification, e.g. OMG or W3C." },
+  specVersion: { gloss: "The edition of a specification this corpus is pinned to." },
+  specUse: { gloss: "How the corpus uses a specification: conforms to it, or only reads it." },
+  specUrl: { gloss: "Where a specification is published." },
+  namespace: { gloss: "An XML or RDF namespace a specification defines." },
   canonicalDocument: { gloss: "The document a node's canonical IRI resolves to." },
 
   // ── Process ──────────────────────────────────────────────────────────

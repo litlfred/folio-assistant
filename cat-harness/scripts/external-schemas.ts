@@ -66,7 +66,13 @@ export function namespacesInUse(root = ROOT): string[] {
   const out: string[] = [];
   const dir = join(root, "processes");
   if (!existsSync(dir)) return out;
-  for (const f of readdirSync(dir).filter((f) => f.endsWith(".bpmn") || f.endsWith(".dmn"))) {
+  // RECURSIVE since 2026-09-27: the DMN tables live in `processes/decisions/`,
+  // and reading only the top level left their namespaces unseen, so DMN 1.3
+  // went unregistered while nine files conformed to it.
+  const files = (readdirSync(dir, { recursive: true }) as string[])
+    .filter((f) => f.endsWith(".bpmn") || f.endsWith(".dmn"))
+    .sort();
+  for (const f of files) {
     const src = readFileSync(join(dir, f), "utf-8");
     for (const m of src.matchAll(/xmlns(?::[a-zA-Z0-9]+)?="([^"]+)"/g)) out.push(m[1]!);
   }

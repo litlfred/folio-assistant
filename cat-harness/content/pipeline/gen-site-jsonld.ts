@@ -53,8 +53,8 @@ import {
 import type { WebPage, WebPageNode } from "../../schemas/webpage.ts";
 import { portableSegment } from "../../schemas/portable-path";
 
-const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const SRC_DIR = join(REPO_ROOT, "content", "docs");
+const INSTANCE_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+const SRC_DIR = join(INSTANCE_ROOT, "content", "docs");
 
 const check = process.argv.includes("--check");
 let written = 0;
@@ -73,7 +73,7 @@ function emit(path: string, doc: Record<string, unknown>): void {
     return;
   }
   if (check) {
-    stale.push(path.slice(REPO_ROOT.length + 1));
+    stale.push(path.slice(INSTANCE_ROOT.length + 1));
     return;
   }
   mkdirSync(dirname(path), { recursive: true });
