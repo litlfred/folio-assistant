@@ -41,9 +41,8 @@
 import { readFileSync } from "node:fs";
 import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Glob } from "bun";
-
 import { repoRootFor } from "../schemas/cat-harness.ts";
+import { gitScan } from "../schemas/git-corpus.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -78,9 +77,15 @@ export function licenceProblem(l: Licence): string | undefined {
 
 export function checkSourceLicence(root: string = REPO_ROOT): LicenceReport {
   const r: LicenceReport = { entries: 0, stated: [], unknown: [], notRecorded: [], malformed: [] };
-  const files = [...new Glob("**/library/*/manifest.jsonld").scanSync({ cwd: root, onlyFiles: true })]
-    .filter((p) => !p.includes("node_modules") && !p.includes("ingest-staging"))
-    .sort();
+  // ASKED OF GIT, and the hand-written denylist is gone because git already
+  // holds it: `node_modules` is `.gitignore:1` and `cat-harness/ingest-staging/`
+  // is `.gitignore:219`. That denylist was an UNDER-APPROXIMATION of the real
+  // rule — it named the two ignored trees somebody had been bitten by, and any
+  // third one swept in silently. `ramz` is the measured instance of that shape
+  // (145 gitignored documents counted as repository content) and `xd1g` is the
+  // sweep it asked for; `biz4` is what it costs when nobody notices (233 nodes
+  // read as 1443, from residue a clean `git status` cannot show).
+  const { files } = gitScan(root, "**/library/*/manifest.jsonld");
   for (const rel of files) {
     const entry = relative(root, dirname(resolve(root, rel)));
     r.entries += 1;

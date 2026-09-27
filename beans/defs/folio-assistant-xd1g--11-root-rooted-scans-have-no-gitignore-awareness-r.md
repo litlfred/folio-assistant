@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-27T10:00:31Z
+updated_at: 2026-09-27T11:01:10Z
 parent: folio-assistant-ahvw
 ---
 
@@ -290,6 +290,174 @@ The duplicate fixes converged too — that PR called `gitCorpus` and REFUSED
 here only because the choice is real: a fallback that is documented and reached
 only when git cannot answer is not the silent one that caused this.
 
+
+## Re-measured 2026-09-27, and the list has moved
+
+Of the eleven this bean names, **one has been converted since** --
+`check-subgraphs` now asks git. Ten remain, plus `audit-coverage` (which
+`biz4` hands over). So **11 bare walkers today**. `biz4`'s neighbouring note
+that "six scanners have adopted gitCorpus" is true repo-wide but not of these
+eleven, and that is the number this bean is about.
+
+Done-when 2 is largely met already: `gitCorpus` in `schemas/git-corpus.ts` is
+the shared rule, with 8 adopters. What was missing is adoption, a matching
+helper for the glob-shaped callers, and the guard.
+
+## Done-when 3 -- A SYNTACTIC CHECK DOES NOT WORK, measured
+
+I built one and it failed its own falsifier, so it is not shipped. The numbers,
+so the next reader does not rebuild it:
+
+| filter | root-rooted scanners found | of this bean's twelve |
+|---|---|---|
+| binds a root const AND enumerates anything | **62** undeclared | all |
+| enumeration SEEDED at a root const | **4** | 1 of 12 |
+
+62 is unusable -- most are scanners reading one declared directory, which is
+fine -- and declaring 62 exemptions I have not read would be the empty
+exemption the check exists to refuse. 4 misses eleven of the twelve, because
+they seed a recursion helper or pass the root as a PARAMETER. There is no
+middle setting: the shapes are not syntactically distinguishable.
+
+**What does work is behavioural**, and it is two-sided. Plant a file under a
+gitignored tree the scanner's own denylist does NOT name, then compare the old
+corpus with the new:
+
+    before (bare walk + hand denylist)  35
+    after  (gitScan, source=git)        34
+    swept by old and not new            _kg/library/planted/manifest.jsonld
+    in new and not old                  0   <- the conversion LOST nothing
+
+Both halves are needed. Excluding ignored files is the point; losing real ones
+is the risk, and a count going down looks like success either way. That control
+is now a test rather than a session log.
+
+## Landed
+
+- `gitScan(root, pattern)` in `schemas/git-corpus.ts` -- Done-when 2's "stated
+  once" for the glob-shaped callers. A Bun `Glob` over git's list rather than a
+  git pathspec, because a pathspec's star crosses a path separator and a Bun
+  single star does not: porting a pattern would change what it matches without
+  changing a character of it. The no-git fallback is REPORTED in `source`, not
+  silent (`kg-detangle`'s `corpusFallbacks` rule).
+- `check-source-licence` converted, 1 of 11. Its hand-written denylist was an
+  exact under-approximation of `.gitignore` -- `node_modules` is line 1 and
+  `cat-harness/ingest-staging/` is line 219 -- so it named the two ignored
+  trees somebody had been bitten by and a third swept in silently. That is
+  `ramz`'s shape, confirmed rather than assumed.
+
+## Open, and needs a decision before the other ten
+
+Done-when 3's mechanism. Options as I see them: a behavioural probe per
+scanner (reliable, needs each scanner to expose its corpus); an `@corpus`
+declaration on every filesystem-enumerating script, `3srh`-style (63 files, one
+line each, but the classification is the real work); or accept the syntactic
+floor as advisory, which is the `1xhc` shape this repository has just spent a
+PR arguing against.
+
+
+## All eleven converted -- 2026-09-27, PR #1456
+
+Done-when 1 is met: every one of the eleven enumerates from git.
+
+| scanner | before | after | swept |
+|---|---|---|---|
+| check-source-licence | 35 | 34 | planted `_kg/.../manifest.jsonld` |
+| check-code-accounting | 1472 | 1471 | `block-qa-schema/dist/index.d.ts` |
+| check-viewer-backticks | 890 | 889 | the same file |
+| ns-export (minted terms) | 936 | 935 | the same file |
+| check-agents-claims | 1290 | 1290 | -- |
+| check-image-roles | 1294 | 1294 | -- |
+| check-docs-templates | 6 | 6 | -- |
+| bpmnFiles x3 (lane, process, glossary-export) | 74 | 74 | -- |
+| audit-coverage / census | -- | -- | -- |
+
+Nothing gained anywhere, so every one is a strict narrowing. Two live
+instances: `check-code-accounting`, whose subject IS accounting for code, was
+counting gitignored build output as repository source; and `ns-export` would
+have minted a namespace term from a generated `.d.ts`.
+
+Done-when 2: `gitScan(root, pattern)` for the glob caller and
+`gitFiles(root, keep)` for the ten walks, both in `schemas/git-corpus.ts`. The
+dot rule deliberately does NOT come for free -- git's corpus includes
+`.github/` and `.claude/`, so folding one in would silently change what several
+scanners read.
+
+## Done-when 3 -- ANSWERED, and the answer is not a gate
+
+The syntactic check failed its own falsifier (62 loose / 4 tight, the tight one
+missing eleven of twelve; numbers in the earlier entry). The guard is
+behavioural and lives with the conversions:
+`scripts/tests/git-corpus-conversions.test.ts`, one case per scanner,
+asserting BOTH directions -- nothing the new corpus admits was absent from the
+old, and everything the old admitted and the new does not is gitignored. Plus a
+case asserting the control itself still discriminates, so it cannot go vacuous.
+
+A scanner that regresses to a bare walk fails its own case. That is "number
+twelve is caught" by a different mechanism than the bean assumed, and the
+reason the assumed one does not work is recorded above rather than left for the
+next agent to rediscover.
+
+## A correction worth keeping
+
+I measured `audit-coverage`'s `census` over the REPOSITORY ROOT -- 31437 files
+before, 14135 after, 17302 swept, all gitignored -- and nearly committed it as
+what that scanner had been doing. It is not: `census` is called on declared
+graph directories only, none of which holds ignored content, and the sidecar
+moves by timestamp and script hash alone. Caught by diffing the sidecar
+numerically rather than trusting the number in hand. A measured number on the
+wrong input is worse than none, because it reads as evidence.
+
+## Still open
+
+The standing warning *"never run audit:coverage in this container"* is now
+unexplained rather than answered: with `census` asking git, and with every
+declared directory clean, I could not reproduce what it warns about. It may be
+stale, or about a container whose declaration set differs. Left recorded rather
+than deleted.
+
+---
+
+## Reconciling the two sessions on this bean — 2026-09-27T08:4x
+
+Two sessions worked `xd1g` in parallel. The entries above are BOTH kept, and
+they do not conflict: one converted the eleven scanners the bean names, the
+other found a twelfth (`kg-audit`) and measured the whole remaining set. The
+merge of `schemas/git-corpus.ts` was likewise additive -- `gitScan` (glob
+callers), `gitFiles` (walk callers) and `corpusPredicate` (a single-file test)
+are three shapes of one rule, not three versions of one function.
+
+**The sibling's correction is right, and it lands on my own claims.** Their
+entry says counting walks counts a SHAPE rather than an EFFECT, and that across
+this bean's lifetime exactly one scanner (`kg-detangle`) ever had a live effect.
+
+I checked my eleven against that standard rather than defending them. Of the
+four whose CORPUS changed -- `check-code-accounting` 1472->1471,
+`check-viewer-backticks` 890->889, `ns-export` 936->935 (all three dropping the
+gitignored `block-qa-schema/dist/index.d.ts`), and `check-source-licence`
+35->34 against a file I planted -- **not one moved a committed verdict**. Every
+sidecar that moved in those commits moved by `script_hash` and `updated_at`
+alone, measured by diffing them numerically.
+
+So: **all eleven conversions are LATENT, zero live**. My PR #1456 body implied
+otherwise by calling `check-code-accounting` a live instance -- its corpus was
+live, its output was not -- and that has been corrected there too.
+
+**Where I think the two sessions' conclusions differ, and it is narrow.** The
+sibling writes that a sweep "would be unfalsifiable work: no test could show it
+fixing anything", and proposes a DETECTOR instead: *does a scanner's committed
+output change when gitignored content is present?*
+
+The sweep as done is falsifiable at the CORPUS level -- the two-sided control in
+`scripts/tests/git-corpus-conversions.test.ts` shows per scanner exactly which
+files were dropped, that each is gitignored, and that none was lost. What it
+does NOT show is the output question, which is the sibling's point exactly. So
+their detector is not an alternative to this work; it is the layer above it, and
+it is the thing still missing.
+
+
+---
+
 _2026-09-27T07:09:15Z_ — Claimed by claude/kg-detangle-git-corpus — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 
@@ -541,3 +709,56 @@ noisy locally — acting on it breaks the branch.
 
 Noted while verifying PR #1462 (kg:audit needs-closure skill resolution). Not
 fixed there: it is this bean's subject, not that PR's.
+
+## Done-when 3 SHIPPED on the owner's ruling -- 2026-09-27
+
+The owner chose (options "1 3") to ship the syntactic census despite my
+objection that a check which cannot fail is the `1xhc` pattern. Recorded here
+as their decision, and in `scripts/root-scan-census.ts`'s own docblock, rather
+than re-argued.
+
+**Built so it fails on something real.** Advisory on the findings -- gating on
+a backlog is the wall somebody switches off, which is `2krx`'s reasoning and it
+is right. HARD on the drift: the sidecar at
+`cat-harness/test/results/root-scan-census.qa-results.json` is committed and
+`root-scan-census:check` exits 1 when it disagrees with the tree. That is
+`audit-coverage`'s arrangement, and it is what "cannot drift" actually
+requires.
+
+### The defect it had for one run, and why it matters here of all places
+
+First output: **"57 enumerating scripts, 1 asks git"** -- on a tree where eleven
+had just been converted. A conversion REMOVES the `readdirSync` the population
+was keyed on, so every fixed scanner dropped out of the denominator instead of
+moving to its good side. **The headline would have got worse as the corpus
+improved.** That is this bean's own failure shape, committed inside the census
+built to report on it. `ENUMERATES` now admits the git spellings and the first
+test pins the property.
+
+Now: **66 enumerating, 10 ask git; 3 seeded at a root and not git-aware** --
+`check-artifact-index`, `gen-default-boards`, `sync-docs-harness`. **None was in
+this bean's eleven.** So the census found three candidates on its first honest
+run, which is the strongest argument for the owner's call over my objection.
+
+### Still a floor, and it says so in its own output
+
+Both filters are syntactic: the loose one over-counts (a walk over one declared
+directory is fine), the tight one under-counts (a recursion helper or a root
+passed as a parameter defeats it -- a test asserts that miss rather than
+papering over it). The GAP between 66 and 3 is the finding: it is why a
+syntactic check cannot answer this question, and why the real guard stays
+behavioural in `scripts/tests/git-corpus-conversions.test.ts`.
+
+### Obligations the new gate owes, both met
+
+`check:artefact-verification` -- declared under `verified` with the four
+consumer-side questions its test asks. `check:partition` -- harness, for
+`check-subgraphs.ts`' reason.
+
+### One CI red worth keeping
+
+My own test asserted `swept > 0`, true only because this container has build
+residue a clean checkout does not. **This bean's defect, in the test guarding
+the fix for it.** Reproduced by moving `dist/` aside; fixed so the suite passes
+both with the residue and without.
+

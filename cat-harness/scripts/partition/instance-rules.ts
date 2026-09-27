@@ -501,6 +501,12 @@ export const RULES: Rule[] = [
       // `harness.json` for the directories, DERIVES the nesting from their
       // declared paths, and has nothing to say about any folio's content.
       "scripts/check-subgraphs.ts",
+      // How many scripts enumerate the filesystem, and how many ask git what
+      // the corpus is (bean `xd1g`). Harness for `check-subgraphs.ts`' reason
+      // and more plainly still: its whole subject is this repository's own
+      // `scripts/` directory read through `gitCorpus`, and it cannot express
+      // an opinion about a folio because it never looks at one.
+      "scripts/root-scan-census.ts",
       // Whether a translated page's links survived being one directory
       // deeper than the page they were translated from (bean `ahab`).
       // Harness for `check-subgraphs.ts`' reason and by the same route — it
