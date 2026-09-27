@@ -3834,6 +3834,12 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   cursor: grab;
 }
 .fa-glass-asset-tools { display: flex; flex-wrap: wrap; gap: 0.3rem; justify-content: flex-end; }
+/* THE SHELVED-ITEMS NOTE (owner, 2026-09-27: "its own todo") has no picture,
+   so its face is just its title: the 4.85rem floor and the grow reserved room
+   for a cover and squeezed the sentence into a scroll box. The words take the
+   room instead. */
+.fa-glass-note-card > .fa-glass-asset-face { flex: 0 0 auto; min-height: 0; }
+.fa-glass-note-card > .fa-glass-sticky-body { flex: 1 1 auto; }
 .fa-glass-asset[data-fa-moving="true"] {
   outline: 3px dashed var(--fa-glass-accent);
   outline-offset: 2px;
