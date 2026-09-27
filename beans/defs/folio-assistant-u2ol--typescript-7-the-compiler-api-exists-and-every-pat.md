@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T01:37:44Z
-updated_at: 2026-09-27T08:08:36Z
+updated_at: 2026-09-27T09:25:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -301,3 +301,34 @@ No code changed and no pin moved — the bean's subject was a decision, and it i
 `typescript` stays at `^6.0.3`. The three measurements that decided it are above: the
 two blockers with only one revisit condition between them, the ~25 s per typecheck the
 hold costs, and the rewrite's cost growing from two consumers to three.
+
+## "Typechecks cleanly" holds only side-by-side — measured 2026-09-27
+
+Appended, not corrected: the decision above stands, and this strengthens it.
+
+The 31.1 s → 6.6 s, 0-diagnostic row is real, but it describes one arrangement:
+the TS 7 **binary** checking a tree whose `node_modules/typescript` is still
+**6.0.3**, so every `import ts from "typescript"` resolves to TS 6's types. That
+is the side-by-side option, not #910.
+
+With `typescript@7.0.2` actually installed as the dependency (`bun add -d
+typescript@7.0.2` in a scratch worktree of `main`, which also writes the
+`bun.lock` change Dependabot never makes), the import resolves to TS 7's
+`lib/version` types and `bun run typecheck` **fails with 120 errors**:
+
+| file | errors |
+|---|---|
+| `cat-harness/scripts/schema-graph.ts` | 73 |
+| `cat-harness/content/pipeline/qa-criterion-hash.ts` | 38 |
+| `cat-harness/schemas/kind-validator.ts` | 9 |
+
+At run time, `kind-validator.test.ts` and `schema-graph.test.ts` fail 16 of 35
+with `TypeError: undefined is not an object (evaluating
+'ts.ScriptTarget.ESNext')`.
+
+So merging #910 as-is would redden `typecheck` and `bun test` before
+typescript-eslint's refusal is even reached. The two questions this bean
+separates — *can TS 7 check the code?* and *is the API the code imports still
+there?* — are not independent once TS 7 is the installed package: the second
+answer makes the first one false. Nothing was installed into this repository;
+the scratch worktree was removed.
