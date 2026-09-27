@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 415,
+      "count": 417,
       "unit": "beans"
     }
   },
@@ -501,6 +501,20 @@
       "file": "beans/defs/folio-assistant-2upx--documentation-one-sdo-voice-rfc-2119-requirement-l.md"
     },
     {
+      "id": "folio-assistant-2vne",
+      "title": "Folio handle back to top-centre as a short pill",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T05:19:36Z",
+      "updatedAt": "2026-09-27T05:19:46Z",
+      "preview": "Owner 2026-09-27: 'i want purple folio button, not on navbar but at top middle of display screen. not so tall'. Reverses 269z's navbar placement.\n\n## Summary of Changes\n\n- `docs-ui.js` `placeHandle`: the handle is appended to `body` again (fixed top centre) on every page, rail or theme sidebar alike.\n- `docs-ui.css`: pill 1.75rem tall (was 3.25rem), rounded bottom corners, 0.85rem label; `--in-nav",
+      "file": "beans/defs/folio-assistant-2vne--folio-handle-back-to-top-centre-as-a-short-pill.md"
+    },
+    {
       "id": "folio-assistant-2yyh",
       "title": "SMART-BASE HARNESS: the WHO digital-health corpus, its methodologies and its voices",
       "status": "in-progress",
@@ -601,14 +615,14 @@
     {
       "id": "folio-assistant-3mo4",
       "title": "EXTRACTION: cleanMarkdownText leaves literal **** in a msgid when a code span is wrapped in emphasis, and eats the spacing when there are two",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T12:53:23Z",
-      "updatedAt": "2026-09-26T12:53:23Z",
+      "updatedAt": "2026-09-27T06:52:18Z",
       "preview": "Found 2026-09-26 while measuring `lvk9`, and **pre-existing rather than introduced\nby it** — proven below.\n\n`cleanMarkdownText` strips an inline code span and strips emphasis markers, but\nwhen a code span is WRAPPED in emphasis it does neither cleanly, and it is not\nconsistent about which way it fails:\n\n| input | output |\n|---|---|\n| ``` **`clarity-defn-single`** — fail if x ``` | `\"**** — fail if",
       "file": "beans/defs/folio-assistant-3mo4--extraction-cleanmarkdowntext-leaves-literal-in-a-m.md"
     },
@@ -687,12 +701,12 @@
       "title": "A nested bun install makes root tsc report 12 errors that CI does not have — and it is the only way to fix a stale nested lockfile",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T17:25:05Z",
-      "updatedAt": "2026-09-26T17:25:05Z",
+      "updatedAt": "2026-09-27T06:14:56Z",
       "preview": "## The trap, measured 2026-09-26\n\n`cat-harness/adapters/mcp-server/bun.lock` was stale against its own manifest, so\nfixing it means `bun install` **in that directory** — there is no other way to\nregenerate a lockfile. That install creates a 56 MB\n`cat-harness/adapters/mcp-server/node_modules`, and from that moment the ROOT\n`bunx tsc --noEmit` reports **12 errors across 3 files under\n`cat-harness/a",
       "file": "beans/defs/folio-assistant-3vc1--a-nested-bun-install-makes-root-tsc-report-12-erro.md"
     },
@@ -2010,7 +2024,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T04:14:07Z",
-      "updatedAt": "2026-09-26T19:58:26Z",
+      "updatedAt": "2026-09-27T05:18:22Z",
       "preview": "Split out of `sa8y` 2026-09-26. It was `sa8y`'s last genuinely open item and the\nonly one of its four; the other three are done and `sa8y` closed on the wording\nfix that is its actual subject. It gets its own bean because it is a different\nsubject — `sa8y` is about a finding's **wording**, this is about a gate's\n**range** — and because a wording bean carrying an infrastructure item is how\n`sa8y` c",
       "file": "beans/defs/folio-assistant-bjzs--per-instance-gates-kgaudit-renderbpmn-and-checkwor.md"
     },
@@ -2195,6 +2209,20 @@
       "updatedAt": "2026-09-21T19:21:24Z",
       "preview": "Owner asked 2026-09-21: *\"we need to dediplicate. options? auto stub prefix?\"*\nBoth options were put to them, both were chosen, and **both turned out to be\nmeasurably wrong**. Recorded here so the next agent does not re-derive it.\n\n## The measurement\n\n**63 declared entries across 52 distinct directories; 11 declared twice.**\nEvery duplicate has one shape: `cat-harness` declares another instance's\n",
       "file": "beans/defs/folio-assistant-cmsl--dedupe-11-directories-declared-twice-and-both-obvi.md"
+    },
+    {
+      "id": "folio-assistant-cn8y",
+      "title": "Page follows the remembered locale; mark source-language fallbacks in a translated navbar",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T05:39:33Z",
+      "updatedAt": "2026-09-27T05:39:33Z",
+      "preview": "Owner 2026-09-27: an English page sat inside a French navbar. 'user selects locale in icon, then only those pages exist (if translated) otherwise source language fallback'. Chose: page follows too, and fallback items tagged (EN).\n\n## Summary of Changes\n\n- `docs-ui.js` `followRememberedLocale`: with a STORED `fa-locale`, a page that has a version in that locale (by its own `availableLocales`) is re",
+      "file": "beans/defs/folio-assistant-cn8y--page-follows-the-remembered-locale-mark-source-lan.md"
     },
     {
       "id": "folio-assistant-cpmo",
