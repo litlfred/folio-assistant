@@ -1,10 +1,10 @@
 ---
 # folio-assistant-3mo4
 title: 'EXTRACTION: cleanMarkdownText leaves literal **** in a msgid when a code span is wrapped in emphasis, and eats the spacing when there are two'
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-09-26T12:53:23Z
-updated_at: 2026-09-26T12:53:23Z
+updated_at: 2026-09-27T06:52:18Z
 parent: folio-assistant-bzyu
 ---
 
@@ -70,3 +70,5 @@ different cause.
 
 Rewriting `cleanMarkdownText` as a markdown parser. The four rows above are the
 contract; how few lines satisfy them is an implementation question.
+
+_2026-09-27T06:52:18Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

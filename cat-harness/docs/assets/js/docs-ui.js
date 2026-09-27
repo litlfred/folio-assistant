@@ -138,10 +138,9 @@
      `fa-locale` was WRITE-ONLY before this: the sidebar switcher stored the
      choice on click and nothing ever read it back, so picking French and
      navigating anywhere landed you in English again with the preference
-     sitting in localStorage unused. This deliberately does NOT redirect --
-     a docs link that silently lands somewhere other than where it points is
-     worse than one extra click -- it just makes the remembered language
-     visibly one click away. */
+     sitting in localStorage unused. It used to stop at marking the remembered
+     language in the bar; since 2026-09-27 `followRememberedLocale` also takes
+     the reader there, on the owner's call. */
   function rememberedLocale(currentLang, available) {
     var loc = getGlobalLocale();
     if (!loc || loc === currentLang) return null;
@@ -150,6 +149,44 @@
     // offered English on a folio that has no English.
     if (available.indexOf(loc) === -1) return null;
     return loc;
+  }
+
+  /**
+   * THE PAGE FOLLOWS THE CHOSEN LANGUAGE. Owner, 2026-09-27: *"user selects
+   * locale in icon, then only those pages exist (if translated) otherwise
+   * source language fallback"*, after an English page sat inside a French
+   * navbar.
+   *
+   * This reverses the "does NOT redirect" note on `rememberedLocale` above:
+   * a page whose remembered language differs from the one it is in, and that
+   * HAS a page in the remembered one, is replaced by that page. Returns true
+   * when it navigated, so `init` can stop.
+   *
+   * Three guards, each against a specific wrong jump:
+   *  - only a STORED choice counts. `getGlobalLocale` answers "en" when
+   *    nothing is stored, which would bounce every shared French link to
+   *    English for a reader who never chose;
+   *  - `?lang=` on the URL wins, because somebody asked for that page;
+   *  - only a locale the page's own meta declares available, so the jump
+   *    never lands on a 404. The language bar writes the choice on click,
+   *    before it navigates, so choosing a language never fights this.
+   */
+  function followRememberedLocale(meta) {
+    if (!meta) return false;
+    var stored = null;
+    try { stored = localStorage.getItem("fa-locale"); } catch (_e) { return false; }
+    if (!stored) return false;
+    try {
+      if (new URL(window.location.href).searchParams.get("lang")) return false;
+    } catch (_e) { return false; }
+    var currentLang = meta.lang || "en";
+    var available = localesAvailable(meta, meta.supportedLocales || UN_LOCALES);
+    var target = rememberedLocale(currentLang, available);
+    if (!target) return false;
+    var dest = localePath(deriveBasePath(window.location.pathname, currentLang), target);
+    if (dest === window.location.pathname) return false;
+    window.location.replace(dest + window.location.search + window.location.hash);
+    return true;
   }
 
   function localePath(basePath, locale) {
@@ -359,6 +396,10 @@
       var badges = mainContent.querySelector(".fa-translation-badges");
       insertTarget = badges ? badges.nextSibling : mainContent.firstChild;
     }
+    // The badges row can ALSO sit outside `mainContent` (it is lifted under
+    // the h1), so its sibling is no safer than the h1's. Checked again, 2026-09-27:
+    // the throw was back on the home page, measured with a `pageerror` listener.
+    if (insertTarget && insertTarget.parentNode !== mainContent) insertTarget = mainContent.firstChild;
     mainContent.insertBefore(container, insertTarget);
   }
 
@@ -4404,6 +4445,11 @@
     layer.setAttribute("data-fa-glass-avatars", p.avatars);
     layer.setAttribute("data-fa-glass-blur", p.blur ? "on" : "off");
     layer.style.setProperty("--fa-glass-opacity", String(p.opacity / 100));
+    // The handle wears the SAME stained glass as the layer (owner,
+    // 2026-09-27: "appropriate theme stained glass, not solid purple"). It is
+    // a sibling of the layer, not a child, so the theme is mirrored onto it.
+    var h = document.querySelector(".fa-glass-handle");
+    if (h) h.setAttribute("data-fa-glass-theme", p.theme);
   }
 
   /**
@@ -4502,46 +4548,17 @@
   }
 
   /**
-   * Where the handle lives: IN THE LEFT NAVBAR. Owner, 2026-09-24: *"folio
-   * handle on LHS on navbar"*.
+   * Where the handle lives: FIXED AT THE TOP CENTRE of the viewport, as a
+   * short pill. Owner, 2026-09-27: *"i want purple folio button, not on
+   * navbar but at top middle of display screen. not so tall"*.
    *
-   * Fixed at the top centre, it sat over whatever a page put there: a
-   * viewer's h1 (bean `015u`) and a replica's INGESTED COPY banner (bean
-   * `269z`). Each fix moved the PAGE or the handle around the other; this
-   * gives the handle a place of its own, in the navigation every page
-   * already has.
-   *
-   *  - the harness rail (`.fa-nav`, standalone viewers and mounted pages):
-   *    at the top, right under the ☰ head;
-   *  - the theme's sidebar (`.side-bar`, just-the-docs pages): under its
-   *    icon row, or under the site header when the page has no row.
-   *
-   * A page with NEITHER keeps the old place, fixed at the top centre, so the
-   * glass is never unreachable. `fa-glass-handle--in-nav` is the only
-   * difference in styling, and it is set here, where the decision is made.
+   * This reverses the 2026-09-24 placement in the left navbar (bean `269z`),
+   * which rendered as a tall purple block with only a ▾ in the strip. The
+   * overlap that placement was solving (a viewer's h1, `015u`; a replica's
+   * banner, `269z`) is answered by HEIGHT instead: the pill is about 1.75rem
+   * tall, and viewers still reserve its band in `docs-ui.css`.
    */
   function placeHandle(handle) {
-    var railTop = document.querySelector(".fa-nav .fa-nav-top");
-    if (railTop) {
-      var head = railTop.querySelector(".fa-nav-head");
-      handle.classList.add("fa-glass-handle--in-nav");
-      if (head) head.insertAdjacentElement("afterend", handle);
-      else railTop.insertBefore(handle, railTop.firstChild);
-      return;
-    }
-    // In the theme's sidebar, AFTER the icon row when there is one. The ☰ is
-    // painted absolutely at a fixed offset, and the icon row is the element
-    // built to clear it; right after the header, the handle's position
-    // depended on the header's height and could land on the ☰ and take its
-    // clicks (measured in `navbar-row.e2e`). The row is mounted before the
-    // glass (`mountNavIconRow` runs first in `init`).
-    var sideRow = document.querySelector(".side-bar > .fa-nav-icons");
-    var siteHeader = document.querySelector(".side-bar > .site-header");
-    if (sideRow || siteHeader) {
-      handle.classList.add("fa-glass-handle--in-nav");
-      (sideRow || siteHeader).insertAdjacentElement("afterend", handle);
-      return;
-    }
     document.body.appendChild(handle);
   }
 
@@ -4587,13 +4604,13 @@
       "aria-label": "Pull down your folio",
       title: "Pull down your folio",
     });
-    // A MARK and a LABEL, not one string: in a navbar strip at rest only
-    // marks show (the owner's "only icons/avatars so compat"), so the label
-    // must be separable from the ▾. The accessible name is the aria-label.
+    // A MARK and a LABEL, not one string, so the stylesheet can size the ▾
+    // apart from the word. The accessible name is the aria-label.
     handle.appendChild(el("span", { class: "fa-glass-handle__mark", "aria-hidden": "true" }, "▾"));
     handle.appendChild(document.createTextNode(" "));
     handle.appendChild(el("span", { class: "fa-glass-handle__label" }, "Folio"));
     placeHandle(handle);
+    applyGlassPrefs(layer, prefs);
 
     // The glass's own chrome, so an open glass is never `:empty`.
     var sheet = el("div", { class: "fa-glass-sheet", role: "region", "aria-label": "Your folio" });
@@ -8437,6 +8454,13 @@
         // nothing, on purpose, so the item keeps the source-language page it
         // already points at.
         link.setAttribute("data-fa-translated", "source");
+        // MARKED, on the owner's call (2026-09-27): a source-language item in
+        // a translated navbar says so, e.g. "CRDM methodology (EN)", so the
+        // mix reads as a fallback rather than a mistake. `lang` makes a screen
+        // reader pronounce the title as the language it is written in.
+        var src = data.sourceLocale || "en";
+        link.setAttribute("lang", src);
+        link.setAttribute("data-fa-source-locale", src.toUpperCase());
         continue;
       }
       link.setAttribute("href", (idx.baseurl || "") + t.url);
@@ -9712,6 +9736,48 @@
     middle.appendChild(nav);
   }
 
+  /**
+   * A TITLED, FOLDABLE PAGE LIST — owner, 2026-09-27: *"no title on the
+   * navbar component w/ pages"* and *"cant minimize them either"*. The two
+   * regions above it ("On this page", "Folders") are disclosures with a
+   * count; the theme's page list was bare. This puts a heading button in
+   * front of `.site-nav`, wherever the nav now lives, and folds the list with
+   * it. Open by default, since the pages are what most readers came for;
+   * a fold is remembered per browser (`fa-nav-pages`), guarded like every
+   * other storage call here.
+   */
+  var NAV_PAGES_KEY = "fa-nav-pages";
+  function mountNavPagesHeading() {
+    var nav = document.querySelector(".side-bar .site-nav");
+    if (!nav || !nav.parentNode || nav.parentNode.querySelector(":scope > .fa-nav-pages")) return;
+    if (!nav.id) nav.id = "site-nav";
+    var top = nav.querySelectorAll(":scope > .nav-list > .nav-list-item").length;
+    var btn = el("button", {
+      type: "button",
+      class: "fa-nav-pages",
+      "aria-controls": nav.id,
+      "aria-expanded": "true",
+    }, "Pages");
+    btn.appendChild(el("span", { class: "fa-nav-pages__count" }, String(top)));
+    function set(open) {
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) nav.removeAttribute("data-fa-folded");
+      else nav.setAttribute("data-fa-folded", "");
+    }
+    var stored = null;
+    try { stored = window.localStorage.getItem(NAV_PAGES_KEY); } catch (_e) { /* default open */ }
+    set(stored !== "closed");
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") !== "true";
+      set(open);
+      try {
+        if (open) window.localStorage.removeItem(NAV_PAGES_KEY);
+        else window.localStorage.setItem(NAV_PAGES_KEY, "closed");
+      } catch (_e) { /* this page only */ }
+    });
+    nav.parentNode.insertBefore(btn, nav);
+  }
+
   /* ── STAY CLOSED, REMEMBERED ─────────────────────────────────────────────
    *
    * Owner, 2026-09-23: *"need mechansim for closing harness navabar (e.g. w/
@@ -9778,7 +9844,11 @@
 
     var box = document.getElementById("fa-nav-open");
     var close = document.querySelector(".fa-nav-close");
-    var open = document.querySelector(".fa-nav-toggle");
+    // `.fa-nav-head` is the SAME control as `lib/navbar.ts` renders it (`sjic`).
+    // Only the old Liquid markup said `.fa-nav-toggle`, so on the live footer
+    // this handler never attached and a stay-closed bar could not be lifted by
+    // the ☰ (found 2026-09-27).
+    var open = document.querySelector(".fa-nav-toggle, .side-bar .fa-nav-head");
 
     if (close) {
       close.addEventListener("click", function (e) {
@@ -9800,12 +9870,54 @@
         applyNavPref(null);
       });
     }
+
+    /* THE AVATAR OPENS AND CLOSES THE BAR — owner, 2026-09-27: *"navbar
+     * starts hidden, click avatar opens for a split second then returns to
+     * hidden"*. The avatar is the theme's home link, so a click RELOADED the
+     * page: the bar peeked under the pointer, then came back at rest. With
+     * stay-closed set it did not open at all.
+     *
+     * From 50rem up it is now the bar's toggle: pin open (lifting stay-closed),
+     * or close (setting it, so the hover peek does not hold it open under the
+     * pointer). Home is still one click away, as ⌂ at the foot of the bar and
+     * as the first page. Below 50rem the theme's ☰ owns the menu and the
+     * avatar stays the home link. With no script it is the home link too. */
+    var avatar = bar.querySelector(".site-title");
+    if (avatar && box && window.matchMedia) {
+      var wide = window.matchMedia("(min-width: 50rem)");
+      var label = function () {
+        if (!wide.matches) {
+          avatar.removeAttribute("aria-expanded");
+          avatar.removeAttribute("aria-controls");
+          return;
+        }
+        avatar.setAttribute("aria-controls", bar.id || "");
+        avatar.setAttribute("aria-expanded", box.checked ? "true" : "false");
+        avatar.title = box.checked ? "Close navigation" : "Open navigation";
+      };
+      if (!bar.id) bar.id = "fa-side-bar";
+      label();
+      box.addEventListener("change", label);
+      avatar.addEventListener("click", function (e) {
+        if (!wide.matches) return;
+        e.preventDefault();
+        box.checked = !box.checked;
+        writeNavPref(box.checked ? null : "closed");
+        applyNavPref(box.checked ? null : "closed");
+        label();
+        // Closing must drop focus too: the bar also opens on `:focus-within`
+        // (the keyboard path), so a focused avatar held it open after the
+        // click that closed it. Measured: 264px wide with the pointer away.
+        if (!box.checked) avatar.blur();
+      });
+    }
   }
 
   function init() {
     // RTL detection — Arabic pages get dir="rtl" on <html> which
     // triggers the CSS rules in docs-ui.css for smooth sidebar slide.
     var meta = getTranslationMeta();
+    if (followRememberedLocale(meta)) return;
     var pageLang = (meta && meta.lang) || "en";
     var RTL_LANGS = ["ar", "he", "fa", "ur"];
     if (RTL_LANGS.indexOf(pageLang) !== -1) {
@@ -9833,6 +9945,8 @@
     // line rather than the only one.
     mountDocumentIndex();
     mountInstanceGraphs();
+    // AFTER the wrapper exists, so the heading lands beside the nav inside it.
+    mountNavPagesHeading();
     // Before the badges: both read the same translation metadata, and the nav
     // is the thing a reader sees first.
     mountNavLocale();
