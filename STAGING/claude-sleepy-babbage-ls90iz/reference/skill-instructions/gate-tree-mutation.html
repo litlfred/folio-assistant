@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790493965">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790495464">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790493965">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790495464">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790493965">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790495464">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790493965">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790495464">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790493965">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790495464">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790493965">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790495464">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790493965" defer></script>
+<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790495464" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -939,6 +939,62 @@ any decision.</p>
 <p>The generalisable half is <strong>not</strong> “engine versions do not matter”. It is that a
 soundness argument has to be checked against the artefact in front of you: the
 same field can be load-bearing in one sidecar and pure provenance in another.</p><hr />
+<h3 id="the-rule-is-convergent-not-novel--and-3ozg-was-the-last-family-to-get-it">
+  
+  
+    <a href="#the-rule-is-convergent-not-novel--and-3ozg-was-the-last-family-to-get-it" class="anchor-heading" aria-labelledby="the-rule-is-convergent-not-novel--and-3ozg-was-the-last-family-to-get-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rule is convergent, not novel — and <code class="language-plaintext highlighter-rouge">3ozg</code> was the LAST family to get it
+  
+  
+</h3>
+    
+
+<p>Swept 2026-09-27 across every committed artefact family carrying a run field.
+This repository already implements the rule in <strong>three independent places</strong>, each
+with the measurement that bought it — so a reader meeting this skill should not
+treat it as a proposal:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>where</th>
+      <th>the guard</th>
+      <th>what it cost to learn</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">scripts/qa-results.ts</code> <code class="language-plaintext highlighter-rouge">writeQaResult</code></td>
+      <td>compares <code class="language-plaintext highlighter-rouge">withoutTimestamp(prior)</code>, so only <code class="language-plaintext highlighter-rouge">updated_at</code> differing is not a write</td>
+      <td><em>“run the check, get a modified file, commit nothing of substance”</em> — 2026-09-19, across <code class="language-plaintext highlighter-rouge">kg-export</code> and <code class="language-plaintext highlighter-rouge">avatar-coverage</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">content/pipeline/qa-sweep.ts</code></td>
+      <td><code class="language-plaintext highlighter-rouge">wroteSomething = verdictChanged \|\| metadataDrifted</code>, and <code class="language-plaintext highlighter-rouge">updated_at</code> advances only then</td>
+      <td>restamping “made an otherwise no-op sweep dirty the whole corpus”</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">qa-utils.ts</code> <code class="language-plaintext highlighter-rouge">saveQaScriptSidecar</code></td>
+      <td>content-derived fields only; since #1452 <code class="language-plaintext highlighter-rouge">engine_version</code> joins the two <code class="language-plaintext highlighter-rouge">last_run_*</code></td>
+      <td><code class="language-plaintext highlighter-rouge">3ozg</code> — the churn this skill is named for</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><code class="language-plaintext highlighter-rouge">writeQaResult</code> is shared by every <code class="language-plaintext highlighter-rouge">*.qa-results.json</code> family, which is why
+<code class="language-plaintext highlighter-rouge">library-qa</code>’s 34 files are safe while carrying <code class="language-plaintext highlighter-rouge">updated_at</code>. Its docblock states
+the principle in the same terms: <em>the timestamp answers “when were these findings
+established”, not “when did somebody last run the script”</em>.</p>
+
+<p><strong>Two things follow.</strong> A churn you meet is more likely a family that MISSED an
+established rule than a new question — look for the nearest of those three before
+designing anything. And the rule has been arrived at independently three times,
+which is itself the argument for it being written down once.</p>
+
+<p><strong>What the sweep did not measure</strong>, stated rather than implied: the 125 <code class="language-plaintext highlighter-rouge">block-qa</code>
+sidecars were verified by READING <code class="language-plaintext highlighter-rouge">qa-sweep.ts</code>’s guard, not by running it.
+<code class="language-plaintext highlighter-rouge">qa_sweep</code> is an MCP tool with no npm script and the platform carries no folio, so
+there was no control to run. Six writers that could be run were, twice where
+cheap, and all were idempotent on a clean tree.</p>
 <h2 id="if-you-meet-a-churn-whose-writer-has-not-been-fixed-yet">
   
   
