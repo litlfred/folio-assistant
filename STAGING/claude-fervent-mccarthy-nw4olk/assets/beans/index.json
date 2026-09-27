@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 422,
+      "count": 425,
       "unit": "beans"
     }
   },
@@ -631,12 +631,12 @@
       "title": "EXTRACTION: cleanMarkdownText leaves literal **** in a msgid when a code span is wrapped in emphasis, and eats the spacing when there are two",
       "status": "in-progress",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T12:53:23Z",
-      "updatedAt": "2026-09-27T06:52:18Z",
+      "updatedAt": "2026-09-27T08:07:11Z",
       "preview": "Found 2026-09-26 while measuring `lvk9`, and **pre-existing rather than introduced\nby it** — proven below.\n\n`cleanMarkdownText` strips an inline code span and strips emphasis markers, but\nwhen a code span is WRAPPED in emphasis it does neither cleanly, and it is not\nconsistent about which way it fails:\n\n| input | output |\n|---|---|\n| ``` **`clarity-defn-single`** — fail if x ``` | `\"**** — fail if",
       "file": "beans/defs/folio-assistant-3mo4--extraction-cleanmarkdowntext-leaves-literal-in-a-m.md"
     },
@@ -713,14 +713,14 @@
     {
       "id": "folio-assistant-3vc1",
       "title": "A nested bun install makes root tsc report 12 errors that CI does not have — and it is the only way to fix a stale nested lockfile",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T17:25:05Z",
-      "updatedAt": "2026-09-27T06:14:56Z",
+      "updatedAt": "2026-09-27T10:04:12Z",
       "preview": "## The trap, measured 2026-09-26\n\n`cat-harness/adapters/mcp-server/bun.lock` was stale against its own manifest, so\nfixing it means `bun install` **in that directory** — there is no other way to\nregenerate a lockfile. That install creates a 56 MB\n`cat-harness/adapters/mcp-server/node_modules`, and from that moment the ROOT\n`bunx tsc --noEmit` reports **12 errors across 3 files under\n`cat-harness/a",
       "file": "beans/defs/folio-assistant-3vc1--a-nested-bun-install-makes-root-tsc-report-12-erro.md"
     },
@@ -977,6 +977,20 @@
       "file": "beans/defs/folio-assistant-5a3l--deployment-topologies-and-operating-modes-are-two.md"
     },
     {
+      "id": "folio-assistant-5gqn",
+      "title": "MERGE FRICTION: beans index.json should join oxka -merge set; harness.json must NOT",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T06:16:21Z",
+      "updatedAt": "2026-09-27T06:16:21Z",
+      "preview": "Measured 2026-09-27 while driving #1439: **three** merges of `origin/main` in\nabout forty minutes, and `docs/assets/beans/index.json` conflicted on the third\none. `oxka` fixed this for three files and marked them\n`linguist-generated=true -diff -merge` in `.gitattributes`. This file is a fourth\nwith the same shape and is not marked.\n\n| file | conflicts paid today | marked `-merge`? |\n|---|---|---|\n",
+      "file": "beans/defs/folio-assistant-5gqn--merge-friction-beans-indexjson-should-join-oxka-me.md"
+    },
+    {
       "id": "folio-assistant-5uuf",
       "title": "FOLIO PREVIEW BEFORE-SIDE: no main-site publish, so before pictures and 'view on main' are empty; stacked PRs compare with the wrong base",
       "status": "in-progress",
@@ -1091,14 +1105,14 @@
     {
       "id": "folio-assistant-6b8u",
       "title": "EXTRACTION: MD_MIN_TEXT_LEN is a threshold in CHARACTERS, so the same table cell is translatable in Arabic and not in English",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T08:56:25Z",
-      "updatedAt": "2026-09-27T07:34:04Z",
+      "updatedAt": "2026-09-27T08:06:12Z",
       "preview": "Found while deriving `.po` catalogues for #206 (bean `tbdg`). Measured\n2026-09-26 on `main` + this branch.\n\n`MD_MIN_TEXT_LEN = 3` in `content/pipeline/pot-extract.ts` gates every one of the\nfour emission paths (heading, paragraph, list-item, blockquote, table-cell). It is\na minimum in **characters**, used as a proxy for \"is there translatable text\nhere\". A character count is not script-neutral, so",
       "file": "beans/defs/folio-assistant-6b8u--extraction-md-min-text-len-is-a-threshold-in-chara.md"
     },
@@ -1665,6 +1679,20 @@
       "file": "beans/defs/folio-assistant-9gyz--qa-review-schemas-finding-decision-and-auditnote-a.md"
     },
     {
+      "id": "folio-assistant-9rnf",
+      "title": "DISCOVERY: publishedPairs scans the site root only, so a translated page in a subdirectory is invisible to every catalogue tool",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T04:59:40Z",
+      "updatedAt": "2026-09-27T08:07:02Z",
+      "preview": "## The gap\n\n`publishedPairs` in `cat-harness/content/pipeline/derive-po.ts` reads the site\ndirectory with a single `readdirSync`, so it sees pages at the root and nothing\nbelow it. Measured on `main` at `c6960465301`:\n\n| | |\n|---|---|\n| published translated pages | **14** |\n| of those, found by discovery | 13 (top level) |\n| **invisible** | **1** — `guides/agent-onboarding.md`, in ar, es, fr, ru, ",
+      "file": "beans/defs/folio-assistant-9rnf--discovery-publishedpairs-scans-the-site-root-only.md"
+    },
+    {
       "id": "folio-assistant-9rrb",
       "title": "CATALOGUE DISCOVERY: derive-po held a list of five page names, so #1404's four new pages took drift from 1 to 21 unseen",
       "status": "todo",
@@ -2038,7 +2066,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T04:14:07Z",
-      "updatedAt": "2026-09-27T07:11:26Z",
+      "updatedAt": "2026-09-27T10:36:45Z",
       "preview": "Split out of `sa8y` 2026-09-26. It was `sa8y`'s last genuinely open item and the\nonly one of its four; the other three are done and `sa8y` closed on the wording\nfix that is its actual subject. It gets its own bean because it is a different\nsubject — `sa8y` is about a finding's **wording**, this is about a gate's\n**range** — and because a wording bean carrying an infrastructure item is how\n`sa8y` c",
       "file": "beans/defs/folio-assistant-bjzs--per-instance-gates-kgaudit-renderbpmn-and-checkwor.md"
     },
@@ -3253,14 +3281,14 @@
     {
       "id": "folio-assistant-kfkh",
       "title": "A clean merge produces a DUPLICATE front-matter key — three instances, no conflict marker on any of them",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T17:44:01Z",
-      "updatedAt": "2026-09-25T17:44:01Z",
+      "updatedAt": "2026-09-27T10:28:24Z",
       "preview": "Found 2026-09-25 while merging `main` into a PR branch. Distinct from `oxka`\n(completed), which is the same territory from the opposite side: that one is\nabout generated files conflicting on **nearly every merge**, and `.gitattributes`\nnow marks three of them `-diff -merge`. This is about hand-authored files\nmerging with **no conflict at all** and producing a duplicate key.\n\n`-merge` is not the re",
       "file": "beans/defs/folio-assistant-kfkh--a-clean-merge-produces-a-duplicate-front-matter-ke.md"
     },
@@ -3414,7 +3442,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T09:20:19Z",
-      "updatedAt": "2026-09-26T14:44:44Z",
+      "updatedAt": "2026-09-27T05:08:36Z",
       "preview": "Found 2026-09-26 while diagnosing bean `7x8o` at the owner's instruction to find\nthe cause before touching any translation. **It is the third and largest member of\nthe `6b8u`/`ig4a` family, and it refutes most of `7x8o`.**\n\n`extractMarkdown` accumulates a PARAGRAPH until a blank line, so a hard-wrapped\nparagraph is correctly one entry. **List items and blockquotes are not\naccumulated** — each matc",
       "file": "beans/defs/folio-assistant-lvk9--extraction-list-items-and-blockquotes-are-extracte.md"
     },
@@ -3745,14 +3773,14 @@
     {
       "id": "folio-assistant-o29r",
       "title": "EXTRACTION: cleanMarkdownText strips the underscores of LaTeX subscripts and snake_case identifiers — a translator receives a corrupted formula",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T14:43:40Z",
-      "updatedAt": "2026-09-26T19:54:35Z",
+      "updatedAt": "2026-09-27T04:56:09Z",
       "preview": "## The defect, minimally\n\n`MD_ITALIC_UNDER_RE` in `cat-harness/content/pipeline/pot-extract.ts` is\n\n    /(?<!_)_([^_]+)_(?!_)/g\n\nwith no word-boundary condition, so any two underscores in one extracted string\nare read as an `_emphasis_` span and both are deleted. Measured:\n\n| input | `cleanMarkdownText` gives | should be |\n|---|---|---|\n| `$a_1$ and $b_2$` | `$a1$ and $b2$` | unchanged |\n| `x_1 y_",
       "file": "beans/defs/folio-assistant-o29r--extraction-cleanmarkdowntext-strips-the-underscore.md"
     },
@@ -4323,14 +4351,14 @@
     {
       "id": "folio-assistant-rmor",
       "title": "INJECTION: injectMarkdown deletes EVERY blank line in the document, not the ones it introduced — the written page is structurally destroyed",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T12:57:59Z",
-      "updatedAt": "2026-09-27T06:26:13Z",
+      "updatedAt": "2026-09-27T06:40:21Z",
       "preview": "Found 2026-09-26 while doing `lvk9`. Pre-existing, and the most damaging thing in\nthis family so far.\n\n`injectMarkdown` ends with:\n\n```ts\n// Remove blank lines introduced by paragraph collapse\nconst result = outLines.filter((line) => line !== \"\").join(\"\\n\");\n```\n\nThe comment says *\"introduced by paragraph collapse\"*. The code removes **every\nempty line in the document**, including every one the au",
       "file": "beans/defs/folio-assistant-rmor--injection-injectmarkdown-deletes-every-blank-line.md"
     },
@@ -4491,14 +4519,14 @@
     {
       "id": "folio-assistant-sfjo",
       "title": "INJECTION: the retranslate path DROPS front-matter keys — 5 locales lost `description:`, and `ar` lost `dir: rtl`",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T19:43:43Z",
-      "updatedAt": "2026-09-27T08:20:47Z",
+      "updatedAt": "2026-09-27T08:25:15Z",
       "preview": "Found 2026-09-26 by bisecting `docs:auto:check` red on main.\n\n## Measured\n\n`docs:auto:check` is green at `3f0518b81ea` and red at `bfec1f9b88b` (#1427,\n\"retranslate index.md + installation.md\"). Bisected across six consecutive\nmain commits, one check per commit — not inferred from the PR's subject.\n\n#1427 rewrote ten locale files. Comparing front-matter KEYS before and after,\nper file:\n\n| file | k",
       "file": "beans/defs/folio-assistant-sfjo--injection-the-retranslate-path-drops-front-matter.md"
     },
@@ -5921,6 +5949,20 @@
       "updatedAt": "2026-09-18T17:24:16Z",
       "preview": "## The ask\n\nOwner, in chat 2026-09-18, verbatim intent:\n\n> when we get to an MVP for agent-harness and folio-assist-core, create\n> the two repo as forks of folio-asst. then delete/modify the new repos\n> until we get to a state we can test under a new/empty repo \"bootstrap a\n> litlfred/folio-assistant here\"\n\nSo: **fork twice, subtract, then prove the result bootstraps from nothing.**\n\n## Why fork-a",
       "file": "beans/defs/folio-assistant-zmdo--split-bootstrap-agentic-harness-folio-assistant-co.md"
+    },
+    {
+      "id": "folio-assistant-zru7",
+      "title": "ACCESSIBILITY: all 70 translated pages serve html lang=en-US; 56 are never corrected even at runtime",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T08:24:45Z",
+      "updatedAt": "2026-09-27T10:30:26Z",
+      "preview": "Found 2026-09-27 while settling `sfjo`'s last item. **Observed in a built site, not\ninferred** — which matters, because `sfjo` carries a correction about exactly the\nopposite mistake (inferring a consequence from a key's name).\n\n## Measured, by building the site with `bun run preview:site`\n\n    translated pages built                              70\n    declaring a `lang` that is NOT their locale  ",
+      "file": "beans/defs/folio-assistant-zru7--accessibility-all-70-translated-pages-serve-html-l.md"
     },
     {
       "id": "folio-assistant-zzmr",

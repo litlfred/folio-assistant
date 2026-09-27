@@ -194,6 +194,11 @@
       "@type": "http://www.w3.org/2001/XMLSchema#integer"
     },
     "decisionRef": "https://litlfred.github.io/folio-assistant/cat-harness/ns#decisionRef",
+    "decidedBy": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#decidedBy",
+      "@type": "@id"
+    },
+    "hitPolicy": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hitPolicy",
     "sourcePath": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourcePath",
     "sourceKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceKind",
     "instructionsPath": "https://litlfred.github.io/folio-assistant/cat-harness/ns#instructionsPath",
@@ -297,10 +302,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-27T10:03:45.876Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/15f81760881065fa8d3145e447ecd6f0c061a25d",
-  "sourceCommitSha": "15f81760881065fa8d3145e447ecd6f0c061a25d",
-  "sourceCommitAt": "2026-09-27T10:00:47Z",
+  "generatedAt": "2026-09-27T10:40:26.989Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/74541cb9c0591d76e00eec957b3950737ff94303",
+  "sourceCommitSha": "74541cb9c0591d76e00eec957b3950737ff94303",
+  "sourceCommitAt": "2026-09-27T10:37:22Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -1637,8 +1642,8 @@
   ],
   "staging": {
     "branch": "claude/fervent-mccarthy-nw4olk",
-    "sha": "b2b8ae3706c1ca6e189cab0225165d3888d5a266",
+    "sha": "04e5b09084b52b11dba318e321976e051d874320",
     "pr": "1462/merge",
-    "run": "36311177049"
+    "run": "36313130794"
   }
 }
