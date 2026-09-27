@@ -3688,7 +3688,8 @@
    * left the art as a picture in the middle of the text. So the shape picks:
    * wide takes `laptop`, tall takes `mobile`, near-square keeps `card`, and a
    * ResizeObserver re-picks as the reader resizes. A todo that NAMES a layout
-   * keeps it. Board stickies keep the square crop (they are not resized).
+   * keeps it. Board stickies follow the same rule (owner, same day: "board
+   * stickies adapt too"), so a sticky reflowed wide by the board is wide.
    * The scrim is unchanged, so the fade does not depend on the crop. */
   function cropForShape(art, w, h) {
     var r = w / Math.max(h, 1);
@@ -3853,7 +3854,12 @@
     var art = todo.theme && todoState.themeArt[todo.theme];
     if (art) attrs.class += " fa-sticky--backdrop";
     var card = el("article", attrs);
-    if (art) card.appendChild(buildBackdrop(art, todo.layout));
+    if (art) {
+      card.appendChild(buildBackdrop(art, todo.layout));
+      // THE BOARD ADAPTS TOO — owner, 2026-09-27, the glass change carried to
+      // the board: a sticky's crop follows its shape as the board reflows.
+      followCardShape(card, art, todo.layout);
+    }
 
     var head = el("div", { class: "fa-sticky-head" });
     var toggle = el("button", {
@@ -5373,16 +5379,16 @@
         });
         oldClose.parentNode.replaceChild(noteClose, oldClose);
         shelf.appendChild(noteCard);
-        // BELOW everything already on the glass, so it covers no card: the
-        // default grid slot ignores cards the reader has placed themselves.
+        // SIZED TO ITS WORDS: measured at each candidate width with the height
+        // left to the content, so no line is cut (a fixed 180px cut the last
+        // one at 420px wide). Then placed where a card of that size is free.
         var noteGeom = defaultGlassGeom({ kind: "todos" }, keys.length);
-        if (placed.length > 0) {
-          var lows = placed.map(geometryOf);
-          noteGeom.top = Math.max.apply(null, lows.map(function (g) { return g.top + g.height; })) + GLASS_GAP;
-          noteGeom.left = Math.min.apply(null, lows.map(function (g) { return g.left; }));
-        }
-        noteGeom.height = Math.min(noteGeom.height, 180);
-        applyGeometry(noteCard, noteGeom);
+        var shapes = [Math.max(noteGeom.width, 420), noteGeom.width].map(function (w) {
+          noteCard.style.width = w + "px";
+          noteCard.style.height = "auto";
+          return { width: w, height: Math.ceil(noteCard.getBoundingClientRect().height / (view.s || 1)) + 2 };
+        });
+        applyGeometry(noteCard, freeSpotFor(shapes, placed, noteGeom));
         placed.push(noteCard);
         fitShelf();
         zoomGlassCard(noteCard);
@@ -5417,6 +5423,53 @@
         notes.appendChild(localNote);
       }
       return keys.length;
+    }
+
+    /* WHERE A NEW CARD CAN BE SEEN — owner, 2026-09-27: the shelved-items
+     * card was placed below every card and so started half under the tile
+     * bar. This finds the first spot, scanning the VISIBLE glass top to
+     * bottom and left to right, that overlaps no card and none of the glass's
+     * own chrome (the Folio handle, the zoom bar, the tile dock). Measured on
+     * screen and converted back through the view (`translate` then `scale`,
+     * origin 0 0), so it is right at any pan or zoom. With no free spot it
+     * falls back to below every card, which is where it used to go. */
+    function freeSpotFor(shapes, cards, fallback) {
+      var s = view.s || 1;
+      var sh = shelf.getBoundingClientRect();
+      var lay = layer.getBoundingClientRect();
+      var blocks = cards.map(function (c) { return c.getBoundingClientRect(); });
+      // The page's own navigation too: the glass spans the viewport, and a
+      // card placed under the left rail or sidebar is a card nobody sees.
+      [handle, zoomBar, dock, notes, document.querySelector(".fa-nav"), document.querySelector(".side-bar")].forEach(function (n) {
+        if (n && n.isConnected) { var r = n.getBoundingClientRect(); if (r.width && r.height) blocks.push(r); }
+      });
+      var pad = GLASS_GAP;
+      var dockTop = dock && dock.isConnected && dock.getBoundingClientRect().height
+        ? dock.getBoundingClientRect().top : lay.bottom;
+      var bottom = Math.min(lay.bottom, dockTop) - pad;
+      // SHAPES TRIED IN TURN, as the caller orders them (wide and short
+      // first: the free band on a full glass is usually a strip above or
+      // beside the cards rather than a square).
+      for (var k = 0; k < shapes.length; k++) {
+        var w = shapes[k].width * s, h = shapes[k].height * s;
+        for (var y = lay.top + pad; y + h <= bottom; y += 12) {
+          for (var x = lay.left + pad; x + w <= lay.right - pad; x += 12) {
+            var hit = blocks.some(function (r) {
+              return x < r.right + pad && x + w + pad > r.left && y < r.bottom + pad && y + h + pad > r.top;
+            });
+            if (!hit) {
+              return { left: (x - sh.left) / s, top: (y - sh.top) / s, width: shapes[k].width, height: shapes[k].height };
+            }
+          }
+        }
+      }
+      var geom = { left: fallback.left, top: fallback.top, width: shapes[0].width, height: shapes[0].height };
+      if (cards.length > 0) {
+        var gs = cards.map(geometryOf);
+        geom.top = Math.max.apply(null, gs.map(function (g) { return g.top + g.height; })) + GLASS_GAP;
+        geom.left = Math.min.apply(null, gs.map(function (g) { return g.left; }));
+      }
+      return geom;
     }
 
     var SHELVED_NOTE_KEY = "fa-glass-shelved-note-dismissed";
