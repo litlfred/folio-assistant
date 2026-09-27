@@ -130,26 +130,33 @@ describe("the two projections share the detection", () => {
     // rather than deleting them, so an offset into the stripped text indexes
     // the same character position.
     //
-    // "STRIPPED-text" is doing real work in that sentence, and the first draft
-    // of this test got it wrong — it expected `b` on line 5 and asserted a
-    // property the codebase does not have. `b` reports line **4**, because
-    // `stripLeanComments` writes a space over the NEWLINE inside a block
-    // comment as well as over its text: length survives, line count does not.
-    // Measured over 3,971 corpus files, 3,931 of them (99.0%) shift, losing
-    // 281,234 lines in total. That is bean `vrfx`, filed rather than fixed
-    // here: it moves a reader-facing line number on almost every file in a
-    // corpus, which is its own change with its own before/after.
+    // "STRIPPED-text" used to be doing real work in that sentence, and as of
+    // bean `vrfx` (2026-09-27) it no longer is: a stripped-text line number IS
+    // a source line number, because `stripLeanComments` now writes the newline
+    // inside a block comment back rather than blanking it. Length survives, and
+    // so does line count.
+    //
+    // **THIS TEST PINNED THE DEFECT, deliberately and with its reasons.** It
+    // asserted `b` on line **4** — the collapsed number — because
+    // `stripLeanComments` blanked the newline too: measured over 3,971 corpus
+    // files, 3,931 (99.0%) shifted, losing 281,234 lines. The author filed
+    // `vrfx` rather than fixing it here, on the ground that moving a
+    // reader-facing line number on almost every file in a corpus is its own
+    // change with its own before/after, and asserted the real behaviour so the
+    // two beans stayed separable. That was right, and it is why the expectation
+    // below moved from 4 to 5 in the commit that fixed `vrfx` rather than
+    // drifting unnoticed.
     //
     // `leanDeclSpans` is self-consistent either way — it has always numbered
-    // the stripped text, which is also what `scopeLeanToDecl` returns — so
-    // this convergence neither causes nor cures that. Asserting the real
-    // behaviour keeps the two beans separable.
+    // the stripped text, which is also what `scopeLeanToDecl` returns — so the
+    // convergence neither caused nor cured it.
     const src = `-- a line comment\ndef a := 1\n/- block\n   comment -/\ndef b := 2\n`;
     const stripped = stripLeanComments(src);
     expect(stripped.length).toBe(src.length);
     expect(leanDeclSpans(stripped).map((s) => [s.name, s.start])).toEqual([
       ["a", 2],
-      ["b", 4],
+      // 5, not 4: `b` is on source line 5 and now reports it (bean `vrfx`).
+      ["b", 5],
     ]);
   });
 

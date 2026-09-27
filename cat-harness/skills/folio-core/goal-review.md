@@ -118,6 +118,42 @@ measurements the store's own status field cannot give you:
   never seen (13 of 14 items for one goal, that day). Sweep the open
   branches' stores too, or the review is blind to the largest workstream.
 
+  **Compare against `origin/main`, never a bare `main`** — the local ref is
+  whatever this container last checked out, and nothing moves it. A session
+  fetches `origin/main` and fast-forwards its own branch; the local `main`
+  just sits there. Bean `065p`: written as `git diff main..origin/<branch>`,
+  with local `main` **2655** commits stale, every branch appeared to carry
+  **566-573** unmerged beans where the true count against `origin/main` was
+  **1**. Off by ~570x, and in the direction that manufactures a crisis — an
+  agent reading that concludes the work plan has fractured across branches and
+  starts reconciling something intact. Re-measured in a different container
+  2026-09-27: **3277** commits stale, so the trap grows rather than ages out.
+  Both spellings are grammatical and one is silently wrong by two orders of
+  magnitude, which is why the ref is named here rather than left to the reader.
+
+  **And if you cannot confirm the baseline is fresh, report `could not
+  determine` rather than a count.** An unverifiable baseline is not a
+  measurement — the same rule as rule 1 above, applied to the ref rather than
+  to the corpus. Confirming it is cheap:
+
+  ```sh
+  # Resolve the default branch, then FALL BACK — `origin/HEAD` is unset in some
+  # clones, measured 2026-09-27: without the fallback this exits 128 in exactly
+  # the container the check is for. `session-start-coord-sweep.sh` does the same.
+  DB="$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's@^origin/@@')"
+  [ -n "$DB" ] || DB=main
+  git fetch origin "+refs/heads/$DB:refs/remotes/origin/$DB"
+  git rev-list --count "refs/heads/$DB..origin/$DB"   # 0 = the local ref is usable
+  ```
+
+  An explicit refspec, not a bare `git fetch origin $DB`: the bare form updates
+  `refs/remotes/origin/$DB` only when `remote.origin.fetch` happens to cover it,
+  and exits 0 when it does not (bean `9giz`).
+
+  A count derived from a ref you did not check is the `dh4f` shape inverted:
+  rather than scanning nothing and reporting clean, it scans the wrong
+  baseline and reports a catastrophe.
+
 **5. Issues.** Updated in the window, and the full open set for
 classification. **Measure it; do not expect a size.** *Dated observation,
 2026-09-20:* 54 proposals merged and 2 issues changed — which this file
@@ -201,6 +237,39 @@ low-dexterity profile (`interaction/`) answers by choosing a number.
 2. **Measure at the window's edges, not from prose.** A body that says
    "nothing remains" is evidence; the status field is a claim; a count you
    remember from an earlier turn is neither.
+
+   **But a COMMITTED CHECK'S OUTPUT is not prose, and re-deriving it is
+   strictly worse than quoting it.** The sentence above is right about
+   remembered numbers, and it does not license re-computing what an instrument
+   has already computed. A check's finding was produced by code with a test behind it; your
+   inline version of the same question has neither, and once you publish it the
+   report's authority rests on whichever spelling you happened to write. So
+   **quote the finding and name the check that produced it** — `bun run health`,
+   `check:anchor-names`, whatever it was — and re-derive only what no committed
+   check answers.
+
+   **The asymmetry is why this is a rule and not a preference.** A re-derivation
+   that finds FEWER items is a harmless miss. One that finds MORE hands the
+   owner a larger permission than any instrument justified, and
+   `deletion-requires-confirmation` assumes the list put to a person is true.
+
+   Bean `pesg`, and it is measured twice over. `bun run health` reported **one**
+   orphaned staging preview; a review re-implemented the slug rule inline
+   (`[^a-zA-Z0-9]+` where `feature-staging.yml` preserves `.`, `_` and `-`),
+   reported **three**, and the owner authorised deleting "the 3 orphans". Two of
+   the three were LIVE previews for open PRs #1337 and #914 — caught only
+   because directory sizes were measured before deleting. `stagingSlug` was
+   already exported from `schemas/staging.ts` and already differentially tested
+   against the real `sed`, one import away. Independently, 2026-09-27: an agent
+   extending `check:anchor-names` probed its own narrower file set instead of
+   quoting the check's own count, wrote **25** invisible ascents into a docblock
+   where the check said **75**, and had to retract it in the same change. Two
+   agents, two subjects, one move.
+
+   **Not the same as "read the published survey" below.** That is about a
+   SIBLING'S sweep and the reason is duplicated effort. This is about an
+   instrument's computed finding and the reason is correctness — a wrong number
+   reaching a person who acts on it.
 3. **Read the owner's rulings out of the items and carry them forward.**
    Several items that day were blocked only in name — the ruling was already
    in a sibling's body. Quote it and move the item to *do now*.

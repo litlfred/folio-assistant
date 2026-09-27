@@ -197,6 +197,61 @@ in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
 8. **Stop here** unless a PR / merge was explicitly requested. If a PR *was*
    requested, see below.
 
+## What a green LOCAL run entitles you to claim
+
+Bean `46l0`. The same commit, `3c2523a8071`, measured three ways on 2026-09-26:
+
+| where | `bun test` failures |
+|---|---|
+| GitHub Actions | **7** |
+| a clean `git worktree` of that exact sha, full suite | **8** |
+| the two disagreeing files, run alone | **0** |
+
+**The sets were not nested.** CI had two the worktree did not; the worktree had
+three CI did not. So a green local run is not a weaker version of a green CI run
+— it is a different measurement, and either can be the one that is wrong.
+
+What it entitles you to say, exactly:
+
+> *The gates I ran passed, on the tree I ran them on, in this environment.*
+
+And what it does **not** entitle, each with what it costs:
+
+- **"CI will pass."** CI tests `refs/pull/N/merge`, not your head — a tree
+  neither parent holds. A staleness that exists only in the merge tree cannot be
+  seen from any checkout, however pristine (bean `1xhc`).
+- **"The gate set passed."** Only if you ran the gate set. A subset chosen by
+  hand is chosen from memory: 2026-09-27, `tsc`, `eslint` and a dozen named
+  `check:*` scripts all passed and CI went red twice — first on
+  `check:partition` (a new script must be classified in
+  `scripts/partition/instance-rules.ts`), then on `no check script is unrun` (a
+  new `check:*` needs a `SCRIPT_EXEMPTIONS` entry when no workflow runs it).
+  Neither is visible to any of the three. `bun run gates` derives its list from
+  the workflow, which is why it cannot drift from what CI runs.
+- **"Nothing is failing, so nothing is wrong."** A *conflicted* head produces no
+  merge ref, so `pull_request` workflows never fire and the PR shows **zero**
+  check runs — measured the same day. That reads as untested, not as red, and
+  the two look identical if you only glance at the absence of a red mark.
+- **"It passed in isolation, so the failure is not mine."** Running the file
+  alone removes the only condition under which it failed. `9v4m` is that shape,
+  and `sff8` measured a case of it: four tests at 77-82 % of a 5 s budget, which
+  ordinary jitter crossed only under load.
+
+**Your environment is part of the claim, and it can now be checked.** Re-measured
+2026-09-27 at a much later commit: CI **0** failures, normal checkout **0**,
+detached worktree at the same sha with real dependencies **0** — 12231 pass, 56
+skip. The 2026-09-26 divergence does not reproduce, so this section is not a
+standing warning about those five tests; it is about the inference.
+
+The one failure that *did* appear in that worktree was caused by the measurement
+itself: `node_modules` symlinked in, which `check:environment` named on sight —
+*"the root `node_modules` is a SYMLINK, so any tool that resolves a real path
+through it reports a location this repository does not contain"* (bean `qook`).
+**Confirming the symlink is git-ignored is not enough**: that addresses corpus
+scanning, and path resolution is a separate confound. Run `bun run
+check:environment` before trusting a run from any hand-built tree, and install
+dependencies rather than borrowing them.
+
 ## A clean merge can produce a wrong artefact (STRICT)
 
 **`bun run regen` after every base merge.** Not only after a conflicted one —

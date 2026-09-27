@@ -121,23 +121,6 @@ function readMaybe(path: string | undefined): string {
  * block's current claim — and they routinely contain phrases like
  * "q_0 ≈ 1.1097" inside narrative-history.
  */
-/**
- * Blank Lean comments — `--` line comments and `/- … -/` blocks, including
- * `/-! … -/` module docs and `/-- … -/` docstrings — while PRESERVING line
- * numbers, so reported hit lines stay accurate.
- *
- * Without this, prose describing archimedean behaviour counts as archimedean
- * code. Measured on the qou corpus: five `appendix-surreals` conjectures
- * failed on `QOU/AppendixSurreals/Conjectures.lean:105/206/208`, all three of
- * which are inside comments explaining that `surrealExp` is a
- * standard-part-projection PLACEHOLDER (`ofReal ∘ Real.exp ∘ st`) and what it
- * loses. Documenting a limitation is not committing it.
- *
- * The tactic scan below already skipped comment lines; the `Real.*` scan
- * beside it did not.
- */
-
-
 function stripFraming(md: string): string {
   let out = md;
   // Strip fenced code (text inside ``` ... ```)
@@ -551,7 +534,20 @@ export function checkQUsageArchimedeanInCategoricalChapter(
   // reviewer entry. See q-usage-watcher.md §Dispensations.
 
   const leanRaw = readMaybe(leanPath);
-  // Comments are prose, not code — see stripLeanComments.
+  // Comments are prose, not code. Without this, prose DESCRIBING archimedean
+  // behaviour counts as archimedean code: measured on the qou corpus, five
+  // `appendix-surreals` conjectures failed on
+  // `QOU/AppendixSurreals/Conjectures.lean:105/206/208`, all three inside
+  // comments explaining that `surrealExp` is a standard-part-projection
+  // PLACEHOLDER (`ofReal ∘ Real.exp ∘ st`) and what it loses. Documenting a
+  // limitation is not committing it. The tactic scan skipped comment lines
+  // already; the `Real.*` scan beside it did not.
+  //
+  // The line numbers this reports are SOURCE line numbers, which was false
+  // until bean `vrfx` (2026-09-27): `stripLeanComments` blanked the newlines
+  // inside a block comment too, so an N-line comment collapsed to one and
+  // every hit below it was reported short. `lean-lexer.ts` now preserves line
+  // count as well as length, and asserts both.
   const leanFile = stripLeanComments(leanRaw);
   // Scan the block's OWN declaration (plus the same-file helpers it reaches),
   // not everything that happens to share the file — see scopeLeanToDecl.
