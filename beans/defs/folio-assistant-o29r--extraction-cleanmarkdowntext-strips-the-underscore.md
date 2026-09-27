@@ -1,11 +1,11 @@
 ---
 # folio-assistant-o29r
 title: 'EXTRACTION: cleanMarkdownText strips the underscores of LaTeX subscripts and snake_case identifiers — a translator receives a corrupted formula'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-26T14:43:40Z
-updated_at: 2026-09-26T19:54:35Z
+updated_at: 2026-09-27T04:56:09Z
 parent: folio-assistant-bzyu
 ---
 
@@ -223,3 +223,51 @@ bean's business.
 `translation:drift:check`, `translation:pot:check` and `translation:index:check`
 each exit 0 — drift compares heading STRUCTURE rather than msgids, which is why
 a msgid change does not move it.
+
+## Summary of Changes
+
+Merged in PR #1433 as `c6960465301`. Verified on `main` rather than reported:
+`cat-harness/content/pipeline/pot-extract.ts:92` carries
+
+    const MD_ITALIC_UNDER_RE = /(?<!\w)_([^_]+)_(?!\w)/g;
+
+and on `main` `$a_1$ and $b_2$` survives intact while `say _this_ and _that_`
+still strips to `say this and that`.
+
+| | |
+|---|---|
+| corrupted msgids, `cat-harness/docs` | 229 of 46435 → **0** |
+| corrupted msgids, `qou/docs` | 13251 of 211139 → **0** |
+| tests | 4 added; **3 measured RED** with the old regex |
+| stranded catalogue keys | 3, repaired; stale count back to `main`'s 281 of 4987 |
+| measured coverage | unchanged — ar 69/80, ru 69/80 |
+
+**The shipped spelling is `\w`, not `[_\w]`.** The class member was redundant —
+JavaScript's `\w` is `[A-Za-z0-9_]` and already contains the underscore — and the
+old spelling could not be displayed on GitHub, whose sanitiser eats the `!` from the
+CDATA opener and so rendered the lookbehind INVERTED, three times, including in the
+revision written to correct it. Equivalence checked rather than reasoned: identical
+on 20 named cases, 200 000 fuzz strings, and 257 574 real msgids across both corpora.
+
+## Two of this bean's own claims were wrong, and both are corrected above
+
+1. **"No committed catalogue needs re-deriving."** Measured with scripts that
+   resolved a catalogue's source as `join(DOCS, page + ".md")` — top-level pages
+   only — so `translations/ar/agent-onboarding.po`, beside the NESTED
+   `docs/guides/agent-onboarding.md`, was never in the set. Three catalogues were
+   stranded. `translation:block-qa:check` caught it, red here and exit 0 on `main`.
+2. **The regex as documented.** Three renderings in the PR description showed a
+   lookbehind without its `!`. The code was correct throughout.
+
+Both share a shape worth carrying forward: **an artefact that is wrong in a way that
+still parses.** A mangled regex is a valid regex; a measurement over a subset returns
+a clean number. In both cases what caught it was external — CI, or reading the stored
+artefact back instead of trusting what had been submitted.
+
+## What this bean does NOT contribute
+
+The combined msgid obsoletion pass is `lvk9`'s remaining item and covers `6b8u`,
+`ig4a`, `lvk9` and `3mo4` — **not** this bean. Measured: of the pages that carry a
+committed catalogue, the fix changed the msgids of three, and those three are already
+repaired here. Use the RECURSIVE staleness measurement for that pass, never the
+top-level-only one that produced finding 1 above.

@@ -980,6 +980,20 @@ jobs:
           # the 25 pages had a `.pot` OR a `.po` in any locale, so the campaign
           # had nothing to be handed.
           bun run translation:pot:check
+          # `lvk9`: when the extractor's segmentation changes, msgids in the
+          # committed catalogues stop matching their source. Deleting them throws
+          # away translation work; leaving them shows a translator strings the
+          # page does not contain. This fails when a stale entry is not `#~`
+          # obsolete, and `bun run translation:obsolete` marks them.
+          #
+          # BEFORE the drift check, deliberately, for the reason the comment above
+          # gives: drift has been red on `main` by decision, and a gate in a
+          # permanently-skipped tail is the `1xhc` shape. It also reports three
+          # states it will not fold into a count — a catalogue sourced from a `.ts`
+          # rather than markdown, one that declares no source at all, and one whose
+          # declared source is ambiguous — because "no findings over the subset I
+          # could resolve" is exactly what produced a wrong published claim on #1433.
+          bun run translation:obsolete:check
           # Bean `07p7`: a published translation that has drifted from its
           # source is a section a reader cannot reach in their language.
           bun run translation:drift:check
