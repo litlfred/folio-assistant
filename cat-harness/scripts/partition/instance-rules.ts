@@ -526,6 +526,12 @@ export const RULES: Rule[] = [
       // subject is `.github/workflows/` plus one repo-root pin file, and it
       // reads no folio content.
       "scripts/check-bun-pin.ts",
+      // The shared "a gate that examined nothing must refuse" decision (bean
+      // `iym1`). Harness because it is a helper for the harness's own gates and
+      // reads nothing at all: it is handed a list of what a caller looked at and
+      // returns a message. It has no corpus of its own, which is why it can be
+      // tested over a CONSTRUCTED empty one while the gates it serves cannot.
+      "scripts/vacuity-refusal.ts",
       // Whether each methodology's cited `origin` resolves to an ingested
       // source. Harness for the same reason as the two above: it reads the
       // declaration for the `methodology` and `library` graphs and fans out
