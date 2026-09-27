@@ -1,0 +1,160 @@
+/**
+ * `3vc1` — the guard that refuses a reading taken through a lying filesystem.
+ *
+ * The assertions that matter are the DISCRIMINATION ones. A guard that flagged
+ * every nested install would pass a test that only counted findings, and it would
+ * also have blocked every local gate run in a correctly set-up checkout — measured
+ * before it shipped: `cat-harness/schemas/block-qa-schema` is a declared
+ * sub-package with its own `bun.lock`, so its `node_modules` is expected.
+ */
+import { describe, expect, test } from "bun:test";
+import { mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
+
+import { distortions, importsPackage, nestedNodeModules } from "../check-environment.ts";
+
+const REPO = resolve(import.meta.dir, "..", "..", "..");
+
+/** A fixture repo: a root install, plus a sub-package that may shadow and may import. */
+function fixture(opts: { shadowVersion?: string; importIt?: boolean }): {
+  root: string;
+  cleanup: () => void;
+} {
+  const root = mkdtempSync(join(tmpdir(), "3vc1-"));
+  const pkg = (dir: string, version: string): void => {
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, "package.json"), JSON.stringify({ name: "dep", version }));
+  };
+  pkg(join(root, "node_modules", "dep"), "2.0.0");
+  const sub = join(root, "sub");
+  mkdirSync(sub, { recursive: true });
+  if (opts.shadowVersion) pkg(join(sub, "node_modules", "dep"), opts.shadowVersion);
+  writeFileSync(
+    join(sub, "source.ts"),
+    opts.importIt ? 'import { a } from "dep";\nexport const b = a;\n' : "export const b = 1;\n",
+  );
+  return { root, cleanup: () => rmSync(root, { recursive: true, force: true }) };
+}
+
+describe("nestedNodeModules — the walk, bounded and excluding the root's own", () => {
+  test("finds a nested install and NEVER reports the root one", () => {
+    const { root, cleanup } = fixture({ shadowVersion: "1.0.0" });
+    try {
+      const found = nestedNodeModules(root);
+      expect(found).toEqual([join(root, "sub", "node_modules")]);
+      expect(found).not.toContain(join(root, "node_modules"));
+    } finally {
+      cleanup();
+    }
+  });
+
+  test("a checkout with only a root install has none", () => {
+    const { root, cleanup } = fixture({});
+    try {
+      expect(nestedNodeModules(root)).toEqual([]);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe("importsPackage — the predicate that replaced `any nested install`", () => {
+  test("true when a source beside the install imports it", () => {
+    const { root, cleanup } = fixture({ shadowVersion: "1.0.0", importIt: true });
+    try {
+      expect(importsPackage(join(root, "sub"), "dep")).toBe(true);
+    } finally {
+      cleanup();
+    }
+  });
+
+  test("false when no source imports it — this is what spares a declared sub-package", () => {
+    const { root, cleanup } = fixture({ shadowVersion: "1.0.0", importIt: false });
+    try {
+      expect(importsPackage(join(root, "sub"), "dep")).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+
+  test("does not read through the install's OWN node_modules", () => {
+    // Otherwise a dependency that imports `dep` internally would make every
+    // nested install look harmful, which is the false positive this guards.
+    const { root, cleanup } = fixture({ shadowVersion: "1.0.0", importIt: false });
+    try {
+      const inner = join(root, "sub", "node_modules", "other");
+      mkdirSync(inner, { recursive: true });
+      writeFileSync(join(inner, "index.ts"), 'import { a } from "dep";\nexport const c = a;\n');
+      expect(importsPackage(join(root, "sub"), "dep")).toBe(false);
+    } finally {
+      cleanup();
+    }
+  });
+});
+
+describe("distortions — DISCRIMINATION, which is the whole contract", () => {
+  test("a shadowing install whose sources import it IS a distortion", () => {
+    const { root, cleanup } = fixture({ shadowVersion: "1.0.0", importIt: true });
+    try {
+      const d = distortions(root);
+      expect(d).toHaveLength(1);
+      expect(d[0]!.path).toBe(join("sub", "node_modules"));
+      expect(d[0]!.effect).toContain("1.0.0");
+      expect(d[0]!.effect).toContain("2.0.0");
+      expect(d[0]!.bean).toBe("3vc1");
+    } finally {
+      cleanup();
+    }
+  });
+
+  test("a shadowing install NOBODY imports is NOT a distortion", () => {
+    // The `block-qa-schema` case. Reporting it would refuse every gate run in a
+    // correctly set-up checkout — worse than the defect being guarded.
+    const { root, cleanup } = fixture({ shadowVersion: "1.0.0", importIt: false });
+    try {
+      expect(distortions(root)).toEqual([]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  test("an install at the SAME version is not a distortion even when imported", () => {
+    // Nothing resolves differently, so no reading can move.
+    const { root, cleanup } = fixture({ shadowVersion: "2.0.0", importIt: true });
+    try {
+      expect(distortions(root)).toEqual([]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  test("a SYMLINKED root install is a distortion on its own — `qook`", () => {
+    const root = mkdtempSync(join(tmpdir(), "3vc1-link-"));
+    const real = mkdtempSync(join(tmpdir(), "3vc1-real-"));
+    try {
+      symlinkSync(real, join(root, "node_modules"));
+      const d = distortions(root);
+      expect(d.map((x) => x.bean)).toContain("qook");
+      expect(d.find((x) => x.bean === "qook")!.effect).toContain("SYMLINK");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+      rmSync(real, { recursive: true, force: true });
+    }
+  });
+});
+
+describe("this repository, right now", () => {
+  // ANTI-VACUITY in the other direction (`6tkl`): if this returned findings on a
+  // normal checkout the guard would be unusable, and every gate run would refuse.
+  test("is not distorted — otherwise `bun run gates` refuses for everyone", () => {
+    expect(distortions(REPO)).toEqual([]);
+  });
+
+  test("and it DOES have a nested install, so the case above is exercised for real", () => {
+    // `schemas/block-qa-schema` is a declared sub-package. If this ever becomes
+    // empty the test above stops proving anything, and the discrimination is only
+    // covered by the temp-dir fixtures.
+    expect(nestedNodeModules(REPO).length).toBeGreaterThan(0);
+  });
+});
