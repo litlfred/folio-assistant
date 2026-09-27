@@ -351,6 +351,11 @@ test.describe("the navbar shows the selected locale", () => {
     await expect(link).toHaveText(UNTRANSLATED.title);
     // Recorded as a deliberate fallback rather than as something overlooked.
     await expect(link).toHaveAttribute("data-fa-translated", "source");
+    // MARKED as the source language (owner, 2026-09-27), so the mix reads as
+    // a fallback: "(EN)" after the title, and `lang` for a screen reader.
+    await expect(link).toHaveAttribute("lang", INDEX.sourceLocale);
+    const tag = await link.evaluate((a) => getComputedStyle(a, "::after").content);
+    expect(tag).toBe(`" (${INDEX.sourceLocale.toUpperCase()})"`);
     // And the fallback is per ITEM: the translated items beside it still are.
     await expect(page.locator(`${nav} a[href="${HOME.translations.fr.url}"]`)).toHaveAttribute(
       "data-fa-translated",
@@ -400,9 +405,77 @@ test.describe("the navbar shows the selected locale", () => {
     await expect(page.locator(`${nav} a[href="${HOME.sourceUrl}"]`)).toBeVisible();
   });
 
+  test("English selected: no item carries the source-language tag", async ({ page }) => {
+    await open(page, ISLAND, "en");
+    await expect(page.locator(`${nav} a[data-fa-source-locale]`)).toHaveCount(0);
+  });
+
   test("nothing remembered: the source language", async ({ page }) => {
     await open(page, ISLAND, null);
     await expect(page.locator(nav)).toHaveAttribute("data-fa-nav-locale", INDEX.sourceLocale);
     await expect(page.locator(`${nav} a[href="${HOME.sourceUrl}"]`)).toBeVisible();
+  });
+});
+
+/**
+ * THE PAGE FOLLOWS THE CHOSEN LANGUAGE — owner, 2026-09-27: *"user selects
+ * locale in icon, then only those pages exist (if translated) otherwise source
+ * language fallback"*. `followRememberedLocale` in `docs-ui.js`.
+ */
+test.describe("the page follows the remembered locale", () => {
+  const PAGE = (lang: string, available: string[]) => `<!doctype html><html><head><meta charset="utf-8">
+<script type="application/json" id="fa-translation-meta">${JSON.stringify({
+    lang,
+    supportedLocales: ["ar", "zh", "en", "fr", "ru", "es"],
+    availableLocales: available,
+  })}</script></head><body><h1>${lang}</h1><script>${JS}<\/script></body></html>`;
+
+  async function serve(page: Page, locale: string | null) {
+    await page.route("http://docs.test/**", (route) => {
+      const u = new URL(route.request().url());
+      const fr = u.pathname.startsWith("/fr/");
+      const lonely = u.pathname.endsWith("/lonely.html");
+      return route.fulfill({
+        contentType: "text/html",
+        body: PAGE(fr ? "fr" : "en", lonely ? [] : ["en", "fr"]),
+      });
+    });
+    await page.addInitScript((loc) => {
+      if (loc === null) localStorage.removeItem("fa-locale");
+      else localStorage.setItem("fa-locale", loc as string);
+    }, locale);
+  }
+
+  test("French remembered: an English page with a French version opens the French one", async ({ page }) => {
+    await serve(page, "fr");
+    await page.goto("http://docs.test/guide.html#part");
+    await page.waitForURL("http://docs.test/fr/guide.html#part");
+  });
+
+  test("French remembered: an English page with NO French version stays English", async ({ page }) => {
+    await serve(page, "fr");
+    await page.goto("http://docs.test/lonely.html");
+    await page.waitForTimeout(300);
+    expect(page.url()).toBe("http://docs.test/lonely.html");
+  });
+
+  test("nothing remembered: a shared French link stays French", async ({ page }) => {
+    await serve(page, null);
+    await page.goto("http://docs.test/fr/guide.html");
+    await page.waitForTimeout(300);
+    expect(page.url()).toBe("http://docs.test/fr/guide.html");
+  });
+
+  test("English remembered: a French page opens the English one", async ({ page }) => {
+    await serve(page, "en");
+    await page.goto("http://docs.test/fr/guide.html");
+    await page.waitForURL("http://docs.test/guide.html");
+  });
+
+  test("?lang= on the URL wins over the remembered choice", async ({ page }) => {
+    await serve(page, "fr");
+    await page.goto("http://docs.test/guide.html?lang=en");
+    await page.waitForTimeout(300);
+    expect(page.url()).toBe("http://docs.test/guide.html?lang=en");
   });
 });
