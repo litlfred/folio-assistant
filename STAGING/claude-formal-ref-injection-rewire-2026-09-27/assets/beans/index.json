@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 421,
+      "count": 422,
       "unit": "beans"
     }
   },
@@ -1371,6 +1371,20 @@
       "file": "beans/defs/folio-assistant-7po1--workflows-bootstrap-keeps-the-bare-minimum-cat-har.md"
     },
     {
+      "id": "folio-assistant-7ppv",
+      "title": "resolveCanonicalLean is O(refs x tree) without a cache, and its two index builders walk .lake/ while listPackageLeanFiles excludes it",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T09:37:16Z",
+      "updatedAt": "2026-09-27T09:38:05Z",
+      "preview": "Found 2026-09-27 while moving the resolver from `content/pipeline/qa-utils.ts`\ninto `content/pipeline/lean-formal-ref.ts` (PR #1465). **The code is unchanged**\n— it moved verbatim — so this is a pre-existing cost, not a regression, and it\nis filed because it was measured rather than because the move introduced it.\n\n## What is measured\n\n`resolveCanonicalLean(ref, repoRoot, cache?)` takes an OPTIONA",
+      "file": "beans/defs/folio-assistant-7ppv--resolvecanonicallean-is-orefs-x-tree-without-a-cac.md"
+    },
+    {
       "id": "folio-assistant-7s52",
       "title": "staging-review hands a reader URLs the AGENT cannot open — but the publish ref is a git branch",
       "status": "in-progress",
@@ -2024,7 +2038,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T11:26:16Z",
-      "updatedAt": "2026-09-26T13:49:29Z",
+      "updatedAt": "2026-09-27T09:37:00Z",
       "preview": "Found 2026-09-26 while establishing whether `kg:detangle:check` was `hloc`'s\nfailure or `main`'s. It was neither — it was the container.\n\n## The measurement\n\n`bun run gates` in this checkout rewrote\n`cat-harness/test/results/detangle/cat-harness/schemas.detangle.json`:\n\n```\n-  \"size\": 229,       +  \"size\": 1443,\n-  \"internal\": 125,   +  \"internal\": 709,\n-  \"cohesion\": 0.82,  +  \"cohesion\": 0.96,\n`",
       "file": "beans/defs/folio-assistant-biz4--an-untracked-kg-at-the-container-root-silently-inf.md"
     },
