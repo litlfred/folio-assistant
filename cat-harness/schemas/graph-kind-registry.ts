@@ -790,7 +790,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // are not derivable (`prior.get(term)` in the `--write` path).
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "folio-assistant-core:schemas/external-schema.ts#ExternalSchemaSchema",
+    validator: "cat-harness:schemas/external-schema.ts#ExternalSchemaSchema",
     summary:
       "The specifications this instance depends on — one record per specification, pinning the " +
       "EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",

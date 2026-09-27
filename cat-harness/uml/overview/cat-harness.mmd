@@ -24,8 +24,23 @@ classDiagram
     }
   }
   namespace cat_harness__external_schemas {
-    class n_cat_harness_external_schemas_external_schema["external-schema: no node schema"] {
-      <<could not determine>>
+    class cat_harness_external_schemas_Term["Term"] {
+      <<json: ExternalSchemaSchema>>
+      term [1] string
+      operative [1] string
+    }
+    class cat_harness_external_schemas_ExternalSchema["ExternalSchema"] {
+      <<json: ExternalSchemaSchema>>
+      $schema [1] 'folio-external-schema/v1'
+      id [1] string
+      authority [1] enum(7)
+      title [1] string
+      version [1] string
+      specUrl [1] string~uri~
+      namespaces [0..*] string[]
+      use [1] conforms | reads | cites
+      terms [0..*] Term[]
+      note [0..1] string
     }
   }
   namespace cat_harness__code_lists {
@@ -1775,8 +1790,9 @@ classDiagram
   cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintains
   cssClass "cat_harness_tools_Maintain" fa_uml_kind_tools
   cssClass "cat_harness_tools_ToolDefinition" fa_uml_kind_tools
-  cssClass "n_cat_harness_external_schemas_external_schema" fa_uml_kind_external_schema
-  cssClass "n_cat_harness_external_schemas_external_schema" fa_uml_undetermined
+  cat_harness_external_schemas_ExternalSchema *-- "0..*" cat_harness_external_schemas_Term : terms
+  cssClass "cat_harness_external_schemas_Term" fa_uml_kind_external_schema
+  cssClass "cat_harness_external_schemas_ExternalSchema" fa_uml_kind_external_schema
   cat_harness_code_lists_CodeList *-- "1..*" cat_harness_code_lists_Code : codes
   cssClass "cat_harness_code_lists_Code" fa_uml_kind_code_list
   cssClass "cat_harness_code_lists_CodeList" fa_uml_kind_code_list
