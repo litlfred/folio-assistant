@@ -1050,6 +1050,12 @@
   .side-bar:has(.fa-nav-open:checked) > .fa-nav-icons {
     width: var(--fa-nav-open);
     flex-wrap: nowrap;
+  }
+  /* The row keeps clearing the ☰ while the bar is open by hover or focus,
+     because the ☰ is still shown then; it only moves up once PINNED, when the
+     ☰ is hidden. Lifting it on hover put the ☰ on top of the first icon
+     (measured 2026-09-27, once the ☰ was sized as a control). */
+  .side-bar:has(.fa-nav-open:checked) > .fa-nav-icons {
     padding-top: 0.25rem;
   }
 
@@ -1088,12 +1094,23 @@
     height: 1.75rem;
     cursor: pointer;
     user-select: none;
-    opacity: 0.7;
+    /* 0.85, was 0.7: at 0.7 on a glyph this size the owner read it as a
+       stray mark (2026-09-27, "tiny ☰ above the first icon"). */
+    opacity: 0.85;
   }
   .fa-nav-toggle:hover,
   .side-bar .fa-nav-head:hover { opacity: 1; }
   .fa-nav-toggle .fa-nav-glyph,
-  .side-bar .fa-nav-head .fa-nav-glyph { flex: none; text-align: center; }
+  .side-bar .fa-nav-head .fa-nav-glyph {
+    flex: none;
+    text-align: center;
+    /* SIZED AS A CONTROL, not as a footnote. It inherited the footer's
+       0.75rem and rendered 9x12px, the smallest thing in the strip, directly
+       above 16px icons. Same size as they are now, so it reads as the first
+       of them: the way to pin the bar open. */
+    font-size: 1.125rem;
+    line-height: 1;
+  }
   /* The `☰` is the way IN; once pinned it is the `[x]`'s job to get back out,
      so showing both would be two controls for one state. */
   .side-bar:has(.fa-nav-open:checked) .fa-nav-toggle,
@@ -1161,14 +1178,20 @@
     justify-content: center;
     width: 1.75rem;
     height: 1.75rem;
-    margin: 0.5rem 0.5rem 0 0;
+    /* 0.25rem top, was 0.5rem: level with the ☰ (top 3.75rem, 1.75rem tall),
+       which now shares this line while the bar is open by hover. */
+    margin: 0.25rem 0.5rem 0 0;
     cursor: pointer;
     user-select: none;
     border-radius: 4px;
     background: var(--sidebar-color, #27262b);
-    font-size: 0.875rem;
+    /* AN EXPLICIT INK, and full opacity. It inherited the sidebar's text
+       colour at 75%, which on this grey box left a faint ×: owner, 2026-09-27.
+       White on the #27262b fallback is 15.4:1. */
+    color: #ffffff;
+    font-size: 1rem;
     line-height: 1;
-    opacity: 0.75;
+    opacity: 1;
   }
   .fa-nav-close:hover { opacity: 1; }
 
@@ -1299,6 +1322,16 @@
  * is `gjli` -- a thing that reads as a control and does nothing you can see. */
 @media not all and (min-width: 50rem) {
   .fa-nav-close { display: none; }
+  /* THE ☰ IN THE FOOTER is the laptop strip's pin-open control, placed at
+     the strip's top only from 50rem up. Below that it fell back into the
+     footer as a stray "☰" at x=0 above HARNESSES (owner, 2026-09-27). The
+     phone menu is the theme's own ☰, so this one has nothing to do here. */
+  .side-bar .fa-nav-top .fa-nav-head { display: none; }
+  /* FULL WIDTH on a phone. The footer takes `--fa-nav-open`, the laptop
+     sidebar's open width, which measured 217px of a 390px menu, so the
+     harness rows sat in a narrow column with the page nav above them twice
+     as wide. */
+  .side-bar .site-footer:has(.fa-nav-in) { width: 100%; }
 }
 
 @media print {
@@ -7466,6 +7499,18 @@ a.fa-harness-tab__body:focus-visible {
 /* The notice belongs to the field, so it starts under the field's own left
    edge, and a little closer: 0.4rem read as a gap between two things. */
 .fa-search-home[data-place="navbar"] .fa-search-notice { margin-top: 0.25rem; }
+
+/* THE PREVIEW NOTE UNDER THE WHOLE ROW on a phone, not under the field alone
+ * (owner, 2026-09-27). It sits inside the field's holder, so at 390px it was
+ * as narrow as the field and wrapped to five lines. `display: contents` lifts
+ * the holder's children into the row, and the notice takes a line of its own
+ * after the "Hide search" button. */
+@media not all and (min-width: 50rem) {
+  .fa-search-home[data-place="navbar"] { flex-wrap: wrap; }
+  .fa-search-home[data-place="navbar"] .fa-search-holder { display: contents; }
+  .fa-search-home[data-place="navbar"] .search { flex: 1 1 0; min-width: 0; }
+  .fa-search-home[data-place="navbar"] .fa-search-notice { order: 99; flex: 1 0 100%; }
+}
 
 /* ── A board nested in the sticky panel has no chrome of its own ──────────
  *
