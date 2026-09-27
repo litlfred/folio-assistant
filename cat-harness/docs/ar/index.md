@@ -5,6 +5,8 @@ lang: ar
 nav_exclude: true
 translation_status: unverified
 translation_source: index.md
+dir: rtl
+description: "folio-assistant — إطار عمل مهارات وكيل مستقل عن المحتوى."
 available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
