@@ -21,6 +21,7 @@ import { undeclaredRootTerms } from "../kg-export.ts";
 import {
   buildLocaleExports,
   catalogueFor,
+  declaresTranslationSources,
   isIri,
   knownLocales,
   localeDocPath,
@@ -334,5 +335,53 @@ describe("the real corpus — what it can still answer with zero translations", 
 describe("localeDocPath", () => {
   test("it sits beside the core document, suffixed by locale", () => {
     expect(localeDocPath("cat-harness", "fr")).toBe("cat-harness.fr.jsonld");
+  });
+});
+
+describe("declaresTranslationSources — the two empties are not one answer", () => {
+  /**
+   * `knownLocales` returning `[]` has TWO causes and the CLI owes them
+   * different exit codes. `6tkl` argued the first: an instance that DECLARES a
+   * translations directory and has no locale under it is a build over an empty
+   * set, so calling it clean is a pass over nothing — exit 2. The second is an
+   * instance that declares nothing, which has no per-locale export to be stale
+   * — a determined empty, exit 0.
+   *
+   * They looked identical because `translationsRootFor` falls back to the
+   * `translations/` convention, so both arrive having found no directory. This
+   * predicate is the only thing that separates them, which is why it is tested
+   * in both directions rather than only on the case that motivated it.
+   *
+   * Measured 2026-09-27: collapsing them turned three CI jobs red on a PR that
+   * moved bootstrap's 15 `.pot` templates out, over an instance whose
+   * per-locale build `jmpb` had already recorded as writing nothing.
+   */
+  test("an instance declaring a translations directory says so", () => {
+    expect(declaresTranslationSources(HARNESS)).toBe(true);
+  });
+
+  test("an instance declaring none says so, and that is not an error", () => {
+    expect(declaresTranslationSources(join(REPO, "bootstrap"))).toBe(false);
+  });
+
+  test("a directory with no declaration at all is false, not a throw", () => {
+    const dir = mkdtempSync(join(tmpdir(), "no-decl-"));
+    try {
+      expect(declaresTranslationSources(dir)).toBe(false);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  /**
+   * The anti-vacuity pair. A predicate that answered one constant would pass
+   * one of the two tests above and fail the other, so neither alone proves it
+   * reads the declaration. This asserts they DISAGREE on the two real
+   * instances, which no constant can satisfy.
+   */
+  test("the two real instances disagree, so no constant passes", () => {
+    expect(declaresTranslationSources(HARNESS)).not.toBe(
+      declaresTranslationSources(join(REPO, "bootstrap")),
+    );
   });
 });

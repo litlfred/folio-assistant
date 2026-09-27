@@ -161,6 +161,12 @@ export function isIri(s: string): boolean {
  * Resolved from the declaration rather than spelled, because two copies of
  * this join is how a check passes over a directory the writer never used.
  */
+export function declaresTranslationSources(instanceRoot: string): boolean {
+  return resolveDirectories([{ name: "(local)", root: instanceRoot, own: true }]).some((x) =>
+    x.graphKinds.includes("translation-sources"),
+  );
+}
+
 export function translationsRootFor(instanceRoot: string): string {
   const d = resolveDirectories([{ name: "(local)", root: instanceRoot, own: true }]).find((x) =>
     x.graphKinds.includes("translation-sources"),
@@ -488,6 +494,41 @@ if (import.meta.main) {
 
   console.log(`${build.stub} graph per locale — source language ${build.sourceLanguage}`);
   if (build.locales.length === 0) {
+    // TWO empties, and collapsing them is a defect `6tkl` did not consider.
+    //
+    // `6tkl` is right about its own case: an instance that DECLARES
+    // `translation-sources` and has no locale directory under it is a build
+    // over an empty set, which asserts nothing, so calling it clean would be
+    // a pass over nothing. That still exits 2.
+    //
+    // An instance that declares NO `translation-sources` is a different
+    // answer. It has no per-locale export to be stale, so there is nothing to
+    // refuse — this is a DETERMINED empty, the third state this repository
+    // uses everywhere else. `translationsRootFor` falls back to the
+    // convention for such an instance, which is what made the two look
+    // identical: both arrive here having found no directory, one because the
+    // declared one is empty and one because the composed path was never
+    // declared by anybody.
+    //
+    // Measured 2026-09-27, on the move of bootstrap's 15 `.pot` templates to
+    // `cat-harness/translations/`: bootstrap stopped declaring
+    // `translation-sources`, this refusal fired, and THREE jobs went red over
+    // an instance with nothing to export. `feature-staging.yml` records from
+    // `jmpb` that bootstrap's per-locale build "Writes NOTHING today and says
+    // so" — it never had a `.po` catalogue, only templates, so the check was
+    // green purely because five locale DIRECTORIES existed, and they existed
+    // only because the templates sat in them.
+    //
+    // The refusal comes back by itself the moment such an instance declares a
+    // translations directory, which is the property that makes this safe: the
+    // determined empty is granted for ABSENCE OF A DECLARATION, never for an
+    // empty declared one.
+    if (!declaresTranslationSources(resolve(instanceRoot ?? ROOT))) {
+      console.log(
+        `  declares no \`translation-sources\` — no per-locale export, and that is a determined empty.`,
+      );
+      process.exit(0);
+    }
     // `6tkl`: a per-locale build over no locales asserts nothing, and
     // reporting it clean would be a pass over an empty set.
     console.error(
