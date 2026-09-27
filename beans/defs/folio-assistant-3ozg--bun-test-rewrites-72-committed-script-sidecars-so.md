@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3ozg
 title: bun test rewrites 72 committed script-sidecars, so bun run gates reports NOT clean on every branch, main included
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-27T05:06:01Z
-updated_at: 2026-09-27T05:19:35Z
+updated_at: 2026-09-27T05:47:35Z
 parent: folio-assistant-1xhc
 ---
 
@@ -31,8 +31,26 @@ Run alone, none of these writes the sidecars: `qa-review`, `profile-conformance-
 
 ## Done when
 
-- [ ] the test (or interaction) that triggers the write is named
-- [ ] it writes into a temp directory, as the profile-conformance tests do, or the three volatile fields stop being committed
-- [ ] `bun run gates` on pristine main ends clean, not 'NOT clean'
+- [x] the test that triggers the write is named — `init-folio-qa.test.ts`, by bisection (below)
+- [x] the volatile fields stop causing writes — `saveQaScriptSidecar` no longer counts `engine_version` as a change (owner chose this over a temp-root override for the test alone)
+- [x] `bun run gates` ends clean — 167 of 167, exit 0, no tree mutation (measured on this branch, based on main)
 
 _2026-09-27T05:19:35Z_ — Claimed by claude/sleepy-babbage-ls90iz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## Named, 2026-09-27: `init-folio-qa.test.ts`, and why
+
+Bisection over `cat-harness/scripts/tests/` (432 files, 9 halvings) ends at one file, and that file alone reproduces all 72 rewrites. Its second test, *"swept from the repository root, as CI does, a subfolder folio's verdicts land at ITS root"*, spawns the real `qa-sweep.ts` against a throwaway folio in a temp directory.
+
+The sweep then saves every script sidecar under its **own** `REPO_ROOT` (`qa-sweep.ts` near line 745, `saveQaScriptSidecar(sidecar, REPO_ROOT)`), which is the platform checkout, whatever it swept. The code comment says this is deliberate: those sidecars describe the platform's own checker scripts. So a sweep of **any** folio, including a test fixture, restamps the platform's committed sidecars with the current time, HEAD and bun version.
+
+That is why none of the other candidates wrote them alone: this is the one test that runs a real sweep rather than a helper.
+
+
+## Summary of Changes
+
+The cause was already half-fixed: `saveQaScriptSidecar` skipped a write when nothing substantive changed. But it counted `engine_version` as substantive, and the committed sidecars carry CI's `bun-1.3.14`, so any run under another bun rewrote all 72. `init-folio-qa.test.ts` performs a real sweep, which is how `bun test` came to do it.
+
+- `engine_version` is dropped from the comparison, together with the two `last_run_*` fields. All three describe the run rather than the checker, and no reader uses a script sidecar's `engine_version` for freshness.
+- The test that asserted *"DOES rewrite when the engine version changes"* now asserts the opposite, and its comment says why the reversal was made. A new test checks that a real content change still records the engine it ran under.
+- Verified: the sidecar tests pass 9/9; `init-folio-qa.test.ts` now leaves 0 sidecars changed; and `bun run gates` passes 167/167 and ends clean, which it has not done on any branch while this bean was open.
