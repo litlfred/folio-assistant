@@ -4,9 +4,9 @@ title: A review re-derived a finding the instrument had already computed, and go
 status: in-progress
 type: bug
 priority: normal
+parent: folio-assistant-ahvw
 created_at: 2026-09-25T16:05:34Z
 updated_at: 2026-09-27T08:21:26Z
-parent: folio-assistant-ahvw
 ---
 
 
@@ -80,6 +80,8 @@ list put to the owner is true; nothing checks that it came from the instrument.
       being presented as a measured one.
 - [ ] Consider whether `health`'s findings should carry the check id in a form
       a report can cite, so quoting is easier than re-deriving.
+
+_2026-09-27T08:18:52Z_ — Claimed by claude/brave-hypatia-r820sf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 
 ## Items 1 and 2 landed; item 3 is the owner's — 2026-09-27
