@@ -10044,6 +10044,158 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/formal-ref.formalrefresolution.basename",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FormalRefResolution.basename"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The basename a whole-tree scan should look for (`<declName>.lean` for the Lean resolver). Kept separate from `declName` so core does not have to know the file extension of somebody else's formalism."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.basename",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/formal-ref.formalrefresolution.candidatepaths",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FormalRefResolution.candidatePaths"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Candidate source files, **repo-root-relative**, in priority order."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.candidatePaths",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/formal-ref.formalrefresolution.declname",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FormalRefResolution.declName"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The bare declaration name, for a `grep -rl` fallback and for the \"does this file actually declare it\" check in `qa-utils`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.declName",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/formal-ref.formalrefresolution.fallbackpaths",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FormalRefResolution.fallbackPaths"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Weaker candidates, tried only after {@link candidatePaths} and only by a caller that is prepared to accept a file which may declare nothing."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.fallbackPaths",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/formal-ref.formalrefresolution.searchdir",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FormalRefResolution.searchDir"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Directory to search when the candidate paths all miss, **repo-root-relative**, or `undefined` when the folio declares no searchable tree for this package."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.searchDir",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/formal-ref.formalrefresolution.treeroot",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FormalRefResolution.treeRoot"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Root the basename scan is confined to, repo-root-relative. Distinct from `searchDir`, which is narrower (a library subtree rather than a Lake root)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.treeRoot",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/formal-ref.formalrefresolverapi.refpattern",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FormalRefResolverAPI.refPattern"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The shape a reference of this formalism must have, and the message to report when it does not."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/formal-ref.ts#FormalRefResolverAPI.refPattern",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/formal-ref.formalrefresolverapi.refpatternmessage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FormalRefResolverAPI.refPatternMessage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Failure message for {@link refPattern}, in the layer's own vocabulary."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/formal-ref.ts#FormalRefResolverAPI.refPatternMessage",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/formalization-types.ambiguityflag.candidates",
       "@type": "skos:Concept",
       "skos:inScheme": {
