@@ -5,7 +5,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-27T06:13:41Z
-updated_at: 2026-09-27T06:18:26Z
+updated_at: 2026-09-27T06:26:57Z
+parent: folio-assistant-1xhc
 ---
 
 ## The three cases, measured on `8cce91e4eab`
@@ -19,9 +20,15 @@ three skills and `kg-navigation` is not one. So the live
 `kg-navigation.html` -- the page a reader is sent to for *how to find the skill
 you need* -- carried:
 
-> **This is the skill `skill_fetch` serves.** A stub of the same name is
-> published as [Reading a knowledge graph before you have anything
-> (bootstrap)](local-kg-navigation.html); it only points here.
+```text
+**This is the skill `skill_fetch` serves.** A stub of the same name is
+published as [Reading a knowledge graph before you have anything
+(bootstrap)](local-kg-navigation.html); it only points here.
+```
+
+(Fenced at column 0 rather than blockquoted: `check:subgraphs` reads a
+`](...)` in a blockquote as a real link and reported THIS TEXT as dangling --
+quoting a broken link is how you mint another one.)
 
 The entry was correct when `tdmg` added it. `pve3` then ruled bootstrap's
 skills out of this instance and the second document stopped publishing, while
