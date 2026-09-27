@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 414,
+      "count": 415,
       "unit": "beans"
     }
   },
@@ -636,7 +636,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-27T05:06:01Z",
-      "updatedAt": "2026-09-27T05:20:13Z",
+      "updatedAt": "2026-09-27T05:36:35Z",
       "preview": "Measured 2026-09-27 on pristine main `c6960465301`, and the same on 2026-09-26 at `8fb8a041a8e`.\n\n## What happens\n\nA full `bun test` rewrites all 72 files under `cat-harness/content/pipeline/script-sidecars/`, changing only three fields in each:\n\n    last_run_at     wall-clock time of this run\n    last_run_sha    the checked-out HEAD\n    engine_version  the local bun (bun-1.3.11 here; the committe",
       "file": "beans/defs/folio-assistant-3ozg--bun-test-rewrites-72-committed-script-sidecars-so.md"
     },
@@ -4085,12 +4085,12 @@
       "title": "check:merged reports a merged tree defective when no real checkout of it is — a symlinked node_modules leaks into the corpus",
       "status": "in-progress",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T11:04:49Z",
-      "updatedAt": "2026-09-26T12:24:21Z",
+      "updatedAt": "2026-09-27T05:33:45Z",
       "preview": "## CORRECTED 2026-09-26 — the cause is NOT `ymsu`, and the title understates it\n\nThis bean was opened saying *\"a sweep artefact\"* and pointing at `ymsu` — a\ngate that writes what a later gate reads. **That was wrong**, and it was a\nhypothesis stated in a bean's title as though it were the finding. The actual\ncause is a one-character `.gitignore` bug that distorts the CORPUS of every\nworktree `chec",
       "file": "beans/defs/folio-assistant-qook--checkmerged-reports-umloverviewcheck-red-on-a-merg.md"
     },
@@ -4232,7 +4232,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T21:03:15Z",
-      "updatedAt": "2026-09-27T05:20:12Z",
+      "updatedAt": "2026-09-27T05:36:35Z",
       "preview": "Measured 2026-09-26 while running `bun run gates` on a clean tree: **72** committed\nscript sidecars were rewritten, and the only content change in each was run\nprovenance:\n\n    -  \"last_run_at\": \"2026-09-26T19:43:36.482Z\",\n    -  \"last_run_sha\": \"abee3acee29e15ad7ae540e254fe31f2cf31cc40\",\n    -  \"engine_version\": \"bun-1.3.14\"\n    +  \"last_run_at\": \"2026-09-26T20:46:45.496Z\",\n    +  \"last_run_sha\":",
       "file": "beans/defs/folio-assistant-rmcf--72-script-sidecars-churn-on-every-gates-run-becaus.md"
     },
@@ -4403,6 +4403,20 @@
       "updatedAt": "2026-09-27T05:20:00Z",
       "preview": "Measured 2026-09-26 on a clean checkout of `main` at `0ef9543ccf3`, while\nstarting unrelated work. `bun test` **exited 1**:\n\n```\ncat-harness/content/pipeline/translation-block-qa.test.ts:\n(fail) buildReport — absence is absence > a translated block reports coverage,\n       terms and echo — and NO round-trip verdict [5031.09ms]\n  ^ this test timed out after 5000ms.\n\ncat-harness/scripts/tests/profil",
       "file": "beans/defs/folio-assistant-sff8--contention-inflates-a-per-test-budget-35x-and-vxho.md"
+    },
+    {
+      "id": "folio-assistant-sfjo",
+      "title": "INJECTION: the retranslate path DROPS front-matter keys — 5 locales lost `description:`, and `ar` lost `dir: rtl`",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T19:43:43Z",
+      "updatedAt": "2026-09-26T19:43:43Z",
+      "preview": "Found 2026-09-26 by bisecting `docs:auto:check` red on main.\n\n## Measured\n\n`docs:auto:check` is green at `3f0518b81ea` and red at `bfec1f9b88b` (#1427,\n\"retranslate index.md + installation.md\"). Bisected across six consecutive\nmain commits, one check per commit — not inferred from the PR's subject.\n\n#1427 rewrote ten locale files. Comparing front-matter KEYS before and after,\nper file:\n\n| file | k",
+      "file": "beans/defs/folio-assistant-sfjo--injection-the-retranslate-path-drops-front-matter.md"
     },
     {
       "id": "folio-assistant-sjic",
@@ -5666,7 +5680,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T18:38:34Z",
-      "updatedAt": "2026-09-26T15:15:42Z",
+      "updatedAt": "2026-09-27T05:09:31Z",
       "preview": "Measured 2026-09-25, while establishing whether PR #1348 still had anything to\nfix. It is the ROOT CAUSE of #1348's own subject: the detangle staleness that\nbroke `main` was invisible to `bun run gates` and surfaced only because a test\nrun left the working tree dirty.\n\n## The mechanism\n\n`bun run gates` runs 152 gates in order. Gate 1 is `bun test`. Somewhere in that\nsuite the detangle **writer** r",
       "file": "beans/defs/folio-assistant-ymsu--kgdetanglecheck-cannot-fail-inside-bun-run-gates-b.md"
     },
