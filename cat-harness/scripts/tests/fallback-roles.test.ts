@@ -23,6 +23,7 @@ import {
   declaredCapabilityFacts,
   declaredRoles,
   fallbackRoleFor,
+  fallbackRolesBySkill,
   fallbackUses,
   transitivelyRequires,
 } from "../check-fallback-roles.ts";
@@ -199,5 +200,76 @@ describe("the capability-level fallback, and the contradiction it exposed", () =
 
   test("the id-set helper still agrees with the facts map", () => {
     expect(declaredCapabilities(ROOT)).toEqual(new Set(facts.keys()));
+  });
+});
+
+/**
+ * The batch, built ONCE at module scope — and the cross-check deliberately BOUNDED.
+ *
+ * Bean `sff8`. Comparing `fallbackRolesBySkill` against the single-skill path is
+ * inherently one full pass per skill: that is the cost the batch exists to remove, so
+ * the test proving it correct necessarily pays it. Measured 2026-09-27 at ~1.5 s per
+ * single-skill call, and the first version of this test — exhaustive over all skills —
+ * took **36 s** and timed out on bun's 5000 ms default.
+ *
+ * Two moves, both from this bean's own taxonomy, and then a judgement:
+ *
+ *  - HOIST the shared pass to module scope, where it is charged to no test's budget.
+ *  - DERIVE the remaining budget from the population, as
+ *    `declared-directory-resolves.test.ts` does for its process-per-module spawn — a
+ *    number that grows with the corpus instead of tightening every time a skill is
+ *    added. NOT a raised timeout, which this bean rules out.
+ *  - and BOUND the sample, because the exhaustive version added **34 s to a ~270 s
+ *    suite — 13 % on every run, for every contributor, forever** — to re-check a
+ *    property whose structural argument is written out in `fallbackRolesBySkill`'s
+ *    docblock (the three filters are independent per node). Spending that on every run
+ *    would be this bean's own defect committed by its own fix.
+ *
+ * So this is a REGRESSION DETECTOR over a fixed sample, not a proof of equivalence,
+ * and it is labelled as one. The full 28-skill comparison was run once, by hand, at
+ * the commit that introduced the batch: **0 disagreements**, batch 1417.6 ms against
+ * 25476.2 ms for the loop.
+ */
+const BATCH = await fallbackRolesBySkill(ROOT);
+/** ~3.3x the measured quiet cost per call, matching `declared-directory-resolves`' ~3.5x. */
+const PER_SKILL_BUDGET_MS = 5000;
+/**
+ * Deterministic and small: sorted so the sample cannot drift between runs.
+ *
+ * Held as ENTRIES rather than keys so the expected value is typed — `BATCH.get(k)` is
+ * `string[] | undefined` even for a key that came from `BATCH`, and asserting that
+ * away with `!` would be a non-null claim the compiler was right to ask about.
+ */
+const SAMPLE = [...BATCH.entries()].sort(([a], [b]) => a.localeCompare(b)).slice(0, 6);
+
+describe("the batch pass agrees with asking per skill — bounded regression check", () => {
+  test(
+    `the same roles come back for ${String(SAMPLE.length)} sampled skills`,
+    async () => {
+      // Non-vacuity first, twice over: an empty batch, or a sample whose every entry
+      // is empty, would satisfy the loop below and prove nothing (`6tkl`).
+      expect(BATCH.size).toBeGreaterThan(0);
+      expect(SAMPLE.length).toBeGreaterThan(0);
+      expect(SAMPLE.some(([, roles]) => roles.length > 0)).toBe(true);
+      for (const [skill, roles] of SAMPLE) {
+        expect(await fallbackRoleFor(ROOT, skill), `skill ${skill}`).toEqual(roles);
+      }
+    },
+    SAMPLE.length * PER_SKILL_BUDGET_MS,
+  );
+
+  test("a skill in NO diagram is absent from the batch and empty from the single path", async () => {
+    // The two must agree on absence as well as presence: a batch that simply omitted
+    // unknown skills while the single path returned something would disagree exactly
+    // where a caller reads "no fallback route".
+    expect(BATCH.has("no-such-skill-anywhere")).toBe(false);
+    expect(await fallbackRoleFor(ROOT, "no-such-skill-anywhere")).toEqual([]);
+  });
+
+  test("roles are sorted for EVERY skill, so two callers cannot see different orders", () => {
+    // Free over the whole batch — no per-skill pass — so this one is not sampled.
+    for (const [skill, roles] of BATCH) {
+      expect(roles, `skill ${skill}`).toEqual([...roles].sort());
+    }
   });
 });

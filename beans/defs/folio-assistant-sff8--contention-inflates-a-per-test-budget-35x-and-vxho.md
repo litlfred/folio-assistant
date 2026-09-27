@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-27T17:23:44Z
+updated_at: 2026-09-27T18:00:42Z
 parent: folio-assistant-1xhc
 ---
 
@@ -681,3 +681,87 @@ in a commit whose stated subject is test scoping.
       `loadProcessModel` memoised per path with mtime invalidation rather than a
       hoist. Re-run `check:test-budgets` on a loaded suite afterwards — each round so
       far has revealed the next-nearest, which is the point of having the list.
+
+
+## The fifth queue item, done — and my proposed MECHANISM was wrong — 2026-09-27
+
+### Retracting what this bean said one entry ago
+
+I wrote: *"the remedy is memoising the parsed model per path, and **mtime invalidation
+is available here**, which is better than the HEAD-keyed cache that question needed for
+git."* **I asserted that before reading `loadProcessModel`, and it is unsafe.** Read:
+
+- It threads `seen` through its recursive descent to refuse a call-activity cycle —
+  `const path = [...seen, proc.id]`, then `path.includes(node.calledElement)` throws.
+  A model cached under one call path and returned under another **skips a refusal that
+  is the entire point of the parameter.**
+- `normaliseOwnExtensions(rootElement)` **mutates the parse tree in place**, so sharing
+  a parsed model across callers shares mutable state.
+- **160 call sites.**
+
+A cache keyed on path alone would have been a correctness bug in a cycle detector, in a
+function with 160 callers, shipped as a performance fix. Measured nothing; read the
+code and the claim collapsed.
+
+### What the cost actually was — worse than the test suggested
+
+The test was the symptom. `src/index.ts:94` ran `await fallbackRoleFor(instance, s.id)`
+**in a loop over every skill**, and the comment directly above it already noticed that
+*"the derivation reads every BPMN in the corpus"* — it hoisted the call out of a
+synchronous predicate and left the repetition.
+
+Measured on this corpus, **74 diagrams and 23 skills**:
+
+| | |
+|---|---|
+| one `fallbackRoleFor` call | **1745.8 ms** |
+| the loop over all 23 skills | **26016.8 ms** |
+| `fallbackRolesBySkill`, one pass | **1417.6 ms** |
+| disagreements between the two, all 23 skills | **0** |
+
+**~18x off a user-facing operation.** I nearly wrote "~15,000 parses" from 276 skills —
+`loadSkillNeeds` returns **23**, not 276, and 276 is the skill count across packages.
+Measured instead: 23 x 74 = 1702 parses where 74 would do.
+
+### The fix is a single pass, NOT a cache — and that is why it has no staleness question
+
+`fallbackRolesBySkill(root)` builds skill -> roles in one pass; `fallbackRoleFor`
+delegates to it, keeping its signature and its cost. Nothing outlives the call, so
+none of the three hazards above applies, and there is no invalidation question to get
+wrong. Equivalent rather than similar: the three conditions (the node's skills, its
+fulfilment kinds, its `roleRef`) are independent per node, so filtering kinds and
+`roleRef` first and then attributing to each of the node's skills selects the same
+pairs.
+
+### My own test committed this bean's defect, and the fix is the taxonomy applied
+
+The first equivalence test compared all 28 batch entries against the single-skill path
+— 28 full passes, **36 s**, and it **timed out** on the 5000 ms default. The test
+proving the fix paid the pre-fix price.
+
+Fixed with all three moves from this bean rather than a raised number:
+
+1. **Hoist** — the batch is built at module scope, charged to no test's budget.
+2. **Derive** — the remaining budget is `SAMPLE.length * 5000`, ~3.3x the measured
+   quiet cost, matching `declared-directory-resolves`' ~3.5x, so it grows with the
+   corpus.
+3. **Bound** — the exhaustive version added **34 s to a ~270 s suite, 13 % on every
+   run for every contributor, forever**, to re-check a property whose structural
+   argument is in the code. It is now a **regression detector over a fixed sample of
+   6**, labelled as one, and the full 28-skill comparison is recorded above as having
+   been run once by hand with 0 disagreements. File cost: 4.2 s -> 13.2 s, not 38 s.
+
+Spending 13 % of every suite run to verify a performance fix would have been this
+bean's own defect committed by its own fix.
+
+### Verification
+
+`bun run gates` **171 of 171**, tree clean. 17 tests in the file (was 14), `tsc` exit 0
+— it caught a real `string[] | undefined` in my first draft, fixed by holding the
+sample as entries rather than asserting the non-null away. `eslint` clean.
+
+- [x] Standing queue item `fallback-roles.test.ts:55` — done, and it was a production
+      fix of ~18x rather than a test-scoping one. The mechanism first proposed here was
+      wrong and is retracted above.
+- [ ] Re-run `check:test-budgets` on a loaded suite: every round so far has revealed
+      the next-nearest test, which is what the list is for.
