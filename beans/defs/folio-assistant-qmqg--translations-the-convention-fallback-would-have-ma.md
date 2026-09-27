@@ -5,7 +5,8 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-27T06:20:28Z
-updated_at: 2026-09-27T06:20:58Z
+updated_at: 2026-09-27T06:38:17Z
+parent: folio-assistant-bzyu
 ---
 
 Found 2026-09-27 while doing the `.pot` relocation in PR #1448, which is the
@@ -104,3 +105,56 @@ Fix 1 without answering the `folio_init` question would break scaffolding. Fix
 The general `dh4f`-inverse gate (fix 2). It is a separate bean's worth of work
 and needs its own rule for kind-matching; folding it in here would let the
 narrow, checkable half wait on the broad one.
+
+## FALSIFIED by CI, 2026-09-27 — the fallback IS load-bearing, and #1448 is what takes it
+
+This bean asserted:
+
+> after #1448 the `??` branch fires for **nobody**, in ten places, with reasons
+> recorded for a path nothing takes
+
+**False.** #1448's own CI proved it within the hour. Three jobs went red on one
+cause:
+
+    $ bun run cat-harness/scripts/kg-locale-export.ts --check --instance ./bootstrap
+    bootstrap graph per locale — source language en
+    No locale directories under bootstrap/translations — refusing to call that clean.
+    exit 2
+
+`kg-locale-export.ts:172` is one of the ten sites. bootstrap declares no
+`translation-sources` once #1448 removes the node, so `translationsRootFor`
+takes the fallback, composes `bootstrap/translations`, finds nothing, and
+`6tkl`'s refusal fires — correctly, on its own terms: *a per-locale build over
+no locales asserts nothing.*
+
+So the caller I said did not exist is `kg:locale:check:bootstrap`, wired into
+`code-quality-gates.yml` and `feature-staging.yml`. Recorded rather than
+edited out: the claim was reached by counting DECLARATIONS and disk
+directories, and no count of either could have found a caller that reaches the
+path by not declaring.
+
+## What the falsification also settles
+
+The fallback is not the thing to make refuse. It is standing in for a real
+question this bean did not ask: **whose locale set is bootstrap's?**
+
+`feature-staging.yml` records, from bean `jmpb`: *"Writes NOTHING today and
+says so: measured 2026-09-22, no locale carries a catalogue applying to either
+graph."* bootstrap never had `.po` catalogues — only the 15 `.pot` templates.
+So the gate was green purely because five locale DIRECTORIES existed, and they
+existed only because the templates sat in them. It asserted nothing about
+content, and moving the templates removed the only thing holding it up.
+
+That makes the `Done when` list above wrong in its framing. Superseded by:
+
+[ ] decide whose locale set an instance that declares no `translation-sources`
+    has — its own (none, so no per-locale export) or its host's
+[ ] whichever is chosen, `kg-locale-export --instance ./bootstrap` distinguishes
+    "declares no translation sources, so nothing to export" (a determined
+    empty, exit 0) from "declares one and it is empty" (`6tkl`, exit 2). Today
+    the fallback collapses the two, which is the actual defect and is NOT
+    what this bean first described
+[ ] only then decide whether the ten sites refuse, because the answer above
+    tells you what they should refuse
+
+The `init-folio` question stands and is now the second unknown, not the first.
