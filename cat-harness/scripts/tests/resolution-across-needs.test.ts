@@ -1,5 +1,10 @@
 /**
- * A skill ref resolves against this instance AND everything it `needs`.
+ * A reference resolves against this instance AND everything it `needs`.
+ *
+ * Both graphs: a `<skill ref>` against the reachable SKILLS, a `<role ref>` and
+ * every RACI value against the reachable ROLE IDS. One file because it is one
+ * rule with one direction — resolution follows `needs` downward — and splitting
+ * it would let the two halves drift on the question they share.
  *
  * ## The defect this pins
  *
@@ -42,7 +47,7 @@
  * regression. That floor is the shape whose absence let the original defect
  * sit unnoticed.
  *
- * @module scripts/tests/skill-resolution-across-needs
+ * @module scripts/tests/resolution-across-needs
  */
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -50,6 +55,7 @@ import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 
 import { instanceRootsIn, readDeclaration } from "../../schemas/cat-harness.js";
+import { readRoleGraph } from "../../schemas/role-graph.js";
 import { orderedDependencies } from "../../schemas/harness-config.js";
 import { knownSkills } from "../known-skills.js";
 
@@ -410,4 +416,135 @@ describe("skill refs resolve across the `needs` chain", () => {
       expect(e.findings?.[0]?.detail ?? "").toContain("no skill in this instance or anything it `needs`");
     }, 60_000);
   });
+});
+
+/* ─────────────── the same rule, over the ROLE graph ─────────────── */
+
+/**
+ * Role IDS reachable from `root` — its own graph's, plus every dependency's.
+ *
+ * Recomputed here from the published readers rather than imported, for the same
+ * reason {@link closureSkills} is.
+ */
+function closureRoleIds(root: string): Set<string> {
+  const out = new Set<string>();
+  const add = (dir: string): void => {
+    try {
+      for (const r of readRoleGraph(dir)?.roles ?? []) out.add(r.id);
+    } catch {
+      // An unreadable graph is not this test's subject.
+    }
+  };
+  add(join(root, "scenarios"));
+  add(join(root, "skills"));
+  for (const dep of orderedDependencies(root)) {
+    add(join(dep.rootPath, "scenarios"));
+    add(join(dep.rootPath, "skills"));
+  }
+  return out;
+}
+
+describe("role refs resolve across the `needs` chain", () => {
+  /**
+   * The measured case, and why the role half is not a footnote.
+   *
+   * After the skill half landed, 11 of 13 nested instances reported ZERO
+   * criticals and two did not: `smart-base` and `folio-assistant-core`, on
+   * `role-ref-resolves` and `raci-role-resolves`. Their diagrams name
+   * `business-analyst`, `programme-manager` and `deep-researcher` — all three
+   * defined in `cat-harness/scenarios/roles.json`, a transitive dependency of
+   * both. Only bootstrap (4 roles) and cat-harness (48) declare a role graph at
+   * all, so every other instance's references necessarily resolve downward or
+   * not at all.
+   */
+  test("a role held anywhere in the `needs` closure is not reported dangling", async () => {
+    const offences: string[] = [];
+    for (const inst of INSTANCES) {
+      if (inst === ROOT_INSTANCE) continue; // bean `pgzn`, as above
+      const rel = `./${relative(REPO, inst)}`;
+      const reachable = closureRoleIds(inst);
+      if (reachable.size === 0) continue; // nothing to resolve against
+
+      const p = Bun.spawn(
+        ["bun", "run", "cat-harness/scripts/kg-audit.ts", "--instance", rel, ...WRITE_FREE],
+        { cwd: REPO, stdout: "pipe", stderr: "pipe" },
+      );
+      const out = await new Response(p.stdout).text();
+      await p.exited;
+      let reports: { subject?: { id?: string }; criteria?: Record<string, { findings?: { detail?: string }[] }> }[];
+      try {
+        reports = (JSON.parse(out) as { reports?: typeof reports }).reports ?? [];
+      } catch {
+        offences.push(`${rel}: no JSON report`);
+        continue;
+      }
+      for (const r of reports) {
+        for (const f of r.criteria?.["role-ref-resolves"]?.findings ?? []) {
+          const named = /binds role "([^"]+)"/.exec(f.detail ?? "")?.[1];
+          if (named !== undefined && reachable.has(named)) {
+            offences.push(`${rel} ${r.subject?.id ?? "?"}: "${named}" is reachable but reported dangling`);
+          }
+        }
+      }
+    }
+    expect(offences).toEqual([]);
+  }, 120_000);
+
+  test("some instance resolves a role ONLY through its dependencies", () => {
+    // Anti-vacuity. Measured: smart-base and folio-assistant-core declare no
+    // role graph at all, so all of their reachable ids come from below.
+    const downward = INSTANCES.filter((i) => {
+      if (i === ROOT_INSTANCE) return false;
+      const own = new Set<string>();
+      for (const d of ["scenarios", "skills"]) {
+        try {
+          for (const r of readRoleGraph(join(i, d))?.roles ?? []) own.add(r.id);
+        } catch { /* not the subject */ }
+      }
+      return closureRoleIds(i).size > own.size;
+    });
+    expect(
+      downward.length,
+      "no instance reaches roles through `needs` — the invariant above measures nothing",
+    ).toBeGreaterThan(0);
+  });
+
+  /**
+   * RESOLUTION widened; SUBJECTHOOD did not — and this is the test that earns
+   * its place, because the alternative design fails exactly here.
+   *
+   * The audit emits one SUBJECT per role in the graph. Overlaying the
+   * `RoleGraph` OBJECT rather than its ids would give cat-harness's run
+   * bootstrap's 4 roles as 4 extra subjects — for roles bootstrap's own run
+   * already audits — which duplicates a dependency's subjects into its
+   * dependent and is what `instance-graph-isolation.test.ts` forbids.
+   *
+   * So the default run's role count must equal cat-harness's OWN role count,
+   * never its closure's. Measured 2026-09-27: own 48, closure 52.
+   */
+  test("the audit's role SUBJECTS are the instance's own, not its closure's", async () => {
+    const auditor = join(REPO, "cat-harness");
+    const own = new Set<string>();
+    for (const r of readRoleGraph(join(auditor, "scenarios"))?.roles ?? []) own.add(r.id);
+    const closure = closureRoleIds(auditor);
+    expect(
+      closure.size,
+      "cat-harness's closure adds no roles — this guard cannot distinguish the two designs",
+    ).toBeGreaterThan(own.size);
+
+    const p = Bun.spawn(["bun", "run", "cat-harness/scripts/kg-audit.ts", ...WRITE_FREE], {
+      cwd: REPO,
+      stdout: "pipe",
+      stderr: "pipe",
+    });
+    const out = await new Response(p.stdout).text();
+    await p.exited;
+    const reports = (JSON.parse(out) as { reports?: { subject?: { kind?: string } }[] }).reports ?? [];
+    const roleSubjects = reports.filter((r) => r.subject?.kind === "role").length;
+    expect(
+      roleSubjects,
+      `the run audits ${roleSubjects} role subjects; cat-harness declares ${own.size} and its closure holds ` +
+        `${closure.size}. A count matching the closure means the overlay reached subjecthood.`,
+    ).toBe(own.size);
+  }, 120_000);
 });

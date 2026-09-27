@@ -60,5 +60,5 @@ Absorbing it into that change would widen the PR past what the failure needs.
 
 - `kg:audit --instance .` audits rather than throwing.
 - The root-instance case is exercised by a test, not only by a manual run.
-- `scripts/tests/skill-resolution-across-needs.test.ts` drops its `ROOT_INSTANCE`
+- `scripts/tests/resolution-across-needs.test.ts` drops its `ROOT_INSTANCE`
   exclusion, which names this bean as the reason it exists.
