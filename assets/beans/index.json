@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 425,
+      "count": 426,
       "unit": "beans"
     }
   },
@@ -2507,6 +2507,20 @@
       "file": "beans/defs/folio-assistant-dv8v--b6b-1168-the-9-writtenby-families-get-zod-schemas.md"
     },
     {
+      "id": "folio-assistant-dvcx",
+      "title": "`bun test` carries the SAME deliberate-red assertion as the declared drift gate, and the matcher cannot see it",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T10:33:16Z",
+      "updatedAt": "2026-09-27T10:44:51Z",
+      "preview": "## What\n\n`check:red-gate-is-last` (bean `cpss`) makes one thing structural: a gate that is\nred **by decision** must be the last step of its job, so the set it masks is\nempty by construction rather than by a passing run.\n\nIts declaration had **one** entry, `translation:drift:check`. There were **two**\ngates carrying that assertion, and the second could not be declared.\n\n`cat-harness/content/pipelin",
+      "file": "beans/defs/folio-assistant-dvcx--bun-test-carries-the-same-deliberate-red-assertion.md"
+    },
+    {
       "id": "folio-assistant-dx5j",
       "title": "Nothing indexes a defect to the beans and PRs describing it — three duplicate-work collisions in one window",
       "status": "completed",
@@ -3892,7 +3906,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T09:42:57Z",
-      "updatedAt": "2026-09-26T19:34:36Z",
+      "updatedAt": "2026-09-27T10:35:39Z",
       "preview": "## What\n\n`main`'s `typescript` job fails at **step 2 of 47**, and GitHub Actions stops a job\nat its first failing step. So every later step in that job does not run — and on\n`main` that failure is red **by the owner's decision**, not by accident.\n\nMeasured on `.github/workflows/code-quality-gates.yml` at `74f27e4c7fb`:\n\n| | |\n|---|---|\n| `bun test` | step 2 (line 234) of the `typescript` job |\n| s",
       "file": "beans/defs/folio-assistant-om30--mains-red-by-decision-test-masks-113-gate-invocati.md"
     },
@@ -4512,7 +4526,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T03:31:40Z",
-      "updatedAt": "2026-09-27T07:02:49Z",
+      "updatedAt": "2026-09-27T10:49:28Z",
       "preview": "Measured 2026-09-26 on a clean checkout of `main` at `0ef9543ccf3`, while\nstarting unrelated work. `bun test` **exited 1**:\n\n```\ncat-harness/content/pipeline/translation-block-qa.test.ts:\n(fail) buildReport — absence is absence > a translated block reports coverage,\n       terms and echo — and NO round-trip verdict [5031.09ms]\n  ^ this test timed out after 5000ms.\n\ncat-harness/scripts/tests/profil",
       "file": "beans/defs/folio-assistant-sff8--contention-inflates-a-per-test-budget-35x-and-vxho.md"
     },
