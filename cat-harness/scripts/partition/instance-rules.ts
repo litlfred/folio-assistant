@@ -1331,6 +1331,7 @@ export const RULES: Rule[] = [
       "scripts/kg-validate.ts",             // one Tool, parameterised by graph kind
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
       "scripts/strip-preview-seo.ts",       // the preview site build
+      "scripts/set-html-lang.ts",           // ...and the served language on its `<html>` (bean `zru7`). Beside the SEO strip for the same reason: a pass over the EMITTED tree, coupling to no content type and to no theme file
       "scripts/staging-banner.ts",          // ...and its banner (bean `g196`)
       "scripts/html-comments.ts",           // the one "is this inside a comment" scan the banner's body-finder and the folio mount's marker check share (bean `ur84`)
       "scripts/folio-mount.ts",             // the fragment that carries the reader's folio onto a library page — machinery, not a content model (bean `jpjt`)
