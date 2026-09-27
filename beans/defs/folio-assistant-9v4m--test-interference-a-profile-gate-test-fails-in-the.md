@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T03:40:20Z
-updated_at: 2026-09-26T19:55:08Z
+updated_at: 2026-09-27T04:58:35Z
 parent: folio-assistant-1swy
 ---
 
@@ -332,3 +332,101 @@ deliberate attempts on this bean did not find it and an accident did.
 - [ ] `profile-scoping`'s mechanism is STILL not established. Do not assume it is
       the same one — that assumption is what this entry just corrected for the
       other test
+
+
+## `profile-scoping`: THREE hypotheses tested, none supported — and my own correlation downgraded to n=1
+
+2026-09-27. This entry mostly REMOVES claims rather than adding one, which is the
+honest shape of the result.
+
+### The correlation I recorded was ONE observation, and I wrote it as more
+
+The entry above ("not a flake, a DIRTY WORKING TREE") tabulated four gate runs and
+concluded the variable was tree state. Re-reading my own table: `profile-scoping`
+failed in **exactly one** of those four runs. The other dirty run failed
+`declared-directory-resolves` instead — and that one now has a MECHANISM (the
+test's own probe importing unguarded `kg-audit.ts`), so it is accounted for
+separately and cannot be counted as a second data point for this test.
+
+So for `profile-scoping` the evidence is **one failure, in one full-suite run**.
+The dirty-tree reading was carried over from its sibling — the same
+over-generalisation this bean already corrected once, when the `/tmp/8suc-*`
+shared-path theory was refuted. Downgraded here rather than left standing.
+
+### What is now measured
+
+| condition | result |
+|---|---|
+| isolated, clean tree | **28 / 28 pass** (12 earlier + 16 today) |
+| isolated, under 6 concurrent `kg-audit` imports on 4 CPUs | **16 / 16 pass** |
+| full `bun test` | 1 failure observed across 4 runs |
+
+The contention test was aimed at a specific model: `sweepOutcomes` SPAWNS a real
+subprocess and the failing run took 6895 ms, while `declared-directory-resolves`
+spawns 20+ `bun -e` imports each running a full audit. On 4 CPUs that is genuine
+load — and it did not reproduce the failure. **Not supported.**
+
+### The structural fact worth keeping, whatever the cause turns out to be
+
+`profile-scoping.test.ts` is not a pure in-process fixture test. `sweepOutcomes`
+runs
+
+    spawnSync("bun", ["run", SWEEP, blockRoot + ".ts", "--dry-run", "--json"],
+              { cwd: root, timeout: 600_000 })
+
+— the REAL sweep script from the repository, against a `mkdtempSync` fixture. So
+it is sensitive to the repository's state and to the environment in a way a
+fixture test normally is not, and it THROWS on a non-zero exit carrying the
+child's stderr. Any future explanation has to go through that property.
+
+### Hypotheses now closed as NOT supported
+
+1. two tests sharing a `/tmp/8suc-*` staging path — **refuted**: `mkdtempSync` is
+   unique per call, and the `✗` line was a passing test's own expected diagnostic
+2. a dirty working tree — **n = 1**, and the dirty-run failure that does have a
+   cause belongs to the other test
+3. CPU contention from concurrent spawned audits — **did not reproduce**, 16/16
+
+### Adds to "Done when"
+
+- [ ] the FAILURE TEXT is captured. Every attempt so far has had only the test
+      NAME, so it is still unknown whether it fails on a wrong outcome
+      (`expect(out[PAPER_ONLY]).toBe("n/a-wrong-profile")`) or on the thrown
+      `qa-sweep exited N` with the child's stderr. **Those have disjoint causes and
+      no further hypothesis is worth forming without knowing which.** Cheapest
+      route: a full `bun test` with this file's output captured, repeated until it
+      fires
+- [ ] whichever it is, the test is made independent of it, or the cause is fixed
+
+
+## The `import.meta.main` guard is MEASURED now, not asserted — 92% of the file
+
+I have repeatedly given "it restructures a 2000-line top-level script" as the
+reason not to guard `kg-audit.ts`. That was an assertion about cost, repeated in
+several check-ins and two commit messages, and never measured. Measured
+2026-09-27:
+
+| | |
+|---|---|
+| `cat-harness/scripts/kg-audit.ts` | 2576 lines |
+| first top-level non-declaration statement | **line 210** (`const root = resolve(instanceArg(...) ?? AUDITOR_ROOT)`) |
+| span from there to EOF | **2367 lines — 92% of the file** |
+| top-level `await` | lines 746 and 2252 |
+| ends | `process.exit(0)` at 2576 |
+
+And the shape matters more than the size: the top-level statements are
+**interleaved with the function declarations**, not gathered in a tail block. So
+it cannot be an indentation wrap — wrapping everything in
+`if (import.meta.main) { … }` would put the exported functions inside a block and
+break every import of this module. The statements have to be lifted into a
+`main()` *around* declarations that stay at module scope.
+
+So the deferral stands and now has a number behind it. Recorded because the
+cheaper reading — "just add three lines" — is what a future agent will try, and
+because a cost claim repeated without measurement is the thing this bean's
+neighbours keep catching.
+
+Two smaller facts for whoever does it: the two top-level `await`s mean `main()`
+must be async and awaited at the call site, and the terminal `process.exit(0)`
+has to move inside the guard or importing the module will still kill the
+importing process.
