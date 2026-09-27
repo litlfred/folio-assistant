@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/docs-ui.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/docs-ui.css?v=1790497464">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/narrow-viewport.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/narrow-viewport.css?v=1790497464">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/work-plan.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/work-plan.css?v=1790497464">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/themes.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/themes.css?v=1790497464">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/uml.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/uml.css?v=1790497464">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/avatars.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/avatars.css?v=1790497464">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/docs-ui.js?v=1790497136" defer></script>
+<script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/docs-ui.js?v=1790497464" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -784,7 +784,11 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><code class="language-plaintext highlighter-rouge">Process_ActorRoleAdministration</code> · strict · 6 step(s)</p>
 
-<p>Changing who can do what: adding an actor, opening or closing a role to one, granting or revoking a permission — and auditing the graph afterwards, because the declaration and the graph are two things that can disagree. You are in this process when the substrate every other diagram’s lanes bind to is what is changing. That is why it is drawn rather than left as a filesystem edit: a role added without an audit is a lane binding that resolves today and may not tomorrow, and nothing else in the corpus would notice. Retirement, never deletion. An actor id is referenced from commits, sidecars and other declarations, so removing one makes an old record unreadable while retiring one leaves it legible and says the actor has stopped.</p>
+<p>Changing who can do what: adding an actor, opening or closing a role to one, granting or revoking a permission — and auditing the graph afterwards, because the declaration and the graph are two things that can disagree.</p>
+
+<p>You are in this process when the substrate every other diagram’s lanes bind to is what is changing. That is why it is drawn rather than left as a filesystem edit: a role added without an audit is a lane binding that resolves today and may not tomorrow, and nothing else in the corpus would notice.</p>
+
+<p>Retirement, never deletion. An actor id is referenced from commits, sidecars and other declarations, so removing one makes an old record unreadable while retiring one leaves it legible and says the actor has stopped.</p>
 
 <p><img src="../assets/img/workflows/actor-role-administration.svg" alt="BPMN diagram: Actor and role administration" style="max-width:100%" /></p>
 <h2 id="how-it-connects">

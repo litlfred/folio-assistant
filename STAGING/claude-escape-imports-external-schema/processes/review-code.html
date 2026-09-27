@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/docs-ui.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/docs-ui.css?v=1790497464">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/narrow-viewport.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/narrow-viewport.css?v=1790497464">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/work-plan.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/work-plan.css?v=1790497464">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/themes.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/themes.css?v=1790497464">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/uml.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/uml.css?v=1790497464">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/avatars.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/avatars.css?v=1790497464">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/docs-ui.js?v=1790497136" defer></script>
+<script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/docs-ui.js?v=1790497464" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -784,7 +784,11 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><code class="language-plaintext highlighter-rouge">Process_CodeReview</code> · strict (defaulted) · 4 step(s)</p>
 
-<p>Judging changed CODE NODES — Tool definitions and schema definition nodes — on whether they are correct NODES, not merely correct code. You are in this process when what changed is a node that happens to be TypeScript. The distinction is the whole reason it is separate from ordinary code review: a file can compile, pass its tests, and still declare the wrong thing, name a skill that does not exist, or advertise a mechanism the pipeline does not actually invoke. The gateway picks by node KIND because the questions differ. A Tool is judged on whether its mechanism is the one that runs; a schema definition node on whether it says what it is and its references resolve.</p>
+<p>Judging changed CODE NODES — Tool definitions and schema definition nodes — on whether they are correct NODES, not merely correct code.</p>
+
+<p>You are in this process when what changed is a node that happens to be TypeScript. The distinction is the whole reason it is separate from ordinary code review: a file can compile, pass its tests, and still declare the wrong thing, name a skill that does not exist, or advertise a mechanism the pipeline does not actually invoke.</p>
+
+<p>The gateway picks by node KIND because the questions differ. A Tool is judged on whether its mechanism is the one that runs; a schema definition node on whether it says what it is and its references resolve.</p>
 
 <p><img src="../assets/img/workflows/review-code.svg" alt="BPMN diagram: Code node review" style="max-width:100%" /></p>
 <h2 id="how-it-connects">
@@ -851,25 +855,25 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Run the node audits</strong><br /><code class="language-plaintext highlighter-rouge">Task_RunNodeAudits</code></td>
       <td>Code reviewer</td>
       <td><a href="../reference/skill-instructions/code-node-review.html"><code class="language-plaintext highlighter-rouge">code-node-review</code></a></td>
-      <td><code class="language-plaintext highlighter-rouge">check:tools</code>, <code class="language-plaintext highlighter-rouge">kg:audit</code> and <code class="language-plaintext highlighter-rouge">typecheck</code>. Read the kg-qa sidecar rather than the summary: it is written per node so an inherited defect and a new one are distinguishable.</td>
+      <td><code class="language-plaintext highlighter-rouge">check:tools</code>, <code class="language-plaintext highlighter-rouge">kg:audit</code> and <code class="language-plaintext highlighter-rouge">typecheck</code>. Read the kg-qa sidecar rather<br />than the summary: it is written per node so an inherited defect and a<br />new one are distinguishable.</td>
     </tr>
     <tr>
       <td><strong>Review the Tool node</strong><br /><code class="language-plaintext highlighter-rouge">Task_ReviewTool</code></td>
       <td>Code reviewer</td>
       <td><a href="../reference/skill-instructions/skills-and-tools.html"><code class="language-plaintext highlighter-rouge">skills-and-tools</code></a><br /><a href="../reference/skill-instructions/covered-is-not-reachable.html"><code class="language-plaintext highlighter-rouge">covered-is-not-reachable</code></a></td>
-      <td>Does it name skills, and do they resolve? Is the mechanism it advertises the one that actually runs? Are its IRIs minted rather than written out? And the question a covered skill hides: is the COMMAND reachable, or only the skill satisfied? A skill can be served by the neighbours of its mechanism while the mechanism itself is reachable from no node, and check:tools reports it as covered and is right to.</td>
+      <td>Does it name skills, and do they resolve? Is the mechanism it advertises<br />the one that actually runs? Are its IRIs minted rather than written out?<br />And the question a covered skill hides: is the COMMAND reachable, or only<br />the skill satisfied? A skill can be served by the neighbours of its<br />mechanism while the mechanism itself is reachable from no node, and<br />check:tools reports it as covered and is right to.</td>
     </tr>
     <tr>
       <td><strong>Review the schema definition node</strong><br /><code class="language-plaintext highlighter-rouge">Task_ReviewSchema</code></td>
       <td>Code reviewer</td>
       <td><a href="../reference/skill-instructions/code-node-review.html"><code class="language-plaintext highlighter-rouge">code-node-review</code></a><br /><a href="../reference/skill-instructions/site-presentation-assets.html"><code class="language-plaintext highlighter-rouge">site-presentation-assets</code></a></td>
-      <td>Does the node declare what KIND of node it is? Does a widened type carry its mirrors? Does a removed field leave a reason behind, so the next author does not re-add it in good faith? And where the node RENDERS to something the site serves — a colour, a glyph, a theme’s tokens — does a Tool maintain that artefact, and does the visual fact have only one home? The node decides; the stylesheet reports.</td>
+      <td>Does the node declare what KIND of node it is? Does a widened type carry<br />its mirrors? Does a removed field leave a reason behind, so the next<br />author does not re-add it in good faith?<br />And where the node RENDERS to something the site serves — a colour, a<br />glyph, a theme’s tokens — does a Tool maintain that artefact, and does the<br />visual fact have only one home? The node decides; the stylesheet reports.</td>
     </tr>
     <tr>
       <td><strong>Record the verdict on the node</strong><br /><code class="language-plaintext highlighter-rouge">Task_RecordVerdict</code></td>
       <td>Code reviewer</td>
       <td><a href="../reference/skill-instructions/code-node-review.html"><code class="language-plaintext highlighter-rouge">code-node-review</code></a></td>
-      <td>Findings are advice, not commits — the same separation the generic reviewer lane keeps. Record them where the next reader meets the node.</td>
+      <td>Findings are advice, not commits — the same separation the generic<br />reviewer lane keeps. Record them where the next reader meets the node.</td>
     </tr>
   </tbody>
 </table></div>

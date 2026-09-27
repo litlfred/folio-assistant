@@ -135,6 +135,21 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#typeIri",
       "@type": "@id"
     },
+    "conformsTo": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#conformsTo",
+      "@type": "@id"
+    },
+    "validator": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#validator",
+      "@type": "@id"
+    },
+    "validatorRef": "https://litlfred.github.io/folio-assistant/cat-harness/ns#validatorRef",
+    "validatorNotApplicable": "https://litlfred.github.io/folio-assistant/cat-harness/ns#validatorNotApplicable",
+    "authority": "https://litlfred.github.io/folio-assistant/cat-harness/ns#authority",
+    "specVersion": "https://litlfred.github.io/folio-assistant/cat-harness/ns#specVersion",
+    "specUse": "https://litlfred.github.io/folio-assistant/cat-harness/ns#specUse",
+    "specUrl": "https://litlfred.github.io/folio-assistant/cat-harness/ns#specUrl",
+    "namespace": "https://litlfred.github.io/folio-assistant/cat-harness/ns#namespace",
     "inputSchema": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#inputSchema",
       "@type": "@id"
@@ -276,10 +291,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-27T08:20:19.456Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/81359d23d31f6c0a8499b2d55fb4839f90fa8a84",
-  "sourceCommitSha": "81359d23d31f6c0a8499b2d55fb4839f90fa8a84",
-  "sourceCommitAt": "2026-09-27T08:17:37Z",
+  "generatedAt": "2026-09-27T08:26:02.613Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2f65bb0deaadfbf003c41f8958edab753bb630aa",
+  "sourceCommitSha": "2f65bb0deaadfbf003c41f8958edab753bb630aa",
+  "sourceCommitAt": "2026-09-27T08:23:08Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -294,6 +309,7 @@
     "ProcessNode": 862,
     "Tool": 104,
     "Schema": 126,
+    "ExternalSchema": 17,
     "GraphKind": 35,
     "Directory": 45,
     "Asset": 3
@@ -6805,6 +6821,10 @@
       ],
       "nodeCount": 10,
       "flowCount": 9,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RepoHealth"
     },
@@ -7120,6 +7140,10 @@
       ],
       "nodeCount": 7,
       "flowCount": 6,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BuildL1Kg"
     },
@@ -7350,6 +7374,10 @@
       ],
       "nodeCount": 13,
       "flowCount": 12,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM"
     },
@@ -7769,6 +7797,10 @@
       ],
       "nodeCount": 16,
       "flowCount": 21,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L2Dak"
     },
@@ -8363,6 +8395,10 @@
       ],
       "nodeCount": 8,
       "flowCount": 8,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ExtractStructure"
     },
@@ -8622,6 +8658,10 @@
       ],
       "nodeCount": 14,
       "flowCount": 13,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MaterializeRemote"
     },
@@ -9063,6 +9103,10 @@
       ],
       "nodeCount": 12,
       "flowCount": 11,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_UpstreamPinWatch"
     },
@@ -9447,6 +9491,10 @@
       ],
       "nodeCount": 7,
       "flowCount": 6,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublishVerification"
     },
@@ -9667,6 +9715,10 @@
       ],
       "nodeCount": 10,
       "flowCount": 13,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeriveContent"
     },
@@ -10014,6 +10066,10 @@
       ],
       "nodeCount": 7,
       "flowCount": 7,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PublishAlert"
     },
@@ -10247,6 +10303,10 @@
       ],
       "nodeCount": 10,
       "flowCount": 10,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IngestTheme"
     },
@@ -10568,6 +10628,10 @@
       ],
       "nodeCount": 5,
       "flowCount": 4,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_AtomicMassDrift"
     },
@@ -10715,6 +10779,10 @@
       ],
       "nodeCount": 29,
       "flowCount": 29,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_IgIncremental"
     },
@@ -11687,6 +11755,10 @@
       ],
       "nodeCount": 9,
       "flowCount": 8,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CopyOutMaterialized"
     },
@@ -11993,6 +12065,10 @@
       ],
       "nodeCount": 9,
       "flowCount": 9,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning"
     },
@@ -12305,6 +12381,10 @@
       ],
       "nodeCount": 14,
       "flowCount": 16,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BeanLifecycle"
     },
@@ -12795,6 +12875,10 @@
       ],
       "nodeCount": 22,
       "flowCount": 19,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_FeatureStaging"
     },
@@ -13442,6 +13526,10 @@
       ],
       "nodeCount": 12,
       "flowCount": 12,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_MethodologyFromSource"
     },
@@ -13828,6 +13916,10 @@
       ],
       "nodeCount": 26,
       "flowCount": 30,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Editing"
     },
@@ -14732,6 +14824,10 @@
       ],
       "nodeCount": 5,
       "flowCount": 4,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Close"
     },
@@ -14891,6 +14987,10 @@
       ],
       "nodeCount": 9,
       "flowCount": 8,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate"
     },
@@ -15183,6 +15283,10 @@
       ],
       "nodeCount": 14,
       "flowCount": 15,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_UpstreamAdoption"
     },
@@ -15658,6 +15762,10 @@
       ],
       "nodeCount": 8,
       "flowCount": 8,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_DataModel"
     },
@@ -15917,6 +16025,10 @@
       ],
       "nodeCount": 14,
       "flowCount": 17,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RefreshMaterialized"
     },
@@ -16401,6 +16513,10 @@
       ],
       "nodeCount": 18,
       "flowCount": 17,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgToPortal"
     },
@@ -16997,6 +17113,10 @@
       ],
       "nodeCount": 15,
       "flowCount": 17,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DocsSite"
     },
@@ -17494,6 +17614,10 @@
       ],
       "nodeCount": 17,
       "flowCount": 21,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GettingStarted"
     },
@@ -18118,6 +18242,10 @@
       ],
       "nodeCount": 17,
       "flowCount": 19,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_EvidenceRetrieval"
     },
@@ -18716,6 +18844,10 @@
       ],
       "nodeCount": 16,
       "flowCount": 18,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Translation"
     },
@@ -19265,6 +19397,10 @@
       ],
       "nodeCount": 7,
       "flowCount": 6,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Adjudication"
     },
@@ -19492,6 +19628,10 @@
       ],
       "nodeCount": 15,
       "flowCount": 16,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeChangeReview"
     },
@@ -20000,6 +20140,10 @@
       ],
       "nodeCount": 11,
       "flowCount": 11,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Lifecycle"
     },
@@ -20385,6 +20529,10 @@
       ],
       "nodeCount": 7,
       "flowCount": 8,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CriterionAdjudication"
     },
@@ -20622,6 +20770,10 @@
       ],
       "nodeCount": 8,
       "flowCount": 10,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L1Gate"
     },
@@ -20914,6 +21066,10 @@
       ],
       "nodeCount": 15,
       "flowCount": 18,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_GraphDetanglement"
     },
@@ -21438,6 +21594,10 @@
       ],
       "nodeCount": 10,
       "flowCount": 11,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NarrativeCodeReview"
     },
@@ -21777,6 +21937,10 @@
       ],
       "nodeCount": 13,
       "flowCount": 14,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DocumentAuthoring"
     },
@@ -22225,6 +22389,10 @@
       ],
       "nodeCount": 14,
       "flowCount": 15,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion"
     },
@@ -22697,6 +22865,10 @@
       ],
       "nodeCount": 7,
       "flowCount": 7,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Needs"
     },
@@ -22923,6 +23095,10 @@
       ],
       "nodeCount": 7,
       "flowCount": 7,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Issue"
     },
@@ -23152,6 +23328,10 @@
       ],
       "nodeCount": 14,
       "flowCount": 20,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates"
     },
@@ -23659,6 +23839,10 @@
       ],
       "nodeCount": 11,
       "flowCount": 10,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PrChecksPresent"
     },
@@ -23997,6 +24181,10 @@
       ],
       "nodeCount": 10,
       "flowCount": 10,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_NarrativeReview"
     },
@@ -24328,6 +24516,10 @@
       ],
       "nodeCount": 11,
       "flowCount": 13,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_WireframeDesignReview"
     },
@@ -24731,6 +24923,10 @@
       ],
       "nodeCount": 15,
       "flowCount": 16,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ActivityLog"
     },
@@ -25222,6 +25418,10 @@
       ],
       "nodeCount": 11,
       "flowCount": 13,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SessionStateMachine"
     },
@@ -25614,6 +25814,10 @@
       ],
       "nodeCount": 12,
       "flowCount": 13,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_VoiceReview"
     },
@@ -26016,6 +26220,10 @@
       ],
       "nodeCount": 9,
       "flowCount": 9,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ThemeUIReview"
     },
@@ -26304,6 +26512,10 @@
       ],
       "nodeCount": 20,
       "flowCount": 21,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_HumanTranslation"
     },
@@ -26985,6 +27197,10 @@
       ],
       "nodeCount": 12,
       "flowCount": 13,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_L3Fhir"
     },
@@ -27414,6 +27630,10 @@
       ],
       "nodeCount": 8,
       "flowCount": 8,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Requirements"
     },
@@ -27672,6 +27892,10 @@
       ],
       "nodeCount": 13,
       "flowCount": 14,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_PaperAuthoring"
     },
@@ -28108,6 +28332,10 @@
       ],
       "nodeCount": 11,
       "flowCount": 14,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ActorRoleAdministration"
     },
@@ -28506,6 +28734,10 @@
       ],
       "nodeCount": 18,
       "flowCount": 20,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Publication"
     },
@@ -29143,6 +29375,10 @@
       ],
       "nodeCount": 44,
       "flowCount": 48,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ContentChangeReview"
     },
@@ -30584,6 +30820,10 @@
       ],
       "nodeCount": 14,
       "flowCount": 16,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Deliver"
     },
@@ -31055,6 +31295,10 @@
       ],
       "nodeCount": 10,
       "flowCount": 11,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Review"
     },
@@ -31377,6 +31621,10 @@
       ],
       "nodeCount": 9,
       "flowCount": 9,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_ContentAcquisition"
     },
@@ -31676,6 +31924,10 @@
       ],
       "nodeCount": 16,
       "flowCount": 15,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SampleImport"
     },
@@ -32168,6 +32420,10 @@
       ],
       "nodeCount": 5,
       "flowCount": 4,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_JsonLdDrift"
     },
@@ -32315,6 +32571,10 @@
       ],
       "nodeCount": 10,
       "flowCount": 12,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RenderLog"
     },
@@ -32659,6 +32919,10 @@
       ],
       "nodeCount": 10,
       "flowCount": 9,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CiHealth"
     },
@@ -32966,6 +33230,10 @@
       ],
       "nodeCount": 11,
       "flowCount": 10,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_SwotAnalysis"
     },
@@ -33316,6 +33584,10 @@
       ],
       "nodeCount": 10,
       "flowCount": 13,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardOpenClose"
     },
@@ -33670,6 +33942,10 @@
       ],
       "nodeCount": 6,
       "flowCount": 6,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardPlaceNote"
     },
@@ -33880,6 +34156,10 @@
       ],
       "nodeCount": 9,
       "flowCount": 9,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CRDM_Signoff"
     },
@@ -34170,6 +34450,10 @@
       ],
       "nodeCount": 7,
       "flowCount": 6,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_RelatedWork"
     },
@@ -34390,6 +34674,10 @@
       ],
       "nodeCount": 8,
       "flowCount": 8,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeReview"
     },
@@ -34649,6 +34937,10 @@
       ],
       "nodeCount": 9,
       "flowCount": 8,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_OptionsAnalysis"
     },
@@ -34929,6 +35221,10 @@
       ],
       "nodeCount": 13,
       "flowCount": 14,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/smart-base-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DIIG"
     },
@@ -35366,6 +35662,10 @@
       ],
       "nodeCount": 9,
       "flowCount": 10,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/folio-assistant-core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_DeepDocumentResearch"
     },
@@ -42527,12 +42827,257 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/source-descriptor"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/dcmi-terms",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "dcmi-terms",
+      "title": "DCMI Metadata Terms",
+      "authority": "DCMI",
+      "specVersion": "2020-01-20",
+      "specUse": "reads",
+      "specUrl": "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/2020-01-20/",
+      "namespace": [
+        "http://purl.org/dc/elements/1.1/",
+        "http://purl.org/dc/terms/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/dcmi-terms"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/hl7-fhir",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "hl7-fhir",
+      "title": "HL7 FHIR",
+      "authority": "HL7",
+      "specVersion": "unpinned",
+      "specUse": "reads",
+      "specUrl": "https://hl7.org/fhir/",
+      "namespace": [
+        "http://hl7.org/fhir/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/hl7-fhir"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "omg-bpmn-2.0",
+      "title": "Business Process Model and Notation (BPMN)",
+      "authority": "OMG",
+      "specVersion": "2.0",
+      "specUse": "conforms",
+      "specUrl": "https://www.omg.org/spec/BPMN/2.0/",
+      "namespace": [
+        "http://www.omg.org/spec/BPMN/20100524/MODEL",
+        "http://www.omg.org/spec/BPMN/20100524/DI"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "omg-dd-1.0",
+      "title": "Diagram Definition (DD)",
+      "authority": "OMG",
+      "specVersion": "1.0",
+      "specUse": "conforms",
+      "specUrl": "https://www.omg.org/spec/DD/1.0/",
+      "namespace": [
+        "http://www.omg.org/spec/DD/20100524/DC",
+        "http://www.omg.org/spec/DD/20100524/DI"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dmn-1.3",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "omg-dmn-1.3",
+      "title": "Decision Model and Notation (DMN)",
+      "authority": "OMG",
+      "specVersion": "1.3",
+      "specUse": "conforms",
+      "specUrl": "https://www.omg.org/spec/DMN/1.3/",
+      "namespace": [
+        "https://www.omg.org/spec/DMN/20191111/MODEL/",
+        "https://www.omg.org/spec/DMN/20191111/DMNDI/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dmn-1.3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/schema-org",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "schema-org",
+      "title": "Schema.org",
+      "authority": "other",
+      "specVersion": "unpinned",
+      "specUse": "conforms",
+      "specUrl": "https://schema.org/",
+      "namespace": [
+        "https://schema.org/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/schema-org"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/spar-doco-deo-cito",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "spar-doco-deo-cito",
+      "title": "SPAR Ontologies: DoCO, DEO and CiTO",
+      "authority": "other",
+      "specVersion": "unpinned",
+      "specUse": "conforms",
+      "specUrl": "http://www.sparontologies.net/",
+      "namespace": [
+        "http://purl.org/spar/doco/",
+        "http://purl.org/spar/deo/",
+        "http://purl.org/spar/cito/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/spar-doco-deo-cito"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/w3c-csvw",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "w3c-csvw",
+      "title": "Metadata Vocabulary for Tabular Data",
+      "authority": "W3C",
+      "specVersion": "2015-12-17",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/tabular-metadata/",
+      "namespace": [
+        "http://www.w3.org/ns/csvw#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-csvw"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/w3c-odrl",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "w3c-odrl",
+      "title": "ODRL Information Model 2.2",
+      "authority": "W3C",
+      "specVersion": "2018-02-15",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/odrl-model/",
+      "namespace": [
+        "http://www.w3.org/ns/odrl/2/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-odrl"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/w3c-owl2",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "w3c-owl2",
+      "title": "OWL 2 Web Ontology Language Document Overview (Second Edition)",
+      "authority": "W3C",
+      "specVersion": "2012-12-11",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/owl2-overview/",
+      "namespace": [
+        "http://www.w3.org/2002/07/owl#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-owl2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/w3c-prov-o",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "w3c-prov-o",
+      "title": "PROV-O: The PROV Ontology",
+      "authority": "W3C",
+      "specVersion": "2013-04-30",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/prov-o/",
+      "namespace": [
+        "http://www.w3.org/ns/prov#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-prov-o"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/w3c-rdf",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "w3c-rdf",
+      "title": "RDF 1.1 Concepts and Abstract Syntax",
+      "authority": "W3C",
+      "specVersion": "2014-02-25",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/rdf11-concepts/",
+      "namespace": [
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-rdf"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/w3c-rdfs",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "w3c-rdfs",
+      "title": "RDF Schema 1.1",
+      "authority": "W3C",
+      "specVersion": "2014-02-25",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/rdf-schema/",
+      "namespace": [
+        "http://www.w3.org/2000/01/rdf-schema#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-rdfs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/w3c-skos",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "w3c-skos",
+      "title": "SKOS Simple Knowledge Organization System Reference",
+      "authority": "W3C",
+      "specVersion": "2009-08-18",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/2009/REC-skos-reference-20090818/",
+      "namespace": [
+        "http://www.w3.org/2004/02/skos/core#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-skos"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/w3c-web-annotation",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "w3c-web-annotation",
+      "title": "Web Annotation Vocabulary",
+      "authority": "W3C",
+      "specVersion": "2017-02-23",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/annotation-vocab/",
+      "namespace": [
+        "http://www.w3.org/ns/oa#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-web-annotation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/w3c-xsd11-datatypes",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "w3c-xsd11-datatypes",
+      "title": "XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes",
+      "authority": "W3C",
+      "specVersion": "2012-04-05",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/xmlschema11-2/",
+      "namespace": [
+        "http://www.w3.org/2001/XMLSchema#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/w3c-xsd11-datatypes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/who-smart-base",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchema",
+      "name": "who-smart-base",
+      "title": "WHO SMART Guidelines base IG",
+      "authority": "other",
+      "specVersion": "unpinned",
+      "specUse": "reads",
+      "specUrl": "https://smart.who.int/base/",
+      "namespace": [
+        "http://smart.who.int/base/StructureDefinition/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/who-smart-base"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/tools",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
       "name": "tools",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ToolGraph",
       "renderable": false,
-      "summary": "Tool definitions — themselves nodes in the KG, per the repo taxonomy."
+      "summary": "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
+      "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#schema/tool"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness",
@@ -42540,7 +43085,8 @@
       "name": "cat-harness",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#KGraph",
       "renderable": false,
-      "summary": "A Subgraph holding a Harness's own parts, such as Skills, Processes and Roles, where one directory holds more than one of them."
+      "summary": "A Subgraph holding a Harness's own parts, such as Skills, Processes and Roles, where one directory holds more than one of them.",
+      "validatorNotApplicable": "it holds several node kinds typed in different places — skills, workflows, roles, actors. `schema` above already says why one pointer here would be a lie of precision, and that applies to a validator with more force: a runnable one would silently grade 51 JSON files against whichever single shape it named. Each family is validated where it is declared."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills",
@@ -42556,7 +43102,13 @@
       "name": "processes",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ProcessGraph",
       "renderable": false,
-      "summary": "Executable BPMN processes and the DMN tables their gateways compute from."
+      "summary": "Executable BPMN processes and the DMN tables their gateways compute from.",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dmn-1.3"
+      ],
+      "validatorNotApplicable": "its nodes are `.bpmn` and `.dmn` — XML, counted 2026-09-24 as 77 and 9. A Zod schema parses JSON, so one here would be a category error; `check:workflows`, `xml-comment-check` and `check-process-documentation` grade them instead."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/scenarios",
@@ -42564,7 +43116,8 @@
       "name": "scenarios",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ScenarioGraph",
       "renderable": false,
-      "summary": "Actors, the Roles they take on, and the User Stories those Roles serve."
+      "summary": "Actors, the Roles they take on, and the User Stories those Roles serve.",
+      "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#schema/role-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/policies",
@@ -42572,7 +43125,8 @@
       "name": "policies",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#PolicyGraph",
       "renderable": false,
-      "summary": "W3C ODRL 2.2 policies: which Actor may do which action, scoped by Process, Task and Role constraints. Actions are the folio profile in skills/permissions/permissions.json."
+      "summary": "W3C ODRL 2.2 policies: which Actor may do which action, scoped by Process, Task and Role constraints. Actions are the folio profile in skills/permissions/permissions.json.",
+      "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#schema/odrl"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology",
@@ -42580,7 +43134,12 @@
       "name": "methodology",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#MethodologyGraph",
       "renderable": false,
-      "summary": "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context."
+      "summary": "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context.",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
+      "validatorNotApplicable": "its nodes are markdown — 12 files, counted 2026-09-24. `check-methodology-evidence` grades what matters about them, which is whether each cited source actually exists in a library."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/docs",
@@ -42596,7 +43155,8 @@
       "name": "proposals",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ProposalsGraph",
       "renderable": false,
-      "summary": "Proposals for the harness's own features — initial analysis, MVP, options — argued before anything is agreed. A sub-graph of `docs`. When the feature ships, its proposal is MOVED to `requirements` and filed against the `Requirement` schema."
+      "summary": "Proposals for the harness's own features — initial analysis, MVP, options — argued before anything is agreed. A sub-graph of `docs`. When the feature ships, its proposal is MOVED to `requirements` and filed against the `Requirement` schema.",
+      "validatorNotApplicable": "its nodes are markdown pages of argument with no fixed shape; a proposal is judged by the owner, not parsed. What IS checked mechanically is the move out of it: `check:requirements` refuses a slug that sits in both proposals and requirements."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/requirements",
@@ -42604,7 +43164,8 @@
       "name": "requirements",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#RequirementsGraph",
       "renderable": false,
-      "summary": "What the harness promises, one document per shipped feature, each carrying a `Requirement` in its front matter. A sub-graph of `docs`. Test runs point at these statements by `req:<slug>#<key>`."
+      "summary": "What the harness promises, one document per shipped feature, each carrying a `Requirement` in its front matter. A sub-graph of `docs`. Test runs point at these statements by `req:<slug>#<key>`.",
+      "validatorNotApplicable": "its nodes are markdown pages whose FRONT MATTER is a `Requirement`. A registry validator parses a JSON node, so one here would be a category error. `check:requirements` extracts the front matter and parses it against the Requirement schema instead, and requires the id to match the file name."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/external-schema",
@@ -42612,7 +43173,8 @@
       "name": "external-schema",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchemaGraph",
       "renderable": false,
-      "summary": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed."
+      "summary": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
+      "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#schema/external-schema"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/code-list",
@@ -42620,7 +43182,8 @@
       "name": "code-list",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#CodeListGraph",
       "renderable": false,
-      "summary": "Closed sets of codes — adjudication answers, the namespaces this project mints — one file per list, every code carrying its definition and source, published as SKOS."
+      "summary": "Closed sets of codes — adjudication answers, the namespaces this project mints — one file per list, every code carrying its definition and source, published as SKOS.",
+      "validatorRef": "schemas/code-list.ts#CodeListSchema"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/schemas",
@@ -42636,7 +43199,8 @@
       "name": "uml",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#UmlGraph",
       "renderable": false,
-      "summary": "UML class diagrams of each named sub-graph a harness declares, derived from the node schemas its graph kinds register — PlantUML and Mermaid from one model."
+      "summary": "UML class diagrams of each named sub-graph a harness declares, derived from the node schemas its graph kinds register — PlantUML and Mermaid from one model.",
+      "validatorNotApplicable": "its nodes are `.puml` and `.mmd` — PlantUML and Mermaid source, counted 2026-09-24 as 103 and 101. Not JSON, and `derived` besides, so a finding against one is a finding against the generator; `uml:overview:check` grades their currency."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/qa",
@@ -42652,7 +43216,8 @@
       "name": "health",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#HealthGraph",
       "renderable": false,
-      "summary": "Repository health reports — one `health-report/v1` document per sweep, carrying every check's three-state verdict, the thresholds it applied and the basis each threshold was chosen on. Generated by `test/health/run.ts`; never hand-edited."
+      "summary": "Repository health reports — one `health-report/v1` document per sweep, carrying every check's three-state verdict, the thresholds it applied and the basis each threshold was chosen on. Generated by `test/health/run.ts`; never hand-edited.",
+      "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#schema/health-report"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/code",
@@ -42660,7 +43225,8 @@
       "name": "code",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#CodeGraph",
       "renderable": false,
-      "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis."
+      "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis.",
+      "validatorNotApplicable": "its nodes are TypeScript — 1793 files, counted 2026-09-24. `tsc` is the validator for code, and `check:partition` plus `check-code-accounting` grade the graph over it."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/swimlane-glossary",
@@ -42684,7 +43250,8 @@
       "name": "bean-defs",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#BeanDefsGraph",
       "renderable": false,
-      "summary": "Work items — one Markdown file each, in the layout the `beans` CLI reads. Authored and edited by people and agents."
+      "summary": "Work items — one Markdown file each, in the layout the `beans` CLI reads. Authored and edited by people and agents.",
+      "validatorNotApplicable": "no instance declares a directory of this kind — it is nested inside `beans/`, declared by `beans/beans.json`, and reached through its parent. There is nothing here to validate; `check:bean-front-matter` and its four siblings grade the bean store."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/session-survey",
@@ -42716,7 +43283,8 @@
       "name": "boards",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#BoardGraph",
       "renderable": false,
-      "summary": "Boards — one JSON file each, carrying `\"$schema\": \"folio-board/v1\"`. A board is a diagram OF a folio: it declares what it shows, and a folio with no board is complete. Schema: `schemas/board.ts`."
+      "summary": "Boards — one JSON file each, carrying `\"$schema\": \"folio-board/v1\"`. A board is a diagram OF a folio: it declares what it shows, and a folio with no board is complete. Schema: `schemas/board.ts`.",
+      "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#schema/board"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/board-positions",
@@ -42724,7 +43292,8 @@
       "name": "board-positions",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#BoardPositionsGraph",
       "renderable": false,
-      "summary": "Where each note sits on each board — `board-positions.json`, keyed by board then by note id, in board units. The layout layer, which points at notes and is never pointed back at. Schema: `schemas/board-positions.ts`."
+      "summary": "Where each note sits on each board — `board-positions.json`, keyed by board then by note id, in board units. The layout layer, which points at notes and is never pointed back at. Schema: `schemas/board-positions.ts`.",
+      "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#schema/board-positions"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/todo-items",
@@ -42732,7 +43301,8 @@
       "name": "todo-items",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#TodoItemsGraph",
       "renderable": false,
-      "summary": "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. Authored by people and by agents on their behalf."
+      "summary": "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. Authored by people and by agents on their behalf.",
+      "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#schema/todo"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/uploads",
@@ -42756,7 +43326,8 @@
       "name": "todo-feedback",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#TodoFeedbackGraph",
       "renderable": false,
-      "summary": "Feedback items — todos raised against a specific block, carrying the submitter's identity. Read by the `todo-review` skill."
+      "summary": "Feedback items — todos raised against a specific block, carrying the submitter's identity. Read by the `todo-review` skill.",
+      "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#schema/constraints"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/interaction",
@@ -42780,7 +43351,8 @@
       "name": "memory",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#MemoryGraph",
       "renderable": false,
-      "summary": "Durable facts an agent carries between sessions. Read during a process, never written by one."
+      "summary": "Durable facts an agent carries between sessions. Read during a process, never written by one.",
+      "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#schema/memory"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/waiver",
@@ -42788,7 +43360,8 @@
       "name": "waiver",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#WaiverGraph",
       "renderable": false,
-      "summary": "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring."
+      "summary": "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring.",
+      "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#schema/waiver"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources",
@@ -42796,7 +43369,8 @@
       "name": "translation-sources",
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#TranslationSourceGraph",
       "renderable": false,
-      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
+      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`.",
+      "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#schema/translation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/folio",

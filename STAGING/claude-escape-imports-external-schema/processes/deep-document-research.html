@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/docs-ui.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/docs-ui.css?v=1790497464">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/narrow-viewport.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/narrow-viewport.css?v=1790497464">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/work-plan.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/work-plan.css?v=1790497464">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/themes.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/themes.css?v=1790497464">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/uml.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/uml.css?v=1790497464">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/avatars.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/avatars.css?v=1790497464">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/docs-ui.js?v=1790497136" defer></script>
+<script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/docs-ui.js?v=1790497464" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -784,7 +784,11 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><code class="language-plaintext highlighter-rouge">Process_DeepDocumentResearch</code> · advisory · 4 step(s)</p>
 
-<p>Answer a question from a corpus this folio ALREADY HOLDS, iteratively, stopping on a stated condition. It begins after <code class="language-plaintext highlighter-rouge">library-ingestion</code> has filed the sources, <code class="language-plaintext highlighter-rouge">ingest-*</code> has derived their structure, and the L1 completeness gate has said they are fit to use. Nothing here acquires or parses anything: a question about a document nobody ingested is not answered by this process, it is refused by it. ADVISORY at the process level. The judgement it contains is which granularity fits a question and whether the evidence so far is sufficient, and neither is gateable — the whole reason the loop carries an iteration cap is that sufficiency may never arrive.</p>
+<p>Answer a question from a corpus this folio ALREADY HOLDS, iteratively, stopping on a stated condition.</p>
+
+<p>It begins after <code class="language-plaintext highlighter-rouge">library-ingestion</code> has filed the sources, <code class="language-plaintext highlighter-rouge">ingest-*</code> has derived their structure, and the L1 completeness gate has said they are fit to use. Nothing here acquires or parses anything: a question about a document nobody ingested is not answered by this process, it is refused by it.</p>
+
+<p>ADVISORY at the process level. The judgement it contains is which granularity fits a question and whether the evidence so far is sufficient, and neither is gateable — the whole reason the loop carries an iteration cap is that sufficiency may never arrive.</p>
 
 <p><img src="../assets/img/workflows/deep-document-research.svg" alt="BPMN diagram: Deep document research" style="max-width:100%" /></p>
 <h2 id="how-it-connects">
@@ -823,7 +827,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <tr>
       <td>Deep researcher</td>
       <td><code class="language-plaintext highlighter-rouge">deep-researcher</code></td>
-      <td>One lane for all four of the paper’s agents, because they are one accountability: somebody stands behind the synthesis and its citations. Splitting them into four swimlanes would say that the party who chose the granularity is answerable separately from the party who reported the answer, which is not true and which no diagram here should assert. The role admits person and agent. Every step is drawn as a plain task rather than a userTask for that reason — an agent performing this is legitimate, and a userTask would assert a person the model does not require.</td>
+      <td>One lane for all four of the paper’s agents, because they are one accountability: somebody stands behind the synthesis and its citations. Splitting them into four swimlanes would say that the party who chose the granularity is answerable separately from the party who reported the answer, which is not true and which no diagram here should assert.<br />The role admits person and agent. Every step is drawn as a plain task rather than a userTask for that reason — an agent performing this is legitimate, and a userTask would assert a person the model does not require.</td>
     </tr>
   </tbody>
 </table></div>
@@ -852,7 +856,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Filter the corpus, choose the granularity, decompose the question</strong><br /><code class="language-plaintext highlighter-rouge">A_Plan</code></td>
       <td>Deep researcher</td>
       <td><a href="../reference/skill-instructions/deep-document-research.html"><code class="language-plaintext highlighter-rouge">deep-document-research</code></a></td>
-      <td>The paper’s Planner. Three outputs, and the middle one is the method’s substance: a filtered document subset, the granularity to search at, and the sub-questions. CHOOSING THE GRANULARITY PER QUESTION is the whole point of parsing at several. A broad question is answered from summaries and a specific one from chunks; a pipeline that picks once has answered every future question the same way. This checkout cannot yet offer the choice — <code class="language-plaintext highlighter-rouge">l1-blocks.ts</code> produces blocks, there is no summary level — so this step SAYS which granularity it searched rather than implying the corpus offered alternatives. Re-entered on every iteration, not only the first: the sub-questions are re-derived from what has been found so far, which is what makes the loop a search rather than a retry.</td>
+      <td>The paper’s Planner. Three outputs, and the middle one is the method’s substance: a filtered document subset, the granularity to search at, and the sub-questions.<br />CHOOSING THE GRANULARITY PER QUESTION is the whole point of parsing at several. A broad question is answered from summaries and a specific one from chunks; a pipeline that picks once has answered every future question the same way. This checkout cannot yet offer the choice — <code class="language-plaintext highlighter-rouge">l1-blocks.ts</code> produces blocks, there is no summary level — so this step SAYS which granularity it searched rather than implying the corpus offered alternatives.<br />Re-entered on every iteration, not only the first: the sub-questions are re-derived from what has been found so far, which is what makes the loop a search rather than a retry.</td>
     </tr>
     <tr>
       <td><strong>Retrieve for each sub-question</strong><br /><code class="language-plaintext highlighter-rouge">A_Search</code></td>
@@ -870,7 +874,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Synthesise, cite to a location, and say what was not found</strong><br /><code class="language-plaintext highlighter-rouge">A_Report</code></td>
       <td>Deep researcher</td>
       <td><a href="../reference/skill-instructions/deep-document-research.html"><code class="language-plaintext highlighter-rouge">deep-document-research</code></a></td>
-      <td>The paper’s Reporter, with two obligations it does not state. CITE TO A LOCATION, not to a document — the page and bounding box the parse preserved, so a reader verifies a claim where it was made rather than being sent to a PDF. AND SAY WHAT WAS NOT FOUND. The failure this method makes easy is that a search which ended quietly looks exactly like one that succeeded. Sub-questions that returned nothing are reported, distinguishing “not in the corpus” from “not found by this search” — only the first is a fact about the folio. A figure description an agent drafted is NOT reported as what the figure shows. <code class="language-plaintext highlighter-rouge">schemas/narrative.ts</code> holds that line and this step does not cross it.</td>
+      <td>The paper’s Reporter, with two obligations it does not state.<br />CITE TO A LOCATION, not to a document — the page and bounding box the parse preserved, so a reader verifies a claim where it was made rather than being sent to a PDF.<br />AND SAY WHAT WAS NOT FOUND. The failure this method makes easy is that a search which ended quietly looks exactly like one that succeeded. Sub-questions that returned nothing are reported, distinguishing “not in the corpus” from “not found by this search” — only the first is a fact about the folio.<br />A figure description an agent drafted is NOT reported as what the figure shows. <code class="language-plaintext highlighter-rouge">schemas/narrative.ts</code> holds that line and this step does not cross it.</td>
     </tr>
   </tbody>
 </table></div>
@@ -896,12 +900,12 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <tbody>
     <tr>
       <td><strong>Is the corpus there to search?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Held</code></td>
-      <td>Computable, and deliberately carries neither <code class="language-plaintext highlighter-rouge">cat-harness.processes:decision</code> nor <code class="language-plaintext highlighter-rouge">cat-harness.processes:judgement</code>: whether the library holds entries whose L1 completeness verdict is <code class="language-plaintext highlighter-rouge">met</code> is a fact about the checkout, so calling it a judgement would be false. Nothing computes it yet, which puts it in the DMN column rather than this one — the “no table because nobody has written one” state bean <code class="language-plaintext highlighter-rouge">q0tc</code> counts. Leaving here is the correct outcome, not a failure. A question about documents nobody ingested has an answer — “this corpus does not hold them” — and that answer is not produced by searching harder.</td>
+      <td>Computable, and deliberately carries neither <code class="language-plaintext highlighter-rouge">cat-harness.processes:decision</code> nor <code class="language-plaintext highlighter-rouge">cat-harness.processes:judgement</code>: whether the library holds entries whose L1 completeness verdict is <code class="language-plaintext highlighter-rouge">met</code> is a fact about the checkout, so calling it a judgement would be false. Nothing computes it yet, which puts it in the DMN column rather than this one — the “no table because nobody has written one” state bean <code class="language-plaintext highlighter-rouge">q0tc</code> counts.<br />Leaving here is the correct outcome, not a failure. A question about documents nobody ingested has an answer — “this corpus does not hold them” — and that answer is not produced by searching harder.</td>
       <td><strong>held</strong> → Filter the corpus, choose the granularity, decompose the question<br /><strong>not held</strong> → Not held — a question for library-ingestion</td>
     </tr>
     <tr>
       <td><strong>Enough, or out of iterations?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Sufficient</code></td>
-      <td>TWO ways out, and both are load-bearing. Sufficiency alone never terminates on a question the corpus cannot answer, which is the ordinary case rather than the exception. The iteration cap alone stops an answerable question early and returns something indistinguishable from a complete answer. A loop carrying one of them is a different method with a failure mode this one does not have. WHICH ONE FIRED IS CARRIED TO THE REPORT. An answer that hit the cap is an answer with known gaps; one that reached sufficiency is not. A report that does not distinguish them hands the reader a confidence nobody established.</td>
+      <td>TWO ways out, and both are load-bearing. Sufficiency alone never terminates on a question the corpus cannot answer, which is the ordinary case rather than the exception. The iteration cap alone stops an answerable question early and returns something indistinguishable from a complete answer.<br />A loop carrying one of them is a different method with a failure mode this one does not have.<br />WHICH ONE FIRED IS CARRIED TO THE REPORT. An answer that hit the cap is an answer with known gaps; one that reached sufficiency is not. A report that does not distinguish them hands the reader a confidence nobody established.</td>
       <td><strong>not yet, and iterations remain</strong> → Filter the corpus, choose the granularity, decompose the question<br /><strong>sufficient</strong> → Synthesise, cite to a location, and say what was not found<br /><strong>out of iterations</strong> → Synthesise, cite to a location, and say what was not found</td>
     </tr>
   </tbody>

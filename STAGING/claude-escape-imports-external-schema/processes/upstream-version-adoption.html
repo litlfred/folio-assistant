@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/docs-ui.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/docs-ui.css?v=1790497464">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/narrow-viewport.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/narrow-viewport.css?v=1790497464">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/work-plan.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/work-plan.css?v=1790497464">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/themes.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/themes.css?v=1790497464">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/uml.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/uml.css?v=1790497464">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/avatars.css?v=1790497136">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/avatars.css?v=1790497464">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/docs-ui.js?v=1790497136" defer></script>
+<script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/docs-ui.js?v=1790497464" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -784,7 +784,11 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><code class="language-plaintext highlighter-rouge">Process_UpstreamAdoption</code> · strict · 10 step(s)</p>
 
-<p>A REUSABLE SUBPROCESS, entered once per pinned upstream dependency that has fallen behind a release. Callers invoke it with <code class="language-plaintext highlighter-rouge">calledElement="Process_UpstreamAdoption"</code>; <code class="language-plaintext highlighter-rouge">upstream-pin-watch.bpmn</code> is the first, and a person may enter it directly with <code class="language-plaintext highlighter-rouge">workflow_start</code> when they want to try a version the watcher has not raised. Reusable means the tenant-specific part is DATA. <code class="language-plaintext highlighter-rouge">upstream-pins.json</code> carries, per row, what of ours binds to the dependency and what its MVP runs; this diagram carries the order those are done in, which is the same for every tenant. A second tenant is a registry row, not a second diagram. Shaped after <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code> because the question is the same one: something outside the repository wants to change what we ship, and the answer has to be a judgement somebody made on evidence rather than a merge that happened. The loop back into impact analysis is the MVP loop — findings the agent can fix are fixed on the same branch and re-evidenced, and only what remains reaches the decider.</p>
+<p>A REUSABLE SUBPROCESS, entered once per pinned upstream dependency that has fallen behind a release. Callers invoke it with <code class="language-plaintext highlighter-rouge">calledElement="Process_UpstreamAdoption"</code>; <code class="language-plaintext highlighter-rouge">upstream-pin-watch.bpmn</code> is the first, and a person may enter it directly with <code class="language-plaintext highlighter-rouge">workflow_start</code> when they want to try a version the watcher has not raised.</p>
+
+<p>Reusable means the tenant-specific part is DATA. <code class="language-plaintext highlighter-rouge">upstream-pins.json</code> carries, per row, what of ours binds to the dependency and what its MVP runs; this diagram carries the order those are done in, which is the same for every tenant. A second tenant is a registry row, not a second diagram.</p>
+
+<p>Shaped after <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code> because the question is the same one: something outside the repository wants to change what we ship, and the answer has to be a judgement somebody made on evidence rather than a merge that happened. The loop back into impact analysis is the MVP loop — findings the agent can fix are fixed on the same branch and re-evidenced, and only what remains reaches the decider.</p>
 
 <p><img src="../assets/img/workflows/upstream-version-adoption.svg" alt="BPMN diagram: Adopting an upstream version bump" style="max-width:100%" /></p>
 <h2 id="how-it-connects">
@@ -868,13 +872,13 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Scope the delta pinned → candidate</strong><br /><code class="language-plaintext highlighter-rouge">A_Scope</code></td>
       <td>Agent</td>
       <td><a href="../reference/skill-instructions/upstream-version-adoption.html"><code class="language-plaintext highlighter-rouge">upstream-version-adoption</code></a></td>
-      <td>Restricted to the directories that reach our output — for a Jekyll theme <code class="language-plaintext highlighter-rouge">_sass</code>, <code class="language-plaintext highlighter-rouge">_includes</code>, <code class="language-plaintext highlighter-rouge">_layouts</code>, <code class="language-plaintext highlighter-rouge">assets</code>. Upstream’s own docs, CI and tests cannot reach us, and counting them makes a harmless release look alarming. The changelog is the claim; <code class="language-plaintext highlighter-rouge">git diff --stat pinned..candidate</code> over those paths is the evidence.</td>
+      <td>Restricted to the directories that reach our output — for a Jekyll theme <code class="language-plaintext highlighter-rouge">_sass</code>, <code class="language-plaintext highlighter-rouge">_includes</code>, <code class="language-plaintext highlighter-rouge">_layouts</code>, <code class="language-plaintext highlighter-rouge">assets</code>. Upstream’s own docs, CI and tests cannot reach us, and counting them makes a harmless release look alarming.<br />The changelog is the claim; <code class="language-plaintext highlighter-rouge">git diff --stat pinned..candidate</code> over those paths is the evidence.</td>
     </tr>
     <tr>
       <td><strong>Impact analysis what of ours binds it</strong><br /><code class="language-plaintext highlighter-rouge">A_Impact</code></td>
       <td>Agent</td>
       <td><a href="../reference/skill-instructions/upstream-version-adoption.html"><code class="language-plaintext highlighter-rouge">upstream-version-adoption</code></a></td>
-      <td>The half a changelog cannot supply, because upstream does not know what you reached into. Worked from the row’s <code class="language-plaintext highlighter-rouge">binds</code> list in <code class="language-plaintext highlighter-rouge">upstream-pins.json</code>. For the theme: <code class="language-plaintext highlighter-rouge">docs/assets/js/docs-ui.js</code> MOVES the theme’s own search markup into the action launcher and binds <code class="language-plaintext highlighter-rouge">.search</code>, <code class="language-plaintext highlighter-rouge">#search-input</code> and <code class="language-plaintext highlighter-rouge">.search-label</code>; <code class="language-plaintext highlighter-rouge">docs-ui.css</code> overrides <code class="language-plaintext highlighter-rouge">.side-bar</code>, <code class="language-plaintext highlighter-rouge">.site-header</code> and <code class="language-plaintext highlighter-rouge">.main-header</code>; three e2e specs assert the structure the theme emits. An upstream rename of any of those is not a build failure — it is a shipped feature that quietly stops working.</td>
+      <td>The half a changelog cannot supply, because upstream does not know what you reached into. Worked from the row’s <code class="language-plaintext highlighter-rouge">binds</code> list in <code class="language-plaintext highlighter-rouge">upstream-pins.json</code>.<br />For the theme: <code class="language-plaintext highlighter-rouge">docs/assets/js/docs-ui.js</code> MOVES the theme’s own search markup into the action launcher and binds <code class="language-plaintext highlighter-rouge">.search</code>, <code class="language-plaintext highlighter-rouge">#search-input</code> and <code class="language-plaintext highlighter-rouge">.search-label</code>; <code class="language-plaintext highlighter-rouge">docs-ui.css</code> overrides <code class="language-plaintext highlighter-rouge">.side-bar</code>, <code class="language-plaintext highlighter-rouge">.site-header</code> and <code class="language-plaintext highlighter-rouge">.main-header</code>; three e2e specs assert the structure the theme emits. An upstream rename of any of those is not a build failure — it is a shipped feature that quietly stops working.</td>
     </tr>
     <tr>
       <td><strong>MVP: build the candidate on a staging branch</strong><br /><code class="language-plaintext highlighter-rouge">Task_Mvp</code></td>
@@ -886,7 +890,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Run the row’s gates tests · e2e · site-links</strong><br /><code class="language-plaintext highlighter-rouge">Task_Gates</code></td>
       <td>CI/CD Pipeline</td>
       <td><a href="../reference/skill-instructions/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a></td>
-      <td>The <code class="language-plaintext highlighter-rouge">mvp</code> commands declared for this tenant. For the theme: <code class="language-plaintext highlighter-rouge">bun test</code>, <code class="language-plaintext highlighter-rouge">CI=1 bunx playwright test</code> (a11y, action tiles, sidebar panels, QA panel) and <code class="language-plaintext highlighter-rouge">scripts/site-links.ts --site ./_site</code>, which checks the navbar tiles against the BUILT site rather than against the attribute — the distinction that let a 404 ship unnoticed once already. A red gate is EVIDENCE, not an exit. It does not end the process and it does not loop by itself: “this version breaks us” is a finding the decider needs, not a reason to stop before they see it.</td>
+      <td>The <code class="language-plaintext highlighter-rouge">mvp</code> commands declared for this tenant. For the theme: <code class="language-plaintext highlighter-rouge">bun test</code>, <code class="language-plaintext highlighter-rouge">CI=1 bunx playwright test</code> (a11y, action tiles, sidebar panels, QA panel) and <code class="language-plaintext highlighter-rouge">scripts/site-links.ts --site ./_site</code>, which checks the navbar tiles against the BUILT site rather than against the attribute — the distinction that let a 404 ship unnoticed once already.<br />A red gate is EVIDENCE, not an exit. It does not end the process and it does not loop by itself: “this version breaks us” is a finding the decider needs, not a reason to stop before they see it.</td>
     </tr>
     <tr>
       <td><strong>Post the MVP evidence staging URL + gate results</strong><br /><code class="language-plaintext highlighter-rouge">A_Evidence</code></td>
@@ -898,19 +902,19 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Review the MVP against what we bind to</strong><br /><code class="language-plaintext highlighter-rouge">R_Review</code></td>
       <td>Reviewer / SME</td>
       <td><a href="../reference/skill-instructions/staging-review.html"><code class="language-plaintext highlighter-rouge">staging-review</code></a></td>
-      <td>A narrower question than “is the new version good”: does everything in <code class="language-plaintext highlighter-rouge">binds</code> still hold, checked against the deployed page. A <code class="language-plaintext highlighter-rouge">userTask</code>, and the lane admits <code class="language-plaintext highlighter-rouge">person</code> and <code class="language-plaintext highlighter-rouge">agent</code> — a review agent is a legitimate reviewer here, and the separation that matters is the next lane’s: a reviewer cannot accept.</td>
+      <td>A narrower question than “is the new version good”: does everything in <code class="language-plaintext highlighter-rouge">binds</code> still hold, checked against the deployed page.<br />A <code class="language-plaintext highlighter-rouge">userTask</code>, and the lane admits <code class="language-plaintext highlighter-rouge">person</code> and <code class="language-plaintext highlighter-rouge">agent</code> — a review agent is a legitimate reviewer here, and the separation that matters is the next lane’s: a reviewer cannot accept.</td>
     </tr>
     <tr>
       <td><strong>Options analysis adopt · hold · decline</strong><br /><code class="language-plaintext highlighter-rouge">Call_OptionsAnalysis</code></td>
       <td>Agent</td>
       <td>calls <a href="options-analysis.html">Options analysis</a></td>
-      <td>On the single edge into <code class="language-plaintext highlighter-rouge">PM_Decide</code>, and deliberately not earlier: the MVP build and its gates are HOW the options’ costs are measured, so an analysis before <code class="language-plaintext highlighter-rouge">Task_Mvp</code> would weigh alternatives against no evidence. Everything the decider needs exists by the time the reviewer has finished and the fixable findings are fixed. In the Agent lane, because this step produces the analysis and does not make the decision — <code class="language-plaintext highlighter-rouge">PM_Decide</code> is a <code class="language-plaintext highlighter-rouge">userTask</code> whose lane admits <code class="language-plaintext highlighter-rouge">person</code> only, and putting the analysis in the agent’s lane is what keeps that separation legible rather than implied. A subprocess that decided would be a second accepting party. Reached through the loop as well as straight through: <code class="language-plaintext highlighter-rouge">SF_UA_8</code> re-enters at <code class="language-plaintext highlighter-rouge">A_Impact</code>, so a run where the reviewer found something fixable arrives here a second time with different evidence. That is a genuine re-analysis and its <code class="language-plaintext highlighter-rouge">op="note"</code> appends rather than deduping, which is the behaviour wanted — a second note records that the options were weighed again against changed inputs.</td>
+      <td>On the single edge into <code class="language-plaintext highlighter-rouge">PM_Decide</code>, and deliberately not earlier: the MVP build and its gates are HOW the options’ costs are measured, so an analysis before <code class="language-plaintext highlighter-rouge">Task_Mvp</code> would weigh alternatives against no evidence. Everything the decider needs exists by the time the reviewer has finished and the fixable findings are fixed.<br />In the Agent lane, because this step produces the analysis and does not make the decision — <code class="language-plaintext highlighter-rouge">PM_Decide</code> is a <code class="language-plaintext highlighter-rouge">userTask</code> whose lane admits <code class="language-plaintext highlighter-rouge">person</code> only, and putting the analysis in the agent’s lane is what keeps that separation legible rather than implied. A subprocess that decided would be a second accepting party.<br />Reached through the loop as well as straight through: <code class="language-plaintext highlighter-rouge">SF_UA_8</code> re-enters at <code class="language-plaintext highlighter-rouge">A_Impact</code>, so a run where the reviewer found something fixable arrives here a second time with different evidence. That is a genuine re-analysis and its <code class="language-plaintext highlighter-rouge">op="note"</code> appends rather than deduping, which is the behaviour wanted — a second note records that the options were weighed again against changed inputs.</td>
     </tr>
     <tr>
       <td><strong>Adopt, hold or decline</strong><br /><code class="language-plaintext highlighter-rouge">PM_Decide</code></td>
       <td>Publication manager</td>
       <td><a href="../reference/skill-instructions/decision-audit.html"><code class="language-plaintext highlighter-rouge">decision-audit</code></a></td>
-      <td>A PERSON decides. The lane admits <code class="language-plaintext highlighter-rouge">person</code> only, so <code class="language-plaintext highlighter-rouge">activity-fulfilment-kind</code> fails the moment somebody makes an agent the accepting party, and <code class="language-plaintext highlighter-rouge">relaxable="false"</code> means no package may relax the step. The publication manager rather than the editor because a pin is not a change to the corpus — it is a change to what the published artefact is BUILT FROM, and that role is the one accountable for what is live. Deliberately NOT a DMN-backed gateway. Every computed gateway in this repository reduces to arithmetic over tool output; this one weighs a rendering nobody can score against the cost of staying behind, and a table here would look authoritative without being so.</td>
+      <td>A PERSON decides. The lane admits <code class="language-plaintext highlighter-rouge">person</code> only, so <code class="language-plaintext highlighter-rouge">activity-fulfilment-kind</code> fails the moment somebody makes an agent the accepting party, and <code class="language-plaintext highlighter-rouge">relaxable="false"</code> means no package may relax the step.<br />The publication manager rather than the editor because a pin is not a change to the corpus — it is a change to what the published artefact is BUILT FROM, and that role is the one accountable for what is live.<br />Deliberately NOT a DMN-backed gateway. Every computed gateway in this repository reduces to arithmetic over tool output; this one weighs a rendering nobody can score against the cost of staying behind, and a table here would look authoritative without being so.</td>
     </tr>
     <tr>
       <td><strong>Move the pin and open the PR</strong><br /><code class="language-plaintext highlighter-rouge">A_ApplyPin</code></td>
@@ -922,7 +926,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Record the hold or the decline</strong><br /><code class="language-plaintext highlighter-rouge">A_RecordOutcome</code></td>
       <td>Agent</td>
       <td><a href="../reference/skill-instructions/upstream-version-adoption.html"><code class="language-plaintext highlighter-rouge">upstream-version-adoption</code></a></td>
-      <td>A HOLD is a block with an expiry and a revisit trigger: a hold with neither cannot be told from abandoned work, and the next watcher run re-raises the same pin with no memory of why it was left. A DECLINE is a scrapped bean carrying its reasons — what stops the next agent re-entering the same dead end. Either way the decision is written down before the process ends, and the bean is resolved from here: a run that stops at “we looked and said no” is as finished as one that moved the pin.</td>
+      <td>A HOLD is a block with an expiry and a revisit trigger: a hold with neither cannot be told from abandoned work, and the next watcher run re-raises the same pin with no memory of why it was left. A DECLINE is a scrapped bean carrying its reasons — what stops the next agent re-entering the same dead end.<br />Either way the decision is written down before the process ends, and the bean is resolved from here: a run that stops at “we looked and said no” is as finished as one that moved the pin.</td>
     </tr>
   </tbody>
 </table></div>
