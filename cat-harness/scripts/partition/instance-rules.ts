@@ -512,6 +512,11 @@ export const RULES: Rule[] = [
       // this block: its subject is `.github/workflows/`, the harness's own CI
       // definition, and it reads no folio content of any kind.
       "scripts/check-red-gate-is-last.ts",
+      // Whether every workflow installs the Bun that `.bun-version` names
+      // (bean `3ozg`). Harness for the same reason as the line above: its
+      // subject is `.github/workflows/` plus one repo-root pin file, and it
+      // reads no folio content.
+      "scripts/check-bun-pin.ts",
       // Whether each methodology's cited `origin` resolves to an ingested
       // source. Harness for the same reason as the two above: it reads the
       // declaration for the `methodology` and `library` graphs and fans out
