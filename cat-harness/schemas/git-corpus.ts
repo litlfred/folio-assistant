@@ -71,9 +71,11 @@
  * @graphNode none — asks git which files exist: a corpus rule, not a schema
  * @covers cat-harness
  */
+import { Glob } from "bun";
+
 import { spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
-import { join } from "node:path";
+import { join, relative } from "node:path";
 
 /**
  * The files git accounts for under {@link dir}, as absolute paths — or
@@ -110,4 +112,52 @@ export function inWorkTree(dir: string): boolean {
     encoding: "utf-8",
   });
   return r.error === undefined && r.status === 0 && r.stdout.trim() === "true";
+}
+
+/**
+ * A glob scan over the files GIT accounts for — the shared form of the rule
+ * `xd1g` asks to be stated once rather than re-implemented eleven times.
+ *
+ * ## Why this and not a git pathspec
+ *
+ * Handing the same pattern to `gitCorpus` as a PATHSPEC looks equivalent and
+ * is not: a git pathspec's star crosses a path separator by default, while a
+ * Bun `Glob` single star does not. So a caller porting a pattern from one to
+ * the other changes what it matches without changing a character of it. This keeps the PATTERN semantics exactly as the caller
+ * wrote them and changes only where the candidate list comes from, which is
+ * the whole of the conversion and the only part that can be verified by
+ * comparing counts.
+ *
+ * ## The fallback is recorded, not silent
+ *
+ * `git` answering is not guaranteed — a temp fixture is not a work tree, and
+ * `gates` must stay runnable where git cannot be asked. So an unavailable git
+ * falls back to the bare scan and SAYS SO in `source`. A measurement pinned
+ * from a bare walk counts whatever is on the machine and has to be legible as
+ * such; that is `kg-detangle`'s `corpusFallbacks` rule, and collapsing the two
+ * into one silent answer is the `dh4f` shape.
+ *
+ * @param root     directory the pattern is relative to
+ * @param pattern  a Bun `Glob` pattern, exactly as a `scanSync` caller writes it
+ * @returns paths RELATIVE to `root`, sorted, and which corpus they came from
+ */
+export function gitScan(
+  root: string,
+  pattern: string,
+): { files: string[]; source: "git" | "walk" } {
+  const glob = new Glob(pattern);
+  const tracked = gitCorpus(root);
+  if (tracked === undefined) {
+    return {
+      files: [...glob.scanSync({ cwd: root, onlyFiles: true })].sort(),
+      source: "walk",
+    };
+  }
+  return {
+    files: tracked
+      .map((abs) => relative(root, abs).split(/[\\/]/).join("/"))
+      .filter((rel) => glob.match(rel))
+      .sort(),
+    source: "git",
+  };
 }

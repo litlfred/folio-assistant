@@ -1,11 +1,11 @@
 ---
 # folio-assistant-biz4
 title: An untracked _kg/ at the container root silently inflates local detangle counts — 229 becomes 1443, and the gate reads as a code defect
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-26T11:26:16Z
-updated_at: 2026-09-26T13:49:29Z
+updated_at: 2026-09-27T07:08:21Z
 parent: folio-assistant-1xhc
 blocked_by:
     - folio-assistant-xd1g
@@ -209,3 +209,34 @@ from `d25494497bb` by hand. `ahab`, `3x2o` and `872t` survived because they rode
 merged PRs, and `m5gx` survived because `beans:claim` pushes the bean to the
 default branch — **claiming is what made it durable**, which is a reason to
 claim beyond coordination.
+
+
+## Verified settled, 2026-09-27 (session on `claude/dead-declaration-keys`)
+
+Re-derived in a container that still carries the contamination, which is the
+only place the claim can be tested:
+
+    du -sh _kg                ->  17M   (grown from the 4.8M this bean recorded)
+    committed schemas sidecar ->  size 233, internal 126, cohesion 0.82
+    bun run kg:detangle:check ->  exit 0
+
+So the contamination is on disk and no longer reaches the measurement --
+`a0f7719032e`'s `gitCorpus` holds. Marking completed on that evidence rather
+than on authorship.
+
+The 4.8M -> 17M growth is worth recording: the five `cat-harness.<locale>.jsonld`
+files are dated to this session's `lvw0` work, so the residue GROWS with every
+export a session runs. That is an argument for answering "what writes `_kg/`"
+rather than leaving it, but it is not this bean's.
+
+## The two unticked items, and where they went
+
+- **What writes `_kg/`** -- still unknown, still not deleted
+  (`deletion-requires-confirmation`). Harmless to this gate rather than
+  answered.
+- **`audit-coverage.ts` still walks** (`readdirSync`, no `gitCorpus`), so the
+  standing *"never run `audit:coverage` in this container"* warning is live.
+  That is `xd1g`'s, which is open and unclaimed and whose own "Done when" is
+  broader: eleven root-rooted scanners, a shared rule rather than eleven
+  copies, and a check so number twelve is caught rather than discovered by a
+  contributor with residue on their machine.

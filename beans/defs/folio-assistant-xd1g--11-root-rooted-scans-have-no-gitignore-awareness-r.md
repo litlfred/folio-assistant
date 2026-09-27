@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xd1g
 title: 11 root-rooted scans have no gitignore awareness — ramz's sibling audit, answered
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-26T11:19:41Z
+updated_at: 2026-09-27T07:14:31Z
 parent: folio-assistant-ahvw
 ---
 
@@ -290,3 +290,67 @@ The duplicate fixes converged too — that PR called `gitCorpus` and REFUSED
 here only because the choice is real: a fallback that is documented and reached
 only when git cannot answer is not the silent one that caused this.
 
+
+## Re-measured 2026-09-27, and the list has moved
+
+Of the eleven this bean names, **one has been converted since** --
+`check-subgraphs` now asks git. Ten remain, plus `audit-coverage` (which
+`biz4` hands over). So **11 bare walkers today**. `biz4`'s neighbouring note
+that "six scanners have adopted gitCorpus" is true repo-wide but not of these
+eleven, and that is the number this bean is about.
+
+Done-when 2 is largely met already: `gitCorpus` in `schemas/git-corpus.ts` is
+the shared rule, with 8 adopters. What was missing is adoption, a matching
+helper for the glob-shaped callers, and the guard.
+
+## Done-when 3 -- A SYNTACTIC CHECK DOES NOT WORK, measured
+
+I built one and it failed its own falsifier, so it is not shipped. The numbers,
+so the next reader does not rebuild it:
+
+| filter | root-rooted scanners found | of this bean's twelve |
+|---|---|---|
+| binds a root const AND enumerates anything | **62** undeclared | all |
+| enumeration SEEDED at a root const | **4** | 1 of 12 |
+
+62 is unusable -- most are scanners reading one declared directory, which is
+fine -- and declaring 62 exemptions I have not read would be the empty
+exemption the check exists to refuse. 4 misses eleven of the twelve, because
+they seed a recursion helper or pass the root as a PARAMETER. There is no
+middle setting: the shapes are not syntactically distinguishable.
+
+**What does work is behavioural**, and it is two-sided. Plant a file under a
+gitignored tree the scanner's own denylist does NOT name, then compare the old
+corpus with the new:
+
+    before (bare walk + hand denylist)  35
+    after  (gitScan, source=git)        34
+    swept by old and not new            _kg/library/planted/manifest.jsonld
+    in new and not old                  0   <- the conversion LOST nothing
+
+Both halves are needed. Excluding ignored files is the point; losing real ones
+is the risk, and a count going down looks like success either way. That control
+is now a test rather than a session log.
+
+## Landed
+
+- `gitScan(root, pattern)` in `schemas/git-corpus.ts` -- Done-when 2's "stated
+  once" for the glob-shaped callers. A Bun `Glob` over git's list rather than a
+  git pathspec, because a pathspec's star crosses a path separator and a Bun
+  single star does not: porting a pattern would change what it matches without
+  changing a character of it. The no-git fallback is REPORTED in `source`, not
+  silent (`kg-detangle`'s `corpusFallbacks` rule).
+- `check-source-licence` converted, 1 of 11. Its hand-written denylist was an
+  exact under-approximation of `.gitignore` -- `node_modules` is line 1 and
+  `cat-harness/ingest-staging/` is line 219 -- so it named the two ignored
+  trees somebody had been bitten by and a third swept in silently. That is
+  `ramz`'s shape, confirmed rather than assumed.
+
+## Open, and needs a decision before the other ten
+
+Done-when 3's mechanism. Options as I see them: a behavioural probe per
+scanner (reliable, needs each scanner to expose its corpus); an `@corpus`
+declaration on every filesystem-enumerating script, `3srh`-style (63 files, one
+line each, but the classification is the real work); or accept the syntactic
+floor as advisory, which is the `1xhc` shape this repository has just spent a
+PR arguing against.
