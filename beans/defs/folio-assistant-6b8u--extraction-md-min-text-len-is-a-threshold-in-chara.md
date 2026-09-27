@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6b8u
 title: 'EXTRACTION: MD_MIN_TEXT_LEN is a threshold in CHARACTERS, so the same table cell is translatable in Arabic and not in English'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T08:56:25Z
-updated_at: 2026-09-27T07:34:04Z
+updated_at: 2026-09-27T08:06:12Z
 parent: folio-assistant-bzyu
 ---
 
@@ -72,9 +72,9 @@ shipped**, because every other consumer does.
       recorded on the constant
 - [x] MEASURED AFTER: the same cell extracts the same number of entries in every
       locale, and a CJK one-character cell is treated like its English counterpart
-- [ ] every `.pot` regenerated with tooling, and the msgids the change adds are
+- [x] every `.pot` regenerated with tooling, and the msgids the change adds are
       dispositioned in the 19 existing `.po` files rather than left as silent drift
-- [ ] checked against a folio other than this one — extraction is shared by every
+- [x] checked against a folio other than this one — extraction is shared by every
       instance
 
 
@@ -178,8 +178,70 @@ and nowhere else.
 
 ### Adds to "Done when"
 
-- [ ] decide the one-character-word case on its merits — a single Han character is
+- [x] decide the one-character-word case on its merits — a single Han character is
       a word where a single Latin letter is not — with the measurement above
       recorded, and NOT justified by alignment, which it does not improve
 
 _2026-09-27T07:34:04Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Re-measured 2026-09-27 — the numbers above were stale, the CONCLUSION holds
+
+The measurements in this bean were taken before `o29r` (229 msgids) and `3mo4`
+(209 msgids) changed extraction, so they no longer describe the corpus. Re-run on
+the current tree. **Nothing was shipped**; `isTranslatable` was patched
+temporarily to measure the candidate and restored, verified by an empty diff.
+
+| | bean, 2026-09-26 | now |
+|---|---|---|
+| msgids admitted by the current rule (≥2 letters) | 40 939 | **46 800** |
+| cells the candidate would newly admit | "6 msgids" | **8 cells, 2 distinct strings** |
+| pairs derived / refused, CURRENT rule | 19 aligned /25 | **57 derived, 13 refused** |
+| pairs derived / refused, CANDIDATE rule | 19 aligned /25 | **57 derived, 13 refused** |
+| `zh/getting-started` | 149 / 145 → 149 / 150 | **149 / 145 → 149 / 150** |
+
+So the bean's two load-bearing claims are confirmed rather than assumed:
+**alignment does not move at all** — 57/13 under both rules, byte-identical
+refusal breakdown (`count-differs` 10, `msgid-conflict` 3) — and on the one pair
+the candidate was meant to help it **swaps one misalignment for another**, short by
+4 becoming long by 1.
+
+## The decision is now concrete rather than abstract
+
+The candidate admits **exactly two strings**, each four times:
+
+    "是"  (yes) x4
+    "否"  (no)  x4
+
+in `docs/guides/zh/agent-onboarding.md`, `docs/zh/document-ingestion.md` and
+`docs/zh/getting-started.md` — all of them yes/no cells in comparison tables.
+
+That is the whole question, stated without an alignment argument as this bean
+requires: **is a single Han character a word a translator should be offered, where
+a single Latin letter is not?** 是 and 否 are complete words; `y` and `n` are not.
+Eight cells either way, and no measurement can settle it.
+
+**Put to the owner 2026-09-27. Unanswered — nothing shipped.**
+
+
+## SHIPPED 2026-09-27 — the owner decided YES, on the merits
+
+`isTranslatable` accepts a string containing Han, Hiragana, Katakana or Hangul.
+The Done-when item is discharged by a DECISION, which is what it asked for.
+
+**Expressed as the property, not as a vocabulary.** `MD_IDEOGRAPH_RE` names the
+four scripts rather than listing `是` and `否`. A two-character list would need
+maintaining every time a page gains a third, which is a rule written as a
+backlog — and the owner's reasoning was about the property: a single ideograph is
+a word where a single Latin letter is not.
+
+Six tests, and one of them is the anti-scope-creep guard: over the real corpus the
+rule must admit **exactly** `["否", "是"]`, eight cells in total. If a later change
+widens it, that assertion fails rather than a msgid count nobody reads. The
+asymmetry is pinned directly too — `isTranslatable("y")` is `false` and
+`isTranslatable("是")` is `true`, in adjacent tests, so the next reader meets the
+decision rather than inferring it.
+
+**The alignment non-claim is pinned as prose in the code**, because it is the
+thing a later reader is most likely to get wrong: this does not improve alignment,
+`derive-po` reports 57 derived / 13 refused either way, and `zh/getting-started`
+goes from short-by-four to long-by-one. Cited as a reason it MUST NOT be used.

@@ -111,12 +111,12 @@
  * translation — #206's own distinction, and the reason every catalogue written
  * here is marked unofficial in its header.
  */
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join, relative, sep } from "node:path";
 
 import { extractMarkdown, type PotEntry } from "./pot-extract.ts";
-import { catalogueFor } from "./translation-drift.ts";
-import { siteRoot, sourceLocale, supportedLocales } from "./translation-index.ts";
+import { catalogueFor, fileForUrl } from "./translation-drift.ts";
+import { buildTranslationIndex, siteRoot, sourceLocale, supportedLocales } from "./translation-index.ts";
 
 /** Why a pair could not be derived — never just "failed". */
 export interface Refusal {
@@ -406,14 +406,14 @@ export function derive(
     const src = extractMarkdown(readFileSync(srcPath, "utf-8"), rel);
 
     for (const locale of locales) {
-      const trPath = join(docs, locale, `${page}.md`);
+      const trPath = translationPathFor(docs, page, locale);
       if (!existsSync(trPath)) {
         refused.push({ page, locale, reason: "translation-missing", detail: `no ${trPath}` });
         continue;
       }
       const tr = extractMarkdown(
         readFileSync(trPath, "utf-8"),
-        `${relative(instanceRoot, docs) || "."}/${locale}/${page}.md`,
+        relative(instanceRoot, trPath),
       );
       if (tr.length < src.length) {
         // The source may simply have GROWN since this was translated, which is
@@ -482,6 +482,31 @@ export function derive(
 }
 
 /**
+ * Where a locale's translation of `page` lives — **beside the page, not at the root.**
+ *
+ * `docs/guides/agent-onboarding.md` is translated at
+ * `docs/guides/ar/agent-onboarding.md`. The composition this replaces was
+ * `join(docs, locale, page + ".md")`, which puts the locale segment first and so
+ * looks for `docs/ar/guides/agent-onboarding.md` — a path that exists nowhere in
+ * this corpus. It was invisible for as long as every translated page sat at the
+ * site root, where the two spellings coincide.
+ *
+ * **Checked against the index rather than reasoned about.** The authority on where
+ * a translation lives is the URL its own front matter produces, which
+ * `buildTranslationIndex` reads; this function composes the same path from a page
+ * name and a locale because {@link derive} is given those and not the index. A
+ * test asserts the two agree on all 70 published pairs, so the composition is
+ * evidence-backed rather than a convention restated in a second place. If they
+ * ever disagree, the index is right and this is wrong.
+ */
+export function translationPathFor(docs: string, page: string, locale: string): string {
+  const cut = page.lastIndexOf("/");
+  return cut === -1
+    ? join(docs, locale, `${page}.md`)
+    : join(docs, page.slice(0, cut), locale, `${page.slice(cut + 1)}.md`);
+}
+
+/**
  * Every (page, locale) this instance PUBLISHES a translation for.
  *
  * **The CLI hard-coded five page names, and that is why a translation batch needed
@@ -490,47 +515,85 @@ export function derive(
  * `translation-drift` went from 1 finding to 21, and this tool could not see them.
  * A list of pages in a script is a list that goes stale on somebody else's merge.
  *
- * Discovered instead: for each locale the instance DECLARES, every `.md` in that
- * locale's directory which has a same-named source page beside the site root.
+ * ## It DELEGATES, and that is the fix rather than a shortcut
  *
- * **The locales come from `supportedLocales`, not from directory names.** My first
- * version matched a two-or-three-letter directory name and picked up
- * `wireframes/fsh-guts` as a locale — `fsh` plus a suffix fits that shape exactly.
- * A locale is a declared vocabulary (`harness.config.json`'s
- * `translation.supportedLocales`, defaulting to the six UN languages), so guessing
- * it from the filesystem was inventing an answer the instance already gives. The
- * source locale is excluded: it is the thing being translated FROM.
+ * This used to do one flat `readdirSync(join(docs, locale))`, so it saw the site
+ * root and nothing below it. Measured on `c6960465301` (bean `9rnf`): **13 of the
+ * 14** pages with published translations, missing `guides/agent-onboarding` in all
+ * five locales — and that one page is where **every** stale msgid in the corpus
+ * lives, so the tool built to keep catalogues current could not reach the only
+ * catalogues that were not.
  *
- * Pages are still discovered from the filesystem, and that is the right split —
- * which pages exist is a fact about the tree, while which locales count is a
- * declaration.
+ * The obvious repair is to make the scan recursive, and the bean asked for exactly
+ * that. It is the wrong repair. `buildTranslationIndex` already walks the site
+ * recursively, already skips Jekyll's `_`-prefixed machinery at every level, and
+ * already resolves a page's locale siblings beside the page — and it is what the
+ * drift gate and `check-translation-catalogue` read. A second recursive walker
+ * here would be a second answer to "which pairs are published", free to disagree
+ * with the first, and the disagreement would surface as one gate reporting a
+ * catalogue missing that another reports present.
+ *
+ * So: one answer, and the locale list is still the DECLARATION rather than the
+ * filesystem. An earlier version of the flat scan matched two-or-three-letter
+ * directory names and picked up `wireframes/fsh-guts` as a locale, `fsh` plus a
+ * suffix fitting that shape exactly. Locales are intersected with
+ * `supportedLocales` for that reason, and the source locale is excluded because
+ * it is the thing being translated FROM.
+ *
+ * ## Why it cannot report an empty set quietly
+ *
+ * `buildTranslationIndex` returns findings, and `unreadable` among them means the
+ * translation set for some page **could not be determined**. Discovering nothing
+ * because the index could not be built is a different fact from discovering
+ * nothing because nothing is published, and collapsing the two is the `dh4f`
+ * defect this file already refuses one level up. The findings are surfaced to the
+ * caller rather than swallowed.
  */
 export function publishedPairs(
   docs: string,
   declaredLocales: readonly string[],
   sourceLocale: string,
-): { pages: string[]; locales: string[] } {
-  const locales: string[] = [];
-  const pages = new Set<string>();
-  for (const locale of declaredLocales) {
-    if (locale === sourceLocale) continue;
-    let entries: string[];
-    try {
-      entries = readdirSync(join(docs, locale));
-    } catch {
-      continue; // The locale is declared but nothing is published in it yet.
-    }
-    let found = false;
-    for (const f of entries) {
-      if (!f.endsWith(".md")) continue;
-      const page = f.slice(0, -3);
-      if (!existsSync(join(docs, `${page}.md`))) continue;
-      pages.add(page);
-      found = true;
-    }
-    if (found) locales.push(locale);
+  opts: { instanceRoot?: string } = {},
+): { pages: string[]; locales: string[]; findings: string[] } {
+  // The index is built from the instance root, while this function's contract is
+  // a site directory — the two differ by the declared site segment, and a caller
+  // that already knows the root passes it rather than having it inferred.
+  const instanceRoot = opts.instanceRoot ?? dirname(docs);
+  const declared = new Set(declaredLocales.filter((l) => l !== sourceLocale));
+
+  let index: ReturnType<typeof buildTranslationIndex>;
+  try {
+    index = buildTranslationIndex(instanceRoot);
+  } catch (e) {
+    // Never an empty answer for a reason that is not "nothing is published".
+    return {
+      pages: [],
+      locales: [],
+      findings: [`the translation index could not be built from ${instanceRoot}: ${String(e)}`],
+    };
   }
-  return { pages: [...pages].sort(), locales: locales.sort() };
+
+  const pages = new Set<string>();
+  const locales = new Set<string>();
+  const findings = index.findings
+    .filter((f) => f.severity !== "note")
+    .map((f) => `${f.severity}: ${f.where} — ${f.message}`);
+
+  for (const page of Object.values(index.index.pages)) {
+    // The page NAME this file speaks in is its path relative to the site, which
+    // is what `translationPathFor` and `formatDerivedPo`'s `#:` reference both
+    // need. `fileForUrl` is the one answer to url -> file, shared with the gate.
+    const srcFile = fileForUrl(docs, page.sourceUrl);
+    const name = relative(docs, srcFile).replace(/\.md$/i, "").split(sep).join("/");
+    let any = false;
+    for (const locale of Object.keys(page.translations)) {
+      if (!declared.has(locale)) continue;
+      locales.add(locale);
+      any = true;
+    }
+    if (any) pages.add(name);
+  }
+  return { pages: [...pages].sort(), locales: [...locales].sort(), findings };
 }
 
 /** What {@link write} did, per catalogue. */
@@ -624,7 +687,14 @@ if (import.meta.main) {
     console.error(`No site root under ${root} — nothing declares a directory with a _config.yml.`);
     process.exit(2);
   }
-  const { pages, locales } = publishedPairs(docs, supportedLocales(root), sourceLocale(root));
+  const { pages, locales, findings } = publishedPairs(docs, supportedLocales(root), sourceLocale(root), {
+    instanceRoot: root,
+  });
+  // Printed BEFORE the count, and never folded into it. A discovery that could
+  // not read part of the corpus still prints a confident-looking number, so the
+  // number has to arrive already qualified.
+  for (const f of findings) console.log(`! ${f}`);
+  if (findings.length > 0) console.log("");
   console.log(`${pages.length} page(s) x ${locales.length} locale(s) published here: ${locales.join(", ")}\n`);
   const r = derive(root, pages, locales);
   console.log(formatReport(r));

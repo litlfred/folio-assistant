@@ -237,10 +237,6 @@ msgstr "Amorçage du plan de travail (inter-harnais)"
 msgid "The work-plan is stored in  and surfaced three ways so any harness is primed identically:"
 msgstr "Le plan de travail est stocké dans  et exposé de trois manières pour que tout harnais soit amorcé de façon identique :"
 
-#: docs/architecture.md:158
-msgid "**** — static discipline, read natively by every agent."
-msgstr "**** — discipline statique, lue nativement par chaque agent."
-
 #: docs/architecture.md:159
 msgid "hook — each harness runs the shared  primer."
 msgstr "Hook  — chaque harnais exécute l'amorce partagée ."
@@ -260,3 +256,6 @@ msgstr "Déploiement"
 #: docs/architecture.md:167
 msgid "contains a Caddy reverse-proxy template, , a provisioning script, Google OAuth setup, and a self-update script for running a shared HTTP instance. The skill-package Docker manifests aggregate apt/pip/npm dependencies into a single image per active package set."
 msgstr "contient un modèle de proxy inverse Caddy, , un script de provisionnement, la configuration de Google OAuth et un script de mise à jour automatique pour exécuter une instance HTTP partagée. Les manifestes Docker des paquets de compétences regroupent les dépendances apt/pip/npm dans une image unique par ensemble de paquets actif."
+
+#~ msgid "**** — static discipline, read natively by every agent."
+#~ msgstr "**** — discipline statique, lue nativement par chaque agent."
