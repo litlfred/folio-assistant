@@ -115,7 +115,7 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
-import { repoRootFor, DECLARATION_SUFFIX, instanceDirectoryForGraph, resolveDirectories } from "../schemas/cat-harness.js";
+import { repoRootFor, DECLARATION_SUFFIX,  resolveDirectories, instanceDirectoriesForGraph} from "../schemas/cat-harness.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
 
@@ -1490,20 +1490,32 @@ function brokenSkillContracts(): KgFinding[] {
  * contract, so a contract nothing points at is specified for nobody.
  */
 function unclaimedSkillContracts(): KgFinding[] {
-  // declared-path-literal: the conventional fallback when no declaration names the directory
-  const dir = join(instanceDirectoryForGraph(root, "schemas") ?? join(root, "schemas"), "skills");
-  if (!existsSync(dir)) return [];
+  // EVERY declared `schemas` directory, not one. Asking for one threw outright on
+  // an instance that declares two — `kg:audit --instance ./large-datasets` never
+  // audited at all, it crashed inside `instanceDirectoryForGraph`. Declaring a
+  // kind twice is legal and `cat-harness.json` does it, so the singular accessor
+  // was simply the wrong question here; its refusal to guess is correct and is
+  // why this reads plural instead of taking `[0]`.
+  //
+  // declared-path-literal: the conventional fallback when no declaration names one.
+  const declared = instanceDirectoriesForGraph(root, "schemas");
+  const dirs = (declared.length > 0 ? declared : [join(root, "schemas")])
+    .map((d) => join(d, "skills"))
+    .filter((d) => existsSync(d));
+  if (dirs.length === 0) return [];
   const claimed = new Set<string>();
   for (const c of skillContracts(root).values()) {
     for (const ref of [c.input, c.output]) if (ref !== undefined) claimed.add(ref);
   }
   const out: KgFinding[] = [];
-  for (const e of readdirSync(dir, { withFileTypes: true })) {
-    if (!e.isDirectory()) continue;
-    for (const f of readdirSync(join(dir, e.name))) {
-      if (!f.endsWith(".schema.json")) continue;
-      const ref = relative(root, join(dir, e.name, f));
-      if (!claimed.has(ref)) out.push({ where: ref, detail: `no skill names ${ref} as its input or output.` });
+  for (const dir of dirs) {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      if (!e.isDirectory()) continue;
+      for (const f of readdirSync(join(dir, e.name))) {
+        if (!f.endsWith(".schema.json")) continue;
+        const ref = relative(root, join(dir, e.name, f));
+        if (!claimed.has(ref)) out.push({ where: ref, detail: `no skill names ${ref} as its input or output.` });
+      }
     }
   }
   return out;
