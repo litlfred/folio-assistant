@@ -1,11 +1,11 @@
 ---
 # folio-assistant-kfkh
 title: A clean merge produces a DUPLICATE front-matter key — three instances, no conflict marker on any of them
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-09-25T17:44:01Z
 parent: folio-assistant-1xhc
-updated_at: 2026-09-25T17:44:01Z
+updated_at: 2026-09-27T10:28:24Z
 ---
 
 Found 2026-09-25 while merging `main` into a PR branch. Distinct from `oxka`
@@ -136,3 +136,5 @@ Two further consequences worth having written down:
       since an unenforced order is what lets two insertions coexist
 - [ ] MEASURED AFTER: a deliberate duplicate in `package-manifest.json` makes
       `bun run gates` exit non-zero
+
+_2026-09-27T10:28:24Z_ — Claimed by claude/brave-hypatia-r820sf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
