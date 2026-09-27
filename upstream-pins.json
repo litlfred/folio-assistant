@@ -9,7 +9,12 @@
       "pinnedIn": "docs/_config.yml",
       "pattern": "^remote_theme:\\s*just-the-docs/just-the-docs@(\\S+)\\s*$",
       "tagPattern": "^v\\d+\\.\\d+\\.\\d+$",
-      "themedPaths": ["_sass", "_includes", "_layouts", "assets"],
+      "themedPaths": [
+        "_sass",
+        "_includes",
+        "_layouts",
+        "assets"
+      ],
       "binds": [
         "docs/assets/js/docs-ui.js — MOVES the theme's own search markup into the action launcher; binds `.search`, `#search-input`, `.search-label`. An upstream rename degrades a shipped feature without failing the build.",
         "docs/assets/css/docs-ui.css — overrides `.side-bar`, `.site-header`, `.main-header`; `sidebar-panels.e2e.ts` records that the theme hard-caps `.site-header` height.",
@@ -24,6 +29,20 @@
         "bun test",
         "CI=1 bunx playwright test",
         "bun run scripts/site-links.ts --site ./_site"
+      ]
+    },
+    {
+      "id": "bun",
+      "title": "Bun runtime",
+      "repo": "https://github.com/oven-sh/bun",
+      "pinnedIn": "../.bun-version",
+      "pattern": "^(\\d+\\.\\d+\\.\\d+)\\s*$",
+      "tagPattern": "^bun-v\\d+\\.\\d+\\.\\d+$",
+      "tagPrefix": "bun-v",
+      "binds": [
+        "Every `.github/workflows/*.yml` — 22 `oven-sh/setup-bun@v2` sites carry `bun-version` literals, and `check:bun-pin` fails if any disagrees with `.bun-version`. That gate is what makes this ONE answer rather than 23: without it the copies would be free to disagree, which is exactly what this registry's own note forbids.",
+        "cat-harness/content/pipeline/qa-utils.ts — `saveQaScriptSidecar` skips the write unless a substantive field moved, and `engine_version` (`bun-${Bun.version}`) is one of them. An unpinned runtime therefore rewrites every script sidecar whenever the engine differs, which took `bun run gates`' tree-mutation detector to 'NOT clean' on every branch including pristine main (bean `3ozg`).",
+        "cat-harness/content/pipeline/script-sidecars/*.script.json — 86 committed records whose `engine_version` is this pin's observable consequence. They held TWO values when the pin was added: 72 at bun-1.3.14 and 14 at bun-1.3.11."
       ]
     }
   ]

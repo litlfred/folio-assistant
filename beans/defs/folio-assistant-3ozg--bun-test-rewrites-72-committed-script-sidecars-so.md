@@ -67,42 +67,167 @@ regeneration writes before committing it.** Committing this churn stamps a
 main's — as though it were a fresh measurement. That is why the standing practice has
 been to discard rather than commit, and why option 4 is not merely a cop-out: it at
 least makes the discard deliberate.
+---
+
+## 2026-09-27 — the CAUSE is pinned. Not closed, and the reason is precise.
+
+The owner chose "pin the runtime" from a set of options. Landed: `.bun-version`
+holding `1.3.14`, all **22** `oven-sh/setup-bun@v2` sites across 12 workflow
+files carrying that literal explicitly (18 said `latest`; **four said nothing at
+all** and took the action's default), a `bun` row in `upstream-pins.json`, and
+`check:bun-pin` asserting the 22 agree with the file.
+
+### What this bean was missing, and it is the reason a pin is the cause-level fix
+
+This entry lists three volatile fields — `last_run_at`, `last_run_sha`,
+`engine_version` — as though all three had to be dealt with. They do not.
+`saveQaScriptSidecar` **skips the write entirely** unless a SUBSTANTIVE field
+moved, and its own docblock records that guard being added for this exact churn
+("76 modified files after one qou run, none of them a real change"). The two
+`last_run_*` fields are excluded from that comparison. `engine_version` is not —
+correctly, since a verdict produced by a different engine is a different verdict.
+
+So `engine_version` is the only field that was ever *causing* a write, and the
+other two were passengers. Remove the difference and all three stop moving. That
+also means the bean's own remedy — "it writes into a temp directory" — would
+have treated a symptom.
+
+### The measurement that shifts the blame off agents
+
+Upstream Bun's newest release is **`bun-v1.4.2`** (`git ls-remote`, 241
+`bun-vX.Y.Z` tags). CI ran `bun-version: latest`, so **CI itself would have
+rewritten all 86 sidecars to `bun-1.4.2` on its next sweep**, whatever any agent
+did. The 86 already held two values — 72 at `bun-1.3.14`, 14 at `bun-1.3.11` —
+so the committed record was mixed before any of this.
+
+And that is where the `72` in this bean's title comes from: it is not a blast
+radius, it is the count of sidecars NOT already at the local Bun (1.3.11 in this
+container). A container at 1.3.14 would see 14 move instead.
+
+### One defect found in the machinery while using it
+
+`upstream-pins.json` could not express Bun at all. `assessPin` compared the pin
+literal to the tag list with `rel.includes(pinned)`, and `setup-bun` takes
+`1.3.14` while upstream tags `bun-v1.3.14` — so the verdict was `unknown`, which
+sets exit 2, which would have made the weekly watchdog report itself **blind
+forever**. That is its documented failure mode pointing the other way: not
+claiming health while blind, but crying blind while healthy, which trains a
+reader to stop looking.
+
+Fixed with an optional `PinDef.tagPrefix`, compared on the tag form while every
+message still reports the literal a reader will find in `pinnedIn`. The existing
+`just-the-docs` pin has no prefix and its 15 tests pass unchanged. The checker now
+reports `▲ Bun runtime | 1.3.14 | bun-v1.4.2 | behind` — which is the machinery
+working: `behind` maintains the tracking issue and only `unknown` fails the job,
+and `check:upstream-pins` is deliberately NOT a step in `code-quality-gates.yml`,
+so a behind pin does not redden CI.
+
+### Why the boxes are still unticked
+
+- **"the test (or interaction) that triggers the write is named"** — still not
+  named. The pin makes it not matter in CI; it does not identify the caller.
+- **"it writes into a temp directory, or the three volatile fields stop being
+  committed"** — neither. The fields stay, and the difference that made them move
+  is gone instead.
+- **"`bun run gates` on pristine main ends clean, not 'NOT clean'"** — **in CI,
+  yes**, once CI runs 1.3.14. **In an agent container whose Bun differs, no.**
+  This container runs 1.3.11, so `bun test` here still rewrites 72 files. The pin
+  cannot reach a container image the repository does not control.
+
+So the always-red signal is fixed where CI observes it and survives where agents
+observe it, and agents are who reported it. Stating that rather than ticking the
+box.
+
+### The version is a judgement, and it is the owner's
+
+`1.3.14` is the version the repository's own artefacts were produced with — the
+status quo made explicit, requiring no mass regeneration. The alternative is
+`1.3.11`: it would make BOTH CI and today's agent containers clean, at the cost
+of one commit regenerating 72 sidecars and of pinning an older patch than the
+artefacts record. Pinning `1.4.2` is not on the table here at all — that is
+ADOPTION, and `processes/upstream-version-adoption.bpmn` makes the accepting step
+a `bpmn:userTask` in a person-only lane.
+
+Put to the owner as a follow-up rather than decided here.
 
 
-## A second way the discard fails, measured 2026-09-27 (branch `claude/brave-hypatia-r820sf`)
+---
 
-Status untouched — this is evidence for whoever works it, not a claim on it.
+## Duplicate found on merge: `rmcf` is the same defect
 
-Remedy 4, *document that these 72 are always discarded locally*, relies on the
-agent knowing. It also relies on the agent's **inspection** being able to see
-them, and there is a common case where it cannot:
+Merging `origin/main` brought in bean `rmcf` — *"72 script sidecars churn on
+every gates run because engine_version records the CONTAINER, and it went
+1.3.14 -> 1.3.11"* — opened by another session with the **same measurement**:
+72 files, the same three changed fields, the same two engine values.
 
-1. `bun run gates` was started in the BACKGROUND while other work continued.
-2. `git status --porcelain` was checked — clean at that moment, because the run
-   had not reached the writer yet.
-3. The run reached `saveQaScriptSidecar` and rewrote all 72.
-4. `git add -A` swept them into a commit about something else entirely.
+Not deleted and not merged. Neither is wrong, and a scrapped or deleted bean
+stops a sibling reconstructing the reasoning. This one holds the claim and the
+fix (the Bun pin, `check:bun-pin`, and `PinDef.tagPrefix`), so `rmcf` carries a
+pointer here rather than the reverse.
 
-The commit was caught and amended before any push, so nothing landed. What makes
-it worth recording is **how** it was nearly missed: the command used to inspect
-the tree was
+Worth noting that THREE beans reached this population independently within a
+day — `3ozg`, `rmcf`, and `ymsu` for a different defect over the same files.
+That is not three people being careless; it is what an always-red signal does:
+every session that runs `bun run gates` on a clean tree sees it, and nothing
+told them it was already written down.
+---
+
+## A second way the discard fails — and its own recommendation is RETRACTED
+
+Appended from `claude/brave-hypatia-r820sf`, 2026-09-27, after the pin above had
+landed as #1442. Status untouched: this is evidence, not a claim on the bean.
+
+**The recommendation this note originally carried was wrong, and it is left named
+rather than deleted.** It read: *"this strengthens remedies 2 and 3 over 4"* —
+stamp only on a real change, or move run provenance out of the committed file. Both
+were put to the owner from this branch before the pin was visible here, and the
+measurement above refutes them:
+
+- **Remedy 2 already exists.** `saveQaScriptSidecar`'s write-skip guard
+  (`qa-utils.ts:1769`) is exactly "stamp only on a real change" — read directly,
+  not taken on trust. It compares `source_file`, `script_hash`,
+  `script_commit_sha`, `deps_hash`, `engine_version` and `extra_inputs`, and
+  returns without writing when all agree.
+- **`last_run_at` and `last_run_sha` are PASSENGERS, never causes.** The guard
+  deliberately excludes them, and its own comment says so: *"Everything except the
+  two `last_run_*` fields is content-derived, so comparing on those alone is the
+  right test."* So moving them out of the committed file — remedy 3 — would change
+  nothing about the churn.
+- Moving `engine_version` out would be worse than a no-op: it is the one field the
+  guard needs in order to notice that a different engine produced the sidecar.
+
+So the pin is cause-level and the two remedies this branch argued for were
+symptom-level. The one fact I had that the bean did not — 86 committed sidecars, 72
+at `bun-1.3.14` and 14 at `bun-1.3.11` — also has a better explanation above than
+the one offered with it. I inferred *"the churn has been committed at least once
+before, partially"*; the sufficient explanation is that the write-skip guard
+compares `engine_version`, so the 14 already matching the local Bun are skipped and
+the 72 are not. **72 is the count not already at the local engine, not a blast
+radius.** My extra hypothesis was never needed and was not established.
+
+### What survives, because it is independent of the remedy
+
+Remedy 4 — *"always discarded locally"* — relies on the agent being able to SEE the
+churn at the moment it commits, and there is a timing window where it cannot:
+
+1. `bun run gates` is started in the BACKGROUND while other work continues.
+2. `git status --porcelain` is checked — clean, because the run has not reached the
+   writer yet.
+3. The run reaches `saveQaScriptSidecar` and rewrites the sidecars.
+4. `git add -A` sweeps them into a commit about something else.
+
+Measured here: 72 sidecars entered a commit about `check:anchor-names`, caught and
+amended before any push. What nearly hid it is the inspection idiom itself —
 
     git status --porcelain | grep -v 'script-sidecars'
 
 — the filter that makes the churn tolerable day to day is the same filter that
-hides it at the moment it matters. An agent following remedy 4 writes exactly
-that pipeline, and it reports clean while 72 files are staged.
+hides it at the moment it matters, and it is the pipeline remedy 4 invites. The
+same run was contaminated a second way: committing a file while gates was live made
+the detector report `bun run lint` as having "reverted" a path, attributing an
+agent's own commit to a gate.
 
-**This strengthens 2 and 3 over 4 rather than adding a fifth option.** Remedy 4
-is the only one whose correctness depends on the timing of an unrelated
-background process; 2 (stamp only on a real change) and 3 (move provenance out of
-the committed file) both make the window not exist. It is also a reason to prefer
-either over "just remember", independent of the `engine_version` downgrade
-argument already recorded here.
-
-One caveat on the count: this branch measures **86** sidecars committed, of which
-**72** carry `bun-1.3.14` and **14** carry `bun-1.3.11`. So the corpus is already
-MIXED — the churn has been committed at least once before, partially — and "main's
-sidecars are stamped bun-1.3.14" is true of 72 of 86 rather than of all of them.
-Whichever remedy is chosen, the 14 are a pre-existing divergence it has to
-account for, not collateral of the fix.
+This is an argument for the pin reaching agent containers too — the open question
+in *"the version is a judgement"* above — rather than for either retracted remedy.
+While an agent container's Bun differs from `.bun-version`, step 2 keeps lying, and
+no amount of documenting the discard closes that window.

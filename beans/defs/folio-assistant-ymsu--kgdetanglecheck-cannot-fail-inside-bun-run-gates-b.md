@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-26T19:27:26Z
+updated_at: 2026-09-27T05:09:31Z
 parent: folio-assistant-1xhc
 ---
 
@@ -720,3 +720,47 @@ alone; the adoption would have been worth nothing.
       proposes on `cpss` — split `translation:drift:check` out and make it the LAST
       step — is recorded here as the candidate, NOT adopted: it restructures gates
       that are not mine, and it is an owner decision
+
+## 2026-09-27 — measured on pristine main, and the runner now DETECTS it
+
+`bun run gates` on a pristine `origin/main` worktree at `c6960465301`
+reported, as its own finding:
+
+```
+✗ 1 gate(s) CHANGED THE REPOSITORY while the gates were running:
+  · bun test   (72 path(s))
+      wrote (" M")  cat-harness/content/pipeline/script-sidecars/assertions_are_falsifiable.script.json
+      wrote (" M")  cat-harness/content/pipeline/script-sidecars/bib-cite-resolves.script.json
+      …and 64 more path(s) not listed
+```
+
+Two things this adds to the bean, neither of which was in it.
+
+**The population is 72 paths, and they are `script-sidecars/`.** This bean was
+written about ONE victim — `kg:detangle:check` reading a sidecar `bun test`
+repaired 1140 lines earlier. The writes are not one file: they are 72, all
+under `cat-harness/content/pipeline/script-sidecars/`. Every gate that reads a
+script sidecar after `bun test` in the same run reads a repaired copy. The
+blast radius is the whole family, not the one gate that happened to be noticed.
+
+**The runner reports it now, so the invisible half of this bean is closed.**
+The detection did not exist when the bean was written — that is why three stale
+artefacts reached `main` green. It is now a named finding with the path list and
+the remedy, and the remedy it prints is the right one:
+
+> If a gate writes here as part of doing its job, that is the defect to fix:
+> compute into a temp directory, as the profile-conformance tests already do,
+> rather than into the tree under test.
+
+**What is still open is the fix, not the detection.** Nothing yet stops
+`bun test` writing into the tree it is being judged on; the runner only tells
+you afterwards that it happened. So a reader still cannot trust any gate
+ordered after `bun test` in a single `gates` run, and the guidance in this
+bean — measure one check at a time, never through `bun run gates` — stands
+unchanged.
+
+Provenance: pristine detached worktree at `origin/main` `c6960465301`, leaf
+directory named `folio-assistant` (the name matters — see below), symlinked
+`node_modules` confirmed git-ignored first so the `qook` corpus defect could
+not confound it. `git status --porcelain` after the run: 72 paths; after
+`git checkout -- .`: 0.

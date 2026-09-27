@@ -5,6 +5,7 @@ lang: zh
 nav_exclude: true
 translation_status: unverified
 translation_source: index.md
+description: "folio-assistant — 内容无关的智能体技能框架。"
 available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
