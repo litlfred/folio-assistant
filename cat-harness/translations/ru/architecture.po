@@ -237,10 +237,6 @@ msgstr "Прайминг плана работы (между харнессам�
 msgid "The work-plan is stored in  and surfaced three ways so any harness is primed identically:"
 msgstr "План работы хранится в  и предоставляется тремя способами, благодаря чему любой харнесс получает идентичный прайминг:"
 
-#: docs/architecture.md:158
-msgid "**** — static discipline, read natively by every agent."
-msgstr "**** — статический регламент, нативно считываемый каждым агентом."
-
 #: docs/architecture.md:159
 msgid "hook — each harness runs the shared  primer."
 msgstr "Хук  — каждый харнесс запускает общий скрипт прайминга ."
@@ -260,3 +256,6 @@ msgstr "Развертывание"
 #: docs/architecture.md:167
 msgid "contains a Caddy reverse-proxy template, , a provisioning script, Google OAuth setup, and a self-update script for running a shared HTTP instance. The skill-package Docker manifests aggregate apt/pip/npm dependencies into a single image per active package set."
 msgstr "содержит шаблон обратного прокси Caddy, , скрипт провижининга, настройку Google OAuth и скрипт самообновления для запуска общего HTTP-инстанса. Docker-манифесты пакетов навыков объединяют зависимости apt/pip/npm в единый образ для каждого активного набора пакетов."
+
+#~ msgid "**** — static discipline, read natively by every agent."
+#~ msgstr "**** — статический регламент, нативно считываемый каждым агентом."

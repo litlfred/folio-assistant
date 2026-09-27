@@ -218,6 +218,13 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "A published specification this corpus conforms to or reads — BPMN, DMN, ODRL, PROV-O — recorded by name and edition rather than copied in.",
     seeAlso: "/external-schemas/",
   },
+  Decision: {
+    // Owner, 2026-09-27: each DMN decision table is its own node, linked to
+    // the gateway that uses it and to the DMN 1.3 standard.
+    gloss:
+      "A DMN decision — a table that computes a gateway's branch from supplied facts, rather than a judgement somebody makes.",
+    seeAlso: "/external-schemas/",
+  },
   Capability: {
     gloss: "Something an actor's environment provides — a binary, a service, a credential — probed rather than assumed.",
   },
@@ -469,6 +476,8 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   from: { gloss: "The node a sequence flow leaves." },
   to: { gloss: "The node a sequence flow arrives at." },
   decisionRef: { gloss: "The DMN table that computes this gateway's branch." },
+  decidedBy: { gloss: "The Decision node whose table computes this gateway's branch." },
+  hitPolicy: { gloss: "How a DMN decision table picks among matching rules, e.g. FIRST or UNIQUE." },
   enforcement: { gloss: "Whether a process's steps are strict or advisory." },
   relaxable: { gloss: "Whether a step may be relaxed by a downstream package." },
   touchesWorkPlan: { gloss: "Whether completing this step performs a work-plan operation." },

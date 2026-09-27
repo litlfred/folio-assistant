@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T04:14:07Z
-updated_at: 2026-09-27T07:11:26Z
+updated_at: 2026-09-27T10:36:45Z
 parent: folio-assistant-d308
 ---
 
@@ -667,4 +667,86 @@ commit 13 sets of false criticals.** The loop waits on blocker 2.
       cannot be audited without committing false criticals** — owner's call on
       whether `skill-ref-resolves`, `role-ref-resolves` and `raci-role-resolves`
       resolve against the dependency closure, as `satisfiableSkills` already does
+- [ ] the `dh4f` zero-diagram question
+
+
+## 2026-09-27, box 8: blocker 2 resolved — resolution follows `needs` DOWNWARD
+
+The owner's call, asked in box 7, was given: *"how resolve?"* then *"go"*. Both
+halves are done, and the box named three criteria because three were wrong.
+
+### The skill half
+
+`resolvableSkills` = own skills ∪ every instance reached through `needs`,
+transitively, via `orderedDependencies` (reused — it already walks the chain, and
+a second walker is the `j79e` defect). Six resolution sites read it.
+
+`smart-base`: `skill-ref-resolves` **fail (9) → pass (0)**, all nine naming
+`methodology-adoption` four layers down its chain. Anchored against an
+independently produced answer: its sidecar now matches
+`cat-harness/test/results/kg-qa/_external/smart-base/` on 5 of 6 skill criteria.
+
+### The role half — measured, not assumed
+
+11 of 13 instances then reported zero criticals. The two that did not,
+`smart-base` and `folio-assistant-core`, named `business-analyst`,
+`programme-manager` and `deep-researcher` — **all three defined in
+`cat-harness/scenarios/roles.json`**, a transitive dependency of both. Only
+bootstrap (4 roles) and cat-harness (48) declare a role graph at all.
+
+`resolvableRoleIds` = own graph's ids ∪ every dependency's. `role-ref-resolves`
+and `raci-role-resolves` were REMOVED from the seven-criterion `!graph`
+overwrite, because neither needs a graph of this instance's own: both ask whether
+a named role exists, which a set of ids answers.
+
+### IDS, not the graph — and the measurement that settled it
+
+Overlaying the `RoleGraph` OBJECT was rejected on evidence. The audit emits one
+SUBJECT per role, so an overlay gives cat-harness's run bootstrap's 4 roles as 4
+new sidecars — for roles bootstrap's own run already audits. That duplicates a
+dependency's subjects into its dependent, which is what
+`instance-graph-isolation.test.ts` forbids and what this bean's own box 2
+requires. **Resolution widens; subjecthood does not** — the `pve3` split, twice.
+
+The five criteria needing role OBJECTS (`lane-binds-role`,
+`role-carries-activity-skill`, `activity-fulfilment-kind`, the two RACI shape
+checks) stay `unknown`, with the message CORRECTED: it said only "no role graph
+declared at scenarios/roles.json", which reads as "these roles do not exist"
+when they do, one layer down.
+
+### Result
+
+**0 criticals across all 13 instances** (was 13 with 2 sets of false ones).
+Default run byte-identical across every sidecar, 48 roles, `fail` 201 unchanged.
+bootstrap unchanged. `instance-graph-isolation.test.ts` green.
+
+### Two mistakes worth recording, both caught by a falsifier
+
+1. `resolvableRoleIds` was seeded from dependencies alone and **not from the
+   instance's own graph**, so cat-harness resolved against bootstrap's 4 roles
+   and none of its own 48: default run `fail` 201 → **273**. A closure must
+   contain the instance it is the closure of. The "default run byte-identical"
+   falsifier caught it immediately; nothing else would have.
+2. The first version of the test spawned `kg:audit --instance` with `--json` but
+   without `--check`, and the audit WRITES `skills/kg-qa.manifest.json` unless
+   `--check` is set. That left stray manifests in three instances' `skills/`
+   directories, which changed the UML generated FROM those directories and made
+   `uml:overview:check` and two `skill:register:check` entries fail — which I
+   first reported as pre-existing on `main`. It was mine. The test now passes
+   `--check` on every spawn and is verified to leave the tree byte-identical.
+
+## Done when
+
+- [x] `check:workflow-refs` audits a path that exists
+- [x] the render:bpmn half — resolved in main's favour (`oqdr`, #1394)
+- [x] `kg:audit --instance`, all criteria scoped `instance|repo`
+- [x] `checkTools()` takes an instance root — 119 phantom sidecars → 0
+- [x] `knownSkills()` stops inheriting the repo's `.claude/` upward — 23 → 0
+- [x] bootstrap declares `qa` → `test/results/`, with its files, `iwtn` green
+- [x] the loop no longer CRASHES on an instance declaring a kind twice
+- [x] **resolution follows `needs` DOWNWARD** — skills and roles, all three
+      criteria, 0 criticals across 13 instances, default run byte-identical
+- [ ] the loop: commit the 13 instances' sidecars — now UNBLOCKED, and it needs
+      a gate that keeps them current, or 13 sets of artefacts start going stale
+      the moment they land
 - [ ] the `dh4f` zero-diagram question

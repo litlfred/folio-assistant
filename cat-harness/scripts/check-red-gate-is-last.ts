@@ -45,11 +45,18 @@
  *
  * ## The list is hardcoded, deliberately
  *
- * One entry. A declaration file for a single row would be a second place to
- * look, and `directory-conventions` is clear that an unavoidable duplicate is
- * fine while an unchecked one is not — this list IS the check. When a second
- * gate earns deliberate-red status, add it here and the rule applies to it
- * unchanged.
+ * Two entries. A declaration file for a list this size would be a second place
+ * to look, and `directory-conventions` is clear that an unavoidable duplicate is
+ * fine while an unchecked one is not — this list IS the check.
+ *
+ * The second entry is the invitation above being taken up, and it cost more than
+ * a row. `bun test` runs the SAME drift assertion as `translation:drift:check`,
+ * so it was a deliberate-red gate from the day the first entry was written — and
+ * it was **undeclarable**, because `invocations` only knew how to name a
+ * `bun run` target. It sat last in its job by coincidence rather than by rule,
+ * which is exactly the distinction this file was written to collapse. A list
+ * that cannot express its own second member is worth noting for the next one:
+ * check that the matcher can NAME a gate before concluding the gate is fine.
  *
  * `tools` is the graph kind this audits: the subject is the workflow's own step
  * order, which is harness state rather than any folio's content. Declared rather
@@ -72,7 +79,12 @@ const WORKFLOW = join(REPO_ROOT, ".github", "workflows", "code-quality-gates.yml
 
 /** A gate the repository accepts as red by decision rather than by defect. */
 export interface RedGate {
-  /** The `bun run` target, exactly as the workflow spells it. */
+  /**
+   * The gate's spelling, exactly as the workflow spells it — a `bun run`
+   * target, or a bare runner like `bun test` that is not a `bun run` target at
+   * all. `invocations` decides what a step is understood to run; this field has
+   * to agree with it, and `absent` is what says so when it stops agreeing.
+   */
   script: string;
   /** Why it is allowed to be red, so a reader does not have to guess. */
   why: string;
@@ -86,6 +98,20 @@ export const DELIBERATELY_RED: readonly RedGate[] = [
       "catalogues, and recording the absences instead was merged in #1364 and reverted " +
       "in #1384 on their instruction. So it may be red for a long time, and it must not " +
       "take other gates with it.",
+  },
+  {
+    script: "bun test",
+    why:
+      "carries the SAME assertion as `translation:drift:check` — " +
+      "`content/pipeline/translation-drift.test.ts` has a `the real corpus — and the gate " +
+      "can actually fail` block whose `no NEW drift, and nothing unreadable` case reads the " +
+      "real translations. That is the single failure that made main's typescript job red " +
+      "(run 36231943911), so it goes red for the same reason, on the same decision, and for " +
+      "the same duration. Declared even though BOTH are green today (2026-09-27: the drift " +
+      "gate exits 0, 70 compared / 0 newly drifted / 8 uncatalogued and recorded) because " +
+      "its position is the thing being fixed, and position must not depend on whether the " +
+      "gate happens to be red this week — bean `om30`'s own lesson, that the masked count " +
+      "is a property of WHICH step is red and that moves.",
   },
 ];
 
@@ -111,10 +137,40 @@ interface Step {
   run?: string;
 }
 
-/** Every `bun run <target>` in a step's script, in order. */
+/**
+ * Every gate a step's script runs, in order.
+ *
+ * Two spellings, because a gate is not always a `bun run` target. `bun test` is
+ * a **bare runner** — it takes no target, so the original `bun run\s+(\S+)`
+ * could not name it, and a gate this function cannot name is a gate
+ * `DELIBERATELY_RED` cannot declare. That was not a gap in the declaration; it
+ * was a gap in the vocabulary, which is why it is fixed here rather than by
+ * inventing a `bun run test` alias in the workflow.
+ *
+ * A bare runner is reported under its own spelling (`"bun test"`), so the
+ * declaration reads the same as the workflow. Arguments after it are allowed
+ * and ignored: `bun test <path>` is a NARROWER run, and narrowing what a step
+ * executes must not silently stop the position rule applying to it. The cost of
+ * over-matching here is an enforced ordering constraint on a step that may no
+ * longer carry the red assertion — harmless. The cost of under-matching is the
+ * masking this whole file exists to refuse.
+ *
+ * A commented-out line matches neither, since `^\s*` is followed by the runner
+ * rather than by anything that may precede it — counting one would report a gate
+ * the job does not run, which is `ot9a` mirrored.
+ */
 export function invocations(run: string | undefined): string[] {
   if (typeof run !== "string") return [];
-  return [...run.matchAll(/^\s*bun run\s+([^\s#]+)/gm)].map((m) => m[1]!);
+  const found: string[] = [];
+  for (const line of run.split("\n")) {
+    const target = /^\s*bun run\s+([^\s#]+)/.exec(line);
+    if (target) {
+      found.push(target[1]!);
+      continue;
+    }
+    if (/^\s*bun\s+test\b/.test(line)) found.push("bun test");
+  }
+  return found;
 }
 
 /**

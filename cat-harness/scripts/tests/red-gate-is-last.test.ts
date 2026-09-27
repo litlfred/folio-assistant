@@ -194,3 +194,63 @@ describe("invocations — what counts as running a gate", () => {
     expect(invocations(undefined)).toEqual([]);
   });
 });
+
+describe("a bare runner is a gate too — `bun test` takes no target", () => {
+  // Bean `dvcx`. `bun test` carried the same drift assertion as the declared
+  // `translation:drift:check` and could not be declared, because the matcher
+  // could only name a `bun run` target. These pin the vocabulary, not the
+  // workflow: the corpus tests above already assert the real file's ordering.
+
+  test("it is named by its own spelling, so the declaration reads like the workflow", () => {
+    expect(invocations("bun test")).toEqual(["bun test"]);
+    expect(invocations("  bun test\n")).toEqual(["bun test"]);
+  });
+
+  test("a COMMENTED-OUT bare runner does not count, same as a `bun run` line", () => {
+    expect(invocations("# bun test\n   #  bun test")).toEqual([]);
+  });
+
+  test("arguments narrow the run and are ignored — position still applies", () => {
+    // Deliberate over-match, argued in `invocations`' docblock: the cost is an
+    // ordering constraint on a step that may not carry the assertion any more,
+    // against masking if a narrowed run still carries it.
+    expect(invocations("bun test cat-harness/content/pipeline")).toEqual(["bun test"]);
+  });
+
+  test("`bun testing:check` is a `bun run`-less word, not a bare runner", () => {
+    // `\b` is load-bearing: without it this would be read as `bun test`, and the
+    // check would claim to track a gate that does not exist.
+    expect(invocations("bun testing:check")).toEqual([]);
+  });
+
+  test("both spellings in one step, in order", () => {
+    expect(invocations("bun run a:check\nbun test\nbun run b:check")).toEqual([
+      "a:check",
+      "bun test",
+      "b:check",
+    ]);
+  });
+
+  test("falsified by breaking — a step appended below it is caught", () => {
+    const bare: readonly RedGate[] = [{ script: "bun test", why: "fixture" }];
+    const r = redGateIsLast(
+      wf([{ name: "bun test", run: "bun test" }, { name: "appended later" }]),
+      bare,
+    );
+    expect(r.findings.map((f) => f.kind)).toEqual(["not-last"]);
+    expect(r.findings[0]!.message).toContain("appended later");
+  });
+
+  test("falsified by breaking — bundling it with another gate is caught", () => {
+    const bare: readonly RedGate[] = [{ script: "bun test", why: "fixture" }];
+    const r = redGateIsLast(wf([{ name: "a batch", run: "bun test\nbun run other:check" }]), bare);
+    expect(r.findings.map((f) => f.kind)).toEqual(["shares-a-step"]);
+    expect(r.findings[0]!.message).toContain("other:check");
+  });
+
+  test("it is DECLARED, so the corpus test above is really asserting its position", () => {
+    // Without this the widening could be reverted and every test in this block
+    // would still pass, since they all supply their own fixture list.
+    expect(DELIBERATELY_RED.map((g) => g.script)).toContain("bun test");
+  });
+});
