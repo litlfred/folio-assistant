@@ -85,15 +85,26 @@ const dotDir = (n: string): boolean => n.startsWith(".") || n === "node_modules"
 
 describe("every converted scanner narrowed to git's corpus and lost nothing", () => {
   test("check-code-accounting / typescriptFiles", () => {
-    // The one conversion in this set that CHANGED an answer: it was counting
-    // `cat-harness/schemas/block-qa-schema/dist/index.d.ts`, gitignored build
-    // output, in the check whose subject is accounting for code.
+    // In a container that has run a build, this drops
+    // `cat-harness/schemas/block-qa-schema/dist/index.d.ts` — gitignored output
+    // being counted by the check whose subject is accounting for code.
+    //
+    // THERE IS NO `swept > 0` ASSERTION, and its absence is the point. The
+    // first version had one, it passed here, and it FAILED IN CI — a clean
+    // checkout has no `dist/`, so there is nothing to sweep. That assertion
+    // was a property of my machine rather than of the code, which is exactly
+    // the defect this whole bean is about, committed while fixing it.
+    // Reproduced by moving `dist/` aside: 5 pass, 1 fail, the same case.
+    //
+    // What is machine-independent is the PAIR below — nothing lost, and
+    // anything swept is gitignored — and they hold on a clean checkout where
+    // both sets are equal. The discrimination lives in the final `describe`,
+    // which compares against the empty set and so needs no residue to exist.
     const before = bareWalk(ROOT, dotDir, ts);
     const after = gitFiles(ROOT, (r) => r.endsWith(".ts") && noDot(r)).files.map((p) => rel(p));
     const c = control(before, after);
     expect(c.lost).toEqual([]);
     expect(c.sweptButTracked).toEqual([]);
-    expect(c.swept).toBeGreaterThan(0);
   });
 
   test("bpmnFiles — lane-documentation, process-documentation, glossary-export", () => {
