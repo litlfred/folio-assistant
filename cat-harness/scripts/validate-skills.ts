@@ -13,6 +13,7 @@ import { readFileSync, readdirSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { kgRoots } from "./known-skills.js";
+import { vacuityRefusal, type Source } from "./vacuity-refusal.ts";
 
 /**
  * The declared knowledge-graph root, or the convention.
@@ -41,9 +42,15 @@ const rootDir = join(__dirname, "..");
 let errors = 0;
 let validated = 0;
 
+/** Every place this gate looked, so a refusal can NAME them (`iym1`). */
+const sources: Source[] = [];
+
 function validateDir(dir: string, schema: z.ZodType<unknown>, label: string): void {
-  if (!existsSync(dir)) return;
-  for (const file of readdirSync(dir).filter(f => f.endsWith(".json"))) {
+  const present = existsSync(dir);
+  const files = present ? readdirSync(dir).filter((f) => f.endsWith(".json")) : [];
+  sources.push({ label, dir, present, found: files.length });
+  if (!present) return;
+  for (const file of files) {
     const path = join(dir, file);
     try {
       const data = JSON.parse(readFileSync(path, "utf-8"));
@@ -95,9 +102,23 @@ validateDir(
 );
 
 // Validate skill package manifests
+//
+// NOTE the path is the CONVENTION, not the declared graph root that
+// `requirements` above resolves through `kgRoot()`. One file answering "where
+// are the skills" two ways is a defect in its own right, reported rather than
+// changed here because it is not this bean's subject.
 const skillsDir = join(rootDir, "skills");
+const pkgDirs = existsSync(skillsDir)
+  ? readdirSync(skillsDir, { withFileTypes: true }).filter((d) => d.isDirectory())
+  : [];
+sources.push({
+  label: "packages",
+  dir: skillsDir,
+  present: existsSync(skillsDir),
+  found: pkgDirs.filter((d) => existsSync(join(skillsDir, d.name, "package-manifest.json"))).length,
+});
 if (existsSync(skillsDir)) {
-  for (const pkg of readdirSync(skillsDir, { withFileTypes: true }).filter(d => d.isDirectory())) {
+  for (const pkg of pkgDirs) {
     const manifestPath = join(skillsDir, pkg.name, "package-manifest.json");
     if (existsSync(manifestPath)) {
       try {
@@ -114,4 +135,17 @@ if (existsSync(skillsDir)) {
 }
 
 console.log(`\nValidated: ${validated}, Errors: ${errors}`);
+
+// Emptiness is checked BEFORE the error count, and exits 2 rather than 1: a run
+// that examined nothing has not established that there are no errors, so
+// reporting "0 errors" first would be answering a question it never asked. Exit
+// 2 is this repository's "could not determine", distinct from 1 for "determined,
+// and it is wrong" — the same split `check:bun-pin` and `check:red-gate-is-last`
+// use for a scan that matched no site.
+const refusal = vacuityRefusal({ script: "check:skills", covers: "skills" }, sources);
+if (refusal !== undefined) {
+  console.error(`\n${refusal}`);
+  process.exit(2);
+}
+
 process.exit(errors > 0 ? 1 : 0);
