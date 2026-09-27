@@ -345,6 +345,31 @@ export function measure(group: string, nodes: DetangleNode[], edges: DetangleEdg
 export const DEFAULT_THRESHOLDS = {
   /** "large collection" — below this it is a file move. */
   minSize: 5,
+  /**
+   * Above this, one subgraph is too many things — the BREAK-APART bound, added
+   * 2026-09-27 on the owner's *"call out if subgraph gets too large… sign to
+   * break apart"*.
+   *
+   * ## The size criterion existed in one direction only
+   *
+   * `minSize` asks "is this big enough to BE a subgraph?" and nothing asked
+   * whether it had stopped being one. So a directory could grow without limit
+   * and every clause stayed green.
+   *
+   * ## The basis, because a bare number would be rejected here
+   *
+   * `uml:overview` renders each of these groups as ONE diagram. The bound is
+   * where that diagram stops being readable by a person, which is a property of
+   * the artefact rather than of today's corpus — so it does not drift when the
+   * corpus grows, and growing everything cannot hide the finding. A percentile
+   * of the measured set was the alternative and was rejected for exactly that:
+   * a recorded value that moves on every commit is the `do70` defect.
+   *
+   * 70 rather than 60 or 80 because those are the same judgement to one
+   * significant figure, and pretending otherwise would dress a round number as
+   * a measurement.
+   */
+  maxSize: 70,
   /** "thematically related" — the files must actually reference each other. */
   minCohesion: 0.5,
   /** "arrows mostly one way" — the owner's clause, as a number, and DIRECTION-BLIND. */
@@ -364,10 +389,35 @@ export type Thresholds = typeof DEFAULT_THRESHOLDS;
 export function failingClauses(m: DetangleMetrics, t: Thresholds = DEFAULT_THRESHOLDS): string[] {
   const out: string[] = [];
   if (m.size < t.minSize) out.push(`size ${m.size} < ${t.minSize} — a file move, not a subgraph`);
-  if (m.cohesion < t.minCohesion)
+  // Size RAISES the finding; cohesion decides what the finding SAYS. It does
+  // not decide whether there is one.
+  //
+  // A first draft required both — `size > maxSize && cohesion < minCohesion` —
+  // and the owner caught it: *"cat-harness/schemas semantic categorification by
+  // judgment?"*. That conjunction is this module deciding that a large cohesive
+  // group is FINE, which is precisely the judgement §"taste is a declared step"
+  // says it may not make. It also meant the largest directory in the repository
+  // (234 nodes) could never be reported at all.
+  //
+  // Cohesion cannot settle the question because of what it measures. Schemas
+  // import schemas; `cat-harness/schemas` scores 0.82 because its members are
+  // the same KIND, which is not evidence that they are one SUBJECT. A semantic
+  // carve is a different axis from a coupling metric, and only an adjudicator
+  // reads it.
+  //
+  // So both branches fire, with different evidence and different remedies:
+  if (m.size > t.maxSize)
     out.push(
-      `cohesion ${m.cohesion.toFixed(2)} < ${t.minCohesion} — the members barely reference each other, ` +
-        `so "thematically related" is asserted rather than shown`,
+      m.cohesion < t.minCohesion
+        ? `size ${m.size} > ${t.maxSize} with cohesion ${m.cohesion.toFixed(2)} < ${t.minCohesion} — too ` +
+          `large to review as one diagram AND its members barely reference each other, so it is several ` +
+          `subgraphs filed as one. The internal clusters are the seam; splitting along them cuts few edges.`
+        : `size ${m.size} > ${t.maxSize} with cohesion ${m.cohesion.toFixed(2)} — too large to review as ` +
+          `one diagram, and cohesion does NOT settle it: members of one KIND reference each other whether ` +
+          `or not they are one SUBJECT. Whether to carve semantically is an adjudication, not a ` +
+          `measurement — this clause reports the size and says nothing about the answer. Splitting here ` +
+          `would turn ${m.internal} internal edges into boundary edges, so a carve needs a reason beyond ` +
+          `the count.`,
     );
   if (m.role === "undetermined")
     out.push(
