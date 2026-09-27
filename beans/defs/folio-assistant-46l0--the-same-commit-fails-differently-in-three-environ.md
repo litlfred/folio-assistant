@@ -1,10 +1,10 @@
 ---
 # folio-assistant-46l0
 title: The same commit fails DIFFERENTLY in three environments, so a green run cannot be read as a green tree
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-09-26T06:33:48Z
-updated_at: 2026-09-26T06:33:48Z
+updated_at: 2026-09-27T09:31:57Z
 parent: folio-assistant-1xhc
 ---
 
