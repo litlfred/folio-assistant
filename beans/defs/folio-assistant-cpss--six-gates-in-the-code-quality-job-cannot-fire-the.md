@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cpss
 title: '108 checks in the code-quality job cannot fire: the deliberately-red drift gate is the 3rd of 106 in one `set -e` batch'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-26T18:09:12Z
-updated_at: 2026-09-27T05:09:21Z
+updated_at: 2026-09-27T05:14:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -295,12 +295,25 @@ That is the whole of this bean's claim, confirmed by observation. The
 recommendation is unchanged and the masking is still latent, for the reasons in
 the entry above.
 
+_2026-09-27T04:55:37Z_ — Claimed by claude/sleepy-babbage-ls90iz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 
 ## The six steps HAVE now run — and the hole is latent, not closed. Do not close this on that evidence.
 
 Evidence appended by another session (PR #1422). **Status deliberately untouched;
-this is not mine to resolve.** It is written because the next reader will see
-green steps and may conclude the bean is done, which would be the wrong reading.
+this is not mine to resolve** — and as of 04:55Z it is held by
+`claude/sleepy-babbage-ls90iz`, so this is addressed to them. It is written because
+a reader who sees the six steps green may conclude the bean is done, which would be
+the wrong reading.
+
+**The claim above and this append collided**, which is worth one line since #1422
+is the PR that implements the rule for it: their claim landed on `main` at 04:55
+and this append was written at 05:09 on a branch, so the two met as a merge
+conflict in this file. Resolved by keeping both, their claim first. That is
+`dx5j`'s scenario exactly — the open-PR search would not have found them, because
+they pushed the claim to `main` precisely *because* their branch had no PR yet
+(their note says so, bean `35nj`). Two mechanisms aimed at the same window from
+opposite ends, and they still crossed.
 
 ### What is now observed
 
@@ -352,3 +365,4 @@ commands with `translation:drift:check` the **3rd**, so **103** gates inside one
 step never ran. This bean's title already says 108 checks and is right; the sibling
 beans' "45 → 6" and "35 masked at step 8" were the smaller half, and `xm31` has
 been closed with its decision moved here.
+
