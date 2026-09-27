@@ -194,6 +194,11 @@
       "@type": "http://www.w3.org/2001/XMLSchema#integer"
     },
     "decisionRef": "https://litlfred.github.io/folio-assistant/cat-harness/ns#decisionRef",
+    "decidedBy": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#decidedBy",
+      "@type": "@id"
+    },
+    "hitPolicy": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hitPolicy",
     "sourcePath": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourcePath",
     "sourceKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceKind",
     "instructionsPath": "https://litlfred.github.io/folio-assistant/cat-harness/ns#instructionsPath",
@@ -297,10 +302,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-27T09:55:48.202Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7f332547bef14fb5c1a1d26051c74aa4bcb401c6",
-  "sourceCommitSha": "7f332547bef14fb5c1a1d26051c74aa4bcb401c6",
-  "sourceCommitAt": "2026-09-27T09:52:52Z",
+  "generatedAt": "2026-09-27T15:07:39.146Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/133283dcf6c448d8b1ce4e8ee3552a548bb562f0",
+  "sourceCommitSha": "133283dcf6c448d8b1ce4e8ee3552a548bb562f0",
+  "sourceCommitAt": "2026-09-27T15:04:50Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -1637,8 +1642,8 @@
   ],
   "staging": {
     "branch": "claude/escape-imports-external-schema",
-    "sha": "0ef2c8e9efa6a27ed42b20227b631e46c946fa8f",
+    "sha": "75f03f779af791bc37e0c0f87e9ce7e18532b9ea",
     "pr": "1458/merge",
-    "run": "36310775992"
+    "run": "36328238028"
   }
 }
