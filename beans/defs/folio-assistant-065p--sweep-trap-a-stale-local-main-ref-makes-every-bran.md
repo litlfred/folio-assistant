@@ -1,11 +1,11 @@
 ---
 # folio-assistant-065p
 title: 'SWEEP TRAP: a stale local `main` ref makes every branch look like it carries unmerged beans'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T15:48:01Z
-updated_at: 2026-09-25T15:48:30Z
+updated_at: 2026-09-27T08:24:17Z
 parent: folio-assistant-ahvw
 ---
 
@@ -62,3 +62,5 @@ catastrophe.
 Changing how sessions fetch. Keeping a local `main` current is one option and
 naming the right ref is another; the second is cheaper and does not depend on
 every agent remembering a step.
+
+_2026-09-27T08:24:17Z_ — Claimed by claude/brave-hypatia-r820sf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

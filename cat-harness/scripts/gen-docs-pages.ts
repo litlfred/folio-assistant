@@ -71,13 +71,13 @@ import {
 import { readQaGraph } from "../content/pipeline/qa-graph-index.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 
-const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const INSTANCE_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 /**
  * The language these generated pages are authored in — the instance's answer,
  * not the `en` literal this file used to write into every page's front matter.
  */
-const SOURCE_LOCALE = sourceLocale(REPO_ROOT);
+const SOURCE_LOCALE = sourceLocale(INSTANCE_ROOT);
 // Platform documentation lives under `content/docs/`. It is NOT folio content
 // (papers, chapters, block triples) — it is the platform's own structured docs,
 // authored as `WebPage` manifests with `.ts` + `.md` blocks.
@@ -89,8 +89,8 @@ const SOURCE_LOCALE = sourceLocale(REPO_ROOT);
 // `content/docs/` explicitly (alongside `content/pipeline/` and
 // `content/schema/`), so documentation can live where content belongs — under
 // `content/` — without tripping the folio-emptiness gate.
-const SRC_DIR = join(REPO_ROOT, "content", "docs");
-const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT));
+const SRC_DIR = join(INSTANCE_ROOT, "content", "docs");
+const OUT_DIR = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT));
 /**
  * The forge this checkout points at.
  *
@@ -106,7 +106,7 @@ const OUT_DIR = join(REPO_ROOT, siteDirFor(REPO_ROOT));
  * The fallback keeps the links working where there is no `origin` to ask —
  * a sandbox, a tarball — rather than emitting hrefs that go nowhere.
  */
-const REPO_WEB = detectRepoUrl(repoRootFor(REPO_ROOT)) ?? "https://github.com/litlfred/folio-assistant";
+const REPO_WEB = detectRepoUrl(repoRootFor(INSTANCE_ROOT)) ?? "https://github.com/litlfred/folio-assistant";
 const EDIT_BASE = `${REPO_WEB}/edit/main`;
 
 /**
@@ -125,7 +125,7 @@ const EDIT_BASE = `${REPO_WEB}/edit/main`;
 /**
  * A path `readTodoFiles` reports, as the REPOSITORY sees it.
  *
- * `todos/` sits at the repository root while this generator's `REPO_ROOT` is
+ * `todos/` sits at the repository root while this generator's `INSTANCE_ROOT` is
  * the cat-harness instance, so `readTodoFiles` returns `../todos/items/x.md`.
  *
  * **The old edit link shipped that verbatim**, as
@@ -137,10 +137,10 @@ const EDIT_BASE = `${REPO_WEB}/edit/main`;
  * by reading it.
  */
 function repoRelative(p: string): string {
-  return relative(repoRootFor(REPO_ROOT), resolve(REPO_ROOT, p));
+  return relative(repoRootFor(INSTANCE_ROOT), resolve(INSTANCE_ROOT, p));
 }
 
-const REPO_URL = detectRepoUrl(repoRootFor(REPO_ROOT));
+const REPO_URL = detectRepoUrl(repoRootFor(INSTANCE_ROOT));
 const SOURCE_BRANCH = "main";
 /** Matches gen-skill-docs.ts / gen-schema-docs.ts — one glyph, no inline SVG. */
 const EDIT_GLYPH = "✎";
@@ -190,7 +190,7 @@ export function readQaSummary(blockDir: string, block: string): QaSummary | unde
   // no verdict recorded against it — counts here as `na`, which leaves every
   // state this function has ever returned unchanged (a sidecar of nothing but
   // `n/a` and `unknown` was `unswept` before and still is).
-  const doc = readWitnessDoc("block", join(blockDir, `${block}.md`), REPO_ROOT);
+  const doc = readWitnessDoc("block", join(blockDir, `${block}.md`), INSTANCE_ROOT);
   if (!doc) return undefined;
   return {
     state: doc.state,
@@ -257,7 +257,7 @@ function readBlock(page: WebPage, nodeId: string, block: string): string {
 // well would have changed every badge in every generated page and the
 // browser code that fetches them, for no gain — the reader's path to the
 // evidence is not what was in the wrong place.
-const QA_ASSET_DIR = join(REPO_ROOT, "test", "results", "witnesses");
+const QA_ASSET_DIR = join(INSTANCE_ROOT, "test", "results", "witnesses");
 
 /**
  * The todo board's data, published as ONE file rather than one per node.
@@ -466,7 +466,7 @@ const QA_INDEX_FILE = "qa-index.json";
 function qaIcons(page: WebPage, node: WebPageNode): string {
   const subjects: string[] = [];
   if (node.block) subjects.push(join(pageDir(page), `${node.block}.md`));
-  if (node.asset) subjects.push(join(REPO_ROOT, node.asset.source));
+  if (node.asset) subjects.push(join(INSTANCE_ROOT, node.asset.source));
 
   const slug = page.slug.replace(/\//g, "-");
   const out: string[] = [];
@@ -477,7 +477,7 @@ function qaIcons(page: WebPage, node: WebPageNode): string {
       // EXISTENCE, not contents. `sidecarPaths` stats the disk and returns
       // only files that are there, so this is the structural question —
       // "has anything ever ruled on this?" — and not a peek at the ruling.
-      const swept = sidecarPaths(family, subject, REPO_ROOT).length > 0;
+      const swept = sidecarPaths(family, subject, INSTANCE_ROOT).length > 0;
       if (!swept) {
         const title = `${label}: not swept — no sidecar for this ${noun}`;
         out.push(
@@ -490,7 +490,7 @@ function qaIcons(page: WebPage, node: WebPageNode): string {
 
       const key = `${node.id}.${family}`;
       const rel = join(slug, `${key}.json`);
-      const doc = readWitnessDoc(family, subject, REPO_ROOT);
+      const doc = readWitnessDoc(family, subject, INSTANCE_ROOT);
       if (doc) {
         const abs = join(QA_ASSET_DIR, rel);
         mkdirSync(dirname(abs), { recursive: true });
@@ -588,7 +588,7 @@ function pageQaIcons(page: WebPage): string {
   const family: QaFamily = "translation";
   const { tag, label } = QA_FAMILY_LABEL[family];
   const slug = page.slug.replace(/\//g, "-");
-  const doc = rollUpWitnessDocs(family, subjects, REPO_ROOT, `${page.title} — translations`);
+  const doc = rollUpWitnessDocs(family, subjects, INSTANCE_ROOT, `${page.title} — translations`);
 
   if (!doc) {
     const title = `${label}: not swept — no block on this page carries a translation verdict`;
@@ -624,7 +624,7 @@ function pageQaIcons(page: WebPage): string {
 
 function blockLabel(page: WebPage, node: WebPageNode): string | undefined {
   const slug = page.slug.replace(/\//g, "-");
-  const file = join(REPO_ROOT, "content", "docs", slug, `${node.id}.ts`);
+  const file = join(INSTANCE_ROOT, "content", "docs", slug, `${node.id}.ts`);
   if (!existsSync(file)) return undefined;
   const m = /^\s*label:\s*"([^"]+)"/m.exec(readFileSync(file, "utf-8"));
   return m ? m[1] : undefined;
@@ -721,7 +721,7 @@ function manifestRef(page: WebPage): string {
 let TRANSLATION_INDEX: TranslationIndex | undefined;
 function translationIndex(): TranslationIndex {
   if (TRANSLATION_INDEX !== undefined) return TRANSLATION_INDEX;
-  const { index, findings } = buildTranslationIndex(REPO_ROOT);
+  const { index, findings } = buildTranslationIndex(INSTANCE_ROOT);
   const hard = findings.filter((f) => f.severity !== "note");
   if (hard.length > 0) {
     throw new Error(
@@ -760,7 +760,7 @@ function renderPage(page: WebPage): string {
   // `guides-who-smart-ig` — a key that matches no page and silently resolves to
   // "source language only". Measured on this corpus the two happen to give the
   // same answer, which is precisely why it needs saying.
-  const locales = localesReadableFor(REPO_ROOT, translationIndex(), pageKey(page.slug));
+  const locales = localesReadableFor(INSTANCE_ROOT, translationIndex(), pageKey(page.slug));
 
   lines.push("---");
   lines.push("layout: default");
@@ -1043,20 +1043,20 @@ function todoRelations(tags: {
  * The bean's file, or `undefined` when nothing on disk carries that id.
  *
  * The directory is RESOLVED from `beans/beans.json` rather than composed. It
- * was `join(repoRootFor(REPO_ROOT), "beans", "defs")` until 2026-09-20 — a
+ * was `join(repoRootFor(INSTANCE_ROOT), "beans", "defs")` until 2026-09-20 — a
  * second answer to a question the graph already answers, which would have gone
  * on resolving to nothing the moment the store moved, and reported every bean
  * reference as unlinkable while looking correct.
  */
 function beanFile(id: string): string | undefined {
-  const dir = beanDefsDir(repoRootFor(REPO_ROOT));
+  const dir = beanDefsDir(repoRootFor(INSTANCE_ROOT));
   if (dir === null || !existsSync(dir)) return undefined;
   // Sorted for the same reason `processHierarchy` sorts: raw directory order
   // is filesystem state, and `find` over it makes the FIRST match a property of
   // where the file landed on disk. Two beans sharing a prefix would resolve to
   // different files on two machines.
   const hit = readdirSync(dir).sort().find((f) => f.startsWith(`${id}--`) || f === `${id}.md`);
-  return hit ? relative(repoRootFor(REPO_ROOT), join(dir, hit)) : undefined;
+  return hit ? relative(repoRootFor(INSTANCE_ROOT), join(dir, hit)) : undefined;
 }
 
 /**
@@ -1091,7 +1091,7 @@ function processHierarchy(): Record<string, string[]> {
   // committed file that reproduced perfectly on the machine that wrote it.
   // An artefact that is only reproducible where it was generated is not a
   // generated artefact; it is a snapshot.
-  for (const f of workflowFiles(REPO_ROOT)) {
+  for (const f of workflowFiles(INSTANCE_ROOT)) {
     if (!f.endsWith(".bpmn")) continue;
     const xml = readFileSync(f, "utf-8");
     // PREFIX-AGNOSTIC, and that is a live fix rather than defensiveness.
@@ -1267,7 +1267,7 @@ function processHierarchy(): Record<string, string[]> {
   // answer free to disagree with the stylesheet that actually paints it. The
   // contrast guarantee — AAA over pure black — is a property of that value and
   // travels with it.
-  const declaration = readDeclaration(REPO_ROOT);
+  const declaration = readDeclaration(INSTANCE_ROOT);
   const themeArt: Record<string, Record<string, string>> = {};
   for (const id of new Set(items.map((i) => i.theme).filter((t): t is string => t !== undefined))) {
     const theme = themeById(id);
@@ -1286,7 +1286,7 @@ function processHierarchy(): Record<string, string[]> {
     // site, where the site directory's contents sit at the root. A declared
     // `docs/assets/...` would 404 for every reader and look like missing art.
     themeArt[id] = Object.fromEntries(
-      [...art.art].map(([layout, img]) => [layout, publishedAssetPath(REPO_ROOT, img.src)]),
+      [...art.art].map(([layout, img]) => [layout, publishedAssetPath(INSTANCE_ROOT, img.src)]),
     );
   }
 
@@ -1337,7 +1337,7 @@ function processHierarchy(): Record<string, string[]> {
   // returns `undefined` for a folio that has not, and that absence is carried
   // through rather than filled in: nothing is written, and the board reports
   // it could not determine one.
-  const zoom = readSemanticZoom(REPO_ROOT);
+  const zoom = readSemanticZoom(INSTANCE_ROOT);
   if (zoom !== undefined) {
     mkdirSync(dirname(ZOOM_ASSET), { recursive: true });
     emit(ZOOM_ASSET, JSON.stringify(zoom, null, 2) + "\n", "data");
@@ -1363,7 +1363,7 @@ function processHierarchy(): Record<string, string[]> {
 // would otherwise need the repository's web address, and a literal in
 // `docs-ui.js` is one folio's own address inside shared client code.
 {
-  const beans = readBeans(repoRootFor(REPO_ROOT));
+  const beans = readBeans(repoRootFor(INSTANCE_ROOT));
   // `null` is "no bean store", which is NOT the same as a store with nothing
   // in it, and rendering them alike is how a consumer reports a clean run over
   // a repository it never looked at. A folio with no work plan simply gets no
@@ -1471,7 +1471,7 @@ function processHierarchy(): Record<string, string[]> {
  * and fresh on main and stale only against their union — bean `d2kp`.
  */
 {
-  const qaDir = directoryForGraph(REPO_ROOT, "qa");
+  const qaDir = directoryForGraph(INSTANCE_ROOT, "qa");
   if (qaDir === undefined) {
     // Declared nowhere is a real answer and not this generator's to fix. Said
     // out loud rather than skipped silently, because a missing projection and
@@ -1556,7 +1556,7 @@ function publishAuthoredPageTranslationQa(): void {
       // marker, same reason, as the sweep's own exclusion.
       if (text.includes("Generated by scripts/gen-docs-pages.ts")) continue;
 
-      const doc = readWitnessDoc("translation", p, REPO_ROOT);
+      const doc = readWitnessDoc("translation", p, INSTANCE_ROOT);
       if (!doc) continue;
 
       const slug = relative(siteDir, p).replace(/\.md$/, "").replace(/\//g, "-");

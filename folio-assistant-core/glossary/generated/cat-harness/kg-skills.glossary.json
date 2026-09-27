@@ -753,6 +753,14 @@
       "status": "candidate"
     },
     {
+      "id": "gate-tree-mutation",
+      "prefLabel": "gate-tree-mutation",
+      "definition": "Reading `bun run gates`' \"NOT clean\" verdict. Why every gate can pass and the run still exit 1, the two causes and how to tell them apart in one command, and the question that settles whether a churning field is a defect in the writer: does it describe the SUBJECT or the RUN?",
+      "notation": "gate-tree-mutation",
+      "source": "cat-harness/skills/folio-core/gate-tree-mutation.md",
+      "status": "candidate"
+    },
+    {
       "id": "generalise-the-fix",
       "prefLabel": "generalise-the-fix",
       "definition": "You have a fix. Before it ships, ask what CLASS of defect it belongs to and whether the fix sits at the right layer — then attack your own answer: name what the fix now catches that the bug did not. Two axes go wrong, SCOPE and STATE, and widening either past the problem is how a fix becomes the next defect. Applies to a bug fix, a schema change, a detector, or a claim in a paper. Use after the fix works and before the pull request.",
