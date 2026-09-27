@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1465 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 149 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1473 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 149 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1632 terms and is 884 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1640 terms and is 889 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1632</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1640</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -3535,6 +3535,62 @@ FolioContribution.root <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>The contributing instance's root directory, absolute.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contributions.ts"><code>cat-harness/schemas/contributions.ts#FolioContribution.root</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--formal-ref.formalrefresolution.basename" data-fa-state="extracted" data-fa-gloss="">
+FormalRefResolution.basename <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The basename a whole-tree scan should look for (`&lt;declName&gt;.lean` for the Lean resolver). Kept separate from `declName` so core does not have to know the file extension of somebody else's formalism.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formal-ref.ts"><code>cat-harness/schemas/formal-ref.ts#FormalRefResolution.basename</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--formal-ref.formalrefresolution.candidatepaths" data-fa-state="extracted" data-fa-gloss="">
+FormalRefResolution.candidatePaths <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Candidate source files, **repo-root-relative**, in priority order.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formal-ref.ts"><code>cat-harness/schemas/formal-ref.ts#FormalRefResolution.candidatePaths</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--formal-ref.formalrefresolution.declname" data-fa-state="extracted" data-fa-gloss="">
+FormalRefResolution.declName <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The bare declaration name, for a `grep -rl` fallback and for the &quot;does this file actually declare it&quot; check in `qa-utils`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formal-ref.ts"><code>cat-harness/schemas/formal-ref.ts#FormalRefResolution.declName</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--formal-ref.formalrefresolution.fallbackpaths" data-fa-state="extracted" data-fa-gloss="">
+FormalRefResolution.fallbackPaths <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Weaker candidates, tried only after &#123;@link candidatePaths} and only by a caller that is prepared to accept a file which may declare nothing.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formal-ref.ts"><code>cat-harness/schemas/formal-ref.ts#FormalRefResolution.fallbackPaths</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--formal-ref.formalrefresolution.searchdir" data-fa-state="extracted" data-fa-gloss="">
+FormalRefResolution.searchDir <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Directory to search when the candidate paths all miss, **repo-root-relative**, or `undefined` when the folio declares no searchable tree for this package.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formal-ref.ts"><code>cat-harness/schemas/formal-ref.ts#FormalRefResolution.searchDir</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--formal-ref.formalrefresolution.treeroot" data-fa-state="extracted" data-fa-gloss="">
+FormalRefResolution.treeRoot <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Root the basename scan is confined to, repo-root-relative. Distinct from `searchDir`, which is narrower (a library subtree rather than a Lake root).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formal-ref.ts"><code>cat-harness/schemas/formal-ref.ts#FormalRefResolution.treeRoot</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--formal-ref.formalrefresolverapi.refpattern" data-fa-state="extracted" data-fa-gloss="">
+FormalRefResolverAPI.refPattern <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The shape a reference of this formalism must have, and the message to report when it does not.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formal-ref.ts"><code>cat-harness/schemas/formal-ref.ts#FormalRefResolverAPI.refPattern</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--formal-ref.formalrefresolverapi.refpatternmessage" data-fa-state="extracted" data-fa-gloss="">
+FormalRefResolverAPI.refPatternMessage <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Failure message for &#123;@link refPattern}, in the layer's own vocabulary.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formal-ref.ts"><code>cat-harness/schemas/formal-ref.ts#FormalRefResolverAPI.refPatternMessage</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--fsh-guts.fshgutsnodeschema.bean" data-fa-state="extracted" data-fa-gloss="">
 FshGutsNodeSchema.bean <span class="fa-gloss-status">candidate, extracted</span>

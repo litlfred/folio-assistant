@@ -3758,6 +3758,62 @@
       "status": "candidate"
     },
     {
+      "id": "formal-ref.formalrefresolution.basename",
+      "prefLabel": "FormalRefResolution.basename",
+      "definition": "The basename a whole-tree scan should look for (`<declName>.lean` for the Lean resolver). Kept separate from `declName` so core does not have to know the file extension of somebody else's formalism.",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.basename",
+      "status": "candidate"
+    },
+    {
+      "id": "formal-ref.formalrefresolution.candidatepaths",
+      "prefLabel": "FormalRefResolution.candidatePaths",
+      "definition": "Candidate source files, **repo-root-relative**, in priority order.",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.candidatePaths",
+      "status": "candidate"
+    },
+    {
+      "id": "formal-ref.formalrefresolution.declname",
+      "prefLabel": "FormalRefResolution.declName",
+      "definition": "The bare declaration name, for a `grep -rl` fallback and for the \"does this file actually declare it\" check in `qa-utils`.",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.declName",
+      "status": "candidate"
+    },
+    {
+      "id": "formal-ref.formalrefresolution.fallbackpaths",
+      "prefLabel": "FormalRefResolution.fallbackPaths",
+      "definition": "Weaker candidates, tried only after {@link candidatePaths} and only by a caller that is prepared to accept a file which may declare nothing.",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.fallbackPaths",
+      "status": "candidate"
+    },
+    {
+      "id": "formal-ref.formalrefresolution.searchdir",
+      "prefLabel": "FormalRefResolution.searchDir",
+      "definition": "Directory to search when the candidate paths all miss, **repo-root-relative**, or `undefined` when the folio declares no searchable tree for this package.",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.searchDir",
+      "status": "candidate"
+    },
+    {
+      "id": "formal-ref.formalrefresolution.treeroot",
+      "prefLabel": "FormalRefResolution.treeRoot",
+      "definition": "Root the basename scan is confined to, repo-root-relative. Distinct from `searchDir`, which is narrower (a library subtree rather than a Lake root).",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.treeRoot",
+      "status": "candidate"
+    },
+    {
+      "id": "formal-ref.formalrefresolverapi.refpattern",
+      "prefLabel": "FormalRefResolverAPI.refPattern",
+      "definition": "The shape a reference of this formalism must have, and the message to report when it does not.",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolverAPI.refPattern",
+      "status": "candidate"
+    },
+    {
+      "id": "formal-ref.formalrefresolverapi.refpatternmessage",
+      "prefLabel": "FormalRefResolverAPI.refPatternMessage",
+      "definition": "Failure message for {@link refPattern}, in the layer's own vocabulary.",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolverAPI.refPatternMessage",
+      "status": "candidate"
+    },
+    {
       "id": "formalization-types.ambiguityflag.candidates",
       "prefLabel": "AmbiguityFlag.candidates",
       "definition": "Candidate types the term could map to.",
