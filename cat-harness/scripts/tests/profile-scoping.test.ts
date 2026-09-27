@@ -200,19 +200,58 @@ function scaffoldFolio(contentType: "paper" | "document"): {
   };
 }
 
-/** Outcome of every criterion for one block, as the sweep reports it. */
+/**
+ * Outcome of every criterion for one block, as the sweep reports it.
+ *
+ * ## Why this records the child on EVERY run, including passes
+ *
+ * This is not a fixture test in the usual sense: it SPAWNS the real sweep
+ * script against a temporary folio, so its verdict depends on a separate
+ * process whose only trace used to be `res.stdout`. Bean `9v4m` has a failure
+ * in this file that is reproducible only inside a full `bun test` — five
+ * attempts across two sessions produced the test NAME and nothing else, so it
+ * is still unknown whether it fails because the child reported a different
+ * OUTCOME or because the child FAILED and its reason was discarded. Those have
+ * disjoint causes and no further hypothesis is worth forming without knowing
+ * which.
+ *
+ * So the record is written unconditionally rather than on failure. Writing it
+ * only when something looks wrong is what makes the next occurrence need a
+ * reproduction: by the time the assertion fails, the process is gone. This is
+ * bean `y0n2`'s defect avoided in a second place — there a `catch` turned "the
+ * tool could not answer" into a verdict; here silence turned it into an absence.
+ *
+ * `console.error`, not `console.log`, so the line survives a `--json` consumer
+ * reading stdout.
+ */
 function sweepOutcomes(root: string, blockRoot: string): Record<string, string> {
   const res = spawnSync(
     "bun",
     ["run", SWEEP, blockRoot + ".ts", "--dry-run", "--json"],
     { cwd: root, encoding: "utf-8", timeout: 600_000 },
   );
+  // `signal` is the timeout case, which reports status `null` and would
+  // otherwise read as "no status" rather than "killed at 600s".
+  const stderr = (res.stderr ?? "").trim();
+  console.error(
+    `  · qa-sweep: status=${res.status} signal=${res.signal ?? "-"} ` +
+      `stdout=${(res.stdout ?? "").length}B stderr=${stderr.length}B` +
+      (stderr ? `\n    stderr: ${stderr.split("\n").slice(0, 6).join("\n    ")}` : ""),
+  );
   if (res.status !== 0) {
-    throw new Error(`qa-sweep exited ${res.status}\n${res.stderr}`);
+    throw new Error(`qa-sweep exited ${res.status} (signal ${res.signal ?? "-"})\n${stderr}`);
   }
-  const report = JSON.parse(res.stdout) as {
-    results: Array<{ details: Array<{ criterion: string; outcome: string }> }>;
-  };
+  let report: { results: Array<{ details: Array<{ criterion: string; outcome: string }> }> };
+  try {
+    report = JSON.parse(res.stdout) as typeof report;
+  } catch (e) {
+    // A zero exit with unparseable stdout is a THIRD state, and it used to
+    // surface as a bare `SyntaxError` naming neither the child nor its output.
+    throw new Error(
+      `qa-sweep exited 0 but its stdout is not JSON (${e instanceof Error ? e.message : String(e)})\n` +
+        `first 400B of stdout: ${(res.stdout ?? "").slice(0, 400)}\nstderr: ${stderr}`,
+    );
+  }
   expect(report.results).toHaveLength(1);
   return Object.fromEntries(report.results[0].details.map((d) => [d.criterion, d.outcome]));
 }
