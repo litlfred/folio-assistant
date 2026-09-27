@@ -336,6 +336,13 @@ jobs:
       - name: workflow policy
         run: bun run check:workflow-policy
 
+      # Guards the placement of the step at the END of this job. Kept here, near
+      # the top, because it is cheap and because a structural rule about the file
+      # should be checked before the file's other 100-odd gates spend five
+      # minutes acting on it. Bean `cpss`.
+      - name: a gate that may be red by decision is its job's last step
+        run: bun run check:red-gate-is-last
+
       # Every skill citation naming a section of an `AGENTS.md` resolves, or
       # says WHICH `AGENTS.md` it means. Turned on 2026-09-19 once the backlog
       # reached zero (bean `1hsf`) — gating before that would have blocked
@@ -958,17 +965,34 @@ jobs:
       - name: every claimed locale has a page behind it
         run: bun run check:available-locales
 
-      # ABOVE the drift batch DELIBERATELY, the FIFTH instance of that reason in
-      # this file — fourth at the time it was written, and main's
-      # `check:available-locales` directly above arrived in the same hour, which is
-      # why the ordinal is corrected here rather than left to read as measured — and this one is the sharpest, because the gate's whole subject
-      # is that the drift gate cannot report growth in its own. Registered below
-      # it, a check about the drift's silence would itself be silenced by it.
+      # ITS OWN STEP, above the batch. The reason changed under this gate while it
+      # was in review, and the original is recorded because it is why the gate
+      # exists: `translation:drift:check` used to be the THIRD of 106 commands in
+      # one `set -e` batch, so a check placed after it never ran, and a check
+      # ABOUT the drift's silence placed there would have been silenced by it.
       #
-      # Measured 2026-09-26 (bean `3sm2`): the `t8g3` campaign closed 24 of the
-      # original 25 catalogue gaps that day and opened 35 new ones in two batches,
-      # so the count went 25 -> 36 while the gate that names it was red the whole
-      # time. A job stops at its first failing step, so no reviewer saw a NEW red.
+      # `cpss` has since fixed that structurally (#1436, option (b)): the drift is
+      # no longer in the batch at all, it is the LAST step of the job, and a gate
+      # enforces that it stays there. So this step is no longer dodging the drift
+      # specifically. It stays its own step above the batch anyway, for the reason
+      # `check:available-locales` above states: a gate inside that batch is one the
+      # batch can still stop, and being registered while never running is worse
+      # than not being wired, because the PR goes green saying otherwise.
+      #
+      # WHAT THIS GATE ASKS, and the measurement is corrected from an earlier
+      # revision of this comment. It asks of the CHANGE what the drift gate asks of
+      # the corpus: does what you are about to merge publish a translated page with
+      # no `.po`? On `6ec97bd64ab^` it reports 5, exit 1. An earlier version of
+      # this block said the backlog "went 25 -> 36" and that 35 was this gate's
+      # finding count — BOTH WRONG and retracted on bean `3sm2`. 35 and 15 are the
+      # counts of added files that PUBLISH a translation; the findings were 5 and 2,
+      # and the 35 came from a hand-mutation that dropped the `existsSync` check.
+      # The corpus backlog went 27 -> 8, downward.
+      #
+      # The argument that survives is about control flow and never rested on a
+      # count: a job stops at its first failing step, so a gate held red by decision
+      # cannot report GROWTH in its own subject — which is what a change-keyed gate
+      # can do and a corpus-keyed one cannot.
       #
       # It reads the DIFF, so it needs the base ref: `actions/checkout` fetches
       # shallowly and `origin/main` is not a ref until this fetch. Without it the
@@ -1019,11 +1043,12 @@ jobs:
           # workflow runs cannot fail, which is bean `xom7` one level down.
           bun run translate-kg-viewer:check
           # Every uncatalogued page has a `.pot` for a translator to work from.
-          # BEFORE the drift check on purpose, and the ordering is measured:
-          # `translation:drift:check` is red on `main` BY DECISION (bean `ngxj`,
-          # issue #206) with 6 steps behind it in this job, so anything placed
-          # after it never runs. A gate in a permanently-skipped tail is the
-          # `1xhc` shape.
+          #
+          # It used to carry an ordering note — "BEFORE the drift check on
+          # purpose ... anything placed after it never runs" — and that note is
+          # gone because the thing it worked around is gone:
+          # `translation:drift:check` is no longer in this block at all. It is
+          # the LAST step of this job, so it masks nothing. Bean `cpss`.
           #
           # This does NOT turn the drift check green and is not meant to: a
           # `.pot` is the translator's input, a `.po` is their output, and 19 of
@@ -1032,9 +1057,6 @@ jobs:
           # the 25 pages had a `.pot` OR a `.po` in any locale, so the campaign
           # had nothing to be handed.
           bun run translation:pot:check
-          # Bean `07p7`: a published translation that has drifted from its
-          # source is a section a reader cannot reach in their language.
-          bun run translation:drift:check
           # Bean `eief`: a stubbed tool must not read as a working one, and a
           # stub that has outlived its tool must fail rather than linger.
           bun run check:tabular-stubs
@@ -1645,6 +1667,42 @@ jobs:
       # statically built navbar for EVERY reader, whatever locale they chose.
       - name: translation index is current
         run: bun run translation:index:check
+
+      # ── LAST ON PURPOSE, and this is the whole point of the placement ──────
+      #
+      # `translation:drift:check` is the one gate in this job that has been red
+      # BY DECISION (bean `ngxj`, issue #206) rather than by defect. It used to
+      # be the THIRD of 107 `bun run` lines inside "gates that were registered
+      # and never run" — one `run: |` block under `set -e` — so while it was red
+      # the 104 invocations after it never executed, on any PR or any push to
+      # `main`.
+      #
+      # Measured 2026-09-26 (bean `cpss`): of those 104, eighteen have no test
+      # anywhere that references the same script, so for those eighteen the
+      # masked gate was the only thing watching. The other 86 had a test twin,
+      # which is a second line of defence rather than an excuse — and both
+      # figures are BOUNDS, not counts, because the twin was matched on script
+      # basename.
+      #
+      # The cost was measured too, twice. `check:partition` (in the masked
+      # region) reported an unclassified module the hour the batch first ran
+      # through. And "translation index is current", three steps above, is the
+      # gate that would have caught a stale `docs/_data/translations.json` —
+      # which had to be repaired BY HAND on 2026-09-26 after CI reported green
+      # on the branch carrying it. The gate existed the whole time.
+      #
+      # So the invariant is now STRUCTURAL rather than remembered: a gate that
+      # may be deliberately red belongs last, where the set it masks is empty.
+      # Anything added after this step re-creates the defect, and the reason it
+      # is safe here is only that nothing follows.
+      #
+      # Three earlier changes moved ONE gate each to just above the batch
+      # (`ee964c7411` for `translated-links:check`, then `docs:pages:check` and
+      # `check:available-locales`). Each was correct and none of them scaled:
+      # "put your gate above the drift" is a rule every future author has to be
+      # told, while "the deliberate red is last" is a rule the file enforces.
+      - name: translations have not drifted from their source
+        run: bun run translation:drift:check
 
   # ── End-to-end, including the accessibility gate ────────────────────
   #

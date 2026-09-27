@@ -1,7 +1,7 @@
 ---
 # folio-assistant-3ozg
 title: bun test rewrites 72 committed script-sidecars, so bun run gates reports NOT clean on every branch, main included
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-27T05:06:01Z
@@ -35,6 +35,7 @@ Run alone, none of these writes the sidecars: `qa-review`, `profile-conformance-
 - [ ] it writes into a temp directory, as the profile-conformance tests do, or the three volatile fields stop being committed
 - [ ] `bun run gates` on pristine main ends clean, not 'NOT clean'
 
+_2026-09-27T05:19:35Z_ — Claimed by claude/sleepy-babbage-ls90iz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 ## `rmcf` is the same defect, filed a day earlier — and it holds four unanswered remedies
 

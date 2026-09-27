@@ -13,10 +13,24 @@
  * first failing step, so once the drift is red its own conclusion cannot change:
  * a batch that publishes a translated page with no catalogue adds to the very
  * set the red gate reports, the job is red either way, and no reviewer sees a
- * NEW red. Measured 2026-09-26 (bean `3sm2`): the `t8g3` campaign closed 24 of
- * `f6r1`'s original 25 that day and opened **35** new ones in two batches —
- * `438a79d284d` and `6ec97bd64ab` — so the count went 25 -> 36 while the gate
- * that names it had been red the whole time.
+ * NEW red.
+ *
+ * **A measurement in an earlier revision of this docblock is RETRACTED** — kept
+ * named rather than deleted, because it was the stated justification for building
+ * this gate. It read: *"the `t8g3` campaign closed 24 of `f6r1`'s original 25 and
+ * opened 35 new ones, so the count went 25 -> 36."* Three errors. 35 and 15 are the
+ * counts of added files that **publish a translation**, not findings — the findings
+ * on those ranges are **5** and **2**, and 35 is what a hand-mutation returns once
+ * the `existsSync` check below is dropped, which is where the figure came from.
+ * `f6r1`'s population was **27**, not 25 (25 was #1364's `UNCATALOGED` entries, a
+ * different set). And the corpus backlog went **27 -> 8**, downward: the campaign
+ * cleared the mechanical cases and left the 8 that need a human decision. Full
+ * correction on bean `3sm2`.
+ *
+ * The argument that survives never rested on a count, which is why the gate stands:
+ * a job stops at its first failing step, so a gate held red by decision cannot
+ * report GROWTH in its own subject. A change-keyed gate can; a corpus-keyed one
+ * cannot.
  *
  * So this gate asks a different question, over a different unit:
  *
