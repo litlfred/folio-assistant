@@ -58,7 +58,12 @@ describe("the derivation that replaced the declaration", () => {
     // that returns SOMETHING for every skill — then a fallback with no
     // route would silently resolve.
     expect(await fallbackRoleFor(ROOT, "formalizer")).toEqual([]);
-    expect(await fallbackRoleFor(ROOT, "no-such-skill-anywhere")).toEqual([]);
+    // The `no-such-skill-anywhere` case that used to sit here is asserted in
+    // `describe("the batch pass agrees...")` below, through BOTH paths rather than
+    // one. It was a second full pass over 74 diagrams for a claim already made,
+    // which put this test at 3.93 s of a 5000 ms budget (79 %) and second on
+    // `check:test-budgets`' exposure list. Bean `sff8`: the coverage moved, it did
+    // not go.
   });
 
   test("the retired field is gone from both declarations and from the corpus", async () => {
