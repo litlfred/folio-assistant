@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xd1g
 title: 11 root-rooted scans have no gitignore awareness — ramz's sibling audit, answered
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-27T05:18:11Z
+updated_at: 2026-09-27T07:09:15Z
 parent: folio-assistant-ahvw
 ---
 
@@ -289,6 +289,8 @@ The duplicate fixes converged too — that PR called `gitCorpus` and REFUSED
 `main`'s is the incumbent and the merge takes it; the refusing variant is noted
 here only because the choice is real: a fallback that is documented and reached
 only when git cannot answer is not the silent one that caused this.
+
+_2026-09-27T07:09:15Z_ — Claimed by claude/kg-detangle-git-corpus — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 
 ## `kg-audit.ts` IS one of the disk-walking scanners — measured, with the files named
