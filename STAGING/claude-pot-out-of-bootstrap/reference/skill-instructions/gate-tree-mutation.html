@@ -16,7 +16,7 @@
 
     .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(244)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(1)) > a,
     .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
@@ -26,14 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(244) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(1) > a {
       font-weight: 600;
       text-decoration: none;
     }.site-nav > ul.nav-list:first-child > li:nth-child(9) > button svg,
-    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(244) > button svg {
+    .site-nav > ul.nav-list:first-child > li:nth-child(9) > ul > li:nth-child(1) > button svg {
       transform: rotate(-90deg);
     }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list,
-    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(244) > ul.nav-list {
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(9) > ul.nav-list > li.nav-list-item:nth-child(1) > ul.nav-list {
       display: block;
     }
   </style>
@@ -53,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>fsh-guts/ | folio-assistant</title>
+<title>“NOT clean” is a verdict about the RUN, not about your diff | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="fsh-guts/" />
+<meta property="og:title" content="“NOT clean” is a verdict about the RUN, not about your diff" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="fsh-guts/" />
+<meta property="twitter:title" content="“NOT clean” is a verdict about the RUN, not about your diff" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -788,7 +788,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <nav aria-label="Breadcrumb" class="breadcrumb-nav">
   <ol class="breadcrumb-nav-list">
     <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-pot-out-of-bootstrap/reference/skill-instructions/">Skill instructions</a></li>
-    <li class="breadcrumb-nav-list-item"><span>`fsh-guts/`</span></li>
+    <li class="breadcrumb-nav-list-item"><span>"NOT clean" is a verdict about the RUN, not about your diff</span></li>
   </ol>
 </nav>
 
@@ -797,195 +797,285 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
         <main>
           
             <blockquote class="note">
-  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/fsh-guts.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/folio-core/fsh-guts.md</code></a> — do not edit here.</p>
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/gate-tree-mutation.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/folio-core/gate-tree-mutation.md</code></a> — do not edit here.</p>
 
-  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/fsh-guts.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/gate-tree-mutation.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
 </blockquote>
-<h1 id="fsh-guts--the-trashcan-that-is-kept">
+<h1 id="not-clean-is-a-verdict-about-the-run-not-about-your-diff">
   
   
-    <a href="#fsh-guts--the-trashcan-that-is-kept" class="anchor-heading" aria-labelledby="fsh-guts--the-trashcan-that-is-kept"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">fsh-guts/</code> — the trashcan that is kept
+    <a href="#not-clean-is-a-verdict-about-the-run-not-about-your-diff" class="anchor-heading" aria-labelledby="not-clean-is-a-verdict-about-the-run-not-about-your-diff"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> “NOT clean” is a verdict about the RUN, not about your diff
   
   
 </h1>
     
 
-<p><strong>Delete means relocate.</strong> Nothing in this repository is removed with <code class="language-plaintext highlighter-rouge">rm</code>
-unless the owner has explicitly confirmed that removal; everything else that
-has outlived its use moves to <code class="language-plaintext highlighter-rouge">fsh-guts/</code>, where it stays addressable,
-exported and greppable, and where no reader of the folio will meet it.</p>
+<p><code class="language-plaintext highlighter-rouge">bun run gates</code> snapshots the tree before the first gate and after every one, so
+a gate that <strong>repairs</strong> something on its way past is named. Every gate can pass
+and the run still exit 1:</p>
 
-<p>Owner, 2026-09-19:</p>
-
-<blockquote>
-  <p>do not pollute the KG with SDLC churn…. if you need to keep it, make a
-folder called <code class="language-plaintext highlighter-rouge">fsh-guts/</code> that you can put structured content in but that
-does not enter into main render pipeline. […] it is the trashcan that does
-not get rendered but […] where deprecated, throwaway stuff goes. […] do not
-delete unless explicit confirm.</p>
-</blockquote>
-<h2 id="what-makes-it-different-from-every-other-non-renderable-graph">
-  
-  
-    <a href="#what-makes-it-different-from-every-other-non-renderable-graph" class="anchor-heading" aria-labelledby="what-makes-it-different-from-every-other-non-renderable-graph"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What makes it different from every other non-renderable graph
-  
-  
-</h2>
-    
-
-<p>The declaration declares nine graph kinds and none of them renders. That makes
-<code class="language-plaintext highlighter-rouge">renderable: false</code> look like a weak signal, and for the others it is: <code class="language-plaintext highlighter-rouge">tools</code>,
-<code class="language-plaintext highlighter-rouge">schemas</code>, <code class="language-plaintext highlighter-rouge">beans</code> and the rest are graphs a <strong>tool</strong> reads, and there was
-never a page to make of them.</p>
-
-<p><strong><code class="language-plaintext highlighter-rouge">fsh-guts</code> is the one whose contents COULD be rendered and deliberately are
-not.</strong> It exists so that something can be kept without being published. That
-is a different fact wearing the same flag, and it is why this skill exists
-rather than a line in the conventions table.</p>
-<h2 id="why-the-never-delete-rule-needed-a-destination">
-  
-  
-    <a href="#why-the-never-delete-rule-needed-a-destination" class="anchor-heading" aria-labelledby="why-the-never-delete-rule-needed-a-destination"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why the never-delete rule needed a destination
-  
-  
-</h2>
-    
-
-<p><code class="language-plaintext highlighter-rouge">AGENTS.md</code> has always forbidden deleting a bean, and its reason was never
-about beans:</p>
-
-<blockquote>
-  <p>a scrapped bean records that something was considered and rejected, which is
-what stops the next agent re-entering the same dead end; a deleted one leaves
-a sibling unable to tell abandonment from accident.</p>
-</blockquote>
-
-<p>Every word of that is true of a page, a diagram, a script or a workflow. The
-rule could not be applied to them because an agent removing one had only <code class="language-plaintext highlighter-rouge">rm</code>
-and no third option. <code class="language-plaintext highlighter-rouge">fsh-guts/</code> is that option, and it converts an
-unenforceable principle into a move.</p>
-
-<p><strong>So the rule now reads, for everything:</strong></p>
-
-<ol>
-  <li>Work that is wanted but wrong → fix it.</li>
-  <li>Work that is not wanted → <strong>move it to <code class="language-plaintext highlighter-rouge">fsh-guts/</code></strong>, with a note saying
-what superseded it.</li>
-  <li>Actual deletion → <strong>only on explicit confirmation from the owner</strong>, asked
-for as a question, never inferred from “this is obviously dead”.</li>
-</ol>
-
-<p>A thing in <code class="language-plaintext highlighter-rouge">fsh-guts/</code> can be read, cited and restored. A thing that is gone
-cannot be told from a thing that was never there.</p>
-<h2 id="files-declare-themselves">
-  
-  
-    <a href="#files-declare-themselves" class="anchor-heading" aria-labelledby="files-declare-themselves"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Files declare themselves
-  
-  
-</h2>
-    
-
-<p>Same contract as the bean and workflow stores: a directory is a place to look,
-and the file says what it is. Every node carries front matter:</p>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
-<span class="na">$schema</span><span class="pi">:</span> <span class="s">folio-fsh-guts/v1</span>
-<span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Deployment</span><span class="nv"> </span><span class="s">topologies</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">operating</span><span class="nv"> </span><span class="s">modes"</span>
-<span class="na">kind</span><span class="pi">:</span> <span class="s">proposal</span>
-<span class="na">movedOn</span><span class="pi">:</span> <span class="s">2026-09-19</span>
-<span class="na">movedFrom</span><span class="pi">:</span> <span class="s2">"</span><span class="s">docs/folio-assistant/proposals/deployment-topologies.md"</span>
-<span class="na">issue</span><span class="pi">:</span> <span class="m">363</span>
-<span class="na">summary</span><span class="pi">:</span> <span class="pi">&gt;-</span>
-  <span class="s">One or two sentences on what this was and why it left.</span>
-<span class="s">---</span>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>✗ every gate passed, and the run is NOT clean — 1 gate(s) changed the tree.
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">movedFrom</code> and <code class="language-plaintext highlighter-rouge">movedOn</code> are the part that earns its keep. Without them a
-node here is an orphan — a reader can see what it says and not where it used
-to live, which is exactly the “abandonment or accident” ambiguity the rule
-exists to prevent. <code class="language-plaintext highlighter-rouge">issue</code> points at the conversation that superseded it,
-where there is one.</p>
+<p>That is not tidiness. The gates that ran after the mutation were handed the
+repaired tree, so their verdicts describe a state you have not committed — bean
+<code class="language-plaintext highlighter-rouge">ymsu</code>, where <code class="language-plaintext highlighter-rouge">152 gate(s) pass</code> was printed <strong>152 of 152 times</strong> over a value
+nobody had committed.</p>
 
-<p><code class="language-plaintext highlighter-rouge">kind</code> is <strong>open</strong>. A proposal, a webpage, a todo, a retired diagram, a script
-nobody calls any more — the trashcan does not get to be fussy about what is
-thrown into it.</p>
-<h2 id="it-is-exported-and-it-is-not-rendered--and-it-is-not-in-the-kg-either">
+<p>No gate can observe what another gate did, which is why the detector can only
+live in the runner (<code class="language-plaintext highlighter-rouge">gate-tree-guard.ts</code>) and why its predicate is a per-gate
+<strong>delta</strong> rather than “the tree is dirty”: running gates over your own
+uncommitted work is the normal case. A failure to read the tree is carried as
+<code class="language-plaintext highlighter-rouge">undetermined</code> and reported rather than thrown, because <code class="language-plaintext highlighter-rouge">undetermined</code> is not
+clean.</p>
+
+<p><strong>Two causes, and they are answered differently. Read <code class="language-plaintext highlighter-rouge">git status --short</code>
+before you decide which one you have.</strong></p><hr />
+<h2 id="cause-1--you-changed-an-input-and-did-not-regenerate">
   
   
-    <a href="#it-is-exported-and-it-is-not-rendered--and-it-is-not-in-the-kg-either" class="anchor-heading" aria-labelledby="it-is-exported-and-it-is-not-rendered--and-it-is-not-in-the-kg-either"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> It is exported, and it is not rendered — and it is not in the KG either
+    <a href="#cause-1--you-changed-an-input-and-did-not-regenerate" class="anchor-heading" aria-labelledby="cause-1--you-changed-an-input-and-did-not-regenerate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Cause 1 — you changed an input and did not regenerate
   
   
 </h2>
     
 
-<ul>
-  <li>served as <code class="language-plaintext highlighter-rouge">&lt;base&gt;/fsh-guts.jsonld</code>, alongside the instance’s other
-renderings, so a consumer can walk it <strong>by name</strong> — built by
-<code class="language-plaintext highlighter-rouge">scripts/fsh-guts-export.ts</code>, published by <code class="language-plaintext highlighter-rouge">docs-site.yml</code>, with a
-<code class="language-plaintext highlighter-rouge">.json</code> alias because Pages has no media type for <code class="language-plaintext highlighter-rouge">.jsonld</code> and serves it
-as octet-stream. <strong>Logs are excluded by DECLARATION</strong>: a file is included
-only if it says <code class="language-plaintext highlighter-rouge">$schema: folio-fsh-guts/v1</code>, so a log entry is left out
-because of what it says it is, not because <code class="language-plaintext highlighter-rouge">.gitignore</code> kept it off the
-build machine — which is a property of the checkout and not of the export</li>
-  <li><strong>absent from the site build</strong> — this is the property, not a side effect.
-A change that causes <code class="language-plaintext highlighter-rouge">fsh-guts/</code> to render has broken it</li>
-  <li><strong>stripped from every other published graph.</strong> Owner, 2026-09-19: <em>“NEVER
-include fsh-guts, references to fsh-guts stripped out of KG before sending
-to publication.”</em></li>
-</ul>
-
-<p><strong>Those last two are different properties and the second is easy to miss.</strong>
-Keeping the CONTENT out of the render pipeline does not keep the REFERENCE
-out of the graph: an instance’s declared directories become nodes in
-<code class="language-plaintext highlighter-rouge">&lt;stub&gt;.jsonld</code>, so declaring this directory — required, or nothing can find
-it — put its id, path and description into the published document. That was
-shipped and then corrected the same day.</p>
-
-<p>A consumer may fetch <code class="language-plaintext highlighter-rouge">fsh-guts.jsonld</code> deliberately. It must never <strong>arrive</strong>
-there by following an edge. Mechanism and the three emitters that had to be
-filtered: <a href="/folio-assistant/STAGING/claude-pot-out-of-bootstrap/reference/skill-instructions/kg-export.html"><code class="language-plaintext highlighter-rouge">kg-export</code></a> §”<code class="language-plaintext highlighter-rouge">fsh-guts</code> NEVER reaches a published
-graph”.</p>
-
-<p>Reaching it as a human is the dead-fish icon under settings, with a node
-counter and a select dialog. Bean <code class="language-plaintext highlighter-rouge">folio-assistant-7vhe</code>; until that exists,
-the files are reachable through the repository and the JSON-LD.</p>
-<h2 id="on-the-name">
+<p>The ordinary case, and <a href="/folio-assistant/STAGING/claude-pot-out-of-bootstrap/reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a> §”What a <code class="language-plaintext highlighter-rouge">*:check</code>
+failure is telling you” is the whole of it: run the generator, commit its output,
+and run the gates <strong>after</strong> the last edit. Never hand-edit the artefact into
+agreement.</p><hr />
+<h2 id="cause-2--the-artefact-records-the-run-and-your-run-differs">
   
   
-    <a href="#on-the-name" class="anchor-heading" aria-labelledby="on-the-name"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> On the name
+    <a href="#cause-2--the-artefact-records-the-run-and-your-run-differs" class="anchor-heading" aria-labelledby="cause-2--the-artefact-records-the-run-and-your-run-differs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Cause 2 — the artefact records the RUN, and your run differs
   
   
 </h2>
     
 
-<p><code class="language-plaintext highlighter-rouge">.fsh</code> is <strong>FHIR Shorthand</strong> — in <code class="language-plaintext highlighter-rouge">schemas/dak.ts</code>, <code class="language-plaintext highlighter-rouge">jsonld.ts</code>,
-<code class="language-plaintext highlighter-rouge">translation-tools.ts</code>, <code class="language-plaintext highlighter-rouge">block-qa.ts</code>, and throughout the WHO SMART folios
-this platform targets. The overlap was raised and the owner confirmed this
-spelling anyway.</p>
+<p>This is the one that looks like cause 1 and is not. The generator is behaving
+correctly, the input has not changed, and the file still gets rewritten — because
+a field in it describes <strong>the run that produced it</strong> rather than <strong>the subject it
+is about</strong>, and your run is not the last one.</p>
 
-<p>It is recorded here so the next agent meets it as a known fact instead of
-rediscovering it and proposing a rename. <strong>Do not re-litigate it.</strong> If you are
-grepping for FHIR Shorthand, exclude this directory.</p>
-<h2 id="what-does-not-go-here">
+<p><strong>The question that settles it:</strong></p>
+
+<blockquote>
+  <p>Does this field describe the SUBJECT the artefact is about, or the RUN that
+produced it? <strong>Only the first is a reason to write.</strong></p>
+</blockquote>
+
+<p>A field that records the environment — a timestamp, the checked-out HEAD, the
+runtime version — will differ on every machine, so counting it as a reason to
+write makes the artefact churn everywhere and reports that churn as though an
+input had moved.</p>
+<h3 id="the-worked-example-and-it-is-fixed">
   
   
-    <a href="#what-does-not-go-here" class="anchor-heading" aria-labelledby="what-does-not-go-here"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What does NOT go here
+    <a href="#the-worked-example-and-it-is-fixed" class="anchor-heading" aria-labelledby="the-worked-example-and-it-is-fixed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The worked example, and it is fixed
+  
+  
+</h3>
+    
+
+<p>Bean <code class="language-plaintext highlighter-rouge">3ozg</code>, 2026-09-27. The committed QA script sidecars under
+<code class="language-plaintext highlighter-rouge">cat-harness/content/pipeline/script-sidecars/</code> carry three such fields:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>last_run_at     wall-clock time of this run
+last_run_sha    the checked-out HEAD
+engine_version  `bun-${Bun.version}` — the local runtime
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">saveQaScriptSidecar</code> already skipped the write unless a <strong>substantive</strong> field
+moved, and it already excluded the two <code class="language-plaintext highlighter-rouge">last_run_*</code> fields. It counted
+<code class="language-plaintext highlighter-rouge">engine_version</code>, so a run under any other Bun rewrote every sidecar whose
+recorded engine disagreed — 72 of 86 from a container at <code class="language-plaintext highlighter-rouge">1.3.11</code> against CI’s
+<code class="language-plaintext highlighter-rouge">1.3.14</code>. <code class="language-plaintext highlighter-rouge">init-folio-qa.test.ts</code> runs a real sweep (found by bisecting 432 test
+files), which is how <code class="language-plaintext highlighter-rouge">bun test</code> came to dirty the tree, and <code class="language-plaintext highlighter-rouge">bun run gates</code>
+therefore ended <code class="language-plaintext highlighter-rouge">NOT clean</code> on <strong>every branch, pristine <code class="language-plaintext highlighter-rouge">main</code> included</strong>.</p>
+
+<p>Two changes landed, and the order matters for reading the history:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>#1442</strong></td>
+      <td>pinned Bun in <code class="language-plaintext highlighter-rouge">.bun-version</code>, with <code class="language-plaintext highlighter-rouge">check:bun-pin</code> holding all 22 <code class="language-plaintext highlighter-rouge">oven-sh/setup-bun</code> sites to it. Makes <strong>CI</strong> consistent — and a container image is not something a repository can pin, so it could not reach an agent container.</td>
+    </tr>
+    <tr>
+      <td><strong>#1452</strong></td>
+      <td>dropped <code class="language-plaintext highlighter-rouge">engine_version</code> from the comparison, joining the two <code class="language-plaintext highlighter-rouge">last_run_*</code> fields. Closes the residual: no engine difference rewrites anything.</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The owner kept both. They answer different halves: the pin makes the recorded
+engine consistent where the repository controls it, the skip stops any other
+engine from rewriting a file whose checker did not change.</p>
+<h3 id="the-argument-that-decided-it-because-the-wrong-one-is-tempting">
+  
+  
+    <a href="#the-argument-that-decided-it-because-the-wrong-one-is-tempting" class="anchor-heading" aria-labelledby="the-argument-that-decided-it-because-the-wrong-one-is-tempting"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The argument that decided it, because the wrong one is tempting
+  
+  
+</h3>
+    
+
+<p>#1442 defended keeping <code class="language-plaintext highlighter-rouge">engine_version</code> substantive with <em>“a verdict produced by a
+different engine is a different verdict”</em>. <strong>That is true and it is about a
+different artefact.</strong> A <em>script</em> sidecar holds no verdict — it records a
+checker’s source file, its hashes and its dependencies. Verdicts live in block
+sidecars. And no reader consults a script sidecar’s <code class="language-plaintext highlighter-rouge">engine_version</code> for
+freshness: <code class="language-plaintext highlighter-rouge">entryIsFresh</code> compares <code class="language-plaintext highlighter-rouge">field_hash</code> and the script hashes, nothing
+else. So the field is a record of the last real change’s engine, not an input to
+any decision.</p>
+
+<p>The generalisable half is <strong>not</strong> “engine versions do not matter”. It is that a
+soundness argument has to be checked against the artefact in front of you: the
+same field can be load-bearing in one sidecar and pure provenance in another.</p><hr />
+<h3 id="the-rule-is-convergent-not-novel--and-3ozg-was-the-last-family-to-get-it">
+  
+  
+    <a href="#the-rule-is-convergent-not-novel--and-3ozg-was-the-last-family-to-get-it" class="anchor-heading" aria-labelledby="the-rule-is-convergent-not-novel--and-3ozg-was-the-last-family-to-get-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rule is convergent, not novel — and <code class="language-plaintext highlighter-rouge">3ozg</code> was the LAST family to get it
+  
+  
+</h3>
+    
+
+<p>Swept 2026-09-27 across every committed artefact family carrying a run field.
+This repository already implements the rule in <strong>three independent places</strong>, each
+with the measurement that bought it — so a reader meeting this skill should not
+treat it as a proposal:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>where</th>
+      <th>the guard</th>
+      <th>what it cost to learn</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">scripts/qa-results.ts</code> <code class="language-plaintext highlighter-rouge">writeQaResult</code></td>
+      <td>compares <code class="language-plaintext highlighter-rouge">withoutTimestamp(prior)</code>, so only <code class="language-plaintext highlighter-rouge">updated_at</code> differing is not a write</td>
+      <td><em>“run the check, get a modified file, commit nothing of substance”</em> — 2026-09-19, across <code class="language-plaintext highlighter-rouge">kg-export</code> and <code class="language-plaintext highlighter-rouge">avatar-coverage</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">content/pipeline/qa-sweep.ts</code></td>
+      <td><code class="language-plaintext highlighter-rouge">wroteSomething = verdictChanged \|\| metadataDrifted</code>, and <code class="language-plaintext highlighter-rouge">updated_at</code> advances only then</td>
+      <td>restamping “made an otherwise no-op sweep dirty the whole corpus”</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">qa-utils.ts</code> <code class="language-plaintext highlighter-rouge">saveQaScriptSidecar</code></td>
+      <td>content-derived fields only; since #1452 <code class="language-plaintext highlighter-rouge">engine_version</code> joins the two <code class="language-plaintext highlighter-rouge">last_run_*</code></td>
+      <td><code class="language-plaintext highlighter-rouge">3ozg</code> — the churn this skill is named for</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p><code class="language-plaintext highlighter-rouge">writeQaResult</code> is shared by every <code class="language-plaintext highlighter-rouge">*.qa-results.json</code> family, which is why
+<code class="language-plaintext highlighter-rouge">library-qa</code>’s 34 files are safe while carrying <code class="language-plaintext highlighter-rouge">updated_at</code>. Its docblock states
+the principle in the same terms: <em>the timestamp answers “when were these findings
+established”, not “when did somebody last run the script”</em>.</p>
+
+<p><strong>Two things follow.</strong> A churn you meet is more likely a family that MISSED an
+established rule than a new question — look for the nearest of those three before
+designing anything. And the rule has been arrived at independently three times,
+which is itself the argument for it being written down once.</p>
+
+<p><strong>What the sweep did not measure</strong>, stated rather than implied: the 125 <code class="language-plaintext highlighter-rouge">block-qa</code>
+sidecars were verified by READING <code class="language-plaintext highlighter-rouge">qa-sweep.ts</code>’s guard, not by running it.
+<code class="language-plaintext highlighter-rouge">qa_sweep</code> is an MCP tool with no npm script and the platform carries no folio, so
+there was no control to run. Six writers that could be run were, twice where
+cheap, and all were idempotent on a clean tree.</p>
+<h2 id="if-you-meet-a-churn-whose-writer-has-not-been-fixed-yet">
+  
+  
+    <a href="#if-you-meet-a-churn-whose-writer-has-not-been-fixed-yet" class="anchor-heading" aria-labelledby="if-you-meet-a-churn-whose-writer-has-not-been-fixed-yet"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> If you meet a churn whose writer has not been fixed yet
   
   
 </h2>
     
 
-<ul>
-  <li><strong>Anything a reader of the folio needs.</strong> That is <code class="language-plaintext highlighter-rouge">docs/</code>, and moving it
-here to tidy up is the opposite mistake.</li>
-  <li><strong>A bean.</strong> Beans have their own lifecycle — <code class="language-plaintext highlighter-rouge">scrapped</code>, with reasons — and
-a second disposal mechanism for them would be two answers to one question.</li>
-  <li><strong>Secrets, credentials or personal data.</strong> This is not rendered; it is still
-committed, still public in a public repository, and still in the JSON-LD.
-Not-rendered is not private, and treating it as private is the one way this
-directory could do real harm.</li>
-</ul>
+<p>Discard it rather than committing it, and then <strong>fix the writer</strong>:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout <span class="nt">--</span> &lt;the churning paths&gt;
+</code></pre></div></div>
+
+<p>Committing such a churn stamps whatever your environment happens to be as though
+it were a fresh measurement — with an older local runtime, a <em>downgrade</em>. That is
+<code class="language-plaintext highlighter-rouge">sfjo</code>’s rule (<em>read what a regeneration writes before committing it</em>) applied to
+a regeneration that is <strong>faithful and still wrong to keep</strong>: the generator records
+your container correctly, and your container is not the repository.</p>
+
+<p><strong>But discarding is a workaround, and the habit is the defect.</strong> <code class="language-plaintext highlighter-rouge">3ozg</code> was filed
+<strong>three times in one day</strong> — as <code class="language-plaintext highlighter-rouge">3ozg</code>, as <code class="language-plaintext highlighter-rouge">rmcf</code>, and <code class="language-plaintext highlighter-rouge">ymsu</code> is a different
+defect over the same files — because every session that ran <code class="language-plaintext highlighter-rouge">bun run gates</code> on a
+clean tree saw the same always-red line, discarded the churn, and moved on.
+A signal that is always red is one nobody reads, and then it cannot report the
+next real in-run repair, which is the whole reason the detector exists.</p>
+
+<p>So the sequence is: discard, ask the question at the top of cause 2, and fix the
+comparison. Do not add the paths to an ignore list — that removes the signal
+instead of the cause.</p><hr />
+<h2 id="do-not-read-past-the-line">
+  
+  
+    <a href="#do-not-read-past-the-line" class="anchor-heading" aria-labelledby="do-not-read-past-the-line"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Do not read past the line
+  
+  
+</h2>
+    
+
+<p>Cause 2 has a narrow signature. If <code class="language-plaintext highlighter-rouge">NOT clean</code> names paths outside the artefact
+family you expect, or fields other than the run-provenance ones, it is <strong>not</strong>
+this: the gate is telling you something new, and cause 1 is the likelier answer.</p><hr />
+<h2 id="related">
+  
+  
+    <a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="/folio-assistant/STAGING/claude-pot-out-of-bootstrap/reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a></td>
+      <td>which gates to run, and cause 1 in full</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">scripts/gate-tree-guard.ts</code></td>
+      <td>why the detector cannot live in a gate</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">content/pipeline/qa-utils.ts</code></td>
+      <td><code class="language-plaintext highlighter-rouge">saveQaScriptSidecar</code>’s comparison, with <code class="language-plaintext highlighter-rouge">3ozg</code>’s reasoning beside it</td>
+    </tr>
+    <tr>
+      <td><a href="/folio-assistant/STAGING/claude-pot-out-of-bootstrap/reference/skill-instructions/generalise-the-fix.html"><code class="language-plaintext highlighter-rouge">generalise-the-fix</code></a></td>
+      <td>the same shape one level up: fix the class, not the instance</td>
+    </tr>
+    <tr>
+      <td><a href="/folio-assistant/STAGING/claude-pot-out-of-bootstrap/reference/skill-instructions/upstream-version-adoption.html"><code class="language-plaintext highlighter-rouge">upstream-version-adoption</code></a></td>
+      <td>moving a pin forward — a person’s decision, never a gate’s</td>
+    </tr>
+  </tbody>
+</table></div>
 
           
 

@@ -9552,6 +9552,37 @@
       }
     }
 
+    /* LIGHT / DARK IN THE ROW — owner, 2026-09-27: *"i want light dark mode
+     * on main icon tab at top of LHS"*. The same switch as the Settings tile
+     * and the header mini-button (which this row hides from 50rem up), so it
+     * REGISTERS a painter rather than owning the state: three controls over
+     * one fact, and none of them can disagree. */
+    var scheme = el("button", { type: "button", class: "fa-nav-icon fa-nav-scheme" });
+    registerSchemePainter(function (name) {
+      scheme.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
+      var said = name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light";
+      scheme.setAttribute("aria-label", said);
+      scheme.title = said;
+      scheme.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
+    });
+    scheme.addEventListener("click", toggleScheme);
+    host.appendChild(scheme);
+
+    /* THE [x] IN THE ROW, as its last item — owner, 2026-09-27: *"make close
+     * navigation in line with the rest of icons"*. It was PAINTED over the
+     * row's end from `.site-footer` (absolute, with its own box), and never
+     * quite sat on the row's line. It is a `<label for="fa-nav-open">`, and a
+     * label drives its checkbox from anywhere, so moving it keeps the no-script
+     * behaviour; it is moved only when `mountNavPreference` has run (the
+     * `.fa-nav-js` mark), because that handler is what makes the hover-case
+     * click mean "close" rather than "pin". Without script it stays where the
+     * stylesheet already places it. */
+    var closeCtl = bar.querySelector(".fa-nav-close");
+    if (closeCtl && bar.classList.contains("fa-nav-js")) {
+      closeCtl.classList.add("fa-nav-icon", "fa-nav-close--in-row");
+      host.appendChild(closeCtl);
+    }
+
     // AFTER the header: line 1 is the avatar and the name, line 2 is this.
     var header = bar.querySelector(".site-header");
     if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);

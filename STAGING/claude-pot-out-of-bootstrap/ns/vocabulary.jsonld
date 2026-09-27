@@ -280,6 +280,22 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:ExternalSchema",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "ExternalSchema",
+      "comment": "A published specification this corpus conforms to or reads — BPMN, DMN, ODRL, PROV-O — recorded by name and edition rather than copied in.",
+      "prefLabel": "ExternalSchema",
+      "definition": "A published specification this corpus conforms to or reads — BPMN, DMN, ODRL, PROV-O — recorded by name and edition rather than copied in.",
+      "notation": "cat-harness:ExternalSchema",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness",
+      "seeAlso": "https://litlfred.github.io/external-schemas/"
+    },
+    {
       "@id": "cat-harness:Capability",
       "@type": [
         "rdfs:Class",
@@ -2077,6 +2093,141 @@
       "prefLabel": "maintainedBy",
       "definition": "The tool that generates and keeps this artefact current.",
       "notation": "cat-harness:maintainedBy",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:conformsTo",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "conformsTo",
+      "comment": "A published specification this node's files are written in, e.g. BPMN 2.0 for a process.",
+      "prefLabel": "conformsTo",
+      "definition": "A published specification this node's files are written in, e.g. BPMN 2.0 for a process.",
+      "notation": "cat-harness:conformsTo",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:validator",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "validator",
+      "comment": "The schema node that runtime-validates a node of this kind.",
+      "prefLabel": "validator",
+      "definition": "The schema node that runtime-validates a node of this kind.",
+      "notation": "cat-harness:validator",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:validatorRef",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "validatorRef",
+      "comment": "The `module#Export` a kind names as its validator, where no schema node for it is in this graph.",
+      "prefLabel": "validatorRef",
+      "definition": "The `module#Export` a kind names as its validator, where no schema node for it is in this graph.",
+      "notation": "cat-harness:validatorRef",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:validatorNotApplicable",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "validatorNotApplicable",
+      "comment": "Why no runtime validator applies to this kind, and what grades it instead.",
+      "prefLabel": "validatorNotApplicable",
+      "definition": "Why no runtime validator applies to this kind, and what grades it instead.",
+      "notation": "cat-harness:validatorNotApplicable",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:authority",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "authority",
+      "comment": "The body that publishes a specification, e.g. OMG or W3C.",
+      "prefLabel": "authority",
+      "definition": "The body that publishes a specification, e.g. OMG or W3C.",
+      "notation": "cat-harness:authority",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:specVersion",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "specVersion",
+      "comment": "The edition of a specification this corpus is pinned to.",
+      "prefLabel": "specVersion",
+      "definition": "The edition of a specification this corpus is pinned to.",
+      "notation": "cat-harness:specVersion",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:specUse",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "specUse",
+      "comment": "How the corpus uses a specification: conforms to it, or only reads it.",
+      "prefLabel": "specUse",
+      "definition": "How the corpus uses a specification: conforms to it, or only reads it.",
+      "notation": "cat-harness:specUse",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:specUrl",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "specUrl",
+      "comment": "Where a specification is published.",
+      "prefLabel": "specUrl",
+      "definition": "Where a specification is published.",
+      "notation": "cat-harness:specUrl",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:namespace",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "namespace",
+      "comment": "An XML or RDF namespace a specification defines.",
+      "prefLabel": "namespace",
+      "definition": "An XML or RDF namespace a specification defines.",
+      "notation": "cat-harness:namespace",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
