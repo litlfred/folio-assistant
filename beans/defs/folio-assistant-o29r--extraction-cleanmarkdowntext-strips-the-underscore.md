@@ -91,11 +91,16 @@ Worth recording, because each manufactured findings that looked real:
 
 ## Done when
 
-- [ ] `MD_ITALIC_UNDER_RE` carries the intraword guard
-- [ ] a test covers `$a_1$ and $b_2$`, `x_1 y_2` and `snake_case_name`
-- [ ] the qou comparison re-run and the 122 class measured at 0
-- [ ] the catalogues already derived are re-derived, or their stale msgids
-      obsoleted, ONCE together with `6b8u`, `ig4a`, `lvk9` and `3mo4`
+- [x] `MD_ITALIC_UNDER_RE` carries the intraword guard
+- [x] a test covers `$a_1$ and $b_2$`, `x_1 y_2` and `snake_case_name` — four
+      tests in `translation.test.ts`, and 3 of the 4 measured RED without the fix
+- [x] the qou comparison re-run: 13251 corrupted to **0**, and 229 to **0** here
+- [x] the catalogues already derived are re-derived, or their stale msgids
+      obsoleted — **not applicable to this fix, measured rather than assumed.**
+      Of the 14 pages that HAVE a committed catalogue, the fix changes the msgids
+      of **0**. The 229 corrupted msgids are all on pages with no catalogue. The
+      combined rewrite is still owed for `6b8u`, `ig4a`, `lvk9` and `3mo4`, and
+      is `lvk9`'s remaining item rather than this bean's.
 
 ## Impact, measured — current extractor vs the same extractor with only the guard added
 
@@ -154,3 +159,67 @@ reviewer should be able to read on its own.
 rewritten anyway. That was offered as option 2 and declined.
 
 _2026-09-26T19:54:35Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Fixed, and every claim here was measured in both directions
+
+`MD_ITALIC_UNDER_RE` now carries CommonMark's intraword rule:
+
+    /(?<![_\w])_([^_]+)_(?!\w)/g
+
+| measurement | before | after |
+|---|---|---|
+| corrupted msgids, `cat-harness/docs` | 229 of 46382 | **0** |
+| corrupted msgids, `qou/docs` | 13251 of 211139 | **0** |
+| the four new tests | **3 of 4 RED** | 4 of 4 green |
+| `translation.test.ts` | — | 51 pass, 0 fail |
+
+The fourth test — real emphasis still stripped, including two spans in one
+string — passes BOTH ways on purpose. It is the guard against buying subscript
+safety by deleting the emphasis branch, which would have satisfied every other
+assertion.
+
+## THREE committed catalogues WERE stranded — the section above this was wrong
+
+**Superseded, and the way it was wrong is the reusable part.** The paragraph that
+stood here claimed "25 of 6102 before, 25 after" and "0 of 14 pages differ", and
+concluded no committed catalogue was stranded. Both figures came from scripts that
+resolved a catalogue's source as `join(DOCS, page + ".md")` — **top-level pages
+only**. `translations/ar/agent-onboarding.po` pairs with
+`docs/guides/agent-onboarding.md`, nested, so it was never in the set. A
+measurement that silently covers a subset is worse than none, because the subset
+looks like the whole.
+
+`translation:block-qa:check` caught it: red on two sidecars here, exit 0 on `main`
+in a worktree, so unambiguously this branch's.
+
+Re-measured walking `translations/` recursively and resolving each `.po` by
+basename across all of `docs/`:
+
+| | stale msgids, 56 catalogues |
+|---|---|
+| `main`'s extractor | **281** of 4987 |
+| with this fix | **284** |
+| after the repair | **281** |
+
+The fix stranded exactly **three** — the same `/prepare-merge` gate-list string in
+`ar`, `ru` and `fr/agent-onboarding.po`, keyed as `contentvalidate / qasweep /
+proofstatus / latexpreflight / lean_build`. `lean_build` survived even then, being
+the odd underscore with no partner.
+
+**The repair is three keys, not three translations.** One line each, `msgid` only.
+Nothing needed translating: `ar` and `ru`'s msgstrs already carry the correct
+`content_validate` and `qa_sweep`, `fr`'s is empty, and the PUBLISHED pages were
+always right. Only the derived key was corrupted, by our own extractor. Sidecars
+regenerated to ar 69/80 and ru 69/80 — their pre-fix values, so the fix costs
+nothing in measured coverage.
+
+**281 msgids were already stale before any of this work** — `kg-viewer.po` is 40 of
+40 stale across five locales, `glossary.po` 8 of 8. A different and larger figure
+than the 3785 `lvk9` tracks, and input for the combined pass rather than this
+bean's business.
+
+## Gates
+
+`translation:drift:check`, `translation:pot:check` and `translation:index:check`
+each exit 0 — drift compares heading STRUCTURE rather than msgids, which is why
+a msgid change does not move it.

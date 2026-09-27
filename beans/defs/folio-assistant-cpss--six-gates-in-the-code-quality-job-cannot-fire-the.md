@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cpss
-title: '108 checks in the code-quality job cannot fire: the deliberately-red drift gate is the 3rd of 106 in one `set -e` batch'
-status: todo
+title: The deliberately-red drift gate masked 104 checks from inside a `set -e` batch — moved to last, and enforced
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-26T18:09:12Z
-updated_at: 2026-09-26T20:10:30Z
+updated_at: 2026-09-27T05:14:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -87,13 +87,26 @@ five gates that are not mine is the owner's call, not a side effect of a bean ab
 
 ## Done when
 
-- [ ] Decided between (a) and (b), or a third option, with the reason recorded
-- [ ] Every step in the `gates` job can fire while the drift is red — verified by
+- [x] Decided between (a) and (b), or a third option, with the reason recorded —
+      **(b)**, on the owner's instruction 2026-09-27. `translation:drift:check` is
+      out of the batch and is now the `gates` job's LAST step
+- [x] Every step in the `gates` job can fire while the drift is red — verified by
       reading the job's step order, not by a green run (a green run proves nothing
-      here: the drift makes the job red either way)
-- [ ] A gate refuses a NEW step registered below a known-red one, or the
-      convention is written where somebody adding a step will read it
-- [ ] falsified by breaking: registering a step below the red one must be caught
+      here: the drift makes the job red either way). **`check:red-gate-is-last`
+      reports it as step 52 of 52**, so the set it can mask is empty BY
+      CONSTRUCTION rather than by a passing run — which is what this box asked for
+      and why it asked for it that way
+- [x] A gate refuses a NEW step registered below a known-red one, or the
+      convention is written where somebody adding a step will read it — **both**.
+      `check:red-gate-is-last` refuses it, and the comment above the moved step
+      says why it is last and that anything appended after it re-creates the defect
+- [x] falsified by breaking: registering a step below the red one must be caught —
+      **17 tests**, and one control better than any of them: run against the
+      workflow as it stood on `main` BEFORE this change, the check reports both
+      defects independently of this bean — `shares-a-step` with **106 other
+      gates**, and `not-last` at **step 46 of 51 with 5 steps following**. Those
+      match the 107 invocations and 5 trailing steps measured by hand on
+      2026-09-26, from a different direction
 
 
 ---
@@ -294,3 +307,145 @@ CI on `897129e7e9`, `Repository gates`, all steps green:
 That is the whole of this bean's claim, confirmed by observation. The
 recommendation is unchanged and the masking is still latent, for the reasons in
 the entry above.
+
+_2026-09-27T04:55:37Z_ — Claimed by claude/sleepy-babbage-ls90iz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+---
+
+## Summary of Changes — 2026-09-27, option (b) on the owner's instruction
+
+**The batch no longer contains the gate that can empty it.**
+`translation:drift:check` is out of the 107-line `set -e` block and is now the
+LAST step of the `gates` job. The comment that used to justify putting
+`translation:pot:check` *before* it — *"anything placed after it never runs"* —
+is gone, because the thing it worked around is gone.
+
+### Why the placement is the fix and the comment is not
+
+Three earlier changes each moved ONE gate to just above the red one
+(`ee964c7411` for `translated-links:check`, then `docs:pages:check` and
+`check:available-locales`). Each was correct. None scaled: *"put your gate above
+the drift check"* is a rule every future author has to be told, and the cost of
+not being told is invisible — a green PR. *"The deliberate red is last"* is a
+rule a file can enforce.
+
+So it is enforced: **`check:red-gate-is-last`**, wired near the top of the same
+job, asserting three separate things about every gate declared red-by-decision:
+
+1. it is **found** — a renamed gate is a finding, not a pass, or this check
+   reports clean the day its subject stops existing;
+2. it occupies a step **alone** — bundling re-creates the masking INSIDE the
+   step, where job-level ordering cannot see it. **This is the case that
+   matters**: a check comparing only step indices would have called the original
+   defect clean, because the batch step was near the end of the job;
+3. its step is **last**, reported with what follows it, because "not last" is not
+   actionable and "5 steps follow it, named" is.
+
+The list of deliberate-red gates is hardcoded and one entry long. A declaration
+file for a single row would be a second place to look; this list IS the check.
+
+### The control
+
+Run against `.github/workflows/code-quality-gates.yml` **as it stood on `main`**,
+the check reports both defects without being told what to look for:
+
+    [shares-a-step]  shares step "gates that were registered and never run"
+                     of job `gates` with 106 other gate(s)
+    [not-last]       is step 46 of 51 ... and 5 step(s) follow it
+
+106 + 1 = the 107 invocations measured by hand on 2026-09-26, and the 5 trailing
+steps are the five this bean named. Two independent routes to the same numbers,
+which is the first time any count in this bean has been confirmed rather than
+corrected.
+
+### What this does NOT do
+
+It does not make `translation:drift:check` green — it is green today because
+#1411 (`9rrb`) replaced a hard-coded five-page list with discovery, and that is
+`ngxj`/#206's subject, not this bean's. The point of the placement is that the
+next time it is red, on purpose or otherwise, it costs one red check instead of
+104.
+
+Nor does it reorder the other 106. They remain one `set -e` block, so a member
+that fails still masks the members after it — bounded now by that step rather
+than by the rest of the job. Whether that block should be split further is a
+separate question, and `check:red-gate-is-last` will say so the moment anything
+in it is declared red by decision.
+
+## The six steps HAVE now run — latent when written, STRUCTURALLY CLOSED since
+
+> **Superseded, and by the right thing.** This section was written at 05:09Z warning
+> that the six steps ran only because the corpus happened to be undrifted, and that
+> one new drifted translation would hide them again — so the bean must not be closed
+> on green steps alone. The holder then landed option (b) (#1436): the drift is no
+> longer in the batch at all, it is the LAST step, and a gate enforces that it stays
+> there. **That is the structural fix, not the lucky state**, so the warning below no
+> longer applies to this bean — it applies to anyone who later moves a
+> deliberately-red gate back into a batch, which is now what the new gate refuses.
+> The measurement is left standing because it is the before-and-after.
+
+Evidence appended by another session (PR #1422). **Status deliberately untouched;
+this is not mine to resolve** — and as of 04:55Z it is held by
+`claude/sleepy-babbage-ls90iz`, so this is addressed to them. It is written because
+a reader who sees the six steps green may conclude the bean is done, which would be
+the wrong reading.
+
+**The claim above and this append collided**, which is worth one line since #1422
+is the PR that implements the rule for it: their claim landed on `main` at 04:55
+and this append was written at 05:09 on a branch, so the two met as a merge
+conflict in this file. Resolved by keeping both, their claim first. That is
+`dx5j`'s scenario exactly — the open-PR search would not have found them, because
+they pushed the claim to `main` precisely *because* their branch had no PR yet
+(their note says so, bean `35nj`). Two mechanisms aimed at the same window from
+opposite ends, and they still crossed.
+
+### What is now observed
+
+`translation:drift:check` is currently **passing** — 70 compared, 0 NEWLY drifted,
+0 could not be read, 0 drifted and recorded, 8 uncatalogued and recorded — so the
+`set -e` batch reaches its end and every step after it executes. Measured by step
+NAME in `Repository gates (hard)` on two runs (`66f5f09cab6` at 21:37Z and
+`6b4c89309ed` at 04:57Z, both green):
+
+| step | name | |
+|---|---|---|
+| 45 | generated docs pages are current | success |
+| 49 | voices projection and viewer are current | success |
+| 50 | folio projection and viewer are current | success |
+| 51 | viewer pages keep the navbar they had | success |
+| 52 | handler namespace index is current | success |
+| 53 | translation index is current | success |
+
+All six of this bean's population, including the one it singled out as proving
+the cost — *"translation index is current"*. The batch step itself now takes **81
+seconds** (21:37:43 → 21:39:04) where it previously died at its 3rd command, which
+is the same fact from the other side.
+
+### Why that does not close it
+
+**The gate did not stop being red by decision; the corpus stopped being drifted.**
+`ngxj` and issue #206 are untouched, and the 8 uncatalogued are *recorded* rather
+than resolved. So the batch is green for a reason that a single new drifted
+translation reverses — at which point all six steps silently vanish again, and
+nothing in CI will say so.
+
+That is this bean's own argument, now with a second demonstration: the masking is
+not a state somebody chose, it is **whatever happens to be later in the file**, and
+it came and went here without anybody deciding either transition. A hole that
+closes by luck is still a hole.
+
+### One partial instance of the remedy has landed
+
+#1422 adds `translation:catalogue:check` **above** the batch, for exactly this
+reason, stated in its docblock: registered below it, a check about the drift's
+silence would itself be silenced by it. That is one gate placed correctly, not a
+fix for the six — the ordering question this bean raises is untouched.
+
+### A correction to a figure this bean is cited alongside
+
+`om30` and `xm31` counted masked **steps**; the unit is **checks**. Verified
+independently from the workflow: the failing step is a `set -e` batch of **106**
+commands with `translation:drift:check` the **3rd**, so **103** gates inside one
+step never ran. This bean's title already says 108 checks and is right; the sibling
+beans' "45 → 6" and "35 masked at step 8" were the smaller half, and `xm31` has
+been closed with its decision moved here.
