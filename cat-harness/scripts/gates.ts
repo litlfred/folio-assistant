@@ -465,6 +465,14 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",
   },
   {
+    match: "set-html-lang.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--site ./_site`: it rewrites the BUILT site's `<html>` tags before a deploy (bean " +
+      "`zru7`); there is no `_site` in a checkout, and its logic is covered here by " +
+      "set-html-lang.test.ts, which builds pages as strings",
+  },
+  {
     // Four call sites, one entry — `match` is a substring and the script is
     // the same in every retry loop in `feature-staging.yml`.
     match: "backoff-sleep.ts",
