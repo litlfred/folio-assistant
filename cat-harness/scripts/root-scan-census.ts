@@ -60,6 +60,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
+import * as gitCorpusModule from "../schemas/git-corpus.ts";
 import { gitCorpus } from "../schemas/git-corpus.ts";
 import { repoRootFor } from "../schemas/cat-harness.ts";
 import { QA_RESULTS_DIR, buildQaResult, writeQaResult, type QaResult } from "./qa-results.js";
@@ -92,19 +93,29 @@ const ROOT_BOUND = /\b(?:REPO_ROOT|INSTANCE_ROOT|ROOT)\s*[:=]/;
  * there is now enough; nothing here has to be remembered.
  */
 function gitCorpusExports(): string[] {
-  const src = readFileSync(join(INSTANCE_ROOT, "schemas", "git-corpus.ts"), "utf-8");
-  const names = [...src.matchAll(/^export function (\w+)/gm)].map((m) => m[1]!);
-  // NOT a silent empty. If the read or the match ever returns nothing, every
-  // scanner reads as not-git-aware and the census reports a corpus-wide
-  // regression that did not happen — the `dh4f` shape, in the file whose
-  // subject is exactly that.
+  // THE MODULE'S OWN EXPORTS, not its source text. The first version read
+  // `schemas/git-corpus.ts` and matched `^export function` — which worked, and
+  // was a composed path literal that `check:declared-paths` flagged the moment
+  // it landed. It was right to: a scanner that reads a file by a path it
+  // built is one more thing to keep in step by hand, which is the exact class
+  // this census exists to report on.
+  //
+  // Importing it is strictly better anyway. It cannot drift from the real
+  // export list, it needs no regex, and a rename is a compile error here
+  // rather than a silent miss.
+  const names = Object.keys(gitCorpusModule).filter(
+    (k) => typeof (gitCorpusModule as Record<string, unknown>)[k] === "function",
+  );
+  // NOT a silent empty. If this ever returns nothing, every scanner reads as
+  // not-git-aware and the census reports a corpus-wide regression that did not
+  // happen — the `dh4f` shape, in the file whose subject is exactly that.
   if (names.length === 0) {
     throw new Error(
-      "no exported helper found in schemas/git-corpus.ts — the census cannot tell " +
-        "git-aware from not without them, and an empty answer here reads as a repository-wide regression",
+      "schemas/git-corpus.ts exports no function — the census cannot tell git-aware from not " +
+        "without them, and an empty answer here reads as a repository-wide regression",
     );
   }
-  return names;
+  return names.sort();
 }
 
 const GIT_HELPERS = gitCorpusExports();

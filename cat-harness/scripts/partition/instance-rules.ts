@@ -507,6 +507,13 @@ export const RULES: Rule[] = [
       // `scripts/` directory read through `gitCorpus`, and it cannot express
       // an opinion about a folio because it never looks at one.
       "scripts/root-scan-census.ts",
+      // Does a generator's COMMITTED OUTPUT change when gitignored content is
+      // present (bean `qrlc`)? Harness by the same route as the census above:
+      // its subjects are derived from this repository's own `package.json`
+      // scripts, it compares them with `git status`, and it never opens a
+      // folio's content — it only asks whether running a writer produced
+      // different bytes.
+      "scripts/detect-live-corpus.ts",
       // Whether a translated page's links survived being one directory
       // deeper than the page they were translated from (bean `ahab`).
       // Harness for `check-subgraphs.ts`' reason and by the same route — it
