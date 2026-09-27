@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T04:14:07Z
-updated_at: 2026-09-27T05:18:22Z
+updated_at: 2026-09-27T07:11:26Z
 parent: folio-assistant-d308
 ---
 
@@ -601,3 +601,70 @@ EXPLAINING the rule is the likeliest place to name it.
 - [ ] the loop: run the per-instance audit for the remaining declared instances
 - [ ] the `dh4f` zero-diagram question — an instance that declares `processes/`
       and has none: is that `unknown` or a finding?
+
+
+## 2026-09-27, box 7: the loop is NOT batchable — two blockers measured
+
+Enumerated the declared instances: **15**, of which only 2 declare `qa`
+(bootstrap, cat-harness). The other 13 have no `test/results` at all. Ran the
+non-writing `--check` against all 13 before changing anything.
+
+### Blocker 1 — a CRASH, fixed in bce18c147f
+
+`kg:audit --instance ./large-datasets` threw instead of auditing:
+`unclaimedSkillContracts` asked `instanceDirectoryForGraph` for THE `schemas`
+directory, and that instance declares **two** (`schemas/` and `sources/`).
+Declaring a kind twice is legal — `cat-harness.json` does it — so the accessor's
+refusal is right and the caller was asking the wrong question.
+
+Fixed with `instanceDirectoriesForGraph`, a plural sibling with the identical
+`scope` filter. NOT `[0]`: that hides a directory and reports clean (`dh4f`).
+large-datasets now audits — 4 subjects, 3 skills, 0 fail. Root run byte-identical.
+
+Three tests added, and the honest note is which one matters: the two accessor
+tests would NOT have caught this, because the defect was a caller picking the
+singular where its question was plural and no grep finds that. The third runs
+`kg:audit --instance` against such an instance. Reverting the caller makes it
+fail (4 pass / 1 fail) and the fix makes it pass (5 pass).
+
+### Blocker 2 — a FIFTH cross-instance issue, OPPOSITE polarity. Not fixed.
+
+`folio-assistant-core` (2) and `smart-base` (11) report **critical**
+`skill-ref-resolves` / `role-ref-resolves` / `raci-role-resolves` findings that
+are **FALSE**:
+
+    smart-base   Knowledge-graph audit (12 subjects, 0 skills, 0 roles)
+
+smart-base declares no `skills` and no `scenarios` directory, so its own sets are
+empty — while `Process_DIIG` references `skill ref="methodology-adoption"`,
+which exists at `cat-harness/skills/folio-core/methodology-adoption.md`.
+cat-harness is smart-base's TRANSITIVE DEPENDENCY
+(`smart-base → fhir-harness → folio-assistant-core → cat-harness`), so the
+reference is legitimate and inherited DOWN the `needs` chain.
+
+**The four leaks fixed so far were an instance seeing things ABOVE it. This is an
+instance unable to see things BELOW it** — same axis, other direction.
+
+Precedent for the fix exists: `satisfiableSkills` in `check-tools.ts` widens
+resolution across instances while keeping coverage narrow, on the recorded ruling
+*"not in my overlay is not does not exist"* (owner's `pve3`). So the direction is
+arguably declared again, via `needs` — but it changes what three criteria MEAN
+across every instance, so it is recorded for a decision rather than taken.
+
+**Consequence: committing sidecars for the 13 undeclared instances now would
+commit 13 sets of false criticals.** The loop waits on blocker 2.
+
+## Done when
+
+- [x] `check:workflow-refs` audits a path that exists
+- [x] the render:bpmn half — resolved in main's favour (`oqdr`, #1394)
+- [x] `kg:audit --instance`, all criteria scoped `instance|repo`
+- [x] `checkTools()` takes an instance root — 119 phantom sidecars → 0
+- [x] `knownSkills()` stops inheriting the repo's `.claude/` upward — 23 → 0
+- [x] bootstrap declares `qa` → `test/results/`, with its files, `iwtn` green
+- [x] the loop no longer CRASHES on an instance declaring a kind twice
+- [ ] **resolution must follow `needs` DOWNWARD, or the 13 remaining instances
+      cannot be audited without committing false criticals** — owner's call on
+      whether `skill-ref-resolves`, `role-ref-resolves` and `raci-role-resolves`
+      resolve against the dependency closure, as `satisfiableSkills` already does
+- [ ] the `dh4f` zero-diagram question
