@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-27T07:47:30Z
-updated_at: 2026-09-27T07:48:15Z
+updated_at: 2026-09-27T08:17:37Z
 parent: folio-assistant-vke6
 ---
 
@@ -151,3 +151,64 @@ declaring no `needs` (`agent-skills`, `folio-assistant-sci`, `large-datasets`,
 `who-iris`, `who-style-guide`) that make 11034 occurrences undetermined. Both
 are real and both are bigger than this; folding them in would let the tractable
 import axis wait on them.
+
+## Themed sub-graphs: a sub-directory IS a declared subgraph — but only for skills/
+
+Owner, 2026-09-27: *"breakdown of large graphes into themed sub=graphs-> sub-dir=named
+ssubgraph declared by harness. make sure linked to existing infra"*.
+
+Checked rather than assumed, and the infra is split down the middle.
+
+### Works today, no code change — `cat-harness/skills/*`
+
+`kg-detangle.ts`'s `SCAN` carries `{ path: "cat-harness/skills", groupDepth: 3 }`,
+so every subdirectory of `skills/` is ALREADY a named subgraph — that is why
+`folio-core`, `crdm` and `workflow` are groups at all. Each package declares
+itself with `package-manifest.json`, and `skill:register` verifies the chain while
+deliberately leaving *which package a file belongs to* to the author, which is
+exactly the themed-carve assertion.
+
+So a skills carve is: new subdir, `package-manifest.json`, move files,
+`skill:register`. Detangle measures the new subgraphs on the next run.
+
+### Does NOT work — `cat-harness/schemas` and `cat-harness/processes`
+
+Both are `groupDepth: 2`, so `schemas/<theme>/foo.ts` still groups as
+`cat-harness/schemas`. A themed subdirectory there produces NO new subgraph.
+
+The code already says so, in a `declared-path-literal` marker on that line: *"the
+scan list is REPO-relative and pairs each path with a grouping depth no
+declaration carries; deriving it is its own change, not part of the byql fold."*
+So the blocker is known and named, not discovered here.
+
+### The inversion, which forces the order
+
+    group                    mechanical seam           infra can name a subdir
+    cat-harness/schemas      YES - 12 components,      NO  - groupDepth 2
+                             129 ISOLATED files
+    skills/folio-core        NO  - 1 component of 155  YES - groupDepth 3
+
+The group that is easy to carve on evidence is the one the tooling cannot
+express; the one the tooling supports has no free seam. So either `groupDepth`
+becomes derived (or 3) before `schemas` is touched, or `folio-core` goes first
+with its carve acknowledged as judgement at a real coupling cost.
+
+### Done when
+
+[ ] `groupDepth` derived from the declaration rather than hardcoded per path —
+    the named prerequisite for any `schemas/` or `processes/` carve
+[ ] `cat-harness/schemas` carved: the 70-node component, the 11 small ones, and
+    the 129 isolated files ADJUDICATED rather than bucketed (129 files with no
+    internal edge is not one decision, it is 129)
+[ ] `cat-harness/processes` carved: 41-node core, 6 small components, 20 isolated
+[ ] `folio-core` and `folio-paper-adapter` carved by declared theme, each with
+    its reason recorded, since neither has a mechanical seam to appeal to
+[ ] every new sub-directory carries a `package-manifest.json` (skills) or a
+    declaration entry, so `skill:register` and `check:declared-dirs` see it
+
+### NOT in scope
+
+Renaming or re-homing anything outside the four groups. And the 129 isolated
+files under `schemas/` are a finding in their own right, not carve residue: a
+file that nothing in its own group references may belong elsewhere entirely, and
+deciding that per file is a bigger job than drawing subgraph boundaries.
