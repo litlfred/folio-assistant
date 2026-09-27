@@ -243,12 +243,21 @@ test.describe("the icon row — line 2 of the fixed top", () => {
     const { errors } = await load(page, LIVE);
     expect(errors).toEqual([]);
     const drawn = LIVE.icons.filter((i) => i !== "close");
-    await expect(page.locator(".fa-nav-icons .fa-nav-icon")).toHaveCount(drawn.length);
+    // The DECLARED slots. The light/dark switch and the moved [x] follow them
+    // (owner, 2026-09-27: "light dark mode on main icon tab", "close
+    // navigation in line with the rest of icons") and are not declared slots.
+    const slots = ".fa-nav-icons .fa-nav-icon:not(.fa-nav-scheme):not(.fa-nav-close)";
+    await expect(page.locator(slots)).toHaveCount(drawn.length);
     expect(drawn).not.toContain("close");
-    const labels = await page.locator(".fa-nav-icons .fa-nav-icon").evaluateAll((ns) =>
+    const labels = await page.locator(slots).evaluateAll((ns) =>
       ns.map((n) => n.getAttribute("aria-label")),
     );
     expect(labels).toEqual(["Todos", "Beans", "Processes", "Knowledge graph", "More actions"]);
+    // ...then the switch, then the [x], last.
+    const tail = await page.locator(".fa-nav-icons > *").evaluateAll((ns) =>
+      ns.slice(-2).map((n) => (n.classList.contains("fa-nav-scheme") ? "scheme" : n.classList.contains("fa-nav-close") ? "close" : n.className)),
+    );
+    expect(tail).toEqual(["scheme", "close"]);
   });
 
   test("FIVE DISTINCT drawings — a row where slots look alike says nothing", async ({ page }) => {
