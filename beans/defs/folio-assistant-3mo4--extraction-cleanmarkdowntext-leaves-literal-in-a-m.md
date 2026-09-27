@@ -72,6 +72,7 @@ different cause.
 Rewriting `cleanMarkdownText` as a markdown parser. The four rows above are the
 contract; how few lines satisfy them is an implementation question.
 
+_2026-09-27T06:52:18Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 ## Fixed 2026-09-27 — with one Done-when item declined and one deferred
 
