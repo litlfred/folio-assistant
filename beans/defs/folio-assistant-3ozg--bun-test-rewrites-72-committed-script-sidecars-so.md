@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-27T05:06:01Z
-updated_at: 2026-09-27T05:43:18Z
+updated_at: 2026-09-27T06:32:16Z
 parent: folio-assistant-1xhc
 ---
 
@@ -188,3 +188,55 @@ day — `3ozg`, `rmcf`, and `ymsu` for a different defect over the same files.
 That is not three people being careless; it is what an always-red signal does:
 every session that runs `bun run gates` on a clean tree sees it, and nothing
 told them it was already written down.
+
+## 2026-09-27 — the owner asked where this belongs. It is a SKILL, and now it is one.
+
+*"3ozg, that should be in tools/skills, no? how resolve?"* — two halves, and the
+answers went in opposite directions.
+
+**The `tools` half: the premise was wrong, and I was the one who made it wrong.**
+`@covers` names the graph kind a gate **audits**, and `cat-harness/tools/` holds
+Tool definitions. `check:bun-pin` and `check:red-gate-is-last` read
+`.github/workflows/`, which is not a declared graph kind at all — the three gates
+already doing exactly that (`check-ci-invocations`, `check-workflow-policy`,
+`check-workflow-script-paths`) say `@covers none` with that reason in as many
+words, and I had declared `tools` on both of mine without looking. The committed
+`audit-coverage.qa-results.json` therefore attributed the `tools` kind to **five**
+gates when three audit it — a false claim in the one artefact whose stated design
+is that the gate half is *declared* so the number is a verdict rather than an
+upper bound (`3srh`). Corrected in #1450; the row now reads three.
+
+**The `skills` half: yes, and this is the resolution.** What survived the pin was
+never code, it was a *reading rule* — and it was living in my check-in prompts and
+commit messages, which is to say nowhere a next session looks. New skill
+[`gate-tree-mutation`](../../cat-harness/skills/folio-core/gate-tree-mutation.md),
+carried by the `authoring-agent` role, `platform-gates` pointing at it:
+
+- `NOT clean` is a verdict about the **run**, not the diff — the gates after a
+  mutation were handed a repaired tree (`ymsu`, 152 of 152).
+- Two causes, told apart by `git status --short`: a missed regeneration, or a
+  container whose Bun differs from `.bun-version`.
+- The second is **discarded, never committed**, because it stamps a *downgrade*
+  as a fresh measurement — `sfjo` applied to a regeneration that is faithful and
+  still wrong to keep.
+- The count is a fact about your container: 86 sidecars, 72 at `bun-1.3.14`, 14
+  at `bun-1.3.11`, and what moves is whichever set disagrees with you. **This
+  bean's title says 72 and that is not a constant.**
+
+### Why it is a separate skill rather than a section in `platform-gates`
+
+Because the first attempt WAS a section, and `kg:audit` refused it: 82 lines took
+`platform-gates.md` from 334 to 416, past p90 (391), flipping
+`skill-not-a-document` from `pass` to a `major` fail — *"at that length it is a
+document, and an agent that skims it follows the part it happened to read."* Read
+before committing, per `sfjo`, and reverted rather than pushed. The criterion was
+right: the subject is distinct (how to read a run's cleanliness verdict, not which
+gates to run), so it got a name findable by `skill_fetch`. 134 lines, 4 pass / 0
+fail, and `platform-gates` keeps a 20-line pointer.
+
+### The three boxes are still unticked, and this does not tick them
+
+Nothing here names the triggering test, nothing moves the write to a temp
+directory, and `bun run gates` in this container still rewrites 72 files. What
+changed is that a session that sees it now finds it written down instead of
+filing it a fourth time.

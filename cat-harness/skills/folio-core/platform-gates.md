@@ -292,6 +292,25 @@ own output when it fails.
 
 ---
 
+## ...and a green gate set is not a CLEAN RUN
+
+`bun run gates` snapshots the tree before the first gate and after every one, so
+every gate can pass and the run still exit 1:
+
+```
+✗ every gate passed, and the run is NOT clean — 1 gate(s) changed the tree.
+```
+
+The gates after the mutation were handed the repaired tree, so their verdicts
+describe a state you have not committed. **The discipline is in the skill, not
+here** — [`gate-tree-mutation`](gate-tree-mutation.md) carries the two causes and
+the one command that tells them apart, and why the second one is usually not your
+diff at all: an agent container whose Bun differs from `.bun-version` rewrites
+the committed QA script sidecars, and that churn is **discarded rather than
+committed**, because it stamps a downgrade as a fresh measurement.
+
+---
+
 ## Three things this skill will not do for you
 
 **It does not replace reading the failure.** The runner names the failing
@@ -331,3 +350,4 @@ renamed or restructured and the reader needs fixing — not the gate list.
 | [`continual-progress`](continual-progress.md) | commit early, open the PR at the first commit — this is the step before the push |
 | [`prepare-merge`](prepare-merge.md) | the pre-merge recipe, which runs these plus content-type gates |
 | [`ci-health`](ci-health.md) | whether the workflows themselves are working — a different question |
+| [`gate-tree-mutation`](gate-tree-mutation.md) | reading `NOT clean` — a green gate set over a tree a gate repaired |
