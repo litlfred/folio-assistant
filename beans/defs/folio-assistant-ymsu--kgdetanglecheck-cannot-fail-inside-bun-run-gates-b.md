@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-27T05:51:51Z
+updated_at: 2026-09-27T05:55:41Z
 parent: folio-assistant-1xhc
 ---
 
@@ -716,3 +716,58 @@ paths to `bun test`. So the write is conditional on something the gates run sets
 up earlier, not on `bun test` alone — which means clause 1 cannot be fixed by
 reading the test files and needs the gates context reproduced. Not yet done; do
 not assume a single test file is the culprit.
+
+### CORRECTION, same day — `bun test` alone DOES write the 72 paths
+
+The paragraph above says `bun test` on a clean pristine worktree leaves it clean
+and the write must be conditional on gates setup. **False.** I read
+`git status` MID-RUN, before the writing test had executed, and took that as
+clean. Measured to completion on a clean pristine worktree at `410199a1de2`:
+
+```
+bun test rc=0
+72 dirty paths
+ M cat-harness/content/pipeline/script-sidecars/assertions_are_falsifiable.script.json
+```
+
+Clause 1 is reproducible with ONE command and no gates context. That makes it
+easier to fix than I said, not harder.
+
+**A status read taken while the thing is still running is not a measurement of
+the thing.** Same family as the vacuous same-commit comparison recorded on
+`qook` today: both looked like evidence and neither was.
+
+### What changes, and why the obvious fix is ALSO wrong
+
+```diff
+-  "last_run_at": "2026-09-26T19:43:36.482Z",
+-  "last_run_sha": "abee3acee29e15ad7ae540e254fe31f2cf31cc40",
+-  "engine_version": "bun-1.3.14"
++  "last_run_at": "2026-09-27T05:52:05.836Z",
++  "last_run_sha": "410199a1de2ed5725af1705434cecce0007c04e8",
++  "engine_version": "bun-1.3.11"
+```
+
+Per-run provenance — timestamp, HEAD, engine version. Unstable by construction.
+
+I first read that as `do70`'s shape (a recorded value that moves on every commit,
+which `AGENTS.md` rules against: *"counts are printed rather than recorded"*) and
+concluded the fields should come out. **Withdrawn.** They belong to
+`block-qa-schema`, a PUBLISHED dual-language contract with a `dist/` and a
+Pydantic parity half; removing fields there breaks two languages. The fields
+legitimately record a real sweep.
+
+So #1363's prescription stands and my reframe was half-true: the defect is that
+a TEST performs a real sweep into the tree, not that the fields exist.
+
+### Narrowing, for whoever takes it next
+
+| | dirty |
+|---|---|
+| full `bun test` | **72** |
+| `bun test cat-harness/content/pipeline/` (holds both the sidecars and `script-sweep.ts`) | **0** |
+| `qa-witness.test.ts`, the only test importing `script-sweep` | **0** |
+
+The writer is OUTSIDE `content/pipeline/` and fires only in the full suite. Not
+identified. Do not assume it is one of the three above — each was measured to
+write nothing.
