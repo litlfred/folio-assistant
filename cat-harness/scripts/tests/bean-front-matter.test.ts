@@ -156,13 +156,16 @@ describe("check-bean-front-matter", () => {
   test("the baseline is reported stale when its bean is absent", () => {
     const root = storeWith({ "folio-assistant-aaaa--ok.md": GOOD_FRONT_MATTER });
     try {
-      // Both baselined ids are absent from this fixture, so both are stale —
-      // which is how a repaired bean gets its entry removed rather than
-      // silently excusing a fresh defect under the same id.
-      expect(checkBeanFrontMatter(root).staleBaseline).toEqual([
-        "folio-assistant-1hvo",
-        "folio-assistant-7u3g",
-      ]);
+      // The baselined id is absent from this fixture, so it is stale — which is
+      // how a repaired bean gets its entry removed rather than silently
+      // excusing a fresh defect under the same id.
+      //
+      // ONE id, not two, since 2026-09-27: `7u3g`'s duplicate was `updated_at`,
+      // which the FIELD settles rather than the owner (bean `kfkh`), so it was
+      // collapsed to the later write and left the baseline. This expectation
+      // mirrors `DUPLICATE_KEY_BASELINE`, so shrinking that set is meant to
+      // fail here — and did, in the same change.
+      expect(checkBeanFrontMatter(root).staleBaseline).toEqual(["folio-assistant-1hvo"]);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
