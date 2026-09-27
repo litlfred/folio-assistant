@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-27T05:06:01Z
-updated_at: 2026-09-27T05:48:31Z
+updated_at: 2026-09-27T06:17:38Z
 parent: folio-assistant-1xhc
 ---
 
@@ -231,3 +231,50 @@ This is an argument for the pin reaching agent containers too — the open quest
 in *"the version is a judgement"* above — rather than for either retracted remedy.
 While an agent container's Bun differs from `.bun-version`, step 2 keeps lying, and
 no amount of documenting the discard closes that window.
+
+
+## The local guard the owner chose — landed 2026-09-27 (`claude/brave-hypatia-r820sf`)
+
+Status untouched. The owner was given the residual question above — the pin cannot
+reach an agent container — with four options, and chose **keep `1.3.14`, add a local
+guard**: a check that says the running Bun differs from the pin, so an agent is told
+at session start instead of finding out in a diff.
+
+`bun run check:bun-runtime`, and a `## Bun runtime vs the pin` section in
+`session-start-coord-sweep.sh`. On this container it prints, derived from the corpus
+rather than quoted from this bean:
+
+    This container runs Bun 1.3.11; .bun-version pins 1.3.14.
+    bun test and bun run gates will rewrite 72 of 86 committed script sidecars here
+
+**It is deliberately NOT a gate**, and the reason is the one that made the churn
+worth fixing. `check:bun-pin` asks a question about the CORPUS — do the 22
+`setup-bun` sites agree with `.bun-version`? — which every checkout answers
+identically, so it is gateable. This asks about the ENVIRONMENT, and no commit can
+change the answer. A gate failing on a fact about the machine would go red in every
+agent container while every reviewer read it as a verdict on the diff: a second
+always-red signal, which is what #1442 existed to remove.
+
+Three states, `cannot-tell` exiting 2 rather than 0 — no pin, an unparseable pin, or
+no Bun to ask are all *unknown*, never *matched*.
+
+**One detail decided whether this worked at all.** A sidecar records
+`engine_version: "bun-1.3.14"` while `.bun-version` holds the bare `1.3.14`.
+Compared directly they never match, so a naive version would report every sidecar
+due for a rewrite in every container including a correctly-matched one — firing
+always, and therefore meaning nothing. That is the same shape as the
+`PinDef.tagPrefix` defect #1442 found in the pin machinery while using it, so the
+prefix is a named constant with its own test rather than an inline template.
+
+11 tests, each BUILDING the state rather than describing it, because this check's
+interesting states are unreachable by pointing it at this repository: in CI it always
+matches and in an agent container it always mismatches.
+
+### What this does and does not close
+
+It closes the window in remedy 4 that no `git status` could: the agent is told before
+step 1, not asked to notice between steps 2 and 4. It does **not** stop the churn —
+72 files still move on every sweep here — so `bun run gates` is still locally 'NOT
+clean' and the boxes above stay unticked. Repinning to `1.3.11` remains the option
+that would make both CI and agent containers clean; it was declined in favour of
+keeping the artefacts' own engine, and that is recorded rather than re-argued.

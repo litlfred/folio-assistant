@@ -333,6 +333,45 @@ if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/check-ci-health.ts
   fi
 fi
 
+# ── 3-ter. Bun runtime vs the pin ───────────────────────────────────────────
+#
+# Bean `3ozg`. #1442 pinned Bun at `.bun-version` and at all 22 `setup-bun`
+# sites, which fixes the sidecar churn WHERE CI OBSERVES IT. It cannot reach a
+# container image the repository does not control, so in a mismatched agent
+# container `bun test` still rewrites every sidecar whose stamp differs, and
+# `bun run gates` still ends 'NOT clean'.
+#
+# The standing remedy was "discard them locally", and it has a window: a
+# BACKGROUND `gates` run writes the sidecars between a clean `git status` and a
+# `git add -A`. Measured 2026-09-27 — 72 sidecars entered a commit about
+# something else, and the idiom used to check for them,
+# `git status --porcelain | grep -v script-sidecars`, filtered out its own
+# subject. No `git status` can close that; being told at session start can.
+#
+# NOTE THE INVERTED EXIT CONVENTION, which is why this does not copy the CI
+# health block above. `check:bun-runtime` exits 1 on a real mismatch — the
+# finding IS the news — and 2 when it cannot tell. Treating non-zero as
+# "could not check", as the adjacent block correctly does for its own script,
+# would swallow exactly the message this exists to deliver. So it keys on EMPTY
+# OUTPUT instead, and an empty result is reported as unknown rather than matched.
+if command -v bun >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/check-bun-runtime.ts" ]; then
+  bun_rt_out=$(timeout 20 bun run "$REPO_ROOT/scripts/check-bun-runtime.ts" --markdown 2>/dev/null || true)
+  if [ -n "$bun_rt_out" ]; then
+    printf '%s\n' "$bun_rt_out"
+    echo
+  else
+    echo "## Bun runtime vs the pin"
+    echo
+    echo "**Could not check — treat as unknown, not as matched.** \`bun\` is present but"
+    echo "\`check:bun-runtime\` produced nothing. Run it by hand:"
+    echo
+    echo '```sh'
+    echo "bun run check:bun-runtime"
+    echo '```'
+    echo
+  fi
+fi
+
 # ── 3b. Declared directories exist ──────────────────────────────────────────
 # A declared-but-absent directory is the bean `dh4f` defect: absent and empty
 # are indistinguishable to a consumer, so the declaration turns a real gap into
