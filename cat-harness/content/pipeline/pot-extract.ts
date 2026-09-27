@@ -213,12 +213,48 @@ const MD_KRAMDOWN_CONSUMING_RE = /^\{:\s*toc\s*\}$/;
  * mismatch.
  */
 export function isTranslatable(text: string): boolean {
+  // A single ideograph IS a word, where a single Latin letter is not. The owner's
+  // decision of 2026-09-27 on bean `6b8u`, **on the merits and explicitly not on
+  // alignment** — which the measurement below says it does not improve.
+  //
+  // `MD_MIN_TEXT_LETTERS` is a count, and a count is not script-neutral. Two
+  // letters is a reasonable proxy for "a word" in an alphabetic script and a wrong
+  // one in a logographic script: `是` and `否` are the complete words "yes" and
+  // "no", while `y` and `n` are abbreviations of words.
+  //
+  // Measured over 660 files / 46 800 msgids before the change: this admits
+  // **exactly two strings, four times each** — `是` and `否`, in yes/no cells of
+  // comparison tables in `docs/guides/zh/agent-onboarding.md`,
+  // `docs/zh/document-ingestion.md` and `docs/zh/getting-started.md`. Eight cells.
+  //
+  // **It does not improve alignment, and must never be cited as if it did.**
+  // `derive-po` reports 57 derived / 13 refused either way, with an identical
+  // breakdown (`count-differs` 10, `msgid-conflict` 3). On the one pair it was
+  // once hoped to fix it swaps one misalignment for another: `zh/getting-started`
+  // goes from source 149 / translation 145 to 149 / **150**, short by four
+  // becoming long by one. That was measured twice, on 2026-09-26 and again on
+  // 2026-09-27 after `o29r` and `3mo4` moved 438 msgids between them.
+  if (MD_IDEOGRAPH_RE.test(text)) return true;
   let letters = 0;
   for (const ch of text) {
     if (/\p{L}/u.test(ch) && ++letters >= MD_MIN_TEXT_LETTERS) return true;
   }
   return false;
 }
+
+/**
+ * Scripts in which ONE character can be a whole word.
+ *
+ * Han, Hiragana, Katakana and Hangul. Named and separate for the same reason
+ * `MD_MIN_TEXT_LETTERS` is: a later change has to argue with the measurement in
+ * {@link isTranslatable} rather than edit an inline pattern.
+ *
+ * Not a list of the two characters this currently admits. The owner's decision
+ * was about the property — a single ideograph is a word — and a vocabulary of
+ * `是`/`否` would need maintaining every time a page gains a third, which is a
+ * rule expressed as a backlog.
+ */
+const MD_IDEOGRAPH_RE = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u;
 
 /**
  * How many letters make a string worth a translator's attention.
@@ -261,12 +297,41 @@ export function cleanMarkdownText(text: string): string {
   result = result.replace(MD_LINK_RE, "$1");
   // Remove angle-bracket autolinks
   result = result.replace(MD_ANGLE_LINK_RE, "");
-  // Remove inline code spans
-  result = result.replace(MD_INLINE_CODE_RE, "");
+  // Tokenise inline code spans rather than removing them here, for the same
+  // reason the Liquid expressions above are tokenised: what follows strips
+  // emphasis, and emphasis WRAPPING a code span has to see something between its
+  // markers. Bean `3mo4`.
+  //
+  // Removing the span first left the emphasis pair empty, and `MD_BOLD_RE`
+  // requires `[^*]+` between its runs, so `**`x`**` became four literal
+  // asterisks in the msgid — noise the translator is asked to reproduce, and part
+  // of the catalogue key. Measured over 660 files / 46 780 msgids before the fix:
+  // **190** msgids carried a run of four or more asterisks, and the defect had
+  // already reached the translations — `es/skills.md` and `ru/architecture.md`
+  // among them, where a translator faithfully copied the asterisks across.
+  //
+  // The obvious alternative, stripping emphasis BEFORE removing code spans, is
+  // declined: it points the emphasis regexes at the inside of code spans, where
+  // `content/**/*.lean` lives. A token containing no `*` is unreachable by them
+  // by construction, which is a property rather than a case that happens to pass.
+  //
+  // Position is deliberately unchanged from the removal it replaces, so no other
+  // construct's handling moves. The pre-existing consequence — the link and image
+  // regexes above still reach inside a code span — is left as it is rather than
+  // fixed silently here.
+  const codeTokens: string[] = [];
+  result = result.replace(MD_INLINE_CODE_RE, () => `\x00CODE${codeTokens.push("") - 1}\x00`);
   // Strip bold/italic markers (keep content)
   result = result.replace(MD_BOLD_RE, "$1");
   result = result.replace(MD_ITALIC_STAR_RE, "$1");
   result = result.replace(MD_ITALIC_UNDER_RE, "$1");
+  // Now drop the code spans. The whitespace this leaves is NOT collapsed: 8188 of
+  // this instance's 46 780 msgids already contain a double space, so collapsing
+  // would rewrite 17.5 % of the corpus and obsolete that many catalogue entries —
+  // a corpus-wide reformatting decision rather than part of this fix.
+  for (let i = 0; i < codeTokens.length; i++) {
+    result = result.replace(`\x00CODE${i}\x00`, "");
+  }
   // Remove remaining HTML tags
   result = result.replace(MD_HTML_TAG_RE, "");
 

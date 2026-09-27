@@ -98,33 +98,13 @@ msgstr "изменить то, какой контент создается"
 msgid "Claim a bean before durable work. Others may be running."
 msgstr "Резервируйте bean перед длительной работой. Параллельно могут выполняться другие задачи."
 
-#: agent-onboarding.md:124
-msgid "Claim before working so two sessions don't pick the same item, and never resolve or delete a sibling's bean. Do not stand up a parallel todo store. Do not  bulk machine-generated queues (, witness files) — those stay as bulk JSON."
-msgstr "Резервируйте задачу перед началом работы, чтобы две сессии не взяли один и тот же элемент, и никогда не закрывайте и не удаляйте bean другого агента. Не создавайте параллельное хранилище задач. Не используйте beans create для массовых машинно-генерируемых очередей (*.qa.json, файлы свидетельств) — они остаются в виде массового JSON."
-
-#: agent-onboarding.md:197
-msgid "constant, or a vocabulary, it is folio data."
-msgstr "константу или терминологический словарь — это данные фолио."
-
 #: agent-onboarding.md:29
 msgid "Contains"
 msgstr "Содержит"
 
-#: agent-onboarding.md:63
-msgid "content-agnostic: coordination, watchers, QA, render, bibliography"
-msgstr "не зависит от контента: координация, наблюдатели, QA, рендеринг, библиография"
-
 #: agent-onboarding.md:139
 msgid "Criteria are grouped into axes (, , , , , , , …). Run one:"
 msgstr "Критерии сгруппированы по осям (proof, voice, detangler, uses, canonical, compute, bibliography, …). Запуск проверки:"
-
-#: agent-onboarding.md:193
-msgid "Don't hardcode a paper name. A folio may hold several; resolve"
-msgstr "Не прописывайте имя статьи жестко в коде. В фолио их может быть несколько; определяйте"
-
-#: agent-onboarding.md:196
-msgid "Don't write content into the platform. If it names a chapter, a"
-msgstr "Не пишите контент в репозиторий платформы. Если упоминается глава,"
 
 #: agent-onboarding.md:134
 msgid "Every block can carry  recording, per criterion, what each reviewer found — , , or . Entries carry the source-file hashes at audit time, so an entry goes stale when the block is edited and must be re-adjudicated."
@@ -158,10 +138,6 @@ msgstr "сгенерированные полные тексты инструк�
 msgid "generated input/output contract per skill"
 msgstr "сгенерированный контракт ввода/вывода для каждого навыка"
 
-#: agent-onboarding.md:95
-msgid "hand-written."
-msgstr "вручную."
-
 #: agent-onboarding.md:30
 msgid "Has"
 msgstr "Имеет"
@@ -169,10 +145,6 @@ msgstr "Имеет"
 #: agent-onboarding.md:68
 msgid "how skills, roles, and capabilities compose"
 msgstr "композиция навыков, ролей и возможностей"
-
-#: agent-onboarding.md:92
-msgid "is editorial. \"What must a reader have read to follow"
-msgstr "носит редакционный характер. «Что читатель должен был прочесть, чтобы понять"
 
 #: agent-onboarding.md:191
 msgid "is not a pass. Say what was skipped and why."
@@ -206,10 +178,6 @@ msgstr "Никогда не заполняйте uses[] из Lean. Это раз
 msgid "no — only"
 msgstr "нет — только"
 
-#: agent-onboarding.md:64
-msgid "papers: Lean, LaTeX, proofs, simulators"
-msgstr "статьи: Lean, LaTeX, доказательства, симуляторы"
-
 #: agent-onboarding.md:180
 msgid "Project commands, conventions"
 msgstr "Команды проекта, соглашения"
@@ -217,10 +185,6 @@ msgstr "Команды проекта, соглашения"
 #: agent-onboarding.md:178
 msgid "Question"
 msgstr "Вопрос"
-
-#: agent-onboarding.md:199
-msgid "Read the criterion description before acting on a finding. They"
-msgstr "Прочтите описание критерия перед тем, как реагировать на замечание. В нем"
 
 #: agent-onboarding.md:198
 msgid "Regenerate, never hand-edit, anything under ."
@@ -243,10 +207,6 @@ msgstr "Справочник по схемам навыков"
 msgid "Skills & roles"
 msgstr "Навыки и роли"
 
-#: agent-onboarding.md:58
-msgid "Skills are the unit of work here. Before hand-rolling a procedure, check whether one exists."
-msgstr "Навыки — это основная единица работы. Прежде чем создавать процедуру вручную, проверьте, существует ли уже готовая."
-
 #: agent-onboarding.md:29
 msgid "skills, schemas, pipeline, MCP server"
 msgstr "навыки, схемы, пайплайн, MCP-сервер"
@@ -254,10 +214,6 @@ msgstr "навыки, схемы, пайплайн, MCP-сервер"
 #: agent-onboarding.md:147
 msgid "Some criteria are  (a script decides) and some are  (an agent or human must adjudicate). The second kind costs real turns — see  for scoping them by what they can actually affect."
 msgstr "Некоторые критерии имеют automated: true (решение принимает скрипт), а некоторые — automated: false (решение должен принимать агент или человек). Второй тип требует реальных затрат шагов диалога — см. semantic-cone.ts для ограничения их области только тем, на что они действительно могут повлиять."
-
-#: agent-onboarding.md:200
-msgid "state severity, intent, and what explicitly does not count."
-msgstr "указаны критичность, назначение и то, что явно не считается нарушением."
 
 #: agent-onboarding.md:85
 msgid "The  manifest is the source of truth for structure. Formalisation status is derived at build time, never stored in the manifest."
@@ -271,10 +227,6 @@ msgstr "саму статью / руководство / IG"
 msgid "The block schema"
 msgstr "Схема блока"
 
-#: agent-onboarding.md:94
-msgid "The formal graph is machine-derived from , never"
-msgstr "Формальный граф вычисляется автоматически на основе lean.ref и никогда не пишется"
-
 #: agent-onboarding.md:185
 msgid "The QA sidecar schema"
 msgstr "Схема файла QA"
@@ -286,10 +238,6 @@ msgstr "Существует два вида репозиториев, и пер
 #: agent-onboarding.md:97
 msgid "They diverge legitimately in both directions: a proof invokes  lemmas nobody needs to read about; a theorem is motivated by an example it never formally cites."
 msgstr "Они закономерно расходятся в обоих направлениях: доказательство вызывает леммы simp, о которых читателю не нужно знать; теорема мотивируется примером, на который она формально никогда не ссылается."
-
-#: agent-onboarding.md:93
-msgid "this block?\" Authored — agent/human maintained."
-msgstr "этот блок?» Создается автором — поддерживается агентом или человеком."
 
 #: agent-onboarding.md:90
 msgid "This trips up agents constantly."
@@ -328,14 +276,6 @@ msgstr "Что умеет данное окружение"
 msgid "Where"
 msgstr "Где"
 
-#: agent-onboarding.md:65
-msgid "WHO SMART DAK / IG"
-msgstr "WHO SMART DAK / IG"
-
-#: agent-onboarding.md:194
-msgid "with  /  from ."
-msgstr "через findPapers() / soleFolioPaper() из content/pipeline/repo-root.ts."
-
 #: agent-onboarding.md:30
 msgid "yes"
 msgstr "да"
@@ -347,3 +287,48 @@ msgstr "Вы — LLM-агент, только что добавленный в �
 #: agent-onboarding.md:31
 msgid "You edit here to"
 msgstr "Вы редактируете здесь, чтобы"
+
+#~ msgid "Claim before working so two sessions don't pick the same item, and never resolve or delete a sibling's bean. Do not stand up a parallel todo store. Do not  bulk machine-generated queues (, witness files) — those stay as bulk JSON."
+#~ msgstr "Резервируйте задачу перед началом работы, чтобы две сессии не взяли один и тот же элемент, и никогда не закрывайте и не удаляйте bean другого агента. Не создавайте параллельное хранилище задач. Не используйте beans create для массовых машинно-генерируемых очередей (*.qa.json, файлы свидетельств) — они остаются в виде массового JSON."
+
+#~ msgid "constant, or a vocabulary, it is folio data."
+#~ msgstr "константу или терминологический словарь — это данные фолио."
+
+#~ msgid "content-agnostic: coordination, watchers, QA, render, bibliography"
+#~ msgstr "не зависит от контента: координация, наблюдатели, QA, рендеринг, библиография"
+
+#~ msgid "Don't hardcode a paper name. A folio may hold several; resolve"
+#~ msgstr "Не прописывайте имя статьи жестко в коде. В фолио их может быть несколько; определяйте"
+
+#~ msgid "Don't write content into the platform. If it names a chapter, a"
+#~ msgstr "Не пишите контент в репозиторий платформы. Если упоминается глава,"
+
+#~ msgid "hand-written."
+#~ msgstr "вручную."
+
+#~ msgid "is editorial. \"What must a reader have read to follow"
+#~ msgstr "носит редакционный характер. «Что читатель должен был прочесть, чтобы понять"
+
+#~ msgid "papers: Lean, LaTeX, proofs, simulators"
+#~ msgstr "статьи: Lean, LaTeX, доказательства, симуляторы"
+
+#~ msgid "Read the criterion description before acting on a finding. They"
+#~ msgstr "Прочтите описание критерия перед тем, как реагировать на замечание. В нем"
+
+#~ msgid "Skills are the unit of work here. Before hand-rolling a procedure, check whether one exists."
+#~ msgstr "Навыки — это основная единица работы. Прежде чем создавать процедуру вручную, проверьте, существует ли уже готовая."
+
+#~ msgid "state severity, intent, and what explicitly does not count."
+#~ msgstr "указаны критичность, назначение и то, что явно не считается нарушением."
+
+#~ msgid "The formal graph is machine-derived from , never"
+#~ msgstr "Формальный граф вычисляется автоматически на основе lean.ref и никогда не пишется"
+
+#~ msgid "this block?\" Authored — agent/human maintained."
+#~ msgstr "этот блок?» Создается автором — поддерживается агентом или человеком."
+
+#~ msgid "WHO SMART DAK / IG"
+#~ msgstr "WHO SMART DAK / IG"
+
+#~ msgid "with  /  from ."
+#~ msgstr "через findPapers() / soleFolioPaper() из content/pipeline/repo-root.ts."

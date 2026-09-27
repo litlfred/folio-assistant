@@ -984,3 +984,49 @@ describe("schemas and standards are nodes, and graphs link to them", () => {
     for (const p of procs) expect(p.conformsTo as string[]).toContain(bpmn);
   });
 });
+
+/*
+ * EACH DMN DECISION IS A NODE. Owner, 2026-09-27: add each DMN decision table
+ * to the knowledge graph as its own node, linked to the BPMN gateway that uses
+ * it and to the DMN 1.3 standard. Before this a gateway carried only
+ * `decisionRef`, a string, so the table computing its branch was the one
+ * thing about the branch a reader could not walk to.
+ */
+describe("DMN decisions are nodes, linked to their gateways and to DMN 1.3", () => {
+  const graph = EXPORT["@graph"] as Array<Record<string, unknown>>;
+  const byType = (t: string) => graph.filter((n) => n["@type"] === termIri(t));
+  const decisions = byType("Decision");
+  const dmn13 = String(byType("ExternalSchema").find((n) => n.name === "omg-dmn-1.3")?.["@id"]);
+
+  test("every decision in every .dmn file is a Decision node conforming to DMN 1.3", () => {
+    const dir = resolve(import.meta.dir, "..", "..", "processes", "decisions");
+    const declared = readdirSync(dir)
+      .filter((f) => f.endsWith(".dmn"))
+      .flatMap((f) =>
+        [...readFileSync(join(dir, f), "utf-8").matchAll(/<decision\s[^>]*\bid="([^"]+)"/g)].map(
+          (m) => `${f.replace(/\.dmn$/, "")}/${m[1]}`,
+        ),
+      );
+    expect(declared.length).toBeGreaterThan(0);
+    const emitted = decisions.map((n) => String(n["@id"]).split("#decision/")[1]);
+    for (const d of declared) expect(emitted).toContain(d);
+    for (const n of decisions) {
+      expect(n.conformsTo as string[]).toContain(dmn13);
+      expect(String(n.sourcePath)).toMatch(/\.dmn$/);
+    }
+  });
+
+  test("every gateway with a decisionRef links to its Decision, and no decidedBy dangles", () => {
+    const ids = new Set(decisions.map((n) => n["@id"]));
+    const gateways = byType("ProcessNode").filter((n) => n.decisionRef !== undefined);
+    expect(gateways.length).toBeGreaterThan(0);
+    for (const g of gateways) expect(ids.has(g.decidedBy as string)).toBe(true);
+    for (const g of byType("ProcessNode").filter((n) => n.decidedBy !== undefined)) {
+      expect(ids.has(g.decidedBy as string)).toBe(true);
+      // The link names the same table the authored ref does.
+      const [file, id] = String(g.decisionRef).split("#");
+      const stem = file!.split("/").pop()!.replace(/\.dmn$/, "");
+      expect(String(g.decidedBy).endsWith(`#decision/${stem}/${id}`)).toBe(true);
+    }
+  });
+});

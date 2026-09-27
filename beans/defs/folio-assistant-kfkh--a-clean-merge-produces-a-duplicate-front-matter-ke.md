@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T17:44:01Z
-updated_at: 2026-09-27T10:38:10Z
+updated_at: 2026-09-27T10:58:11Z
 parent: folio-assistant-1xhc
 ---
 
@@ -137,6 +137,8 @@ Two further consequences worth having written down:
       since an unenforced order is what lets two insertions coexist
 - [x] MEASURED AFTER: a deliberate duplicate in `package-manifest.json` makes
       `bun run gates` exit non-zero
+
+_2026-09-27T10:28:24Z_ — Claimed by claude/brave-hypatia-r820sf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 
 ## Items 1 and 3 done — and the two-way split needed a THIRD case, 2026-09-27
@@ -293,3 +295,41 @@ Verified: 6 tests in `skill-manifest-coverage.test.ts`, all 22 manifests parse,
 `skill:register` (6 artefacts current, 276 skills / 19 packages),
 `skill:register:check`, `skills:docs:check`, `check:bean-front-matter`,
 `kg:audit:check`.
+
+
+## My resolver produced THIS defect, in THIS bean — and the classifier settled it
+
+2026-09-27, merging main (35 commits). The conflict was in this bean's own file,
+and my keep-both-sides resolution put main's `parent:` and `updated_at:` before
+this branch's `updated_at:`, leaving:
+
+    updated_at: 2026-09-27T10:38:10Z
+    parent: folio-assistant-1xhc
+    updated_at: 2026-09-27T10:28:24Z
+
+Two `updated_at` lines at **different positions with another key between them** —
+precisely the mechanism this bean documents, produced by a hand resolution rather
+than by git.
+
+`check:bean-front-matter` caught it immediately, and the classification built for
+item 1 settled it without a question: `updated_at` is `mechanical`, later wins,
+so it collapsed to `10:38:10Z`. The bean's own remedy applied to the bean.
+
+**And it exposed a gap in that change.** I had added the per-key detail to the
+`outstanding` loop only, so the report named the file and said nothing about
+which key or who could settle it — for a NEW duplicate, which is the one somebody
+is about to act on, while the outstanding ones are already triaged. Backwards.
+The detail now prints for both, verified by injecting a second `updated_at` into
+another bean:
+
+    ✗ …folio-assistant-2vne….md:9 [folio-assistant-2vne] duplicate key: …
+        `updated_at` x2, and the FIELD settles it: keep "2026-09-27T05:19:46Z" (later wins). No decision needed.
+
+A report path nobody has seen is a report path that may be broken, which is why
+it was injected rather than reasoned about.
+
+**This is also evidence for item 2, the hook question, and it cuts both ways.**
+For: the defect recurred within hours, in the bean about it, from a hand
+resolution — so it is not a three-times-in-history curiosity. Against: it was
+caught in ~0.3 s by a check already in CI, on the very next command I ran, and a
+hook would have caught it about two minutes earlier. Still the owner's call.

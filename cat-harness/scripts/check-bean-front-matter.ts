@@ -485,6 +485,25 @@ function main(): void {
   }
   for (const d of newDuplicates) {
     console.error(`  ✗ ${d.file}${at(d)} [${d.id}] duplicate key: ${d.message}`);
+    // The same per-key detail the outstanding loop prints. It was missing here
+    // until 2026-09-27, which is backwards: a NEW duplicate is the one somebody
+    // is about to act on, and the outstanding ones are already triaged. Found by
+    // producing one — a bean-conflict resolution duplicated `updated_at` in the
+    // `kfkh` bean itself, and the report named the file without saying that the
+    // FIELD settled it.
+    for (const dup of d.duplicates ?? []) {
+      if (dup.resolution === "collapsible") {
+        console.error(`      \`${dup.key}\` x${dup.values.length}, SAME value — collapse it, nothing is lost`);
+      } else if (dup.resolution === "mechanical") {
+        console.error(
+          `      \`${dup.key}\` x${dup.values.length}, and the FIELD settles it: keep ` +
+            `${JSON.stringify(dup.winner)} (${MECHANICAL_KEYS[dup.key]} wins). No decision needed.`,
+        );
+      } else {
+        console.error(`      \`${dup.key}\` x${dup.values.length}, values DIFFER — this one needs a choice:`);
+        for (const v of dup.values) console.error(`        ${JSON.stringify(v)}`);
+      }
+    }
   }
   for (const d of outstanding) {
     console.log(`  · outstanding ${d.id} [duplicate-key]: ${d.message} — ${d.file}${at(d)}`);
