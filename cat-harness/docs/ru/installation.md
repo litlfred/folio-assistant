@@ -17,11 +17,11 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 > Установка — это более простая половина. То, что нужно запустить **перед push**, — это
-> [`platform-gates`](reference/skill-instructions/platform-gates.html) —
+> [`platform-gates`](../reference/skill-instructions/platform-gates.html) —
 > успешное прохождение `bun test` не означает прохождение гейтов платформы, а сам их список выводится из
 > рабочего процесса CI, а не просто где-то записан. Если вы разворачиваете folio-assistant
 > поверх уже существующего репозитория, сначала прочитайте
-> [`repo-conversion`](reference/skill-instructions/repo-conversion.html).
+> [`repo-conversion`](../reference/skill-instructions/repo-conversion.html).
 
 ## Предварительные требования
 
@@ -32,11 +32,11 @@ MCP. Самой платформе требуется только Bun; отде
 
 | Требование | Для чего требуется | Установка (Linux/macOS) | Установка (Windows) |
 |-------------|-----------|---------|---------|
-| **Bun ≥ 1.0** | для фреймворка (всегда) | `curl -fsSL https://bun.sh/install \| bash` | `winget install Oven-sh.Bun` |
+| **Bun ≥ 1.0** | фреймворк (всегда) | `curl -fsSL https://bun.sh/install \| bash` | `winget install Oven-sh.Bun` |
 | Git + git-lfs | репозитории контента | `apt install git git-lfs` | `winget install Git.Git GitHub.GitLFS` |
 | LaTeX (`latexmk`, `texlive`) | рендеринг статей | `apt install texlive-full latexmk biber` | `winget install MiKTeX.MiKTeX` |
 | Lean 4 (через `elan`) | формализация статей | `curl …/elan-init.sh \| sh -s -- -y` | см. [релизы elan](https://github.com/leanprover/elan/releases) |
-| Java 21 + IG Publisher + SUSHI | WHO SMART IG (L3) | см. [руководство по WHO SMART IG](guides/who-smart-ig.html) | `winget install EclipseAdoptium.Temurin.21.JDK`, затем руководство |
+| Java 21 + IG Publisher + SUSHI | WHO SMART IG (L3) | см. [руководство по WHO SMART IG](../guides/who-smart-ig.html) | `winget install EclipseAdoptium.Temurin.21.JDK`, затем руководство |
 | `pandoc`, `ripgrep` | преобразования, поиск | `apt install pandoc ripgrep` | `winget install JohnMacFarlane.Pandoc BurntSushi.ripgrep.MSVC` |
 
 Вам не обязательно всё это устанавливать — устанавливайте только то, что требуется
@@ -44,6 +44,7 @@ MCP. Самой платформе требуется только Bun; отде
 
 > **Обязателен только Bun.** Каждая остальная строка относится к конкретному типу контента и проверяется
 > во время выполнения, поэтому ничего другого устанавливать не нужно, пока об этом не попросит `check-deps`.
+
 
 ## Клонирование и установка
 
@@ -68,6 +69,28 @@ cd folio-assistant
 
 Он устанавливает Bun и ничего больше — LaTeX, Lean, Java и IG Publisher остаются
 привязкой к конкретным типам контента и сообщаются `check-deps` с подсказками по установке.
+
+Шелл-скрипты платформы написаны для bash. В Windows они выполняются в **Git Bash**,
+который устанавливается вместе с [Git for Windows](https://git-scm.com/download/win), поэтому `git` —
+единственное дополнительное предварительное требование. Рядом с каждым скриптом, который пользователь
+запускает вручную или прописывает в конфигурации, находится файл `.bat` —
+`cat-harness\scripts\install-beans.bat`, `cat-harness\scripts\start-folio-assistant.bat`,
+`cat-harness\scripts\git-hooks\install.bat`, `cat-harness\scripts\session-start-coord-sweep.bat`
+и так далее. Этот файл находит Git Bash (ни в коем случае не лаунчер WSL в `System32`) и
+запускает соседний `.sh` с теми же аргументами. Используйте их из `cmd.exe`, PowerShell,
+Task Scheduler или параметров конфигурации MCP:
+
+```bat
+cat-harness\scripts\install-beans.bat
+cat-harness\scripts\upload-to-uploads.bat https://example.org/guideline.pdf
+```
+
+Все, что требуется скриптам `.sh` — `bun`, `curl`, `gh`, `elan` — должно быть доступно
+в Windows `PATH`, поскольку Git Bash наследует его от вызывающего процесса. Скрипты, которые
+имеют смысл только на хосте Linux (`deploy/`, `install-tex.sh`, `setup-sage.sh`,
+`setup-singular.sh`), намеренно не имеют bat-оберток. Их список находится в
+`cat-harness/scripts/gen-bat-wrappers.sh`; команда `bun run bat:sync` заново генерирует обертки,
+а `bun run bat:sync:check` завершает CI с ошибкой, если какая-либо из них отсутствует или устарела.
 
 ### Для Linux/macOS также есть скрипт
 
@@ -224,4 +247,4 @@ Gemini CLI нативно считывает `AGENTS.md` / `GEMINI.md`. Заре
 > (стандарт для агентов от Linux Foundation, нативно считываемый Claude Code, Gemini CLI,
 > Antigravity, Cursor, Copilot и другими); актуальное состояние предоставляется как через
 > отдельный для каждого харнесса хук `SessionStart` поверх единого общего скрипта, так и через
-> MCP-инструмент `work_plan_prime`. См. страницу [Архитектура](architecture.html).
+> MCP-инструмент `work_plan_prime`. См. страницу [архитектуры](architecture.html).

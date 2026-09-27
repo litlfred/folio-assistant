@@ -63,13 +63,13 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 
 | Рабочий процесс | Источник BPMN | Условие входа |
 |---|---|---|
-| **Создание контента (paper)** | [`authoring-a-paper.bpmn`](../processes/authoring-a-paper.bpmn) | Пользователь запрашивает создание контента в фолио статьи (paper) |
-| **Создание контента (document)** | [`authoring-a-document.bpmn`](../processes/authoring-a-document.bpmn) | Пользователь запрашивает создание контента в фолио документа (document) |
-| **Жизненный цикл контента** | [`content-lifecycle.bpmn`](../processes/content-lifecycle.bpmn) | Контент проходит этапы validate → render → publish |
-| **Импорт документов** | [`document-ingestion.bpmn`](../processes/document-ingestion.bpmn) | Пользователь помещает файл в `uploads/` |
-| **От черновика к публикации** | [`draft-to-publication.bpmn`](../processes/draft-to-publication.bpmn) | Контент переходит из состояния черновика в опубликованное |
-| **Требования CRDM** | [`crdm-requirements.bpmn`](../processes/crdm-requirements.bpmn) | Агент обнаруживает запрос новой функциональности (feature request) |
-| **Поиск свидетельств** | [`evidence-retrieval.bpmn`](../processes/evidence-retrieval.bpmn) | Агент ищет свидетельства для подтверждения утверждения |
+| **Создание контента (paper)** | [`authoring-a-paper.bpmn`](../../processes/authoring-a-paper.bpmn) | Пользователь запрашивает создание контента в фолио статьи (paper) |
+| **Создание контента (document)** | [`authoring-a-document.bpmn`](../../processes/authoring-a-document.bpmn) | Пользователь запрашивает создание контента в фолио документа (document) |
+| **Жизненный цикл контента** | [`content-lifecycle.bpmn`](../../processes/content-lifecycle.bpmn) | Контент проходит этапы validate → render → publish |
+| **Импорт документов** | [`document-ingestion.bpmn`](../../processes/document-ingestion.bpmn) | Пользователь помещает файл в `uploads/` |
+| **От черновика к публикации** | [`draft-to-publication.bpmn`](../../processes/draft-to-publication.bpmn) | Контент переходит из состояния черновика в опубликованное |
+| **Требования CRDM** | [`crdm-requirements.bpmn`](../../processes/crdm-requirements.bpmn) | Агент обнаруживает запрос новой функциональности (feature request) |
+| **Поиск свидетельств** | [`evidence-retrieval.bpmn`](../../processes/evidence-retrieval.bpmn) | Агент ищет свидетельства для подтверждения утверждения |
 
 **Переходы состояний:** рабочий процесс может быть **приостановлен**, когда пользователь просит
 переключить контекст. Агент фиксирует, где он находился (текущее действие BPMN), и
@@ -121,7 +121,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 | **Создание контента** | Написание, редактирование, расширение контента фолио (главы, блоки, разделы) | Рабочий процесс создания (paper или document) |
 | **Рецензирование контента** | Проверка, валидация, обратная связь по существующему контенту | Жизненный цикл контента / рабочий процесс editing-HCI |
 | **Импорт контента** | Импорт исходного документа в фолио | Рабочий процесс импорта документов |
-| **Запрос функциональности** | Запрос новой возможности платформы (см. [crdm-detect](../skills/crdm/crdm-detect.md)) | Рабочий процесс требований CRDM |
+| **Запрос функциональности** | Запрос новой возможности платформы (см. [crdm-detect](../../skills/crdm/crdm-detect.md)) | Рабочий процесс требований CRDM |
 | **Информационный запрос** | Вопрос о платформе, контенте или процессе | Вне процессов — прямой ответ |
 | **Вызов инструмента** | Запуск конкретного инструмента (`content_validate`, `qa_sweep` и т. д.) | Вне процессов — выполнить и отчитаться |
 | **Управление планом работы** | Создание, обновление или запрос beans | Вне процессов — выполнить и отчитаться |
@@ -131,7 +131,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 
 Критическая граница классификации пролегает между **созданием контента** и
 **запросом функциональности**. Навык `crdm-detect`
-([`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md))
+([`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md))
 предоставляет подробные критерии обнаружения. Краткое правило:
 
 > Если реализация запроса потребует изменений в **folio-assistant**
@@ -204,7 +204,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 подпроцессах при контролируемом наложении контекста и памяти — вот три
 вопроса, которые этот репозиторий теперь может сформулировать, но еще не разрешил. План исследований, где
 каждое утверждение помечено как измеренное (measured), решенное (decided) или гипотеза (hypothesis), изложен в
-[`deterministic-and-agentic`](reference/skill-instructions/deterministic-and-agentic.html).
+[`deterministic-and-agentic`](../reference/skill-instructions/deterministic-and-agentic.html).
 Читайте его именно как план программы: в нем больше гипотез, чем измерений, о чем в нем
 прямо и сообщается.
 
@@ -218,7 +218,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 > **Навык выполнения BPMN (BPMN Execution Skill):** имея Процесс, Контекст, Состояние и Роль, задействовать
 > один или несколько Навыков для выполнения Задачи.
 
-![Выполнение BPMN: от детерминированного к агентному. Цветовая шкала идет от «детерминированного» (синий, слева: управляемое выполнение агентом отдельной задачи) к «агентному» (зеленый, справа: агенты на большинстве или на всех задачах). Слева под значком шестеренки и двигателя: «BPMN Execution Tool: любой движок BPMN с открытым исходным кодом, строгое соблюдение состояния и дорожек», над плоской дорожечной диаграммой жизненного цикла фолио с одной стикер-заметкой, одним кластером beans, человеком и котом-роботом рядом с дорожками. Справа под значком кота-робота: «BPMN Execution Tool: агентный рой с неуправляемым состоянием. Агенты "ослабляют" дорожки, что компенсируется механическими и агентными отчетами QA/QC», над той же диаграммой в перспективном наклоне, с рассыпанными по всем дорожкам beans и множеством котов-роботов под ней.](assets/img/bpmn-execution-spectrum.webp)
+![Выполнение BPMN: от детерминированного к агентному. Цветовая шкала идет от «детерминированного» (синий, слева: управляемое выполнение агентом отдельной задачи) к «агентному» (зеленый, справа: агенты на большинстве или на всех задачах). Слева под значком шестеренки и двигателя: «BPMN Execution Tool: любой движок BPMN с открытым исходным кодом, строгое соблюдение состояния и дорожек», над плоской дорожечной диаграммой жизненного цикла фолио с одной стикер-заметкой, одним кластером beans, человеком и котом-роботом рядом с дорожками. Справа под значком кота-робота: «BPMN Execution Tool: агентный рой с неуправляемым состоянием. Агенты "ослабляют" дорожки, что компенсируется механическими и агентными отчетами QA/QC», над той же диаграммой в перспективном наклоне, с рассыпанными по всем дорожкам beans и множеством котов-роботов под ней.](../assets/img/bpmn-execution-spectrum.webp)
 
 **Один навык, два вида инструментов (Tool).** Навык одинаков на обоих полюсах: взять
 процесс, контекст, текущее состояние и роль, выбрать навыки и выполнить
@@ -241,7 +241,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 [W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) в качестве языка разрешений
 и [W3C PROV-O](https://www.w3.org/TR/prov-o/) в качестве журнала выполнения (владелец,
 2026-09-23; вытекающая отсюда схема —
-[предложение по субъектам, ODRL и PROV-O](proposals/odrl-prov-actor-model.html)).
+[предложение по субъектам, ODRL и PROV-O](../proposals/odrl-prov-actor-model.html)).
 
 **Большинство реальных запусков располагаются между этими полюсами**, причем применительно к отдельным задачам, а не к процессам в целом:
 в [предыдущем разделе](#deterministic-and-agentic) уже подсчитано, какие
@@ -264,7 +264,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 Когда запрос классифицируется как запрос новой функциональности, агент входит в
 **рабочий процесс требований CRDM**
 ([полная документация](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
-[BPMN](../processes/crdm-requirements.bpmn)).
+[BPMN](../../processes/crdm-requirements.bpmn)).
 
 Рабочий процесс запросов функциональности — это область, где данный документ об оснастке приносит больше всего
 пользы, поскольку он описывает поведение, которое ранее существовало лишь неявно. Процессы
@@ -273,7 +273,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 
 ### Как агент входит в CRDM
 
-Логика обнаружения описана в [`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md).
+Логика обнаружения описана в [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md).
 Три сценария:
 
 **Новая сессия, первый запрос — запрос новой функциональности:**
@@ -397,17 +397,17 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 | Поведение | Исходный навык / документ | Расположение |
 |---|---|---|
 | Стартовый обзор сессии | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
-| Протокол beans | `todo-manager.md`, `bean-coordination.md` | [`skills/folio-core/`](../skills/folio-core/) |
+| Протокол beans | `todo-manager.md`, `bean-coordination.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Дисциплина коммитов и PR | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| Обнаружение запросов функциональности | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md) |
-| Рабочий процесс требований CRDM | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../skills/crdm/crdm-requirements-workflow.md) |
-| Создание контента (paper) | навыки authoring-math | [`skills/authoring-math/`](../skills/authoring-math/) |
-| Создание контента (document) | навыки folio-document-adapter | [`skills/folio-document-adapter/`](../skills/folio-document-adapter/) |
-| Жизненный цикл контента | навыки content-lifecycle | [`skills/content-lifecycle/`](../skills/content-lifecycle/) |
-| Импорт документов | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../skills/folio-core/docs-generation.md) |
-| Диспетчеризация и координация | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../skills/folio-core/) |
+| Обнаружение запросов функциональности | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md) |
+| Рабочий процесс требований CRDM | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../../skills/crdm/crdm-requirements-workflow.md) |
+| Создание контента (paper) | навыки authoring-math | [`skills/authoring-math/`](../../skills/authoring-math/) |
+| Создание контента (document) | навыки folio-document-adapter | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
+| Жизненный цикл контента | навыки content-lifecycle | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
+| Импорт документов | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../../skills/folio-core/docs-generation.md) |
+| Диспетчеризация и координация | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Типы контента и адаптеры | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |
-| Разработка диаграмм BPMN | навык `bpmn-authoring` | [`skills/folio-core/`](../skills/folio-core/) |
+| Разработка диаграмм BPMN | навык `bpmn-authoring` | [`skills/folio-core/`](../../skills/folio-core/) |
 
 **При расхождении между навыком и этой страницей приоритет имеет навык.** Эта страница представляет собой
 сводный материал, а не новый первоисточник. Если вы обнаружите расхождение, исправьте эту страницу.

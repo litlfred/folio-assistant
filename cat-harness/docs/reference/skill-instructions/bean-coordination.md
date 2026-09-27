@@ -37,6 +37,38 @@ considered and rejected, and on what grounds — which is what stops the next
 agent re-entering the same dead end. A deleted bean leaves a sibling session
 unable to tell abandonment from accident.
 
+### Archiving is a VIEW, not a third way out
+
+`beans/defs/archive/` exists and is **not** a terminal state. The owner ruled it
+2026-09-26 (bean `e8m3`): an archived bean **keeps its status** and is still part
+of the store, moved aside rather than closed. So archiving decides nothing, and
+in particular it is not a way to make unwanted work go quiet without the reason
+this section requires.
+
+That mattered, measurably. In one five-day window 131 beans left the top level
+and **35 of them were `todo` or `in-progress`** — out of the active store with no
+terminal status and, because archiving is a *file move* rather than a status
+change, no recorded reason. Exactly the state the rule above exists to prevent,
+reached by a route the rule did not mention.
+
+It was invisible twice. Every bean count this repository quotes reads the active
+store only, so none could fall when it happened — *a number that drops when work
+FINISHES but not when it is set aside is not measuring what its name says*. And
+the directory itself was **undeclared**: 631 `bean-defs` in a path
+`beans/beans.json` named nowhere, which `check:declared-dirs` and
+`check:harness-dirs` cannot see by construction, because both compare
+declarations against disk and not the reverse.
+
+Both are now held by **`bun run check:bean-archive`**: the `archive` node must be
+declared, and every bean in it must be `completed` or `scrapped`. So the rule is
+unchanged and archiving is simply not an exit from it — if you want a bean out of
+the way, scrap it *with its reasons* first, then archive if you like.
+
+One consequence for readers of this store: `readBeans` is the **active** store
+and `readArchivedBeans` is the view, and they are separate on purpose. They share
+the graph kind `bean-defs`, so anything resolving by KIND gets whichever is
+declared first; resolve the archive by its **id**.
+
 **Claiming and closing are separately scoped.** Claim before you work, so two
 sessions do not pick the same item — with the limit in the next section, because
 a claim is not a lock.
@@ -139,6 +171,49 @@ would have.
 And a second-order caution, because it inverts who pays: a duplicate-detecting
 test punishes **whoever merges second**, not whoever duplicated. Merging first
 does not mean you were first.
+
+### And ASK AGAIN before you open the PR — looking once is not enough
+
+**Owner decision, 2026-09-26, bean `dx5j`.** The two checks above and the
+`beans:claim` push below all happen at the *start* of a topic. That is the wrong
+and only moment they cover, and the gap it leaves was measured: **four
+duplicate-work collisions in one working window.**
+
+> **Re-run the open-PR search immediately before you open your PR, not only
+> before you start.**
+
+The reason it has to be a second point in TIME rather than a new relation is the
+one collision that settles it: **the search was run, and it found nothing,
+because the sibling's PR did not exist yet.** No index over beans, no label on a
+PR and no `describes:` edge would have returned anything, because there was
+nothing to return. Only asking again later would.
+
+The owner was offered three structural alternatives and rejected each for a
+stated reason, recorded here so nobody re-proposes one as new:
+
+| offered | why it fails |
+|---|---|
+| a `describes:` edge between beans | the second session to arrive cannot know it is second, so nobody is in a position to write the edge |
+| a label or line on the PR carrying bean ids | only helps once a PR exists, which is exactly the window these collisions open in |
+| nothing, and keep recording them | the rate was four in one window |
+
+Same commands as above, same widened search terms — the subject as well as the
+id. The cost is one call at a moment you are already stopping to write a PR body.
+
+And the cost is not only the duplicated work. In the fourth collision two
+sessions fixed one e2e precondition; the sibling's landed first, and re-measuring
+the same element under **their** implementation falsified a finding the losing
+session had already published in a commit message, a PR comment and its own
+reporting — an `opacity: 0` that read `1` under the version that shipped, with
+four test sites changed on the strength of it.
+
+> **Two independent implementations of one fix produce two sets of observations,
+> and the weaker implementation's observations look like findings about the
+> subject** — and you cannot tell which set you hold until the other lands.
+
+So the second check is not bookkeeping about effort. It is what stops a
+measurement taken against your own artefact from being reported as a property of
+the system.
 
 ### `bun run beans:claim <id>` closes it — when the remote lets it
 

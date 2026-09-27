@@ -1756,9 +1756,20 @@ export function saveQaScriptSidecar(
   // change. That churn is not free: it is indistinguishable, in `git
   // status`, from an actual checker-hash movement.
   //
-  // Everything except the two `last_run_*` fields is content-derived, so
-  // comparing on those alone is the right test: identical hashes mean the
-  // recorded state is already accurate and the timestamp adds nothing.
+  // The comparison is over the CONTENT-derived fields only: the source file,
+  // the three hashes and the extra inputs. Identical there means the recorded
+  // state is already accurate. `last_run_at`, `last_run_sha` and
+  // `engine_version` describe the RUN, not the checker, so on their own they
+  // are not a reason to write.
+  //
+  // `engine_version` was compared too until bean `3ozg` (2026-09-27), and that
+  // kept the churn alive: the committed sidecars carried CI's `bun-1.3.14`, a
+  // local run is `bun-1.3.11`, so every sweep from a different bun rewrote all
+  // 72. `init-folio-qa.test.ts` runs a real sweep, which made `bun test` dirty
+  // the tree and `bun run gates` report "NOT clean" on every branch. No reader
+  // uses a script sidecar's `engine_version` for freshness (`entryIsFresh`
+  // compares hashes), so it is left as a record of the last CONTENT change's
+  // engine rather than the last run's.
   const prev = loadQaScriptSidecar(sidecar.criterion_id, repoRoot);
   if (
     prev &&
@@ -1766,7 +1777,6 @@ export function saveQaScriptSidecar(
     prev.script_hash === sidecar.script_hash &&
     prev.script_commit_sha === sidecar.script_commit_sha &&
     prev.deps_hash === sidecar.deps_hash &&
-    prev.engine_version === sidecar.engine_version &&
     JSON.stringify(prev.extra_inputs ?? []) ===
       JSON.stringify(sidecar.extra_inputs ?? [])
   ) {

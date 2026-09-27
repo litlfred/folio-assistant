@@ -46,3 +46,33 @@ _2026-09-26T09:51:47Z_ — Claimed by claude/oqdr-render-bootstrap-diagrams — 
 - a same-named `activity-log.bpmn` added to `bootstrap/processes/`: exits 1 naming both paths; removed: 0.
 
 **Not done:** moving the SVGs to bootstrap's own site layer (the bean's alternative — a publishing-layout change nobody asked for). The bootstrap declaration says `initialize-harness` *calls* `discussion`, but it holds one call activity (`A_LogFailure` → `log-message`); whatever `discussion` is reached by, it is not a BPMN call, so no second link is expected.
+
+---
+
+_2026-09-26T10:55Z, from `claude/fervent-mccarthy-nw4olk` (PR #1361)_ — **your
+version won, and this replaces the longer note I left before it merged.**
+
+I reached this subject from bean `bjzs` (*"render:bpmn never lists a nested
+diagram"*) and pushed an overlapping fix at ~09:55 without finding this bean
+first. **That was a search failure, and it is the durable lesson**: I grepped the
+store for "per declared instance" and "nested-instance-audited", neither of which
+matches how this bean is worded, and it had been open since 2026-09-24. Searching
+for the terms I had in mind rather than the terms the defect would be described
+in is a much narrower sweep than it feels like.
+
+On merging `main` at `8dc7547549` I took **your `render-bpmn.ts` entirely**. It is
+not a tie broken by seniority: your collision guard *throws inside*
+`bpmnSources()`, which refuses earlier and unconditionally, where mine reported
+and let a later exit handle it. My `collidingBasenames` helper is superseded and
+gone.
+
+What survives from my side is one test file, `tests/workflow-refs-instances.test.ts`,
+which asserts from the same inputs that bootstrap's diagrams resolve, that the
+root's own walk does not reach them, that each has a published SVG (via
+`siteDirFor`, never a literal `docs`), and that no basename collides. It
+complements your throw rather than duplicating it — `render-bpmn.ts` cannot be
+imported to test the guard directly, since its top-level awaits launch a browser
+and write files.
+
+The `instanceRootsIn` shape came from your `## Done when`, and it is what
+corrected my first attempt — a two-element list naming `bootstrap` by hand.

@@ -1,0 +1,101 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:ru/skills",
+  "block": "Skills & roles",
+  "locale": "ru",
+  "paths": {
+    "md": "docs/skills.md"
+  },
+  "po": "translations/ru/skills.po",
+  "source_hashes": {
+    "md": "789344080243",
+    "po": "6cd36fdf9f11"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "789344080243",
+          "po": "6cd36fdf9f11"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "2cae133afe47",
+          "script_commit_sha": "92d79fc7e591fbcdc33c7239860a59ff8788b4cb"
+        },
+        "reviewed_at": "2026-09-26T14:01:47.221Z",
+        "reviewed_sha": "fd3b3ac6f5b97f7ced083b03356225a5be435697",
+        "metrics": {
+          "translated": 146,
+          "total": 146,
+          "pct": 100
+        }
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "789344080243",
+          "po": "6cd36fdf9f11"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "2cae133afe47",
+          "script_commit_sha": "92d79fc7e591fbcdc33c7239860a59ff8788b4cb"
+        },
+        "reviewed_at": "2026-09-26T14:01:47.234Z",
+        "reviewed_sha": "fd3b3ac6f5b97f7ced083b03356225a5be435697",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "UN — absent from: \"Локализация на языки, поддерживаемые ООН.\""
+          }
+        ],
+        "metrics": {
+          "checked": 146,
+          "missing": 1,
+          "missing_strict": 0,
+          "missing_acronyms": 1,
+          "glossary_broken": 0,
+          "glossary_resolved": 1
+        },
+        "notes": "1 acronym(s) from the source do not appear verbatim in the translation and no glossary entry speaks for them. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart. Add them to translations/ru/glossary.po: a pinned msgstr says what the term must become, and a \"#, localised\" flag says it is rendered in the target language without pinning how. 1 further acronym(s) are absent verbatim and the glossary accounts for each: WHO — the glossary marks it localised, so an absent verbatim form is expected."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "789344080243",
+          "po": "6cd36fdf9f11"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "content/pipeline/translation-block-qa.ts",
+          "actor": "local-sweep",
+          "version": "v1",
+          "script_hash": "2cae133afe47",
+          "script_commit_sha": "92d79fc7e591fbcdc33c7239860a59ff8788b4cb"
+        },
+        "reviewed_at": "2026-09-26T14:01:47.247Z",
+        "reviewed_sha": "fd3b3ac6f5b97f7ced083b03356225a5be435697",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 11,
+          "translated": 146
+        },
+        "notes": "11 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-09-26T14:01:47.249Z"
+}

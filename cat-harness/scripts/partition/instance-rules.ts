@@ -492,6 +492,31 @@ export const RULES: Rule[] = [
       // `harness.json` for the directories, DERIVES the nesting from their
       // declared paths, and has nothing to say about any folio's content.
       "scripts/check-subgraphs.ts",
+      // Whether a translated page's links survived being one directory
+      // deeper than the page they were translated from (bean `ahab`).
+      // Harness for `check-subgraphs.ts`' reason and by the same route — it
+      // consumes that tool's report and resolves the site root from the
+      // declaration, so it knows which directories publish a site and
+      // nothing at all about what any folio put in them.
+      "scripts/check-translated-link-depth.ts",
+      // Whether a page's `available_locales` names a locale a reader can
+      // actually read it in (bean `9x01`). Harness by the same route as the two
+      // above: it resolves the site root from the declaration, builds the
+      // translation index from what the pages themselves declare (`lang` and
+      // `translation_source`), and compares a page's claim with that index. The
+      // CLAIM is structural — "is this readable in French" — so it says nothing
+      // about what any folio wrote in French.
+      "scripts/check-available-locales.ts",
+      // Whether a gate that may be red BY DECISION sits last in its job, so the
+      // set it masks is empty (bean `cpss`). Harness for the plainest reason in
+      // this block: its subject is `.github/workflows/`, the harness's own CI
+      // definition, and it reads no folio content of any kind.
+      "scripts/check-red-gate-is-last.ts",
+      // Whether every workflow installs the Bun that `.bun-version` names
+      // (bean `3ozg`). Harness for the same reason as the line above: its
+      // subject is `.github/workflows/` plus one repo-root pin file, and it
+      // reads no folio content.
+      "scripts/check-bun-pin.ts",
       // Whether each methodology's cited `origin` resolves to an ingested
       // source. Harness for the same reason as the two above: it reads the
       // declaration for the `methodology` and `library` graphs and fans out
@@ -505,6 +530,12 @@ export const RULES: Rule[] = [
       // and it runs across EVERY instance in the repository rather than for
       // one folio.
       "scripts/check-layout-norms.ts",
+      // Whether a rendered workflow diagram shows an XML character reference
+      // as literal text (bean `li5y`). Harness for the same reason as the
+      // layout norm above: its input is this instance's own process diagrams
+      // under `workflows/`, it reads no folio content of any kind, and what it
+      // judges is the harness's own published SVGs.
+      "scripts/check-rendered-labels.ts",
       // Issue #1023. Both read every instance's declaration (visualisers) or
       // every declared library (manifests), and hold no folio's content: the
       // same reason as the layout norm above.
@@ -845,6 +876,12 @@ export const RULES: Rule[] = [
       // but `node:fs` and `node:path`, and the advice it sweeps is this
       // platform's skills and workflows.
       "scripts/check-stale-field-advice.ts",
+      // Bean `e8m3`. Harness by subject: it reads the declared `bean-defs` graph
+      // and the work plan is the harness's own, not any folio's content.
+      "scripts/check-bean-archive.ts",
+      // Bean `6ptx`. Harness by subject: a survey is of THIS repository's own
+      // commit history and work plan, which no folio has as content.
+      "scripts/survey.ts",
       // Its subject is the harness's OWN declaration filename — which file
       // names an instance — so it is harness by subject as well as by
       // dependency: it imports `schemas/cat-harness.js` for the constant and
@@ -1277,7 +1314,7 @@ export const RULES: Rule[] = [
       "scripts/gates.ts",                   // the gate runner itself
       "scripts/gate-tree-guard.ts",         // ...and which gate changed the tree under it (bean `ymsu`). Harness for the same reason the runner is: it asks a question only the runner is positioned to ask, since no gate can observe what another gate did
       "scripts/decisions-named-not-asked.ts", // the `Stop` layer of `interaction-modality` §4.1 (bean `ahvw`). Harness: it reads a transcript and enforces how a QUESTION is put, which no content type varies
-      "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales (bean `v625`). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the five artefacts before their checks read them
+      "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales AND gates the declarations (beans `v625`, `nfv3` — two commands one letter apart, consolidated here at the owner's decision 2026-09-26). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the six artefacts before their checks read them
       "scripts/check-merged.ts",            // the gate runner, on the merged tree (bean `nytj`)
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
       "scripts/gen-bootstrap-graph.ts", // writes bootstrap/bootstrap.jsonld
@@ -1537,6 +1574,19 @@ export const RULES: Rule[] = [
       // which it reads, is core by the `schemas/` prefix. Arrived from `main`
       // and fell through every prefix.
       "scripts/check-voices.ts",
+      // CORE, by the same test and for the same stated reason: the subject is
+      // CONTENT. It asks whether a change publishes a TRANSLATED PAGE with no
+      // `.po` beside it, so both sides of the question are a folio's material —
+      // the page under the site root and the catalogue under `translations/`,
+      // which is core by its own prefix above.
+      //
+      // It reads `buildTranslationIndex`/`siteRoot` from
+      // `content/pipeline/translation-index.ts` and `catalogueFor`/`fileForUrl`
+      // from `content/pipeline/translation-drift.ts`, both core by the
+      // `content/pipeline/` prefix. Calling it harness would buy a
+      // wrong-direction edge for nothing — the mistake this block already
+      // records against `check-context-emission.ts`'s sibling (bean `3sm2`).
+      "scripts/check-translation-catalogue.ts",
       // Its other half: the rules are cited, AND the instruction body beside
       // them does not restate them uncited (bean `n8br`). Core for the same
       // reason — its subject is a voice, which is content an instance derived,

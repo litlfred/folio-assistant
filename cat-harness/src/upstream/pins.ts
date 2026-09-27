@@ -28,6 +28,24 @@ export interface PinDef {
   pattern: string;
   /** Which tags count as a release we would adopt. */
   tagPattern: string;
+  /**
+   * What upstream prefixes its tags with, when the pinned literal cannot carry
+   * it.
+   *
+   * `just-the-docs` needs none: `docs/_config.yml` holds `v0.12.0` and upstream
+   * tags it `v0.12.0`, so the pin literal IS the tag. Bun's cannot be —
+   * `setup-bun` and `.bun-version` take a bare `1.3.14` while upstream tags
+   * `bun-v1.3.14`, so a literal that matched the tag would be a literal the
+   * build rejects.
+   *
+   * Without this, {@link assessPin} compares `1.3.14` against a list of
+   * `bun-v…` tags, finds no match, and returns `unknown` — FOREVER, with the
+   * detail "a sha, a branch or a withdrawn tag". That is the watchdog's failure
+   * mode in its other direction: not blind and claiming health, but permanently
+   * crying blind, which trains a reader to stop looking. Measured before this
+   * field existed.
+   */
+  tagPrefix?: string;
   /** Upstream directories whose changes can reach our rendered output. */
   themedPaths?: string[];
   /** What of OURS reaches into this dependency — the impact-analysis list. */
@@ -129,18 +147,24 @@ export function assessPin(pin: PinDef, pinned: string | undefined, tags: string[
     };
   }
   const latest = rel[rel.length - 1];
-  if (!rel.includes(pinned)) {
+  // The pin literal is what the BUILD reads; the tag is what upstream
+  // publishes. They coincide for most dependencies and cannot for some, so the
+  // comparison is done on the tag form and every message still reports the
+  // literal a reader will find in `pinnedIn`.
+  const tag = `${pin.tagPrefix ?? ""}${pinned}`;
+  if (!rel.includes(tag)) {
     return {
       ...base,
       state: "unknown",
       pinned,
       latest,
       detail:
-        `pinned at "${pinned}", which is not one of the ${rel.length} release(s) upstream lists. ` +
+        `pinned at "${pinned}"${pin.tagPrefix ? ` (looked for tag "${tag}")` : ""}, which is not one ` +
+        `of the ${rel.length} release(s) upstream lists. ` +
         `A sha, a branch or a withdrawn tag — say which, rather than reporting it behind.`,
     };
   }
-  const behindBy = rel.slice(rel.indexOf(pinned) + 1);
+  const behindBy = rel.slice(rel.indexOf(tag) + 1);
   if (behindBy.length === 0) {
     return { ...base, state: "current", pinned, latest, behindBy: [], detail: `at ${latest}, the newest release.` };
   }

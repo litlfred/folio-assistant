@@ -20,6 +20,7 @@ import {
   firstKindDivergence,
   formatDerivedPo,
   alignGrownSource,
+  publishedPairs,
   LOCALE_NAMES,
 } from "./derive-po.ts";
 import { extractMarkdown, MD_CODE_FENCE_RE } from "./pot-extract.ts";
@@ -621,23 +622,113 @@ describe("a source that GREW since its translation is still alignable", () => {
     expect(out!.some((e) => e === undefined)).toBe(false);
   });
 
-  it("the five installation catalogues carry exactly 2 untranslated entries each", () => {
-    // Against the real corpus, and the number is the claim: those two are the
-    // paragraphs `main` added. If it ever reads other than 2, either the source
-    // moved again or the alignment is pairing something it should not.
-    const root = resolve(import.meta.dir, "..", "..");
-    const r = derive(root, ["installation"], LOCALES_ALL);
-    expect(r.derived).toHaveLength(5);
-    for (const d of r.derived) expect(d.untranslated).toBe(2);
+  // These two tests used to name a corpus state: "the five installation
+  // catalogues carry exactly 2 untranslated entries each", with a comment
+  // calling the number the claim and a tripwire for the alignment pairing
+  // something it should not. It fired on 2026-09-26 — correctly, and for the
+  // uninteresting reason. `main` translated those two paragraphs, so the count
+  // went to 0 and the header stopped saying INCOMPLETE.
+  //
+  // A tripwire that trips on every legitimate translate batch is not a
+  // tripwire. It is bean `tbdg`'s "scheduled failure with a comment on it", the
+  // same thing that expired the `nav-locale` fixture three times, and the third
+  // corpus-pinned absolute in this file's history (`toHaveLength(10)` was the
+  // first). The growth being tested is a property of the PAIR, so the pair is
+  // built here and no batch can expire it.
+  it("a grown source leaves the added construct untranslated, and says so", () => {
+    const grown = [SRC, "", "A paragraph added after the translation was made."].join("\n");
+    const { root, cleanup } = fixture(grown, { fr: OK });
+    const d = derive(root, ["page"], ["fr"]).derived[0];
+    expect(d.untranslated).toBe(1);
+    // Untranslated is not merely counted — a reader of the file must see it.
+    expect(d.po).toContain("INCOMPLETE");
+    expect(d.po).toContain("added to the source AFTER this translation was made");
+    expect(d.po).toContain("#, fuzzy");
+    expect(d.po).toContain('msgstr ""');
+    cleanup();
   });
 
-  it("an incomplete catalogue SAYS SO in its header, and marks the entry fuzzy", () => {
-    // A catalogue that is incomplete by construction must not read as complete.
+  it("a complete catalogue does NOT claim to be incomplete", () => {
+    // The other direction, which the corpus-pinned version could not test: a
+    // pair with no growth must not carry the INCOMPLETE banner or a fuzzy mark.
+    // Without this, a header that said INCOMPLETE unconditionally would have
+    // passed every assertion above.
+    const { root, cleanup } = fixture(SRC, { fr: OK });
+    const d = derive(root, ["page"], ["fr"]).derived[0];
+    expect(d.untranslated).toBe(0);
+    expect(d.po).not.toContain("INCOMPLETE");
+    expect(d.po).not.toContain("#, fuzzy");
+    cleanup();
+  });
+
+  it("over the REAL corpus: the banner appears exactly when something is untranslated", () => {
+    // Corpus-wide, as an INVARIANT rather than a count. Whatever `main` has
+    // translated since, `untranslated > 0` and the INCOMPLETE banner must agree
+    // — in both directions — and a count can never exceed the entries it counts.
     const root = resolve(import.meta.dir, "..", "..");
-    const po = derive(root, ["installation"], ["fr"]).derived[0].po;
-    expect(po).toContain("INCOMPLETE");
-    expect(po).toContain("added to the source AFTER this translation was made");
-    expect(po).toContain("#, fuzzy");
-    expect(po).toContain('msgstr ""');
+    const r = derive(root, ["installation"], LOCALES_ALL);
+    expect(r.derived.length).toBeGreaterThan(0);
+    for (const d of r.derived) {
+      expect(d.untranslated).toBeLessThanOrEqual(d.entries);
+      expect(d.po.includes("INCOMPLETE")).toBe(d.untranslated > 0);
+      expect(d.po.includes("#, fuzzy")).toBe(d.untranslated > 0);
+    }
+  });
+});
+
+describe("the pages to catalogue are DISCOVERED, not listed in the script", () => {
+  // The CLI hard-coded five page names, which is why PR #1404 could publish four
+  // more pages across five locales and take `translation-drift` from 1 finding to
+  // 21 while this tool could not see them. A list of pages in a script goes stale
+  // on somebody else's merge.
+  it("finds a page published in a locale that has a source beside it", () => {
+    const root = mkdtempSync(join(tmpdir(), "derive-po-disc-"));
+    mkdirSync(join(root, SITE_DIR, "fr"), { recursive: true });
+    writeFileSync(join(root, SITE_DIR, "_config.yml"), "title: fixture\n");
+    writeFileSync(join(root, SITE_DIR, "alpha.md"), "# Alpha heading here\n");
+    writeFileSync(join(root, SITE_DIR, "beta.md"), "# Beta heading here\n");
+    writeFileSync(join(root, SITE_DIR, "fr", "alpha.md"), "# Titre alpha ici\n");
+    const { pages, locales } = publishedPairs(join(root, SITE_DIR), ["en", "fr", "ru"], "en");
+    // `beta` has no translation, `ru` has no directory, `en` is the source.
+    expect(pages).toEqual(["alpha"]);
+    expect(locales).toEqual(["fr"]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it("a translated page with NO source beside it is not a pair", () => {
+    // Otherwise a stray file in a locale directory invents a page to catalogue.
+    const root = mkdtempSync(join(tmpdir(), "derive-po-orphan-"));
+    mkdirSync(join(root, SITE_DIR, "fr"), { recursive: true });
+    writeFileSync(join(root, SITE_DIR, "_config.yml"), "title: fixture\n");
+    writeFileSync(join(root, SITE_DIR, "fr", "orphan.md"), "# Orphelin ici\n");
+    expect(publishedPairs(join(root, SITE_DIR), ["en", "fr"], "en").pages).toEqual([]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it("locales come from the DECLARATION, so a lookalike directory is not one", () => {
+    // THE DEFECT THIS PINS. My first version matched a two-or-three-letter
+    // directory name and picked up `wireframes/fsh-guts` as a locale — `fsh` plus
+    // a suffix fits that shape exactly. A locale is a declared vocabulary, so
+    // guessing it from the filesystem invents an answer the instance already gives.
+    const root = mkdtempSync(join(tmpdir(), "derive-po-lookalike-"));
+    mkdirSync(join(root, SITE_DIR, "fsh-guts"), { recursive: true });
+    mkdirSync(join(root, SITE_DIR, "fr"), { recursive: true });
+    writeFileSync(join(root, SITE_DIR, "_config.yml"), "title: fixture\n");
+    writeFileSync(join(root, SITE_DIR, "intent.md"), "# Intent heading here\n");
+    writeFileSync(join(root, SITE_DIR, "fsh-guts", "intent.md"), "# Not a translation\n");
+    writeFileSync(join(root, SITE_DIR, "fr", "intent.md"), "# Intention ici\n");
+    const { locales } = publishedPairs(join(root, SITE_DIR), ["en", "fr"], "en");
+    expect(locales).toEqual(["fr"]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it("this repository's real pairs are found, and `fsh-guts` is not among them", () => {
+    const root = resolve(import.meta.dir, "..", "..");
+    const { pages, locales } = publishedPairs(join(root, SITE_DIR), ["en", "ar", "es", "fr", "ru", "zh"], "en");
+    expect(locales).toEqual(["ar", "es", "fr", "ru", "zh"]);
+    expect(locales).not.toContain("fsh-guts");
+    // Anti-vacuity, and it must include a page #1404 added — the whole point.
+    expect(pages.length).toBeGreaterThan(5);
+    expect(pages).toContain("architecture");
   });
 });

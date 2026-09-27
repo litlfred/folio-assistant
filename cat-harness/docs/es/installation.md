@@ -17,11 +17,11 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 > Instalar es la parte fácil. Lo que debes ejecutar **antes de hacer push** es
-> [`platform-gates`](reference/skill-instructions/platform-gates.html) —
+> [`platform-gates`](../reference/skill-instructions/platform-gates.html) —
 > que `bun test` pase no significa que los gates hayan pasado, y la lista se deriva del
 > flujo de trabajo de CI en lugar de estar fijada por escrito. Si estás incorporando folio-assistant sobre
 > un repositorio que ya existe, lee primero
-> [`repo-conversion`](reference/skill-instructions/repo-conversion.html).
+> [`repo-conversion`](../reference/skill-instructions/repo-conversion.html).
 
 ## Requisitos previos
 
@@ -36,7 +36,7 @@ tiempo de ejecución y se pueden instalar bajo demanda.
 | Git + git-lfs | repositorios de contenido | `apt install git git-lfs` | `winget install Git.Git GitHub.GitLFS` |
 | LaTeX (`latexmk`, `texlive`) | renderizado de artículos | `apt install texlive-full latexmk biber` | `winget install MiKTeX.MiKTeX` |
 | Lean 4 (mediante `elan`) | formalización de artículos | `curl …/elan-init.sh \| sh -s -- -y` | consulta las [versiones de elan](https://github.com/leanprover/elan/releases) |
-| Java 21 + IG Publisher + SUSHI | IGs SMART de la OMS (L3) | consulta la [guía de IG SMART de la OMS](guides/who-smart-ig.html) | `winget install EclipseAdoptium.Temurin.21.JDK`, luego la guía |
+| Java 21 + IG Publisher + SUSHI | IGs SMART de la OMS (L3) | consulta la [guía de IG SMART de la OMS](../guides/who-smart-ig.html) | `winget install EclipseAdoptium.Temurin.21.JDK`, luego la guía |
 | `pandoc`, `ripgrep` | conversiones, búsqueda | `apt install pandoc ripgrep` | `winget install JohnMacFarlane.Pandoc BurntSushi.ripgrep.MSVC` |
 
 No necesitas todos estos requisitos — instala solo lo que requieran los tipos de contenido
@@ -44,6 +44,7 @@ que redactas. La comprobación integrada de capacidades te indica qué falta.
 
 > **Solo se requiere Bun.** Cada una de las demás filas depende del tipo de contenido y se comprueba en
 > tiempo de ejecución, por lo que no instales nada más hasta que `check-deps` lo solicite.
+
 
 ## Clonar e instalar
 
@@ -68,6 +69,28 @@ cd folio-assistant
 
 Instala Bun y nada más — LaTeX, Lean, Java y el IG Publisher se mantienen
 por tipo de contenido, reportados por `check-deps` con sugerencias de instalación.
+
+Los scripts de shell de la plataforma son bash. En Windows se ejecutan bajo **Git Bash**,
+el cual es instalado por [Git para Windows](https://git-scm.com/download/win), por lo que `git`
+es el único prerrequisito adicional. Cada script que un usuario ejecuta manualmente o conecta a
+una configuración tiene un `.bat` a su lado — `cat-harness\scripts\install-beans.bat`,
+`cat-harness\scripts\start-folio-assistant.bat`, `cat-harness\scripts\git-hooks\install.bat`,
+`cat-harness\scripts\session-start-coord-sweep.bat` y así sucesivamente —, el cual localiza Git Bash
+(nunca el iniciador de WSL en `System32`) y ejecuta el `.sh` hermano con los mismos
+argumentos. Utilízalos desde `cmd.exe`, PowerShell, el Programador de tareas o una entrada de
+configuración de MCP:
+
+```bat
+cat-harness\scripts\install-beans.bat
+cat-harness\scripts\upload-to-uploads.bat https://example.org/guideline.pdf
+```
+
+Cualquier cosa que necesite el archivo `.sh` — `bun`, `curl`, `gh`, `elan` — debe estar en el
+`PATH` de Windows, ya que Git Bash lo hereda del proceso que lo llama. Los scripts que solo
+tienen sentido en un host Linux (`deploy/`, `install-tex.sh`, `setup-sage.sh`,
+`setup-singular.sh`) no tienen wrapper a propósito. La lista reside en
+`cat-harness/scripts/gen-bat-wrappers.sh`; `bun run bat:sync` regenera los wrappers
+y `bun run bat:sync:check` hace fallar la CI si falta alguno o está desactualizado.
 
 ### En Linux/macOS, también existe un script
 

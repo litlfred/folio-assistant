@@ -5,7 +5,7 @@
     "id": "Process_RepoHealth",
     "path": "processes/repository-health-watch.bpmn"
   },
-  "source_hash": "sha256:b7f60528dfc6ba620140a81d16ba2bb5dec40751190f41d7e1553ffb27418a58",
+  "source_hash": "sha256:3887cf3210263aa0c8d92cec344b3904bfb1f9248949e2a7c1d94d8a0740493f",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,15 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Check",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -123,7 +132,7 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 1,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   },
@@ -132,9 +141,10 @@
       "kind": "implements",
       "prose": "cat-harness/processes/repository-health-watch.bpmn",
       "code": ".github/workflows/health-check.yml",
-      "prose_hash": "b7f60528dfc6",
-      "code_hash": "7b58e3ecfb04",
-      "by": "baseline"
+      "prose_hash": "3887cf321026",
+      "code_hash": "80ca116adecb",
+      "by": "agent",
+      "reason": "This branch changed 12 workflow files in ONE way: an `oven-sh/setup-bun@v2` step's `bun-version` literal went from `latest` (or from absent) to `1.3.14`. Re-read all six paired documentations: none mentions the runtime, `setup-bun\\', `bun-version` or `latest` — grepped, not assumed — so none of them describes the thing that changed. `upstream-pin-watch` was read most closely because this branch also adds Bun to `upstream-pins.json`, and its prose is tenant-agnostic by design: it names no pin, gives no count, and says a new tenant is 'a registry row and a call — never a second diagram'. Adding a row is what it prescribes, so the prose holds a fortiori. Bean `3ozg`."
     }
   ]
 }

@@ -63,13 +63,13 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 
 | سير العمل | مصدر BPMN | يُدخل إليه عندما |
 |---|---|---|
-| **التأليف (paper)** | [`authoring-a-paper.bpmn`](../processes/authoring-a-paper.bpmn) | يطلب المستخدم تأليف محتوى في folio من نوع paper |
-| **التأليف (document)** | [`authoring-a-document.bpmn`](../processes/authoring-a-document.bpmn) | يطلب المستخدم تأليف محتوى في folio من نوع document |
-| **دورة حياة المحتوى** | [`content-lifecycle.bpmn`](../processes/content-lifecycle.bpmn) | ينتقل المحتوى عبر التحقق → التصيير → النشر |
-| **استيعاب المستندات** | [`document-ingestion.bpmn`](../processes/document-ingestion.bpmn) | يُسقط المستخدم ملفًا في `uploads/` |
-| **من المسودة إلى النشر** | [`draft-to-publication.bpmn`](../processes/draft-to-publication.bpmn) | ينتقل المحتوى من مسودة إلى منشور |
-| **متطلبات CRDM** | [`crdm-requirements.bpmn`](../processes/crdm-requirements.bpmn) | يكتشف الوكيل طلب ميزة |
-| **استرجاع الأدلة** | [`evidence-retrieval.bpmn`](../processes/evidence-retrieval.bpmn) | يبحث الوكيل عن أدلة لدعم ادعاء |
+| **التأليف (paper)** | [`authoring-a-paper.bpmn`](../../processes/authoring-a-paper.bpmn) | يطلب المستخدم تأليف محتوى في folio من نوع paper |
+| **التأليف (document)** | [`authoring-a-document.bpmn`](../../processes/authoring-a-document.bpmn) | يطلب المستخدم تأليف محتوى في folio من نوع document |
+| **دورة حياة المحتوى** | [`content-lifecycle.bpmn`](../../processes/content-lifecycle.bpmn) | ينتقل المحتوى عبر التحقق → التصيير → النشر |
+| **استيعاب المستندات** | [`document-ingestion.bpmn`](../../processes/document-ingestion.bpmn) | يُسقط المستخدم ملفًا في `uploads/` |
+| **من المسودة إلى النشر** | [`draft-to-publication.bpmn`](../../processes/draft-to-publication.bpmn) | ينتقل المحتوى من مسودة إلى منشور |
+| **متطلبات CRDM** | [`crdm-requirements.bpmn`](../../processes/crdm-requirements.bpmn) | يكتشف الوكيل طلب ميزة |
+| **استرجاع الأدلة** | [`evidence-retrieval.bpmn`](../../processes/evidence-retrieval.bpmn) | يبحث الوكيل عن أدلة لدعم ادعاء |
 
 **انتقالات الحالة:** يمكن **تعليق (suspend)** سير العمل عندما يطلب المستخدم
 تبديل السياق. يسجل الوكيل أين كان (نشاط BPMN الحالي) ويمكنه
@@ -121,7 +121,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 | **تأليف المحتوى** | كتابة محتوى folio أو تعديله أو توسيعه (فصول، كتل، أقسام) | سير عمل التأليف (paper أو document) |
 | **مراجعة المحتوى** | مراجعة المحتوى الحالي والتحقق منه وتقديم ملاحظات بشأنه | سير عمل دورة حياة المحتوى / تحرير تفاعل الإنسان والحاسوب (HCI) |
 | **استيعاب المحتوى** | استيعاب مستند مصدر في الـ folio | سير عمل استيعاب المستندات |
-| **طلب ميزة** | طلب قدرة جديدة للمنصة (انظر [crdm-detect](../skills/crdm/crdm-detect.md)) | سير عمل متطلبات CRDM |
+| **طلب ميزة** | طلب قدرة جديدة للمنصة (انظر [crdm-detect](../../skills/crdm/crdm-detect.md)) | سير عمل متطلبات CRDM |
 | **طلب معلومات** | الاستفسار عن المنصة أو المحتوى أو العملية | لا يوجد سير عمل — الإجابة مباشرة |
 | **استدعاء أداة** | تشغيل أداة محددة (`content_validate`، و`qa_sweep`، إلخ) | لا يوجد سير عمل — التنفيذ والإبلاغ |
 | **إدارة خطة العمل** | إنشاء الـ beans أو تحديثها أو الاستعلام عنها | لا يوجد سير عمل — التنفيذ والإبلاغ |
@@ -131,7 +131,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 
 يقع الحد الفاصل الحرج للتصنيف بين **تأليف المحتوى** و**طلب ميزة**.
 وتوفر مهارة `crdm-detect`
-([`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md))
+([`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md))
 إشارات الاكتشاف التفصيلية. والقاعدة التلخيصية هي:
 
 > إذا كان تنفيذ الطلب يتطلب تغييرات في **folio-assistant**
@@ -203,7 +203,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 مسارات العمل الفرعية في ظل طبقة محكومة من السياق والذكريات؛ هذه ثلاثة
 أسئلة يمكن لهذا المستودع طرحها الآن ولم يجب عليها بعد. وجدول الأعمال، مع
 تمييز كل ادعاء بأنه مقيس (measured) أو مقطوع به (decided) أو فرضية (hypothesis)، موجود في
-[`deterministic-and-agentic`](reference/skill-instructions/deterministic-and-agentic.html).
+[`deterministic-and-agentic`](../reference/skill-instructions/deterministic-and-agentic.html).
 اقرأه كجدول أعمال: ففيه من الفرضيات أكثر مما فيه من القياس،
 وهو يقر بذلك صراحة.
 
@@ -217,7 +217,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 > **مهارة تنفيذ BPMN:** بالنظر إلى عملية (Process)، وسياق (Context)، وحالة (State)، ودور (Role)، يتم استخدام
 > مهارة واحدة أو أكثر من أجل تنفيذ مهمة (Task).
 
-![تنفيذ BPMN، من الحتمي إلى الوكيلي. يمتد شريط ألوان من "حتمي" (أزرق، يسار: تنفيذ مدار بواسطة وكيل لمهمة واحدة) إلى "وكيلي" (أخضر، يمين: وكلاء عبر معظم أو كل المهام). على اليسار، تحت أيقونة ترس ومحرك: "أداة تنفيذ BPMN: أحد محركات BPMN مفتوحة المصدر، مع فرض صارم للحالة ومسارات السباحة"، فوق مخطط مسارات سباحة مسطح لدورة حياة folio مع ملاحظة لاصقة واحدة، ومجموعة beans واحدة، وشخص وروبوت قط بجانب المسارات. على اليمين، تحت أيقونة روبوت قط: "أداة تنفيذ BPMN: سرب وكيل ذو حالة غير محكومة. يقوم الوكلاء بـ 'تخفيف' مسارات السباحة، مع تخفيف الأثر عبر تقارير ضمان/مراقبة جودة ميكانيكية + وكيلة"، فوق المخطط ذاته مائلاً في المنظور، مع انتشار beans عبر كل مسار والعديد من روبوتات القطط تحته.](assets/img/bpmn-execution-spectrum.webp)
+![تنفيذ BPMN، من الحتمي إلى الوكيلي. يمتد شريط ألوان من "حتمي" (أزرق، يسار: تنفيذ مدار بواسطة وكيل لمهمة واحدة) إلى "وكيلي" (أخضر، يمين: وكلاء عبر معظم أو كل المهام). على اليسار، تحت أيقونة ترس ومحرك: "أداة تنفيذ BPMN: أحد محركات BPMN مفتوحة المصدر، مع فرض صارم للحالة ومسارات السباحة"، فوق مخطط مسارات سباحة مسطح لدورة حياة folio مع ملاحظة لاصقة واحدة، ومجموعة beans واحدة، وشخص وروبوت قط بجانب المسارات. على اليمين، تحت أيقونة روبوت قط: "أداة تنفيذ BPMN: سرب وكيل ذو حالة غير محكومة. يقوم الوكلاء بـ 'تخفيف' مسارات السباحة، مع تخفيف الأثر عبر تقارير ضمان/مراقبة جودة ميكانيكية + وكيلة"، فوق المخطط ذاته مائلاً في المنظور، مع انتشار beans عبر كل مسار والعديد من روبوتات القطط تحته.](../assets/img/bpmn-execution-spectrum.webp)
 
 **مهارة واحدة، ونوعان من الأدوات.** المهارة هي نفسها عند كلا الطرفين: أخذ
 العملية، والسياق، والحالة الراهنة والدور، واختيار المهارات، وأداء
@@ -240,7 +240,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 [W3C ODRL 2.2](https://www.w3.org/TR/odrl-model/) كلغة للأذونات
 و[W3C PROV-O](https://www.w3.org/TR/prov-o/) كسجل للتنفيذ (المالك،
 2026-09-23؛ والمخطط الذي يقتضيه هذا هو
-[مقترح الجهات الفاعلة وODRL وPROV-O](proposals/odrl-prov-actor-model.html)).
+[مقترح الجهات الفاعلة وODRL وPROV-O](../proposals/odrl-prov-actor-model.html)).
 
 **تقع معظم عمليات التشغيل الحقيقية بين الطرفين**، ويكون ذلك على مستوى المهمة بدلاً من مستوى العملية ككل:
 فالقسم [السابق](#deterministic-and-agentic) يحصي بالفعل أي
@@ -263,7 +263,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 عندما يُصنف طلب على أنه طلب ميزة، يدخل الوكيل في
 **سير عمل متطلبات CRDM**
 ([التوثيق الكامل](https://litlfred.github.io/folio-assistant/crdm-methodology.html)،
-و[BPMN](../processes/crdm-requirements.bpmn)).
+و[BPMN](../../processes/crdm-requirements.bpmn)).
 
 يعد سير عمل طلبات الميزات هو الموضع الذي تقدم فيه وثيقة إطار العمل هذه أكبر
 فائدة، لأنها تصف سلوكًا كان ضمنيًا في السابق. فبينما وُثقت مسارات عمل
@@ -272,7 +272,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 
 ### كيف يدخل الوكيل في CRDM
 
-يوجد منطق الاكتشاف في [`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md).
+يوجد منطق الاكتشاف في [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md).
 ثلاثة سيناريوهات:
 
 **جلسة جديدة، والطلب الأول هو ميزة:**
@@ -396,17 +396,17 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 | السلوك | المهارة / الوثيقة المصدر | الموقع |
 |---|---|---|
 | مسح بدء الجلسة | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
-| بروتوكول Bean | `todo-manager.md`، و`bean-coordination.md` | [`skills/folio-core/`](../skills/folio-core/) |
+| بروتوكول Bean | `todo-manager.md`، و`bean-coordination.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | انضباط التثبيت وطلبات السحب | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| اكتشاف طلبات الميزات | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md) |
-| سير عمل متطلبات CRDM | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../skills/crdm/crdm-requirements-workflow.md) |
-| تأليف المحتوى (paper) | مهارات authoring-math | [`skills/authoring-math/`](../skills/authoring-math/) |
-| تأليف المحتوى (document) | مهارات folio-document-adapter | [`skills/folio-document-adapter/`](../skills/folio-document-adapter/) |
-| دورة حياة المحتوى | مهارات content-lifecycle | [`skills/content-lifecycle/`](../skills/content-lifecycle/) |
-| استيعاب المستندات | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../skills/folio-core/docs-generation.md) |
-| الإرسال والتنسيق | `dispatch-agent.md`، و`coordinate.md` | [`skills/folio-core/`](../skills/folio-core/) |
+| اكتشاف طلبات الميزات | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md) |
+| سير عمل متطلبات CRDM | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../../skills/crdm/crdm-requirements-workflow.md) |
+| تأليف المحتوى (paper) | مهارات authoring-math | [`skills/authoring-math/`](../../skills/authoring-math/) |
+| تأليف المحتوى (document) | مهارات folio-document-adapter | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
+| دورة حياة المحتوى | مهارات content-lifecycle | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
+| استيعاب المستندات | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../../skills/folio-core/docs-generation.md) |
+| الإرسال والتنسيق | `dispatch-agent.md`، و`coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | أنواع المحتوى والمحولات | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |
-| تأليف مخططات BPMN | مهارة `bpmn-authoring` | [`skills/folio-core/`](../skills/folio-core/) |
+| تأليف مخططات BPMN | مهارة `bpmn-authoring` | [`skills/folio-core/`](../../skills/folio-core/) |
 
 **عندما تختلف إحدى المهارات مع هذه الصفحة، تسود المهارة.** فهذه الصفحة هي
 تجميع وتوحيد، وليست سلطة جديدة بحد ذاتها. وإذا وجدت تعارضًا، فقم بإصلاح هذه الصفحة.

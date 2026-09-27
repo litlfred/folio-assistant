@@ -17,11 +17,11 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 > L'installation est la partie facile. Ce qu'il faut exécuter **avant de pousser** (push), c'est
-> [`platform-gates`](reference/skill-instructions/platform-gates.html) —
+> [`platform-gates`](../reference/skill-instructions/platform-gates.html) —
 > la réussite de `bun test` ne garantit pas le passage des « gates », et la liste est dérivée du
 > workflow de CI plutôt qu'écrite noir sur blanc. Si vous intégrez folio-assistant sur
 > un dépôt déjà existant, lisez d'abord
-> [`repo-conversion`](reference/skill-instructions/repo-conversion.html).
+> [`repo-conversion`](../reference/skill-instructions/repo-conversion.html).
 
 ## Prérequis
 
@@ -36,7 +36,7 @@ moment de l'exécution et peuvent être installées à la demande.
 | Git + git-lfs | dépôts de contenu | `apt install git git-lfs` | `winget install Git.Git GitHub.GitLFS` |
 | LaTeX (`latexmk`, `texlive`) | rendu des articles | `apt install texlive-full latexmk biber` | `winget install MiKTeX.MiKTeX` |
 | Lean 4 (via `elan`) | formalisation des articles | `curl …/elan-init.sh \| sh -s -- -y` | voir les [versions d'elan](https://github.com/leanprover/elan/releases) |
-| Java 21 + IG Publisher + SUSHI | IGs WHO SMART (L3) | voir le [guide WHO SMART IG](guides/who-smart-ig.html) | `winget install EclipseAdoptium.Temurin.21.JDK`, puis le guide |
+| Java 21 + IG Publisher + SUSHI | IGs WHO SMART (L3) | voir le [guide WHO SMART IG](../guides/who-smart-ig.html) | `winget install EclipseAdoptium.Temurin.21.JDK`, puis le guide |
 | `pandoc`, `ripgrep` | conversions, recherche | `apt install pandoc ripgrep` | `winget install JohnMacFarlane.Pandoc BurntSushi.ripgrep.MSVC` |
 
 Vous n'avez pas besoin de tout cela — installez uniquement ce qu'exigent les types de contenu que vous
@@ -68,6 +68,28 @@ cd folio-assistant
 
 Il installe Bun et rien d'autre — LaTeX, Lean, Java et l'IG Publisher restent
 propres à chaque type de contenu, signalés par `check-deps` avec des indications d'installation.
+
+Les scripts shell de la plateforme sont en bash. Sur Windows, ils s'exécutent sous **Git Bash**,
+que [Git pour Windows](https://git-scm.com/download/win) installe, `git`
+est donc le seul prérequis supplémentaire. Chaque script qu'un utilisateur exécute manuellement ou intègre dans
+une configuration dispose d'un `.bat` à ses côtés — `cat-harness\scripts\install-beans.bat`,
+`cat-harness\scripts\start-folio-assistant.bat`, `cat-harness\scripts\git-hooks\install.bat`,
+`cat-harness\scripts\session-start-coord-sweep.bat`, etc. — qui localise Git Bash
+(jamais le lanceur WSL dans `System32`) et exécute le script `.sh` jumeau avec les mêmes
+arguments. Utilisez-les depuis `cmd.exe`, PowerShell, le Planificateur de tâches ou une entrée de
+configuration MCP :
+
+```bat
+cat-harness\scripts\install-beans.bat
+cat-harness\scripts\upload-to-uploads.bat https://example.org/guideline.pdf
+```
+
+Tout ce dont le script `.sh` a besoin — `bun`, `curl`, `gh`, `elan` — doit se trouver dans le
+`PATH` de Windows, puisque Git Bash en hérite depuis l'appelant. Les scripts qui n'ont de sens
+que sur un hôte Linux (`deploy/`, `install-tex.sh`, `setup-sage.sh`,
+`setup-singular.sh`) n'ont délibérément aucun wrapper. La liste se trouve dans
+`cat-harness/scripts/gen-bat-wrappers.sh` ; `bun run bat:sync` régénère les wrappers
+et `bun run bat:sync:check` fait échouer la CI si l'un d'eux est manquant ou obsolète.
 
 ### Sur Linux/macOS, il existe également un script
 
@@ -144,7 +166,6 @@ outil de document. `folio_init` écrit ce fichier pour vous ; voir
 ---
 
 ## Connecter un harnais LLM
-{: #connecting-an-llm-harness }
 
 folio-assistant expose ses outils via MCP, de sorte que tout harnais d'agent compatible MCP
 peut le piloter. Vous trouverez ci-dessous les configurations pour les plus courants. Dans tous les cas, l'agent

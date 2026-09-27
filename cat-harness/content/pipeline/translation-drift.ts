@@ -133,6 +133,52 @@ export const UNCATALOGED: UncatalogedTranslation[] = [
     since: "2026-09-20",
     reason: "same as `es/agent-onboarding` — published, structurally current, no catalogue",
   },
+  // The six below are what `derive-po.ts` REFUSES, recorded on the owner's
+  // decision of 2026-09-26 after the page-discovery fix took this gate from 36
+  // findings to 6. Each is a real finding about the translation, not a tool
+  // limit, and each names WHAT differs rather than saying "drifted" — a reason
+  // that does not say what is wrong cannot tell the next reader whether it has
+  // been fixed.
+  //
+  // None is an agent's to clear: issue #206 reserves translation adjudication
+  // to a human, so re-translating any of these to make a catalogue derivable
+  // would manufacture exactly the sign-off that issue protects.
+  {
+    translation: "ar/architecture",
+    since: "2026-09-26",
+    reason:
+      "`count-differs` — the source has 60 translatable constructs and the translation has 61, so the translation carries something the source does not. `alignGrownSource` is sound only for constructs ADDED TO THE SOURCE; pairing a remainder the source lacks would invent an alignment rather than read one",
+  },
+  {
+    translation: "ar/skills",
+    since: "2026-09-26",
+    reason:
+      "`count-differs` — source 146 constructs, translation 147. Same shape as `ar/architecture`: longer than its source by one, so no positional alignment is sound",
+  },
+  {
+    translation: "zh/getting-started",
+    since: "2026-09-26",
+    reason:
+      "`count-differs` — source 149 constructs, translation 145. Diagnosed on bean `7x8o`: 20 table cells are dropped by `isTranslatable`, of which `是` and `否` are real words dropped for being one character. That is bean `6b8u`'s own incompleteness, and the obvious CJK-aware rule is measured and deliberately NOT shipped — it takes this pair from short-by-4 to long-by-1",
+  },
+  {
+    translation: "ar/publication-workflow",
+    since: "2026-09-26",
+    reason:
+      '`msgid-conflict` — the source string "Editor / author" occurs more than once and is translated two different ways ("المحرر / المؤلف", and left untranslated at construct 298). A msgid-keyed `.po` cannot represent both, so this needs `msgctxt` rather than a derivation',
+  },
+  {
+    translation: "zh/publication-workflow",
+    since: "2026-09-26",
+    reason:
+      '`msgid-conflict` — "Editor / author" is translated "编辑 / 作者" and "Editor / author（编辑 / 作者）" at construct 298. Needs `msgctxt`; a msgid-keyed `.po` cannot hold both',
+  },
+  {
+    translation: "zh/skills",
+    since: "2026-09-26",
+    reason:
+      '`msgid-conflict` — "Skills" occurs more than once and is translated "技能" and "技能数" at construct 89. This is the guard added after bean `f6r1` found the same case masked by `count-differs`, now firing on genuinely new data. Needs `msgctxt`',
+  },
 ];
 
 /** A translation known to have drifted, recorded rather than passed over. */
@@ -217,8 +263,17 @@ export function catalogueFor(instanceRoot: string, locale: string, page: string)
   return join(dir, locale, `${page}.po`);
 }
 
-/** Site-absolute URL -> the file that serves it. */
-function fileForUrl(site: string, url: string): string {
+/**
+ * Site-absolute URL -> the file that serves it.
+ *
+ * **Exported for `check-translation-catalogue.ts`, and it must stay one
+ * answer.** That gate maps a CHANGED FILE back to the translation it publishes,
+ * which is this function's inverse over the index — so if it composed the path
+ * itself, a gate about missing catalogues could disagree with the gate about
+ * drift on which file is which page, and the two would be right about different
+ * corpora.
+ */
+export function fileForUrl(site: string, url: string): string {
   const rel = url.replace(/^\//, "").replace(/\.html$/, ".md");
   return join(site, rel === "" || rel.endsWith("/") ? `${rel}index.md` : rel);
 }

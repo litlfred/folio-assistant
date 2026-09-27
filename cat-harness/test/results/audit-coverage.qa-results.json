@@ -8,11 +8,11 @@
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-26T11:05:51.971Z",
+  "updated_at": "2026-09-27T05:35:35.014Z",
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 44 of 44 declared kind(s), 160 gate(s), 68 criteria.",
-      "count": 44,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 45 of 45 declared kind(s), 169 gate(s), 69 criteria.",
+      "count": 45,
       "entries": [
         {
           "kind": "bean-defs",
@@ -21,6 +21,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run check:bean-archive",
             "bun run check:bean-blocks",
             "bun run check:bean-bodies",
             "bun run check:bean-front-matter",
@@ -43,6 +44,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run check:bean-archive",
             "bun run check:bean-bodies",
             "bun run check:bean-front-matter",
             "bun run check:bean-issue-links",
@@ -131,6 +133,7 @@
             "bun run check:published-packages",
             "bun run check:published-refs",
             "bun run check:read-only-graphs",
+            "bun run check:rendered-labels",
             "bun run check:subgraph-coverage",
             "bun run check:subgraphs",
             "bun run check:undeclared-files:check",
@@ -142,7 +145,9 @@
             "bun run kg:locale:check",
             "bun run kg:locale:check:bootstrap",
             "bun run kg:schema:check",
-            "bun run ns:check"
+            "bun run ns:check",
+            "bun run skill:register:check",
+            "bun run translation:pot:check"
           ],
           "typed": false,
           "hasFiles": true
@@ -224,13 +229,12 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
-            "bun run cat-harness/scripts/gen-docs-pages.ts --check",
             "bun run cat-harness/scripts/gen-schema-docs.ts --check",
-            "bun run cat-harness/scripts/gen-skill-docs.ts --check",
             "bun run check:agent-entry-links",
             "bun run check:agents-xref",
             "bun run check:agents-xref:strict",
             "bun run check:anchor-names",
+            "bun run check:available-locales",
             "bun run check:command-paths",
             "bun run check:docs-populated",
             "bun run check:docs-templates",
@@ -243,13 +247,16 @@
             "bun run check:wireframes",
             "bun run docs:auto:check",
             "bun run docs:harness:check",
+            "bun run docs:pages:check",
             "bun run gen:jsonld:check",
             "bun run handler:index:check",
             "bun run landing:data:check",
             "bun run readme:audit",
             "bun run readme:audit:root",
             "bun run readme:sync:check",
-            "bun run readme:sync:root:check"
+            "bun run readme:sync:root:check",
+            "bun run skills:docs:check",
+            "bun run translated-links:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -476,6 +483,7 @@
             "activity-fulfilment-kind",
             "activity-in-lane",
             "activity-names-skill",
+            "activity-skill-has-tool",
             "call-activity-resolves",
             "convention-ref-resolves",
             "decision-outcomes-used",
@@ -648,6 +656,16 @@
           "hasFiles": false
         },
         {
+          "kind": "session-survey",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": true,
+          "hasFiles": false
+        },
+        {
           "kind": "skills",
           "state": "covered",
           "directories": [
@@ -679,7 +697,6 @@
             "skill"
           ],
           "gates": [
-            "bun run cat-harness/scripts/gen-skill-docs.ts --check",
             "bun run check:agent-entry-links",
             "bun run check:agents-xref",
             "bun run check:agents-xref:strict",
@@ -691,7 +708,9 @@
             "bun run check:voice-skills",
             "bun run check:workflow-refs",
             "bun run kg:audit:check",
-            "bun run kg:detangle:check"
+            "bun run kg:detangle:check",
+            "bun run skill:register:check",
+            "bun run skills:docs:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -786,6 +805,8 @@
             "tool"
           ],
           "gates": [
+            "bun run check:bun-pin",
+            "bun run check:red-gate-is-last",
             "bun run check:tools",
             "bun run kg:audit:check",
             "bun run tools:viz:check"
@@ -808,6 +829,7 @@
             "bun run translate-bpmn:check",
             "bun run translate-kg-viewer:check",
             "bun run translation:block-qa:check",
+            "bun run translation:catalogue:check",
             "bun run translation:drift:check",
             "bun run translation:index:check",
             "bun run translation:status:check"
@@ -907,12 +929,13 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 11,
+      "count": 12,
       "entries": [
         {
           "kind": "bean-defs",
           "criteria": 0,
           "gates": [
+            "bun run check:bean-archive",
             "bun run check:bean-blocks",
             "bun run check:bean-bodies",
             "bun run check:bean-front-matter",
@@ -966,6 +989,11 @@
           "gates": []
         },
         {
+          "kind": "session-survey",
+          "criteria": 0,
+          "gates": []
+        },
+        {
           "kind": "todo-feedback",
           "criteria": 0,
           "gates": []
@@ -990,10 +1018,10 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 160 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 169 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }
   },
-  "total": 55
+  "total": 57
 }
