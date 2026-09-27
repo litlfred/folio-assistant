@@ -87,6 +87,7 @@ But `lvk9` makes it MORE pressing rather than less: once a list item is one msgi
 injecting it means writing one translation back over several source lines, which is
 exactly the path this defect sits on.
 
+_2026-09-27T06:26:13Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 ## Fixed 2026-09-27
 
