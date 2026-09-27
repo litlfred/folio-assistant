@@ -65,7 +65,7 @@
  */
 
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { basename, dirname, join, relative } from "node:path";
+import { basename, dirname, join, relative, sep } from "node:path";
 
 import type { CompanionRole, QaCriterionEntry, QaFieldHash, QaReviewer, UntaintedDispatch } from "../../schemas/block-qa.ts";
 import { parsePo, parsePoEntries } from "./po-inject.ts";
@@ -798,8 +798,25 @@ function sweepSubject(
   locales: string[],
   check: boolean,
   tally: SweepTally,
+  /**
+   * What the catalogue for this subject is called, relative to the locale
+   * directory — **supplied by the caller, not derived here.**
+   *
+   * The docblock above says the two passes differ in how the subject is found and
+   * in what it is CALLED, and this is the second of those. It was derived here as
+   * `basename(md)`, which is a third answer to a question `catalogueFor` and
+   * `driftFor` also answer, and the three did not agree for a page below the site
+   * root: the owner's decision of 2026-09-27 (bean `9rnf`) is that a catalogue
+   * path MIRRORS the page path, so `docs/guides/agent-onboarding.md` is
+   * catalogued at `translations/<locale>/guides/agent-onboarding.po` and a
+   * basename cannot name it.
+   *
+   * The block pass still passes a basename, because a block's catalogue is keyed
+   * by its stem and lives beside its siblings rather than under a site.
+   */
+  catalogueStem?: string,
 ): void {
-  const stem = basename(md).replace(/\.md$/, "");
+  const stem = catalogueStem ?? basename(md).replace(/\.md$/, "");
   const chapterSlug = basename(join(md, ".."));
   const subjectRoot = md.replace(/\.md$/, "");
   for (const locale of locales) {
@@ -868,7 +885,11 @@ if (import.meta.main) {
     const siteDir = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT));
     if (existsSync(siteDir)) {
       for (const page of docsPages(siteDir, src)) {
-        sweepSubject(page.md, page.title, locales, check, tally);
+        // The page's path relative to the SITE, which is what its catalogue
+        // mirrors. `relative` rather than a manual strip so a page nested any
+        // number of levels deep composes correctly.
+        const stem = relative(siteDir, page.md).replace(/\.md$/, "").split(sep).join("/");
+        sweepSubject(page.md, page.title, locales, check, tally, stem);
       }
     }
   }

@@ -3,8 +3,9 @@
 title: 'EXTRACTION: cleanMarkdownText leaves literal **** in a msgid when a code span is wrapped in emphasis, and eats the spacing when there are two'
 status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-26T12:53:23Z
-updated_at: 2026-09-27T06:52:18Z
+updated_at: 2026-09-27T08:07:11Z
 parent: folio-assistant-bzyu
 ---
 
@@ -54,11 +55,11 @@ different cause.
 
 ## Done when
 
-- [ ] a code span wrapped in emphasis yields the code span's removal and the
+- [x] a code span wrapped in emphasis yields the code span's removal and the
       emphasis markers' removal, with the surrounding text and its spacing intact
-- [ ] the two rows above are pinned as tests, including the second occurrence case
+- [x] the two rows above are pinned as tests, including the second occurrence case
       that currently eats the spacing
-- [ ] MEASURED AFTER: no msgid in this instance's extraction contains a run of
+- [x] MEASURED AFTER: no msgid in this instance's extraction contains a run of
       `**` that is not part of prose — and the count is reported, since the
       current 47 includes legitimate glob patterns (`content/**/*.lean`) that must
       NOT be touched
@@ -72,3 +73,94 @@ Rewriting `cleanMarkdownText` as a markdown parser. The four rows above are the
 contract; how few lines satisfy them is an implementation question.
 
 _2026-09-27T06:52:18Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Fixed 2026-09-27 — with one Done-when item declined and one deferred
+
+**The mechanism.** Code spans are now tokenised the way Liquid expressions already
+were (`\x00CODE<i>\x00`), so emphasis stripping sees something opaque between the
+markers instead of nothing. `MD_BOLD_RE` requires `[^*]+`, which is why an emptied
+pair survived as literal asterisks.
+
+Reordering the regexes — strip emphasis first, then remove code spans — was
+declined. It points `MD_BOLD_RE` at the inside of code spans, where
+`content/**/*.lean` lives. A token containing no `*` is unreachable by
+construction: a property, not a case that happens to pass.
+
+## The falsifier caught my own prediction being wrong
+
+I predicted exactly 190 msgids would change, the 95 carrying `**` without `****`
+would be untouched, and the double-space count would hold at 8188. Measured by
+dumping all 46 780 msgids before and after and diffing:
+
+| | predicted | actual |
+|---|---|---|
+| msgids changed | 190 | **209** |
+| carrying `**` but not `****` | 95 | 95 → **76** |
+| carrying a double space | 8188 | 8188 → **8202** |
+
+Both surprises are the same defect in a shape this bean did not record. **19
+msgids** had TWO emphasis runs, the first wrapping a code span: emptying it let
+`MD_BOLD_RE` start one character late and pair the first run's opening `**` with
+the SECOND run's closing one, consuming the text between and leaving a stray `*`
+at the front and `**` before the punctuation. Real example, verbatim from
+`docs/reference/skill-instructions/kg-navigation.md:70`:
+
+    source: **`skill_list`** — every servable skill **with its one-line summary**,
+    before: "* — every servable skill with its one-line summary**,"
+    after:  "— every servable skill with its one-line summary,"
+
+The +14 double spaces are `a **`x`** b`: with the asterisks gone the two spaces
+become adjacent. Expected once seen, and consistent with not collapsing whitespace.
+
+**Verified no content was lost**, over all 209: zero gained an asterisk; 198 are
+identical once asterisks and whitespace are normalised; the other 11 differ only
+by punctuation re-attaching to its word (`summary ,` → `summary,`), which is the
+correct reading of the source.
+
+## Done-when item 3 is DECLINED, and it needs the owner
+
+The item asks that row 4's spacing be fixed. It is not, deliberately. That double
+space is not specific to this defect — removing ANY code span leaves one — and
+**8188 of 46 780 msgids (17.5 %) already contain one**. Collapsing would obsolete
+8188 catalogue entries rather than 12, which is a corpus-wide reformatting
+decision rather than a bug fix. This bean was written without that number. The
+test pins `"and  both"` as it is, with the reason in its body, so the choice is
+visible rather than forgotten. **Put to the owner; unanswered.**
+
+## Done-when item 4 is PARTLY done, and the "one rewrite" instruction is broken
+
+The item asks for one catalogue rewrite covering this, `6b8u`, `ig4a` and `lvk9`
+rather than four. Three gates went red on the msgid change and could not be left
+red, so: `translation:pot` regenerated 16 stale `.pot` files, `translation:obsolete`
+marked **12** stale msgids `#~`, and `translation:block-qa` plus
+`translation:status` followed. `6b8u`'s remaining item will cause one more
+rewrite. Reporting that rather than pretending the instruction was honoured.
+
+**Nothing was deleted.** Checked as a MULTISET of every non-empty `msgstr`, active
+and obsolete, across all 73 `.po` files against `HEAD`: **0 lost, 0 gained.** The
+12 entries moved to `#~` carrying their translations, revivable by a human.
+
+## Falsified by breaking
+
+Reverting the fix reddens 4 of the 8 new tests. The other four guard the opposite
+direction, the deliberate spacing choice, and the repair that was NOT chosen; each
+says in its own body that it passes either way. My first version of the
+asymmetric-marker test used a constructed single-run fixture that produced
+identical output before and after — it pinned nothing while its comment claimed to
+pin the defect. Replaced with the real line.
+
+bun test 12194 pass 0 fail; tsc clean; eslint 0 errors; all 161 gates the `gates`
+job runs, 0 failures.
+
+
+## The whitespace question is ANSWERED: leave it as is (owner, 2026-09-27)
+
+Done-when item 3 asked that the double space left by a removed code span be
+collapsed. Put to the owner with the number that was missing when this bean was
+written — **8188 of 46 780 msgids already contain a double space**, so collapsing
+obsoletes 8188 catalogue entries rather than 12 — and they confirmed the current
+behaviour.
+
+So the item is CLOSED as decided-against rather than left open. The test pins
+`"and  both"` with the reason in its body, which is now a recorded decision rather
+than a deferral.

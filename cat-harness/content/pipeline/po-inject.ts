@@ -273,6 +273,30 @@ export function injectMarkdown(
 ): InjectionResult {
   const lines = sourceMd.split("\n");
   const outLines = [...lines];
+  /**
+   * Indices {@link flushParagraph} collapsed away — **not** lines that are empty.
+   *
+   * This used to be expressed by setting the line to `""` and ending the function
+   * with `outLines.filter((line) => line !== "")`, under a comment reading
+   * "Remove blank lines introduced by paragraph collapse". It removed every empty
+   * line in the document, the author's included. Measured on the bean's own
+   * five-line fixture (bean `rmor`): 3 blank lines in, 0 out — the heading ran
+   * into the paragraph, the paragraph into the list, and the trailing paragraph
+   * was absorbed by the list. In markdown that is a different document, and
+   * `src/tools/translation.ts` writes it to disk.
+   *
+   * A value of `""` cannot distinguish "a line this function emptied" from "a
+   * line the author left empty", so no filter over values can either. An index
+   * can. The bean also offered a sentinel string; that is declined deliberately,
+   * because it would owe a proof that no markdown line can equal the sentinel,
+   * and a set of indices owes nothing.
+   *
+   * It fixes a second defect with the same change. A blank line inside a list
+   * item makes the list LOOSE, so emptying a wrapped item's continuation altered
+   * rendering before the global filter ever ran. Removing the line rather than
+   * emptying it introduces no blank at all.
+   */
+  const collapsed = new Set<number>();
   let changed = false;
   let totalSpans = 0;
   let translatedSpans = 0;
@@ -307,7 +331,7 @@ export function injectMarkdown(
       // Replace first line with full translated text, blank continuation lines
       outLines[paragraphBuf[0].idx] = translated;
       for (let i = 1; i < paragraphBuf.length; i++) {
-        outLines[paragraphBuf[i].idx] = "";
+        collapsed.add(paragraphBuf[i].idx);
       }
       changed = true;
     }
@@ -464,8 +488,10 @@ export function injectMarkdown(
 
   flushParagraph();
 
-  // Remove blank lines introduced by paragraph collapse
-  const result = outLines.filter((line) => line !== "").join("\n");
+  // Drop exactly the continuation lines a collapsed paragraph left behind. Every
+  // other line survives, blank ones included — see `collapsed` above for the
+  // defect this spelling replaces.
+  const result = outLines.filter((_, idx) => !collapsed.has(idx)).join("\n");
 
   return {
     translated: result || sourceMd,
