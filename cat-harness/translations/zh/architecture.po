@@ -237,10 +237,6 @@ msgstr "工作计划引导（跨 harness）"
 msgid "The work-plan is stored in  and surfaced three ways so any harness is primed identically:"
 msgstr "工作计划存储在  中，并通过三种方式呈现，以使任何 harness 都能获得完全相同的初始引导："
 
-#: docs/architecture.md:158
-msgid "**** — static discipline, read natively by every agent."
-msgstr "**** —— 静态规程，由所有智能体原生读取。"
-
 #: docs/architecture.md:159
 msgid "hook — each harness runs the shared  primer."
 msgstr "钩子 —— 每个 harness 运行共享的  引导脚本。"
@@ -260,3 +256,6 @@ msgstr "部署"
 #: docs/architecture.md:167
 msgid "contains a Caddy reverse-proxy template, , a provisioning script, Google OAuth setup, and a self-update script for running a shared HTTP instance. The skill-package Docker manifests aggregate apt/pip/npm dependencies into a single image per active package set."
 msgstr "包含 Caddy 反向代理模板、、置备脚本、Google OAuth 配置，以及用于运行共享 HTTP 实例的自动更新脚本。技能包的 Docker 清单文件会将 apt/pip/npm 依赖聚合到每个活动包集对应的单一镜像中。"
+
+#~ msgid "**** — static discipline, read natively by every agent."
+#~ msgstr "**** —— 静态规程，由所有智能体原生读取。"

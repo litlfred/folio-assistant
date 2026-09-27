@@ -1082,6 +1082,28 @@ jobs:
           # the 25 pages had a `.pot` OR a `.po` in any locale, so the campaign
           # had nothing to be handed.
           bun run translation:pot:check
+          # `lvk9`: when the extractor's segmentation changes, msgids in the
+          # committed catalogues stop matching their source. Deleting them throws
+          # away translation work; leaving them shows a translator strings the
+          # page does not contain. This fails when a stale entry is not `#~`
+          # obsolete, and `bun run translation:obsolete` marks them.
+          #
+          # It also reports three states it will NOT fold into a count — a
+          # catalogue sourced from a `.ts` rather than markdown, one that declares
+          # no source at all, and one whose declared source is ambiguous — because
+          # "no findings over the subset I could resolve" is exactly what produced
+          # a wrong published claim on #1433.
+          #
+          # This step carried a placement rationale until the `cpss` merge: it
+          # asked to sit BEFORE `translation:drift:check` so a deliberately-red
+          # gate could not bury it, the `1xhc` shape. That reason is gone rather
+          # than satisfied — the drift check is no longer in this block at all,
+          # it is the last step of the job, and `check:red-gate-is-last` enforces
+          # that structurally near the top. The note is recorded rather than
+          # deleted because a reader who finds this line above nothing in
+          # particular would otherwise re-derive the ordering question from
+          # scratch.
+          bun run translation:obsolete:check
           # Bean `eief`: a stubbed tool must not read as a working one, and a
           # stub that has outlived its tool must fail rather than linger.
           bun run check:tabular-stubs

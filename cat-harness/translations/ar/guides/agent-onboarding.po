@@ -98,33 +98,13 @@ msgstr "تغيير ما يتم تأليفه"
 msgid "Claim a bean before durable work. Others may be running."
 msgstr "احجز الـ bean قبل البدء بعمل دائم. قد تكون هناك مهام أخرى قيد التشغيل."
 
-#: agent-onboarding.md:124
-msgid "Claim before working so two sessions don't pick the same item, and never resolve or delete a sibling's bean. Do not stand up a parallel todo store. Do not  bulk machine-generated queues (, witness files) — those stay as bulk JSON."
-msgstr "احجز المهمة قبل البدء بالعمل حتى لا تلتقط جلستان العنصر نفسه، ولا تقم أبدًا بحل أو حذف مهمة تخص وكيلاً زميلاً. لا تنشئ مخزن مهام موازيًا. ولا تستخدم beans create لإنشاء طوابير ضخمة مولدة آليًا (*.qa.json، ملفات الشواهد) — فهذه تبقى بصيغة JSON مجمعة."
-
-#: agent-onboarding.md:197
-msgid "constant, or a vocabulary, it is folio data."
-msgstr "ثابتًا، أو مفردات، فهو من بيانات الـ folio."
-
 #: agent-onboarding.md:29
 msgid "Contains"
 msgstr "يحتوي على"
 
-#: agent-onboarding.md:63
-msgid "content-agnostic: coordination, watchers, QA, render, bibliography"
-msgstr "غير مرتبط بمحتوى معين: التنسيق، المراقبون (watchers)، ضمان الجودة (QA)، التصيير، المراجع"
-
 #: agent-onboarding.md:139
 msgid "Criteria are grouped into axes (, , , , , , , …). Run one:"
 msgstr "تُجمّع المعايير في محاور (proof، وvoice، وdetangler، وuses، وcanonical، وcompute، وbibliography، …). قم بتشغيل أحدها:"
-
-#: agent-onboarding.md:193
-msgid "Don't hardcode a paper name. A folio may hold several; resolve"
-msgstr "لا تضع اسم الورقة البحثية بشكل ثابت (hardcode). قد يحتوي الـ folio على عدة أوراق؛ قم بحل الاسم"
-
-#: agent-onboarding.md:196
-msgid "Don't write content into the platform. If it names a chapter, a"
-msgstr "لا تكتب محتوى داخل المنصة. إذا كان يحدد فصلاً، أو"
 
 #: agent-onboarding.md:134
 msgid "Every block can carry  recording, per criterion, what each reviewer found — , , or . Entries carry the source-file hashes at audit time, so an entry goes stale when the block is edited and must be re-adjudicated."
@@ -158,10 +138,6 @@ msgstr "نصوص التعليمات الكاملة المولّدة آليًا"
 msgid "generated input/output contract per skill"
 msgstr "عقد الإدخال/الإخراج المصنف للأنواع والمولّد آليًا لكل مهارة"
 
-#: agent-onboarding.md:95
-msgid "hand-written."
-msgstr "يدويًا أبدًا."
-
 #: agent-onboarding.md:30
 msgid "Has"
 msgstr "يحتوي على"
@@ -169,10 +145,6 @@ msgstr "يحتوي على"
 #: agent-onboarding.md:68
 msgid "how skills, roles, and capabilities compose"
 msgstr "كيفية تكوين المهارات والأدوار والقدرات معًا"
-
-#: agent-onboarding.md:92
-msgid "is editorial. \"What must a reader have read to follow"
-msgstr "هي علاقة تحريرية. \"ما الذي يجب أن يكون القارئ قد قرأه ليتابع"
 
 #: agent-onboarding.md:191
 msgid "is not a pass. Say what was skipped and why."
@@ -206,10 +178,6 @@ msgstr "لا تملأ uses[] أبدًا من Lean. فهذا يدمر الإشا�
 msgid "no — only"
 msgstr "لا — فقط"
 
-#: agent-onboarding.md:64
-msgid "papers: Lean, LaTeX, proofs, simulators"
-msgstr "الأوراق البحثية: Lean، وLaTeX، والبراهين، والمحاكيات"
-
 #: agent-onboarding.md:180
 msgid "Project commands, conventions"
 msgstr "أوامر المشروع واتفاقياته"
@@ -217,10 +185,6 @@ msgstr "أوامر المشروع واتفاقياته"
 #: agent-onboarding.md:178
 msgid "Question"
 msgstr "السؤال"
-
-#: agent-onboarding.md:199
-msgid "Read the criterion description before acting on a finding. They"
-msgstr "اقرأ وصف المعيار قبل التصرف بناءً على نتيجة الفحص. فالأوصاف"
 
 #: agent-onboarding.md:198
 msgid "Regenerate, never hand-edit, anything under ."
@@ -243,10 +207,6 @@ msgstr "مرجع مخطط المهارات"
 msgid "Skills & roles"
 msgstr "المهارات والأدوار"
 
-#: agent-onboarding.md:58
-msgid "Skills are the unit of work here. Before hand-rolling a procedure, check whether one exists."
-msgstr "المهارات هي وحدة العمل هنا. قبل أن تبني إجراءً يدويًا، تحقق مما إذا كان هناك إجراء موجود بالفعل."
-
 #: agent-onboarding.md:29
 msgid "skills, schemas, pipeline, MCP server"
 msgstr "المهارات، المخططات، خط المعالجة، خادم MCP"
@@ -254,10 +214,6 @@ msgstr "المهارات، المخططات، خط المعالجة، خادم M
 #: agent-onboarding.md:147
 msgid "Some criteria are  (a script decides) and some are  (an agent or human must adjudicate). The second kind costs real turns — see  for scoping them by what they can actually affect."
 msgstr "بعض المعايير تكون automated: true (يحسمها نص برمجي) وبعضها الآخر automated: false (يجب على وكيل أو إنسان البت فيها). والنوع الثاني يكلف أدوار عمل حقيقية — انظر semantic-cone.ts لحصر نطاقها وفق ما يمكنها التأثير عليه فعليًا."
-
-#: agent-onboarding.md:200
-msgid "state severity, intent, and what explicitly does not count."
-msgstr "توضح مستوى الخطورة، والقصد، وما هو مستبعد صراحةً."
 
 #: agent-onboarding.md:85
 msgid "The  manifest is the source of truth for structure. Formalisation status is derived at build time, never stored in the manifest."
@@ -271,10 +227,6 @@ msgstr "الورقة البحثية / الدليل الإرشادي / دليل �
 msgid "The block schema"
 msgstr "مخطط الكتلة"
 
-#: agent-onboarding.md:94
-msgid "The formal graph is machine-derived from , never"
-msgstr "المخطط الشكلي مُشتق آليًا من lean.ref، ولا يُكتب"
-
 #: agent-onboarding.md:185
 msgid "The QA sidecar schema"
 msgstr "مخطط ملف QA الجانبي"
@@ -286,10 +238,6 @@ msgstr "هناك نوعان، والخلط بينهما هو الخطأ الأك
 #: agent-onboarding.md:97
 msgid "They diverge legitimately in both directions: a proof invokes  lemmas nobody needs to read about; a theorem is motivated by an example it never formally cites."
 msgstr "وهما يتباينان بصورة مبررة في كلا الاتجاهين: فقد يستدعي برهان ما توطئات simp لا يحتاج أي شخص للقراءة عنها؛ وقد يكون الدافع وراء مبرهنة ما مثالاً لا تستشهد به المبرهنة شكليًا على الإطلاق."
-
-#: agent-onboarding.md:93
-msgid "this block?\" Authored — agent/human maintained."
-msgstr "هذه الكتلة؟\" مؤلفة — يتولى صيانتها الوكيل/الإنسان."
 
 #: agent-onboarding.md:90
 msgid "This trips up agents constantly."
@@ -328,14 +276,6 @@ msgstr "ما يمكن لهذه البيئة فعله"
 msgid "Where"
 msgstr "الموقع"
 
-#: agent-onboarding.md:65
-msgid "WHO SMART DAK / IG"
-msgstr "حزم DAK / أدلة IG لإرشادات منظمة الصحة العالمية SMART"
-
-#: agent-onboarding.md:194
-msgid "with  /  from ."
-msgstr "باستخدام findPapers() / soleFolioPaper() من content/pipeline/repo-root.ts."
-
 #: agent-onboarding.md:30
 msgid "yes"
 msgstr "نعم"
@@ -347,3 +287,48 @@ msgstr "أنت وكيل نموذج لغوي كبير (LLM) تم إدخالك ل�
 #: agent-onboarding.md:31
 msgid "You edit here to"
 msgstr "تعدل هنا من أجل"
+
+#~ msgid "Claim before working so two sessions don't pick the same item, and never resolve or delete a sibling's bean. Do not stand up a parallel todo store. Do not  bulk machine-generated queues (, witness files) — those stay as bulk JSON."
+#~ msgstr "احجز المهمة قبل البدء بالعمل حتى لا تلتقط جلستان العنصر نفسه، ولا تقم أبدًا بحل أو حذف مهمة تخص وكيلاً زميلاً. لا تنشئ مخزن مهام موازيًا. ولا تستخدم beans create لإنشاء طوابير ضخمة مولدة آليًا (*.qa.json، ملفات الشواهد) — فهذه تبقى بصيغة JSON مجمعة."
+
+#~ msgid "constant, or a vocabulary, it is folio data."
+#~ msgstr "ثابتًا، أو مفردات، فهو من بيانات الـ folio."
+
+#~ msgid "content-agnostic: coordination, watchers, QA, render, bibliography"
+#~ msgstr "غير مرتبط بمحتوى معين: التنسيق، المراقبون (watchers)، ضمان الجودة (QA)، التصيير، المراجع"
+
+#~ msgid "Don't hardcode a paper name. A folio may hold several; resolve"
+#~ msgstr "لا تضع اسم الورقة البحثية بشكل ثابت (hardcode). قد يحتوي الـ folio على عدة أوراق؛ قم بحل الاسم"
+
+#~ msgid "Don't write content into the platform. If it names a chapter, a"
+#~ msgstr "لا تكتب محتوى داخل المنصة. إذا كان يحدد فصلاً، أو"
+
+#~ msgid "hand-written."
+#~ msgstr "يدويًا أبدًا."
+
+#~ msgid "is editorial. \"What must a reader have read to follow"
+#~ msgstr "هي علاقة تحريرية. \"ما الذي يجب أن يكون القارئ قد قرأه ليتابع"
+
+#~ msgid "papers: Lean, LaTeX, proofs, simulators"
+#~ msgstr "الأوراق البحثية: Lean، وLaTeX، والبراهين، والمحاكيات"
+
+#~ msgid "Read the criterion description before acting on a finding. They"
+#~ msgstr "اقرأ وصف المعيار قبل التصرف بناءً على نتيجة الفحص. فالأوصاف"
+
+#~ msgid "Skills are the unit of work here. Before hand-rolling a procedure, check whether one exists."
+#~ msgstr "المهارات هي وحدة العمل هنا. قبل أن تبني إجراءً يدويًا، تحقق مما إذا كان هناك إجراء موجود بالفعل."
+
+#~ msgid "state severity, intent, and what explicitly does not count."
+#~ msgstr "توضح مستوى الخطورة، والقصد، وما هو مستبعد صراحةً."
+
+#~ msgid "The formal graph is machine-derived from , never"
+#~ msgstr "المخطط الشكلي مُشتق آليًا من lean.ref، ولا يُكتب"
+
+#~ msgid "this block?\" Authored — agent/human maintained."
+#~ msgstr "هذه الكتلة؟\" مؤلفة — يتولى صيانتها الوكيل/الإنسان."
+
+#~ msgid "WHO SMART DAK / IG"
+#~ msgstr "حزم DAK / أدلة IG لإرشادات منظمة الصحة العالمية SMART"
+
+#~ msgid "with  /  from ."
+#~ msgstr "باستخدام findPapers() / soleFolioPaper() من content/pipeline/repo-root.ts."

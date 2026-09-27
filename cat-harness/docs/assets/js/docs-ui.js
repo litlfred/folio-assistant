@@ -3681,6 +3681,35 @@
     return pic;
   }
 
+  /* THE CROP FOLLOWS THE CARD'S SHAPE, on the glass — owner, 2026-09-27:
+   * *"use laptop layout for the existing todos"* and then *"theme todos layout
+   * should be dynamic in case user resized"*. A card on the glass is resized
+   * freely, so one crop cannot suit it: the square `card` crop in a wide card
+   * left the art as a picture in the middle of the text. So the shape picks:
+   * wide takes `laptop`, tall takes `mobile`, near-square keeps `card`, and a
+   * ResizeObserver re-picks as the reader resizes. A todo that NAMES a layout
+   * keeps it. Board stickies follow the same rule (owner, same day: "board
+   * stickies adapt too"), so a sticky reflowed wide by the board is wide.
+   * The scrim is unchanged, so the fade does not depend on the crop. */
+  function cropForShape(art, w, h) {
+    var r = w / Math.max(h, 1);
+    var pick = r >= 1.3 ? "laptop" : r <= 0.8 ? "mobile" : "card";
+    return art[pick] || art.card || art.mobile || art.laptop;
+  }
+  function followCardShape(card, art, layout) {
+    if (layout && art[layout]) return;
+    var img = card.querySelector(".fa-sticky-art");
+    if (!img) return;
+    function fit() {
+      var r = card.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      var src = cropForShape(art, r.width, r.height);
+      if (src && img.getAttribute("src") !== src) img.setAttribute("src", src);
+    }
+    fit();
+    if (typeof ResizeObserver === "function") new ResizeObserver(fit).observe(card);
+  }
+
   /* The pencil and the eye, as inline SVG rather than `✎` and `⎘`.
    *
    * Which glyph a font actually has for those two characters varies, and `⎘`
@@ -3825,7 +3854,12 @@
     var art = todo.theme && todoState.themeArt[todo.theme];
     if (art) attrs.class += " fa-sticky--backdrop";
     var card = el("article", attrs);
-    if (art) card.appendChild(buildBackdrop(art, todo.layout));
+    if (art) {
+      card.appendChild(buildBackdrop(art, todo.layout));
+      // THE BOARD ADAPTS TOO — owner, 2026-09-27, the glass change carried to
+      // the board: a sticky's crop follows its shape as the board reflows.
+      followCardShape(card, art, todo.layout);
+    }
 
     var head = el("div", { class: "fa-sticky-head" });
     var toggle = el("button", {
@@ -4469,6 +4503,26 @@
     }));
   }
 
+  /**
+   * `themes.css` on a page that did not load it, for the same reason as
+   * `avatars.css` above. A replica (who-iris) loads `docs-ui.css` alone, so a
+   * themed todo on its glass had the theme's art but NOT its scrim or ink:
+   * `--fa-sticky-scrim` is declared in `themes.css`, and without it the
+   * backdrop fell back to an 8% grey and the picture sat unfaded behind the
+   * text (owner, 2026-09-27: "it should be faded for legibility").
+   */
+  function ensureThemesCss() {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      if (/\/themes\.css(\?|$)/.test(links[i].getAttribute("href") || "")) return;
+    }
+    document.head.appendChild(el("link", {
+      rel: "stylesheet",
+      href: safeHref(withBase("/assets/css/themes.css")),
+      "data-fa-glass-themes-css": "",
+    }));
+  }
+
   /** The declared kind avatar for `kind`, from `avatars.css`. */
   function kindAvatar(kind) {
     return el("span", {
@@ -4576,6 +4630,7 @@
     var prefs = glassPrefs();
     applyGlassPrefs(layer, prefs);
     ensureAvatarsCss();
+    ensureThemesCss();
     // THE ZOOM DECLARATION, for pages whose board never asked for it — a
     // replica page has no board and no `fa-zoom-src` meta. Asked once; absent
     // stays null, which keeps every card's words (see `zoomState`).
@@ -5238,7 +5293,8 @@
       // on the glass: the theme's colours stay, its picture does not.
       if (art && prefs.avatars !== "text") {
         card.classList.add("fa-sticky--backdrop");
-        card.insertBefore(buildBackdrop(art), card.firstChild);
+        card.insertBefore(buildBackdrop(art, todo.layout), card.firstChild);
+        followCardShape(card, art, todo.layout);
         // The theme's art IS the avatar now; the generic yellow note goes.
         var generic = card.querySelector(".fa-glass-asset-face > .fa-glass-avatar");
         if (generic) generic.parentNode.removeChild(generic);
@@ -5289,13 +5345,53 @@
       // "PUT YOUR FOLIO AWAY FIRST" is a measured fix rather than politeness:
       // while the glass is down the library row underneath takes no clicks.
       var shelved = Object.keys(all).filter(function (k) { return !all[k].shown; });
-      if (shelved.length > 0) {
-        notes.appendChild(el("p", { class: "fa-glass-shelved-note" },
+      /* ITS OWN CARD ON THE GLASS, not a strip across the bottom — owner,
+       * 2026-09-27: *"lower tooltip should be its own todo"*. It moves and
+       * resizes like every other card, and its × dismisses it until the
+       * number of shelved items changes (a new one is news again). It is not
+       * stored in the folio: it describes the folio, it is not in it, so its
+       * place lasts for this view only. */
+      if (shelved.length > 0 && shelvedNoteDismissedAt() !== shelved.length) {
+        var noteTitle = shelved.length === 1
+          ? "1 item in your folio is not on the glass"
+          : shelved.length + " items in your folio are not on the glass";
+        var noteCard = buildGlassCard("note/shelved", { title: noteTitle, kind: "todos" });
+        noteCard.classList.add("fa-glass-sticky", "fa-glass-note-card");
+        // Words only: the generic note picture sat behind the sentence.
+        var noteAva = noteCard.querySelector(".fa-glass-asset-face > .fa-glass-avatar");
+        if (noteAva) noteAva.parentNode.removeChild(noteAva);
+        noteCard.insertBefore(el("p", { class: "fa-glass-shelved-note fa-glass-sticky-body" },
           (shelved.length === 1
             ? "1 item is in your folio but not displayed. "
             : shelved.length + " items are in your folio but not displayed. ") +
           "Put your folio away, then open the library view to put it back on the glass " +
-          "(for a todo, use the Todos tile below)."));
+          "(for a todo, use the Todos tile below)."), noteCard.querySelector(".fa-glass-asset-tools"));
+        // The shared close SHELVES an asset; this card is not one, so its ×
+        // dismisses instead, and says so.
+        var oldClose = noteCard.querySelector(".fa-glass-asset-close");
+        var noteClose = oldClose.cloneNode(true);
+        noteClose.setAttribute("aria-label", "Dismiss this note until another item leaves the glass");
+        noteClose.title = "Dismiss";
+        noteClose.addEventListener("click", function () {
+          setShelvedNoteDismissedAt(shelved.length);
+          if (noteCard.parentNode) noteCard.parentNode.removeChild(noteCard);
+          handle.focus();
+        });
+        oldClose.parentNode.replaceChild(noteClose, oldClose);
+        shelf.appendChild(noteCard);
+        // SIZED TO ITS WORDS: measured at each candidate width with the height
+        // left to the content, so no line is cut (a fixed 180px cut the last
+        // one at 420px wide). Then placed where a card of that size is free.
+        var noteGeom = defaultGlassGeom({ kind: "todos" }, keys.length);
+        var shapes = [Math.max(noteGeom.width, 420), noteGeom.width].map(function (w) {
+          noteCard.style.width = w + "px";
+          noteCard.style.height = "auto";
+          return { width: w, height: Math.ceil(noteCard.getBoundingClientRect().height / (view.s || 1)) + 2 };
+        });
+        applyGeometry(noteCard, freeSpotFor(shapes, placed, noteGeom));
+        placed.push(noteCard);
+        fitShelf();
+        zoomGlassCard(noteCard);
       }
 
       // Saved in THIS BROWSER, said in words wherever the reader's own items
@@ -5327,6 +5423,61 @@
         notes.appendChild(localNote);
       }
       return keys.length;
+    }
+
+    /* WHERE A NEW CARD CAN BE SEEN — owner, 2026-09-27: the shelved-items
+     * card was placed below every card and so started half under the tile
+     * bar. This finds the first spot, scanning the VISIBLE glass top to
+     * bottom and left to right, that overlaps no card and none of the glass's
+     * own chrome (the Folio handle, the zoom bar, the tile dock). Measured on
+     * screen and converted back through the view (`translate` then `scale`,
+     * origin 0 0), so it is right at any pan or zoom. With no free spot it
+     * falls back to below every card, which is where it used to go. */
+    function freeSpotFor(shapes, cards, fallback) {
+      var s = view.s || 1;
+      var sh = shelf.getBoundingClientRect();
+      var lay = layer.getBoundingClientRect();
+      var blocks = cards.map(function (c) { return c.getBoundingClientRect(); });
+      // The page's own navigation too: the glass spans the viewport, and a
+      // card placed under the left rail or sidebar is a card nobody sees.
+      [handle, zoomBar, dock, notes, document.querySelector(".fa-nav"), document.querySelector(".side-bar")].forEach(function (n) {
+        if (n && n.isConnected) { var r = n.getBoundingClientRect(); if (r.width && r.height) blocks.push(r); }
+      });
+      var pad = GLASS_GAP;
+      var dockTop = dock && dock.isConnected && dock.getBoundingClientRect().height
+        ? dock.getBoundingClientRect().top : lay.bottom;
+      var bottom = Math.min(lay.bottom, dockTop) - pad;
+      // SHAPES TRIED IN TURN, as the caller orders them (wide and short
+      // first: the free band on a full glass is usually a strip above or
+      // beside the cards rather than a square).
+      for (var k = 0; k < shapes.length; k++) {
+        var w = shapes[k].width * s, h = shapes[k].height * s;
+        for (var y = lay.top + pad; y + h <= bottom; y += 12) {
+          for (var x = lay.left + pad; x + w <= lay.right - pad; x += 12) {
+            var hit = blocks.some(function (r) {
+              return x < r.right + pad && x + w + pad > r.left && y < r.bottom + pad && y + h + pad > r.top;
+            });
+            if (!hit) {
+              return { left: (x - sh.left) / s, top: (y - sh.top) / s, width: shapes[k].width, height: shapes[k].height };
+            }
+          }
+        }
+      }
+      var geom = { left: fallback.left, top: fallback.top, width: shapes[0].width, height: shapes[0].height };
+      if (cards.length > 0) {
+        var gs = cards.map(geometryOf);
+        geom.top = Math.max.apply(null, gs.map(function (g) { return g.top + g.height; })) + GLASS_GAP;
+        geom.left = Math.min.apply(null, gs.map(function (g) { return g.left; }));
+      }
+      return geom;
+    }
+
+    var SHELVED_NOTE_KEY = "fa-glass-shelved-note-dismissed";
+    function shelvedNoteDismissedAt() {
+      try { return Number(localStorage.getItem(SHELVED_NOTE_KEY) || "0"); } catch (_e) { return 0; }
+    }
+    function setShelvedNoteDismissedAt(n) {
+      try { localStorage.setItem(SHELVED_NOTE_KEY, String(n)); } catch (_e) { /* back next view */ }
     }
 
     var NOTE_KEY = "fa-glass-local-note-dismissed";
