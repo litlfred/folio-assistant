@@ -3,8 +3,9 @@
 title: The same commit fails DIFFERENTLY in three environments, so a green run cannot be read as a green tree
 status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-26T06:33:48Z
-updated_at: 2026-09-27T09:31:57Z
+updated_at: 2026-09-27T09:45:54Z
 parent: folio-assistant-1xhc
 ---
 
@@ -57,7 +58,7 @@ them as one, fold this in.
       they all concern repository-root detection, so a detached worktree is
       plausibly just an unsupported layout, and if so the tests should skip
       rather than fail.
-- [ ] A stated answer to: what does a green local run entitle you to claim?
+- [x] A stated answer to: what does a green local run entitle you to claim?
       Today the honest answer is "less than everyone assumes", and that is not
       written anywhere.
 
@@ -65,3 +66,89 @@ them as one, fold this in.
 
 Recorded and left `todo`. Found while driving three PRs through `main`'s red on
 2026-09-26.
+
+
+## Re-measured 2026-09-27: the divergence does NOT reproduce — item 3 answered, 1 and 2 have no subject
+
+Worked from `claude/brave-hypatia-r820sf`. **Items 1 and 2 are deliberately left
+unchecked.** They are *moot*, not *done*, and ticking them would assert I had
+classified five tests when there was nothing failing to classify. If the
+divergence returns they become live again, which is why this bean stays open.
+
+### The measurement
+
+Three environments, one commit (`a7a1668b728`, far ahead of the `3c2523a8071` this
+bean measured):
+
+| where | `bun test` failures |
+|---|---|
+| GitHub Actions, PR #1461 | **0** (10 success, 2 skipped) |
+| this checkout, full suite | **0** |
+| a detached `git worktree` at the same sha, real dependencies, full suite | **0** — 12231 pass, 56 skip |
+
+The three worktree-only failures this bean names — `FOLIO_ROOT detection`, `every
+instance is found`, `the reader is told the repository root` — pass in the
+worktree both as a 3-file subset (31/31) and inside the full suite. The two
+CI-only ones are answered by CI's own green run rather than by a commissioned
+one.
+
+**Why this is not evidence the bean was wrong.** The tree changed materially in
+between: `sff8`'s module-scope hoist removed the per-test-budget pressure, #1452
+changed `saveQaScriptSidecar`, a new `check:environment` guard landed, and 18+
+commits of `main` merged. A day-old divergence not reproducing after that is
+expected; it says the instances are gone, not that the shape was imaginary.
+
+### The one failure I DID find was my own measurement, and a new guard named it
+
+The first worktree run came back **1 fail**: `this repository, right now > is not
+distorted`. Cause, quoted from the check rather than inferred:
+
+    "bean": "qook",
+    "effect": "the root `node_modules` is a SYMLINK, so any tool that resolves a
+               real path through it reports a location this repository does not contain"
+
+I had symlinked `node_modules` into the worktree — and I had done what an earlier
+session recorded doing, *confirming it git-ignored first*. **That is not
+sufficient.** Git-ignoring addresses the corpus-scanning confound; path
+resolution is a separate one. Replaced with a real `bun install` (379 packages,
+189 MB) and re-ran: 0 failures.
+
+So the class this bean is about is now **guarded** rather than merely absent, by
+a check that did not exist when the bean was written. That is the most useful
+thing this re-measurement found, and it is why item 3 could be written as an
+inference rule rather than a warning about five named tests.
+
+### Item 3 — done, in `skills/folio-core/prepare-merge.md`
+
+A new section, *"What a green LOCAL run entitles you to claim"*, beside the
+existing *"A clean merge can produce a wrong artefact"* — same family: a green
+signal meaning less than it seems. It states the entitlement in one line (*the
+gates I ran passed, on the tree I ran them on, in this environment*) and then
+four things it does **not** entitle, each with its cost:
+
+- *"CI will pass"* — CI tests `refs/pull/N/merge`, a tree neither parent holds
+  (`1xhc`);
+- *"the gate set passed"* — only if you ran the gate set; a hand-picked subset
+  cost two CI cycles on 2026-09-27, on `check:partition` and on `no check script
+  is unrun`, neither visible to `tsc`, `eslint` or the targeted tests;
+- *"nothing is failing, so nothing is wrong"* — a conflicted head produces no
+  merge ref, so `pull_request` workflows never fire and the PR shows **zero**
+  check runs, which reads as untested rather than red;
+- *"it passed in isolation, so it is not mine"* — isolation removes the only
+  condition under which it failed (`9v4m`, and `sff8`'s measured case).
+
+Plus the environment clause: run `check:environment` before trusting a run from
+any hand-built tree, and install dependencies rather than borrowing them.
+
+### For the owner
+
+This bean may now be closeable on the ground that the shape is guarded and the
+instances are gone — but that is a judgement about whether items 1 and 2 still
+want doing, and it is not mine to make. It also asked, in "Its relation to
+`sff8`", whether the two should be folded together; `sff8` has since been
+measured and closed, which is an input to that.
+
+Verified: `skill:register` (6 artefacts current, 276 skills / 19 packages),
+`skill:register:check`, `skills:docs:check`, `check:bean-restates-skill`,
+`check:command-paths`, `check:declared-paths`, `kg:audit:check`,
+`check:environment`.
