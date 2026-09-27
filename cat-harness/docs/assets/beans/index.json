@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 413,
+      "count": 415,
       "unit": "beans"
     }
   },
@@ -636,7 +636,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-27T05:06:01Z",
-      "updatedAt": "2026-09-27T05:19:35Z",
+      "updatedAt": "2026-09-27T05:20:13Z",
       "preview": "Measured 2026-09-27 on pristine main `c6960465301`, and the same on 2026-09-26 at `8fb8a041a8e`.\n\n## What happens\n\nA full `bun test` rewrites all 72 files under `cat-harness/content/pipeline/script-sidecars/`, changing only three fields in each:\n\n    last_run_at     wall-clock time of this run\n    last_run_sha    the checked-out HEAD\n    engine_version  the local bun (bun-1.3.11 here; the committe",
       "file": "beans/defs/folio-assistant-3ozg--bun-test-rewrites-72-committed-script-sidecars-so.md"
     },
@@ -653,6 +653,20 @@
       "updatedAt": "2026-09-19T17:04:01Z",
       "preview": "**Uncaptured owner requirement**, same comment as `folio-assistant-cy4p` —\n[#363](https://github.com/litlfred/folio-assistant/issues/363#issuecomment-5740727385),\n09:20, not beaned until 17:0x.\n\n> use for skill to deterministcally walk agent through process flow,\n> detministitcally setting the memory/context using the KG\n> (subprocess/role overlays). worktiems are the beans that they carry with\n> ",
       "file": "beans/defs/folio-assistant-3q47--process-walk-deterministically-set-an-agents-conte.md"
+    },
+    {
+      "id": "folio-assistant-3sm2",
+      "title": "A gate held red by decision cannot ratchet its own subject — so the catalogue question is asked of the CHANGE (the 25→36 growth claim is RETRACTED: it was a mutant's output)",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T19:39:54Z",
+      "updatedAt": "2026-09-27T05:06:39Z",
+      "preview": "Owner chose the route on 2026-09-26: **make the drift gate green rather than move\nthe masked gates out from behind it** (asked with four options, against `cpss`'s\n108 masked checks). Measuring first turned that into a finding: the gate cannot be\nbrought green by finishing a fixed list, because the list is growing faster than it\nis being cleared, and nothing stops it.\n\n## The arithmetic, measured o",
+      "file": "beans/defs/folio-assistant-3sm2--the-t8g3-campaign-closed-24-catalogue-gaps-today-a.md"
     },
     {
       "id": "folio-assistant-3srh",
@@ -2220,7 +2234,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T18:09:12Z",
-      "updatedAt": "2026-09-27T05:02:36Z",
+      "updatedAt": "2026-09-27T05:14:00Z",
       "preview": "Measured while fixing an unrelated finding (bean `9x01`), so the population below\nis exact and the recommendation is not.\n\n## What is unreachable\n\n`.github/workflows/code-quality-gates.yml`, job `gates`: **46 steps**, and the\nstep named *\"gates that were registered and never run\"* is **step 40**. A job\nstops at its first failing step, and that step's batch contains\n`translation:drift:check`, which",
       "file": "beans/defs/folio-assistant-cpss--six-gates-in-the-code-quality-job-cannot-fire-the.md"
     },
@@ -2425,14 +2439,14 @@
     {
       "id": "folio-assistant-dx5j",
       "title": "Nothing indexes a defect to the beans and PRs describing it — three duplicate-work collisions in one window",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T14:32:59Z",
-      "updatedAt": "2026-09-26T15:25:37Z",
+      "updatedAt": "2026-09-26T17:52:18Z",
       "preview": "## What was measured, 2026-09-26\n\nThree duplicate-work collisions in one working window, each found only because\nsomebody happened to read a sibling's PR:\n\n| defect | named as | and also as | how it was found |\n|---|---|---|---|\n| CI's gates job masked its own steps | `om30` (#1390) | `m5gx` (#1401) | #1401 opened a near file-for-file duplicate ~3h after #1390 |\n| the fast gate set was hardcoded |",
       "file": "beans/defs/folio-assistant-dx5j--nothing-indexes-a-defect-to-the-beans-and-prs-desc.md"
     },
@@ -3808,7 +3822,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T09:42:57Z",
-      "updatedAt": "2026-09-26T14:46:46Z",
+      "updatedAt": "2026-09-26T19:34:36Z",
       "preview": "## What\n\n`main`'s `typescript` job fails at **step 2 of 47**, and GitHub Actions stops a job\nat its first failing step. So every later step in that job does not run — and on\n`main` that failure is red **by the owner's decision**, not by accident.\n\nMeasured on `.github/workflows/code-quality-gates.yml` at `74f27e4c7fb`:\n\n| | |\n|---|---|\n| `bun test` | step 2 (line 234) of the `typescript` job |\n| s",
       "file": "beans/defs/folio-assistant-om30--mains-red-by-decision-test-masks-113-gate-invocati.md"
     },
@@ -4223,6 +4237,20 @@
       "file": "beans/defs/folio-assistant-rkqp--ingest-gemini-cli-agent-skill-best-practices-pdf-c.md"
     },
     {
+      "id": "folio-assistant-rmcf",
+      "title": "72 script sidecars churn on every gates run because engine_version records the CONTAINER, and it went 1.3.14 -> 1.3.11",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T21:03:15Z",
+      "updatedAt": "2026-09-27T05:20:12Z",
+      "preview": "Measured 2026-09-26 while running `bun run gates` on a clean tree: **72** committed\nscript sidecars were rewritten, and the only content change in each was run\nprovenance:\n\n    -  \"last_run_at\": \"2026-09-26T19:43:36.482Z\",\n    -  \"last_run_sha\": \"abee3acee29e15ad7ae540e254fe31f2cf31cc40\",\n    -  \"engine_version\": \"bun-1.3.14\"\n    +  \"last_run_at\": \"2026-09-26T20:46:45.496Z\",\n    +  \"last_run_sha\":",
+      "file": "beans/defs/folio-assistant-rmcf--72-script-sidecars-churn-on-every-gates-run-becaus.md"
+    },
+    {
       "id": "folio-assistant-rmor",
       "title": "INJECTION: injectMarkdown deletes EVERY blank line in the document, not the ones it introduced — the written page is structurally destroyed",
       "status": "todo",
@@ -4381,12 +4409,12 @@
       "title": "Contention inflates a per-test budget ~35x, and vxho fixed ONE of 505 files — two more just failed on main",
       "status": "in-progress",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T03:31:40Z",
-      "updatedAt": "2026-09-27T05:16:34Z",
+      "updatedAt": "2026-09-27T05:20:00Z",
       "preview": "Measured 2026-09-26 on a clean checkout of `main` at `0ef9543ccf3`, while\nstarting unrelated work. `bun test` **exited 1**:\n\n```\ncat-harness/content/pipeline/translation-block-qa.test.ts:\n(fail) buildReport — absence is absence > a translated block reports coverage,\n       terms and echo — and NO round-trip verdict [5031.09ms]\n  ^ this test timed out after 5000ms.\n\ncat-harness/scripts/tests/profil",
       "file": "beans/defs/folio-assistant-sff8--contention-inflates-a-per-test-budget-35x-and-vxho.md"
     },
@@ -5477,14 +5505,14 @@
     {
       "id": "folio-assistant-xm31",
       "title": "om30 residual masking MEASURED: five gate failures on main that CI has never reported",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T14:46:29Z",
-      "updatedAt": "2026-09-26T14:48:54Z",
+      "updatedAt": "2026-09-26T19:34:10Z",
       "preview": "`om30` recorded a KNOWN LIMIT rather than implying it: the gates-job split took\nthe masked region from 45 steps to 6, not to 0, and \"local evidence says all six\npass today\" was explicitly a fact about that day's tree rather than a property of\nthe arrangement.\n\nThat fact has expired, and here is the measurement.\n\n## What is masked today, and how it was established\n\nmain's `Repository gates` job sto",
       "file": "beans/defs/folio-assistant-xm31--om30-residual-masking-measured-five-gate-failures.md"
     },

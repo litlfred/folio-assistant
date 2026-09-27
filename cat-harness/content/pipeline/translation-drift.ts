@@ -263,8 +263,17 @@ export function catalogueFor(instanceRoot: string, locale: string, page: string)
   return join(dir, locale, `${page}.po`);
 }
 
-/** Site-absolute URL -> the file that serves it. */
-function fileForUrl(site: string, url: string): string {
+/**
+ * Site-absolute URL -> the file that serves it.
+ *
+ * **Exported for `check-translation-catalogue.ts`, and it must stay one
+ * answer.** That gate maps a CHANGED FILE back to the translation it publishes,
+ * which is this function's inverse over the index — so if it composed the path
+ * itself, a gate about missing catalogues could disagree with the gate about
+ * drift on which file is which page, and the two would be right about different
+ * corpora.
+ */
+export function fileForUrl(site: string, url: string): string {
   const rel = url.replace(/^\//, "").replace(/\.html$/, ".md");
   return join(site, rel === "" || rel.endsWith("/") ? `${rel}index.md` : rel);
 }
