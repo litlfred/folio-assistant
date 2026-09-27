@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 413,
+      "count": 414,
       "unit": "beans"
     }
   },
@@ -2195,6 +2195,20 @@
       "updatedAt": "2026-09-21T19:21:24Z",
       "preview": "Owner asked 2026-09-21: *\"we need to dediplicate. options? auto stub prefix?\"*\nBoth options were put to them, both were chosen, and **both turned out to be\nmeasurably wrong**. Recorded here so the next agent does not re-derive it.\n\n## The measurement\n\n**63 declared entries across 52 distinct directories; 11 declared twice.**\nEvery duplicate has one shape: `cat-harness` declares another instance's\n",
       "file": "beans/defs/folio-assistant-cmsl--dedupe-11-directories-declared-twice-and-both-obvi.md"
+    },
+    {
+      "id": "folio-assistant-cn8y",
+      "title": "Page follows the remembered locale; mark source-language fallbacks in a translated navbar",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T05:39:33Z",
+      "updatedAt": "2026-09-27T05:39:33Z",
+      "preview": "Owner 2026-09-27: an English page sat inside a French navbar. 'user selects locale in icon, then only those pages exist (if translated) otherwise source language fallback'. Chose: page follows too, and fallback items tagged (EN).\n\n## Summary of Changes\n\n- `docs-ui.js` `followRememberedLocale`: with a STORED `fa-locale`, a page that has a version in that locale (by its own `availableLocales`) is re",
+      "file": "beans/defs/folio-assistant-cn8y--page-follows-the-remembered-locale-mark-source-lan.md"
     },
     {
       "id": "folio-assistant-cpmo",
