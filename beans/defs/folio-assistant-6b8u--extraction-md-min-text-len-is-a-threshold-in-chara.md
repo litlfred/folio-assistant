@@ -182,6 +182,7 @@ and nowhere else.
       a word where a single Latin letter is not — with the measurement above
       recorded, and NOT justified by alignment, which it does not improve
 
+_2026-09-27T07:34:04Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 ## Re-measured 2026-09-27 — the numbers above were stale, the CONCLUSION holds
 
