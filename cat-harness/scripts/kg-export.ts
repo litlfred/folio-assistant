@@ -81,7 +81,7 @@ import {
 } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
 import { loadSpecs } from "./external-schemas.js";
-import { declaredNamespaces } from "../../folio-assistant-core/schemas/external-schema.js";
+import { declaredNamespaces } from "../schemas/external-schema.js";
 import { toolsOf } from "../tools/discover.js";
 import { skillIoIri } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
