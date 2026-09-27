@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 178,
+      "count": 179,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -472,6 +472,14 @@
       "reason": "asks git which files exist: a corpus rule, not a schema",
       "summary": "What files this REPOSITORY contains — asked of git, never of the disk.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/git-scan.test.ts",
+      "instance": "cat-harness",
+      "name": "git-scan.test",
+      "graphNode": "undeclared",
+      "summary": "`xd1g` — the corpus rule, stated once so it is not re-implemented eleven",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/glossary-graph-kind.ts",

@@ -512,32 +512,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790519713">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790527076">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790519713">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790527076">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790519713">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790527076">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790519713">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790527076">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790519713">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790527076">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790519713">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790527076">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -554,7 +554,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790519713" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790527076" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1061,6 +1061,48 @@ committed to two minutes earlier. Reporting rather than acting is what kept
 that from becoming a deletion — but a report that names live work still invites
 one, which is why the list a person is asked to act on has to be as careful as
 the action itself.</p>
+<h2 id="name-the-instrument-that-produced-the-list--bean-pesg">
+  
+  
+    <a href="#name-the-instrument-that-produced-the-list--bean-pesg" class="anchor-heading" aria-labelledby="name-the-instrument-that-produced-the-list--bean-pesg"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Name the instrument that produced the list — bean <code class="language-plaintext highlighter-rouge">pesg</code>
+  
+  
+</h2>
+    
+
+<p><strong>A candidate list must say where it came from.</strong> If a committed check computed
+it, quote the check’s finding and name the check. If you built the list by hand,
+say that in as many words, so the person can see they are being asked to act on
+a derivation rather than on a measurement.</p>
+
+<p>This is not bookkeeping. 2026-09-25, the same <code class="language-plaintext highlighter-rouge">STAGING/</code> previews as <code class="language-plaintext highlighter-rouge">plj1</code>
+above: <code class="language-plaintext highlighter-rouge">bun run health</code> reported <strong>one</strong> orphaned preview, named and sized. A
+review re-implemented the slug rule inline — <code class="language-plaintext highlighter-rouge">[^a-zA-Z0-9]+</code>, where
+<code class="language-plaintext highlighter-rouge">feature-staging.yml</code> preserves <code class="language-plaintext highlighter-rouge">.</code>, <code class="language-plaintext highlighter-rouge">_</code> and <code class="language-plaintext highlighter-rouge">-</code> — reported <strong>three</strong>, and put
+that number to the owner, who authorised deleting “the 3 orphans”. Two of the
+three were <strong>live previews for open pull requests #1337 and #914</strong>, which a
+reviewer could have been reading. Nothing in this skill caught it: every rule
+here was obeyed. The artefacts were named, sized, aged and confirmed. The list
+was simply wrong, and no rule asked where it came from.</p>
+
+<p>It was caught by measuring each directory’s size before deleting, noticing a
+name that looked like an open PR’s branch, and re-checking — that is luck
+wearing the clothes of diligence, and it is not a control.</p>
+
+<p><strong>The asymmetry is the whole point.</strong> A hand-derived list that is SHORTER than
+the instrument’s is a harmless miss: something survives that could have gone.
+One that is LONGER extracts a permission the instrument never justified, and
+this skill’s central assumption — that the person is choosing from a true list
+— fails silently. So the rule is not “re-derive carefully”; it is <strong>do not
+re-derive what a committed check already computes</strong>, which is
+<a href="/folio-assistant/reference/skill-instructions/goal-review.html"><code class="language-plaintext highlighter-rouge">goal-review</code></a> rule 2’s qualification, stated there for the
+reviewing side.</p>
+
+<p><code class="language-plaintext highlighter-rouge">stagingSlug</code> was exported from <code class="language-plaintext highlighter-rouge">schemas/staging.ts</code> at the time, and
+<code class="language-plaintext highlighter-rouge">test/health/checks.test.ts</code> already asserted it differentially against the real
+<code class="language-plaintext highlighter-rouge">sed</code> pipeline. A correct, tested implementation was one import away. So the gap
+was never duplication in the code — it was that nothing required the list’s
+provenance to be stated.</p>
 <h2 id="applying-it-to-your-own-code">
   
   
@@ -1097,6 +1139,10 @@ nothing.</p>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Is there a non-destructive move — scrap, archive, redirect, regenerate,
     label? Prefer it, and say you preferred it.</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you <strong>named</strong> each artefact, with its size and age and what is lost?</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Does the list say <strong>which instrument produced it</strong> — or, if you built it by
+    hand, does it say that? A hand-derived list longer than the check’s takes a
+    permission nothing measured (bean <code class="language-plaintext highlighter-rouge">pesg</code>: 3 offered where <code class="language-plaintext highlighter-rouge">health</code> found 1,
+    two of them live).</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Have you given a recommendation, and said what happens on silence?</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Did the user confirm <strong>this</strong> removal, rather than a similar one?</li>
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Does any code you wrote remove something as a side effect? Say so in the
@@ -1332,7 +1378,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36326371365"><code>836810b</code></a> &middot; 2026-09-27T14:35:09Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36333867028"><code>f7abf45</code></a> &middot; 2026-09-27T16:37:51Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

@@ -292,10 +292,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-27T14:37:06.695Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/836810b9a41d0156f749c83f050972eb10affeba",
-  "sourceCommitSha": "836810b9a41d0156f749c83f050972eb10affeba",
-  "sourceCommitAt": "2026-09-27T16:33:55+02:00",
+  "generatedAt": "2026-09-27T16:39:55.662Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f7abf459e7c4ab69da9636c4e905f3c69a32b04f",
+  "sourceCommitSha": "f7abf459e7c4ab69da9636c4e905f3c69a32b04f",
+  "sourceCommitAt": "2026-09-27T18:36:28+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1339,7 +1339,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/goal-review.md",
-      "instructionLines": 276,
+      "instructionLines": 345,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2721,7 +2721,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 397,
+      "instructionLines": 452,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3135,7 +3135,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/deletion-requires-confirmation.md",
-      "instructionLines": 248,
+      "instructionLines": 288,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5921,8 +5921,8 @@
       "path": "skills/authoring-math",
       "hasManifest": true,
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lean-formalization",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/latex-authoring",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lean-formalization",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/proof-verification"
       ],
       "providesCapability": [
@@ -5946,14 +5946,14 @@
       "path": "skills/theming",
       "hasManifest": true,
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theming",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/create-sticky-note",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/site-presentation-assets",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-art-intake",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-artefacts",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-contrast",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-declaration",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-generation",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-contrast",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-artefacts",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/create-sticky-note",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/site-presentation-assets"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theming"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -6060,9 +6060,9 @@
       "path": "skills/security",
       "hasManifest": true,
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/security",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/injection-boundaries",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/path-containment",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/injection-boundaries"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/security"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -6277,16 +6277,16 @@
       "path": "skills/content-lifecycle",
       "hasManifest": true,
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-plan",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-author",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-validate",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-review",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-appraisal",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-test",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-publish",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-feedback",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-retire"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-plan",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-publish",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-retire",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-test",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-appraisal",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/git-push",
@@ -6431,9 +6431,9 @@
       "hasManifest": true,
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-authoring",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-publishing",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-structure",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/normative-statements",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/document-publishing"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/normative-statements"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/pandoc",
