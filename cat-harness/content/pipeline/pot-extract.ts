@@ -213,12 +213,48 @@ const MD_KRAMDOWN_CONSUMING_RE = /^\{:\s*toc\s*\}$/;
  * mismatch.
  */
 export function isTranslatable(text: string): boolean {
+  // A single ideograph IS a word, where a single Latin letter is not. The owner's
+  // decision of 2026-09-27 on bean `6b8u`, **on the merits and explicitly not on
+  // alignment** — which the measurement below says it does not improve.
+  //
+  // `MD_MIN_TEXT_LETTERS` is a count, and a count is not script-neutral. Two
+  // letters is a reasonable proxy for "a word" in an alphabetic script and a wrong
+  // one in a logographic script: `是` and `否` are the complete words "yes" and
+  // "no", while `y` and `n` are abbreviations of words.
+  //
+  // Measured over 660 files / 46 800 msgids before the change: this admits
+  // **exactly two strings, four times each** — `是` and `否`, in yes/no cells of
+  // comparison tables in `docs/guides/zh/agent-onboarding.md`,
+  // `docs/zh/document-ingestion.md` and `docs/zh/getting-started.md`. Eight cells.
+  //
+  // **It does not improve alignment, and must never be cited as if it did.**
+  // `derive-po` reports 57 derived / 13 refused either way, with an identical
+  // breakdown (`count-differs` 10, `msgid-conflict` 3). On the one pair it was
+  // once hoped to fix it swaps one misalignment for another: `zh/getting-started`
+  // goes from source 149 / translation 145 to 149 / **150**, short by four
+  // becoming long by one. That was measured twice, on 2026-09-26 and again on
+  // 2026-09-27 after `o29r` and `3mo4` moved 438 msgids between them.
+  if (MD_IDEOGRAPH_RE.test(text)) return true;
   let letters = 0;
   for (const ch of text) {
     if (/\p{L}/u.test(ch) && ++letters >= MD_MIN_TEXT_LETTERS) return true;
   }
   return false;
 }
+
+/**
+ * Scripts in which ONE character can be a whole word.
+ *
+ * Han, Hiragana, Katakana and Hangul. Named and separate for the same reason
+ * `MD_MIN_TEXT_LETTERS` is: a later change has to argue with the measurement in
+ * {@link isTranslatable} rather than edit an inline pattern.
+ *
+ * Not a list of the two characters this currently admits. The owner's decision
+ * was about the property — a single ideograph is a word — and a vocabulary of
+ * `是`/`否` would need maintaining every time a page gains a third, which is a
+ * rule expressed as a backlog.
+ */
+const MD_IDEOGRAPH_RE = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u;
 
 /**
  * How many letters make a string worth a translator's attention.

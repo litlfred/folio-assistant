@@ -123,13 +123,13 @@ export interface UncatalogedTranslation {
  */
 export const UNCATALOGED: UncatalogedTranslation[] = [
   {
-    translation: "es/agent-onboarding",
+    translation: "es/guides/agent-onboarding",
     since: "2026-09-20",
     reason:
       "published with no `.po`; the page's structure matches its source, so it is current but untracked. A catalogue cannot be derived from a finished translation without inventing the segmentation",
   },
   {
-    translation: "zh/agent-onboarding",
+    translation: "zh/guides/agent-onboarding",
     since: "2026-09-20",
     reason: "same as `es/agent-onboarding` — published, structurally current, no catalogue",
   },
@@ -338,7 +338,23 @@ export function driftFor(
     for (const [locale, t] of Object.entries(page.translations)) {
       const file = fileForUrl(site, t.url);
       const name = page.sourceUrl.replace(/^\//, "").replace(/\.html$/, "").replace(/\/$/, "") || "index";
-      const subject = `${locale}/${name.split("/").pop()}`;
+      // The FULL page path, not its basename. Flattening here made
+      // `guides/agent-onboarding` indistinguishable from a hypothetical
+      // top-level `agent-onboarding`, and it made this gate look for a catalogue
+      // at a path `catalogueFor` would never write — the two disagreed about
+      // which file is which page for any page below the site root.
+      //
+      // The owner's decision of 2026-09-27 (bean `9rnf`): catalogue paths MIRROR
+      // the page path. Measured as the reason rather than tidiness — 65 of 585
+      // source pages here share a basename, and three of the colliders are
+      // translated today (`getting-started` with `processes/getting-started` and
+      // `reference/skill-instructions/getting-started`, `document-ingestion` with
+      // `processes/document-ingestion`, and `index` twenty-two ways). Under
+      // flattening, translating `processes/getting-started` would address the same
+      // `.po` as the root page's, and `write` would either skip it silently or,
+      // with `--overwrite`, replace a catalogue that may carry a human's sign-off.
+      // That is the loss issue #206 exists to prevent.
+      const subject = `${locale}/${name}`;
       if (!existsSync(file)) {
         findings.push({
           severity: "unreadable",
@@ -360,7 +376,7 @@ export function driftFor(
             (src.length === got.length ? " — same count, different levels or numbering" : ""),
         });
       }
-      if (!existsSync(catalogueFor(instanceRoot, locale, name.split("/").pop() ?? name)) && !recorded.has(subject)) {
+      if (!existsSync(catalogueFor(instanceRoot, locale, name)) && !recorded.has(subject)) {
         findings.push({
           severity: "error",
           subject,

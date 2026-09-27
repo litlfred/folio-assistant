@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T12:53:23Z
-updated_at: 2026-09-27T07:20:06Z
+updated_at: 2026-09-27T08:07:11Z
 parent: folio-assistant-bzyu
 ---
 
@@ -151,3 +151,16 @@ pin the defect. Replaced with the real line.
 
 bun test 12194 pass 0 fail; tsc clean; eslint 0 errors; all 161 gates the `gates`
 job runs, 0 failures.
+
+
+## The whitespace question is ANSWERED: leave it as is (owner, 2026-09-27)
+
+Done-when item 3 asked that the double space left by a removed code span be
+collapsed. Put to the owner with the number that was missing when this bean was
+written — **8188 of 46 780 msgids already contain a double space**, so collapsing
+obsoletes 8188 catalogue entries rather than 12 — and they confirmed the current
+behaviour.
+
+So the item is CLOSED as decided-against rather than left open. The test pins
+`"and  both"` with the reason in its body, which is now a recorded decision rather
+than a deferral.

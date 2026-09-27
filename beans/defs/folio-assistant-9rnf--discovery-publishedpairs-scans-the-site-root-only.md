@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9rnf
 title: 'DISCOVERY: publishedPairs scans the site root only, so a translated page in a subdirectory is invisible to every catalogue tool'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-27T04:59:40Z
-updated_at: 2026-09-27T06:02:12Z
+updated_at: 2026-09-27T08:07:02Z
 parent: folio-assistant-bzyu
 ---
 
@@ -116,3 +116,67 @@ translatable constructs against 79 (ar), 79 (es), 62 (fr), 79 (ru), 78 (zh). So
 translations have drifted structurally from the source, which is a corpus fact for
 a human to adjudicate under #206, not something to re-translate around. The 41
 `#~` obsoleted entries therefore STAND rather than being superseded.
+
+
+## Catalogue paths now MIRROR the page path — owner's decision, 2026-09-27
+
+The open question this bean surfaced: `catalogueFor` composed
+`translations/<locale>/<page>.po` while `driftFor` flattened with
+`name.split("/").pop()`, so the two disagreed about which file is which page for
+any page below the site root. Put to the owner with the measurement; they chose
+mirroring over a collision guard.
+
+**Why it was a decision and not tidiness.** 65 of 585 source pages here share a
+basename, and three of the colliders are translated today: `getting-started`
+(with `processes/getting-started` and
+`reference/skill-instructions/getting-started`), `document-ingestion` (with
+`processes/document-ingestion`), and `index` twenty-two ways. Under flattening,
+translating `processes/getting-started` would address the same `.po` as the root
+page's, and `write` would either skip it silently or — with `--overwrite` —
+replace a catalogue that may carry a human's sign-off. That is the loss #206
+exists to prevent.
+
+The convention was already partly in use, which the estimate missed:
+`translations/<locale>/glossary/` and `.../processes/` were nested already. So
+this makes one convention out of two rather than introducing a new one.
+
+### Five files moved, not three
+
+The estimate given to the owner said three catalogues. It is five, plus fields
+inside one of them — stated because an estimate that turns out low should be
+corrected where it was made:
+
+    translations/{ar,ru}/agent-onboarding.po  -> .../guides/
+    translations/fr/agent-onboarding.{po,pot,ts} -> .../guides/
+
+`git mv`, so no content was touched. The `.ts` node's `potFile`, `poFile`, its
+relative import, and its `label` (`trans:fr/agent-onboarding` ->
+`trans:fr/guides/agent-onboarding`) were updated; the label regex
+`/^trans:[a-z]{2,}\//` admits the nested stem, and nothing outside that file and
+one generated sidecar referenced the old label.
+
+### Four code sites, and the third was found by a failing gate rather than by reading
+
+  1. `translation-drift.ts` — `subject` and the `catalogueFor` call stop flattening.
+  2. `check-translation-catalogue.ts` — `translationsByFile` passes the full path.
+  3. `translation-block-qa.ts` — `sweepSubject` derived `basename(md)` as the
+     catalogue stem, a THIRD answer to the same question. Now the caller supplies
+     it: the page pass passes the site-relative path, the block pass keeps the
+     basename, and the parameter's docblock says why the two differ. Found because
+     `translation:block-qa:check` reported *"has no PO source any more"* — the
+     sweep REPORTS rather than deletes such a sidecar, which is the only reason
+     three QA records were not lost to a regeneration.
+  4. Two `UNCATALOGED` entries, `es/agent-onboarding` and `zh/agent-onboarding`,
+     had to become `es|zh/guides/agent-onboarding` or they would stop matching
+     `subject` and the gate would report them as unrecorded.
+
+My own `rmor` corpus test also composed the basename, with a comment recording that
+as an open question. The question is answered, so the test follows.
+
+### Nothing lost
+
+73 `.po` files at HEAD, 73 now, and every non-empty `msgstr` compared as a
+MULTISET across all of them, active and obsolete: **0 lost, 0 gained.** The three
+`translation-qa` sidecars for the page are present after regeneration.
+
+bun test 12219 pass 0 fail; tsc clean; eslint 0 errors; all 161 gates 0 failures.

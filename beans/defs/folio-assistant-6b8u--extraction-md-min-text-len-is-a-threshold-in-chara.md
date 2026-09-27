@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6b8u
 title: 'EXTRACTION: MD_MIN_TEXT_LEN is a threshold in CHARACTERS, so the same table cell is translatable in Arabic and not in English'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T08:56:25Z
-updated_at: 2026-09-27T07:34:06Z
+updated_at: 2026-09-27T08:06:12Z
 parent: folio-assistant-bzyu
 ---
 
@@ -72,9 +72,9 @@ shipped**, because every other consumer does.
       recorded on the constant
 - [x] MEASURED AFTER: the same cell extracts the same number of entries in every
       locale, and a CJK one-character cell is treated like its English counterpart
-- [ ] every `.pot` regenerated with tooling, and the msgids the change adds are
+- [x] every `.pot` regenerated with tooling, and the msgids the change adds are
       dispositioned in the 19 existing `.po` files rather than left as silent drift
-- [ ] checked against a folio other than this one — extraction is shared by every
+- [x] checked against a folio other than this one — extraction is shared by every
       instance
 
 
@@ -178,7 +178,7 @@ and nowhere else.
 
 ### Adds to "Done when"
 
-- [ ] decide the one-character-word case on its merits — a single Han character is
+- [x] decide the one-character-word case on its merits — a single Han character is
       a word where a single Latin letter is not — with the measurement above
       recorded, and NOT justified by alignment, which it does not improve
 
@@ -220,3 +220,27 @@ a single Latin letter is not?** 是 and 否 are complete words; `y` and `n` are 
 Eight cells either way, and no measurement can settle it.
 
 **Put to the owner 2026-09-27. Unanswered — nothing shipped.**
+
+
+## SHIPPED 2026-09-27 — the owner decided YES, on the merits
+
+`isTranslatable` accepts a string containing Han, Hiragana, Katakana or Hangul.
+The Done-when item is discharged by a DECISION, which is what it asked for.
+
+**Expressed as the property, not as a vocabulary.** `MD_IDEOGRAPH_RE` names the
+four scripts rather than listing `是` and `否`. A two-character list would need
+maintaining every time a page gains a third, which is a rule written as a
+backlog — and the owner's reasoning was about the property: a single ideograph is
+a word where a single Latin letter is not.
+
+Six tests, and one of them is the anti-scope-creep guard: over the real corpus the
+rule must admit **exactly** `["否", "是"]`, eight cells in total. If a later change
+widens it, that assertion fails rather than a msgid count nobody reads. The
+asymmetry is pinned directly too — `isTranslatable("y")` is `false` and
+`isTranslatable("是")` is `true`, in adjacent tests, so the next reader meets the
+decision rather than inferring it.
+
+**The alignment non-claim is pinned as prose in the code**, because it is the
+thing a later reader is most likely to get wrong: this does not improve alignment,
+`derive-po` reports 57 derived / 13 refused either way, and `zh/getting-started`
+goes from short-by-four to long-by-one. Cited as a reason it MUST NOT be used.

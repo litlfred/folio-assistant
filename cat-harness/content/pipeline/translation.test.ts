@@ -11,6 +11,7 @@ import {
   extractMarkdown,
   extractFromManifest,
   formatPot,
+  isTranslatable,
 } from "./pot-extract";
 import { parsePo, injectMarkdown } from "./po-inject";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
@@ -235,6 +236,92 @@ describe("cleanMarkdownText — emphasis around a code span (bean `3mo4`)", () =
     // Anti-vacuity: a walk that found nothing would satisfy the line above.
     expect(files.length).toBeGreaterThan(500);
     expect(msgids).toBeGreaterThan(40000);
+  });
+});
+
+// ── bean `6b8u`: one ideograph is a word ──────────────────────────
+//
+// The owner's decision of 2026-09-27, on the MERITS. `MD_MIN_TEXT_LETTERS` is a
+// count and a count is not script-neutral: `是` and `否` are the complete words
+// "yes" and "no", while `y` and `n` are abbreviations. Over 660 files / 46 800
+// msgids the rule admits exactly those two strings, four times each, in yes/no
+// cells of three zh comparison tables.
+//
+// The alignment non-claim is pinned too, because it is the thing a later reader
+// is most likely to get wrong: this does NOT improve alignment and must not be
+// cited as if it did.
+
+describe("isTranslatable — a single ideograph is a word (bean `6b8u`)", () => {
+  test("a lone Han character is translatable", () => {
+    expect(isTranslatable("是")).toBe(true);
+    expect(isTranslatable("否")).toBe(true);
+  });
+
+  test("a lone Latin letter is still NOT translatable", () => {
+    // The asymmetry is the decision, not an oversight: `y` abbreviates a word,
+    // `是` is one. A rule that admitted both would admit every stray initial.
+    expect(isTranslatable("y")).toBe(false);
+    expect(isTranslatable("n")).toBe(false);
+    expect(isTranslatable("a")).toBe(false);
+  });
+
+  test("two Latin letters remain the threshold", () => {
+    expect(isTranslatable("no")).toBe(true);
+    expect(isTranslatable("нет")).toBe(true);
+  });
+
+  test("Hiragana, Katakana and Hangul count too, not only Han", () => {
+    // The decision was about the property rather than about `是`/`否`, so the
+    // other scripts where one character is a word are included. A vocabulary of
+    // two characters would be a rule expressed as a backlog.
+    expect(isTranslatable("ひ")).toBe(true);
+    expect(isTranslatable("ア")).toBe(true);
+    expect(isTranslatable("한")).toBe(true);
+  });
+
+  test("still nothing translatable in a letterless string", () => {
+    // The guard the threshold exists for in the first place.
+    expect(isTranslatable(", ")).toBe(false);
+    expect(isTranslatable("")).toBe(false);
+    expect(isTranslatable("42 — 7")).toBe(false);
+  });
+
+  test("it admits EXACTLY the eight cells measured, and no more", () => {
+    // Anti-scope-creep, over the real corpus. If a later change widens the rule,
+    // this is where the widening shows up rather than in a msgid count nobody
+    // reads. Counted over table cells, which is where the bean found the defect.
+    const root = resolve(import.meta.dir, "..", "..");
+    const docs = siteRoot(root);
+    expect(docs).toBeDefined();
+    const files: string[] = [];
+    const walk = (d: string): void => {
+      for (const e of readdirSync(d, { withFileTypes: true })) {
+        const p = join(d, e.name);
+        if (e.isDirectory()) {
+          if (!e.name.startsWith("_")) walk(p);
+        } else if (e.name.endsWith(".md")) files.push(p);
+      }
+    };
+    walk(docs!);
+    const twoLetters = (t: string): boolean => {
+      let n = 0;
+      for (const c of t) if (/\p{L}/u.test(c) && ++n >= 2) return true;
+      return false;
+    };
+    const admitted = new Map<string, number>();
+    for (const f of files) {
+      for (const raw of readFileSync(f, "utf-8").split("\n")) {
+        const t = raw.trim();
+        if (!t.startsWith("|") || !t.endsWith("|")) continue;
+        for (const cell of t.slice(1, -1).split("|")) {
+          const m = cleanMarkdownText(cell.trim());
+          // Admitted by the new rule and rejected by the old one.
+          if (m && !twoLetters(m) && isTranslatable(m)) admitted.set(m, (admitted.get(m) ?? 0) + 1);
+        }
+      }
+    }
+    expect([...admitted.keys()].sort()).toEqual(["否", "是"]);
+    expect([...admitted.values()].reduce((a, b) => a + b, 0)).toBe(8);
   });
 });
 
@@ -689,9 +776,12 @@ describe("injectMarkdown preserves document structure", () => {
       if (!existsSync(srcFile)) continue;
       const source = readFileSync(srcFile, "utf-8");
       for (const locale of locales) {
-        // Catalogues are addressed by basename today; see bean `9rnf` on why
-        // that is a separate open question from this one.
-        const po = join(root, "translations", locale, `${page.split("/").pop()}.po`);
+        // A catalogue path MIRRORS the page path — the owner's decision of
+        // 2026-09-27 on bean `9rnf`. This composed a basename when it was
+        // written, with a comment recording that as an open question; the
+        // question is answered, so the test follows rather than keeping a
+        // convention the code no longer uses.
+        const po = join(root, "translations", locale, `${page}.po`);
         if (!existsSync(po)) continue;
         pairs++;
         const result = injectMarkdown(source, parsePo(readFileSync(po, "utf-8")));

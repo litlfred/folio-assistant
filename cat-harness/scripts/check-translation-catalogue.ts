@@ -137,9 +137,12 @@ export function translationsByFile(
     // gate derives its own subject so the two cannot disagree.
     const name =
       page.sourceUrl.replace(/^\//, "").replace(/\.html$/, "").replace(/\/$/, "") || "index";
-    const leaf = name.split("/").pop() ?? name;
+    // The FULL path, matching `driftFor`'s subject and `catalogueFor`'s
+    // destination. This took the basename until 2026-09-27, which is the same
+    // disagreement one gate over: this gate decided a page had no catalogue by
+    // looking where `derive-po` would never have written one.
     for (const [locale, t] of Object.entries(page.translations)) {
-      out.set(resolve(fileForUrl(site, t.url)), { locale, page: leaf });
+      out.set(resolve(fileForUrl(site, t.url)), { locale, page: name });
     }
   }
   return out.size === 0 ? undefined : out;
