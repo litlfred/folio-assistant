@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cpss
 title: '108 checks in the code-quality job cannot fire: the deliberately-red drift gate is the 3rd of 106 in one `set -e` batch'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-26T18:09:12Z
-updated_at: 2026-09-26T20:10:30Z
+updated_at: 2026-09-27T04:55:37Z
 parent: folio-assistant-1xhc
 ---
 
@@ -294,3 +294,5 @@ CI on `897129e7e9`, `Repository gates`, all steps green:
 That is the whole of this bean's claim, confirmed by observation. The
 recommendation is unchanged and the masking is still latent, for the reasons in
 the entry above.
+
+_2026-09-27T04:55:37Z_ — Claimed by claude/sleepy-babbage-ls90iz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
