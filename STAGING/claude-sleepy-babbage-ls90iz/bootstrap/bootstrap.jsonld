@@ -282,10 +282,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-27T06:43:48.733Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/21c149c5b9bb768aa0a536f5d57b5564601ab324",
-  "sourceCommitSha": "21c149c5b9bb768aa0a536f5d57b5564601ab324",
-  "sourceCommitAt": "2026-09-27T06:41:24Z",
+  "generatedAt": "2026-09-27T07:14:18.426Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0d44e79b07d5fec0eca2f808b4aa7e37379de2f1",
+  "sourceCommitSha": "0d44e79b07d5fec0eca2f808b4aa7e37379de2f1",
+  "sourceCommitAt": "2026-09-27T07:11:50Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -294,8 +294,8 @@
     "SequenceFlow": 30,
     "Role": 9,
     "ProcessNode": 30,
-    "GraphKind": 7,
-    "Directory": 7,
+    "GraphKind": 8,
+    "Directory": 8,
     "Asset": 2
   },
   "@graph": [
@@ -1412,6 +1412,14 @@
       "summary": "A Subgraph of schema definitions: files that state the shape other files must have."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/qa",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
+      "name": "qa",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#QaGraph",
+      "renderable": false,
+      "summary": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/swimlane-glossary",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
       "name": "swimlane-glossary",
@@ -1580,6 +1588,18 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-translations"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/bootstrap/bootstrap.jsonld#directory/qa",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
+      "name": "qa",
+      "path": "test/results/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/qa"
+      ],
+      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict in this repository is a sidecar. ONE kind lives here and the files say so themselves per the $schema contract: kg-qa/v1, one per audited subject, in a tree mirroring the subject's own path. At declaration time that is 15 files across the three families this instance has subjects in — skills/ (7), processes/ (3) and scenarios/ (5). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be the same over-claim pointed the other way. dependents: reproduce, because a dependent instance audits its OWN graph — these verdicts are about this instance's nodes, and inheriting them would attribute one instance's findings to another. That is exactly the leak which had to be fixed before this directory could be declared at all: an instance-scoped audit run from the layer above wrote 119 tool sidecars and 23 skill findings here for subjects belonging to that layer, because the tool registry and the skill overlay both took no instance root. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/bootstrap/bootstrap.jsonld#directory/qa",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/qa"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/bootstrap/bootstrap.jsonld#asset/agent-instructions",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Asset",
       "name": "agent-instructions",
@@ -1602,8 +1622,8 @@
   ],
   "staging": {
     "branch": "claude/sleepy-babbage-ls90iz",
-    "sha": "3a6a5a508de525aa127921e6530ac6fea4394006",
+    "sha": "5037467351014851a7541331c98c9d6c389010a1",
     "pr": "1450/merge",
-    "run": "36300843583"
+    "run": "36302368256"
   }
 }
