@@ -766,6 +766,22 @@ jobs:
       - name: audit coverage is measured, current, and every gate has declared
         run: bun run audit:coverage:require-all
 
+      # ADVISORY ON THE FINDINGS, HARD ON THE STALENESS, and the split is the
+      # whole point of this step existing at all. `xd1g` Done-when 3 wanted a
+      # check that catches the next bare-walk scanner; a syntactic filter
+      # cannot be one (62 findings loose, 4 tight, and the tight one misses
+      # eleven of twelve), so what this gates is DRIFT: the committed census
+      # disagreeing with the tree means the number moved and nobody looked.
+      #
+      # The counts themselves never fail. Gating on them would be the wall
+      # somebody switches off, which is `2krx`'s reasoning and it is right.
+      # The owner ruled on 2026-09-27 that the census ships anyway so the
+      # number stays visible, over the objection that a check which cannot
+      # fail is `1xhc`; this arrangement is what gives it something real to
+      # fail on.
+      - name: the root-scan census is current
+        run: bun run root-scan-census:check
+
       # The four graphs `audit:coverage` reported as `typed-only` — a schema
       # parses their nodes and nothing had an opinion about what they SAY.
       # Bean `h1wq`, at the owner's ask (2026-09-24).

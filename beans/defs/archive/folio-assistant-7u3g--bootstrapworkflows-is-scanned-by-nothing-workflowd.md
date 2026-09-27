@@ -5,8 +5,6 @@ status: scrapped
 type: task
 priority: normal
 created_at: 2026-09-20T14:47:57Z
-updated_at: 2026-09-20T15:26:13Z
-
 updated_at: 2026-09-20T15:32:27Z
 parent: folio-assistant-zzmr
 blocked_by:

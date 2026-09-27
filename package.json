@@ -41,6 +41,8 @@
   "scripts": {
     "agent-memory": "bun run cat-harness/scripts/agent-memory.ts",
     "agent-memory:check": "bun run cat-harness/scripts/agent-memory.ts --check",
+    "root-scan-census": "bun run cat-harness/scripts/root-scan-census.ts",
+    "root-scan-census:check": "bun run cat-harness/scripts/root-scan-census.ts --check",
     "audit:coverage": "bun run cat-harness/scripts/audit-coverage.ts",
     "audit:coverage:check": "bun run cat-harness/scripts/audit-coverage.ts --check",
     "audit:coverage:require-all": "bun run cat-harness/scripts/audit-coverage.ts --check --require-all",

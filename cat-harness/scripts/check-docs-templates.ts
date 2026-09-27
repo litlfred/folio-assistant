@@ -46,8 +46,9 @@
  * @module cat-harness/scripts/check-docs-templates
  * @covers docs
  */
-import { readdirSync, readFileSync, statSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { readFileSync } from "node:fs";
+import { relative, resolve } from "node:path";
+import { gitFiles } from "../schemas/git-corpus.ts";
 
 const REPO_ROOT = resolve(import.meta.dir, "../..");
 
@@ -83,29 +84,23 @@ export function judge(expr: string): Verdict {
   return lit[2]!.startsWith("/") ? "unresolved-literal" : "ok";
 }
 
+/**
+ * Every Jekyll template git accounts for — an `.html` directly inside an
+ * `_includes/` or `_layouts/` directory.
+ *
+ * `xd1g`. Measured at the conversion: **6 before, 6 after**, nothing swept and
+ * nothing gained, so this one was never wrong — it is converted so that a
+ * generated or vendored `_includes/` appearing later cannot quietly join the
+ * corpus. A conversion that changes no answer today is still the one that
+ * stops tomorrow's; `check-code-accounting`, converted in the same change,
+ * shows what it looks like when nobody did it in time.
+ */
 function templates(root: string): string[] {
-  const out: string[] = [];
-  const walk = (d: string): void => {
-    let entries: string[];
-    try {
-      entries = readdirSync(d);
-    } catch {
-      return;
-    }
-    for (const e of entries) {
-      if (e === "node_modules" || e === ".git") continue;
-      const p = join(d, e);
-      if (statSync(p).isDirectory()) {
-        if (e === "_includes" || e === "_layouts") {
-          for (const f of readdirSync(p)) if (f.endsWith(".html")) out.push(join(p, f));
-        } else {
-          walk(p);
-        }
-      }
-    }
-  };
-  walk(root);
-  return out.sort();
+  return gitFiles(root, (rel) => {
+    if (!rel.endsWith(".html")) return false;
+    const parent = rel.split("/").at(-2);
+    return parent === "_includes" || parent === "_layouts";
+  }).files;
 }
 
 export function checkDocsTemplates(root = REPO_ROOT): { files: number; findings: Finding[] } {
