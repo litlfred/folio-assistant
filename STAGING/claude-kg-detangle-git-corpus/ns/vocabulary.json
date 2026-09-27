@@ -296,6 +296,22 @@
       "seeAlso": "https://litlfred.github.io/external-schemas/"
     },
     {
+      "@id": "cat-harness:Decision",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "Decision",
+      "comment": "A DMN decision — a table that computes a gateway's branch from supplied facts, rather than a judgement somebody makes.",
+      "prefLabel": "Decision",
+      "definition": "A DMN decision — a table that computes a gateway's branch from supplied facts, rather than a judgement somebody makes.",
+      "notation": "cat-harness:Decision",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness",
+      "seeAlso": "https://litlfred.github.io/external-schemas/"
+    },
+    {
       "@id": "cat-harness:Capability",
       "@type": [
         "rdfs:Class",
@@ -2348,6 +2364,36 @@
       "prefLabel": "decisionRef",
       "definition": "The DMN table that computes this gateway's branch.",
       "notation": "cat-harness:decisionRef",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:decidedBy",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "decidedBy",
+      "comment": "The Decision node whose table computes this gateway's branch.",
+      "prefLabel": "decidedBy",
+      "definition": "The Decision node whose table computes this gateway's branch.",
+      "notation": "cat-harness:decidedBy",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:hitPolicy",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "hitPolicy",
+      "comment": "How a DMN decision table picks among matching rules, e.g. FIRST or UNIQUE.",
+      "prefLabel": "hitPolicy",
+      "definition": "How a DMN decision table picks among matching rules, e.g. FIRST or UNIQUE.",
+      "notation": "cat-harness:hitPolicy",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
