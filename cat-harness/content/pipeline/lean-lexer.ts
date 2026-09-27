@@ -43,6 +43,26 @@
  * are preserved — the declaration splitter below indexes into the
  * result and must stay aligned with the original source.
  *
+ * ## TWO invariants, and only the first was held until 2026-09-27
+ *
+ * **Length is preserved**, so byte offsets stay aligned. That one always held
+ * and is what the module was tested on.
+ *
+ * **Line count is preserved too**, so a line number taken from the stripped
+ * text is the SOURCE line number. That one did NOT hold: a newline inside a
+ * block comment was overwritten with a space like any other character, so an
+ * N-line comment collapsed to one line and everything below it moved up.
+ * Bean `vrfx`. Measured over the qou corpus: **3,931 of 3,971 files** shifted
+ * (99.0 %), 281,234 lines lost, worst file −3,199. A `/-! … -/` module header
+ * shifted an entire file — reproduced here as 6 source lines reporting as 2.
+ *
+ * The fix is to write the newline back rather than a space. Length is still
+ * one character for one, and the comment's CONTENT is still blanked, so a
+ * restored newline only ever yields a line of spaces that no declaration
+ * pattern can match. Both invariants are asserted in
+ * `lean-lexer-is-the-only-stripper.test.ts`; asserting only length is why this
+ * survived.
+ *
  * Doc comments (`/-- … -/`) are comments too: a decl name mentioned
  * only in prose is not a dependency. Skipping this step is how a
  * scanner invents edges out of documentation.
@@ -68,7 +88,12 @@ export function stripLeanComments(src: string): string {
       out[i++] = " ";
       continue;
     }
-    if (depth > 0) out[i] = " ";
+    // The newline is written BACK, not blanked: blanking it collapsed an
+    // N-line block comment to one line, so every line number below it was
+    // wrong (bean `vrfx`). The three other writes above cannot reach a
+    // newline — the `--` loop stops at one, and `/-` and `-/` are two
+    // non-newline characters each — so this is the only place it mattered.
+    if (depth > 0) out[i] = src[i] === "\n" ? "\n" : " ";
     i++;
   }
   return out.join("");
