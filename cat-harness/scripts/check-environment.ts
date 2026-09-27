@@ -139,9 +139,54 @@ export function shadowedPackages(nested: string, root: string): string[] {
   for (const name of names) {
     const here = version(join(nested, name));
     const there = version(join(root, "node_modules", name));
-    if (here && there && here !== there) out.push(`${name} ${here} here vs ${there} at the root`);
+    if (here && there && !sameApiLine(here, there)) {
+      out.push(`${name} ${here} here vs ${there} at the root`);
+    }
   }
   return out.sort();
+}
+
+/**
+ * Are two versions close enough that a typecheck cannot tell them apart?
+ *
+ * ## Why MAJOR.MINOR, and why this line is evidence rather than principle
+ *
+ * The first version of this compared versions for EQUALITY, and that was a false
+ * positive — caught by running it, not by reasoning about it. Bean `3vc1`'s own fix
+ * regenerated `adapters/mcp-server`'s stale lockfile, which took the nested SDK from
+ * 1.28.0 to 1.30.1 against the root's 1.30.0. Root `tsc` then reported **0 errors**
+ * while this guard still said DISTORTED and refused every gate run.
+ *
+ * Two measurements, and they bracket the line:
+ *
+ * | nested vs root | differs at | root `tsc --noEmit` |
+ * |---|---|---|
+ * | 1.28.0 vs 1.30.0 | **minor** | **12 errors in 6 files** |
+ * | 1.30.1 vs 1.30.0 | **patch** | **0 errors** |
+ *
+ * So major-only would have missed the case this guard exists for, and exact equality
+ * refuses a harmless tree. Major.minor is the only line the evidence supports.
+ *
+ * **Stated as a heuristic, because it is one.** Whether a version difference changes
+ * a typecheck cannot be known without typechecking twice, which is the thing this
+ * runs BEFORE. A patch release that changed a type would slip past — and that is the
+ * failure this accepts in exchange for not refusing a correctly set-up checkout,
+ * which is the worse of the two and was measured: the equality version blocked
+ * `bun run gates` on a tree whose typecheck was clean.
+ *
+ * A malformed version is treated as NOT matching, so an unreadable pair is reported
+ * rather than waved through — `could not tell` belongs on the refusing side here,
+ * because the alternative is a silent pass.
+ */
+function sameApiLine(a: string, b: string): boolean {
+  const line = (v: string): string | undefined => {
+    const m = /^(\d+)\.(\d+)\./.exec(v.trim());
+    return m ? `${m[1]}.${m[2]}` : undefined;
+  };
+  const la = line(a);
+  const lb = line(b);
+  if (la === undefined || lb === undefined) return false;
+  return la === lb;
 }
 
 /** A package's declared version, or `undefined` if it cannot be read. */

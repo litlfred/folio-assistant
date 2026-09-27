@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3vc1
 title: A nested bun install makes root tsc report 12 errors that CI does not have — and it is the only way to fix a stale nested lockfile
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-26T17:25:05Z
-updated_at: 2026-09-27T06:14:56Z
+updated_at: 2026-09-27T10:04:12Z
 parent: folio-assistant-1xhc
 ---
 
@@ -70,9 +70,12 @@ from something the repository does not contain".
 
 ## Done when
 
-- [ ] the owner has chosen between excluding, bumping, detecting, or recording
-- [ ] whichever is chosen, the 12-error reading can no longer be mistaken for a
-      finding about this repository's source
+- [x] the owner has chosen between excluding, bumping, detecting, or recording —
+      **DETECT and FIX THE CAUSE, both**, decided 2026-09-27
+- [x] whichever is chosen, the 12-error reading can no longer be mistaken for a
+      finding about this repository's source — **met at the SOURCE, not just the
+      gate**: the stale nested lockfile was regenerated, so root `tsc` reports 0
+      errors with the nested install present and the reading no longer exists
 
 
 ## Option 3 — DETECT — implemented 2026-09-27
@@ -162,3 +165,85 @@ which now refuses. It is **not** met for someone running `bunx tsc --noEmit` by 
 that still reports 12 errors with no mention of a `node_modules`. Whether that matters
 is a judgement about how people actually read this repository, so it is left stated
 rather than decided.
+
+
+## DECIDED and both halves done — 2026-09-27
+
+The owner chose **detect AND fix the cause**, asked explicitly rather than read off a
+work-selection. `Done when` #1 is settled on that answer.
+
+### The guard (option 3) shipped in #1447 — and it was WRONG, caught by this fix
+
+Narrowing it is the interesting part. The guard flagged a nested install that shadows
+a package **its own sources import**, comparing versions for **equality**. Regenerating
+the lock below took the nested SDK from 1.28.0 to **1.30.1** against the root's
+**1.30.0** — and root `tsc` reported **0 errors** while the guard still said DISTORTED
+and refused every gate run. A false positive on a tree whose typecheck was clean.
+
+Two measurements bracket the real line:
+
+| nested vs root | differs at | root `tsc --noEmit` |
+|---|---|---|
+| 1.28.0 vs 1.30.0 | **minor** | **12 errors in 6 files** |
+| 1.30.1 vs 1.30.0 | **patch** | **0 errors** |
+
+So **major-only would have missed the case this guard exists for**, and equality
+refuses a correct checkout. `major.minor` is the only line the evidence supports, and
+it is now `sameApiLine`, stated in the code as a **heuristic** — whether a version
+difference moves a typecheck cannot be known without typechecking twice, which is the
+thing the guard runs before. A patch release that changed a type would slip past; that
+is the failure accepted, and it is the lesser one, because the alternative was measured
+and it blocks `bun run gates` on a clean tree. Two new tests pin both sides, plus one
+for an unparseable version, which is reported rather than waved through.
+
+### The cause (option 2), and this bean's description of it was WRONG
+
+This bean says *"bump that directory's `@modelcontextprotocol/sdk` to the root's
+version"*. **There was nothing to bump.** Both manifests already declared the same
+range:
+
+    root package.json                     "@modelcontextprotocol/sdk": "^1.12.0"
+    adapters/mcp-server/package.json      "@modelcontextprotocol/sdk": "^1.12.0"
+
+The divergence was entirely in the **stale nested lockfile**: it pinned 1.28.0 while
+the root's lock resolved the identical range to 1.30.0. So the fix is a lockfile
+regeneration, and the manifest is untouched.
+
+**What the lock diff shows is the mechanism, exactly as this bean diagnosed it.** One
+removed line:
+
+    - "@modelcontextprotocol/sdk/zod": ["zod@3.25.76", …]
+
+SDK 1.28.0 nested **zod 3.25.76** under itself while the root hoists zod 4. SDK 1.30.1
+accepts zod 4 and nests nothing, so the two type universes stop disagreeing.
+
+### Measured after
+
+    root tsc --noEmit, nested install PRESENT     0 errors   (was 12 across 6 files)
+    bun run check:environment                     exit 0     (was exit 2)
+    nested bun install --frozen-lockfile          consistent
+    check:partition / code-accounting /
+      audit:coverage:require-all / check:workflows  green
+
+**The trap is gone rather than guarded.** The 12-error reading no longer exists to be
+mistaken for a finding, which is `Done when` #2 met at the source instead of at the
+gate — and it closes the gap the #1447 note left open, where a hand-run
+`bunx tsc --noEmit` still showed 12 errors with no mention of a `node_modules`.
+
+### One thing I did and undid, recorded because the intermediate state was worse
+
+`bun update @modelcontextprotocol/sdk` also rewrote the **manifest**, `^1.12.0` →
+`^1.30.1`. That makes the two specs DIVERGE where they had matched — the opposite of
+the point. Reverting only the manifest left the lock recording a specifier the manifest
+did not declare: `--frozen-lockfile` accepted it, but it is a state bun would never
+produce, and hand-editing a lockfile is what this repository's own rules forbid. So the
+lock was deleted and regenerated from the unchanged spec, giving specifier `^1.12.0`
+and resolution 1.30.1 — all of it bun's output.
+
+### What remains true from this bean, unchanged
+
+The TRAP framing. Regenerating that lockfile still requires `bun install` in that
+directory, which still creates the 56 MB nested `node_modules` — and this fix was done
+by walking into it deliberately. What changed is that the install is now **harmless**:
+same major.minor as the root, no nested zod 3, and the guard says so rather than
+refusing.
