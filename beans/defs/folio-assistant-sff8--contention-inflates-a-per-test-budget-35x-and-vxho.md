@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-27T11:10:31Z
+updated_at: 2026-09-27T11:38:38Z
 parent: folio-assistant-1xhc
 ---
 
@@ -466,3 +466,70 @@ demonstration that the class is live, **not** a prediction of CI's failure rate.
       cause now that the causes are distinguishable, or leave them recorded and
       unworked? Not chosen here — it is a scope call, and the evidence for each
       remedy is in the table above.
+
+
+## The class MEASURED: it is a budget-to-cost mismatch, not ~70 slow tests — 2026-09-27
+
+The three failures above are fixed (hoisted to module scope, #1471, merged
+`967f4e9922a`) and **a fourth appeared in the very next loaded run**:
+
+    skill coverage > every resolvable skill is a node in the exported graph  5312 ms
+    cat-harness/scripts/tests/skill-coverage.test.ts:94
+
+| | before #1471 | after |
+|---|---|---|
+| loaded result | 12241 pass / **3 fail** | 12291 pass / **1 fail** |
+| wall clock | 555.8 s | **640.8 s** (harsher load) |
+
+So the three targeted ones stayed fixed under a HEAVIER load, and the class did
+not close. Whack-a-mole, and the distribution says why.
+
+### Per-test times from both loaded runs
+
+| ≥ share of the 5000 ms default | run 1 | run 2 |
+|---|---|---|
+| ≥ 5000 ms (100 %) | **12** | **10** |
+| ≥ 4000 ms (80 %) | 23 | 20 |
+| ≥ 3000 ms (60 %) | 35 | 29 |
+| ≥ 2500 ms (50 %) | 50 | 49 |
+| ≥ 2000 ms (40 %) | 70 | 69 |
+
+### The load-bearing row is the first, read AGAINST the failure count
+
+Twelve cases exceeded 5000 ms and **three** failed. Ten exceeded it and **one**
+failed. Therefore **at least nine tests already run past the default budget and do
+not fail**, because they carry their own — `declared-directory-resolves.test.ts` at
+**22158 ms** with a budget DERIVED from its module count (600 ms/module) is the
+clearest case, and it is correct.
+
+**That reframes this bean.** The problem is not "≈70 slow tests". It is that **a
+test's budget bears no systematic relationship to its cost**: a handful derive one
+and work at 22 s, while every other test silently inherits 5000 ms. A failure is
+then whichever default-budget test happens to sit nearest the line when the machine
+is busiest. Fixing the three that failed surfaced a fourth because the population
+was never those three.
+
+It also settles, with a number, why `## What a fix is NOT` is right about a raised
+timeout and yet `declared-directory-resolves` is not violating it: a **derived**
+budget grows with the population it measures, so it is the one form that does not
+decay. Nine tests already rely on that and none of them is a defect.
+
+### The three remedies, unchanged, plus what a systemic answer would look like
+
+Hoist (shared expensive work), derive (irreducible cost), eliminate (spawns it does
+not need) — all three already have precedent here, and all three are per-test.
+
+What does NOT exist is anything that makes the mismatch VISIBLE. Nothing reports
+"this test costs 73 % of its budget", so every instance has been discovered by a
+red run on somebody's machine. A gate over the junit timings could say it, and
+`declared-directory-resolves`'s own docblock already names the failure mode it would
+catch — *"green on CI, red on a contributor's laptop, and nothing saying which"*.
+**Deliberately not proposed as chosen work**: it is a new instrument, which is the
+owner's call, not an agent's.
+
+- [ ] **OWNER DECISION, now with the size of the class attached** (it previously
+      read as three failures of an unknown population): ~9 tests are over budget
+      and correctly carry their own; ~50 sit at half the default. Fix the one live
+      failure (`skill-coverage`) and stop; keep fixing per-test as they surface;
+      build the instrument that makes cost-vs-budget visible; or leave it recorded.
+      Not chosen here.
