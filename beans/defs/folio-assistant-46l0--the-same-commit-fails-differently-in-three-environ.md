@@ -67,6 +67,8 @@ them as one, fold this in.
 Recorded and left `todo`. Found while driving three PRs through `main`'s red on
 2026-09-26.
 
+_2026-09-27T09:31:55Z_ — Claimed by claude/brave-hypatia-r820sf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 
 ## Re-measured 2026-09-27: the divergence does NOT reproduce — item 3 answered, 1 and 2 have no subject
 
