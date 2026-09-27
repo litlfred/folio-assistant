@@ -93,6 +93,41 @@ describe("the invariants a reimplementation kept losing", () => {
     expect(stripLeanComments(src).length).toBe(src.length);
   });
 
+  test("LINE COUNT is preserved too — a block comment keeps its newlines", () => {
+    // THE SECOND INVARIANT, and asserting only length above is why its absence
+    // survived (bean `vrfx`). A newline inside a block comment was blanked like
+    // any other character, so an N-line comment collapsed to one line and every
+    // line number below it was reported short. Measured over the qou corpus
+    // before the fix: 3,931 of 3,971 files shifted (99.0%), 281,234 lines lost.
+    const src = ["def a := 1", "/- block", "   spanning", "   three -/", "def b := 2"].join("\n");
+    const got = stripLeanComments(src);
+    expect(got.length).toBe(src.length);
+    expect(got.split("\n")).toHaveLength(src.split("\n").length);
+    // Not just the count — `def b` must land on its SOURCE line, which is the
+    // only thing a reader of a QA hit cares about.
+    expect(got.split("\n").findIndex((l) => l.includes("def b")) + 1).toBe(5);
+  });
+
+  test("a `/-! … -/` module header does not shift the whole file", () => {
+    // The worst case in the corpus: a header at the top moves EVERYTHING below
+    // it. Reproduced before the fix as 6 source lines reporting as 2.
+    const src = ["/-!", "# Header", "spanning", "four lines", "-/", "def c := 3"].join("\n");
+    const got = stripLeanComments(src);
+    expect(got.split("\n")).toHaveLength(6);
+    expect(got.split("\n").findIndex((l) => l.includes("def c")) + 1).toBe(6);
+  });
+
+  test("a restored newline yields only spaces — the comment is still blanked", () => {
+    // The obvious objection to writing the newline back: does the comment's
+    // CONTENT survive? It must not, or a declaration pattern could match inside
+    // a comment. Every line of the stripped block is blank.
+    const src = ["/- def hidden := 1", "   theorem alsoHidden : True := trivial -/", "def real := 2"].join("\n");
+    const lines = stripLeanComments(src).split("\n");
+    expect(lines[0]!.trim()).toBe("");
+    expect(lines[1]!.trim()).toBe("");
+    expect(lines[2]).toContain("def real");
+  });
+
   test("NESTED block comments close at the right place", () => {
     // The whole defect, in one line. A non-greedy regex stops at the inner
     // `-/` and hands `outer tail def leaked` to the caller as code.

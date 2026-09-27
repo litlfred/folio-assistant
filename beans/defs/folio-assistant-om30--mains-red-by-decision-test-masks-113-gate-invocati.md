@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T09:42:57Z
-updated_at: 2026-09-26T19:34:36Z
+updated_at: 2026-09-27T10:35:39Z
 parent: folio-assistant-1xhc
 ---
 
@@ -99,9 +99,12 @@ gating workflow, so it is the owner's call and not an agent's.
 - [x] Re-check whether any OTHER gate in the masked region is red — **five were.**
       `tsc` and the t8g3 drift are main's; `check:glossary`, `kg:audit:check`,
       `check:lockfile-pinning` and `docs:auto:check` were mine, all fixed.
-- [ ] The residual **6** steps behind step 42 — the drift gate wants its own job, the
-      same shape as the decision above. Not started: a third job on a judgement the
-      owner has already made once, for six steps whose current state is demonstrable.
+- [x] The residual **6** steps behind step 42 — the drift gate wants its own job, the
+      same shape as the decision above. **It does not want one.** Measured 2026-09-27
+      on `origin/main` `63a465674a2`: **0** steps sit behind either deliberate-red
+      step — `translation:drift:check` is 55 of 55, `bun test` is 6 of 6 — and
+      `check:red-gate-is-last` enforces it, so this is a property of the arrangement
+      rather than of today's tree. Section below for the method and the scope.
 - [ ] **OWNER ONLY:** if the merge queue (`nytj`'s last box) goes on, BOTH check names
       must be required — `TypeScript — tests, lint, types (hard)` and `Repository
       gates (hard)` — or 150 gate invocations run and block nothing.
@@ -428,3 +431,55 @@ structural: **a deliberately-red gate must be the LAST step in its job**, not th
 
 Recorded here because this bean is where the masking finding started and its own
 numbers are the ones a reader will find first.
+
+
+## The residual box is SATISFIED, and not by a third job — measured 2026-09-27
+
+The box read: *"The residual **6** steps behind step 42 — the drift gate wants its
+own job, the same shape as the decision above."*
+
+It does not want one. Parsed from `.github/workflows/code-quality-gates.yml` at
+`origin/main` `63a465674a2` — parsed, not read, because this bean's own history is
+three hand-counted figures that were each the smaller half:
+
+| deliberate-red step | position | steps behind it |
+|---|---|---|
+| `translation:drift:check` (`gates` job) | step **55 of 55** | **0** |
+| `bun test` (`typescript` job) | step **6 of 6** | **0** |
+
+The job split — this bean's chosen option (1) — plus `cpss`'s move of the drift
+gate out of the 106-command batch to the end of its job did the whole thing. `bun
+test` went from **step 2 of 47** to step 6 of 6. `check:red-gate-is-last` exits 0
+over 8 jobs and 85 steps and reports each as last in its job, so this is a
+property of the ARRANGEMENT and not of today's tree — which is exactly the form
+this bean's third `Done when` box demanded and the form its "45 → 6" caveat
+correctly distrusted.
+
+### Scoped carefully, because the obvious stronger claim is false
+
+This does **not** say nothing can be masked. An *accidentally* red step still
+stops every step after it, and it should. What is now structural is narrower and
+is the whole of what this bean asked for: **a gate that is red by decision masks
+nothing.** The bean's own lesson is why the distinction matters — *"the masked
+count is a property of WHICH step is red, and that moves."*
+
+### A gap found while measuring it — bean `dvcx`
+
+`bun test` carries the **same** assertion as the declared drift gate
+(`translation-drift.test.ts:168`, under `describe("the real corpus — and the gate
+can actually fail")` — the single failure in run 36231943911, i.e. this bean's
+own evidence). It was **undeclarable**: `invocations()` could only name a
+`bun run <target>`, and `bun test` takes no target. So it was last in its job by
+coincidence, not by rule. Fixed on `dvcx`; both are now declared and located.
+
+### Status of the red-by-decision gate itself, dated because it moves
+
+`translation:drift:check` exits **0** today — 70 compared, 0 newly drifted, 0
+unreadable, **8 uncatalogued and recorded** (the `t8g3` backlog recorded rather
+than failing). `translation-drift.test.ts` is 18 pass / 0 fail. **Neither carrier
+is red right now**, so the 113-invocation masking this bean opened on is not live.
+Recorded as a fact about 2026-09-27 and not as a property, per the caveat above.
+
+- [x] The residual **6** steps behind step 42 — **0 steps behind either
+      deliberate-red step**, enforced by `check:red-gate-is-last` rather than
+      observed in a green run. No third job.
