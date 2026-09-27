@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790498515">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790498515">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790498515">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790498515">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790498515">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790498515">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790496158" defer></script>
+<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790498515" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -784,19 +784,19 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><code class="language-plaintext highlighter-rouge">Process_RepoHealth</code> · strict · 4 step(s)</p>
 
-<p>THE SAME SHAPE AS <code class="language-plaintext highlighter-rouge">ci-health</code>, ONE LEVEL OUT. That one asks whether the WORKFLOWS pass; this asks about the REPOSITORY — how much of <code class="language-plaintext highlighter-rouge">gh-pages</code> the review previews occupy, how big a clone costs, whether the work plan has duplicates or unhonoured claims.
+<p>THE SAME SHAPE AS <code class="language-plaintext highlighter-rouge">ci-health</code>, ONE LEVEL OUT. That one asks whether the WORKFLOWS pass; this asks about the REPOSITORY — how much of <code class="language-plaintext highlighter-rouge">gh-pages</code> the review previews occupy, how big a clone costs, whether the work plan has duplicates or unhonoured claims.</p>
 
-IT REPORTS AND NEVER ACTS. Four of the five checks are about artefacts accumulating, and every finding’s action names something a PERSON does. That is <code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code> applied to the tool that most wants to break it: the skill’s own worked example is bean <code class="language-plaintext highlighter-rouge">plj1</code>, a workflow whose shape deleted every open PR’s preview without anybody deciding it. There is no removal task on this diagram, and its absence is the rule being followed rather than an omission.
+<p>IT REPORTS AND NEVER ACTS. Four of the five checks are about artefacts accumulating, and every finding’s action names something a PERSON does. That is <code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code> applied to the tool that most wants to break it: the skill’s own worked example is bean <code class="language-plaintext highlighter-rouge">plj1</code>, a workflow whose shape deleted every open PR’s preview without anybody deciding it. There is no removal task on this diagram, and its absence is the rule being followed rather than an omission.</p>
 
-THE REPORT IS KEPT WHETHER OR NOT THE CHECKS SUCCEED (<code class="language-plaintext highlighter-rouge">if: always()</code>), which is why <code class="language-plaintext highlighter-rouge">Run the health checks</code> says “keeping the report either way”. A sweep whose output survives only on success cannot be used to investigate the run that failed.
+<p>THE REPORT IS KEPT WHETHER OR NOT THE CHECKS SUCCEED (<code class="language-plaintext highlighter-rouge">if: always()</code>), which is why <code class="language-plaintext highlighter-rouge">Run the health checks</code> says “keeping the report either way”. A sweep whose output survives only on success cannot be used to investigate the run that failed.</p>
 
-The daily cron is at 06:41, OFF THE HOUR deliberately: GitHub’s scheduler queues heavily at :00, and a delayed run is a run whose report is stamped later than the state it describes.
+<p>The daily cron is at 06:41, OFF THE HOUR deliberately: GitHub’s scheduler queues heavily at :00, and a delayed run is a run whose report is stamped later than the state it describes.</p>
 
-THE THIRD STATE IS THE WHOLE POINT, AND IT IS THE ONLY ONE THAT FAILS THE JOB. Verified 2026-09-20 by reading the <code class="language-plaintext highlighter-rouge">if:</code> guards: <code class="language-plaintext highlighter-rouge">unknown</code> runs <code class="language-plaintext highlighter-rouge">exit 1</code>; a finding does NOT. A repository in trouble leaves this workflow GREEN and speaks through the tracking issue, while a sweep that could not look turns the job red. That inversion is deliberate and is invisible from the run list, which is the argument for drawing it.
+<p>THE THIRD STATE IS THE WHOLE POINT, AND IT IS THE ONLY ONE THAT FAILS THE JOB. Verified 2026-09-20 by reading the <code class="language-plaintext highlighter-rouge">if:</code> guards: <code class="language-plaintext highlighter-rouge">unknown</code> runs <code class="language-plaintext highlighter-rouge">exit 1</code>; a finding does NOT. A repository in trouble leaves this workflow GREEN and speaks through the tracking issue, while a sweep that could not look turns the job red. That inversion is deliberate and is invisible from the run list, which is the argument for drawing it.</p>
 
-ONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue — a feed nobody reads is the failure mode a watchdog invites. On <code class="language-plaintext highlighter-rouge">unknown</code> the issue is left UNTOUCHED: not closed, not opened, not edited. Closing it would assert the thing the sweep just failed to establish.
+<p>ONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue — a feed nobody reads is the failure mode a watchdog invites. On <code class="language-plaintext highlighter-rouge">unknown</code> the issue is left UNTOUCHED: not closed, not opened, not edited. Closing it would assert the thing the sweep just failed to establish.</p>
 
-<code class="language-plaintext highlighter-rouge">Ensure the tracking label exists</code> sits AFTER <code class="language-plaintext highlighter-rouge">Could we tell?</code> and before the split, because both issue paths need the label — the clean path filters on it too, and on a repository where nothing has ever gone wrong it would not otherwise exist. It is skipped on <code class="language-plaintext highlighter-rouge">unknown</code>, where neither path runs and a label hiccup must not be what fails the job.</p>
+<p><code class="language-plaintext highlighter-rouge">Ensure the tracking label exists</code> sits AFTER <code class="language-plaintext highlighter-rouge">Could we tell?</code> and before the split, because both issue paths need the label — the clean path filters on it too, and on a repository where nothing has ever gone wrong it would not otherwise exist. It is skipped on <code class="language-plaintext highlighter-rouge">unknown</code>, where neither path runs and a label hiccup must not be what fails the job.</p>
 
 <p><img src="../assets/img/workflows/repository-health-watch.svg" alt="BPMN diagram: Is the repository itself healthy?" style="max-width:100%" /></p>
 <h2 id="how-it-connects">

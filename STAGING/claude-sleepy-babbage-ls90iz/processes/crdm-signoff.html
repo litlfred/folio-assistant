@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790498515">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790498515">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790498515">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790498515">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790498515">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790498515">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790496158" defer></script>
+<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790498515" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -856,7 +856,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Phase 5: Create beans</strong><br /><code class="language-plaintext highlighter-rouge">A_CreateBeans</code></td>
       <td>Agent</td>
       <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
-      <td>The agent mints the implementation beans itself with <code class="language-plaintext highlighter-rouge">beans create</code>, running the exact-title existence check first. The engine has no <code class="language-plaintext highlighter-rouge">create</code> op — it claims, notes and resolves the instance’s OWN bean — so what this step records here is a note that the plan now exists.</td>
+      <td>The agent mints the implementation beans itself with<br /><code class="language-plaintext highlighter-rouge">beans create</code>, running the exact-title existence check first. The engine has<br />no <code class="language-plaintext highlighter-rouge">create</code> op — it claims, notes and resolves the instance’s OWN bean — so<br />what this step records here is a note that the plan now exists.</td>
     </tr>
     <tr>
       <td><strong>Sign off on requirements</strong><br /><code class="language-plaintext highlighter-rouge">BA_Signoff</code></td>
@@ -868,25 +868,25 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Announce the branch on the issue</strong><br /><code class="language-plaintext highlighter-rouge">A_AnnounceBranch</code></td>
       <td>Agent</td>
       <td><a href="../reference/skill-instructions/crdm-requirements-workflow.html"><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code></a></td>
-      <td>On CREATING the feature branch, comment on the issue: the branch name, the process and phase, and the beans claimed. Visibility is the whole point — without it a sibling session or a human cannot tell that work has begun, only that it has finished. Deliberately on this edge and not inside Phase 6. The three loops back into A_Implement (increment rejected, MVP not ready, feedback translated) re-enter implementation on the SAME branch, and re-announcing on each would be noise. Announce once, when the branch is created.</td>
+      <td>On CREATING the feature branch, comment on the issue:<br />the branch name, the process and phase, and the beans claimed. Visibility is<br />the whole point — without it a sibling session or a human cannot tell that work<br />has begun, only that it has finished.<br />Deliberately on this edge and not inside Phase 6. The three loops back into<br />A_Implement (increment rejected, MVP not ready, feedback translated) re-enter<br />implementation on the SAME branch, and re-announcing on each would be noise.<br />Announce once, when the branch is created.</td>
     </tr>
     <tr>
       <td><strong>Offer the knowledge-graph destinations for the agreed set</strong><br /><code class="language-plaintext highlighter-rouge">A_OfferKg</code></td>
       <td>Agent</td>
       <td><a href="../reference/skill-instructions/kg-contribution-offer.html"><code class="language-plaintext highlighter-rouge">kg-contribution-offer</code></a></td>
-      <td>THE STEP THAT WAS MISSING. Requirements were elicited, agreed and signed off, and then existed as an issue and a conversation — so the output of the process that exists to produce durable requirements was the one thing the knowledge graph never learned. ONE question for the SET, not one per requirement: a six-phase run can agree many, and asking six times is the same failure as a form that re-asks what it was already told. The options are DERIVED from the graphs this instance declares in <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code>, read at the time of asking, so an instance that adds a graph gets it in the offer without anybody editing a skill. Never a list typed from memory.</td>
+      <td>THE STEP THAT WAS MISSING. Requirements were elicited, agreed and signed off, and then existed as an issue and a conversation — so the output of the process that exists to produce durable requirements was the one thing the knowledge graph never learned.<br />ONE question for the SET, not one per requirement: a six-phase run can agree many, and asking six times is the same failure as a form that re-asks what it was already told.<br />The options are DERIVED from the graphs this instance declares in <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code>, read at the time of asking, so an instance that adds a graph gets it in the offer without anybody editing a skill. Never a list typed from memory.</td>
     </tr>
     <tr>
       <td><strong>Choose a destination, or none</strong><br /><code class="language-plaintext highlighter-rouge">BA_ChooseKg</code></td>
       <td>BA / Feature Requestor</td>
       <td><a href="../reference/skill-instructions/kg-contribution-offer.html"><code class="language-plaintext highlighter-rouge">kg-contribution-offer</code></a></td>
-      <td>A PERSON’S STEP, and <code class="language-plaintext highlighter-rouge">none</code> is one of the answers rather than a refusal to answer. A requirement whose whole content is carried by the code becomes a commit and nothing else; a graph that acquires a node for it is a graph with a node nobody will ever read. The default creates NOTHING. An agent that decides on its own that a requirement “is really a skill” has manufactured a node nobody asked for, in a graph somebody else maintains — which is what this step exists to prevent.</td>
+      <td>A PERSON’S STEP, and <code class="language-plaintext highlighter-rouge">none</code> is one of the answers rather than a refusal to answer. A requirement whose whole content is carried by the code becomes a commit and nothing else; a graph that acquires a node for it is a graph with a node nobody will ever read.<br />The default creates NOTHING. An agent that decides on its own that a requirement “is really a skill” has manufactured a node nobody asked for, in a graph somebody else maintains — which is what this step exists to prevent.</td>
     </tr>
     <tr>
       <td><strong>Run placement, and raise a bean for the authoring</strong><br /><code class="language-plaintext highlighter-rouge">A_RecordKg</code></td>
       <td>Agent</td>
       <td><a href="../reference/skill-instructions/placement.html"><code class="language-plaintext highlighter-rouge">placement</code></a></td>
-      <td>The offer produces a DECISION, not a node. <code class="language-plaintext highlighter-rouge">placement</code> then decides instance, graph and node kind — it is the step that catches a hardcoded path or a literal naming one folio — and the authoring itself becomes a bean, because work here is a bean before it is a file. <code class="language-plaintext highlighter-rouge">op="note"</code> and not <code class="language-plaintext highlighter-rouge">create</code>, for the reason <code class="language-plaintext highlighter-rouge">A_CreateBeans</code> above states: the engine has no <code class="language-plaintext highlighter-rouge">create</code> op — it claims, notes and resolves the instance’s OWN bean. The agent mints the authoring bean itself with <code class="language-plaintext highlighter-rouge">beans create</code>, running the exact-title existence check first, and what this step records is a note that the decision was taken.</td>
+      <td>The offer produces a DECISION, not a node. <code class="language-plaintext highlighter-rouge">placement</code> then decides instance, graph and node kind — it is the step that catches a hardcoded path or a literal naming one folio — and the authoring itself becomes a bean, because work here is a bean before it is a file.<br /><code class="language-plaintext highlighter-rouge">op="note"</code> and not <code class="language-plaintext highlighter-rouge">create</code>, for the reason <code class="language-plaintext highlighter-rouge">A_CreateBeans</code> above states: the engine has no <code class="language-plaintext highlighter-rouge">create</code> op — it claims, notes and resolves the instance’s OWN bean. The agent mints the authoring bean itself with <code class="language-plaintext highlighter-rouge">beans create</code>, running the exact-title existence check first, and what this step records is a note that the decision was taken.</td>
     </tr>
   </tbody>
 </table></div>

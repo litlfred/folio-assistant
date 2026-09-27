@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790498515">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790498515">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790498515">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790498515">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790498515">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790498515">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790496158" defer></script>
+<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790498515" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -784,7 +784,13 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><code class="language-plaintext highlighter-rouge">Process_Editing</code> · strict · 17 step(s)</p>
 
-<p>folio-assistant — editing a content block and its HCI validation gate. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by <code class="language-plaintext highlighter-rouge">bun run render:bpmn</code> — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/.</cat-harness.processes:bean></bootstrap.processes:skill></p>
+<p>folio-assistant — editing a content block and its HCI validation gate.
+Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+by <code class="language-plaintext highlighter-rouge">bun run render:bpmn</code> — never hand-edit the SVG.
+The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
+work plan in beans/.</cat-harness.processes:bean></bootstrap.processes:skill></p>
 
 <p><img src="../assets/img/workflows/editing-hci-validation.svg" alt="BPMN diagram: Editing and HCI validation" style="max-width:100%" /></p>
 <h2 id="how-it-connects">
@@ -893,7 +899,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Gather and verify the evidence</strong><br /><code class="language-plaintext highlighter-rouge">CallActivity_Evidence</code></td>
       <td>Editor / author (person)</td>
       <td>calls <a href="evidence-retrieval.html">Evidence for a recommendation</a></td>
-      <td>Before anything is drafted: the author reads the guidance ALREADY in this content, frames the question as PICO, retrieves candidates across the three evidence classes, and has each candidate’s authority resolved against its publisher’s own API. A recommendation reaches the drafting step with its evidence attached, or with the gap recorded. This step has nothing to do for content that carries no recommendations – a mathematics folio has none – and is skipped there rather than satisfied vacuously.</td>
+      <td>Before anything is drafted: the author reads the guidance ALREADY in this content, frames the question as PICO, retrieves candidates across the three evidence classes, and has each candidate’s authority resolved against its publisher’s own API. A recommendation reaches the drafting step with its evidence attached, or with the gap recorded.<br />This step has nothing to do for content that carries no recommendations – a mathematics folio has none – and is skipped there rather than satisfied vacuously.</td>
     </tr>
     <tr>
       <td><strong>Draft the block edit</strong><br /><code class="language-plaintext highlighter-rouge">Task_DraftEdit</code></td>
@@ -953,7 +959,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Options analysis accept · revise · discard</strong><br /><code class="language-plaintext highlighter-rouge">Call_OptionsAnalysis</code></td>
       <td>Authoring agent (system)</td>
       <td>calls <a href="options-analysis.html">Options analysis</a></td>
-      <td>On the edge out of <code class="language-plaintext highlighter-rouge">Task_ReviewFindings</code> and before <code class="language-plaintext highlighter-rouge">Task_RecordDecision</code>: the findings are the evidence, so the options can only be weighed once they exist, and after <code class="language-plaintext highlighter-rouge">Task_RecordDecision</code> the decision is already written down. NOT between <code class="language-plaintext highlighter-rouge">Gateway_EditorDecision</code> and <code class="language-plaintext highlighter-rouge">Task_RecordDecision</code>, which is the pair the work-plan named — in this diagram those run the OTHER WAY ROUND. <code class="language-plaintext highlighter-rouge">Flow_21b</code> goes <code class="language-plaintext highlighter-rouge">Task_RecordDecision</code> -&gt; <code class="language-plaintext highlighter-rouge">Gateway_EditorDecision</code>, so the gateway reads a decision that has already been recorded, and interposing there would analyse options after the choice was made. In the Agent lane, and this diagram makes the reason sharp. <code class="language-plaintext highlighter-rouge">Task_RecordDecision</code> is a <code class="language-plaintext highlighter-rouge">userTask</code> in <code class="language-plaintext highlighter-rouge">Lane_Editor</code> that already names <code class="language-plaintext highlighter-rouge">decision-audit</code>, and <code class="language-plaintext highlighter-rouge">Process_OptionsAnalysis</code> ends with its own <code class="language-plaintext highlighter-rouge">decision-audit</code> note. Those are two different acts — the subprocess records that the options were WEIGHED, the editor records WHAT WAS CHOSEN — and putting the analysis in the editor’s lane would collapse them, making the same party both analyse and decide. The subprocess’s own documentation refuses that: it produces options and a recommendation, and the authorisation belongs to the calling step. <code class="language-plaintext highlighter-rouge">CallActivity_Evidence</code> sits in <code class="language-plaintext highlighter-rouge">Lane_Editor</code> instead, and that is not an inconsistency: the author performs the evidence retrieval, whereas here the point is that the analyst is not the decider. On the trigger: <code class="language-plaintext highlighter-rouge">A_Frame</code> opens the subprocess on <code class="language-plaintext highlighter-rouge">opening-brief</code>’s trigger — irreversibility and surprise — and leaving there is a correct outcome. A spelling fix that reached <code class="language-plaintext highlighter-rouge">Task_ReviewFindings</code> with one mechanical finding exits immediately; a revise-or-discard on a block other content depends on does not.</td>
+      <td>On the edge out of <code class="language-plaintext highlighter-rouge">Task_ReviewFindings</code> and before <code class="language-plaintext highlighter-rouge">Task_RecordDecision</code>: the findings are the evidence, so the options can only be weighed once they exist, and after <code class="language-plaintext highlighter-rouge">Task_RecordDecision</code> the decision is already written down.<br />NOT between <code class="language-plaintext highlighter-rouge">Gateway_EditorDecision</code> and <code class="language-plaintext highlighter-rouge">Task_RecordDecision</code>, which is the pair the work-plan named — in this diagram those run the OTHER WAY ROUND. <code class="language-plaintext highlighter-rouge">Flow_21b</code> goes <code class="language-plaintext highlighter-rouge">Task_RecordDecision</code> -&gt; <code class="language-plaintext highlighter-rouge">Gateway_EditorDecision</code>, so the gateway reads a decision that has already been recorded, and interposing there would analyse options after the choice was made.<br />In the Agent lane, and this diagram makes the reason sharp. <code class="language-plaintext highlighter-rouge">Task_RecordDecision</code> is a <code class="language-plaintext highlighter-rouge">userTask</code> in <code class="language-plaintext highlighter-rouge">Lane_Editor</code> that already names <code class="language-plaintext highlighter-rouge">decision-audit</code>, and <code class="language-plaintext highlighter-rouge">Process_OptionsAnalysis</code> ends with its own <code class="language-plaintext highlighter-rouge">decision-audit</code> note. Those are two different acts — the subprocess records that the options were WEIGHED, the editor records WHAT WAS CHOSEN — and putting the analysis in the editor’s lane would collapse them, making the same party both analyse and decide. The subprocess’s own documentation refuses that: it produces options and a recommendation, and the authorisation belongs to the calling step.<br /><code class="language-plaintext highlighter-rouge">CallActivity_Evidence</code> sits in <code class="language-plaintext highlighter-rouge">Lane_Editor</code> instead, and that is not an inconsistency: the author performs the evidence retrieval, whereas here the point is that the analyst is not the decider.<br />On the trigger: <code class="language-plaintext highlighter-rouge">A_Frame</code> opens the subprocess on <code class="language-plaintext highlighter-rouge">opening-brief</code>’s trigger — irreversibility and surprise — and leaving there is a correct outcome. A spelling fix that reached <code class="language-plaintext highlighter-rouge">Task_ReviewFindings</code> with one mechanical finding exits immediately; a revise-or-discard on a block other content depends on does not.</td>
     </tr>
     <tr>
       <td><strong>Record the decision and its audit note</strong><br /><code class="language-plaintext highlighter-rouge">Task_RecordDecision</code></td>

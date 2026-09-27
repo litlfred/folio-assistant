@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790498515">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790498515">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790498515">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790498515">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790498515">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790498515">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790496158" defer></script>
+<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790498515" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -886,7 +886,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Adjudication</strong><br /><code class="language-plaintext highlighter-rouge">Call_Adjudicate</code></td>
       <td>Adjudicator</td>
       <td>calls <a href="criterion-adjudication.html">Criterion adjudication</a></td>
-      <td>folio-assistant’s adjudication: the adjudication leads, the checker’s entry is kept, and the dispensation carries its reason. Reviewers disagreeing on ONE criterion is a criterion disagreement, so this calls the QA-criterion specialisation (bean <code class="language-plaintext highlighter-rouge">bvuk</code>, owner 2026-09-23): the failing entry stands, the criterion does not apply to this screen, or a dispensation is granted with its reason. FOR THIS CALLER THE SPLIT WAS A REGRESSION, not a fix, and that is worth keeping because the PR that made it said the opposite. When <code class="language-plaintext highlighter-rouge">bvuk</code> moved the outcome half out of <code class="language-plaintext highlighter-rouge">adjudication.bpmn</code>, #1074 reported that all four remaining callers “no longer reach A_ScopeCriterion or A_Dispensation” and framed it as the intended effect. True for three of them, whose question never admitted those steps. Here it removed the two steps the sentence above already documents, so the call was left pointing at a shared judgement that no longer runs either. Repointing restores what the documentation always claimed rather than changing it. The entry condition matches exactly rather than approximately: GW_Agree asks whether the blind reviewers’ entries agree and takes <code class="language-plaintext highlighter-rouge">no</code> here, and <code class="language-plaintext highlighter-rouge">Process_CriterionAdjudication</code> starts at “entries for one criterion disagree” — R_Review records pass, warn or fail PER CRITERION with a reason, so the disagreement reaching this step is a per-criterion disagreement between reviewer entries and nothing else.</td>
+      <td>folio-assistant’s adjudication: the adjudication leads, the checker’s entry is kept, and the dispensation carries its reason. Reviewers disagreeing on ONE criterion is a criterion disagreement, so this calls the QA-criterion specialisation (bean <code class="language-plaintext highlighter-rouge">bvuk</code>, owner 2026-09-23): the failing entry stands, the criterion does not apply to this screen, or a dispensation is granted with its reason.<br />FOR THIS CALLER THE SPLIT WAS A REGRESSION, not a fix, and that is worth keeping because the PR that made it said the opposite. When <code class="language-plaintext highlighter-rouge">bvuk</code> moved the outcome half out of <code class="language-plaintext highlighter-rouge">adjudication.bpmn</code>, #1074 reported that all four remaining callers “no longer reach A_ScopeCriterion or A_Dispensation” and framed it as the intended effect. True for three of them, whose question never admitted those steps. Here it removed the two steps the sentence above already documents, so the call was left pointing at a shared judgement that no longer runs either. Repointing restores what the documentation always claimed rather than changing it.<br />The entry condition matches exactly rather than approximately: GW_Agree asks whether the blind reviewers’ entries agree and takes <code class="language-plaintext highlighter-rouge">no</code> here, and <code class="language-plaintext highlighter-rouge">Process_CriterionAdjudication</code> starts at “entries for one criterion disagree” — R_Review records pass, warn or fail PER CRITERION with a reason, so the disagreement reaching this step is a per-criterion disagreement between reviewer entries and nothing else.</td>
     </tr>
     <tr>
       <td><strong>Choose a candidate</strong><br /><code class="language-plaintext highlighter-rouge">Call_Choose</code></td>

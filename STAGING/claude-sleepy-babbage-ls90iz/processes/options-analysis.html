@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790498515">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790498515">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790498515">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790498515">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790498515">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790498515">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790496158" defer></script>
+<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790498515" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -784,7 +784,13 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><code class="language-plaintext highlighter-rouge">Process_OptionsAnalysis</code> · strict (defaulted) · 5 step(s)</p>
 
-<p>A decision reached by a NAMED methodology, with its rejected options recorded. Called as a subprocess, never run on its own. WHEN IT APPLIES: the trigger is <code class="language-plaintext highlighter-rouge">opening-brief</code>’s — IRREVERSIBILITY AND SURPRISE, not size. A reversible choice needs no subprocess; an irreversible one cannot skip it. A subprocess fired on every decision becomes ceremony, and ceremony is how a gate stops being read. WHY IT IS ONE SUBPROCESS AND NOT A BRANCH PER METHODOLOGY: the methodologies are parallel tracks selected by context, and the selection is a judgement made inside A_Select rather than a gateway. A gateway per methodology would assert the choice is computable from data, which is the claim <code class="language-plaintext highlighter-rouge">dmn</code> says to make only when the criteria recur. WHAT IT DOES NOT DO: it does not decide. It produces the options, their trade-offs and a recommendation; the decision and its authorisation belong to whoever owns the calling step.</p>
+<p>A decision reached by a NAMED methodology, with its rejected options recorded. Called as a subprocess, never run on its own.</p>
+
+<p>WHEN IT APPLIES: the trigger is <code class="language-plaintext highlighter-rouge">opening-brief</code>’s — IRREVERSIBILITY AND SURPRISE, not size. A reversible choice needs no subprocess; an irreversible one cannot skip it. A subprocess fired on every decision becomes ceremony, and ceremony is how a gate stops being read.</p>
+
+<p>WHY IT IS ONE SUBPROCESS AND NOT A BRANCH PER METHODOLOGY: the methodologies are parallel tracks selected by context, and the selection is a judgement made inside A_Select rather than a gateway. A gateway per methodology would assert the choice is computable from data, which is the claim <code class="language-plaintext highlighter-rouge">dmn</code> says to make only when the criteria recur.</p>
+
+<p>WHAT IT DOES NOT DO: it does not decide. It produces the options, their trade-offs and a recommendation; the decision and its authorisation belong to whoever owns the calling step.</p>
 
 <p><img src="../assets/img/workflows/options-analysis.svg" alt="BPMN diagram: Options analysis" style="max-width:100%" /></p>
 <h2 id="how-it-connects">
@@ -857,25 +863,25 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Select the methodology by context</strong><br /><code class="language-plaintext highlighter-rouge">A_Select</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/methodology-adoption.html"><code class="language-plaintext highlighter-rouge">methodology-adoption</code></a></td>
-      <td>Ask the selection question in order, first yes decides: do the criteria RECUR with the same inputs having to produce the same answer; is this the CERTAINTY of a body of evidence behind a recommendation; is the context a BEAN recording a decision; otherwise a one-off choice among candidates. If none fits, that is a finding — say which question the decision is and that no adopted methodology covers it. Do not improvise one and do not stretch the nearest fit. The declared set is the contents of the <code class="language-plaintext highlighter-rouge">methodology</code> graph. Ask for it; do not remember it.</td>
+      <td>Ask the selection question in order, first yes decides: do the criteria RECUR with the same inputs having to produce the same answer; is this the CERTAINTY of a body of evidence behind a recommendation; is the context a BEAN recording a decision; otherwise a one-off choice among candidates. If none fits, that is a finding — say which question the decision is and that no adopted methodology covers it. Do not improvise one and do not stretch the nearest fit.<br />The declared set is the contents of the <code class="language-plaintext highlighter-rouge">methodology</code> graph. Ask for it; do not remember it.</td>
     </tr>
     <tr>
       <td><strong>Check the selected methodology’s evidence base</strong><br /><code class="language-plaintext highlighter-rouge">A_CheckEvidence</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/literature-search.html"><code class="language-plaintext highlighter-rouge">literature-search</code></a></td>
-      <td>Before applying a methodology, establish that the thing being applied is what it claims to be. A methodology is adopted because it is somebody else’s named, external work; this step checks that the <code class="language-plaintext highlighter-rouge">origin</code> it cites resolves to a source in a declared library, and reads the <code class="language-plaintext highlighter-rouge">methodology-evidence</code> QA sidecar for it. WHY THE CHECK IS HERE AND NOT AT ADOPTION. Adoption happens once; selection happens every time a decision is made. A source that was reachable when the methodology was adopted can stop being so, and a methodology adopted before this axis existed was never checked at all. Measured 2026-09-22: six methodologies cited an origin and NONE had that source in any library, so every selection made until then rested on an unverifiable citation. WHAT A GAP DOES AND DOES NOT DO. A missing source does NOT block the decision, and this step has no branch that stops the process — that would make a documentation gap into an outage, and the owner decides whether an unbacked methodology may still be used. It does two things: it runs <code class="language-plaintext highlighter-rouge">literature-search</code> to try to close the gap, and it puts the evidence state into the record <code class="language-plaintext highlighter-rouge">A_Record</code> writes, so a reader can tell a decision made on a verified method from one made on a citation nobody could follow. The third state is the one that matters. “Source ingested”, “source located but unreachable from here” and “no source found” are three different facts, and <code class="language-plaintext highlighter-rouge">literature-search</code> exists largely to stop the middle one being reported as the last.</td>
+      <td>Before applying a methodology, establish that the thing being applied is what it claims to be. A methodology is adopted because it is somebody else’s named, external work; this step checks that the <code class="language-plaintext highlighter-rouge">origin</code> it cites resolves to a source in a declared library, and reads the <code class="language-plaintext highlighter-rouge">methodology-evidence</code> QA sidecar for it.<br />WHY THE CHECK IS HERE AND NOT AT ADOPTION. Adoption happens once; selection happens every time a decision is made. A source that was reachable when the methodology was adopted can stop being so, and a methodology adopted before this axis existed was never checked at all. Measured 2026-09-22: six methodologies cited an origin and NONE had that source in any library, so every selection made until then rested on an unverifiable citation.<br />WHAT A GAP DOES AND DOES NOT DO. A missing source does NOT block the decision, and this step has no branch that stops the process — that would make a documentation gap into an outage, and the owner decides whether an unbacked methodology may still be used. It does two things: it runs <code class="language-plaintext highlighter-rouge">literature-search</code> to try to close the gap, and it puts the evidence state into the record <code class="language-plaintext highlighter-rouge">A_Record</code> writes, so a reader can tell a decision made on a verified method from one made on a citation nobody could follow.<br />The third state is the one that matters. “Source ingested”, “source located but unreachable from here” and “no source found” are three different facts, and <code class="language-plaintext highlighter-rouge">literature-search</code> exists largely to stop the middle one being reported as the last.</td>
     </tr>
     <tr>
       <td><strong>Apply it, and state each option’s trade-offs</strong><br /><code class="language-plaintext highlighter-rouge">A_Apply</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/methodology-adoption.html"><code class="language-plaintext highlighter-rouge">methodology-adoption</code></a></td>
-      <td>Follow the selected methodology as written — adopted whole, not blended with another. At least two real options: one option is not a choice, and a straw option is worse than a short list because it makes the analysis look thorough while narrowing it. Never quantify the comparison to make it look measured. Where a method scores and sums, this platform takes the structure and refuses the arithmetic: the weights are invented and a total reads as a measurement.</td>
+      <td>Follow the selected methodology as written — adopted whole, not blended with another. At least two real options: one option is not a choice, and a straw option is worse than a short list because it makes the analysis look thorough while narrowing it.<br />Never quantify the comparison to make it look measured. Where a method scores and sums, this platform takes the structure and refuses the arithmetic: the weights are invented and a total reads as a measurement.</td>
     </tr>
     <tr>
       <td><strong>Record the recommendation AND the rejected options</strong><br /><code class="language-plaintext highlighter-rouge">A_Record</code></td>
       <td>Business analyst</td>
       <td><a href="../reference/skill-instructions/decision-audit.html"><code class="language-plaintext highlighter-rouge">decision-audit</code></a></td>
-      <td>The rejected options and why they lost are part of the output, not an appendix. A rejected option with no record is a dead end nobody marked, and the next agent walks into it — the same argument <code class="language-plaintext highlighter-rouge">bean-coordination</code> makes for <code class="language-plaintext highlighter-rouge">scrapped</code> over deleted. In a bean context the form is MADR’s. Which methodology was followed is named here, so a reader can check the method rather than take the conclusion.</td>
+      <td>The rejected options and why they lost are part of the output, not an appendix. A rejected option with no record is a dead end nobody marked, and the next agent walks into it — the same argument <code class="language-plaintext highlighter-rouge">bean-coordination</code> makes for <code class="language-plaintext highlighter-rouge">scrapped</code> over deleted.<br />In a bean context the form is MADR’s. Which methodology was followed is named here, so a reader can check the method rather than take the conclusion.</td>
     </tr>
   </tbody>
 </table></div>
@@ -901,7 +907,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <tbody>
     <tr>
       <td><strong>Irreversible or surprising?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Trigger</code></td>
-      <td><code class="language-plaintext highlighter-rouge">A_Frame</code> has always ENDED with this question — “is this irreversible, or would the answer surprise someone? If neither, say so and stop; the calling step decides without this subprocess. Stopping here is a correct outcome, not a skipped step.” Until this gateway existed, the diagram gave it NO WAY TO STOP: <code class="language-plaintext highlighter-rouge">A_Frame</code>’s only outgoing edge went to <code class="language-plaintext highlighter-rouge">A_Select</code>, so the prose promised a branch the model did not have. Found by adding the second caller, not by reading. With one caller the straight line looked fine; wiring <code class="language-plaintext highlighter-rouge">editing-hci-validation</code> made every write in that process run all four activities, and its corpus-gate tests failed with “Task_RecordDecision is not enabled. Enabled now: A_Frame.” That is the ceremony this process’s own documentation refuses — “a subprocess fired on every decision becomes ceremony, and ceremony is how a gate stops being read” — and it was unreachable as a criticism while the subprocess had a single caller. DELIBERATELY NOT DMN-BACKED, unlike the gateways that are. Irreversibility and surprise are judged, not computed: <code class="language-plaintext highlighter-rouge">dmn</code> says to claim computability only when the criteria recur with the same inputs having to produce the same answer, and “would this surprise someone” does not. So the outcome is supplied by whoever is at the step, exactly as <code class="language-plaintext highlighter-rouge">Gateway_EditorDecision</code> takes one.</td>
+      <td><code class="language-plaintext highlighter-rouge">A_Frame</code> has always ENDED with this question — “is this irreversible, or would the answer surprise someone? If neither, say so and stop; the calling step decides without this subprocess. Stopping here is a correct outcome, not a skipped step.” Until this gateway existed, the diagram gave it NO WAY TO STOP: <code class="language-plaintext highlighter-rouge">A_Frame</code>’s only outgoing edge went to <code class="language-plaintext highlighter-rouge">A_Select</code>, so the prose promised a branch the model did not have.<br />Found by adding the second caller, not by reading. With one caller the straight line looked fine; wiring <code class="language-plaintext highlighter-rouge">editing-hci-validation</code> made every write in that process run all four activities, and its corpus-gate tests failed with “Task_RecordDecision is not enabled. Enabled now: A_Frame.” That is the ceremony this process’s own documentation refuses — “a subprocess fired on every decision becomes ceremony, and ceremony is how a gate stops being read” — and it was unreachable as a criticism while the subprocess had a single caller.<br />DELIBERATELY NOT DMN-BACKED, unlike the gateways that are. Irreversibility and surprise are judged, not computed: <code class="language-plaintext highlighter-rouge">dmn</code> says to claim computability only when the criteria recur with the same inputs having to produce the same answer, and “would this surprise someone” does not. So the outcome is supplied by whoever is at the step, exactly as <code class="language-plaintext highlighter-rouge">Gateway_EditorDecision</code> takes one.</td>
       <td><strong>yes</strong> → Select the methodology by context<br /><strong>no</strong> → Trigger not met — the caller decides without an analysis</td>
     </tr>
   </tbody>

@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790498515">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790498515">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790498515">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790498515">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790498515">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790498515">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790496158" defer></script>
+<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790498515" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -784,17 +784,17 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><code class="language-plaintext highlighter-rouge">Process_CiHealth</code> · strict · 4 step(s)</p>
 
-<p>A WORKFLOW’S OUTCOME IS INVISIBLE FROM A CHECKOUT. Bean <code class="language-plaintext highlighter-rouge">xom7</code>: one workflow here fired on every push to <code class="language-plaintext highlighter-rouge">main</code> and FAILED ALL 30 TIMES OVER TWO MONTHS with nothing in the repository saying so. This is the backstop.
+<p>A WORKFLOW’S OUTCOME IS INVISIBLE FROM A CHECKOUT. Bean <code class="language-plaintext highlighter-rouge">xom7</code>: one workflow here fired on every push to <code class="language-plaintext highlighter-rouge">main</code> and FAILED ALL 30 TIMES OVER TWO MONTHS with nothing in the repository saying so. This is the backstop.</p>
 
-WEEKLY, NOT DAILY, and the cadence is an argument rather than a default: the defect is “nobody noticed for two months”, not “nobody noticed for a day”, and the session-start sweep already covers every day somebody is working. A weekly run bounds the blind spot to seven days without turning the tracking issue into a feed.
+<p>WEEKLY, NOT DAILY, and the cadence is an argument rather than a default: the defect is “nobody noticed for two months”, not “nobody noticed for a day”, and the session-start sweep already covers every day somebody is working. A weekly run bounds the blind spot to seven days without turning the tracking issue into a feed.</p>
 
-<code class="language-plaintext highlighter-rouge">Could we tell?</code> IS NOT SIMPLY THE EXIT CODE, and that is the subtlety worth drawing. <code class="language-plaintext highlighter-rouge">bun</code> exits 1 on an uncaught exception as well as on a live failure, so exit 1 alone does not separate “found something red” from “crashed”. The REPORT FILE separates them: <code class="language-plaintext highlighter-rouge">--out</code> writes it before any exit path, so a genuine red always has one and a crash before that point does not. Exit 1 with no report is reclassified as <code class="language-plaintext highlighter-rouge">unknown</code>. Without that, a crash would open a tracking issue quoting a stale file.
+<p><code class="language-plaintext highlighter-rouge">Could we tell?</code> IS NOT SIMPLY THE EXIT CODE, and that is the subtlety worth drawing. <code class="language-plaintext highlighter-rouge">bun</code> exits 1 on an uncaught exception as well as on a live failure, so exit 1 alone does not separate “found something red” from “crashed”. The REPORT FILE separates them: <code class="language-plaintext highlighter-rouge">--out</code> writes it before any exit path, so a genuine red always has one and a crash before that point does not. Exit 1 with no report is reclassified as <code class="language-plaintext highlighter-rouge">unknown</code>. Without that, a crash would open a tracking issue quoting a stale file.</p>
 
-THE THIRD STATE IS THE WHOLE POINT, AND IT IS THE ONLY ONE THAT FAILS THE JOB. Verified 2026-09-20 by reading the <code class="language-plaintext highlighter-rouge">if:</code> guards: <code class="language-plaintext highlighter-rouge">unknown</code> runs <code class="language-plaintext highlighter-rouge">exit 1</code>; a finding does NOT. A repository in trouble leaves this workflow GREEN and speaks through the tracking issue, while a sweep that could not look turns the job red. That inversion is deliberate and is invisible from the run list, which is the argument for drawing it.
+<p>THE THIRD STATE IS THE WHOLE POINT, AND IT IS THE ONLY ONE THAT FAILS THE JOB. Verified 2026-09-20 by reading the <code class="language-plaintext highlighter-rouge">if:</code> guards: <code class="language-plaintext highlighter-rouge">unknown</code> runs <code class="language-plaintext highlighter-rouge">exit 1</code>; a finding does NOT. A repository in trouble leaves this workflow GREEN and speaks through the tracking issue, while a sweep that could not look turns the job red. That inversion is deliberate and is invisible from the run list, which is the argument for drawing it.</p>
 
-ONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue — a feed nobody reads is the failure mode a watchdog invites. On <code class="language-plaintext highlighter-rouge">unknown</code> the issue is left UNTOUCHED: not closed, not opened, not edited. Closing it would assert the thing the sweep just failed to establish.
+<p>ONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue — a feed nobody reads is the failure mode a watchdog invites. On <code class="language-plaintext highlighter-rouge">unknown</code> the issue is left UNTOUCHED: not closed, not opened, not edited. Closing it would assert the thing the sweep just failed to establish.</p>
 
-<code class="language-plaintext highlighter-rouge">Ensure the tracking label exists</code> sits AFTER <code class="language-plaintext highlighter-rouge">Could we tell?</code> and before the split, because both issue paths need the label — the clean path filters on it too, and on a repository where nothing has ever gone wrong it would not otherwise exist. It is skipped on <code class="language-plaintext highlighter-rouge">unknown</code>, where neither path runs and a label hiccup must not be what fails the job.</p>
+<p><code class="language-plaintext highlighter-rouge">Ensure the tracking label exists</code> sits AFTER <code class="language-plaintext highlighter-rouge">Could we tell?</code> and before the split, because both issue paths need the label — the clean path filters on it too, and on a repository where nothing has ever gone wrong it would not otherwise exist. It is skipped on <code class="language-plaintext highlighter-rouge">unknown</code>, where neither path runs and a label hiccup must not be what fails the job.</p>
 
 <p><img src="../assets/img/workflows/ci-health-watch.svg" alt="BPMN diagram: Is CI actually working on the default branch?" style="max-width:100%" /></p>
 <h2 id="how-it-connects">

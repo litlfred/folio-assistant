@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790498515">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790498515">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790498515">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790498515">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790498515">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790498515">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790496158" defer></script>
+<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790498515" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -784,7 +784,18 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><code class="language-plaintext highlighter-rouge">Process_IngestTheme</code> · advisory · 5 step(s)</p>
 
-<p>folio-assistant — Ingestion subprocess — ingest a theme. Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it by <code class="language-plaintext highlighter-rouge">bun run render:bpmn</code> — never hand-edit the SVG. The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared work plan in beans/. Bean j66n. One Theme node with kind sticky | webpage | publication, not three node kinds: the palette vocabulary is shared and only the GEOMETRY varies.</cat-harness.processes:bean></bootstrap.processes:skill></p>
+<p>folio-assistant — Ingestion subprocess — ingest a theme.</p>
+
+<p>Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+by <code class="language-plaintext highlighter-rouge">bun run render:bpmn</code> — never hand-edit the SVG.</p>
+
+<p>The <bootstrap.processes:skill> extension on an activity names the folio-assistant skill
+that implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared
+work plan in beans/.</cat-harness.processes:bean></bootstrap.processes:skill></p>
+
+<p>Bean j66n. One Theme node with kind sticky | webpage | publication, not three
+node kinds: the palette vocabulary is shared and only the GEOMETRY varies.</p>
 
 <p><img src="../assets/img/workflows/ingest-theme.svg" alt="BPMN diagram: Ingestion subprocess — ingest a theme" style="max-width:100%" /></p>
 <h2 id="how-it-connects">
@@ -875,7 +886,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Theme and UI review</strong><br /><code class="language-plaintext highlighter-rouge">Task_Review</code></td>
       <td>Ingestion Engine (agent, runs unattended)</td>
       <td>calls <a href="theme-ui-review.html">Theme and UI review — at ingestion</a><br /><a href="../reference/skill-instructions/theme-ui-review.html"><code class="language-plaintext highlighter-rouge">theme-ui-review</code></a></td>
-      <td>THEME REVIEW HAPPENS HERE AND NOWHERE ELSE. Owner, 2026-09-23: “theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI”; asked directly on 2026-09-24 whether that meant ONLY at ingestion: “Yes only at ingestion”. Bean <code class="language-plaintext highlighter-rouge">9fdi</code>. So this step now CALLS <code class="language-plaintext highlighter-rouge">theme-ui-review.bpmn</code> rather than performing one automated check out of it. Until 2026-09-24 it carried a <code class="language-plaintext highlighter-rouge">folio:no-call</code> reason — “calling it would put a human gate into an automated ingest” — and the review ran post-MVP from <code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code> instead. That call is gone, and the reason for not calling is withdrawn rather than left standing beside a call it contradicts. WHAT THE CALL COSTS, stated rather than hidden. The subprocess has a human step, <code class="language-plaintext highlighter-rouge">R_Judge</code>: a person looks at the ingested assets laid out in their design at a web and a mobile width. So ingesting a THEME SOURCE is attended at that step. Ingesting anything else stays unattended — <code class="language-plaintext highlighter-rouge">Gateway_ThemeSource</code> in <code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code> routes non-theme documents past this subprocess entirely. THE OLD AUTOMATED CHECK IS INSIDE THE CALL, NOT DROPPED. “A theme sets the stripe’s hue; it never sets its width to zero” — colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide agrees (“Never red with green, never blue with yellow”). That check is <code class="language-plaintext highlighter-rouge">A_Accessibility</code> in the called process, which measures contrast against the real ground and requires a non-colour channel wherever colour carries meaning.</td>
+      <td>THEME REVIEW HAPPENS HERE AND NOWHERE ELSE. Owner, 2026-09-23: “theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI”; asked directly on 2026-09-24 whether that meant ONLY at ingestion: “Yes only at ingestion”. Bean <code class="language-plaintext highlighter-rouge">9fdi</code>.<br />So this step now CALLS <code class="language-plaintext highlighter-rouge">theme-ui-review.bpmn</code> rather than performing one automated check out of it. Until 2026-09-24 it carried a <code class="language-plaintext highlighter-rouge">folio:no-call</code> reason — “calling it would put a human gate into an automated ingest” — and the review ran post-MVP from <code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code> instead. That call is gone, and the reason for not calling is withdrawn rather than left standing beside a call it contradicts.<br />WHAT THE CALL COSTS, stated rather than hidden. The subprocess has a human step, <code class="language-plaintext highlighter-rouge">R_Judge</code>: a person looks at the ingested assets laid out in their design at a web and a mobile width. So ingesting a THEME SOURCE is attended at that step. Ingesting anything else stays unattended — <code class="language-plaintext highlighter-rouge">Gateway_ThemeSource</code> in <code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code> routes non-theme documents past this subprocess entirely.<br />THE OLD AUTOMATED CHECK IS INSIDE THE CALL, NOT DROPPED. “A theme sets the stripe’s hue; it never sets its width to zero” — colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide agrees (“Never red with green, never blue with yellow”). That check is <code class="language-plaintext highlighter-rouge">A_Accessibility</code> in the called process, which measures contrast against the real ground and requires a non-colour channel wherever colour carries meaning.</td>
     </tr>
   </tbody>
 </table></div>

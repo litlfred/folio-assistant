@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/docs-ui.css?v=1790498515">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/narrow-viewport.css?v=1790498515">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/work-plan.css?v=1790498515">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/themes.css?v=1790498515">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/uml.css?v=1790498515">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790496158">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/css/avatars.css?v=1790498515">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790496158" defer></script>
+<script src="/folio-assistant/STAGING/claude-sleepy-babbage-ls90iz/assets/js/docs-ui.js?v=1790498515" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -784,7 +784,11 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p><code class="language-plaintext highlighter-rouge">Process_CodeChangeReview</code> · strict · 11 step(s)</p>
 
-<p>Getting a change to the PLATFORM from “this is needed” to merged: claim the work, branch and announce it, make the change, prove it against the platform’s own gates, and carry it through review to a merge somebody else is not left holding. You are in this process for a change to folio-assistant itself. <code class="language-plaintext highlighter-rouge">content-change-review</code> is the same shape for a folio’s content, and the acceptance differs: here a code reviewer judges the engineering, there a review committee judges the editorial. The loop back through “root-cause the failure” is the point of drawing this at all. Red CI is not a state you report and leave; it is a state you re-enter the process from. The same is true of a review that is not clear.</p>
+<p>Getting a change to the PLATFORM from “this is needed” to merged: claim the work, branch and announce it, make the change, prove it against the platform’s own gates, and carry it through review to a merge somebody else is not left holding.</p>
+
+<p>You are in this process for a change to folio-assistant itself. <code class="language-plaintext highlighter-rouge">content-change-review</code> is the same shape for a folio’s content, and the acceptance differs: here a code reviewer judges the engineering, there a review committee judges the editorial.</p>
+
+<p>The loop back through “root-cause the failure” is the point of drawing this at all. Red CI is not a state you report and leave; it is a state you re-enter the process from. The same is true of a review that is not clear.</p>
 
 <p><img src="../assets/img/workflows/code-change-review.svg" alt="BPMN diagram: Code change and review" style="max-width:100%" /></p>
 <h2 id="how-it-connects">
@@ -861,67 +865,67 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Claim the work item</strong><br /><code class="language-plaintext highlighter-rouge">Task_ClaimBean</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a></td>
-      <td>Claim before you work. A claim ANNOUNCES rather than reserves until the PR exists, which is why the branch is announced at the next step and not at the end.</td>
+      <td>Claim before you work. A claim ANNOUNCES rather than reserves until<br />the PR exists, which is why the branch is announced at the next<br />step and not at the end.</td>
     </tr>
     <tr>
       <td><strong>Branch, and announce it</strong><br /><code class="language-plaintext highlighter-rouge">Task_BranchAndAnnounce</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/issue-working.html"><code class="language-plaintext highlighter-rouge">issue-working</code></a></td>
-      <td>Announce the branch WHEN IT IS CREATED, not when the work is done. The gap between one agent’s view of an issue and everyone else’s is what this closes.</td>
+      <td>Announce the branch WHEN IT IS CREATED, not when the work is done.<br />The gap between one agent’s view of an issue and everyone else’s is<br />what this closes.</td>
     </tr>
     <tr>
       <td><strong>Make the change</strong><br /><code class="language-plaintext highlighter-rouge">Task_Implement</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a></td>
-      <td>The loop’s only open-ended step. Everything around it is procedure; this is the work.</td>
+      <td>The loop’s only open-ended step. Everything around it is procedure;<br />this is the work.</td>
     </tr>
     <tr>
       <td><strong>Run the platform’s own gates</strong><br /><code class="language-plaintext highlighter-rouge">Task_RunGates</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a></td>
-      <td>Before pushing, not after CI says so. <code class="language-plaintext highlighter-rouge">bun test</code> passing is NOT the gates passing: measured 2026-09-19, a green unit suite sat beside a <code class="language-plaintext highlighter-rouge">tsc</code> failure and a missing <code class="language-plaintext highlighter-rouge">@graphNode</code> tag, and the second broke a QA sidecar comparison as well — one cause, two symptoms, and an agent running only the tests would have pushed all three.</td>
+      <td>Before pushing, not after CI says so. <code class="language-plaintext highlighter-rouge">bun test</code> passing is NOT the<br />gates passing: measured 2026-09-19, a green unit suite sat beside a<br /><code class="language-plaintext highlighter-rouge">tsc</code> failure and a missing <code class="language-plaintext highlighter-rouge">@graphNode</code> tag, and the second broke<br />a QA sidecar comparison as well — one cause, two symptoms, and an<br />agent running only the tests would have pushed all three.</td>
     </tr>
     <tr>
       <td><strong>Commit, push, open the PR</strong><br /><code class="language-plaintext highlighter-rouge">Task_CommitAndOpenPR</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a></td>
-      <td>The PR opens at the FIRST commit, even on a stub, and permission is never asked for it. Holding a green PR back for someone to look at is not caution — it is a blocked reviewer.</td>
+      <td>The PR opens at the FIRST commit, even on a stub, and permission is<br />never asked for it. Holding a green PR back for someone to look at<br />is not caution — it is a blocked reviewer.</td>
     </tr>
     <tr>
       <td><strong>Root-cause the failure</strong><br /><code class="language-plaintext highlighter-rouge">Task_Diagnose</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/ci-health.html"><code class="language-plaintext highlighter-rouge">ci-health</code></a></td>
-      <td>“Flake” is not a root cause. A red PR is work now, whatever its review state — only a green, mergeable head waits on reviewers.</td>
+      <td>“Flake” is not a root cause. A red PR is work now, whatever its<br />review state — only a green, mergeable head waits on reviewers.</td>
     </tr>
     <tr>
       <td><strong>Address the review</strong><br /><code class="language-plaintext highlighter-rouge">Task_AddressReview</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/watch.html"><code class="language-plaintext highlighter-rouge">watch</code></a></td>
-      <td>Every finding is answered — implemented, or replied to with why not. A design question does not excuse skipping the nits in the same review.</td>
+      <td>Every finding is answered — implemented, or replied to with why<br />not. A design question does not excuse skipping the nits in the<br />same review.</td>
     </tr>
     <tr>
       <td><strong>Prepare the merge, and watch it through</strong><br /><code class="language-plaintext highlighter-rouge">Task_PrepareMerge</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a></td>
-      <td><code class="language-plaintext highlighter-rouge">prepare-merge</code> brings the base in, re-runs the gates and pushes — it does NOT merge. <code class="language-plaintext highlighter-rouge">watch</code> follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition.</td>
+      <td><code class="language-plaintext highlighter-rouge">prepare-merge</code> brings the base in, re-runs the gates and pushes —<br />it does NOT merge. <code class="language-plaintext highlighter-rouge">watch</code> follows the PR until it is merged or<br />closed, because webhooks do not reliably deliver CI success or a<br />merge-conflict transition.</td>
     </tr>
     <tr>
       <td><strong>Record what was done, and close</strong><br /><code class="language-plaintext highlighter-rouge">Task_CloseBean</code></td>
       <td>Authoring agent</td>
       <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
-      <td>A closed work item is read later by somebody deciding whether to reopen the subject, so “completed” with nothing behind it cannot be audited. An ISSUE is never closed on the agent’s own say-so.</td>
+      <td>A closed work item is read later by somebody deciding whether to<br />reopen the subject, so “completed” with nothing behind it cannot be<br />audited. An ISSUE is never closed on the agent’s own say-so.</td>
     </tr>
     <tr>
       <td><strong>Run the gates against the merge of head into base</strong><br /><code class="language-plaintext highlighter-rouge">Task_RunCI</code></td>
       <td>CI/CD pipeline</td>
       <td>—</td>
-      <td>CI tests the MERGE, not the branch. That is why a locally green tree can go red here: the agent’s tree and the merge result are different trees, and the difference is invisible from a checkout.</td>
+      <td>CI tests the MERGE, not the branch. That is why a locally green<br />tree can go red here: the agent’s tree and the merge result are<br />different trees, and the difference is invisible from a checkout.</td>
     </tr>
     <tr>
       <td><strong>Review the change</strong><br /><code class="language-plaintext highlighter-rouge">Task_Review</code></td>
       <td>Code reviewer</td>
       <td><a href="../reference/skill-instructions/code-node-review.html"><code class="language-plaintext highlighter-rouge">code-node-review</code></a></td>
-      <td>A human or an agent acting AS reviewer. Nothing is a reviewer; somebody acts as one for the duration of this lane.</td>
+      <td>A human or an agent acting AS reviewer. Nothing is a reviewer;<br />somebody acts as one for the duration of this lane.</td>
     </tr>
   </tbody>
 </table></div>
