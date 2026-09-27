@@ -2184,15 +2184,15 @@
     },
     {
       "id": "folio-assistant-cpss",
-      "title": "108 checks in the code-quality job cannot fire: the deliberately-red drift gate is the 3rd of 106 in one `set -e` batch",
-      "status": "todo",
+      "title": "The deliberately-red drift gate masked 104 checks from inside a `set -e` batch — moved to last, and enforced",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T18:09:12Z",
-      "updatedAt": "2026-09-26T20:10:30Z",
+      "updatedAt": "2026-09-27T05:02:36Z",
       "preview": "Measured while fixing an unrelated finding (bean `9x01`), so the population below\nis exact and the recommendation is not.\n\n## What is unreachable\n\n`.github/workflows/code-quality-gates.yml`, job `gates`: **46 steps**, and the\nstep named *\"gates that were registered and never run\"* is **step 40**. A job\nstops at its first failing step, and that step's batch contains\n`translation:drift:check`, which",
       "file": "beans/defs/folio-assistant-cpss--six-gates-in-the-code-quality-job-cannot-fire-the.md"
     },
