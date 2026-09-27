@@ -1092,3 +1092,26 @@ test.describe("the page list has a heading and folds — owner, 2026-09-27", () 
     await expect(page.locator(".site-nav")).toBeVisible();
   });
 });
+
+test.describe("the avatar opens and closes the bar — owner, 2026-09-27", () => {
+  // "navbar starts hidden, click avatar opens for a split second then returns
+  // to hidden": the avatar was the home link, so a click reloaded the page.
+  test("one click pins the bar open, a second closes it, and neither navigates", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await load(page, CUSTOM);
+    await page.locator(".site-title").evaluate((a) => a.setAttribute("href", "http://navbar.fixture/elsewhere"));
+    const avatar = page.locator(".side-bar .site-title");
+    await expect(avatar).toHaveAttribute("aria-expanded", "false");
+    await avatar.click();
+    expect(page.url()).toBe("http://navbar.fixture/nav");
+    expect(await page.locator("#fa-nav-open").isChecked()).toBe(true);
+    await expect(avatar).toHaveAttribute("aria-expanded", "true");
+    await avatar.click();
+    expect(page.url()).toBe("http://navbar.fixture/nav");
+    expect(await page.locator("#fa-nav-open").isChecked()).toBe(false);
+    expect(await page.evaluate(() => localStorage.getItem("fa-nav"))).toBe("closed");
+    // Closed means closed: not held open by the avatar's focus.
+    await page.mouse.move(900, 400);
+    await expect.poll(async () => (await page.locator(".side-bar").boundingBox())!.width).toBeLessThan(100);
+  });
+});
