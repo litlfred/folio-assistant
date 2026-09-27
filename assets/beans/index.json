@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 426,
+      "count": 429,
       "unit": "beans"
     }
   },
@@ -1385,6 +1385,20 @@
       "file": "beans/defs/folio-assistant-7po1--workflows-bootstrap-keeps-the-bare-minimum-cat-har.md"
     },
     {
+      "id": "folio-assistant-7ppv",
+      "title": "resolveCanonicalLean is O(refs x tree) without a cache, and its two index builders walk .lake/ while listPackageLeanFiles excludes it",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T09:37:16Z",
+      "updatedAt": "2026-09-27T09:41:47Z",
+      "preview": "Found 2026-09-27 while moving the resolver from `content/pipeline/qa-utils.ts`\ninto `content/pipeline/lean-formal-ref.ts` (PR #1465). **The code is unchanged**\n— it moved verbatim — so this is a pre-existing cost, not a regression, and it\nis filed because it was measured rather than because the move introduced it.\n\n## What is measured\n\n`resolveCanonicalLean(ref, repoRoot, cache?)` takes an OPTIONA",
+      "file": "beans/defs/folio-assistant-7ppv--resolvecanonicallean-is-orefs-x-tree-without-a-cac.md"
+    },
+    {
       "id": "folio-assistant-7s52",
       "title": "staging-review hands a reader URLs the AGENT cannot open — but the publish ref is a git branch",
       "status": "in-progress",
@@ -1523,6 +1537,20 @@
       "updatedAt": "2026-09-21T19:50:20Z",
       "preview": "Owner, 2026-09-21: a thorough analysis of the existing documentation AND skills, consolidated, in ONE voice. All of the documentation eventually; **bootstrap and cat-harness first**.\n\n**Two structural asks:**\n- **Reuse content between `skills/` and `docs/`** so both consolidate, with the docs pointing at the skill for rendering where the skill was written correctly.\n- **Some documentation will nee",
       "file": "beans/defs/folio-assistant-88mg--consolidation-one-voice-over-bootstrap-and-cat-har.md"
+    },
+    {
+      "id": "folio-assistant-89wq",
+      "title": "Four QA checkers are unconditional n/a stubs — 8949 sidecar entries indistinguishable from a correct decline, two of them proof-build-green / proof-no-axiom-growth",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T10:37:00Z",
+      "updatedAt": "2026-09-27T10:37:00Z",
+      "preview": "Measured 2026-09-27 against this branch's `cat-harness/`, and cross-checked\nagainst qou's committed sidecars at platform pin `37a36ce`.\n\n## Four exported checkers whose entire body is `return { result: \"n/a\", hits: [] }`\n\nFound by parsing every `export function check*` in\n`cat-harness/content/pipeline/qa-checkers*.ts` and keeping those with exactly\none `return` statement, which returns `n/a`:\n\n| c",
+      "file": "beans/defs/folio-assistant-89wq--four-qa-checkers-are-unconditional-na-stubs-8949-s.md"
     },
     {
       "id": "folio-assistant-8i57",
@@ -2052,7 +2080,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T11:26:16Z",
-      "updatedAt": "2026-09-26T13:49:29Z",
+      "updatedAt": "2026-09-27T09:37:00Z",
       "preview": "Found 2026-09-26 while establishing whether `kg:detangle:check` was `hloc`'s\nfailure or `main`'s. It was neither — it was the container.\n\n## The measurement\n\n`bun run gates` in this checkout rewrote\n`cat-harness/test/results/detangle/cat-harness/schemas.detangle.json`:\n\n```\n-  \"size\": 229,       +  \"size\": 1443,\n-  \"internal\": 125,   +  \"internal\": 709,\n-  \"cohesion\": 0.82,  +  \"cohesion\": 0.96,\n`",
       "file": "beans/defs/folio-assistant-biz4--an-untracked-kg-at-the-container-root-silently-inf.md"
     },
@@ -3993,6 +4021,20 @@
       "updatedAt": "2026-09-21T20:12:17Z",
       "preview": "Reported by the owner, 2026-09-21, as a bare fact: the staging URL **404s**.\nIt was not propagation.\n\n## Measured on `gh-pages`, not inferred\n\nThis branch's preview has been **deleted four times today**, each time by the\n`cleanup` job firing when one of this session's own PRs merged:\n\n```\ncf39207d  staging(cleanup): remove STAGING/claude-lhs-…  (PR #786 closed)\n05f5cfae  staging(cleanup): remove S",
       "file": "beans/defs/folio-assistant-oz5w--staging-cleanup-vs-branch-reuse-merging-pr-n-delet.md"
+    },
+    {
+      "id": "folio-assistant-p11x",
+      "title": "check:partition cannot see cross-instance edges: its ROOT is cat-harness/, so every 0 it reports is scoped to one instance",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T09:52:20Z",
+      "updatedAt": "2026-09-27T09:52:59Z",
+      "preview": "Opened 2026-09-27 because **`bf5l` asked for it and it did not exist.** That\nbean's closing section says, of making the blind checks see the edge it found:\n*\"Making the blind checks see it is NOT done here … it wants its own bean.\"* A\ncorpus-grep across `beans/defs/` and `beans/defs/archive/` found no such bean, so\n`bf5l` completed with its follow-up unrecorded.\n\n## What is measured\n\nVerified dire",
+      "file": "beans/defs/folio-assistant-p11x--checkpartition-cannot-see-cross-instance-edges-its.md"
     },
     {
       "id": "folio-assistant-p5wm",

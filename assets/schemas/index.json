@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 177,
+      "count": 178,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -430,6 +430,14 @@
       "name": "folio-graph-kind",
       "graphNode": "schema",
       "summary": "The `folio` graph kind — registered by **core**, not declared by the harness.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/formal-ref.ts",
+      "instance": "cat-harness",
+      "name": "formal-ref",
+      "graphNode": "schema",
+      "summary": "Dependency injection point for FORMAL REFERENCES — the `lean:` field's",
       "isTest": false
     },
     {
@@ -8349,7 +8357,7 @@
       "fields": [
         {
           "name": "ref",
-          "type": "z .string() .min(1, \"Lean ref is required\") .regex( LEAN_REF_PATTERN, // Error message doubles as migration guidance fo…",
+          "type": "z .string() .min(1, \"Lean ref is required\") .superRefine((value, ctx) => { if (formalRefPattern().test(value)) return; …",
           "optional": false,
           "array": false
         },
@@ -8390,7 +8398,8 @@
         "cat-harness/schemas/constraints.ts#LeanValidationSchema"
       ],
       "unresolved": [
-        "LEAN_REF_PATTERN"
+        "formalRefPattern",
+        "formalRefPatternMessage"
       ],
       "external": [
         "z"
@@ -12648,6 +12657,106 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/formal-ref.ts#FormalRefResolution",
+      "name": "FormalRefResolution",
+      "module": "cat-harness/schemas/formal-ref.ts",
+      "kind": "interface",
+      "doc": "What a formal reference resolves to, expressed in terms core already",
+      "fields": [
+        {
+          "name": "candidatePaths",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Candidate source files, **repo-root-relative**, in priority order."
+        },
+        {
+          "name": "fallbackPaths",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "Weaker candidates, tried only after {@link candidatePaths} and only by a"
+        },
+        {
+          "name": "declName",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The bare declaration name, for a `grep -rl` fallback and for the"
+        },
+        {
+          "name": "searchDir",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Directory to search when the candidate paths all miss, **repo-root-relative**,"
+        },
+        {
+          "name": "basename",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The basename a whole-tree scan should look for (`<declName>.lean` for the"
+        },
+        {
+          "name": "treeRoot",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Root the basename scan is confined to, repo-root-relative. Distinct from"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/formal-ref.ts#FormalRefResolverAPI",
+      "name": "FormalRefResolverAPI",
+      "module": "cat-harness/schemas/formal-ref.ts",
+      "kind": "interface",
+      "doc": "The contract a formalism layer implements.",
+      "fields": [
+        {
+          "name": "refPattern",
+          "type": "RegExp",
+          "optional": true,
+          "array": false,
+          "doc": "The shape a reference of this formalism must have, and the message to"
+        },
+        {
+          "name": "refPatternMessage",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Failure message for {@link refPattern}, in the layer's own vocabulary."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/formal-ref.ts#FormalTreeCache",
+      "name": "FormalTreeCache",
+      "module": "cat-harness/schemas/formal-ref.ts",
+      "kind": "type-alias",
+      "doc": "A resolver's own scan cache, threaded through by bulk callers so a source",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
