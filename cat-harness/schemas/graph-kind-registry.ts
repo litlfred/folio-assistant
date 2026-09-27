@@ -1084,8 +1084,20 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // content.
     holds: "state",
     // declared-path-literal: this table IS the declaration, as on `health`.
+    // EVERY nested kind's `$schema` family belongs here, not only on the child.
+    // `check:kind-validators` routes a node by the family map of the kind whose
+    // DIRECTORY contains it, and the directory is `beans/` — so a family
+    // declared solely on the child is unmapped the moment a node of it exists.
+    // `folio-workflow-instance/v1` is `workflow-state`'s family and was already
+    // here for exactly this reason; `folio-session-survey/v1` is
+    // `session-survey`'s and was not, because until 2026-09-27 no survey had
+    // ever been published and a map with no nodes cannot be caught failing to
+    // route one (`1xhc`).
     nodeSchemas: {
       "folio-workflow-instance/v1": { shape: "src/workflow/instance.ts#InstanceState" },
+      // Runnable, unlike its neighbour: `SessionSurveySchema` is a Zod schema,
+      // so a published survey is PARSED rather than merely typed.
+      "folio-session-survey/v1": { validator: "schemas/session-survey.ts#SessionSurveySchema" },
     },
     recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:
