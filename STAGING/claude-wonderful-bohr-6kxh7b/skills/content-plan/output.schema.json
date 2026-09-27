@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-wonderful-bohr-6kxh7b/skills/content-plan/output.schema.json",
+  "title": "Content Plan Output",
+  "description": "Output schema for content planning.",
+  "type": "object",
+  "required": [
+    "plan"
+  ],
+  "properties": {
+    "plan": {
+      "type": "object",
+      "required": [
+        "projectName",
+        "sprints",
+        "team"
+      ],
+      "properties": {
+        "projectName": {
+          "type": "string"
+        },
+        "sprints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "number": {
+                "type": "integer"
+              },
+              "startDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "endDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "goals": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "team": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "actorId": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "responsibilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/wonderful-bohr-6kxh7b",
+    "sha": "e9b8a1c4c9269e74b192c098cbe95bd2c7231689",
+    "pr": "1468/merge",
+    "run": "36313564275"
+  }
+}
