@@ -5,7 +5,8 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-27T09:37:16Z
-updated_at: 2026-09-27T09:38:05Z
+updated_at: 2026-09-27T09:41:47Z
+parent: folio-assistant-1swy
 ---
 
 Found 2026-09-27 while moving the resolver from `content/pipeline/qa-utils.ts`
