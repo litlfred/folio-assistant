@@ -276,18 +276,18 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-27T05:06:37.225Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/781fb057fc7edf55d4d68190f6501fac52331fb6",
-  "sourceCommitSha": "781fb057fc7edf55d4d68190f6501fac52331fb6",
-  "sourceCommitAt": "2026-09-27T05:02:19Z",
+  "generatedAt": "2026-09-27T05:20:09.705Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4881940ce1734d8e1ebdb7cbf53e77654c66309e",
+  "sourceCommitSha": "4881940ce1734d8e1ebdb7cbf53e77654c66309e",
+  "sourceCommitAt": "2026-09-27T05:17:33Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 286,
+    "Skill": 279,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
-    "SkillPackage": 23,
+    "SkillPackage": 22,
     "Process": 71,
     "SequenceFlow": 912,
     "Role": 148,
@@ -295,7 +295,7 @@
     "Tool": 104,
     "Schema": 126,
     "GraphKind": 35,
-    "Directory": 46,
+    "Directory": 45,
     "Asset": 3
   },
   "@graph": [
@@ -4938,124 +4938,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/iris-dspace"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#skill/bootstrap-graph-emission",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "bootstrap-graph-emission",
-      "title": "Writing out bootstrap's own Knowledge Graph",
-      "description": "What bootstrap's own Knowledge Graph must be when it is written out as a data file, `.jsonld` with a `.json` copy. bootstrap renders no pages for a person to browse, so this file is how it shows it is a Knowledge Graph at all.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#package/bootstrap"
-      ],
-      "instructionsPath": "../bootstrap/skills/bootstrap-graph-emission.md",
-      "instructionLines": 62,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#directory/bootstrap-skills",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bootstrap-graph-emission"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#skill/confirm-harness",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "confirm-harness",
-      "title": "Which harness, and where",
-      "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. It needs a person: the Requestor settles it, never the agent.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#package/bootstrap"
-      ],
-      "instructionsPath": "../bootstrap/skills/confirm-harness.md",
-      "instructionLines": 58,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#directory/bootstrap-skills",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/confirm-harness"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#skill/bootstrap-kg-navigation",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "bootstrap-kg-navigation",
-      "title": "Reading a knowledge graph before you have anything",
-      "description": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill bootstrap hands you, because the second step of the handoff cannot be followed without it. Named `bootstrap-` so it cannot be confused with a navigation Skill of a Harness that is installed.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#package/bootstrap"
-      ],
-      "instructionsPath": "../bootstrap/skills/bootstrap-kg-navigation.md",
-      "instructionLines": 77,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#directory/bootstrap-skills",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bootstrap-kg-navigation"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#skill/log-message",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "log-message",
-      "title": "Logging what you are doing",
-      "description": "Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#package/bootstrap"
-      ],
-      "instructionsPath": "../bootstrap/skills/log-message.md",
-      "instructionLines": 92,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#directory/bootstrap-skills",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/log-message"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#skill/root-readme",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "root-readme",
-      "title": "The root README, and the one fact it must carry",
-      "description": "Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. It runs only once the install has succeeded.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#package/bootstrap"
-      ],
-      "instructionsPath": "../bootstrap/skills/root-readme.md",
-      "instructionLines": 82,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#directory/bootstrap-skills",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/root-readme"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#skill/bootstrap-graph-publication",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "bootstrap-graph-publication",
-      "title": "Publishing bootstrap's Knowledge Graph",
-      "description": "Where bootstrap's Knowledge Graph file is published, why its `@id` must be exactly that address, why a `.json` copy sits beside the `.jsonld`, and why the file is not kept in the repository.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#package/bootstrap"
-      ],
-      "instructionsPath": "../bootstrap/skills/bootstrap-graph-publication.md",
-      "instructionLines": 49,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#directory/bootstrap-skills",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bootstrap-graph-publication"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#skill/discussion",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
-      "name": "discussion",
-      "title": "discussion — settling what an agent cannot read off disk",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#package/bootstrap"
-      ],
-      "instructionsPath": "../bootstrap/skills/discussion.md",
-      "instructionLines": 107,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#directory/bootstrap-skills",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/discussion"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#skill/fhir-client-operations",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "fhir-client-operations",
@@ -6327,15 +6209,6 @@
       "hasManifest": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#directory/who-iris-skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/who-iris"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#package/bootstrap",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
-      "name": "bootstrap",
-      "path": "../bootstrap/skills",
-      "hasManifest": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#directory/bootstrap-skills",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/bootstrap"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#package/fhir-client",
@@ -35964,7 +35837,7 @@
       },
       "requirements": {},
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#skill/discussion"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/bootstrap/bootstrap.jsonld#skill/discussion"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/discuss"
     },
@@ -36568,8 +36441,8 @@
       },
       "satisfies": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#skill/kg-export",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#skill/bootstrap-graph-emission",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#skill/bootstrap-graph-publication"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-emission",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/bootstrap/bootstrap.jsonld#skill/bootstrap-graph-publication"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/kg-graph-export"
     },
@@ -38543,7 +38416,7 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#skill/log-message"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/bootstrap/bootstrap.jsonld#skill/log-message"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/log-message"
     },
@@ -44287,17 +44160,6 @@
       ],
       "description": "The who-iris instance's skills. ONE today -- `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, and what a later tool needs from a record stated as checkable requirements. Deliberately thin, per the owner's 'mionimal tools in who specific stuff': the Dublin Core TYPE is generic and lives in folio-assist-core, the enumeration/subsetting descriptor lives in large-datasets, and OCR stays a cat-harness platform tool. What is WHO-specific is only how IRIS uses those things. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/who-iris-skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#directory/bootstrap-skills",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "bootstrap-skills",
-      "path": "bootstrap/skills/",
-      "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills"
-      ],
-      "description": "CatBootstrap's instruction bodies, declared here for the same reason `large-datasets-skills` and `who-iris-skills` are: a consumer that resolves the ROOT instance's declaration sees only what the root declares, and `gen-skill-docs` calls `kgDirectories(INSTANCE_ROOT)`. Absent this entry, all seven of bootstrap's skills were unpublished -- measured 2026-09-27, bean `3x2o`: `bootstrap-kg-navigation`, `bootstrap-graph-emission`, `bootstrap-graph-publication`, `confirm-harness`, `discussion`, `log-message`, `root-readme`. The generator's own `SKILLS_CATEGORIES` carried a \"CatBootstrap (read before anything else is known)\" heading throughout, keyed `bootstrap`, which nothing reached -- so the file that says a cold agent reads these FIRST was the one whose pages 404ed. The two ids for one directory (`skills` in `bootstrap/bootstrap.json`, `bootstrap-skills` here) are the pre-split shape `folio-assistant-core/skills/` already carries as `core-skills` + `folio-assistant-core-skills`; `bootstrap` cannot reuse its own `skills` id because this instance's own graph already holds it.",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/bootstrap-skills"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-3x2o-remote-stub-banner/cat-harness.jsonld#directory/fhir-ig-skills",
