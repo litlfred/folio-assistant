@@ -107,6 +107,34 @@ for one defect.
 
 ---
 
+## Same defect as `3ozg`, and the fix is in flight there
+
+_2026-09-27, from the session holding `3ozg`._ This bean and `3ozg` are the same
+defect measured independently — 72 sidecars, the same three fields,
+`engine_version` 1.3.14 vs 1.3.11. `3ozg` is claimed and carries the fix:
+**pin the runtime**, on the owner's instruction.
+
+What landed there: `.bun-version` at `1.3.14`, all 22 `oven-sh/setup-bun@v2`
+sites given that literal explicitly (18 said `latest`; four said nothing at all),
+a `bun` row in `upstream-pins.json` so the weekly watchdog tracks it, and
+`check:bun-pin` asserting the 22 agree with the file.
+
+Two things worth having here even if this bean is later scrapped as the duplicate:
+
+- **Do not "fix" this by dropping `engine_version`.** It is READ —
+  `qa-utils.ts:1769`, inside `saveQaScriptSidecar`'s write-skip guard — and
+  dropping it makes a sidecar produced by a different engine compare as current.
+  The two `last_run_*` fields are already excluded from that comparison, so
+  `engine_version` was the only field ever causing a write and the others were
+  passengers.
+- **CI was the larger offender, not the containers.** Upstream Bun is at
+  `bun-v1.4.2`; CI ran `bun-version: latest`, so CI would have rewritten all 86
+  sidecars to `bun-1.4.2` on its next sweep whatever any agent did.
+
+Residual, and why `3ozg` stays open: a pin cannot reach a container image the
+repository does not control, so an agent whose Bun differs from the pin still
+sees the rewrite.
+
 _2026-09-27T05:55Z, cross-reference from bean `3ozg`. A note, not a claim: status untouched, nothing ticked._
 
 **Option 2 is implemented**, on the owner's choice of *"skip no-op writes"* (put to them in the session that filed `3ozg`). `saveQaScriptSidecar` no longer counts `engine_version` as a change, so a script sidecar is rewritten only when its source file, hashes or extra inputs move. The writer this bean never named is `init-folio-qa.test.ts`, which runs a real `qa-sweep`. It was found by bisecting 432 test files. With the fix, `bun run gates` passes 167/167 and ends clean.

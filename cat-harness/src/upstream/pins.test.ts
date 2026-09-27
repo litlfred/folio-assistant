@@ -116,3 +116,65 @@ describe("render", () => {
     expect(render([])).toContain("declares no pins");
   });
 });
+
+/**
+ * `tagPrefix` — when the pin literal CANNOT be the tag.
+ *
+ * Bun is the case that forced this. `.bun-version` and `setup-bun`'s
+ * `bun-version` both take a bare `1.3.14`; upstream tags it `bun-v1.3.14`. So a
+ * literal that matched the tag would be a literal the build rejects, and the
+ * registry's own rule — the version lives in the file the build reads, never in
+ * the registry — forbids storing a second, tag-shaped copy.
+ */
+describe("tagPrefix", () => {
+  const BUN: PinDef = {
+    id: "bun",
+    title: "Bun runtime",
+    repo: "https://github.com/oven-sh/bun",
+    pinnedIn: ".bun-version",
+    pattern: "^(\\d+\\.\\d+\\.\\d+)\\s*$",
+    tagPattern: "^bun-v\\d+\\.\\d+\\.\\d+$",
+    tagPrefix: "bun-v",
+  };
+  const BUN_TAGS = ["bun-v1.3.11", "bun-v1.3.14", "bun-v1.4.0", "bun-v1.4.1", "bun-v1.4.2"];
+
+  test("WITHOUT it the verdict is `unknown`, which is the defect it fixes", () => {
+    // The falsification, and it is not hypothetical: this is what the registry
+    // did before the field existed. `unknown` sets exit 2, so the watchdog
+    // would report itself blind on every weekly run forever — the failure its
+    // own docblock warns about, pointing the other way.
+    const { tagPrefix: _omitted, ...noPrefix } = BUN;
+    const v = assessPin(noPrefix, "1.3.14", BUN_TAGS);
+    expect(v.state).toBe("unknown");
+    expect(exitCode([v])).toBe(2);
+  });
+
+  test("WITH it, a pin behind upstream reads `behind`, counting only newer releases", () => {
+    const v = assessPin(BUN, "1.3.14", BUN_TAGS);
+    expect(v.state).toBe("behind");
+    expect(v.behindBy).toEqual(["bun-v1.4.0", "bun-v1.4.1", "bun-v1.4.2"]);
+    expect(v.latest).toBe("bun-v1.4.2");
+    // The literal a reader will find in `pinnedIn`, not the tag form — the
+    // comparison is internal and the report has to match the file.
+    expect(v.pinned).toBe("1.3.14");
+  });
+
+  test("the newest release reads `current`", () => {
+    expect(assessPin(BUN, "1.4.2", BUN_TAGS).state).toBe("current");
+  });
+
+  test("a literal upstream never tagged is still `unknown`, not `behind`", () => {
+    // The prefix must not turn "I cannot place this ref" into a confident
+    // answer: `1.3.99` prefixes to a tag that does not exist.
+    const v = assessPin(BUN, "1.3.99", BUN_TAGS);
+    expect(v.state).toBe("unknown");
+    expect(v.detail).toContain("bun-v1.3.99");
+  });
+
+  test("an absent prefix leaves every existing pin's behaviour untouched", () => {
+    // The regression guard for the change itself: `tagPrefix` is optional and
+    // defaults to "", so a pin whose literal IS its tag compares as before.
+    expect(assessPin(THEME, "v0.11.2", TAGS).state).toBe("behind");
+    expect(assessPin(THEME, "v0.12.0", TAGS).state).toBe("current");
+  });
+});
