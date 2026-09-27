@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/docs-ui.css?v=1790495880">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/docs-ui.css?v=1790496164">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/narrow-viewport.css?v=1790495880">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/narrow-viewport.css?v=1790496164">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/work-plan.css?v=1790495880">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/work-plan.css?v=1790496164">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/themes.css?v=1790495880">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/themes.css?v=1790496164">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/uml.css?v=1790495880">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/uml.css?v=1790496164">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/avatars.css?v=1790495880">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/css/avatars.css?v=1790496164">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/docs-ui.js?v=1790495880" defer></script>
+<script src="/folio-assistant/STAGING/claude-escape-imports-external-schema/assets/js/docs-ui.js?v=1790496164" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -815,7 +815,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><code class="language-plaintext highlighter-rouge">cat-harness/external-schemas</code></td>
       <td><code class="language-plaintext highlighter-rouge">cat-harness/external-schemas</code></td>
       <td>external-schema</td>
-      <td>external-schema: <em>could not determine</em></td>
+      <td><code class="language-plaintext highlighter-rouge">ExternalSchemaSchema</code></td>
       <td><em>not measured</em></td>
       <td> </td>
       <td> </td>
@@ -851,12 +851,28 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <pre><code class="language-mermaid">classDiagram
   direction TB
   namespace cat_harness__external_schemas {
-    class n_cat_harness_external_schemas_external_schema["external-schema: no node schema"] {
-      &lt;&lt;could not determine&gt;&gt;
+    class cat_harness_external_schemas_Term["Term"] {
+      &lt;&lt;json: ExternalSchemaSchema&gt;&gt;
+      term [1] string
+      operative [1] string
+    }
+    class cat_harness_external_schemas_ExternalSchema["ExternalSchema"] {
+      &lt;&lt;json: ExternalSchemaSchema&gt;&gt;
+      $schema [1] 'folio-external-schema/v1'
+      id [1] string
+      authority [1] enum(7)
+      title [1] string
+      version [1] string
+      specUrl [1] string~uri~
+      namespaces [0..*] string[]
+      use [1] conforms | reads | cites
+      terms [0..*] Term[]
+      note [0..1] string
     }
   }
-  cssClass "n_cat_harness_external_schemas_external_schema" fa_uml_kind_external_schema
-  cssClass "n_cat_harness_external_schemas_external_schema" fa_uml_undetermined
+  cat_harness_external_schemas_ExternalSchema *-- "0..*" cat_harness_external_schemas_Term : terms
+  cssClass "cat_harness_external_schemas_Term" fa_uml_kind_external_schema
+  cssClass "cat_harness_external_schemas_ExternalSchema" fa_uml_kind_external_schema
 </code></pre>
 
           
