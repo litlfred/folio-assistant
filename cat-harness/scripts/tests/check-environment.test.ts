@@ -151,10 +151,31 @@ describe("this repository, right now", () => {
     expect(distortions(REPO)).toEqual([]);
   });
 
-  test("and it DOES have a nested install, so the case above is exercised for real", () => {
-    // `schemas/block-qa-schema` is a declared sub-package. If this ever becomes
-    // empty the test above stops proving anything, and the discrimination is only
-    // covered by the temp-dir fixtures.
-    expect(nestedNodeModules(REPO).length).toBeGreaterThan(0);
+  // WHAT THIS DOES NOT ASSERT, and why the first version of it failed in CI.
+  //
+  // It read `expect(nestedNodeModules(REPO).length).toBeGreaterThan(0)` — reaching
+  // for anti-vacuity, on the ground that if this repository held no nested install
+  // then the test above ("is not distorted") proved nothing. It passed locally,
+  // where `schemas/block-qa-schema` is installed, and FAILED IN CI, which installs
+  // only from the repository root.
+  //
+  // So it encoded a fact about one ENVIRONMENT as an invariant of the REPOSITORY —
+  // in the test file whose whole subject is not confusing those two. The count is
+  // legitimately 1 on a developer checkout and legitimately 0 on a runner, and a
+  // test that demands either is wrong somewhere.
+  //
+  // The anti-vacuity guarantee belongs on the FIXTURES, which are
+  // environment-independent: the five `distortions` cases above prove
+  // discrimination by construction, so `distortions(REPO) === []` is not vacuous
+  // whatever this checkout happens to hold. What is left here is the narrow true
+  // thing — the walk runs against a real tree of this size and returns a list —
+  // plus the count, reported rather than graded.
+  test("the walk runs against the real tree and returns a list, whatever it holds", () => {
+    const found = nestedNodeModules(REPO);
+    expect(Array.isArray(found)).toBe(true);
+    // Reported, not asserted: 1 on a developer checkout that installed the
+    // sub-package, 0 on a runner that installed only the root. Both are correct.
+    console.log(`    nested install(s) in this checkout: ${found.length}`);
+    for (const f of found) expect(f.endsWith("node_modules")).toBe(true);
   });
 });
