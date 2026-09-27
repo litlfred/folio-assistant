@@ -56,13 +56,20 @@ describe("maxSize — size RAISES the finding, cohesion only shapes it", () => {
     const c = tooLarge(clean({ size: 166, cohesion: 0.22, internal: 154, inbound: 523 }));
     expect(c).toBeDefined();
     expect(c).toContain("several");
-    expect(c).toContain("internal clusters");
+    // It must point at `internalClusters` rather than ASSERT a seam. Measured
+    // 2026-09-27: the two lowest-cohesion groups in this repository are each a
+    // single connected component, so low cohesion does not imply a free split
+    // and the first wording of this clause was wrong in exactly that way.
+    expect(c).toContain("internalClusters");
+    expect(c).toContain("BEFORE assuming");
   });
 
   test("a large COHESIVE group is STILL reported — and as an adjudication", () => {
     const c = tooLarge(clean({ size: 234, cohesion: 0.82, internal: 126, inbound: 27, outbound: 1 }));
     expect(c).toBeDefined();
     expect(c).toContain("adjudication");
+    // And it must warn that a high score can hide non-participation.
+    expect(c).toContain("PARTICIPATION");
     // It must NOT tell the reader to split: the carve is not this module's call.
     expect(c).not.toContain("several subgraphs filed as one");
   });
