@@ -779,7 +779,7 @@ formalizer <span class="fa-gloss-status">candidate, extracted</span>
 gate-tree-mutation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Reading `bun run gates`' &quot;NOT clean&quot; verdict. Why every gate can pass and the run still exit 1, the two causes and how to tell them apart in one command, and why the QA script-sidecar churn in an agent container is discarded rather than committed.</p>
+<p>Reading `bun run gates`' &quot;NOT clean&quot; verdict. Why every gate can pass and the run still exit 1, the two causes and how to tell them apart in one command, and the question that settles whether a churning field is a defect in the writer: does it describe the SUBJECT or the RUN?</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/gate-tree-mutation.md"><code>cat-harness/skills/folio-core/gate-tree-mutation.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--generalise-the-fix" data-fa-state="extracted" data-fa-gloss="">

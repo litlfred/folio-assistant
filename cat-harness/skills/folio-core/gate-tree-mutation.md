@@ -3,8 +3,8 @@ name: gate-tree-mutation
 description: >
   Reading `bun run gates`' "NOT clean" verdict. Why every gate can pass and the
   run still exit 1, the two causes and how to tell them apart in one command, and
-  why the QA script-sidecar churn in an agent container is discarded rather than
-  committed.
+  the question that settles whether a churning field is a defect in the writer:
+  does it describe the SUBJECT or the RUN?
 adapters: [document, paper, dak]
 profiles: [document, paper]
 ---
@@ -29,7 +29,7 @@ live in the runner (`gate-tree-guard.ts`) and why its predicate is a per-gate
 **delta** rather than "the tree is dirty": running gates over your own
 uncommitted work is the normal case. A failure to read the tree is carried as
 `undetermined` and reported rather than thrown, because `undetermined` is not
-clean — the [third state](content-context-and-state-graphs.md) again.
+clean.
 
 **Two causes, and they are answered differently. Read `git status --short`
 before you decide which one you have.**
@@ -45,22 +45,27 @@ agreement.
 
 ---
 
-## Cause 2 — your Bun is not the Bun the artefacts were produced with
+## Cause 2 — the artefact records the RUN, and your run differs
 
-```sh
-bun --version            # this container
-cat .bun-version         # what the repository runs
-```
+This is the one that looks like cause 1 and is not. The generator is behaving
+correctly, the input has not changed, and the file still gets rewritten — because
+a field in it describes **the run that produced it** rather than **the subject it
+is about**, and your run is not the last one.
 
-`.bun-version` is the one answer to that question, and `check:bun-pin` holds all
-22 `oven-sh/setup-bun` sites across 12 workflow files to it, so **CI** is
-consistent. **A container image is not something a repository can pin**, and an
-agent container is free to differ: measured 2026-09-27, this one ran `1.3.11`
-against a pin of `1.3.14`.
+**The question that settles it:**
 
-When it differs, a full `bun test` rewrites the committed QA script sidecars
-under `cat-harness/content/pipeline/script-sidecars/`, changing three fields and
-nothing else:
+> Does this field describe the SUBJECT the artefact is about, or the RUN that
+> produced it? **Only the first is a reason to write.**
+
+A field that records the environment — a timestamp, the checked-out HEAD, the
+runtime version — will differ on every machine, so counting it as a reason to
+write makes the artefact churn everywhere and reports that churn as though an
+input had moved.
+
+### The worked example, and it is fixed
+
+Bean `3ozg`, 2026-09-27. The committed QA script sidecars under
+`cat-harness/content/pipeline/script-sidecars/` carry three such fields:
 
 ```
 last_run_at     wall-clock time of this run
@@ -68,58 +73,74 @@ last_run_sha    the checked-out HEAD
 engine_version  `bun-${Bun.version}` — the local runtime
 ```
 
-**Only the third is *causing* the write.** `saveQaScriptSidecar` skips the write
-entirely unless a **substantive** field moved; `last_run_at` and `last_run_sha`
-are excluded from that comparison and `engine_version` is not — correctly, since
-a verdict produced by a different engine is a different verdict. The two
-`last_run_*` fields are passengers, which is why the bean's original remedy
-("write into a temp directory") would have treated a symptom.
+`saveQaScriptSidecar` already skipped the write unless a **substantive** field
+moved, and it already excluded the two `last_run_*` fields. It counted
+`engine_version`, so a run under any other Bun rewrote every sidecar whose
+recorded engine disagreed — 72 of 86 from a container at `1.3.11` against CI's
+`1.3.14`. `init-folio-qa.test.ts` runs a real sweep (found by bisecting 432 test
+files), which is how `bun test` came to dirty the tree, and `bun run gates`
+therefore ended `NOT clean` on **every branch, pristine `main` included**.
 
-### The churn count is a fact about your container, not a blast radius
+Two changes landed, and the order matters for reading the history:
 
-The 86 committed sidecars hold two engine values — 72 at `bun-1.3.14`, 14 at
-`bun-1.3.11`, measured 2026-09-27 — and what moves is *whichever set disagrees
-with you*: 72 files at Bun 1.3.11, 14 at 1.3.14, none at neither. Bean `3ozg`'s
-title says 72 for that reason and it is not a constant. Quoting it as one is how
-a reader concludes their own run is worse or better than it is.
+| | |
+|---|---|
+| **#1442** | pinned Bun in `.bun-version`, with `check:bun-pin` holding all 22 `oven-sh/setup-bun` sites to it. Makes **CI** consistent — and a container image is not something a repository can pin, so it could not reach an agent container. |
+| **#1452** | dropped `engine_version` from the comparison, joining the two `last_run_*` fields. Closes the residual: no engine difference rewrites anything. |
 
-### Discard it; do not commit it
+The owner kept both. They answer different halves: the pin makes the recorded
+engine consistent where the repository controls it, the skip stops any other
+engine from rewriting a file whose checker did not change.
+
+### The argument that decided it, because the wrong one is tempting
+
+#1442 defended keeping `engine_version` substantive with *"a verdict produced by a
+different engine is a different verdict"*. **That is true and it is about a
+different artefact.** A *script* sidecar holds no verdict — it records a
+checker's source file, its hashes and its dependencies. Verdicts live in block
+sidecars. And no reader consults a script sidecar's `engine_version` for
+freshness: `entryIsFresh` compares `field_hash` and the script hashes, nothing
+else. So the field is a record of the last real change's engine, not an input to
+any decision.
+
+The generalisable half is **not** "engine versions do not matter". It is that a
+soundness argument has to be checked against the artefact in front of you: the
+same field can be load-bearing in one sidecar and pure provenance in another.
+
+---
+
+## If you meet a churn whose writer has not been fixed yet
+
+Discard it rather than committing it, and then **fix the writer**:
 
 ```sh
-git checkout -- cat-harness/content/pipeline/script-sidecars/
+git checkout -- <the churning paths>
 ```
 
-Committing stamps a **downgrade** — a pin of 1.3.14 with a local 1.3.11 writes
-`engine_version` backwards — as though it were a fresh measurement. That is
+Committing such a churn stamps whatever your environment happens to be as though
+it were a fresh measurement — with an older local runtime, a *downgrade*. That is
 `sfjo`'s rule (*read what a regeneration writes before committing it*) applied to
-a regeneration that is **faithful and still wrong to keep**: the generator is
-recording the container correctly, and the container is not the repository.
-`script_hash` and `source_file` do not move — verified across all 86 — so nothing
-a reader uses is being discarded.
+a regeneration that is **faithful and still wrong to keep**: the generator records
+your container correctly, and your container is not the repository.
 
-Adopting the newer Bun is a different question and not this gate's to wave
-through: [`upstream-version-adoption`](upstream-version-adoption.md), whose
-accepting step is a `bpmn:userTask` in a person-only lane. Upstream's newest was
-`bun-v1.4.2` on 2026-09-27; `check:upstream-pins` reports the pin as `behind`,
-maintains its tracking issue, and is deliberately **not** a step in
-`code-quality-gates.yml`, so a `behind` pin does not redden CI.
+**But discarding is a workaround, and the habit is the defect.** `3ozg` was filed
+**three times in one day** — as `3ozg`, as `rmcf`, and `ymsu` is a different
+defect over the same files — because every session that ran `bun run gates` on a
+clean tree saw the same always-red line, discarded the churn, and moved on.
+A signal that is always red is one nobody reads, and then it cannot report the
+next real in-run repair, which is the whole reason the detector exists.
+
+So the sequence is: discard, ask the question at the top of cause 2, and fix the
+comparison. Do not add the paths to an ignore list — that removes the signal
+instead of the cause.
 
 ---
 
 ## Do not read past the line
 
-`3ozg` was filed **three times in one day** — as `3ozg`, as `rmcf`, and `ymsu` is
-a different defect over the same files — because an always-red signal is one
-every session rediscovers and none of them finds written down. That is what this
-skill exists to stop, and it is also the warning against using it too widely:
-
-> If `NOT clean` names paths **outside** that directory, or fields other than
-> those three, it is **not** this. The gate is telling you something new.
-
-Neither bean is scrapped and neither is merged: `3ozg` holds the claim and the
-fix, `rmcf` carries a pointer to it, and a deleted bean would stop the next
-session reconstructing the reasoning
-([`bean-coordination`](bean-coordination.md)).
+Cause 2 has a narrow signature. If `NOT clean` names paths outside the artefact
+family you expect, or fields other than the run-provenance ones, it is **not**
+this: the gate is telling you something new, and cause 1 is the likelier answer.
 
 ---
 
@@ -129,6 +150,6 @@ session reconstructing the reasoning
 |---|---|
 | [`platform-gates`](platform-gates.md) | which gates to run, and cause 1 in full |
 | `scripts/gate-tree-guard.ts` | why the detector cannot live in a gate |
-| `content/pipeline/qa-utils.ts` | `saveQaScriptSidecar` and its substantive-field guard |
-| [`upstream-version-adoption`](upstream-version-adoption.md) | moving the pin forward — a person's decision, never a gate's |
-| [`qa-witness`](qa-witness.md) | the other QA projection, and why "could not determine" is a third state there too |
+| `content/pipeline/qa-utils.ts` | `saveQaScriptSidecar`'s comparison, with `3ozg`'s reasoning beside it |
+| [`generalise-the-fix`](generalise-the-fix.md) | the same shape one level up: fix the class, not the instance |
+| [`upstream-version-adoption`](upstream-version-adoption.md) | moving a pin forward — a person's decision, never a gate's |

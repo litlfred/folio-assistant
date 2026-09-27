@@ -306,11 +306,13 @@ every gate can pass and the run still exit 1:
 
 The gates after the mutation were handed the repaired tree, so their verdicts
 describe a state you have not committed. **The discipline is in the skill, not
-here** — [`gate-tree-mutation`](gate-tree-mutation.md) carries the two causes and
-the one command that tells them apart, and why the second one is usually not your
-diff at all: an agent container whose Bun differs from `.bun-version` rewrites
-the committed QA script sidecars, and that churn is **discarded rather than
-committed**, because it stamps a downgrade as a fresh measurement.
+here** — [`gate-tree-mutation`](gate-tree-mutation.md) carries the two causes, the
+one command that tells them apart, and the question that settles the second: does
+the churning field describe the **subject** the artefact is about, or the **run**
+that produced it? Only the first is a reason to write. Bean `3ozg` is its worked
+example — an `engine_version` counted as substantive rewrote 72 committed sidecars
+on every branch — and the skill also carries why discarding such a churn is a
+workaround whose habit is the defect.
 
 ---
 
