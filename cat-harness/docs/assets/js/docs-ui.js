@@ -5349,7 +5349,7 @@
         var noteTitle = shelved.length === 1
           ? "1 item in your folio is not on the glass"
           : shelved.length + " items in your folio are not on the glass";
-        var noteCard = buildGlassCard("note/shelved", { title: noteTitle, kind: "todos", href: "" });
+        var noteCard = buildGlassCard("note/shelved", { title: noteTitle, kind: "todos" });
         noteCard.classList.add("fa-glass-sticky", "fa-glass-note-card");
         // Words only: the generic note picture sat behind the sentence.
         var noteAva = noteCard.querySelector(".fa-glass-asset-face > .fa-glass-avatar");
