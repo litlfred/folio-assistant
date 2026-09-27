@@ -138,10 +138,9 @@
      `fa-locale` was WRITE-ONLY before this: the sidebar switcher stored the
      choice on click and nothing ever read it back, so picking French and
      navigating anywhere landed you in English again with the preference
-     sitting in localStorage unused. This deliberately does NOT redirect --
-     a docs link that silently lands somewhere other than where it points is
-     worse than one extra click -- it just makes the remembered language
-     visibly one click away. */
+     sitting in localStorage unused. It used to stop at marking the remembered
+     language in the bar; since 2026-09-27 `followRememberedLocale` also takes
+     the reader there, on the owner's call. */
   function rememberedLocale(currentLang, available) {
     var loc = getGlobalLocale();
     if (!loc || loc === currentLang) return null;
@@ -150,6 +149,44 @@
     // offered English on a folio that has no English.
     if (available.indexOf(loc) === -1) return null;
     return loc;
+  }
+
+  /**
+   * THE PAGE FOLLOWS THE CHOSEN LANGUAGE. Owner, 2026-09-27: *"user selects
+   * locale in icon, then only those pages exist (if translated) otherwise
+   * source language fallback"*, after an English page sat inside a French
+   * navbar.
+   *
+   * This reverses the "does NOT redirect" note on `rememberedLocale` above:
+   * a page whose remembered language differs from the one it is in, and that
+   * HAS a page in the remembered one, is replaced by that page. Returns true
+   * when it navigated, so `init` can stop.
+   *
+   * Three guards, each against a specific wrong jump:
+   *  - only a STORED choice counts. `getGlobalLocale` answers "en" when
+   *    nothing is stored, which would bounce every shared French link to
+   *    English for a reader who never chose;
+   *  - `?lang=` on the URL wins, because somebody asked for that page;
+   *  - only a locale the page's own meta declares available, so the jump
+   *    never lands on a 404. The language bar writes the choice on click,
+   *    before it navigates, so choosing a language never fights this.
+   */
+  function followRememberedLocale(meta) {
+    if (!meta) return false;
+    var stored = null;
+    try { stored = localStorage.getItem("fa-locale"); } catch (_e) { return false; }
+    if (!stored) return false;
+    try {
+      if (new URL(window.location.href).searchParams.get("lang")) return false;
+    } catch (_e) { return false; }
+    var currentLang = meta.lang || "en";
+    var available = localesAvailable(meta, meta.supportedLocales || UN_LOCALES);
+    var target = rememberedLocale(currentLang, available);
+    if (!target) return false;
+    var dest = localePath(deriveBasePath(window.location.pathname, currentLang), target);
+    if (dest === window.location.pathname) return false;
+    window.location.replace(dest + window.location.search + window.location.hash);
+    return true;
   }
 
   function localePath(basePath, locale) {
@@ -8407,6 +8444,13 @@
         // nothing, on purpose, so the item keeps the source-language page it
         // already points at.
         link.setAttribute("data-fa-translated", "source");
+        // MARKED, on the owner's call (2026-09-27): a source-language item in
+        // a translated navbar says so, e.g. "CRDM methodology (EN)", so the
+        // mix reads as a fallback rather than a mistake. `lang` makes a screen
+        // reader pronounce the title as the language it is written in.
+        var src = data.sourceLocale || "en";
+        link.setAttribute("lang", src);
+        link.setAttribute("data-fa-source-locale", src.toUpperCase());
         continue;
       }
       link.setAttribute("href", (idx.baseurl || "") + t.url);
@@ -9776,6 +9820,7 @@
     // RTL detection — Arabic pages get dir="rtl" on <html> which
     // triggers the CSS rules in docs-ui.css for smooth sidebar slide.
     var meta = getTranslationMeta();
+    if (followRememberedLocale(meta)) return;
     var pageLang = (meta && meta.lang) || "en";
     var RTL_LANGS = ["ar", "he", "fa", "ur"];
     if (RTL_LANGS.indexOf(pageLang) !== -1) {

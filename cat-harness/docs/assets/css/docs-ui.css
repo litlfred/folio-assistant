@@ -7722,3 +7722,12 @@ a.fa-harness-tab__body:focus-visible {
   font-size: 0.8em;
 }
 .fa-nav-folders__list--sub { margin: 0; padding-left: 0.5rem; }
+
+/* A SOURCE-LANGUAGE FALLBACK in a translated navbar says so — owner,
+ * 2026-09-27. `docs-ui.js` (`mountNavLocale`) sets the attribute only on an
+ * item with no page in the chosen locale, and only when that locale is not the
+ * source, so an English navbar never shows the tag. */
+.site-nav a[data-fa-source-locale]::after {
+  content: " (" attr(data-fa-source-locale) ")";
+  font-size: 0.8em;
+}
