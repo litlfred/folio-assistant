@@ -1,0 +1,296 @@
+#!/usr/bin/env bun
+/**
+ * Is this checkout's ENVIRONMENT telling the truth about the repository?
+ *
+ * Every gate here answers a question about what the repository contains. This
+ * script answers a prior one: *could any answer be trusted at all?* — because a
+ * tool that resolves a module, walks a directory or counts a corpus reads the
+ * filesystem, and the filesystem holds things the repository does not.
+ *
+ * ## Three measured instances of one shape
+ *
+ * | bean | the residue | what it distorted |
+ * |---|---|---|
+ * | `xd1g` | `block-qa-schema/node_modules` + `dist` | `kg-detangle` counted **1214** phantom KG nodes |
+ * | `qook` | a SYMLINKED root `node_modules` | `gitCorpus` handed every consumer one phantom path |
+ * | `3vc1` | a nested REAL `node_modules` | root `tsc` resolves a different SDK and reports **12** errors in **6** files |
+ *
+ * Each is *"a tool answered a question about the repository and the answer came
+ * from something the repository does not contain"*.
+ *
+ * `3vc1` is the one that makes this worth a guard rather than a note, because it
+ * is a **TRAP and not a mistake**: a stale nested lockfile can only be fixed by
+ * `bun install` **in that directory**, there is no other way to regenerate a
+ * lockfile, and that install is what creates the distortion. Doing the correct
+ * thing is what breaks the reading, and nothing warns you. Measured 2026-09-26:
+ * it cost a full `bun run gates` cycle, and the false red arrived alongside two
+ * unrelated test failures, so the reading was wrong in three places at once and
+ * none of them named a `node_modules`.
+ *
+ * ## Exit codes — this is a THIRD STATE, never a finding
+ *
+ *     0  the environment matches what the repository declares
+ *     2  distorted: a reading taken now cannot be trusted
+ *
+ * **There is deliberately no exit 1.** A distortion is not a defect in this
+ * repository's source, and `nytj` is the rule it follows: a gate that cannot run
+ * must not read as green — and equally must not read as a finding. `gates.ts`
+ * consults this BEFORE running anything and refuses the whole run, because 168
+ * gate results computed against a lying filesystem are worse than no results:
+ * they look like evidence.
+ *
+ * ## Why this is a precondition and not one of the gates
+ *
+ * CI installs only from the repository root, so this condition cannot arise
+ * there — a workflow step would be a gate that can never fire, which reads as
+ * protection and is not (the `build-glossary` dead-guard defect `gates.ts` names
+ * elsewhere). It is exempt in `SCRIPT_EXEMPTIONS` with that reason rather than
+ * wired into a workflow to satisfy `check:unrun-scripts`.
+ *
+ * ```sh
+ * bun run check:environment          # 0 clean, 2 distorted
+ * ```
+ *
+ * @covers schemas
+ * @graphNode tool
+ */
+import { existsSync, lstatSync, readdirSync, readFileSync } from "node:fs";
+import { dirname, join, relative, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
+
+/** One way the filesystem disagrees with the repository. */
+export type Distortion = {
+  /** Repository-relative path of the residue. */
+  path: string;
+  /** What a tool reading it would get wrong. */
+  effect: string;
+  /** The bean that measured this shape. */
+  bean: string;
+};
+
+/**
+ * Directories never descended into.
+ *
+ * The root `node_modules` is EXCLUDED FROM THE WALK rather than reported: it is
+ * what the repository declares, and every nested `node_modules` inside it is its
+ * own business. Walking it would also report thousands of paths and take long
+ * enough that nobody would run this.
+ */
+const SKIP = new Set(["node_modules", ".git", ".lake", "_kg", "dist", ".bun"]);
+
+/**
+ * Every `node_modules` under `root` that is not `root/node_modules`.
+ *
+ * Bounded: the walk never enters a `node_modules` it finds, so the cost is the
+ * repository's own directory count and not the dependency tree's.
+ */
+export function nestedNodeModules(root: string): string[] {
+  const found: string[] = [];
+  const walk = (dir: string, depth: number): void => {
+    if (depth > 8) return;
+    let entries;
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return; // unreadable is not a distortion; it is nothing to say
+    }
+    for (const e of entries) {
+      if (!e.isDirectory() && !e.isSymbolicLink()) continue;
+      const p = join(dir, e.name);
+      if (e.name === "node_modules") {
+        if (p !== join(root, "node_modules")) found.push(p);
+        continue; // never descend into one
+      }
+      if (SKIP.has(e.name) || e.name.startsWith(".")) continue;
+      walk(p, depth + 1);
+    }
+  };
+  walk(root, 0);
+  return found.sort();
+}
+
+/**
+ * What a nested install actually changes, read from the package rather than assumed.
+ *
+ * Reporting "there is a node_modules here" is a shape; reporting WHICH version of
+ * a shared dependency it shadows is the thing that lets a reader connect it to the
+ * 12 errors. `3vc1`'s cause was `@modelcontextprotocol/sdk` resolving to 1.28.0
+ * nested against the root's hoisted 1.30.0 — established from that package's own
+ * `package.json`, which is why this looks there too.
+ */
+export function shadowedPackages(nested: string, root: string): string[] {
+  const out: string[] = [];
+  let names: string[] = [];
+  try {
+    names = readdirSync(nested, { withFileTypes: true })
+      .filter((e) => e.isDirectory())
+      .flatMap((e) =>
+        e.name.startsWith("@")
+          ? readdirSync(join(nested, e.name), { withFileTypes: true })
+              .filter((s) => s.isDirectory())
+              .map((s) => `${e.name}/${s.name}`)
+          : [e.name],
+      );
+  } catch {
+    return out;
+  }
+  for (const name of names) {
+    const here = version(join(nested, name));
+    const there = version(join(root, "node_modules", name));
+    if (here && there && here !== there) out.push(`${name} ${here} here vs ${there} at the root`);
+  }
+  return out.sort();
+}
+
+/** A package's declared version, or `undefined` if it cannot be read. */
+function version(pkgDir: string): string | undefined {
+  try {
+    const raw = readFileSync(join(pkgDir, "package.json"), "utf-8");
+    return (JSON.parse(raw) as { version?: string }).version;
+  } catch {
+    // Absent or unparseable is not a distortion — it is nothing to say. A
+    // comparison needs BOTH versions, and `shadowedPackages` drops the pair.
+    return undefined;
+  }
+}
+
+/**
+ * Does any `.ts` under `dir` (excluding installs) import `name`?
+ *
+ * ## Why the predicate is IMPORTS and not "there is a nested install"
+ *
+ * A first version of this script reported every nested `node_modules` as a
+ * distortion, and that is **wrong** — measured before it shipped, which is the
+ * only reason it is not in the history. `cat-harness/schemas/block-qa-schema`
+ * is a declared sub-package with its OWN `bun.lock` and `package.json`, so its
+ * `node_modules` is the expected result of installing it. Refusing on that would
+ * have blocked every local gate run in a correctly set-up checkout: a far worse
+ * defect than the one this guards.
+ *
+ * "Inside the root `tsconfig.json`'s `include`" does not discriminate either.
+ * BOTH directories are inside it — `cat-harness/adapters/**` and
+ * `cat-harness/schemas/**` — and only one causes errors.
+ *
+ * What discriminates is measured:
+ *
+ * | nested install | shadows | its sources import it? | root `tsc` |
+ * |---|---|---|---|
+ * | `adapters/mcp-server` | `@modelcontextprotocol/sdk` 1.28.0 vs 1.30.0 | **yes**, 4+ files | **12 errors in 6 files** |
+ * | `schemas/block-qa-schema` | `typescript` 7.0.2 vs 6.0.3, `commander` | **no** | 0 errors |
+ *
+ * So a nested install matters exactly when the sources beside it import a package
+ * it resolves differently from the root. Anything else is a sub-package doing what
+ * it is declared to do, and saying so would be noise that trains a reader to
+ * ignore this check.
+ */
+export function importsPackage(dir: string, name: string): boolean {
+  const pattern = new RegExp(`(from|import|require\\()\\s*\\(?["'\`]${name.replace(/[/@.]/g, "\\$&")}(/|["'\`])`);
+  const walk = (d: string, depth: number): boolean => {
+    if (depth > 6) return false;
+    let entries;
+    try {
+      entries = readdirSync(d, { withFileTypes: true });
+    } catch {
+      return false;
+    }
+    for (const e of entries) {
+      const p = join(d, e.name);
+      if (e.isDirectory()) {
+        if (e.name === "node_modules" || SKIP.has(e.name) || e.name.startsWith(".")) continue;
+        if (walk(p, depth + 1)) return true;
+        continue;
+      }
+      if (!e.name.endsWith(".ts") && !e.name.endsWith(".tsx")) continue;
+      try {
+        if (pattern.test(readFileSync(p, "utf-8"))) return true;
+      } catch {
+        /* unreadable is nothing to say */
+      }
+    }
+    return false;
+  };
+  return walk(dir, 0);
+}
+
+/**
+ * Every distortion in this checkout, or `[]` when the environment is honest.
+ *
+ * A nested install that shadows nothing its own sources import is NOT returned —
+ * see {@link importsPackage} for the measurement that settled the predicate.
+ */
+export function distortions(root: string): Distortion[] {
+  const out: Distortion[] = [];
+
+  // `qook`: a SYMLINKED root `node_modules` made `gitCorpus` hand every consumer
+  // a path that is not in the repository. Checked with `lstat`, because `stat`
+  // follows the link and reports the directory it points at — which is exactly
+  // the substitution being looked for.
+  const rootModules = join(root, "node_modules");
+  if (existsSync(rootModules)) {
+    try {
+      if (lstatSync(rootModules).isSymbolicLink()) {
+        out.push({
+          path: "node_modules",
+          effect:
+            "the root `node_modules` is a SYMLINK, so any tool that resolves a real path through it reports a location this repository does not contain",
+          bean: "qook",
+        });
+      }
+    } catch {
+      /* unreadable is nothing to say */
+    }
+  }
+
+  // `3vc1`: a nested install whose shadowed packages are IMPORTED by the sources
+  // beside it. The version pair is reported because the shape alone does not tell
+  // a reader why a typecheck moved.
+  for (const nested of nestedNodeModules(root)) {
+    const owner = dirname(nested);
+    const harmful = shadowedPackages(nested, root).filter((line) =>
+      importsPackage(owner, line.split(" ")[0]!),
+    );
+    if (harmful.length === 0) continue;
+    out.push({
+      path: relative(root, nested),
+      effect:
+        `a nested install shadows ${harmful.length} package(s) that the sources beside it IMPORT — ` +
+        `${harmful.slice(0, 3).join("; ")}${harmful.length > 3 ? "; …" : ""}`,
+      bean: "3vc1",
+    });
+  }
+
+  return out;
+}
+
+if (import.meta.main) {
+  const found = distortions(REPO);
+  if (found.length === 0) {
+    // Says what was CHECKED, not "clean". There may well be a nested install
+    // here — `schemas/block-qa-schema` is a declared sub-package and has one —
+    // and claiming "no nested install" would be false. What is asserted is the
+    // narrower, true thing: none of them shadows a package its own sources import.
+    const nested = nestedNodeModules(REPO).map((n) => relative(REPO, n));
+    console.log(
+      `✓ environment is not distorting a reading — root \`node_modules\` is a real ` +
+        `directory, and ${nested.length} nested install(s) shadow nothing their own sources import` +
+        (nested.length ? `:\n${nested.map((n) => `    · ${n}`).join("\n")}` : ""),
+    );
+    process.exit(0);
+  }
+  console.error("could not determine: this checkout's environment is DISTORTED.\n");
+  for (const d of found) {
+    console.error(`  ✗ ${d.path}`);
+    console.error(`      ${d.effect}`);
+    console.error(`      measured on bean \`${d.bean}\``);
+  }
+  console.error(
+    "\nA reading taken now is not about this repository. Move the residue aside and\n" +
+      "re-run — and note that for a nested install this is a TRAP rather than a\n" +
+      "mistake: regenerating a nested lockfile REQUIRES `bun install` in that\n" +
+      "directory, so doing the correct thing is what created this. Bean `3vc1`.\n" +
+      "\nThis is exit 2, not 1: nothing here is a finding about the source.",
+  );
+  process.exit(2);
+}

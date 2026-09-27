@@ -3,8 +3,9 @@
 title: A nested bun install makes root tsc report 12 errors that CI does not have — and it is the only way to fix a stale nested lockfile
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-26T17:25:05Z
-updated_at: 2026-09-26T17:25:05Z
+updated_at: 2026-09-27T06:14:56Z
 parent: folio-assistant-1xhc
 ---
 
@@ -72,3 +73,92 @@ from something the repository does not contain".
 - [ ] the owner has chosen between excluding, bumping, detecting, or recording
 - [ ] whichever is chosen, the 12-error reading can no longer be mistaken for a
       finding about this repository's source
+
+
+## Option 3 — DETECT — implemented 2026-09-27
+
+### Which option, and on whose say-so
+
+The owner was offered four items of work and chose this one as *"Fix `3vc1`
+durably — a real fix (or a committed guard) beats a parked directory and a warning
+note."* That is read as **option 3, detect and refuse**, which is also the one this
+bean already said *"generalises over all three rows"*. **If option 1 (exclude) or 2
+(bump) was meant instead, this is cheap to swap** — the guard is one script and one
+call site, and nothing else depends on it.
+
+### A correction to this bean's own figure
+
+It said **"12 errors across 3 files"**. Re-measured by restoring the nested install
+deliberately: **12 errors across 6 files** — `render.ts` 4, `validate.ts` 3,
+`lean.ts` 2, then `preview.ts`, `preferences.ts` and `check-deps.ts` one each. The
+error count was right and the file count was not.
+
+### The predicate was WRONG the first time, and the false positive was worse than the defect
+
+The first version reported **every nested `node_modules`** as a distortion. Caught
+before it shipped, by running it:
+
+    ✗ cat-harness/adapters/mcp-server/node_modules       46 packages shadowed
+    ✗ cat-harness/schemas/block-qa-schema/node_modules    2 packages shadowed
+
+`block-qa-schema` is a **declared sub-package with its own `bun.lock` and
+`package.json`** — its `node_modules` is the expected result of installing it. A
+guard that refused on it would have blocked `bun run gates` in a correctly set-up
+checkout, which is a worse defect than the one being guarded, and it would have
+looked like it was working.
+
+**"Inside the root `tsconfig.json`'s `include`" does not discriminate either.** Both
+directories are inside it (`cat-harness/adapters/**`, `cat-harness/schemas/**`) and
+only one moves the typecheck.
+
+What discriminates is measured:
+
+| nested install | shadows | its own sources import it? | root `tsc` |
+|---|---|---|---|
+| `adapters/mcp-server` | `@modelcontextprotocol/sdk` 1.28.0 vs 1.30.0 | **yes**, 4+ files | **12 errors, 6 files** |
+| `schemas/block-qa-schema` | `typescript` 7.0.2 vs 6.0.3, `commander` 4.1.1 vs 8.3.0 | **no** | 0 errors |
+
+So the rule is: **a nested install is a distortion exactly when it shadows a package
+the sources beside it import.** Narrowing to that took the mcp-server report from
+"46 packages shadowed" to the one that is the actual cause.
+
+### What landed
+
+`cat-harness/scripts/check-environment.ts`, plus `distortions()` called from
+`gates.ts` BEFORE any gate runs. Exit **2**, never 1 (`nytj`): nothing it reports is
+a finding about this repository's source, and `gates.ts` refuses the whole set rather
+than reddening one, because 169 results computed against a lying filesystem are worse
+than none — they look like evidence.
+
+A **precondition, not a gate**, and deliberately in no workflow: CI installs only from
+the repository root, so the condition cannot arise there and a step would be a gate
+that can never fire. That reason is in `SCRIPT_EXEMPTIONS` rather than left for
+`check:unrun-scripts` to trip over.
+
+It also covers `qook` — a symlinked root `node_modules`, checked with `lstat` because
+`stat` follows the link and reports the directory it points at, which is the exact
+substitution being looked for.
+
+### Verified, both directions
+
+    with the nested install restored   exit 2, names @modelcontextprotocol/sdk 1.28.0 vs 1.30.0
+                                       and root tsc simultaneously reports 12 errors
+    with it parked                     exit 0, and SAYS it is ignoring
+                                       schemas/block-qa-schema/node_modules rather than
+                                       claiming there is no nested install
+
+11 tests, mutation-tested twice — dropping the import predicate gives 2 fails,
+reporting the root `node_modules` gives 2 fails. Two of them are anti-vacuity in the
+awkward direction (`6tkl`): this repository must report NO distortion, or the guard
+refuses for everyone, and it must still HAVE a nested install, or the
+spare-the-sub-package case is only covered by fixtures.
+
+### Still open, and not mine to close
+
+Done-when #1 asked for the owner's choice between four options; this implements one on
+a reading of their selection. Done-when #2 — *the 12-error reading can no longer be
+mistaken for a finding about this repository's source* — is met for `bun run gates`,
+which now refuses. It is **not** met for someone running `bunx tsc --noEmit` by hand:
+that still reports 12 errors with no mention of a `node_modules`. Whether that matters
+is a judgement about how people actually read this repository, so it is left stated
+rather than decided.

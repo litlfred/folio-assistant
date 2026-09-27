@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3x2o
 title: Two generated skill pages name a source directory that does not exist — the oe98 banner bug recurs for remote stubs
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-26T10:44:49Z
-updated_at: 2026-09-27T05:30:59Z
+updated_at: 2026-09-27T06:12:28Z
 parent: folio-assistant-ahvw
 ---
 
