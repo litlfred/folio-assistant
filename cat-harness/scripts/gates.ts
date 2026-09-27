@@ -815,6 +815,12 @@ export interface ScriptExemption {
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
   {
+    script: "check:test-budgets",
+    kind: "report",
+    reason:
+      "IT HAS NO SUBJECT UNTIL A SUITE HAS RUN — bean `sff8`. It reads a junit report produced by `bun test --reporter=junit`, so as a gate it would either duplicate the ~5-minute suite or run against a file that is not there; a missing report is exit 2, `could not determine`, which as a CI step would be a gate whose normal state is unable to fire. Its subject is also the wrong KIND for a gate: a test's cost is a fact about the MACHINE, not about this repository, so red here would report the runner while every reviewer read it as a verdict on the diff — the always-red-signal defect `check:bun-runtime` names one input over. Nothing it reports is a defect in this repository's source, so it exits 0 or 2 and never 1 (`nytj`), and 0 cases is exit 2 rather than a clean run over nothing (`6tkl`). It writes NO sidecar, deliberately, because committing milliseconds would pin this container's numbers as the corpus's — the `3vc1` defect — and `check:ci-health` already carries the precedent for asking a machine-shaped question externally every run and caching it nowhere. Whether a threshold should ever GATE is left open on the bean rather than settled here: ~50 cases sit at half the default budget under load, so a threshold gate would need 50 exemptions nobody has read, which is the empty exemption `xd1g` removed a gate for",
+  },
+  {
     script: "check:environment",
     kind: "report",
     reason:
