@@ -29,6 +29,55 @@ describe("cleanMarkdownText", () => {
     expect(cleanMarkdownText("_italic text_")).toBe("italic text");
   });
 
+  // ── bean `o29r`: CommonMark's intraword rule ──────────────────
+  //
+  // `_` cannot OPEN emphasis after an alphanumeric, nor CLOSE before one. The
+  // regex had no such guard, so ANY TWO underscores in one string paired up and
+  // both were deleted. One subscript alone was safe, because the pattern needs a
+  // second `_` to close on — so TWO is the threshold, and two is the ordinary
+  // case in mathematical prose.
+  //
+  // Measured over the real corpora, current extractor against the same one with
+  // only that line changed: 229 corrupted msgids of 46306 here, 13251 of 211139
+  // in `litlfred/qou`. Each case below is a shape taken from those, not invented.
+
+  test("a LaTeX subscript survives, alone or beside another", () => {
+    // `$a_1$` alone already passed before the fix; the pair is the regression.
+    expect(cleanMarkdownText("$a_1$")).toBe("$a_1$");
+    expect(cleanMarkdownText("$a_1$ and $b_2$")).toBe("$a_1$ and $b_2$");
+    expect(cleanMarkdownText("x_1 y_2")).toBe("x_1 y_2");
+  });
+
+  test("a subscripted LaTeX command is not turned into a different expression", () => {
+    // The case that sets the severity. Losing these underscores does not flatten
+    // a subscript, it rewrites the mathematics: `\sum{\lambdai}` is not valid
+    // LaTeX, so the msgid cannot be reconstructed by a translator who knows the
+    // convention.
+    expect(cleanMarkdownText("weighted by $w_\\lambda = dq$")).toBe("weighted by $w_\\lambda = dq$");
+    expect(cleanMarkdownText("the subspace $G^+ = \\sum_{\\lambda_i}$")).toBe(
+      "the subspace $G^+ = \\sum_{\\lambda_i}$",
+    );
+  });
+
+  test("a snake_case identifier is not a word with emphasis inside it", () => {
+    // Not a maths-only concern: this shape broke BPMN ids in this repo's own
+    // `prov-qaqc` page, where `Process_CodeChangeReview/Task_ClaimBean` extracted
+    // as `ProcessCodeChangeReview/TaskClaimBean` — a msgid no translator can
+    // round-trip.
+    expect(cleanMarkdownText("snake_case_name stays")).toBe("snake_case_name stays");
+    expect(cleanMarkdownText("perform-task for Process_CodeChangeReview/Task_ClaimBean")).toBe(
+      "perform-task for Process_CodeChangeReview/Task_ClaimBean",
+    );
+  });
+
+  test("real emphasis is still stripped, including two spans in one string", () => {
+    // The guard must not buy subscript safety by giving up emphasis. Without
+    // this, deleting the emphasis branch outright would pass every case above.
+    expect(cleanMarkdownText("say _this_ and _that_")).toBe("say this and that");
+    expect(cleanMarkdownText("a _multi word_ span")).toBe("a multi word span");
+    expect(cleanMarkdownText("(_parenthesised_)")).toBe("(parenthesised)");
+  });
+
   test("replaces links with link text", () => {
     expect(cleanMarkdownText("[click here](https://example.com)")).toBe(
       "click here"
