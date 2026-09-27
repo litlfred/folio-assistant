@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-26T19:55:08Z
+updated_at: 2026-09-27T05:18:11Z
 parent: folio-assistant-ahvw
 ---
 
@@ -424,3 +424,75 @@ structural change to a 2000-line top-level script and is not taken here.
 - [ ] an `import.meta.main` guard on `kg-audit.ts`. MEASURED AFTER: importing it
       writes nothing and does not exit the importing process. Owner's call — it
       restructures a hot script
+
+
+## The remaining scanners MEASURED — one live defect in the whole set, and it was already fixed
+
+2026-09-27, on the owner's instruction to measure the rest rather than trust the
+count. The result changes how this bean should be read.
+
+### The enumeration, with its basis stated
+
+`git ls-files '*.ts'`, excluding tests:
+
+| | |
+|---|---|
+| non-test `.ts` calling `readdirSync` | **227** |
+| already asking git (`gitCorpus`) | 5 — `check-context-emission`, `check-kind-validators`, `gen-uml-overview`, `kg-audit`, `kg-detangle` |
+| unguarded | **222** |
+| of those, RECURSIVE **and** seeded from a root identifier | **2** |
+
+222 is not 222 defects. A `readdirSync` over one declared directory cannot read
+gitignored content unless gitignored content is there, and most of these scan a
+fixture, a temp directory, or a single declared subdirectory. **The dangerous
+shape is a recursive walk seeded from a repository root**, which is what this
+bean's "root-rooted" meant, and that narrowing is a STATIC approximation — it
+requires the seed to be a root identifier at the call site, so it can miss a
+scanner that computes its root indirectly. Stated rather than presented as
+exhaustive.
+
+### The two, and their exposure measured rather than reasoned
+
+**`content/pipeline/orphan-verdict-sweep.ts`** — walks
+`join(repoRoot, BLOCK_QA_RESULTS_DIR)` = `test/results/block-qa`.
+Ignored files under `cat-harness/test/results`: **0**. Untracked: 0. No exposure.
+
+**`scripts/external-schemas.ts`** — walks `directoriesForGraph(root, "code")` and
+`directoriesForGraph(root, "schemas")`, and `cat-harness/schemas` holds **2743
+gitignored files** in this container: the same `block-qa-schema/node_modules` that
+took `kg-detangle` from 227 nodes to 1441. So the walk genuinely reads files a
+fresh checkout does not have — **1004 of them are `.ts`**, which is the extension
+it keeps.
+
+And then the decisive measurement: of those 1004, **0 contain `@context`**, which
+is the filter the extraction applies before taking any URL. So the effect on the
+output today is **nil**. Latent, not live — the same verdict as `skillFiles()`.
+
+### What this means for the bean, and it is a correction of emphasis
+
+Across every scanner examined in this bean's lifetime, **exactly one had a live
+effect: `kg-detangle`**, and it is fixed. `kg-audit` was fixed today and its
+exposure was latent (6 files read, 0 sidecars changed). `skillFiles()` and both
+scanners above are latent with 0 live effect.
+
+So "11 root-rooted scans have no gitignore awareness" is true as stated and
+**overstates the live risk**, because it counts a shape rather than an effect. The
+distinction that matters is LIVE versus LATENT, and it can only be settled per
+scanner by asking what its filter admits — not by counting walks.
+
+A sweep of all 222, or even of the 2, would therefore be unfalsifiable work: no
+test could show it fixing anything. What is worth building instead is a DETECTOR —
+does a scanner's committed output change when gitignored content is present? That
+is the question every one of these measurements had to answer by hand.
+
+### Done when
+
+- [x] the remaining scanners enumerated and measured, with the enumeration's
+      basis stated and its approximation admitted
+- [x] `external-schemas.ts` — 1004 ignored `.ts` read, 0 matching the `@context`
+      filter, so 0 live effect
+- [x] `orphan-verdict-sweep.ts` — 0 ignored files under its scan root
+- [ ] a detector, not a sweep: for each generated artefact, does its writer's
+      output change when gitignored content exists beneath its scan root?
+      MEASURED AFTER: it reports `kg-detangle`'s pre-fix state as live and the
+      latent ones as latent, distinguishing them WITHOUT a hand measurement
