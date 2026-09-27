@@ -172,6 +172,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div>
 
 <ul class="subs">
+<li><a href="../fhir-ig-skills/">fhir-ig-skills</a> <span class="p">fhir-harness/skills</span> <span class="n">6</span></li>
 <li><a href="../folio-assistant-core-skills/">folio-assistant-core-skills</a> <span class="p">folio-assistant-core/skills</span> <span class="n">1</span></li>
 <li><a href="../large-datasets-skills/">large-datasets-skills</a> <span class="p">large-datasets/skills</span> <span class="n">3</span></li>
 <li><a href="../skills/">skills</a> <span class="p">cat-harness/skills</span> <span class="n">269</span></li>
@@ -1256,6 +1257,30 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/workflow-state.md"><code>workflow-state</code></a><br><span class="p">cat-harness/skills/workflow/workflow-state.md</span></td>
   <td>Where a running process keeps what it knows, and which store answers which question.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-client/fhir-client-operations.md"><code>fhir-client-operations</code></a><br><span class="p">fhir-harness/skills/fhir-client/fhir-client-operations.md</span></td>
+  <td>Reading, searching and writing FHIR R4 resources through the SMARTerFHIR client (`BaseClient` and its vendor subclasses): the launch-context reads, `requestResource`, `create` with its automatic subject/encounter/contex…</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-client/smart-launch.md"><code>smart-launch</code></a><br><span class="p">fhir-harness/skills/fhir-client/smart-launch.md</span></td>
+  <td>How a browser app performs a SMART on FHIR launch — EHR launch and standalone launch — with the SMARTerFHIR library: `SmartLaunchHandler`, the `LAUNCH` and `EMR` enums, the scopes it requests per EHR vendor, how the red…</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md"><code>ig-build-pipeline</code></a><br><span class="p">fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md</span></td>
+  <td>The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md"><code>ig-publisher-fork</code></a><br><span class="p">fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md</span></td>
+  <td>Requirements for an agent working a local experimental fork of the IG Publisher — which repositories, what the AST must carry, what must not change, and the acceptance criteria.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md"><code>ig-publisher-reduction</code></a><br><span class="p">fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md</span></td>
+  <td>The phased transition that reduces the IG Publisher to AST + QA — five phases, each with an exit criterion that is measured rather than asserted, and the staleness contract that makes an AST-backed staging build honest.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md"><code>ig-render-jekyll</code></a><br><span class="p">fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md</span></td>
+  <td>Rendering a FHIR IG's content through the just-the-docs pipeline instead of mounting the IG Publisher's finished HTML — the JSON-only representation contract, navigation derived from sushi-config.yaml, and the LHS rail.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/deep-document-research.md"><code>deep-document-research</code></a><br><span class="p">folio-assistant-core/skills/deep-document-research.md</span></td>
