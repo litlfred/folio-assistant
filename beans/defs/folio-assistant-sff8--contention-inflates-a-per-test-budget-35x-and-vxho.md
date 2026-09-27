@@ -3,8 +3,9 @@
 title: Contention inflates a per-test budget ~35x, and vxho fixed ONE of 505 files — two more just failed on main
 status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-27T05:16:34Z
+updated_at: 2026-09-27T05:20:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -101,4 +102,102 @@ somebody stops, with no way to know when it is done.
 Recorded and left `todo`. The session that found it was doing unrelated work
 (`ymsu`) and deliberately did not pivot.
 
+
+
+## Third independent confirmation, and one piece of evidence the bean does not yet have — 2026-09-26, ~17:30
+
+Seen again on `81461747918` (a beans-only branch, no source change), inside
+`bun run gates`. Same two files. **Not appending a duplicate observation: the new
+element is that the failing SET VARIES between runs of the identical commit.**
+
+    full run A   buildReport — absence is absence
+                 the sweep's profile gate … > a paper-only criterion is n/a'd in a document folio
+    full run B   the sweep's profile gate … > the same criterion runs in a paper folio
+                 the sweep's profile gate … > a folio whose config cannot be read keeps its coverage
+
+Four distinct test names across two runs, drawn from the same two files, same
+commit, same container. Then `bun test cat-harness/scripts/tests/profile-scoping.test.ts`
+alone: **16 pass / 0 fail, three times.**
+
+"Passes in isolation" is consistent with a deterministic environment difference.
+**A set that varies run to run is not** — it rules that out and leaves contention,
+which is what this bean already says. The same discriminator settled a navbar e2e
+question earlier today from the opposite direction: a deterministic browser
+difference names the same elements every time, so a varying set meant a race.
+
+CI on that same commit reported **1** `bun test` failure, not 3 — main's `t8g3`
+drift and nothing else — so the runner does not reproduce it and the local gate set
+is the surface that misreports.
+
+Consequence worth recording for whoever takes this: **`bun run gates` and
+`check:merged` inherit it.** A session comparing a local gate run against CI sees
+2-of-158 locally against CI's 2 and has to establish, by hand and per run, that the
+extra names are not findings. That is the third time in one session that a local
+gate reading had to be discounted against CI — the other two were `xd1g`-class
+residue (`3vc1`) and the `pull_request` merge-ref discovery (`g5o5`).
+
+Status untouched, no claim taken — this is somebody else's to work; the evidence is
+recorded here rather than in a new bean because `check before you create` would have
+had me open a duplicate of it.
+
+
+## Two more timeouts, and their MARGINS are the evidence
+
+A clean-tree `bun run gates` on 2026-09-26 21:2x hit these, in the same file:
+
+    (fail) a paper-only criterion is n/a'd in a document folio, under its OWN outcome  [5170.50ms]
+      ^ this test timed out after 5000ms.
+    (fail) a folio whose config cannot be read keeps its coverage                      [5047.46ms]
+      ^ this test timed out after 5000ms.
+
+**Both are timeouts at the limit plus a small remainder** — 5000 ms + 170 ms and
+5000 ms + 47 ms — and that is the discriminating fact, not the failure itself. A
+deterministic environment difference (a missing binary, a different resolution, a
+path that is absent in one place) does not land just past a deadline: it fails
+the same way every time, usually fast. Work that is merely **slower than the
+budget under load** lands exactly here, arbitrarily close to the limit from
+above.
+
+Taken with the earlier datapoint — the failing test SET varies between runs of
+the identical commit, while `profile-scoping.test.ts` is 16/16 in isolation —
+the shape is contention for a shared resource, not a difference between this
+container and CI's.
+
+Recorded as evidence only; this is not my bean and its status is untouched. If
+it is contention, the fix is a budget or a serialisation, not a code path, and
+whoever holds it should decide which.
+
+
+## A third margin, and the SPREAD is the new evidence
+
+A clean-tree `bun run gates` on the merged tree (`6b4c89309ed`, 2026-09-27 05:0xZ)
+failed exactly one gate of 167, and its one failing test was:
+
+    (fail) buildReport — absence is absence > a translated block reports coverage,
+           terms and echo — and NO round-trip verdict  [7463.84ms]
+      ^ this test timed out after 5000ms.
+
+A timeout, not an assertion — and in `profile-conformance-axis.test.ts`, the
+second of the two files, not `profile-scoping.test.ts`.
+
+So the margins over the 5000 ms budget now stand at **47 ms, 170 ms and 2464 ms**.
+**The spread is the point.** A deterministic environment difference — a missing
+binary, a different resolution, a path absent here — produces a STABLE duration,
+because it is the same work every time. A budget exceeded by three different
+amounts across three runs of the same suite is load, and load is contention.
+
+Independently: **CI passed this exact test on this exact commit** minutes before,
+along with the four profile-scoping tests, in `TypeScript — tests, lint, types
+(hard)` on `6b4c89309ed`. That is the third consecutive CI run to pass what this
+container fails, which is this bean's premise holding rather than an assumption
+about it.
+
+Evidence only when written. **Superseded by the claim note below**: this session
+claimed the bean at 05:16Z, so "no claim taken" stopped being true minutes after it
+was written, and the line is corrected here rather than left standing. The remedy is
+now this session's to propose, under the `## Done when` already recorded above —
+which rules out both a raised budget and per-file hoisting, so neither is on the
+table as a shortcut.
+
 _2026-09-27T05:16:34Z_ — Claimed by claude/wonderful-bohr-6kxh7b — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+

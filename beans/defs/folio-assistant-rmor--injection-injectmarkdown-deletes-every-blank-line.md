@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rmor
 title: 'INJECTION: injectMarkdown deletes EVERY blank line in the document, not the ones it introduced — the written page is structurally destroyed'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-26T12:57:59Z
-updated_at: 2026-09-26T12:57:59Z
+updated_at: 2026-09-27T06:26:13Z
 parent: folio-assistant-bzyu
 ---
 
@@ -86,3 +86,5 @@ Independent of `lvk9`'s extract half, which is measurable and landing without it
 But `lvk9` makes it MORE pressing rather than less: once a list item is one msgid,
 injecting it means writing one translation back over several source lines, which is
 exactly the path this defect sits on.
+
+_2026-09-27T06:26:13Z_ — Claimed by claude/wonderful-gauss-7frcrw — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

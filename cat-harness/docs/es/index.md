@@ -5,6 +5,7 @@ lang: es
 nav_exclude: true
 translation_status: unverified
 translation_source: index.md
+description: "folio-assistant — un marco de habilidades de agente independiente del contenido."
 available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
