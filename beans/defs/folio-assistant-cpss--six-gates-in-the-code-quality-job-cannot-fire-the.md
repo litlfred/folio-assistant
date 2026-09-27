@@ -308,6 +308,7 @@ That is the whole of this bean's claim, confirmed by observation. The
 recommendation is unchanged and the masking is still latent, for the reasons in
 the entry above.
 
+_2026-09-27T04:55:37Z_ — Claimed by claude/sleepy-babbage-ls90iz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 ---
 
