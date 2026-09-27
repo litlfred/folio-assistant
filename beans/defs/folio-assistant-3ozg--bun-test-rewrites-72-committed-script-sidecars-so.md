@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-27T05:06:01Z
-updated_at: 2026-09-27T05:20:13Z
+updated_at: 2026-09-27T05:48:31Z
 parent: folio-assistant-1xhc
 ---
 
@@ -67,3 +67,42 @@ regeneration writes before committing it.** Committing this churn stamps a
 main's — as though it were a fresh measurement. That is why the standing practice has
 been to discard rather than commit, and why option 4 is not merely a cop-out: it at
 least makes the discard deliberate.
+
+
+## A second way the discard fails, measured 2026-09-27 (branch `claude/brave-hypatia-r820sf`)
+
+Status untouched — this is evidence for whoever works it, not a claim on it.
+
+Remedy 4, *document that these 72 are always discarded locally*, relies on the
+agent knowing. It also relies on the agent's **inspection** being able to see
+them, and there is a common case where it cannot:
+
+1. `bun run gates` was started in the BACKGROUND while other work continued.
+2. `git status --porcelain` was checked — clean at that moment, because the run
+   had not reached the writer yet.
+3. The run reached `saveQaScriptSidecar` and rewrote all 72.
+4. `git add -A` swept them into a commit about something else entirely.
+
+The commit was caught and amended before any push, so nothing landed. What makes
+it worth recording is **how** it was nearly missed: the command used to inspect
+the tree was
+
+    git status --porcelain | grep -v 'script-sidecars'
+
+— the filter that makes the churn tolerable day to day is the same filter that
+hides it at the moment it matters. An agent following remedy 4 writes exactly
+that pipeline, and it reports clean while 72 files are staged.
+
+**This strengthens 2 and 3 over 4 rather than adding a fifth option.** Remedy 4
+is the only one whose correctness depends on the timing of an unrelated
+background process; 2 (stamp only on a real change) and 3 (move provenance out of
+the committed file) both make the window not exist. It is also a reason to prefer
+either over "just remember", independent of the `engine_version` downgrade
+argument already recorded here.
+
+One caveat on the count: this branch measures **86** sidecars committed, of which
+**72** carry `bun-1.3.14` and **14** carry `bun-1.3.11`. So the corpus is already
+MIXED — the churn has been committed at least once before, partially — and "main's
+sidecars are stamped bun-1.3.14" is true of 72 of 86 rather than of all of them.
+Whichever remedy is chosen, the 14 are a pre-existing divergence it has to
+account for, not collateral of the fix.
