@@ -1,10 +1,10 @@
 ---
 # folio-assistant-vrfx
 title: stripLeanComments eats newlines inside block comments, so 99% of Lean QA hit lines are wrong
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-09-25T16:20:52Z
-updated_at: 2026-09-25T16:20:52Z
+updated_at: 2026-09-27T09:58:54Z
 parent: folio-assistant-0lmb
 ---
 
@@ -85,3 +85,4 @@ The other five modules carrying their own Lean declaration pattern
 `bqrg`'s ground, and `lean-decl-starts-are-shared.test.ts` ratchets the list so
 it can only shrink.
 
+_2026-09-27T09:58:54Z_ — Claimed by claude/brave-hypatia-r820sf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
