@@ -805,6 +805,12 @@ export interface ScriptExemption {
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
   {
+    script: "check:bun-runtime",
+    kind: "report",
+    reason:
+      "CI CANNOT OBTAIN A MISMATCH \u2014 the `ingest:ig-menu:check` shape, one input over. It compares the Bun RUNNING in this process against `.bun-version`, and CI installs `.bun-version` at all 22 `setup-bun` sites (that is `check:bun-pin`, which IS gated), so on a runner `running === pinned` by construction. Wired as a gate it would exercise nothing on every run, and its one interesting state would be unreachable from the only place it was ever checked. Its subject is the ENVIRONMENT rather than the corpus, so no commit can change the answer either: red here would report the machine while every reviewer read it as a verdict on the diff, which is the second always-red signal #1442 removed the first one for. **It is not unrun.** `session-start-coord-sweep.sh` runs it with `--markdown` on every session start, which is where the cost it prevents is paid \u2014 an agent in a mismatched container sees 72 of 86 sidecars rewritten by any sweep and needs to know that is bean `3ozg` and not its own diff, BEFORE its first `git add`, since no `git status` afterwards can tell it. Built so a blind run cannot read as clean: no pin, an unparseable pin or no Bun to ask all exit **2** as `cannot-tell`, never 0. Run it by hand, or read it at session start. Bean `3ozg`",
+  },
+  {
     script: "check:quiet-claims",
     kind: "report",
     reason:
