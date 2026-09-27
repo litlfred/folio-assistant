@@ -501,6 +501,12 @@ export const RULES: Rule[] = [
       // `harness.json` for the directories, DERIVES the nesting from their
       // declared paths, and has nothing to say about any folio's content.
       "scripts/check-subgraphs.ts",
+      // How many scripts enumerate the filesystem, and how many ask git what
+      // the corpus is (bean `xd1g`). Harness for `check-subgraphs.ts`' reason
+      // and more plainly still: its whole subject is this repository's own
+      // `scripts/` directory read through `gitCorpus`, and it cannot express
+      // an opinion about a folio because it never looks at one.
+      "scripts/root-scan-census.ts",
       // Whether a translated page's links survived being one directory
       // deeper than the page they were translated from (bean `ahab`).
       // Harness for `check-subgraphs.ts`' reason and by the same route — it
@@ -526,6 +532,12 @@ export const RULES: Rule[] = [
       // subject is `.github/workflows/` plus one repo-root pin file, and it
       // reads no folio content.
       "scripts/check-bun-pin.ts",
+      // The shared "a gate that examined nothing must refuse" decision (bean
+      // `iym1`). Harness because it is a helper for the harness's own gates and
+      // reads nothing at all: it is handed a list of what a caller looked at and
+      // returns a message. It has no corpus of its own, which is why it can be
+      // tested over a CONSTRUCTED empty one while the gates it serves cannot.
+      "scripts/vacuity-refusal.ts",
       // Whether each methodology's cited `origin` resolves to an ingested
       // source. Harness for the same reason as the two above: it reads the
       // declaration for the `methodology` and `library` graphs and fans out

@@ -55,8 +55,9 @@
  * @covers code
  */
 
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
+import { gitFiles } from "../schemas/git-corpus.ts";
 
 import {
   directoriesForGraph,
@@ -66,25 +67,27 @@ import {
   repoRootFor,
 } from "../schemas/cat-harness.js";
 
-/** Every `.ts` under `root`, excluding `node_modules` and dot directories. */
+/**
+ * Every `.ts` under `root` that GIT accounts for, excluding dot directories.
+ *
+ * `xd1g`. This walked the filesystem behind a hand-written
+ * `node_modules`-and-dot-directories skip list, so it counted build output as
+ * repository source. Measured at the conversion: **1472 files before, 1471
+ * after**, and the one it dropped is
+ * `cat-harness/schemas/block-qa-schema/dist/index.d.ts` — a gitignored
+ * `dist/`, being accounted for by the check whose subject is accounting for
+ * code. Nothing was gained, so the change is a strict narrowing to the real
+ * rule.
+ *
+ * The dot-directory rule is stated here rather than inherited: git's corpus
+ * INCLUDES `.github/` and `.claude/`, so `gitFiles` deliberately does not fold
+ * one in — see its docblock.
+ */
 export function typescriptFiles(root: string): string[] {
-  const out: string[] = [];
-  const walk = (dir: string): void => {
-    let entries;
-    try {
-      entries = readdirSync(dir, { withFileTypes: true });
-    } catch {
-      return; // unreadable is not this script's finding to raise
-    }
-    for (const e of entries) {
-      if (e.name === "node_modules" || e.name.startsWith(".")) continue;
-      const f = join(dir, e.name);
-      if (e.isDirectory()) walk(f);
-      else if (e.name.endsWith(".ts")) out.push(f);
-    }
-  };
-  walk(root);
-  return out;
+  return gitFiles(
+    root,
+    (rel) => rel.endsWith(".ts") && !rel.split("/").some((seg) => seg.startsWith(".")),
+  ).files;
 }
 
 export interface DeclaredDirs {

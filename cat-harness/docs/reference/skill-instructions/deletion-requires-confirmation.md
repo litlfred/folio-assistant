@@ -222,6 +222,42 @@ that from becoming a deletion — but a report that names live work still invite
 one, which is why the list a person is asked to act on has to be as careful as
 the action itself.
 
+## Name the instrument that produced the list — bean `pesg`
+
+**A candidate list must say where it came from.** If a committed check computed
+it, quote the check's finding and name the check. If you built the list by hand,
+say that in as many words, so the person can see they are being asked to act on
+a derivation rather than on a measurement.
+
+This is not bookkeeping. 2026-09-25, the same `STAGING/` previews as `plj1`
+above: `bun run health` reported **one** orphaned preview, named and sized. A
+review re-implemented the slug rule inline — `[^a-zA-Z0-9]+`, where
+`feature-staging.yml` preserves `.`, `_` and `-` — reported **three**, and put
+that number to the owner, who authorised deleting "the 3 orphans". Two of the
+three were **live previews for open pull requests #1337 and #914**, which a
+reviewer could have been reading. Nothing in this skill caught it: every rule
+here was obeyed. The artefacts were named, sized, aged and confirmed. The list
+was simply wrong, and no rule asked where it came from.
+
+It was caught by measuring each directory's size before deleting, noticing a
+name that looked like an open PR's branch, and re-checking — that is luck
+wearing the clothes of diligence, and it is not a control.
+
+**The asymmetry is the whole point.** A hand-derived list that is SHORTER than
+the instrument's is a harmless miss: something survives that could have gone.
+One that is LONGER extracts a permission the instrument never justified, and
+this skill's central assumption — that the person is choosing from a true list
+— fails silently. So the rule is not "re-derive carefully"; it is **do not
+re-derive what a committed check already computes**, which is
+[`goal-review`](goal-review.md) rule 2's qualification, stated there for the
+reviewing side.
+
+`stagingSlug` was exported from `schemas/staging.ts` at the time, and
+`test/health/checks.test.ts` already asserted it differentially against the real
+`sed` pipeline. A correct, tested implementation was one import away. So the gap
+was never duplication in the code — it was that nothing required the list's
+provenance to be stated.
+
 ## Applying it to your own code
 
 Two tests, both cheap, both derived from `plj1`:
@@ -244,6 +280,10 @@ nothing.
 - [ ] Is there a non-destructive move — scrap, archive, redirect, regenerate,
       label? Prefer it, and say you preferred it.
 - [ ] Have you **named** each artefact, with its size and age and what is lost?
+- [ ] Does the list say **which instrument produced it** — or, if you built it by
+      hand, does it say that? A hand-derived list longer than the check's takes a
+      permission nothing measured (bean `pesg`: 3 offered where `health` found 1,
+      two of them live).
 - [ ] Have you given a recommendation, and said what happens on silence?
 - [ ] Did the user confirm **this** removal, rather than a similar one?
 - [ ] Does any code you wrote remove something as a side effect? Say so in the

@@ -138,7 +138,7 @@
  * @covers none — it measures coverage rather than auditing a graph; a row about
  *   itself would be a criterion that cannot fail.
  */
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import {
@@ -150,6 +150,7 @@ import {
   repoRootFor,
 } from "../schemas/cat-harness.js";
 import { KG_CRITERIA, KG_SUBJECT_GRAPH_KINDS, type KgSubjectKind } from "../schemas/kg-qa.js";
+import { gitFiles } from "../schemas/git-corpus.ts";
 import { loadGates } from "./gates.js";
 import { QA_RESULTS_DIR, buildQaResult, writeQaResult, type QaResult } from "./qa-results.js";
 
@@ -263,32 +264,50 @@ function isSidecar(name: string): boolean {
  */
 const SELF_SIDECAR = join(ROOT, QA_RESULTS_DIR, "audit-coverage.qa-results.json");
 
-/** Files and sidecars under `dir`, recursively. Unreadable is zero, reported by the caller. */
+/**
+ * Files and sidecars under `dir` that GIT accounts for. Unreadable is zero,
+ * reported by the caller.
+ *
+ * ## It changes no count today, and the docblock nearly claimed otherwise
+ *
+ * `xd1g`. Measured over the three largest declared directories at the
+ * conversion — `cat-harness/skills` (389), `beans/defs` (1049),
+ * `cat-harness/test/results` (945) — **identical before and after**, nothing
+ * swept and nothing gained. The committed sidecar moves by its timestamp and
+ * script hash alone.
+ *
+ * That is the honest result, and it took a correction to reach. The same
+ * comparison over the REPOSITORY ROOT is dramatic — 31437 files before, 14135
+ * after, 17302 swept and every one of them gitignored (14561 in
+ * `node_modules/`, 2723 of build output, 18 in `_kg/`) — and it was nearly
+ * written here as what this scanner had been doing. It is not: {@link census}
+ * is called on DECLARED GRAPH DIRECTORIES only, never on a root, and every one
+ * of them happens to hold no ignored content. A number measured on a different
+ * input is not this function's measurement.
+ *
+ * What the root figure does show is the SHAPE, and the shape is one
+ * declaration away: the old recursion skipped only dot-prefixed names, so it
+ * had no defence at all if a declared directory ever came to contain build
+ * output. `_kg/` is 18 such files sitting one level above the directories this
+ * does census.
+ *
+ * `dir` is any directory inside the work tree, not only a root: `gitCorpus`
+ * runs `git ls-files` with `cwd: dir`, which lists exactly that subtree.
+ *
+ * The dot rule is kept explicitly — git's corpus includes `.github/` and
+ * `.claude/`, and folding a dot rule into the helper would change what several
+ * scanners read without saying so.
+ */
 export function census(dir: string, skip: ReadonlySet<string> = new Set([SELF_SIDECAR])): { files: number; sidecars: number; readable: boolean } {
-  let entries: string[];
-  try {
-    entries = readdirSync(dir);
-  } catch {
-    return { files: 0, sidecars: 0, readable: false };
-  }
+  if (!existsSync(dir)) return { files: 0, sidecars: 0, readable: false };
+  const found = gitFiles(dir, (rel) => !rel.split("/").some((s) => s.startsWith(".")));
   let files = 0;
   let sidecars = 0;
-  for (const e of entries) {
-    if (e.startsWith(".")) continue;
-    const p = join(dir, e);
-    if (skip.has(p)) continue;
-    let dirent;
-    try {
-      dirent = statSync(p);
-    } catch {
-      continue;
-    }
-    if (dirent.isDirectory()) {
-      const inner = census(p, skip);
-      files += inner.files;
-      sidecars += inner.sidecars;
-    } else if (isSidecar(e)) sidecars++;
-    else if (countable(e)) files++;
+  for (const abs of found.files) {
+    if (skip.has(abs)) continue;
+    const base = abs.split(/[\\/]/).at(-1)!;
+    if (isSidecar(base)) sidecars++;
+    else if (countable(base)) files++;
   }
   return { files, sidecars, readable: true };
 }

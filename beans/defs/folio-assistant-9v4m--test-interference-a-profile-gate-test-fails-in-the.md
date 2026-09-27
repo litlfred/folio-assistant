@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T03:40:20Z
-updated_at: 2026-09-27T05:12:05Z
+updated_at: 2026-09-27T14:31:29Z
 parent: folio-assistant-1swy
 ---
 
@@ -472,3 +472,45 @@ stderr rather than by running the suite again.
       reports as a wrong OUTCOME rather than as a throw. MEASURED AFTER: the child's
       exit status and stderr are recorded on every run, failing or not, so the next
       occurrence is diagnosable from the log instead of needing a reproduction
+
+
+## Two inputs from #1472 on the guard clause — one narrows it, one is adjacent and says so
+
+Both facts come from a sibling session's PR
+([#1472](https://github.com/litlfred/folio-assistant/pull/1472)), read 2026-09-27
+while watching open PRs. The cost measurement above — 2367 lines, 92 % of the
+file — is unchanged by either.
+
+**1. A second consumer of `kg-audit.ts` arrived and deliberately did NOT import
+it.** #1472 adds `cat-harness/scripts/kg-audit-all.ts`, which runs the audit for
+every declared instance. It reaches `kg-audit.ts` through
+`Bun.spawn(["bun", "run", "cat-harness/scripts/kg-audit.ts", …])` and imports
+only `instanceRootsIn` from `../schemas/cat-harness.js` — read off that branch's
+file, not taken from the PR body. Its docblock gives two reasons and neither is
+this bean: the root is resolved once at module scope *by design* (*"nothing needs
+a DIFFERENT root part-way through a run"*), and spawning is what makes a crash in
+one instance a **reported failure** rather than an exception that ends the sweep.
+
+So after the one change most likely to have produced an importer, the guard still
+has exactly one caller to protect — `declared-directory-resolves.test.ts`'s own
+probe — and the deferral blocks nobody.
+
+**2. An adjacent cost on the same file, and it is adjacent rather than the same.**
+Quoting #1472: `KG_QA_MANIFEST_PATH` was `skills/kg-qa.manifest.json`, and
+*"`kg-audit.ts` writes it unconditionally, so the first full sweep created a
+`skills/` directory holding nothing but a manifest"* in each of the six instances
+that have none — after which the generated UML and the navbar both reported a
+skills graph holding no skills.
+
+**That is not evidence for the guard, and saying so matters more than claiming
+it.** Those were legitimate runs with the file as the entry point, which is
+exactly the case a guard leaves untouched; #1472's repair was to move the path,
+right on its own terms. What the two share is narrower: `kg-audit.ts`'s writes
+are consequences of the module being **evaluated**, not of a caller asking for
+them. Two sessions in two days were surprised by that write set, by two different
+routes.
+
+**Net for the owner's call:** the same question, better informed. No importer
+exists or is planned, so nothing is waiting on the restructure; and the file's
+write-on-evaluation shape has now cost a second session time, which is an
+argument about this file generally rather than about the three lines.

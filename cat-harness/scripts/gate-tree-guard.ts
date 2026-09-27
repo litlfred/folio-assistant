@@ -3,10 +3,12 @@
  *
  * ## The defect this exists for
  *
- * `bun run gates` runs 152 gates in order. Gate 1 is `bun test`; somewhere in
- * that suite the detangle WRITER runs and repairs
- * `test/results/detangle/**.detangle.json`. Gate 152 is `kg:detangle:check`,
- * ~1140 lines of output later, and it reads the file gate 1 just repaired.
+ * `bun run gates` runs its gates in order, and the FIRST is `bun test`; somewhere
+ * in that suite the detangle WRITER runs and repairs
+ * `test/results/detangle/**.detangle.json`. `kg:detangle:check` is near the end,
+ * ~1140 lines of output later, and it reads the file the first gate just
+ * repaired. (No count here on purpose: this said "152 gates" while the set was
+ * 170, and the gap between the two is the argument.)
  *
  * Measured on one tree with `internal` deliberately stale (bean `ymsu`):
  *
@@ -50,9 +52,11 @@
  *
  * Cost, measured rather than assumed before choosing per-gate over
  * once-per-run: `git status --porcelain` over this repository's 13,529 tracked
- * files is **~29ms** (five runs: 29, 27, 29, 27, 29). 152 snapshots is ~4.4s
- * against a run of several minutes, so attribution — the part that turns "the
- * tree changed" into "gate 1 changed what gate 152 reads" — is nearly free.
+ * files is **~29ms** (five runs: 29, 27, 29, 27, 29). At the 152 gates of the
+ * day that was ~4.4s, and the conclusion does not depend on the count — it is
+ * one snapshot per gate against a run of several minutes. So attribution — the
+ * part that turns "the tree changed" into "the first gate changed what the last
+ * one reads" — is nearly free.
  *
  * ## Raw porcelain lines are the key, on purpose
  *
@@ -66,18 +70,30 @@
  *
  * A parser this code does not contain is a parser that cannot be wrong.
  *
- * ## Known limitation: do not run git WHILE the gates run
+ * ## Known limitation: do not CHANGE the tree while the gates run, by any means
  *
- * The snapshots are of the working tree as git reports it, so **any** git
- * operation during a run moves the thing being measured. `git add` turns `??`
- * into `A ` and ` M` into `M `; a commit makes those entries vanish entirely.
- * Either is a real porcelain change, and this code will attribute it to
- * whichever gate happened to be running — a finding that names an innocent
- * gate.
+ * The snapshots are of the working tree as git reports it, so anything that
+ * moves a porcelain line during a run moves the thing being measured, and this
+ * code will attribute it to whichever gate happened to be running — a finding
+ * that names an innocent gate.
  *
- * Found the honest way, 2026-09-26: the session writing this guard wanted to
- * commit it mid-run and realised it would fabricate the finding it was trying
- * to measure.
+ * **Git operations are one way.** `git add` turns `??` into `A ` and ` M` into
+ * `M `; a commit makes those entries vanish entirely. Found the honest way,
+ * 2026-09-26: the session writing this guard wanted to commit it mid-run and
+ * realised it would fabricate the finding it was trying to measure.
+ *
+ * **An ordinary write to a tracked file is another, and this section named only
+ * the first until it fired that way.** Measured 2026-09-27: an agent appended a
+ * paragraph to a bean file while a background `gates` run was in flight, and the
+ * run ended *"every gate passed, and the run is NOT clean — 1 gate(s) changed
+ * the tree"*, attributing ` M beans/defs/…-9v4m….md` to `bun test`. Nothing was
+ * wrong with `bun test` and no git command had been run. The heading said
+ * *"do not run git"*, the agent had not run git, and it read the finding as a
+ * gate's defect before checking.
+ *
+ * The condition is therefore not "a git operation" but "a tree change from
+ * outside the gate", and an editor write is the easier one to commit by
+ * accident, because it does not feel like operating on the repository at all.
  *
  * It is documented rather than defended against, and the reason is that the
  * defence is worse than the disease. Detecting "did HEAD or the index move?"
@@ -251,6 +267,14 @@ export function formatMutations(mutations: readonly GateMutation[], cap = 8): st
   lines.push("  diff you are missing. If a gate writes here as part of doing its job, that is");
   lines.push("  the defect to fix: compute into a temp directory, as the profile-conformance");
   lines.push("  tests already do, rather than into the tree under test.");
+  lines.push("");
+  // Printed because the docblock is not what anybody reads when a run goes red.
+  // Measured 2026-09-27: an edit made during a background run was reported as
+  // `bun test` writing, and read as a gate's defect before being checked.
+  lines.push("  First rule out YOURSELF: this guard cannot tell a gate's write from any other");
+  lines.push("  change to the tree during the run, so an edit, a `git add` or a commit made");
+  lines.push("  while it was in flight is reported against whichever gate was running. If a");
+  lines.push("  path above is one you touched, the gate named is innocent — commit, then re-run.");
   return lines;
 }
 

@@ -50,10 +50,11 @@
  * Usage:  bun run check:agents-claims
  * Exit:   0 clean · 1 a claim is false · 2 nothing could be parsed
  */
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import { repoRootFor } from "../schemas/cat-harness.js";
+import { gitFiles } from "../schemas/git-corpus.ts";
 
 const HERE = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(HERE);
@@ -150,20 +151,31 @@ export function declares(src: string, symbol: string): boolean {
   return new RegExp(`\\b${member.replace(/\$/g, "\\$")}\\b`).test(src);
 }
 
-/** Every `.ts` file under the repo, skipping vendored and generated trees. */
+/**
+ * Every `.ts` file GIT accounts for, minus the trees this check does not read.
+ *
+ * `xd1g`. Two different exclusions used to sit in one `SKIP` set and they are
+ * not the same kind of thing. `_site`, `dist`, `build` and `.lake` are
+ * GENERATED and gitignored — git now excludes them, by rule rather than by
+ * whoever remembered to name them. `docs` and `translations` are TRACKED
+ * content this check deliberately does not read, so they stay listed here,
+ * which is what makes them legible as a choice.
+ *
+ * Measured at the conversion: **1290 before, 1290 after** — behaviour-
+ * identical today, because the hand-written list happened to name the
+ * generated trees that currently exist. That is correct by coincidence, and
+ * the next one nobody names is `check-code-accounting`'s `dist/index.d.ts`.
+ */
 function sourceFiles(repo: string): string[] {
-  const SKIP = new Set(["node_modules", ".git", "_site", "dist", "build", ".lake", "docs", "translations"]);
-  const out: string[] = [];
-  const walk = (d: string): void => {
-    for (const e of readdirSync(d, { withFileTypes: true })) {
-      if (e.name.startsWith(".") || SKIP.has(e.name)) continue;
-      const p = join(d, e.name);
-      if (e.isDirectory()) walk(p);
-      else if (/\.(ts|tsx)$/.test(e.name) && statSync(p).size < 2_000_000) out.push(p);
-    }
-  };
-  walk(repo);
-  return out;
+  const NOT_READ = new Set(["docs", "translations"]);
+  return gitFiles(
+    repo,
+    (rel) => {
+      const segs = rel.split("/");
+      if (segs.some((s) => s.startsWith(".") || NOT_READ.has(s))) return false;
+      return /\.(ts|tsx)$/.test(rel) && statSync(join(repo, rel)).size < 2_000_000;
+    },
+  ).files;
 }
 
 /**
