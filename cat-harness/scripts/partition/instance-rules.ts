@@ -572,6 +572,22 @@ export const RULES: Rule[] = [
     triaged: true,
     exact: [
       "scripts/audit-wiring.ts",             // Python .witness.json buckets
+      // 🟧 OWNER RULING 2026-09-27, verbatim: "field sits on shared kinds
+      //    (remark, example, algorithm, simulator), so the grammar genuinely
+      //    is vocabulary that goes tp f-a-sci" — reversing the inference the
+      //    core triage block below applied FIVE times (see its header, now
+      //    corrected). A `lean` field on a shared kind does not make the
+      //    grammar core; it makes that field on those kinds part of the
+      //    science vocabulary.
+      //
+      //    These two move FREE: MEASURED, reassigning them adds ZERO
+      //    wrong-direction edges. The other two the ruling reaches
+      //    (`schemas/lean-packages.ts`, `content/pipeline/lean-signature.ts`)
+      //    cost SIX core -> sci edges and are held pending the owner's call on
+      //    how core is to carry a formal reference it does not own. qou bean
+      //    `qou-7ko6`.
+      "content/pipeline/lean-lexer.ts",   // comment stripping, declaration splitting
+      "content/pipeline/witness-address.ts", // where a witness lives; is one there
       "scripts/audit-wiring-migrate.ts",     // stamps auditOnly on witness JSON
       "scripts/check-duplicate-decls.ts",    // one Lake tree, two declarations
       "scripts/check-mirror-drift.ts",       // .lean sibling vs library decl
@@ -1345,7 +1361,7 @@ export const RULES: Rule[] = [
   //    BEFORE the domain rules because first match wins: the `lean` keyword
   //    would otherwise claim a module the generic content model depends on.
   //
-  //    The test applied is not "does the name mention Lean" but "would core
+  //    The test applied WAS not "does the name mention Lean" but "would core
   //    compile and function without the science layer installed". For
   //    `lean-packages.ts` it would not: `BlockBase` carries an optional `lean`
   //    field in `schemas/types.ts`, `schemas/constraints.ts` validates its
@@ -1353,6 +1369,40 @@ export const RULES: Rule[] = [
   //    kinds by design — the document profile forbids its USE rather than its
   //    existence. So the grammar belongs wherever the field does. Only the
   //    package list is a property of a folio, and that is injected.
+  //
+  //    🟧 THAT TEST IS OVERRULED (owner, 2026-09-27), and it is the premise
+  //    rather than the reasoning that was rejected. Verbatim: "field sits on
+  //    shared kinds (remark, example, algorithm, simulator), so the grammar
+  //    genuinely is vocabulary that goes tp f-a-sci", following
+  //    "f-a-sci __should__ have scehams for math/science papers". A `lean`
+  //    field appearing on a shared kind does NOT make the grammar core; it
+  //    makes that field on those kinds part of the science vocabulary.
+  //
+  //    The test was applied FIVE times in this block ("Same test again",
+  //    "Same test a third time"), so the ruling reaches four entries, not one.
+  //    Two have moved to the sci block above and cost NOTHING — measured, zero
+  //    new wrong-direction edges. The remaining two stay here for now and the
+  //    reason is a measurement, not a disagreement: reassigning
+  //    `schemas/lean-packages.ts` and `content/pipeline/lean-signature.ts`
+  //    yields SIX core -> sci edges --
+  //      schemas/constraints.ts          -> lean-packages
+  //      adapters/mcp-server/server.ts   -> lean-packages
+  //      adapters/document/resolver.ts   -> lean-packages
+  //      adapters/manifest-entries.ts    -> lean-packages
+  //      content/pipeline/qa-utils.ts    -> lean-packages
+  //      content/pipeline/qa-utils.ts    -> lean-signature
+  //    -- because the header above is, as a statement of FACT about today's
+  //    code, correct: core really does reach into the grammar. Honouring the
+  //    ruling therefore needs core to carry a formal reference whose
+  //    vocabulary it does not own -- `lean` off `BlockBase` and behind the
+  //    same injection `configureLeanPackages` already established for the
+  //    LIST, extended to the GRAMMAR. That changes `BlockBase`, so it is the
+  //    owner's call and is not made here. qou bean `qou-7ko6`.
+  //
+  //    NOTE for whoever picks this up: the two entries left below now carry a
+  //    rationale their own header says is overruled. That is deliberate -- the
+  //    classification still matches the code -- but do not cite it as the
+  //    reason they are core. The reason is the six edges.
   {
     repo: "core",
     triaged: true,
@@ -1380,19 +1430,6 @@ export const RULES: Rule[] = [
       // core, and `qa-utils` consults it on every freshness check. The
       // grammar belongs wherever the field does.
       "content/pipeline/lean-signature.ts",
-      // The Lean LEXER — comment stripping and declaration splitting — which
-      // `lean-signature.ts` is built on. Same test again: finding a
-      // declaration in a file is grammar; what you then DO with it (Atlas
-      // ingestion, triviality probing, coverage tables) is the science layer.
-      "content/pipeline/lean-lexer.ts",
-      // Where a witness lives and whether one is there. Same test a third
-      // time: `export-json.ts` is the GENERIC exporter and emits `witnessed`
-      // for every block carrying a `lean` field, so hashing the file and
-      // looking for the sibling travels with the field. Producing and
-      // invalidating witnesses stays in `scripts/lean-witness.ts`, which is
-      // sci. Named for `witness`, which the sci keyword rule would otherwise
-      // claim — hence the explicit entry.
-      "content/pipeline/witness-address.ts",
       // The QA sidecar PROJECTION — the families (`block`, `translation`,
       // `script`, `kg`), their states and freshness, read by `gen-docs-pages`
       // to publish one file per (subject, family). Nothing in it is science:
