@@ -9844,7 +9844,11 @@
 
     var box = document.getElementById("fa-nav-open");
     var close = document.querySelector(".fa-nav-close");
-    var open = document.querySelector(".fa-nav-toggle");
+    // `.fa-nav-head` is the SAME control as `lib/navbar.ts` renders it (`sjic`).
+    // Only the old Liquid markup said `.fa-nav-toggle`, so on the live footer
+    // this handler never attached and a stay-closed bar could not be lifted by
+    // the ☰ (found 2026-09-27).
+    var open = document.querySelector(".fa-nav-toggle, .side-bar .fa-nav-head");
 
     if (close) {
       close.addEventListener("click", function (e) {
@@ -9864,6 +9868,47 @@
       open.addEventListener("click", function () {
         writeNavPref(null);
         applyNavPref(null);
+      });
+    }
+
+    /* THE AVATAR OPENS AND CLOSES THE BAR — owner, 2026-09-27: *"navbar
+     * starts hidden, click avatar opens for a split second then returns to
+     * hidden"*. The avatar is the theme's home link, so a click RELOADED the
+     * page: the bar peeked under the pointer, then came back at rest. With
+     * stay-closed set it did not open at all.
+     *
+     * From 50rem up it is now the bar's toggle: pin open (lifting stay-closed),
+     * or close (setting it, so the hover peek does not hold it open under the
+     * pointer). Home is still one click away, as ⌂ at the foot of the bar and
+     * as the first page. Below 50rem the theme's ☰ owns the menu and the
+     * avatar stays the home link. With no script it is the home link too. */
+    var avatar = bar.querySelector(".site-title");
+    if (avatar && box && window.matchMedia) {
+      var wide = window.matchMedia("(min-width: 50rem)");
+      var label = function () {
+        if (!wide.matches) {
+          avatar.removeAttribute("aria-expanded");
+          avatar.removeAttribute("aria-controls");
+          return;
+        }
+        avatar.setAttribute("aria-controls", bar.id || "");
+        avatar.setAttribute("aria-expanded", box.checked ? "true" : "false");
+        avatar.title = box.checked ? "Close navigation" : "Open navigation";
+      };
+      if (!bar.id) bar.id = "fa-side-bar";
+      label();
+      box.addEventListener("change", label);
+      avatar.addEventListener("click", function (e) {
+        if (!wide.matches) return;
+        e.preventDefault();
+        box.checked = !box.checked;
+        writeNavPref(box.checked ? null : "closed");
+        applyNavPref(box.checked ? null : "closed");
+        label();
+        // Closing must drop focus too: the bar also opens on `:focus-within`
+        // (the keyboard path), so a focused avatar held it open after the
+        // click that closed it. Measured: 264px wide with the pointer away.
+        if (!box.checked) avatar.blur();
       });
     }
   }
