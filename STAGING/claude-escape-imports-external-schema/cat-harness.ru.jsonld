@@ -291,14 +291,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-27T08:31:00.698Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/dbd4b46cfcc692fa2797dd928b996c4c518c80ee",
-  "sourceCommitSha": "dbd4b46cfcc692fa2797dd928b996c4c518c80ee",
-  "sourceCommitAt": "2026-09-27T08:28:11Z",
+  "generatedAt": "2026-09-27T09:55:51.115Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7f332547bef14fb5c1a1d26051c74aa4bcb401c6",
+  "sourceCommitSha": "7f332547bef14fb5c1a1d26051c74aa4bcb401c6",
+  "sourceCommitAt": "2026-09-27T09:52:52Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 279,
+    "Skill": 280,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
@@ -1569,7 +1569,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/platform-gates.md",
-      "instructionLines": 334,
+      "instructionLines": 356,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3382,6 +3382,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/readme-sections"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/gate-tree-mutation",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "gate-tree-mutation",
+      "title": "\"NOT clean\" is a verdict about the RUN, not about your diff",
+      "description": "Reading `bun run gates`' \"NOT clean\" verdict. Why every gate can pass and the run still exit 1, the two causes and how to tell them apart in one command, and the question that settles whether a churning field is a defect in the writer: does it describe the SUBJECT or the RUN?",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/gate-tree-mutation.md",
+      "instructionLines": 184,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/gate-tree-mutation"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/decision-audit",
@@ -6485,6 +6502,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/feature-staging",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/filing-dublin-core",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/flushable-containers",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/gate-tree-mutation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/generalise-the-fix",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/getting-started",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/github-state-inspection",
@@ -43796,6 +43814,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/document-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/document-structure",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/feature-staging",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/gate-tree-mutation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/github-state-inspection",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/graph-detanglement",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/issue-working",
