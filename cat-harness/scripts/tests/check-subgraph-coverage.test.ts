@@ -140,6 +140,22 @@ describe("declared-but-missing is a different problem from undeclared", () => {
     expect(viz).toHaveLength(1);
     expect(viz[0]?.severity).toBe("major");
     expect(viz[0]?.detail).toContain("does not resolve");
+    // `bsay`: the distinction now has to be readable WITHOUT parsing prose,
+    // because the exit rule acts on it. `severity` cannot carry it — both
+    // kinds are `major` — which is exactly why `--strict` could not separate
+    // them and the 20-item backlog held two broken refs hostage.
+    expect(viz[0]?.unmet).toBe("unresolvable");
+    cleanup();
+  });
+
+  it("an UNDECLARED criterion is tagged `undeclared`, so the two never collapse", () => {
+    // The other half of the same assertion. Without it, `unmet` could be the
+    // constant "unresolvable" and every test above would still pass while the
+    // new exit rule failed the whole backlog.
+    const { root, cleanup } = instance({ docs: "doc.md", skill: "some-skill" });
+    const viz = auditInstance(root).findings.filter((f) => f.criterion === "visualiser");
+    expect(viz).toHaveLength(1);
+    expect(viz[0]?.unmet).toBe("undeclared");
     cleanup();
   });
 
@@ -674,5 +690,32 @@ describe("the repository root is recognised as itself — bean `yt7j`", () => {
     expect(auditInstance(root, root).readme).toBeUndefined();
     expect(auditInstance(root, join(root, "..")).readme).toBeUndefined();
     cleanup();
+  });
+});
+
+
+describe("this repository declares nothing that fails to resolve — bean `bsay`", () => {
+  const repo = resolve(".");
+
+  it("no declaration in this repository points at a missing target", () => {
+    // The ratchet. Two were broken when this landed and both were the same
+    // shape — an id renamed, and a `coverage.visualiser` ref keyed on the id
+    // left behind: `skills` still named `…/index/skills/cat-harness/` after
+    // `iwtn` renamed that id from `cat-harness`, and `swimlane-glossary` named
+    // `…/glossary/glossary/`. Both were REPORTED the whole time and the check
+    // exited 0, because `--strict` fails on the 20-item `undeclared` backlog
+    // too and so could not be turned on.
+    const unresolvable = auditAll(repo)
+      .flatMap((r) => r.findings.filter((f) => f.unmet === "unresolvable"))
+      .map((f) => `${f.instance}/${f.directory}/${f.criterion}: ${f.detail}`);
+    expect(unresolvable).toEqual([]);
+  });
+
+  it("and the check is still REPORTING findings, so the line above is not vacuous", () => {
+    // Without this, an `auditAll` that returned nothing at all would satisfy
+    // the assertion above — the failure mode an advisory axis is most likely
+    // to have, as this file's own header says.
+    const undeclared = auditAll(repo).flatMap((r) => r.findings.filter((f) => f.unmet === "undeclared"));
+    expect(undeclared.length).toBeGreaterThan(0);
   });
 });
