@@ -129,6 +129,46 @@ describe("distortions — DISCRIMINATION, which is the whole contract", () => {
     }
   });
 
+  // THE BOUNDARY, and both sides of it were measured on the real tree rather than
+  // chosen. `3vc1`'s fix regenerated a stale lockfile, taking the nested SDK from
+  // 1.28.0 to 1.30.1 against the root's 1.30.0 — and root `tsc` went from 12 errors
+  // to 0 while an equality-based guard still refused. So:
+  //
+  //   1.28.0 vs 1.30.0   minor differs   12 errors   -> a distortion
+  //   1.30.1 vs 1.30.0   patch differs    0 errors   -> NOT a distortion
+  //
+  // Major-only would have missed the case this guard exists for; equality refuses a
+  // clean tree. These two tests pin the line so it cannot drift either way.
+  test("a PATCH-level difference is NOT a distortion — the measured 1.30.1 vs 1.30.0", () => {
+    const { root, cleanup } = fixture({ shadowVersion: "2.0.1", importIt: true });
+    try {
+      expect(distortions(root)).toEqual([]);
+    } finally {
+      cleanup();
+    }
+  });
+
+  test("a MINOR-level difference IS a distortion — the measured 1.28 vs 1.30", () => {
+    const { root, cleanup } = fixture({ shadowVersion: "2.1.0", importIt: true });
+    try {
+      const d = distortions(root);
+      expect(d).toHaveLength(1);
+      expect(d[0]!.effect).toContain("2.1.0");
+    } finally {
+      cleanup();
+    }
+  });
+
+  test("a version neither side can parse is reported, not waved through", () => {
+    // `could not tell` belongs on the refusing side: the alternative is a silent pass.
+    const { root, cleanup } = fixture({ shadowVersion: "not-a-version", importIt: true });
+    try {
+      expect(distortions(root)).toHaveLength(1);
+    } finally {
+      cleanup();
+    }
+  });
+
   test("a SYMLINKED root install is a distortion on its own — `qook`", () => {
     const root = mkdtempSync(join(tmpdir(), "3vc1-link-"));
     const real = mkdtempSync(join(tmpdir(), "3vc1-real-"));

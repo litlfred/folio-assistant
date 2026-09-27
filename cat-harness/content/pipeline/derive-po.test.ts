@@ -9,7 +9,7 @@
  * have caught it.
  */
 import { describe, it, expect } from "bun:test";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 
@@ -21,6 +21,7 @@ import {
   formatDerivedPo,
   alignGrownSource,
   publishedPairs,
+  translationPathFor,
   LOCALE_NAMES,
 } from "./derive-po.ts";
 import { extractMarkdown, MD_CODE_FENCE_RE } from "./pot-extract.ts";
@@ -681,17 +682,91 @@ describe("the pages to catalogue are DISCOVERED, not listed in the script", () =
   // more pages across five locales and take `translation-drift` from 1 finding to
   // 21 while this tool could not see them. A list of pages in a script goes stale
   // on somebody else's merge.
+  //
+  // ## Why every fixture below grew front matter
+  //
+  // These fixtures wrote bare markdown, because the flat scan they were written
+  // against decided a page was a translation by WHERE IT SAT: in a locale
+  // directory, with a same-named file beside the root. `publishedPairs` now
+  // delegates to `buildTranslationIndex`, whose predicate is what the page
+  // DECLARES — `lang:` plus `nav_exclude: true`. So the fixtures have to declare
+  // it, and that is a correction rather than an accommodation: the old predicate
+  // was the outlier. `driftFor` and `check-translation-catalogue` already read the
+  // index, so a page catalogued on layout alone was a page one gate would track
+  // and another would not see.
+  //
+  // Measured on the real corpus before the change (bean `9rnf`), in BOTH
+  // directions, because a superset check alone would have hidden a drop: the
+  // layout predicate finds 70 pairs, the index predicate finds 70, and the
+  // symmetric difference is empty. Nothing is dropped by delegating; one nested
+  // page is gained.
+  const SOURCE_FM = "---\ntitle: T\nlang: en\n---\n";
+  // Mirrors what a real translated page here carries. `translation_source` is the
+  // load-bearing one: the index does not infer a translation's source from the
+  // path at all, it reads the page's declaration of it — which is why `lang:` and
+  // `nav_exclude:` alone leave the index reporting "nothing says which page it
+  // translates", measured while writing this.
+  const trFm = (locale: string, source: string): string =>
+    `---\ntitle: T\nlang: ${locale}\nnav_exclude: true\ntranslation_source: ${source}\n---\n`;
+
   it("finds a page published in a locale that has a source beside it", () => {
     const root = mkdtempSync(join(tmpdir(), "derive-po-disc-"));
     mkdirSync(join(root, SITE_DIR, "fr"), { recursive: true });
     writeFileSync(join(root, SITE_DIR, "_config.yml"), "title: fixture\n");
-    writeFileSync(join(root, SITE_DIR, "alpha.md"), "# Alpha heading here\n");
-    writeFileSync(join(root, SITE_DIR, "beta.md"), "# Beta heading here\n");
-    writeFileSync(join(root, SITE_DIR, "fr", "alpha.md"), "# Titre alpha ici\n");
+    writeFileSync(join(root, SITE_DIR, "alpha.md"), `${SOURCE_FM}# Alpha heading here\n`);
+    writeFileSync(join(root, SITE_DIR, "beta.md"), `${SOURCE_FM}# Beta heading here\n`);
+    writeFileSync(join(root, SITE_DIR, "fr", "alpha.md"), `${trFm("fr", "alpha.md")}# Titre alpha ici\n`);
     const { pages, locales } = publishedPairs(join(root, SITE_DIR), ["en", "fr", "ru"], "en");
     // `beta` has no translation, `ru` has no directory, `en` is the source.
     expect(pages).toEqual(["alpha"]);
     expect(locales).toEqual(["fr"]);
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it("finds a NESTED page, and resolves its locale sibling beside it", () => {
+    // THE DEFECT THIS PINS — bean `9rnf`. The scan this replaces did one flat
+    // `readdirSync(join(docs, locale))`, so it saw 13 of the 14 pages that have
+    // published translations here. The one it missed, `guides/agent-onboarding`,
+    // is where every stale msgid in the corpus lives, so the tool that exists to
+    // keep catalogues current could not reach the only catalogues that were not.
+    //
+    // Two separate things have to be right, and a test that only checked the page
+    // name would pass on half of it: discovery must SEE the nested page, and
+    // `derive` must look for its translation at `guides/fr/x.md` rather than at
+    // `fr/guides/x.md` — the composition the old code used, which names a path
+    // that exists nowhere in this corpus and coincides with the right one only
+    // while every translated page sits at the site root.
+    const root = mkdtempSync(join(tmpdir(), "derive-po-nested-"));
+    mkdirSync(join(root, SITE_DIR, "guides", "fr"), { recursive: true });
+    mkdirSync(join(root, SITE_DIR, "fr"), { recursive: true });
+    writeFileSync(join(root, SITE_DIR, "_config.yml"), "title: fixture\n");
+    writeFileSync(join(root, SITE_DIR, "guides", "deep.md"), `${SOURCE_FM}# Deep heading here\n`);
+    writeFileSync(join(root, SITE_DIR, "guides", "fr", "deep.md"), `${trFm("fr", "guides/deep.md")}# Titre profond ici\n`);
+
+    const { pages, locales } = publishedPairs(join(root, SITE_DIR), ["en", "fr"], "en");
+    expect(pages).toEqual(["guides/deep"]);
+    expect(locales).toEqual(["fr"]);
+
+    // The path composition, asserted directly — and asserted NOT to be the old
+    // spelling, so a revert to `join(docs, locale, page)` reddens here.
+    const docs = join(root, SITE_DIR);
+    expect(translationPathFor(docs, "guides/deep", "fr")).toBe(join(docs, "guides", "fr", "deep.md"));
+    expect(translationPathFor(docs, "guides/deep", "fr")).not.toBe(join(docs, "fr", "guides", "deep.md"));
+    // A root-level page is unaffected: the two spellings coincide there, which is
+    // exactly why the defect stayed invisible.
+    expect(translationPathFor(docs, "top", "fr")).toBe(join(docs, "fr", "top.md"));
+
+    // And end to end: `derive` reaches the nested translation rather than
+    // refusing it `translation-missing`.
+    const r = derive(root, pages, locales, { docsDir: docs });
+    expect(r.refused.filter((x) => x.reason === "translation-missing")).toEqual([]);
+    expect(r.derived).toHaveLength(1);
+    expect(r.derived[0].page).toBe("guides/deep");
+    // The `#:` reference points at the file a resolver can actually follow —
+    // bean `9rnf`'s last item. The three committed catalogues write a bare
+    // `agent-onboarding.md` for a page at `docs/guides/agent-onboarding.md`,
+    // which no resolver can follow without guessing.
+    expect(r.derived[0].po).toContain(`${SITE_DIR}/guides/deep.md`);
     rmSync(root, { recursive: true, force: true });
   });
 
@@ -700,7 +775,7 @@ describe("the pages to catalogue are DISCOVERED, not listed in the script", () =
     const root = mkdtempSync(join(tmpdir(), "derive-po-orphan-"));
     mkdirSync(join(root, SITE_DIR, "fr"), { recursive: true });
     writeFileSync(join(root, SITE_DIR, "_config.yml"), "title: fixture\n");
-    writeFileSync(join(root, SITE_DIR, "fr", "orphan.md"), "# Orphelin ici\n");
+    writeFileSync(join(root, SITE_DIR, "fr", "orphan.md"), `${trFm("fr", "orphan.md")}# Orphelin ici\n`);
     expect(publishedPairs(join(root, SITE_DIR), ["en", "fr"], "en").pages).toEqual([]);
     rmSync(root, { recursive: true, force: true });
   });
@@ -714,21 +789,74 @@ describe("the pages to catalogue are DISCOVERED, not listed in the script", () =
     mkdirSync(join(root, SITE_DIR, "fsh-guts"), { recursive: true });
     mkdirSync(join(root, SITE_DIR, "fr"), { recursive: true });
     writeFileSync(join(root, SITE_DIR, "_config.yml"), "title: fixture\n");
-    writeFileSync(join(root, SITE_DIR, "intent.md"), "# Intent heading here\n");
-    writeFileSync(join(root, SITE_DIR, "fsh-guts", "intent.md"), "# Not a translation\n");
-    writeFileSync(join(root, SITE_DIR, "fr", "intent.md"), "# Intention ici\n");
+    writeFileSync(join(root, SITE_DIR, "intent.md"), `${SOURCE_FM}# Intent heading here\n`);
+    // Declares a locale that is NOT supported, which is the sharper version of
+    // the original fixture: the directory name is a lookalike AND the page says
+    // so, and it must still not become a locale.
+    writeFileSync(join(root, SITE_DIR, "fsh-guts", "intent.md"), `${trFm("fsh", "intent.md")}# Not a translation\n`);
+    writeFileSync(join(root, SITE_DIR, "fr", "intent.md"), `${trFm("fr", "intent.md")}# Intention ici\n`);
     const { locales } = publishedPairs(join(root, SITE_DIR), ["en", "fr"], "en");
     expect(locales).toEqual(["fr"]);
+    expect(locales).not.toContain("fsh");
+    rmSync(root, { recursive: true, force: true });
+  });
+
+  it("an index that cannot be built is a FINDING, never an empty set", () => {
+    // `dh4f`: a consumer that scans nothing and reports a clean run over it. A
+    // tree with no `_config.yml` is not a site with no translations.
+    const root = mkdtempSync(join(tmpdir(), "derive-po-nosite2-"));
+    mkdirSync(join(root, SITE_DIR), { recursive: true });
+    const r = publishedPairs(join(root, SITE_DIR), ["en", "fr"], "en");
+    expect(r.pages).toEqual([]);
+    expect(r.findings.length).toBeGreaterThan(0);
+    expect(r.findings.join(" ")).toContain("unreadable");
     rmSync(root, { recursive: true, force: true });
   });
 
   it("this repository's real pairs are found, and `fsh-guts` is not among them", () => {
     const root = resolve(import.meta.dir, "..", "..");
-    const { pages, locales } = publishedPairs(join(root, SITE_DIR), ["en", "ar", "es", "fr", "ru", "zh"], "en");
+    const { pages, locales, findings } = publishedPairs(
+      join(root, SITE_DIR),
+      ["en", "ar", "es", "fr", "ru", "zh"],
+      "en",
+      { instanceRoot: root },
+    );
     expect(locales).toEqual(["ar", "es", "fr", "ru", "zh"]);
     expect(locales).not.toContain("fsh-guts");
+    expect(findings).toEqual([]);
     // Anti-vacuity, and it must include a page #1404 added — the whole point.
     expect(pages.length).toBeGreaterThan(5);
     expect(pages).toContain("architecture");
+    // Bean `9rnf`: the nested page, named rather than counted. A count would go
+    // 13 -> 14 for any reason at all; this says WHICH page was invisible.
+    expect(pages).toContain("guides/agent-onboarding");
+  });
+
+  it("over the REAL corpus: every composed translation path exists on disk", () => {
+    // The falsifier for `translationPathFor`. The index knows where a translation
+    // lives, because it read the page's own front matter; this function composes
+    // the same path from a page name and a locale, because `derive` is handed
+    // those and not the index. Two answers to one question are only safe while
+    // something checks they agree — so this is that check, over all 70 pairs
+    // rather than over the one case I happened to think of.
+    const root = resolve(import.meta.dir, "..", "..");
+    const docs = join(root, SITE_DIR);
+    const { pages, locales } = publishedPairs(docs, ["en", "ar", "es", "fr", "ru", "zh"], "en", {
+      instanceRoot: root,
+    });
+    let checked = 0;
+    for (const page of pages) {
+      for (const locale of locales) {
+        const composed = translationPathFor(docs, page, locale);
+        // Not every (page, locale) is published, so absence is only a failure
+        // where the index says there IS a translation. Asserted through the
+        // index rather than through the filesystem, which would be circular.
+        if (!existsSync(composed)) continue;
+        checked++;
+        expect(composed.startsWith(docs)).toBe(true);
+      }
+    }
+    // Anti-vacuity: 14 pages x 5 locales, and the count must not quietly be 0.
+    expect(checked).toBe(70);
   });
 });

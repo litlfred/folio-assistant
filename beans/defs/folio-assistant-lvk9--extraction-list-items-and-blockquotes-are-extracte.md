@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T09:20:19Z
-updated_at: 2026-09-26T14:44:44Z
+updated_at: 2026-09-27T05:08:36Z
 parent: folio-assistant-bzyu
 blocked_by:
     - folio-assistant-wlyg
@@ -103,8 +103,10 @@ line each with a measured effect in both directions, and this is a parser change
       adjacent msgids where the first opens a `**` span the second closes
 - [x] MEASURED AFTER: re-wrapping a source paragraph, list item or blockquote
       changes NO msgid — the property that makes a catalogue survive an edit
-- [ ] the 3785 msgids this merges away are obsoleted in the existing `.po` files
-      with tooling, not dropped
+- [x] the msgids this merges away are obsoleted in the existing `.po` files with
+      tooling, not dropped. **41, not 3785** — see the measurement below; the
+      tooling is `bun run translation:obsolete`, gated by
+      `translation:obsolete:check`.
 - [x] `7x8o` re-measured afterwards; expect 8 pairs or fewer to remain
 - [x] checked against a folio other than this one — extraction is shared.
       `litlfred/qou`, 150 markdown files, pre-`lvk9` extractor vs now. It found
@@ -258,3 +260,61 @@ surfaced 122 instances.
 
 None of the three was the extractor. A cross-corpus comparison needs its own
 harness checked as carefully as the thing it measures.
+
+## The obsoletion is done, and the count was 41 rather than 3785
+
+The figure in this bean's body predates #1369, which regenerated most catalogues
+with `--overwrite`. Re-measured on `main` at `c6960465301`:
+
+| | |
+|---|---|
+| comparable catalogues | 58 — **6127** live msgids |
+| **stale** | **41** |
+| where | `ar` 15, `ru` 15, `fr` 11 — all `agent-onboarding.po`, nothing else |
+
+They are exactly what this bean is about: the wrap-split fragments the merge
+removed. `"Don't write content into the platform. If it names a chapter, a"` and
+`"constant, or a vocabulary, it is folio data."` are two halves of one sentence.
+
+Marked `#~` obsolete by `cat-harness/content/pipeline/obsolete-stale-po.ts`.
+**Nothing was deleted, and that is measured** — 84 active msgstr in
+`ar/agent-onboarding.po` before, 69 active + 15 newly obsolete + 1 already
+obsolete after, and every one of the 84 strings still present in the file.
+`translation:block-qa` regenerated: coverage unchanged at ru 69/80, fr 18/80,
+because an obsolete entry is not counted as a translation either way.
+
+## The tool asks the FILE what its source is — three earlier attempts guessed
+
+This is the fourth version of the same measurement and the first sound one. The
+three before it each invented a pairing rule where the artefact carried a
+declaration, and each produced a confident wrong number:
+
+| attempt | rule | what it got wrong |
+|---|---|---|
+| 1 | `join(DOCS, page + ".md")` | top-level pages only; reported "0 of 14 pages differ" and was used to claim no catalogue was stranded. Three were (`o29r`) |
+| 2 | recursive match on BASENAME | paired `kg-viewer.po` with an unrelated same-named page; **200 of its 281 findings were that one mistake** |
+| 3 | basename + uniqueness check | sound, but still a guess |
+| 4 | the `.po`'s own `#:` references | — |
+
+`kg-viewer.po` declares `scripts/kg-viewer-strings.ts`: TypeScript UI strings this
+markdown extractor never touches. Attempt 2 compared them to a markdown page and
+called all 40 msgids stale, in five locales.
+
+So the tool reports three states it refuses to fold into a count — **other-sourced**
+(5 catalogues, the `kg-viewer` set), **undeclared** (10, `index.po` and
+`glossary.po` carry no `#:` at all) and **ambiguous** — because *"no findings over
+the subset I could resolve"* is precisely the shape that produced the wrong claim
+in row 1.
+
+## What this does NOT fix, and why the better repair was unavailable
+
+Re-deriving those three catalogues would give correct msgids AND correct msgstrs
+from the published pages — strictly better than obsoleting half-sentences. It is
+blocked: `publishedPairs` scans the site root only, so `guides/agent-onboarding.md`
+is invisible to every catalogue tool, which is **bean `9rnf`**. The owner's decision
+of 2026-09-27 is to do both in order — this obsoletion now, the re-derive after
+`9rnf` — so these 41 obsolete entries are expected to be superseded.
+
+That `9rnf` exists at all is the same blind spot a third time: attempts 1 and 2
+above, and the shipped discovery in #1411, all treated "the pages" as the ones
+visible without recursing.
