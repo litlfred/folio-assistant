@@ -390,6 +390,34 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [IRIS, DSpace and Dublin Core](iris-dspace.html) | `iris-dspace` | — | **Every claim here was read off one captured record** — the DSpace full item |
 
+## CatBootstrap (read before anything else is known)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Writing out bootstrap's own Knowledge Graph](bootstrap-graph-emission.html) | `bootstrap-graph-emission` | — | bootstrap renders nothing for a person to look at. What it owes instead is its |
+| [Publishing bootstrap's Knowledge Graph](bootstrap-graph-publication.html) | `bootstrap-graph-publication` | — |  |
+| [Reading a knowledge graph before you have anything](bootstrap-kg-navigation.html) | `bootstrap-kg-navigation` | — | **This skill assumes a text editor and nothing else.** No MCP server, no |
+| [Which harness, and where](confirm-harness.html) | `confirm-harness` | — | **You are the Bootstrapping Agent.** You may narrow; only the Requestor may decide. |
+| [discussion](discussion.html) | `discussion` | — | An agent that has just read `bootstrap/README.md` knows the shape of a |
+| [Logging what you are doing](log-message.html) | `log-message` | — | **You are the author of a log line; the Logger is where it goes.** That is the |
+| [The root README, and the one fact it must carry](root-readme.html) | `root-readme` | — | **You are the Bootstrapping Agent, and the install has just succeeded.** The repository |
+
+## FHIR client & SMART launch (fhir-harness/skills/fhir-client)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [fhir-client-operations](fhir-client-operations.html) | `fhir-client-operations` | — | > Skill id: `fhir-client-operations` · Package: `fhir-client` · Instance: |
+| [smart-launch](smart-launch.html) | `smart-launch` | — | > Skill id: `smart-launch` · Package: `fhir-client` · Instance: |
+
+## FHIR IG build (fhir-harness/skills/fhir-ig-base)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [ig-build-pipeline](ig-build-pipeline.html) | `ig-build-pipeline` | — | > Skill id: `ig-build-pipeline` · Package: `fhir-ig-base` · Instance: |
+| [ig-publisher-fork](ig-publisher-fork.html) | `ig-publisher-fork` | — | > Skill id: `ig-publisher-fork` · Package: `fhir-ig-base` · Instance: |
+| [ig-publisher-reduction](ig-publisher-reduction.html) | `ig-publisher-reduction` | — | > Skill id: `ig-publisher-reduction` · Package: `fhir-ig-base` · Instance: |
+| [ig-render-jekyll](ig-render-jekyll.html) | `ig-render-jekyll` | — | > Skill id: `ig-render-jekyll` · Package: `fhir-ig-base` · Instance: |
+
 ## Local skills (.claude/skills/local)
 
 | Skill | Id | Schema | Summary |

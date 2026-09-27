@@ -135,6 +135,72 @@ function reportCollisions(): void {
   process.exit(1);
 }
 
+/**
+ * Pages sitting in the output directory that THIS RUN did not produce.
+ *
+ * `index.md` is the generator's own, so it is never an orphan.
+ *
+ * Pure and exported so the guard can be falsified without a corpus: on the real
+ * tree the answer is now the empty set, and an empty set is exactly what a
+ * guard that computes nothing also returns.
+ */
+export function orphanPages(onDisk: readonly string[], produced: Iterable<string>): string[] {
+  const made = new Set(produced);
+  return onDisk
+    .filter((f) => f.endsWith(".md") && f !== "index.md" && !made.has(f.slice(0, -".md".length)))
+    .sort();
+}
+
+/**
+ * A committed page no source produces is a STALE DOCUMENT, and it is the one
+ * failure `--check` was structurally unable to see.
+ *
+ * `emit` compares content per path and collects what DIFFERS. A page whose
+ * source has gone is never emitted at all, so it is never compared: the drift
+ * report reads "up to date" over it, for as many months as nobody looks. Bean
+ * `3x2o` measured it — `fhir-client-operations.md` and `smart-launch.md`, two
+ * pages produced by nothing, dated to the commit that last regenerated them
+ * while the skills they were generated from had become unreachable.
+ *
+ * The danger is not the stale bytes, it is the BANNER. Every page carries
+ * "Generated from `<path>` — do not edit here" with an edit link; on an orphan
+ * that is an instruction to go and edit a source that is not the source of
+ * anything published. A reader cannot tell it apart from a live page.
+ *
+ * It REPORTS and never deletes. That is
+ * `deletion-requires-confirmation` — an agent does not remove a durable
+ * artefact on its own initiative — and it is not timidity here: an orphan has
+ * two opposite causes. Either the skill was removed and the page should go, or
+ * the DIRECTORY STOPPED BEING DECLARED and the page is the only surviving
+ * evidence that it used to publish. This generator cannot tell which, and the
+ * second case is what actually happened: `rm`-ing these two would have
+ * destroyed the trace that led to the missing declaration.
+ *
+ * Promoted to a hard failure while the count is ZERO, which is this
+ * repository's rule for every ratchet and also the only moment it is free.
+ * Fails in writing mode too, for `reportCollisions`' reason: a re-run does not
+ * fix it, so exiting 0 would bury it.
+ */
+function reportOrphans(produced: Iterable<string>): void {
+  const orphans = orphanPages(readdirSync(OUT_DIR), produced);
+  if (orphans.length === 0) return;
+  console.error(
+    `\n✗ ${orphans.length} page(s) in the output directory were produced by NO source.\n` +
+      `  Each carries a "Generated from … — do not edit here" banner naming a source that\n` +
+      `  publishes nothing, which a reader cannot distinguish from a live page.\n`,
+  );
+  for (const f of orphans) console.error(`  ${join(OUT_DIR, f)}`);
+  console.error(
+    `\n  TWO opposite causes, and this cannot tell them apart, so it removes nothing:\n` +
+      `    - the skill was deleted, and the page should be deleted too; or\n` +
+      `    - its directory stopped being DECLARED, and the page is the only evidence\n` +
+      `      that it used to publish — which is what bean \`3x2o\` found.\n` +
+      `  Check the declaration first. If the source really is gone, a person deletes the\n` +
+      `  page; \`deletion-requires-confirmation\` is why this does not.`,
+  );
+  process.exit(1);
+}
+
 function reportDrift(): void {
   if (!CHECK_ONLY) return;
   if (drifted.length === 0) {
@@ -320,7 +386,18 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // `cat-harness` while the declaration gave that id to `skills/`: one name,
   // two real directories. `corpus-grep` now sits in `folio-core` with its
   // siblings and needs no category of its own.
-  "bootstrap": "CatBootstrap (read before anything else is known)",
+  // Keyed `bootstrap-skills`, the id `cat-harness.json` declares
+  // `bootstrap/skills/` under — and it was `bootstrap` until 2026-09-27, a key
+  // NOTHING REACHED. That is worse than a missing heading and the reason this
+  // comment is long: the entry looked like evidence that bootstrap publishes.
+  // A category key is only ever read as `SKILLS_CATEGORIES[decl.id]` or
+  // `SKILLS_CATEGORIES[basename]`, so a key matching neither is unfalsifiable
+  // from this file — and `discoverGroups` throws on an id with NO heading,
+  // never on a heading with no id. All seven of bootstrap's skills were
+  // unpublished under it (bean `3x2o`), including `bootstrap-kg-navigation`,
+  // which CatBootstrap's README sends a cold agent to read before anything
+  // else is known.
+  "bootstrap-skills": "CatBootstrap (read before anything else is known)",
   // CatBootstrap's SECOND declared directory, and the one that constitutes its
   // exemption rather than describing it: the layer is excused a visualiser and
   // owes its own `.jsonld`/`.json` instead, so the skills governing that
@@ -347,6 +424,14 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "folio-assistant-core-skills": "Content layer (folio-assistant-core)",
   "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
   "who-iris-skills": "WHO IRIS (catalogue instance)",
+  // The `fhir-harness` instance's two packages, keyed by BASENAME because they
+  // are package subdirectories of a declared root (`fhir-ig-skills`), not roots
+  // holding skills directly. Two headings rather than one "FHIR IG" because the
+  // packages answer different questions — how an IG is BUILT versus how a
+  // client TALKS to a server — and a reader meeting `smart-launch` under "IG
+  // build pipeline" would reasonably conclude it is a build step.
+  "fhir-ig-base": "FHIR IG build (fhir-harness/skills/fhir-ig-base)",
+  "fhir-client": "FHIR client & SMART launch (fhir-harness/skills/fhir-client)",
 };
 
 /**
@@ -961,6 +1046,10 @@ async function main(): Promise<void> {
   // BEFORE the drift report: a dropped document is not staleness, and a run
   // that exits 0 on "up to date" would bury it.
   reportCollisions();
+  // BEFORE `reportDrift`, which `process.exit(0)`s on a clean tree — anything
+  // after it is unreachable in exactly the run that matters, `--check` on a
+  // tree whose only defect is an orphan.
+  reportOrphans(written.keys());
   reportDrift();
   console.log(`\nWrote skill instruction docs to ${OUT_DIR}`);
 }

@@ -962,6 +962,26 @@
       }
     },
     {
+      "id": "bootstrap-skills",
+      "path": "bootstrap/skills/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "CatBootstrap's instruction bodies, declared here for the same reason `large-datasets-skills` and `who-iris-skills` are: a consumer that resolves the ROOT instance's declaration sees only what the root declares, and `gen-skill-docs` calls `kgDirectories(INSTANCE_ROOT)`. Absent this entry, all seven of bootstrap's skills were unpublished -- measured 2026-09-27, bean `3x2o`: `bootstrap-kg-navigation`, `bootstrap-graph-emission`, `bootstrap-graph-publication`, `confirm-harness`, `discussion`, `log-message`, `root-readme`. The generator's own `SKILLS_CATEGORIES` carried a \"CatBootstrap (read before anything else is known)\" heading throughout, keyed `bootstrap`, which nothing reached -- so the file that says a cold agent reads these FIRST was the one whose pages 404ed. The two ids for one directory (`skills` in `bootstrap/bootstrap.json`, `bootstrap-skills` here) are the pre-split shape `folio-assistant-core/skills/` already carries as `core-skills` + `folio-assistant-core-skills`; `bootstrap` cannot reuse its own `skills` id because this instance's own graph already holds it.",
+      "graphKinds": [
+        "skills"
+      ]
+    },
+    {
+      "id": "fhir-ig-skills",
+      "path": "fhir-harness/skills/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The `fhir-harness` instance's instruction bodies -- the FHIR IG layer's two packages, `fhir-ig-base` (build pipeline, publisher fork and reduction, Jekyll render) and `fhir-client` (client operations, SMART launch). Declared here for the reason `bootstrap-skills` above gives, and the id is deliberately the SAME one `fhir-harness/fhir-harness.json` uses for the same directory: where a sibling instance's id does not collide with one of this instance's own, reusing it keeps one name on one directory. Measured 2026-09-27 (bean `3x2o`): `fhir-client-operations.md` and `smart-launch.md` were committed under `docs/reference/skill-instructions/` and produced by NO source, so they were orphans no re-run could refresh -- 280 committed against 278 produced -- while the four `fhir-ig-base` bodies had never been published at all.",
+      "graphKinds": [
+        "skills"
+      ]
+    },
+    {
       "id": "large-datasets-schemas",
       "path": "large-datasets/schemas/",
       "scope": "repository",
