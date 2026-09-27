@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3ozg
 title: bun test rewrites 72 committed script-sidecars, so bun run gates reports NOT clean on every branch, main included
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-27T05:06:01Z
-updated_at: 2026-09-27T06:32:16Z
+updated_at: 2026-09-27T06:50:55Z
 parent: folio-assistant-1xhc
 ---
 
@@ -31,9 +31,9 @@ Run alone, none of these writes the sidecars: `qa-review`, `profile-conformance-
 
 ## Done when
 
-- [ ] the test (or interaction) that triggers the write is named
-- [ ] it writes into a temp directory, as the profile-conformance tests do, or the three volatile fields stop being committed
-- [ ] `bun run gates` on pristine main ends clean, not 'NOT clean'
+- [x] the test that triggers the write is named — `init-folio-qa.test.ts`, by bisection (below)
+- [x] the volatile fields stop causing writes — `saveQaScriptSidecar` no longer counts `engine_version` as a change (owner chose this over a temp-root override for the test alone)
+- [x] `bun run gates` ends clean — 167 of 167, exit 0, no tree mutation (measured on this branch, based on main)
 
 _2026-09-27T05:19:35Z_ — Claimed by claude/sleepy-babbage-ls90iz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
@@ -189,6 +189,33 @@ That is not three people being careless; it is what an always-red signal does:
 every session that runs `bun run gates` on a clean tree sees it, and nothing
 told them it was already written down.
 
+## Named, 2026-09-27: `init-folio-qa.test.ts`, and why
+
+Bisection over `cat-harness/scripts/tests/` (432 files, 9 halvings) ends at one file, and that file alone reproduces all 72 rewrites. Its second test, *"swept from the repository root, as CI does, a subfolder folio's verdicts land at ITS root"*, spawns the real `qa-sweep.ts` against a throwaway folio in a temp directory.
+
+The sweep then saves every script sidecar under its **own** `REPO_ROOT` (`qa-sweep.ts` near line 745, `saveQaScriptSidecar(sidecar, REPO_ROOT)`), which is the platform checkout, whatever it swept. The code comment says this is deliberate: those sidecars describe the platform's own checker scripts. So a sweep of **any** folio, including a test fixture, restamps the platform's committed sidecars with the current time, HEAD and bun version.
+
+That is why none of the other candidates wrote them alone: this is the one test that runs a real sweep rather than a helper.
+
+
+## Summary of Changes
+
+The cause was already half-fixed: `saveQaScriptSidecar` skipped a write when nothing substantive changed. But it counted `engine_version` as substantive, and the committed sidecars carry CI's `bun-1.3.14`, so any run under another bun rewrote all 72. `init-folio-qa.test.ts` performs a real sweep, which is how `bun test` came to do it.
+
+- `engine_version` is dropped from the comparison, together with the two `last_run_*` fields. All three describe the run rather than the checker, and no reader uses a script sidecar's `engine_version` for freshness.
+- The test that asserted *"DOES rewrite when the engine version changes"* now asserts the opposite, and its comment says why the reversal was made. A new test checks that a real content change still records the engine it ran under.
+- Verified: the sidecar tests pass 9/9; `init-folio-qa.test.ts` now leaves 0 sidecars changed; and `bun run gates` passes 167/167 and ends clean, which it has not done on any branch while this bean was open.
+
+**This implements `rmcf`'s option 2** (stamp only on a real change), on the owner's choice of "skip no-op writes" put to them in this session. It was built before the cross-reference above was seen, and arrived at the same remedy independently. `rmcf`'s option 1 (stop recording `engine_version`) is NOT taken: the field is still written whenever a real change writes, so a reader still sees the engine of the last content change. The `sfjo` caution holds too: this fix means there is no churn left to commit or discard.
+
+## Combined with #1442's pin, 2026-09-27 — owner's choice "keep both"
+
+#1442 pinned Bun to 1.3.14, which makes CI consistent, and left this bean open for the residual: *"This container runs 1.3.11, so `bun test` here still rewrites 72 files. The pin cannot reach a container image the repository does not control."* The write-skip change above closes that residual. The owner chose to keep both: the pin makes the recorded engine consistent where the repository controls it, and the skip stops a run under any other engine from rewriting files whose checker did not change.
+
+On #1442's reason for keeping `engine_version` substantive (*"a verdict produced by a different engine is a different verdict"*): script sidecars hold no verdicts. Verdicts live in block sidecars, and nothing reads a script sidecar's `engine_version` for freshness; `entryIsFresh` compares hashes. So the field now records the engine of the last real checker change, and the two changes do not conflict.
+
+---
+
 ## 2026-09-27 — the owner asked where this belongs. It is a SKILL, and now it is one.
 
 *"3ozg, that should be in tools/skills, no? how resolve?"* — two halves, and the
@@ -240,3 +267,36 @@ Nothing here names the triggering test, nothing moves the write to a temp
 directory, and `bun run gates` in this container still rewrites 72 files. What
 changed is that a session that sees it now finds it written down instead of
 filing it a fourth time.
+
+### Correction to the section above, after merging #1452 — 2026-09-27
+
+Two claims in my own entry are now false, and one was never right. Correcting
+rather than editing, because the reasoning is what a next session reads.
+
+**False now, fixed by #1452:** *"nothing here names the triggering test"* — it is
+`init-folio-qa.test.ts`, bisected over 432 files, and the entry above this one
+says so. And *"`bun run gates` in this container still rewrites 72 files"* — it
+does not; `engine_version` no longer counts as substantive.
+
+**Never right:** my justification for keeping it substantive, carried into #1442,
+was *"a verdict produced by a different engine is a different verdict"*. True, and
+about a different artefact. A **script** sidecar holds no verdict — source file,
+hashes, dependencies. Verdicts live in block sidecars. Verified independently
+before accepting it: `entryIsFresh` compares `field_hash` and the script hashes,
+and `engine_version` appears nowhere else in `qa-utils.ts`. So there was no
+reader, and the field was provenance the whole time.
+
+**The skill was revised, not merged as written.** `gate-tree-mutation` now carries
+the general rule rather than this container's symptom:
+
+> Does this field describe the SUBJECT the artefact is about, or the RUN that
+> produced it? Only the first is a reason to write.
+
+`3ozg` is its worked example, marked fixed, with both halves (#1442's pin, #1452's
+skip) and what each one answers. Discarding a churn is documented as a
+**workaround whose habit is the defect** — three filings in one day is what
+discard-and-move-on produced — rather than as the standing practice my first draft
+made it.
+
+Not reopening: the boxes are closed on evidence I did not produce, which is
+`bean-coordination`'s rule working as intended.
