@@ -30,6 +30,7 @@
  * counted clean, because "no findings over the subset I could resolve" is exactly
  * the shape that produced the wrong claim above.
  *
+ * @covers translation-sources
  * @module content/pipeline/obsolete-stale-po
  */
 import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from "node:fs";
