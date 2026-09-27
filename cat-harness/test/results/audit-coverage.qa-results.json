@@ -8,7 +8,7 @@
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-27T05:12:58.032Z",
+  "updated_at": "2026-09-27T05:01:47.215Z",
   "families": {
     "coverage-measured": {
       "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 45 of 45 declared kind(s), 167 gate(s), 69 criteria.",
@@ -805,6 +805,7 @@
             "tool"
           ],
           "gates": [
+            "bun run check:red-gate-is-last",
             "bun run check:tools",
             "bun run kg:audit:check",
             "bun run tools:viz:check"
@@ -829,7 +830,6 @@
             "bun run translation:block-qa:check",
             "bun run translation:drift:check",
             "bun run translation:index:check",
-            "bun run translation:obsolete:check",
             "bun run translation:status:check"
           ],
           "typed": true,
