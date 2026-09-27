@@ -110,6 +110,34 @@ soundness argument has to be checked against the artefact in front of you: the
 same field can be load-bearing in one sidecar and pure provenance in another.
 
 ---
+### The rule is convergent, not novel — and `3ozg` was the LAST family to get it
+
+Swept 2026-09-27 across every committed artefact family carrying a run field.
+This repository already implements the rule in **three independent places**, each
+with the measurement that bought it — so a reader meeting this skill should not
+treat it as a proposal:
+
+| where | the guard | what it cost to learn |
+|---|---|---|
+| `scripts/qa-results.ts` `writeQaResult` | compares `withoutTimestamp(prior)`, so only `updated_at` differing is not a write | *"run the check, get a modified file, commit nothing of substance"* — 2026-09-19, across `kg-export` and `avatar-coverage` |
+| `content/pipeline/qa-sweep.ts` | `wroteSomething = verdictChanged \|\| metadataDrifted`, and `updated_at` advances only then | restamping "made an otherwise no-op sweep dirty the whole corpus" |
+| `qa-utils.ts` `saveQaScriptSidecar` | content-derived fields only; since #1452 `engine_version` joins the two `last_run_*` | `3ozg` — the churn this skill is named for |
+
+`writeQaResult` is shared by every `*.qa-results.json` family, which is why
+`library-qa`'s 34 files are safe while carrying `updated_at`. Its docblock states
+the principle in the same terms: *the timestamp answers "when were these findings
+established", not "when did somebody last run the script"*.
+
+**Two things follow.** A churn you meet is more likely a family that MISSED an
+established rule than a new question — look for the nearest of those three before
+designing anything. And the rule has been arrived at independently three times,
+which is itself the argument for it being written down once.
+
+**What the sweep did not measure**, stated rather than implied: the 125 `block-qa`
+sidecars were verified by READING `qa-sweep.ts`'s guard, not by running it.
+`qa_sweep` is an MCP tool with no npm script and the platform carries no folio, so
+there was no control to run. Six writers that could be run were, twice where
+cheap, and all were idempotent on a clean tree.
 
 ## If you meet a churn whose writer has not been fixed yet
 
