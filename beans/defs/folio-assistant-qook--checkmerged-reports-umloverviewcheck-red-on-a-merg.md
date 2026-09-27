@@ -3,9 +3,10 @@
 title: check:merged reports a merged tree defective when no real checkout of it is — a symlinked node_modules leaks into the corpus
 status: in-progress
 type: bug
-parent: folio-assistant-1xhc
+priority: normal
 created_at: 2026-09-26T11:04:49Z
-updated_at: 2026-09-26T12:24:21Z
+updated_at: 2026-09-27T05:33:45Z
+parent: folio-assistant-1xhc
 ---
 
 
@@ -98,3 +99,88 @@ cause for it would repeat the mistake this bean was opened with.
 
 _2026-09-26T12:24:17Z_ — Claimed by claude/fx5r-close — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
+
+## 2026-09-27 — the original cause IS fixed, and a SECOND cause of the same false report is not
+
+The two open boxes, worked from an undistorted checkout (`node_modules` a real
+directory) against a worktree pinned to the SAME commit with `node_modules`
+symlinked — the exact pair of environments the bean is about.
+
+### The residual `proseMentions` discrepancy: RESOLVED
+
+`cat-harness/test/results/detangle/cat-harness/skills/scientific-critical-thinking.detangle.json`,
+**recomputed** with `bun run kg:detangle` in each environment:
+
+| | proseMentions |
+|---|---|
+| real checkout | 15 |
+| symlinked worktree | 15 |
+
+and the whole sidecar byte-identical afterwards. Corpus size likewise **14215
+in both**.
+
+**Method note worth more than the result.** My first attempt compared the
+COMMITTED sidecar in the two trees and got 15 = 15. That measured nothing —
+same commit, same bytes, agreement guaranteed. A comparison between two
+checkouts of one commit is vacuous unless the value is RECOMPUTED in each. It
+looked exactly like diligence.
+
+### The `check:merged` box: NOT satisfied, and for a new reason
+
+Run from the symlinked worktree, the guard behaved: no exit 2, no
+"could not determine", straight to `running bun run gates on the merged tree`.
+So `.gitignore`-without-the-slash did fix what this bean identified.
+
+But `check:merged` still exits **1** on the merged tree, and the reason is not
+staleness:
+
+```
+✗ every gate passed, and the run is NOT clean — 1 gate(s) changed the tree.
+  167 verdict(s) above were reached against a tree that a gate had already
+  repaired, so the later ones describe a state you have not committed.
+
+✗ the MERGED tree fails the gates, though this branch may pass alone.
+Merge the base into the branch, regenerate what the failing gates name, ...
+```
+
+**Every gate passed. No gate failed. There is nothing to regenerate.** The
+advice is unactionable, and the first line is false as written.
+
+`check-merged.ts:160` branches on `gates.status !== 0` and nothing else, so it
+cannot distinguish "a gate failed" from "every gate passed but a gate wrote to
+the tree" (`ymsu`, measured the same day at 72 `script-sidecars/` paths).
+
+**This is this bean’s own title restated** — *reports a merged tree defective
+when no real checkout of it is* — reached by a second, independent route. The
+first route is closed; this one is open. So the box stays UNCHECKED.
+
+### Also not satisfied, and not satisfiable as written
+
+The box says re-run on the two recorded trees `d698d151` and `240f0953`. The
+bean records the tree hashes but **not the (branch, base) pair** they were
+produced from, and a tree object alone does not reconstruct the merge that made
+it. A literal replay is therefore not available to a later reader. What IS
+verified is the cause, in the distorted environment, which is strictly what the
+`1xhc` parent asks for; the literal replay is not.
+
+**Lesson for the next bean that records a tree hash: record the inputs, not
+just the output.** A hash you cannot regenerate is evidence you cannot re-check.
+
+### The fix I did NOT make, because it is the owner’s
+
+`gates.ts` already reserves exit **2** for "could not tell" (line 1135), and the
+mutation path at 1232 takes exit **1**. Its own comment argues the case for 2:
+*"their passing is a verdict about a state the repository does not contain."*
+This bean makes the same argument for its own guard — *a distorted corpus is
+exit 2, never a red; a false refusal from a tool whose job is to refuse teaches
+everyone to stop running it.*
+
+So the one-line candidate is: that path exits 2, and `check:merged` — which
+already treats 2 as could-not-determine — reports it correctly with no change
+of its own.
+
+Not done unilaterally. It changes a gate’s exit-code contract, which affects
+every CI consumer, and the author reasoned about exit 2 deliberately right
+next to it (*"I know exactly which steps are missing is not I could not
+tell"*). `jh2j`’s exit-2 contract is already an owner item; this belongs with
+it.
