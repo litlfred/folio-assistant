@@ -350,8 +350,20 @@
           "detail": "nested instance \"smart-base\" declares its own graph, and this audit does not read it — 1 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
+          "where": "smart-dak/smart-dak.json",
+          "detail": "nested instance \"smart-dak\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "smart-ig/smart-ig.json",
+          "detail": "nested instance \"smart-ig\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
           "where": "smart-immunizations/smart-immunizations.json",
           "detail": "nested instance \"smart-immunizations\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "smart-l1/smart-l1.json",
+          "detail": "nested instance \"smart-l1\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
           "where": "smart-trust/smart-trust.json",
