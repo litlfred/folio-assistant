@@ -121,15 +121,28 @@
  * what catches that — it reports the checks' verdicts, so an under-declared
  * list fails loudly rather than passing quietly.
  *
- * ## They are NOT order-dependent, and the earlier claim that they were is wrong
+ * ## Order: five were independent, and the SIXTH is not — measured 2026-09-27
  *
- * Measured by running all five in reverse and re-checking: still green. An
- * earlier session asserted this chain was order-sensitive. The ordering it
- * observed is real but belongs to a **different pair** — `gen-docs-pages`
- * writes what `docs:harness` reads — and neither is in this chain. The claim
- * was true of something else and attached to this.
+ * This section said the chain was order-independent, on a real measurement:
+ * running all **five** in reverse and re-checking left them green. That
+ * measurement predates `uml:overview`, and the six-step chain does NOT have the
+ * property:
  *
- * The fixed order below is for deterministic output, not dependency.
+ *     declare a `qa` directory for a nested instance
+ *       -> kg:audit writes its sidecars
+ *       -> uml:overview renders the QA tree, adding pages
+ *       -> docs:auto:check goes STALE, and docs:auto ran two steps earlier
+ *
+ * Measured by running the command: pass 1 left `docs:auto:check` red, pass 2
+ * exited 0. **One pass is not a fixed point**, and the order below is now
+ * dependency-bearing whether or not it was designed to be.
+ *
+ * The order is deliberately NOT changed to fix it. Putting `docs:auto` last would
+ * close this pair and might open another, and the verification loop already
+ * reports the truth: every check runs after the writes and the command exits
+ * non-zero while any is red, so a stale artefact is named rather than shipped.
+ * What was wrong was this paragraph asserting a property the chain had since
+ * lost — a measurement whose conclusion outlived the thing it measured.
  *
  * ## Why it shells out instead of importing
  *
@@ -884,6 +897,11 @@ function main(): number {
         "    person's decision, so no amount of regenerating can settle it. Delete\n" +
         "    the named file yourself, or restore its subject. Measured 2026-09-26 by\n" +
         "    registering a probe skill and then deleting it.\n" +
+        "  · the chain is not at a FIXED POINT yet. A later step can stale an\n" +
+        "    earlier step's artefact: `uml:overview` renders the QA tree `kg:audit`\n" +
+        "    writes, and its new pages stale `docs:auto`, two steps earlier.\n" +
+        "    Measured 2026-09-27: pass 1 red, pass 2 exit 0. If the red check is one\n" +
+        "    an EARLIER step owns, run this command again before reading on.\n" +
         "  · the chain above is INCOMPLETE. Measure by running that ONE check against\n" +
         "    a clean tree with and without your skill. Do NOT measure through\n" +
         "    `bun run gates` — `bun test` runs some of these writers and repairs what\n" +

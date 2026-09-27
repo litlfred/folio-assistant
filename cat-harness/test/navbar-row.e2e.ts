@@ -154,7 +154,7 @@ function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADIN
     <nav class="site-nav"><a href="#">Navigation link</a></nav>
     <input type="checkbox" class="fa-nav-open" id="fa-nav-open">
     <label class="fa-nav-toggle" for="fa-nav-open" title="Keep navigation open"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span></label>
-    <label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span></label>
+    <label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label>
     <footer class="site-footer">
       <div class="fa-nav-bottom__stack">
         <details class="fa-harness-tabs">
@@ -381,7 +381,10 @@ test.describe("the middle — controlled folders, then the harness navigation, O
       .locator(".fa-nav-middle > *")
       .evaluateAll((ns) => ns.map((n) => n.className));
     expect(order[0]).toContain("fa-nav-folders");
-    expect(order[1]).toContain("site-nav");
+    // The page list's own heading (owner, 2026-09-27: "no title on the
+    // navbar component w/ pages"), then the list.
+    expect(order[1]).toContain("fa-nav-pages");
+    expect(order[2]).toContain("site-nav");
   });
 
   test("every declared kind is listed; one with no viewer is a non-link", async ({ page }) => {
@@ -534,9 +537,6 @@ test.describe("the document index — the fixed top, about the page rather than 
     expect(order).toEqual([
       expect.stringContaining("site-header"),
       expect.stringContaining("fa-nav-icons"),
-      // The folio handle, IN the navbar under the icon row: owner,
-      // 2026-09-24, "folio handle on LHS on navbar".
-      expect.stringContaining("fa-glass-handle"),
       expect.stringContaining("fa-doc-index"),
       expect.stringContaining("fa-nav-middle"),
       expect.stringContaining("site-footer"),
@@ -614,13 +614,12 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     return out;
   };
 
-  test("the folio handle sits under the icon row, so it never takes the ☰'s clicks", async ({ page }) => {
-    // Owner, 2026-09-24: "folio handle on LHS on navbar". Placed right under
-    // the header, the handle's position depended on the header's height while
-    // the ☰ is painted at a fixed offset, and in this fixture it took the ☰'s
-    // clicks. Under the icon row, the element built to clear the ☰, it cannot.
+  test("the folio handle is not in the sidebar, and the ☰ still takes its clicks", async ({ page }) => {
+    // Owner, 2026-09-27: the handle is back at the top centre, "not on
+    // navbar". Kept as a guard: the ☰ must still open and close the bar.
     await load(page, CUSTOM);
-    await expect(page.locator(".side-bar > .fa-nav-icons + .fa-glass-handle")).toHaveCount(1);
+    await expect(page.locator(".side-bar .fa-glass-handle")).toHaveCount(0);
+    await expect(page.locator("body > .fa-glass-handle")).toHaveCount(1);
     await page.hover(".side-bar");
     await page.locator(".fa-nav-close").click();
     await page.waitForTimeout(200);
@@ -880,6 +879,26 @@ test.describe("the navbar can be closed, and it stays closed", () => {
     await expect(page.locator(".fa-nav-close")).toBeVisible();
   });
 
+  test("only the [x] SHOWS — its words are for a screen reader (owner, 2026-09-27)", async ({ page }) => {
+    // Owner: the open sidebar showed "× Close navigatio", the words wrapped
+    // over two lines on the grey box and over the icon row. The span that
+    // carries the name was clipped only by the RAIL's stylesheet, and this
+    // fixture had been written without it, so nothing here could see it.
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    const close = page.locator(".fa-nav-close");
+    await expect(close).toBeVisible();
+    const box = (await close.boundingBox())!;
+    expect(box.width).toBeLessThanOrEqual(40);
+    expect(box.height).toBeLessThanOrEqual(40);
+    expect(box.height).toBeGreaterThanOrEqual(24);
+    const sr = (await page.locator(".fa-nav-close .fa-nav-sr").boundingBox())!;
+    expect(sr.width).toBeLessThanOrEqual(1);
+    expect(sr.height).toBeLessThanOrEqual(1);
+    // Hidden from the eye, still the control's name.
+    await expect(close).toContainText("Close navigation");
+  });
+
   test("pressing it does NOT pin the bar open — the label would have", async ({ page }) => {
     // The defect this intercepts. `[x]` is a `<label for="fa-nav-open">` and a
     // label TOGGLES; with the bar open by hover the checkbox is already clear,
@@ -1054,5 +1073,45 @@ test.describe("a sub-graph is drawn INSIDE its parent's row, folded — issue #1
     const f = (LIVE?.folders ?? []);
     expect(f.find((x) => x.kind === "proposals")?.within).toBe("docs");
     expect(f.find((x) => x.kind === "requirements")?.within).toBe("docs");
+  });
+});
+
+test.describe("the page list has a heading and folds — owner, 2026-09-27", () => {
+  test("a 'Pages' button with a count sits in front of the nav and folds it", async ({ page }) => {
+    const { errors } = await load(page, CUSTOM);
+    expect(errors).toEqual([]);
+    const btn = page.locator(".fa-nav-pages");
+    await expect(btn).toHaveCount(1);
+    await expect(btn).toContainText("Pages");
+    await expect(btn).toHaveAttribute("aria-expanded", "true");
+    await page.hover(".side-bar");
+    await btn.click();
+    await expect(btn).toHaveAttribute("aria-expanded", "false");
+    await expect(page.locator(".site-nav")).toBeHidden();
+    await page.locator(".fa-nav-pages").click();
+    await expect(page.locator(".site-nav")).toBeVisible();
+  });
+});
+
+test.describe("the avatar opens and closes the bar — owner, 2026-09-27", () => {
+  // "navbar starts hidden, click avatar opens for a split second then returns
+  // to hidden": the avatar was the home link, so a click reloaded the page.
+  test("one click pins the bar open, a second closes it, and neither navigates", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await load(page, CUSTOM);
+    await page.locator(".site-title").evaluate((a) => a.setAttribute("href", "http://navbar.fixture/elsewhere"));
+    const avatar = page.locator(".side-bar .site-title");
+    await expect(avatar).toHaveAttribute("aria-expanded", "false");
+    await avatar.click();
+    expect(page.url()).toBe("http://navbar.fixture/nav");
+    expect(await page.locator("#fa-nav-open").isChecked()).toBe(true);
+    await expect(avatar).toHaveAttribute("aria-expanded", "true");
+    await avatar.click();
+    expect(page.url()).toBe("http://navbar.fixture/nav");
+    expect(await page.locator("#fa-nav-open").isChecked()).toBe(false);
+    expect(await page.evaluate(() => localStorage.getItem("fa-nav"))).toBe("closed");
+    // Closed means closed: not held open by the avatar's focus.
+    await page.mouse.move(900, 400);
+    await expect.poll(async () => (await page.locator(".side-bar").boundingBox())!.width).toBeLessThan(100);
   });
 });

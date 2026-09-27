@@ -1756,31 +1756,28 @@ export function saveQaScriptSidecar(
   // change. That churn is not free: it is indistinguishable, in `git
   // status`, from an actual checker-hash movement.
   //
-  // The two `last_run_*` fields are excluded because they move on every
-  // sweep. Everything else is compared — and ONE of those is not
-  // content-derived, which this comment claimed it was until 2026-09-27.
+  // The comparison is over the CONTENT-derived fields only: the source file,
+  // the three hashes and the extra inputs. Identical there means the recorded
+  // state is already accurate. `last_run_at`, `last_run_sha` and
+  // `engine_version` describe the RUN, not the checker, so on their own they
+  // are not a reason to write.
   //
-  // `engine_version` is derived from the ENVIRONMENT. So this guard skips a
-  // write only for a sweep running the same engine as the one that recorded
-  // the file, and rewrites every sidecar recorded by any other. Measured that
-  // day: 86 sidecars held two values, 72 at `bun-1.3.14` and 14 at
-  // `bun-1.3.11`; a container running 1.3.11 rewrote exactly the 72 and no
-  // others. The count nobody could explain was just the size of the
-  // disagreeing group.
+  // `engine_version` was compared too until bean `3ozg` (2026-09-27), and that
+  // kept the churn alive: the committed sidecars carried CI's `bun-1.3.14`, a
+  // local run is `bun-1.3.11`, so every sweep from a different bun rewrote all
+  // 72. `init-folio-qa.test.ts` runs a real sweep, which made `bun test` dirty
+  // the tree and `bun run gates` report "NOT clean" on every branch. No reader
+  // uses a script sidecar's `engine_version` for freshness (`entryIsFresh`
+  // compares hashes), so it is left as a record of the last CONTENT change's
+  // engine rather than the last run's.
   //
-  // That is why `.bun-version` exists (`df579167c71`, bean `3ozg`, on the
-  // owner's choice of "pin the runtime" over three other options): with one
-  // engine there is one value and the term costs nothing. It is also why
-  // DROPPING the field would have been the wrong fix — a sidecar produced by
-  // a different engine would then compare as current, which is the thing this
-  // term is for.
-  //
-  // The sentence is corrected rather than deleted because its false half did
-  // real damage: two beans (`rmcf`, then `3ozg`) hunted a *test* that wrote
-  // into the tree, on the strength of "everything else is content-derived"
-  // ruling the environment out. There is no such test. The trigger is this
-  // term plus an off-pin engine, and an agent container the repository cannot
-  // pin still has one.
+  // Why this took two beans to find (`rmcf`, then `3ozg`; #1451): the comment
+  // here used to say everything but the two `last_run_*` fields was
+  // content-derived. That was false for `engine_version`, which comes from the
+  // ENVIRONMENT, and it ruled the environment out, so the hunt went looking
+  // for a test alone. Both halves were needed: the WRITER is a test, the
+  // TRIGGER was this term plus an off-pin engine. The pin (`.bun-version`)
+  // and this skip are kept together, on the owner's choice.
   const prev = loadQaScriptSidecar(sidecar.criterion_id, repoRoot);
   if (
     prev &&
@@ -1788,7 +1785,6 @@ export function saveQaScriptSidecar(
     prev.script_hash === sidecar.script_hash &&
     prev.script_commit_sha === sidecar.script_commit_sha &&
     prev.deps_hash === sidecar.deps_hash &&
-    prev.engine_version === sidecar.engine_version &&
     JSON.stringify(prev.extra_inputs ?? []) ===
       JSON.stringify(sidecar.extra_inputs ?? [])
   ) {
