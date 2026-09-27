@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-26T21:35:59Z
+updated_at: 2026-09-27T05:06:39Z
 parent: folio-assistant-1xhc
 ---
 
@@ -165,3 +165,32 @@ container and CI's.
 Recorded as evidence only; this is not my bean and its status is untouched. If
 it is contention, the fix is a budget or a serialisation, not a code path, and
 whoever holds it should decide which.
+
+
+## A third margin, and the SPREAD is the new evidence
+
+A clean-tree `bun run gates` on the merged tree (`6b4c89309ed`, 2026-09-27 05:0xZ)
+failed exactly one gate of 167, and its one failing test was:
+
+    (fail) buildReport — absence is absence > a translated block reports coverage,
+           terms and echo — and NO round-trip verdict  [7463.84ms]
+      ^ this test timed out after 5000ms.
+
+A timeout, not an assertion — and in `profile-conformance-axis.test.ts`, the
+second of the two files, not `profile-scoping.test.ts`.
+
+So the margins over the 5000 ms budget now stand at **47 ms, 170 ms and 2464 ms**.
+**The spread is the point.** A deterministic environment difference — a missing
+binary, a different resolution, a path absent here — produces a STABLE duration,
+because it is the same work every time. A budget exceeded by three different
+amounts across three runs of the same suite is load, and load is contention.
+
+Independently: **CI passed this exact test on this exact commit** minutes before,
+along with the four profile-scoping tests, in `TypeScript — tests, lint, types
+(hard)` on `6b4c89309ed`. That is the third consecutive CI run to pass what this
+container fails, which is this bean's premise holding rather than an assumption
+about it.
+
+Evidence only. Not my bean, status untouched, no claim taken. If it is contention
+the remedy is a budget or a serialisation rather than a code path, and that choice
+belongs to whoever holds it.

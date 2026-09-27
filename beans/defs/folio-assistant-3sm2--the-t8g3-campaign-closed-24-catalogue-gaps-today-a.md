@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-09-26T19:39:54Z
-updated_at: 2026-09-26T21:36:20Z
+updated_at: 2026-09-27T05:06:39Z
 parent: folio-assistant-bzyu
 ---
 
@@ -362,3 +362,28 @@ it": robustness would have to be argued, absence is observed.
 difference of one is unexplained and not chased: it changes nothing here, and
 quoting their number as confirmed when I measured a different one would be the
 failure this repository has a rule about.
+
+
+## `o29r` has MERGED, so the caveat above is now verified rather than predicted
+
+The note above was written against #1433 as an open PR, with its regex applied by
+hand to a scratch copy of `pot-extract.ts`. It merged as `c6960465301`, so the
+question can be asked of the code that actually ships.
+
+Re-run on `main`'s own extractor after merging it into this branch
+(`6b4c89309ed`), whose regex is `/(?<!\w)_([^_]+)_(?!\w)/g`:
+
+| | published above | against the MERGED extractor |
+|---|---|---|
+| pairs with equal count | 32 | **32** |
+| segments across them | 5004 | **5004** |
+| identical-text anchors | 462 (9.2 %) | **462 (9.2 %)** |
+| pairs showing any off-by-one shift | 0 | **0** |
+| pairs with zero anchors | 3 | **3** |
+
+Byte-identical. Their landed form simplified the lookbehind from `[_\w]` — what
+was tested here — to `\w`, and in JavaScript `\w` already contains `_`, so the two
+character classes are the same set and the hand-applied test was equivalent to
+what shipped. **Stated because it had to be checked, not assumed**: a regex that
+"looks the same" is exactly the kind of thing this bean has already been wrong
+about once.
