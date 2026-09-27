@@ -1258,6 +1258,49 @@
   .side-bar { transition: width .14s ease; }
 }
 
+/* THE [x]'S WORDS ARE FOR A SCREEN READER, NOT FOR THE EYE.
+ *
+ * Owner, 2026-09-27: the close control overlaps -- with the sidebar open,
+ * *"× Close navigatio"* showed next to the icon row, the words wrapped over
+ * two lines on top of the grey box and over the icons.
+ *
+ * The generated markup (`scripts/lib/navbar.ts`) is `<label class=
+ * "fa-nav-close"><span aria-hidden>×</span><span class="fa-nav-sr">Close
+ * navigation</span></label>`, and `.fa-nav-sr` is clipped by the RAIL's
+ * stylesheet -- which the docs site does not load. Here nothing hid it, so
+ * a 1.75rem flex box centred a 74px-wide line of text on itself and it spilled
+ * out both sides, over the icons. The e2e fixture had been written without
+ * the span, so the one test that looks at this box measured a control the
+ * site never renders.
+ *
+ * Clipped, not removed: the span is the control's accessible name, and the
+ * `title` alone is not one every screen reader announces. Written as a
+ * descendant of `.fa-nav-close` rather than as a bare `.fa-nav-sr` so it is
+ * NOT one of the selectors both navbar stylesheets declare -- that shared set
+ * is held at three on purpose (`navbar-css-single-source.test.ts`). */
+.fa-nav-close .fa-nav-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* BELOW 50rem THE [x] HAS NOTHING TO CLOSE. Every rule that places and shows
+ * it lives in the `min-width: 50rem` block above, so on a phone the label fell
+ * back to an inline box in the sidebar's footer -- "×Close navigation" loose
+ * in the middle of the page at rest, measured at 390px. The phone menu is the
+ * theme's own ☰, which already opens AND closes it; this label would only
+ * toggle the desktop pin and write the desktop stay-closed preference, which
+ * is `gjli` -- a thing that reads as a control and does nothing you can see. */
+@media not all and (min-width: 50rem) {
+  .fa-nav-close { display: none; }
+}
+
 @media print {
   .side-bar,
   .fa-nav-toggle,
@@ -7353,6 +7396,76 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 .fa-search-home .search { position: relative; }
+
+/* ── ONE SEARCH ROW, not three controls ─────────────────────────────────
+ *
+ * Owner, 2026-09-27: *"search is wonky"* -- a small square magnifier on the
+ * left, a full-width field, a "Hide search" button on the right, and on a
+ * preview a note under them, all at DIFFERENT HEIGHTS, reading as three
+ * unrelated controls.
+ *
+ * Measured on a local build before this block (getting-started.html):
+ *
+ *   1280px   magnifier 28px, field 36px, Hide search 28px -- three heights.
+ *            On a preview `align-items: center` centred both buttons against
+ *            the field PLUS the notice, so they dropped 21px below the field
+ *            and sat level with the notice instead.
+ *   390px    the theme's below-50rem rules were still live: `.search` is
+ *            `height: 4rem; padding: 0.5rem` and `.search-input-wrap` is
+ *            `height: 3rem` with a drop shadow, so the field floated 7px down
+ *            inside a 56px box, shadowed, beside two 25px buttons.
+ *
+ * The fix is geometry, not new controls:
+ *
+ *   - Everything is 2.25rem tall -- the field's own height, already chosen
+ *     above for the low-dexterity profile -- so no control is smaller than
+ *     the field it sits beside.
+ *   - Top-aligned, so a notice under the field grows the row DOWNWARDS and
+ *     never pulls the buttons off the field's line.
+ *   - The magnifier is ATTACHED to the field: no gap, shared edge, the outer
+ *     corners rounded and the inner ones square, so it reads as the field's
+ *     own icon. It keeps its job (focuses the field; in the corner, opens it)
+ *     and its name, so nothing about keyboard access changes.
+ *   - The theme's mobile box (padding, 4rem/3rem heights, shadow) is undone
+ *     here, where search is ours. That the same `.search` rule used to go
+ *     full-screen on focus below 50rem was ALREADY overridden by
+ *     `position: relative` above; this only removes the leftovers.
+ *
+ * NAVBAR ONLY for the attached look. The corner card is its own bordered
+ * box with the field collapsed behind the magnifier; fusing them there would
+ * fuse the icon to nothing. */
+.fa-search-home .search {
+  height: auto;
+  padding: 0;
+}
+.fa-search-home .search-input-wrap {
+  height: 2.25rem;
+  box-shadow: none;
+  border-radius: 0;
+  /* `hidden` in the theme clipped the input's own focus ring. The theme's
+     magnifier label that the clip was for is already a 1px sr-only box. */
+  overflow: visible;
+}
+
+.fa-search-home[data-place="navbar"] {
+  align-items: flex-start;
+  gap: 0;
+}
+.fa-search-home[data-place="navbar"] .fa-search-peek {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-right: 0;
+  border-radius: 4px 0 0 4px;
+}
+.fa-search-home[data-place="navbar"] .fa-search-peek svg { width: 1.1rem; height: 1.1rem; }
+.fa-search-home[data-place="navbar"] .search-input { border-radius: 0 4px 4px 0; }
+.fa-search-home[data-place="navbar"] .fa-search-slide {
+  height: 2.25rem;
+  margin-left: 0.4rem;
+}
+/* The notice belongs to the field, so it starts under the field's own left
+   edge, and a little closer: 0.4rem read as a gap between two things. */
+.fa-search-home[data-place="navbar"] .fa-search-notice { margin-top: 0.25rem; }
 
 /* ── A board nested in the sticky panel has no chrome of its own ──────────
  *

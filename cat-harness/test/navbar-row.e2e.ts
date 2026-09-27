@@ -154,7 +154,7 @@ function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADIN
     <nav class="site-nav"><a href="#">Navigation link</a></nav>
     <input type="checkbox" class="fa-nav-open" id="fa-nav-open">
     <label class="fa-nav-toggle" for="fa-nav-open" title="Keep navigation open"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span></label>
-    <label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span></label>
+    <label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label>
     <footer class="site-footer">
       <div class="fa-nav-bottom__stack">
         <details class="fa-harness-tabs">
@@ -877,6 +877,26 @@ test.describe("the navbar can be closed, and it stays closed", () => {
     await expect(page.locator(".fa-nav-close")).toBeHidden();
     await page.hover(".side-bar");
     await expect(page.locator(".fa-nav-close")).toBeVisible();
+  });
+
+  test("only the [x] SHOWS — its words are for a screen reader (owner, 2026-09-27)", async ({ page }) => {
+    // Owner: the open sidebar showed "× Close navigatio", the words wrapped
+    // over two lines on the grey box and over the icon row. The span that
+    // carries the name was clipped only by the RAIL's stylesheet, and this
+    // fixture had been written without it, so nothing here could see it.
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    const close = page.locator(".fa-nav-close");
+    await expect(close).toBeVisible();
+    const box = (await close.boundingBox())!;
+    expect(box.width).toBeLessThanOrEqual(40);
+    expect(box.height).toBeLessThanOrEqual(40);
+    expect(box.height).toBeGreaterThanOrEqual(24);
+    const sr = (await page.locator(".fa-nav-close .fa-nav-sr").boundingBox())!;
+    expect(sr.width).toBeLessThanOrEqual(1);
+    expect(sr.height).toBeLessThanOrEqual(1);
+    // Hidden from the eye, still the control's name.
+    await expect(close).toContainText("Close navigation");
   });
 
   test("pressing it does NOT pin the bar open — the label would have", async ({ page }) => {
