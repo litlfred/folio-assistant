@@ -13,6 +13,10 @@ import {
   formatPot,
 } from "./pot-extract";
 import { parsePo, injectMarkdown } from "./po-inject";
+import { existsSync, readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
+import { publishedPairs } from "./derive-po.ts";
+import { siteRoot, sourceLocale, supportedLocales } from "./translation-index.ts";
 
 // ── cleanMarkdownText ───────────────────────────────────────────
 
@@ -477,6 +481,118 @@ describe("injectMarkdown", () => {
     );
     expect(result.stats.translatedSpans).toBe(1);
     expect(result.stats.untranslatedSpans).toBe(1);
+  });
+});
+
+// ── The blank line is part of the document (bean `rmor`) ────────
+//
+// Every test in the block above asserts with `toContain`, and that is exactly
+// why this defect lived: `toContain` cannot see a blank line that is gone. The
+// final filter read `outLines.filter((line) => line !== "")` under a comment
+// saying it removed blank lines "introduced by paragraph collapse", and it
+// removed every empty line in the document. `src/tools/translation.ts` writes
+// the result to disk, so `translation_inject` could not produce a usable page
+// for any document with more than one block.
+//
+// Structure is asserted here rather than substrings, in both directions: the
+// blanks must survive, AND the paragraph must still collapse. A fix that
+// preserved blank lines by not collapsing at all would satisfy the first and
+// silently remove the feature.
+
+describe("injectMarkdown preserves document structure", () => {
+  test("the author's blank lines survive — all three of them", () => {
+    // The bean's own fixture, byte for byte. Measured before the fix: 3 blank
+    // lines in, 0 out; the heading ran into the paragraph, the paragraph into
+    // the list, and the trailing paragraph was absorbed by the list.
+    const source = "# Title\n\nFirst paragraph here.\n\n- item one\n- item two\n\nSecond paragraph here.";
+    const result = injectMarkdown(source, new Map([["Title", "Titre"]]));
+    const blanks = (s: string): number => s.split("\n").filter((l) => l.trim() === "").length;
+    expect(blanks(source)).toBe(3);
+    expect(blanks(result.translated)).toBe(3);
+    // And the whole document, so nothing else moved either.
+    expect(result.translated).toBe(
+      "# Titre\n\nFirst paragraph here.\n\n- item one\n- item two\n\nSecond paragraph here.",
+    );
+  });
+
+  test("a wrapped paragraph STILL collapses to one line", () => {
+    // The other half of the falsifier. Preserving blank lines by not collapsing
+    // would pass the test above and remove the feature.
+    const source = "A sentence that was\nhard wrapped across\nthree source lines.";
+    const result = injectMarkdown(
+      source,
+      new Map([["A sentence that was hard wrapped across three source lines.", "Une phrase repliée."]]),
+    );
+    expect(result.translated).toBe("Une phrase repliée.");
+    expect(result.translated.split("\n")).toHaveLength(1);
+    expect(result.changed).toBe(true);
+  });
+
+  test("collapsing a multi-line continuation leaves no blank line inside the list", () => {
+    // The second defect the same mechanism caused, and the two INTERACTED in a way
+    // worth writing down: blanking put a blank line inside the list, and the global
+    // filter then swept it away. So the list damage was MASKED by the blank-line
+    // destruction, and fixing only the filter would have exposed it.
+    //
+    // Measured on this exact fixture with blanking kept and the global filter
+    // removed: `"- an item\nsuite traduite\n\n- second item"` — a blank line inside
+    // the list, which makes the list LOOSE and changes how every item renders.
+    //
+    // **This test does not discriminate against the old code as a whole**, and
+    // saying so is the point: with both defects present the final output matches,
+    // because the second hid the first. What it guards is a future "fix" that makes
+    // the filter precise while still emptying lines — the obvious half-repair.
+    const source = "- an item\n  continued line one\n  continued line two\n- second item";
+    const result = injectMarkdown(
+      source,
+      new Map([["continued line one continued line two", "suite traduite"]]),
+    );
+    expect(result.translated).toBe("- an item\nsuite traduite\n- second item");
+    expect(result.translated).not.toContain("\n\n");
+  });
+
+  test("a document with NO translation is returned unchanged, byte for byte", () => {
+    // The cheapest guard against the whole class: if nothing is translated,
+    // nothing may move.
+    const source = "# Heading\n\nA paragraph.\n\n- one\n- two\n\n\nDouble blank above.\n";
+    const result = injectMarkdown(source, new Map());
+    expect(result.translated).toBe(source);
+    expect(result.changed).toBe(false);
+  });
+
+  test("over the REAL corpus: injection never changes the blank-line count", () => {
+    // 62 (catalogue, source) pairs in this instance. A fixture proves the
+    // mechanism; only the corpus says whether any real page trips it. Measured
+    // before the fix: the old filter would have destroyed 3,871 blank lines
+    // across these same pairs.
+    const root = resolve(import.meta.dir, "..", "..");
+    const docs = siteRoot(root);
+    expect(docs).toBeDefined();
+    const { pages, locales } = publishedPairs(docs!, supportedLocales(root), sourceLocale(root), {
+      instanceRoot: root,
+    });
+    const blanks = (s: string): number => s.split("\n").filter((l) => l.trim() === "").length;
+    let pairs = 0;
+    let collapsed = 0;
+    for (const page of pages) {
+      const srcFile = join(docs!, `${page}.md`);
+      if (!existsSync(srcFile)) continue;
+      const source = readFileSync(srcFile, "utf-8");
+      for (const locale of locales) {
+        // Catalogues are addressed by basename today; see bean `9rnf` on why
+        // that is a separate open question from this one.
+        const po = join(root, "translations", locale, `${page.split("/").pop()}.po`);
+        if (!existsSync(po)) continue;
+        pairs++;
+        const result = injectMarkdown(source, parsePo(readFileSync(po, "utf-8")));
+        expect(blanks(result.translated)).toBe(blanks(source));
+        if (result.translated.split("\n").length < source.split("\n").length) collapsed++;
+      }
+    }
+    // Anti-vacuity, both ways: the loop must have run, and it must have actually
+    // collapsed something on every pair rather than passing by doing nothing.
+    expect(pairs).toBeGreaterThanOrEqual(60);
+    expect(collapsed).toBe(pairs);
   });
 });
 
