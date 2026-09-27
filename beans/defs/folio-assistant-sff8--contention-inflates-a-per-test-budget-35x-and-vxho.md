@@ -1,11 +1,11 @@
 ---
 # folio-assistant-sff8
 title: Contention inflates a per-test budget ~35x, and vxho fixed ONE of 505 files — two more just failed on main
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-27T05:06:39Z
+updated_at: 2026-09-27T05:20:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -103,6 +103,7 @@ Recorded and left `todo`. The session that found it was doing unrelated work
 (`ymsu`) and deliberately did not pivot.
 
 
+
 ## Third independent confirmation, and one piece of evidence the bean does not yet have — 2026-09-26, ~17:30
 
 Seen again on `81461747918` (a beans-only branch, no source change), inside
@@ -191,6 +192,12 @@ along with the four profile-scoping tests, in `TypeScript — tests, lint, types
 container fails, which is this bean's premise holding rather than an assumption
 about it.
 
-Evidence only. Not my bean, status untouched, no claim taken. If it is contention
-the remedy is a budget or a serialisation rather than a code path, and that choice
-belongs to whoever holds it.
+Evidence only when written. **Superseded by the claim note below**: this session
+claimed the bean at 05:16Z, so "no claim taken" stopped being true minutes after it
+was written, and the line is corrected here rather than left standing. The remedy is
+now this session's to propose, under the `## Done when` already recorded above —
+which rules out both a raised budget and per-file hoisting, so neither is on the
+table as a shortcut.
+
+_2026-09-27T05:16:34Z_ — Claimed by claude/wonderful-bohr-6kxh7b — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+

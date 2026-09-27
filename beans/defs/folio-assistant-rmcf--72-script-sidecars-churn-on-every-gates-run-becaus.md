@@ -3,8 +3,9 @@
 title: 72 script sidecars churn on every gates run because engine_version records the CONTAINER, and it went 1.3.14 -> 1.3.11
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-26T21:03:15Z
-updated_at: 2026-09-26T21:03:15Z
+updated_at: 2026-09-27T05:20:12Z
 parent: folio-assistant-1xhc
 ---
 
@@ -75,3 +76,30 @@ has context this bean does not.
       less often, or moving provenance out of the committed file
 - [ ] `bun run gates` on a clean tree in a container whose bun differs from the last
       pusher's leaves the tree clean, or the churn is deliberate and written down
+
+
+## DUPLICATE of `3ozg`, which is the better record — 2026-09-27
+
+`3ozg` (filed by a sibling, merged as #1438) is the same defect measured
+independently: the same 72 files under `cat-harness/content/pipeline/script-sidecars/`,
+the same three fields, the same `bun-1.3.14` committed against `bun-1.3.11` local.
+
+**Theirs is the better record and should be the one worked**, for two reasons this
+bean does not have: it names the writer, `saveQaScriptSidecar` in `qa-utils.ts`, and
+its callers `script-sweep.ts` and `qa-sweep.ts`; and it measured on **pristine
+`main`** at two commits, which establishes the churn is not branch-specific — this
+bean only ever saw it on a branch.
+
+**Left open rather than scrapped**, because it carries something `3ozg` does not: the
+four remedies put to the owner and still unanswered — stop recording
+`engine_version`; stamp only on a real change; move run provenance out of the
+committed sidecar; or document the discard as intended. Option 2 looked right to me.
+Whoever works `3ozg` should read those four and this repository's rule that a bean is
+never deleted, only `scrapped` with reasons.
+
+**How the duplication happened is the reusable part.** Neither session was careless:
+`rmcf` was filed 2026-09-26 on a branch with no PR yet, so an open-PR search would
+have returned nothing, and `3ozg` was filed from pristine `main` where `rmcf` was not
+yet visible. That is `dx5j`'s window from a third direction — after the claim-early
+rule (`35nj`) and after the re-check-before-PR rule, and it still produced two beans
+for one defect.
