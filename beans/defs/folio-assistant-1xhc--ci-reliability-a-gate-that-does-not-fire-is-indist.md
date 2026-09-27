@@ -3,8 +3,9 @@
 title: 'CI RELIABILITY: a gate that does not fire is indistinguishable from one that passed'
 status: in-progress
 type: epic
+priority: normal
 created_at: 2026-09-19T11:43:44Z
-updated_at: 2026-09-19T11:58:51Z
+updated_at: 2026-09-26T18:34:06Z
 ---
 
 A gate that does not fire is indistinguishable from one that passed.
@@ -88,3 +89,63 @@ The `UNDET` third state was NOT ported. `gates.ts` answers the same question
 structurally — it does not run browser gates unless asked — so there is nothing
 to detect, and adding a detector would be a second mechanism for a case the
 first design does not have.
+
+
+## `bun run gates` ON A BRANCH HEAD IS NOT WHAT CI RUNS — 2026-09-26, and it cost two CI rounds
+
+A new instance of this bean's sentence, and the most expensive one so far, because
+**no local run can detect it** — not even a pristine clone.
+
+`actions/checkout` on a `pull_request` event checks out `refs/pull/N/merge`:
+`main` MERGED INTO the branch, not the branch head. So CI's verdict is about a
+tree that exists nowhere locally.
+
+### The measurement, PR #1425
+
+`Skill-registration chain` red on `kg:audit:check`, twice. Reproduced nowhere:
+
+| environment | verdict |
+|---|---|
+| this container, clean tree, same commit | exit 0 |
+| a pristine `git clone` of that commit, `bun install --frozen-lockfile` | exit 0 |
+| CI, same commit | **exit 1**, twice |
+
+Finding counts were IDENTICAL between CI and the clone on every comparable line,
+so the audit saw the same graph; only the pass/fail differed. The cause:
+`prose-reviewed-since-code-changed` keeps a committed attestation of two files'
+content hashes, and `main` had moved BOTH of them —
+
+    .github/workflows/code-quality-gates.yml   head bb6cbd2d26c2   main 8a07b7de6278
+    cat-harness/processes/code-quality-gates.bpmn   head f8dd3d54012d   main 2286ea1f8f1b
+
+— so the attestation was correct for the head and stale for the merge. Merging
+`main` and regenerating moved exactly the one sidecar CI had named.
+
+### Why this belongs to THIS bean specifically
+
+The bean's line is *"a gate that does not fire is indistinguishable from one that
+passed."* Here the gate fires only in a tree the author cannot construct by
+checking out their own branch, so locally it is indistinguishable from passing —
+and the natural response, which I made, is to suspect the environment or a flake.
+Two hypotheses died first: `kg-audit`'s gitignored-file disk walk (real, recorded
+on `xd1g`, changed no sidecar) and a flake (the re-run failed identically).
+
+### The class of artefact at risk, which is the useful generalisation
+
+Any committed artefact whose inputs include files `main` also touches. Named
+instances today: a `pair_attestation` (content hashes of two files), and — from
+`main`'s own bean `g5o5`, landed the same day — `check:glossary` calling
+kg-skills stale in CI and current locally. **Two sessions hit this
+independently within hours**, which is the argument for recording the mechanism
+rather than either instance.
+
+### Adds to "Done when"
+
+- [ ] a contributor can run what CI runs. MEASURED AFTER: one command produces
+      the merge tree (`git merge origin/main` into a throwaway worktree, or
+      fetching `refs/pull/N/merge`) and runs the gate set against it, and its
+      verdict matches CI's on a case where the head's verdict does not
+- [ ] the failure MODE is documented where an agent meets it: `skill:register`'s
+      own red message says "if it is red in CI but green here: ask git what the
+      corpus is" — correct advice for `xd1g`, and it sent me down that path for
+      a case where the corpus was identical and the TREE was not

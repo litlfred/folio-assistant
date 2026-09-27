@@ -75,7 +75,7 @@ import { Glob } from "bun";
 
 import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync } from "node:fs";
-import { join, relative, sep } from "node:path";
+import { join, relative, resolve, sep } from "node:path";
 
 /**
  * The files git accounts for under {@link dir}, as absolute paths — or
@@ -226,4 +226,44 @@ export function gitFiles(
   };
   if (existsSync(root)) walk(root);
   return { files: out.sort(), source: "walk" };
+}
+
+/**
+ * "Is this file part of the repository's corpus?", for a page-text scan.
+ *
+ * BESIDE `gitCorpus` rather than in its caller, and exported, because the fix
+ * has to be FALSIFIABLE. It was inline in `kg-audit.ts` first — untestable
+ * twice over: nothing could show it working, and `kg-audit.ts` has no
+ * `import.meta.main` guard, so a test that imported it RAN THE WHOLE AUDIT
+ * and then hit the script's own `process.exit(0)`. An untestable corpus rule
+ * is how the defect below survived.
+ *
+ * Three states, kept apart deliberately:
+ *
+ * | case | answer | why |
+ * |---|---|---|
+ * | git listed it | **in** | tracked, or untracked-and-not-ignored |
+ * | under `repoRoot`, git did not list it | **out** | gitignored — the defect |
+ * | NOT under `repoRoot` | **in** | a sibling checkout (`docsLayers` can return one) is outside this corpus and cannot be judged by it |
+ * | git could not answer (`undefined`) | **in**, everything | an unanswerable question is not an empty answer |
+ *
+ * The defect, measured 2026-09-26 (bean `xd1g`; the shape `rsi6` and
+ * `kg-detangle` already paid for): the page walk excluded `_site`,
+ * `node_modules` and `vendor` BY NAME, and a name list cannot be complete.
+ * This container held SIX gitignored `.md`/`.html` files a fresh checkout does
+ * not — five `index.html` under `_kg/` and a `.pytest_cache/README.md` — none
+ * matching an excluded name. Their text entered the page corpus, so every
+ * criterion asking "is this mentioned on a page?" could answer differently
+ * here than in CI.
+ *
+ * NOT claimed: that this fixes any verdict today. Running the writer with it
+ * changed no sidecar, so the exposure is LATENT. It is fixed because a
+ * measurement that depends on what a gate happened to install is not a
+ * measurement, not because it is currently wrong.
+ */
+export function corpusPredicate(repoRoot: string): (abs: string) => boolean {
+  const corpus = gitCorpus(repoRoot, ["*.md", "*.html"]);
+  if (corpus === undefined) return () => true;
+  const tracked = new Set(corpus.map((f) => resolve(repoRoot, f)));
+  return (abs: string): boolean => !abs.startsWith(`${repoRoot}/`) || tracked.has(abs);
 }

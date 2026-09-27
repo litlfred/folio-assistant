@@ -11,7 +11,13 @@ nav_exclude: true
 
 `Process_CopyOutMaterialized` · strict · 5 step(s)
 
-Materialized content is read-only. The owner, 2026-09-21: "if we have a materialized <stub>/<sub-graph>, the contents of it should be immutable ... you would need to copy/mateiralize it to your own folio/ in order to mess around with it." And 2026-09-22, choosing between advising and enforcing: enforce from the start. STRICT, and the reason is narrow. Only one step here is a gate, and it is Gateway_Frozen: whether the target is read-only at all. Everything after it is mechanical. What makes the process strict is that skipping it does not fail loudly — an edit in place succeeds, and is only caught later by check:materialized-fixity hashing bytes against the digest their record carries. A process whose omission looks exactly like compliance is the vlhk shape, and advisory would not hold it. The copy-out re-opens NONE of the five materialisation gates. Those were answered when this repository decided it may hold these bytes at all (materialize-remote.bpmn); copying something already held is not a second acquisition. What the copy does inherit is the restrictions and copyright verdicts — the copy is a new artefact in the copier's folio, and publishing it is that folio's decision. The three states, the five gates and the provenance pair are folio-assistant-core/schemas/materialization.ts. Nothing here restates them.
+Materialized content is read-only. The owner, 2026-09-21: "if we have a materialized <stub>/<sub-graph>, the contents of it should be immutable ... you would need to copy/mateiralize it to your own folio/ in order to mess around with it." And 2026-09-22, choosing between advising and enforcing: enforce from the start.
+
+STRICT, and the reason is narrow. Only one step here is a gate, and it is Gateway_Frozen: whether the target is read-only at all. Everything after it is mechanical. What makes the process strict is that skipping it does not fail loudly — an edit in place succeeds, and is only caught later by check:materialized-fixity hashing bytes against the digest their record carries. A process whose omission looks exactly like compliance is the vlhk shape, and advisory would not hold it.
+
+The copy-out re-opens NONE of the five materialisation gates. Those were answered when this repository decided it may hold these bytes at all (materialize-remote.bpmn); copying something already held is not a second acquisition. What the copy does inherit is the restrictions and copyright verdicts — the copy is a new artefact in the copier's folio, and publishing it is that folio's decision.
+
+The three states, the five gates and the provenance pair are folio-assistant-core/schemas/materialization.ts. Nothing here restates them.
 
 <img src="../assets/img/workflows/copy-out-materialized.svg" alt="BPMN diagram: Copy out materialized content — to work on somebody else's bytes" style="max-width:100%">
 

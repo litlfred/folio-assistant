@@ -183,7 +183,53 @@ function graftBoundary(repoRoot: string): Set<string> {
   return value;
 }
 
+/**
+ * `<repoRoot>\0<relPath>` -> the answer, and the HEAD it was computed AT.
+ *
+ * ## Why this is cached, with the measurement
+ *
+ * `git log -n 1` costs **20.05 ms** (measured 2026-09-27, bean `sff8`), and
+ * `entry()` in `translation-block-qa.ts` calls this once PER CRITERION, so one
+ * `buildReport` spent ~66 ms of subprocess time re-asking two questions whose
+ * answers do not change. That is a production cost, not a test one: the QA sweep
+ * runs `buildReport` per block per locale, so a sweep over N subjects paid 66N ms
+ * for it. It surfaced as a test that is 4 % of its budget on an idle machine and
+ * was twice seen at 28-41x over it, because PROCESS CREATION is what degrades
+ * under load — the spawns queue behind every other test file's work.
+ *
+ * ## Why it is keyed on HEAD rather than cached for the process lifetime
+ *
+ * The owner's decision of 2026-09-27, and the reason is a failure mode this
+ * repository has twice: a **stale provenance recorded as a fresh verdict** is what
+ * `sfjo` and `rmcf` are both about. `qa-utils.ts` is reachable from the
+ * long-running MCP server, where a commit can land mid-process — and a verdict
+ * stamped with the previous HEAD would be confidently wrong rather than unknown.
+ *
+ * Keying on HEAD is sound because the answer — the last commit that touched a path
+ * — can only change when a new commit lands, which moves HEAD. And it is cheap
+ * because `git rev-parse HEAD` costs **1.96 ms** against that 20.05 ms, so the
+ * probe stays UNCACHED as the invalidation signal and only the expensive half is
+ * memoised: ~66 ms per `buildReport` becomes ~6 ms.
+ *
+ * `GIT_SHA_UNKNOWN` is cached like any other answer. A non-git directory returns it
+ * for every path under one key, which is correct: the question has one answer there.
+ */
+const fileCommitCache = new Map<string, { head: string; sha: string }>();
+
 export function gitFileCommitSha(relPath: string, repoRoot: string): string {
+  // The invalidation probe, deliberately NOT memoised — it is what makes the
+  // memo safe, and at 1.96 ms it is a tenth of what it protects.
+  const head = gitHeadSha(repoRoot);
+  const key = `${repoRoot}\u0000${relPath}`;
+  const hit = fileCommitCache.get(key);
+  if (hit && hit.head === head) return hit.sha;
+  const sha = computeFileCommitSha(relPath, repoRoot);
+  fileCommitCache.set(key, { head, sha });
+  return sha;
+}
+
+/** The uncached body — every `git` call this function ever made lives here. */
+function computeFileCommitSha(relPath: string, repoRoot: string): string {
   try {
     const out = execFileSync(
       "git",
@@ -1770,6 +1816,14 @@ export function saveQaScriptSidecar(
   // uses a script sidecar's `engine_version` for freshness (`entryIsFresh`
   // compares hashes), so it is left as a record of the last CONTENT change's
   // engine rather than the last run's.
+  //
+  // Why this took two beans to find (`rmcf`, then `3ozg`; #1451): the comment
+  // here used to say everything but the two `last_run_*` fields was
+  // content-derived. That was false for `engine_version`, which comes from the
+  // ENVIRONMENT, and it ruled the environment out, so the hunt went looking
+  // for a test alone. Both halves were needed: the WRITER is a test, the
+  // TRIGGER was this term plus an off-pin engine. The pin (`.bun-version`)
+  // and this skip are kept together, on the owner's choice.
   const prev = loadQaScriptSidecar(sidecar.criterion_id, repoRoot);
   if (
     prev &&
