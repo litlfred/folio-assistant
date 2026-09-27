@@ -14775,6 +14775,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/kg-qa.kgcriteriondefinition.scope",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgCriterionDefinition.scope"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "WHICH INSTANCE ROOT can answer it — the second axis beside {@link applies}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/kg-qa.ts#KgCriterionDefinition.scope",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/kg-qa.kgcriteriondefinition.scopebasis",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgCriterionDefinition.scopeBasis"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why this criterion is `repo`-scoped. Required for `repo`, absent for `instance`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/kg-qa.ts#KgCriterionDefinition.scopeBasis",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/kg-qa.kgcriteriondefinition.summary",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -19199,6 +19237,196 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/session-context.ts#SessionContextSchema.waitingOn",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/session-survey.sessionsurveyschema.axes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SessionSurveySchema.axes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Per-axis findings. Empty is refused: a survey that covered nothing is not a survey."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.axes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/session-survey.sessionsurveyschema.branch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SessionSurveySchema.branch"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The branch the window is on, so a reader knows which history `from`/`to` live in."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.branch",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/session-survey.sessionsurveyschema.by",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SessionSurveySchema.by"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who took it, so a reader can ask. A session URL or id."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.by",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/session-survey.sessionsurveyschema.commits",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SessionSurveySchema.commits"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How many commits the window held, as counted at publication."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.commits",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/session-survey.sessionsurveyschema.from",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SessionSurveySchema.from"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The window's LOWER edge — the last commit the surveyor already knew. Exclusive, matching `git rev-list from..to`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.from",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/session-survey.sessionsurveyschema.takenat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SessionSurveySchema.takenAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When it was taken, ISO-8601. Not the staleness test — `to` is — but it dates the prose."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.takenAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/session-survey.sessionsurveyschema.to",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SessionSurveySchema.to"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The window's UPPER edge — the newest commit the survey actually read. Inclusive."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.to",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/session-survey.surveyaxisschema.axis",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SurveyAxisSchema.axis"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What was examined — `beans`, `ci`, `prs`, `issues`, `branches`, …"
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/session-survey.ts#SurveyAxisSchema.axis",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/session-survey.surveyaxisschema.covered",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SurveyAxisSchema.covered"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "False means NOT LOOKED AT; `finding` then says why, not what was found."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/session-survey.ts#SurveyAxisSchema.covered",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/session-survey.surveyaxisschema.finding",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SurveyAxisSchema.finding"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What it found, or — when `covered` is false — why it was skipped."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/session-survey.ts#SurveyAxisSchema.finding",
       "skos:note": "candidate"
     },
     {
