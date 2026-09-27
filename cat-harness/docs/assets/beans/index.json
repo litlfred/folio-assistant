@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 421,
+      "count": 424,
       "unit": "beans"
     }
   },
@@ -25,14 +25,14 @@
     {
       "id": "folio-assistant-065p",
       "title": "SWEEP TRAP: a stale local `main` ref makes every branch look like it carries unmerged beans",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T15:48:01Z",
-      "updatedAt": "2026-09-25T15:48:30Z",
+      "updatedAt": "2026-09-27T08:24:17Z",
       "preview": "Found 2026-09-25 during a `/goal-review` sweep, by axis 4's own instruction —\n*\"Items that exist only on a branch … Sweep the open branches' stores too, or\nthe review is blind to the largest workstream.\"*\n\n## The trap\n\nThe natural way to write that comparison is the way the skill's prose implies:\n\n```sh\ngit diff --name-only --diff-filter=A main..origin/<branch> -- beans/defs/\n```\n\nIn this containe",
       "file": "beans/defs/folio-assistant-065p--sweep-trap-a-stale-local-main-ref-makes-every-bran.md"
     },
@@ -365,12 +365,12 @@
       "title": "CI RELIABILITY: a gate that does not fire is indistinguishable from one that passed",
       "status": "in-progress",
       "type": "epic",
-      "priority": "",
+      "priority": "normal",
       "parent": "",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T11:43:44Z",
-      "updatedAt": "2026-09-19T11:58:51Z",
+      "updatedAt": "2026-09-26T18:34:06Z",
       "preview": "A gate that does not fire is indistinguishable from one that passed.\n\nThat is `xom7`'s lesson one layer up, and every item here is an instance:\n`3pqn` (a PR that opens with zero checks looks exactly like one whose checks\nare green), `dzl3` (playwright fails before any test body runs), `t373`\n(`readme:audit` is in no workflow at all, and `main` carried eight dead links),\n`bgle` (a guard that enumer",
       "file": "beans/defs/folio-assistant-1xhc--ci-reliability-a-gate-that-does-not-fire-is-indist.md"
     },
@@ -415,6 +415,20 @@
       "updatedAt": "2026-09-24T18:04:45Z",
       "preview": "Found by bean 015u (2026-09-24). On the who-iris replica the fixed ▾ Folio handle covers the 'INGESTED COPY — not WHO' banner at 390 px, and at 1280 px a link sits centred under it, so a click there opens the glass instead.\n\nThe obvious fix, reserving the handle's band with top padding, is ruled out by an existing rule: `folio-mount.e2e` asserts a replica is UNCHANGED while the glass is closed (be",
       "file": "beans/defs/folio-assistant-269z--folio-handle-covers-the-who-iris-replicas-ingested.md"
+    },
+    {
+      "id": "folio-assistant-27u0",
+      "title": "check:anchor-names was blind to 2 of 4 base spellings: 75 ascents unseen, 9 real findings, and it printed a green check",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T05:47:27Z",
+      "updatedAt": "2026-09-27T05:47:27Z",
+      "preview": "Found 2026-09-27 while reading `check-translation-catalogue.ts`, which arrived on\n`main` in the 36 commits merged into `claude/brave-hypatia-r820sf`. Its docblock\njustified deriving the instance root locally with *\"because no module exports\nit\"*. That claim is false — `cat-harness.ts:2702` exports `instanceRootFor` — and\nchecking it opened the real defect one level down.\n\n## The defect\n\n`check:anc",
+      "file": "beans/defs/folio-assistant-27u0--checkanchor-names-was-blind-to-2-of-4-base-spellin.md"
     },
     {
       "id": "folio-assistant-2b5s",
@@ -1716,7 +1730,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T03:40:20Z",
-      "updatedAt": "2026-09-26T16:43:35Z",
+      "updatedAt": "2026-09-27T05:12:05Z",
       "preview": "Measured 2026-09-26 on `985d0bada2a` (branch claude/brave-hypatia-r820sf, diff = two bean .md files only).\n\n## What happened\n\n`bun run gates` failed with ONE test failure:\n\n    (fail) the sweep's profile gate, end to end > a paper-only criterion is n/a'd in a document folio, under its OWN outcome [5769.02ms]\n\nThe same test, by name, **passes in isolation** — both with the branch's changes applied ",
       "file": "beans/defs/folio-assistant-9v4m--test-interference-a-profile-gate-test-fails-in-the.md"
     },
@@ -3386,7 +3400,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T11:40:56Z",
-      "updatedAt": "2026-09-26T12:38:50Z",
+      "updatedAt": "2026-09-27T07:46:48Z",
       "preview": "Found 2026-09-26 by LOOKING at a rendered SVG, not by any gate. `render:bpmn:check`\nwas green throughout: it grades whether the committed SVG matches what the\nrenderer produces, and the renderer faithfully produced the wrong thing. That is\nthe currency-vs-validity split `check:artefact-verification` exists for, arriving\nin the diagrams.\n\n## What renders\n\nA BPMN `name` attribute written `&amp;#10;`",
       "file": "beans/defs/folio-assistant-li5y--bpmn-labels-are-double-escaped-126-amp10-across-8.md"
     },
@@ -3897,6 +3911,20 @@
       "file": "beans/defs/folio-assistant-omki--quiet-claims-the-network-half-the-checks-own-basis.md"
     },
     {
+      "id": "folio-assistant-oq57",
+      "title": "GATES CANNOT PASS ANYWHERE: script sidecars commit engine_version, so main's new tree-write detector fails on whichever bun version is in the minority",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T20:07:20Z",
+      "updatedAt": "2026-09-27T06:07:18Z",
+      "preview": "Measured 2026-09-26, immediately after merging 51 commits of `main`.\n\n`main` added a check I welcome — `bun run gates` now FAILS a run in which a gate\nwrote to the tree it is being judged on, even when every gate passed:\n\n    ✗ every gate passed, and the run is NOT clean — 1 gate(s) changed the tree.\n      164 verdict(s) above were reached against a tree that a gate had already\n      repaired, so ",
+      "file": "beans/defs/folio-assistant-oq57--gates-cannot-pass-anywhere-script-sidecars-commit.md"
+    },
+    {
       "id": "folio-assistant-oqdr",
       "title": "Bootstrap diagrams' SVGs are published but rendered by nothing since the split",
       "status": "completed",
@@ -3985,14 +4013,14 @@
     {
       "id": "folio-assistant-pesg",
       "title": "A review re-derived a finding the instrument had already computed, and got it wrong",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T16:05:34Z",
-      "updatedAt": "2026-09-25T16:05:34Z",
+      "updatedAt": "2026-09-27T08:18:52Z",
       "preview": "## What happened, 2026-09-25\n\n`bun run health` reported **one** orphaned staging preview, named, sized and\nreasoned:\n\n> `STAGING/dependabot-github_actions-actions-c1d4c18a44` (101.6 MB, 1426 files)\n> — no open pull request; and no branch on the remote slugifies to it.\n\nRunning a `goal-review`, I re-derived that finding instead of quoting it. I\nwrote a slug function inline — `re.sub(r'[^a-zA-Z0-9]+",
       "file": "beans/defs/folio-assistant-pesg--a-review-re-derived-a-finding-the-instrument-had-a.md"
     },
@@ -5655,6 +5683,20 @@
       "updatedAt": "2026-09-19T12:15:59Z",
       "preview": "**In one sentence:** generalise `fsh-guts`'s flush behaviour into a *flushable\ncontainer* — a named store with a declared buffer limit, an over-full badge and\nthree actions (flush all / trim to limit / select to prune) — and make staging\npreviews and the console log two more instances of it.\n[View this bean](https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio-assistant-xxku--flu",
       "file": "beans/defs/folio-assistant-xxku--flushable-containers-a-named-store-with-a-buffer-l.md"
+    },
+    {
+      "id": "folio-assistant-y0n2",
+      "title": "isPushed() returns false when git COULD NOT ANSWER, so a transient git failure reads as 'you never pushed' — and it made a test fail in the suite and pass alone",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T05:11:35Z",
+      "updatedAt": "2026-09-27T07:46:48Z",
+      "preview": "Found 2026-09-27 while hunting `9v4m`'s remaining clause. Not the test I was\nlooking for, and a better finding than the one I was after.\n\n## The defect\n\n`isPushed` in `cat-harness/scripts/check-head-has-run.ts:360`:\n\n    export function isPushed(repo: string, sha: string): boolean {\n      try {\n        return execFileSync(\"git\", [\"-C\", repo, \"branch\", \"-r\", \"--contains\", sha], {\n          encoding",
+      "file": "beans/defs/folio-assistant-y0n2--ispushed-returns-false-when-git-could-not-answer-s.md"
     },
     {
       "id": "folio-assistant-y1w9",

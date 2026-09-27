@@ -90,7 +90,7 @@
       <bpmn:outgoing>H02</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:task id="Task_SeedBeans" name="Seed the work plan&#10;[todo-manager]">
-      <bpmn:documentation>The plan becomes beans. From here on, beans/ is the shared answer to &#x27;what is done, what is next&#x27; — for humans and agents alike.</bpmn:documentation>
+      <bpmn:documentation>The plan becomes beans. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="todo-manager" />
         <cat-harness.processes:bean op="claim" />

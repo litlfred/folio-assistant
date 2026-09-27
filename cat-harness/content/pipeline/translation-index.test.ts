@@ -49,7 +49,7 @@ import {
 } from "./translation-index.ts";
 import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 
-const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
+const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
 /**
  * A throwaway instance: a `harness.config.json`, and a `docs/` tree with the
@@ -402,8 +402,8 @@ describe("URL normalisation matches navKey in docs-ui.js", () => {
 
 describe("this repository's own corpus", () => {
   it("is a Jekyll site where this module looks for one", () => {
-    expect(siteRoot(REPO_ROOT)).toBe(join(REPO_ROOT, SITE_DIR));
-    expect(isTranslatable(contentType(REPO_ROOT), ".md")).toBe(true);
+    expect(siteRoot(INSTANCE_ROOT)).toBe(join(INSTANCE_ROOT, SITE_DIR));
+    expect(isTranslatable(contentType(INSTANCE_ROOT), ".md")).toBe(true);
   });
 
   it("every translated page is out of the STATIC nav", () => {
@@ -413,8 +413,8 @@ describe("this repository's own corpus", () => {
     //
     // Derived by WALKING for pages that declare a non-source `lang`, so a
     // translation added anywhere tomorrow is covered without editing this.
-    const src = sourceLocale(REPO_ROOT);
-    const site = siteRoot(REPO_ROOT)!;
+    const src = sourceLocale(INSTANCE_ROOT);
+    const site = siteRoot(INSTANCE_ROOT)!;
     const offenders: string[] = [];
     let translated = 0;
     const walk = (p: string): void => {
@@ -434,7 +434,7 @@ describe("this repository's own corpus", () => {
         if (!fm || typeof fm.lang !== "string" || fm.lang === src) continue;
         translated += 1;
         if (fm.nav_exclude !== true || fm.nav_order !== undefined) {
-          offenders.push(relative(REPO_ROOT, f));
+          offenders.push(relative(INSTANCE_ROOT, f));
         }
       }
     };
@@ -446,7 +446,7 @@ describe("this repository's own corpus", () => {
   });
 
   it("the committed index is up to date and valid", () => {
-    const r = checkTranslationIndex(REPO_ROOT);
+    const r = checkTranslationIndex(INSTANCE_ROOT);
     const bad = r.findings.filter((f) => f.severity !== "note").map((f) => `${f.where}: ${f.message}`);
     expect(bad).toEqual([]);
     expect(r.state, `run: bun run translation:index`).toBe("ok");
@@ -455,15 +455,15 @@ describe("this repository's own corpus", () => {
   it("the published index names a source page that really exists", () => {
     // Guards the one thing a self-consistent generator cannot catch: a key
     // scheme that agrees with itself and matches no nav link on the real site.
-    const index = JSON.parse(readFileSync(join(REPO_ROOT, INDEX_PATH), "utf-8")) as {
+    const index = JSON.parse(readFileSync(join(INSTANCE_ROOT, INDEX_PATH), "utf-8")) as {
       pages: Record<string, { sourceUrl: string }>;
     };
     expect(Object.keys(index.pages).length).toBeGreaterThan(0);
     for (const [key, page] of Object.entries(index.pages)) {
       expect(pageKey(page.sourceUrl), `${page.sourceUrl} does not key to ${key}`).toBe(key);
       const candidates = [
-        join(REPO_ROOT, SITE_DIR, key === "" ? "index.md" : `${key}.md`),
-        join(REPO_ROOT, SITE_DIR, key, "index.md"),
+        join(INSTANCE_ROOT, SITE_DIR, key === "" ? "index.md" : `${key}.md`),
+        join(INSTANCE_ROOT, SITE_DIR, key, "index.md"),
       ];
       expect(candidates.some((c) => existsSync(c)), `no source page for key "${key}"`).toBe(true);
     }

@@ -574,7 +574,7 @@ Branding: does it read as this instance? <span class="fa-gloss-status">candidate
 Brief the topic before touching anything <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>What am I doing and why is it worth doing; what do I already know, with each measurement's provenance; how do I plan to do it and WHAT WOULD FALSIFY THE APPROACH. A falsifier that never fires is decoration &amp;#8212; this practice's own fired, took edges 5 to 12, and rewrote the plan.</p>
+<p>What am I doing and why is it worth doing; what do I already know, with each measurement's provenance; how do I plan to do it and WHAT WOULD FALSIFY THE APPROACH. A falsifier that never fires is decoration — this practice's own fired, took edges 5 to 12, and rewrote the plan.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/graph-detanglement.bpmn"><code>cat-harness/processes/graph-detanglement.bpmn#Task_Brief</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_editing.task_buildgates" data-fa-state="extracted" data-fa-gloss="">
