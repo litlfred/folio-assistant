@@ -11,7 +11,11 @@ nav_exclude: true
 
 `Process_DocumentAuthoring` · advisory · 9 step(s)
 
-folio-assistant — authoring a document end to end (no Lean, no required TeX). Source of truth: this file. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG. The shape is the paper process minus the Lean lane and plus one step, the profile check, which is what keeps a document folio publishable without either toolchain.
+folio-assistant — authoring a document end to end (no Lean, no required TeX).
+Source of truth: this file. The SVG under docs/assets/img/workflows/ is generated
+from it by `bun run render:bpmn` — never hand-edit the SVG.
+The shape is the paper process minus the Lean lane and plus one step, the profile
+check, which is what keeps a document folio publishable without either toolchain.
 
 <img src="../assets/img/workflows/authoring-a-document.svg" alt="BPMN diagram: Authoring a document" style="max-width:100%">
 

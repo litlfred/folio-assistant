@@ -1,11 +1,11 @@
 ---
 # folio-assistant-u2ol
 title: 'TYPESCRIPT 7: the compiler API exists, and every path to it is namespaced `unstable/`'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T01:37:44Z
-updated_at: 2026-09-26T09:18:41Z
+updated_at: 2026-09-27T08:08:36Z
 parent: folio-assistant-1xhc
 ---
 
@@ -85,8 +85,10 @@ with this measurement as their stated reason**, rather than rotting unexplained
 - [x] TS 7's actual export surface measured, not inferred from release notes
 - [x] Every type guard the two consumers need checked for existence — 0 missing
 - [x] The absent primitives named, and the `Project`/`Program` replacement found
-- [ ] The owner decides: rewrite against `unstable/`, or hold at 6 until the
-      API is stable — **it is a risk call about gates, not a feasibility one**
+- [x] The owner decides: rewrite against `unstable/`, or hold at 6 until the
+      API is stable — **it is a risk call about gates, not a feasibility one**.
+      **DECIDED 2026-09-27: hold at 6, with the revisit condition recorded.**
+      See §"The decision, made" at the end.
 - [→] #910 carries a comment pointing here (2026-09-26). **#914 needs none — it
       MERGED on 2026-09-25**, which this bean's plan did not anticipate; see the
       update below
@@ -240,3 +242,62 @@ dropped — not as a preference, but because the fact under it changed.
 The third-consumer section is `main`'s and is left as written. Its argument is the
 one that should reach the owner: **the cost of the rewrite option grows while the
 decision sits open**, so a hold is not the static side of this choice.
+
+
+---
+
+## The decision, made — 2026-09-27
+
+**The owner chose: hold at 6, and record the revisit condition.** Asked with the
+three options this bean had arrived at, and answered directly. Nothing here is an
+agent's reading of a preference.
+
+### Why that option, in the owner's terms
+
+Of the two blockers this bean measured, **only one has a condition for revisiting**,
+and that asymmetry is what the decision turns on:
+
+| blocker | condition for revisiting |
+|---|---|
+| the compiler API lives under `unstable/`, and two of the three consumers run inside `bun run gates` on every push | **none** — upstream may change it in a patch release, and nothing says when it stabilises |
+| `typescript-eslint@8.70.0` declares `typescript: >=4.8.4 <6.1.0` and **hard-throws at module load** on TS 7.0, so `bun run lint` would not run at all | **yes** — upstream's own [typescript-eslint#10940](https://github.com/typescript-eslint/typescript-eslint/issues/10940) tracks TS ≥ 7.1 |
+
+So the hold is not indefinite by default: it ends when `typescript-eslint` ships TS 7
+support, at which point the `unstable/` question is the only one left and can be asked
+on its own.
+
+### What the hold costs, stated because a risk decision reads as free otherwise
+
+**~25 s per typecheck.** `tsc -p tsconfig.json --noEmit`, same config, same tree, both
+binaries run directly: **31.1 s on 6.0.3 against 6.6 s on 7.0.2**, both exit 0 with 0
+diagnostics. TS 7 typechecks this codebase cleanly and ~4.7× faster. That is a real
+price and it is being paid deliberately.
+
+### And the cost of the OTHER option keeps growing
+
+This bean said two consumers; there are **three**. `schemas/kind-validator.ts` arrived
+in `e8917e7763d` five hours after this bean was written, carrying 8 `ts.*` refs and a
+`ts.createSourceFile` call at line 318 — one of the primitives `unstable/` does not
+ship. The rewrite is now **110 `ts.*` references across three files**, and that number
+moves in one direction while the decision waits. Recorded so a later reader does not
+re-derive the rewrite's cost from the two-consumer figure.
+
+### What was NOT done, and why
+
+**#910 is left OPEN with a comment recording this decision**, rather than closed. Two
+reasons: the owner chose the hold and did not ask for the PR to be closed, and this
+repository's standing constraint is that an agent never force-pushes or rebases a
+dependabot branch — a closure is the same class of unasked-for act on somebody else's
+PR. If it should be closed, that is one instruction away.
+
+**No revisit tracker was created.** The condition is recorded here and on #910, which
+is where a reader arrives from. Opening a bean to watch an upstream issue is
+speculative work-planning, and `check before you create` applies as much to a tracker
+as to anything else.
+
+## Summary of Changes
+
+No code changed and no pin moved — the bean's subject was a decision, and it is made.
+`typescript` stays at `^6.0.3`. The three measurements that decided it are above: the
+two blockers with only one revisit condition between them, the ~25 s per typecheck the
+hold costs, and the rewrite's cost growing from two consumers to three.

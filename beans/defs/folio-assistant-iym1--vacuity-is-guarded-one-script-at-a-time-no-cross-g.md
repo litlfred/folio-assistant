@@ -1,11 +1,11 @@
 ---
 # folio-assistant-iym1
 title: 'VACUITY IS GUARDED ONE SCRIPT AT A TIME: no cross-gate reader pins a corpus-walking gate non-empty'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T07:36:35Z
-updated_at: 2026-09-21T07:36:35Z
+updated_at: 2026-09-27T07:52:24Z
 parent: folio-assistant-1xhc
 ---
 
@@ -90,3 +90,5 @@ So the reader needs a declared exemption with a reason — the shape
 design constraint the three candidates above do not yet carry.
 
 Blocked on nothing. Needs the measurement before the implementation.
+
+_2026-09-27T07:52:24Z_ — Claimed by claude/sleepy-babbage-ls90iz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

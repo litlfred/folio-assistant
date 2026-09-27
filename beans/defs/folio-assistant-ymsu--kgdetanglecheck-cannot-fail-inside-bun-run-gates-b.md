@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-27T05:09:31Z
+updated_at: 2026-09-27T05:55:41Z
 parent: folio-assistant-1xhc
 ---
 
@@ -608,6 +608,119 @@ argument above), and the whole `Skill-registration chain, unmasked (hard)` job
 (10s, green).
 
 
+## The declaration gate CANNOT FIRE in CI — which is how `main` landed a gate without one
+
+2026-09-26, PR #1425. A clean instance of this bean's mechanism, and the
+consequence is already visible on `main`.
+
+`check:artefact-verification` exists to catch exactly one thing: a NEW
+generated-artefact check registered with no statement of what verifies it for a
+consumer. It is red right now, naming `translated-links:check`, which `main`
+landed the same day.
+
+**It is red on `main` too** — measured in a clean worktree of `origin/main`, not
+inferred. So `main` shipped a gate without its declaration, and the gate whose
+whole purpose is catching that omission did not stop it.
+
+### Why it could not stop it
+
+Both live in step 44 of the `gates` job, `gates that were registered and never
+run`, which opens `set -e`. The command order inside it:
+
+| position in the step | command |
+|---|---|
+| 3rd | `translation:drift:check` — **RED on `main` by decision** (bean `ngxj`) |
+| … | … |
+| far below | `check:artefact-verification` |
+
+So the step dies at the third command and `check:artefact-verification` is never
+executed in CI, on `main` or on any branch. It is registered, it is wired, and it
+has no reachable verdict — this bean's third state exactly, and `1xhc`'s
+sentence: a gate that does not fire is indistinguishable from one that passed.
+
+### The part that makes this measurable rather than theoretical
+
+`bun run gates` locally reported **3** failures; CI's `Repository gates` reports
+**1**. The difference is not the tree — it is that bun's script runner executes
+every gate while a GitHub step stops at its first failure. So the only instrument
+that saw `main`'s missing declaration was a local full run, and nothing in CI
+will report it until the accepted drift red clears.
+
+That inverts the usual worry on this bean. The familiar hazard is CI being
+LENIENT where local is strict (`bun test` repairing an artefact). Here local is
+strictly more informative than CI, for a structural reason, and an agent that
+trusts CI over its own gate run will conclude the repository is cleaner than it
+is.
+
+### Adds to "Done when"
+
+- [ ] `check:artefact-verification` is reachable — moved ABOVE the accepted drift
+      red, or given its own step. MEASURED AFTER: with drift still red, CI reports
+      the missing-declaration failure by name
+- [ ] the count of gates in step 44 that sit BELOW the drift command is reported
+      somewhere a reader sees. They are all in the same position and none of them
+      can fail today
+
+
+## The blast radius is 109 CHECKS, not 6 steps — my own framing corrected, twice over
+
+I have described this cascade as **45 steps**, then corrected it to **6 steps**, and
+both numbers were answers to the wrong question. Measured 2026-09-26 with the step
+boundaries verified:
+
+| | |
+|---|---|
+| the step | `gates that were registered and never run`, workflow lines **911–1433** |
+| `bun run` invocations inside it | **106** |
+| `translation:drift:check` position | **3rd** |
+| unreachable INSIDE the step, under `set -e` | **103** |
+| whole steps skipped AFTER it | **6** |
+| **checks that cannot run at all** | **109** |
+
+`set -e` is present; there is no `|| true` and no `set +e` anywhere in the step, so
+nothing resets the failure. Controlled for.
+
+### Why my earlier numbers were the wrong unit
+
+45 and 6 both count **STEPS**. A step is not a check: this one step holds 106
+checks. So "the cascade shrank from 45 to 6" was true of steps and badly misleading
+as a statement of how much goes unevaluated — the real figure went from a
+job-sized cascade to a **step-sized one that is larger than the job cascade it
+replaced**, because 103 gates were consolidated into a single `run: |` block.
+
+That is the same error I made on `cell()` the same day (recorded on `li5y`: "one
+instance" was 238). Both times I counted the coarse unit that was easy to see and
+published it as the exposure. **The unit a reader cares about is the CHECK, and it
+is never the unit a workflow makes convenient to count.**
+
+### Two verification notes, because the measurement itself nearly went wrong
+
+**My first slice was wrong and gave the right answer by luck.** I detected the
+step's end with an indentation heuristic that ran to line 1683 instead of 1433,
+swallowing the `rust-wildcard` and `dependency-advisories` steps. It still reported
+106 — because those later steps use raw shell rather than `bun run`, so the
+over-wide slice contained no extra matches. I only noticed because the same scan
+reported `|| true` and `continue-on-error` present, which contradicted the claim I
+was checking. **A count that survives a boundary bug is not a count that was
+measured correctly**, and the thing that exposed it was an incidental flag, not the
+number.
+
+**The figure reached me second-hand first.** Another session's check-in asserted
+106/3rd/103. I re-derived it rather than adopting it, which is what caught the
+boundary bug. The independent agreement is worth more than either measurement
+alone; the adoption would have been worth nothing.
+
+### Done when
+
+- [x] the count of gates below the drift command is measured and recorded —
+      **103 inside the step, 6 steps after, 109 checks total**
+- [ ] `check:artefact-verification` is reachable. Unchanged, and now with a number:
+      it is one of the 103
+- [ ] the 103 are not a single `run: |` block. The remedy a sibling session
+      proposes on `cpss` — split `translation:drift:check` out and make it the LAST
+      step — is recorded here as the candidate, NOT adopted: it restructures gates
+      that are not mine, and it is an owner decision
+
 ## 2026-09-27 — measured on pristine main, and the runner now DETECTS it
 
 `bun run gates` on a pristine `origin/main` worktree at `c6960465301`
@@ -651,3 +764,123 @@ directory named `folio-assistant` (the name matters — see below), symlinked
 `node_modules` confirmed git-ignored first so the `qook` corpus defect could
 not confound it. `git status --porcelain` after the run: 72 paths; after
 `git checkout -- .`: 0.
+
+
+## 2026-09-27 — clause 3's exit code is RIGHT; `check:merged`'s MESSAGE was wrong
+
+Coordination first, because this bean is claimed. `bun run beans:claim
+folio-assistant-ymsu` refused: *ALREADY CLAIMED by
+claude/ymsu-gates-tree-guard*. That session is not reachable from here
+(`ListAgents`: none running). Basis for proceeding on clause 1 anyway, recorded
+rather than assumed: **PR #1363 is MERGED and its own Scope paragraph scopes
+clause 1 OUT** — *"Clause 1 is untouched … This guard makes that defect visible
+and fatal; it does not fix it."* The holder delivered clause 3 and said clause 1
+is not theirs. The owner authorised taking it 2026-09-27.
+
+### A proposal I made and then withdrew — read this before making it again
+
+I proposed making `gates.ts`'s mutation path exit **2** instead of 1, on the
+grounds that verdicts describing a repaired tree are a could-not-determine, and
+that `gates` already reserves 2 for "could not tell".
+
+**That is wrong, and #1363 says why in its own words.** The exit is fatal ON
+PURPOSE, to force clause 1 rather than let a writing gate be tolerated.
+Softening it to a could-not-determine would defeat the guard exactly where it is
+working. Recorded here because the argument for 2 is genuinely tempting — it
+cites this repository's own three-state discipline — and the next agent will
+reach for it.
+
+### What WAS wrong, and is now fixed
+
+`check-merged.ts` branched on `gates.status !== 0` and nothing else, so it
+printed the same thing for both meanings of that exit:
+
+```
+✗ the MERGED tree fails the gates, though this branch may pass alone.
+Merge the base into the branch, regenerate what the failing gates name, ...
+```
+
+Measured on `claude/qook-verify-backwards`: **every gate passed**, one gate
+changed the tree, and that was the message. It names failing gates that do not
+exist and prescribes regenerating nothing.
+
+Fixed by OBSERVATION, not by exit code: `check:merged` owns the merge worktree,
+so it reads porcelain before and after and reports the mutation case in its own
+words, pointing at clause 1. Extracted as `mutatedDuring(before, after)` so it
+is testable.
+
+**Unreadable is not a sighting.** If either reading fails, `mutatedDuring`
+answers `false` — "no mutation observed", not "none happened" — and the caller
+falls through to the ordinary message. That is the safe direction: telling
+somebody to look at their own branch is recoverable, sending them hunting a
+writer that may not exist is not.
+
+Falsified: 6 tests including the anti-vacuity pair; always-`true` fails 4,
+always-`false` fails 2, the real implementation passes 6. The
+disappearing-entry direction (#1363's own near-miss, where a writer restoring a
+correct value makes the entry vanish from porcelain) has its own case.
+
+### Clause 1 — the writer is NOT yet identified, and that is a finding
+
+`bun test` on a clean pristine worktree at `410199a1de2` left it **clean**, and
+`portable-path.test.ts` and `qa-witness.test.ts` each write nothing. Yet inside
+`bun run gates` the guard attributes **72** `content/pipeline/script-sidecars/`
+paths to `bun test`. So the write is conditional on something the gates run sets
+up earlier, not on `bun test` alone — which means clause 1 cannot be fixed by
+reading the test files and needs the gates context reproduced. Not yet done; do
+not assume a single test file is the culprit.
+
+### CORRECTION, same day — `bun test` alone DOES write the 72 paths
+
+The paragraph above says `bun test` on a clean pristine worktree leaves it clean
+and the write must be conditional on gates setup. **False.** I read
+`git status` MID-RUN, before the writing test had executed, and took that as
+clean. Measured to completion on a clean pristine worktree at `410199a1de2`:
+
+```
+bun test rc=0
+72 dirty paths
+ M cat-harness/content/pipeline/script-sidecars/assertions_are_falsifiable.script.json
+```
+
+Clause 1 is reproducible with ONE command and no gates context. That makes it
+easier to fix than I said, not harder.
+
+**A status read taken while the thing is still running is not a measurement of
+the thing.** Same family as the vacuous same-commit comparison recorded on
+`qook` today: both looked like evidence and neither was.
+
+### What changes, and why the obvious fix is ALSO wrong
+
+```diff
+-  "last_run_at": "2026-09-26T19:43:36.482Z",
+-  "last_run_sha": "abee3acee29e15ad7ae540e254fe31f2cf31cc40",
+-  "engine_version": "bun-1.3.14"
++  "last_run_at": "2026-09-27T05:52:05.836Z",
++  "last_run_sha": "410199a1de2ed5725af1705434cecce0007c04e8",
++  "engine_version": "bun-1.3.11"
+```
+
+Per-run provenance — timestamp, HEAD, engine version. Unstable by construction.
+
+I first read that as `do70`'s shape (a recorded value that moves on every commit,
+which `AGENTS.md` rules against: *"counts are printed rather than recorded"*) and
+concluded the fields should come out. **Withdrawn.** They belong to
+`block-qa-schema`, a PUBLISHED dual-language contract with a `dist/` and a
+Pydantic parity half; removing fields there breaks two languages. The fields
+legitimately record a real sweep.
+
+So #1363's prescription stands and my reframe was half-true: the defect is that
+a TEST performs a real sweep into the tree, not that the fields exist.
+
+### Narrowing, for whoever takes it next
+
+| | dirty |
+|---|---|
+| full `bun test` | **72** |
+| `bun test cat-harness/content/pipeline/` (holds both the sidecars and `script-sweep.ts`) | **0** |
+| `qa-witness.test.ts`, the only test importing `script-sweep` | **0** |
+
+The writer is OUTSIDE `content/pipeline/` and fires only in the full suite. Not
+identified. Do not assume it is one of the three above — each was measured to
+write nothing.

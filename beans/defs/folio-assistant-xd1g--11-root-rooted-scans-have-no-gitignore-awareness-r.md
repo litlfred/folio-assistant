@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xd1g
 title: 11 root-rooted scans have no gitignore awareness — ramz's sibling audit, answered
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-26T11:19:41Z
+updated_at: 2026-09-27T07:09:15Z
 parent: folio-assistant-ahvw
 ---
 
@@ -290,3 +290,211 @@ The duplicate fixes converged too — that PR called `gitCorpus` and REFUSED
 here only because the choice is real: a fallback that is documented and reached
 only when git cannot answer is not the silent one that caused this.
 
+_2026-09-27T07:09:15Z_ — Claimed by claude/kg-detangle-git-corpus — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## `kg-audit.ts` IS one of the disk-walking scanners — measured, with the files named
+
+2026-09-26, found while diagnosing a CI failure on PR #1425. Recorded with an
+important caveat attached, below, because the obvious conclusion turned out to be
+wrong.
+
+`kg-audit.ts` builds its page corpus with a bare `readdirSync` walk that excludes
+only three names — `_site`, `node_modules`, `vendor`:
+
+    if (e.name.startsWith("_site") || e.name === "node_modules" || e.name === "vendor") continue;
+
+**A name list cannot be complete, and this one is not.** Measured in this
+container against `git ls-files --others --ignored --exclude-standard`: SIX
+gitignored `.md` / `.html` files exist here that a fresh checkout does not have,
+and not one of them matches an excluded name —
+
+    _kg/cat-harness/index.html
+    _kg/fixtures/cat-harness/index.html
+    _kg/fixtures/folio-assistant/index.html
+    _kg/folio-assistant-i18n-fixture/index.html
+    _kg/folio-assistant/index.html
+    cat-harness/schemas/block-qa-schema/.pytest_cache/README.md
+
+All six are read and concatenated into `pages`, which every criterion asking
+"is this mentioned on a page?" is evaluated against. So that corpus is
+environment-dependent, which is this bean's subject exactly.
+
+There is a second bare walk in the same file, `skillFiles()`, not yet measured.
+
+### The caveat, and it is the part that matters
+
+**This is NOT established as the cause of the CI failure I was chasing**, and I
+nearly recorded it as one. The mechanism fit perfectly — red in CI, green in this
+container, a disk walk reading six files CI cannot see. I wrote the `gitCorpus`
+fix and ran the writer, and **not one sidecar changed.** The only diff was
+`kg-qa.manifest.json`'s `script_hash`, which moved because I had edited the
+script.
+
+So the six files demonstrably affect nothing in today's corpus. What the fix buys
+is that they CANNOT start affecting it — a latent environment dependence rather
+than a live one, which is worth fixing and is not worth claiming as a diagnosis.
+
+Two reproductions were needed to get to that: this container clean, and a
+pristine `git clone` of the exact commit with `bun install --frozen-lockfile` and
+nothing else. Both exit 0. That second one is the measurement this bean should
+insist on generally — "green on my machine" is worth nothing when the whole
+subject is the machine.
+
+### The fix, written and held back
+
+`gitCorpus(repoRoot, ["*.md", "*.html"])`, with a predicate that drops a file
+only when it is under the repository AND git does not list it — so a layer in a
+SIBLING checkout (`docsLayers` can return one) is kept rather than silently
+dropped, and `undefined` from `gitCorpus` keeps everything, because git being
+unable to answer is not an empty answer.
+
+Held out of PR #1425 rather than tacked onto it: it belongs to this bean on its
+own merits, not to that PR on a coincidence.
+
+### Adds to "Done when"
+
+- [x] `kg-audit.ts` identified as a disk-walking scanner, with the six files it
+      wrongly reads NAMED rather than described
+- [ ] the `gitCorpus` fix for it lands, on its own change. MEASURED AFTER: the
+      six files are present and no sidecar differs from a pristine clone's
+- [ ] `skillFiles()` in the same file — the second bare walk, not yet measured
+
+
+## `kg-audit`'s page corpus now asks git — and the OTHER walk is measured CLEAN rather than fixed
+
+2026-09-26. The held fix landed, with the two things it was missing: a home where
+it can be tested, and a test that can fail.
+
+### Fixed: the page-corpus walk
+
+`corpusPredicate` now lives in `schemas/git-corpus.ts` beside `gitCorpus`, and
+`kg-audit.ts` imports it. Four states kept apart, each with a test:
+
+| case | answer | why |
+|---|---|---|
+| git listed it (tracked, or untracked-and-not-ignored) | in | a file a contributor just wrote is part of the corpus; `--cached` alone would make the audit disagree with itself between `git add` and `git commit` |
+| under the repo, git did not list it | **out** | gitignored — the defect |
+| not under the repo | in | `docsLayers` can return a SIBLING checkout, which cannot be judged by this corpus; dropping it would be a clean run over unread content (`dh4f`) |
+| git could not answer | in, everything | an unanswerable question is not an empty answer |
+
+**Mutation-tested by hand**, four mutations, each red on the test that names it:
+`undefined` read as an empty corpus; outside-the-repo dropped; the trailing
+separator removed from the prefix test (so `<root>-other/…` reads as inside);
+and the gitignored case admitted, i.e. the defect restored.
+
+### NOT fixed, because it has no measured exposure: `skillFiles()`
+
+The second bare walk. Measured against
+`git ls-files --others --ignored --exclude-standard` over the real kg roots:
+
+    cat-harness/skills   ignored=0  untracked=0
+    bootstrap/skills     ignored=0  untracked=0
+
+The 17 ignored `.md` under a `skills/` path in this container are all inside
+`node_modules/playwright/.../skills/playwright-cli/`, which is **not** under
+`ownKgRoots(root)`, so the walk never reaches them. It also walks DECLARED roots
+rather than every docs layer, and filters through `isSkillMd`.
+
+So it is latently unguarded and currently clean. **Left alone deliberately: a fix
+with no measured effect is a fix no test can demonstrate**, and shipping one into a
+hot path would be the same over-claim this bean exists to catch, pointed inward.
+The one-line predicate is now exported and applies the day it matters.
+
+### A finding that belongs to `9v4m`, found by trying to test this
+
+`kg-audit.ts` has **no `import.meta.main` guard**. Its body is top-level and ends
+`process.exit(0)`, so *importing* it runs the entire audit and then kills the
+process — which is why the first version of this test produced audit output and no
+test summary, and why the predicate had to move rather than be exported in place.
+
+**That is the mechanism for `9v4m`'s `declared-directory-resolves` failure**, which
+I had recorded as "a sibling in the same process" and left without a named cause.
+The test spawns an import of every module that resolves a declared directory;
+`kg-audit.ts` is one, so the test ITSELF runs the audit and rewrites sidecars. On a
+clean tree those writes are no-ops and `git status` is unchanged, so it passes. On a
+dirty tree they regenerate against uncommitted sources and produce real
+modifications — the 13 it reported. **The probe causes the writes it detects.**
+Cross-referenced on `9v4m`; the remedy is a guard on `kg-audit.ts`, which is a
+structural change to a 2000-line top-level script and is not taken here.
+
+### Done when
+
+- [x] `kg-audit.ts`'s page corpus asks git — landed, tested, mutation-tested
+- [x] `skillFiles()` measured — 0 ignored, 0 untracked under the real kg roots;
+      not fixed, and the reason recorded
+- [ ] an `import.meta.main` guard on `kg-audit.ts`. MEASURED AFTER: importing it
+      writes nothing and does not exit the importing process. Owner's call — it
+      restructures a hot script
+
+
+## The remaining scanners MEASURED — one live defect in the whole set, and it was already fixed
+
+2026-09-27, on the owner's instruction to measure the rest rather than trust the
+count. The result changes how this bean should be read.
+
+### The enumeration, with its basis stated
+
+`git ls-files '*.ts'`, excluding tests:
+
+| | |
+|---|---|
+| non-test `.ts` calling `readdirSync` | **227** |
+| already asking git (`gitCorpus`) | 5 — `check-context-emission`, `check-kind-validators`, `gen-uml-overview`, `kg-audit`, `kg-detangle` |
+| unguarded | **222** |
+| of those, RECURSIVE **and** seeded from a root identifier | **2** |
+
+222 is not 222 defects. A `readdirSync` over one declared directory cannot read
+gitignored content unless gitignored content is there, and most of these scan a
+fixture, a temp directory, or a single declared subdirectory. **The dangerous
+shape is a recursive walk seeded from a repository root**, which is what this
+bean's "root-rooted" meant, and that narrowing is a STATIC approximation — it
+requires the seed to be a root identifier at the call site, so it can miss a
+scanner that computes its root indirectly. Stated rather than presented as
+exhaustive.
+
+### The two, and their exposure measured rather than reasoned
+
+**`content/pipeline/orphan-verdict-sweep.ts`** — walks
+`join(repoRoot, BLOCK_QA_RESULTS_DIR)` = `test/results/block-qa`.
+Ignored files under `cat-harness/test/results`: **0**. Untracked: 0. No exposure.
+
+**`scripts/external-schemas.ts`** — walks `directoriesForGraph(root, "code")` and
+`directoriesForGraph(root, "schemas")`, and `cat-harness/schemas` holds **2743
+gitignored files** in this container: the same `block-qa-schema/node_modules` that
+took `kg-detangle` from 227 nodes to 1441. So the walk genuinely reads files a
+fresh checkout does not have — **1004 of them are `.ts`**, which is the extension
+it keeps.
+
+And then the decisive measurement: of those 1004, **0 contain `@context`**, which
+is the filter the extraction applies before taking any URL. So the effect on the
+output today is **nil**. Latent, not live — the same verdict as `skillFiles()`.
+
+### What this means for the bean, and it is a correction of emphasis
+
+Across every scanner examined in this bean's lifetime, **exactly one had a live
+effect: `kg-detangle`**, and it is fixed. `kg-audit` was fixed today and its
+exposure was latent (6 files read, 0 sidecars changed). `skillFiles()` and both
+scanners above are latent with 0 live effect.
+
+So "11 root-rooted scans have no gitignore awareness" is true as stated and
+**overstates the live risk**, because it counts a shape rather than an effect. The
+distinction that matters is LIVE versus LATENT, and it can only be settled per
+scanner by asking what its filter admits — not by counting walks.
+
+A sweep of all 222, or even of the 2, would therefore be unfalsifiable work: no
+test could show it fixing anything. What is worth building instead is a DETECTOR —
+does a scanner's committed output change when gitignored content is present? That
+is the question every one of these measurements had to answer by hand.
+
+### Done when
+
+- [x] the remaining scanners enumerated and measured, with the enumeration's
+      basis stated and its approximation admitted
+- [x] `external-schemas.ts` — 1004 ignored `.ts` read, 0 matching the `@context`
+      filter, so 0 live effect
+- [x] `orphan-verdict-sweep.ts` — 0 ignored files under its scan root
+- [ ] a detector, not a sweep: for each generated artefact, does its writer's
+      output change when gitignored content exists beneath its scan root?
+      MEASURED AFTER: it reports `kg-detangle`'s pre-fix state as live and the
+      latent ones as latent, distinguishing them WITHOUT a hand measurement

@@ -56,6 +56,8 @@ import { join, resolve } from "node:path";
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { parse } from "yaml";
 
+import { distortions } from "./check-environment.ts";
+
 import {
   diffReadings,
   formatMutations,
@@ -805,6 +807,18 @@ export interface ScriptExemption {
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
   {
+    script: "check:environment",
+    kind: "report",
+    reason:
+      "A PRECONDITION, not a gate — bean `3vc1`. `gates.ts` calls `distortions()` directly before running anything and refuses the whole set on a finding, so the script exists for a contributor to ask the same question standalone. It is deliberately in NO workflow: CI installs only from the repository root, so a nested install cannot arise there and the step would be a gate that can never fire — which reads as protection and is not, the same dead-guard defect this file names for `build-glossary`. Its findings exit 2, never 1: a distorted environment is `could not determine` and nothing it reports is a defect in this repository's source (`nytj`). Measured: a nested `bun install` under `adapters/mcp-server` takes root `tsc` from 0 errors to 12 across 6 files with no source change, while CI on the identical commit is green",
+  },
+  {
+    script: "check:bun-runtime",
+    kind: "report",
+    reason:
+      "CI CANNOT OBTAIN A MISMATCH \u2014 the `ingest:ig-menu:check` shape, one input over. It compares the Bun RUNNING in this process against `.bun-version`, and CI installs `.bun-version` at all 22 `setup-bun` sites (that is `check:bun-pin`, which IS gated), so on a runner `running === pinned` by construction. Wired as a gate it would exercise nothing on every run, and its one interesting state would be unreachable from the only place it was ever checked. Its subject is the ENVIRONMENT rather than the corpus, so no commit can change the answer either: red here would report the machine while every reviewer read it as a verdict on the diff, which is the second always-red signal #1442 removed the first one for. **It is not unrun.** `session-start-coord-sweep.sh` runs it with `--markdown` on every session start. What it reports there changed once already: it was built to warn that a mismatched bun rewrites 72 of 86 sidecars on every sweep, and #1452 removed `engine_version` from `saveQaScriptSidecar`'s write-skip comparison, so nothing is rewritten and THAT CLAIM IS RETRACTED (measured: 0 rewritten where this container had produced 72). What it says now is that the agent is not running the code CI will judge its push with, and that a checker changed here stamps its sidecar with the older local engine \u2014 `rmcf`'s downgrade concern, which needs a real content change and is no longer an every-run event. Built so a blind run cannot read as clean: no pin, an unparseable pin or no Bun to ask all exit **2** as `cannot-tell`, never 0. Run it by hand, or read it at session start. Bean `3ozg`",
+  },
+  {
     script: "check:quiet-claims",
     kind: "report",
     reason:
@@ -1132,6 +1146,45 @@ if (import.meta.main) {
     gates = loadGates(ROOT, { all });
   } catch (e) {
     for (const line of undeterminedReport(e, ROOT)) console.error(line);
+    process.exit(2);
+  }
+
+  // ── Is the ENVIRONMENT fit to be read from? (bean `3vc1`) ──────────────
+  //
+  // Asked BEFORE any gate runs, and it refuses the whole set rather than
+  // reddening one, because 168 results computed against a filesystem that
+  // disagrees with the repository are worse than no results: they look like
+  // evidence. Measured 2026-09-26 — a nested `bun install` under
+  // `adapters/mcp-server` takes root `tsc --noEmit` from 0 errors to 12 across
+  // 6 files with NO source change, and CI on the identical commit is green.
+  //
+  // Exit 2, never 1, and that distinction is the whole point (`nytj`): nothing
+  // it reports is a finding about this repository's source. The third state has
+  // to be reachable from here or the reading is indistinguishable from a real
+  // red — which is `1xhc`'s subject, and the reason this refusal is not a
+  // warning that scrolls past.
+  //
+  // It is a PRECONDITION rather than one of the gates because CI installs only
+  // from the repository root, so the condition cannot arise there: a workflow
+  // step would be a gate that can never fire, which reads as protection and is
+  // not. `SCRIPT_EXEMPTIONS` carries that reason for `check:unrun-scripts`.
+  const distorted = distortions(ROOT);
+  if (distorted.length > 0) {
+    console.error("REFUSING TO RUN — this checkout's environment is distorted.\n");
+    for (const d of distorted) {
+      console.error(`  ✗ ${d.path}`);
+      console.error(`      ${d.effect}`);
+      console.error(`      measured on bean \`${d.bean}\``);
+    }
+    console.error(
+      "\nNo gate ran. A gate set read now would report this repository's source\n" +
+        "incorrectly, and a wrong red costs more than a missing one — it sends the\n" +
+        "next hour to the wrong file. Move the residue aside and re-run.\n" +
+        "\nFor a nested install this is a TRAP and not a mistake: regenerating a\n" +
+        "nested lockfile REQUIRES `bun install` in that directory, so doing the\n" +
+        "correct thing is what created this. `bun run check:environment` alone\n" +
+        "reports the same thing without running any gate.",
+    );
     process.exit(2);
   }
 

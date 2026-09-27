@@ -184,6 +184,15 @@ export const RULES: Rule[] = [
       "scripts/block-screenshots.ts",    // pictures of changed visual blocks, compared in Chromium (bean `0rxe`)
       "scripts/publish-main-site.ts",    // a folio's main site at the publish root: the before side (bean `5uuf`)
       "scripts/repo-partition.ts",           // this tool; platform meta
+      // HARNESS, by the same test as `check-ci-health.ts` above: its subject is
+      // this checkout's own ENVIRONMENT — whether a nested `node_modules` or a
+      // symlinked root makes a tool answer a question about the repository from
+      // something the repository does not contain (bean `3vc1`). It reads no
+      // folio material and no content schema; it imports `node:fs` and
+      // `node:path` and nothing else, so it cannot drag a folio in. `gates.ts`
+      // is its only caller and is itself harness, so the edge runs
+      // harness -> harness.
+      "scripts/check-environment.ts",
       // The prose half of the same arrow this tool measures for imports, and
       // harness for the same reason `repo-partition.ts` is: its subject is
       // which INSTANCE a file belongs to and what that instance declares it
@@ -1584,10 +1593,41 @@ export const RULES: Rule[] = [
       // It reads `buildTranslationIndex`/`siteRoot` from
       // `content/pipeline/translation-index.ts` and `catalogueFor`/`fileForUrl`
       // from `content/pipeline/translation-drift.ts`, both core by the
-      // `content/pipeline/` prefix. Calling it harness would buy a
-      // wrong-direction edge for nothing — the mistake this block already
-      // records against `check-context-emission.ts`'s sibling (bean `3sm2`).
+      // `content/pipeline/` prefix.
+      //
+      // **Its second clause is RETRACTED, 2026-09-27.** It read "calling it harness
+      // would buy a wrong-direction edge for nothing". Measured: reclassifying such
+      // a script to `harness` leaves `Wrong-direction edges: 0`, because this file
+      // has a `#!` line and `import.meta.main`, so `isCompositionRoot` holds and the
+      // direction rule exempts its edges by design. The CONCLUSION stands and the
+      // subject argument above it is untouched — only the layering reason was
+      // wrong, and a right answer resting on a wrong reason is one the next entry
+      // copies, which is exactly what happened to the `check-bun-runtime.ts` entry
+      // above before it was falsified.
       "scripts/check-translation-catalogue.ts",
+      // Whether the Bun RUNNING HERE is the one `.bun-version` pins, and how many
+      // committed script sidecars a sweep in this container will therefore rewrite
+      // (bean `3ozg`). CORE ON SUBJECT ALONE: what it measures and reports is the
+      // sidecar corpus under `content/pipeline/script-sidecars/`, core by the
+      // `content/pipeline/` prefix, and it reads `SCRIPT_SIDECAR_DIR` from
+      // `content/pipeline/qa-utils.ts` to find it.
+      //
+      // The tension is worth naming rather than smoothing over: its REASON is the
+      // harness's runtime, which is why `check-bun-pin.ts` is harness. Its SUBJECT
+      // is what it counts, and that is core's. Subject decides.
+      //
+      // **AND THE LAYERING ARGUMENT DOES NOT DECIDE IT — measured, because a first
+      // draft of this comment claimed it did.** That draft read "calling it harness
+      // would buy a wrong-direction edge for nothing", copied from the
+      // `check-translation-catalogue.ts` entry below. Falsified by reclassifying
+      // this module to `harness` and re-running: `Wrong-direction edges: 0` and
+      // rc=0, exactly as under `core`. The reason is `isCompositionRoot` — true for
+      // any source with a `#!` line or `import.meta.main` — whose edges the
+      // direction rule exempts by design. Every executable `scripts/check-*.ts`
+      // here qualifies, this one and `check-translation-catalogue.ts` included, so
+      // for a script in this block the direction rule is SILENT and cannot be
+      // evidence for either repo. Subject is the only criterion that discriminates.
+      "scripts/check-bun-runtime.ts",
       // Its other half: the rules are cited, AND the instruction body beside
       // them does not restate them uncited (bean `n8br`). Core for the same
       // reason — its subject is a voice, which is content an instance derived,

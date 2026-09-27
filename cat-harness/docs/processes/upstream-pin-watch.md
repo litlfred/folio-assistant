@@ -11,7 +11,13 @@ nav_exclude: true
 
 `Process_UpstreamPinWatch` · strict (defaulted) · 6 step(s)
 
-THE WATCHER'S DISPATCH POINT, drawn rather than described. Bean `29ij` records the rule this follows: a watcher fires on specific events, and those events are process events — they belong in a diagram, not in prose that no tool reads. Everything up to the tracking issue is MECHANICAL and sits in a system lane: read the registry, list upstream's releases, compare, and maintain ONE issue. No step here exercises judgement, which is what makes `build-pipeline` the correct lane rather than a convenient one. Three outcomes and the middle one is the point. Current closes the issue; behind opens or edits it; COULD NOT TELL leaves the issue exactly as it is and fails the job, because a watchdog that has gone blind must not read as good news — `check-ci-health.ts`'s rule, and the reason this repository has a watchdog at all. The adoption itself is a call activity, so the judgement half lives in its own reusable process and this one stays free of it.
+THE WATCHER'S DISPATCH POINT, drawn rather than described. Bean `29ij` records the rule this follows: a watcher fires on specific events, and those events are process events — they belong in a diagram, not in prose that no tool reads.
+
+Everything up to the tracking issue is MECHANICAL and sits in a system lane: read the registry, list upstream's releases, compare, and maintain ONE issue. No step here exercises judgement, which is what makes `build-pipeline` the correct lane rather than a convenient one.
+
+Three outcomes and the middle one is the point. Current closes the issue; behind opens or edits it; COULD NOT TELL leaves the issue exactly as it is and fails the job, because a watchdog that has gone blind must not read as good news — `check-ci-health.ts`'s rule, and the reason this repository has a watchdog at all.
+
+The adoption itself is a call activity, so the judgement half lives in its own reusable process and this one stays free of it.
 
 <img src="../assets/img/workflows/upstream-pin-watch.svg" alt="BPMN diagram: Watching a pinned upstream dependency" style="max-width:100%">
 

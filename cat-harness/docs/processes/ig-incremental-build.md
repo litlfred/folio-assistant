@@ -11,7 +11,14 @@ nav_exclude: true
 
 `Process_IgIncremental` · advisory · 19 step(s)
 
-One change — a PR push or a push to main — through the incremental IG build of docs/proposals/ig-incremental-build.md: restore the derived state, compute the change's dependency cone, compile and validate only the cone against the warm validator, re-render the cone's records, rebuild the meta-index, assemble the site, gate on QA, then deploy — and, on main or a release only, seed the cache from the green build. A cache miss or a moved toolchain falls back to today's full build; an environment error stops the run and logs why. Advisory, like the other content-type pipelines: the package that owns the content owns what adequate means.
+One change — a PR push or a push to main — through the incremental IG build
+of docs/proposals/ig-incremental-build.md: restore the derived state, compute
+the change's dependency cone, compile and validate only the cone against the
+warm validator, re-render the cone's records, rebuild the meta-index, assemble
+the site, gate on QA, then deploy — and, on main or a release only, seed the
+cache from the green build. A cache miss or a moved toolchain falls back to
+today's full build; an environment error stops the run and logs why. Advisory, like the other content-type pipelines: the
+package that owns the content owns what adequate means.
 
 <img src="../assets/img/workflows/ig-incremental-build.svg" alt="BPMN diagram: Incremental IG build" style="max-width:100%">
 

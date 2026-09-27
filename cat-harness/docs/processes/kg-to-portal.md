@@ -11,7 +11,17 @@ nav_exclude: true
 
 `Process_KgToPortal` · advisory · 10 step(s)
 
-folio-assistant — KG to public portal. Six stages: select, serialize, package, sign, distribute, verify. Three decisions belong to the DEPLOYMENT and are drawn as gateways rather than as steps — the ingestion transport, the versioned store, and the signing scheme. A pipeline that picks one of those is asserting a decision nobody made. A CDN is a LAYER, not a publication host. PUBLICATION_HOSTS answers "what serves the rendering"; a cache answers "what stands between the server and the reader", and the canonical URL stays the origin's either way.
+folio-assistant — KG to public portal.
+
+Six stages: select, serialize, package, sign, distribute, verify. Three
+decisions belong to the DEPLOYMENT and are drawn as gateways rather than
+as steps — the ingestion transport, the versioned store, and the signing
+scheme. A pipeline that picks one of those is asserting a decision nobody
+made.
+
+A CDN is a LAYER, not a publication host. PUBLICATION_HOSTS answers "what
+serves the rendering"; a cache answers "what stands between the server and
+the reader", and the canonical URL stays the origin's either way.
 
 <img src="../assets/img/workflows/kg-to-portal.svg" alt="BPMN diagram: KG to public portal" style="max-width:100%">
 
