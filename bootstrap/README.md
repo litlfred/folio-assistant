@@ -36,9 +36,9 @@ with a Knowledge Graph. A Harness is a Knowledge Graph too, declared the same
 way. This directory is the first Harness, `bootstrap`, declared by
 [`bootstrap.json`](bootstrap.json).
 
-**Setting up a repository means making it one particular Harness.** A person
-chooses which one, and the choice is hard to undo. Everything added to the
-repository afterwards is built on it.
+**Setting up a repository means instantiating one or more different kinds of
+Knowledge Graph Harness on the data in the repository.** A person chooses which
+ones, and the choice is hard to undo.
 
 ---
 
@@ -149,30 +149,60 @@ a step can name it: Functional Requirement 1 is FR-1.
 
 ## Every file here
 
-| file | kind | what it is |
+Grouped by directory. "Used in" names the step that reads the file; a file no
+step reads says so.
+
+**At the top**
+
+| file | what it is | used in |
 |---|---|---|
-| [`README.md`](README.md) | text | this page |
-| [`AGENTS.md`](AGENTS.md) | text | sends an agent that reads `AGENTS.md` first to this page |
-| [`bootstrap.json`](bootstrap.json) | declaration | this Harness's declaration: its Subgraphs and its files |
-| [`schemas/README.md`](schemas/README.md) | text | every schema here, drawn as boxes, and every term's definition |
-| [`schemas/graph.schema.json`](schemas/graph.schema.json) | schema | the shape of a declaration, and the definition of every term on this page |
-| [`schemas/discussion.input.schema.json`](schemas/discussion.input.schema.json) | schema | what you know before asking the Requestor |
-| [`schemas/discussion.output.schema.json`](schemas/discussion.output.schema.json) | schema | the Requestor's answer; a document matching it completes step 2 |
-| [`schemas/requirement.schema.json`](schemas/requirement.schema.json) | schema | the shape of a Requirement: statements made with SHALL, SHOULD or MAY |
-| [`schemas/model-registry.schema.json`](schemas/model-registry.schema.json) | schema | the shape of `models/models.json` |
-| [`scenarios/roles.json`](scenarios/roles.json) | data | the four Roles |
-| [`skills/bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md) | Skill | how to open anything here |
-| [`skills/confirm-harness.md`](skills/confirm-harness.md) | Skill | what to ask the Requestor |
-| [`skills/discussion.md`](skills/discussion.md) | Skill | how to ask |
-| [`skills/log-message.md`](skills/log-message.md) | Skill | how to record what you are doing |
-| [`skills/root-readme.md`](skills/root-readme.md) | Skill | how to write the root README |
-| [`skills/bootstrap-graph-emission.md`](skills/bootstrap-graph-emission.md) | Skill | writing this Harness's own Knowledge Graph as a data file |
-| [`skills/bootstrap-graph-publication.md`](skills/bootstrap-graph-publication.md) | Skill | publishing that file |
-| [`skills/package-manifest.json`](skills/package-manifest.json) | data | the list of Skills |
-| [`processes/initialize-harness.bpmn`](processes/initialize-harness.bpmn) | diagram | the steps above |
-| [`processes/discussion.bpmn`](processes/discussion.bpmn) | diagram | asking the Requestor (step 2) |
-| [`processes/log-message.bpmn`](processes/log-message.bpmn) | diagram | recording what you are doing, and any failure |
-| [`processes/ns.jsonld`](processes/ns.jsonld) | data | the elements the diagrams add (`skill`, `role`, `precondition`), written `bootstrap.processes:` |
-| [`models/models.json`](models/models.json) | data | which languages each model is good at, and whether a person checked; empty until one does |
-| [`glossary/glossary-ledger.json`](glossary/glossary-ledger.json) | data | every term the glossary has held, with when it first appeared and when it was retired |
-| [`test/results/`](test/results/) | results | what auditing this Harness found, one file per Skill, Process and Role |
+| [`README.md`](README.md) | this page | start here |
+| [`AGENTS.md`](AGENTS.md) | points an agent that opens `AGENTS.md` first to this page | start here |
+| [`bootstrap.json`](bootstrap.json) | this Harness's declaration: its Subgraphs and its files | step 1 |
+
+**`schemas/`**: the shapes of the JSON files
+
+| file | what it is | used in |
+|---|---|---|
+| [`schemas/README.md`](schemas/README.md) | every schema here drawn as boxes, and every term's definition | every step |
+| [`schemas/graph.schema.json`](schemas/graph.schema.json) | the shape of a declaration, and the definition of every term on this page | step 1 |
+| [`schemas/discussion.input.schema.json`](schemas/discussion.input.schema.json) | what you know before asking the Requestor | step 2 |
+| [`schemas/discussion.output.schema.json`](schemas/discussion.output.schema.json) | the Requestor's answer; a document matching it completes step 2 | step 2 |
+| [`schemas/requirement.schema.json`](schemas/requirement.schema.json) | the shape of a Requirement: statements made with SHALL, SHOULD, MAY or SHALL NOT | no step |
+| [`schemas/model-registry.schema.json`](schemas/model-registry.schema.json) | the shape of `models/models.json` | no step |
+
+**`processes/`**: the diagrams
+
+| file | what it is | used in |
+|---|---|---|
+| [`processes/initialize-harness.bpmn`](processes/initialize-harness.bpmn) | the steps on this page, drawn | every step |
+| [`processes/discussion.bpmn`](processes/discussion.bpmn) | asking the Requestor | step 2 |
+| [`processes/log-message.bpmn`](processes/log-message.bpmn) | recording what you are doing, and any failure | step 4, and on failure |
+| [`processes/ns.jsonld`](processes/ns.jsonld) | the elements the diagrams add (`skill`, `role`, `precondition`), written `bootstrap.processes:` | reading any diagram |
+
+**`scenarios/`**: who takes part
+
+| file | what it is | used in |
+|---|---|---|
+| [`scenarios/roles.json`](scenarios/roles.json) | the four Roles | every step |
+
+**`skills/`**: instructions for one step each
+
+| file | what it is | used in |
+|---|---|---|
+| [`skills/bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md) | how to open anything here | step 1 |
+| [`skills/confirm-harness.md`](skills/confirm-harness.md) | what to ask the Requestor | step 2 |
+| [`skills/discussion.md`](skills/discussion.md) | how to ask | step 2 |
+| [`skills/log-message.md`](skills/log-message.md) | how to record what you are doing | step 4, and on failure |
+| [`skills/root-readme.md`](skills/root-readme.md) | how to write the root README | step 6 |
+| [`skills/bootstrap-graph-emission.md`](skills/bootstrap-graph-emission.md) | what this Harness's Knowledge Graph looks like as one data file | no step |
+| [`skills/bootstrap-graph-publication.md`](skills/bootstrap-graph-publication.md) | where that file is published | no step |
+| [`skills/package-manifest.json`](skills/package-manifest.json) | the list of Skills | no step |
+
+**Other data**
+
+| file | what it is | used in |
+|---|---|---|
+| [`models/models.json`](models/models.json) | which languages each model is good at, and whether a person checked; empty until one does | no step |
+| [`glossary/glossary-ledger.json`](glossary/glossary-ledger.json) | every term the glossary has held, with when it first appeared and when it was retired | no step |
+| [`test/results/`](test/results/) | what auditing this Harness found, one file per Skill, Process and Role | no step |
