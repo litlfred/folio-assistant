@@ -653,6 +653,48 @@ declares nothing it does not have. A `library` entry appears in `who-iris`'s
 declaration only when the corpus moves there, because a declared-but-absent
 directory makes every consumer scan nothing and report a clean run over it.
 
+## Authoring an entry — the checklist
+
+The rules are argued elsewhere in this skill and its neighbours; this is the
+list to run down when you add or edit a `directories[]` entry, with where each
+one is argued.
+
+1. **`id`, `path`, `graphKinds`** — required. Refer to the entry by `id`
+   everywhere else; **ids are stable, paths are not** (§"Declare what exists",
+   §"Inheritance"). Pick each kind by what a process does with it
+   ([`content-context-and-state-graphs`](content-context-and-state-graphs.md)).
+2. **`title`** — a short noun phrase a reader would put on a tab. It is the
+   directory README's heading; absent, the heading falls back to the id and
+   `subgraph-readmes` records a `no-title` finding.
+3. **`description`** — one or two sentences **for a reader**: what the
+   directory holds and what it is for, **60 words at most**
+   (`DESCRIPTION_WORDS`, finding `long-description`). It is printed under the
+   README heading. History, rulings, measurements and argument go in a
+   `_description_comment` on the same entry (the `_<field>_comment` convention
+   the entries already use) — `_` keys are annotations every loader drops
+   (§"Node schemas, one per `$schema` family").
+4. **Declare only what exists**, or say why not with `absent: { reason }`.
+5. **`coverage`** — the `skill` that governs it, the `docs` that say what it is
+   for, the `visualiser` that renders it; an opt-out carries its reason
+   (`SubgraphCoverageSchema`). Without a skill the directory is unreachable
+   by an agent even where a person can read it.
+6. **The files inside declare what they are** — front matter, a `$schema`, a
+   leading comment — never an extension or a location
+   (§"A sub-sub-graph", §"Every other marker"). The README's "what it is"
+   column reads exactly that, so a file that says nothing shows as a gap.
+7. **Generated or authored — say which, in the file.** A generated file
+   carries the markers of the region it owns
+   ([`readme-sections`](readme-sections.md)) or a header naming the command
+   that wrote it, is never hand-edited, and has a `--check` twin in CI.
+8. **A missing fact is a QA finding, never a blank or a guess** — the three
+   states of §"Three states, as everywhere else here". Record it in a
+   committed sidecar under `test/results/`; do not fill it with a plausible
+   default.
+9. **Then regenerate**: `bun run readme:subgraphs` renders the directory's
+   README from this entry ([`liquid-templates`](liquid-templates.md)), and
+   `bun run kg:export` publishes the entry as a Directory node
+   ([`kg-export`](kg-export.md)).
+
 ## Naming — a self-identifying declaration, stub-named artefacts (STRICT)
 
 The declaration carries three publication fields beside `name`:

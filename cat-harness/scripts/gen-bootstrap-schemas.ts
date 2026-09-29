@@ -300,9 +300,26 @@ outputs.push({
 let stale = 0;
 let wrote = 0;
 
+/**
+ * The drawn page shares its file with the directory README `subgraph-readmes`
+ * writes (`schemas/README.md` IS that directory's README). This generator owns
+ * everything but the `kg:subgraph` region, which it carries over unchanged:
+ * two generators, one file, neither overwriting the other.
+ */
+const SUBGRAPH_BEGIN = "<!-- kg:subgraph:begin -->";
+const SUBGRAPH_END = "<!-- kg:subgraph:end -->";
+function keepSubgraphRegion(file: string, text: string): string {
+  if (!file.endsWith("README.md")) return text;
+  const prev = existsSync(join(BOOTSTRAP, file)) ? readFileSync(join(BOOTSTRAP, file), "utf8") : "";
+  const i = prev.indexOf(SUBGRAPH_BEGIN);
+  const j = prev.indexOf(SUBGRAPH_END);
+  const region = i !== -1 && j > i ? prev.slice(i, j + SUBGRAPH_END.length) : `${SUBGRAPH_BEGIN}\n${SUBGRAPH_END}`;
+  return `${region}\n\n${text}`;
+}
+
 for (const t of outputs) {
   const path = join(BOOTSTRAP, t.file);
-  const next = t.text;
+  const next = keepSubgraphRegion(t.file, t.text);
   const prev = existsSync(path) ? readFileSync(path, "utf8") : null;
 
   if (prev === next) {

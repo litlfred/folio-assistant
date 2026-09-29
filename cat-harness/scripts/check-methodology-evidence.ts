@@ -64,6 +64,7 @@ import {
   type MethodologyFrontMatter,
 } from "../schemas/methodology.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
+import { isDirectoryReadme } from "../schemas/kg-node.ts";
 
 /**
  * This module's own instance root.
@@ -104,7 +105,7 @@ export function methodologyFiles(root: string): string[] {
       // nodes are its own — the `x4v4` rule that a subgraph's nodes are not
       // also its container's. Recursing here would attribute a CRDM skill to
       // the methodology graph and make every count computed from it wrong.
-      if (e.endsWith(".md") && statSync(p).isFile()) out.push(p);
+      if (e.endsWith(".md") && !isDirectoryReadme(p) && statSync(p).isFile()) out.push(p);
     }
   }
   return out.sort();
