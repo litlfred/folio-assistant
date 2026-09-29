@@ -1,0 +1,265 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json",
+  "title": "Knowledge Graph declaration",
+  "description": "A Declaration. Any field not listed here is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The Knowledge Graph's name. The declaration file is `<name>.json`."
+    },
+    "version": {
+      "description": "Its version, as MAJOR.MINOR.PATCH (semantic versioning).",
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "iriBase": {
+      "description": "The address its IRIs are minted under, before the version. An identifier a program reads is `<iriBase><version>/…`; a page meant for a person is `<iriBase>v<major>/…`.",
+      "type": "string",
+      "format": "uri"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "directories": {
+      "description": "Its Subgraphs: zero or more.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The Subgraph's name, unique within its Knowledge Graph."
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The directory, relative to the declaration."
+          },
+          "graphKinds": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "skills",
+                  "description": "A Subgraph of Skills: the instructions an Actor follows to carry out a Task."
+                },
+                {
+                  "type": "string",
+                  "const": "schemas",
+                  "description": "A Subgraph of Node Schemas: files that state the shape other files must have."
+                },
+                {
+                  "type": "string",
+                  "const": "scenarios",
+                  "description": "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on."
+                },
+                {
+                  "type": "string",
+                  "const": "processes",
+                  "description": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from."
+                },
+                {
+                  "type": "string",
+                  "const": "models",
+                  "description": "A Subgraph describing the language models an Actor may be: which languages each is good at, and whether a person checked."
+                },
+                {
+                  "type": "string",
+                  "const": "swimlane-glossary",
+                  "description": "A Subgraph recording every term a Knowledge Graph's Processes have ever named, and when each stopped being used, so a retired term is never silently reused."
+                },
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "A Graph Kind a Harness defines. To a reader that knows only bootstrap it is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning."
+                }
+              ],
+              "description": "A named set of Node Kinds whose instances may be held together."
+            },
+            "description": "The Graph Kinds it holds."
+          },
+          "title": {
+            "description": "A short name for people, shown as its README's heading.",
+            "type": "string"
+          },
+          "description": {
+            "description": "What it holds, in a sentence or two, shown under that heading.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "path",
+          "graphKinds"
+        ],
+        "additionalProperties": {},
+        "description": "A named subset of Node Instances: a Declaration's directory entry, with its id, its directory and its Graph Kinds."
+      }
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "src": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The file, relative to the declaration."
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The part the file plays, such as `instance-readme`."
+          }
+        },
+        "required": [
+          "id",
+          "src",
+          "role"
+        ],
+        "additionalProperties": {},
+        "description": "A Declaration's file entry: one file about the repository itself, such as its README, with its stated purpose."
+      }
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "additionalProperties": {},
+  "$defs": {
+    "Node": {
+      "title": "Node",
+      "description": "One unit of recorded knowledge, held in one file or as one identifiable part of a file, and named by an IRI."
+    },
+    "NodeKind": {
+      "title": "NodeKind",
+      "description": "A name for a class of Nodes, together with its Node Schema: a JSON Schema that every Node of that kind satisfies."
+    },
+    "SubKind": {
+      "title": "SubKind",
+      "description": "A Node Kind whose Node Schema requires everything another Node Kind's does, so every Node of it is also a Node of that other kind."
+    },
+    "NodeInstance": {
+      "title": "NodeInstance",
+      "description": "A Node that states its Node Kind and satisfies that kind's Node Schema."
+    },
+    "GraphKind": {
+      "title": "GraphKind",
+      "anyOf": [
+        {
+          "type": "string",
+          "const": "skills",
+          "description": "A Subgraph of Skills: the instructions an Actor follows to carry out a Task."
+        },
+        {
+          "type": "string",
+          "const": "schemas",
+          "description": "A Subgraph of Node Schemas: files that state the shape other files must have."
+        },
+        {
+          "type": "string",
+          "const": "scenarios",
+          "description": "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on."
+        },
+        {
+          "type": "string",
+          "const": "processes",
+          "description": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from."
+        },
+        {
+          "type": "string",
+          "const": "models",
+          "description": "A Subgraph describing the language models an Actor may be: which languages each is good at, and whether a person checked."
+        },
+        {
+          "type": "string",
+          "const": "swimlane-glossary",
+          "description": "A Subgraph recording every term a Knowledge Graph's Processes have ever named, and when each stopped being used, so a retired term is never silently reused."
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "description": "A Graph Kind a Harness defines. To a reader that knows only bootstrap it is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning."
+        }
+      ],
+      "description": "A named set of Node Kinds whose instances may be held together."
+    },
+    "Declaration": {
+      "title": "Declaration",
+      "description": "A JSON document, `<name>.json`, that gives a name and lists entries, each naming either a directory of Node Instances with the Graph Kinds they belong to, or a single file with its purpose."
+    },
+    "Subgraph": {
+      "title": "Subgraph",
+      "description": "A named subset of Node Instances: a Declaration's directory entry, with its id, its directory and its Graph Kinds."
+    },
+    "Asset": {
+      "title": "Asset",
+      "description": "A Declaration's file entry: one file about the repository itself, such as its README, with its stated purpose."
+    },
+    "Extension": {
+      "title": "Extension",
+      "description": "A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning."
+    },
+    "KnowledgeGraph": {
+      "title": "KnowledgeGraph",
+      "description": "A semi-static description of one or more datasets or information repositories as of one version: a set of Node Schemas and Node Instances, and the Declaration that divides them into Subgraphs. Published as JSON-LD, each Subgraph is a named graph."
+    },
+    "Dependency": {
+      "title": "Dependency",
+      "description": "One Knowledge Graph depends on another when its Declaration names the other. The dependent's Nodes may refer to the other's; the other's never refer back."
+    },
+    "Content": {
+      "title": "Content",
+      "description": "The Node Kinds whose instances describe the datasets and other information a Knowledge Graph is about: their records, documents, catalogues and terms, and links to other sources of knowledge inside or outside the repository."
+    },
+    "Actor": {
+      "title": "Actor",
+      "description": "A person, an agent or a program that can carry out work."
+    },
+    "Task": {
+      "title": "Task",
+      "description": "A unit of work an Actor carries out: what it needs to begin, and what it produces."
+    },
+    "Skill": {
+      "title": "Skill",
+      "description": "The Node Kind whose instances are natural-language instructions an Actor follows to carry out one Task."
+    },
+    "Tool": {
+      "title": "Tool",
+      "description": "The Node Kind whose instances describe a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it."
+    },
+    "Role": {
+      "title": "Role",
+      "description": "The Node Kind whose instances name a responsibility an Actor takes on when carrying out Tasks, and list the Skills that responsibility needs."
+    },
+    "ProcessNode": {
+      "title": "ProcessNode",
+      "description": "One element of a BPMN diagram: a Task, a decision, a start or an end."
+    },
+    "SequenceFlow": {
+      "title": "SequenceFlow",
+      "description": "An arrow in a BPMN diagram, from one Process Node to the next."
+    },
+    "Process": {
+      "title": "Process",
+      "description": "The Node Kind whose instances coordinate Tasks: a BPMN diagram whose Process Nodes are joined by Sequence Flows, in lanes that each name the Role an Actor takes to carry out that lane's Tasks."
+    },
+    "Harness": {
+      "title": "Harness",
+      "description": "A Knowledge Graph whose Subgraphs hold Skills, Tools, Roles and Processes: what an Actor needs in order to work with another Knowledge Graph."
+    }
+  }
+}
