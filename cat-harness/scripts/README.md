@@ -9,7 +9,6 @@ _406 files directly here, too many to list: 286 .ts, 44 .sh, 33 .bat, 26 .py, 14
 
 | file | what it is | used by |
 |---|---|---|
-| [`__pycache__/`](__pycache__/) | 4 files | |
 | [`ci/`](ci/) | 1 file | |
 | [`docker-latex-build/`](docker-latex-build/) | 3 files | |
 | [`eval/`](eval/) | 2 files | |

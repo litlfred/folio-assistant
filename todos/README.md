@@ -9,6 +9,5 @@ Part of [C@T Harness](../cat-harness/README.md), declared as `todos`, holding `t
 |---|---|---|
 | [`todos.json`](todos.json) | data |  |
 | [`boards/`](boards/) | 5 files | |
-| [`feedback/`](feedback/) | 0 files | |
 | [`items/`](items/) | 3 files | |
 <!-- kg:subgraph:end -->

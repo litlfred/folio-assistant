@@ -15,6 +15,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 
 import { BEGIN, END, plan, splice, templatesDir } from "../subgraph-readmes.ts";
+import { isDirectoryReadme } from "../../schemas/kg-node.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 const TEMPLATES = templatesDir(join(REPO, "cat-harness"));
@@ -46,6 +47,13 @@ function repo(): string {
   writeFileSync(join(inst, "kept", "README.md"), "# Somebody wrote this\n");
   return r;
 }
+
+test("a directory README is never a node, at any depth, and nothing else is", () => {
+  expect(isDirectoryReadme("README.md")).toBe(true);
+  expect(isDirectoryReadme("todos/README.md")).toBe(true);
+  expect(isDirectoryReadme("todos/README.md.bak")).toBe(false);
+  expect(isDirectoryReadme("todos/NOT-README.md")).toBe(false);
+});
 
 describe("splice", () => {
   test("no README: a file holding only the region", () => {

@@ -31,8 +31,8 @@
  * the file itself and "used by" only where a diagram records it (the same
  * helpers as the `kg:files` README section). Nothing is composed here.
  *
- * The layout is a Liquid template in `tools/templates/readme/`, declared in
- * the tools graph. Templates may `{% include %}` each other, Jekyll style,
+ * The layout is a Liquid template in `tools/templates/readme/`, part of the
+ * tools graph. Templates may `{% include %}` each other, Jekyll style,
  * and read any declared field through `kg`.
  *
  * ## QA: a missing fact is a finding, never a blank
@@ -60,19 +60,45 @@ import {
 } from "../schemas/cat-harness.ts";
 import { describe as describeFile, usedByIndex } from "../content/pipeline/readme-graph-sections.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
+import { gitCorpus } from "../schemas/git-corpus.ts";
+
+/**
+ * Every file under `dir` that git would commit, relative to `dir`: tracked or
+ * untracked, never ignored. A bare walk listed `__pycache__/` after a Python
+ * test ran, so the README depended on what happened to be on disk. Outside a
+ * git work tree (a test's temporary directory) it falls back to the walk.
+ */
+function filesIn(dir: string): string[] {
+  const corpus = gitCorpus(dir);
+  if (corpus !== undefined) return corpus.filter((p) => existsSync(p)).map((p) => relative(dir, p)).sort();
+  const out: string[] = [];
+  const walk = (d: string): void => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      if (e.name.startsWith(".")) continue;
+      if (e.isDirectory()) walk(join(d, e.name));
+      else out.push(relative(dir, join(d, e.name)));
+    }
+  };
+  walk(dir);
+  return out.sort();
+}
 
 const ROOT = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(ROOT);
 
 /**
- * The templates, in the tools graph. Read through the declaration's `id`, so
- * the directory can move without this line changing.
+ * The templates, in the tools graph: `templates/readme/` inside the directory
+ * this instance declares as `tools`. Not a declared directory of their own —
+ * a declared directory nested in another is refused by `check:layout-norms`,
+ * so they are files OF the tools graph, found through its declaration.
  */
 export function templatesDir(instanceRoot: string = ROOT): string {
   const decl = readDeclaration(instanceRoot);
-  const d = decl?.directories?.find((x) => x.id === "readme-templates");
-  if (!d) throw new Error(`subgraph-readmes: ${instanceRoot} declares no \`readme-templates\` directory`);
-  return join(instanceRoot, d.path);
+  const tools = decl?.directories?.find((x) => x.id === "tools");
+  if (!tools) throw new Error(`subgraph-readmes: ${instanceRoot} declares no \`tools\` directory`);
+  // declared-path-literal: the templates' place WITHIN the declared tools
+  // directory; the directory itself is read from the declaration above.
+  return join(instanceRoot, tools.path, "templates", "readme");
 }
 
 export const BEGIN = "<!-- kg:subgraph:begin -->";
@@ -159,24 +185,13 @@ export async function plan(repo: string, templates: string): Promise<Plan> {
       if (!description) out.findings["no-description"].push(at);
       else if (description.split(/\s+/).length > DESCRIPTION_WORDS) out.findings["long-description"].push(at);
 
-      const entries = readdirSync(abs, { withFileTypes: true }).filter((e) => !e.name.startsWith("."));
-      const direct = entries.filter((e) => e.isFile() && e.name !== "README.md").map((e) => e.name).sort();
-      const subdirs = entries
-        .filter((e) => e.isDirectory())
-        .map((e) => e.name)
-        .sort()
-        .map((n) => {
-          let count = 0;
-          const walk = (p: string) => {
-            for (const x of readdirSync(p, { withFileTypes: true })) {
-              if (x.name.startsWith(".")) continue;
-              if (x.isDirectory()) walk(join(p, x.name));
-              else count++;
-            }
-          };
-          walk(join(abs, n));
-          return { name: n, count, readme: existsSync(join(abs, n, "README.md")) ? `${n}/README.md` : "" };
-        });
+      const all = filesIn(abs).filter((f) => !f.split("/").some((seg) => seg.startsWith(".")));
+      const direct = all.filter((f) => !f.includes("/") && f !== "README.md");
+      const counts = new Map<string, number>();
+      for (const f of all) if (f.includes("/")) counts.set(f.split("/")[0]!, (counts.get(f.split("/")[0]!) ?? 0) + 1);
+      const subdirs = [...counts]
+        .sort((a, b) => a[0].localeCompare(b[0]))
+        .map(([n, count]) => ({ name: n, count, readme: existsSync(join(abs, n, "README.md")) ? `${n}/README.md` : "" }));
       const listed = direct.length <= LIST_LIMIT;
       const files = listed
         ? direct.map((f) => {

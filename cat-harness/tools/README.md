@@ -12,5 +12,5 @@ Part of [C@T Harness](../README.md), declared as `tools`, holding `tools`.
 | [`mcp.ts`](mcp.ts) | a file |  |
 | [`sessions.ts`](sessions.ts) | a file |  |
 | [`viewers.ts`](viewers.ts) | a file |  |
-| [`templates/`](templates/) | 3 files | |
+| [`templates/`](templates/) | 2 files | |
 <!-- kg:subgraph:end -->

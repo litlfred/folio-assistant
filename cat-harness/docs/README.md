@@ -1,7 +1,7 @@
 <!-- kg:subgraph:begin -->
 # docs
 
-Documentation ABOUT the knowledge graph itself -- 241 markdown files, the entire published surface, and UNDECLARED until 2026-09-20. That is the dh4f defect in its purest form: every declaration-driven consumer scanned straight past the thing readers actually see. Owner, same day: 'docs/ is about documentation about the KG itself... docs/ in cat-harness', with the intent that this is WHERE DOCUMENTATION GOES and therefore the only place a forward reference may be authored. The `docs` kind is RENDERABLE and is registered by `schemas/docs-graph-kind.ts` rather than added to BASE_GRAPH_KINDS, so the assertion that the harness's base vocabulary carries no renderable kind stays true and its test stays unchanged. Distinct from `folio`, which is core's: the difference is the SUBJECT. A page explaining how ingestion works is `docs`; a note an author writes about an ingested catalogue is a `folio`; the catalogue itself is `library/`. `dependents` is `skip`, unlike the other renderable graph `folio`: this is documentation THIS instance publishes about the knowledge graph, so a dependent folio inherits the pages rather than an empty directory to refill — it authors its own subject matter under `folio/`, which is `reproduce`. CHANGED TO `reproduce` 2026-09-21 ON THE OWNER'S COMPOSE RULING (bean `n0nf`, issue #638), and the paragraph above is kept rather than deleted because its reasoning was right for the question it answered. It argued `skip` on the grounds that a dependent should INHERIT THE PAGES rather than get an empty directory to refill. Under compose it gets BOTH: the pages still reach it, and `reproduce` gives it the place to override one. So this is not a reversal of that argument, it is the second half of it arriving. The `dependents` doc warns that defaulting to `reproduce` ships junk -- twelve inherited directories, four of them the platform's own, each empty with a committed keep marker, the `dh4f` shape shipped downstream. That warning is about a DEFAULT, and the test it turns on is the one that schema states: is this directory part of the SHAPE a folio has, or merely where THIS instance's content lives? Before the ruling `docs/` was the second. After it, a folio is expected to author and override its own documentation, which makes it the first -- the same answer `uploads/` and `library/` get, and they are `reproduce` and also start empty. WHAT THIS DOES NOT DO is give the REPOSITORY ROOT a `docs/`. The root does not depend on cat-harness (measured: its declaration chain has length 1), so nothing is inherited there, and the root's own `harness.json` carries the owner's "only uploads/ on this repo's root". `n0nf` says the root's docs "is not its own: cat-harness installs it", which needs a dependency edge that does not exist. That is left for the owner rather than settled here. A viewer IS declared for this `docs` directory, and `owesVisualiser` not demanding one is not the same as forbidding one. The kind is `renderable`, so it does not OWE a viewer — but the owner's rule, quoted in full in `mount-instance-docs.ts`'s module note, is that a harness which instantiates a directory MAKES a visualiser for it, docs and library included. It points at the `docs-auto` index, NOT at the mount route `/docs/<instance>/`: that mount is a VERBATIM copy of the directory, and `visualiserHref` exists precisely because linking a rail to it lands on a byte-identical page — the owner's *"clicking on doc/ ... under who-iris navbar did nothing"*. The owner's sentence is CITED rather than quoted here on purpose: it names a graph whose viewer is `publish: "staging-only"`, and a test asserts that name appears NOWHERE in the built export — including in a declaration's own prose, which is where quoting it put it. The test caught that, and this paragraph is the second attempt.
+Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.
 
 Part of [C@T Harness](../README.md), declared as `docs`, holding `docs`.
 
@@ -44,7 +44,7 @@ Part of [C@T Harness](../README.md), declared as `docs`, holding `docs`.
 | [`_includes/`](_includes/) | 9 files | |
 | [`ar/`](ar/) | 13 files | |
 | [`architecture/`](architecture/) | 8 files | |
-| [`assets/`](assets/) | 449 files | |
+| [`assets/`](assets/) | 447 files | |
 | [`beans/`](beans/) | 1 file | |
 | [`bootstrap/`](bootstrap/) | 1 file | |
 | [`cat-harness/`](cat-harness/) | 42 files | |
@@ -70,7 +70,7 @@ Part of [C@T Harness](../README.md), declared as `docs`, holding `docs`.
 | [`todos/`](todos/) | 1 file | |
 | [`tools/`](tools/) | 1 file | |
 | [`translation-status/`](translation-status/) | 1 file | |
-| [`uml/`](uml/) | 125 files | |
+| [`uml/`](uml/) | 124 files | |
 | [`uploads/`](uploads/) | 1 file | |
 | [`wireframes/`](wireframes/) | 140 files | |
 | [`zh/`](zh/) | 13 files | |

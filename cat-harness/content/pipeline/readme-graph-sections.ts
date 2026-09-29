@@ -32,6 +32,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import { basename, join, relative } from "path";
 
 import { findDeclarationFile, readDeclaration } from "../../schemas/cat-harness";
+import { gitCorpus } from "../../schemas/git-corpus";
 import type { ReadmeSection, SectionOutput } from "./readme-sections";
 
 /** Escape the cell separator so a value containing `|` cannot break a table. */
@@ -45,8 +46,20 @@ export function firstSentence(text: string): string {
   return s.length > 160 ? `${s.slice(0, 157).trimEnd()}…` : s;
 }
 
-/** Every file under `dir`, relative to `root`, sorted. */
+/**
+ * Every file under `dir` that git would commit, relative to `root`, sorted:
+ * tracked or untracked, never ignored, so a build cache does not become a
+ * row. Outside a git work tree it falls back to a walk.
+ */
 function filesUnder(root: string, dir: string): string[] {
+  if (!existsSync(dir) || !statSync(dir).isDirectory()) return [];
+  const corpus = gitCorpus(dir);
+  if (corpus !== undefined) {
+    return corpus
+      .filter((p) => existsSync(p) && !relative(dir, p).split("/").some((s) => s.startsWith(".")))
+      .map((p) => relative(root, p))
+      .sort();
+  }
   const out: string[] = [];
   const walk = (d: string): void => {
     for (const e of readdirSync(d, { withFileTypes: true })) {
@@ -55,7 +68,7 @@ function filesUnder(root: string, dir: string): string[] {
       else out.push(relative(root, p));
     }
   };
-  if (existsSync(dir) && statSync(dir).isDirectory()) walk(dir);
+  walk(dir);
   return out.sort();
 }
 

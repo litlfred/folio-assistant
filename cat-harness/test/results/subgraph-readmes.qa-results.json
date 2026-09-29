@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/subgraph-readmes.ts",
-    "script_hash": "407dc905e0d2"
+    "script_hash": "df1842707af2"
   },
   "subject": {
     "kind": "graph",
     "id": "subgraph-readmes"
   },
-  "updated_at": "2026-09-29T20:21:58.112Z",
+  "updated_at": "2026-09-29T20:54:31.492Z",
   "families": {
     "absent-directory": {
       "summary": "Declared directories not on disk and not declared `absent`: a consumer scanning them finds nothing and may report a clean run.",
@@ -17,7 +17,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 75,
+      "count": 74,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -173,11 +173,6 @@
           "instance": "cat-harness",
           "directory": "folio-assistant-core-methodologies",
           "path": "folio-assistant-core/methodologies"
-        },
-        {
-          "instance": "cat-harness",
-          "directory": "docs",
-          "path": "cat-harness/docs"
         },
         {
           "instance": "cat-harness",
@@ -895,5 +890,5 @@
       ]
     }
   },
-  "total": 171
+  "total": 170
 }

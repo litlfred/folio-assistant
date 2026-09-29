@@ -186,8 +186,8 @@ heading is the directory's declared `title`, the paragraph its `description`,
 the kinds its `graphKinds`, each file row what the file says it is, and "used
 by" only a relation a diagram records.
 
-**The layout is Liquid**, in the declared `readme-templates` directory
-(`tools/templates/readme/`). Templates may `{% include %}` one another, Jekyll
+**The layout is Liquid**, in `tools/templates/readme/`, part of the tools
+graph and found through the `tools` declaration. Templates may `{% include %}` one another, Jekyll
 style, and read any declared field through `kg`. Change a template, run the
 command, commit the result.
 
