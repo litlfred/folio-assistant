@@ -77,7 +77,7 @@
  * @covers processes, translation-sources
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { resolveDirectories } from "../schemas/cat-harness.js";
+import { localeDirIn, translationsHomeFor } from "../schemas/cat-harness.js";
 import { workflowFiles } from "./known-skills.js";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { extractBpmn, injectBpmn } from "../content/pipeline/bpmn-translate.js";
@@ -106,6 +106,20 @@ const instanceFlag = ((): string | undefined => {
   return i === -1 ? undefined : a[i + 1];
 })();
 const root = instanceFlag ? resolve(instanceFlag) : resolve(import.meta.dir, "..");
+/**
+ * This script's OWN instance, which is the host when `--instance` names a
+ * different one. Always cat-harness, whatever `--instance` says — that is the
+ * point: the tool resolving a dependency's templates is the tool that publishes
+ * them.
+ */
+const HARNESS_ROOT = resolve(import.meta.dir, "..");
+/**
+ * For reporting only. A hosted instance's templates sit outside `--instance`,
+ * so a path relative to IT would climb out with `../`, and one relative to the
+ * host would read as the host's own file. The repo root is the one base under
+ * which every case reads as itself.
+ */
+const REPO_ROOT = resolve(import.meta.dir, "..", "..");
 const argv = process.argv.slice(2);
 
 function flag(name: string): string | undefined {
@@ -148,17 +162,16 @@ if (diagrams.length === 0) {
  * declaration still has a `translations/`, and refusing to run over one would
  * be worse than assuming the default the schema already supplies.
  */
-function translationsRoot(): string {
-  const d = resolveDirectories([{ name: "(local)", root, own: true }]).find((x) =>
-    x.graphKinds.includes("translation-sources"),
-  );
-  // declared-path-literal: the base case for an instance that declares
-  // nothing. Reading a declaration to learn the fallback for having no
-  // declaration is not a thing that can be done; the schema's own
-  // DEFAULT_DIRECTORIES supplies the same convention.
-  return d?.absPath ?? join(root, "translations");
-}
-const TRANSLATIONS = translationsRoot();
+//
+// `HOME` answers all three cases rather than two — see `translationsHomeFor`.
+// The third is `bootstrap`, whose templates live in cat-harness's corpus under
+// `<locale>/bootstrap/` because a `.pot` is tooling output and bootstrap is a
+// floor an agent reads. The host is passed as `HARNESS_ROOT`, this script's own
+// instance: the host is a DEPENDENT (cat-harness declares `needs: ['bootstrap']`,
+// not the reverse), so it cannot be found by walking `--instance`'s own
+// dependencies.
+const HOME = translationsHomeFor(root, HARNESS_ROOT);
+const TRANSLATIONS = HOME.root;
 
 /**
  * The per-locale subdirectory holding a diagram's `.pot`/`.po`/injected `.bpmn`.
@@ -185,7 +198,7 @@ const DIAGRAM_SUBDIR = "processes";
  * close.
  */
 function potPathFor(file: string, loc: string): string {
-  return join(TRANSLATIONS, loc, DIAGRAM_SUBDIR, `${basename(file, ".bpmn")}.pot`);
+  return join(localeDirIn(HOME, loc), DIAGRAM_SUBDIR, `${basename(file, ".bpmn")}.pot`);
 }
 
 /** The comparison form of a template, shared with core's `glossary-pot` (see `potWithoutTimestamp`). */
@@ -279,7 +292,19 @@ if (wantCheck) {
   const owned = new Set(diagrams.map((f) => basename(f, ".bpmn")));
   const orphaned: string[] = [];
   for (const loc of [...gating].sort()) {
-    const dir = join(TRANSLATIONS, loc, DIAGRAM_SUBDIR);
+    // `localeDirIn`, NOT a join on `TRANSLATIONS` — this scan is where the
+    // hosted case bites hardest. A hosted instance's `TRANSLATIONS` is its
+    // HOST's corpus, so composing `<root>/<locale>/processes` here reads every
+    // template the host owns and calls each one an orphan of the few diagrams
+    // `--instance` names. Measured 2026-09-27 while wiring it: 355 spurious
+    // orphans across five locales, against bootstrap's three diagrams.
+    //
+    // Worse than a wrong number, the advice attached to it told a reader the
+    // relics "should live under ITS translations" — of files already in exactly
+    // the right place. A check that fabricates findings about correct files is
+    // the `1xhc` failure pointed the other way, and it trains people to ignore
+    // the one real orphan when it comes.
+    const dir = join(localeDirIn(HOME, loc), DIAGRAM_SUBDIR);
     let names: string[];
     try {
       names = readdirSync(dir).filter((n) => n.endsWith(".pot"));
@@ -287,7 +312,9 @@ if (wantCheck) {
       continue;
     }
     for (const n of names.sort()) {
-      if (!owned.has(basename(n, ".pot"))) orphaned.push(`translations/${loc}/${DIAGRAM_SUBDIR}/${n}`);
+      if (!owned.has(basename(n, ".pot"))) {
+        orphaned.push(`${relative(REPO_ROOT, dir)}/${n}`);
+      }
     }
   }
 

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-q2wm
 title: 'RENDER SAFETY: declared XSS hints on tools and skills, lazy loading, and dynamic render from the graph'
-status: in-progress
+status: todo
 type: task
 priority: high
 created_at: 2026-09-20T21:47:28Z
-updated_at: 2026-09-21T15:15:58Z
+updated_at: 2026-09-29T18:14:48Z
 parent: folio-assistant-6lb8
 ---
 
@@ -155,3 +155,9 @@ the hole and looked like a simplification.
   Two reasons, two messages.
 
 `bun run gates --all` — 92/92, 329 e2e.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

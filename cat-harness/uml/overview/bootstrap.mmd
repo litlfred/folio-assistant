@@ -187,16 +187,6 @@ classDiagram
       concepts [1] Record~string, LedgerEntry~
     }
   }
-  namespace bootstrap__bootstrap_translations {
-    class bootstrap_bootstrap_translations_TranslationConfig["TranslationConfig"] {
-      <<json: TranslationConfigSchema>>
-      defaultLocale [0..1] string
-      supportedLocales [0..*] string[]
-      translationDir [0..1] string
-      potGranularity [0..1] block | chapter | folio
-      officialRequired [0..1] boolean
-    }
-  }
   namespace bootstrap__qa {
     class bootstrap_qa_kg_qa_v1_Pair_attestation["Pair_attestation"] {
       <<json: KgQaReportSchema>>
@@ -254,7 +244,6 @@ classDiagram
   cssClass "bootstrap_models_Model" fa_uml_kind_models
   cssClass "bootstrap_models_ModelRegistry" fa_uml_kind_models
   cssClass "bootstrap_swimlane_glossary_folio_glossary_ledger_v1" fa_uml_kind_swimlane_glossary
-  cssClass "bootstrap_bootstrap_translations_TranslationConfig" fa_uml_kind_translation_sources
   bootstrap_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" bootstrap_qa_kg_qa_v1_Pair_attestation : pair_attestations
   cssClass "bootstrap_qa_kg_qa_v1_Pair_attestation" fa_uml_kind_qa
   cssClass "bootstrap_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa

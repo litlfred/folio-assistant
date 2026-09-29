@@ -37,7 +37,26 @@
  * cannot tell them apart is the thing this file exists to prevent.
  *
  * @graphNode schema
- * @module schemas/external-schema
+ * ## Why this lives in cat-harness and not in core
+ *
+ * Moved 2026-09-27, bean `yj6r`. It sat in `folio-assistant-core/schemas/` and
+ * its only three importers were all in `cat-harness/scripts/` — so cat-harness,
+ * which declares `needs: ['bootstrap']` and not core, was importing UP into a
+ * layer above it. After a repository cut that is a circular dependency.
+ *
+ * The direction of the fix follows from what this file is ABOUT, which is the
+ * test that matters and not who imports it. Its subject is the specifications
+ * **this repository** conforms to — BPMN, DMN, DCMI — so it is a fact about the
+ * platform's own conformance, not about any folio's content. A content schema
+ * consumed by platform tooling would have been the other case, and its
+ * consumers would have moved up instead.
+ *
+ * Same defect `zlmp` records one layer out: *"schemas/, a directory claimed
+ * wholesale by a core prefix rule while holding schemas from all three
+ * layers."* That reclassified four harness-owned schemas without moving them;
+ * this MOVES one, because here the path was wrong and not just the label.
+ *
+ * @module cat-harness/schemas/external-schema
  */
 import { z } from "zod";
 
