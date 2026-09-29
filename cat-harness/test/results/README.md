@@ -24,6 +24,7 @@ Part of [C@T Harness](../../README.md), declared as `qa`, holding `qa`.
 | [`subgraph-readmes.qa-results.json`](subgraph-readmes.qa-results.json) | data |  |
 | [`wireframes.qa-results.json`](wireframes.qa-results.json) | data |  |
 | [`block-qa/`](block-qa/) | 122 files | |
+| [`bootstrap/`](bootstrap/) | 16 files | |
 | [`detangle/`](detangle/) | 28 files | |
 | [`kg-export.@litlfred/`](kg-export.@litlfred/) | 1 file | |
 | [`kg-qa/`](kg-qa/) | 550 files | |

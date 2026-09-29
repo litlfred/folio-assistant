@@ -4588,6 +4588,44 @@ export function localeDirIn(
 }
 
 /** Every directory this instance declares as holding `graph`, in declaration order. */
+/**
+ * Where an instance's `kg-audit` results live: the directory holding its
+ * `kg-qa/` tree and its `kg-qa.manifest.json`.
+ *
+ * Three answers, and the caller is told which, as {@link translationsHomeFor}
+ * does for translations:
+ *
+ * - **own** — the instance declares a `qa` directory; its results live there.
+ * - **hosted** — it declares none, and `hostRoot` (the auditor's instance)
+ *   does; the results live in the host's `qa` directory under the instance's
+ *   stub, e.g. `cat-harness/test/results/bootstrap/`. This is how bootstrap
+ *   keeps its QA sidecars out of its own tree (owner, 2026-09-29, decision 2 of
+ *   bean `r3gy`): a verdict ABOUT bootstrap is harness output, and bootstrap is
+ *   the layer that must read cleanly with no harness present.
+ * - **convention** — neither declares one; `<instance>/test/results/`.
+ *
+ * A hosted home sits BESIDE the host's own `kg-qa/` tree, never inside it, so
+ * the host's orphan sweep cannot claim another instance's sidecars as its own.
+ */
+export function kgQaHomeFor(
+  instanceRoot: string,
+  hostRoot?: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): { root: string; by: "own" | "hosted" | "convention" } {
+  const own = matchingDirectories(instanceRoot, "qa", registry)[0];
+  if (own !== undefined) return { root: own.absPath, by: "own" };
+  if (hostRoot !== undefined && resolve(hostRoot) !== resolve(instanceRoot)) {
+    const host = matchingDirectories(hostRoot, "qa", registry)[0];
+    const decl = readDeclaration(instanceRoot);
+    if (host !== undefined && decl !== undefined && decl !== null) {
+      return { root: join(host.absPath, artefactStub(decl)), by: "hosted" };
+    }
+  }
+  // declared-path-literal: the base case for an instance that declares no `qa`
+  // directory and is hosted by nobody — the same convention KG_QA_RESULTS_DIR names.
+  return { root: join(instanceRoot, "test", "results"), by: "convention" };
+}
+
 function matchingDirectories(
   root: string,
   graph: string,

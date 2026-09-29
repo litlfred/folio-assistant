@@ -233,10 +233,4 @@ Process that reads a file, where a diagram says so.
 |---|---|---|
 | [`glossary-ledger.json`](glossary/glossary-ledger.json) | data |  |
 
-**[`test/results/`](test/results/README.md)**: What auditing THIS instance produced, committed so a consumer can tell "never audited" from "audited clean" — a printed verdict cannot, which is why every QA…
-
-| file | what it is | used by |
-|---|---|---|
-| [`test/results/`](test/results/) | 16 files, in subdirectories | |
-
 <!-- kg:files:end -->
