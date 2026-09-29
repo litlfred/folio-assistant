@@ -91,14 +91,17 @@ import {
   findDeclarationFile,
   instanceRootsIn,
   readDeclaration,
+  repoRootFor,
   resolveDirectories,
   siteDirFor,
   visualisationsOf,
 } from "../schemas/cat-harness.ts";
 import { withViewerNav } from "./viewer-page.ts";
 import { ownElementPattern } from "../schemas/namespaces.js";
+import { renderedPath, withRenders } from "./viewer-declarations.js";
 
 const ROOT = join(import.meta.dir, "..");
+const REPO_ROOT = repoRootFor(ROOT);
 const REPO = join(ROOT, "..");
 const check = process.argv.includes("--check");
 
@@ -865,13 +868,20 @@ if (import.meta.main) {
       count: byDir.get(id)!.length,
     }));
 
+    // Each page says which directories it draws (#1168 B7a-2): every
+    // populated sub-graph on the type's page, its own on a sub-graph page.
+    const drawn = (ids: readonly string[]): string[] =>
+      ids.flatMap((id) => {
+        const d = dirs.find((x) => x.id === id);
+        return d ? [renderedPath(REPO_ROOT, d.absPath)] : [];
+      });
     const { pageDir } = viewerPlacement(site, `${handler}/docs-auto/${type.id}`, "docs-auto");
-    emit(join(pageDir, "index.html"), autoDocPage(type, items, "", undefined, siblings));
+    emit(join(pageDir, "index.html"), withRenders(autoDocPage(type, items, "", undefined, siblings), drawn(populated)));
     for (const id of populated) {
       const sub = viewerPlacement(site, `${handler}/docs-auto/${type.id}/${id}`, "docs-auto");
       emit(
         join(sub.pageDir, "index.html"),
-        autoDocPage(type, byDir.get(id)!, id, dirs.find((d) => d.id === id)?.path, siblings),
+        withRenders(autoDocPage(type, byDir.get(id)!, id, dirs.find((d) => d.id === id)?.path, siblings), drawn([id])),
       );
     }
 

@@ -311,7 +311,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - [C@T Harness]({{ '/uploads/' | relative_url }})
 - [Folio Assistant]({{ '/cat-harness/uploads/folio-assistant/' | relative_url }})
-- [WHO IRIS]({{ '/cat-harness/library/who-iris/' | relative_url }})
+- [WHO IRIS]({{ '/cat-harness/uploads/who-iris/' | relative_url }})
 
 ### `voices`
 

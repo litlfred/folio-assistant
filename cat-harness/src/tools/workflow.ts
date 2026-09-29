@@ -34,6 +34,7 @@
 
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { workflowFiles } from "../../scripts/known-skills.js";
+import { orderedDependencies } from "../../schemas/harness-config.js";
 import { z } from "zod";
 import { basename, join, resolve } from "node:path";
 import { findInModel, loadProcessModel, type ProcessModel } from "../workflow/process-model.js";
@@ -62,12 +63,54 @@ import { authorizeTask, describeVerdict, type TaskAuthVerdict } from "../workflo
 const text = (s: string) => ({ content: [{ type: "text" as const, text: s }] });
 
 /** Resolve a process by file stem (`editing-hci-validation`) or by process id. */
+/**
+ * The instances whose diagrams these tools can run: every dependency in
+ * overlay order, then the root — LAST, so the root wins a name collision,
+ * the rule `resolveSkillDirs` states for skills.
+ *
+ * Bean `nf2z`. `workflowFiles(root)` alone is root-only, through
+ * `kgDirectories`, and on purpose: the export and the renderers rely on it.
+ * But since the split the root instance declares no diagram at all — every
+ * one belongs to a dependency — so a server started at the repository root
+ * listed "Processes: (none)" and could start nothing, which made the
+ * recorded-instance rule (bean `vlhk`) uncompliable. Only THIS module's
+ * resolver changes; the root-only function stays as it is.
+ *
+ * A dependency graph that cannot be resolved falls back to the root alone
+ * rather than taking the tools down — the same posture as the role graph
+ * below. `check:harness-deps` is where a broken graph is a finding.
+ */
+export function processRoots(repoRoot: string): string[] {
+  let deps: string[] = [];
+  try {
+    deps = orderedDependencies(repoRoot).map((d) => resolve(d.rootPath));
+  } catch {
+    deps = [];
+  }
+  return [...new Set([...deps, resolve(repoRoot)])];
+}
+
+/** Every `.bpmn` across {@link processRoots}, root's copy first for a shared stem. */
+export function processFiles(repoRoot: string): string[] {
+  const seen = new Map<string, string>();
+  // Root first, so its file claims the stem; a dependency's same-named
+  // diagram is then shadowed rather than listed twice.
+  for (const r of [...processRoots(repoRoot)].reverse()) {
+    for (const f of workflowFiles(r)) {
+      if (!f.endsWith(".bpmn")) continue;
+      const stem = basename(f, ".bpmn");
+      if (!seen.has(stem)) seen.set(stem, f);
+    }
+  }
+  return [...seen.values()].sort();
+}
+
 async function resolveModel(repoRoot: string, ref: string): Promise<ProcessModel> {
   // EVERY declared knowledge-graph directory, not the literal
   // `processes/`. A topical layout puts diagrams in more than one
   // place, and a resolver that knows only one of them reports a process that
   // exists as missing — which reads to a caller exactly like a typo.
-  const files = workflowFiles(repoRoot).filter((f) => f.endsWith(".bpmn"));
+  const files = processFiles(repoRoot);
   const stem = basename(ref).replace(/\.bpmn$/, "");
 
   const direct = files.find((f) => basename(f, ".bpmn") === stem);
@@ -119,7 +162,14 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       try {
         // declared-path-literal: the convention fallback, at the call site.
         // A role graph lives in a declared knowledge-graph root.
-        rolesCache = { graph: roleGraphFor(root) };
+        // Root first, then the nearest dependency that declares one (bean
+        // `nf2z`): at the repository root the graph lives in a dependency.
+        let graph: RoleGraph | undefined;
+        for (const r of [...processRoots(root)].reverse()) {
+          graph = roleGraphFor(r);
+          if (graph) break;
+        }
+        rolesCache = { graph };
       } catch {
         rolesCache = { graph: undefined };
       }
@@ -133,7 +183,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       "instances currently open. Use before workflow_start to see what exists.",
     {},
     async () => {
-      const files = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));
+      const files = processFiles(root);
       const lines: string[] = ["# Processes", ""];
       for (const f of files) {
         try {
