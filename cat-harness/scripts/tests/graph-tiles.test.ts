@@ -172,8 +172,9 @@ describe("a live projection with no declaration is a FINDING — `flh4`'s third 
   test("the finding names the repair, not the symptom", () => {
     const [f] = tileFindings("cat-harness", dirs, published);
     expect(f).toContain("beans");
-    expect(f).toContain("coverage.visualiser");
-    expect(f).toContain("Declare it");
+    // The repair since #1168 B7a: the generator names the directory in the page.
+    expect(f).toContain("withRenders");
+    expect(f).toContain("name the directory in the page");
   });
 });
 
@@ -391,3 +392,25 @@ describe("a page's declared ref names the directory that declared it", () => {
     expect([...directoryByVisualisationRef([dir("undeclared")])]).toEqual([]);
   });
 });
+
+describe("one tile per page (#1168 B7a-2b)", () => {
+  // Viewers are read from the pages, and one page may draw several
+  // directories. The tile goes to the instance's own directory first.
+  const shared = "docs/processes/index.md";
+  const tiles = graphTiles([
+    { id: "smart-base-processes", scope: "repository", coverage: { visualiser: shared } },
+    { id: "processes", coverage: { visualiser: shared } },
+    { id: "core-processes", scope: "repository", coverage: { visualiser: shared } },
+    { id: "tools", coverage: { visualiser: "docs/tools/index.md" } },
+  ]);
+
+  it("a page shared by several directories gets one tile", () => {
+    expect(tiles.filter((t) => t.ref === shared)).toHaveLength(1);
+    expect(tiles).toHaveLength(2);
+  });
+
+  it("and it is the instance's own directory's tile", () => {
+    expect(tiles.find((t) => t.ref === shared)?.directory).toBe("processes");
+  });
+});
+

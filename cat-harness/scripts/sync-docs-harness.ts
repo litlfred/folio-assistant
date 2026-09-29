@@ -39,6 +39,7 @@ import { readTileCounts, type TileCount } from "../schemas/tile-count.js";
 import { harnessTiles, instanceDirs } from "./harness-tiles.js";
 import { harnessPanel, skillPageIn } from "./harness-panel.js";
 import { siteLinks } from "./site-links.js";
+import { withViewers } from "./viewer-declarations.js";
 
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -427,7 +428,7 @@ const payload = {
    * and says where it shows, never two registries free to disagree about what
    * a tile is. The navbar and the board filter this by `surfaces`. */
   tiles: withTileCounts(
-    graphTiles(decl?.directories ?? [], relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
+    graphTiles(withViewers(decl?.directories ?? [], ROOT), relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
     scanTileCounts(join(ROOT, siteDirFor(ROOT), "assets")),
   ),
   harnesses: allHarnesses,

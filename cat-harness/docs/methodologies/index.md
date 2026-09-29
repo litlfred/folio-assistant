@@ -5,6 +5,7 @@ renders:
   - cat-harness/methodologies
   - folio-assistant-core/methodologies
   - smart-base/methodologies
+rendered-by: methodologies-viewer
 ---
 <style>
 .mv-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;

@@ -172,6 +172,8 @@ export interface GraphTile {
 /** The directory fields a tile is derived from — named rather than imported. */
 export type TiledDirectory = {
   id: string;
+  /** `repository` when the path is resolved from the repository root rather than the instance's. */
+  scope?: string;
   coverage?: Parameters<typeof visualisationsOf>[0];
   theme?: string;
   /** The directory holds materialized content. Absent is NOT DECLARED, never `false`. */
@@ -216,8 +218,21 @@ export function graphTiles(
   siteDirFromRepoRoot?: string,
 ): GraphTile[] {
   const tiles: GraphTile[] = [];
+  // ONE TILE PER PAGE (#1168 B7a-2b, owner 2026-09-29: "tiles for all, one
+  // per page"). Viewers are read from the pages now, and one page may draw
+  // several directories — the processes index draws every instance's. The
+  // tile goes to the instance's OWN directory before a repository-scoped one,
+  // then by id, so the page keeps the tile it had when it was declared.
+  const opened = new Set<string>();
+  const order = [...dirs].sort(
+    (a, b) =>
+      Number(a.scope === "repository") - Number(b.scope === "repository") || a.id.localeCompare(b.id, "en"),
+  );
+  const firstFor = new Map<string, string>();
+  for (const d of order) for (const v of visualisationsOf(d.coverage, d.id)) if (!firstFor.has(v.ref)) firstFor.set(v.ref, d.id);
   for (const d of [...dirs].sort((a, b) => a.id.localeCompare(b.id, "en"))) {
-    const vis = visualisationsOf(d.coverage, d.id);
+    const vis = visualisationsOf(d.coverage, d.id).filter((v) => firstFor.get(v.ref) === d.id && !opened.has(v.ref));
+    for (const v of vis) opened.add(v.ref);
     vis.forEach((v: Visualisation & { title: string }, i) => {
       tiles.push({
         // The index is part of the id only where it has to be. A directory
@@ -295,7 +310,8 @@ export function tileFindings(
   return undeclaredProjections(dirs, published).map(
     (id) =>
       `${instance}/${id}: a viewer is published at /${id}/ and the directory declares no ` +
-      `visualiser, so it gets no tile. Declare it in \`coverage.visualiser\` and the tile follows.`,
+      `viewer, so it gets no tile. Have its generator name the directory in the page ` +
+        `(\`withRenders\`, #1168 B7a) and the tile follows.`,
   );
 }
 
