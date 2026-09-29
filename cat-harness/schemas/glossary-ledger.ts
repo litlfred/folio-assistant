@@ -12,7 +12,10 @@
  */
 import { z } from "zod";
 
-export const LEDGER_SCHEMA = "glossary-ledger/v1";
+/** The schema's name and its own semver; a reader accepts any tag of the same MAJOR version. */
+export const LEDGER_SCHEMA_NAME = "glossary-ledger";
+export const LEDGER_SCHEMA_VERSION = "1.0.0";
+export const LEDGER_SCHEMA = `${LEDGER_SCHEMA_NAME}/${LEDGER_SCHEMA_VERSION}`;
 /** The tag before 2026-09-29. Read, never written; drop after one release. */
 export const LEGACY_LEDGER_SCHEMA = "folio-glossary-ledger/v1";
 

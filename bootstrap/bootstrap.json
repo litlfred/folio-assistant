@@ -2,6 +2,8 @@
   "_comment": "The bootstrap instance. It declares its directories under `directories` below, because discovery reads declarations rather than walking the tree, and an undeclared directory is not this instance's graph however many files sit in it. THREE processes live in `processes/` and exactly one of them is an ENTRY POINT: `processes/initialize-harness.bpmn`. A Bootstrapping Agent that has read README.md is at its start event with nowhere else to begin. `processes/log-message.bpmn` is an independent SUB-PROCESS, reached only by a callActivity from a step and never started. `processes/discussion.bpmn` is entered from within the entry process when a fact is needed that no file holds. Neither competes with the first for being the thing you begin. The constraint was never 'one file'; it is that there is one place to start. Every harness is composed ON TOP of this rather than being its parent, which is why nothing here may refer to one.",
   "name": "bootstrap",
   "version": "0.1.0",
+  "_iriBase_comment": "The one place bootstrap's address is written. Every IRI bootstrap mints is derived from it and `version`: `<iriBase><version>/…` for what a program reads, `<iriBase>v<major>/…` for pages a person reads. A fork changes this line and re-runs the sync; nothing else names the address by hand.",
+  "iriBase": "https://litlfred.github.io/bootstrap/",
   "_title_comment": "The display name. `name` stays the identifier that file names use; `title` is what a person reads.",
   "title": "Bootstrap",
   "description": "The graph an agent reads before it knows what this repository is.",

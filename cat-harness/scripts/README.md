@@ -3,9 +3,9 @@
 
 The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.
 
-Part of [C@T Harness](../README.md), declared as `cat-harness-scripts`, holding `code`.
+Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-scripts`, holding `code`.
 
-_406 files directly here, too many to list: 286 .ts, 44 .sh, 33 .bat, 26 .py, 14 .json, 1 .txt, 1 .ps1, 1 .mjs._
+_407 files directly here, too many to list: 287 .ts, 44 .sh, 33 .bat, 26 .py, 14 .json, 1 .txt, 1 .ps1, 1 .mjs._
 
 | file | what it is | used by |
 |---|---|---|

@@ -43,12 +43,12 @@ Kept so the page renders even where the PlantUML image is missing, and because M
 classDiagram
   direction TB
   namespace cat_harness__swimlane_glossary {
-    class cat_harness_swimlane_glossary_glossary_ledger_v1_glossary_ledger_v1["glossary-ledger/v1"] {
+    class cat_harness_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0["glossary-ledger/1.0.0"] {
       <<json: LedgerSchema>>
-      $schema [1] 'glossary-ledger/v1'
+      $schema [1] 'glossary-ledger/1.0.0'
       instance [1] string
       concepts [1] map~object~
     }
   }
-  cssClass "cat_harness_swimlane_glossary_glossary_ledger_v1_glossary_ledger_v1" fa_uml_kind_swimlane_glossary
+  cssClass "cat_harness_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0" fa_uml_kind_swimlane_glossary
 ```

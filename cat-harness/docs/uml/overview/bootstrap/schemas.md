@@ -82,7 +82,7 @@ classDiagram
     }
     class bootstrap_schemas_glossary_ledger_schema_json_Glossary_Ledger["Glossary Ledger"] {
       <<schema: glossary-ledger.schema.json>>
-      $schema [1] 'glossary-ledger/v1'
+      $schema [1] 'glossary-ledger/1.0.0'
       instance [1] string
       concepts [1] map~object~
     }
@@ -103,6 +103,8 @@ classDiagram
     class bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration["Knowledge Graph declaration"] {
       <<schema: graph.schema.json>>
       name [1] string
+      version [0..1] string
+      iriBase [0..1] string~uri~
       title [0..1] string
       description [0..1] string
       directories [0..*] Directory[]
@@ -120,7 +122,7 @@ classDiagram
     }
     class bootstrap_schemas_model_registry_schema_json_Model_Registry["Model Registry"] {
       <<schema: model-registry.schema.json>>
-      $schema [1] 'model-registry/v1'
+      $schema [1] 'model-registry/1.0.0'
       models [0..*] Model[]
     }
     class bootstrap_schemas_requirement_schema_json_Statement["Statement"] {

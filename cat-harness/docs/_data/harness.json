@@ -1663,12 +1663,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 7
+          "value": 6
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 7
+          "value": 6
         },
         {
           "id": "views",
@@ -1683,10 +1683,6 @@
         },
         {
           "kind": "processes",
-          "note": "no viewer by design"
-        },
-        {
-          "kind": "qa",
           "note": "no viewer by design"
         },
         {
@@ -1707,7 +1703,7 @@
         }
       ],
       "findings": [
-        "bootstrap: 7 graph(s) render no viewer — models, processes, qa, scenarios, schemas, skills, swimlane-glossary — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
+        "bootstrap: 6 graph(s) render no viewer — models, processes, scenarios, schemas, skills, swimlane-glossary — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
         "bootstrap: renders nothing of its own (render-exempt), so its tab opens one of its own files as published (/bootstrap/README.html), declared as `reachableAt`."
       ],
       "navbarIcons": [
@@ -1857,6 +1853,104 @@
         "note": "no viewer yet"
       }
     ]
+  },
+  "releases": {
+    "agent-skills": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    },
+    "bootstrap": {
+      "version": "0.1.0",
+      "major": 0,
+      "agent": "https://litlfred.github.io/bootstrap/0.1.0/",
+      "human": "https://litlfred.github.io/bootstrap/v0/"
+    },
+    "cat-harness": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    },
+    "fhir-harness": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    },
+    "folio-assistant": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    },
+    "folio-assistant-core": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    },
+    "folio-assistant-sci": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    },
+    "large-datasets": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    },
+    "smart-base": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    },
+    "smart-dak": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    },
+    "smart-ig": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    },
+    "smart-immunizations": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    },
+    "smart-l1": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    },
+    "smart-trust": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    },
+    "who-iris": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    },
+    "who-style-guide": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
+    }
   },
   "config": {
     "properties": [
@@ -2677,7 +2771,7 @@
           },
           {
             "key": "directories",
-            "summary": "7: skills, schemas, scenarios, processes, models, swimlane-glossary, qa"
+            "summary": "6: skills, schemas, scenarios, processes, models, swimlane-glossary"
           },
           {
             "key": "stickies",
@@ -2711,7 +2805,8 @@
     "findings": [
       "`topology`: no skill edits `topology` yet: its axes are documented only in the schema (cat-harness.ts, TopologySchema)",
       "who-iris: declares `folioMount`, which the declaration schema does not have and silently drops.",
-      "cat-harness: declares `folioMount`, which the declaration schema does not have and silently drops."
+      "cat-harness: declares `folioMount`, which the declaration schema does not have and silently drops.",
+      "bootstrap: declares `iriBase`, which the declaration schema does not have and silently drops."
     ]
   }
 }

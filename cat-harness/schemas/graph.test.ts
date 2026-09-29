@@ -147,7 +147,7 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
    *   location, not a reference to another Harness.
    *
    * The `folio-*` schema identifiers are no longer allowed: bootstrap's own
-   * files carry `model-registry/v1` and `glossary-ledger/v1`, each resolving
+   * files carry `model-registry/1.0.0` and `glossary-ledger/1.0.0`, each resolving
    * to a schema inside bootstrap (bean r3gy, D2). The `folio:` diagram prefix
    * went earlier (bean 12s9, stage 2).
    */
@@ -245,7 +245,7 @@ describe("every $schema a bootstrap file carries resolves inside bootstrap (bean
   });
 
   test("the two tags that used to name the platform are bootstrap's own", () => {
-    expect(owned.has("model-registry/v1")).toBe(true);
-    expect(owned.has("glossary-ledger/v1")).toBe(true);
+    expect(owned.has("model-registry/1.0.0")).toBe(true);
+    expect(owned.has("glossary-ledger/1.0.0")).toBe(true);
   });
 });

@@ -50,6 +50,7 @@
  * own turns. A registry that was read as the answer would be a regression
  * dressed as a feature.
  */
+import { tagCompatible } from "./release-iri.ts";
 import { z } from "zod";
 
 /**
@@ -87,8 +88,13 @@ export const ModelEntrySchema = z.object({
 
 export type ModelEntry = z.infer<typeof ModelEntrySchema>;
 
-/** bootstrap's tag for the registry (bean `r3gy`, D2). */
-export const MODEL_REGISTRY_SCHEMA = "model-registry/v1";
+/**
+ * bootstrap's tag for the registry (bean `r3gy`, D2): the schema's name and
+ * its own semver. A reader accepts any tag of the same MAJOR version.
+ */
+export const MODEL_REGISTRY_SCHEMA_NAME = "model-registry";
+export const MODEL_REGISTRY_SCHEMA_VERSION = "1.0.0";
+export const MODEL_REGISTRY_SCHEMA = `${MODEL_REGISTRY_SCHEMA_NAME}/${MODEL_REGISTRY_SCHEMA_VERSION}`;
 /** The tag before 2026-09-29, naming the platform above bootstrap. Read, never written; drop after one release. */
 export const LEGACY_MODEL_REGISTRY_SCHEMA = "folio-model-registry/v1";
 
@@ -129,8 +135,9 @@ export function validatedLanguages(entry: ModelEntry): readonly string[] | undef
  * made.
  */
 export function parseModelRegistry(raw: unknown, where: string): ModelRegistry {
+  const tag = raw && typeof raw === "object" ? (raw as { $schema?: unknown }).$schema : undefined;
   const tagged =
-    raw && typeof raw === "object" && (raw as { $schema?: unknown }).$schema === LEGACY_MODEL_REGISTRY_SCHEMA
+    tag === LEGACY_MODEL_REGISTRY_SCHEMA || (tag !== MODEL_REGISTRY_SCHEMA && tagCompatible(tag, MODEL_REGISTRY_SCHEMA_NAME, 1))
       ? { ...(raw as object), $schema: MODEL_REGISTRY_SCHEMA }
       : raw;
   const parsed = ModelRegistrySchema.safeParse(tagged);

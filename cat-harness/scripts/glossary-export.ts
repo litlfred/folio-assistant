@@ -123,7 +123,8 @@
  * @conformsTo w3c-rdfs
  * @conformsTo w3c-skos
  */
-import { LEDGER_SCHEMA, LEGACY_LEDGER_SCHEMA } from "../schemas/glossary-ledger.ts";
+import { LEDGER_SCHEMA, LEDGER_SCHEMA_NAME, LEGACY_LEDGER_SCHEMA } from "../schemas/glossary-ledger.ts";
+import { tagCompatible } from "../schemas/release-iri.ts";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
@@ -271,7 +272,7 @@ export function readLedger(instanceRoot: string, stub: string): Ledger {
   // A ledger that is not one is REFUSED rather than replaced. Overwriting it
   // would delete every retirement record in the file — the one thing this
   // module exists to keep — on the strength of a parse this code got wrong.
-  if (raw.$schema !== LEDGER_SCHEMA && raw.$schema !== LEGACY_LEDGER_SCHEMA) {
+  if (raw.$schema !== LEGACY_LEDGER_SCHEMA && !tagCompatible(raw.$schema, LEDGER_SCHEMA_NAME, 1)) {
     throw new Error(`${p}: expected "$schema": "${LEDGER_SCHEMA}", found ${JSON.stringify(raw.$schema)}`);
   }
   return { ...raw, $schema: LEDGER_SCHEMA };

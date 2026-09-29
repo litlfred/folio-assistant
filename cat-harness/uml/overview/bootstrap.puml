@@ -45,7 +45,7 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
     stillOpen [0..*] : list<harness | repositories>
   }
   class "Glossary Ledger" as bootstrap_schemas_glossary_ledger_schema_json_Glossary_Ledger <<schema: glossary-ledger.schema.json>> #e9edf3 {
-    $schema [1] : 'glossary-ledger/v1'
+    $schema [1] : 'glossary-ledger/1.0.0'
     instance [1] : string
     concepts [1] : map<object>
   }
@@ -63,6 +63,8 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
   }
   class "Knowledge Graph declaration" as bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration <<schema: graph.schema.json>> #e9edf3 {
     name [1] : string
+    version [0..1] : string
+    iriBase [0..1] : string<uri>
     title [0..1] : string
     description [0..1] : string
     directories [0..*] : Directory[]
@@ -78,7 +80,7 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
     note [0..1] : string
   }
   class "Model Registry" as bootstrap_schemas_model_registry_schema_json_Model_Registry <<schema: model-registry.schema.json>> #e9edf3 {
-    $schema [1] : 'model-registry/v1'
+    $schema [1] : 'model-registry/1.0.0'
     models [0..*] : Model[]
   }
   class "Statement" as bootstrap_schemas_requirement_schema_json_Statement <<schema: requirement.schema.json>> #e9edf3 {
@@ -169,13 +171,13 @@ package "bootstrap/models" as pkg_bootstrap_models <<models>> {
     note [0..1] : string
   }
   class "ModelRegistry" as bootstrap_models_ModelRegistry <<json: ModelRegistrySchema>> #e8f0ee {
-    $schema [1] : 'model-registry/v1'
+    $schema [1] : 'model-registry/1.0.0'
     models [0..*] : Model[]
   }
 }
 package "bootstrap/swimlane-glossary" as pkg_bootstrap_swimlane_glossary <<swimlane-glossary>> {
-  class "glossary-ledger/v1" as bootstrap_swimlane_glossary_glossary_ledger_v1_glossary_ledger_v1 <<json: LedgerSchema>> #f4f4f1 {
-    $schema [1] : 'glossary-ledger/v1'
+  class "glossary-ledger/1.0.0" as bootstrap_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0 <<json: LedgerSchema>> #f4f4f1 {
+    $schema [1] : 'glossary-ledger/1.0.0'
     instance [1] : string
     concepts [1] : map<object>
   }

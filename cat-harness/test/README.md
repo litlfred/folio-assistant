@@ -3,7 +3,7 @@
 
 The platform's own tests, EXCLUDING the results they write -- `test/results/` is declared `qa` and `test/health/results/` is declared `health`, and they keep those kinds. A directory is a place to look and may hold more than one part of a graph, which is exactly this case: the tests are authored code, their outputs are state, and the two are told apart by what the files declare themselves to be.
 
-Part of [C@T Harness](../README.md), declared as `cat-harness-tests`, holding `code`.
+Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-tests`, holding `code`.
 
 | file | what it is | used by |
 |---|---|---|

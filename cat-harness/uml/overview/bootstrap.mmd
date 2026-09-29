@@ -45,7 +45,7 @@ classDiagram
     }
     class bootstrap_schemas_glossary_ledger_schema_json_Glossary_Ledger["Glossary Ledger"] {
       <<schema: glossary-ledger.schema.json>>
-      $schema [1] 'glossary-ledger/v1'
+      $schema [1] 'glossary-ledger/1.0.0'
       instance [1] string
       concepts [1] map~object~
     }
@@ -66,6 +66,8 @@ classDiagram
     class bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration["Knowledge Graph declaration"] {
       <<schema: graph.schema.json>>
       name [1] string
+      version [0..1] string
+      iriBase [0..1] string~uri~
       title [0..1] string
       description [0..1] string
       directories [0..*] Directory[]
@@ -83,7 +85,7 @@ classDiagram
     }
     class bootstrap_schemas_model_registry_schema_json_Model_Registry["Model Registry"] {
       <<schema: model-registry.schema.json>>
-      $schema [1] 'model-registry/v1'
+      $schema [1] 'model-registry/1.0.0'
       models [0..*] Model[]
     }
     class bootstrap_schemas_requirement_schema_json_Statement["Statement"] {
@@ -182,14 +184,14 @@ classDiagram
     }
     class bootstrap_models_ModelRegistry["ModelRegistry"] {
       <<json: ModelRegistrySchema>>
-      $schema [1] 'model-registry/v1'
+      $schema [1] 'model-registry/1.0.0'
       models [0..*] Model[]
     }
   }
   namespace bootstrap__swimlane_glossary {
-    class bootstrap_swimlane_glossary_glossary_ledger_v1_glossary_ledger_v1["glossary-ledger/v1"] {
+    class bootstrap_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0["glossary-ledger/1.0.0"] {
       <<json: LedgerSchema>>
-      $schema [1] 'glossary-ledger/v1'
+      $schema [1] 'glossary-ledger/1.0.0'
       instance [1] string
       concepts [1] map~object~
     }
@@ -225,4 +227,4 @@ classDiagram
   bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
   cssClass "bootstrap_models_Model" fa_uml_kind_models
   cssClass "bootstrap_models_ModelRegistry" fa_uml_kind_models
-  cssClass "bootstrap_swimlane_glossary_glossary_ledger_v1_glossary_ledger_v1" fa_uml_kind_swimlane_glossary
+  cssClass "bootstrap_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0" fa_uml_kind_swimlane_glossary

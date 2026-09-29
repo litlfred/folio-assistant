@@ -2255,6 +2255,19 @@ export const CatHarnessDeclarationSchema = z.object({
   navbarIcons: NavbarIconsSchema.optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
+  /**
+   * The address this instance's IRIs are minted under, BEFORE the version —
+   * bootstrap's `iriBase` (see `graph.ts`), and the one place a fork edits.
+   *
+   * Not `canonicalUrl`, and the difference is the version. `canonicalUrl`
+   * says where documents are PUBLISHED, and `kg-export` mints a document's
+   * `@id` from it; `iriBase` says what the vocabulary's identifiers ARE, and
+   * those carry the release: `<iriBase><version>/…` for anything an agent
+   * reads (namespaces, schema `$id`s), `<iriBase>v<major>/…` for pages a
+   * person reads (owner, 2026-09-29). `releaseIris` in `release-iri.ts`
+   * composes both; `iri:sync` keeps every literal copy at the declared version.
+   */
+  iriBase: z.string().url().optional(),
   previewUrl: z.string().url().optional(),
   publication: PublicationSchema.optional(),
   topology: TopologySchema.optional(),

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://litlfred.github.io/folio-assistant/bootstrap/schemas/graph.schema.json",
+  "$id": "https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json",
   "title": "Knowledge Graph declaration",
   "description": "A Declaration. Any field not listed here is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning.",
   "type": "object",
@@ -9,6 +9,16 @@
       "type": "string",
       "minLength": 1,
       "description": "The Knowledge Graph's name. The declaration file is `<name>.json`."
+    },
+    "version": {
+      "description": "Its version, as MAJOR.MINOR.PATCH (semantic versioning).",
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "iriBase": {
+      "description": "The address its IRIs are minted under, before the version. An identifier a program reads is `<iriBase><version>/…`; a page meant for a person is `<iriBase>v<major>/…`.",
+      "type": "string",
+      "format": "uri"
     },
     "title": {
       "type": "string"
@@ -137,6 +147,10 @@
     "NodeKind": {
       "title": "NodeKind",
       "description": "A name for a class of Nodes, together with its Node Schema: a JSON Schema that every Node of that kind satisfies."
+    },
+    "SubKind": {
+      "title": "SubKind",
+      "description": "A Node Kind whose Node Schema requires everything another Node Kind's does, so every Node of it is also a Node of that other kind."
     },
     "NodeInstance": {
       "title": "NodeInstance",

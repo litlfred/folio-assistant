@@ -65,6 +65,10 @@ import { BOOTSTRAP_TERMS, BOOTSTRAP_TERM_SHAPES, KnowledgeGraphDeclarationSchema
 import { renderSchemaPage, type PageDocument } from "./bootstrap-schema-page.ts";
 import { ModelRegistrySchema } from "../schemas/model-registry.ts";
 import { LedgerSchema } from "../schemas/glossary-ledger.ts";
+import { bootstrapRelease, releaseIri } from "../schemas/release-iri.ts";
+
+/** Every `$id` below is minted from bootstrap's declared iriBase and version, never typed. */
+const RELEASE = bootstrapRelease();
 import {
   REQUIREMENT_JSON_SCHEMA_CONDITIONALS,
   RequirementSchema,
@@ -114,7 +118,7 @@ const TARGETS = [
     // it is half of a published contract cited from five languages'
     // catalogues, and ids are stable across a relocation while paths are not.
     file: "schemas/discussion.input.schema.json",
-    id: "https://litlfred.github.io/folio-assistant/bootstrap/skills/discussion/input.schema.json",
+    id: releaseIri(RELEASE, "skills/discussion/input.schema.json", "agent"),
     title: "Discussion Input",
     description:
       "The occasion for asking: what the agent already knows, and which unknown is still open. Deliberately small — a Bootstrapping Agent has read one README and can look nothing up, so an input it cannot populate is an input that stops the process.",
@@ -125,7 +129,7 @@ const TARGETS = [
   {
     // declared-path-literal: as above — path moved, `$id` deliberately not.
     file: "schemas/discussion.output.schema.json",
-    id: "https://litlfred.github.io/folio-assistant/bootstrap/skills/discussion/output.schema.json",
+    id: releaseIri(RELEASE, "skills/discussion/output.schema.json", "agent"),
     title: "Discussion Output",
     description:
       "What the exchange determined: which harness, which repositories, on whose word, and by what means. This document existing and conforming is what finishes the task — not that a conversation took place.",
@@ -138,7 +142,7 @@ const TARGETS = [
     // (owner, 2026-09-23: "bootstrap = self definitional … all terms have a
     // schema"). `bootstrap/README.md` links each term's first use here.
     file: "schemas/graph.schema.json",
-    id: "https://litlfred.github.io/folio-assistant/bootstrap/schemas/graph.schema.json",
+    id: releaseIri(RELEASE, "schemas/graph.schema.json", "agent"),
     title: "Knowledge Graph declaration",
     description:
       BOOTSTRAP_TERMS.KnowledgeGraph +
@@ -152,7 +156,7 @@ const TARGETS = [
     // into cat-harness on 2026-09-23 (bean iwtn, FR-7: bootstrap holds no
     // code); this document is what a reader with nothing installed opens.
     file: "schemas/model-registry.schema.json",
-    id: "https://litlfred.github.io/folio-assistant/bootstrap/schemas/model-registry.schema.json",
+    id: releaseIri(RELEASE, "schemas/model-registry.schema.json", "agent"),
     title: "Model Registry",
     description:
       "Which languages a model is good at, and whether a person checked. Only `human-validated` is ever acted on, and only a person can grant it.",
@@ -165,7 +169,7 @@ const TARGETS = [
     // `folio-glossary-ledger/v1` and resolved to no schema inside bootstrap;
     // now every `$schema` a bootstrap file carries does (bean r3gy, D2).
     file: "schemas/glossary-ledger.schema.json",
-    id: "https://litlfred.github.io/folio-assistant/bootstrap/schemas/glossary-ledger.schema.json",
+    id: releaseIri(RELEASE, "schemas/glossary-ledger.schema.json", "agent"),
     title: "Glossary Ledger",
     description:
       "Every term a Knowledge Graph's Processes have ever named, with the date each was first seen and the date it stopped being used. The glossary itself is regenerated each time; this is the one fact that cannot be, so a retired term is never silently reused.",
@@ -178,7 +182,7 @@ const TARGETS = [
     // Bootstrap publishes it because a harness states its requirements before
     // anything above bootstrap has loaded; the Zod is in cat-harness (FR-7, 319n).
     file: "schemas/requirement.schema.json",
-    id: "https://litlfred.github.io/folio-assistant/bootstrap/schemas/requirement.schema.json",
+    id: releaseIri(RELEASE, "schemas/requirement.schema.json", "agent"),
     title: "Requirement",
     description:
       "What a harness, or something built with one, must do, said so it can be checked: a titled set of numbered statements, each with a level (SHALL, SHOULD, MAY, SHALL NOT) and one sentence. A test run points at a statement as `req:<slug>#<key>`; the requirement does not list its tests. Statement keys are unique within a requirement.",

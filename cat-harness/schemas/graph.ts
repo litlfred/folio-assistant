@@ -46,6 +46,8 @@ export const BOOTSTRAP_TERMS = {
     "One unit of recorded knowledge, held in one file or as one identifiable part of a file, and named by an IRI.",
   NodeKind:
     "A name for a class of Nodes, together with its Node Schema: a JSON Schema that every Node of that kind satisfies.",
+  SubKind:
+    "A Node Kind whose Node Schema requires everything another Node Kind's does, so every Node of it is also a Node of that other kind.",
   NodeInstance: "A Node that states its Node Kind and satisfies that kind's Node Schema.",
   GraphKind: "A named set of Node Kinds whose instances may be held together.",
   Declaration:
@@ -141,6 +143,18 @@ export const AssetSchema = z
 export const KnowledgeGraphDeclarationSchema = z
   .object({
     name: z.string().min(1).describe("The Knowledge Graph's name. The declaration file is `<name>.json`."),
+    version: z
+      .string()
+      .regex(/^\d+\.\d+\.\d+$/)
+      .optional()
+      .describe("Its version, as MAJOR.MINOR.PATCH (semantic versioning)."),
+    iriBase: z
+      .string()
+      .url()
+      .optional()
+      .describe(
+        "The address its IRIs are minted under, before the version. An identifier a program reads is `<iriBase><version>/…`; a page meant for a person is `<iriBase>v<major>/…`.",
+      ),
     title: z.string().optional(),
     description: z.string().optional(),
     directories: z.array(SubgraphSchema).optional().describe("Its Subgraphs: zero or more."),

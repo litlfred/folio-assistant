@@ -1059,7 +1059,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "state",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "glossary-ledger/v1": { validator: "schemas/glossary-ledger.ts#LedgerSchema" },
+      "glossary-ledger/1.0.0": { validator: "schemas/glossary-ledger.ts#LedgerSchema" },
     },
     // NOT work. A bean is something somebody is partway through; this is a
     // record that a term exists, true whether or not anybody is doing
