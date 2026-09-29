@@ -296,10 +296,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-27T15:07:42.074Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/133283dcf6c448d8b1ce4e8ee3552a548bb562f0",
-  "sourceCommitSha": "133283dcf6c448d8b1ce4e8ee3552a548bb562f0",
-  "sourceCommitAt": "2026-09-27T15:04:50Z",
+  "generatedAt": "2026-09-29T17:57:42.321Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e0abdd628dafe250b27124403a4866509c8d9691",
+  "sourceCommitSha": "e0abdd628dafe250b27124403a4866509c8d9691",
+  "sourceCommitAt": "2026-09-29T17:33:24Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1406,7 +1406,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/goal-review.md",
-      "instructionLines": 276,
+      "instructionLines": 345,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2875,7 +2875,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 397,
+      "instructionLines": 452,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3315,7 +3315,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/deletion-requires-confirmation.md",
-      "instructionLines": 248,
+      "instructionLines": 288,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6276,8 +6276,8 @@
       "path": "skills/authoring-math",
       "hasManifest": true,
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/lean-formalization",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/latex-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/lean-formalization",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/proof-verification"
       ],
       "providesCapability": [
@@ -6302,14 +6302,14 @@
       "path": "skills/theming",
       "hasManifest": true,
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/theming",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/create-sticky-note",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/site-presentation-assets",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/theme-art-intake",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/theme-artefacts",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/theme-contrast",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/theme-declaration",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/theme-generation",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/theme-contrast",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/theme-artefacts",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/create-sticky-note",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/site-presentation-assets"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/theming"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -6421,9 +6421,9 @@
       "path": "skills/security",
       "hasManifest": true,
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/security",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/injection-boundaries",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/path-containment",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/injection-boundaries"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/security"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -6642,16 +6642,16 @@
       "path": "skills/content-lifecycle",
       "hasManifest": true,
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/content-plan",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/content-author",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/content-validate",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/content-review",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/evidence-appraisal",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/content-test",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/sample-import",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/content-publish",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/content-feedback",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/content-retire"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/content-plan",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/content-publish",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/content-retire",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/content-test",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/evidence-appraisal",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/sample-import"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#capability/git-push",
@@ -6801,9 +6801,9 @@
       "hasManifest": true,
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/document-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/document-publishing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/document-structure",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/normative-statements",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/document-publishing"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#skill/normative-statements"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-escape-imports-external-schema/cat-harness.jsonld#capability/pandoc",
