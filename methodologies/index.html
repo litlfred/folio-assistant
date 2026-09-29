@@ -509,32 +509,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790722321">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790723947">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790722321">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790723947">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790722321">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790723947">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790722321">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790723947">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790722321">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790723947">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790722321">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790723947">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -551,7 +551,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790722321" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790723947" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -766,10 +766,10 @@ the source that origin names is a separate question, and the one the third
 column answers.</p>
 
 <div class="mv-grid">
-<div class="mv-stat"><b>13</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>8</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>16</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>11</b><span>with the source held here</span></div>
 <div class="mv-stat"><b>5</b><span>cited, not ingested</span></div>
-<div class="mv-stat"><b>3</b><span>instance(s) declaring the graph</span></div>
+<div class="mv-stat"><b>4</b><span>instance(s) declaring the graph</span></div>
 </div>
 <h2 id="choosing-one">
   
@@ -794,6 +794,18 @@ agent picks by resemblance, which is why the schema requires the field.</p>
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td><strong><a href="#bidirectional-agentic-autoformalization">Bidirectional agentic autoformalization — extract, compile-fix, check faithfulness, then informalize back without the source</a></strong><br /><code class="language-plaintext highlighter-rouge">bidirectional-agentic-autoformalization</code></td>
+      <td><strong>A whole paper, not a single theorem, is being formalised with an agent doing the Lean</strong>, and the question is how to organise the run: what to extra…</td>
+      <td><span class="mv-tag mv-ingested">source held</span></td>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci</code></td>
+    </tr>
+    <tr>
+      <td><strong><a href="#blueprint-driven-formalization">Blueprint-driven formalization — Lean as the single source of dependency and status, the blueprint node as the unit of work</a></strong><br /><code class="language-plaintext highlighter-rouge">blueprint-driven-formalization</code></td>
+      <td><strong>A formalization is large enough that its state has to be tracked node by node</strong> — many interdependent definitions and theorems, several contributor…</td>
+      <td><span class="mv-tag mv-ingested">source held</span></td>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci</code></td>
+    </tr>
     <tr>
       <td><strong><a href="#consensus-grounded-subject-evaluation">Consensus-grounded subject evaluation — independent indexers as the answer key, and a panel instead of one score</a></strong><br /><code class="language-plaintext highlighter-rouge">consensus-grounded-subject-evaluation</code></td>
       <td><strong>Judging how good a set of controlled-vocabulary assignments is, when qualified people would themselves disagree about the exact answer.</strong> Use it to…</td>
@@ -835,6 +847,12 @@ agent picks by resemblance, which is why the schema requires the field.</p>
       <td><strong>Bean context</strong> — the owner’s binding, 2026-09-20. When a bean records a decision, this is the form. Not for the decision METHOD (see…</td>
       <td><span class="mv-tag mv-cited">cited, not ingested</span></td>
       <td><code class="language-plaintext highlighter-rouge">cat-harness</code></td>
+    </tr>
+    <tr>
+      <td><strong><a href="#process-driven-autoformalization">Process-driven autoformalization — judge a formalised statement by compiling it WITH a proof, and read the first error as the step signal</a></strong><br /><code class="language-plaintext highlighter-rouge">process-driven-autoformalization</code></td>
+      <td><strong>A natural-language statement is being turned into a Lean statement and the question is how to test the candidate</strong>, or…</td>
+      <td><span class="mv-tag mv-ingested">source held</span></td>
+      <td><code class="language-plaintext highlighter-rouge">folio-assistant-sci</code></td>
     </tr>
     <tr>
       <td><strong><a href="#raci">RACI — who is involved in an activity, and in which of four ways</a></strong><br /><code class="language-plaintext highlighter-rouge">raci</code></td>
@@ -891,6 +909,50 @@ an open question, reported by <code class="language-plaintext highlighter-rouge"
 nothing. <strong>Citation does not resolve</strong> is neither: the node claims a source
 and the slug names nothing, which reads as evidence in every listing and is
 strictly worse than declaring none.</p>
+<h3 id="bidirectional-agentic-autoformalization--extract-compile-fix-check-faithfulness-then-informalize-back-without-the-source">
+  
+  
+    <a href="#bidirectional-agentic-autoformalization--extract-compile-fix-check-faithfulness-then-informalize-back-without-the-source" class="anchor-heading" aria-labelledby="bidirectional-agentic-autoformalization--extract-compile-fix-check-faithfulness-then-informalize-back-without-the-source"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Bidirectional agentic autoformalization — extract, compile-fix, check faithfulness, then informalize back without the source
+  
+  
+</h3>
+    
+
+<p><a id="bidirectional-agentic-autoformalization"></a></p>
+
+<p><code class="language-plaintext highlighter-rouge">bidirectional-agentic-autoformalization</code> — declared by <code class="language-plaintext highlighter-rouge">folio-assistant-sci</code> — <span class="mv-tag mv-ingested">source held</span></p>
+
+<p><strong>Applies when.</strong> <strong>A whole paper, not a single theorem, is being formalised with an agent doing the Lean</strong>, and the question is how to organise the run: what to extract first, how the compile-fix loop is bounded, what happens to a statement the agent cannot prove, and how a mathematician who does not read Lean reviews what came out. Do NOT use it to decide that a formalisation is faithful because the pipeline’s own faithfulness step said so (see §3 and §”Refusals”). Not for choosing an axiom policy — this platform already has one, and it is stricter.</p>
+
+<p><strong>Origin.</strong> Yuanjie Ren, Jinzheng Li and Yidi Qi, “MerLean: An Agentic Framework for Autoformalization in Quantum Computation” (arXiv:2602.16554v1 [cs.LO], Massachusetts Institute of Technology and Northeastern University, 18 February 2026). Open access. A SYSTEM paper: it reports one agent pipeline run on three quantum-computing papers. What is adopted below is the method; several of its steps are REFUSED here, and §”Refusals” says which and why.</p>
+
+<p><strong>Ingested sources:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">library/arxiv-2602.16554v1</code></li>
+</ul>
+<h3 id="blueprint-driven-formalization--lean-as-the-single-source-of-dependency-and-status-the-blueprint-node-as-the-unit-of-work">
+  
+  
+    <a href="#blueprint-driven-formalization--lean-as-the-single-source-of-dependency-and-status-the-blueprint-node-as-the-unit-of-work" class="anchor-heading" aria-labelledby="blueprint-driven-formalization--lean-as-the-single-source-of-dependency-and-status-the-blueprint-node-as-the-unit-of-work"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Blueprint-driven formalization — Lean as the single source of dependency and status, the blueprint node as the unit of work
+  
+  
+</h3>
+    
+
+<p><a id="blueprint-driven-formalization"></a></p>
+
+<p><code class="language-plaintext highlighter-rouge">blueprint-driven-formalization</code> — declared by <code class="language-plaintext highlighter-rouge">folio-assistant-sci</code> — <span class="mv-tag mv-ingested">source held</span></p>
+
+<p><strong>Applies when.</strong> <strong>A formalization is large enough that its state has to be tracked node by node</strong> — many interdependent definitions and theorems, several contributors or agents, and partial progress that someone must be able to read at a glance. Use it to decide where dependency and completion status are RECORDED and who may write them, and to decompose a target into units an automated prover can attempt one at a time. Do NOT use it to decide whether a Lean statement says what the prose says: a blueprint records that a node is <code class="language-plaintext highlighter-rouge">sorry</code>-free, never that it is faithful. That question belongs to the equivalence and vacuity audits, and this method makes it MORE pressing, not less (see §4). Not for a single-theorem formalization, where the graph has one node and the bookkeeping costs more than it saves.</p>
+
+<p><strong>Origin.</strong> Thomas Zhu, Pietro Monticone, Jeremy Avigad and Sean Welleck, “LeanArchitect: Automating Blueprint Generation for Humans and AI” (arXiv:2601.22554v1 [cs.LO], Carnegie Mellon University and University of Trento, 30 January 2026). Open access. The blueprint itself is older and is not this paper’s: it is Patrick Massot’s <code class="language-plaintext highlighter-rouge">leanblueprint</code> (2020), a plasTeX plugin whose <code class="language-plaintext highlighter-rouge">\uses</code>, <code class="language-plaintext highlighter-rouge">\lean</code> and <code class="language-plaintext highlighter-rouge">\leanok</code> macros this paper builds on (its §2, ref. [16]). <code class="language-plaintext highlighter-rouge">leanblueprint</code> is NOT ingested here, so everything this node says about it is SECOND-HAND, through the LeanArchitect paper. The LeanArchitect paper is a TOOL paper: it presents a method through one Lean package. What is adopted below is the method; §”Where this rendering stops” says which parts were left behind.</p>
+
+<p><strong>Ingested sources:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">library/arxiv-2601.22554v1</code></li>
+</ul>
 <h3 id="consensus-grounded-subject-evaluation--independent-indexers-as-the-answer-key-and-a-panel-instead-of-one-score">
   
   
@@ -1038,6 +1100,28 @@ these.</p>
 <p><strong>No ingested source.</strong> The origin above names one; nothing in this
 checkout holds it. <code class="language-plaintext highlighter-rouge">literature-search</code> is the skill that closes one of
 these.</p>
+<h3 id="process-driven-autoformalization--judge-a-formalised-statement-by-compiling-it-with-a-proof-and-read-the-first-error-as-the-step-signal">
+  
+  
+    <a href="#process-driven-autoformalization--judge-a-formalised-statement-by-compiling-it-with-a-proof-and-read-the-first-error-as-the-step-signal" class="anchor-heading" aria-labelledby="process-driven-autoformalization--judge-a-formalised-statement-by-compiling-it-with-a-proof-and-read-the-first-error-as-the-step-signal"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Process-driven autoformalization — judge a formalised statement by compiling it WITH a proof, and read the first error as the step signal
+  
+  
+</h3>
+    
+
+<p><a id="process-driven-autoformalization"></a></p>
+
+<p><code class="language-plaintext highlighter-rouge">process-driven-autoformalization</code> — declared by <code class="language-plaintext highlighter-rouge">folio-assistant-sci</code> — <span class="mv-tag mv-ingested">source held</span></p>
+
+<p><strong>Applies when.</strong> <strong>A natural-language statement is being turned into a Lean statement and the question is how to test the candidate</strong>, or <strong>a Lean statement is being turned into prose</strong> (a blueprint, a docstring, a narrative) and the question is how to keep that prose independent of the Lean it came from. Use it for the two checks it names — compile the statement together with a proof, and decompose informalization so the result is not a paraphrase of the syntax. Do NOT use it as evidence that a statement is FAITHFUL. The paper says itself that the compiler “can only validate the formal proof’s correctness, not its semantic correspondence to the original natural language” (§5.1.2). Not for choosing, training or ranking models: the numbers in it are about the authors’ models on the authors’ dataset.</p>
+
+<p><strong>Origin.</strong> Jianqiao Lu, Yingjia Wan, Zhengying Liu, Yinya Huang, Jing Xiong, Chengwu Liu, Jianhao Shen, Hui Jin, Jipeng Zhang, Haiming Wang, Zhicheng Yang, Jing Tang and Zhijiang Guo, “Process-Driven Autoformalization in Lean 4” (arXiv:2406.01940v2 [cs.CL], 14 October 2024; version 1, June 2024). The paper labels itself “Work in progress”. Open access. It is a MACHINE-LEARNING paper: it contributes a dataset (FormL4, built by informalizing Mathlib 4 theorems) and a training loop (an autoformalizer and a verifier fine-tuned against Lean compiler feedback). This platform trains no models, so what is adopted below is the small part of the method that survives without training; §”Where this rendering stops” is long on purpose.</p>
+
+<p><strong>Ingested sources:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">library/arxiv-2406.01940v2</code></li>
+</ul>
 <h3 id="raci--who-is-involved-in-an-activity-and-in-which-of-four-ways">
   
   
@@ -1373,7 +1457,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36641959989"><code>6fd124b</code></a> &middot; 2026-09-29T22:51:57Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36644462769"><code>68148ea</code></a> &middot; 2026-09-29T23:19:03Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
