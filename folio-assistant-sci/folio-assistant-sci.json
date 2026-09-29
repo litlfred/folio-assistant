@@ -2,7 +2,7 @@
   "_comment": "The SCIENCE folio instance, staged as a top-level directory ahead of becoming its own repository -- the same pattern as who-iris/ and folio-assistant-core/. Owner, 2026-09-20: 'milnor goes in f-a-sci library/, move all 4 and fix fallout'. It exists because `milnorlink` is source material for mathematics and has nothing to do with the WHO IRIS catalogue, so sending it to who-iris/ alongside the three IRIS items would have put one thing in a place named for another. Bean r1lz. DECLARE ONLY WHAT EXISTS, per the dh4f rule: every entry here is a directory that is present.",
   "name": "folio-assistant-sci",
   "version": "0.1.0",
-  "description": "Scientific source material used by folios that formalise mathematics — one document today.",
+  "description": "Scientific source material used by folios that formalise mathematics, and the methodologies for formalising it in Lean that this layer adopts from that material.",
   "assets": [
     {
       "id": "agent-instructions",
@@ -24,7 +24,7 @@
       "id": "library",
       "path": "library/",
       "dependents": "reproduce",
-      "description": "Ingested L1 source material for the sciences. `milnorlink` is the whole of it: the source text the derived `milnor` skill reads, moved out of cat-harness/library/ because the PLATFORM holds no content (bean r1lz, and the rule AGENTS.md states as 'folio-assistant is the platform, not the content'). Its `image-verdicts.json` moved with it rather than staying behind: a verdict belongs to the library it judges, and one file judging documents in two libraries is how one library's judgement comes to rewrite another's sidecar. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
+      "description": "Ingested L1 source material for the sciences. `milnorlink` was the whole of it until 2026-09-29, when three Lean-autoformalization papers arrived as the `evidence` of this layer's methodology nodes (bean h3rw). `milnorlink` is the source text the derived `milnor` skill reads, moved out of cat-harness/library/ because the PLATFORM holds no content (bean r1lz, and the rule AGENTS.md states as 'folio-assistant is the platform, not the content'). Its `image-verdicts.json` moved with it rather than staying behind: a verdict belongs to the library it judges, and one file judging documents in two libraries is how one library's judgement comes to rewrite another's sidecar. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
       "graphKinds": [
         "library"
       ],
@@ -43,6 +43,16 @@
       "coverage": {
         "visualiser": "cat-harness/docs/cat-harness/voices/folio-assistant-sci/index.html"
       }
+    },
+    {
+      "id": "sci-methodologies",
+      "theme": "analyst",
+      "path": "methodologies/",
+      "dependents": "skip",
+      "description": "The methodologies this layer adopts from its own library: external, named methods for formalising mathematics in Lean. Separate from `cat-harness/methodologies/` for the reason `core-methodologies` is separate from both -- a method belongs to the layer whose job it describes, so this directory lifts out with this instance and nothing else moves (`methodology-adoption` §4). Each node renders the METHOD and states where the rendering stops; the paper's tools and numbers are not adopted. Bean h3rw.",
+      "graphKinds": [
+        "methodology"
+      ]
     }
   ]
 }
