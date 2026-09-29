@@ -25,9 +25,9 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>13</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>14</b><span>adopted methodologies</span></div>
 <div class="mv-stat"><b>8</b><span>with the source held here</span></div>
-<div class="mv-stat"><b>5</b><span>cited, not ingested</span></div>
+<div class="mv-stat"><b>6</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>3</b><span>instance(s) declaring the graph</span></div>
 </div>
 
@@ -45,6 +45,7 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[Doc-Researcher — parse for multiple granularities, then research iteratively against a sufficiency threshold](#doc-researcher)**<br>`doc-researcher` | **A question must be answered from documents this folio has ingested, and one retrieval pass will not do it.** Use it when the answer is spread acros… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-core` |
 | **[Hybrid LLM/deterministic — the model proposes a RULE, machinery validates and runs it](#hybrid-llm-deterministic)**<br>`hybrid-llm-deterministic` | **An agent must produce an artefact that something downstream will act on.** Use it when a language model is in the loop and a wrong output would be… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Kepner-Tregoe Decision Analysis](#kepner-tregoe)**<br>`kepner-tregoe` | A decision with several candidate options and no recurring rule — a platform choice, an architecture question, which of three fixes to take. Contextu… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
+| **[Latent Semantic Indexing — retrieve and relate by co-occurrence structure, not by shared words](#lsi)**<br>`lsi` | … | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[MADR — Markdown Architectural Decision Records](#madr)**<br>`madr` | **Bean context** — the owner's binding, 2026-09-20. When a bean records a decision, this is the form. Not for the decision METHOD (see… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[RACI — who is involved in an activity, and in which of four ways](#raci)**<br>`raci` | **Who is involved in an activity, and how.** Use it when a process or a breakdown exists and the question is participation — who answers for this, wh… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[RASCI — RACI plus Supportive, for when doing the work and owning it come apart](#rasci)**<br>`rasci` | **Who is involved, when a role does the work without owning the deliverable.** Use it where a separate *Supportive* party is real — someone who contr… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
@@ -144,6 +145,20 @@ these.
 **Applies when.** A decision with several candidate options and no recurring rule — a platform choice, an architecture question, which of three fixes to take. Contextual, not default: if the criteria recur, use `dmn`; if the question is certainty of evidence for a recommendation, use `grade`.
 
 **Origin.** Charles H. Kepner and Benjamin B. Tregoe, *The Rational Manager* (1965); *The New Rational Manager* (1981)
+
+**No ingested source.** The origin above names one; nothing in this
+checkout holds it. `literature-search` is the skill that closes one of
+these.
+
+### Latent Semantic Indexing — retrieve and relate by co-occurrence structure, not by shared words
+
+<a id="lsi"></a>
+
+`lsi` — declared by `cat-harness` — <span class="mv-tag mv-cited">cited, not ingested</span>
+
+**Applies when.** **Finding or relating units of text that discuss the same thing in different words, across a corpus too large to read whole, where no controlled vocabulary has been assigned.** Use it to ask "what else in this graph is about this?", to propose a home for an unfiled item among existing groups, to find near-duplicates, and to surface clusters nobody named. It answers *which units are close in co-occurrence structure*. It does NOT answer whether a unit is relevant, correct, or a dependency: every output is a PROPOSAL a person or an agent confirms. Not for assigning terms from a controlled vocabulary (`skill-pipeline-subject-indexing`), not for judging an assignment (`consensus-grounded-subject-evaluation`), and not for any decision (`kepner-tregoe`, `dmn`).
+
+**Origin.** Scott Deerwester, Susan T. Dumais, George W. Furnas, Thomas K. Landauer and Richard Harshman, "Indexing by Latent Semantic Analysis", Journal of the American Society for Information Science 41(6):391–407 (1990), for the method. Susan T. Dumais, "Improving the retrieval of information from external sources", Behavior Research Methods, Instruments & Computers 23(2):229–236 (1991), for the log-entropy term weighting. Michael W. Berry, Susan T. Dumais and Gavin W. O'Brien, "Using Linear Algebra for Intelligent Information Retrieval", SIAM Review 37(4):573–595 (1995), for folding-in and updating. Thomas K. Landauer and Susan T. Dumais, "A Solution to Plato's Problem", Psychological Review 104(2):211–240 (1997), for the cognitive reading of the same computation (there called LSA), which this node does NOT adopt.
 
 **No ingested source.** The origin above names one; nothing in this
 checkout holds it. `literature-search` is the skill that closes one of
