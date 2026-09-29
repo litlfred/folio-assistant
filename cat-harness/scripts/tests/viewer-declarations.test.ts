@@ -21,6 +21,7 @@ import {
   viewersOf,
   withRenders,
   withRendersFrontMatter,
+  type ViewedDirectory,
 } from "../viewer-declarations.js";
 
 describe("writing and reading the declaration", () => {
@@ -108,7 +109,7 @@ describe("the corpus: viewers are read from the pages (#1168 B7a-2b)", () => {
     tools().flatMap((t) => (t.renders && t.renders.length > 0 ? [[t.id, t.renders] as const] : [])),
   );
 
-  interface Dir { id: string; path: string; scope?: string; graphKinds?: string[]; coverage?: { visualiser?: unknown } }
+  type Dir = ViewedDirectory;
   const dirs: { root: string; instance: string; dir: Dir }[] = [];
   for (const root of instanceRootsIn(REPO)) {
     const p = declarationPathIn(root);

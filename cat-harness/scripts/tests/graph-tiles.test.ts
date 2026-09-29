@@ -404,12 +404,12 @@ describe("one tile per page (#1168 B7a-2b)", () => {
     { id: "tools", coverage: { visualiser: "docs/tools/index.md" } },
   ]);
 
-  it("a page shared by several directories gets one tile", () => {
+  test("a page shared by several directories gets one tile", () => {
     expect(tiles.filter((t) => t.ref === shared)).toHaveLength(1);
     expect(tiles).toHaveLength(2);
   });
 
-  it("and it is the instance's own directory's tile", () => {
+  test("and it is the instance's own directory's tile", () => {
     expect(tiles.find((t) => t.ref === shared)?.directory).toBe("processes");
   });
 });
