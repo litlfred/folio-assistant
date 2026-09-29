@@ -7,7 +7,7 @@
  * > etc points stub0 → sub1.
  *
  * If A depends on B, nothing in B may reference A. B is lower; it must not
- * know about what sits on top of it. `bootstrap-tools/schemas/graph.test.ts`
+ * know about what sits on top of it. `schemas/graph.test.ts`
  * enforces exactly this for ONE instance (`bootstrap/`, bean `iwtn`). This
  * module is the same invariant over every declared instance.
  *

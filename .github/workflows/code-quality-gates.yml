@@ -418,7 +418,7 @@ jobs:
       #
       # NOTHING WAS DROPPED WITH IT, and that is worth saying rather than
       # assuming: the gate compared bytes, while every property it was
-      # protecting is asserted directly in `scripts/tests/bootstrap-graph.test.ts`
+      # protecting is asserted directly in `bootstrap-tools/scripts/tests/bootstrap-graph.test.ts`
       # against `buildCatBootstrapDocument()` — purity, id ordering, no absolute
       # build paths, skills derived from disk, graph kinds a subset of the
       # declaration, and the `omitted` list. Those run in `bun test`, which
@@ -853,16 +853,27 @@ jobs:
         run: bun run ns:check
 
       # `bootstrap`'s JSON Schemas are GENERATED from Zod in
-      # `cat-harness/schemas/`, because bootstrap promises a Bootstrapping Agent it
-      # needs no tools and therefore cannot hold a `.ts` of its own. This is the
-      # `--check` twin `schema-management` requires of any new rendering:
+      # `bootstrap-tools/schemas/` and the stay-put `cat-harness/schemas/`
+      # modules (bean `81tw`), because bootstrap promises a Bootstrapping Agent
+      # it needs no tools and therefore cannot hold a `.ts` of its own. This is
+      # the `--check` twin `schema-management` requires of any new rendering:
       # three schema generators rotted here before, because nothing ever asked
       # whether their output still matched their input.
       #
       # A red here means the Zod moved and the published document did not —
       # and that document sits at an `$id` consumers already follow.
+      #
+      # `bootstrap:validate` is the second half of the same render pipeline
+      # (owner, 2026-09-29: "need Zod usage in bootstrap tools as part of
+      # validation in rendering pipeline"): the check above judges the
+      # SCHEMAS against their Zod; this judges the DOCUMENTS bootstrap carries
+      # — its declaration, its model registry, any discussion document —
+      # against the same Zod. A run that cannot find bootstrap, or validates
+      # nothing, fails.
       - name: bootstrap schemas are current
-        run: bun run bootstrap:schemas:check
+        run: |
+          bun run bootstrap:schemas:check
+          bun run bootstrap:validate
 
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a

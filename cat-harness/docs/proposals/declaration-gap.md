@@ -440,7 +440,7 @@ over one path are not one entry overriding another. They are two graphs.** A
 consumer that fans out over instances resolves both and scans the directory
 twice.
 
-The remaining four — `bootstrap-tools/schemas`, `large-datasets/skills`,
+The remaining four — the first bootstrap-Zod staging instance's `schemas` (retired by `319n`), `large-datasets/skills`,
 `who-iris/skills`, `large-datasets/schemas` — carry the **same** id on both
 sides, so the by-id override does collapse them to one. They are duplicates in
 the file and not in the resolved set. That distinction is the finding: the same

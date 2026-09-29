@@ -1,7 +1,7 @@
 /**
  * Issue #1164 — the bootstrap `Requirement`, what builds on it, and the check
  * that holds it: `check:requirements`. `check:bootstrap-concepts` moved with
- * its script to `bootstrap-tools/scripts/tests/` (bean `81tw`).
+ * its script out of this instance (bean `81tw`).
  */
 import { describe, expect, test } from "bun:test";
 import { readdirSync, readFileSync } from "node:fs";

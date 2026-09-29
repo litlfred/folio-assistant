@@ -736,13 +736,6 @@ export const RULES: Rule[] = [
       // which it calls: a generator that lived elsewhere would be a second
       // place deciding what a harness row contains, which is the defect.
       "scripts/gen-navbar-include.ts",
-      // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
-      // reason the others here do not have: bootstrap must hold no executable
-      // code, so the generator cannot live beside what it generates.
-      "scripts/gen-bootstrap-schemas.ts",
-      // Its drawn page, `bootstrap/schemas/README.md`. Beside the generator
-      // that calls it, and for the same reason: bootstrap holds no code.
-      "scripts/bootstrap-schema-page.ts",
       // A README per declared directory, from the declaration. Core beside
       // `readme-sections`, whose file description and 'used by' it reuses.
       "scripts/subgraph-readmes.ts",
@@ -1103,11 +1096,9 @@ export const RULES: Rule[] = [
       // is harness machinery, and none imports the content vocabulary.
       "scripts/beans-fallback.ts",
       "scripts/check-harness-dirs.ts",
-      // Issue #1164: bootstrap schemas name no outside concept, and a filed
-      // requirement is a valid one with no name used twice. Harness
-      // machinery over the harness's own declarations; neither imports the
-      // content vocabulary.
-      "scripts/check-bootstrap-concepts.ts",
+      // Issue #1164: a filed requirement is a valid one with no name used
+      // twice. Harness machinery over the harness's own declarations; it does
+      // not import the content vocabulary.
       "scripts/check-requirements.ts",
       // Bean `95ir`: declared-but-absent is reported by a scanner, never
       // dropped. Harness machinery over declarations; imports only node:fs.
@@ -1198,12 +1189,12 @@ export const RULES: Rule[] = [
       // the prefix rule claimed it for core and the edge appeared immediately.
       "schemas/vocabulary.ts",
       // bootstrap's Zod (owner, 2026-09-24: "Validate/zod in cat-harness. Graph
-      // and Subgraph too"). Moved in from the retired `bootstrap-tools`
-      // instance; `vocabulary.ts` above reads BOOTSTRAP_TERMS from `graph.ts`,
-      // so a core placement is a wrong-direction edge.
+      // and Subgraph too"). `vocabulary.ts` above reads BOOTSTRAP_TERMS from
+      // `graph.ts`, so a core placement is a wrong-direction edge. The Zod
+      // that nothing here imports was staged back OUT of this instance on
+      // 2026-09-29 (bean `81tw`), and this scan does not reach it; this entry
+      // keeps only what cat-harness itself depends on.
       "schemas/graph.ts",
-      "schemas/discussion.ts",
-      "schemas/bootstrap-graph.ts",
       // The Requirement bootstrap publishes (issue #1164); `skill-package.ts`
       // builds the harness Requirement on it, so core would be an edge downward.
       "schemas/requirement.ts",
@@ -1359,7 +1350,6 @@ export const RULES: Rule[] = [
       "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales AND gates the declarations (beans `v625`, `nfv3` — two commands one letter apart, consolidated here at the owner's decision 2026-09-26). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the six artefacts before their checks read them
       "scripts/check-merged.ts",            // the gate runner, on the merged tree (bean `nytj`)
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
-      "scripts/gen-bootstrap-graph.ts", // writes bootstrap/bootstrap.jsonld
       "scripts/gen-python-deps.ts",         // writes requirements.txt
       "scripts/kg-validate.ts",             // one Tool, parameterised by graph kind
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs

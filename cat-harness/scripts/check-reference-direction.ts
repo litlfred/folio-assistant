@@ -5,7 +5,7 @@
  * Owner, 2026-09-23: *"if sub1 depends (directly or through chain) stub0, no
  * references/context etc points stub0 → sub1."*
  *
- * `bootstrap-tools/schemas/graph.test.ts` enforces this for ONE instance
+ * `schemas/graph.test.ts` enforces this for ONE instance
  * (`bootstrap/`, bean `iwtn`). This is the same invariant over all of them,
  * through the direction computation `check:partition` already uses, so the
  * import axis and the prose axis cannot give two answers (bean `zhg2`).

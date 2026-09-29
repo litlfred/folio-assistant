@@ -7,7 +7,7 @@
 
 All three are written by `cat-harness/scripts/gen-schema-viz.ts`. It is a zero-dependency viewer that fetches its projection (`assets/schemas/index.json`) relative to its own location. The drawing uses `cat-harness` (812 declarations, 122 modules, 517 edges, 8 undetermined). The others use the same layout with less data: folio-assistant-core 60 / 11 / 31, large-datasets 11 / 2 / 1.
 
-A fifth, `detangle`, was dropped 2026-09-23 when that instance was folded into cat-harness (bean `byql`); its two modules now render on the `cat-harness` page. A sixth, `bootstrap-tools`, was dropped 2026-09-24 the same way: its Zod moved into `cat-harness/schemas/` on the owner's ruling (bean `319n`).
+A fifth, `detangle`, was dropped 2026-09-23 when that instance was folded into cat-harness (bean `byql`); its two modules now render on the `cat-harness` page. A sixth, staged to hold bootstrap's Zod, was folded in 2026-09-24 the same way (bean `319n`) and staged back out on 2026-09-29 (bean `81tw`); the modules that went with it render on that instance's own page, not this one.
 
 **Who it is for:** the owner or a maintainer reading an instance's schemas. The owner's ask, quoted in the generator: *"browsable, so i can give overview like browsing"*. It is "a navigation requirement rather than a poster requirement".
 
