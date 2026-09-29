@@ -64,6 +64,10 @@ A named subset of Node Instances: a Declaration's directory entry, with its id, 
 
 A Declaration's file entry: one file about the repository itself, such as its README, with its stated purpose. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). [src](graph.schema.json#/$defs/Asset)
 
+#### Extension
+
+A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning. [src](graph.schema.json#/$defs/Extension)
+
 #### Knowledge Graph
 
 A semi-static description of one or more datasets or information repositories as of one version: a set of Node Schemas and Node Instances, and the Declaration that divides them into Subgraphs. Published as JSON-LD, each Subgraph is a named graph. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). [src](graph.schema.json#/$defs/KnowledgeGraph)
@@ -198,7 +202,7 @@ Rules the drawing cannot show:
 
 [src](graph.schema.json) · describes `<name>.json`
 
-A semi-static description of one or more datasets or information repositories as of one version: a set of Node Schemas and Node Instances, and the Declaration that divides them into Subgraphs. Published as JSON-LD, each Subgraph is a named graph. This schema is the shape of that declaration, and its `$defs` define every term bootstrap uses.
+A Declaration. Any field not listed here is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning.
 
 ```text
 +--------------------------------------+

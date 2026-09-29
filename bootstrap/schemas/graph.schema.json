@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/bootstrap/schemas/graph.schema.json",
   "title": "Knowledge Graph declaration",
-  "description": "A semi-static description of one or more datasets or information repositories as of one version: a set of Node Schemas and Node Instances, and the Declaration that divides them into Subgraphs. Published as JSON-LD, each Subgraph is a named graph. This schema is the shape of that declaration, and its `$defs` define every term bootstrap uses.",
+  "description": "A Declaration. Any field not listed here is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning.",
   "type": "object",
   "properties": {
     "name": {
@@ -121,6 +121,10 @@
     "Asset": {
       "title": "Asset",
       "description": "A Declaration's file entry: one file about the repository itself, such as its README, with its stated purpose."
+    },
+    "Extension": {
+      "title": "Extension",
+      "description": "A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning."
     },
     "KnowledgeGraph": {
       "title": "KnowledgeGraph",

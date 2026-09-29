@@ -52,6 +52,8 @@ export const BOOTSTRAP_TERMS = {
     "A JSON document, `<name>.json`, that gives a name and lists entries, each naming either a directory of Node Instances with the Graph Kinds they belong to, or a single file with its purpose.",
   Subgraph: "A named subset of Node Instances: a Declaration's directory entry, with its id, its directory and its Graph Kinds.",
   Asset: "A Declaration's file entry: one file about the repository itself, such as its README, with its stated purpose.",
+  Extension:
+    "A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning.",
   KnowledgeGraph:
     "A semi-static description of one or more datasets or information repositories as of one version: a set of Node Schemas and Node Instances, and the Declaration that divides them into Subgraphs. Published as JSON-LD, each Subgraph is a named graph.",
   Dependency:
@@ -104,4 +106,8 @@ export const KnowledgeGraphDeclarationSchema = z
     directories: z.array(SubgraphSchema).optional().describe("Its Subgraphs: zero or more."),
     assets: z.array(AssetSchema).optional(),
   })
-  .passthrough();
+  // Every other field is an Extension: a Harness above bootstrap adds its
+  // own (`stickies`, and a sticky's `theme`, are cat-harness's), and a reader
+  // that does not know one ignores it rather than rejecting the file.
+  .passthrough()
+  .describe(`A Declaration. Any field not listed here is an Extension: ${BOOTSTRAP_TERMS.Extension}`);
