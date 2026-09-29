@@ -302,10 +302,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-29T18:30:35.619Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/09c672dec030710fed973ef6d0e3a92ae5b01dc0",
-  "sourceCommitSha": "09c672dec030710fed973ef6d0e3a92ae5b01dc0",
-  "sourceCommitAt": "2026-09-29T18:19:03Z",
+  "generatedAt": "2026-09-29T19:50:17.859Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ed67fee4b693e02e8708fa32cd4b23af617bed0a",
+  "sourceCommitSha": "ed67fee4b693e02e8708fa32cd4b23af617bed0a",
+  "sourceCommitAt": "2026-09-29T19:38:44Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -314,8 +314,8 @@
     "SequenceFlow": 30,
     "Role": 9,
     "ProcessNode": 30,
-    "GraphKind": 8,
-    "Directory": 8,
+    "GraphKind": 7,
+    "Directory": 7,
     "Asset": 2
   },
   "@graph": [
@@ -1456,14 +1456,6 @@
       "summary": "Which languages a model is good at, and whether a human checked. Read when a session opens, as ONE input to the communication-language determination and never as the answer. Declared in bootstrap because an agent reaching for it has not yet loaded the harness."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#GraphKind",
-      "name": "translation-sources",
-      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#TranslationSourceGraph",
-      "renderable": false,
-      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "bootstrapping-agent",
@@ -1596,18 +1588,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/swimlane-glossary"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/bootstrap/bootstrap.jsonld#directory/bootstrap-translations",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "bootstrap-translations",
-      "path": "translations/",
-      "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/translation-sources"
-      ],
-      "description": "Translation templates (`.pot`) for bootstrap's Process diagrams, one directory per target language.",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/bootstrap/bootstrap.jsonld#directory/bootstrap-translations",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/bootstrap-translations"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/bootstrap/bootstrap.jsonld#directory/qa",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
       "name": "qa",
@@ -1642,8 +1622,8 @@
   ],
   "staging": {
     "branch": "claude/brave-hawking-511rrx",
-    "sha": "488089f2a7a5ac6add5fb979048dd757e2f89a28",
+    "sha": "5cbffdb647d573d9ff6657287b087b91210e7513",
     "pr": "1483/merge",
-    "run": "36612295146"
+    "run": "36621806431"
   }
 }
