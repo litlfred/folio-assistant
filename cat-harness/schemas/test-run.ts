@@ -85,7 +85,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { SkillNameSchema } from "./tool-types";
 
-import { RequirementRefSchema } from "./requirement.ts";
+import { RequirementRefSchema } from "../../bootstrap-tools/schemas/requirement.ts";
 
 /** The `$schema` tag every test run carries. */
 export const TEST_RUN_SCHEMA_ID = "folio-test-run/v1";
@@ -164,7 +164,7 @@ export const TestRunSchema = z.object({
    *
    * The test points at the requirement, not the reverse — the same direction
    * as `skill` above. See `bootstrap/schemas/requirement.schema.json` (Zod
-   * source: `cat-harness/schemas/requirement.ts`). Optional so that a run
+   * source: `bootstrap-tools/schemas/requirement.ts`). Optional so that a run
    * recorded before the field existed still parses; a new run should say what
    * it is evidence FOR.
    */

@@ -18,7 +18,7 @@
  *
  * ## Beside bean `iwtn`'s test, not instead of it
  *
- * `cat-harness/schemas/graph.test.ts` holds ALL of `bootstrap/` to a stricter
+ * `bootstrap-tools/schemas/graph.test.ts` holds ALL of `bootstrap/` to a stricter
  * list — no layer above it may be named either (`cat-harness`, `folio`),
  * because bootstrap is self-definitional. This check covers the narrower
  * rule, no OUTSIDE concept, and applies it to one thing that test does not
@@ -75,7 +75,7 @@ function filesUnder(dir: string): string[] {
     const p = join(dir, name);
     if (statSync(p).isDirectory()) out.push(...filesUnder(p));
     // A TEST is not a schema, and one that lists the forbidden names in order
-    // to forbid them (`cat-harness/schemas/graph.test.ts`) is not a leak.
+    // to forbid them (`bootstrap-tools/schemas/graph.test.ts`) is not a leak.
     else if (/\.(ts|json)$/.test(name) && !/\.test\.ts$/.test(name)) out.push(p);
   }
   return out;

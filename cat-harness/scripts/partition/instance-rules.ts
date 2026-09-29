@@ -736,13 +736,8 @@ export const RULES: Rule[] = [
       // which it calls: a generator that lived elsewhere would be a second
       // place deciding what a harness row contains, which is the defect.
       "scripts/gen-navbar-include.ts",
-      // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
-      // reason the others here do not have: bootstrap must hold no executable
-      // code, so the generator cannot live beside what it generates.
-      "scripts/gen-bootstrap-schemas.ts",
-      // Its drawn page, `bootstrap/schemas/README.md`. Beside the generator
-      // that calls it, and for the same reason: bootstrap holds no code.
-      "scripts/bootstrap-schema-page.ts",
+      // gen-bootstrap-schemas and bootstrap-schema-page moved to the sibling
+      // instance `bootstrap-tools/` (bean `xsqm`), outside this partition.
       // A README per declared directory, from the declaration. Core beside
       // `readme-sections`, whose file description and 'used by' it reuses.
       "scripts/subgraph-readmes.ts",
@@ -1065,11 +1060,6 @@ export const RULES: Rule[] = [
       // importing the content vocabulary, so classifying it here adds no
       // wrong-direction edge — see schemas/cat-harness.ts.
       "schemas/cat-harness.ts",
-      // An instance's release addresses (`<iriBase><version>/`, `<iriBase>v<major>/`),
-      // composed from the declaration above; harness for the same reason it is.
-      "schemas/release-iri.ts",
-      // Keeps every literal copy of those addresses at the declared version.
-      "scripts/iri-sync.ts",
       // The graph-kind registry, split out of the line above so core could
       // import it without a cycle (bean `q2wn`). HARNESS on the same terms:
       // it holds `BASE_GRAPH_KINDS` — the harness's OWN three kinds — plus

@@ -16425,7 +16425,7 @@
           "@value": "The model identifier, exactly as the runtime reports it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.id",
+      "dcterms:source": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema.id",
       "skos:note": "candidate"
     },
     {
@@ -16444,7 +16444,7 @@
           "@value": "Anything a reader needs that the fields above cannot carry."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.note",
+      "dcterms:source": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema.note",
       "skos:note": "candidate"
     },
     {
@@ -16463,7 +16463,7 @@
           "@value": "BCP 47 tags, best first."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.preferredLanguages",
+      "dcterms:source": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema.preferredLanguages",
       "skos:note": "candidate"
     },
     {
@@ -16482,7 +16482,7 @@
           "@value": "Human-readable name, for a report a person reads."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.title",
+      "dcterms:source": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema.title",
       "skos:note": "candidate"
     },
     {
@@ -16501,7 +16501,7 @@
           "@value": "Who checked, when `validation` is `human-validated`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.validatedBy",
+      "dcterms:source": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema.validatedBy",
       "skos:note": "candidate"
     },
     {
@@ -16520,7 +16520,7 @@
           "@value": "ISO date of that check. A validation with no date cannot go stale."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.validatedOn",
+      "dcterms:source": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema.validatedOn",
       "skos:note": "candidate"
     },
     {
@@ -16539,7 +16539,7 @@
           "@value": "How the list above came to be believed. Required — see the header."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.validation",
+      "dcterms:source": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema.validation",
       "skos:note": "candidate"
     },
     {
@@ -18097,7 +18097,7 @@
           "@value": "`<iriBase><version>/` — what a program reads."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/release-iri.ts#ReleaseIris.agent",
+      "dcterms:source": "bootstrap-tools/schemas/release-iri.ts#ReleaseIris.agent",
       "skos:note": "candidate"
     },
     {
@@ -18116,7 +18116,7 @@
           "@value": "`<iriBase>v<major>/` — what a person reads."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/release-iri.ts#ReleaseIris.human",
+      "dcterms:source": "bootstrap-tools/schemas/release-iri.ts#ReleaseIris.human",
       "skos:note": "candidate"
     },
     {
@@ -18135,7 +18135,7 @@
           "@value": "The declared `iriBase`, ending in `/`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/release-iri.ts#ReleaseIris.iriBase",
+      "dcterms:source": "bootstrap-tools/schemas/release-iri.ts#ReleaseIris.iriBase",
       "skos:note": "candidate"
     },
     {
@@ -18154,7 +18154,7 @@
           "@value": "`MAJOR` alone, as a number."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/release-iri.ts#ReleaseIris.major",
+      "dcterms:source": "bootstrap-tools/schemas/release-iri.ts#ReleaseIris.major",
       "skos:note": "candidate"
     },
     {
@@ -18173,7 +18173,7 @@
           "@value": "The declared version, `MAJOR.MINOR.PATCH`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/release-iri.ts#ReleaseIris.version",
+      "dcterms:source": "bootstrap-tools/schemas/release-iri.ts#ReleaseIris.version",
       "skos:note": "candidate"
     },
     {
@@ -18534,7 +18534,7 @@
           "@value": "Broader requirements this one specialises, by id."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementFields.derivedFrom",
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementFields.derivedFrom",
       "skos:note": "candidate"
     },
     {
@@ -18553,7 +18553,7 @@
           "@value": "`req:<slug>`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementFields.id",
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementFields.id",
       "skos:note": "candidate"
     },
     {
@@ -18572,7 +18572,7 @@
           "@value": "WHERE IT CAME FROM — the proposal it was filed from, as a path, when it began as one. Kept after the proposal is moved, so the history can be followed back through `git log --follow`."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementFields.proposedIn",
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementFields.proposedIn",
       "skos:note": "candidate"
     },
     {
@@ -18591,7 +18591,7 @@
           "@value": "When `superseded`: what replaced it."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementFields.supersededBy",
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementFields.supersededBy",
       "skos:note": "candidate"
     },
     {
@@ -18610,7 +18610,7 @@
           "@value": "FUNCTIONAL — the activity the statement is part of."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.activity",
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.activity",
       "skos:note": "candidate"
     },
     {
@@ -18629,7 +18629,7 @@
           "@value": "The roles it is about, by id in the harness's own role registry."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.actors",
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.actors",
       "skos:note": "candidate"
     },
     {
@@ -18648,7 +18648,7 @@
           "@value": "FUNCTIONAL — why (\"so that …\")."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.benefit",
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.benefit",
       "skos:note": "candidate"
     },
     {
@@ -18667,7 +18667,7 @@
           "@value": "FUNCTIONAL — what the actor wants to be able to do (\"I want …\")."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.capability",
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.capability",
       "skos:note": "candidate"
     },
     {
@@ -18686,7 +18686,7 @@
           "@value": "NON-FUNCTIONAL — which quality it constrains."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.category",
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.category",
       "skos:note": "candidate"
     },
     {
@@ -18705,7 +18705,7 @@
           "@value": "How strongly it binds. Named `conformance` — the word the harness's requirement files have used since they were first written — so that building them on this base moved no file."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.conformance",
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.conformance",
       "skos:note": "candidate"
     },
     {
@@ -18724,7 +18724,7 @@
           "@value": "Other statements this one presupposes, by {@link requirementRef}."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.dependsOn",
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.dependsOn",
       "skos:note": "candidate"
     },
     {
@@ -18743,7 +18743,7 @@
           "@value": "Unique within its requirement; with the requirement's id it is the statement's address."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.key",
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.key",
       "skos:note": "candidate"
     },
     {
@@ -18762,7 +18762,7 @@
           "@value": "The statement itself, as one sentence a reviewer can say yes or no to."
         }
       ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.requirement",
+      "dcterms:source": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields.requirement",
       "skos:note": "candidate"
     },
     {

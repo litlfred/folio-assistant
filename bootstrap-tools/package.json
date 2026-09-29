@@ -1,0 +1,25 @@
+{
+  "name": "@litlfred/bootstrap-tools",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The Zod source of bootstrap's schemas, their generators, and the checks bootstrap's content must pass. Depends on zod alone.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "repository": "https://github.com/litlfred/bootstrap-tools",
+  "scripts": {
+    "schemas": "bun run scripts/gen-bootstrap-schemas.ts",
+    "schemas:check": "bun run scripts/gen-bootstrap-schemas.ts --check",
+    "iri:sync": "bun run scripts/iri-sync.ts",
+    "iri:sync:check": "bun run scripts/iri-sync.ts --check",
+    "check:closure": "bun run scripts/check-closure.ts",
+    "check:node-iris": "bun run scripts/check-node-iris.ts",
+    "check:concepts": "bun run scripts/check-bootstrap-concepts.ts",
+    "test": "bun test ."
+  },
+  "dependencies": {
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "ajv": "^6.15.0"
+  }
+}

@@ -45,7 +45,7 @@
  * @graphNode schema
  */
 import { termIri } from "./namespaces";
-import { BOOTSTRAP_GRAPH_KINDS } from "./graph";
+import { BOOTSTRAP_GRAPH_KINDS } from "../../bootstrap-tools/schemas/graph";
 
 
 // ── Graph kinds ─────────────────────────────────────────────────

@@ -46,9 +46,9 @@
  *
  * Usage: `bun run readme:subgraphs` · `bun run readme:subgraphs:check`
  */
-import { bootstrapTermTargets, linkTerms } from "../content/pipeline/term-links.ts";
-import { BOOTSTRAP_TERMS } from "../schemas/graph.ts";
-import { releaseIris } from "../schemas/release-iri.ts";
+import { bootstrapTermTargets, linkTerms } from "../../bootstrap-tools/scripts/term-links.ts";
+import { BOOTSTRAP_TERMS } from "../../bootstrap-tools/schemas/graph.ts";
+import { releaseIris } from "../../bootstrap-tools/schemas/release-iri.ts";
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 import { Liquid } from "liquidjs";

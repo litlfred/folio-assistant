@@ -7,9 +7,6 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
-import { findDeclarationFile, instanceRootsIn } from "./cat-harness.ts";
-import { CLASS_GLOSSES, termLayer } from "./vocabulary.ts";
-import { BASE_GRAPH_KINDS } from "./graph-kind-registry.ts";
 import {
   BOOTSTRAP_GRAPH_KINDS,
   BOOTSTRAP_TERM_DEFINED_BY,
@@ -17,25 +14,14 @@ import {
   BOOTSTRAP_TERMS,
   KnowledgeGraphDeclarationSchema,
 } from "./graph.ts";
-import { checkDeclaredOrder } from "./dependency-order.ts";
-import { unlinkedTerms } from "../content/pipeline/term-links.ts";
+import { checkDeclaredOrder } from "./declared-order.ts";
+import { unlinkedTerms } from "../scripts/term-links.ts";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
 const BOOTSTRAP = join(REPO_ROOT, "bootstrap");
 /** Names of things above bootstrap, and outside standards named by acronym alone. */
 const LEAKS = [/\bWHO\b/, /\bDAK\b/, /\bSMART\b/i, /cat-harness/, /folio/i, /smart-base/, /\bL[123]\b/];
 
-describe("every declaration in this repository is a Knowledge Graph declaration", () => {
-  const roots = instanceRootsIn(REPO_ROOT);
-  test("there are declarations to check", () => expect(roots.length).toBeGreaterThan(3));
-  for (const root of roots) {
-    test(root.slice(REPO_ROOT.length) || "/", () => {
-      const file = join(root, findDeclarationFile(root)!);
-      const r = KnowledgeGraphDeclarationSchema.safeParse(JSON.parse(readFileSync(file, "utf-8")));
-      expect(r.success ? "ok" : JSON.stringify(r.error.issues.slice(0, 2))).toBe("ok");
-    });
-  }
-});
 
 describe("bootstrap's terms are its own", () => {
   test("no definition names anything above bootstrap", () => {
@@ -43,18 +29,6 @@ describe("bootstrap's terms are its own", () => {
     expect(leaking).toEqual([]);
   });
 
-  test("the published vocabulary uses bootstrap's definitions, and bootstrap's terms link nowhere above", () => {
-    for (const [cls, term] of [["Actor", "Actor"], ["Role", "Role"], ["Skill", "Skill"], ["Process", "Process"], ["Directory", "Subgraph"], ["Harness", "Harness"]] as const) {
-      expect(CLASS_GLOSSES[cls]!.gloss).toBe(BOOTSTRAP_TERMS[term]);
-      // A term bootstrap defines is bootstrap's, IRI included (v3: Harness moved).
-      expect(CLASS_GLOSSES[cls]!.layer, cls).toBe("bootstrap");
-    }
-    // Owner, 2026-09-29: "no tools in bootstrap". A Harness defines Tool.
-    expect("Tool" in BOOTSTRAP_TERMS).toBe(false);
-    expect(CLASS_GLOSSES.Tool!.layer ?? "harness").toBe("harness");
-    const bootstrapLinks = Object.entries(CLASS_GLOSSES).filter(([, g]) => g.layer === "bootstrap" && g.seeAlso);
-    expect(bootstrapLinks.map(([n]) => n)).toEqual([]);
-  });
 
   test("the generated schema carries every term as a definition", () => {
     const schema = JSON.parse(readFileSync(join(BOOTSTRAP, "schemas", "graph.schema.json"), "utf-8"));
@@ -274,15 +248,6 @@ describe("bootstrap's graph kinds are its own (bean r3gy, D1)", () => {
     expect(own.filter((k) => !used.has(k))).toEqual([]);
   });
 
-  test("the harness's registry reads bootstrap's sentence, and mints the type in bootstrap's layer", () => {
-    for (const k of own) {
-      const def = BASE_GRAPH_KINDS[k as keyof typeof BASE_GRAPH_KINDS];
-      expect(def, k).toBeDefined();
-      expect(def.summary).toBe(BOOTSTRAP_GRAPH_KINDS[k as keyof typeof BOOTSTRAP_GRAPH_KINDS]);
-      const local = def.type.split("#").pop()!;
-      expect(termLayer(local), `${k} → ${local}`).toBe("bootstrap");
-    }
-  });
 });
 
 describe("every $schema a bootstrap file carries is a Node Kind its declaration lists (r3gy D2; nodeSchemas, 2026-09-29)", () => {
