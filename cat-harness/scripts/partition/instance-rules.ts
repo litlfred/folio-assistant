@@ -1612,6 +1612,9 @@ export const RULES: Rule[] = [
       "scripts/build-document-site.ts",
       "src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/render-order.ts", "src/tools/translation.ts",
       "src/tools/preview.ts", "src/qa-agent-write.ts",
+      // `lsi_query` (bean `ansc`): registered beside the README and render
+      // tools as a generic MCP tool, for the same reason — no block kind.
+      "src/tools/lsi-query.ts",
       // The voice-graph validator. It resolves each rule's citation into
       // `library/` — a FOLIO's reference library — and `schemas/voices.ts`,
       // which it reads, is core by the `schemas/` prefix. Arrived from `main`

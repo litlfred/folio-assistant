@@ -24,6 +24,15 @@
         }
       ]
     },
+    "lsi-index-fresh": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "smart-base/library",
+          "detail": "needs an LSI index and has none — run `bun run lsi index --instance smart-base --graph library`"
+        }
+      ]
+    },
     "manifest-skill-exists": {
       "result": "pass",
       "findings": []
@@ -125,7 +134,7 @@
   },
   "totals": {
     "pass": 8,
-    "fail": 0,
+    "fail": 1,
     "n/a": 10,
     "unknown": 2
   }
