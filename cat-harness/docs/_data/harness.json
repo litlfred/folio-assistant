@@ -2057,6 +2057,15 @@
         ]
       },
       {
+        "key": "iriBase",
+        "skills": [
+          {
+            "name": "instance-publication",
+            "path": "/reference/skill-instructions/instance-publication.html"
+          }
+        ]
+      },
+      {
         "key": "publication",
         "skills": [
           {
@@ -2770,6 +2779,10 @@
             "summary": "2: agent-instructions, readme"
           },
           {
+            "key": "iriBase",
+            "summary": "https://litlfred.github.io/bootstrap/"
+          },
+          {
             "key": "directories",
             "summary": "6: skills, schemas, scenarios, processes, models, swimlane-glossary"
           },
@@ -2805,8 +2818,7 @@
     "findings": [
       "`topology`: no skill edits `topology` yet: its axes are documented only in the schema (cat-harness.ts, TopologySchema)",
       "who-iris: declares `folioMount`, which the declaration schema does not have and silently drops.",
-      "cat-harness: declares `folioMount`, which the declaration schema does not have and silently drops.",
-      "bootstrap: declares `iriBase`, which the declaration schema does not have and silently drops."
+      "cat-harness: declares `folioMount`, which the declaration schema does not have and silently drops."
     ]
   }
 }
