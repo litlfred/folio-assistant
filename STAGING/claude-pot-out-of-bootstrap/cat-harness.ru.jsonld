@@ -296,10 +296,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-27T14:54:32.459Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e3059d9124a4bf67aa359a2968673517bfe1e582",
-  "sourceCommitSha": "e3059d9124a4bf67aa359a2968673517bfe1e582",
-  "sourceCommitAt": "2026-09-27T14:47:33Z",
+  "generatedAt": "2026-09-29T17:57:37.126Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/489735a0d61e84d6b8606ce465b424ac474c233e",
+  "sourceCommitSha": "489735a0d61e84d6b8606ce465b424ac474c233e",
+  "sourceCommitAt": "2026-09-29T17:54:53Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -314,7 +314,7 @@
     "Role": 148,
     "ProcessNode": 862,
     "Tool": 104,
-    "Schema": 126,
+    "Schema": 127,
     "ExternalSchema": 17,
     "GraphKind": 35,
     "Directory": 45,
@@ -1406,7 +1406,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/goal-review.md",
-      "instructionLines": 276,
+      "instructionLines": 345,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2875,7 +2875,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 397,
+      "instructionLines": 452,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3315,7 +3315,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/deletion-requires-confirmation.md",
-      "instructionLines": 248,
+      "instructionLines": 288,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6276,8 +6276,8 @@
       "path": "skills/authoring-math",
       "hasManifest": true,
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/lean-formalization",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/latex-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/lean-formalization",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/proof-verification"
       ],
       "providesCapability": [
@@ -6302,14 +6302,14 @@
       "path": "skills/theming",
       "hasManifest": true,
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/theming",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/create-sticky-note",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/site-presentation-assets",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/theme-art-intake",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/theme-artefacts",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/theme-contrast",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/theme-declaration",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/theme-generation",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/theme-contrast",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/theme-artefacts",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/create-sticky-note",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/site-presentation-assets"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/theming"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -6421,9 +6421,9 @@
       "path": "skills/security",
       "hasManifest": true,
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/security",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/injection-boundaries",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/path-containment",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/injection-boundaries"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/security"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -6642,16 +6642,16 @@
       "path": "skills/content-lifecycle",
       "hasManifest": true,
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/content-plan",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/content-author",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/content-validate",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/content-review",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/evidence-appraisal",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/content-test",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/sample-import",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/content-publish",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/content-feedback",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/content-retire"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/content-plan",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/content-publish",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/content-retire",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/content-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/content-test",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/evidence-appraisal",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/sample-import"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#capability/git-push",
@@ -6801,9 +6801,9 @@
       "hasManifest": true,
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/document-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/document-publishing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/document-structure",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/normative-statements",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/document-publishing"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#skill/normative-statements"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#capability/pandoc",
@@ -42123,6 +42123,15 @@
       "module": "schemas/folio-graph-kind.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/folio-graph-kind"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#schema/formal-ref",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "formal-ref",
+      "title": "Dependency injection point for FORMAL REFERENCES — the `lean:` field's",
+      "module": "schemas/formal-ref.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/formal-ref"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-pot-out-of-bootstrap/cat-harness.jsonld#schema/formalization-types",
