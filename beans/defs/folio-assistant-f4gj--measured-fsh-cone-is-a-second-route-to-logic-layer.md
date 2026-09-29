@@ -1,11 +1,11 @@
 ---
 # folio-assistant-f4gj
 title: 'MEASURED: fsh-cone is a second route to logic-layer edges, but delivers 0 of 458 as merged — skill''s P3 blocker holds as measurement, is too strong as inference'
-status: in-progress
+status: todo
 type: feature
 priority: high
 created_at: 2026-09-23T21:17:32Z
-updated_at: 2026-09-23T21:19:50Z
+updated_at: 2026-09-29T20:03:10Z
 parent: folio-assistant-uhkv
 ---
 
@@ -243,3 +243,9 @@ It takes an IG root and the artefact index and prints every table above.
 - [x] Record that (b)'s fix is itself a partial reimplementation of SUSHI, and what it does not do
 - [ ] Open: does ~24 % rebuild per commit still pay for an incremental build? NOT answered here
 - [ ] Owner review and merge — NOT mine to merge
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
