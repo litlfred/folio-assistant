@@ -3,7 +3,7 @@
 
 The instructions for working with large datasets: one Skill per file.
 
-Part of [C@T Harness](../../cat-harness/README.md), declared as `large-datasets-skills`, holding `skills`.
+Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `large-datasets-skills`, holding `skills`.
 
 | file | what it is | used by |
 |---|---|---|

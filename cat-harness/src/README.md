@@ -3,7 +3,7 @@
 
 The MCP server and the harness runtime -- what `bun run cat-harness/src/index.ts` starts. `src/` is the name a new instance should use for its code by convention; it is a minority of the code HERE, which is the measurement that stopped `<stub>/src` from being adopted as a destination for everything.
 
-Part of [C@T Harness](../README.md), declared as `cat-harness-src`, holding `code`.
+Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-src`, holding `code`.
 
 | file | what it is | used by |
 |---|---|---|

@@ -59,7 +59,7 @@ function writeProcess(dir: string, requiredFile: string): void {
     join(dir, "gated.bpmn"),
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Defs_Gated" targetNamespace="urn:test">
   <bpmn:process id="Process_Gated" name="Gated">
     <bpmn:extensionElements>

@@ -120,6 +120,15 @@ Tiers (agent-confirmed):
 Do **not** flag an axiom that already carries a `-- Ref:` / citation — resting
 on a cited upstream result is sound.
 
+**An API that is hard to unfold is not a reason to axiomatize.** A published
+agent pipeline (MerLean, arXiv:2602.16554v1, Appendix A.3) axiomatized that
+the tensor product of two cycles is a cycle — one line from the Leibniz rule
+its own docstring states — because Mathlib's total complex was hard to work
+with, and it converts any subgoal to an `axiom` once its attempt cap is hit.
+Both land in tier **provable**. Running out of attempts leaves an annotated
+`sorry`, never an `axiom`; see `bidirectional-agentic-autoformalization`
+§"Refusals" in `folio-assistant-sci/methodologies/`.
+
 ## Why `proof-statement-integrity` misses all of these
 
 Per the QA registry, `proof-statement-integrity` is `automated: false`

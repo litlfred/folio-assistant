@@ -3,7 +3,7 @@
 
 _No description is declared for `skills`._
 
-Part of [Bootstrap](../README.md), declared as `skills`, holding `skills`.
+Part of [Bootstrap](../README.md) 0.1.0, declared as `skills`, holding `skills`.
 
 | file | what it is | used by |
 |---|---|---|
