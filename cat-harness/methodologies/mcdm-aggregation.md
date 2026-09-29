@@ -10,10 +10,12 @@ origin: >
 
   **The copy ingested is the authors' preliminary draft manuscript**, produced
   in Word and carrying no arXiv stamp, headed "Preliminary Draft Manuscript"
-  and paginated 8-1 onward. That is why its bib-slug is `250906388v1` rather
-  than `arxiv-2509.06388v1`: `_pdf_doc_id.py` reads the arXiv id off page
-  one's text layer, and this copy has none. Cite the arXiv id; the slug is a
-  filing key.
+  and paginated 8-1 onward. `_pdf_doc_id.py` reads the arXiv id off page one's
+  text layer, so this copy derived no `arxiv-` slug and fell back to the
+  basename. Filed instead under the author-year convention the repository's
+  other non-arXiv entries use (owner, 2026-09-29), which is why the bib-slug
+  and the citation differ: **cite arXiv:2509.06388v1**; the slug is a filing
+  key and nothing more.
 applies-when: >
   **A FIXED, FINITE set of alternatives is to be ranked against several
   explicit criteria, all known up front.** The input is an
@@ -35,7 +37,7 @@ applies-when: >
   evidence. It also assumes the criteria set is complete: a criterion nobody
   wrote down is weighted zero, silently.
 evidence:
-  - library/250906388v1
+  - library/wang-rangaiah-2026-mcdm-aggregation
 ---
 
 # Aggregation-type MCDM
