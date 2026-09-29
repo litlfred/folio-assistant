@@ -1206,9 +1206,24 @@ export type SubgraphCoverage = z.infer<typeof SubgraphCoverageSchema>;
 export const VISUALISER_KINDS = ["folio"] as const;
 export type VisualiserKind = (typeof VISUALISER_KINDS)[number];
 
+/**
+ * How a directory's tile looks — everything a {@link Visualisation} carries
+ * except the page it opens.
+ *
+ * #1168 B7a-2b, owner 2026-09-24 (*"split: page derived"*): the PAGE is read
+ * from the viewer pages, each of which names the directories it draws
+ * (`scripts/viewer-declarations.ts`); a directory no longer points at its
+ * viewer. What stays with the directory is presentation, which is the
+ * directory's own business.
+ */
+export const TileSchema = VisualisationSchema.omit({ ref: true });
+export type Tile = z.infer<typeof TileSchema>;
+
 const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
   dependents: DependentMaterialisationSchema,
   coverage: SubgraphCoverageSchema.optional(),
+  /** How this directory's tile looks. See {@link TileSchema}. */
+  tile: TileSchema.optional(),
   /**
    * HOW this graph is shown, and what can be done to it.
    *
