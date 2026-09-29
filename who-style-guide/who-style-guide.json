@@ -1,15 +1,18 @@
 {
-  "_comment": "THE WHO ONE-VOICES, staged as a top-level directory ahead of becoming their own repository — the same arrangement as who-iris/, folio-assistant-sci/ and folio-assistant-core/. Owner, 2026-09-20: 'the 3 one-voices, should reference the 3 artefacts in the who-iris library, but the 3 one voices are derived from the cataloge and in their own repo/dir.' DERIVED FROM is the whole relation: each voice is read rule by rule out of one IRIS publication, every rule cites the page it came from, and the publication itself lives in who-iris. So this instance holds no corpus and declares no `library` — it declares VOICES, and every one of them resolves its evidence across the instance boundary. That cross-instance citation is what bean z7ev built and what r1lz predicted would be needed: 'a skill derived from a source text in another repo would cite evidence its own instance cannot resolve.' DECLARE ONLY WHAT EXISTS, per dh4f: `voices/` is the only entry because it is the only directory here.",
+  "_comment": "THE WHO ONE-VOICES, staged as a top-level directory ahead of becoming their own repository \u2014 the same arrangement as who-iris/, folio-assistant-sci/ and folio-assistant-core/. Owner, 2026-09-20: 'the 3 one-voices, should reference the 3 artefacts in the who-iris library, but the 3 one voices are derived from the cataloge and in their own repo/dir.' DERIVED FROM is the whole relation: each voice is read rule by rule out of one IRIS publication, every rule cites the page it came from, and the publication itself lives in who-iris. So this instance holds no corpus and declares no `library` \u2014 it declares VOICES, and every one of them resolves its evidence across the instance boundary. That cross-instance citation is what bean z7ev built and what r1lz predicted would be needed: 'a skill derived from a source text in another repo would cite evidence its own instance cannot resolve.' DECLARE ONLY WHAT EXISTS, per dh4f: `voices/` is the only entry because it is the only directory here.",
   "name": "who-style-guide",
   "version": "0.1.0",
-  "description": "The WHO house voices — editorial style, guideline development, publication design — each derived from one IRIS publication and citing it by page.",
+  "needs": [
+    "who-iris"
+  ],
+  "description": "The WHO house voices \u2014 editorial style, guideline development, publication design \u2014 each derived from one IRIS publication and citing it by page.",
   "assets": [
     {
       "id": "agent-instructions",
       "src": "AGENTS.md",
       "role": "agent-instructions",
-      "title": "AGENTS.md — who-style-guide",
-      "description": "Cold start for work in this layer, and the one rule that governs it: a voice is DERIVED FROM a publication and is not the publication. Source text is never copied here — every rule cites `{instance, libraryId, sectionId}` across the boundary and carries its quote and page, which is what makes a voice auditable rather than asserted."
+      "title": "AGENTS.md \u2014 who-style-guide",
+      "description": "Cold start for work in this layer, and the one rule that governs it: a voice is DERIVED FROM a publication and is not the publication. Source text is never copied here \u2014 every rule cites `{instance, libraryId, sectionId}` across the boundary and carries its quote and page, which is what makes a voice auditable rather than asserted."
     },
     {
       "id": "readme",
@@ -36,7 +39,7 @@
       "id": "qa",
       "path": "test/results/",
       "dependents": "reproduce",
-      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 4 files across scenarios (1), skills (3). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" \u2014 a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject\u2019s own path, and ONE kg-qa-manifest/v1 recording the auditor\u2019s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 4 files across scenarios (1), skills (3). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph \u2014 these verdicts are about this instance\u2019s nodes, and inheriting them would attribute one instance\u2019s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "graphKinds": [
         "qa"
       ]
