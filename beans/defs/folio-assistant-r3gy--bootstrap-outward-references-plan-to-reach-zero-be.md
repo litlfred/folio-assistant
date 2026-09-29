@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-29T18:18:26Z
-updated_at: 2026-09-29T21:44:11Z
+updated_at: 2026-09-29T22:15:52Z
 parent: folio-assistant-vke6
 ---
 
@@ -116,3 +116,14 @@ Verbatim: *"skill determine the installed harnesses in a repo (intput = repo loc
 - [ ] `log-message`: a **validate input schema** sub-process used by skills; partial data never stops the run, it returns false; output schema carries success/fail code words.
 - [ ] `initialize-harness.bpmn`: restructure with sub-processes, using the business-analyst skills.
 - [x] Instance README file tables name files relative to the directory heading they sit under (`readme-graph-sections.ts`), PR #1489.
+
+
+## Groups A–E — done on branch next/group-d (2026-09-29)
+
+- **A:** the last item fixed (`initialize-harness.bpmn` no longer calls log-message the last diagram). C was already complete.
+- **D3:** Extension term (a field bootstrap does not define; ignored by a reader that does not know it). Owner then chose to keep **both** Extension and **SubKind** (a kind that requires everything its parent does, IS-A).
+- **D4:** `kgQaHomeFor`; bootstrap declares no qa directory; its 15 sidecars + manifest live at `cat-harness/test/results/bootstrap/`.
+- **D1:** `BOOTSTRAP_GRAPH_KINDS` (six kinds, one sentence each) → `$defs.GraphKind`; registry summaries read them; one layer table `GRAPH_KIND_TYPE_LAYERS`.
+- **D2:** bootstrap `$schema` tags resolve inside bootstrap; ledger schema added; leak test allows no `folio-*/v1`.
+- **E:** owner's SEMVER rule, 2026-09-29: *"2 used for human narrative centric content, 3 for agentic … make variables of version available to minimize drift. include in json/jsonld/schema rendering pipeline too"*. `iriBase` in bootstrap.json (one place); agent IRIs `<iriBase><version>/`, person-facing `<iriBase>v<major>/`; `iri:sync` + gate; `$schema` tags carry the schema's semver (`model-registry/1.0.0`); `release` variables in templates and `site.data.harness.releases`. Skills updated.
+- **Deliberately not moved:** the exported document `@id` (`bootstrap.jsonld`) — kg-export mints it from where it is served; moves when litlfred/bootstrap publishes (`40fl`). GitHub tree links in bootstrap.json also switch at seeding.

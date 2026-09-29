@@ -1065,6 +1065,11 @@ export const RULES: Rule[] = [
       // importing the content vocabulary, so classifying it here adds no
       // wrong-direction edge — see schemas/cat-harness.ts.
       "schemas/cat-harness.ts",
+      // An instance's release addresses (`<iriBase><version>/`, `<iriBase>v<major>/`),
+      // composed from the declaration above; harness for the same reason it is.
+      "schemas/release-iri.ts",
+      // Keeps every literal copy of those addresses at the declared version.
+      "scripts/iri-sync.ts",
       // The graph-kind registry, split out of the line above so core could
       // import it without a cycle (bean `q2wn`). HARNESS on the same terms:
       // it holds `BASE_GRAPH_KINDS` — the harness's OWN three kinds — plus
