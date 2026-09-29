@@ -40,10 +40,9 @@
  *   bun run cat-harness/scripts/gen-external-schemas-viz.ts --check
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, relative, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { declarationPathIn } from "../schemas/cat-harness.js";
 import { docsLayers } from "./compose-docs.js";
 import { loadSpecs, namespacesInUse } from "./external-schemas.js";
 import { specUsers, type SpecUse, type SpecUseForm, type SpecUsers } from "./spec-users.js";
@@ -53,6 +52,10 @@ import {
   unusedNamespaces,
   type ExternalSchema,
 } from "../schemas/external-schema.js";
+import { conventionalPage, handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "external-schemas-viewer";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REPO = resolve(INSTANCE_ROOT, "..");
@@ -67,25 +70,12 @@ export function declaredUsers(specs: readonly ExternalSchema[], repoRoot = REPO)
   return specUsers(repoRoot, files, specs, BASE_GRAPH_KINDS, "cat-harness");
 }
 
-/** Where the page goes, read from the declaration that renders it. */
+/**
+ * Where the page goes: the declared directory's own name (#1168 B7a-2b,
+ * `conventionalPage`). Never a literal — `site-dir-single-answer` refuses one.
+ */
 export function pageRelPath(repo = REPO): string | undefined {
-  const declPath = declarationPathIn(join(repo, "cat-harness"));
-  if (!declPath || !existsSync(declPath)) return undefined;
-  const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-    directories?: { graphKinds?: string[]; coverage?: { visualiser?: unknown } }[];
-  };
-  for (const e of d.directories ?? []) {
-    if (!(e.graphKinds ?? []).includes(KIND)) continue;
-    const v = e.coverage?.visualiser;
-    for (const one of Array.isArray(v) ? v : [v]) {
-      const ref = typeof one === "string" ? one : (one as { ref?: string } | undefined)?.ref;
-      if (!ref) continue;
-      const rel = relative(baseDocs(repo), resolve(repo, ref));
-      if (rel.startsWith("..") || rel === "") return undefined;
-      return rel;
-    }
-  }
-  return undefined;
+  return conventionalPage(join(repo, "cat-harness"), KIND);
 }
 
 /** The base docs layer — the same answer `compose-docs.ts` uses. */
@@ -338,7 +328,8 @@ if (import.meta.main) {
   }
 
   const users = declaredUsers(specs);
-  const rendered = page(specs, users, namespacesInUse());
+  // The page says which directories it draws (#1168 B7a-2).
+  const rendered = withRendersFrontMatter(page(specs, users, namespacesInUse()), handledDirectories(REPO, INSTANCE_ROOT, KIND), VIEWER_TOOL);
   const out = join(baseDocs(REPO), PAGE);
 
   if (check) {

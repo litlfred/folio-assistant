@@ -123,6 +123,8 @@
  * @conformsTo w3c-rdfs
  * @conformsTo w3c-skos
  */
+import { LEDGER_SCHEMA, LEDGER_SCHEMA_NAME, LEGACY_LEDGER_SCHEMA } from "../schemas/glossary-ledger.ts";
+import { tagCompatible } from "../schemas/release-iri.ts";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
@@ -146,7 +148,7 @@ export const GLOSSARY_DIR = "glossary";
 /** The ledger's filename — the one non-derivable fact this module stores. */
 export const LEDGER_FILENAME = "glossary-ledger.json";
 /** Tagged so the file declares what it is, per the directory conventions. */
-export const LEDGER_SCHEMA = "folio-glossary-ledger/v1";
+export { LEDGER_SCHEMA } from "../schemas/glossary-ledger.ts";
 
 // ── The corpus ──────────────────────────────────────────────────
 
@@ -270,10 +272,10 @@ export function readLedger(instanceRoot: string, stub: string): Ledger {
   // A ledger that is not one is REFUSED rather than replaced. Overwriting it
   // would delete every retirement record in the file — the one thing this
   // module exists to keep — on the strength of a parse this code got wrong.
-  if (raw.$schema !== LEDGER_SCHEMA) {
+  if (raw.$schema !== LEGACY_LEDGER_SCHEMA && !tagCompatible(raw.$schema, LEDGER_SCHEMA_NAME, 1)) {
     throw new Error(`${p}: expected "$schema": "${LEDGER_SCHEMA}", found ${JSON.stringify(raw.$schema)}`);
   }
-  return raw;
+  return { ...raw, $schema: LEDGER_SCHEMA };
 }
 
 // ── The document ────────────────────────────────────────────────

@@ -120,7 +120,7 @@ describe("a table must be able to route the gateway it backs", () => {
       join(dir, "bad.bpmn"),
       `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="D" targetNamespace="urn:x">
   <bpmn:process id="Process_Bad" name="Bad" isExecutable="false">
     <bpmn:startEvent id="S"><bpmn:outgoing>F1</bpmn:outgoing></bpmn:startEvent>

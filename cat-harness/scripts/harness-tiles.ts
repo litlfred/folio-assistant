@@ -71,6 +71,7 @@ import {
   defaultGraphKinds,
   nestedDirectories,
 } from "../schemas/cat-harness.js";
+import { withViewers } from "./viewer-declarations.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
 // module that imports it, and the harness may not depend on core. The
@@ -1127,8 +1128,11 @@ export function harnessTiles(
   const tiles: HarnessTile[] = [];
   const decls: { dir: string; decl: CatHarnessDeclaration }[] = [];
   for (const dir of instanceDirs(repoRoot, names)) {
-    const decl = readDeclaration(dir);
-    if (!decl) continue;
+    const read = readDeclaration(dir);
+    if (!read) continue;
+    // Viewers RESOLVED from the pages (#1168 B7a-2b): a directory no longer
+    // names its viewer, the page names the directories it draws.
+    const decl = { ...read, directories: withViewers(read.directories ?? [], dir) };
     decls.push({ dir, decl });
   }
 

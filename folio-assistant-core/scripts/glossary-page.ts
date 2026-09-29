@@ -71,6 +71,7 @@ import {
   resolveDirectories,
 } from "../../cat-harness/schemas/cat-harness.ts";
 import { LEGACY_FOLIO_NS } from "../../cat-harness/schemas/namespaces.ts";
+import { releaseIris } from "../../cat-harness/schemas/release-iri.ts";
 import { GlossarySchema, schemeIri, toSkos, termIri, type Glossary, type LangText } from "../schemas/glossary.ts";
 import { ASSET_TYPES, EXTRACTED_PREFIX, assetTypeTitle, assetTypeWhat, extract, type AssetType } from "./glossary-extract.ts";
 
@@ -116,8 +117,13 @@ export interface Findings {
 /** The instance's namespace, `<stem><stub>/ns#`: bean `lqo9` puts a term's IRI there, never in the asset. */
 /** The platform's publication root, read from the namespace registry rather than written again here. */
 const NS_STEM = LEGACY_FOLIO_NS.replace(/ns#$/, "");
-export function instanceNs(name: string, stub?: string): string {
-  return `${NS_STEM}${stub ?? name}/ns#`;
+export function instanceNs(name: string, stub?: string, decl?: { iriBase?: string; version?: string }): string {
+  // An instance that declares an iriBase mints under its own release, as its
+  // vocabulary does (`release-iri.ts`): bootstrap's glossary terms are then
+  // `<iriBase><version>/ns#glossary/…`, the same namespace as its terms, and
+  // not a second address under this site that nothing else uses.
+  const release = releaseIris(decl);
+  return release ? `${release.agent}ns#` : `${NS_STEM}${stub ?? name}/ns#`;
 }
 
 // ── Who owns a term ─────────────────────────────────────────────
@@ -147,7 +153,7 @@ export function instanceOwners(repo: string = REPO): Array<{ root: string; name:
   const out: Array<{ root: string; name: string; ns: string }> = [];
   for (const root of instanceRootsIn(repo)) {
     const decl = readDeclaration(root);
-    if (decl) out.push({ root: resolve(root), name: decl.name, ns: instanceNs(decl.name, decl.stub) });
+    if (decl) out.push({ root: resolve(root), name: decl.name, ns: instanceNs(decl.name, decl.stub, decl) });
   }
   return out.sort((a, b) => b.root.length - a.root.length);
 }

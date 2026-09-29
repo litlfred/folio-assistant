@@ -123,6 +123,14 @@ Count or strength of hypotheses differs. E.g. narrative:
 structure as a hypothesis, possibly making the claim vacuously
 stronger or unsound.
 
+The drift that most needs catching runs the other way: **the Lean assumes, as
+a hypothesis, the step that is the content of the paper's proof**, and the
+conclusion then follows in a few lines. A published worked case is the
+showcase theorem of the MerLean paper (arXiv:2602.16554v1, Appendix A.1),
+read in `bidirectional-agentic-autoformalization` §"Two findings". Test: list
+the paper's hypotheses and the Lean's; for each Lean hypothesis the paper does
+not state, ask whether proving it is most of the proof.
+
 ### Class D — Notation drift
 
 The symbols don't match. Paper: $\varrho \colon \mathbf{1} \to A$;
@@ -159,6 +167,18 @@ From `.md`:
   the content-object structure: `<block>.md` is the statement,
   `<block>-proof.md` is the proof)
 - Record: stated hypotheses, conclusion, level of generality
+
+#### Optional: a blind informalization as the second statement
+
+When the Lean is too long to read against the prose directly, informalize it
+**without the narrative in context**, then compare the two prose statements.
+A reading made with the narrative in view recognises its input; one made
+without it is an independent reading. Decompose it as
+`process-driven-autoformalization` §3 does — statement, then a throwaway
+term-by-term gloss, then a proof that names no Lean identifier — or the result
+is a transliteration of the Lean and inherits its errors. Source of the
+technique: `bidirectional-agentic-autoformalization` §4. It feeds this audit;
+it does not replace Phase 3.
 
 ### Phase 3 — Classify each block
 
