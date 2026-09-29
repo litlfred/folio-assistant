@@ -241,12 +241,12 @@ A Declaration. Any field not listed here is an Extension: A field of a Declarati
 Which languages a model is good at, and whether a person checked. Only `human-validated` is ever acted on, and only a person can grant it.
 
 ```text
-+------------------------------------------------+
-| Model Registry                                 |
-+------------------------------------------------+
-| * $schema  [1]     = "folio-model-registry/v1" |
-| * models   [0..*]  Model list                  |
-+------------------------------------------------+
++------------------------------------------+
+| Model Registry                           |
++------------------------------------------+
+| * $schema  [1]     = "model-registry/v1" |
+| * models   [0..*]  Model list            |
++------------------------------------------+
   |
   +-- models (each item) --> +----------------------------------------------------------------------------------+
                              | Model                                                                            |
@@ -259,6 +259,30 @@ Which languages a model is good at, and whether a person checked. Only `human-va
                              |   validatedOn         [0..1]  string                                             |
                              |   note                [0..1]  string                                             |
                              +----------------------------------------------------------------------------------+
+```
+
+### Glossary Ledger
+
+[src](glossary-ledger.schema.json)
+
+Every term a Knowledge Graph's Processes have ever named, with the date each was first seen and the date it stopped being used. The glossary itself is regenerated each time; this is the one fact that cannot be, so a retired term is never silently reused.
+
+```text
++-----------------------------------------+
+| Glossary Ledger                         |
++-----------------------------------------+
+| * $schema   [1]  = "glossary-ledger/v1" |
+| * instance  [1]  string                 |
+| * concepts  [1]  map of key to Concept  |
++-----------------------------------------+
+  |
+  +-- concepts (each item) --> +---------------------------------+
+                               | Concept                         |
+                               +---------------------------------+
+                               | * prefLabel  [1]  string        |
+                               | * firstSeen  [1]  string        |
+                               | * retiredOn  [1]  string | null |
+                               +---------------------------------+
 ```
 
 ### Requirement

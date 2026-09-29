@@ -46,6 +46,8 @@ interface SchemaNode {
   properties?: Record<string, SchemaNode>;
   required?: string[];
   items?: SchemaNode;
+  /** A keyed map's value shape, e.g. the ledger's `concepts`. */
+  additionalProperties?: SchemaNode | boolean;
   minItems?: number;
   enum?: unknown[];
   const?: unknown;
@@ -94,8 +96,12 @@ function boxNameFor(field: string, isList: boolean, names: Readonly<Record<strin
   return s;
 }
 
+/** A map from any key to one shape: an object with no named fields, only `additionalProperties`. */
+const mapValue = (n: SchemaNode | undefined): SchemaNode | undefined =>
+  n && n.properties === undefined && typeof n.additionalProperties === "object" ? n.additionalProperties : undefined;
+
 const isObject = (n: SchemaNode | undefined): boolean =>
-  !!n && (n.type === "object" || n.properties !== undefined);
+  !!n && mapValue(n) === undefined && (n.type === "object" || n.properties !== undefined);
 
 function literal(v: unknown): string {
   return typeof v === "string" ? `"${v}"` : JSON.stringify(v);
@@ -111,6 +117,8 @@ function typeOf(n: SchemaNode, childName: string | undefined): string {
     const items = n.items ?? {};
     return isObject(items) ? `${childName} list` : `list of ${typeOf(items, undefined)}`;
   }
+  const value = mapValue(n);
+  if (value) return isObject(value) ? `map of key to ${childName}` : `map of key to ${typeOf(value, undefined)}`;
   if (isObject(n)) return childName ?? "object";
   return Array.isArray(n.type) ? n.type.join(" | ") : (n.type ?? "any");
 }
@@ -118,6 +126,7 @@ function typeOf(n: SchemaNode, childName: string | undefined): string {
 /** `[1]`, `[0..1]`, `[1..*]` or `[0..*]`. */
 function multiplicity(n: SchemaNode, required: boolean): string {
   if (n.type === "array") return required && (n.minItems ?? 0) >= 1 ? "[1..*]" : "[0..*]";
+  if (mapValue(n)) return required ? "[1]" : "[0..1]";
   return required ? "[1]" : "[0..1]";
 }
 
@@ -137,8 +146,8 @@ function buildBox(name: string, node: SchemaNode, names: Readonly<Record<string,
   const children: Box["children"] = [];
   const rows: [string, string, string][] = [];
   for (const [field, n] of props) {
-    const many = n.type === "array";
-    const inner = many ? n.items : n;
+    const many = n.type === "array" || mapValue(n) !== undefined;
+    const inner = n.type === "array" ? n.items : (mapValue(n) ?? n);
     const child = isObject(inner) ? boxNameFor(field, many, names) : undefined;
     if (child) children.push({ field, many, box: buildBox(child, inner!, names) });
     rows.push([`${required.has(field) ? "*" : " "} ${field}`, typeOf(n, child), multiplicity(n, required.has(field))]);
@@ -164,6 +173,7 @@ function drawBox(box: Box): string[] {
 function drawTree(box: Box): string[] {
   const out = drawBox(box);
   box.children.forEach(({ field, many, box: child }, i) => {
+    // A list's items and a map's values both hang as "each item": one box per entry.
     const last = i === box.children.length - 1;
     const label = `  +-- ${field} ${many ? "(each item)" : ""}`.trimEnd() + " --> ";
     const sub = drawTree(child);

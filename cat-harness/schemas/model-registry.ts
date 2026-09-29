@@ -87,8 +87,15 @@ export const ModelEntrySchema = z.object({
 
 export type ModelEntry = z.infer<typeof ModelEntrySchema>;
 
+/** bootstrap's tag for the registry (bean `r3gy`, D2). */
+export const MODEL_REGISTRY_SCHEMA = "model-registry/v1";
+/** The tag before 2026-09-29, naming the platform above bootstrap. Read, never written; drop after one release. */
+export const LEGACY_MODEL_REGISTRY_SCHEMA = "folio-model-registry/v1";
+
 export const ModelRegistrySchema = z.object({
-  $schema: z.literal("folio-model-registry/v1"),
+  // The published schema names only the new tag; the old one is accepted by
+  // `parseModelRegistry` alone, so bootstrap never states a platform name.
+  $schema: z.literal(MODEL_REGISTRY_SCHEMA),
   models: z.array(ModelEntrySchema),
 });
 
@@ -122,7 +129,11 @@ export function validatedLanguages(entry: ModelEntry): readonly string[] | undef
  * made.
  */
 export function parseModelRegistry(raw: unknown, where: string): ModelRegistry {
-  const parsed = ModelRegistrySchema.safeParse(raw);
+  const tagged =
+    raw && typeof raw === "object" && (raw as { $schema?: unknown }).$schema === LEGACY_MODEL_REGISTRY_SCHEMA
+      ? { ...(raw as object), $schema: MODEL_REGISTRY_SCHEMA }
+      : raw;
+  const parsed = ModelRegistrySchema.safeParse(tagged);
   if (!parsed.success) throw new Error(`${where} is not a valid model registry: ${parsed.error.message}`);
   const ids = new Set<string>();
   for (const m of parsed.data.models) {
