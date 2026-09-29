@@ -4,6 +4,7 @@ description: "The methodologies this repository has adopted — what each is for
 renders:
   - cat-harness/methodologies
   - folio-assistant-core/methodologies
+  - folio-assistant-sci/methodologies
   - smart-base/methodologies
 ---
 <style>
