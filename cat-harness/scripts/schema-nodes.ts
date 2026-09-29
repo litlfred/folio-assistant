@@ -78,7 +78,8 @@ function schemasRoots(root: string): string[] {
   // inherited `schemas` entry against its own root as well as its own
   // differently-id'd entry, so the same directory can come back twice — and
   // every module in it would be minted as two identical nodes (bean `81tw`,
-  // measured on the first bootstrap-tools export: 4 Schema nodes for 2 modules).
+  // measured on the first export of an instance staged above this one: 4
+  // Schema nodes for 2 modules).
   const declared = [...new Set(directoriesForGraph(root, "schemas"))];
   return declared.length > 0 ? declared : [join(root, "schemas")];
 }

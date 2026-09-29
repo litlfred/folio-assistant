@@ -25,6 +25,44 @@ folio-assistant follows [Semantic Versioning 2.0.0](https://semver.org/):
 | **Minor** (0.X.0) | New backward-compatible capability. New skills, tools, block kinds, BPMN workflows. | Add a skill, add a docs page |
 | **Patch** (0.0.X) | Bug fix, typo, documentation correction, CI fix. No new capability. | Fix a BPMN marker, fix a broken link |
 
+### Worked example — publishing a schema contract (bootstrap)
+
+The table above says *"breaking change to schema types"* is major but not
+which direction a change moves. For a document published at a fixed `$id`
+the direction is the whole question, and bootstrap's published schemas are
+the worked lifecycle (owner, 2026-09-29: *"in cat-harness, bootstrap
+publication can be an SDLC example"*). Each step is a command, and each
+command is a gate or a reading — never an assertion:
+
+1. **Change the Zod.** It is the authoring tool; the published JSON Schema,
+   not the Zod, is the contract.
+2. **Generate** — `bun run bootstrap:schemas` rewrites
+   `bootstrap/schemas/*.schema.json`; its `--check` twin fails CI when the
+   Zod moved and the published document did not.
+3. **Validate** — `bun run bootstrap:validate`, in the same CI step, parses
+   the documents bootstrap itself carries against the same Zod. A change that
+   breaks bootstrap's own data is caught before any consumer sees it; a run
+   that validated nothing fails.
+4. **Compute the bump** — `bun run bootstrap:semver` diffs each generated
+   schema against a base ref (default `origin/main`) and grades it by
+   **what validates**: *major* if a document that passed can now fail (a new
+   required field, a narrower type or enum, strictness tightened), *minor* if
+   it only widens (an optional field, a relaxed requirement), *patch* if only
+   annotations changed. An unreadable base is **`could not determine`**,
+   never patch. This is the instance-versioning proposal's rule —
+   [#592](https://github.com/litlfred/folio-assistant/issues/592),
+   [`instance-versioning.md`](../../docs/proposals/instance-versioning.md):
+   *"a version bump COMPUTED by diffing the exported graph rather than
+   asserted"* — applied to one published contract.
+5. **Publish** — the site build copies each schema to its `$id`. A major bump
+   needs the owner before merge: the `$id` does not change with it, so it is
+   a broken promise to whoever follows it.
+
+The toolchain that runs steps 2–4 sits in a layer above this one, and this
+skill names only bootstrap's contract and the commands, not that layer:
+cat-harness does not know what depends on it. The grading rules in full are
+in that toolchain's own semver skill.
+
 ## Release types and their gates
 
 | Type | Gate | Who decides |

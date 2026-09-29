@@ -46,11 +46,11 @@
     },
     {
       "code": "bootstrap-tools",
-      "label": "bootstrap-tools vocabulary",
-      "definition": "JSON-LD terms the bootstrap-tools instance declares; the prefix is the instance stub. Minted for the toolchain that renders and validates bootstrap, staged to become its own repository. Its schema NODES are not in it: those are fragments of its graph document, <base>/bootstrap-tools/bootstrap-tools.jsonld#schema/<module>.",
+      "label": "bootstrap render-toolchain vocabulary",
+      "definition": "JSON-LD terms the instance that renders and validates bootstrap declares; the prefix is the instance stub. That instance is staged above this one and depends on it, so this entry is the one place the registry must name it. Its schema NODES are not in this namespace: they are fragments of its own graph document.",
       "value": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#",
       "source": {
-        "note": "owner, 2026-09-29 (bean 81tw): 'for now create dir bootstrap-tools/ for staging split out into repo. make sure IRIs updated'"
+        "note": "owner, 2026-09-29 (bean 81tw): make sure IRIs are updated when the render tools are staged out for their own repository"
       }
     },
     {
