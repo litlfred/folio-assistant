@@ -6,7 +6,7 @@
  * singular values the paper prints to two decimals.
  */
 import { describe, expect, test } from "bun:test";
-import { buildLsi, neighboursOf, query } from "./lsi";
+import { buildLsi, neighboursOf, query, tokenize } from "./lsi";
 
 // Table 2, the term × document matrix, rows in the paper's order.
 const TERMS = ["human", "interface", "computer", "user", "system", "response", "time", "eps", "survey", "trees", "graph", "minors"];
@@ -62,5 +62,12 @@ describe("LSI engine against Deerwester et al. (1990)", () => {
     const again = buildLsi(units, { k: 8, weighting: "raw", minDf: 1, maxDfShare: 1, seed: 1990 });
     expect(again.singularValues).toEqual(ix.singularValues);
     expect(neighboursOf(again, "c3", 3)).toEqual(neighboursOf(ix, "c3", 3));
+  });
+});
+
+describe("tokenizer", () => {
+  test("a soft hyphen (U+00AD) at a line break joins the word, not splits it", () => {
+    // The WHO Handbook's text layer carries 742 of these (2026-09-29).
+    expect(tokenize("strong recommenda\u00AD\ntions for organi\u00ADzation")).toEqual(["strong", "recommendations", "organization"]);
   });
 });

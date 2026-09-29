@@ -57,7 +57,12 @@ export function plainText(raw: string): string {
     .replace(/!\[[^\]]*\]\([^)]*\)/g, " ") // images
     .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1") // links → their text
     .replace(/https?:\/\/\S+/g, " ")
-    .replace(/<[^>]+>/g, " ");
+    .replace(/<[^>]+>/g, " ")
+    // A soft hyphen (U+00AD) is a line-break HINT the PDF text layer kept:
+    // "recommenda\u00AD\ntions". Left in, it splits one word into two
+    // fragments that each become a term. Measured 2026-09-29: 742 of them in
+    // the WHO guideline Handbook, 201 fragment terms. Joined, not spaced.
+    .replace(/\u00AD\s*/g, "");
 }
 
 export function tokenize(raw: string): string[] {
@@ -258,7 +263,10 @@ export interface LsiIndex {
 
 export function fingerprintUnits(units: LsiUnit[], opts: LsiOptions = {}): string {
   const h = createHash("sha256");
-  h.update(JSON.stringify({ ...opts, v: 1 }));
+  // `v` is the TOKENIZER version: a change to how text becomes terms changes
+  // every index without changing any input, so it must change the fingerprint
+  // or a stale index reads as fresh. v2: soft hyphens joined.
+  h.update(JSON.stringify({ ...opts, v: 2 }));
   for (const u of [...units].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))) {
     h.update(u.id);
     h.update("\0");
