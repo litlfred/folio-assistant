@@ -22,10 +22,11 @@
  * list — no layer above it may be named either (`cat-harness`, `folio`),
  * because bootstrap is self-definitional. This check covers the narrower
  * rule, no OUTSIDE concept, and applies it to one thing that test does not
- * read: the Zod SOURCES bootstrap's schemas are generated from. Those moved
- * into `cat-harness/schemas/` when the `bootstrap-tools` instance was retired
- * (bean `319n`), where they may name cat-harness, but still may not name an
- * outside concept, since their text becomes the published schema.
+ * read: the Zod SOURCES bootstrap's schemas are generated from. Those live in
+ * this instance's `schemas/` (staged again by bean `81tw`, reversing `319n`)
+ * and in the stay-put `cat-harness/schemas/` modules the generator also reads;
+ * they may name cat-harness, but still may not name an outside concept, since
+ * their text becomes the published schema.
  *
  * ## Which files
  *
@@ -33,8 +34,9 @@
  *
  * - every directory the `bootstrap` instance declares with the `schemas`
  *   graph kind, where the published `*.schema.json` live; and
- * - every `../schemas/*.ts` module `gen-bootstrap-schemas.ts` imports, which
- *   are the sources those documents are generated from.
+ * - every `schemas/*.ts` module `gen-bootstrap-schemas.ts` imports — its own
+ *   instance's or cat-harness's — which are the sources those documents are
+ *   generated from.
  *
  * A declaration that cannot be read is a failure, not a skip. A check that
  * silently scanned nothing would report clean over exactly the files it
@@ -48,7 +50,7 @@
  * family of harnesses.
  */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
-import { join, relative } from "node:path";
+import { join, relative, resolve } from "node:path";
 
 const REPO = join(import.meta.dir, "..", "..");
 
@@ -96,16 +98,24 @@ export function bootstrapSchemaDirs(repo: string): string[] {
   return dirs;
 }
 
-/** The Zod modules the bootstrap schemas are GENERATED from, read off the generator's imports. */
+/**
+ * The Zod modules the bootstrap schemas are GENERATED from, read off the generator's imports.
+ *
+ * Resolved RELATIVE TO THE GENERATOR rather than against one fixed directory:
+ * since bean `81tw` the generator reads its own instance's `../schemas/` and
+ * the stay-put modules in the instance it depends on, so a source can live in
+ * either and a fixed prefix would silently drop half of them.
+ */
 export function bootstrapSchemaSources(repo: string): string[] {
-  const gen = join(repo, "cat-harness", "scripts", "gen-bootstrap-schemas.ts");
+  const genDir = join(repo, relative(REPO, import.meta.dir));
+  const gen = join(genDir, "gen-bootstrap-schemas.ts");
   const text = readFileSync(gen, "utf8");
   const out = new Set<string>();
   // Only a module imported FOR A SCHEMA is a source: the generator also
   // imports `cat-harness.ts` for its instance helpers, and that module's text
   // never reaches a published document.
-  for (const m of text.matchAll(/import\s*\{([^}]*)\}\s*from\s+"\.\.\/schemas\/([a-z0-9-]+\.ts)"/g)) {
-    if (/\b\w+Schema\b/.test(m[1]!)) out.add(join(repo, "cat-harness", "schemas", m[2]!));
+  for (const m of text.matchAll(/import\s*\{([^}]*)\}\s*from\s+"((?:\.\.\/)+(?:[a-z0-9-]+\/)*schemas\/[a-z0-9-]+\.ts)"/g)) {
+    if (/\b\w+Schema\b/.test(m[1]!)) out.add(resolve(genDir, m[2]!));
   }
   return [...out].sort();
 }

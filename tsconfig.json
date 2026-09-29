@@ -77,7 +77,7 @@
   //
   // Same `test/` and `*.e2e.ts` reasoning as above applies to each, which is
   // why these are per-directory globs rather than a bare `*/**/*.ts`.
-  "include": ["cat-harness/src/**/*.ts", "cat-harness/schemas/**/*.ts", "cat-harness/content/**/*.ts", "cat-harness/scripts/**/*.ts", "cat-harness/skills/**/*.ts", "cat-harness/adapters/**/*.ts", "cat-harness/test/health/**/*.ts", "cat-harness/types/**/*.d.ts", "tools/**/*.ts", "folio-assistant-core/schemas/**/*.ts", "large-datasets/schemas/**/*.ts", "large-datasets/scripts/**/*.ts", "who-iris/scripts/**/*.ts", "who-iris/schemas/**/*.ts"],
+  "include": ["cat-harness/src/**/*.ts", "cat-harness/schemas/**/*.ts", "cat-harness/content/**/*.ts", "cat-harness/scripts/**/*.ts", "cat-harness/skills/**/*.ts", "cat-harness/adapters/**/*.ts", "cat-harness/test/health/**/*.ts", "cat-harness/types/**/*.d.ts", "tools/**/*.ts", "folio-assistant-core/schemas/**/*.ts", "large-datasets/schemas/**/*.ts", "large-datasets/scripts/**/*.ts", "who-iris/scripts/**/*.ts", "who-iris/schemas/**/*.ts", "bootstrap-tools/schemas/**/*.ts", "bootstrap-tools/scripts/**/*.ts"],
   "exclude": [
     // `block-qa-schema` publishes to npm and owns its compiler settings. Its
     // `tests/` are excluded here for a reason that is NOT tidiness (bean `om30`):

@@ -408,6 +408,17 @@ jobs:
           bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
           cp "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}.json"
 
+          # bootstrap-tools' OWN graph, as its own document — bean `81tw`.
+          #
+          # The owner's "make sure IRIs updated": the Zod modules that moved out
+          # of cat-harness mint their schema nodes HERE, at
+          # `<base>/bootstrap-tools/bootstrap-tools.jsonld#schema/<module>`, and
+          # no longer in `<stub>.jsonld`. Publishing the document is what keeps
+          # those `@id`s dereferenceable. `.json` alongside for Pages, as above.
+          TOOLS_STUB=$(bun run cat-harness/scripts/print-stub.ts ./bootstrap-tools)
+          bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap-tools --out "./_site/${TOOLS_STUB}/${TOOLS_STUB}.jsonld"
+          cp "./_site/${TOOLS_STUB}/${TOOLS_STUB}.jsonld" "./_site/${TOOLS_STUB}/${TOOLS_STUB}.json"
+
           # The swimlane glossaries, beside the graphs whose role IRIs they
           # reuse -- bean `lqo9` slice 2, issue #596. PUBLISHED rather than
           # left as a build output because the document IS its own

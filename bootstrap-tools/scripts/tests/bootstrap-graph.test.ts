@@ -14,15 +14,15 @@ import { execFileSync } from "node:child_process";
 import { join, resolve } from "node:path";
 
 import { buildCatBootstrapDocument } from "../gen-bootstrap-graph.js";
-import { buildExport, publishedDocument } from "../kg-export.js";
+import { buildExport, publishedDocument } from "../../../cat-harness/scripts/kg-export.js";
 import { BootstrapGraphDocumentSchema } from "../../schemas/bootstrap-graph.js";
-import { isSkillMd } from "../known-skills.js";
+import { isSkillMd } from "../../../cat-harness/scripts/known-skills.js";
 import {
   repoRootFor,
   declarationPathIn,
   readDeclaration,
   artefactStub,
-} from "../../schemas/cat-harness.js";
+} from "../../../cat-harness/schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
 // `bootstrap/` is at the REPOSITORY root, not inside this instance — it is
@@ -214,7 +214,6 @@ describe("what it contains, and what it admits it did not look at", () => {
     expect(doc_omitted(await buildCatBootstrapDocument()).sort()).toEqual([
       "packages",
       "registry",
-      "schemas",
       "tools",
     ]);
   });
@@ -268,12 +267,14 @@ function bootstrapGraphPublishers(workflowText: string): string[] {
     .split("\n")
     .filter((l) => !/^\s*#/.test(l))
     .join("\n");
-  return [...code.matchAll(/cat-harness\/scripts\/([a-z0-9-]+)\.ts([^\n]*)/g)]
+  return [...code.matchAll(/(?:cat-harness|bootstrap-tools)\/scripts\/([a-z0-9-]+)\.ts([^\n]*)/g)]
     .filter((m) => {
       const [script, rest] = [m[1]!, m[2] ?? ""];
       if (!/--out\s/.test(rest)) return false;
       if (script === "gen-bootstrap-graph") return true;
-      return script === "kg-export" && /--instance\s+\.?\/?bootstrap\b/.test(rest);
+      // `(?![\w-])`, not `\b`: `./bootstrap-tools` is a different instance,
+      // and `\b` matches between `p` and `-`.
+      return script === "kg-export" && /--instance\s+\.?\/?bootstrap(?![\w-])/.test(rest);
     })
     .map((m) => `${m[1]}${m[2]}`);
 }

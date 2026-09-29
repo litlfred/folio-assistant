@@ -891,6 +891,12 @@ jobs:
           bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
           cp "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}.json"
 
+          # bootstrap-tools' own graph, where its schema nodes are minted (bean
+          # `81tw`) — the same step as the live build, staged at `$BASE`.
+          TOOLS_STUB=$(bun run cat-harness/scripts/print-stub.ts ./bootstrap-tools)
+          bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap-tools --base-url "$BASE" --out "./_site/${TOOLS_STUB}/${TOOLS_STUB}.jsonld"
+          cp "./_site/${TOOLS_STUB}/${TOOLS_STUB}.jsonld" "./_site/${TOOLS_STUB}/${TOOLS_STUB}.json"
+
           # The swimlane glossaries, on the preview too -- `check:invocation-parity`
           # refused this change until they were here, which is the gate doing
           # exactly its job. Each concept's `inScheme` names the glossary

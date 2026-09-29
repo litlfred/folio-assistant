@@ -1,6 +1,7 @@
 /**
- * Issue #1164 — the bootstrap `Requirement`, what builds on it, and the two
- * checks that hold it: `check:requirements` and `check:bootstrap-concepts`.
+ * Issue #1164 — the bootstrap `Requirement`, what builds on it, and the check
+ * that holds it: `check:requirements`. `check:bootstrap-concepts` moved with
+ * its script to `bootstrap-tools/scripts/tests/` (bean `81tw`).
  */
 import { describe, expect, test } from "bun:test";
 import { readdirSync, readFileSync } from "node:fs";
@@ -16,7 +17,6 @@ import {
 import { RequirementSchema as HarnessRequirementSchema } from "../../schemas/skill-package.ts";
 import { TestRunSchema } from "../../schemas/test-run.ts";
 import { checkRequirementPage, collisions, declaredDirFor } from "../check-requirements.ts";
-import { bootstrapSchemaDirs, bootstrapSchemaSources, scan } from "../check-bootstrap-concepts.ts";
 
 const REPO = join(import.meta.dir, "..", "..", "..");
 
@@ -184,20 +184,5 @@ describe("check:requirements", () => {
     // Declared FROM WITHIN `docs/` (`docs/docs.json`), not by the root.
     expect(declaredDirFor(inst, "requirements")).toEndWith("docs/requirements/");
     expect(declaredDirFor(inst, "proposals")).toEndWith("docs/proposals/");
-  });
-});
-
-describe("check:bootstrap-concepts", () => {
-  test("names outside concepts, and leaves plain English alone", () => {
-    const found = scan([{ path: "x.ts", text: "who is asking\nthe WHO model\na smart-base term\nFHIR here\nsmart choice" }]);
-    expect(found.map((f) => f.term)).toEqual(["WHO", "smart-base", "FHIR"]);
-  });
-  test("reads the declared schema directories — never an empty list", () => {
-    expect(bootstrapSchemaDirs(REPO).length).toBeGreaterThan(0);
-  });
-  test("…and the Zod sources they are generated from, not the generator's helpers", () => {
-    const names = bootstrapSchemaSources(REPO).map((p) => p.split("/").pop());
-    expect(names).toContain("requirement.ts");
-    expect(names).not.toContain("cat-harness.ts");
   });
 });

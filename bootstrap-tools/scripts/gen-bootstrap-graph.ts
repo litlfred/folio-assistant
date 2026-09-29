@@ -85,8 +85,8 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
-import { buildContext, collectInstanceNodes, compact, stripNamespace } from "./kg-export.js";
+import { readDeclaration, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
+import { buildContext, collectInstanceNodes, compact, stripNamespace } from "../../cat-harness/scripts/kg-export.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 // declared-path-literal: bootstrap is not a directory THIS instance declares —

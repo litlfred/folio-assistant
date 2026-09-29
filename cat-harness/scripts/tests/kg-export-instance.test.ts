@@ -20,7 +20,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { COLLECTOR_SCOPE, collectInstanceNodes } from "../kg-export.js";
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { instanceRootsIn, repoRootFor } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const ROOT = resolve(import.meta.dir, "../..");
@@ -82,7 +82,25 @@ describe("what was not looked for is not reported as clean", () => {
     // "This instance has no tools" and "tools were never looked for" are
     // different facts. Collapsing them is the `dh4f` defect.
     const { omitted } = await collectInstanceNodes(join(repoRootFor(ROOT), "bootstrap"), DOC, BASE, []);
-    expect([...omitted].sort()).toEqual(["packages", "registry", "schemas", "tools"]);
+    // `schemas` left this list with bean `81tw`: its collector reads only the
+    // declared `schemas` directories of the root it is handed.
+    expect([...omitted].sort()).toEqual(["packages", "registry", "tools"]);
+  });
+
+  test("another instance's schema modules are minted in ITS document, not this one's", async () => {
+    // Bean `81tw`: a staged instance's Zod must resolve under its own
+    // document IRI. Discovered, never named: the first instance other than
+    // this one whose declared schema directory holds a schema node.
+    const repo = repoRootFor(ROOT);
+    let checked = 0;
+    for (const inst of instanceRootsIn(repo)) {
+      if (inst === ROOT || inst === repo) continue;
+      const { nodes } = await collectInstanceNodes(inst, DOC, BASE, []);
+      const schemas = nodes.filter((n) => String(n["@type"]).endsWith("#Schema"));
+      for (const n of schemas) expect(String(n["@id"]).startsWith(`${DOC}#schema/`)).toBe(true);
+      checked += schemas.length;
+    }
+    expect(checked).toBeGreaterThan(0); // not vacuous
   });
 
   test("a declared directory holding no diagrams is a NOTE, not a crash and not a problem", async () => {

@@ -53,7 +53,7 @@ import { join, relative } from "node:path";
 
 import { z } from "zod";
 
-import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.ts";
+import { instanceRootsIn, readDeclaration } from "../../cat-harness/schemas/cat-harness.ts";
 
 
 import {
@@ -61,13 +61,13 @@ import {
   DiscussionOutputObjectSchema,
   JSON_SCHEMA_CONDITIONALS,
 } from "../schemas/discussion.ts";
-import { BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "../schemas/graph.ts";
+import { BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "../../cat-harness/schemas/graph.ts";
 import { renderSchemaPage, type PageDocument } from "./bootstrap-schema-page.ts";
-import { ModelRegistrySchema } from "../schemas/model-registry.ts";
+import { ModelRegistrySchema } from "../../cat-harness/schemas/model-registry.ts";
 import {
   REQUIREMENT_JSON_SCHEMA_CONDITIONALS,
   RequirementSchema,
-} from "../schemas/requirement.ts";
+} from "../../cat-harness/schemas/requirement.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const check = process.argv.includes("--check");

@@ -1793,12 +1793,21 @@ function collectTools(doc: string, base: string, problems: string[]): Node[] {
  * Tool keeps an artefact true; this says which Tool keeps THIS module's
  * artefact true, which is the question a reader of a schema node actually has.
  */
-function collectSchemas(doc: string, base: string): Node[] {
-  const audit = auditSchemaNodes(ROOT);
+function collectSchemas(doc: string, base: string, root: string = ROOT): Node[] {
+  // ROOTED, so an instance other than this one mints its schema nodes in ITS
+  // OWN document. `auditSchemaNodes` already read only the declaration it was
+  // handed; what kept this collector instance-bound was the default. Bean
+  // `81tw`: a staged instance's Zod modules must resolve under that
+  // instance's document IRI, not under this one's.
+  const audit = auditSchemaNodes(root);
+  const foreign = resolve(root) !== resolve(ROOT);
 
   // Tool → artefact, inverted once so each schema node can name its keeper.
+  // Only for THIS instance: the Tool set is compile-time imported (see
+  // `COLLECTOR_SCOPE`), so for another instance it would name this one's
+  // Tools as keepers of modules they were never declared to maintain.
   const keeper = new Map<string, string[]>();
-  try {
+  if (!foreign) try {
     for (const t of toolsOf(ROOT, base)) {
       for (const m of t.maintains ?? []) {
         keeper.set(m.source, (keeper.get(m.source) ?? []).concat(makeIri(doc, "tool", t.id)));
@@ -2161,7 +2170,7 @@ const LINK_TERMS = [
  */
 export const COLLECTOR_SCOPE = {
   /** Reads only DECLARED directories, so any instance with a declaration works. */
-  generic: ["skills", "processes", "declaredRoles", "declaration"],
+  generic: ["skills", "processes", "declaredRoles", "declaration", "schemas"],
   /** Reads nothing instance-specific at all — the global graph-kind registry. */
   universal: ["graphKinds"],
   /**
@@ -2169,12 +2178,16 @@ export const COLLECTOR_SCOPE = {
    *
    * - `registry` — `.claude/skills/<group>` as a path literal.
    * - `packages` — `package-manifest.json` plus directories named in code.
-   * - `schemas` — `auditSchemaNodes`, which audits this repo's `schemas/`.
+   *
+   * `schemas` was the fourth until bean `81tw`: `auditSchemaNodes` always took
+   * a root and read that root's declared `schemas` directories, so it was
+   * bound by its call site, not by what it reads. It is generic now, and the
+   * Tool back-links it adds are left to this instance alone.
    * - `tools` — **compile-time `import`** of `tools/index.ts`. This one is the
    *   sharpest: it is not root-hardcoded, it is IMPORT-BOUND, so threading a
    *   root through it reaches nothing. It would need the tool set passed in.
    */
-  instanceBound: ["registry", "packages", "schemas", "tools"],
+  instanceBound: ["registry", "packages", "tools"],
 } as const;
 
 /**
@@ -2212,6 +2225,7 @@ export async function collectInstanceNodes(
     ...collectSkills(doc, base, problems, root),
     ...(await collectProcesses(doc, problems, root, notes)),
     ...collectGraphKinds(root),
+    ...collectSchemas(doc, base, root),
     ...collectDeclaredRoles(doc, root),
     ...collectDeclaration(doc, problems, root),
     ...collectDeclaredAssets(doc, problems, root),
