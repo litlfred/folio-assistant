@@ -32,8 +32,8 @@ Rule: bootstrap may name a ROLE the Harness plays ("the Harness's README tool"),
 - [x] `models/models.json:3`: `skills/communication-language.md` (does not exist in bootstrap) and `check:model-languages`
 
 ### C. Repository-root-relative paths (needs a code change in cat-harness)
-- [ ] `initialize-harness.bpmn:26` precondition `ref="bootstrap/README.md"` is resolved from the repository root. Make `file-exists` resolve against the INSTANCE root (`src/workflow/process-model.ts`), change the ref to `README.md`, and update `precondition.test.ts:81-102`.
-- [ ] Prose `bootstrap/README.md` references (`initialize-harness.bpmn:14`, `discussion.bpmn:20`, `scenarios/roles.json:8`, `skills/discussion.md:3`) → `README.md`
+- [x] `initialize-harness.bpmn:26` precondition `ref="bootstrap/README.md"` is resolved from the repository root. Make `file-exists` resolve against the INSTANCE root (`src/workflow/process-model.ts`), change the ref to `README.md`, and update `precondition.test.ts:81-102`.
+- [x] Prose `bootstrap/README.md` references (`initialize-harness.bpmn:14`, `discussion.bpmn:20`, `scenarios/roles.json:8`, `skills/discussion.md:3`) → `README.md`
 
 ### D. Vocabulary bootstrap uses but does not define (design)
 - [ ] The 7 graph kinds (`skills`, `schemas`, `scenarios`, `processes`, `models`, `swimlane-glossary`, `qa`) are defined only in `cat-harness/schemas/graph-kind-registry.ts`. `graph.schema.json` should enumerate the kinds bootstrap itself uses (generated, so the Zod source gains the list).
@@ -69,3 +69,11 @@ Groups A and B authorised to start (owner: "Do A B").
 - B: bean ids `lv3j`, `ug4r`, `dh4f`, `2krx`, `46uh` removed; `readme_sync` → "the harness's own README tool"; `content-context-and-state-graphs` → "its own skill on context and state"; "data-modelling, step 8" dropped; `models.json` no longer names `check:model-languages` or `skills/communication-language.md`; `skill_fetch` and `beans` → "skill-fetching tool", "work-plan store".
 - Regenerated with their own tools, not by hand: 15 `.pot` templates (`translate-bpmn.ts --instance ./bootstrap --extract`) and 7 bootstrap kg-qa sidecars (`kg:audit:all`; only `source_hash` changed, no verdict).
 - Still present by design: `kg-audit.ts`-era wording is gone, but `bootstrap.json`'s `qa` description still describes the auditor generically; that directory is decision 2.
+
+## Group C — done (2026-09-29)
+
+- `file-exists` preconditions now resolve against the INSTANCE that owns the diagram, found at parse time with `findInstanceRoot` (the lookup `checkCodeLists` already used) and carried on the check as `base`. `evaluatePrecondition`, `evaluatePreconditions` and `preflight` no longer take a root, so no caller can resolve against a different directory.
+- Parse now refuses: a ref that is absolute or has a `..` segment, and a file check on a diagram no instance declaration owns.
+- `initialize-harness.bpmn`: `ref="bootstrap/README.md"` -> `ref="README.md"`. Four prose mentions -> "bootstrap's README.md". `processes/ns.jsonld` now says what `ref` is relative to.
+- Sabotage: resolving against the working directory fails 3 tests; dropping the `..` guard fails 1; dropping the no-owner guard fails 1.
+- The GitHub link at `bootstrap.json:41` is group E and stays for now.

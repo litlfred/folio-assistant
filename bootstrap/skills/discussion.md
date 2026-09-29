@@ -1,6 +1,6 @@
 # discussion — settling what an agent cannot read off disk
 
-An agent that has just read `bootstrap/README.md` knows the shape of a
+An agent that has just read bootstrap's `README.md` knows the shape of a
 harness and nothing about **this** one. Two questions have no answer in any
 file it can reach:
 
