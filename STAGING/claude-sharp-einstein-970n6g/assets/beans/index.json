@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 433,
+      "count": 434,
       "unit": "beans"
     }
   },
@@ -545,14 +545,14 @@
     {
       "id": "folio-assistant-3025",
       "title": "folio-paper-adapter: 44 of 47 skills have no role — the package is unmodelled, not untriaged",
-      "status": "in-progress",
+      "status": "todo",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-8jt6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T14:49:49Z",
-      "updatedAt": "2026-09-20T16:18:25Z",
+      "updatedAt": "2026-09-29T21:43:12Z",
       "preview": "Measured 2026-09-20 while sampling for bean `y1w9`.\n\n## The finding\n\n`folio-paper-adapter` holds **47 skills and 44 are bound to nothing — 93 %.**\nThe 3 that are bound are scattered one-apiece across six unrelated roles\n(`reviewer` 2, `authoring-agent` 1, `onboarding-agent` 1, `ingestion-agent` 1,\n`evidence-agent` 1, `corpus` 1).\n\n**That pattern is the point.** Six roles holding one paper skill ea",
       "file": "beans/defs/folio-assistant-3025--folio-paper-adapter-44-of-47-skills-have-no-role-t.md"
     },
@@ -615,14 +615,14 @@
     {
       "id": "folio-assistant-3lbz",
       "title": "TOOLS: Zod schemas are not reachable as Tools, and kg-navigation has none — audit + analysis",
-      "status": "in-progress",
+      "status": "todo",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T05:16:23Z",
-      "updatedAt": "2026-09-20T05:21:39Z",
+      "updatedAt": "2026-09-29T21:43:12Z",
       "preview": "**Asked by the owner, 2026-09-20**: *\"all zod usage is associated with skills\nand put in tools? (like validate node in graph, or so) in kg-navigation?\"* —\nand, on shape: *\"a Tool per Zod schema... no, but there should be common\npatterns (single pattern?) with some parameters more or less\"*.\n\nAnalysis: `cat-harness/docs/proposals/zod-schemas-as-tools.md`, attached to\n[#223](https://github.com/litlf",
       "file": "beans/defs/folio-assistant-3lbz--tools-zod-schemas-are-not-reachable-as-tools-and-k.md"
     },
@@ -1219,14 +1219,14 @@
     {
       "id": "folio-assistant-6pfo",
       "title": "Staging previews on gh-pages carry metadata that exists only at runtime — publish it as a KG graph",
-      "status": "in-progress",
+      "status": "todo",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T12:28:52Z",
-      "updatedAt": "2026-09-19T15:49:43Z",
+      "updatedAt": "2026-09-29T21:43:13Z",
       "preview": "Owner, 2026-09-19: *\"metadata on ghpages staging should be avalabale in KG\"*.\n\nQueued, not started — raised mid-turn while the preview cleanup was running,\nand the standing instruction is to queue rather than pivot.\n\n## The ask, as I read it\n\nEvery staging preview under `STAGING/<slug>` on `gh-pages` has facts attached\nto it: which branch it was built from, which commit, which pull request and\niss",
       "file": "beans/defs/folio-assistant-6pfo--staging-previews-on-gh-pages-carry-metadata-that-e.md"
     },
@@ -1429,14 +1429,14 @@
     {
       "id": "folio-assistant-7sf1",
       "title": "Move MEMORY.md into the kg graph, with correct skill/task pairings",
-      "status": "in-progress",
+      "status": "todo",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-8jt6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T00:04:29Z",
-      "updatedAt": "2026-09-19T00:37:53Z",
+      "updatedAt": "2026-09-29T21:43:12Z",
       "preview": "Queued 2026-09-19 while the `skill-not-a-document` split was in flight; not\nstarted. Requested as: *\"move MEMORY.md into kg and make sure in right skill /\ntask pairings\"*.\n\n## What is there now\n\n`.claude/agents/` defines three subagents carrying `memory: project`, each with\na `MEMORY.md` under `.claude/agent-memory/<agent>/`:\n\n- `platform-boundary-guard` — folio-vs-platform boundary, adapter vs pr",
       "file": "beans/defs/folio-assistant-7sf1--move-memorymd-into-the-kg-graph-with-correct-skill.md"
     },
@@ -1779,14 +1779,14 @@
     {
       "id": "folio-assistant-9wb0",
       "title": "PUBLICATION IS A STATE, NOT A BOOLEAN: every asset carries id + version and sits in draft; formal publication is an undefined process",
-      "status": "in-progress",
+      "status": "todo",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T21:29:44Z",
-      "updatedAt": "2026-09-23T21:30:16Z",
+      "updatedAt": "2026-09-29T21:43:13Z",
       "preview": "Owner ruling, 2026-09-23: *\"all assets get a version and are in 'draft' publication. formal publication process needs to be deinfed/neeeds tools/depends on instance\"*.\n\nCorrects §3.1 as `snjh` shipped it. Not a gap in that work — a different model.\n\n## What §3.1 got wrong, precisely\n\nIt models `publishable?: boolean` with three states, and REFUSES id and version unless `publishable: true`:\n\n    re",
       "file": "beans/defs/folio-assistant-9wb0--publication-is-a-state-not-a-boolean-every-asset-c.md"
     },
@@ -2227,14 +2227,14 @@
     {
       "id": "folio-assistant-ce65",
       "title": "Tool nodes exist for 11 of 138 skills — audit which uncovered skills describe an action",
-      "status": "in-progress",
+      "status": "todo",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T20:21:01Z",
-      "updatedAt": "2026-09-19T07:07:53Z",
+      "updatedAt": "2026-09-29T21:43:12Z",
       "preview": "Opened 2026-09-18, after the work rather than before it — the same unclaimed-work\nfailure as `1dfh`, recorded rather than backfilled quietly. Twice in one session\nis a pattern, not an accident: both times I went from a one-line instruction\n(\"do schemas/tool.ts\") straight to building.\n\n## Done in #279\n\n`schemas/tool.ts`, `schemas/tool-types.ts`, four Tool nodes in `tools/`,\n`check:tools` gated in C",
       "file": "beans/defs/folio-assistant-ce65--tool-nodes-exist-for-11-of-138-skills-audit-which.md"
     },
@@ -2901,14 +2901,14 @@
     {
       "id": "folio-assistant-h32d",
       "title": "Memory and todos: one schema, attachable to any KG node, stickies in the rendered folio",
-      "status": "in-progress",
+      "status": "todo",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-8jt6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T00:58:13Z",
-      "updatedAt": "2026-09-19T11:08:23Z",
+      "updatedAt": "2026-09-29T21:43:11Z",
       "preview": "**Requirements capture, 2026-09-19.** Stated by the author; recorded verbatim in\nsubstance before any design, because it arrived as one long message and the\nauthor types with difficulty. Nothing here is my synthesis unless marked so.\n\nSupersedes the framing of `folio-assistant-7sf1` (move MEMORY.md into the kg\ngraph), which is now the narrow first slice of this.\n\n## 1. The model\n\n**Memory workflow",
       "file": "beans/defs/folio-assistant-h32d--memory-and-todos-one-schema-attachable-to-any-kg-n.md"
     },
@@ -4037,6 +4037,20 @@
       "file": "beans/defs/folio-assistant-oz5w--staging-cleanup-vs-branch-reuse-merging-pr-n-delet.md"
     },
     {
+      "id": "folio-assistant-oz9e",
+      "title": "BENCHMARK: outcome evaluation of harness runs across models (close B8 — accuracy, not only structure)",
+      "status": "todo",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-5a3l",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-29T21:30:50Z",
+      "updatedAt": "2026-09-29T21:32:03Z",
+      "preview": "From the ARG-Designer mapping (arXiv 2507.18224), row B8: *they measure\naccuracy on benchmarks; we check structure.* The owner, 2026-09-29: that gap is\n**intended** to be closed, as part of the tool-harness / multi-model\nbenchmarking work under this epic — not left as a permanent difference.\n\n## What is missing today\n\nEvery check cat-harness runs is **structural**: a lane binds a role, a step is\ne",
+      "file": "beans/defs/folio-assistant-oz9e--benchmark-outcome-evaluation-of-harness-runs-acros.md"
+    },
+    {
       "id": "folio-assistant-p11x",
       "title": "check:partition cannot see cross-instance edges: its ROOT is cat-harness/, so every 0 it reports is scoped to one instance",
       "status": "todo",
@@ -4330,7 +4344,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-29T18:18:26Z",
-      "updatedAt": "2026-09-29T19:14:25Z",
+      "updatedAt": "2026-09-29T21:44:11Z",
       "preview": "## Why\n\n`bootstrap/` is the floor (`needs: []`) and is meant to become `litlfred/bootstrap`. An analysis on 2026-09-29 (artifact https://claude.ai/artifact/92M8FmwCJeHUvs6NXutsar, §3) listed 22 places where bootstrap's own files point outside bootstrap or at folio-assistant. Each one dangles once the directory is its own repository. This bean is the plan to remove them, grouped by how each group g",
       "file": "beans/defs/folio-assistant-r3gy--bootstrap-outward-references-plan-to-reach-zero-be.md"
     },
@@ -4575,14 +4589,14 @@
     {
       "id": "folio-assistant-s8nu",
       "title": "Four orphan-selectors now exist for one question — orphanSubjectPages should be the only one",
-      "status": "in-progress",
+      "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T05:33:00Z",
-      "updatedAt": "2026-09-21T06:05:00Z",
+      "updatedAt": "2026-09-29T21:43:13Z",
       "preview": "Recorded after `ankg` was fixed on main while this branch was fixing it too —\nso the count below is measured against main, not against a plan.\n\n## The four\n\n| selector | where | how it decides |\n|---|---|---|\n| `prunableStickies` | `ensure-landing-sticky.ts` | the candidate parses as the thing it writes |\n| `OWNED` | `who-iris/scripts/gen-iris-pages.ts` (#607) | a regex over FILE NAMES this genera",
       "file": "beans/defs/folio-assistant-s8nu--three-orphan-pruners-now-exist-for-one-problem-vie.md"
     },
@@ -5323,15 +5337,15 @@
     {
       "id": "folio-assistant-w91p",
       "title": "B7a (#1168): the 10 gen-*-viz scripts become Tools (renders:, maintains:); coverage.visualiser removed",
-      "status": "in-progress",
+      "status": "todo",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T19:50:21Z",
-      "updatedAt": "2026-09-24T20:36:29Z",
-      "preview": "Owner 2026-09-24: 'A: viz scripts become Tools'. 36 coverage.visualiser entries (23 single, 13 lists); none of the 10 gen-*-viz scripts is a declared Tool (tools/index.ts has 61). Each becomes a Tool with renders: <graph kind> and maintains: its pages; per-instance pages computed from Tool + directory id; the 13 lists need a rule. Derive each directory's viewers; remove coverage.visualiser.",
+      "updatedAt": "2026-09-29T21:43:12Z",
+      "preview": "Owner 2026-09-24: 'A: viz scripts become Tools'. 36 coverage.visualiser entries (23 single, 13 lists); none of the 10 gen-*-viz scripts is a declared Tool (tools/index.ts has 61). Each becomes a Tool with renders: <graph kind> and maintains: its pages; per-instance pages computed from Tool + directory id; the 13 lists need a rule. Derive each directory's viewers; remove coverage.visualiser.\n\n\n\n## ",
       "file": "beans/defs/folio-assistant-w91p--b7a-1168-the-10-gen-viz-scripts-become-tools-rende.md"
     },
     {
@@ -5379,14 +5393,14 @@
     {
       "id": "folio-assistant-whbf",
       "title": "Overview panel: the DYNAMIC half — drag, re-run layout, alternate arrangements",
-      "status": "in-progress",
+      "status": "todo",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T21:10:28Z",
-      "updatedAt": "2026-09-22T06:40:21Z",
+      "updatedAt": "2026-09-29T21:43:13Z",
       "preview": "Owner, 2026-09-20, splitting the work explicitly:\n\n| dynamic stuff is bean for later.  but static visualiztion overview is needed.\n| panel at top (colassibkle)\n\nThe static half shipped: a collapsible `<details>` panel at the top of the\nschema viewer holding a deterministic SVG of the whole graph. See\n`schema-management` §\"The overview panel\".\n\n## What is NOT there, and is this bean\n\n- Dragging a n",
       "file": "beans/defs/folio-assistant-whbf--overview-panel-the-dynamic-half-drag-re-run-layout.md"
     },
@@ -5813,14 +5827,14 @@
     {
       "id": "folio-assistant-y1w9",
       "title": "MEMORY REACH: 113 skills are bound to no role or process, so nothing hands them to an agent",
-      "status": "in-progress",
+      "status": "todo",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-8jt6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T18:34:19Z",
-      "updatedAt": "2026-09-20T16:15:40Z",
+      "updatedAt": "2026-09-29T21:43:12Z",
       "preview": "**Found by paying the cost, 2026-09-19.** Not a survey finding — a measured\nloss in one session, twice.\n\n## What happened\n\nWhile working `folio-assistant-n60j` I \"discovered\" that the gate list must\nbe derived from the CI workflow rather than from `package.json`, wrote a\nrunner and a skill around it, and reported it as a finding. It was already\nrecorded, that same day, in\n`skills/memory/derive-the",
       "file": "beans/defs/folio-assistant-y1w9--memory-reach-113-skills-are-bound-to-no-role-or-pr.md"
     },
@@ -5981,14 +5995,14 @@
     {
       "id": "folio-assistant-z4mq",
       "title": "Zod modules are tool KG nodes that maintain the public JSON-LD / JSON Schema",
-      "status": "in-progress",
+      "status": "todo",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T22:22:06Z",
-      "updatedAt": "2026-09-19T05:22:33Z",
+      "updatedAt": "2026-09-29T21:43:12Z",
       "preview": "## The requirement, in the author's words (2026-09-18)\n\n> make sure schema skills and tools as separated well. the zod(.ts) should be\n> tool KG nodes that implement maintaining a json-ld/json schema for public\n> authoritative. it is the CODING convention of cat-harness that the zod/.ts\n> toolchain is used to maintain INTERNAL the json schema. it is a REQUIREMENT\n> that any instance of cat-harness ",
       "file": "beans/defs/folio-assistant-z4mq--zod-modules-are-tool-kg-nodes-that-maintain-the-pu.md"
     },
