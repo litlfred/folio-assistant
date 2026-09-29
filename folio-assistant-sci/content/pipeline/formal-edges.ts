@@ -39,7 +39,7 @@
  * @module folio-assistant-sci/content/pipeline/formal-edges
  */
 
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "fs";
 import { dirname, join, relative, resolve } from "path";
 import { spawnSync } from "child_process";
 import { parseLeanRef, refToDecl } from "../../../cat-harness/content/pipeline/content-graph";
@@ -129,6 +129,79 @@ export function parseRows(jsonl: string): ExtractedRow[] {
   return jsonl.split("\n").filter((l) => l.trim()).map((l) => JSON.parse(l) as ExtractedRow);
 }
 
+// ── Run ─────────────────────────────────────────────────────────
+
+export interface RunOptions {
+  /** The folio's Lake project (holds `lakefile.*` and `.lake/`). */
+  lakeDir: string;
+  /** Content root to collect `lean.ref` targets from; default the folio's declared one. */
+  root?: string;
+  /** Where to write the `--ingest` JSONL; default `<lakeDir>/.lake/formal-edges/edges.jsonl`. */
+  out?: string;
+  /** Record the result in the formal cache as `source: "elaborated"`. */
+  ingest?: boolean;
+  /** Stream Lean's own output (the CLI does; the MCP tool does not). */
+  inheritStdio?: boolean;
+}
+
+/**
+ * The outcome, in THREE states rather than two. `could-not-determine` (no
+ * built modules; Lean failed) is never reported as extracted, because an
+ * empty edge set there would read as "nothing depends on anything".
+ */
+export type RunResult =
+  | { state: "extracted"; tagged: number; extracted: number; missing: string[]; out: string; ingested: boolean }
+  | { state: "could-not-determine"; reason: string };
+
+export function runFormalEdges(opts: RunOptions): RunResult {
+  const lakeDir = resolve(opts.lakeDir);
+  const repoRoot = findContentRepoRoot();
+  const contentRoot = opts.root ? resolve(opts.root) : folioDir(repoRoot);
+  const work = join(lakeDir, ".lake", "formal-edges");
+  mkdirSync(work, { recursive: true });
+
+  const tagged = collectTagged(contentRoot, repoRoot);
+  const modules = builtModules(lakeDir);
+  if (!modules.length) {
+    return { state: "could-not-determine", reason: `no built modules under ${lakeDir}/.lake/build/lib/lean; run \`lake build\` first` };
+  }
+  const driver = join(work, "Driver.lean");
+  writeFileSync(driver, fillTemplate(readFileSync(TEMPLATE_PATH, "utf-8"), modules));
+  writeFileSync(join(work, "tagged.txt"), tagged.map((t) => t.decl).join("\n") + "\n");
+  const rawOut = join(work, "edges.raw.jsonl");
+  // A previous run's output must not survive a failed run and be read as this one's.
+  rmSync(rawOut, { force: true });
+
+  const r = spawnSync("lake", ["env", "lean", driver], {
+    cwd: lakeDir,
+    env: { ...process.env, FORMAL_EDGES_TAGGED: join(work, "tagged.txt"), FORMAL_EDGES_OUT: rawOut },
+    stdio: opts.inheritStdio ? "inherit" : "pipe",
+    encoding: "utf-8",
+  });
+  if (r.status !== 0 || !existsSync(rawOut)) {
+    const tail = (r.stderr || r.stdout || "").toString().trim().split("\n").slice(-5).join("\n");
+    return { state: "could-not-determine", reason: `lake env lean exited ${r.status ?? "on a signal"}; no edges written${tail ? `\n${tail}` : ""}` };
+  }
+
+  const { records, missing } = toIngestRecords(parseRows(readFileSync(rawOut, "utf-8")), tagged);
+  const out = resolve(opts.out ?? join(work, "edges.jsonl"));
+  mkdirSync(dirname(out), { recursive: true });
+  writeFileSync(out, records.map((x) => JSON.stringify(x)).join("\n") + "\n");
+  if (opts.ingest) ingestMode(repoRoot, out, "elaborated");
+  return { state: "extracted", tagged: tagged.length, extracted: records.length, missing, out, ingested: !!opts.ingest };
+}
+
+/** One human-readable summary, shared by the CLI and the MCP tool. */
+export function describeResult(r: RunResult): string {
+  if (r.state === "could-not-determine") return `could not determine formal edges: ${r.reason}`;
+  const lines = [
+    `${r.tagged} lean.ref targets; ${r.extracted} extracted; ${r.missing.length} not found in the built environment`,
+  ];
+  if (r.missing.length) lines.push(`  missing (first 10): ${r.missing.slice(0, 10).join(", ")}`);
+  lines.push(`wrote ${r.out}${r.ingested ? ' and recorded it as source: "elaborated"' : ""}`);
+  return lines.join("\n");
+}
+
 // ── CLI ─────────────────────────────────────────────────────────
 
 if (import.meta.main) {
@@ -139,39 +212,8 @@ if (import.meta.main) {
     console.error("usage: formal-edges.ts --lake-dir <folio Lake project> [--root <content root>] [--out <jsonl>] [--ingest]");
     process.exit(2);
   }
-  const repoRoot = findContentRepoRoot();
-  const contentRoot = opt("--root") ? resolve(opt("--root")!) : folioDir(repoRoot);
-  const work = join(resolve(lakeDir), ".lake", "formal-edges");
-  mkdirSync(work, { recursive: true });
-
-  const tagged = collectTagged(contentRoot, repoRoot);
-  const modules = builtModules(resolve(lakeDir));
-  if (!modules.length) {
-    // Could-not-determine is not clean: say so and exit non-zero.
-    console.error(`no built modules under ${lakeDir}/.lake/build/lib/lean — run \`lake build\` first`);
-    process.exit(2);
-  }
-  const driver = join(work, "Driver.lean");
-  writeFileSync(driver, fillTemplate(readFileSync(TEMPLATE_PATH, "utf-8"), modules));
-  writeFileSync(join(work, "tagged.txt"), tagged.map((t) => t.decl).join("\n") + "\n");
-  const rawOut = join(work, "edges.raw.jsonl");
-
-  const r = spawnSync("lake", ["env", "lean", driver], {
-    cwd: resolve(lakeDir),
-    env: { ...process.env, FORMAL_EDGES_TAGGED: join(work, "tagged.txt"), FORMAL_EDGES_OUT: rawOut },
-    stdio: "inherit",
-  });
-  if (r.status !== 0 || !existsSync(rawOut)) {
-    console.error(`lake env lean exited ${r.status ?? "on a signal"}; no edges written`);
-    process.exit(1);
-  }
-
-  const { records, missing } = toIngestRecords(parseRows(readFileSync(rawOut, "utf-8")), tagged);
-  const out = resolve(opt("--out") ?? join(work, "edges.jsonl"));
-  mkdirSync(dirname(out), { recursive: true });
-  writeFileSync(out, records.map((x) => JSON.stringify(x)).join("\n") + "\n");
-  console.log(`${tagged.length} lean.ref targets; ${records.length} extracted; ${missing.length} not found in the built environment`);
-  if (missing.length) console.log(`  missing (first 10): ${missing.slice(0, 10).join(", ")}`);
-  console.log(`wrote ${out}`);
-  if (args.includes("--ingest")) ingestMode(repoRoot, out, "elaborated");
+  const r = runFormalEdges({ lakeDir, root: opt("--root"), out: opt("--out"), ingest: args.includes("--ingest"), inheritStdio: true });
+  (r.state === "extracted" ? console.log : console.error)(describeResult(r));
+  // could-not-determine exits 2, never 0: it is not a clean result.
+  process.exit(r.state === "extracted" ? 0 : 2);
 }

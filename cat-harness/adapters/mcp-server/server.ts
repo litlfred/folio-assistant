@@ -68,6 +68,9 @@ import {
 } from "./git.js";
 import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync } from "fs";
 import { join, relative, resolve, extname, basename } from "path";
+import { loadContributions } from "../../schemas/harness-config";
+import { ContributionRegistry, type FolioContribution } from "../../schemas/contributions";
+import { findContentRepoRoot } from "../../content/pipeline/repo-root";
 import Anthropic from "@anthropic-ai/sdk";
 
 // ── Access control ───────────────────────────────────────────
@@ -3558,6 +3561,36 @@ server.tool = function (...args: Parameters<typeof origTool>) {
 for (const o of await registerMcpToolGroups(server)) {
   if (o.state === "absent") log("mcp", `− ${o.id}`, `${o.layer} layer: ${o.detail}`);
   else if (o.state === "failed") log("mcp", `✗ ${o.id}`, o.detail);
+}
+
+// Tools CONTRIBUTED by the folio's declared dependencies — the direction that
+// needs no name: the server walks what the instance declares and registers
+// what each dependency's `contributes` module supplies, as qa-sweep already
+// does for contributed QA checkers. `ContributionRegistry.registerTools` had
+// no production caller until this block, so a contributed tool never reached
+// any server (folio-assistant#1492, which contributes `lean_formal_edges` from
+// folio-assistant-sci). A contribution that cannot load is REPORTED and the
+// server still starts, the same stance as a failed tool group above.
+try {
+  // The FOLIO's root, not this platform's: contributions are what the folio
+  // declares as its dependencies. `cat-harness/` declares none, so loading
+  // from here would register nothing and look exactly like "nothing to add".
+  //
+  // `findContentRepoRoot()` FALLS BACK to the platform's own `cat-harness/`
+  // when no ancestor holds a folio — which is the case in the platform's own
+  // repository. There the instance actually running is the repository root
+  // above it (whose declaration lists folio-assistant-sci), so that is the
+  // root used; `qa-checker-discovery.test.ts` loads from the same place.
+  const platformInstance = resolve(import.meta.dir, "..", "..");
+  const folioRoot = findContentRepoRoot();
+  const contributions = await loadContributions<FolioContribution, ContributionRegistry>(
+    folioRoot === platformInstance ? resolve(platformInstance, "..") : folioRoot,
+    new ContributionRegistry(),
+  );
+  contributions.registerTools(server);
+  for (const name of contributions.contributedTools()) log("mcp", `+ ${name}`, "contributed tool");
+} catch (e) {
+  log("mcp", "✗ contributed tools", e instanceof Error ? e.message : String(e));
 }
 
 // ── Transport selection ──────────────────────────────────────────
