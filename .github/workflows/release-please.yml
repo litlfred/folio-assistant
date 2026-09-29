@@ -86,7 +86,7 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: googleapis/release-please-action@v4
+      - uses: googleapis/release-please-action@v5
         with:
           # Token: GITHUB_TOKEN is the conservative default but suffers
           # from the silent-fail issue documented above. If a fine-

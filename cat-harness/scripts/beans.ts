@@ -207,6 +207,58 @@ export function resolveBeanDefs(root: string): BeanDefsResolution {
   return { dir: join(declared ? dirname(file) : graphRoot, node.path), declared };
 }
 
+/** The ARCHIVE view's directory, and whether the graph declared it. */
+export interface BeanArchiveResolution {
+  /** The directory, or `null` when the graph declares no `archive` node. */
+  dir: string | null;
+  /** True when `beans/beans.json` names a node with id `archive`. */
+  declared: boolean;
+}
+
+/**
+ * Where the archive VIEW is — resolved by node **id**, not by kind.
+ *
+ * Bean `e8m3`. The owner ruled 2026-09-26 that archiving is a **view** rather
+ * than a terminal state: an archived bean keeps its status and is still part of
+ * the store. So the archive holds `bean-defs`, the same kind as the active
+ * store — and that is exactly why {@link nodeOfKind} cannot be used here. With
+ * two nodes of one kind it returns the first, which is `defs`, so asking by
+ * kind would hand back the ACTIVE store under the name of the archive. Silent,
+ * and wrong in the direction that reports the archive as clean.
+ *
+ * That the two share a kind is the point rather than an accident: a reader of
+ * either is reading beans. What differs is whether the work is still in front
+ * of anybody, and `check:bean-archive` is what holds that line.
+ *
+ * `declared: false` with `dir: null` is an instance that has no archive, which
+ * is fine. A declared path that is absent is `dh4f` and is the caller's to
+ * report as COULD NOT DETERMINE rather than as empty.
+ */
+export function resolveBeanArchive(root: string): BeanArchiveResolution {
+  const graphRoot = join(root, DEFAULT_BEAN_GRAPH_ROOT);
+  const file = join(graphRoot, BEAN_GRAPH_FILE);
+  const declared = existsSync(file);
+  const graph = declared
+    ? parseBeanGraph(JSON.parse(readFileSync(file, "utf-8")))
+    : DEFAULT_BEAN_GRAPH;
+  const node = graph.directories.find((d) => d.id === "archive");
+  if (!node) return { dir: null, declared: false };
+  return { dir: join(declared ? dirname(file) : graphRoot, node.path), declared: true };
+}
+
+/**
+ * Every bean in the ARCHIVE view, sorted by id. `null` when none is declared.
+ *
+ * Deliberately a separate reader rather than a flag on {@link readBeans}: eight
+ * call sites read the active store and none of them should start counting
+ * history because a parameter defaulted the other way.
+ */
+export function readArchivedBeans(root: string): BeanNode[] | null {
+  const { dir } = resolveBeanArchive(root);
+  if (dir === null || !existsSync(dir)) return null;
+  return beansIn(dir, root);
+}
+
 /**
  * Every bean in the store, sorted by id.
  *
@@ -222,6 +274,19 @@ export function resolveBeanDefs(root: string): BeanDefsResolution {
 export function readBeans(root: string): BeanNode[] | null {
   const dir = beanDefsDir(root);
   if (dir === null || !existsSync(dir)) return null;
+  return beansIn(dir, root);
+}
+
+/**
+ * Parse every bean file directly in `dir`. Shared by the active store and the
+ * archive view so the front-matter parsing has ONE implementation.
+ *
+ * Non-recursive on purpose. `beans/defs/archive/` is a sibling VIEW with its
+ * own declaration and its own reader ({@link readArchivedBeans}), not a deeper
+ * part of the active store — so recursing here would silently fold 631 terminal
+ * beans into every open-bean count.
+ */
+function beansIn(dir: string, root: string): BeanNode[] {
   const out: BeanNode[] = [];
   for (const name of readdirSync(dir).sort()) {
     if (!name.endsWith(".md")) continue;

@@ -5,7 +5,7 @@
     "id": "Process_ActivityLog",
     "path": "processes/activity-log.bpmn"
   },
-  "source_hash": "sha256:aa18026f1520927ea6e5057273d29a2f84349ce0c7ba1a14de951dd0d382e1a9",
+  "source_hash": "sha256:b9fd0c9f0f072d6bc39084954385148186628a7f7e7d7aa8cad0be7172d5abe8",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,39 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_LogStart",
+          "detail": "names skill \"activity-log\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_LogMessage",
+          "detail": "names skill \"activity-log\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_LogEnd",
+          "detail": "names skill \"activity-log\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_PersistLog",
+          "detail": "names skill \"activity-log\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_ReportCaptureState",
+          "detail": "names skill \"activity-log\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_EmptyOne",
+          "detail": "names skill \"activity-log\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_EmptyAll",
+          "detail": "names skill \"activity-log\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -135,7 +168,7 @@
   },
   "totals": {
     "pass": 13,
-    "fail": 1,
+    "fail": 2,
     "n/a": 10,
     "unknown": 0
   }

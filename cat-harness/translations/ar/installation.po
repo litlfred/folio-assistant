@@ -1,0 +1,260 @@
+# Arabic translation of folio-assistant installation (docs/installation.md)
+# Copyright (C) 2026 folio-assistant contributors
+# This file is distributed under the same license as the folio-assistant package.
+#
+# UNOFFICIAL — recovered from the already-published translation by
+# `content/pipeline/derive-po.ts`, by aligning this locale's page against its
+# source with the same extractor. No human has adjudicated it. Issue #206
+# defines official as human sign-off; until that happens this is a starting
+# point, not an authority. The alignment was accepted because the two
+# documents yield the same sequence of 58 constructs; see the module
+# docblock for what that does and does not establish.
+#
+# INCOMPLETE — 2 of these constructs
+# were added to the source AFTER this translation was made, and carry an empty
+# msgstr. That is #206's stale-on-edit case; they need a translator, not a fix.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: folio-assistant\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: folio-assistant agent (derived, unofficial)\n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: docs/installation.md:9
+msgid "Installation"
+msgstr "التثبيت"
+
+#: docs/installation.md:17
+msgid "Installing is the easy half. What to run before you push is  —  passing is not the gates passing, and the list is derived from the CI workflow rather than written down. If you are laying folio-assistant over a repository that already exists, read  first."
+msgstr "التثبيت هو النصف الأسهل. ما يجب تشغيله قبل أن تدفع (push) هو  — فاجتياز  ليس هو اجتياز البوابات، وتُستمد القائمة من سير عمل CI بدلاً من أن تكون مكتوبة نصيًا. وإذا كنت تضع folio-assistant فوق مستودع موجود بالفعل، فاقرأ  أولاً."
+
+#: docs/installation.md:24
+msgid "Prerequisites"
+msgstr "المتطلبات الأساسية"
+
+#: docs/installation.md:26
+msgid "folio-assistant runs on Bun and connects to an LLM agent over MCP. The platform itself only needs Bun; individual content types pull in heavier toolchains (LaTeX, Lean, the FHIR IG Publisher) which are checked at runtime and can be installed on demand."
+msgstr "يعمل folio-assistant على Bun ويتصل بوكيل نموذج لغوي كبير (LLM) عبر MCP. والمنصة نفسها لا تحتاج إلا إلى Bun؛ أما أنواع المحتوى الفردية فتتطلب مجموعات أدوات أثقل (LaTeX وLean وFHIR IG Publisher) التي يتم التحقق منها في وقت التشغيل ويمكن تثبيتها عند الطلب."
+
+#: docs/installation.md:31
+msgid "Requirement"
+msgstr "المتطلب"
+
+#: docs/installation.md:31
+msgid "Needed for"
+msgstr "مطلوب لـ"
+
+#: docs/installation.md:31
+msgid "Install (Linux/macOS)"
+msgstr "التثبيت (Linux/macOS)"
+
+#: docs/installation.md:31
+msgid "Install (Windows)"
+msgstr "التثبيت (Windows)"
+
+#: docs/installation.md:33
+msgid "Bun ≥ 1.0"
+msgstr "Bun ≥ 1.0"
+
+#: docs/installation.md:33
+msgid "the framework (always)"
+msgstr "إطار العمل (دائمًا)"
+
+#: docs/installation.md:33
+msgid "`curl -fsSL https://bun.sh/install \\"
+msgstr "`curl -fsSL https://bun.sh/install \\"
+
+#: docs/installation.md:33
+msgid "bash`"
+msgstr "bash`"
+
+#: docs/installation.md:34
+msgid "Git + git-lfs"
+msgstr "Git + git-lfs"
+
+#: docs/installation.md:34
+msgid "content repositories"
+msgstr "مستودعات المحتوى"
+
+#: docs/installation.md:35
+msgid "LaTeX (, )"
+msgstr "LaTeX (، و)"
+
+#: docs/installation.md:35
+msgid "rendering papers"
+msgstr "تصيير الأوراق العلمية"
+
+#: docs/installation.md:36
+msgid "Lean 4 (via )"
+msgstr "Lean 4 (عبر )"
+
+#: docs/installation.md:36
+msgid "formalizing papers"
+msgstr "الصياغة الرياضية الرسمية للأوراق"
+
+#: docs/installation.md:36
+msgid "`curl …/elan-init.sh \\"
+msgstr "`curl …/elan-init.sh \\"
+
+#: docs/installation.md:36
+msgid "sh -s -- -y`"
+msgstr "sh -s -- -y`"
+
+#: docs/installation.md:36
+msgid "see elan releases"
+msgstr "راجع إصدارات elan"
+
+#: docs/installation.md:37
+msgid "Java 21 + IG Publisher + SUSHI"
+msgstr "Java 21 + IG Publisher + SUSHI"
+
+#: docs/installation.md:37
+msgid "WHO SMART IGs (L3)"
+msgstr "أدلة تطبيق WHO SMART (المستوى L3)"
+
+#: docs/installation.md:37
+msgid "see WHO SMART IG guide"
+msgstr "راجع دليل WHO SMART IG"
+
+#: docs/installation.md:37
+msgid ", then the guide"
+msgstr "، ثم الدليل"
+
+#: docs/installation.md:38
+msgid "conversions, search"
+msgstr "التحويلات، والبحث"
+
+#: docs/installation.md:40
+msgid "You do not need all of these — install only what the content types you author require. The built-in capability probe tells you what is missing."
+msgstr "لست بحاجة إلى كل هذه المتطلبات — ثبّت فقط ما تتطلبه أنواع المحتوى التي تؤلفها. ويخبرك فاحص القدرات المدمج بما هو مفقود."
+
+#: docs/installation.md:43
+msgid "Only Bun is required. Every other row is per content type and is probed at runtime, so install nothing else until  asks for it."
+msgstr "Bun هو المطلوب فقط. كل صف آخر يخص نوع محتوى معين ويتم فحصه في وقت التشغيل، لذا لا تثبّت أي شيء آخر حتى يطلبه ."
+
+#: docs/installation.md:47
+msgid "Clone and install"
+msgstr "الاستنساخ والتثبيت"
+
+#: docs/installation.md:55
+msgid "On Windows, there is a script"
+msgstr "على Windows، يوجد برنامج نصي"
+
+#: docs/installation.md:57
+msgid "From a bare machine with only a git client, this installs Bun (via winget where available), refreshes , runs , and then hands over to the capability probe:"
+msgstr "من جهاز مجرد لا يحتوي إلا على عميل git، يقوم هذا البرنامج بتثبيت Bun (عبر winget حيثما يتوفر)، ويحدّث ، ويشغل ، ثم يسلّم المهمة إلى فاحص القدرات:"
+
+#: docs/installation.md:68
+msgid "It installs Bun and nothing else — LaTeX, Lean, Java and the IG Publisher stay per content type, reported by  with install hints."
+msgstr "وهو يثبت Bun ولا شيء غيره — وتبقى أدوات LaTeX وLean وJava وIG Publisher لكل نوع محتوى، ويُبلغ عنها  مع تلميحات التثبيت."
+
+#: docs/installation.md:71
+#, fuzzy
+msgid "The platform's shell scripts are bash. On Windows they run under Git Bash, which Git for Windows installs, so  is the only extra prerequisite. Every script a user runs by hand or wires into a config has a  beside it — , , ,  and so on — which finds Git Bash (never the WSL launcher in ) and runs the sibling  with the same arguments. Use them from , PowerShell, Task Scheduler or an MCP config entry:"
+msgstr ""
+
+#: docs/installation.md:86
+#, fuzzy
+msgid "Anything the  needs — , , ,  — must be on the Windows , since Git Bash inherits it from the caller. Scripts that only make sense on a Linux host (, , , ) have no wrapper on purpose. The list lives in ;  regenerates the wrappers and  fails CI if one is missing or stale."
+msgstr ""
+
+#: docs/installation.md:93
+msgid "On Linux/macOS, there is also a script"
+msgstr "على Linux/macOS، يوجد أيضًا برنامج نصي"
+
+#: docs/installation.md:95
+msgid "installs Bun if it is missing and then starts the server, and  is a fuller installer covering TeX Live as well. Both were undocumented until 2026-09-21 (#740) — which is why this section exists."
+msgstr "يقوم  بتثبيت Bun إذا كان مفقودًا ثم يبدأ تشغيل الخادم، كما أن  هو برنامج تثبيت أكثر شمولاً يغطي TeX Live أيضًا. كلاهما لم يكن موثقًا حتى 2026-09-21 (#740) — ولهذا السبب يوجد هذا القسم."
+
+#: docs/installation.md:102
+msgid "Check your environment"
+msgstr "فحص بيئتك"
+
+#: docs/installation.md:104
+msgid "The  probe reports which capabilities are present and gives an install hint for anything missing:"
+msgstr "يُبلغ فاحص  عن القدرات الموجودة ويقدم تلميح تثبيت لأي شيء مفقود:"
+
+#: docs/installation.md:113
+msgid "Run the server"
+msgstr "تشغيل الخادم"
+
+#: docs/installation.md:115
+msgid "folio-assistant is an MCP server. It speaks two transports:"
+msgstr "إن folio-assistant هو خادم MCP. وهو يدعم وسيطي نقل:"
+
+#: docs/installation.md:128
+msgid "There are convenience scripts in :"
+msgstr "توجد برامج نصية للملاءمة في :"
+
+#: docs/installation.md:138
+msgid "Configure for your folio"
+msgstr "التكوين لـ folio الخاص بك"
+
+#: docs/installation.md:140
+msgid "Copy the example config into your content repository (not into folio-assistant) and adjust it for your content type:"
+msgstr "انسخ نموذج التكوين إلى مستودع المحتوى الخاص بك (وليس إلى folio-assistant) واضبطه وفقًا لنوع المحتوى لديك:"
+
+#: docs/installation.md:159
+msgid "selects both the adapter and the block-kind profile. Use  (and ) for a folio with Lean-backed mathematics — the paper adapter extends the document one, so it offers every document tool as well.  writes this file for you; see Start a new folio."
+msgstr "يحدد  كلاً من المحول وملف تعريف نوع الكتلة. استخدم  (و) لـ folio يحتوي على رياضيات مدعومة بـ Lean — حيث يوسع محول paper محول document، وبالتالي يوفر جميع أدوات document أيضًا. يكتب  هذا الملف نيابة عنك؛ راجع بدء folio جديد."
+
+#: docs/installation.md:167
+msgid "Connecting an LLM harness"
+msgstr "توصيل إطار LLM"
+
+#: docs/installation.md:169
+msgid "folio-assistant exposes its tools over MCP, so any MCP-capable agent harness can drive it. Below are configurations for the common ones. In every case the agent launches the server over stdio."
+msgstr "يعرض folio-assistant أدواته عبر MCP، لذا يمكن لأي إطار عمل وكيل يدعم MCP تشغيله. فيما يلي تكوينات للأطر الشائعة. في كل الحالات، يشغّل الوكيل الخادم عبر stdio."
+
+#: docs/installation.md:173
+msgid "Claude Code"
+msgstr "Claude Code"
+
+#: docs/installation.md:175
+msgid "Add folio-assistant as an MCP server. Project-scoped config lives in  at the root of your content repo:"
+msgstr "أضف folio-assistant كخادم MCP. يوجد التكوين على نطاق المشروع في ملف  في جذر مستودع المحتوى الخاص بك:"
+
+#: docs/installation.md:189
+msgid "Or register it from the CLI:"
+msgstr "أو سجّله من واجهة سطر الأوامر (CLI):"
+
+#: docs/installation.md:195
+msgid "Claude Code also reads  /  natively and honours the  hook in  — so the work-plan primer runs automatically when a session starts."
+msgstr "يقرأ Claude Code أيضًا  /  بشكل أصيل ويلتزم بخطاف  في  — بحيث يعمل ممهّد خطة العمل تلقائيًا عند بدء الجلسة."
+
+#: docs/installation.md:199
+msgid "Antigravity"
+msgstr "Antigravity"
+
+#: docs/installation.md:201
+msgid "Antigravity reads  natively and supports MCP servers and a  lifecycle hook. Add the server to its MCP config (JSON format shared with Gemini CLI):"
+msgstr "يقرأ Antigravity ملف  بشكل أصيل ويدعم خوادم MCP وخطاف دورة الحياة . أضف الخادم إلى تكوين MCP الخاص به (تنسيق JSON مشترك مع Gemini CLI):"
+
+#: docs/installation.md:216
+msgid "Wire the session-start primer to Antigravity's  hook so each session is primed with the work-plan — point the hook command at the shared script  (the same script every harness uses; only the hook-config format differs per tool)."
+msgstr "قم بربط ممهّد بدء الجلسة بخطاف  في Antigravity حتى تُمهَّد كل جلسة بخطة العمل — وجّه أمر الخطاف إلى البرنامج النصي المشترك  (وهو البرنامج النصي نفسه الذي يستخدمه كل إطار؛ ويختلف فقط تنسيق تكوين الخطاف باختلاف الأداة)."
+
+#: docs/installation.md:221
+msgid "Gemini CLI"
+msgstr "Gemini CLI"
+
+#: docs/installation.md:223
+msgid "Gemini CLI reads  /  natively. Register the MCP server in its settings and reuse the same  script:"
+msgstr "يقرأ Gemini CLI ملف  /  بشكل أصيل. سجّل خادم MCP في إعداداته وأعد استخدام البرنامج النصي نفسه لـ :"
+
+#: docs/installation.md:237
+msgid "Any other MCP client"
+msgstr "أي عميل MCP آخر"
+
+#: docs/installation.md:239
+msgid "Point your client at the stdio command above, or run the HTTP transport () and connect over HTTP. The MCP server exposes a  tool that any MCP-connected agent can call to get identical live work-plan priming, regardless of harness."
+msgstr "وجّه عميلك إلى أمر stdio أعلاه، أو شغّل وسيط نقل HTTP () واتصل عبر HTTP. يتيح خادم MCP أداة  التي يمكن لأي وكيل متصل بـ MCP استدعاؤها للحصول على تمهيد مباشر ومتطابق لخطة العمل، بغض النظر عن إطار العمل المستخدم."
+
+#: docs/installation.md:244
+msgid "Why this works across harnesses. The discipline lives in  (a Linux Foundation agent standard read natively by Claude Code, Gemini CLI, Antigravity, Cursor, Copilot, and others); the live state is exposed both as a per-harness  hook over one shared script and as the  MCP tool. See the architecture page."
+msgstr "لماذا يعمل هذا عبر الأطر المختلفة. يكمن الانضباط في  (وهو معيار لوكلاء Linux Foundation يُقرأ بشكل أصيل بواسطة Claude Code وGemini CLI وAntigravity وCursor وCopilot وغيرها)؛ ويتم إظهار الحالة المباشرة كخطاف  لكل إطار عبر برنامج نصي مشترك، وكأداة MCP المسماة . راجع صفحة البنية الهندسية."

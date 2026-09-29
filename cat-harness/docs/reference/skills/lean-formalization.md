@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-schema-docs.ts — do not hand-edit; edit the schema
 title: Lean Formalization
 parent: Skill schema reference
 ---
@@ -22,7 +23,7 @@ Input schema for the lean-formalization skill. Describes source material to be f
 | `dependencies` | array<string> | no | Lean package dependencies (lake packages). |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/lean-formalization/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/lean-formalization/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/lean-formalization/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/lean-formalization/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -52,4 +53,4 @@ Output schema for the lean-formalization skill.
 | `message` | string | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/lean-formalization/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/lean-formalization/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/lean-formalization/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/lean-formalization/output.schema.json){: .fa-edit-source }

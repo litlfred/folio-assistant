@@ -14,11 +14,11 @@
  *
  * Usage:
  *
- *   bun run pipeline/integration-audit.ts <content-root> \
+ *   bun run cat-harness/content/pipeline/integration-audit.ts <content-root> \
  *     --criteria ID[,ID]      # explicit criterion IDs
- *   bun run pipeline/integration-audit.ts <content-root> \
+ *   bun run cat-harness/content/pipeline/integration-audit.ts <content-root> \
  *     --axis NAME[,NAME]      # one or more watcher axes
- *   bun run pipeline/integration-audit.ts <content-root> --all
+ *   bun run cat-harness/content/pipeline/integration-audit.ts <content-root> --all
  *                             # every registered criterion
  *
  *   --dry-run                 # report what would change, do nothing

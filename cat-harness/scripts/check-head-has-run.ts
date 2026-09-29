@@ -110,6 +110,41 @@
  * is the whole check: in both of the bean's cases the branch *did* have a
  * recent run — for the commit the previous PR had merged.
  *
+ * ## A push does not buy you a run, and `mergeable_state` does not buy you an answer
+ *
+ * Two things measured 2026-09-25 (bean `fx5r`), both of which change what an
+ * operator standing at a runless head should DO.
+ *
+ * **Pushing to a PR's head branch does not re-run its `pull_request`
+ * workflows.** A merge commit was pushed to an open PR's branch and only the
+ * `push`-triggered workflow fired:
+ *
+ * ```
+ * 17:04  success  JSON-LD generated-file drift   57fd738d8  (event=push)
+ * 04:54  success  Code-quality gates             5a02ac4b5  (event=pull_request)
+ * ```
+ *
+ * The head then carried ONE green check and not the one that mattered — this
+ * script's own subject, `3pqn`, arrived at from the other side: not zero
+ * checks, but the wrong subset, which reads as green at a glance. So
+ * "push something to trigger CI" is not a remedy; `workflow_dispatch` against
+ * the branch is, and the table above is right that it is safe only while the
+ * PR is mergeable.
+ *
+ * **`mergeable_state` is not the way to check by hand.** It, `head.sha` and
+ * `updated_at` all kept serving a PR's pre-merge view 45 minutes after that PR
+ * merged; only `merged` went stale-safe. Worse, `update-branch` answered
+ * *"merge conflict between base and head"* for a CLOSED PR, while
+ * `git merge-tree` and a real `git merge --no-commit` both reported zero
+ * unmerged paths — a wrong cause stated with the authority of a measurement.
+ *
+ * This module already had the right instinct: {@link mergeStateForHead} asks
+ * `git ls-remote origin refs/pull/N/merge` rather than the field. The advice it
+ * PRINTED in the `unknown` case did not, and pointed at `mergeable_state`
+ * twice. That is fixed; the rule is the one `h2s9` arrived at independently —
+ * **when a forge API and git disagree about git, git is the subject and the
+ * API is a cache.**
+ *
  * ## The hazard this script could itself have become
  *
  * A commit id GitHub has never heard of returns an empty run list, which is
@@ -125,7 +160,7 @@
  *
  * Usage:  bun run check:head-has-run [<sha>]
  */
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 
 import { classifyResponse, withBackoff, type BackoffOptions } from "../src/core/retry.js";
@@ -322,17 +357,63 @@ export function mergeStateForHead(
 }
 
 /** Is this commit on any remote-tracking ref — i.e. has it been pushed? */
-export function isPushed(repo: string, sha: string): boolean {
-  try {
-    return (
-      execFileSync("git", ["-C", repo, "branch", "-r", "--contains", sha], {
-        encoding: "utf8",
-        stdio: ["ignore", "pipe", "ignore"],
-      }).trim() !== ""
-    );
-  } catch {
-    return false;
+/** Whether a commit is on a remote-tracking ref — with the third state kept. */
+export type PushedState = "pushed" | "not-pushed" | "cannot-tell";
+
+/**
+ * Is this commit on a remote-tracking ref?
+ *
+ * ## Why this is not a boolean — bean `y0n2`
+ *
+ * It was, and it returned `false` from a bare `catch`, which conflated two
+ * different facts: *git answered, and no remote-tracking branch contains this
+ * commit* with *git did not answer*. The second is a could-not-determine, and
+ * this repository states the rule everywhere — `ci-health`, `health`,
+ * `audit-coverage` — as **could-not-determine is never rendered as clean**. Here
+ * it was rendered as a VERDICT, and the wrong one.
+ *
+ * It also discarded stderr (`stdio: ["ignore", "pipe", "ignore"]`), so the reason
+ * git failed was not merely unreported but UNAVAILABLE. That is what made the
+ * measured failure undiagnosable: `head-has-run.test.ts`'s
+ * `a commit on a remote-tracking ref reads as pushed` failed once inside a full
+ * `bun test` at 22671 ms and passed when run directly, and no route existed to
+ * the reason. A 523-file suite runs plenty of concurrent git, and `.git` lock
+ * contention is exactly the transient the old `catch` ate.
+ *
+ * The consequence was not cosmetic. This value chooses what a person is TOLD:
+ * `not-pushed` sends them to *"Push it, then ask again"*, which is the wrong
+ * advice for somebody who has pushed — and bean `sddf` is the record of how much
+ * care the OTHER branch of this decision already needed.
+ *
+ * `cannot-tell` follows the `cannot-ask` state this same script already has for
+ * the run verdict, deliberately: one idiom, not two.
+ */
+export function pushedState(repo: string, sha: string): PushedState {
+  const r = spawnSync("git", ["-C", repo, "branch", "-r", "--contains", sha], {
+    encoding: "utf8",
+  });
+  // `spawnSync` rather than `execFileSync` so a non-zero exit is DATA instead of
+  // an exception — the shape that made the old `catch` possible at all.
+  if (r.error !== undefined || r.status !== 0) {
+    const why = r.error?.message ?? (r.stderr ?? "").trim() ?? "";
+    lastPushedFailure = `git branch -r --contains exited ${r.status ?? "null"}${why ? `: ${why}` : ""}`;
+    return "cannot-tell";
   }
+  return r.stdout.trim() !== "" ? "pushed" : "not-pushed";
+}
+
+/**
+ * Why the last `cannot-tell` happened, for the message to quote.
+ *
+ * Module-level rather than returned alongside the state, because every caller
+ * wants the state and only the failing one wants the reason — and a tuple would
+ * put the reason in the way of the comparison that matters.
+ */
+let lastPushedFailure = "";
+
+/** The reason behind the most recent `cannot-tell`, or `""`. */
+export function lastPushedReason(): string {
+  return lastPushedFailure;
 }
 
 /**
@@ -390,8 +471,13 @@ export function noRunAdvice(merge: MergeState): string {
   return (
     head +
     "\n\n  The mergeability probe itself failed, so even THAT is unknown here.\n" +
-    "  Check `mergeable_state` by hand before dispatching anything: on a\n" +
-    "  conflicted PR a dispatch tests a tree that will never exist."
+    "  Check by hand before dispatching anything — and ask GIT, not\n" +
+    "  `mergeable_state`. Bean `fx5r`: that field kept serving a merged PR's\n" +
+    "  pre-merge value 45 minutes after the merge, and `update-branch` called\n" +
+    "  a CLOSED PR a conflict. Only `merged` goes stale-safe:\n" +
+    "      gh pr view N --json merged          # merged? then nothing is owed\n" +
+    "      git ls-remote origin refs/pull/N/merge   # the probe above, retried\n" +
+    "  On a conflicted PR a dispatch tests a tree that will never exist."
   );
 }
 
@@ -476,9 +562,13 @@ export function missingRequiredAdvice(missing: string[], merge: MergeState): str
   }
   return (
     head +
-    "\n\n  Mergeability is not established, so check `mergeable_state` by hand\n" +
-    "  before dispatching anything: on a conflicted PR a dispatch tests a tree\n" +
-    "  that will never exist."
+    "\n\n  Mergeability is not established, so check by hand before dispatching\n" +
+    "  anything — and ask GIT, not `mergeable_state`. Bean `fx5r` measured it\n" +
+    "  still serving a merged PR's pre-merge value 45 minutes after the merge;\n" +
+    "  only `merged` goes stale-safe:\n" +
+    "      gh pr view N --json merged          # merged? then nothing is owed\n" +
+    "      git ls-remote origin refs/pull/N/merge   # the probe above, retried\n" +
+    "  On a conflicted PR a dispatch tests a tree that will never exist."
   );
 }
 
@@ -504,7 +594,19 @@ if (import.meta.main) {
   }
   if (verdict.state === "no-run") {
     console.error(`✗ ${sha.slice(0, 10)} has NO workflow run of any kind.`);
-    if (!isPushed(REPO, sha)) {
+    const pushed = pushedState(REPO, sha);
+    if (pushed === "cannot-tell") {
+      // Bean `y0n2`: this used to read as `not-pushed` and tell somebody who HAD
+      // pushed to push again. Exits 2, matching `cannot-ask` above — the same
+      // third state, one idiom.
+      console.error(
+        `\n  ? COULD NOT TELL whether it is pushed: ${lastPushedReason()}.\n` +
+          "  That is not the same as being unpushed, and it must not be read as\n" +
+          "  either answer. Nothing has been established about where this commit is.",
+      );
+      process.exit(2);
+    }
+    if (pushed === "not-pushed") {
       // The ordinary explanation, and it is not bean `3pqn`. Saying "GitHub
       // dropped your event" to somebody who has not pushed teaches them to
       // ignore the message.

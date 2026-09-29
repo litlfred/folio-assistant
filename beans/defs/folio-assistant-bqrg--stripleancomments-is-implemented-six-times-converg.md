@@ -1,10 +1,11 @@
 ---
 # folio-assistant-bqrg
 title: stripLeanComments is implemented six times — converge on lean-lexer.ts
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-18T22:52:21Z
-updated_at: 2026-09-18T22:52:21Z
+updated_at: 2026-09-25T16:22:38Z
 parent: folio-assistant-0lmb
 ---
 
@@ -216,5 +217,94 @@ here the pinning fails and the sweep becomes possible.
 - [x] `stripLeanComments`: one implementation, gated.
 - [x] The splitter's real duplication located: the pattern, not the functions.
 - [x] The divergence measured, named, and pinned against silent drift.
-- [ ] One union pattern, with before/after verdicts on a real Lean corpus —
-      **needs a folio**, and `litlfred/qou` is the corpus that has one.
+- [x] One union pattern, with before/after verdicts on a real Lean corpus —
+      `litlfred/qou`, and it was reachable from this container all along.
+
+---
+
+## DONE 2026-09-25 — the sweep ran, and the blocker was a checkout away
+
+The previous round pinned the divergence rather than fixing it, on a stated
+reason that was **half right**:
+
+> **This repository holds 0 `.lean` files**, so the sweep cannot be run here at
+> all; it has to happen in a folio that carries a Lean corpus.
+
+The first clause is true — and is still asserted by a test, because it is worth
+holding: this is the platform, and Lean content belongs to a folio. The
+conclusion does not follow. The corpus is a **sibling checkout**, not a file in
+this tree: `/home/user/qou`, **3,971** `.lean` files. And
+`lean-lexer-is-the-only-stripper.test.ts`, in the same directory as the pin,
+already recorded a **3,954-file** sweep run from a container exactly like this
+one. The repository contained its own counter-example, and the pin's own text
+said what to do when the sweep became possible: *"these tests should be replaced
+by one union pattern plus its results."*
+
+### The sweep — 3,971 files, 52,144 declarations
+
+| pattern | found | wrong about |
+|---|---|---|
+| union (now `DECL_RE`) | 52,144 | — |
+| `DECL_RE` before | 51,901 | **missed 243** across 105 files: `axiom` 113, `opaque` 130. No `unsafe` occurs in this corpus. |
+| `LEAN_DECL_RE` | 52,144 | every name found, **990** of them (1.9%) truncated at the first dot |
+
+**A missed keyword is not a skipped declaration.** `splitDeclarations` slices
+from one start to the NEXT, so text it does not recognise is absorbed into the
+body of whatever precedes it. Those 243 were reported as part of another
+declaration's body, in authored content — `vertex-algebra-relations.lean`
+absorbed **9** on its own — and `lean-triviality-probe` splices bodies. The
+earlier round named the stake correctly: *"in a formal corpus an axiom is the
+declaration whose presence most changes what a proof is worth."* 113 were
+invisible.
+
+### Two things the earlier analysis did not have
+
+**The map collision.** With names truncated at the dot, every member of a
+namespace collapsed to one `byName` key, so `new Map(...)` kept the **last**
+while `find` returned the **first** — one name meaning two different spans
+inside a single function. A body mentioning `AlgElement.add` pulled in whichever
+member happened to be declared last, not the one referenced. Fixing only the
+names would have made the closure reach *nothing*: quieter, no more correct. The
+tokenizer speaks dots now too.
+
+**The pattern has EIGHT sites, not two.** Found by the guard written for this
+change. Five further modules carry their own, and every one is missing a keyword
+the union has:
+
+| module | misses |
+|---|---|
+| `conjectural-propagation-audit` | `example`, `inductive` |
+| `generate-lean-stubs` | `axiom`, `example`, `opaque` |
+| `proof-narrative-lean-equiv-sweep` | `example`, `opaque` |
+| `qa-utils` | `example` |
+| `lean-coverage` | `axiom`, `example`, `inductive`, `opaque` |
+
+Three of the five miss `axiom` or `opaque` — the two that cost 243 declarations
+above. **Not converged here**, for this bean's own reason: each feeds a different
+consumer, so each is its own corpus re-sweep and its own changed verdict on
+merged content. `lean-decl-starts-are-shared.test.ts` asserts the list by FILE
+so it can only shrink; a sixth fails, and converging one lets somebody delete a
+row.
+
+### A separate defect this uncovered — bean `vrfx`
+
+`stripLeanComments` writes a space over the **newlines** inside a block comment,
+not just over its text. Length is preserved, which is the invariant the module
+documents and tests; line count is not. Measured: **3,931 of 3,971 files (99.0%)
+shift**, 281,234 lines lost, worst file −3,199. `qa-checkers-q-usage` states the
+opposite in its own docblock, and `QUsageHit.line` is a number a reader is
+shown.
+
+Filed rather than fixed here, deliberately: the fix is one character, but it
+moves a reader-facing line number on almost every file in a corpus, and folding
+that into a splitter convergence is exactly the *"cleanup becomes a silent
+re-scoring"* this bean warns about. `leanDeclSpans` is self-consistent either
+way — it has always numbered the stripped text, which is also what
+`scopeLeanToDecl` returns — so this change neither causes nor cures it.
+
+### Verified
+
+- both projections agree on names across all 3,971 files — **0 disagreements**
+- 20 tests in `lean-decl-starts-are-shared.test.ts`, replacing the 12 that
+  pinned the divergence
+- `bun test` and the full `bun run gates` set

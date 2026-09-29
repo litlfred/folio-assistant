@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-schema-docs.ts — do not hand-edit; edit the schema
 title: BPMN Authoring
 parent: Skill schema reference
 ---
@@ -22,7 +23,7 @@ Input schema for BPMN 2.0 business process authoring.
 | `participants` | array<string> | no | Actor/participant IDs involved in the process. |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/bpmn-authoring/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/bpmn-authoring/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/bpmn-authoring/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/bpmn-authoring/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -37,4 +38,4 @@ Output schema for BPMN 2.0 business process authoring.
 | `participantCount` | integer | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/bpmn-authoring/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/bpmn-authoring/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/bpmn-authoring/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/bpmn-authoring/output.schema.json){: .fa-edit-source }

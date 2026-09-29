@@ -43,12 +43,13 @@
  * @conformsTo w3c-rdfs
  * @conformsTo w3c-skos
  */
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 import { BASE_GRAPH_KINDS, repoRootFor } from "../schemas/cat-harness.js";
 import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer, termIri } from "../schemas/namespaces.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
+import { gitFiles } from "../schemas/git-corpus.ts";
 import {
   CLASS_GLOSSES,
   PROPERTY_GLOSSES,
@@ -133,25 +134,22 @@ export function mintedTermsFromSource(root = ROOT): Set<string> {
   // 94 hand-written template literals became this single call, which is also
   // what makes the scan a scan for one pattern rather than for four.
   const pat = /\btermIri\(\s*"([A-Za-z][A-Za-z0-9_]*)"\s*\)/g;
-  const walk = (dir: string): void => {
-    for (const e of readdirSync(dir, { withFileTypes: true })) {
-      if (e.name === "node_modules" || e.name.startsWith(".")) continue;
-      const p = join(dir, e.name);
-      if (e.isDirectory()) walk(p);
-      else if (e.name.endsWith(".ts") && !e.name.endsWith(".test.ts")) {
-        // COMMENTS ARE STRIPPED FIRST, and this is not fussiness: the first
-        // version scanned raw source and reported `Name` as an undefined
-        // term, matched from THIS function's own comment describing the
-        // pattern it looks for. A scanner that reads its own documentation as
-        // data will do it again the next time somebody writes an example, and
-        // a phantom term in a completeness check is worse than none — it is a
-        // finding nobody can act on.
-        const src = readFileSync(p, "utf-8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
-        for (const m of src.matchAll(pat)) out.add(m[1]!);
-      }
-    }
-  };
-  walk(root);
+  // `xd1g`. Measured at the conversion: **936 before, 935 after** — the one it
+  // drops is a gitignored `dist/index.d.ts`, and a generated declaration file
+  // minting a term would be a term nobody wrote. Nothing gained.
+  for (const p of gitFiles(root, (rel) =>
+    rel.endsWith(".ts") && !rel.endsWith(".test.ts") && !rel.split("/").some((s) => s.startsWith(".")),
+  ).files) {
+    // COMMENTS ARE STRIPPED FIRST, and this is not fussiness: the first
+    // version scanned raw source and reported `Name` as an undefined term,
+    // matched from THIS function's own comment describing the pattern it looks
+    // for. A scanner that reads its own documentation as data will do it again
+    // the next time somebody writes an example, and a phantom term in a
+    // completeness check is worse than none — it is a finding nobody can act
+    // on.
+    const src = readFileSync(p, "utf-8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
+    for (const m of src.matchAll(pat)) out.add(m[1]!);
+  }
   return out;
 }
 

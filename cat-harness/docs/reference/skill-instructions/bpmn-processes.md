@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Processes are BPMN, and the diagrams are executable'
 parent: Skill instructions
 ---
@@ -30,10 +31,49 @@ Every activity carries **`<bootstrap.processes:skill ref="…">`** naming the sk
 implements it, and **`<cat-harness.processes:bean …>`** where it touches the work plan. Add both
 when you add an activity; the audit reports an activity that names no skill, and
 the exemptions for the legitimate cases are *declarations*, not silence — see
-[`role-model`](../folio-core/role-model.md).
+[`role-model`](role-model.md).
 
 Lanes bind roles, not people. A lane is the role; an actor **takes it on** for
-the duration. [`role-model`](../folio-core/role-model.md) carries that model.
+the duration. [`role-model`](role-model.md) carries that model.
+
+### There is no `tool` element, and that is a decision
+
+An activity names a **skill**. A Tool declares `satisfies: ["<skill>"]`. So the
+activity→Tool join **already exists and is derivable** — `activity → skill →
+Tool` — and a `<…:tool ref>` on an activity would be a second, independent edge
+answering the same question, free to disagree with the first.
+
+It would also put the edge on the wrong side. `satisfies` is owned by the Tool,
+which knows what it implements and is versioned with it; a `tool` ref would be
+owned by the diagram author, who would have to track Tools across every
+instance — measured 2026-09-26, **116** Tools are discovered from four
+`tools/` graphs (`cat-harness`, `smart-base`, `folio-assistant-core`,
+`fhir-harness`), so a diagram in one instance would be asserting facts about
+three others.
+
+**What is NOT being claimed** is that the join is well populated. Measured the
+same day over the authoritative registry (`tools/discover.ts`, never a grep):
+
+| | |
+|---|---|
+| distinct skills named by an activity, across all 74 `.bpmn` | **99** |
+| …of those, some Tool satisfies | **32** |
+| …of those, no Tool satisfies | **67** |
+| distinct skills some Tool satisfies, corpus-wide | 69 |
+
+The gap is real and is reported rather than gated —
+`activity-skill-has-tool` (`minor`) locates it per activity, and
+`check:tools` carries the corpus-wide count with the ruling that a skill with
+no Tool is **not** an error, since plenty of skills are pure judgement. Those
+two are a location and a count, not two answers: a corpus total cannot say
+*which* activity hands a performer a skill whose mechanism is still inlined in
+its prose.
+
+One number here disagrees with `check:tools`, which reports "64 skill(s) have a
+Tool" against the 69 above, and the disagreement is recorded rather than
+reconciled away: the two count different sets (a `satisfies` naming a skill
+that does not resolve is in one and not the other), and neither is wrong for
+its own question.
 
 ### Binding the extension namespaces
 
@@ -108,7 +148,7 @@ this process and task, and allowed to touch the target content? This is
 generic engine behaviour, so **do not draw an authorization task into a
 diagram**: a check drawn into some processes is a check missing from the rest.
 What a diagram owes the check is a lane bound to a declared role. See
-[`task-authorization`](../folio-core/task-authorization.md).
+[`task-authorization`](task-authorization.md).
 
 **Instance state is committed**, alongside the work plan, so a sibling session
 sees the same position. That is the whole reason not to hand-roll a second
@@ -177,7 +217,7 @@ does claim → resolve — every one manufactures the condition and none
 discharges it, which is how **219** beans accumulated.
 
 Before reaching for an `archive` op, read
-[`todo-manager`](../folio-core/todo-manager.md) §"Archiving — two dispositions": an op and
+[`todo-manager`](todo-manager.md) §"Archiving — two dispositions": an op and
 a periodic sweep answer different questions, and for most processes the
 answer is the sweep. An op is worth an edge on your diagram only where your
 process's completion is *itself* the reason a bean is finished — and then the

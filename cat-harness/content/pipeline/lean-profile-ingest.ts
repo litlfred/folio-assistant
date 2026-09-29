@@ -30,9 +30,9 @@
  *
  * ## Usage
  *
- *   bun run content/pipeline/lean-profile-ingest.ts --ingest <profile.jsonl>
- *   bun run content/pipeline/lean-profile-ingest.ts --stale
- *   bun run content/pipeline/lean-profile-ingest.ts --report
+ *   bun run cat-harness/content/pipeline/lean-profile-ingest.ts --ingest <profile.jsonl>
+ *   bun run cat-harness/content/pipeline/lean-profile-ingest.ts --stale
+ *   bun run cat-harness/content/pipeline/lean-profile-ingest.ts --report
  *
  * JSONL, one declaration per line:
  *   { "decl": "QOU.Foo.bar", "lean_path": "content/…/foo.lean",

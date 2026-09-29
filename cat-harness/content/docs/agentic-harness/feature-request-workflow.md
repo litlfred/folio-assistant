@@ -1,7 +1,7 @@
 When a request is classified as a feature request, the agent enters the
 **CRDM requirements workflow**
 ([full documentation](https://litlfred.github.io/folio-assistant/crdm-methodology.html),
-[BPMN](../../processes/crdm-requirements.bpmn)).
+[BPMN](../processes/crdm-requirements.bpmn)).
 
 The feature-request workflow is where this harness document adds the most
 value, because it describes a behaviour that was previously implicit. The
@@ -10,7 +10,7 @@ requirements workflow existed only as ad-hoc conversation.
 
 ### How the agent enters CRDM
 
-The detection logic is in [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md).
+The detection logic is in [`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md).
 Three scenarios:
 
 **New session, first request is a feature:**

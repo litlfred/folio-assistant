@@ -320,6 +320,10 @@ export function navbarCss(): string {
     `background:#1f2328;color:#e6edf3;overflow:hidden;transition:width .14s ease;`,
     `font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}`,
     `.fa-nav:hover,.fa-nav:focus-within,.fa-nav:has(.fa-nav-open:checked){width:${NAV_OPEN_PX}px}`,
+    // The folio handle, placed IN this rail by docs-ui.js (owner, 2026-09-24:
+    // "folio handle on LHS on navbar"). At rest the strip shows marks only, so
+    // its label waits for the rail to open, as every other label here does.
+    `.fa-nav:not(:hover):not(:focus-within):not(:has(.fa-nav-open:checked)) .fa-glass-handle__label{opacity:0}`,
     // The theme widens its own sidebar at `mq(lg)` with a `min-width` FLOOR.
     // The rail has no such floor and would simply stay narrower -- which is
     // the same navbar at two widths on one screen size, the defect this

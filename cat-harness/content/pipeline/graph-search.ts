@@ -39,8 +39,8 @@
  * caller can see at a glance that a topic has 40 library hits and no authored
  * ones — the shape that means *cite it*, not *derive it*.
  *
- *   bun run content/pipeline/graph-search.ts "torsion" --hops 2 --text
- *   bun run content/pipeline/graph-search.ts "Temperley-Lieb" --in
+ *   bun run cat-harness/content/pipeline/graph-search.ts "torsion" --hops 2 --text
+ *   bun run cat-harness/content/pipeline/graph-search.ts "Temperley-Lieb" --in
  */
 
 import {

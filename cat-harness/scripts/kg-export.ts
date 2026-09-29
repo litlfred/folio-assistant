@@ -46,14 +46,14 @@
  * @conformsTo w3c-xsd11-datatypes
  */
 import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
-import { join, dirname, relative, resolve, sep } from "node:path";
+import { basename, join, dirname, relative, resolve, sep } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import { NS_PREFIXES, namespaceForLayer, termIri } from "../schemas/namespaces.js";
 import { termLayer } from "../schemas/vocabulary.js";
 import { readPolicyGrants } from "../schemas/odrl.js";
-import { BASE_GRAPH_KINDS, KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
+import { BASE_GRAPH_KINDS, KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, directoriesForGraph, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
@@ -80,11 +80,14 @@ import {
   unpublishedSkills,
 } from "./known-skills.js";
 import { auditSchemaNodes } from "./schema-nodes.js";
+import { loadSpecs } from "./external-schemas.js";
+import { declaredNamespaces } from "../schemas/external-schema.js";
 import { toolsOf } from "../tools/discover.js";
 import { skillIoIri } from "./harness-schema-export.js";
 import { stagingFields } from "./staging-stamp.js";
 import { buildQaResult, writeQaResult } from "./qa-results.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
+import { listDecisions } from "../src/workflow/decision-table.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -323,6 +326,23 @@ export function buildContext(): Record<string, unknown> {
     canonicalDocument: { "@id": termIri("canonicalDocument"), ...link },
     typeIri: { "@id": termIri("typeIri"), "@type": "@id" },
 
+    // ── The standards a graph is written in, and what validates it ──────
+    //
+    // Owner, 2026-09-27, looking at the `processes` GraphKind: *"i would have
+    // expected to see schemas more accessible (e.g. bpmn, or others) when
+    // viewing"*. The registry knew `processes` is BPMN and the exporter
+    // dropped it. `conformsTo` and `validator` are LINKS to nodes this
+    // document carries (ExternalSchema, Schema); the rest are literals.
+    conformsTo: { "@id": termIri("conformsTo"), ...link },
+    validator: { "@id": termIri("validator"), ...link },
+    validatorRef: termIri("validatorRef"),
+    validatorNotApplicable: termIri("validatorNotApplicable"),
+    authority: termIri("authority"),
+    specVersion: termIri("specVersion"),
+    specUse: termIri("specUse"),
+    specUrl: termIri("specUrl"),
+    namespace: termIri("namespace"),
+
     // A skill's I/O contract, as a LINK to the published schema document.
     //
     // These were missing, and their absence was invisible in a way worth
@@ -394,13 +414,17 @@ export function buildContext(): Record<string, unknown> {
     relaxable: { "@id": termIri("relaxable"), "@type": `${XSD}boolean` },
     nodeCount: { "@id": termIri("nodeCount"), "@type": `${XSD}integer` },
     flowCount: { "@id": termIri("flowCount"), "@type": `${XSD}integer` },
-    // A LITERAL, and the one term here whose call is expected to change. The
-    // value is a repo-relative DMN path plus the decision's own id
-    // (`decisions/draft-qa-gate.dmn#Decision_DraftQaGate`) and this graph emits
-    // no Decision nodes at all, so coercing it would mint four IRIs that
-    // resolve to nothing -- `makeIri`'s rule applied to a value rather than to
-    // an `@id`. It becomes a link on the day decision tables are nodes.
+    // A LITERAL: the ref as authored, a DMN path relative to the diagram plus
+    // the decision's own id (`decisions/draft-qa-gate.dmn#Decision_DraftQaGate`).
+    // Coercing it would resolve that path against the document IRI and mint
+    // an IRI nothing serves. The comment here said it "becomes a link on the
+    // day decision tables are nodes"; that day is 2026-09-27 (owner: each DMN
+    // table a node, linked to its gateway and to DMN 1.3), and the link is a
+    // SEPARATE term, `decidedBy`, so this one's published meaning does not
+    // change under anybody reading it.
     decisionRef: termIri("decisionRef"),
+    decidedBy: { "@id": termIri("decidedBy"), ...link },
+    hitPolicy: termIri("hitPolicy"),
     // WHERE A NODE CAME FROM, and the two senses are not one term. A Process
     // carries the `.bpmn` path it was loaded from; a lane-derived Role carries
     // the string `bpmn-lane`, which is a provenance KIND and not a path. Both
@@ -560,6 +584,28 @@ export function buildContext(): Record<string, unknown> {
     // fatal on the first run — which is the guard working, and the reason the
     // field is not silently dropped by a JSON-LD processor instead.
     omitted: { "@id": termIri("omitted"), "@container": "@set" },
+    // `sourceLanguage` — present only on a PER-LOCALE document, written by
+    // `kg-locale-export.ts`, and it is the language of the document's UNTAGGED
+    // strings rather than of its content. That distinction is the whole reason
+    // it is a minted term and not `schema:inLanguage`: the wider web's term
+    // says what language the content is in, and for `cat-harness.fr.jsonld`
+    // the honest answer to that is French, while the answer this field gives
+    // is English. Two different questions, so borrowing the term would make
+    // every locale document assert something false to a consumer that
+    // understood it.
+    //
+    // Declared here, in the CORE's context, because a locale document carries
+    // the core's `@context` verbatim — `IDENTITY_KEYS` in the translating walk
+    // protects it, since rewriting a context repoints every property in the
+    // document. So there is one place terms are declared, and a locale
+    // document cannot drift from it.
+    //
+    // `lvw0`: it was written and never declared, and `undeclaredRootTerms` did
+    // not catch it because that guard ran against the core document only —
+    // the `staging` shape of #340 exactly, one file over. A JSON-LD processor
+    // dropped it, and `publish:verify` refused all four locale documents,
+    // which skipped the deploy.
+    sourceLanguage: { "@id": termIri("sourceLanguage") },
     //
     // `problems`, `undeclaredTerms`, `undeclaredSchemaModules` and
     // `danglingLinks` were declared here and are NOT any more — the document
@@ -1448,6 +1494,60 @@ async function collectProcesses(
       problems.push(`declared knowledge-graph directory is absent: ${d.path}`);
     }
   }
+  // EACH DMN DECISION IS A NODE. Owner, 2026-09-27: add each DMN decision
+  // table to the knowledge graph as its own node, linked to the BPMN gateway
+  // that uses it and to the DMN 1.3 standard. Before this a gateway carried
+  // only `decisionRef`, a path-and-fragment string, so the rule that computes
+  // a branch was the one thing about the branch a reader could not walk to.
+  //
+  // Keyed by the RESOLVED file path plus the decision id, which is exactly
+  // how `loadDecisions` in `process-model.ts` resolves a gateway's ref — so a
+  // `decidedBy` link is written only when the table it names was emitted
+  // here, and a ref to a file or id nobody declares stays a literal rather
+  // than becoming a dangling link. Collected per workflow directory, BEFORE
+  // its diagrams, so both export paths (this instance's and a foreign one's,
+  // via `collectInstanceNodes`) get the same guarantee from the same code.
+  const decisionIri = new Map<string, string>();
+  const decisionOwner = new Map<string, string>();
+  const collectDecisions = async (dir: string): Promise<void> => {
+    for (const dmn of diagramFiles(dir).filter((f) => f.endsWith(".dmn"))) {
+      try {
+        for (const d of await listDecisions(dmn)) {
+          const key = `${resolve(dmn)}#${d.id}`;
+          if (decisionIri.has(key)) continue;
+          // The IRI is `<file-stem>/<decisionId>`, readable and stable. Two
+          // files with one stem in different directories would mint one IRI
+          // for two tables — reported rather than silently merged.
+          const iri = makeIri(doc, "decision", `${basename(dmn, ".dmn")}/${d.id}`);
+          const prior = decisionOwner.get(iri);
+          if (prior !== undefined && prior !== key) {
+            problems.push(`decision IRI collision: ${relative(root, dmn)}#${d.id} and ${prior}`);
+            continue;
+          }
+          decisionOwner.set(iri, key);
+          decisionIri.set(key, iri);
+          nodes.push({
+            "@id": iri,
+            "@type": termIri("Decision"),
+            name: d.name,
+            hitPolicy: d.hitPolicy,
+            sourcePath: relative(root, dmn),
+            // `conformsTo` → DMN 1.3 is written by `linkSchemas`, from the
+            // file's own namespace, and only when that node is in the graph.
+          });
+        }
+      } catch (e) {
+        problems.push(`unloadable decision table ${relative(root, dmn)}: ${e instanceof Error ? e.message : String(e)}`);
+      }
+    }
+  };
+  const decidedBy = (bpmnPath: string, ref: string | undefined): string | undefined => {
+    if (!ref) return undefined;
+    const [file, id] = ref.split("#");
+    if (!file || !id) return undefined;
+    return decisionIri.get(`${resolve(dirname(bpmnPath), file)}#${id}`);
+  };
+
   for (const rel of dirs) {
   const dir = join(root, rel);
   // A directory that was found and then vanished, or one a declaration names
@@ -1457,6 +1557,7 @@ async function collectProcesses(
     problems.push(`declared workflow directory is absent: ${rel}`);
     continue;
   }
+  await collectDecisions(dir);
   for (const f of readdirSync(dir)) {
     if (!f.endsWith(".bpmn")) continue;
     const path = join(dir, f);
@@ -1531,6 +1632,12 @@ async function collectProcesses(
           workPlanOp: n.workPlanOp,
           relaxable: n.relaxable,
           decisionRef: n.decisionRef,
+          // The same ref as a LINK to the Decision node, written only when
+          // that node was emitted above (owner, 2026-09-27). `decisionRef`
+          // stays beside it as the literal as authored: removing it would
+          // move a published term, and it is what a reader needs when the
+          // link is absent because the table was not found.
+          decidedBy: decidedBy(m.source, n.decisionRef),
           incoming: n.incoming.map((f) => makeIri(doc, "process", `${m.id}/flow/${f}`)),
           outgoing: n.outgoing.map((f) => makeIri(doc, "process", `${m.id}/flow/${f}`)),
         });
@@ -1708,6 +1815,126 @@ function collectSchemas(doc: string, base: string): Node[] {
     module: m.module,
     maintainedBy: keeper.get(m.module),
   }));
+}
+
+/**
+ * The EXTERNAL SPECIFICATIONS this instance conforms to or reads, as nodes.
+ *
+ * `external-schemas/*.json` records each one by name and edition (BPMN 2.0,
+ * DMN 1.3, ODRL, PROV-O, ...). They were a published page and not graph
+ * nodes, so nothing in the graph could point at "BPMN". Owner, 2026-09-27.
+ */
+function collectExternalSchemas(doc: string): Node[] {
+  let specs: ReturnType<typeof loadSpecs>;
+  try {
+    specs = loadSpecs();
+  } catch {
+    // `external-schemas:check` reports a malformed record by name; a second
+    // report here would read as two failures.
+    return [];
+  }
+  return specs.map((sp) => ({
+    "@id": makeIri(doc, "externalSchema", sp.id),
+    "@type": termIri("ExternalSchema"),
+    name: sp.id,
+    title: sp.title,
+    authority: sp.authority,
+    specVersion: sp.version,
+    specUse: sp.use,
+    specUrl: sp.specUrl,
+    namespace: sp.namespaces.length > 0 ? sp.namespaces : undefined,
+  }));
+}
+
+/** The XML namespaces a file binds, `xmlns` and `xmlns:prefix` alike. */
+function xmlNamespaces(path: string): string[] {
+  try {
+    const src = readFileSync(path, "utf-8");
+    return [...src.matchAll(/xmlns(?::[a-zA-Z0-9]+)?="([^"]+)"/g)].map((m) => m[1]!);
+  } catch {
+    return [];
+  }
+}
+
+/** Every `.bpmn` / `.dmn` under `dir`, at any depth. */
+function diagramFiles(dir: string): string[] {
+  if (!existsSync(dir)) return [];
+  return (readdirSync(dir, { recursive: true }) as string[])
+    .filter((f) => f.endsWith(".bpmn") || f.endsWith(".dmn"))
+    .map((f) => join(dir, f));
+}
+
+/**
+ * Link graph kinds and processes to the standards and schemas behind them.
+ *
+ * A POST-PASS over the built graph, not a field set in each collector, for
+ * one reason: a link may only be written when its target is IN this graph
+ * (the foreign-instance export omits whole collectors, and a link to an
+ * omitted node is the dangling-link defect). So each link is written only
+ * after its target is found among the emitted nodes.
+ *
+ * - A `GraphKind` `conformsTo` the specification its registry `schema` names
+ *   (`external-schemas/<id>.json`), plus every specification whose namespace
+ *   a diagram in one of its declared directories binds. That is how
+ *   `processes` reaches DMN 1.3 as well as BPMN 2.0: the registry names one,
+ *   and the decision tables under it declare the other.
+ * - A `GraphKind` `validator` links to the Schema node for its registry
+ *   `validator` module; one with no node here keeps the reference as text,
+ *   and `validatorNotApplicable` says why a kind has none.
+ * - A `Process` or `Decision` `conformsTo` the specification its own file's
+ *   namespace names.
+ */
+function linkSchemas(graph: Node[], root: string = ROOT): void {
+  const specIri = new Map<string, string>();
+  const schemaByModule = new Map<string, string>();
+  for (const n of graph) {
+    const t = n["@type"];
+    if (t === termIri("ExternalSchema") && typeof n.name === "string") specIri.set(n.name, n["@id"] as string);
+    if (t === termIri("Schema") && typeof n.module === "string") schemaByModule.set(n.module, n["@id"] as string);
+  }
+  if (specIri.size === 0 && schemaByModule.size === 0) return;
+  let byNs = new Map<string, string>();
+  try {
+    byNs = new Map([...declaredNamespaces(loadSpecs())].map(([ns, sp]) => [ns, sp.id]));
+  } catch { /* reported by external-schemas:check */ }
+  const specsIn = (files: string[]): string[] => {
+    const ids = new Set<string>();
+    for (const f of files) for (const ns of xmlNamespaces(f)) {
+      const id = byNs.get(ns);
+      if (id && specIri.has(id)) ids.add(id);
+    }
+    return [...ids].sort().map((id) => specIri.get(id)!);
+  };
+
+  for (const n of graph) {
+    if (n["@type"] === termIri("GraphKind") && typeof n.name === "string") {
+      const def = defaultGraphKinds.get(n.name);
+      if (!def) continue;
+      const links = new Set<string>();
+      const named = def.schema && /^external-schemas\/([a-z0-9.-]+)\.json$/.exec(def.schema)?.[1];
+      if (named && specIri.has(named)) links.add(specIri.get(named)!);
+      let dirs: string[] = [];
+      try { dirs = directoriesForGraph(root, n.name); } catch { /* undeclared: nothing to scan */ }
+      for (const iri of specsIn(dirs.flatMap(diagramFiles))) links.add(iri);
+      if (links.size > 0) n.conformsTo = [...links];
+      if (def.validator) {
+        const module = def.validator.split("#")[0]!.replace(/^[a-z0-9-]+:/, "");
+        const hit = schemaByModule.get(module);
+        if (hit) n.validator = hit;
+        else n.validatorRef = def.validator;
+      }
+      if (def.validatorNotApplicable) n.validatorNotApplicable = def.validatorNotApplicable;
+    }
+    // A Decision reaches DMN 1.3 the same way a Process reaches BPMN 2.0:
+    // from the namespace its own file binds (owner, 2026-09-27).
+    if (
+      (n["@type"] === termIri("Process") || n["@type"] === termIri("Decision")) &&
+      typeof n.sourcePath === "string"
+    ) {
+      const iris = specsIn([join(root, n.sourcePath)]);
+      if (iris.length > 0) n.conformsTo = iris;
+    }
+  }
 }
 
 /**
@@ -2423,12 +2650,15 @@ export async function buildExport(opts: ExportOptions = {}): Promise<Export> {
           ...(await collectProcesses(docIri, problems)),
           ...collectTools(docIri, base, problems),
           ...collectSchemas(docIri, base),
+          ...collectExternalSchemas(docIri),
           ...collectGraphKinds(),
           ...collectDeclaredRoles(docIri),
           ...collectDeclaration(docIri, problems),
           ...collectDeclaredAssets(docIri, problems),
         ]
   ).map(compact);
+
+  linkSchemas(graph, foreign ? opts.instanceRoot! : ROOT);
 
   stampSubgraph(graph, docIri, exportedInstance);
 

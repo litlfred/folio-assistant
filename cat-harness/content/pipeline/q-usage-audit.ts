@@ -7,11 +7,11 @@
  *
  * Usage:
  *
- *   bun run content/pipeline/q-usage-audit.ts                 # default
- *   bun run content/pipeline/q-usage-audit.ts --no-write      # report only
- *   bun run content/pipeline/q-usage-audit.ts --strict        # exit 1 on fail
- *   bun run content/pipeline/q-usage-audit.ts --chapter <dir> # one chapter
- *   bun run content/pipeline/q-usage-audit.ts --json          # JSON report
+ *   bun run cat-harness/content/pipeline/q-usage-audit.ts                 # default
+ *   bun run cat-harness/content/pipeline/q-usage-audit.ts --no-write      # report only
+ *   bun run cat-harness/content/pipeline/q-usage-audit.ts --strict        # exit 1 on fail
+ *   bun run cat-harness/content/pipeline/q-usage-audit.ts --chapter <dir> # one chapter
+ *   bun run cat-harness/content/pipeline/q-usage-audit.ts --json          # JSON report
  *
  * Output:
  *   - per-block: writes/updates `<block>.qa.json` with one entry per

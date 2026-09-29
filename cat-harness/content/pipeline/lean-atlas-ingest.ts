@@ -51,10 +51,10 @@
  *
  * ## Usage
  *
- *   bun run content/pipeline/lean-atlas-ingest.ts --list
- *   bun run content/pipeline/lean-atlas-ingest.ts --ingest <deps.jsonl>
- *   bun run content/pipeline/lean-atlas-ingest.ts --scan [content-root]
- *   bun run content/pipeline/lean-atlas-ingest.ts --stale
+ *   bun run cat-harness/content/pipeline/lean-atlas-ingest.ts --list
+ *   bun run cat-harness/content/pipeline/lean-atlas-ingest.ts --ingest <deps.jsonl>
+ *   bun run cat-harness/content/pipeline/lean-atlas-ingest.ts --scan [content-root]
+ *   bun run cat-harness/content/pipeline/lean-atlas-ingest.ts --stale
  *
  * `--ingest` JSONL, one declaration per line:
  *   { "decl": "QOU.Foo.bar", "type_deps": [...], "value_deps": [...] }

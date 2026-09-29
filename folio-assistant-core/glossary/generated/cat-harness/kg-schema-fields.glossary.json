@@ -2918,6 +2918,167 @@
       "status": "candidate"
     },
     {
+      "id": "decision-methodology-context.decisioncontextschema.alternativecount",
+      "prefLabel": "DecisionContextSchema.alternativeCount",
+      "definition": "How many alternatives are being compared.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.alternativeCount",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.criteriacount",
+      "prefLabel": "DecisionContextSchema.criteriaCount",
+      "definition": "How many criteria the alternatives are scored against.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.criteriaCount",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.criteriaweightsknown",
+      "prefLabel": "DecisionContextSchema.criteriaWeightsKnown",
+      "definition": "Whether criteria weights are known a priori or must be derived.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.criteriaWeightsKnown",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.datatype",
+      "prefLabel": "DecisionContextSchema.dataType",
+      "definition": "Kind of data available for the criteria values.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.dataType",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.questiontype",
+      "prefLabel": "DecisionContextSchema.questionType",
+      "definition": "The methodology-adoption lane. When provided, only methods in this lane are candidates.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.questionType",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.reversibility",
+      "prefLabel": "DecisionContextSchema.reversibility",
+      "definition": "Can the decision be undone, and at what cost?",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.reversibility",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.sequential",
+      "prefLabel": "DecisionContextSchema.sequential",
+      "definition": "True when decisions recur or adapt over time (sequential/bandit setting).",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.sequential",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.stakeholdercount",
+      "prefLabel": "DecisionContextSchema.stakeholderCount",
+      "definition": "Number of people involved in the decision.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.stakeholderCount",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.summary",
+      "prefLabel": "DecisionContextSchema.summary",
+      "definition": "Free-text summary of what is being decided. Not matched algorithmically — carried for the rationale narrative.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.summary",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.timeconstraint",
+      "prefLabel": "DecisionContextSchema.timeConstraint",
+      "definition": "How much time is available for the analysis.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.timeConstraint",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.decisioncontextschema.uncertainty",
+      "prefLabel": "DecisionContextSchema.uncertainty",
+      "definition": "How much is unknown about the problem.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#DecisionContextSchema.uncertainty",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.avoidwhen",
+      "prefLabel": "MethodologyRecommendationSchema.avoidWhen",
+      "definition": "Under what conditions this method should NOT be used. Matched against context.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.avoidWhen",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.complexity",
+      "prefLabel": "MethodologyRecommendationSchema.complexity",
+      "definition": "Low / Medium / High.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.complexity",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.datarequirements",
+      "prefLabel": "MethodologyRecommendationSchema.dataRequirements",
+      "definition": "What data the method requires.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.dataRequirements",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.family",
+      "prefLabel": "MethodologyRecommendationSchema.family",
+      "definition": "Which method family: mcdm-aggregation, probabilistic, social, classical, hybrid-mcdm.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.family",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.matchtier",
+      "prefLabel": "MethodologyRecommendationSchema.matchTier",
+      "definition": "How well this method fits the context. A tier, not a score — the platform refuses pseudo-measurement (methodology-adoption: \"never quantify a judgement to make it look measured; where a method scores and sums, take structure and refuse arithmetic\").",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.matchTier",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.methodologyid",
+      "prefLabel": "MethodologyRecommendationSchema.methodologyId",
+      "definition": "The methodology's `name` from its front matter (kebab-case id).",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.methodologyId",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.rationale",
+      "prefLabel": "MethodologyRecommendationSchema.rationale",
+      "definition": "Why this methodology fits the given context. Matched against `applies-when`.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.rationale",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.source",
+      "prefLabel": "MethodologyRecommendationSchema.source",
+      "definition": "Bibliographic source: paper title, authors, arxiv id or standard.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.source",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyrecommendationschema.title",
+      "prefLabel": "MethodologyRecommendationSchema.title",
+      "definition": "The methodology's human-readable title.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologyRecommendationSchema.title",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyselectionresultschema.context",
+      "prefLabel": "MethodologySelectionResultSchema.context",
+      "definition": "The context that was provided.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologySelectionResultSchema.context",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyselectionresultschema.nomatchreason",
+      "prefLabel": "MethodologySelectionResultSchema.noMatchReason",
+      "definition": "If no methodology fits, this explains why. Per methodology-adoption: \"If none fits, that is a finding, not a licence.\"",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologySelectionResultSchema.noMatchReason",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-context.methodologyselectionresultschema.recommendations",
+      "prefLabel": "MethodologySelectionResultSchema.recommendations",
+      "definition": "Ranked recommendations, best fit first.",
+      "source": "cat-harness/schemas/decision-methodology-context.ts#MethodologySelectionResultSchema.recommendations",
+      "status": "candidate"
+    },
+    {
       "id": "decision-request.decisionoptionschema.con",
       "prefLabel": "DecisionOptionSchema.con",
       "definition": "What it costs to DO. Not what it costs later; that is `downstream`.",
@@ -3184,6 +3345,20 @@
       "status": "candidate"
     },
     {
+      "id": "detangle-sidecar.detanglesidecar.undetermineddirection",
+      "prefLabel": "DetangleSidecar.undeterminedDirection",
+      "definition": "Outbound edges whose direction cannot be decided, because the source instance declares no `needs`. Not clean.",
+      "source": "cat-harness/schemas/detangle-sidecar.ts#DetangleSidecar.undeterminedDirection",
+      "status": "candidate"
+    },
+    {
+      "id": "detangle-sidecar.detanglesidecar.wrongdirection",
+      "prefLabel": "DetangleSidecar.wrongDirection",
+      "definition": "Outbound edges `directionOf` called `wrong-direction` — the layering is inverted.",
+      "source": "cat-harness/schemas/detangle-sidecar.ts#DetangleSidecar.wrongDirection",
+      "status": "candidate"
+    },
+    {
       "id": "detangle.classifiededge.basis",
       "prefLabel": "ClassifiedEdge.basis",
       "definition": "Why it was classified so. A classification with no basis is an assertion.",
@@ -3293,6 +3468,13 @@
       "prefLabel": "DetangleMetrics.internal",
       "definition": "Edges with both ends inside the group.",
       "source": "cat-harness/schemas/detangle.ts#DetangleMetrics.internal",
+      "status": "candidate"
+    },
+    {
+      "id": "detangle.detanglemetrics.internaledges",
+      "prefLabel": "DetangleMetrics.internalEdges",
+      "definition": "The INTERNAL edges themselves, not just their count.",
+      "source": "cat-harness/schemas/detangle.ts#DetangleMetrics.internalEdges",
       "status": "candidate"
     },
     {
@@ -3524,6 +3706,111 @@
       "prefLabel": "PlacementSchema.page",
       "definition": "The page it sits on, 1-based as a reader counts.",
       "source": "cat-harness/schemas/document-image.ts#PlacementSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "external-schema.externalschemaschema.id",
+      "prefLabel": "ExternalSchemaSchema.id",
+      "definition": "Stable local id, e.g. `omg-bpmn-2.0`.",
+      "source": "cat-harness/schemas/external-schema.ts#ExternalSchemaSchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "external-schema.externalschemaschema.namespaces",
+      "prefLabel": "ExternalSchemaSchema.namespaces",
+      "definition": "The XML namespaces or URI stems this edition defines, as WE consume them.",
+      "source": "cat-harness/schemas/external-schema.ts#ExternalSchemaSchema.namespaces",
+      "status": "candidate"
+    },
+    {
+      "id": "external-schema.externalschemaschema.note",
+      "prefLabel": "ExternalSchemaSchema.note",
+      "definition": "Why this edition, where the choice was not forced.",
+      "source": "cat-harness/schemas/external-schema.ts#ExternalSchemaSchema.note",
+      "status": "candidate"
+    },
+    {
+      "id": "external-schema.externalschemaschema.specurl",
+      "prefLabel": "ExternalSchemaSchema.specUrl",
+      "definition": "Where the specification is published.",
+      "source": "cat-harness/schemas/external-schema.ts#ExternalSchemaSchema.specUrl",
+      "status": "candidate"
+    },
+    {
+      "id": "external-schema.externalschemaschema.terms",
+      "prefLabel": "ExternalSchemaSchema.terms",
+      "definition": "The OPERATIVE vocabulary — the terms this repository actually acts on.",
+      "source": "cat-harness/schemas/external-schema.ts#ExternalSchemaSchema.terms",
+      "status": "candidate"
+    },
+    {
+      "id": "external-schema.externalschemaschema.title",
+      "prefLabel": "ExternalSchemaSchema.title",
+      "definition": "The specification's own title, as the authority writes it.",
+      "source": "cat-harness/schemas/external-schema.ts#ExternalSchemaSchema.title",
+      "status": "candidate"
+    },
+    {
+      "id": "external-schema.externalschemaschema.version",
+      "prefLabel": "ExternalSchemaSchema.version",
+      "definition": "The edition being conformed to.",
+      "source": "cat-harness/schemas/external-schema.ts#ExternalSchemaSchema.version",
+      "status": "candidate"
+    },
+    {
+      "id": "formal-ref.formalrefresolution.basename",
+      "prefLabel": "FormalRefResolution.basename",
+      "definition": "The basename a whole-tree scan should look for (`<declName>.lean` for the Lean resolver). Kept separate from `declName` so core does not have to know the file extension of somebody else's formalism.",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.basename",
+      "status": "candidate"
+    },
+    {
+      "id": "formal-ref.formalrefresolution.candidatepaths",
+      "prefLabel": "FormalRefResolution.candidatePaths",
+      "definition": "Candidate source files, **repo-root-relative**, in priority order.",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.candidatePaths",
+      "status": "candidate"
+    },
+    {
+      "id": "formal-ref.formalrefresolution.declname",
+      "prefLabel": "FormalRefResolution.declName",
+      "definition": "The bare declaration name, for a `grep -rl` fallback and for the \"does this file actually declare it\" check in `qa-utils`.",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.declName",
+      "status": "candidate"
+    },
+    {
+      "id": "formal-ref.formalrefresolution.fallbackpaths",
+      "prefLabel": "FormalRefResolution.fallbackPaths",
+      "definition": "Weaker candidates, tried only after {@link candidatePaths} and only by a caller that is prepared to accept a file which may declare nothing.",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.fallbackPaths",
+      "status": "candidate"
+    },
+    {
+      "id": "formal-ref.formalrefresolution.searchdir",
+      "prefLabel": "FormalRefResolution.searchDir",
+      "definition": "Directory to search when the candidate paths all miss, **repo-root-relative**, or `undefined` when the folio declares no searchable tree for this package.",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.searchDir",
+      "status": "candidate"
+    },
+    {
+      "id": "formal-ref.formalrefresolution.treeroot",
+      "prefLabel": "FormalRefResolution.treeRoot",
+      "definition": "Root the basename scan is confined to, repo-root-relative. Distinct from `searchDir`, which is narrower (a library subtree rather than a Lake root).",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolution.treeRoot",
+      "status": "candidate"
+    },
+    {
+      "id": "formal-ref.formalrefresolverapi.refpattern",
+      "prefLabel": "FormalRefResolverAPI.refPattern",
+      "definition": "The shape a reference of this formalism must have, and the message to report when it does not.",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolverAPI.refPattern",
+      "status": "candidate"
+    },
+    {
+      "id": "formal-ref.formalrefresolverapi.refpatternmessage",
+      "prefLabel": "FormalRefResolverAPI.refPatternMessage",
+      "definition": "Failure message for {@link refPattern}, in the layer's own vocabulary.",
+      "source": "cat-harness/schemas/formal-ref.ts#FormalRefResolverAPI.refPatternMessage",
       "status": "candidate"
     },
     {
@@ -5270,6 +5557,20 @@
       "status": "candidate"
     },
     {
+      "id": "kg-qa.kgcriteriondefinition.scope",
+      "prefLabel": "KgCriterionDefinition.scope",
+      "definition": "WHICH INSTANCE ROOT can answer it — the second axis beside {@link applies}.",
+      "source": "cat-harness/schemas/kg-qa.ts#KgCriterionDefinition.scope",
+      "status": "candidate"
+    },
+    {
+      "id": "kg-qa.kgcriteriondefinition.scopebasis",
+      "prefLabel": "KgCriterionDefinition.scopeBasis",
+      "definition": "Why this criterion is `repo`-scoped. Required for `repo`, absent for `instance`.",
+      "source": "cat-harness/schemas/kg-qa.ts#KgCriterionDefinition.scopeBasis",
+      "status": "candidate"
+    },
+    {
       "id": "kg-qa.kgcriteriondefinition.summary",
       "prefLabel": "KgCriterionDefinition.summary",
       "definition": "One line, in the form of what a FAILURE means.",
@@ -6299,6 +6600,55 @@
       "status": "candidate"
     },
     {
+      "id": "reference-direction.occurrence.from",
+      "prefLabel": "Occurrence.from",
+      "definition": "The instance the FILE belongs to.",
+      "source": "cat-harness/schemas/reference-direction.ts#Occurrence.from",
+      "status": "candidate"
+    },
+    {
+      "id": "reference-direction.occurrence.text",
+      "prefLabel": "Occurrence.text",
+      "definition": "The whole line, which is what an exemption matches against.",
+      "source": "cat-harness/schemas/reference-direction.ts#Occurrence.text",
+      "status": "candidate"
+    },
+    {
+      "id": "reference-direction.occurrence.to",
+      "prefLabel": "Occurrence.to",
+      "definition": "The instance whose NAME was found.",
+      "source": "cat-harness/schemas/reference-direction.ts#Occurrence.to",
+      "status": "candidate"
+    },
+    {
+      "id": "reference-direction.referenceexemption.file",
+      "prefLabel": "ReferenceExemption.file",
+      "definition": "Matches the FILE the occurrence sits in, repo-relative. Omitted means any file.",
+      "source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.file",
+      "status": "candidate"
+    },
+    {
+      "id": "reference-direction.referenceexemption.pattern",
+      "prefLabel": "ReferenceExemption.pattern",
+      "definition": "Matches the LINE the occurrence sits on. Omitted means any line, and then `file` must be set.",
+      "source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.pattern",
+      "status": "candidate"
+    },
+    {
+      "id": "reference-direction.referenceexemption.reason",
+      "prefLabel": "ReferenceExemption.reason",
+      "definition": "Why this is not a reference to the instance. Required.",
+      "source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "reference-direction.referenceexemption.to",
+      "prefLabel": "ReferenceExemption.to",
+      "definition": "Limit to one target instance; omitted means any.",
+      "source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.to",
+      "status": "candidate"
+    },
+    {
       "id": "render-log.renderlogentryschema.branch",
       "prefLabel": "RenderLogEntrySchema.branch",
       "definition": "Branch the render came from.",
@@ -6852,6 +7202,76 @@
       "status": "candidate"
     },
     {
+      "id": "session-survey.sessionsurveyschema.axes",
+      "prefLabel": "SessionSurveySchema.axes",
+      "definition": "Per-axis findings. Empty is refused: a survey that covered nothing is not a survey.",
+      "source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.axes",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.sessionsurveyschema.branch",
+      "prefLabel": "SessionSurveySchema.branch",
+      "definition": "The branch the window is on, so a reader knows which history `from`/`to` live in.",
+      "source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.branch",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.sessionsurveyschema.by",
+      "prefLabel": "SessionSurveySchema.by",
+      "definition": "Who took it, so a reader can ask. A session URL or id.",
+      "source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.by",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.sessionsurveyschema.commits",
+      "prefLabel": "SessionSurveySchema.commits",
+      "definition": "How many commits the window held, as counted at publication.",
+      "source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.commits",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.sessionsurveyschema.from",
+      "prefLabel": "SessionSurveySchema.from",
+      "definition": "The window's LOWER edge — the last commit the surveyor already knew. Exclusive, matching `git rev-list from..to`.",
+      "source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.from",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.sessionsurveyschema.takenat",
+      "prefLabel": "SessionSurveySchema.takenAt",
+      "definition": "When it was taken, ISO-8601. Not the staleness test — `to` is — but it dates the prose.",
+      "source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.takenAt",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.sessionsurveyschema.to",
+      "prefLabel": "SessionSurveySchema.to",
+      "definition": "The window's UPPER edge — the newest commit the survey actually read. Inclusive.",
+      "source": "cat-harness/schemas/session-survey.ts#SessionSurveySchema.to",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.surveyaxisschema.axis",
+      "prefLabel": "SurveyAxisSchema.axis",
+      "definition": "What was examined — `beans`, `ci`, `prs`, `issues`, `branches`, …",
+      "source": "cat-harness/schemas/session-survey.ts#SurveyAxisSchema.axis",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.surveyaxisschema.covered",
+      "prefLabel": "SurveyAxisSchema.covered",
+      "definition": "False means NOT LOOKED AT; `finding` then says why, not what was found.",
+      "source": "cat-harness/schemas/session-survey.ts#SurveyAxisSchema.covered",
+      "status": "candidate"
+    },
+    {
+      "id": "session-survey.surveyaxisschema.finding",
+      "prefLabel": "SurveyAxisSchema.finding",
+      "definition": "What it found, or — when `covered` is false — why it was skipped.",
+      "source": "cat-harness/schemas/session-survey.ts#SurveyAxisSchema.finding",
+      "status": "candidate"
+    },
+    {
       "id": "site-indexes.beanindexitemschema.file",
       "prefLabel": "BeanIndexItemSchema.file",
       "definition": "Repository-relative path of the bean file.",
@@ -6961,6 +7381,48 @@
       "prefLabel": "SkillDefinitionSchema.roles",
       "definition": "RETIRED 2026-09-20 (bean `y1w9`) — optional, and read by nothing.",
       "source": "cat-harness/schemas/skill-package.ts#SkillDefinitionSchema.roles",
+      "status": "candidate"
+    },
+    {
+      "id": "source-provenance.signatureschema.format",
+      "prefLabel": "SignatureSchema.format",
+      "definition": "How to interpret `value` — a media type or a named scheme.",
+      "source": "cat-harness/schemas/source-provenance.ts#SignatureSchema.format",
+      "status": "candidate"
+    },
+    {
+      "id": "source-provenance.signatureschema.signer",
+      "prefLabel": "SignatureSchema.signer",
+      "definition": "Who signed, as a key identifier.",
+      "source": "cat-harness/schemas/source-provenance.ts#SignatureSchema.signer",
+      "status": "candidate"
+    },
+    {
+      "id": "source-provenance.signatureschema.value",
+      "prefLabel": "SignatureSchema.value",
+      "definition": "The signature itself, or a URI that resolves to it.",
+      "source": "cat-harness/schemas/source-provenance.ts#SignatureSchema.value",
+      "status": "candidate"
+    },
+    {
+      "id": "source-provenance.signatureschema.verifiedat",
+      "prefLabel": "SignatureSchema.verifiedAt",
+      "definition": "When it was last CHECKED against the signer's key — never when it was recorded. Same discipline as {@link FixitySchema.verifiedAt}.",
+      "source": "cat-harness/schemas/source-provenance.ts#SignatureSchema.verifiedAt",
+      "status": "candidate"
+    },
+    {
+      "id": "source-provenance.sourceprovenanceschema.local",
+      "prefLabel": "SourceProvenanceSchema.local",
+      "definition": "The original **in this repository** this was taken from.",
+      "source": "cat-harness/schemas/source-provenance.ts#SourceProvenanceSchema.local",
+      "status": "candidate"
+    },
+    {
+      "id": "source-provenance.sourceprovenanceschema.upstream",
+      "prefLabel": "SourceProvenanceSchema.upstream",
+      "definition": "The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not \"there is none\".",
+      "source": "cat-harness/schemas/source-provenance.ts#SourceProvenanceSchema.upstream",
       "status": "candidate"
     },
     {
@@ -9250,6 +9712,83 @@
       "prefLabel": "UserStorySchema.want",
       "definition": "What the reader wants to do, in their terms — \"I want to …\".",
       "source": "cat-harness/schemas/user-story.ts#UserStorySchema.want",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorfigurepageschema.captioncandidates",
+      "prefLabel": "VectorFigurePageSchema.captionCandidates",
+      "definition": "Verbatim line-start `Fig.`/`Figure` matches on the page, table-of-contents entries removed. A lower bound, and it deliberately includes cross-references — plural, and never asserted to be the page's figure.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.captionCandidates",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorfigurepageschema.drawings",
+      "prefLabel": "VectorFigurePageSchema.drawings",
+      "definition": "Vector drawing operations MuPDF reports on the page. Reported, never graded.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.drawings",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorfigurepageschema.page",
+      "prefLabel": "VectorFigurePageSchema.page",
+      "definition": "1-based, matching `DocumentImage`'s `basis.page` so the two join.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorfigurepageschema.rasterimagesonpage",
+      "prefLabel": "VectorFigurePageSchema.rasterImagesOnPage",
+      "definition": "Raster images the page also places.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.rasterImagesOnPage",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorfigurepageschema.rotation",
+      "prefLabel": "VectorFigurePageSchema.rotation",
+      "definition": "The page's rotation in degrees, as the PDF declares it.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorFigurePageSchema.rotation",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorlabelschema.bbox",
+      "prefLabel": "VectorLabelSchema.bbox",
+      "definition": "The line's rectangle **in the visible frame** — rotation already applied.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema.bbox",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorlabelschema.fonts",
+      "prefLabel": "VectorLabelSchema.fonts",
+      "definition": "Font names on the line's spans, deduplicated and sorted.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema.fonts",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorlabelschema.intersectsdrawing",
+      "prefLabel": "VectorLabelSchema.intersectsDrawing",
+      "definition": "Whether this block's rectangle intersects any vector drawing's.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema.intersectsDrawing",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorlabelschema.sizes",
+      "prefLabel": "VectorLabelSchema.sizes",
+      "definition": "Point sizes on the line's spans, deduplicated and sorted ascending.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema.sizes",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorlabelschema.text",
+      "prefLabel": "VectorLabelSchema.text",
+      "definition": "The line's text: its spans concatenated, since a span break is a style change and not a word break.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorLabelSchema.text",
+      "status": "candidate"
+    },
+    {
+      "id": "vector-labels.vectorlabelssidecarschema.pages",
+      "prefLabel": "VectorLabelsSidecarSchema.pages",
+      "definition": "`null` is could-not-determine and is NOT an empty list.",
+      "source": "cat-harness/schemas/vector-labels.ts#VectorLabelsSidecarSchema.pages",
       "status": "candidate"
     },
     {

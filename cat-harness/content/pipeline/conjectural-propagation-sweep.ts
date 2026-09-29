@@ -6,7 +6,7 @@
  * (theorem / proposition / lemma / corollary) live in each cone.
  *
  * Usage (from repo root):
- *   bun run content/pipeline/conjectural-propagation-sweep.ts [output-path]
+ *   bun run cat-harness/content/pipeline/conjectural-propagation-sweep.ts [output-path]
  *
  * Default output: `docs/audits/2026-05-01-conjectural-propagation-sweep.md`
  */

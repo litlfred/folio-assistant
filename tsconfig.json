@@ -78,5 +78,29 @@
   // Same `test/` and `*.e2e.ts` reasoning as above applies to each, which is
   // why these are per-directory globs rather than a bare `*/**/*.ts`.
   "include": ["cat-harness/src/**/*.ts", "cat-harness/schemas/**/*.ts", "cat-harness/content/**/*.ts", "cat-harness/scripts/**/*.ts", "cat-harness/skills/**/*.ts", "cat-harness/adapters/**/*.ts", "cat-harness/test/health/**/*.ts", "cat-harness/types/**/*.d.ts", "tools/**/*.ts", "folio-assistant-core/schemas/**/*.ts", "large-datasets/schemas/**/*.ts", "large-datasets/scripts/**/*.ts", "who-iris/scripts/**/*.ts", "who-iris/schemas/**/*.ts"],
-  "exclude": ["dist", "node_modules"]
+  "exclude": [
+    // `block-qa-schema` publishes to npm and owns its compiler settings. Its
+    // `tests/` are excluded here for a reason that is NOT tidiness (bean `om30`):
+    // `tests/parity.test.ts` imports `vitest`, that package's own
+    // devDependency, installed into its nested `node_modules` by
+    // `check:published-packages`. A runner reaching `tsc --noEmit` has no such
+    // install, so this typecheck FAILED with TS2307 — and had done for as long
+    // as the step existed, unseen, because `bun test` failed first and Actions
+    // stops a job at its first failing step.
+    //
+    // So nothing CI ever had is lost here: that file has never been typechecked
+    // successfully on a runner. It typechecks in a developer container only
+    // because another gate's install happens to be present.
+    //
+    // The package cannot cover it either: its own config emits npm declarations
+    // with `rootDir: js` and `emitDeclarationOnly`, and the test additionally
+    // wants node types, `allowImportingTsExtensions` and `import.meta.dirname`
+    // — Bun-isms that config exists to reject (measured, 5 errors). Adding
+    // `vitest` to THIS manifest was the alternative and is worse: a whole test
+    // framework and a second runner at the root, for one file's types.
+    //
+    // RESIDUAL GAP, stated rather than closed: that test file is now typechecked
+    // by nothing. Closing it is the package owner's call — a `tsconfig.test.json`
+    // carrying those options, run from its own `scripts.test`.
+    "cat-harness/schemas/block-qa-schema/tests","dist", "node_modules"]
 }

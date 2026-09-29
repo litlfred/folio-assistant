@@ -4483,6 +4483,110 @@ export function directoryForGraph(
   return all[0]?.absPath;
 }
 
+/**
+ * Where an instance's `.pot` / `.po` sources actually live — its own declared
+ * directory, or a HOST's, namespaced by the instance's stub.
+ *
+ * ## The third case, and why it had to exist
+ *
+ * Two answers were assumed for years and both are about the instance itself:
+ * it declares `translation-sources`, or it does not and the convention
+ * `<root>/translations` applies. Ten readers spell the second as
+ * `directoryForGraph(root, "translation-sources") ?? join(root, "translations")`.
+ *
+ * A third case is real and neither covers it. `bootstrap` is a floor an agent
+ * READS — no TypeScript, `needs: []` — and a `.pot` is tooling OUTPUT that
+ * nobody reads. So on the owner's instruction its 15 templates moved to
+ * `cat-harness/translations/<locale>/bootstrap/processes/`: the files that
+ * describe one instance's diagrams, kept in the translation corpus of the
+ * instance that PUBLISHES them.
+ *
+ * Both assumed answers then compose a path that does not exist, and this is
+ * not hypothetical — it took three CI jobs red on 2026-09-27, twice, in two
+ * different readers.
+ *
+ * ## The host is a DEPENDENT, not a dependency
+ *
+ * Worth stating because the natural guess is wrong and costs an afternoon.
+ * `bootstrap` declares `needs: []`; it depends on nothing, so no dependency of
+ * bootstrap's could be hosting anything. `cat-harness` is what declares
+ * `needs: ['bootstrap']`. The host is the instance that DEPENDS on this one,
+ * which is also the one whose build publishes it — so the host cannot be found
+ * by walking this instance's own dependencies, and `hostRoot` is supplied by
+ * the caller rather than derived. A tool shipping inside cat-harness passes
+ * its own instance root, which is the only host it could sensibly mean.
+ *
+ * ## Three states, reported rather than collapsed
+ *
+ * `by` says WHICH question answered, because the three are not equally good
+ * news and a caller that cannot tell them apart makes the mistake this
+ * function exists to stop. `own` is a declaration. `hosted` is a declaration
+ * one level out plus a directory that exists. `convention` is a guess, and a
+ * reader deciding whether an empty result is a determined empty or a defect
+ * needs to know it was a guess.
+ *
+ * @param instanceRoot the instance whose translations are wanted
+ * @param hostRoot an instance that may host them; omit when there is none
+ */
+export function translationsHomeFor(
+  instanceRoot: string,
+  hostRoot?: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): { root: string; scope: readonly string[]; by: "own" | "hosted" | "convention" } {
+  const own = matchingDirectories(instanceRoot, "translation-sources", registry);
+  if (own.length > 0 && own[0] !== undefined) {
+    return { root: own[0].absPath, scope: [], by: "own" };
+  }
+
+  if (hostRoot !== undefined && resolve(hostRoot) !== resolve(instanceRoot)) {
+    const hosts = matchingDirectories(hostRoot, "translation-sources", registry);
+    const host = hosts[0];
+    // `readDeclaration`, NOT `artefactStubFor`. The latter throws EISDIR on a
+    // directory with no declaration file: `findDeclarationFile` returns
+    // undefined, so it reads the DIRECTORY and node refuses. Found by this
+    // function's own tests, which pass exactly such a directory — and by two
+    // OLDER tests in the same file that had been passing temp dirs to
+    // `catalogueFor` for months. An instance with no declaration has no stub,
+    // so it cannot be hosted under one; that is the convention case below.
+    const decl = readDeclaration(instanceRoot);
+    if (host !== undefined && decl !== undefined && decl !== null) {
+      const stub = artefactStub(decl);
+      // Existence is REQUIRED, not assumed. Composing `<host>/<locale>/<stub>`
+      // and reporting `hosted` without looking would hand every caller a path
+      // that may be nothing, and the whole point of this function is that a
+      // caller can tell an empty answer apart from a wrong one.
+      const hosted = existsSync(host.absPath)
+        ? readdirSync(host.absPath, { withFileTypes: true }).some(
+            (e) => e.isDirectory() && existsSync(join(host.absPath, e.name, stub)),
+          )
+        : false;
+      if (hosted) return { root: host.absPath, scope: [stub], by: "hosted" };
+    }
+  }
+
+  // declared-path-literal: the base case for an instance that declares nothing
+  // and is hosted by nobody. Reading a declaration to learn the fallback for
+  // having no declaration cannot be done; `DEFAULT_DIRECTORIES` supplies this
+  // same convention, and `by: "convention"` tells the caller it was a guess.
+  return { root: join(instanceRoot, "translations"), scope: [], by: "convention" };
+}
+
+/**
+ * The directory holding one locale's files for an instance, hosted or not:
+ * `<root>/<locale>` when it owns its corpus, `<root>/<locale>/<stub>` when a
+ * host carries it.
+ *
+ * One function rather than a join at each site, for the reason `potPathFor`
+ * gives about its own sibling: two copies of a path is how a check passes over
+ * a file the extractor never wrote.
+ */
+export function localeDirIn(
+  home: { root: string; scope: readonly string[] },
+  locale: string,
+): string {
+  return join(home.root, locale, ...home.scope);
+}
+
 /** Every directory this instance declares as holding `graph`, in declaration order. */
 function matchingDirectories(
   root: string,
@@ -4734,6 +4838,41 @@ export function deferResolution<T>(
  * symptom would be a generator writing its output into another instance's
  * tree, with a clean exit code.
  */
+/**
+ * Every directory of `graph` that is genuinely THIS instance's — the plural of
+ * {@link instanceDirectoryForGraph}, with the identical `scope` filter.
+ *
+ * It exists because the singular THROWS when an instance declares more than one,
+ * deliberately: taking `[0]` is the `dh4f` shape, where a second declared
+ * directory is scanned by nobody and the run reports clean. That refusal is
+ * right, and it makes the singular the wrong accessor for a caller whose
+ * question is plural — which is how `kg:audit --instance ./large-datasets`
+ * CRASHED rather than auditing (measured 2026-09-27):
+ *
+ *     instance at .../large-datasets declares 2 directories for graph "schemas"
+ *     at its own root, and this call site expects one:
+ *       large-datasets-schemas → .../large-datasets/schemas
+ *       large-datasets-sources → .../large-datasets/sources
+ *
+ * Both are legal — a kind may be declared by several directories, and
+ * `cat-harness.json` does exactly that for `schemas` — so the caller had to stop
+ * asking for one. `unclaimedSkillContracts` in `kg-audit.ts` is that caller.
+ *
+ * Filtered on `scope` and not on `own`, for the reason spelled out on the
+ * singular: from a root that stages sibling instances, all of them are `own`,
+ * and `scope` is the discriminator that actually asks "resolves against THIS
+ * root".
+ */
+export function instanceDirectoriesForGraph(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): string[] {
+  return matchingDirectories(root, graph, registry)
+    .filter((d) => d.own && d.scope !== "repository")
+    .map((d) => d.absPath);
+}
+
 export function instanceDirectoryForGraph(
   root: string,
   graph: string,

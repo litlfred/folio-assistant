@@ -1,0 +1,485 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2504.19675v2",
+ "source": {
+  "file": "2504.19675v2.pdf",
+  "sha256": "5e8e75c26a95847b5f6915a1a4d526e9bc425769054e592d3ce4e42d88ee59f3",
+  "bytes": 316066,
+  "pages": 8,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-24T19:21:15Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2504.19675",
+   "version": "2",
+   "primary_class": "cs.CL",
+   "stamp_date": "21 Aug 2025"
+  },
+  "doi": null,
+  "title": "Annif at SemEval-2025 Task 5: Traditional XMTC augmented by LLMs",
+  "authors_raw": "Osma Suominen and Juho Inkinen and Mona Lehtinen",
+  "title_lines": [
+   "Annif at SemEval-2025 Task 5: Traditional XMTC augmented by LLMs"
+  ],
+  "abstract": "This paper presents the Annif system in SemEval-2025 Task 5 (LLMs4Subjects), which focussed on subject indexing using large lan- guage models (LLMs). The task required creating subject predictions for bibliographic records from the bilingual TIBKAT database using the GND subject vocabulary. Our ap- proach combines traditional natural language processing and machine learning techniques im- plemented in the Annif toolkit with innovative LLM-based methods for translation and syn- thetic data generation, and merging predictions from monolingual models. The system ranked first in the all-subjects category and second in the tib-core-subjects category in the quantita- tive evaluation, and fourth in qualitative evalu- ations. These findings demonstrate the poten- tial of combining traditional XMTC algorithms with modern LLM techniques to improve the accuracy and efficiency of subject indexing in multilingual contexts.",
+  "docinfo": {
+   "Title": "Annif at SemEval-2025 Task 5: Traditional XMTC augmented by LLMs",
+   "Author": "Osma Suominen; Juho Inkinen; Mona Lehtinen",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:)"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Background",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "System overview",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Translation of data sets",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Synthetic training data",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Experimental setup",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Base projects",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Adding synthetic data",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Ensemble projects",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Test set predictions",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Results",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Quantitative evaluation",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Qualitative evaluation",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Analysis",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Conclusions",
+   "page": 6,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Effect of synthetic data",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Results for base projects",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Ensemble weights",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Details about LLM usage",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Performance",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Processing example",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Prompt templates",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Record translation",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Record synthesis",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "GND translation",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1131,
+   "n_words": 156
+  },
+  {
+   "id": "sec-000-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1252,
+   "n_words": 188
+  },
+  {
+   "id": "sec-001-synthetic-training-data",
+   "number": null,
+   "title": "Synthetic training data",
+   "level": 2,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 762,
+   "n_words": 116
+  },
+  {
+   "id": "sec-002-background",
+   "number": null,
+   "title": "Background",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 1558,
+   "n_words": 234
+  },
+  {
+   "id": "sec-003-system-overview",
+   "number": null,
+   "title": "System overview",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 2106,
+   "n_words": 313
+  },
+  {
+   "id": "sec-004-translation-of-data-sets",
+   "number": null,
+   "title": "Translation of data sets",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 1738,
+   "n_words": 288
+  },
+  {
+   "id": "sec-005-experimental-setup",
+   "number": null,
+   "title": "Experimental setup",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 54,
+   "n_words": 10
+  },
+  {
+   "id": "sec-006-base-projects",
+   "number": null,
+   "title": "Base projects",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 1839,
+   "n_words": 281
+  },
+  {
+   "id": "sec-007-adding-synthetic-data",
+   "number": null,
+   "title": "Adding synthetic data",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 484,
+   "n_words": 86
+  },
+  {
+   "id": "sec-008-results",
+   "number": null,
+   "title": "Results",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 229,
+   "n_words": 40
+  },
+  {
+   "id": "sec-009-ensemble-projects",
+   "number": null,
+   "title": "Ensemble projects",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 2436,
+   "n_words": 390
+  },
+  {
+   "id": "sec-010-test-set-predictions",
+   "number": null,
+   "title": "Test set predictions",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 661,
+   "n_words": 112
+  },
+  {
+   "id": "sec-011-qualitative-evaluation",
+   "number": null,
+   "title": "Qualitative evaluation",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 42,
+   "n_words": 7
+  },
+  {
+   "id": "sec-012-quantitative-evaluation",
+   "number": null,
+   "title": "Quantitative evaluation",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 1953,
+   "n_words": 311
+  },
+  {
+   "id": "sec-013-analysis",
+   "number": null,
+   "title": "Analysis",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 6,
+   "n_chars": 4622,
+   "n_words": 756
+  },
+  {
+   "id": "sec-014-conclusions",
+   "number": null,
+   "title": "Conclusions",
+   "level": 1,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 94,
+   "n_words": 13
+  },
+  {
+   "id": "sec-015-performance",
+   "number": null,
+   "title": "Performance",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 7,
+   "n_chars": 3558,
+   "n_words": 491
+  },
+  {
+   "id": "sec-016-effect-of-synthetic-data",
+   "number": null,
+   "title": "Effect of synthetic data",
+   "level": 1,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 310,
+   "n_words": 49
+  },
+  {
+   "id": "sec-017-results-for-base-projects",
+   "number": null,
+   "title": "Results for base projects",
+   "level": 1,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 446,
+   "n_words": 76
+  },
+  {
+   "id": "sec-018-ensemble-weights",
+   "number": null,
+   "title": "Ensemble weights",
+   "level": 1,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 318,
+   "n_words": 59
+  },
+  {
+   "id": "sec-019-details-about-llm-usage",
+   "number": null,
+   "title": "Details about LLM usage",
+   "level": 1,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 494,
+   "n_words": 77
+  },
+  {
+   "id": "sec-020-processing-example",
+   "number": null,
+   "title": "Processing example",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 91,
+   "n_words": 16
+  },
+  {
+   "id": "sec-021-prompt-templates",
+   "number": null,
+   "title": "Prompt templates",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 158,
+   "n_words": 26
+  },
+  {
+   "id": "sec-022-record-translation",
+   "number": null,
+   "title": "Record translation",
+   "level": 3,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 467,
+   "n_words": 74
+  },
+  {
+   "id": "sec-023-record-synthesis",
+   "number": null,
+   "title": "Record synthesis",
+   "level": 3,
+   "page_start": 7,
+   "page_end": 8,
+   "n_chars": 544,
+   "n_words": 76
+  },
+  {
+   "id": "sec-024-gnd-translation",
+   "number": null,
+   "title": "GND translation",
+   "level": 3,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 5100,
+   "n_words": 659
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 25,
+  "toc_inferred_entries": 0,
+  "sections": 26,
+  "chars_total": 32447
+ }
+}

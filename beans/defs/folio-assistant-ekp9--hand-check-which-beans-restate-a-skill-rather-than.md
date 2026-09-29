@@ -1,10 +1,11 @@
 ---
 # folio-assistant-ekp9
 title: 'HAND-CHECK: which beans restate a skill rather than record an outcome — the ground truth `check:bean-restates-skill` is measured against'
-status: in-progress
+status: todo
 type: task
+priority: normal
 created_at: 2026-09-23T21:09:53Z
-updated_at: 2026-09-23T21:09:53Z
+updated_at: 2026-09-29T20:50:33Z
 parent: folio-assistant-1swy
 ---
 
@@ -518,3 +519,9 @@ The check's message is the right repair and was taken — *"remove the link and
 keep the text — a reader cannot tell a stale link from a wrong one."* Recorded
 rather than quietly fixed, because a sweep about restatement that imported a
 broken link by restating should say so.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

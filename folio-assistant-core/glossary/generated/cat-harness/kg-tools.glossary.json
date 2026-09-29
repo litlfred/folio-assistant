@@ -222,6 +222,14 @@
       "status": "candidate"
     },
     {
+      "id": "headless-render-qc",
+      "prefLabel": "Headless render QC (Playwright)",
+      "definition": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering.",
+      "notation": "headless-render-qc",
+      "source": "cat-harness/tools/index.ts#headless-render-qc",
+      "status": "candidate"
+    },
+    {
       "id": "ingest-extended",
       "prefLabel": "Ingest, with PDF and image extensions",
       "definition": "Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow.",
@@ -595,6 +603,22 @@
       "definition": "STUB — not implemented. Would read a workbook into a CSVW TableGroup: one table per sheet, with the location CSVW cannot express (`fac:anchor`, `fac:headerRow`, `fac:extent`) carried as annotations on valid CSVW. A workbook is the case that motivates those terms: tables that do not start at A1, headers that are not row 1, several tables on one sheet.",
       "notation": "tabular-xlsx",
       "source": "cat-harness/tools/index.ts#tabular-xlsx",
+      "status": "candidate"
+    },
+    {
+      "id": "tex-snippet-validate",
+      "prefLabel": "TeX snippet validation (AST)",
+      "definition": "Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one.",
+      "notation": "tex-snippet-validate",
+      "source": "cat-harness/tools/index.ts#tex-snippet-validate",
+      "status": "candidate"
+    },
+    {
+      "id": "tex-source-audit",
+      "prefLabel": "TeX-source hazard audit",
+      "definition": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion.",
+      "notation": "tex-source-audit",
+      "source": "cat-harness/tools/index.ts#tex-source-audit",
       "status": "candidate"
     },
     {

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nsbb
 title: 'IG PIPELINE LAYERING: a bare FHIR IG pipeline is the base; DAK and SMART are overlays on it, not the thing itself'
-status: in-progress
+status: todo
 type: task
 priority: high
 created_at: 2026-09-21T15:37:14Z
-updated_at: 2026-09-22T19:07:23Z
+updated_at: 2026-09-29T20:03:11Z
 parent: folio-assistant-uhkv
 ---
 
@@ -52,3 +52,9 @@ So the proxy reaches TERMINOLOGY dependencies and structurally cannot reach the 
 - [ ] the contradiction with #690 / #717 is resolved rather than left standing
 
 Related: qrnz (second-IG findings), hpo0 (IG Publisher micro-asks), rna3 (IG incremental build), gpdo (compiled-artefact caching).
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

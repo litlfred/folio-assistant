@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8xx6
 title: BPMN re-render for translated labels
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-18T15:07:07Z
-updated_at: 2026-09-19T00:41:33Z
+updated_at: 2026-09-29T18:14:49Z
 parent: folio-assistant-bzyu
 ---
 
@@ -75,3 +75,9 @@ refs and identical bean ops. A pass producing good French and a disconnected
 graph would satisfy every string-level test.
 
 _2026-09-19T00:41:33Z_ — Checked 2026-09-19 on main at 17dc1e6 — LIVE per the bean's own last note, which records the orchestration as built (scripts/translate-bpmn.ts, 706 strings across 20 diagrams, fr committed) and page wiring as the remaining blocker. Nothing in this pass contradicts that; not re-measured.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

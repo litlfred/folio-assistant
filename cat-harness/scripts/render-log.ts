@@ -134,7 +134,7 @@ const USAGE =
   `       \`summary\` is required; the rest are optional. Build it with jq, never\n` +
   `       by string concatenation:\n` +
   `         jq -n --arg s "$SUMMARY" --arg r "$REASON" '{summary:$s, reason:$r}' \\\n` +
-  `           | bun run render-log.ts --dir DIR --event removed ...\n` +
+  `           | bun run cat-harness/scripts/render-log.ts --dir DIR --event removed ...\n` +
   `\n` +
   `       render-log.ts --dir DIR --read [--day YYYY-MM-DD]`;
 

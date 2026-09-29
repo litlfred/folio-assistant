@@ -86,6 +86,46 @@ async function drawnSettled(page: Page): Promise<number> {
   return n!;
 }
 
+/**
+ * The caption's verdict once it has SETTLED — a count, or `null` for a refusal.
+ *
+ * {@link drawnSettled} cannot serve a caller that does not know which verdict to
+ * expect: it polls `.not.toBeNull()` and so FAILS the test on a refusal, which is
+ * correct for the tests that have already narrowed below the limit and wrong for
+ * one that is asking which kinds do. Measured 2026-09-27: using it to probe
+ * turned a red test into a differently-red one.
+ *
+ * It polls for the same reason `drawnSettled` does, and the reason is the one
+ * written there: the list re-renders on `input` while the diagram is DEBOUNCED at
+ * 150ms, so between "no longer refusing" and "reports a count" there is a window
+ * holding NEITHER, and a single read can sample it. The third state here is
+ * `"unsettled"`, and it is polled away rather than treated as a refusal — reading
+ * the gap as "this kind is too big" would be the same defect the debounce comment
+ * describes, one caller along.
+ */
+async function settledVerdict(page: Page): Promise<number | null> {
+  let verdict: number | null = null;
+  await expect
+    .poll(
+      async () => {
+        const text = (await page.locator(CAP).textContent()) ?? "";
+        if (text.includes("too many to draw")) {
+          verdict = null;
+          return "refused";
+        }
+        const m = /^(\d+)\s+declaration/.exec(text.trim());
+        if (m) {
+          verdict = Number(m[1]);
+          return "drew";
+        }
+        return "unsettled";
+      },
+      { timeout: 10_000 },
+    )
+    .not.toBe("unsettled");
+  return verdict;
+}
+
 test.describe("overview panel — the picture follows every filter", () => {
   test("a SEARCH narrows the diagram, not only the list", async ({ page }) => {
     await openPanel(page);
@@ -128,13 +168,49 @@ test.describe("overview panel — the picture follows every filter", () => {
 
   test("the KIND select narrows the diagram too", async ({ page }) => {
     await openPanel(page);
-    const kinds = await page.locator("#kind option").allTextContents();
-    // `zod-enum` measured at 35 in scope — under the limit, so it draws.
-    expect(kinds).toContain("zod-enum");
+    // NAMES NO KIND, and that is the fix rather than the shortcut.
+    //
+    // This asserted `zod-enum` on the comment *"measured at 35 in scope — under
+    // the limit, so it draws"*. That is a count, and counts grow: regenerating
+    // the schema index on 2026-09-27 took `zod-enum` to 41 against `DIA_MAX =
+    // 40`, so the kind this test had chosen for being small became one the panel
+    // correctly refuses — and the test failed while both the panel and the
+    // caption were right.
+    //
+    // The sibling test above already states the rule this one broke: *"Asserted
+    // as the REFUSAL rather than as a number, so growing the corpus does not
+    // redden this and shrinking it below the limit fails loudly instead of
+    // passing vacuously."* The property here is that SELECTING A KIND NARROWS
+    // THE SCOPE — not that any particular kind is small. So it tries each kind
+    // and requires that at least one draws.
+    //
+    // A kind that draws still proves the narrowing: the unfiltered page refuses
+    // at 842 declarations, so anything that draws was narrowed to under 40 by
+    // the select and nothing else.
+    const options = await page.locator("#kind option").evaluateAll((els) =>
+      (els as HTMLOptionElement[]).map((e) => e.value).filter((v) => v !== ""),
+    );
+    expect(options.length, "the kind select offers nothing to narrow BY").toBeGreaterThan(0);
 
-    await page.locator("#kind").selectOption("zod-enum");
+    let drew: { kind: string; count: number } | undefined;
+    for (const kind of options) {
+      await page.locator("#kind").selectOption(kind);
+      // `settledVerdict`, NOT `drawnSettled`: the latter asserts a count and so
+      // fails on the first kind that is legitimately too big to draw.
+      const n = await settledVerdict(page);
+      if (n !== null && n > 0) {
+        drew = { kind, count: n };
+        break;
+      }
+    }
+
+    expect(
+      drew,
+      `no kind narrowed the scope below the diagram limit — tried ${options.length}: ${options.join(", ")}. ` +
+        "Either every kind now exceeds DIA_MAX, or the select stopped filtering the picture, and those are " +
+        "different defects.",
+    ).toBeDefined();
     await expect(page.locator(CAP)).not.toContainText("too many to draw");
-    expect(await drawnSettled(page)).toBeGreaterThan(0);
   });
 
   test("an empty result names the FILTER, never the scope", async ({ page }) => {

@@ -5,7 +5,7 @@
     "id": "Process_FeatureStaging",
     "path": "processes/feature-staging.bpmn"
   },
-  "source_hash": "sha256:7ea553b86eff4f264cf106d51fa2ec2d125139fa12a9768f1304e1fedbeeb0b8",
+  "source_hash": "sha256:75f7006aa174558e0e5c66e4a98986064b0ca49dc15678e07d0883271266e1ef",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,31 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Remove",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Validate",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Preflight",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RemoveDisp",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "H_Confirm",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -138,8 +163,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/feature-staging.yml",
+          "detail": ".github/workflows/feature-staging.yml changed since cat-harness/processes/feature-staging.bpmn was last attested (agent), and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -147,8 +177,8 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 2,
+    "pass": 14,
+    "fail": 4,
     "n/a": 7,
     "unknown": 0
   },
@@ -157,9 +187,10 @@
       "kind": "implements",
       "prose": "cat-harness/processes/feature-staging.bpmn",
       "code": ".github/workflows/feature-staging.yml",
-      "prose_hash": "7ea553b86eff",
-      "code_hash": "df24d472051f",
-      "by": "baseline"
+      "prose_hash": "75f7006aa174",
+      "code_hash": "4a5f525c2fea",
+      "by": "agent",
+      "reason": "This branch changed 12 workflow files in ONE way: an `oven-sh/setup-bun@v2` step's `bun-version` literal went from `latest` (or from absent) to `1.3.14`. Re-read all six paired documentations: none mentions the runtime, `setup-bun\\', `bun-version` or `latest` — grepped, not assumed — so none of them describes the thing that changed. `upstream-pin-watch` was read most closely because this branch also adds Bun to `upstream-pins.json`, and its prose is tenant-agnostic by design: it names no pin, gives no count, and says a new tenant is 'a registry row and a call — never a second diagram'. Adding a row is what it prescribes, so the prose holds a fortiori. Bean `3ozg`."
     }
   ]
 }

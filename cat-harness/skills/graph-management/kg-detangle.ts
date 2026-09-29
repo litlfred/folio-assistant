@@ -35,6 +35,8 @@
 import { readdirSync, readFileSync, statSync, existsSync, mkdirSync, writeFileSync } from "fs";
 import { join, relative, resolve, dirname } from "path";
 import { detangleResultsDir, sidecarFor, sidecarPathFor, staleFields } from "../../schemas/detangle-sidecar.ts";
+import { gitCorpus } from "../../schemas/git-corpus.ts";
+import { groupDepthFor } from "./group-depth.ts";
 import {
   DEFAULT_THRESHOLDS,
   measure,
@@ -51,25 +53,41 @@ import { ownElementPattern } from "../../schemas/namespaces.js";
 
 const ROOT = resolve(import.meta.dir, "../../..");
 
-/** Directories scanned, each mapped to the depth at which a candidate group is named. */
-const SCAN: Array<{ path: string; groupDepth: number }> = [
-  { path: "cat-harness/skills", groupDepth: 3 },
-  // `processes/` and `scenarios/` are SIBLINGS of `skills/` since 2026-09-21,
-  // not subdirectories of it. At depth 3 the old layout named them
-  // `cat-harness/skills/workflows` and `.../roles`; once they moved out, the
-  // `cat-harness/skills` entry above stopped reaching them and they were
-  // measured nowhere — the detangle report is only as wide as this list, so a
-  // directory missing from it reads as "nothing to report" rather than as a
-  // gap. Depth 2 names them for the same reason `bootstrap/processes` does.
-  { path: "cat-harness/processes", groupDepth: 2 },
-  { path: "cat-harness/scenarios", groupDepth: 2 },
-  { path: "cat-harness/schemas", groupDepth: 2 },
-  { path: "cat-harness/tools", groupDepth: 2 },
-  { path: "cat-harness/src/skills", groupDepth: 3 },
-  // declared-path-literal: the scan list is REPO-relative and pairs each path with a grouping depth no declaration carries; deriving it is its own change, not part of the byql fold.
-  { path: "folio-assistant-core/schemas", groupDepth: 2 },
-  { path: "bootstrap/skills", groupDepth: 2 },
-  { path: "bootstrap/processes", groupDepth: 2 },
+/**
+ * Directories scanned. The depth at which each names its groups is DERIVED —
+ * see {@link groupDepthFor}.
+ *
+ * Each entry used to carry a hardcoded `groupDepth`, and the reasoning those
+ * numbers encoded is kept here because it is still true about the LAYOUT even
+ * though it no longer has to be written down as a number:
+ *
+ * - `processes/` and `scenarios/` are SIBLINGS of `skills/` since 2026-09-21,
+ *   not subdirectories of it. Under the old table they were listed at depth 3
+ *   as `cat-harness/skills/workflows` and `.../roles`; once they moved out, the
+ *   `cat-harness/skills` entry stopped reaching them and they were measured
+ *   NOWHERE — this report is only as wide as this list, so a directory missing
+ *   from it reads as "nothing to report" rather than as a gap.
+ * - `cat-harness/skills` names its groups one level down and `bootstrap/skills`
+ *   does not, despite being the same graph kind. That is a fact about where each
+ *   instance keeps its nodes, which is why the depth is measured rather than
+ *   inferred from the kind.
+ *
+ * An entry naming a directory that does not exist is REPORTED as a determined
+ * empty and left alone — removing it is a person's edit, not this script's.
+ */
+const SCAN: Array<{ path: string }> = [
+  { path: "cat-harness/skills" },
+  { path: "cat-harness/processes" },
+  { path: "cat-harness/scenarios" },
+  { path: "cat-harness/schemas" },
+  { path: "cat-harness/tools" },
+  { path: "cat-harness/src/skills" },
+  // declared-path-literal: the scan list is REPO-relative. The grouping depth it
+  // used to pair with each path is now derived (`groupDepthFor`); the PATHS
+  // remain literals, which is a separate and still-open concern.
+  { path: "folio-assistant-core/schemas" },
+  { path: "bootstrap/skills" },
+  { path: "bootstrap/processes" },
 ];
 
 const EXT = /\.(md|bpmn|dmn|json|ts)$/;
@@ -77,6 +95,10 @@ const EXT = /\.(md|bpmn|dmn|json|ts)$/;
 /** Per-directory file names that name no node — see the name index below. */
 const CONVENTIONAL = new Set(["README", "AGENTS"]);
 
+/**
+ * A bare filesystem descent. Kept ONLY as the fallback for when git cannot
+ * answer — see {@link corpusOf}, which is what callers use.
+ */
 function walk(dir: string, out: string[] = []): string[] {
   if (!existsSync(dir)) return out;
   for (const e of readdirSync(dir)) {
@@ -88,13 +110,96 @@ function walk(dir: string, out: string[] = []): string[] {
   return out;
 }
 
+/** True when any segment of `rel` is dot-prefixed, as {@link walk} skipped. */
+function hasDotSegment(rel: string): boolean {
+  return rel.split("/").some((seg) => seg.startsWith("."));
+}
+
+/**
+ * The nodes of one scanned directory — asked of git, not of the disk.
+ *
+ * ## Why this is not a bare walk any more
+ *
+ * A bare walk skips dot-prefixed entries and nothing else, so it counts
+ * whatever happens to be on the machine. On 2026-09-26 that stopped being
+ * theoretical: `check:published-packages` (bean `rsi6`) runs `bun install`
+ * inside `cat-harness/schemas/block-qa-schema`, and the moment it did, this
+ * scan's answer for `cat-harness/schemas` went from **227** to **1441** —
+ * 1214 files of a dependency tree and a build directory, counted as
+ * knowledge-graph nodes and pinned into a committed sidecar, which
+ * `gen-uml-overview` then republished as `1441 | 0.96 | 25 | 4`.
+ *
+ * Measured four ways on one tree, with this module's own `EXT`: bare walk
+ * 1441, excluding `node_modules/` 228, also excluding `dist/` 227,
+ * `git ls-files` 227.
+ *
+ * **The sharp part is that it was order-dependent WITHIN a single run.** That
+ * install happens at line 823 of `code-quality-gates.yml` and
+ * `kg:detangle:check` at line 663, so a runner measures 227 while a developer
+ * container that has already run the gate set measures 1441 — and the two
+ * disagree about a number that is committed. A measurement whose value depends
+ * on which gate ran first is not a measurement of the repository.
+ *
+ * This was the THIRTEENTH instance of `xd1g`'s class and the first outside
+ * `scripts/`, which is why that bean's survey — a syntactic filter over
+ * `scripts/*.ts` — could not have found it.
+ *
+ * ## `undefined` is not `[]`
+ *
+ * {@link gitCorpus} returns `undefined` when git could not answer and `[]` when
+ * git looked and there is nothing. Collapsing them is the `dh4f` shape —
+ * reporting a clean corpus nobody read.
+ *
+ * But there are **three** cases here, not two, because `gitCorpus` also answers
+ * `undefined` for a directory that is not there — and an absent directory is a
+ * DETERMINED empty, not an unknown. Found immediately: `SCAN` still names
+ * `cat-harness/src/skills`, which #760 removed, so the first version of this
+ * function reported *"git could not enumerate 1 directory"* about a directory
+ * whose answer is perfectly known. That is a could-not-determine manufactured
+ * out of a fact, which is as bad as the reverse.
+ *
+ * So:
+ *
+ *   absent      -> `[]`, and recorded in {@link absentScanTargets}. A declared
+ *                  scan target that does not exist is `dh4f` itself — a
+ *                  consumer scanning nothing and reporting a clean run over it
+ *                  — so it is REPORTED rather than silently skipped, and left
+ *                  for a person to remove from `SCAN`.
+ *   git refused -> a bare {@link walk}, recorded in {@link corpusFallbacks},
+ *                  because a measurement pinned from a bare walk counts
+ *                  whatever is on the machine and must be legible as such.
+ *   git answers -> that list, filtered to {@link EXT} and to the dot-prefix
+ *                  rule `walk` applied.
+ *
+ * Neither is a failure. `gates` must stay runnable where git cannot be asked,
+ * and a stale `SCAN` entry is a person's edit, not this script's to make.
+ */
+const corpusFallbacks: string[] = [];
+const absentScanTargets: string[] = [];
+
+function corpusOf(dir: string): string[] {
+  const shown = relative(ROOT, dir) || dir;
+  if (!existsSync(dir)) {
+    absentScanTargets.push(shown);
+    return [];
+  }
+  const listed = gitCorpus(dir);
+  if (listed === undefined) {
+    corpusFallbacks.push(shown);
+    return walk(dir);
+  }
+  return listed.filter((abs) => EXT.test(abs) && !hasDotSegment(relative(dir, abs)));
+}
+
 const nodes: DetangleNode[] = [];
 const byId = new Map<string, string>(); // id -> absolute path
 /** Skill name (front-matter `name:` or basename) -> node id. A name may be carried by two bodies; both are kept. */
 const byName = new Map<string, string[]>();
 
-for (const { path, groupDepth } of SCAN) {
-  for (const abs of walk(join(ROOT, path))) {
+for (const { path } of SCAN) {
+  const scanned = corpusOf(join(ROOT, path));
+  const groupDepth = groupDepthFor(path, scanned);
+  for (const abs of scanned) {
     const id = relative(ROOT, abs);
     const group = id.split("/").slice(0, groupDepth).join("/");
     nodes.push({ id, group });
@@ -393,6 +498,22 @@ if (process.argv.includes("--json")) {
   console.log(JSON.stringify({ thresholds: DEFAULT_THRESHOLDS, results, dangling }, null, 2));
 } else {
   console.log(`\nDetangle — ${nodes.length} nodes, ${edges.length} edges, ${dangling.length} dangling\n`);
+  // Stated rather than silent: a measurement pinned from a bare walk counts
+  // whatever is on the machine, which is the defect `corpusOf` exists for. A
+  // reader must be able to tell which kind of number they are looking at.
+  if (corpusFallbacks.length > 0) {
+    console.log(
+      `  ? git could not enumerate ${corpusFallbacks.length} scanned directory(ies); a bare walk was used, so`,
+    );
+    console.log("    their counts may include untracked residue: " + corpusFallbacks.join(", "));
+    console.log("");
+  }
+  if (absentScanTargets.length > 0) {
+    console.log(`  ? ${absentScanTargets.length} declared scan target(s) do not exist, so nothing was measured`);
+    console.log("    for them — a determined empty, not an unknown. Remove from SCAN or create: ");
+    console.log("    " + absentScanTargets.join(", "));
+    console.log("");
+  }
   console.log(
     "  " +
       ["group".padEnd(40), "size".padStart(5), "coh".padStart(6), "in".padStart(5), "out".padStart(6), "grps".padStart(5), "dir".padStart(6), "enf".padStart(4), "prose".padStart(6), "wdir".padStart(5), "undet".padStart(6), "role".padEnd(13), "verdict"].join(" "),

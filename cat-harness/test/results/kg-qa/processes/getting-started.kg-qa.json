@@ -5,7 +5,7 @@
     "id": "Process_GettingStarted",
     "path": "processes/getting-started.bpmn"
   },
-  "source_hash": "sha256:5db91fa753ea004d7ab90f988c1a8c9cc82ca9aff2d34bb8b8604c8920a33e90",
+  "source_hash": "sha256:6b27e7fad23e682bcb161cee108a647119a5eb640ed05d41a629f91f39fb9ed8",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,23 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_DetectModality",
+          "detail": "names skill \"interaction-modality\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_AskIntent",
+          "detail": "names skill \"interaction-modality\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ConfirmImport",
+          "detail": "names skill \"dispatch-agent\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "pass",
@@ -106,7 +123,7 @@
   },
   "totals": {
     "pass": 16,
-    "fail": 0,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   }

@@ -342,55 +342,6 @@
       "status": "candidate"
     },
     {
-      "id": "external-schema.externalschemaschema.id",
-      "prefLabel": "ExternalSchemaSchema.id",
-      "definition": "Stable local id, e.g. `omg-bpmn-2.0`.",
-      "source": "folio-assistant-core/schemas/external-schema.ts#ExternalSchemaSchema.id",
-      "status": "candidate"
-    },
-    {
-      "id": "external-schema.externalschemaschema.namespaces",
-      "prefLabel": "ExternalSchemaSchema.namespaces",
-      "definition": "The XML namespaces or URI stems this edition defines, as WE consume them.",
-      "source": "folio-assistant-core/schemas/external-schema.ts#ExternalSchemaSchema.namespaces",
-      "status": "candidate"
-    },
-    {
-      "id": "external-schema.externalschemaschema.note",
-      "prefLabel": "ExternalSchemaSchema.note",
-      "definition": "Why this edition, where the choice was not forced.",
-      "source": "folio-assistant-core/schemas/external-schema.ts#ExternalSchemaSchema.note",
-      "status": "candidate"
-    },
-    {
-      "id": "external-schema.externalschemaschema.specurl",
-      "prefLabel": "ExternalSchemaSchema.specUrl",
-      "definition": "Where the specification is published.",
-      "source": "folio-assistant-core/schemas/external-schema.ts#ExternalSchemaSchema.specUrl",
-      "status": "candidate"
-    },
-    {
-      "id": "external-schema.externalschemaschema.terms",
-      "prefLabel": "ExternalSchemaSchema.terms",
-      "definition": "The OPERATIVE vocabulary — the terms this repository actually acts on.",
-      "source": "folio-assistant-core/schemas/external-schema.ts#ExternalSchemaSchema.terms",
-      "status": "candidate"
-    },
-    {
-      "id": "external-schema.externalschemaschema.title",
-      "prefLabel": "ExternalSchemaSchema.title",
-      "definition": "The specification's own title, as the authority writes it.",
-      "source": "folio-assistant-core/schemas/external-schema.ts#ExternalSchemaSchema.title",
-      "status": "candidate"
-    },
-    {
-      "id": "external-schema.externalschemaschema.version",
-      "prefLabel": "ExternalSchemaSchema.version",
-      "definition": "The edition being conformed to.",
-      "source": "folio-assistant-core/schemas/external-schema.ts#ExternalSchemaSchema.version",
-      "status": "candidate"
-    },
-    {
       "id": "extraction.extractedassetschema.bytes",
       "prefLabel": "ExtractedAssetSchema.bytes",
       "definition": "Uncompressed size in bytes, from the container's index.",
@@ -855,7 +806,7 @@
     {
       "id": "materialization.materializationschema.provenance",
       "prefLabel": "MaterializationSchema.provenance",
-      "definition": "WHERE THIS CAME FROM — see {@link ProvenanceSchema}.",
+      "definition": "WHERE THIS CAME FROM — see {@link SourceProvenanceSchema}.",
       "source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.provenance",
       "status": "candidate"
     },
@@ -864,48 +815,6 @@
       "prefLabel": "MaterializationSchema.purpose",
       "definition": "Why the bytes were taken. Required on anything materialized — the gates mean different things under each.",
       "source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.purpose",
-      "status": "candidate"
-    },
-    {
-      "id": "materialization.provenanceschema.local",
-      "prefLabel": "ProvenanceSchema.local",
-      "definition": "The original **in this repository** this was taken from.",
-      "source": "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema.local",
-      "status": "candidate"
-    },
-    {
-      "id": "materialization.provenanceschema.upstream",
-      "prefLabel": "ProvenanceSchema.upstream",
-      "definition": "The remote thing. A URI, always — never a path, never a bare name. Absent means NOT RECORDED, which is not \"there is none\".",
-      "source": "folio-assistant-core/schemas/materialization.ts#ProvenanceSchema.upstream",
-      "status": "candidate"
-    },
-    {
-      "id": "materialization.signatureschema.format",
-      "prefLabel": "SignatureSchema.format",
-      "definition": "How to interpret `value` — a media type or a named scheme.",
-      "source": "folio-assistant-core/schemas/materialization.ts#SignatureSchema.format",
-      "status": "candidate"
-    },
-    {
-      "id": "materialization.signatureschema.signer",
-      "prefLabel": "SignatureSchema.signer",
-      "definition": "Who signed, as a key identifier.",
-      "source": "folio-assistant-core/schemas/materialization.ts#SignatureSchema.signer",
-      "status": "candidate"
-    },
-    {
-      "id": "materialization.signatureschema.value",
-      "prefLabel": "SignatureSchema.value",
-      "definition": "The signature itself, or a URI that resolves to it.",
-      "source": "folio-assistant-core/schemas/materialization.ts#SignatureSchema.value",
-      "status": "candidate"
-    },
-    {
-      "id": "materialization.signatureschema.verifiedat",
-      "prefLabel": "SignatureSchema.verifiedAt",
-      "definition": "When it was last CHECKED against the signer's key — never when it was recorded. Same discipline as {@link FixitySchema.verifiedAt}.",
-      "source": "folio-assistant-core/schemas/materialization.ts#SignatureSchema.verifiedAt",
       "status": "candidate"
     },
     {

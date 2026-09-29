@@ -42,7 +42,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04, macos-14]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Linux: GMP/MPFR are pre-installed on ubuntu-24.04 runners.
       # macOS: install via brew.
@@ -55,7 +55,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.21
+        uses: pypa/cibuildwheel@v4.2
         env:
           CIBW_BUILD: 'cp310-* cp311-* cp312-*'
           # Skip 32-bit and musl (rug needs full GMP).
@@ -84,7 +84,7 @@ jobs:
           package-dir: tools/pyhecke-native
           output-dir: wheelhouse
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: wheels-${{ matrix.os }}
           path: wheelhouse/*.whl
@@ -97,7 +97,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: wheelhouse
           merge-multiple: true
@@ -106,7 +106,7 @@ jobs:
         run: ls -la wheelhouse/
 
       - name: Attach to GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: pyhecke-native-${{ github.sha }}
           name: pyhecke-native ${{ github.sha }}
@@ -132,7 +132,7 @@ jobs:
       name: testpypi
       url: https://test.pypi.org/project/pyhecke-native/
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: wheelhouse
           merge-multiple: true
@@ -155,7 +155,7 @@ jobs:
       name: pypi
       url: https://pypi.org/project/pyhecke-native/
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: wheelhouse
           merge-multiple: true

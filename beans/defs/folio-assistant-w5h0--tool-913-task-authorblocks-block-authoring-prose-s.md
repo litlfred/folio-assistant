@@ -1,11 +1,11 @@
 ---
 # folio-assistant-w5h0
 title: 'TOOL 9/13: Task_AuthorBlocks — block authoring & prose structure (14 files, 1 entry point)'
-status: todo
+status: scrapped
 type: task
 priority: low
 created_at: 2026-09-20T04:34:56Z
-updated_at: 2026-09-20T04:39:59Z
+updated_at: 2026-09-25T17:34:06Z
 parent: folio-assistant-d308
 ---
 
@@ -76,3 +76,92 @@ block is checking a voice, which is false and would be published in the graph.
 - [ ] if (1): the diagram corrected and this row reclassified in `d308`
 - [ ] if (2): folded into `jh2j` and this bean scrapped with its reasons
 - [ ] if (3): a node authored here with its verification posture stated on it
+
+
+---
+
+## SCRAPPED 2026-09-25 — nodeless by the owner's decision, and two of three refuted
+
+Owner, asked which of this bean's three possibilities holds:
+**"Record it nodeless; note what a folio owes."**
+
+Two of the three were refuted by measurement first, so the question put to the
+owner was narrower than the one above.
+
+### Possibility 1 — "the diagram is wrong" — REFUTED
+
+`Task_AuthorBlocks` being a `serviceTask` is not a drafting error.
+`content-author` is named by **five activities across four diagrams in three
+element types**:
+
+| diagram | element | type |
+|---|---|---|
+| `authoring-a-paper.bpmn:106` | `Task_AuthorBlocks` | `serviceTask` |
+| `editing-hci-validation.bpmn` | `Task_DraftEdit`, `Task_ReviseEdit` | `serviceTask` |
+| `evidence-retrieval.bpmn` | `Task_FramePico`, `Task_AttachEvidence` | **`userTask`** |
+| `content-lifecycle.bpmn`, `draft-to-publication.bpmn` | `CallActivity_Editing` | `callActivity` |
+
+So the corpus **already** says this skill is agent-performed in some lanes and
+person-performed in others. That is the *one mechanism, several dispatch points*
+pattern the owner has now ruled on twice (`vo9d`: **"1 2 3 are all triggers"**,
+then **"all for triggers or tools as appropriate"**), written up in
+`covered-is-not-reachable` §"Reachability is PLURAL". Re-asking it would be the
+failure that skill exists to stop.
+
+### Possibility 2 — "fold into `jh2j`, the render node owns `block-module`" — REFUTED
+
+`block-module` is imported by at least **eight** modules — `schemas/jsonld.ts`,
+`gen-block-jsonld`, `qa-utils`, `graph-index`, `verify-block-walk`,
+`conditional-class-banner-audit`, `conjectural-propagation-audit`, and itself's
+consumers. It is a shared library across the whole pipeline, not render-path
+specific. Folding this row into `jh2j` would file a general library under one of
+its many consumers.
+
+### Possibility 3 — the residue, and why it closes rather than opens work
+
+This group has **no entry point in this repository at all**. 13 of its 14 files
+are libraries; the 14th, `check-voices.ts`, was a categoriser bug and has since
+been re-filed into core with a recorded reason (*"its subject is content"*). A
+Tool node needs an `invoke`, and the command that authors a block lives in a
+folio's `package.json`, which the platform cannot read.
+
+`d308` asks which platform code is unreachable. **This group's answer is that
+none of it is a command** — the libraries are reached through their consumers,
+which is the same criterion that already exempted `pdf-extract` and
+`pdf-structure` in `81t5`. So the row is satisfied, not outstanding.
+
+### What a folio owes, recorded where an agent will hit it
+
+`UNCOVERED_BY_DESIGN` in `cat-harness/scripts/tool-coverage.ts`. `content-author`
+and `document-authoring` now annotate in the tier-A listing as
+`← by design (folio-mechanism)`, alongside `content-publish` (bean `v7bg`).
+
+The annotation is on the **row**, not in a footnote, because the failure it fixes
+is an agent reading tier A top to bottom and treating every line as work. And
+every entry must match a skill that is *currently* uncovered and tier A, or the
+run fails — `staleAnnotations`, enforced by
+`tool-coverage-uncovered-by-design.test.ts` (11 tests), because
+`tools:coverage` is a report in no workflow and its own exit code reaches only a
+person who runs it. An annotation reading "do not bother" over work that has
+since become real is worse than none, because it is believed.
+
+`contract-unsatisfied` is the table's second state and is **deliberately
+empty**: `latex-authoring` and `proof-verification` are its candidates per
+`jh2j` — *"an authoring skill's contract names the artefact being created; the
+corpus has checking mechanisms"* — but the owner ruled on `folio-mechanism`
+only, and a declaration is not the place to settle a second question quietly. A
+test asserts it is still empty, so populating it is a decision somebody takes on
+purpose.
+
+### Done when — all settled
+
+- [x] `check-voices` re-filed — done elsewhere, with a recorded reason
+- [x] which of the three possibilities holds — (3), with 1 and 2 refuted by measurement
+- [x] ~~if (1): the diagram corrected~~ — refuted; the diagram is right
+- [x] ~~if (2): folded into `jh2j`~~ — refuted; `block-module` is a shared library
+- [x] (3): recorded nodeless, and what a folio owes is declared in `UNCOVERED_BY_DESIGN`
+
+**Scrapped rather than completed**, and rather than deleted: no Tool node was
+authored, so calling it complete would misreport what happened — while deleting
+it would leave the next agent unable to tell a decided dead end from an
+abandoned one, and `d308`'s table still names this row.

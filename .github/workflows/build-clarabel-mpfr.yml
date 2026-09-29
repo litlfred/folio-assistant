@@ -25,13 +25,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Install MPFR/GMP system libs
         run: sudo apt-get update && sudo apt-get install -y libmpfr-dev libgmp-dev
 
       - name: Cache cargo + target
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             ~/.cargo/registry
@@ -49,7 +49,7 @@ jobs:
           test -x tools/hecke-engine/target/release/clarabel-operator-selection-lp
 
       - name: Upload binary artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: clarabel-operator-selection-lp
           path: tools/hecke-engine/target/release/clarabel-operator-selection-lp

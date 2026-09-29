@@ -32,9 +32,9 @@
  *
  * ## Usage
  *
- *   bun run content/pipeline/source-ledger-index.ts            # report only
- *   bun run content/pipeline/source-ledger-index.ts --write
- *   bun run content/pipeline/source-ledger-index.ts --write --matches m.json
+ *   bun run cat-harness/content/pipeline/source-ledger-index.ts            # report only
+ *   bun run cat-harness/content/pipeline/source-ledger-index.ts --write
+ *   bun run cat-harness/content/pipeline/source-ledger-index.ts --write --matches m.json
  *
  * @module content/pipeline/source-ledger-index
  */

@@ -1,5 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import { leanSignatures } from "../../content/pipeline/lean-signature";
+// Side-effect import: installs the Lean layer into core's `formal-ref`
+// injection point. `hashBlockFiles` derives `lean_statement` through
+// `formalStatementHash`, which returns `undefined` with no layer installed —
+// so the statement-granularity freshness test cannot pass without this line.
+import "../../content/pipeline/lean-formal-ref.ts";
 import { entryIsFresh, hashBlockFiles } from "../../content/pipeline/qa-utils";
 import type { QaCriterionEntry } from "../../schemas/block-qa";
 import { mkdtempSync, writeFileSync } from "fs";

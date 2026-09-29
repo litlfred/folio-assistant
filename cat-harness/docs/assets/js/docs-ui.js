@@ -138,10 +138,9 @@
      `fa-locale` was WRITE-ONLY before this: the sidebar switcher stored the
      choice on click and nothing ever read it back, so picking French and
      navigating anywhere landed you in English again with the preference
-     sitting in localStorage unused. This deliberately does NOT redirect --
-     a docs link that silently lands somewhere other than where it points is
-     worse than one extra click -- it just makes the remembered language
-     visibly one click away. */
+     sitting in localStorage unused. It used to stop at marking the remembered
+     language in the bar; since 2026-09-27 `followRememberedLocale` also takes
+     the reader there, on the owner's call. */
   function rememberedLocale(currentLang, available) {
     var loc = getGlobalLocale();
     if (!loc || loc === currentLang) return null;
@@ -150,6 +149,44 @@
     // offered English on a folio that has no English.
     if (available.indexOf(loc) === -1) return null;
     return loc;
+  }
+
+  /**
+   * THE PAGE FOLLOWS THE CHOSEN LANGUAGE. Owner, 2026-09-27: *"user selects
+   * locale in icon, then only those pages exist (if translated) otherwise
+   * source language fallback"*, after an English page sat inside a French
+   * navbar.
+   *
+   * This reverses the "does NOT redirect" note on `rememberedLocale` above:
+   * a page whose remembered language differs from the one it is in, and that
+   * HAS a page in the remembered one, is replaced by that page. Returns true
+   * when it navigated, so `init` can stop.
+   *
+   * Three guards, each against a specific wrong jump:
+   *  - only a STORED choice counts. `getGlobalLocale` answers "en" when
+   *    nothing is stored, which would bounce every shared French link to
+   *    English for a reader who never chose;
+   *  - `?lang=` on the URL wins, because somebody asked for that page;
+   *  - only a locale the page's own meta declares available, so the jump
+   *    never lands on a 404. The language bar writes the choice on click,
+   *    before it navigates, so choosing a language never fights this.
+   */
+  function followRememberedLocale(meta) {
+    if (!meta) return false;
+    var stored = null;
+    try { stored = localStorage.getItem("fa-locale"); } catch (_e) { return false; }
+    if (!stored) return false;
+    try {
+      if (new URL(window.location.href).searchParams.get("lang")) return false;
+    } catch (_e) { return false; }
+    var currentLang = meta.lang || "en";
+    var available = localesAvailable(meta, meta.supportedLocales || UN_LOCALES);
+    var target = rememberedLocale(currentLang, available);
+    if (!target) return false;
+    var dest = localePath(deriveBasePath(window.location.pathname, currentLang), target);
+    if (dest === window.location.pathname) return false;
+    window.location.replace(dest + window.location.search + window.location.hash);
+    return true;
   }
 
   function localePath(basePath, locale) {
@@ -352,9 +389,17 @@
     // and a function that eats everything downstream of it is a trap for the
     // next one.
     //
-    // `null` is a VALID second argument -- it appends -- so the fallback is
-    // the correct placement rather than a bail-out.
-    if (insertTarget && insertTarget.parentNode !== mainContent) insertTarget = null;
+    // Fallback chain: badges container → first child (not `null` which
+    // appends at the end — the landing page's h1 is outside mainContent,
+    // so `null` put the bar at y=5519).
+    if (insertTarget && insertTarget.parentNode !== mainContent) {
+      var badges = mainContent.querySelector(".fa-translation-badges");
+      insertTarget = badges ? badges.nextSibling : mainContent.firstChild;
+    }
+    // The badges row can ALSO sit outside `mainContent` (it is lifted under
+    // the h1), so its sibling is no safer than the h1's. Checked again, 2026-09-27:
+    // the throw was back on the home page, measured with a `pageerror` listener.
+    if (insertTarget && insertTarget.parentNode !== mainContent) insertTarget = mainContent.firstChild;
     mainContent.insertBefore(container, insertTarget);
   }
 
@@ -3636,6 +3681,35 @@
     return pic;
   }
 
+  /* THE CROP FOLLOWS THE CARD'S SHAPE, on the glass — owner, 2026-09-27:
+   * *"use laptop layout for the existing todos"* and then *"theme todos layout
+   * should be dynamic in case user resized"*. A card on the glass is resized
+   * freely, so one crop cannot suit it: the square `card` crop in a wide card
+   * left the art as a picture in the middle of the text. So the shape picks:
+   * wide takes `laptop`, tall takes `mobile`, near-square keeps `card`, and a
+   * ResizeObserver re-picks as the reader resizes. A todo that NAMES a layout
+   * keeps it. Board stickies follow the same rule (owner, same day: "board
+   * stickies adapt too"), so a sticky reflowed wide by the board is wide.
+   * The scrim is unchanged, so the fade does not depend on the crop. */
+  function cropForShape(art, w, h) {
+    var r = w / Math.max(h, 1);
+    var pick = r >= 1.3 ? "laptop" : r <= 0.8 ? "mobile" : "card";
+    return art[pick] || art.card || art.mobile || art.laptop;
+  }
+  function followCardShape(card, art, layout) {
+    if (layout && art[layout]) return;
+    var img = card.querySelector(".fa-sticky-art");
+    if (!img) return;
+    function fit() {
+      var r = card.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      var src = cropForShape(art, r.width, r.height);
+      if (src && img.getAttribute("src") !== src) img.setAttribute("src", src);
+    }
+    fit();
+    if (typeof ResizeObserver === "function") new ResizeObserver(fit).observe(card);
+  }
+
   /* The pencil and the eye, as inline SVG rather than `✎` and `⎘`.
    *
    * Which glyph a font actually has for those two characters varies, and `⎘`
@@ -3780,7 +3854,12 @@
     var art = todo.theme && todoState.themeArt[todo.theme];
     if (art) attrs.class += " fa-sticky--backdrop";
     var card = el("article", attrs);
-    if (art) card.appendChild(buildBackdrop(art, todo.layout));
+    if (art) {
+      card.appendChild(buildBackdrop(art, todo.layout));
+      // THE BOARD ADAPTS TOO — owner, 2026-09-27, the glass change carried to
+      // the board: a sticky's crop follows its shape as the board reflows.
+      followCardShape(card, art, todo.layout);
+    }
 
     var head = el("div", { class: "fa-sticky-head" });
     var toggle = el("button", {
@@ -4400,6 +4479,11 @@
     layer.setAttribute("data-fa-glass-avatars", p.avatars);
     layer.setAttribute("data-fa-glass-blur", p.blur ? "on" : "off");
     layer.style.setProperty("--fa-glass-opacity", String(p.opacity / 100));
+    // The handle wears the SAME stained glass as the layer (owner,
+    // 2026-09-27: "appropriate theme stained glass, not solid purple"). It is
+    // a sibling of the layer, not a child, so the theme is mirrored onto it.
+    var h = document.querySelector(".fa-glass-handle");
+    if (h) h.setAttribute("data-fa-glass-theme", p.theme);
   }
 
   /**
@@ -4416,6 +4500,26 @@
       rel: "stylesheet",
       href: safeHref(withBase("/assets/css/avatars.css")),
       "data-fa-glass-avatars-css": "",
+    }));
+  }
+
+  /**
+   * `themes.css` on a page that did not load it, for the same reason as
+   * `avatars.css` above. A replica (who-iris) loads `docs-ui.css` alone, so a
+   * themed todo on its glass had the theme's art but NOT its scrim or ink:
+   * `--fa-sticky-scrim` is declared in `themes.css`, and without it the
+   * backdrop fell back to an 8% grey and the picture sat unfaded behind the
+   * text (owner, 2026-09-27: "it should be faded for legibility").
+   */
+  function ensureThemesCss() {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      if (/\/themes\.css(\?|$)/.test(links[i].getAttribute("href") || "")) return;
+    }
+    document.head.appendChild(el("link", {
+      rel: "stylesheet",
+      href: safeHref(withBase("/assets/css/themes.css")),
+      "data-fa-glass-themes-css": "",
     }));
   }
 
@@ -4497,6 +4601,21 @@
       });
   }
 
+  /**
+   * Where the handle lives: FIXED AT THE TOP CENTRE of the viewport, as a
+   * short pill. Owner, 2026-09-27: *"i want purple folio button, not on
+   * navbar but at top middle of display screen. not so tall"*.
+   *
+   * This reverses the 2026-09-24 placement in the left navbar (bean `269z`),
+   * which rendered as a tall purple block with only a ▾ in the strip. The
+   * overlap that placement was solving (a viewer's h1, `015u`; a replica's
+   * banner, `269z`) is answered by HEIGHT instead: the pill is about 1.75rem
+   * tall, and viewers still reserve its band in `docs-ui.css`.
+   */
+  function placeHandle(handle) {
+    document.body.appendChild(handle);
+  }
+
   var glassLayer = null;
   function mountGlass() {
     if (glassLayer && glassLayer.isConnected) return glassLayer;
@@ -4511,6 +4630,7 @@
     var prefs = glassPrefs();
     applyGlassPrefs(layer, prefs);
     ensureAvatarsCss();
+    ensureThemesCss();
     // THE ZOOM DECLARATION, for pages whose board never asked for it — a
     // replica page has no board and no `fa-zoom-src` meta. Asked once; absent
     // stays null, which keeps every card's words (see `zoomState`).
@@ -4538,8 +4658,14 @@
       "aria-expanded": "false",
       "aria-label": "Pull down your folio",
       title: "Pull down your folio",
-    }, "▾ Folio");
-    document.body.appendChild(handle);
+    });
+    // A MARK and a LABEL, not one string, so the stylesheet can size the ▾
+    // apart from the word. The accessible name is the aria-label.
+    handle.appendChild(el("span", { class: "fa-glass-handle__mark", "aria-hidden": "true" }, "▾"));
+    handle.appendChild(document.createTextNode(" "));
+    handle.appendChild(el("span", { class: "fa-glass-handle__label" }, "Folio"));
+    placeHandle(handle);
+    applyGlassPrefs(layer, prefs);
 
     // The glass's own chrome, so an open glass is never `:empty`.
     var sheet = el("div", { class: "fa-glass-sheet", role: "region", "aria-label": "Your folio" });
@@ -5167,7 +5293,8 @@
       // on the glass: the theme's colours stay, its picture does not.
       if (art && prefs.avatars !== "text") {
         card.classList.add("fa-sticky--backdrop");
-        card.insertBefore(buildBackdrop(art), card.firstChild);
+        card.insertBefore(buildBackdrop(art, todo.layout), card.firstChild);
+        followCardShape(card, art, todo.layout);
         // The theme's art IS the avatar now; the generic yellow note goes.
         var generic = card.querySelector(".fa-glass-asset-face > .fa-glass-avatar");
         if (generic) generic.parentNode.removeChild(generic);
@@ -5218,13 +5345,53 @@
       // "PUT YOUR FOLIO AWAY FIRST" is a measured fix rather than politeness:
       // while the glass is down the library row underneath takes no clicks.
       var shelved = Object.keys(all).filter(function (k) { return !all[k].shown; });
-      if (shelved.length > 0) {
-        notes.appendChild(el("p", { class: "fa-glass-shelved-note" },
+      /* ITS OWN CARD ON THE GLASS, not a strip across the bottom — owner,
+       * 2026-09-27: *"lower tooltip should be its own todo"*. It moves and
+       * resizes like every other card, and its × dismisses it until the
+       * number of shelved items changes (a new one is news again). It is not
+       * stored in the folio: it describes the folio, it is not in it, so its
+       * place lasts for this view only. */
+      if (shelved.length > 0 && shelvedNoteDismissedAt() !== shelved.length) {
+        var noteTitle = shelved.length === 1
+          ? "1 item in your folio is not on the glass"
+          : shelved.length + " items in your folio are not on the glass";
+        var noteCard = buildGlassCard("note/shelved", { title: noteTitle, kind: "todos" });
+        noteCard.classList.add("fa-glass-sticky", "fa-glass-note-card");
+        // Words only: the generic note picture sat behind the sentence.
+        var noteAva = noteCard.querySelector(".fa-glass-asset-face > .fa-glass-avatar");
+        if (noteAva) noteAva.parentNode.removeChild(noteAva);
+        noteCard.insertBefore(el("p", { class: "fa-glass-shelved-note fa-glass-sticky-body" },
           (shelved.length === 1
             ? "1 item is in your folio but not displayed. "
             : shelved.length + " items are in your folio but not displayed. ") +
           "Put your folio away, then open the library view to put it back on the glass " +
-          "(for a todo, use the Todos tile below)."));
+          "(for a todo, use the Todos tile below)."), noteCard.querySelector(".fa-glass-asset-tools"));
+        // The shared close SHELVES an asset; this card is not one, so its ×
+        // dismisses instead, and says so.
+        var oldClose = noteCard.querySelector(".fa-glass-asset-close");
+        var noteClose = oldClose.cloneNode(true);
+        noteClose.setAttribute("aria-label", "Dismiss this note until another item leaves the glass");
+        noteClose.title = "Dismiss";
+        noteClose.addEventListener("click", function () {
+          setShelvedNoteDismissedAt(shelved.length);
+          if (noteCard.parentNode) noteCard.parentNode.removeChild(noteCard);
+          handle.focus();
+        });
+        oldClose.parentNode.replaceChild(noteClose, oldClose);
+        shelf.appendChild(noteCard);
+        // SIZED TO ITS WORDS: measured at each candidate width with the height
+        // left to the content, so no line is cut (a fixed 180px cut the last
+        // one at 420px wide). Then placed where a card of that size is free.
+        var noteGeom = defaultGlassGeom({ kind: "todos" }, keys.length);
+        var shapes = [Math.max(noteGeom.width, 420), noteGeom.width].map(function (w) {
+          noteCard.style.width = w + "px";
+          noteCard.style.height = "auto";
+          return { width: w, height: Math.ceil(noteCard.getBoundingClientRect().height / (view.s || 1)) + 2 };
+        });
+        applyGeometry(noteCard, freeSpotFor(shapes, placed, noteGeom));
+        placed.push(noteCard);
+        fitShelf();
+        zoomGlassCard(noteCard);
       }
 
       // Saved in THIS BROWSER, said in words wherever the reader's own items
@@ -5256,6 +5423,61 @@
         notes.appendChild(localNote);
       }
       return keys.length;
+    }
+
+    /* WHERE A NEW CARD CAN BE SEEN — owner, 2026-09-27: the shelved-items
+     * card was placed below every card and so started half under the tile
+     * bar. This finds the first spot, scanning the VISIBLE glass top to
+     * bottom and left to right, that overlaps no card and none of the glass's
+     * own chrome (the Folio handle, the zoom bar, the tile dock). Measured on
+     * screen and converted back through the view (`translate` then `scale`,
+     * origin 0 0), so it is right at any pan or zoom. With no free spot it
+     * falls back to below every card, which is where it used to go. */
+    function freeSpotFor(shapes, cards, fallback) {
+      var s = view.s || 1;
+      var sh = shelf.getBoundingClientRect();
+      var lay = layer.getBoundingClientRect();
+      var blocks = cards.map(function (c) { return c.getBoundingClientRect(); });
+      // The page's own navigation too: the glass spans the viewport, and a
+      // card placed under the left rail or sidebar is a card nobody sees.
+      [handle, zoomBar, dock, notes, document.querySelector(".fa-nav"), document.querySelector(".side-bar")].forEach(function (n) {
+        if (n && n.isConnected) { var r = n.getBoundingClientRect(); if (r.width && r.height) blocks.push(r); }
+      });
+      var pad = GLASS_GAP;
+      var dockTop = dock && dock.isConnected && dock.getBoundingClientRect().height
+        ? dock.getBoundingClientRect().top : lay.bottom;
+      var bottom = Math.min(lay.bottom, dockTop) - pad;
+      // SHAPES TRIED IN TURN, as the caller orders them (wide and short
+      // first: the free band on a full glass is usually a strip above or
+      // beside the cards rather than a square).
+      for (var k = 0; k < shapes.length; k++) {
+        var w = shapes[k].width * s, h = shapes[k].height * s;
+        for (var y = lay.top + pad; y + h <= bottom; y += 12) {
+          for (var x = lay.left + pad; x + w <= lay.right - pad; x += 12) {
+            var hit = blocks.some(function (r) {
+              return x < r.right + pad && x + w + pad > r.left && y < r.bottom + pad && y + h + pad > r.top;
+            });
+            if (!hit) {
+              return { left: (x - sh.left) / s, top: (y - sh.top) / s, width: shapes[k].width, height: shapes[k].height };
+            }
+          }
+        }
+      }
+      var geom = { left: fallback.left, top: fallback.top, width: shapes[0].width, height: shapes[0].height };
+      if (cards.length > 0) {
+        var gs = cards.map(geometryOf);
+        geom.top = Math.max.apply(null, gs.map(function (g) { return g.top + g.height; })) + GLASS_GAP;
+        geom.left = Math.min.apply(null, gs.map(function (g) { return g.left; }));
+      }
+      return geom;
+    }
+
+    var SHELVED_NOTE_KEY = "fa-glass-shelved-note-dismissed";
+    function shelvedNoteDismissedAt() {
+      try { return Number(localStorage.getItem(SHELVED_NOTE_KEY) || "0"); } catch (_e) { return 0; }
+    }
+    function setShelvedNoteDismissedAt(n) {
+      try { localStorage.setItem(SHELVED_NOTE_KEY, String(n)); } catch (_e) { /* back next view */ }
     }
 
     var NOTE_KEY = "fa-glass-local-note-dismissed";
@@ -8383,6 +8605,13 @@
         // nothing, on purpose, so the item keeps the source-language page it
         // already points at.
         link.setAttribute("data-fa-translated", "source");
+        // MARKED, on the owner's call (2026-09-27): a source-language item in
+        // a translated navbar says so, e.g. "CRDM methodology (EN)", so the
+        // mix reads as a fallback rather than a mistake. `lang` makes a screen
+        // reader pronounce the title as the language it is written in.
+        var src = data.sourceLocale || "en";
+        link.setAttribute("lang", src);
+        link.setAttribute("data-fa-source-locale", src.toUpperCase());
         continue;
       }
       link.setAttribute("href", (idx.baseurl || "") + t.url);
@@ -9474,6 +9703,37 @@
       }
     }
 
+    /* LIGHT / DARK IN THE ROW — owner, 2026-09-27: *"i want light dark mode
+     * on main icon tab at top of LHS"*. The same switch as the Settings tile
+     * and the header mini-button (which this row hides from 50rem up), so it
+     * REGISTERS a painter rather than owning the state: three controls over
+     * one fact, and none of them can disagree. */
+    var scheme = el("button", { type: "button", class: "fa-nav-icon fa-nav-scheme" });
+    registerSchemePainter(function (name) {
+      scheme.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
+      var said = name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light";
+      scheme.setAttribute("aria-label", said);
+      scheme.title = said;
+      scheme.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
+    });
+    scheme.addEventListener("click", toggleScheme);
+    host.appendChild(scheme);
+
+    /* THE [x] IN THE ROW, as its last item — owner, 2026-09-27: *"make close
+     * navigation in line with the rest of icons"*. It was PAINTED over the
+     * row's end from `.site-footer` (absolute, with its own box), and never
+     * quite sat on the row's line. It is a `<label for="fa-nav-open">`, and a
+     * label drives its checkbox from anywhere, so moving it keeps the no-script
+     * behaviour; it is moved only when `mountNavPreference` has run (the
+     * `.fa-nav-js` mark), because that handler is what makes the hover-case
+     * click mean "close" rather than "pin". Without script it stays where the
+     * stylesheet already places it. */
+    var closeCtl = bar.querySelector(".fa-nav-close");
+    if (closeCtl && bar.classList.contains("fa-nav-js")) {
+      closeCtl.classList.add("fa-nav-icon", "fa-nav-close--in-row");
+      host.appendChild(closeCtl);
+    }
+
     // AFTER the header: line 1 is the avatar and the name, line 2 is this.
     var header = bar.querySelector(".site-header");
     if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
@@ -9658,6 +9918,48 @@
     middle.appendChild(nav);
   }
 
+  /**
+   * A TITLED, FOLDABLE PAGE LIST — owner, 2026-09-27: *"no title on the
+   * navbar component w/ pages"* and *"cant minimize them either"*. The two
+   * regions above it ("On this page", "Folders") are disclosures with a
+   * count; the theme's page list was bare. This puts a heading button in
+   * front of `.site-nav`, wherever the nav now lives, and folds the list with
+   * it. Open by default, since the pages are what most readers came for;
+   * a fold is remembered per browser (`fa-nav-pages`), guarded like every
+   * other storage call here.
+   */
+  var NAV_PAGES_KEY = "fa-nav-pages";
+  function mountNavPagesHeading() {
+    var nav = document.querySelector(".side-bar .site-nav");
+    if (!nav || !nav.parentNode || nav.parentNode.querySelector(":scope > .fa-nav-pages")) return;
+    if (!nav.id) nav.id = "site-nav";
+    var top = nav.querySelectorAll(":scope > .nav-list > .nav-list-item").length;
+    var btn = el("button", {
+      type: "button",
+      class: "fa-nav-pages",
+      "aria-controls": nav.id,
+      "aria-expanded": "true",
+    }, "Pages");
+    btn.appendChild(el("span", { class: "fa-nav-pages__count" }, String(top)));
+    function set(open) {
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) nav.removeAttribute("data-fa-folded");
+      else nav.setAttribute("data-fa-folded", "");
+    }
+    var stored = null;
+    try { stored = window.localStorage.getItem(NAV_PAGES_KEY); } catch (_e) { /* default open */ }
+    set(stored !== "closed");
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") !== "true";
+      set(open);
+      try {
+        if (open) window.localStorage.removeItem(NAV_PAGES_KEY);
+        else window.localStorage.setItem(NAV_PAGES_KEY, "closed");
+      } catch (_e) { /* this page only */ }
+    });
+    nav.parentNode.insertBefore(btn, nav);
+  }
+
   /* ── STAY CLOSED, REMEMBERED ─────────────────────────────────────────────
    *
    * Owner, 2026-09-23: *"need mechansim for closing harness navabar (e.g. w/
@@ -9724,7 +10026,11 @@
 
     var box = document.getElementById("fa-nav-open");
     var close = document.querySelector(".fa-nav-close");
-    var open = document.querySelector(".fa-nav-toggle");
+    // `.fa-nav-head` is the SAME control as `lib/navbar.ts` renders it (`sjic`).
+    // Only the old Liquid markup said `.fa-nav-toggle`, so on the live footer
+    // this handler never attached and a stay-closed bar could not be lifted by
+    // the ☰ (found 2026-09-27).
+    var open = document.querySelector(".fa-nav-toggle, .side-bar .fa-nav-head");
 
     if (close) {
       close.addEventListener("click", function (e) {
@@ -9746,12 +10052,54 @@
         applyNavPref(null);
       });
     }
+
+    /* THE AVATAR OPENS AND CLOSES THE BAR — owner, 2026-09-27: *"navbar
+     * starts hidden, click avatar opens for a split second then returns to
+     * hidden"*. The avatar is the theme's home link, so a click RELOADED the
+     * page: the bar peeked under the pointer, then came back at rest. With
+     * stay-closed set it did not open at all.
+     *
+     * From 50rem up it is now the bar's toggle: pin open (lifting stay-closed),
+     * or close (setting it, so the hover peek does not hold it open under the
+     * pointer). Home is still one click away, as ⌂ at the foot of the bar and
+     * as the first page. Below 50rem the theme's ☰ owns the menu and the
+     * avatar stays the home link. With no script it is the home link too. */
+    var avatar = bar.querySelector(".site-title");
+    if (avatar && box && window.matchMedia) {
+      var wide = window.matchMedia("(min-width: 50rem)");
+      var label = function () {
+        if (!wide.matches) {
+          avatar.removeAttribute("aria-expanded");
+          avatar.removeAttribute("aria-controls");
+          return;
+        }
+        avatar.setAttribute("aria-controls", bar.id || "");
+        avatar.setAttribute("aria-expanded", box.checked ? "true" : "false");
+        avatar.title = box.checked ? "Close navigation" : "Open navigation";
+      };
+      if (!bar.id) bar.id = "fa-side-bar";
+      label();
+      box.addEventListener("change", label);
+      avatar.addEventListener("click", function (e) {
+        if (!wide.matches) return;
+        e.preventDefault();
+        box.checked = !box.checked;
+        writeNavPref(box.checked ? null : "closed");
+        applyNavPref(box.checked ? null : "closed");
+        label();
+        // Closing must drop focus too: the bar also opens on `:focus-within`
+        // (the keyboard path), so a focused avatar held it open after the
+        // click that closed it. Measured: 264px wide with the pointer away.
+        if (!box.checked) avatar.blur();
+      });
+    }
   }
 
   function init() {
     // RTL detection — Arabic pages get dir="rtl" on <html> which
     // triggers the CSS rules in docs-ui.css for smooth sidebar slide.
     var meta = getTranslationMeta();
+    if (followRememberedLocale(meta)) return;
     var pageLang = (meta && meta.lang) || "en";
     var RTL_LANGS = ["ar", "he", "fa", "ur"];
     if (RTL_LANGS.indexOf(pageLang) !== -1) {
@@ -9779,6 +10127,8 @@
     // line rather than the only one.
     mountDocumentIndex();
     mountInstanceGraphs();
+    // AFTER the wrapper exists, so the heading lands beside the nav inside it.
+    mountNavPagesHeading();
     // Before the badges: both read the same translation metadata, and the nav
     // is the thing a reader sees first.
     mountNavLocale();

@@ -45,7 +45,7 @@ import { TaskRefSchema } from "../schemas/carried-note.js";
 import { TodoNodeSchema } from "../schemas/todo.js";
 import { TestRunSchema } from "../schemas/test-run.js";
 import { KgQaReportSchema } from "../schemas/kg-qa.js";
-import { ExternalSchemaSchema } from "../../folio-assistant-core/schemas/external-schema.js";
+import { ExternalSchemaSchema } from "../schemas/external-schema.js";
 import { instanceDirectoryForGraph } from "../schemas/cat-harness.js";
 import { readUmlPalette } from "./uml-palette.js";
 

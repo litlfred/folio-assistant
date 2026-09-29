@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Reading the knowledge graph'
 parent: Skill instructions
 ---
@@ -10,11 +11,6 @@ parent: Skill instructions
 > [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg-navigation/kg-navigation.md){: .fa-edit-source }
 
 {% raw %}
-> **This is the skill `skill_fetch` serves.** A stub of the same name
-> is published as
-> [Reading a knowledge graph before you have anything (bootstrap)](local-kg-navigation.html); it only points here.
-> Edit this page's source, never the stub.
-
 # Reading the knowledge graph — how to find the skill you need
 
 You are in a fresh container. You have a task, a filesystem, and no memory of
@@ -109,8 +105,8 @@ content, no server:
 Both Tools serve the same nodes. Neither is the skill: *knowing that a fallback
 exists* is the capability, and an agent that only knows the MCP route is an
 agent that stops when the server is absent. See
-[`skills-and-tools`](../folio-core/skills-and-tools.md) for why that distinction is enforced
-rather than merely preferred, and [`directory-conventions`](../folio-core/directory-conventions.md)
+[`skills-and-tools`](skills-and-tools.md) for why that distinction is enforced
+rather than merely preferred, and [`directory-conventions`](directory-conventions.md)
 for the declaration's schema and the full list of graph kinds.
 
 ## Not everything under the path is a skill

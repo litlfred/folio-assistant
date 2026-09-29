@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'A decision is not a finding, and neither is a substitute for the other'
 parent: Skill instructions
 ---
@@ -17,7 +18,7 @@ A **decision** is an act *about* a set of findings: approve, request changes,
 reject. The gate reads the decision; the record has to carry both, because the
 interesting cases are exactly where they disagree.
 
-Schema: [`schemas/qa-review.ts`](../../schemas/qa-review.ts).
+Schema: [`schemas/qa-review.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/qa-review.ts).
 
 ## Overruling is recorded, not erased
 

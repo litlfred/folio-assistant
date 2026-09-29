@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rq8s
 title: 'A SESSION BLOCKED ON THE OWNER IS INVISIBLE: four sessions held verbatim questions that only the session API could see, and nothing durable records one'
-status: in-progress
+status: todo
 type: bug
 priority: normal
 created_at: 2026-09-21T06:30:04Z
-updated_at: 2026-09-22T18:54:19Z
+updated_at: 2026-09-29T20:50:32Z
 parent: folio-assistant-ahvw
 ---
 
@@ -295,3 +295,9 @@ decision — **put to the owner rather than invented here.**
       surfaced on #956 2026-09-22.
 - [ ] **Owner decision:** whether the skip should leave a durable trace, which
       needs a new `state` artefact and a declaration. Not invented here.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

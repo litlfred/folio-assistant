@@ -5,7 +5,7 @@
     "id": "Process_DocsSite",
     "path": "processes/docs-site-publish.bpmn"
   },
-  "source_hash": "sha256:daed89633b0ecd9703de283725c9920eac0086fce84fc6e64f1e03b6ffb46c7f",
+  "source_hash": "sha256:38d0aa6a10d5fc908842557f7569dddf740c8fa6de787ea710bcf6af2bb56085",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,19 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Call_Verify",
+          "detail": "names skill \"publish-verification\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_Alert",
+          "detail": "names skill \"publish-verification\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -96,8 +109,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": ".github/workflows/docs-site.yml",
+          "detail": ".github/workflows/docs-site.yml changed since cat-harness/processes/docs-site-publish.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -105,8 +123,8 @@
     }
   },
   "totals": {
-    "pass": 17,
-    "fail": 0,
+    "pass": 16,
+    "fail": 2,
     "n/a": 7,
     "unknown": 0
   },
@@ -115,8 +133,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/docs-site-publish.bpmn",
       "code": ".github/workflows/docs-site.yml",
-      "prose_hash": "daed89633b0e",
-      "code_hash": "4a075282128a",
+      "prose_hash": "38d0aa6a10d5",
+      "code_hash": "963586be770e",
       "by": "baseline"
     }
   ]

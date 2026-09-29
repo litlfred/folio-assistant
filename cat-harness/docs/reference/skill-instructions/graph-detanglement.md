@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Graph detanglement'
 parent: Skill instructions
 ---
@@ -44,7 +45,7 @@ message:
 > wrong — **check the target's layer before the importer's** — or the import
 > is."
 
-**At knowledge-graph scale** — [`kg-detangle.ts`](kg-detangle.ts), beside this skill (`bun run kg:detangle`), over the
+**At knowledge-graph scale** — [`kg-detangle.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/graph-management/kg-detangle.ts), beside this skill (`bun run kg:detangle`), over the
 instance stack each `<instance>.json` declares in `needs`.
 
 The repository and knowledge-graph scales share ONE verdict function,
@@ -100,7 +101,7 @@ skill is about it.
 The sub-graph carries its own declaration, its own namespace, its own published
 artefact. `bootstrap/` is the demonstrated case: its own declaration, its
 own `bootstrap:` namespace — the prefix IS the stub, see
-[`kg-export`](../folio-core/kg-export.md) §"A prefix is the stub" — its own
+[`kg-export`](kg-export.md) §"A prefix is the stub" — its own
 graph document.
 
 ### 4. Extract
@@ -312,5 +313,5 @@ This skill has its own process: **[A sub-graph wants to leave](../../processes/g
 
 | process | step(s) that name it |
 |---|---|
-| [A sub-graph wants to leave](../../processes/graph-detanglement.html) | 1 &#183; Declare in place&#10;(nothing moves); 2a &#183; Measure &#8212; unassigned&#10;column FIRST; 2b &#183; Prune, merge, factor&#10;&#8212; or the classification is wrong; 3 &#183; Isolate &#8212; own declaration,&#10;namespace, artefact; 4 &#183; Extract &#8212; a directory move,&#10;not a file-by-file sift |
+| [A sub-graph wants to leave](../../processes/graph-detanglement.html) | 1 · Declare in place (nothing moves); 2a · Measure — unassigned column FIRST; 2b · Prune, merge, factor — or the classification is wrong; 3 · Isolate — own declaration, namespace, artefact; 4 · Extract — a directory move, not a file-by-file sift |
 

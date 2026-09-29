@@ -1,11 +1,11 @@
 ---
 # folio-assistant-423d
 title: 'REVIEW COMMENTS: anchored to block id as 9gyz Findings, surviving moves — and the write path a static page lacks'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:55Z
-updated_at: 2026-09-23T07:10:03Z
+updated_at: 2026-09-29T18:14:49Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-jwox
@@ -234,3 +234,9 @@ both directories created. Checked end to end on a scaffolded folio:
 **Left on 423d:** resolving from the page, which is deliberately not built
 because it needs a write path from a static page. And the real Actions run,
 which is owed with `ojcx`.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

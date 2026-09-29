@@ -122,11 +122,11 @@ jobs:
       group: gh-pages-push
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          bun-version: 1.3.14
 
       - name: Install deps
         run: bun install --frozen-lockfile
@@ -284,6 +284,20 @@ jobs:
       # with a front door of its own. No change here when it does.
       - name: Mount instance-rendered content
         run: bun run cat-harness/scripts/mount-instance-docs.ts --site ./_site --built cat-harness
+
+      # WCAG 3.1.1 (Language of Page). Bean `zru7`: the pinned theme emits
+      # `<html lang="{{ site.lang | default: 'en-US' }}">` — `site.lang`, not
+      # `page.lang` — so all 70 translated pages were served declaring en-US, and
+      # `docs-ui.js` repaired `lang` only inside its RTL branch, leaving the 56
+      # es/fr/ru/zh pages permanently wrong with JavaScript on or off.
+      #
+      # A post-build pass rather than a layout override, for the reason
+      # `strip-preview-seo.ts` states one file over: the tag lives in the REMOTE
+      # theme, so fixing it at the source means vendoring a file the theme pin
+      # exists to avoid vendoring. This reads each page's OWN
+      # `fa-translation-meta` block and couples to nothing.
+      - name: Put each page's own locale on its html element
+        run: bun run cat-harness/scripts/set-html-lang.ts --site ./_site
 
       # The DIRECTORY, not a list of eight files.
       #
@@ -686,7 +700,7 @@ jobs:
       # fetch, reset, restore against the current contents, lay `_site` down,
       # commit, push.
       - name: Check out the publish branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: gh-pages
           path: pages

@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-20T19:31:09Z
-updated_at: 2026-09-21T05:29:17Z
+updated_at: 2026-09-26T03:57:20Z
 parent: folio-assistant-ahvw
 ---
 
@@ -308,3 +308,51 @@ already carries two.
 
 **Recorded for the revisit**, which is the moment it matters: whoever reads the
 trigger then needs to know it is counting beans.
+
+
+---
+
+## Revisit trigger re-measured 2026-09-26 — it has NOT fired, and that is informative
+
+Another session checked this bean's one open box while sweeping the beans
+`beans:landed` reports as partly-ticked. **Nothing is closed here** — the box is
+a deferral with a numeric trigger, and the measurement it asks for is cheap, so
+it was taken rather than left to accumulate.
+
+```
+bun run health  →  bean-rendered-decision-records
+```
+
+| when | value |
+|---|---|
+| 2026-09-21, as this bean recorded | **1** |
+| 2026-09-26, re-run | **1** |
+
+Still 1 of the twelve the box requires, and still this bean. **Five days, no
+movement.**
+
+### Why that is worth writing down rather than just leaving the box open
+
+The deferral's own recorded purpose is *"whether `renderDecision` works for
+authors other than the one who wrote it"*. Five days of ordinary practice across
+many sessions, and **no author other than this bean's has rendered a decision**.
+That is not yet twelve data points, but it is a data point about adoption, and
+it is the one the trigger exists to surface.
+
+It also confirms the 2026-09-21 correction was right. `bean-decision-records` —
+the metric this box originally named — had grown 7 → 10 in a day on ordinary
+practice. Had the trigger stayed on it, it would have reached twelve by now and
+fired on evidence it was never designed to collect. The metric it was corrected
+to has not moved at all. **The two numbers have diverged exactly as the
+correction predicted**, which is the clearest vindication that argument could
+have got.
+
+### Where the metric lives, since it is not in the console output
+
+It is emitted as a **measurement**, not a finding (`test/health/checks.ts:1396`),
+so it is written to `test/health/results/repository.health-report.json` and never
+printed among the findings. Looking for it in `bun run health`'s console output
+finds nothing, which reads like a missing check and is not one. Worth knowing
+before the next session re-derives this.
+
+**Status unchanged, box unticked.** The trigger has not fired.

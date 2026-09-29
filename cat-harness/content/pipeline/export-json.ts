@@ -6,9 +6,9 @@
  * reads .md and .lean files, and writes a single paper.json.
  *
  * Usage:
- *   bun run content/pipeline/export-json.ts
- *   bun run content/pipeline/export-json.ts --paper quantum-observable-universe
- *   bun run content/pipeline/export-json.ts --out build/viewer
+ *   bun run cat-harness/content/pipeline/export-json.ts
+ *   bun run cat-harness/content/pipeline/export-json.ts --paper quantum-observable-universe
+ *   bun run cat-harness/content/pipeline/export-json.ts --out build/viewer
  *
  * Output:
  *   <out>/paper.json — full paper tree with all content inlined

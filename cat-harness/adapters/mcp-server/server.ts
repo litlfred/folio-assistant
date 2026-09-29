@@ -43,6 +43,23 @@ import { leanStatusBucket } from "../../schemas/types";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { REPO_ROOT, BUILD_DIR, FEEDBACK_DIR, FEEDBACK_WORKTREE, MAIN_TEX, FOLIO_PORT, LIBRARY_DIRS, UPLOADS_DIR } from "./paths.js";
+import { safeSegment, joinSegments, realPathWithin, writableWithin } from "../../src/core/safe-path.js";
+
+/**
+ * An archive was REFUSED, as distinct from failing to be an archive.
+ *
+ * Bean `6bhf`. The tar path's `catch` swallowed both, so a tarball rejected for
+ * naming a path outside the upload directory fell through to "try as a single
+ * `.tex`" with nothing logged — a refusal rendered as a non-event, and
+ * indistinguishable from a file that simply was not a tarball. A distinct type
+ * is what lets the handler answer 422 for one and carry on for the other.
+ */
+class UnsafeArchive extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "UnsafeArchive";
+  }
+}
 import { executeGraphTool } from "./tools/graph.js";
 import {
   currentBranch, listBranches, fetchOrigin, isCurrentBranch,
@@ -50,7 +67,7 @@ import {
   mergeBase, gitLogFiles, gitShowBinaryAt, gitShowAt,
 } from "./git.js";
 import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync } from "fs";
-import { join, relative, resolve, extname } from "path";
+import { join, relative, resolve, extname, basename } from "path";
 import Anthropic from "@anthropic-ai/sdk";
 
 // ── Access control ───────────────────────────────────────────
@@ -70,9 +87,22 @@ import Anthropic from "@anthropic-ai/sdk";
 
 import { spawnSync } from "child_process";
 
-/** Resolve feedback .ts path relative to a base dir. */
-function feedbackPath(paperId: string, rootName: string, base = FEEDBACK_DIR): string {
-  return join(base, paperId, `${rootName}.ts`);
+/**
+ * Resolve feedback .ts path relative to a base dir, or `undefined`.
+ *
+ * **BOTH arguments come from outside and neither was checked** — bean `6bhf`,
+ * measured 2026-09-25. `paperId` and `rootName` reach here straight from
+ * `GET /api/feedback?paperId=&rootName=` and from the POST body, so this one
+ * `join` was a read primitive and, through `writeFeedback`, a write one.
+ *
+ * Returns `undefined` rather than throwing or repairing: the caller owns the
+ * 400, and `safe-path.ts` §"Refuse, never repair" says why sanitising is worse.
+ */
+function feedbackPath(paperId: string, rootName: string, base = FEEDBACK_DIR): string | undefined {
+  const seg = safeSegment(paperId);
+  const name = safeSegment(rootName);
+  if (seg === undefined || name === undefined) return undefined;
+  return join(base, seg, `${name}.ts`);
 }
 
 /** Parse a feedback .ts file → array of FeedbackItems. */
@@ -111,6 +141,14 @@ function serializeFeedbackTs(items: FeedbackItem[]): string {
  */
 function readFeedback(paperId: string, rootName: string): FeedbackItem[] {
   const p = feedbackPath(paperId, rootName);
+  // A refused id is indistinguishable from an absent store TO THIS FUNCTION,
+  // which already returns `[]` for "nothing there" and has no channel for an
+  // error. Logged so a refusal is not silent, because a traversal attempt and
+  // a typo look identical in an empty array.
+  if (p === undefined) {
+    log("feedback", `refused unsafe identifier`, `paperId=${JSON.stringify(paperId)} rootName=${JSON.stringify(rootName)}`);
+    return [];
+  }
   if (!existsSync(p)) return [];
   let items: unknown[];
   try { items = parseFeedbackTs(readFileSync(p, "utf-8")); } catch { return []; }
@@ -126,12 +164,23 @@ function readFeedback(paperId: string, rootName: string): FeedbackItem[] {
 }
 
 function writeFeedback(paperId: string, rootName: string, todos: FeedbackItem[]): void {
+  // THROWS rather than returning quietly, unlike `readFeedback` — the two are
+  // deliberately different. A refused read has a correct empty answer; a
+  // refused write does NOT have a correct no-op, because the caller believes
+  // the item was saved and will report success to a person. Bean `6bhf`.
+  const target = feedbackPath(paperId, rootName);
+  const dir = joinSegments(FEEDBACK_DIR, paperId);
+  if (target === undefined || dir === undefined) {
+    throw new Error(
+      `refusing to write feedback: paperId or rootName is not one safe path segment ` +
+        `(paperId=${JSON.stringify(paperId)}, rootName=${JSON.stringify(rootName)})`,
+    );
+  }
   const ts = serializeFeedbackTs(todos);
 
   // Write to main repo feedback/ (for immediate reads)
-  const dir = join(FEEDBACK_DIR, paperId);
   mkdirSync(dir, { recursive: true });
-  writeFileSync(feedbackPath(paperId, rootName), ts, "utf-8");
+  writeFileSync(target, ts, "utf-8");
 
   // Write to worktree and commit to main
   commitFeedbackToMain(paperId, rootName, ts);
@@ -274,10 +323,10 @@ const GRAPH_ROOTS = [
     dir,
   })),
 ];
-import { leanPackageByName } from "../../schemas/lean-packages.js";
+import { resolveFormalRef } from "../../schemas/formal-ref.js";
 import {
   blockCaption, blockExamples, blockLean, blockProofs, blockTex,
-  isSectionRef, sectionBlockNames, tryParseLeanRef,
+  isSectionRef, sectionBlockNames,
 } from "../manifest-entries.js";
 
 /**
@@ -294,41 +343,42 @@ function resolveLeanSource(
   // Declaring it `string` was simply narrower than every party involved.
   branch: string | undefined,
 ): string | undefined {
-  if (!bLean(blk)) return undefined;
-  const parsed = tryParseLeanRef(blk);
+  const blkLean = bLean(blk);
+  if (!blkLean) return undefined;
+  // Steps 2 and 3 were built here from `leanPackageByName` and a decl-prefix
+  // walk — the FORMALISM LAYER's vocabulary, which core no longer holds (owner
+  // ruling 2026-09-27). `resolveFormalRef` returns the same paths in the same
+  // order; the branch-backed reading stays, because that is this function's job.
+  //
+  // `fallbackPaths` is deliberately NOT consulted: it is the module-path
+  // candidate that may be an import-only aggregator, and serving an `import`
+  // list as a block's source is worse than serving nothing.
+  const res = resolveFormalRef(blkLean.ref);
 
   // 1. sibling .lean file
   let leanSource = readFileBranch(branch, `${chRel}/${rootName}.lean`) ?? undefined;
   if (leanSource) return leanSource;
 
-  // 2. package-rooted path derived from parsed ref
-  if (parsed) {
-    const pkg = leanPackageByName(parsed.package);
-    if (pkg) {
-      const parts = parsed.decl.split(".");
-      for (let i = parts.length; i >= 2; i--) {
-        const candidate = `${pkg.lakeRoot}/${parts.slice(0, i).join("/")}.lean`;
-        leanSource = readFileBranch(branch, candidate) ?? undefined;
-        if (leanSource) return leanSource;
-      }
+  // 2. the layer's candidate paths, in its own priority order
+  if (res) {
+    for (const candidate of res.candidatePaths) {
+      leanSource = readFileBranch(branch, candidate) ?? undefined;
+      if (leanSource) return leanSource;
     }
   }
 
   // 3. grep fallback (current branch + disk-backed package only)
-  if (parsed && isCurrentBranch(branch)) {
-    const pkg = leanPackageByName(parsed.package);
-    if (pkg) {
-      try {
-        const leanSrcDir = resolve(REPO_ROOT, pkg.lakeRoot, pkg.lib);
-        if (existsSync(leanSrcDir)) {
-          const result = Bun.spawnSync(["grep", "-rl", parsed.name, leanSrcDir]);
-          const files = result.stdout.toString().trim().split("\n").filter(Boolean);
-          if (files.length > 0 && existsSync(files[0])) {
-            return readFileSync(files[0], "utf-8");
-          }
+  if (res?.searchDir && isCurrentBranch(branch)) {
+    try {
+      const leanSrcDir = resolve(REPO_ROOT, res.searchDir);
+      if (existsSync(leanSrcDir)) {
+        const result = Bun.spawnSync(["grep", "-rl", res.declName, leanSrcDir]);
+        const files = result.stdout.toString().trim().split("\n").filter(Boolean);
+        if (files.length > 0 && existsSync(files[0])) {
+          return readFileSync(files[0], "utf-8");
         }
-      } catch {}
-    }
+      }
+    } catch {}
   }
 
   return undefined;
@@ -2918,15 +2968,40 @@ These become clickable buttons so users don't have to type. Make them specific t
 
       if (!file) return Response.json({ error: "No file uploaded" }, { status: 400 });
 
-      const id = paperId || file.name.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-]/gi, "-").toLowerCase();
+      // `6bhf`, second and third sinks. The FALLBACK was sanitised and the
+      // SUPPLIED value was not — `id = paperId || <slugified file.name>` used a
+      // supplied `paperId` verbatim, so `../../..` reached `join()` and the two
+      // lines below are `mkdirSync(recursive)` and a `writeFileSync`. The route
+      // is unauthenticated and answers `Access-Control-Allow-Origin: *`, and a
+      // cross-origin FormData POST is a simple request: the write lands whether
+      // or not the response can be read.
+      const rawId = paperId || file.name.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-]/gi, "-").toLowerCase();
+      const id = safeSegment(rawId);
+      if (id === undefined) {
+        return Response.json({ error: "paperId must be one safe path segment" }, { status: 400 });
+      }
       const uploadDir = join(UPLOADS_DIR(), id);
       mkdirSync(uploadDir, { recursive: true });
 
       // Save the file
       const buf = Buffer.from(await file.arrayBuffer());
       const ext = extname(file.name) || (file.type === "application/pdf" ? ".pdf" : ".tex");
-      const filename = ext === ".pdf" ? "original.pdf" : file.name;
-      writeFileSync(join(uploadDir, filename), buf);
+      // `file.name` is attacker-supplied and reached `join()` unchanged, which
+      // is an arbitrary file WRITE with attacker-controlled content — the worse
+      // half of this route. `basename` first because a browser may legitimately
+      // send a path, then `safeSegment` because `basename("..")` is `".."`.
+      const filename = ext === ".pdf" ? "original.pdf" : safeSegment(basename(file.name));
+      if (filename === undefined) {
+        return Response.json({ error: "file name must be one safe path segment" }, { status: 400 });
+      }
+      const target = join(uploadDir, filename);
+      // The symlink half: lexical containment cannot see an uploads/<id> that
+      // is a link out of the store. `serve-rendering.ts`'s own test got a 200
+      // from the lexical-only version by exactly that route.
+      if (!writableWithin(UPLOADS_DIR(), target)) {
+        return Response.json({ error: "upload target is outside the uploads store" }, { status: 400 });
+      }
+      writeFileSync(target, buf);
 
       // Write import metadata
       const meta = {
@@ -2968,7 +3043,18 @@ These become clickable buttons so users don't have to type. Make them specific t
       const categories = [...xml.matchAll(/<category[^>]*term="([^"]+)"/g)].map(m => m[1]);
       const published = xml.match(/<published>(.*?)<\/published>/)?.[1] || "";
 
-      const id = body.paperId || `arxiv-${arxivId.replace(/[/.]/g, "-")}`;
+      // THE SUPPLIED ID IS CHECKED; THE FALLBACK IS ALREADY SAFE. Bean `6bhf`:
+      // `body.paperId` reached `join()` unvalidated, and the next two lines are
+      // `mkdirSync(recursive)` and a `writeFileSync` — an arbitrary directory
+      // creation and file write for anyone who can POST here. The fallback
+      // spells `/` and `.` out of the value itself, so only the supplied branch
+      // needs the guard; checking both anyway costs nothing and means a later
+      // edit to the fallback cannot reopen this.
+      const rawId = body.paperId || `arxiv-${arxivId.replace(/[/.]/g, "-")}`;
+      const id = safeSegment(rawId);
+      if (id === undefined) {
+        return Response.json({ error: "paperId must be one safe path segment" }, { status: 400 });
+      }
       const uploadDir = join(UPLOADS_DIR(), id);
       mkdirSync(uploadDir, { recursive: true });
 
@@ -2983,13 +3069,96 @@ These become clickable buttons so users don't have to type. Make them specific t
           if (contentType.includes("gzip") || contentType.includes("tar")) {
             writeFileSync(join(uploadDir, "source.tar.gz"), srcBuf);
             // Extract using tar
-            const { execSync } = await import("child_process");
+            const { execFileSync } = await import("child_process");
             try {
-              execSync(`tar xzf source.tar.gz`, { cwd: uploadDir, timeout: 15000 });
+              // LIST BEFORE EXTRACTING, and refuse rather than repair — bean
+              // `6bhf`. This archive is fetched from arxiv.org, so its member
+              // names are not ours. GNU tar already refuses a `..` member and
+              // strips a leading `/`, which covers traversal BY SPELLING; what
+              // it does not cover is a symlink member followed by a regular
+              // file of the same name, which writes through the link. That is
+              // the residual `serve-rendering.ts`'s own test found by getting
+              // 200 from a link pointing out of its root.
+              //
+              // `execFileSync` with an argv rather than `execSync` with a
+              // string: there is no shell to parse, so a filename can never be
+              // program. Nothing here is attacker-controlled today; the point
+              // is that it cannot become so by an edit elsewhere.
+              // `tvzf`, not `tzf`: the long form carries the member TYPE in the
+              // first character of the mode, and the type is what closes the
+              // residual named above. A symlink member is `l`, a hardlink `h`;
+              // both write through to wherever they point, so neither spelling
+              // check nor `--no-same-*` helps.
+              const listing = execFileSync("tar", ["tvzf", "source.tar.gz"], {
+                cwd: uploadDir,
+                timeout: 15000,
+                encoding: "utf-8",
+                maxBuffer: 16 * 1024 * 1024,
+              })
+                .split("\n")
+                .map((m) => m.trim())
+                .filter((m) => m.length > 0);
+              // A WHITELIST, not a blacklist: only a regular file (`-`) or a
+              // directory (`d`) may be in the archive. Enumerating the types to
+              // refuse means the next tar feature nobody thought about is
+              // admitted by default, and an arXiv e-print source has no
+              // legitimate need for a device, fifo or link member.
+              const badType = listing.filter((l) => !/^[-d]/.test(l));
+              if (badType.length > 0) {
+                throw new UnsafeArchive(
+                  `${badType.length} member(s) are not a regular file or directory ` +
+                    `(a link member writes through to its target), first ${JSON.stringify(badType[0].slice(0, 120))}`,
+                );
+              }
+              // The member name is everything after the time field. Anchoring
+              // on the `HH:MM` pattern handles BOTH formats:
+              //
+              //   GNU tar:  -rw-r--r-- root/root  2 2026-09-26 12:13 sub/a b c.tex
+              //             \_______/ \_______/ \/ \________/ \___/ \___________/
+              //               mode      owner   sz    date    time      name
+              //
+              //   BSD tar:  -rw-r--r--  0 user wheel  2 Sep 26 21:34 sub/a b c.tex
+              //             \_______/ \/ \__/ \___/ \/ \__/ \/ \___/ \___________/
+              //               mode    lk own  grp  sz mon  dy time       name
+              //
+              // The first version stripped five fields and silently ate the first
+              // word of every name on macOS — `sub/a b c.tex` came out as
+              // `Sep 26 21:34 sub/a b c.tex`, and the path check ran on a
+              // fabrication.
+              const members = listing.map((l) => l.replace(/^.*?\d{1,2}:\d{2}\s+/, ""));
+              const unsafe = members.filter(
+                (m) => m.startsWith("/") || m.split("/").includes("..") || m.includes("\0"),
+              );
+              if (unsafe.length > 0) {
+                throw new UnsafeArchive(
+                  `${unsafe.length} member(s) name a path outside the upload directory, first ${JSON.stringify(unsafe[0])}`,
+                );
+              }
+              execFileSync("tar", ["xzf", "source.tar.gz", "--no-same-owner", "--no-same-permissions"], {
+                cwd: uploadDir,
+                timeout: 15000,
+              });
               const { readdirSync } = await import("fs");
               sourceFiles = readdirSync(uploadDir).filter(f => f.endsWith(".tex"));
               format = "latex";
-            } catch { /* tar extract failed — might be single file */ }
+            } catch (e) {
+              // A REFUSAL is not a format mismatch, and the bare `catch` that
+              // was here made them the same event: an archive rejected for
+              // naming a path outside the upload directory fell through to "try
+              // as a single .tex" with nothing said, so an operator could not
+              // tell a hostile archive from a file that simply was not a
+              // tarball. Three states, and this one was collapsing two of them.
+              if (e instanceof UnsafeArchive) {
+                log("import", `REFUSED archive for ${id}`, e.message);
+                return Response.json(
+                  { error: `refusing archive: ${e.message}` },
+                  { status: 422, headers: { "Access-Control-Allow-Origin": "*" } },
+                );
+              }
+              // Anything else really may be a single .tex rather than a tarball,
+              // which is the original intent — kept, but no longer silent.
+              log("import", `tar extract failed for ${id}, trying as a single file`, String(e).slice(0, 200));
+            }
             if (!sourceFiles.length) {
               // Try as single .tex file
               try {
@@ -3041,7 +3210,14 @@ These become clickable buttons so users don't have to type. Make them specific t
   if (path === "/api/import/scan") {
     try {
       const body = await req.json() as { paperId: string };
-      const uploadDir = join(UPLOADS_DIR(), body.paperId);
+      // `6bhf`, fourth sink — missed when the other three were fixed, which is
+      // this bean's own thesis: a correct helper stranded while a sibling route
+      // hand-rolls `join()`. `/api/import/arxiv` validates 100 lines above.
+      const scanId = safeSegment(body.paperId);
+      if (scanId === undefined) {
+        return Response.json({ error: "paperId must be one safe path segment" }, { status: 400 });
+      }
+      const uploadDir = join(UPLOADS_DIR(), scanId);
       const metaPath = join(uploadDir, "import-meta.json");
       if (!existsSync(metaPath)) {
         return Response.json({ error: `No import found: ${body.paperId}` }, { status: 404 });
@@ -3060,8 +3236,17 @@ These become clickable buttons so users don't have to type. Make them specific t
       const texFiles = meta.files?.length ? meta.files : readdirSync(uploadDir).filter((f: string) => f.endsWith(".tex"));
 
       for (const tf of texFiles) {
-        const texPath = join(uploadDir, tf);
-        if (!existsSync(texPath)) continue;
+        // `meta.files` comes out of `import-meta.json`, which `/api/import/upload`
+        // writes from the uploaded file's own name — so this is a SECOND
+        // traversal that survives validating `paperId`, and the one that made
+        // the read primitive reachable without a traversal in the identifier.
+        // Not `safeSegment`: a `.tex` may legitimately sit in `sections/`, so
+        // the question is containment rather than single-segment-ness.
+        const texPath = realPathWithin(uploadDir, join(uploadDir, String(tf)));
+        if (texPath === undefined) {
+          log("import", `refused unsafe member`, `paperId=${scanId} file=${JSON.stringify(tf)}`);
+          continue;
+        }
         const src = readFileSync(texPath, "utf-8");
       
         let match;

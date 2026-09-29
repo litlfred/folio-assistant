@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Working an issue'
 parent: Skill instructions
 ---
@@ -126,7 +127,7 @@ apply reads from the outside exactly like a rule being followed.
 (`mggs`). One direction is not enough: a reader arriving at either object has
 to be able to reach the other, and a check reports the ones that cannot.
 
-When to open an issue at all is [`crdm-detect`](../crdm/crdm-detect.md)
+When to open an issue at all is [`crdm-detect`](crdm-detect.md)
 §"Issue association" — **scan before creating one, and never create one without
 permission**. This section is about what is owed once the work exists, not
 about manufacturing an issue for every bean.
@@ -137,5 +138,5 @@ about manufacturing an issue for every bean.
 | process | step(s) that name it |
 |---|---|
 | [Code change and review](../../processes/code-change-review.html) | Branch, and announce it |
-| [Which open pull requests have no CI run on their head?](../../processes/pr-checks-present.html) | Comment ONCE per&#10;(PR, head sha) |
+| [Which open pull requests have no CI run on their head?](../../processes/pr-checks-present.html) | Comment ONCE per (PR, head sha) |
 
