@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xlg2
 title: 'RUN THE SAMPLE IMPORT: one real end-to-end instance of sample-import.bpmn, recorded, with a test'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-09-24T18:01:44Z
-updated_at: 2026-09-24T18:01:44Z
+updated_at: 2026-09-29T22:14:56Z
 parent: folio-assistant-kupb
 ---
 
