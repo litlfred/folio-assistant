@@ -914,6 +914,13 @@ jobs:
       - name: The root README's generated sections are current
         run: bun run readme:sync:root:check
 
+      # bootstrap's README carries `kg:processes` (its diagrams, drawn) and
+      # `kg:files` (every file it holds), both generated from its declaration
+      # (owner, 2026-09-29). The pictures themselves are checked by
+      # `render:bpmn:check`; this checks the README that shows them.
+      - name: bootstrap's README generated sections are current
+        run: bun run readme:sync:bootstrap:check
+
       # Agent memory is authored under `memory/` and ASSEMBLED into
       # `.claude/agent-memory/<agent>/MEMORY.md`, which is what the Claude Code
       # harness injects. An entry edited and never assembled is a fact the

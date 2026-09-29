@@ -740,6 +740,9 @@ export const RULES: Rule[] = [
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
       "scripts/gen-bootstrap-schemas.ts",
+      // Its drawn page, `bootstrap/schemas/README.md`. Beside the generator
+      // that calls it, and for the same reason: bootstrap holds no code.
+      "scripts/bootstrap-schema-page.ts",
       "scripts/check-docs-populated.ts",     // every harness owes one populated doc page
       "scripts/library-refs.ts",             // who references a slug — the L1 property
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus

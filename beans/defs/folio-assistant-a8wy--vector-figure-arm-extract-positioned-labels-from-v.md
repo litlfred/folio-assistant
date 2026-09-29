@@ -1,10 +1,11 @@
 ---
 # folio-assistant-a8wy
 title: 'VECTOR FIGURE ARM: extract positioned labels from vector-only figures — 69 of 87 caption pages'
-status: in-progress
+status: todo
 type: task
+priority: normal
 created_at: 2026-09-24T18:04:22Z
-updated_at: 2026-09-24T18:35:11Z
+updated_at: 2026-09-29T20:03:13Z
 parent: folio-assistant-2yyh
 ---
 
@@ -90,3 +91,8 @@ appends a sentence to `image-descriptions`' detail and nothing more.
 - [ ] an inspector actually describes a figure from its labels — the point of
       the arm, and not yet done for a single figure
 
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
