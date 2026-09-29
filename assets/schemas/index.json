@@ -15468,8 +15468,14 @@
           "array": true
         },
         {
+          "name": "title",
+          "type": "z.string().optional().describe(\"A short name for people, shown as its README's heading.\")",
+          "optional": true,
+          "array": false
+        },
+        {
           "name": "description",
-          "type": "z.string().optional()",
+          "type": "z.string().optional().describe(\"What it holds, in a sentence or two, shown under that heading.\")",
           "optional": true,
           "array": false
         }

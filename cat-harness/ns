@@ -168,9 +168,9 @@
         "skos:Concept"
       ],
       "label": "Tool",
-      "comment": "A program an Actor calls to carry out a step. A Harness may declare Tools; bootstrap declares none, because it runs nothing.",
+      "comment": "The Node Kind whose instances describe a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
       "prefLabel": "Tool",
-      "definition": "A program an Actor calls to carry out a step. A Harness may declare Tools; bootstrap declares none, because it runs nothing.",
+      "definition": "The Node Kind whose instances describe a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
       "notation": "cat-harness:Tool",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
@@ -246,9 +246,9 @@
         "skos:Concept"
       ],
       "label": "Harness",
-      "comment": "What an Actor uses to work with a Knowledge Graph: Skills, Processes, Roles and Tools. A Harness is itself a Knowledge Graph, declared the same way; bootstrap is the first Harness.",
+      "comment": "A Knowledge Graph whose Subgraphs hold Skills, Tools, Roles and Processes: what an Actor needs in order to work with another Knowledge Graph.",
       "prefLabel": "Harness",
-      "definition": "What an Actor uses to work with a Knowledge Graph: Skills, Processes, Roles and Tools. A Harness is itself a Knowledge Graph, declared the same way; bootstrap is the first Harness.",
+      "definition": "A Knowledge Graph whose Subgraphs hold Skills, Tools, Roles and Processes: what an Actor needs in order to work with another Knowledge Graph.",
       "notation": "cat-harness:Harness",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
@@ -1541,6 +1541,21 @@
       "prefLabel": "instructionsPath",
       "definition": "Where a skill's instruction body lives, relative to the instance root.",
       "notation": "cat-harness:instructionsPath",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:readmePath",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "readmePath",
+      "comment": "Where a declared directory's README lives, relative to the instance root: the page a person reads about that directory.",
+      "prefLabel": "readmePath",
+      "definition": "Where a declared directory's README lives, relative to the instance root: the page a person reads about that directory.",
+      "notation": "cat-harness:readmePath",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"

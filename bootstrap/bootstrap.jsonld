@@ -202,6 +202,7 @@
     "sourcePath": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourcePath",
     "sourceKind": "https://litlfred.github.io/folio-assistant/cat-harness/ns#sourceKind",
     "instructionsPath": "https://litlfred.github.io/folio-assistant/cat-harness/ns#instructionsPath",
+    "readmePath": "https://litlfred.github.io/folio-assistant/cat-harness/ns#readmePath",
     "instructionLines": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#instructionLines",
       "@type": "http://www.w3.org/2001/XMLSchema#integer"
@@ -298,10 +299,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-29T20:29:22.256Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ab69d2ab304454bd83fbf1568c332e38fd5da3f1",
-  "sourceCommitSha": "ab69d2ab304454bd83fbf1568c332e38fd5da3f1",
-  "sourceCommitAt": "2026-09-29T22:26:06+02:00",
+  "generatedAt": "2026-09-29T22:21:22.164Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c8349950fa552b9b61a61816d8852cd8007805b6",
+  "sourceCommitSha": "c8349950fa552b9b61a61816d8852cd8007805b6",
+  "sourceCommitAt": "2026-09-30T00:17:01+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -1441,6 +1442,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills"
       ],
+      "readmePath": "skills/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/skills"
     },
     {
@@ -1452,6 +1454,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/schemas"
       ],
       "description": "The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and output of the discussion Process. Their published `$id`s do not change when a file moves.",
+      "readmePath": "schemas/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/schemas"
     },
     {
@@ -1463,6 +1466,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/scenarios"
       ],
       "description": "bootstrap's four Roles: Bootstrapping Agent, Requestor, Knowledge Graph Data Store and Logger.",
+      "readmePath": "scenarios/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/scenarios"
     },
     {
@@ -1474,6 +1478,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/processes"
       ],
       "description": "bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to ask the Requestor; and `log-message.bpmn`, which any step may call to record what it is doing. `ns.jsonld` defines the elements these diagrams add to BPMN (skill, role, precondition), written with the prefix `bootstrap.processes:`.",
+      "readmePath": "processes/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/processes"
     },
     {
@@ -1485,6 +1490,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/models"
       ],
       "description": "Which languages a model is good at, and whether anybody checked. In BOOTSTRAP for the reason everything else here is: an agent reaching for the language it should communicate in has not yet loaded the harness that would otherwise answer, so a registry one layer up would be unreachable in exactly the case it exists for. `context`: read when a session opens, never written by a process — a person grants a validation, an agent never does, because a model's own claim about its languages is the thing the validation state exists to distrust.",
+      "readmePath": "models/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/models"
     },
     {
@@ -1496,6 +1502,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/swimlane-glossary"
       ],
       "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived — that a concept was once minted — is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
+      "readmePath": "glossary/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/swimlane-glossary"
     },
     {
@@ -1507,6 +1514,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/qa"
       ],
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict in this repository is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: the auditor writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 15 files across the three families this instance has subjects in — skills/ (7), processes/ (3) and scenarios/ (5). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be the same over-claim pointed the other way. dependents: reproduce, because a dependent instance audits its OWN graph — these verdicts are about this instance's nodes, and inheriting them would attribute one instance's findings to another. That is exactly the leak which had to be fixed before this directory could be declared at all: an instance-scoped audit run from the layer above wrote 119 tool sidecars and 23 skill findings here for subjects belonging to that layer, because the tool registry and the skill overlay both took no instance root. Declared WITH its files in one commit: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "readmePath": "test/results/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/qa"
     },
     {
@@ -1530,8 +1538,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "ab69d2ab304454bd83fbf1568c332e38fd5da3f1",
+    "sha": "c8349950fa552b9b61a61816d8852cd8007805b6",
     "pr": "main",
-    "run": "36626318226"
+    "run": "36638644230"
   }
 }
