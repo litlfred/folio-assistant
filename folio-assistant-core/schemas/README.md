@@ -1,7 +1,7 @@
 <!-- kg:subgraph:begin -->
 # folio-assist-core-schemas
 
-The CONTENT layer's schema nodes, staged as a top-level directory ahead of the split (#223). Owner, 2026-09-20: 'not in cat-harness, in folio-assitant-core/ as a named subgraph.' A NAMED SUBGRAPH and not a second `schemas` entry: overrides match on the entry's id, so reusing `schemas` would REPLACE this instance's schema graph rather than add to it -- the same trap the `cat-harness-src` entry above documents from the other side. REPOSITORY-scoped, like `bootstrap/skills/`: it sits at the top of the checkout, not inside this instance, and is deliberately never overlaid by a dependency. This entry is the mirror of `folio-assistant-core/harness.json`'s own, and it has to be stated twice only because `resolveSkillDirs` has no caller -- when that is wired, THIS entry is the one to delete.
+The schemas of the content layer's Node Kinds, kept as their own Subgraph until this repository is split.
 
 Part of [C@T Harness](../../cat-harness/README.md), declared as `folio-assist-core-schemas`, holding `schemas`, `cat-harness`.
 

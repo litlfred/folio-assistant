@@ -1,7 +1,7 @@
 <!-- kg:subgraph:begin -->
 # large-datasets-skills
 
-The `large-datasets` subgraph's instruction bodies. Declared here as well as in its own harness.json for the same reason kg-navigation is: `resolveSkillDirs` has no caller yet, so a nested instance's directories are not reachable from the root. `materialize-remote` lives here and is named by two diagrams in cat-harness/processes/ -- a skill ref resolves across the declared graphs, not within one directory. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== "content"`, and `skills` is `content` — *"a graph that stands on its own does not need a viewer to be legible"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as "no published viewer" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.
+The instructions for working with large datasets: one Skill per file.
 
 Part of [C@T Harness](../../cat-harness/README.md), declared as `large-datasets-skills`, holding `skills`.
 
