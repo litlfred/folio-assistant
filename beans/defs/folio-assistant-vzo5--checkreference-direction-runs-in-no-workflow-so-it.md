@@ -76,3 +76,42 @@ be guessing at `zhg2`'s intent.
 - [ ] the stale `gen-object-model-uml.ts` entry is resolved
 - [ ] whatever is chosen, the claim and the wiring agree: no `reason` text
       describes enforcement that no workflow performs
+
+
+## Step 0 done, 2026-09-29 — and it unmasked a second exit-1
+
+The stale entry is deleted. `check:reference-direction` now exits 1 on a
+DIFFERENT condition, which the stale-PENDING branch had been masking because
+it `process.exit(1)`s before the `missing` check is reached:
+
+**31 multi-destination files name several instances above them and are not in
+PENDING.** That is not a regression — it is the next layer of the same backlog
+becoming visible for the first time.
+
+### They are not one kind of file, and that matters
+
+| | count | |
+|---|---:|---|
+| **generator output** | **14** | 5 `docs/glossary/*/index.md`, 3 `glossary/generated/*.glossary.json`, 3 `*.skos.jsonld`, 3 translated `docs/{zh,ar,ru}/publication-workflow.md` |
+| **authored** | **17** | 6 `.ts`, 2 skills, 7 docs (4 of them `docs/architecture/*`) |
+
+**Do NOT bulk-add these to PENDING.** `zhg2` states the reason itself: PENDING
+*"compares as a set, so a fixed leak fails too — a PENDING that only grows
+stops meaning anything."* Thirty-one entries added at once would retire it as
+an instrument.
+
+The 14 generated ones already have a mechanism and are not a ruling: the check
+skips a file that declares itself generator output, and **476 files already
+take that route**. These fourteen do not declare it — which is bean `ws99`
+(*"every generator's output should declare its writer — five write into docs/
+and none did"*) meeting `zhg2` at the same 31 files. Fixing `ws99` removes 14
+of the 31 with no owner input at all.
+
+The 17 authored ones are `zhg2`'s multi-destination class and genuinely need
+the ruling. Four are `docs/architecture/*`, whose subject IS the layering —
+the same shape as `schemas/dak-content-type.ts`, where a file below the
+boundary describes the boundary, and both *move* and *reword* are wrong.
+
+One of the 17 is `skills/folio-core/instance-publication.md`, written in this
+same arc four days ago. The check had no way to say so at the time, because
+nothing ran it.
