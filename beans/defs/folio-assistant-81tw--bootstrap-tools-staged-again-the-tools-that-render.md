@@ -5,7 +5,8 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-29T23:13:27Z
-updated_at: 2026-09-29T23:13:35Z
+updated_at: 2026-09-29T23:13:54Z
+parent: folio-assistant-vuip
 ---
 
 **Owner, 2026-09-29:** *"we will https://github.com/litlfred/bootstrap-tools use this for the tools that render bootstrap/ but were put in cat-harness. for now create dir bootstrap-tools/ for staging split out into repo. make sure IRIs updated"* — then, choosing scope: *"1 2 ... need Zod usage in bootstrap tools as part of validation in rendering pipeline. will also need SEMVER skills in bootstrap-tools"*.
