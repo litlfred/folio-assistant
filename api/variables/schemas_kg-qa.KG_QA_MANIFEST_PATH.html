@@ -11,11 +11,31 @@
 <li><a href="../modules/schemas_kg-qa.html">schemas/kg-qa</a></li>
 <li><a href="" aria-current="page">KG_QA_MANIFEST_PATH</a></li></ul>
 <h1>Variable KG_QA_MANIFEST_PATH<code class="tsd-tag">Const</code></h1></div>
-<div class="tsd-signature"><span class="tsd-kind-variable">KG_QA_MANIFEST_PATH</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;skills/kg-qa.manifest.json&quot;</span></div>
-<div class="tsd-comment tsd-typography"><p>Repo-relative location of that manifest, so every reader agrees on it.</p>
+<div class="tsd-signature"><span class="tsd-kind-variable">KG_QA_MANIFEST_PATH</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;test/results/kg-qa.manifest.json&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Instance-relative location of that manifest, so every reader agrees on it.</p>
+<h2 id="why-it-moved-out-of-2026-09-27" class="tsd-anchor-link">Why it moved out of <code>skills/</code> (2026-09-27)<a href="#why-it-moved-out-of-2026-09-27" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>It was <code>skills/kg-qa.manifest.json</code>, which was harmless while ONE instance
+was audited — cat-harness, which has a <code>skills/</code> directory. Auditing every
+declared instance made it a defect: <code>kg-audit.ts</code> writes this file
+unconditionally, so running the audit against an instance with no skills
+CREATED a <code>skills/</code> directory holding nothing but this manifest. Measured on
+the first full sweep: six instances (<code>smart-dak</code>, <code>smart-ig</code>,
+<code>smart-immunizations</code>, <code>smart-l1</code>, <code>smart-trust</code>, <code>agent-skills</code>) gained one,
+and the generated UML and navbar both moved to report a skills graph that
+holds no skills.</p>
+<p><code>test/results/</code> is where it belongs on its own terms, not merely where it is
+harmless: this file describes the SIDECARS, and a fact about a set of
+artefacts belongs with them. Its old home was an accident of the period when
+the role graph and the skill packages shared one directory.</p>
+<p>It is the CONVENTION rather than a declaration read at run time, and that is
+deliberate for one consumer's sake: <code>qa-witness.ts</code> reads it as
+<code>join(repoRoot, KG_QA_MANIFEST_PATH)</code> and has no instance in hand. All 15
+declared instances declare <code>qa</code> → <code>test/results/</code>, so the constant and every
+declaration agree today; if one ever moves its <code>qa</code> directory, this is the
+line that has to learn to ask.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/f2d58d67b1d040c53721ec4ef092d23f08376049/cat-harness/schemas/kg-qa.ts#L86">work/folio-assistant/folio-assistant/cat-harness/schemas/kg-qa.ts:86</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/bcde6eebfc95d53a6161bfaa5d819f8ef25418af/cat-harness/schemas/kg-qa.ts#L112">work/folio-assistant/folio-assistant/cat-harness/schemas/kg-qa.ts:112</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -27,7 +47,10 @@
 <li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
 <li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
 <li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
-<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#why-it-moved-out-of-2026-09-27"><span>Why it moved out of  (2026-<wbr/>09-<wbr/>27)</span></a></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="../index.html">folio-assistant API</a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container">

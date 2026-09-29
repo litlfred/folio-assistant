@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 429,
+      "count": 430,
       "unit": "beans"
     }
   },
@@ -1103,6 +1103,20 @@
       "file": "beans/defs/folio-assistant-61tg--topology-self-sovereign-own-infrastructure-inward.md"
     },
     {
+      "id": "folio-assistant-676g",
+      "title": "kg:validate cannot own a NESTED instance's path, so 15 instances' committed QA sidecars are consumer-validated by nothing",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T16:50:03Z",
+      "updatedAt": "2026-09-27T16:50:03Z",
+      "preview": "## What was measured\n\n`kg:validate` resolves declared directories from ONE instance root, so a sidecar\nin a nested instance is refused rather than validated. Measured 2026-09-27, from\nthe repository root:\n\n    bun run cat-harness/scripts/kg-validate.ts cat-harness/test/results/kg-qa/processes/adjudication.kg-qa.json\n      ✓ … [qa]\n\n    bun run cat-harness/scripts/kg-validate.ts bootstrap/test/resu",
+      "file": "beans/defs/folio-assistant-676g--kgvalidate-cannot-own-a-nested-instances-path-so-1.md"
+    },
+    {
       "id": "folio-assistant-6b8u",
       "title": "EXTRACTION: MD_MIN_TEXT_LEN is a threshold in CHARACTERS, so the same table cell is translatable in Arabic and not in English",
       "status": "completed",
@@ -2094,7 +2108,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T04:14:07Z",
-      "updatedAt": "2026-09-27T10:36:45Z",
+      "updatedAt": "2026-09-27T11:27:47Z",
       "preview": "Split out of `sa8y` 2026-09-26. It was `sa8y`'s last genuinely open item and the\nonly one of its four; the other three are done and `sa8y` closed on the wording\nfix that is its actual subject. It gets its own bean because it is a different\nsubject — `sa8y` is about a finding's **wording**, this is about a gate's\n**range** — and because a wording bean carrying an infrastructure item is how\n`sa8y` c",
       "file": "beans/defs/folio-assistant-bjzs--per-instance-gates-kgaudit-renderbpmn-and-checkwor.md"
     },
