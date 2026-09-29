@@ -54,6 +54,22 @@ A **unit** is the graph's own chunk: a library **section** (what ingestion
 already produced), otherwise one markdown file. Units under 20 tokens are
 skipped — too little vocabulary to place.
 
+## Cross-document links — a floor, and hubs reported, not penalised
+
+`bun run lsi links --instance <i> --graph <g>` proposes links between units of
+DIFFERENT documents in one graph: each unit's best other-document match, only
+at cosine ≥ 0.5 (`LINK_FLOOR`), with the units that are "nearest" to many
+others listed as **hubs** to discount. On who-iris it proposes 12 links and
+leaves 326 of 342 sections with none — the honest answer when the median best
+match is ~0.2.
+
+**Why there is no hub PENALTY (bean `9udd`).** A CSLS-style penalty
+(`2·cos − r(a) − r(b)`) was measured on the 15 strongest who-iris pairs a
+reader labelled, and made ranking worse: real-vs-spurious AUC 0.96 with plain
+cosine, 0.75–0.79 with the penalty at K = 5, 10, 20. The page it demoted most
+(HQ p36, mark-up) is central because it is genuinely on-topic. The floor alone
+is what the data supports; it is a house number fitted to 15 examples.
+
 ## Correspondence analysis — the parallel track
 
 [`correspondence-analysis`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/correspondence-analysis.md)

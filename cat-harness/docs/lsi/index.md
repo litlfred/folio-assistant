@@ -94,7 +94,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**304** units · **7526** terms · k = **100** · retains **69.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**304** units · **7527** terms · k = **100** · retains **69.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -103,13 +103,13 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
 | 1 | 46.24 | bean, session, graph, kind, branch, instance, page, agent | *(none)* |
-| 2 | 27.72 | bias, studies, study, effect, statistical, causation, validity, causal | bean, instance, harness, directory, node, graph, kind, session |
+| 2 | 27.71 | bias, studies, study, effect, statistical, causation, validity, causal | bean, instance, harness, directory, node, graph, kind, session |
 | 3 | 22.20 | proof, watcher, lean, slot, blocks, project, witness, chapter | harness, node, bean, instance, page, directory, actor, process |
-| 4 | 19.45 | dpi, color, grayscale, matplotlib, images, raster, pdf, fonts | session, prs, queue, branch, sibling, commits, coordination, beans |
+| 4 | 19.45 | dpi, color, grayscale, matplotlib, raster, images, pdf, fonts | session, prs, queue, branch, sibling, commits, coordination, beans |
 | 5 | 18.49 | dpi, color, grayscale, session, matplotlib, contrast, raster, eps | lean, proof, declaration, glossary, mathlib, theorem, sorry, chapter |
 | 6 | 16.78 | regulatory, intervention, biosafety, candidate, ethics, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, consider, solutions, description, correlation |
 | 7 | 16.12 | lean, mathlib, mcp, sorry, proof, search, bean, lake | watcher, slot, backlog, voice, ledger, queue, nesting, idle |
-| 8 | 15.28 | mathlib, lean, sorry, subdirectory, lake, mcp, nesting, oleans | slot, forward, major, edges, criterion, reader, band, section |
+| 8 | 15.29 | mathlib, lean, sorry, subdirectory, lake, mcp, nesting, oleans | slot, forward, major, edges, criterion, reader, band, section |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

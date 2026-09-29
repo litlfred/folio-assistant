@@ -6,7 +6,7 @@
  * singular values the paper prints to two decimals.
  */
 import { describe, expect, test } from "bun:test";
-import { buildLsi, neighboursOf, query, tokenize } from "./lsi";
+import { buildLsi, crossGroupLinks, neighboursOf, query, tokenize } from "./lsi";
 
 // Table 2, the term × document matrix, rows in the paper's order.
 const TERMS = ["human", "interface", "computer", "user", "system", "response", "time", "eps", "survey", "trees", "graph", "minors"];
@@ -69,5 +69,35 @@ describe("tokenizer", () => {
   test("a soft hyphen (U+00AD) at a line break joins the word, not splits it", () => {
     // The WHO Handbook's text layer carries 742 of these (2026-09-29).
     expect(tokenize("strong recommenda\u00AD\ntions for organi\u00ADzation")).toEqual(["strong", "recommendations", "organization"]);
+  });
+});
+
+describe("cross-group link proposals (bean 9udd)", () => {
+  // Two groups sharing one topic (cats) and one group about something else.
+  const units = [
+    { id: "a/1", text: "lion tiger cheetah jaguar savanna prey hunt" },
+    { id: "a/2", text: "porsche ferrari engine speed track race car" },
+    { id: "b/1", text: "lion tiger cheetah savanna hunt pride prey" },
+    { id: "b/2", text: "violin cello orchestra symphony concert music" },
+    { id: "c/1", text: "cello violin symphony concert orchestra score" },
+    { id: "c/2", text: "engine speed race track porsche car wheel" },
+  ];
+  const ix = buildLsi(units, { k: 3, weighting: "raw", minDf: 1, maxDfShare: 1, seed: 1990 });
+  const r = crossGroupLinks(ix, (id) => id.split("/")[0], { floor: 0.5, perUnit: 1, hubAt: 99 });
+
+  test("never links two units of the same group", () => {
+    for (const l of r.links) expect(l.a.split("/")[0]).not.toBe(l.b.split("/")[0]);
+  });
+  test("proposes the shared topics across groups", () => {
+    const pairs = r.links.map((l) => l.a + "~" + l.b);
+    expect(pairs).toContain("a/1~b/1");
+    expect(pairs).toContain("b/2~c/1");
+    expect(pairs).toContain("a/2~c/2");
+  });
+  test("nothing below the floor is proposed", () => {
+    for (const l of r.links) expect(l.cosine).toBeGreaterThanOrEqual(0.5);
+    const strict = crossGroupLinks(ix, (id) => id.split("/")[0], { floor: 1.01 });
+    expect(strict.links).toEqual([]);
+    expect(strict.belowFloor).toBe(6);
   });
 });

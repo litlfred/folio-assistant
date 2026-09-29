@@ -533,3 +533,73 @@ export function dimensionSummaries(index: LsiIndex, dims = 10, perPole = 8): Arr
   }
   return out;
 }
+
+// ─── Cross-group link proposals (bean `9udd`) ─────────────────────────────────
+
+/** Below this cosine a cross-group pair is not proposed. House number,
+ *  measured 2026-09-29 on the 15 strongest who-iris cross-document pairs a
+ *  reader labelled: 0.5 keeps all 4 real pairs and drops 5 of 7 spurious
+ *  ones. Fitted to 15 examples — move it when a larger ground truth exists. */
+export const LINK_FLOOR = 0.5;
+
+export interface CrossLink {
+  a: string;
+  b: string;
+  cosine: number;
+}
+
+export interface CrossLinks {
+  links: CrossLink[];
+  /** Units that are the nearest other-group unit for many units — a reader
+   *  should discount links through them. REPORTED, not penalised: a
+   *  CSLS-style penalty (2·cos − r(a) − r(b), r = mean cosine to the K nearest
+   *  other-group units) was measured on the same 15 pairs and made ranking
+   *  WORSE (AUC real-vs-spurious 0.96 with cosine, 0.75–0.79 with the penalty
+   *  at K = 5, 10, 20): the page it demoted most was a genuinely central one. */
+  hubs: Array<{ id: string; nearestFor: number }>;
+  /** How many units' best other-group match fell below the floor. */
+  belowFloor: number;
+}
+
+/**
+ * Propose links between units of DIFFERENT groups (documents, graphs):
+ * each unit's best `perUnit` other-group matches at or above `floor`, deduped.
+ * A proposal, never a relation (method `lsi`, refusal 3).
+ */
+export function crossGroupLinks(
+  index: LsiIndex,
+  groupOf: (id: string) => string,
+  opts: { floor?: number; perUnit?: number; hubAt?: number } = {},
+): CrossLinks {
+  const floor = opts.floor ?? LINK_FLOOR;
+  const perUnit = opts.perUnit ?? 1;
+  const ids = index.unitIds;
+  const k = index.k;
+  const seen = new Map<string, CrossLink>();
+  const nearest = new Map<string, number>();
+  let belowFloor = 0;
+  for (let i = 0; i < ids.length; i++) {
+    const g = groupOf(ids[i]);
+    const cand: Array<[number, number]> = [];
+    for (let j = 0; j < ids.length; j++) {
+      if (j === i || groupOf(ids[j]) === g) continue;
+      cand.push([j, cosine(index.unitCoords, i * k, index.unitCoords, j * k, k)]);
+    }
+    if (cand.length === 0) continue;
+    cand.sort((x, y) => y[1] - x[1]);
+    nearest.set(ids[cand[0][0]], (nearest.get(ids[cand[0][0]]) ?? 0) + 1);
+    if (cand[0][1] < floor) belowFloor++;
+    for (const [j, c] of cand.slice(0, perUnit)) {
+      if (c < floor) break;
+      const [a, b] = ids[i] < ids[j] ? [ids[i], ids[j]] : [ids[j], ids[i]];
+      seen.set(a + "\u0000" + b, { a, b, cosine: Number(c.toFixed(3)) });
+    }
+  }
+  const hubAt = opts.hubAt ?? Math.max(5, Math.ceil(0.05 * ids.length));
+  const hubs = [...nearest]
+    .filter(([, n]) => n >= hubAt)
+    .map(([id, nearestFor]) => ({ id, nearestFor }))
+    .sort((x, y) => y.nearestFor - x.nearestFor || (x.id < y.id ? -1 : 1));
+  const links = [...seen.values()].sort((x, y) => y.cosine - x.cosine || (x.a < y.a ? -1 : 1));
+  return { links, hubs, belowFloor };
+}

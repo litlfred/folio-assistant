@@ -15,6 +15,7 @@
  *   bun run lsi query  "<text>" [--instance <name>] [--graph <id>] [--doc <slug>…] [--top N]
  *   echo "<text>" | bun run lsi query --instance <name> --graph <id>   # the Tool node's form
  *   bun run lsi audit  [--strict]      # which graphs need an index; is each fresh?
+ *   bun run lsi links  --instance <name> --graph <id> [--per N] [--top N]   # cross-document proposals
  *
  * ## What is committed, and why not the vectors
  *
@@ -47,6 +48,8 @@ import { declaredGraphs, instanceRootsIn } from "../schemas/cat-harness";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 import {
   buildLsi,
+  crossGroupLinks,
+  LINK_FLOOR,
   dimensionSummaries,
   fingerprintUnits,
   neighboursOf,
@@ -386,6 +389,22 @@ if (import.meta.main) {
         const body = units.find((u) => u.id === h.id)!.text.toLowerCase();
         const lexical = words.some((w) => body.includes(w));
         console.log(`  ${h.cosine.toFixed(3)}  ${lexical ? "lexical+latent" : "latent only   "}  ${h.id}`);
+      }
+    }
+  } else if (cmd === "links") {
+    // Cross-DOCUMENT link proposals inside one graph (a library's documents):
+    // a floor, and hubs reported rather than penalised — bean 9udd.
+    for (const t of targets()) {
+      const units = unitsOf(t.absPath, t.graphKinds, args("doc"));
+      if (units.length < 3) continue;
+      const ix = buildLsi(units, opts);
+      const docOf = (id: string) => id.split("/").slice(0, -2).join("/");
+      const r = crossGroupLinks(ix, docOf, { perUnit: Number(arg("per") ?? 1) });
+      console.log(`# ${t.instance}/${t.id} — ${r.links.length} cross-document link proposal(s) at cosine >= ${LINK_FLOOR}; ${r.belowFloor} of ${units.length} units have no other-document match that high`);
+      for (const l of r.links.slice(0, Number(arg("top") ?? 25))) console.log(`  ${l.cosine.toFixed(3)}  ${l.a}  ~  ${l.b}`);
+      if (r.hubs.length) {
+        console.log("  hubs (nearest other-document unit for many units — discount links through them):");
+        for (const h of r.hubs) console.log(`    ${h.nearestFor}×  ${h.id}`);
       }
     }
   } else if (cmd === "check") {
