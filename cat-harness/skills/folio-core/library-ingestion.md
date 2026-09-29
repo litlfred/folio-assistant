@@ -74,6 +74,115 @@ bun run ingest uploads/FILE.pdf --dry-run # say which rung it would pick, and wh
 It picks the rung, runs it, and writes the manifest. Everything below is what it
 decides **on your behalf** — read it when the answer surprises you, not before.
 
+## What happens to the upload after it is ingested — it is RETIRED, not left and not deleted
+
+**Owner's ruling, 2026-09-29**, in two parts. First, answering *"why are
+ingested things still sitting in uploads and not moived to library of
+appropraite harness?"*:
+
+> **no, uploads is archival copy.**
+
+and then, refining where that archival copy belongs:
+
+> **archival (once ingested into KG and put into a proper `library/` under a
+> harness repo) then it should be moved to `fsh-guts`.**
+
+So the lifecycle has **three** places, not two, and `uploads/` is the only one
+that is temporary:
+
+| stage | where | what it holds |
+|---|---|---|
+| queued | `uploads/FILE.pdf` | the source, **not yet ingested** — this is what the queue viewer counts |
+| derived | `library/<slug>/` | `sections/`, `blocks/`, `images/`, `structure.json`, the manifest |
+| archived | `fsh-guts/uploads/FILE.pdf` + its sidecar | the **source bytes**, kept and addressable, off the rendered site |
+
+### Why the library cannot be the destination
+
+A library entry may not hold the bytes, and that is enforced rather than
+conventional. `ENTRY_DIRECTORIES` is `sections`, `blocks`, `images`, `ocr`;
+`ENTRY_SIDECARS` is `images.json`, `vector-labels.json`, `manifest.jsonld`,
+`summaries.json`, plus the one kind marker. Dropping the PDF into a promoted
+entry makes `check:l1-complete` report it — measured 2026-09-29:
+
+```
+✗ contents   1 unexpected child(ren): source.pdf
+```
+
+The entry records `source_sha256` and the technical metadata, which is what
+lets a re-derivation be checked against the original. It does not record the
+original. So "move it to the library" is not available, and the source needs
+somewhere else to live — which is what the second half of the ruling settles.
+
+### `fsh-guts/` is that somewhere, and it already has the contract
+
+[`fsh-guts`](fsh-guts.md) is *"the trashcan that is kept"*: addressable,
+exported, greppable, and deliberately absent from the canonical render.
+**Delete means relocate**, and this is that rule applied to a source whose
+derivation has landed.
+
+A PDF cannot carry front matter, and the directory already answers that —
+`extract-lean-blocks.py`, `split-docs-page.py`, `detangle-schema-viewer.html`
+each keep their bytes beside a same-basename `.md` sidecar that declares them.
+An archived upload follows the same convention:
+
+```yaml
+---
+$schema: folio-fsh-guts/v1
+title: "wang-rangaiah-2026-mcdm-aggregation.pdf"
+kind: source
+movedOn: 2026-09-29
+movedFrom: "uploads/wang-rangaiah-2026-mcdm-aggregation.pdf"
+summary: >-
+  Ingested to `cat-harness/library/wang-rangaiah-2026-mcdm-aggregation/`;
+  cited by `methodologies/mcdm-aggregation.md`. Archived here after promotion.
+---
+```
+
+`movedFrom` and `movedOn` are the load-bearing pair, for the reason `fsh-guts`
+gives: without them a node there is an orphan, and *"abandonment or accident"*
+becomes indistinguishable.
+
+**`fsh-guts/uploads/` is the sub-directory this proposes** — the existing two
+are `retired/` and `scripts/`, named for what the thing is, and an ingested
+source is neither. Not yet ruled on.
+
+### What this makes true, and what it costs
+
+`uploads/` becomes what its viewer already says it is. `gen-uploads-viz.ts`'s
+`itemState` returns `waiting` or `ingested`, and the headline is the
+UNINGESTED count because that is the one that means work is owed — under this
+rule `ingested` becomes a **transient** state rather than a resting place, and
+an upload sitting in it is a retirement nobody has done yet.
+
+**Never `rm`.** An ingested upload is not cleanup: deleting it removes the only
+copy of the source from the working tree, leaving git history, which is not the
+same thing — every derived artefact in `library/` becomes unreproducible from a
+checkout. `deletion-requires-confirmation` governs any exception, and an ingest
+step that removed its own input would be the `plj1` shape exactly.
+
+### Measured 2026-09-29 — nine to retire, and five already gone
+
+Fourteen library entries compared against `uploads/` by each manifest's own
+`meta.source_file`: **nine present, five absent.** The five absent are exactly
+the five whose upload had been renamed to a descriptive filename
+(`feng-2023-designing-with-language`,
+`neubauer-2025-ai-assisted-schema-creation`,
+`dusengumuremyi-2026-ai-mediated-raci`, `gurel-tat-2017-swot-analysis`,
+`sammut-bonnici-galea-2015-swot-analysis`) — the sessions that renamed also
+tidied away, under no rule, because there was none to read. They are
+recoverable from git history and have not been restored. Bean `q7ey` carries
+both the retirement of the nine and the question of whether to bring the five
+back.
+
+### Renaming an upload is done BEFORE the first ingest
+
+The slug is derived from the upload: `_pdf_doc_id.py` reads an arXiv id off
+page one's text layer and falls back to the basename slug. A source with no
+arXiv stamp is therefore named by hand first, to the author-year convention —
+`gurel-tat-2017-swot-analysis`, `wang-rangaiah-2026-mcdm-aggregation` — and the
+slug follows. Renaming afterwards means re-ingesting under the new name and
+removing the old entry, which is why it is worth getting right on the way in.
+
 ## Entry point two — an asset in a remote graph
 
 An instance declares `remoteGraphs` in its declaration: a graph it knows

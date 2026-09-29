@@ -1,92 +1,84 @@
 ---
 # folio-assistant-q7ey
-title: 'UPLOADS RETENTION: nothing removes an ingested upload, and a library entry may not hold its source — two decisions, not a tidy-up'
+title: 'UPLOADS RETENTION: uploads is the archival copy until ingested, then it retires to fsh-guts — rule written, nine to sweep'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-29T23:26:27Z
-updated_at: 2026-09-29T23:26:27Z
+updated_at: 2026-09-29T23:48:03Z
 parent: folio-assistant-2upx
 ---
 
-Owner, 2026-09-29, while the decision-methodology sources were being ingested:
-*"why are ingested things still sitting in uploads and not moived to library of
-appropraite harness?"*
+Owner, 2026-09-29, in two parts. First, answering *"why are ingested things
+still sitting in uploads and not moived to library of appropraite harness?"*:
 
-## Measured before answering, 2026-09-29
+> no, uploads is archival copy.
 
-Fourteen library entries across the platform, compared against `uploads/` by
-each manifest's own `meta.source_file`:
+then, refining where the archival copy belongs:
 
-| | |
+> archival (once ingested into KG and put into a proper `library/` under a
+> harness repo) then it should be moved to `fsh-guts`.
+
+**Both decisions this bean opened are answered.** The rule is written down in
+[`library-ingestion`](../../cat-harness/skills/folio-core/library-ingestion.md)
+§"What happens to the upload after it is ingested", with a pointer from
+[`fsh-guts`](../../cat-harness/skills/folio-core/fsh-guts.md). What remains is
+the sweep and one naming question.
+
+## The rule, as recorded
+
+Three places, and `uploads/` is the only temporary one:
+
+| stage | where |
 |---|---|
-| upload still in `uploads/` | **9** |
-| upload gone | **5** |
+| queued | `uploads/FILE.pdf` — not yet ingested, what the queue viewer counts |
+| derived | `library/<slug>/` |
+| archived | `fsh-guts/uploads/FILE.pdf` + a same-basename `.md` sidecar |
 
-The split is not random. **All five that are gone are the ones with a
-hand-chosen descriptive filename** — `feng-2023-designing-with-language`,
+A library entry may not hold the bytes and that is enforced, not conventional:
+dropping the PDF into a promoted entry makes `check:l1-complete` report
+`✗ contents  1 unexpected child(ren): source.pdf`. So the library was never
+available as the destination, which is what made the second half of the ruling
+necessary.
+
+The sidecar convention needed no invention — `fsh-guts/` already pairs
+`extract-lean-blocks.py`, `split-docs-page.py` and
+`detangle-schema-viewer.html` each with a same-basename `.md` carrying
+`$schema: folio-fsh-guts/v1`, `movedFrom` and `movedOn`.
+
+## What is left
+
+**Nine uploads to retire.** Measured 2026-09-29 across fourteen library
+entries by each manifest's own `meta.source_file`: nine still in `uploads/`,
+five already gone. Roughly 20 MB of PDFs, all reversible — a relocate, never
+an `rm`.
+
+**Five already deleted**, and they are exactly the five whose upload had been
+renamed to a descriptive filename (`feng-2023-designing-with-language`,
 `neubauer-2025-ai-assisted-schema-creation`,
 `dusengumuremyi-2026-ai-mediated-raci`, `gurel-tat-2017-swot-analysis`,
-`sammut-bonnici-galea-2015-swot-analysis`. All nine that remain kept their
-arXiv-id filename. So the sessions that renamed an upload also tidied it away,
-and the sessions that did not, did not.
+`sammut-bonnici-galea-2015-swot-analysis`). The sessions that renamed also
+tidied away, under no rule, because there was none to read. Recoverable from
+git history; not restored, because restoring 5 sources is the owner's call
+under the same reasoning that makes the rule worth having.
 
-## Nothing in the pipeline does it
-
-`ingest-document.ts` reads the PDF, writes to `ingest-staging/`, and promotes
-into `library/<slug>/`. It never renames, moves, copies or removes the upload,
-and no skill says what should happen to it afterwards. The five were removed
-by hand.
-
-## But "not ingested yet" IS modelled, and staying is not a leak
-
-`gen-uploads-viz.ts` gives an upload two states, `waiting` and `ingested`
-(`itemState`), so a file that remains after promotion is in a state the model
-has a name for. The owner already ruled on why the queue is its own viewer
-(bean `v18c`):
-
-> uploads/ are not ingested, they are ingested into libray/. separate
-> visualizations … actually funcionally different/behavior diffent so need
-> distinct harness
-
-and the reason the viewer's headline is the UNINGESTED count:
-
-> an un-ingested source is worse than an absent one, because it produces false
-> confidence rather than a gap
-
-What is NOT stated anywhere is the **retention** rule: whether `ingested` is a
-terminal state an upload may sit in forever, or a transient one before the file
-goes. That is the whole gap, and the 9-against-5 split is what an unstated rule
-looks like.
-
-## The part that is not a tidy-up
-
-**A library entry does not hold its source bytes, and currently may not.**
-`ENTRY_DIRECTORIES` is `sections`, `blocks`, `images`, `ocr`; `ENTRY_SIDECARS`
-is `images.json`, `vector-labels.json`, `manifest.jsonld`, `summaries.json`;
-plus one kind marker. Verified by experiment 2026-09-29 — dropping the PDF into
-a promoted entry makes `check:l1-complete` report:
-
-> ✗ contents  1 unexpected child(ren): source.pdf
-
-So `uploads/` is the only place in the working tree where the PDF exists. The
-entry records `source_sha256` and the technical metadata, not the bytes.
-Deleting an ingested upload therefore does not *move* the source into the
-library — it removes it from the tree, leaving only git history.
-
-That makes the owner's question two decisions, not one, and the second is the
-load-bearing one.
+**One naming question.** `fsh-guts/` currently holds `retired/` and
+`scripts/`, named for what the thing is. An ingested source is neither, so the
+skill proposes `fsh-guts/uploads/` and marks it as not yet ruled on.
 
 ## Done when
 
-- [ ] **Decision 1 — does a library entry carry its source?** If yes,
-      `ENTRY_SIDECARS` gains it, `check:l1-complete` stops refusing it, and
-      the repository's size grows by the corpus (the PDFs here already include
-      a 4.4 MB and a 2.8 MB one, and `bun run health` watches clone cost).
-      If no, an ingested upload is the archival copy and must NOT be deleted,
-      which answers the retention question by itself.
-- [ ] **Decision 2 — the retention rule**, whichever way 1 goes, written down
-      in `library-ingestion` rather than left to each session's habit
-- [ ] whatever is decided, `deletion-requires-confirmation` still holds: the
-      pipeline reports what would go, with sizes, and a person decides. An
-      ingest step that silently removed somebody's upload is the `plj1` shape.
-- [ ] the nine remaining uploads reconciled with the rule, one way or the other
+- [x] Decision 1 — does a library entry carry its source? **No**, and it is
+      enforced by `check:l1-complete`'s contents check
+- [x] Decision 2 — the retention rule, written into `library-ingestion`
+      rather than left to each session's habit
+- [x] `deletion-requires-confirmation` restated for this case: never `rm` an
+      ingested upload; relocate, which is reversible
+- [ ] `fsh-guts/uploads/` confirmed as the sub-directory, or renamed
+- [ ] the nine surviving uploads retired, with a sidecar each
+- [ ] the five already-deleted sources restored from git history, or the
+      owner rules that they stay gone
+- [ ] whether `ingest --promote` should perform the retirement itself, or
+      whether it stays a separate deliberate step (an ingest step that moves
+      its own input is the shape `deletion-requires-confirmation` is most
+      wary of, so this is a real question rather than an obvious yes)
