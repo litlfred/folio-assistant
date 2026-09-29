@@ -24,27 +24,38 @@ and knows nothing else about it. Everything here is a file to read: text
 (<code>.md</code>), data (<code>.json</code>) and diagrams (<code>.bpmn</code>). Nothing here is a program, so
 you need nothing installed to use it.</p>
 <p>A capitalized word on this page is a defined term. It links to its definition
-the first time it appears. Every definition is in one file,
+the first time it appears, and <code>[src]</code> beside it opens the schema that defines
+it. Every definition is drawn on one page,
+<a href="schemas/README.html"><code>schemas/README.md</code></a>, from one file,
 <a href="schemas/graph.schema.json"><code>schemas/graph.schema.json</code></a>.</p>
+<p><strong>Contents</strong></p>
+<ol>
+<li><a href="#what-you-are-setting-up">What you are setting up</a>: what a repository becomes</li>
+<li><a href="#who-takes-part">Who takes part</a>: you, the person who asked, and the rest</li>
+<li><a href="#user-story">User story</a>: what you are here to do, in one sentence</li>
+<li><a href="#steps">Steps</a>: the six steps, drawn and then in order</li>
+<li><a href="#functional-requirements">Functional Requirements</a>: the eight rules the steps meet</li>
+<li><a href="#every-file-here">Every file here</a>: what each file is</li>
+</ol>
 <hr>
 <h2>What you are setting up</h2>
-<p>A <a href="schemas/graph.schema.json#/$defs/KnowledgeGraph">Knowledge Graph</a> is
+<p>A <a href="schemas/README.html#knowledge-graph">Knowledge Graph</a> (<a href="schemas/graph.schema.json#/$defs/KnowledgeGraph">src</a>) is
 information kept as files in a repository: things, and the named relations
 between them. One file at its root, <code>&#x3C;name>.json</code>, declares it. That file
 gives its name and lists its
-<a href="schemas/graph.schema.json#/$defs/Subgraph">Subgraphs</a>, the named directories
+<a href="schemas/README.html#subgraph">Subgraphs</a> (<a href="schemas/graph.schema.json#/$defs/Subgraph">src</a>), the named directories
 it is divided into.</p>
-<p>A <a href="schemas/graph.schema.json#/$defs/Harness">Harness</a> is what you use to work
+<p>A <a href="schemas/README.html#harness">Harness</a> (<a href="schemas/graph.schema.json#/$defs/Harness">src</a>) is what you use to work
 with a Knowledge Graph. A Harness is a Knowledge Graph too, declared the same
 way. This directory is the first Harness, <code>bootstrap</code>, declared by
 <a href="bootstrap.json"><code>bootstrap.json</code></a>.</p>
-<p><strong>Setting up a repository means making it one particular Harness.</strong> A person
-chooses which one, and the choice is hard to undo. Everything added to the
-repository afterwards is built on it.</p>
+<p><strong>Setting up a repository means instantiating one or more different kinds of
+Knowledge Graph Harness on the data in the repository.</strong> A person chooses which
+ones, and the choice is hard to undo.</p>
 <hr>
 <h2>Who takes part</h2>
-<p>An <a href="schemas/graph.schema.json#/$defs/Actor">Actor</a> is a person, an agent or a
-program. Each Actor takes a <a href="schemas/graph.schema.json#/$defs/Role">Role</a>, and
+<p>An <a href="schemas/README.html#actor">Actor</a> (<a href="schemas/graph.schema.json#/$defs/Actor">src</a>) is a person, an agent or a
+program. Each Actor takes a <a href="schemas/README.html#role">Role</a> (<a href="schemas/graph.schema.json#/$defs/Role">src</a>), and
 the four Roles here are declared in <a href="scenarios/roles.json"><code>scenarios/roles.json</code></a>:</p>
 <table>
 <thead>
@@ -73,7 +84,7 @@ the four Roles here are declared in <a href="scenarios/roles.json"><code>scenari
 </tbody>
 </table>
 <p>As the Bootstrapping Agent you have no Harness yet, so you have no
-<a href="schemas/graph.schema.json#/$defs/Tool">Tools</a> (programs to call). If a step
+<a href="schemas/README.html#tool">Tools</a> (<a href="schemas/graph.schema.json#/$defs/Tool">src</a>) (programs to call). If a step
 seems to need one, it belongs to the Harness you are about to set up, not to
 this one.</p>
 <hr>
@@ -88,11 +99,34 @@ up, or the reason it could not be is recorded.</p>
 <hr>
 <h2>Steps</h2>
 <p>The steps are drawn as a
-<a href="schemas/graph.schema.json#/$defs/Process">Process</a>,
+<a href="schemas/README.html#process">Process</a> (<a href="schemas/graph.schema.json#/$defs/Process">src</a>),
 <a href="processes/initialize-harness.bpmn"><code>initialize-harness.bpmn</code></a>. It is the only
 Process you start. Each step names the
-<a href="schemas/graph.schema.json#/$defs/Skill">Skill</a> to read and the Functional
+<a href="schemas/README.html#skill">Skill</a> (<a href="schemas/graph.schema.json#/$defs/Skill">src</a>) to read and the Functional
 Requirement it must meet (see the next section).</p>
+<pre><code class="language-text"> 1  Learn how to open files here
+ |
+ 2  Find the candidates  --- ask --->  the Requestor chooses one Harness
+ |
+ 3  Check each repository  --- already set up? --->  record it and stop
+ |
+ 4  Record that you are starting
+ |
+ 5  Follow the chosen Harness's own instructions
+ |
+ 6  Leave a README at the repository's root, if it has none
+
+    At any step: something cannot be found or read  --->  record it and stop
+</code></pre>
+<p>The same steps, and the Processes they start, as the diagrams themselves:</p>
+<!-- kg:processes:begin -->
+<p><strong>Determine the harness and repositories</strong>: <a href="processes/discussion.bpmn"><code>processes/discussion.bpmn</code></a>, the one you start.</p>
+<p><img src="processes/discussion.svg" alt="Determine the harness and repositories"></p>
+<p><strong>Initialize a harness</strong>: <a href="processes/initialize-harness.bpmn"><code>processes/initialize-harness.bpmn</code></a>, the one you start; it calls "Log a message".</p>
+<p><img src="processes/initialize-harness.svg" alt="Initialize a harness"></p>
+<p><strong>Log a message</strong>: <a href="processes/log-message.bpmn"><code>processes/log-message.bpmn</code></a>, started from "Initialize a harness".</p>
+<p><img src="processes/log-message.svg" alt="Log a message"></p>
+<!-- kg:processes:end -->
 <ol>
 <li>
 <p><strong>Learn how to open files here.</strong> Read
@@ -179,137 +213,246 @@ a step can name it: Functional Requirement 1 is FR-1.</p>
 </table>
 <hr>
 <h2>Every file here</h2>
+<p>Grouped by directory, each described from the file itself. "Used by" names the
+Process that reads a file, where a diagram says so.</p>
+<!-- kg:files:begin -->
+<p><strong>At the top</strong></p>
 <table>
 <thead>
 <tr>
 <th>file</th>
-<th>kind</th>
 <th>what it is</th>
+<th>used by</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="README.html"><code>README.md</code></a></td>
-<td>text</td>
-<td>this page</td>
+<td><a href="AGENTS.html"><code>AGENTS.md</code></a></td>
+<td>Phase one of two.</td>
+<td></td>
 </tr>
 <tr>
-<td><a href="AGENTS.html"><code>AGENTS.md</code></a></td>
-<td>text</td>
-<td>sends an agent that reads <code>AGENTS.md</code> first to this page</td>
+<td><a href="README.html"><code>README.md</code></a></td>
+<td>The flow, with every term linked to the schema that defines it.</td>
+<td></td>
 </tr>
 <tr>
 <td><a href="bootstrap.json"><code>bootstrap.json</code></a></td>
-<td>declaration</td>
-<td>this Harness's declaration: its Subgraphs and its files</td>
+<td>Bootstrap</td>
+<td></td>
 </tr>
+</tbody>
+</table>
+<p><strong><code>skills/</code></strong></p>
+<table>
+<thead>
 <tr>
-<td><a href="schemas/graph.schema.json"><code>schemas/graph.schema.json</code></a></td>
-<td>schema</td>
-<td>the shape of a declaration, and the definition of every term on this page</td>
+<th>file</th>
+<th>what it is</th>
+<th>used by</th>
 </tr>
-<tr>
-<td><a href="schemas/discussion.input.schema.json"><code>schemas/discussion.input.schema.json</code></a></td>
-<td>schema</td>
-<td>what you know before asking the Requestor</td>
-</tr>
-<tr>
-<td><a href="schemas/discussion.output.schema.json"><code>schemas/discussion.output.schema.json</code></a></td>
-<td>schema</td>
-<td>the Requestor's answer; a document matching it completes step 2</td>
-</tr>
-<tr>
-<td><a href="schemas/requirement.schema.json"><code>schemas/requirement.schema.json</code></a></td>
-<td>schema</td>
-<td>the shape of a Requirement: statements made with SHALL, SHOULD or MAY</td>
-</tr>
-<tr>
-<td><a href="schemas/model-registry.schema.json"><code>schemas/model-registry.schema.json</code></a></td>
-<td>schema</td>
-<td>the shape of <code>models/models.json</code></td>
-</tr>
-<tr>
-<td><a href="scenarios/roles.json"><code>scenarios/roles.json</code></a></td>
-<td>data</td>
-<td>the four Roles</td>
-</tr>
-<tr>
-<td><a href="skills/bootstrap-kg-navigation.html"><code>skills/bootstrap-kg-navigation.md</code></a></td>
-<td>Skill</td>
-<td>how to open anything here</td>
-</tr>
-<tr>
-<td><a href="skills/confirm-harness.html"><code>skills/confirm-harness.md</code></a></td>
-<td>Skill</td>
-<td>what to ask the Requestor</td>
-</tr>
-<tr>
-<td><a href="skills/discussion.html"><code>skills/discussion.md</code></a></td>
-<td>Skill</td>
-<td>how to ask</td>
-</tr>
-<tr>
-<td><a href="skills/log-message.html"><code>skills/log-message.md</code></a></td>
-<td>Skill</td>
-<td>how to record what you are doing</td>
-</tr>
-<tr>
-<td><a href="skills/root-readme.html"><code>skills/root-readme.md</code></a></td>
-<td>Skill</td>
-<td>how to write the root README</td>
-</tr>
+</thead>
+<tbody>
 <tr>
 <td><a href="skills/bootstrap-graph-emission.html"><code>skills/bootstrap-graph-emission.md</code></a></td>
-<td>Skill</td>
-<td>writing this Harness's own Knowledge Graph as a data file</td>
+<td>What bootstrap's own Knowledge Graph must be when it is written out as a data file, <code>.jsonld</code> with a <code>.json</code> copy.</td>
+<td></td>
 </tr>
 <tr>
 <td><a href="skills/bootstrap-graph-publication.html"><code>skills/bootstrap-graph-publication.md</code></a></td>
-<td>Skill</td>
-<td>publishing that file</td>
+<td>Where bootstrap's Knowledge Graph file is published, why its <code>@id</code> must be exactly that address, why a <code>.json</code> copy sits beside the <code>.jsonld</code>, and why the fi…</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="skills/bootstrap-kg-navigation.html"><code>skills/bootstrap-kg-navigation.md</code></a></td>
+<td>Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness.</td>
+<td>"Initialize a harness"</td>
+</tr>
+<tr>
+<td><a href="skills/confirm-harness.html"><code>skills/confirm-harness.md</code></a></td>
+<td>Narrow the harnesses and locations this could be, then have the Requestor settle it.</td>
+<td>"Initialize a harness"</td>
+</tr>
+<tr>
+<td><a href="skills/discussion.html"><code>skills/discussion.md</code></a></td>
+<td>discussion — settling what an agent cannot read off disk</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="skills/log-message.html"><code>skills/log-message.md</code></a></td>
+<td>Say what you are doing, to the Logger, in a form a reader can act on.</td>
+<td>"Initialize a harness", "Log a message"</td>
 </tr>
 <tr>
 <td><a href="skills/package-manifest.json"><code>skills/package-manifest.json</code></a></td>
+<td>What an agent reads before it knows whether this repository is an instance, what kind, or what for.</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="skills/root-readme.html"><code>skills/root-readme.md</code></a></td>
+<td>Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status.</td>
+<td>"Initialize a harness"</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>schemas/</code></strong>: The schemas bootstrap is checked against: <code>graph.schema.json</code>, the shape of a declaration and the definition of every term bootstrap uses; and the input and…</p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>what it is</th>
+<th>used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="schemas/README.html"><code>schemas/README.md</code></a></td>
+<td>Schemas, drawn</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="schemas/discussion.input.schema.json"><code>schemas/discussion.input.schema.json</code></a></td>
+<td>Discussion Input</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="schemas/discussion.output.schema.json"><code>schemas/discussion.output.schema.json</code></a></td>
+<td>Discussion Output</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="schemas/graph.schema.json"><code>schemas/graph.schema.json</code></a></td>
+<td>Knowledge Graph declaration</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="schemas/model-registry.schema.json"><code>schemas/model-registry.schema.json</code></a></td>
+<td>Model Registry</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="schemas/requirement.schema.json"><code>schemas/requirement.schema.json</code></a></td>
+<td>Requirement</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>scenarios/</code></strong>: bootstrap's four Roles: Bootstrapping Agent, Requestor, Knowledge Graph Data Store and Logger.</p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>what it is</th>
+<th>used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="scenarios/roles.json"><code>scenarios/roles.json</code></a></td>
 <td>data</td>
-<td>the list of Skills</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>processes/</code></strong>: bootstrap's Processes: <code>initialize-harness.bpmn</code>, the only one an Actor starts; <code>discussion.bpmn</code>, which it calls to ask the Requestor; and `log-message.bpmn…</p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>what it is</th>
+<th>used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="processes/discussion.bpmn"><code>processes/discussion.bpmn</code></a></td>
+<td>a Process: Determine the harness and repositories</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="processes/discussion.svg"><code>processes/discussion.svg</code></a></td>
+<td>the picture of <code>discussion.bpmn</code>, generated from it</td>
+<td></td>
 </tr>
 <tr>
 <td><a href="processes/initialize-harness.bpmn"><code>processes/initialize-harness.bpmn</code></a></td>
-<td>diagram</td>
-<td>the steps above</td>
+<td>a Process: Initialize a harness</td>
+<td></td>
 </tr>
 <tr>
-<td><a href="processes/discussion.bpmn"><code>processes/discussion.bpmn</code></a></td>
-<td>diagram</td>
-<td>asking the Requestor (step 2)</td>
+<td><a href="processes/initialize-harness.svg"><code>processes/initialize-harness.svg</code></a></td>
+<td>the picture of <code>initialize-harness.bpmn</code>, generated from it</td>
+<td></td>
 </tr>
 <tr>
 <td><a href="processes/log-message.bpmn"><code>processes/log-message.bpmn</code></a></td>
-<td>diagram</td>
-<td>recording what you are doing, and any failure</td>
+<td>a Process: Log a message</td>
+<td>"Initialize a harness"</td>
+</tr>
+<tr>
+<td><a href="processes/log-message.svg"><code>processes/log-message.svg</code></a></td>
+<td>the picture of <code>log-message.bpmn</code>, generated from it</td>
+<td></td>
 </tr>
 <tr>
 <td><a href="processes/ns.jsonld"><code>processes/ns.jsonld</code></a></td>
 <td>data</td>
-<td>the elements the diagrams add (<code>skill</code>, <code>role</code>, <code>precondition</code>), written <code>bootstrap.processes:</code></td>
-</tr>
-<tr>
-<td><a href="models/models.json"><code>models/models.json</code></a></td>
-<td>data</td>
-<td>which languages each model is good at, and whether a person checked; empty until one does</td>
-</tr>
-<tr>
-<td><a href="glossary/glossary-ledger.json"><code>glossary/glossary-ledger.json</code></a></td>
-<td>data</td>
-<td>every term the glossary has held, with when it first appeared and when it was retired</td>
-</tr>
-<tr>
-<td><a href="test/results/"><code>test/results/</code></a></td>
-<td>results</td>
-<td>what auditing this Harness found, one file per Skill, Process and Role</td>
+<td></td>
 </tr>
 </tbody>
 </table>
+<p><strong><code>models/</code></strong>: Which languages a model is good at, and whether anybody checked.</p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>what it is</th>
+<th>used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="models/models.json"><code>models/models.json</code></a></td>
+<td>Which languages a model is good at, and whether anybody checked.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>glossary/</code></strong>: The swimlane glossary's retirement ledger.</p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>what it is</th>
+<th>used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="glossary/glossary-ledger.json"><code>glossary/glossary-ledger.json</code></a></td>
+<td>data</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>test/results/</code></strong>: What auditing THIS instance produced, committed so a consumer can tell "never audited" from "audited clean" — a printed verdict cannot, which is why every QA…</p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>what it is</th>
+<th>used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="test/results/"><code>test/results/</code></a></td>
+<td>16 files, in subdirectories</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<!-- kg:files:end -->
 
 </body>
 </html>
