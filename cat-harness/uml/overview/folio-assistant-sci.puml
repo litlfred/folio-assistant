@@ -20,6 +20,12 @@ package "folio-assistant-sci/library" as pkg_folio_assistant_sci_library <<libra
     inspected_at [1] : string
     verdicts [1] : Record<string, Record<string, Verdict>>
   }
+  class "folio-vector-labels/v1" as folio_assistant_sci_library_folio_vector_labels_v1_folio_vector_labels_v1 <<json: VectorLabelsSidecarSchema>> #f4f4f1 {
+    $schema [1] : 'folio-vector-labels/v1'
+    doc_id [1] : string
+    pages [1] : object[] | null
+    undetermined_reason [0..1] : string
+  }
 }
 package "folio-assistant-sci/voices" as pkg_folio_assistant_sci_voices <<voices>> {
   class "Source" as folio_assistant_sci_voices_Source <<json: VoiceProfileSchema>> #e8f0ee {
@@ -66,6 +72,9 @@ package "folio-assistant-sci/voices" as pkg_folio_assistant_sci_voices <<voices>
     superseded [0..1] : object
   }
 }
+package "folio-assistant-sci/sci-methodologies" as pkg_folio_assistant_sci_sci_methodologies <<methodology>> {
+  note "methodology: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_sci_sci_methodologies_methodology
+}
 package "folio-assistant-sci/qa" as pkg_folio_assistant_sci_qa <<qa>> {
   class "Pair_attestation" as folio_assistant_sci_qa_kg_qa_v1_Pair_attestation <<json: KgQaReportSchema>> #f4e6e6 {
     kind [1] : implements | co-located
@@ -95,6 +104,7 @@ folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Pattern : 
 folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Terminology : terminology
 folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_Rule : rules
 folio_assistant_sci_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" folio_assistant_sci_qa_kg_qa_v1_Pair_attestation : pair_attestations
-' grid: portrait, 2 column(s) — pkg_folio_assistant_sci_library pkg_folio_assistant_sci_voices pkg_folio_assistant_sci_qa
-pkg_folio_assistant_sci_library -[hidden]down- pkg_folio_assistant_sci_qa
+' grid: portrait, 2 column(s) — pkg_folio_assistant_sci_library pkg_folio_assistant_sci_voices pkg_folio_assistant_sci_sci_methodologies pkg_folio_assistant_sci_qa
+pkg_folio_assistant_sci_library -[hidden]down- pkg_folio_assistant_sci_sci_methodologies
+pkg_folio_assistant_sci_voices -[hidden]down- pkg_folio_assistant_sci_qa
 @enduml

@@ -203,6 +203,36 @@ Two things this rules out, both of which read as complete to their author:
 - **An option label carrying the trade-off and a description carrying nothing**
   — or the reverse. A label is a handle; the description is the argument.
 
+#### The question goes in the chat too — both, every time (STRICT)
+
+The rule above makes the **structured fields** stand alone. This is its mirror:
+the **chat** must stand alone as well. Every question handed to the person is
+written **in the chat, as text** — the question, the numbered options, the
+recommendation and what happens with no answer — **and** asked through the
+selection tool. Neither copy may depend on the other.
+
+**Owner, 2026-09-29**, after a selection box was dismissed by accident:
+*"reask question... dismall accidental. always put q in chat and structured"*.
+The question had been asked in the selection tool only. Dismissing the box
+closed it, and nothing in the chat still said what was being asked, so the
+decision vanished with one stray tap. For a person with limited hand function
+a stray tap is the ordinary case, not the edge case.
+
+**A dismissal is not an answer.** The tool reports a dismissed box as "do not
+proceed", and the right move is exactly that: proceed on nothing. The question
+stays open in the chat text, and the next turn re-asks it through the selection
+tool when the person indicates it was accidental — never treat the dismissal as
+a choice of any option, including the default. (The stated default governs
+**silence** over time, not a dismissal.)
+
+Two things this rules out:
+
+- **A question that exists only inside the selection tool.** One dismissal, one
+  connection drop or one client that does not render the box, and the decision
+  is gone with no trace in the conversation.
+- **A chat that says "see the question below".** A pointer to the box is not
+  the question; if the box goes, the pointer points at nothing.
+
 And when you are the one **relaying** somebody else's blocked question: say
 that you are relaying, and say where the answer has to be given. An answer
 typed at the relay does not reach the asker.
