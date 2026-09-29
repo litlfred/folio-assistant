@@ -15,6 +15,10 @@ Found 2026-09-24 in a 1-day goal review. The rule concerned is `goal-review` §"
 
 This is the skill's own rule 4 ("a window boundary is an artefact") one level down, and it is not stated for this axis. A reader following the axis as written reports a 131-bean hidden epic that does not exist.
 
+## Related, and not a duplicate: `065p` (2026-09-27, `bff39c0`)
+
+`065p` added to axis 4: *"Compare against `origin/main`, never a bare `main`"*, plus a freshness check on the baseline ref. That closes a stale **local ref**. It does not close this gap. Here the baseline was `origin/main` and fresh, and the error came from `A...B`, which diffs against the **merge base**. For a branch 822 commits behind, the merge base predates 130 beans that main already has. The two traps give the same symptom, an inflated count, from different causes. The fix below belongs beside `065p`'s paragraph, not in place of it.
+
 ## Done when
 - [ ] axis 4 says to compare by bean id against the default branch's store, never by file diff against a merge base
 - [ ] it gives the check (ids on the branch minus ids on main) and says a large file-diff count from a far-behind branch is the stale-base signature
