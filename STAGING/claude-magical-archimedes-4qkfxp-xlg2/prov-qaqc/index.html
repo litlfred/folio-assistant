@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/css/docs-ui.css?v=1790722799">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/css/docs-ui.css?v=1790724265">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/css/narrow-viewport.css?v=1790722799">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/css/narrow-viewport.css?v=1790724265">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/css/work-plan.css?v=1790722799">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/css/work-plan.css?v=1790724265">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/css/themes.css?v=1790722799">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/css/themes.css?v=1790724265">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/css/uml.css?v=1790722799">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/css/uml.css?v=1790724265">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/css/avatars.css?v=1790722799">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/css/avatars.css?v=1790724265">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/js/docs-ui.js?v=1790722799" defer></script>
+<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/js/docs-ui.js?v=1790724265" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -808,7 +808,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h2>
     
 
-<p>6 instance(s), 66 step(s) checked, 66 <code class="language-plaintext highlighter-rouge">prov:Activity</code> emitted, 70 finding(s). Policies evaluated: <code class="language-plaintext highlighter-rouge">https://litlfred.github.io/folio-assistant/policies/folio-defaults</code>, <code class="language-plaintext highlighter-rouge">https://litlfred.github.io/folio-assistant/policies/http-gateway</code>.</p>
+<p>7 instance(s), 78 step(s) checked, 78 <code class="language-plaintext highlighter-rouge">prov:Activity</code> emitted, 72 finding(s). Policies evaluated: <code class="language-plaintext highlighter-rouge">https://litlfred.github.io/folio-assistant/policies/folio-defaults</code>, <code class="language-plaintext highlighter-rouge">https://litlfred.github.io/folio-assistant/policies/http-gateway</code>.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -836,12 +836,12 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">not-eligible</code></td>
-      <td>0</td>
+      <td>1</td>
       <td>the actor’s <code class="language-plaintext highlighter-rouge">roles</code> do not include the role the lane binds</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">unknown</code></td>
-      <td>55</td>
+      <td>56</td>
       <td>no ODRL policy grants <code class="language-plaintext highlighter-rouge">perform-task</code> here; <code class="language-plaintext highlighter-rouge">unknown</code> is never permit</td>
     </tr>
     <tr>
@@ -1510,6 +1510,44 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><code class="language-plaintext highlighter-rouge">A_Synthesise</code></td>
       <td><code class="language-plaintext highlighter-rouge">unknown</code></td>
       <td>no policy grants perform-task for Process_CRDM_Needs/A_Synthesise as authoring-agent</td>
+    </tr>
+  </tbody>
+</table></div>
+<h3 id="sampleimportxlg2-wpro-trial">
+  
+  
+    <a href="#sampleimportxlg2-wpro-trial" class="anchor-heading" aria-labelledby="sampleimportxlg2-wpro-trial"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> sampleimport–xlg2-wpro-trial
+  
+  
+</h3>
+    
+
+<p>12 step(s) checked, 12 <code class="language-plaintext highlighter-rouge">prov:Activity</code> emitted, 2 finding(s). Sources: <code class="language-plaintext highlighter-rouge">cat-harness/processes/sample-import.bpmn</code>, <code class="language-plaintext highlighter-rouge">cat-harness/processes/materialize-remote.bpmn</code>. <a href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/assets/prov/sampleimport--xlg2-wpro-trial.prov.jsonld">PROV JSON-LD</a></p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>instance</th>
+      <th>entry</th>
+      <th>node</th>
+      <th>finding</th>
+      <th>detail</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sampleimport--xlg2-wpro-trial</code></td>
+      <td>2</td>
+      <td><code class="language-plaintext highlighter-rouge">Call_Materialize</code></td>
+      <td><code class="language-plaintext highlighter-rouge">not-eligible</code></td>
+      <td>claude may act as authoring-agent, business-analyst, code-reviewer, not as ingestion-agent</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sampleimport--xlg2-wpro-trial</code></td>
+      <td>2</td>
+      <td><code class="language-plaintext highlighter-rouge">Call_Materialize</code></td>
+      <td><code class="language-plaintext highlighter-rouge">unknown</code></td>
+      <td>no policy grants perform-task for Process_SampleImport/Call_Materialize as ingestion-agent</td>
     </tr>
   </tbody>
 </table></div>
