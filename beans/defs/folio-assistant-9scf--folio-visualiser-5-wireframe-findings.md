@@ -23,3 +23,13 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/folio/` (intent.m
 Related: `folio-assistant-7ofc`, `folio-assistant-6lb8`
 
 When fixed, re-draw `cat-harness/docs/wireframes/folio/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+
+## Re-verified 2026-09-29 on `main` 35402147f
+
+Each finding re-measured on a local build of that commit, at 1280×800 and 390×844, both colour schemes where contrast is involved. 3 still present, 2 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **FIXED** — Horizontal scroll at phone width: At 390: scrollWidth 390 (was 769). Node table overflow-x:auto, scrollWidth 560 inside a 296px box; page does not pan. — 76b34f8ec
+- **FIXED** — The mount handle covers the heading: h1 text box 1280: x127-325 y64-91; 390: x75-273 y64-91. .fa-glass-handle fixed at y0-28 (x596-684 / x151-239): no overlap at either width.
+- **STILL-PRESENT** — Links are not links: Node table 'links' column: 0 a[href] in any cell; cat-harness cell is 6 labels joined by <br>; no word 'resolv*' anywhere on page.
+- **STILL-PRESENT** — Long cells stretch the rows: Node-table row heights at 1280: 63/245/154/63/63 px (cat-harness row ~4x); at 390: 222/427/405/359/268.
+- **STILL-PRESENT** — Tables have no caption or heading: Both tables: no <caption>, no aria-label; preceding sibling is a DIV (stat line / previous table), not a heading.

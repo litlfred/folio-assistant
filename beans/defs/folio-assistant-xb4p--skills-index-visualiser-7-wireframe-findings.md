@@ -23,3 +23,15 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/skills-index/` (i
 7. **The small siblings get the same heavy page shell.** `kg-navigation` and `who-iris-skills` have one row each, but they repeat the full lede, note and four-row sibling list above it. At 390 px their only row starts at y ≈ 655.
 
 When fixed, re-draw `cat-harness/docs/wireframes/skills-index/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+
+## Re-verified 2026-09-29 on `main` 35402147f
+
+Each finding re-measured on a local build of that commit, at 1280×800 and 390×844, both colour schemes where contrast is involved. 7 still present, 0 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — 1. Horizontal scroll at phone width; descriptions cut: 390x844: the document itself no longer scrolls sideways (scrollWidth 390, was 421). But the table is now overflow-x:auto with a right-edge fade mask (scrollWidth 344 vs clientWidth 296), and the description cell is at left 164, width 255, right edge 419 > 390. 39 of the first 39 rows are cut ('no description in the …
+- **STILL-PRESENT** — 2. One very long flat list: 270 rows (was 240), 0 folder headings, 0 filter/search inputs. docH 22,417px at 1280 and 67,046px at 390 (was 40,578).
+- **STILL-PRESENT** — 3. Skills with no description: 49 of 270 rows read 'no description in the artefact' (was 50/240). latex-authoring is still the first such row.
+- **STILL-PRESENT** — 4. Descriptions cut at 220 chars with no way to read the rest: 34 descriptions end in '…'. wireframe-design-review still ends '…mechanical checks at both vie…'.
+- **STILL-PRESENT** — 5. Markdown shows through (literal backticks): 24 descriptions contain literal backticks, e.g. 'Declare a harness this one knows about and does not hold (`associatedHarnesses`)…'.
+- **STILL-PRESENT** — 6. Phone layout favours the path: On the main skills page at 390 the balance flipped: name+path cell 89px, description 255px. The path breaks anywhere (overflow-wrap:anywhere, 'latex-/authori/ng'). On the small siblings it is still path-heavy: who-iris-skills 180px vs 115px description, large-datasets-skills 184px vs 112px.
+- **STILL-PRESENT** — 7. Small siblings get the same heavy page shell: 1 row, still preceded by the lede, the note and a now 5-row sibling list. At 390 the only row starts at y≈811 (was ≈655). Same for large-datasets-skills (3 rows, first at y≈811).

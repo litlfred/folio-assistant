@@ -22,3 +22,14 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/translation-statu
 6. **The accessibility markup is right.** Row headers use `th scope="row"` and column headers use `scope="col"`. This is recorded so a redesign keeps it.
 
 When fixed, re-draw `cat-harness/docs/wireframes/translation-status/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+
+## Re-verified 2026-09-29 on `main` 35402147f
+
+Each finding re-measured on a local build of that commit, at 1280×800 and 390×844, both colour schemes where contrast is involved. 5 still present, 1 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **FIXED** — Horizontal scroll at phone width: At 390x844 document scrollWidth 390 (was 509). Table is now its own scroll box (display:block; overflow-x:auto; scrollWidth 493 / clientWidth 318). Caveat: 'fuzzy' (x=380) and 'untranslated' (x=437) still start off-screen inside that box; 'catalogues / templates' header still wraps to 3 lines (th height 76px). — 76b34f8ec
+- **STILL-PRESENT** — Page is always dark: prefers-color-scheme light → body bg rgb(13,13,13), fg rgb(255,255,255), data-fa-scheme unset. Only a saved localStorage fa-color-scheme=light turns it light (bg rgb(249,249,247)) — partial, commit 805bbd1ba. No prefers-color-scheme handling, no on-page control. — 805bbd1ba
+- **STILL-PRESENT** — Locales shown as bare codes: Row headers th[scope=row]: 'ar','es','fr','ru','zh' — no language names.
+- **STILL-PRESENT** — Two questions not visually separated: 'catalogues / templates' cells have the same computed style as the string columns (bg transparent, weight 400, no borders, 16px). Explanation 'Two questions, not one.' is still a note below the table (y=528 vs table y=134).
+- **STILL-PRESENT** — Nothing links onward / dead end: PARTIAL: a nav.fa-nav now gives 25 links (graphs, harnesses, home '../') — way back fixed. Still 0 links to fr catalogues, .pot list or the translation-manager skill; main content has no links.
+- **STILL-PRESENT** — Accessibility markup is right (keep): Positive finding preserved: 6 th[scope=col], 5 th[scope=row].

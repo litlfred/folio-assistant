@@ -23,3 +23,15 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/processes/` (inte
 7. **`nav_exclude: true` on all 69 pages.** The pages are reachable only through the Processes icon (a glyph with an accessible name but no visible label at rest), the Folders list, the C@T Harness divider's "processes" link, or search. The theme's own navigation never lists them.
 
 When fixed, re-draw `cat-harness/docs/wireframes/processes/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+
+## Re-verified 2026-09-29 on `main` 35402147f
+
+Each finding re-measured on a local build of that commit, at 1280×800 and 390×844, both colour schemes where contrast is involved. 7 still present, 0 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — 'Searchable' in H1 but no search/filter control: H1 still 'Processes — every executable diagram, searchable'. Only input on page is the theme's site search #search-input ('Search folio-assistant', outside main, now shown at top of content). No filter input/select inside main (0). 7 tables, process table 74 rows.
+- **STILL-PRESENT** — Index is five long tables; 'On this page' only in opened sidebar: Tables now 4/74/99/105/3/2/14 rows. details.fa-doc-index 'ON THIS PAGE 8' is visible at rest at 390x844 (summary at y=96, full width, elementFromPoint hits it) — FIXED on mobile. At 1280x800 the summary sits in the 55px collapsed strip at (0,299) but elementFromPoint at its centre hits a.nav-list-link, and screensho…
+- **STILL-PRESENT** — Skill -> process 'run by' column not linked: Table 'skill | run by': 99 rows, 0 cells contain an <a>; values are <code>*.bpmn</code> text.
+- **STILL-PRESENT** — BPMN diagram unreadable at phone width at rest: At 390x844 inline svg is 346px wide for viewBox width 830 → scale 0.42; 12px diagram text renders ≈5px (was ≈3px at 1330 viewBox). Zoom controls (−,+,Reset,Full width,SVG,PNG,Copy) still needed to read it. Improved but still unreadable.
+- **STILL-PRESENT** — Purpose ~330 words above diagram; lanes/steps cells long and scroll sideways on mobile: At 390: purpose now 4 paragraphs (86+110+68+44 ≈ 308 words) at y=685–1500; diagram starts y=1639 (≈1.9 screens down). Longest td cells 172/146/137 words. One .table-wrapper scrollWidth 456 > clientWidth 362.
+- **STILL-PRESENT** — 'undocumented steps' column mixes '—' with numbers: Column 'undocumented steps': 72 cells '—', 2 cells '1' (74 rows).
+- **STILL-PRESENT** — nav_exclude on all process pages; reachable only via unlabeled icon etc.: Source: 75 of 75 cat-harness/docs/processes/*.md carry nav_exclude: true. Theme .nav-list contains 0 links to processes/. Navbar a.fa-nav-icon[href$='/processes/'] has innerText '' (aria-label/title 'Processes' only) at 1280.

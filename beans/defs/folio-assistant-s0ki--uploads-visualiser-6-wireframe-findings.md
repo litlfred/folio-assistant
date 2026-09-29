@@ -24,3 +24,14 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/uploads/` (intent
 Related: `folio-assistant-v1hw`
 
 When fixed, re-draw `cat-harness/docs/wireframes/uploads/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+
+## Re-verified 2026-09-29 on `main` 35402147f
+
+Each finding re-measured on a local build of that commit, at 1280×800 and 390×844, both colour schemes where contrast is involved. 5 still present, 1 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — Lead number is not what the list leads with: Lead badge '16 waiting to be ingested'; default sort 'State ▴' puts all 34 ingested rows first (order iiii…×34 then w×16). First waiting row at y=2741 at 1280x800, y=4114 at 390x844.
+- **FIXED** — Horizontal scroll at phone width: At 390x844 document scrollWidth 390 (was 537); the table is its own scroll box (scrollWidth 630 / clientWidth 302). Caveat: Type (x=527), Size (578), Queue (626) still start off-screen inside it. — 76b34f8ec
+- **STILL-PRESENT** — Sorting is mouse-only: 6 thead th: tabindex null, aria-sort null, no <button>, no role, on all; order shown only by '▴' glyph in 'State ▴'.
+- **STILL-PRESENT** — Lead badge emphasis is colour alone: .badge.lead b colour rgb(154,103,0) vs other badges rgb(31,35,40); font-weight 700 on all four — colour is the only difference. Contrast 4.57:1 on #f6f8fa (light), 6.85:1 dark.
+- **STILL-PRESENT** — Size wraps inside its cell at 1280: Worse: at 1280 the Size column is 64px wide and 48 of 50 size cells wrap to two lines (e.g. '3.6 / MB', '646 / KB'; row screenshot confirms), white-space normal.
+- **STILL-PRESENT** — Unhelpful filenames get equal weight, no grouping: 12 rows named 'ChatGPT Image …' or a UUID; single tbody, 0 group rows/captions; 50 rows.

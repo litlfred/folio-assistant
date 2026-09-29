@@ -21,3 +21,13 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/todos/` (intent.m
 5. **No way back to the site.** There is no `nav` or `header` and no link home. The page is dark by default, with no scheme control. (→ `folio-assistant-dc64`)
 
 When fixed, re-draw `cat-harness/docs/wireframes/todos/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+
+## Re-verified 2026-09-29 on `main` 35402147f
+
+Each finding re-measured on a local build of that commit, at 1280×800 and 390×844, both colour schemes where contrast is involved. 5 still present, 0 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — Items not on the page (only '1 open / 3 total'): [data-fa-workplan] renders only 'TODOS — THE HUMAN HALF / 1 open / 3 total' (0 links, none of the 3 item summaries present) although assets/todos/index.json has 3 items.
+- **STILL-PRESENT** — 'Open' means something different from beans page: Panel still shows '1 open' with 3 items of status open/blocked/in_progress — counts status==open only.
+- **STILL-PRESENT** — First screen is mostly the list of other graphs: At 1280x800 the workplan panel is 117px tall (y=112); 'State graphs this harness declares' list starts y=292 and fills the rest (7 cards). Same at 390x844 (panel y=112 h=117, list y=292).
+- **STILL-PRESENT** — Heading order skips a level; tags run into names: Headings: H1 'todos' → H3 'Todos — the human half' (skips h2). Card h2 textContent: 'beanslive','healthdeclared','todoslive',… (span.sv-tag has no separator).
+- **STILL-PRESENT** — No way back to the site; dark by default, no scheme control: PARTIAL: nav.fa-nav[aria-label=folio-assistant] now present with 3 links home ('../') — way back FIXED (fa-nav, e.g. 805bbd1ba/earlier viewer-nav work). Still dark under prefers-color-scheme: light (body bg rgb(13,13,13), fg #fff); follows only a saved localStorage fa-color-scheme=light (then bg rgb(249,249,247), co… — 805bbd1ba
