@@ -100,7 +100,13 @@ is not, ANP costs more for nothing.
 Aggregation methods are **total by construction**: every alternative gets a
 score, so one always wins. Nothing in the family reports "these two are not
 distinguishable on this evidence", and nothing reports that a criterion was
-missing. That is the opposite of the three-state discipline the rest of this
+missing.
+
+And the choice of method is itself load-bearing. The chapter's own abstract
+promises *"a consolidated summary [that] shows how different methods can lead
+to variations in the final rankings"* — so a ranking is a joint product of the
+matrix, the weights AND the method, and reporting one without naming the method
+states a conclusion the evidence does not carry on its own. That is the opposite of the three-state discipline the rest of this
 repository keeps, and an agent handing a ranking to a person should say which
 of the top scores are within the noise of the weights that produced them —
 the chapter does not, because it is teaching the algorithms.
