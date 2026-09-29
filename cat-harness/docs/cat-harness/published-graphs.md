@@ -161,11 +161,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `methodology`
 
-1 of 3 published.
+1 of 4 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/methodologies/' | relative_url }})
 - folio-assistant-core — *declared, not published*
+- folio-assistant-sci — *declared, not published*
 - SMART Base — *declared, not published*
 
 ### `models`
@@ -310,7 +311,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - [C@T Harness]({{ '/uploads/' | relative_url }})
 - [Folio Assistant]({{ '/cat-harness/uploads/folio-assistant/' | relative_url }})
-- [WHO IRIS]({{ '/cat-harness/library/who-iris/' | relative_url }})
+- [WHO IRIS]({{ '/cat-harness/uploads/who-iris/' | relative_url }})
 
 ### `voices`
 

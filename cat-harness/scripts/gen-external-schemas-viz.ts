@@ -53,6 +53,7 @@ import {
   unusedNamespaces,
   type ExternalSchema,
 } from "../schemas/external-schema.js";
+import { handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REPO = resolve(INSTANCE_ROOT, "..");
@@ -338,7 +339,8 @@ if (import.meta.main) {
   }
 
   const users = declaredUsers(specs);
-  const rendered = page(specs, users, namespacesInUse());
+  // The page says which directories it draws (#1168 B7a-2).
+  const rendered = withRendersFrontMatter(page(specs, users, namespacesInUse()), handledDirectories(REPO, INSTANCE_ROOT, KIND));
   const out = join(baseDocs(REPO), PAGE);
 
   if (check) {

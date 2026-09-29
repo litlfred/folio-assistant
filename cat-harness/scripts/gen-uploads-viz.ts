@@ -95,6 +95,7 @@ import {
   siteDirFor,
 } from "../schemas/cat-harness.ts";
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
+import { withRenders } from "./viewer-declarations.js";
 
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
@@ -326,7 +327,7 @@ const emitPage = (nav: ViewerNav) => makeEmit({ check, onStale: () => { stale++;
 if (import.meta.main) {
   const repoRoot = repoRootFor(ROOT);
   const site = join(ROOT, siteDirFor(ROOT));
-  const g = readLibraryGraph(instanceRootsIn(repoRoot));
+  const g = readLibraryGraph(instanceRootsIn(repoRoot), repoRoot);
   if (g === null) {
     console.log("  · no library graph could be read — nothing to publish");
     process.exit(0);
@@ -352,7 +353,11 @@ if (import.meta.main) {
   // sits on the uploads route, so the tile opens a queue view.
   const { pageDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, "library");
   const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
-  emitPage(nav)(join(pageDir, "index.html"), viewerHtml(dataHref));
+  // Each page says which directories it draws (#1168 B7a-2): the upload
+  // queues it shows — every one here, the subject's own on a subject page.
+  const drawn = (subject?: string): string[] =>
+    g.queues.filter((q) => subject === undefined || q.instance === subject).map((q) => q.dir);
+  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn()));
 
   // One page per SUBJECT — read from the QUEUES rather than from the declared
   // directory list, so a declared-but-empty uploads directory gets no page
@@ -360,7 +365,7 @@ if (import.meta.main) {
   const subjects = [...new Set(g.queues.map((q) => q.instance))].sort();
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, "library");
-    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
+    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject)));
   }
 
   if (!check) {

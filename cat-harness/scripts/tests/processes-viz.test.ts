@@ -30,7 +30,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
 import { docsLayers } from "../compose-docs.js";
-import { page, pageRelPath, processRows, skillToProcesses } from "../gen-processes-viz.js";
+import { page, pageRelPath, publishedIndex, processRows, skillToProcesses } from "../gen-processes-viz.js";
 import { ownElementPattern } from "../../schemas/namespaces.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
@@ -236,6 +236,6 @@ describe("the committed page is current", () => {
   it("and matches what the generator produces now", () => {
     // A stale page fails the unit suite rather than only the gate, which is
     // where it is noticed first.
-    expect(readFileSync(join(DOCS, pageRelPath(REPO)!), "utf-8")).toBe(page(rows));
+    expect(readFileSync(join(DOCS, pageRelPath(REPO)!), "utf-8")).toBe(publishedIndex(rows));
   });
 });

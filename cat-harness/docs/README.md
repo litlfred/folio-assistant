@@ -44,10 +44,10 @@ Part of [C@T Harness](../README.md), declared as `docs`, holding `docs`.
 | [`_includes/`](_includes/) | 9 files | |
 | [`ar/`](ar/) | 13 files | |
 | [`architecture/`](architecture/) | 8 files | |
-| [`assets/`](assets/) | 447 files | |
+| [`assets/`](assets/) | 451 files | |
 | [`beans/`](beans/) | 1 file | |
 | [`bootstrap/`](bootstrap/) | 1 file | |
-| [`cat-harness/`](cat-harness/) | 42 files | |
+| [`cat-harness/`](cat-harness/) | 44 files | |
 | [`es/`](es/) | 13 files | |
 | [`external-schemas/`](external-schemas/) | 1 file | |
 | [`fr/`](fr/) | 13 files | |
@@ -70,7 +70,7 @@ Part of [C@T Harness](../README.md), declared as `docs`, holding `docs`.
 | [`todos/`](todos/) | 1 file | |
 | [`tools/`](tools/) | 1 file | |
 | [`translation-status/`](translation-status/) | 1 file | |
-| [`uml/`](uml/) | 124 files | |
+| [`uml/`](uml/) | 126 files | |
 | [`uploads/`](uploads/) | 1 file | |
 | [`wireframes/`](wireframes/) | 140 files | |
 | [`zh/`](zh/) | 13 files | |
