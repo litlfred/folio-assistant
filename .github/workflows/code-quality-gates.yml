@@ -924,6 +924,12 @@ jobs:
       - name: bootstrap's README generated sections are current
         run: bun run readme:sync:bootstrap:check
 
+      # One README per declared directory, generated from the declaration by
+      # `subgraph-readmes` (owner, 2026-09-29). The pre-commit hook runs the
+      # same check; this is the gate a commit that skipped the hook still meets.
+      - name: Every declared directory's README is current
+        run: bun run readme:subgraphs:check
+
       # Agent memory is authored under `memory/` and ASSEMBLED into
       # `.claude/agent-memory/<agent>/MEMORY.md`, which is what the Claude Code
       # harness injects. An entry edited and never assembled is a fact the

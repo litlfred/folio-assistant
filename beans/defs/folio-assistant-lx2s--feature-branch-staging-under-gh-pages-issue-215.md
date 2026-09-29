@@ -1,11 +1,11 @@
 ---
 # folio-assistant-lx2s
 title: 'Feature-branch staging under gh-pages (issue #215)'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-17T22:29:53Z
-updated_at: 2026-09-20T14:37:30Z
+updated_at: 2026-09-29T20:50:33Z
 parent: folio-assistant-1xhc
 ---
 
@@ -173,3 +173,9 @@ Three items remain open and none is mechanical:
 The mechanism runs — `feature-staging.yml` deploys previews, and it did so for
 this very sweep's PRs. The issue's scope is wider than the mechanism, which is
 what the earlier correction established and why *"it works"* was too fast.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

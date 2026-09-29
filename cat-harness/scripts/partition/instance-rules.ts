@@ -743,6 +743,9 @@ export const RULES: Rule[] = [
       // Its drawn page, `bootstrap/schemas/README.md`. Beside the generator
       // that calls it, and for the same reason: bootstrap holds no code.
       "scripts/bootstrap-schema-page.ts",
+      // A README per declared directory, from the declaration. Core beside
+      // `readme-sections`, whose file description and 'used by' it reuses.
+      "scripts/subgraph-readmes.ts",
       "scripts/check-docs-populated.ts",     // every harness owes one populated doc page
       "scripts/library-refs.ts",             // who references a slug — the L1 property
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
@@ -1342,6 +1345,7 @@ export const RULES: Rule[] = [
       "scripts/check-quiet-claim-liveness.ts", // the work plan's own state against the remote (bean `omki`)
       "scripts/skill-governance.ts",        // which skill governs a directory, read from the skills (#1168 B7b)
       "scripts/docs-declarations.ts",       // which page documents a directory, read from the pages (#1168 B7c)
+      "scripts/viewer-declarations.ts",     // which viewer page draws a directory, read from the pages (#1168 B7a-2)
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
       "scripts/ingest-ig-menu.ts",        // a FHIR IG's own navigation, read from its sushi-config (bean `0818`)
       "scripts/check-code-accounting.ts", // the two questions about a code file, kept apart (bean `ylj7`)

@@ -58,6 +58,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.js";
 
 import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../../cat-harness/schemas/ig-menu.js";
 import {
@@ -838,6 +839,9 @@ function committed(): Map<string, string> {
     for (const e of readdirSync(dir, { withFileTypes: true }).sort((x, y) => x.name.localeCompare(y.name))) {
       if (e.name.startsWith(".")) continue;
       const rel = prefix ? join(prefix, e.name) : e.name;
+      // The directory's own README is written by `subgraph-readmes`, not by
+      // this generator, so it is neither one of these pages nor an orphan.
+      if (!e.isDirectory() && isDirectoryReadme(rel)) continue;
       if (e.isDirectory()) walk(join(dir, e.name), rel);
       else out.set(rel, readFileSync(join(dir, e.name), "utf8"));
     }
@@ -860,8 +864,16 @@ if (CHECK) {
   }
   console.log(`✓ smart-trust docs are current — ${pages.size} page(s) over ${ix.count} artefacts`);
 } else {
-  // Rebuilt wholesale so a removed artefact cannot leave a page behind.
+  // Rebuilt wholesale so a removed artefact cannot leave a page behind — all
+  // but the directory's README, which another generator owns and is carried
+  // across the rebuild unchanged.
+  const readme = join(OUT, "README.md");
+  const keptReadme = existsSync(readme) ? readFileSync(readme, "utf8") : undefined;
   if (existsSync(OUT)) rmSync(OUT, { recursive: true });
+  if (keptReadme !== undefined) {
+    mkdirSync(OUT, { recursive: true });
+    writeFileSync(readme, keptReadme);
+  }
   for (const [rel, html] of pages) {
     const abs = join(OUT, rel);
     mkdirSync(join(abs, ".."), { recursive: true });

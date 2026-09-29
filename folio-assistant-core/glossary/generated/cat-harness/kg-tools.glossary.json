@@ -606,6 +606,14 @@
       "status": "candidate"
     },
     {
+      "id": "subgraph-readmes",
+      "prefLabel": "Directory READMEs from the Knowledge Graph",
+      "definition": "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
+      "notation": "subgraph-readmes",
+      "source": "cat-harness/tools/index.ts#subgraph-readmes",
+      "status": "candidate"
+    },
+    {
       "id": "tabular-csv",
       "prefLabel": "CSV tabular metadata (STUB)",
       "definition": "STUB — not implemented. Would read a delimited text file into CSVW: one table, its columns and their datatypes. A CSV has no sheets and no cells outside the table, so `fac:anchor.sheet` and `fac:anchor.cell` are a determined null rather than an absence. Routing a CSV is not a sniff — it has no magic bytes — and must not become an extension guess (bean `p67i`).",

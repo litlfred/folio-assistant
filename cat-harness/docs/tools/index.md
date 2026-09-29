@@ -1,6 +1,8 @@
 ---
 title: "Tools"
 description: "The Tool nodes this instance declares — how each is installed and invoked, and which skill it satisfies."
+renders:
+  - cat-harness/tools
 ---
 <style>
 .tg-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;
@@ -25,9 +27,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>106</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>107</b><span>Tool nodes</span></div>
 <div class="tg-stat"><b>64</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>86</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>87</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -37,19 +39,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 86 |
+| <span class="tg-tag tg-shell">shell</span> | 87 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 24 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 6 |
 
 | installation | tools |
 |---|---|
-| `none` | 97 |
+| `none` | 98 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **64** skills named across **106** tools resolve to a
+Yes — all **64** skills named across **107** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -132,6 +134,7 @@ tool advertising a capability the graph cannot locate.
 | `skill-list`<br>List skills | Every skill this instance can resolve, with its one-line summary. The entry point AGENTS.md sends an agent to first. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `skills-and-tools` | 0 in / 1 out |
 | `stakeholder-map`<br>Stakeholder map | Given the paths a proposed change touches, report which skills change, which roles declare them, and who therefore has a stake in the review. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `coordinate`<br>`role-model` | 1 in / 1 out |
 | `state-viewer`<br>State graph viewer | Render each declared state graph with a projection as a dashboard page: what the work plan holds, and what state it is in. | <span class="tg-tag tg-shell">shell</span> | `graph-rendering` | 1 in / 1 out |
+| `subgraph-readmes`<br>Directory READMEs from the Knowledge Graph | Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`. | <span class="tg-tag tg-shell">shell</span> | `docs-generation` | 1 in / 1 out |
 | `tabular-csv`<br>CSV tabular metadata (STUB) | STUB — not implemented. Would read a delimited text file into CSVW: one table, its columns and their datatypes. A CSV has no sheets and no cells outside the table, so `fac:anchor.sheet` and `fac:anchor.cell` are a determined null rather than an absence. Routing a CSV is not a sniff — it has no magic bytes — and must not become an extension guess (bean `p67i`). | <span class="tg-tag tg-manual">manual</span> | `tabular-metadata` | 1 in / 1 out |
 | `tabular-xlsx`<br>Spreadsheet tabular metadata (STUB) | STUB — not implemented. Would read a workbook into a CSVW TableGroup: one table per sheet, with the location CSVW cannot express (`fac:anchor`, `fac:headerRow`, `fac:extent`) carried as annotations on valid CSVW. A workbook is the case that motivates those terms: tables that do not start at A1, headers that are not row 1, several tables on one sheet. | <span class="tg-tag tg-manual">manual</span> | `tabular-metadata` | 1 in / 1 out |
 | `tex-snippet-validate`<br>TeX snippet validation (AST) | Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one. | <span class="tg-tag tg-shell">shell</span> | `latex-validation` | 5 in / 1 out |

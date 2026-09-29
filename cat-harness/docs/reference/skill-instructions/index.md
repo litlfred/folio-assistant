@@ -151,6 +151,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [KG → package → distribution → portal](kg-to-portal.html) | `kg-to-portal` | — | A knowledge graph is in a repository. A portal — a Moodle site, a ministry's |
 | [Rendering the knowledge graph](kg-viewer.html) | `kg-viewer` | — | `kg-export` serialises the instance's graph to one JSON-LD document. This skill |
 | [Library ingestion](library-ingestion.html) | `library-ingestion` | — | `uploads/` and `library/` are two stages of **one** pipeline. `uploads/` is the |
+| [Liquid templates](liquid-templates.html) | `liquid-templates` | — | Two engines run Liquid here, and they produce different kinds of output. Know |
 | [Literature search](literature-search.html) | `literature-search` | — | A node cites a source. Nothing in any declared library holds it. This skill is |
 | [Markdown Render Check](markdown-render-check.html) | `markdown-render-check` | — | git diff HEAD~1 HEAD --name-only -- '*.md' |
 | [MCP assembly](mcp-assembly.html) | `mcp-assembly` | — | [`mcp-projection`](mcp-projection.md) maps **one** Tool node to one MCP tool. |

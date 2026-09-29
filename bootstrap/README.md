@@ -180,61 +180,60 @@ Process that reads a file, where a diagram says so.
 | [`README.md`](README.md) | The flow, with every term linked to the schema that defines it. |  |
 | [`bootstrap.json`](bootstrap.json) | Bootstrap |  |
 
-**`skills/`**
+**[`skills/`](skills/README.md)**
 
 | file | what it is | used by |
 |---|---|---|
-| [`skills/bootstrap-graph-emission.md`](skills/bootstrap-graph-emission.md) | What bootstrap's own Knowledge Graph must be when it is written out as a data file, `.jsonld` with a `.json` copy. |  |
-| [`skills/bootstrap-graph-publication.md`](skills/bootstrap-graph-publication.md) | Where bootstrap's Knowledge Graph file is published, why its `@id` must be exactly that address, why a `.json` copy sits beside the `.jsonld`, and why the fi… |  |
-| [`skills/bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md) | Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. | "Initialize a harness" |
-| [`skills/confirm-harness.md`](skills/confirm-harness.md) | Narrow the harnesses and locations this could be, then have the Requestor settle it. | "Initialize a harness" |
-| [`skills/discussion.md`](skills/discussion.md) | discussion — settling what an agent cannot read off disk |  |
-| [`skills/log-message.md`](skills/log-message.md) | Say what you are doing, to the Logger, in a form a reader can act on. | "Initialize a harness", "Log a message" |
-| [`skills/package-manifest.json`](skills/package-manifest.json) | What an agent reads before it knows whether this repository is an instance, what kind, or what for. |  |
-| [`skills/root-readme.md`](skills/root-readme.md) | Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. | "Initialize a harness" |
+| [`bootstrap-graph-emission.md`](skills/bootstrap-graph-emission.md) | What bootstrap's own Knowledge Graph must be when it is written out as a data file, `.jsonld` with a `.json` copy. |  |
+| [`bootstrap-graph-publication.md`](skills/bootstrap-graph-publication.md) | Where bootstrap's Knowledge Graph file is published, why its `@id` must be exactly that address, why a `.json` copy sits beside the `.jsonld`, and why the fi… |  |
+| [`bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md) | Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. | "Initialize a harness" |
+| [`confirm-harness.md`](skills/confirm-harness.md) | Narrow the harnesses and locations this could be, then have the Requestor settle it. | "Initialize a harness" |
+| [`discussion.md`](skills/discussion.md) | discussion — settling what an agent cannot read off disk |  |
+| [`log-message.md`](skills/log-message.md) | Say what you are doing, to the Logger, in a form a reader can act on. | "Initialize a harness", "Log a message" |
+| [`package-manifest.json`](skills/package-manifest.json) | What an agent reads before it knows whether this repository is an instance, what kind, or what for. |  |
+| [`root-readme.md`](skills/root-readme.md) | Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. | "Initialize a harness" |
 
-**`schemas/`**: The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and…
-
-| file | what it is | used by |
-|---|---|---|
-| [`schemas/README.md`](schemas/README.md) | Schemas, drawn |  |
-| [`schemas/discussion.input.schema.json`](schemas/discussion.input.schema.json) | Discussion Input |  |
-| [`schemas/discussion.output.schema.json`](schemas/discussion.output.schema.json) | Discussion Output |  |
-| [`schemas/graph.schema.json`](schemas/graph.schema.json) | Knowledge Graph declaration |  |
-| [`schemas/model-registry.schema.json`](schemas/model-registry.schema.json) | Model Registry |  |
-| [`schemas/requirement.schema.json`](schemas/requirement.schema.json) | Requirement |  |
-
-**`scenarios/`**: bootstrap's four Roles: Bootstrapping Agent, Requestor, Knowledge Graph Data Store and Logger.
+**[`schemas/`](schemas/README.md)**: The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and…
 
 | file | what it is | used by |
 |---|---|---|
-| [`scenarios/roles.json`](scenarios/roles.json) | data |  |
+| [`discussion.input.schema.json`](schemas/discussion.input.schema.json) | Discussion Input |  |
+| [`discussion.output.schema.json`](schemas/discussion.output.schema.json) | Discussion Output |  |
+| [`graph.schema.json`](schemas/graph.schema.json) | Knowledge Graph declaration |  |
+| [`model-registry.schema.json`](schemas/model-registry.schema.json) | Model Registry |  |
+| [`requirement.schema.json`](schemas/requirement.schema.json) | Requirement |  |
 
-**`processes/`**: bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to ask the Requestor; and `log-message.bpmn…
-
-| file | what it is | used by |
-|---|---|---|
-| [`processes/discussion.bpmn`](processes/discussion.bpmn) | a Process: Determine the harness and repositories |  |
-| [`processes/discussion.svg`](processes/discussion.svg) | the picture of `discussion.bpmn`, generated from it |  |
-| [`processes/initialize-harness.bpmn`](processes/initialize-harness.bpmn) | a Process: Initialize a harness |  |
-| [`processes/initialize-harness.svg`](processes/initialize-harness.svg) | the picture of `initialize-harness.bpmn`, generated from it |  |
-| [`processes/log-message.bpmn`](processes/log-message.bpmn) | a Process: Log a message | "Initialize a harness" |
-| [`processes/log-message.svg`](processes/log-message.svg) | the picture of `log-message.bpmn`, generated from it |  |
-| [`processes/ns.jsonld`](processes/ns.jsonld) | data |  |
-
-**`models/`**: Which languages a model is good at, and whether anybody checked.
+**[`scenarios/`](scenarios/README.md)**: bootstrap's four Roles: Bootstrapping Agent, Requestor, Knowledge Graph Data Store and Logger.
 
 | file | what it is | used by |
 |---|---|---|
-| [`models/models.json`](models/models.json) | Which languages a model is good at, and whether anybody checked. |  |
+| [`roles.json`](scenarios/roles.json) | data |  |
 
-**`glossary/`**: The swimlane glossary's retirement ledger.
+**[`processes/`](processes/README.md)**: bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to ask the Requestor; and `log-message.bpmn…
 
 | file | what it is | used by |
 |---|---|---|
-| [`glossary/glossary-ledger.json`](glossary/glossary-ledger.json) | data |  |
+| [`discussion.bpmn`](processes/discussion.bpmn) | a Process: Determine the harness and repositories |  |
+| [`discussion.svg`](processes/discussion.svg) | the picture of `discussion.bpmn`, generated from it |  |
+| [`initialize-harness.bpmn`](processes/initialize-harness.bpmn) | a Process: Initialize a harness |  |
+| [`initialize-harness.svg`](processes/initialize-harness.svg) | the picture of `initialize-harness.bpmn`, generated from it |  |
+| [`log-message.bpmn`](processes/log-message.bpmn) | a Process: Log a message | "Initialize a harness" |
+| [`log-message.svg`](processes/log-message.svg) | the picture of `log-message.bpmn`, generated from it |  |
+| [`ns.jsonld`](processes/ns.jsonld) | data |  |
 
-**`test/results/`**: What auditing THIS instance produced, committed so a consumer can tell "never audited" from "audited clean" — a printed verdict cannot, which is why every QA…
+**[`models/`](models/README.md)**: Which languages a model is good at, and whether anybody checked.
+
+| file | what it is | used by |
+|---|---|---|
+| [`models.json`](models/models.json) | Which languages a model is good at, and whether anybody checked. |  |
+
+**[`glossary/`](glossary/README.md)**: The swimlane glossary's retirement ledger.
+
+| file | what it is | used by |
+|---|---|---|
+| [`glossary-ledger.json`](glossary/glossary-ledger.json) | data |  |
+
+**[`test/results/`](test/results/README.md)**: What auditing THIS instance produced, committed so a consumer can tell "never audited" from "audited clean" — a printed verdict cannot, which is why every QA…
 
 | file | what it is | used by |
 |---|---|---|

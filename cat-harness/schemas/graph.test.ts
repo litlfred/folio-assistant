@@ -49,6 +49,34 @@ describe("bootstrap's terms are its own", () => {
   });
 });
 
+describe("the terms are ordered: each definition uses only terms above it", () => {
+  // Owner, 2026-09-29: "logically tight, non self-referential definitions".
+  // A term is USED when its spaced name appears in a definition, singular or
+  // plural, as a whole word; longer names are matched first, so "Node Kind"
+  // is not also read as "Node".
+  const names = Object.keys(BOOTSTRAP_TERMS).map((k) => ({ key: k, label: k.replace(/([a-z])([A-Z])/g, "$1 $2") }));
+  const byLength = [...names].sort((a, b) => b.label.length - a.label.length);
+  const uses = (text: string): string[] => {
+    let rest = text;
+    const found: string[] = [];
+    for (const { key, label } of byLength) {
+      const re = new RegExp(`\\b${label}(s|es)?\\b`, "g");
+      if (re.test(rest)) {
+        found.push(key);
+        rest = rest.replace(re, " ");
+      }
+    }
+    return found;
+  };
+  const order = names.map((n) => n.key);
+  for (const [i, key] of order.entries()) {
+    test(`${key} uses no later term and not itself`, () => {
+      const later = uses(BOOTSTRAP_TERMS[key as keyof typeof BOOTSTRAP_TERMS]).filter((u) => order.indexOf(u) >= i);
+      expect(later).toEqual([]);
+    });
+  }
+});
+
 describe("bootstrap/README.md is self-definitional", () => {
   const readme = readFileSync(join(BOOTSTRAP, "README.md"), "utf-8");
   const links = [...readme.matchAll(/\]\(([^)]+)\)/g)].map((m) => m[1]!);

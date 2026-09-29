@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3lbz
 title: 'TOOLS: Zod schemas are not reachable as Tools, and kg-navigation has none — audit + analysis'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T05:16:23Z
-updated_at: 2026-09-20T05:21:39Z
+updated_at: 2026-09-29T21:43:12Z
 parent: folio-assistant-zzmr
 ---
 
@@ -79,3 +79,9 @@ unchanged, including the finding that nothing invokes
 
 Paths in the proposal are now the post-move ones. A proposal whose paths do not
 land is the failure #457 was about.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

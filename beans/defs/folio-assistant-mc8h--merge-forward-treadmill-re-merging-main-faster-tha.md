@@ -1,7 +1,7 @@
 ---
 # folio-assistant-mc8h
 title: 'MERGE-FORWARD TREADMILL: re-merging main faster than CI can answer means never getting a verdict — #1064 took four base merges and observed zero gates runs'
-status: in-progress
+status: todo
 type: bug
 priority: normal
 created_at: 2026-09-23T13:25:16Z
@@ -140,4 +140,8 @@ it is simply no longer propped up by a claim about what CI did not do.
       whether that is worth a gate is the owner's call, not this bean's
 
 
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
 _2026-09-29_ — **Re-parented `1swy` → `1xhc`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Re-merging main faster than CI answers means no verdict at all — CI reliability, not QA verdict content.
