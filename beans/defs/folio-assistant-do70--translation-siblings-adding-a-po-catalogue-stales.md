@@ -5,8 +5,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-26T10:05:01Z
-updated_at: 2026-09-26T18:42:37Z
-parent: folio-assistant-bzyu
+updated_at: 2026-09-29T20:52:42Z
+parent: folio-assistant-1xhc
 ---
 
 Found 2026-09-26 by paying the cost, then reading PR #1361 and finding the
@@ -205,3 +205,6 @@ says `docs/_data/harness.json`, but the file is at
 `cat-harness/docs/_data/harness.json`. A `git diff` on the path the error prints
 shows nothing, which reads as "no staleness" and is how I nearly closed this as
 a non-finding.
+
+
+_2026-09-29_ — **Re-parented `bzyu` → `1xhc`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Seven artefacts going stale with no gate naming the remedy is a gate problem; catalogues were only the trigger.

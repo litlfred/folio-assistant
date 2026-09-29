@@ -211,3 +211,43 @@ Thresholds (house, adjustable in the script): no-fit below cosine 0.3; ambiguous
 | branch `claude/clever-fermi-yzyqmx` feat(latex): colour-code + tag the PDF ∀ Lean-status mark | `0lmb` CONTENT MODEL | 0.62 | 0.04 | ambiguous vs `slw1`; 1 ahead, last 2026-06-24 |
 | branch `claude/blueprint-html-integration-2026-06-24` feat(ci): wire leanblueprint into folio-assistant pipeline | `4ccr` WIREFRAME FINDINGS | 0.26 | 0.01 | **no fit**; 1 ahead, last 2026-06-24 |
 | branch `claude/upbeat-noether-3cpyhy` docs(qou): add qou migration checklist file | `8jt6` MEMORY & TODOS | 0.63 | 0.03 | ambiguous vs `zzmr`; 9 ahead, last 2026-06-20 |
+
+## Applied 2026-09-29 — the owner chose "1 2 3"
+
+Every change below was made one bean at a time, by reading the bean, with the
+reason appended to its body. **The score proposed; the subject decided** —
+several moves differ from LSI's first guess, and 16 disputes were left alone.
+
+**Given an epic (were directly under a GOAL):** `yx9p`→`vke6`, `7mog`→`o3xy`,
+`j6t3`→`d308`, `oi1y`→`yj32`, `sjic`→`yj32`.
+**Kept directly under their GOAL:** `10uc`, `upgd` — stream consolidation
+claims that own a whole goal across epics, by design.
+
+**Moved to their subject epic (18):** `m4s1`, `tbdg` → `bzyu`; `4dbr` → `5a3l`;
+`ceud`, `oz5w`, `mc8h`, `do70`, `9v4m` → `1xhc`; `chq5`, `m8gz`, `pomp`,
+`30hn` → `ahvw`; `6qk5` → `1swy`; `qrnz`, `jut3` → `uhkv`; `a7t8` → `slw1`;
+`c4rz` → `8jt6`; `nvbr` → `yj32`.
+
+**Disputed but kept, and why:**
+
+| bean | stays under | why |
+|---|---|---|
+| `p11x` | `1xhc` | its body states the choice: "parented there rather than under `vke6`, even though the work is partition-shaped" |
+| `xies` | `5a3l` | re-parented off `kupb` by the owner's ruling, 2026-09-23 |
+| `7bg9` | `zzmr` | names `zzmr` as its epic in its own body |
+| `ngxj` | `1xhc` | says of itself: "the gate blocker and the measurement, not the translation work" |
+| `95sk` | `vke6` | the owner's choice "Move to split, close" carried it there |
+| `eief` | `slw1` | CSVW as an ingestion tool is ingest; content model was the score's guess |
+| `cpmo` | `2yyh` | smart-base crosswalks are smart-base content |
+| `v1hw`, `1xrg`, `v9ah`, `12ws`, `hs08`, `8xtj` | as filed | both epics fit; no clear subject/symptom split, so the author's choice stands |
+| `w91p` | `tr05` | step B7a of the #1168 KG-modelling plan |
+| `cz17` | `0lmb` | the DAK *type* is a content-model question |
+| `3q47`, `tvf8` | `ahvw` | process subjects already |
+| `sopq` | `1swy` | QA criteria for DAK |
+| `q2aj` | `8jt6` | the todo store's own tooling |
+
+**Duplicates:** `rmcf` scrapped as a duplicate of the completed `3ozg` (same
+72-sidecar churn; `3ozg` named the writer and carries the owner's chosen
+remedy). Every other ≥ 0.95 pair was already closed on both sides, or is a
+sibling rather than a copy (`4y2i`/`61tg` two topologies; `ay3x`/`m4xy` vector
+vs raster arm; `ulqj`/`eief` decision then build). Nothing was deleted.

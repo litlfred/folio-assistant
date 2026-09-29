@@ -3,9 +3,10 @@
 title: 'TRANSLATION CATALOGUES: 36 (locale, page) .po files must be AUTHORED — the templates now exist, nobody has been ASKED, and #1399 is held on it'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-09-26T16:58:29Z
-updated_at: 2026-09-26T16:58:29Z
-parent: folio-assistant-1xhc
+updated_at: 2026-09-29T20:52:41Z
+parent: folio-assistant-bzyu
 blocking:
     - folio-assistant-tbdg
 ---
@@ -111,3 +112,6 @@ list — the same act as quarantining a test.
       after are equal
 - [ ] PR #1399 is unblocked — it is held on this bean by the owner's decision of
       2026-09-26 and on nothing else; 2 of 162 gates red, both this one cause
+
+
+_2026-09-29_ — **Re-parented `1xhc` → `bzyu`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). The work is authoring .po catalogues; the red PR it holds is the symptom, not the subject.

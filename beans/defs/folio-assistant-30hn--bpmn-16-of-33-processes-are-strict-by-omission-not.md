@@ -5,8 +5,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T15:56:22Z
-updated_at: 2026-09-20T14:26:05Z
-parent: folio-assistant-1xhc
+updated_at: 2026-09-29T20:52:42Z
+parent: folio-assistant-ahvw
 ---
 
 
@@ -184,3 +184,6 @@ Cross-check, two independent oracles agreeing:
 So this bean's cost statement stands and gains one line: the file no longer
 records a decision **and**, in one case, records the act of writing a policy
 without recording the decision it was for.
+
+
+_2026-09-29_ — **Re-parented `1xhc` → `ahvw`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Which BPMN processes are strict by decision is process governance.

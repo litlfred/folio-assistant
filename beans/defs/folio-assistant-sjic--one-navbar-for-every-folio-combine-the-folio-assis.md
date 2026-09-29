@@ -5,8 +5,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T21:26:39Z
-updated_at: 2026-09-24T12:00:07Z
-parent: folio-assistant-p5wm
+updated_at: 2026-09-29T20:52:41Z
+parent: folio-assistant-yj32
 ---
 
 ## What — the owner's spec, verbatim
@@ -318,3 +318,6 @@ green** (`gates --all`, 128/128 incl. 459 browser tests). The gap is between
 ## Note, 2026-09-23 — left to stream 2, by the owner's choice
 
 While going through beans, the owner chose **"Leave to stream 2"**. The one open item, switching the Jekyll sidebar to the renderer, follows `603s`, which is in #1133 (`claude/stream-2-goal2-surface`). This bean unblocks when #1133 merges. It is not claimed from here.
+
+
+_2026-09-29_ — **Re-parented `p5wm` → `yj32`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). One navbar for every folio is the LHS rendering yj32 defines; LSI's first guess (6lb8, folio board) is weaker — this is the sidebar, not the board.

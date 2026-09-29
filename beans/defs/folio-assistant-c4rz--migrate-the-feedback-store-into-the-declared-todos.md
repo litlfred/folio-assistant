@@ -3,9 +3,10 @@
 title: Migrate the feedback store into the declared todos/ graph
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-18T23:02:16Z
-updated_at: 2026-09-18T23:02:16Z
-parent: folio-assistant-zzmr
+updated_at: 2026-09-29T20:52:42Z
+parent: folio-assistant-8jt6
 ---
 
 
@@ -74,3 +75,6 @@ of this bean. Tracked with the repo-partition work.
 Reviving `todos/*.json` as a machine-queue directory. Bean `bfyw` retired that
 and `scripts/tests/audit-output-paths.test.ts` pins it; bulk machine-generated
 queues stay under `build/`.
+
+
+_2026-09-29_ — **Re-parented `zzmr` → `8jt6`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Migrating the feedback store into todos/ is the MEMORY & TODOS subject.

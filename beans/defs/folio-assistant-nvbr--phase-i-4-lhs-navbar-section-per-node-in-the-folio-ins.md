@@ -1,12 +1,12 @@
 ---
 # folio-assistant-nvbr
-title: 'Phase I.4 — LHS navbar section per node in the folio instance (#223)'
+title: Phase I.4 — LHS navbar section per node in the folio instance (#223)
 status: todo
 type: task
 priority: normal
 created_at: 2026-09-18T15:00:27Z
-updated_at: 2026-09-18T15:00:27Z
-parent: folio-assistant-vke6
+updated_at: 2026-09-29T20:52:42Z
+parent: folio-assistant-yj32
 ---
 
 From [issue #223 comment](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913):
@@ -53,3 +53,6 @@ issue #223 rather than from the landing work. Not scrapped, because it carries
 neither of them had — that the same act also buys a URL prefix. Left `todo`
 with the blocker withdrawn; whoever takes `603s` should read this and then
 scrap or fold it deliberately rather than by accident.
+
+
+_2026-09-29_ — **Re-parented `vke6` → `yj32`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). An LHS navbar section per folio node is yj32's rendering subject; #223 is where it was asked, not what it is.

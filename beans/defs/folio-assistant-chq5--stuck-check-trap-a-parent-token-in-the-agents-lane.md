@@ -5,8 +5,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T11:10:26Z
-updated_at: 2026-09-21T11:12:15Z
-parent: folio-assistant-yj32
+updated_at: 2026-09-29T20:52:41Z
+parent: folio-assistant-ahvw
 ---
 
 Found 2026-09-21 while measuring `v49e`'s join. **This bean was written once
@@ -206,3 +206,6 @@ pick up.
 
 Leaving them unticked is correct. Leaving them *unexplained* is what cost the
 re-entry, so the explanation is here rather than in a session log.
+
+
+_2026-09-29_ — **Re-parented `yj32` → `ahvw`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). A parent token in the wrong lane is BPMN process state, which ahvw owns.

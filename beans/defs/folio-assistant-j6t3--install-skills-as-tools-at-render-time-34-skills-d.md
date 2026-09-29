@@ -5,8 +5,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T21:42:35Z
-updated_at: 2026-09-21T23:15:22Z
-parent: folio-assistant-vuip
+updated_at: 2026-09-29T20:52:40Z
+parent: folio-assistant-d308
 ---
 
 ## What — the owner's ask, verbatim
@@ -234,3 +234,6 @@ declaring `user_invocable`") would not produce it, and would not notice.
 Worth folding into this bean's options rather than opening a fifth: whatever
 generates commands has to reconcile BOTH directions, or the next count is
 wrong again in the other one.
+
+
+_2026-09-29_ — **Re-parented `vuip` → `d308`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Making skills reachable as tools in MCP hosts is the Tool-node question d308 owns; yj32 (interface) was the runner-up and fits less: nothing here is rendered.

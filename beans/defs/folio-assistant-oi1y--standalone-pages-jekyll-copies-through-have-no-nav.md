@@ -3,9 +3,10 @@
 title: 'STANDALONE PAGES JEKYLL COPIES THROUGH HAVE NO NAVIGATION: 33 published pages (23 wireframes + 10 bootstrap) carry no rail and no way out'
 status: in-progress
 type: feature
+priority: normal
 created_at: 2026-09-24T05:12:16Z
-updated_at: 2026-09-24T05:12:16Z
-parent: folio-assistant-p5wm
+updated_at: 2026-09-29T20:52:40Z
+parent: folio-assistant-yj32
 ---
 
 Owner, 2026-09-24, after `edx7` shipped: *"do edx7 navbar on mounted pages too"* —
@@ -86,3 +87,6 @@ Jekyll never laid out"* is post-build injection, which is what
 - [ ] `api/` decided separately — it has its own navigation, so it is a layout question and not a gap (the owner's second stream)
 - [ ] verified on the BUILT site, with an instrument validated on positives and negatives
 - [ ] the five-instrument lesson written where the next agent measuring coverage will find it
+
+
+_2026-09-29_ — **Re-parented `p5wm` → `yj32`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Pages with no navigation are a defect of the harness's default rendering (LHS + docs/); 4ccr (wireframe findings) was the runner-up, but only 23 of the 33 pages are wireframes.

@@ -3,9 +3,10 @@
 title: 'MERGE-FORWARD TREADMILL: re-merging main faster than CI can answer means never getting a verdict — #1064 took four base merges and observed zero gates runs'
 status: in-progress
 type: bug
-parent: folio-assistant-1swy
+priority: normal
 created_at: 2026-09-23T13:25:16Z
-updated_at: 2026-09-23T13:25:16Z
+updated_at: 2026-09-29T20:52:41Z
+parent: folio-assistant-1xhc
 ---
 
 
@@ -137,3 +138,6 @@ it is simply no longer propped up by a claim about what CI did not do.
 - [x] the surviving lesson restated at the size the evidence supports
 - [ ] a check that no tool reads `get_status` for a verdict — **not built**;
       whether that is worth a gate is the owner's call, not this bean's
+
+
+_2026-09-29_ — **Re-parented `1swy` → `1xhc`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Re-merging main faster than CI answers means no verdict at all — CI reliability, not QA verdict content.

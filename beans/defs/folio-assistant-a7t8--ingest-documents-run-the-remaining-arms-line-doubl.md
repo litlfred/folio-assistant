@@ -3,9 +3,10 @@
 title: ingest-document's 'run the remaining arms' line double-nests the pdf-images output
 status: todo
 type: bug
+priority: normal
 created_at: 2026-09-22T20:13:04Z
-updated_at: 2026-09-22T20:13:04Z
-parent: folio-assistant-ahvw
+updated_at: 2026-09-29T20:52:41Z
+parent: folio-assistant-slw1
 ---
 
 Hit while ingesting the SWOT paper, 2026-09-22.
@@ -43,3 +44,6 @@ Same class as the three `'scripts/<name>.py'` CWD-relative paths that module's o
 - [ ] the printed recipe works when copy-pasted, for every arm it names
 - [ ] the two `-o` conventions are reconciled, or each arm's `--help` says which it takes
 - [ ] a test pins it, since this failure mode exits 0
+
+
+_2026-09-29_ — **Re-parented `ahvw` → `slw1`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). A defect in ingest-document's printed next step belongs with the ingest pipeline.

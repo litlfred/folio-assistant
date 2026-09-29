@@ -3,9 +3,10 @@
 title: 'CI: a push to a PR branch fired NO workflow at all — a PR that looks untested rather than red'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-09-24T17:30:00Z
-updated_at: 2026-09-24T17:30:00Z
-parent: folio-assistant-1swy
+updated_at: 2026-09-29T20:52:41Z
+parent: folio-assistant-1xhc
 ---
 
 Measured 2026-09-24, working PR #1241.
@@ -141,3 +142,6 @@ missing is a **detection**, and that is the part worth stating as work:
       merge, so it does not substitute for one
 - [ ] MEASURED AFTER: the second occurrence is detected by a tool rather than
       by an agent tracking the SHA by hand, which is how both of these were found
+
+
+_2026-09-29_ — **Re-parented `1swy` → `1xhc`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). A push that fires no workflow is exactly 1xhc's thesis: a gate that does not fire looks like one that passed.

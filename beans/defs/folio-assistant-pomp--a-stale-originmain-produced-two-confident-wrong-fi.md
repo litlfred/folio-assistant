@@ -3,9 +3,10 @@
 title: A stale origin/main produced two confident wrong findings in one session — 'not in my checkout' is not 'does not exist'
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-21T06:43:56Z
-updated_at: 2026-09-21T06:43:56Z
-parent: folio-assistant-vke6
+updated_at: 2026-09-29T20:52:41Z
+parent: folio-assistant-ahvw
 ---
 
 
@@ -115,3 +116,6 @@ has while writing a finding.
 One session's five occurrences is a strong signal and a sample of one. The
 skill lines cover cases 1 and 2 today, which is where both *published* errors
 came from.
+
+
+_2026-09-29_ — **Re-parented `vke6` → `ahvw`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). A stale origin/main producing confident wrong findings is about how an agent verifies before it reports — process; nothing here is the split. (LSI's first guess was 1xhc.)

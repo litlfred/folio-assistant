@@ -3,9 +3,10 @@
 title: 'SEPARATION: the 5 partition package names and the 5 instance directory names do not agree — 1 of 5 does'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-26T06:33:48Z
-updated_at: 2026-09-26T06:33:48Z
-parent: folio-assistant-vuip
+updated_at: 2026-09-29T20:52:40Z
+parent: folio-assistant-vke6
 ---
 
 Measured 2026-09-26. `repo-partition.ts` partitions 1143 modules into five
@@ -101,3 +102,5 @@ sabotage now fails with a sentence naming both strings and which one to change.
 **A test that passes on the defect it was written for is worse than no test**,
 because it is evidence of coverage. This one was that for about ten minutes.
 
+
+_2026-09-29_ — **Re-parented `vuip` → `vke6`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). The bean is about partition package names vs instance directory names — the SPLIT's own vocabulary.

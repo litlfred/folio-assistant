@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rmcf
 title: 72 script sidecars churn on every gates run because engine_version records the CONTAINER, and it went 1.3.14 -> 1.3.11
-status: todo
+status: scrapped
 type: task
 priority: normal
 created_at: 2026-09-26T21:03:15Z
-updated_at: 2026-09-27T05:48:16Z
+updated_at: 2026-09-29T20:52:42Z
 parent: folio-assistant-1xhc
 ---
 
@@ -140,3 +140,6 @@ _2026-09-27T05:55Z, cross-reference from bean `3ozg`. A note, not a claim: statu
 **Option 2 is implemented**, on the owner's choice of *"skip no-op writes"* (put to them in the session that filed `3ozg`). `saveQaScriptSidecar` no longer counts `engine_version` as a change, so a script sidecar is rewritten only when its source file, hashes or extra inputs move. The writer this bean never named is `init-folio-qa.test.ts`, which runs a real `qa-sweep`. It was found by bisecting 432 test files. With the fix, `bun run gates` passes 167/167 and ends clean.
 
 Whether this bean closes on that evidence is for its owner, per `bean-coordination` §"Closing a bean whose work has already landed".
+
+
+_2026-09-29_ — **Scrapped as a duplicate of `3ozg`** (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Same defect (72 script sidecars rewritten, the same three provenance fields); `3ozg` measured it on pristine main, named the writer (`saveQaScriptSidecar`), and was fixed and completed with the owner's chosen remedy — `engine_version` no longer counts as a change — which answers remedy 1/2 of the four listed here. Found by `lsi` (cosine ≥ 0.95) and confirmed by reading both. Not deleted: a scrapped bean keeps the next agent from re-filing it.
