@@ -4,7 +4,7 @@
  * graph leakage").
  */
 import { describe, expect, test } from "bun:test";
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 import { findDeclarationFile, instanceRootsIn } from "./cat-harness.ts";
@@ -55,6 +55,18 @@ describe("bootstrap/README.md is self-definitional", () => {
 
   test("every link stays inside bootstrap/", () => {
     expect(links.filter((l) => l.startsWith("../") || l.startsWith("/") || /^[a-z]+:/.test(l))).toEqual([]);
+  });
+
+  test("every relative link and image resolves to a file in bootstrap/", () => {
+    // What a reader of the README actually hits: the diagram pictures and the
+    // file list are generated (kg:processes, kg:files), so a generator that
+    // wrote a path to nothing would pass its own currency check. This is the
+    // consumer-side check `artefact-verification.json` names for them.
+    const broken = links
+      .filter((l) => !/^[a-z]+:/.test(l) && !l.startsWith("#"))
+      .map((l) => l.split("#")[0]!)
+      .filter((p) => p !== "" && !existsSync(join(BOOTSTRAP, p)));
+    expect(broken).toEqual([]);
   });
 
   test("names nothing above bootstrap", () => {
