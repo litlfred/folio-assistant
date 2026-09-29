@@ -4196,12 +4196,18 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
  *     bean `jpjt`: who-iris exists to look like WHO), and a band moves it;
  *   - two test fixtures with no theme header moved too.
  *
- * The replica's banner is still under the handle. Whether that is acceptable
- * is the owner's call against `jpjt`, not this rule's to settle.
+ * REPLICAS TOO, since 2026-09-29 — bean `g9r2`, the owner's call on the
+ * question this comment used to leave open: "Band on replicas". The pill sat
+ * over the replica's own "INGESTED COPY — not WHO" banner at 390 px and over
+ * its folio-assistant link at 1280. A replica is found by the mount script
+ * `folio-mount.ts` writes into it (`data-fa-folio-mount`). The band moves
+ * the whole replica down at once, and `folio-mount.e2e` now measures from
+ * the top of body's content, so it still fails on anything but that.
  *
  * 2.25rem clears the 1.75rem pill (owner, 2026-09-27: "not so tall") with a
  * few pixels of air. */
-html:has(style[data-folio-narrow-viewport]) body:has(> .fa-glass-handle) {
+html:has(style[data-folio-narrow-viewport]) body:has(> .fa-glass-handle),
+html:has(script[data-fa-folio-mount]) body:has(> .fa-glass-handle) {
   padding-top: 2.25rem;
 }
 

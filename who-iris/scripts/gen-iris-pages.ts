@@ -997,6 +997,13 @@ function page(
     table.items, table.items tbody, table.items tr, table.items td { display: block; width: 100%; }
     table.items thead { display: none; }
     table.items td { border-bottom: none; padding: 0.25rem 0; }
+    /* Stacked, a download cell is a line of its own, so the desktop
+       \`nowrap\` that kept a size beside its link now holds a whole sentence
+       ("held here, not published — copyright: refused, …") on one line: the
+       page was 537 px wide at 390 (bean \`g9r2\`). Wrap it here; the size
+       stays whole, because \`code\` keeps its own nowrap. */
+    .dl { white-space: normal; }
+    .dl code { white-space: nowrap; }
     table.items tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
     table.reqs, table.reqs tbody, table.reqs tr, table.reqs td, table.reqs th { display: block; width: auto; }
     table.reqs thead { display: none; }
