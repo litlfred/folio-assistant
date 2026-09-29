@@ -46,6 +46,7 @@
  *
  * Usage: `bun run readme:subgraphs` · `bun run readme:subgraphs:check`
  */
+import { releaseIris } from "../schemas/release-iri.ts";
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 import { Liquid } from "liquidjs";
@@ -158,6 +159,16 @@ export async function plan(repo: string, templates: string): Promise<Plan> {
       continue; // an unreadable declaration is readDeclaration's own finding, reported by its checkers
     }
     if (!decl) continue;
+    // The version, and — for an instance declaring an iriBase — both release
+    // addresses, so a template writes `{{ release.version }}` rather than a
+    // number that goes stale on the next bump (owner, 2026-09-29).
+    const iris = releaseIris(decl);
+    const release = {
+      version: decl.version ?? "",
+      major: iris?.major ?? "",
+      agent: iris?.agent ?? "",
+      human: iris?.human ?? "",
+    };
     const name = decl.name;
     const declFile = findDeclarationFile(inst);
     const instReadme = declaredAssetPath(inst, INSTANCE_README_ROLE) ?? join(inst, "README.md");
@@ -213,6 +224,7 @@ export async function plan(repo: string, templates: string): Promise<Plan> {
       const region = await liquid.renderFile("subgraph", {
         subgraph: { id: d.id, path: d.path, title, description, kinds: d.graphKinds },
         instance: { name, title: decl.title, readme: relative(abs, instLink) },
+        release,
         kg: decl,
         files,
         subdirs,

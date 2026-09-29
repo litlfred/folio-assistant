@@ -3,7 +3,7 @@
 
 The Tool-node barrel. `index.ts` merges every instance's `<stub>/tools/*.ts` into the one import five consumers use -- `check-tools`, `kg-export`, `harness-schema-export`, `tool-coverage` and the MCP projection -- so adding an instance is one line here rather than a path baked into five call sites. Declared by the ROOT rather than by `cat-harness` with repository scope: it is the checkout's own barrel over every instance, and repository-scoped entries from `cat-harness` are what put 15 paths under two declarations each.
 
-Part of [Folio Assistant](../README.md), declared as `root-tools`, holding `code`.
+Part of [Folio Assistant](../README.md) 0.1.0, declared as `root-tools`, holding `code`.
 
 | file | what it is | used by |
 |---|---|---|

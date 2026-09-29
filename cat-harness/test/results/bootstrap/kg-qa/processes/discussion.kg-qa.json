@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_LogMessage",
-    "path": "processes/log-message.bpmn"
+    "id": "Process_Discussion",
+    "path": "processes/discussion.bpmn"
   },
-  "source_hash": "sha256:823779fdd630181ea6c13b813161d5249a5fb2a4d65a3e6eaf03037f4b3bd12b",
+  "source_hash": "sha256:f8519fa12fc3da00dbbe59bbdb26be7fd84a5d512174adf2d81bcbb254c46fb0",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -52,17 +52,12 @@
       "findings": []
     },
     "variable-performer-declared-alone": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "A_Record",
-          "detail": "needs skill \"log-message\", but its lane's role \"logger\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -89,13 +84,8 @@
       "findings": []
     },
     "gateway-documented": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "GW_Complete",
-          "detail": "\"All five present?\" carries no <bpmn:documentation>, so its page shows the question and not what answers it — who decides, from what evidence, and what each branch commits the process to."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "gateway-branches-named": {
       "result": "pass",
@@ -119,9 +109,9 @@
     }
   },
   "totals": {
-    "pass": 14,
-    "fail": 2,
-    "n/a": 9,
+    "pass": 15,
+    "fail": 0,
+    "n/a": 10,
     "unknown": 0
   }
 }

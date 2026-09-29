@@ -63,7 +63,10 @@ import { directoryByVisualisationRef } from "./graph-tiles.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 import { itemState } from "./gen-uploads-viz.ts";
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
-import { renderedPath, withRenders } from "./viewer-declarations.js";
+import { renderedPath, withRenders, withViewers } from "./viewer-declarations.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "library-viewer";
 
 const ROOT = join(import.meta.dir, "..");
 const REPO_ROOT = repoRootFor(ROOT);
@@ -915,7 +918,7 @@ if (import.meta.main) {
   //
   // The rule that falls out: look the ref up in the SAME list the tiles came
   // from, or the ids do not correspond to tiles at all.
-  const byRef = directoryByVisualisationRef(readDeclaration(ROOT)?.directories ?? []);
+  const byRef = directoryByVisualisationRef(withViewers(readDeclaration(ROOT)?.directories ?? [], ROOT));
   const refOf = (dirPath: string): string =>
     relative(REPO_ROOT, join(viewerPlacement(site, dirPath, seg).pageDir, "index.html"))
       .split(sep)
@@ -1015,12 +1018,12 @@ if (import.meta.main) {
     ]
       .filter(([, instance]) => subject === undefined || instance === subject)
       .map(([p]) => p);
-  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref, "", folioMount), drawn()));
+  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref, "", folioMount), drawn(), VIEWER_TOOL));
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
     emitPage({ ...nav, instance: subject })(
       join(sub.pageDir, "index.html"),
-      withRenders(viewerHtml(sub.dataHref, subject, folioMount), drawn(subject)),
+      withRenders(viewerHtml(sub.dataHref, subject, folioMount), drawn(subject), VIEWER_TOOL),
     );
   }
 

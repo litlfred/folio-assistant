@@ -3,7 +3,7 @@
 
 The WHO IRIS instance's library, reached from here because this repository STAGES who-iris as a sibling top-level directory ahead of it becoming its own repo -- the same pattern as `folio-assist-core-schemas` and `detangle-schemas` above. Repository-scoped, so it resolves against the repository root rather than this instance's. Declared here as well as in who-iris/harness.json because the consumers that scan libraries -- `check:l1-complete`, the narrative queue, `gen-library-jsonld`, the MCP server's graph roots -- run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the dh4f defect).
 
-Part of [C@T Harness](../../cat-harness/README.md), declared as `who-iris-library`, holding `library`.
+Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `who-iris-library`, holding `library`.
 
 | file | what it is | used by |
 |---|---|---|
