@@ -201,11 +201,24 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `qa`
 
-1 of 2 published.
+1 of 15 published.
 {: .fa-hx-dim }
 
+- agent-skills — *declared, not published*
 - Bootstrap — *declared, not published*
 - [C@T Harness]({{ '/qa/' | relative_url }})
+- FHIR IG Harness — *declared, not published*
+- folio-assistant-core — *declared, not published*
+- folio-assistant-sci — *declared, not published*
+- large-datasets — *declared, not published*
+- SMART Base — *declared, not published*
+- SMART DAK — *declared, not published*
+- SMART IG — *declared, not published*
+- smart-immunizations — *declared, not published*
+- SMART L1 — *declared, not published*
+- smart-trust — *declared, not published*
+- WHO IRIS — *declared, not published*
+- who-style-guide — *declared, not published*
 
 ### `requirements`
 
@@ -278,10 +291,9 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `translation-sources`
 
-1 of 2 published.
+1 of 1 published.
 {: .fa-hx-dim }
 
-- Bootstrap — *declared, not published*
 - [C@T Harness]({{ '/translation-status/' | relative_url }})
 
 ### `uml`

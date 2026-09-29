@@ -20,7 +20,13 @@ classDiagram
       totals [1] map~number~
       pair_attestations [0..*] Pair_attestation[]
     }
+    class bootstrap_qa_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
+      <<json: KgQaManifestSchema>>
+      $schema [1] 'kg-qa-manifest/v1'
+      auditor [1] object
+    }
   }
   bootstrap_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" bootstrap_qa_kg_qa_v1_Pair_attestation : pair_attestations
   cssClass "bootstrap_qa_kg_qa_v1_Pair_attestation" fa_uml_kind_qa
   cssClass "bootstrap_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
+  cssClass "bootstrap_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa

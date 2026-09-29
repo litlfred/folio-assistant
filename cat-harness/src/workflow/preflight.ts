@@ -69,8 +69,8 @@ export interface PreflightReport {
 }
 
 /**
- * Ask every precondition of `model`, resolving `file-exists` refs against
- * `root`.
+ * Ask every precondition of `model`. A `file-exists` ref resolves against the
+ * root of the instance that owns the diagram, carried on the check itself.
  *
  * A process declaring none yields four empty lists, which is a determined
  * answer and not a missing one — {@link describePreflight} says so in words
@@ -78,9 +78,8 @@ export interface PreflightReport {
  */
 export function preflight(
   model: Pick<ProcessModel, "preconditions">,
-  root: string,
 ): PreflightReport {
-  const entries = evaluatePreconditions(model, root);
+  const entries = evaluatePreconditions(model);
   return {
     entries,
     unsatisfied: entries.filter((e) => e.verdict === "unsatisfied"),

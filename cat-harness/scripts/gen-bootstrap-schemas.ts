@@ -62,6 +62,7 @@ import {
   JSON_SCHEMA_CONDITIONALS,
 } from "../schemas/discussion.ts";
 import { BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "../schemas/graph.ts";
+import { renderSchemaPage, type PageDocument } from "./bootstrap-schema-page.ts";
 import { ModelRegistrySchema } from "../schemas/model-registry.ts";
 import {
   REQUIREMENT_JSON_SCHEMA_CONDITIONALS,
@@ -259,12 +260,66 @@ export function render(t: (typeof TARGETS)[number]): string {
   return `${JSON.stringify(doc, null, 2)}\n`;
 }
 
+/**
+ * The drawn page, `schemas/README.md`, rendered from the documents above in
+ * the same run, so the staleness check covers it too. How each document is
+ * presented: the file it describes, and names for boxes that are defined
+ * terms (a declaration's `directories` hold Subgraphs, its `assets` Assets).
+ */
+const PAGE_PRESENTATION: Readonly<Record<string, Omit<PageDocument, "file" | "schema">>> = {
+  "Knowledge Graph declaration": {
+    describes: "<name>.json",
+    boxNames: { directories: "Subgraph", assets: "Asset" },
+  },
+  // The file this schema describes, as the page shows it to a reader; the
+  // page is text, and nothing resolves this string as a path.
+  "Model Registry": { describes: "models/models.json" },
+};
+
+const outputs: { file: string; title: string; text: string }[] = TARGETS.map((t) => ({
+  file: t.file,
+  title: t.title,
+  text: render(t),
+}));
+outputs.push({
+  title: "Schemas, drawn",
+  // declared-path-literal: the drawn page sits beside the schemas it draws,
+  // in the same declared `schemas/` directory as every TARGETS file above.
+  file: "schemas/README.md",
+  text: renderSchemaPage(
+    outputs.map((o) => ({
+      file: o.file.replace(/^schemas\//, ""),
+      schema: JSON.parse(o.text),
+      ...PAGE_PRESENTATION[o.title],
+    })),
+    // The document whose `$defs` hold the terms: the one titled for them.
+    outputs.find((o) => o.title === "Knowledge Graph declaration")!.file.replace(/^schemas\//, ""),
+  ),
+});
+
 let stale = 0;
 let wrote = 0;
 
-for (const t of TARGETS) {
+/**
+ * The drawn page shares its file with the directory README `subgraph-readmes`
+ * writes (`schemas/README.md` IS that directory's README). This generator owns
+ * everything but the `kg:subgraph` region, which it carries over unchanged:
+ * two generators, one file, neither overwriting the other.
+ */
+const SUBGRAPH_BEGIN = "<!-- kg:subgraph:begin -->";
+const SUBGRAPH_END = "<!-- kg:subgraph:end -->";
+function keepSubgraphRegion(file: string, text: string): string {
+  if (!file.endsWith("README.md")) return text;
+  const prev = existsSync(join(BOOTSTRAP, file)) ? readFileSync(join(BOOTSTRAP, file), "utf8") : "";
+  const i = prev.indexOf(SUBGRAPH_BEGIN);
+  const j = prev.indexOf(SUBGRAPH_END);
+  const region = i !== -1 && j > i ? prev.slice(i, j + SUBGRAPH_END.length) : `${SUBGRAPH_BEGIN}\n${SUBGRAPH_END}`;
+  return `${region}\n\n${text}`;
+}
+
+for (const t of outputs) {
   const path = join(BOOTSTRAP, t.file);
-  const next = render(t);
+  const next = keepSubgraphRegion(t.file, t.text);
   const prev = existsSync(path) ? readFileSync(path, "utf8") : null;
 
   if (prev === next) {
@@ -291,5 +346,5 @@ if (check && stale) {
 console.log(
   check
     ? "\nbootstrap schemas are up to date"
-    : `\n${wrote} written, ${TARGETS.length - wrote} unchanged`,
+    : `\n${wrote} written, ${outputs.length - wrote} unchanged`,
 );

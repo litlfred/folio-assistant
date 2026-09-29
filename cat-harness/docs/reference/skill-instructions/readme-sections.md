@@ -135,11 +135,76 @@ so the difference could not show. Use the pair:
 |---|---|
 | `readme:sync` · `readme:audit` | the cat-harness instance's README |
 | `readme:sync:root` · `readme:audit:root` | the REPOSITORY's README |
+| `readme:sync:bootstrap` | bootstrap's README — renders its diagrams first |
 
 Both are gated in `code-quality-gates.yml`, and that is not belt and braces:
 when the split landed, the bare `readme:audit` silently narrowed to
 cat-harness's and took the root README's 41 links out of the gate **without
 failing anything**. A gate that stops covering something still reports green.
+
+## `kg:processes` and `kg:files` — an instance's diagrams and files, from its declaration
+
+Two sections any instance's README may carry, both read from the instance's
+own declaration and the files it names (`content/pipeline/readme-graph-sections.ts`).
+Owner, 2026-09-29: *"display bpmn(s) etc in README.md"*, *"part of readme.md
+generation is to do rendering"*, and the file list at the end must be *"a
+skill and tool in cat-harness"*.
+
+- **`kg:processes`** — every `.bpmn` in the declared directories, the entry
+  Process first (the one no other calls), each with its picture. The picture
+  is the SVG `render:bpmn` writes **beside** the `.bpmn` for an instance
+  exempt from `workflow-visualiser` — one with no site of its own, so its
+  README is where its diagrams are seen. This section **reads** the SVG and
+  never draws; rendering needs a browser, so `readme:sync:bootstrap` runs
+  `render:bpmn` first. A diagram with no picture beside it leaves the region
+  untouched — never a broken image.
+- **`kg:files`** — every file, grouped by declared directory, with "what it
+  is" read from the file itself (front-matter `description`, a Process's
+  name, a schema's `title`, a JSON file's own `description` or `$comment`)
+  and "used by" **only** where a diagram records the relation: a task naming
+  a Skill, a call activity naming a Process. Blank otherwise, never guessed.
+  A directory whose files all sit in subdirectories collapses to one row.
+
+**Why `kg:` and not `cat-harness:`.** The marker is written into the
+instance's README, and the floor instance must not name the layer above it
+— its leak test fails on the word. `kg` is vocabulary every instance has.
+
+**A blank "used by" is a finding, not decoration.** On bootstrap it showed
+`skills/discussion.md` used by nothing although a diagram names it: the file
+has no front matter, so by bootstrap's own rule it is not a Skill. A
+hand-kept table had said "step 2" and hidden that.
+
+## `subgraph-readmes` — one README per declared directory
+
+A large instance cannot list every file on one page, but it declares its
+directories, and each declared directory gets its own README
+(`bun run readme:subgraphs`, the `subgraph-readmes` Tool). The instance
+README's `kg:files` then links each directory to it, and above 200 files lists
+directories instead of files. The README is part of the graph: the exported
+Directory node carries `readmePath`.
+
+**Everything shown is read from the Knowledge Graph**, never composed: the
+heading is the directory's declared `title`, the paragraph its `description`,
+the kinds its `graphKinds`, each file row what the file says it is, and "used
+by" only a relation a diagram records.
+
+**The layout is Liquid**, in `tools/templates/readme/`, part of the tools
+graph and found through the `tools` declaration. Templates may `{% include %}` one another, Jekyll
+style, and read any declared field through `kg`. Change a template, run the
+command, commit the result. How to write one is
+[`liquid-templates`](liquid-templates.md).
+
+**It writes only between `<!-- kg:subgraph:begin -->` and `:end`.** A README
+with no markers is left alone and reported: somebody wrote it. A generator
+that owns a whole README (bootstrap's schema page) keeps that region intact.
+
+**A missing fact is a QA finding, not a blank.**
+`test/results/subgraph-readmes.qa-results.json` records every directory with
+no `title`, no `description` or a description over 60 words, every declared
+directory absent from disk, and every unmarked README. Findings are reported,
+not failed: filling a declaration is its owner's work. `--check` fails on a
+stale README or a stale record, and runs in CI and in the pre-commit hook
+(`scripts/git-hooks/pre-commit`).
 
 ### Where the README render sits in the pipeline
 

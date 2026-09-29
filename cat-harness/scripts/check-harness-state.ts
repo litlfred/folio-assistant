@@ -49,6 +49,7 @@ import { directoriesForGraph, instanceRootsIn, repoRootFor } from "../schemas/ca
 // The producer's OWN hash, not a re-derivation. See `healthProducerCurrent`.
 import { checkerHash } from "../test/health/run.js";
 import { buildQaResult, writeQaResult } from "./qa-results.js";
+import { isDirectoryReadme } from "../schemas/kg-node.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(ROOT);
@@ -97,7 +98,7 @@ function nodesOf(kind: string, ext: string): string[] {
         if (e.startsWith(".")) continue;
         const p = join(d, e);
         if (statSync(p).isDirectory()) walk(p);
-        else if (p.endsWith(ext)) out.add(resolve(p));
+        else if (p.endsWith(ext) && !isDirectoryReadme(p)) out.add(resolve(p));
       }
     };
     walk(dir);

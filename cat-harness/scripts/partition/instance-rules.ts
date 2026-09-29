@@ -740,6 +740,12 @@ export const RULES: Rule[] = [
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
       "scripts/gen-bootstrap-schemas.ts",
+      // Its drawn page, `bootstrap/schemas/README.md`. Beside the generator
+      // that calls it, and for the same reason: bootstrap holds no code.
+      "scripts/bootstrap-schema-page.ts",
+      // A README per declared directory, from the declaration. Core beside
+      // `readme-sections`, whose file description and 'used by' it reuses.
+      "scripts/subgraph-readmes.ts",
       "scripts/check-docs-populated.ts",     // every harness owes one populated doc page
       "scripts/library-refs.ts",             // who references a slug — the L1 property
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
@@ -1107,6 +1113,14 @@ export const RULES: Rule[] = [
       // dropped. Harness machinery over declarations; imports only node:fs.
       "scripts/lib/declared-presence.ts",
       "scripts/kg-audit.ts",
+      // The same audit over every declared instance rather than the root alone
+      // (bean `bjzs`). Harness layer for exactly the reason `kg-audit.ts` is —
+      // it spawns that audit and imports only `instanceRootsIn`, so its subject
+      // is the instance declarations, never the content vocabulary. Assigned
+      // here in the same change that added it: `unassigned` is what the tool's
+      // own report says not to read as clean, and four scripts sat that way
+      // until somebody looked.
+      "scripts/kg-audit-all.ts",
       // WHICH audits reach which kind of node (bean `xutg`). Harness machinery
       // for the same reason `kg-audit.ts` is: its subject is the graph-kind
       // registry and the gate set, not the content vocabulary. Beside the audit

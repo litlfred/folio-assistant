@@ -20,7 +20,7 @@ generally: a scrapped item stops the next agent re-entering a dead end, while
 a deleted one cannot be told from an accident. Delete here means relocate, and
 relocate is reversible.
 
-**31 file(s)** across 2 group(s). Each links to the file itself —
+**32 file(s)** across 3 group(s). Each links to the file itself —
 this page indexes what is kept, it does not republish it.
 
 ## Does each file declare itself?
@@ -33,13 +33,21 @@ would make the format's limit and somebody's omission look the same.
 
 | state | files | what it means |
 |---|---|---|
-| <span class="fg-tag fg-ok">declared</span> | 20 | carries the tag itself |
+| <span class="fg-tag fg-ok">declared</span> | 21 | carries the tag itself |
 | <span class="fg-tag fg-side">via sidecar</span> | 4 | a script, described by a tagged `.md` sibling |
 | <span class="fg-tag fg-gap">undeclared</span> | 7 | **neither** — a gap, not a format limit |
 
 The 7 undeclared are listed below with the rest rather than in a
 separate section: they are part of the corpus, and a gap hidden behind a
 summary count is the failure this table exists to avoid.
+
+## at the root
+
+1 file(s).
+
+| file | what it is | declares itself |
+|---|---|---|
+| [README.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/README.md) | fsh-guts | <span class="fg-tag fg-ok">declared</span> |
 
 ## retired
 
