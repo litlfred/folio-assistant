@@ -314,7 +314,11 @@ bibliographic citations. Only flag if the `sorry` lacks a `-- Ref:` comment.
 
 1. **Collect all errors** from the build output before fixing anything
 2. **Group by file** — fix all errors in one file before moving to the next
-3. **Fix errors before warnings** — errors block the build; warnings don't
+3. **Fix errors before warnings** — errors block the build; warnings don't.
+   Within one declaration, **the first error is the only one checked against a
+   sound prefix**; later diagnostics are conditioned on an already broken
+   state, so fix the first and re-read rather than working the list top to
+   bottom (`process-driven-autoformalization` §2)
 4. **After each file's fixes**, verify with `lean_diagnostic_messages` (MCP)
    or a targeted rebuild
 5. **Commit after each logical group** of fixes with a descriptive message
