@@ -1,0 +1,503 @@
+# Lean 4 CI/CD — Build, Audit, Documentation, and Deployment, for every
+# Lean package in this paper folio.
+#
+# Written by `folio_init` for PAPER folios, from the platform's template
+# (cat-harness/templates/paper/github/workflows/lean_ci.yml).
+#
+# Names no paper: a `discover` job finds every `{{folio}}/<paper>/lean/`
+# holding a lakefile and every phase below runs once per package.
+#
+# Triggers
+# ────────
+#   workflow_dispatch — manual run, and the only trigger as written.
+#   The docs and deploy phases run only on a push to `main`; add a `push`
+#   trigger to enable them.
+#
+# Phases
+# ──────
+#   1. Build     – lake build verifying all proofs, and proof status
+#   2. Audit     – axiom report (sorry, axiom deps) and dependency graph
+#   3. Docs      – doc-gen4, or a source-browser fallback (blueprint.yml
+#                  builds the full blueprint)
+#   4. Deploy    – publish artifacts to gh-pages, one directory per paper
+#
+# Published artifacts (gh-pages)
+# ─────────────────────────────
+#   lean/<paper>/              Raw Lean source files for browsing
+#   lean/<paper>/docs/         doc-gen4 or fallback source browser
+#   <paper>/axiom-report.txt   Plaintext verification report
+#   <paper>/proof-objects.json Formalization status manifest
+#   <paper>/dependency-graph.svg  Visual dependency graph
+
+name: Lean CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: >
+          Branch, tag, or commit SHA to build from.
+          Leave blank to use the ref selected in the GitHub UI's
+          "Use workflow from" dropdown.
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: lean-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  discover:
+    name: Discover Lean packages
+    runs-on: ubuntu-latest
+    outputs:
+      papers: ${{ steps.find.outputs.papers }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Find every Lake package under the content root
+        id: find
+        run: |
+          papers=()
+          for d in "{{folio}}"/*/lean; do
+            if [ -f "$d/lakefile.toml" ] || [ -f "$d/lakefile.lean" ]; then
+              papers+=("$(basename "$(dirname "$d")")")
+            fi
+          done
+          if [ ${#papers[@]} -eq 0 ]; then
+            echo "::error::no {{folio}}/<paper>/lean/ Lake package (lakefile.toml or lakefile.lean) found — nothing to build."
+            exit 1
+          fi
+          echo "papers=$(printf '%s\n' "${papers[@]}" | jq -R . | jq -cs .)" >> "$GITHUB_OUTPUT"
+          echo "lean packages: ${papers[*]}"
+
+  # ════════════════════════════════════════════════════════════════════════
+  # Phase 1: Build
+  # ════════════════════════════════════════════════════════════════════════
+  build:
+    name: Build & Verify ${{ matrix.paper }}
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        paper: ${{ fromJSON(needs.discover.outputs.papers) }}
+    env:
+      PAPER: ${{ matrix.paper }}
+      FOLIO_PAPER: ${{ matrix.paper }}
+      FOLIO_BUILD_DIR: build/${{ matrix.paper }}
+      FOLIO_MANIFEST: build/${{ matrix.paper }}/proof-objects.json
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+          submodules: recursive
+
+      - name: Check out the platform if the folio does not carry it
+        run: |
+          if [ ! -f "{{assistant}}/bun.lock" ]; then
+            git clone --depth 1 "{{platform_git}}" "{{assistant}}"
+          fi
+
+      - name: Install CI tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            texlive texlive-latex-extra texlive-fonts-extra texlive-bibtex-extra \
+            texlive-science texlive-extra-utils biber \
+            latexdiff graphviz
+
+      - name: Install Lean via elan
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Configure Python path
+        run: echo "PYTHONPATH=$GITHUB_WORKSPACE/.github/scripts" >> "$GITHUB_ENV"
+
+      # ── Pre-build: content pipeline + extraction ──────────────────
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install the platform's dependencies
+        run: |
+          cd "{{assistant}}"
+          bun install --frozen-lockfile
+
+      - name: Build content objects to LaTeX chapters
+        continue-on-error: true
+        run: |
+          bun run "{{assistant}}/cat-harness/content/pipeline/build.ts" \
+            "{{folio}}/$PAPER/$PAPER.ts" \
+            --out-dir "$FOLIO_BUILD_DIR/chapters" \
+            --generate-main \
+            --main-out "$FOLIO_BUILD_DIR/main.tex"
+          echo "Generated chapters:"
+          ls -la "$FOLIO_BUILD_DIR"/chapters/*.tex 2>/dev/null || echo "  (none)"
+
+      - name: Extract proof objects from LaTeX
+        continue-on-error: true
+        run: python3 .github/scripts/extract_proof_objects.py
+
+      # Whichever of the package's manifest files exist — the cache key is
+      # a hash of them, and the action refuses a file that is not there.
+      - name: List the package's manifest files
+        id: pkg
+        run: |
+          d="{{folio}}/$PAPER/lean"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          {
+            echo "files<<$EOF"
+            for f in lean-toolchain lakefile.toml lakefile.lean lake-manifest.json; do
+              [ -f "$d/$f" ] && echo "$d/$f"
+            done
+            echo "$EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      # Tier-1 (actions/cache) + Tier-2 (lake-cache/<paper>-* orphan
+      # branch) + Tier-3 (Mathlib upstream, when the package requires it).
+      - name: Cache Lean build artifacts (hybrid 3-tier)
+        uses: ./.github/actions/lake-cache-restore
+        with:
+          package: ${{ matrix.paper }}
+          lake-root: "{{folio}}/${{ matrix.paper }}/lean"
+          toolchain-file: "{{folio}}/${{ matrix.paper }}/lean/lean-toolchain"
+          manifest-files: ${{ steps.pkg.outputs.files }}
+
+      # ── Build ──────────────────────────────────────────────────────
+      - name: Build Lean package
+        id: build
+        run: |
+          mkdir -p "$FOLIO_BUILD_DIR"
+          cd "{{folio}}/$PAPER/lean"
+          lake update
+          lake build 2>&1 | tee "$GITHUB_WORKSPACE/$FOLIO_BUILD_DIR/build.log"
+          exit "${PIPESTATUS[0]}"
+        continue-on-error: true
+
+      # ── Post-build analysis ────────────────────────────────────────
+      - name: Update proof status
+        run: python3 .github/scripts/update_proof_status.py --build-log "$FOLIO_BUILD_DIR/build.log"
+
+      - name: Count sorry markers
+        id: sorry
+        run: |
+          COUNT=$(find "{{folio}}/$PAPER/lean" -name '*.lean' -not -path '*/.lake/*' -print0 \
+            | xargs -0 -r grep -ho '\bsorry\b' | wc -l)
+          echo "count=${COUNT}" >> "$GITHUB_OUTPUT"
+          echo "Total sorry occurrences in $PAPER: ${COUNT}"
+
+      - name: Check for type errors
+        if: steps.build.outcome == 'failure'
+        run: |
+          echo "::error::lake build failed for $PAPER — check build.log for type errors"
+          grep -i "error:" "$FOLIO_BUILD_DIR/build.log" | head -20
+
+      # ── Upload artifacts for downstream jobs ───────────────────────
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-build-${{ matrix.paper }}
+          path: |
+            build/${{ matrix.paper }}/build.log
+            build/${{ matrix.paper }}/proof-objects.json
+          retention-days: 30
+
+  # ════════════════════════════════════════════════════════════════════════
+  # Phase 2: Audit
+  # ════════════════════════════════════════════════════════════════════════
+  audit:
+    name: Axiom Audit ${{ matrix.paper }}
+    runs-on: ubuntu-latest
+    needs: [discover, build]
+    strategy:
+      fail-fast: false
+      matrix:
+        paper: ${{ fromJSON(needs.discover.outputs.papers) }}
+    env:
+      PAPER: ${{ matrix.paper }}
+      FOLIO_PAPER: ${{ matrix.paper }}
+      FOLIO_BUILD_DIR: build/${{ matrix.paper }}
+      FOLIO_MANIFEST: build/${{ matrix.paper }}/proof-objects.json
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+          submodules: recursive
+
+      - name: Check out the platform if the folio does not carry it
+        run: |
+          if [ ! -f "{{assistant}}/bun.lock" ]; then
+            git clone --depth 1 "{{platform_git}}" "{{assistant}}"
+          fi
+
+      - name: Install CI tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends graphviz
+
+      - name: Install Lean via elan
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Configure Python path
+        run: echo "PYTHONPATH=$GITHUB_WORKSPACE/.github/scripts" >> "$GITHUB_ENV"
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: lean-build-${{ matrix.paper }}
+          path: build/${{ matrix.paper }}
+
+      - name: List the package's manifest files
+        id: pkg
+        run: |
+          d="{{folio}}/$PAPER/lean"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          {
+            echo "files<<$EOF"
+            for f in lean-toolchain lakefile.toml lakefile.lean lake-manifest.json; do
+              [ -f "$d/$f" ] && echo "$d/$f"
+            done
+            echo "$EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Restore Lean cache (hybrid 3-tier)
+        uses: ./.github/actions/lake-cache-restore
+        with:
+          package: ${{ matrix.paper }}
+          lake-root: "{{folio}}/${{ matrix.paper }}/lean"
+          toolchain-file: "{{folio}}/${{ matrix.paper }}/lean/lean-toolchain"
+          manifest-files: ${{ steps.pkg.outputs.files }}
+
+      # ── Generate axiom report ──────────────────────────────────────
+      - name: Generate axiom report
+        run: |
+          python3 .github/scripts/axiom_report.py \
+            --build-log "$FOLIO_BUILD_DIR/build.log" \
+            --output "$FOLIO_BUILD_DIR/axiom-report.txt"
+
+      - name: Print report summary
+        run: cat "$FOLIO_BUILD_DIR/axiom-report.txt"
+
+      - name: Generate dependency graph
+        run: |
+          python3 .github/scripts/generate_dependency_graph.py \
+            --output "$FOLIO_BUILD_DIR/dependency-graph.svg"
+
+      - name: Upload audit artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-audit-${{ matrix.paper }}
+          path: |
+            build/${{ matrix.paper }}/axiom-report.txt
+            build/${{ matrix.paper }}/dependency-graph.svg
+            build/${{ matrix.paper }}/dependency-graph.dot
+          retention-days: 30
+
+  # ════════════════════════════════════════════════════════════════════════
+  # Phase 3: Documentation (doc-gen4)
+  # ════════════════════════════════════════════════════════════════════════
+  docs:
+    name: Generate Documentation ${{ matrix.paper }}
+    runs-on: ubuntu-latest
+    needs: [discover, build]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    strategy:
+      fail-fast: false
+      matrix:
+        paper: ${{ fromJSON(needs.discover.outputs.papers) }}
+    env:
+      PAPER: ${{ matrix.paper }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+          submodules: recursive
+
+      - name: Check out the platform if the folio does not carry it
+        run: |
+          if [ ! -f "{{assistant}}/bun.lock" ]; then
+            git clone --depth 1 "{{platform_git}}" "{{assistant}}"
+          fi
+
+      - name: Install Lean via elan
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: List the package's manifest files
+        id: pkg
+        run: |
+          d="{{folio}}/$PAPER/lean"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          {
+            echo "files<<$EOF"
+            for f in lean-toolchain lakefile.toml lakefile.lean lake-manifest.json; do
+              [ -f "$d/$f" ] && echo "$d/$f"
+            done
+            echo "$EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Restore Lean cache (hybrid 3-tier)
+        id: lean-cache-docs
+        uses: ./.github/actions/lake-cache-restore
+        with:
+          package: ${{ matrix.paper }}
+          lake-root: "{{folio}}/${{ matrix.paper }}/lean"
+          toolchain-file: "{{folio}}/${{ matrix.paper }}/lean/lean-toolchain"
+          manifest-files: ${{ steps.pkg.outputs.files }}
+
+      - name: Build Lean package (ensure .olean files exist)
+        working-directory: "{{folio}}/${{ matrix.paper }}/lean"
+        env:
+          CACHE_HIT: ${{ steps.lean-cache-docs.outputs.cache-hit }}
+        run: |
+          # Only fetch dependencies on cache miss
+          if [ "$CACHE_HIT" != "true" ]; then
+            lake update
+          fi
+          lake build
+        continue-on-error: true
+
+      # ── Generate documentation ─────────────────────────────────────
+      # doc-gen4 is fetched via Lake. Every `lean_lib` the package's
+      # lakefile declares gets a `<lib>:docs` target; if doc-gen4 is not
+      # wired in, we fall back to a static source browser.
+      - name: Generate doc-gen4 documentation
+        id: docgen
+        working-directory: "{{folio}}/${{ matrix.paper }}/lean"
+        run: |
+          libs=$(PYTHONPATH="$GITHUB_WORKSPACE/.github/scripts" python3 -c \
+            "from folio_lean.config import lean_libraries; print(' '.join(lean_libraries('.')))")
+          targets=$(for l in $libs; do printf '%s:docs ' "$l"; done)
+          if [ -n "$targets" ] && lake build $targets 2>&1 | tee docgen.log; then
+            echo "docgen=true" >> "$GITHUB_OUTPUT"
+            echo "✅ doc-gen4 succeeded"
+          else
+            echo "docgen=false" >> "$GITHUB_OUTPUT"
+            echo "⚠️  doc-gen4 not available — generating source browser fallback"
+          fi
+        continue-on-error: true
+
+      # Fallback: a browsable source directory with an index generated from
+      # whatever .lean files the package holds.
+      - name: Generate source browser (fallback)
+        if: steps.docgen.outputs.docgen != 'true'
+        run: |
+          src="{{folio}}/$PAPER/lean"
+          mkdir -p lean-docs
+          (cd "$src" && find . -name '*.lean' -not -path './.lake/*' -print0 \
+            | xargs -0 -r cp --parents -t "$GITHUB_WORKSPACE/lean-docs")
+          for f in lakefile.toml lakefile.lean lean-toolchain; do
+            [ -f "$src/$f" ] && cp "$src/$f" lean-docs/
+          done
+          {
+            echo '<!DOCTYPE html>'
+            echo '<html lang="en"><head><meta charset="utf-8">'
+            echo "<title>$PAPER — Lean 4 source browser</title></head><body>"
+            echo "<h1>$PAPER — Lean 4 source browser</h1><ul>"
+            (cd lean-docs && find . -type f \( -name '*.lean' -o -name 'lakefile.*' -o -name 'lean-toolchain' \) | sort) \
+              | sed 's|^\./||' | while read -r f; do echo "<li><a href=\"$f\">$f</a></li>"; done
+            echo '</ul></body></html>'
+          } > lean-docs/index.html
+          echo "✅ Generated source browser fallback"
+
+      # Collect docs output
+      - name: Collect documentation output
+        run: |
+          mkdir -p _lean_docs
+          dir="{{folio}}/$PAPER/lean/.lake/build/doc"
+          if [ -d "$dir" ]; then
+            cp -r "$dir"/* _lean_docs/ 2>/dev/null || true
+          fi
+          if [ -d lean-docs ]; then
+            cp -r lean-docs/* _lean_docs/ 2>/dev/null || true
+          fi
+          echo "Documentation files: $(find _lean_docs -type f | wc -l)"
+
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-docs-${{ matrix.paper }}
+          path: _lean_docs/
+          retention-days: 30
+
+  # ════════════════════════════════════════════════════════════════════════
+  # Phase 4: Deploy
+  # ════════════════════════════════════════════════════════════════════════
+  deploy:
+    name: Deploy to gh-pages
+    runs-on: ubuntu-latest
+    needs: [discover, build, audit, docs]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # One queue for every job that pushes gh-pages: a concurrency group
+    # matches on the literal string, so every such job must name this one.
+    concurrency:
+      group: gh-pages-push
+      cancel-in-progress: false
+    env:
+      PAPERS: ${{ needs.discover.outputs.papers }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: _artifacts
+
+      - name: Assemble deployment directory
+        run: |
+          mkdir -p _deploy
+          for paper in $(echo "$PAPERS" | jq -r '.[]'); do
+            mkdir -p "_deploy/$paper" "_deploy/lean/$paper/docs"
+            # Lean documentation
+            [ -d "_artifacts/lean-docs-$paper" ] && cp -r "_artifacts/lean-docs-$paper"/* "_deploy/lean/$paper/docs/"
+            # Audit artifacts
+            if [ -d "_artifacts/lean-audit-$paper" ]; then
+              cp "_artifacts/lean-audit-$paper/axiom-report.txt" "_deploy/$paper/" 2>/dev/null || true
+              cp "_artifacts/lean-audit-$paper/dependency-graph.svg" "_deploy/$paper/" 2>/dev/null || true
+            fi
+            # Build artifacts
+            if [ -d "_artifacts/lean-build-$paper" ]; then
+              cp "_artifacts/lean-build-$paper/proof-objects.json" "_deploy/$paper/" 2>/dev/null || true
+            fi
+            # The package's own Lean sources, for browsing.
+            src="{{folio}}/$paper/lean"
+            (cd "$src" && find . \( -name '*.lean' -o -name 'lakefile.*' -o -name 'lean-toolchain' \) \
+              -not -path './.lake/*' -print0 \
+              | xargs -0 -r cp --parents -t "$GITHUB_WORKSPACE/_deploy/lean/$paper")
+          done
+          echo "Deployment contents:"
+          find _deploy -type f | head -30
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_deploy
+          publish_branch: gh-pages
+          destination_dir: ''
+          keep_files: true
+          commit_message: >
+            docs: deploy Lean docs and audit report from ${{ github.sha }}

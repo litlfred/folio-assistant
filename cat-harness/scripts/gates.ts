@@ -56,6 +56,16 @@ import { join, resolve } from "node:path";
 import { repoRootFor } from "../schemas/cat-harness.js";
 import { parse } from "yaml";
 
+import { distortions } from "./check-environment.ts";
+
+import {
+  diffReadings,
+  formatMutations,
+  formatUndetermined,
+  readTree,
+  type GateMutation,
+} from "./gate-tree-guard.js";
+
 // The REPOSITORY root. `GATES_WORKFLOW` is `.github/workflows/…`, which
 // belongs to the repository rather than to this instance, and the gates
 // themselves are npm scripts run from the repository root. This arrived from
@@ -125,9 +135,12 @@ export const WORKFLOW_DIR = join(".github", "workflows");
  * wrong program. `check:workflow-paths` records that as a `FOLIO_PATHS`
  * exemption with the same reason, and a test pins it.
  *
- * What the rename does NOT yet reach — `scripts/init-folio.ts` still
- * scaffolds `content/<slug>/`, and these workflows still `cd content` — is
- * `52dz`'s open half and the owner's call, not this table's to settle.
+ * `52dz`'s owner ruling (2026-09-24) settled the rest: the generic QA
+ * workflows and the Lean workflows that `cd content` were moved OUT of
+ * `.github/workflows/` into the platform's `templates/`, which `folio_init`
+ * writes into a new folio pointed at `folio/`. Their entries left this table
+ * with them — an exemption for a step no workflow here runs is the stale
+ * claim `gates.test.ts` refuses.
  *
  * These steps are not broken and not runnable here, and until this table
  * existed nothing could tell either from a real gap.
@@ -362,10 +375,11 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
   // workflows and prose; it is true of these and now declared.
   //
   // WORTH SAYING PLAINLY: several of these were authored for `litlfred/qou`
-  // and live here. One names `quantum-observable-universe` outright. Whether
-  // they belong in the platform repository at all is bean `52dz` — this table
-  // records what they are, and does not pretend that is the same as deciding
-  // where they go.
+  // and lived here. Bean `52dz` decided where they go (owner, 2026-09-24):
+  // `qa-sweep.yml`, `qa-sweep-nightly.yml`, `section-title-audit.yml` and the
+  // four Lean workflows are now templates `folio_init` writes, so the
+  // `qa-staleness` and `qa-section-title-audit.ts` entries went with them.
+  // What remains below still matches a workflow in `.github/workflows/`.
   {
     match: "pipeline/build.ts",
     kind: "no-folio",
@@ -376,16 +390,14 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "(bean `52dz`, 2026-09-20)",
   },
   {
+    // Since `52dz` the only match is the reusable `folio-staging.yml`, which
+    // runs inside a FOLIO's staging job and sweeps that folio's `folio_dir`.
     match: "qa-sweep",
     kind: "no-folio",
     reason:
-      "sweeps a folio's blocks from `content/`, a root the convention has " +
-      "retired in favour of `folio/` (owner, 2026-09-20)",
-  },
-  {
-    match: "qa-staleness",
-    kind: "no-folio",
-    reason: "as `qa-sweep` — a verdict's freshness against blocks the platform does not have",
+      "runs inside a FOLIO's staging job (`folio-staging.yml`, a reusable " +
+      "workflow) over that folio's blocks; the platform carries no folio. " +
+      "The standalone qa-sweep workflows are folio_init templates (bean `52dz`)",
   },
   {
     match: "check-witnesses",
@@ -401,13 +413,6 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     match: "latex-overfull-report.ts",
     kind: "no-folio",
     reason: "reads `main.log` from a folio's LaTeX run",
-  },
-  {
-    match: "qa-section-title-audit.ts",
-    kind: "no-folio",
-    reason:
-      "audits section titles from a root `content/` — retired; the " +
-      "convention is `folio/`, which this instance declares",
   },
   {
     match: "scripts/audit-wiring.ts",
@@ -458,6 +463,14 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     match: "strip-preview-seo.ts",
     kind: "ci-only",
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",
+  },
+  {
+    match: "set-html-lang.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--site ./_site`: it rewrites the BUILT site's `<html>` tags before a deploy (bean " +
+      "`zru7`); there is no `_site` in a checkout, and its logic is covered here by " +
+      "set-html-lang.test.ts, which builds pages as strings",
   },
   {
     // Four call sites, one entry — `match` is a substring and the script is
@@ -609,8 +622,33 @@ export function exemptionFor(command: string): StepExemption | undefined {
   return STEP_EXEMPTIONS.find((e) => command.includes(e.match));
 }
 
-/** Jobs whose steps need no browser — the inner loop. */
-const FAST_JOBS = new Set(["typescript"]);
+/**
+ * Does this job install a browser? — the inner loop's one question.
+ *
+ * **Derived, because the sentence this replaces already said the answer was
+ * derivable.** `FAST_JOBS = new Set(["typescript", "gates"])` was documented
+ * as *"jobs whose steps need no browser"* and as *"Chromium … is the only
+ * question this set actually asks"* — a predicate, written out, beside a
+ * hardcoded list of the jobs that happened to satisfy it. Asking it directly
+ * removes the gap where those two can disagree.
+ *
+ * The hazard the old comment names is real and this keeps it: a job the set
+ * does not name contributes NOTHING, so `bun run gates` would shrink while
+ * still printing a confident pass, and {@link NoGatesFound} could not catch it
+ * because the remaining jobs still yield commands. Bean `om30` had to widen
+ * the literal by hand when it split the job; the next split will not.
+ *
+ * It was also already wrong in the other direction. `dependency-advisories`
+ * runs `bun run check:dependency-advisories`, needs no browser, and was absent
+ * from the literal — so one CI gate had never run in the local fast set at all
+ * (157 → 158).
+ *
+ * `playwright install` is the discriminator rather than a job's name: it is
+ * what actually costs the 36 seconds and actually requires Chromium.
+ */
+function installsBrowser(def: { steps?: { run?: string }[] }): boolean {
+  return (def.steps ?? []).some((s) => /playwright\s+install/.test(s.run ?? ""));
+}
 
 /** One runnable gate, with the job and step that ask for it. */
 export interface Gate {
@@ -635,7 +673,7 @@ export function gatesFrom(workflowText: string, opts: { all?: boolean } = {}): G
   };
   const out: Gate[] = [];
   for (const [job, def] of Object.entries(doc.jobs ?? {})) {
-    if (!opts.all && !FAST_JOBS.has(job)) continue;
+    if (!opts.all && installsBrowser(def)) continue;
     for (const step of def.steps ?? []) {
       if (!step.run) continue;
       // A step's `run` may hold several lines; each `bun …` line is its own
@@ -693,7 +731,7 @@ export interface ForeignStep {
 /**
  * Every `bun` step in every OTHER workflow, in file order.
  *
- * Jobs are not filtered by {@link FAST_JOBS} here: that set names jobs of the
+ * Jobs are not filtered by {@link installsBrowser} here: that question is asked of the
  * gates workflow, and a job called `typescript` in another file is a different
  * job. Reading them all and classifying each is what keeps the two lists from
  * drifting.
@@ -777,6 +815,30 @@ export interface ScriptExemption {
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
   {
+    script: "check:test-budgets",
+    kind: "report",
+    reason:
+      "IT HAS NO SUBJECT UNTIL A SUITE HAS RUN — bean `sff8`. It reads a junit report produced by `bun test --reporter=junit`, so as a gate it would either duplicate the ~5-minute suite or run against a file that is not there; a missing report is exit 2, `could not determine`, which as a CI step would be a gate whose normal state is unable to fire. Its subject is also the wrong KIND for a gate: a test's cost is a fact about the MACHINE, not about this repository, so red here would report the runner while every reviewer read it as a verdict on the diff — the always-red-signal defect `check:bun-runtime` names one input over. Nothing it reports is a defect in this repository's source, so it exits 0 or 2 and never 1 (`nytj`), and 0 cases is exit 2 rather than a clean run over nothing (`6tkl`). It writes NO sidecar, deliberately, because committing milliseconds would pin this container's numbers as the corpus's — the `3vc1` defect — and `check:ci-health` already carries the precedent for asking a machine-shaped question externally every run and caching it nowhere. Whether a threshold should ever GATE is left open on the bean rather than settled here: ~50 cases sit at half the default budget under load, so a threshold gate would need 50 exemptions nobody has read, which is the empty exemption `xd1g` removed a gate for",
+  },
+  {
+    script: "check:environment",
+    kind: "report",
+    reason:
+      "A PRECONDITION, not a gate — bean `3vc1`. `gates.ts` calls `distortions()` directly before running anything and refuses the whole set on a finding, so the script exists for a contributor to ask the same question standalone. It is deliberately in NO workflow: CI installs only from the repository root, so a nested install cannot arise there and the step would be a gate that can never fire — which reads as protection and is not, the same dead-guard defect this file names for `build-glossary`. Its findings exit 2, never 1: a distorted environment is `could not determine` and nothing it reports is a defect in this repository's source (`nytj`). Measured: a nested `bun install` under `adapters/mcp-server` takes root `tsc` from 0 errors to 12 across 6 files with no source change, while CI on the identical commit is green",
+  },
+  {
+    script: "check:bun-runtime",
+    kind: "report",
+    reason:
+      "CI CANNOT OBTAIN A MISMATCH \u2014 the `ingest:ig-menu:check` shape, one input over. It compares the Bun RUNNING in this process against `.bun-version`, and CI installs `.bun-version` at all 22 `setup-bun` sites (that is `check:bun-pin`, which IS gated), so on a runner `running === pinned` by construction. Wired as a gate it would exercise nothing on every run, and its one interesting state would be unreachable from the only place it was ever checked. Its subject is the ENVIRONMENT rather than the corpus, so no commit can change the answer either: red here would report the machine while every reviewer read it as a verdict on the diff, which is the second always-red signal #1442 removed the first one for. **It is not unrun.** `session-start-coord-sweep.sh` runs it with `--markdown` on every session start. What it reports there changed once already: it was built to warn that a mismatched bun rewrites 72 of 86 sidecars on every sweep, and #1452 removed `engine_version` from `saveQaScriptSidecar`'s write-skip comparison, so nothing is rewritten and THAT CLAIM IS RETRACTED (measured: 0 rewritten where this container had produced 72). What it says now is that the agent is not running the code CI will judge its push with, and that a checker changed here stamps its sidecar with the older local engine \u2014 `rmcf`'s downgrade concern, which needs a real content change and is no longer an every-run event. Built so a blind run cannot read as clean: no pin, an unparseable pin or no Bun to ask all exit **2** as `cannot-tell`, never 0. Run it by hand, or read it at session start. Bean `3ozg`",
+  },
+  {
+    script: "check:quiet-claims",
+    kind: "report",
+    reason:
+      "A REPORT, and deliberately not a gate — bean `omki`. It supplies the NETWORK half of `bean-quiet-claims` (an open pull request naming a bean, an unmerged branch changing its file), so it needs a reachable GitHub API and a token, and it fetches before it reads because `pomp` makes ref freshness part of the evidence. Gating on it would make every PR depend on api.github.com being up, and it would redden when a SIBLING's branch merges rather than when this author forgot anything — the property `schema:viz:check` is exempt for. Its findings exit 0 on purpose: a quiet claim is a fact about the repository, not a defect in a diff. Could-not-determine exits 2, so a caller cannot read a blind sweep as a clean one. Run it by hand, or from a goal-review sweep",
+  },
+  {
     script: "check:kind-validators",
     kind: "covered-by",
     reason:
@@ -819,6 +881,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "not a gate but the Tool `wireframe-check`: it takes the candidate files to render as arguments, and with none it has nothing to measure. What it writes, `checks/report.json` beside each wireframe, IS gated, by `check:wireframes`, which fails on a declared visualiser whose wireframe has no report, or a report missing a viewport or holding a fail (issue #1023). Run it by hand when a wireframe changes",
   },
   {
+    script: "check:reference-direction",
+    kind: "report",
+    reason:
+      "ADVISORY BECAUSE THE COUNT IS NOT ZERO YET, and for no other reason \u2014 574 wrong-direction occurrences across 167 files, measured 2026-09-24, of which 343 in 51 files are PENDING. The repository's own precedent settles this: the ruff comment in `code-quality-gates.yml`, and `repo-partition.ts`'s note that its two axes were each enforced only as they reached zero. Turning a red gate on just teaches the next agent to append `|| true`. It is built so an advisory run CANNOT be mistaken for a clean one: the summary always prints `undetermined \u2014 NOT clean` with its count and what landed there, and 3,139 occurrences do, chiefly because `folio-assistant` names the repository, the published product AND the root instance, whose directory IS the repository root. `--strict` exits 1 on any wrong-direction occurrence and is what flips this to `kind: \"gate\"` once the backlog is drained. What IS enforced on every run today, without waiting: the PENDING set, which fails on a stale entry, and the IMPORT half of the same arrow \u2014 `check:partition`, 0/0 and enforcing both axes, computing direction through the very same `layer-direction.ts` this consumes. Issue #1219, bean `zhg2`",
+  },
+  {
     script: "ingest:ig-menu:check",
     kind: "report",
     reason:
@@ -857,6 +925,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     script: "check:upstream-pins",
     kind: "scheduled",
     reason: "`upstream-pins.yml` runs it weekly; pins do not move with a diff",
+  },
+  {
+    script: "check:reference-direction:strict",
+    kind: "report",
+    reason:
+      "THE SAME SCRIPT AS `check:reference-direction`, exiting 1 instead of 0 on a wrong-direction occurrence. It is the form this becomes a gate in, kept runnable and wired to nothing while the count is 574: a gate that fails on a backlog is a gate somebody switches off. Run it by hand, or from `/prepare-merge`, to see what enforcement would say today. Flipping the advisory entry above to `kind: \"gate\"` and pointing it here is the whole of the change once the backlog is drained. Bean `zhg2`",
   },
   {
     script: "check:partition:edges",
@@ -1089,9 +1163,48 @@ if (import.meta.main) {
     process.exit(2);
   }
 
+  // ── Is the ENVIRONMENT fit to be read from? (bean `3vc1`) ──────────────
+  //
+  // Asked BEFORE any gate runs, and it refuses the whole set rather than
+  // reddening one, because 168 results computed against a filesystem that
+  // disagrees with the repository are worse than no results: they look like
+  // evidence. Measured 2026-09-26 — a nested `bun install` under
+  // `adapters/mcp-server` takes root `tsc --noEmit` from 0 errors to 12 across
+  // 6 files with NO source change, and CI on the identical commit is green.
+  //
+  // Exit 2, never 1, and that distinction is the whole point (`nytj`): nothing
+  // it reports is a finding about this repository's source. The third state has
+  // to be reachable from here or the reading is indistinguishable from a real
+  // red — which is `1xhc`'s subject, and the reason this refusal is not a
+  // warning that scrolls past.
+  //
+  // It is a PRECONDITION rather than one of the gates because CI installs only
+  // from the repository root, so the condition cannot arise there: a workflow
+  // step would be a gate that can never fire, which reads as protection and is
+  // not. `SCRIPT_EXEMPTIONS` carries that reason for `check:unrun-scripts`.
+  const distorted = distortions(ROOT);
+  if (distorted.length > 0) {
+    console.error("REFUSING TO RUN — this checkout's environment is distorted.\n");
+    for (const d of distorted) {
+      console.error(`  ✗ ${d.path}`);
+      console.error(`      ${d.effect}`);
+      console.error(`      measured on bean \`${d.bean}\``);
+    }
+    console.error(
+      "\nNo gate ran. A gate set read now would report this repository's source\n" +
+        "incorrectly, and a wrong red costs more than a missing one — it sends the\n" +
+        "next hour to the wrong file. Move the residue aside and re-run.\n" +
+        "\nFor a nested install this is a TRAP and not a mistake: regenerating a\n" +
+        "nested lockfile REQUIRES `bun install` in that directory, so doing the\n" +
+        "correct thing is what created this. `bun run check:environment` alone\n" +
+        "reports the same thing without running any gate.",
+    );
+    process.exit(2);
+  }
+
   const scope = all
     ? "every job, plus every locally-runnable step from the other workflows"
-    : `the fast set (${[...FAST_JOBS].join(", ")})`;
+    : `the fast set (every job that does not install a browser)`;
   console.log(`${gates.length} gate(s) — ${scope}\n`);
 
   // Reported on EVERY run, not only with `--list`: an unclassified step is a
@@ -1122,19 +1235,76 @@ if (import.meta.main) {
     process.exit(0);
   }
 
+  // ── Which gate changed the repository (bean `ymsu`) ────────────────────
+  //
+  // Snapshot the working tree between gates, so a gate that writes to the tree
+  // it is being judged on is attributed to ITSELF rather than discovered later
+  // as a mystery dirty file. `gate-tree-guard.ts` carries why this can only
+  // live here — no gate can observe what another gate did, which is the
+  // definition of the blind spot — and why the predicate is a per-gate DELTA
+  // rather than "the tree is dirty", since running gates on your own
+  // uncommitted work is the normal case.
+  //
+  // A failure to read the tree is carried as `undetermined` and reported, not
+  // thrown: `gates` has to stay runnable where the question cannot be asked.
+  const baseline = readTree(ROOT);
+  let seen: ReadonlyMap<string, string> | undefined = baseline.ok ? baseline.entries : undefined;
+  const undetermined: string[] = baseline.ok ? [] : formatUndetermined(baseline.why);
+  const mutations: GateMutation[] = [];
+
   const failed: { gate: Gate; why: string[] }[] = [];
   for (const g of gates) {
     process.stdout.write(`▸ ${g.command}\n`);
     const [cmd, ...args] = g.command.split(/\s+/);
     const r = await runTee(cmd!, args);
     if (r.code !== 0) failed.push({ gate: g, why: salientFailures(r.output) });
+
+    if (seen !== undefined) {
+      const now = readTree(ROOT);
+      if (!now.ok) {
+        // The baseline read fine and this one did not, so the question stops
+        // being answerable PART WAY THROUGH. Reported with the gate it stopped
+        // at, and the comparison is abandoned rather than continued against a
+        // snapshot that is now of unknown age.
+        undetermined.push(...formatUndetermined(`${now.why} (after \`${g.command}\`)`));
+        seen = undefined;
+      } else {
+        const changes = diffReadings(seen, now.entries);
+        if (changes.length > 0) mutations.push({ gate: g.command, changes });
+        seen = now.entries;
+      }
+    }
   }
 
   console.log("");
+  for (const line of undetermined) console.log(line);
+  if (undetermined.length) console.log("");
+  const mutationReport = formatMutations(mutations);
+  for (const line of mutationReport) console.log(line);
+  if (mutationReport.length) console.log("");
   if (failed.length === 0) {
-    console.log(`✓ ${gates.length} gate(s) pass — the ${all ? "whole" : "fast"} set.`);
-    if (!all) console.log("  `bun run gates --all` adds the browser jobs before you push.");
-    process.exit(0);
+    // Every gate passed AND nothing moved underneath them. Only this pair earns
+    // the clean line.
+    if (mutations.length === 0) {
+      console.log(`✓ ${gates.length} gate(s) pass — the ${all ? "whole" : "fast"} set.`);
+      if (!all) console.log("  `bun run gates --all` adds the browser jobs before you push.");
+      process.exit(0);
+    }
+    // `152 gate(s) pass` is TRUE here and it is the wrong thing to print: the
+    // gates that ran after the mutation were handed a repaired tree, so their
+    // passing is a verdict about a state the repository does not contain. The
+    // whole of bean `ymsu` is that this sentence was printed anyway, 152 times
+    // out of 152, over a value nobody had committed.
+    console.log(
+      `✗ every gate passed, and the run is NOT clean — ${mutations.length} gate(s) changed the tree.`,
+    );
+    console.log(
+      `  ${gates.length} verdict(s) above were reached against a tree that a gate had already`,
+    );
+    console.log(
+      `  repaired, so the later ones describe a state you have not committed. Details above.`,
+    );
+    process.exit(1);
   }
   console.log(`✗ ${failed.length} of ${gates.length} failed:`);
   for (const { gate, why } of failed) {

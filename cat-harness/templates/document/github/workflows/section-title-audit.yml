@@ -1,0 +1,70 @@
+# Section-title + structure audit (chapter-scoped).
+#
+# Written by `folio_init` from the platform's template
+# (cat-harness/templates/document/github/workflows/section-title-audit.yml).
+#
+# Two reviews:
+#   - MACHINE review — the platform's qa-section-title-audit.ts flags
+#     auto-split " : <tag>" title artifacts, trailing colons, over-long /
+#     compound titles, and structure findings (depth/band/balance).
+#   - AGENT review — story-coherence verdicts live in the `agent` block
+#     of each per-document sidecar
+#     ({{folio}}/<document>/section-title-audit.qa.json), re-opened as the
+#     chapter manifest hash drifts.
+#
+# This workflow HARD-gates the machine side and sidecar freshness, so a
+# chapter manifest can't change without the committed sidecars being
+# updated.
+#
+# Triggers: `workflow_dispatch` only as written. Uncomment `pull_request`
+# to run it on every pull request.
+
+name: Section-title + structure audit
+
+on:
+  workflow_dispatch:
+  # pull_request:
+  #   types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Check out the platform if the folio does not carry it
+        run: |
+          if [ ! -f "{{assistant}}/bun.lock" ]; then
+            git clone --depth 1 "{{platform_git}}" "{{assistant}}"
+          fi
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install the platform's dependencies
+        run: |
+          cd "{{assistant}}"
+          bun install --frozen-lockfile
+
+      # MACHINE review — HARD GATE. A split-artifact / trailing-colon /
+      # empty title (or a depth>3 nesting) fails CI. Soft conciseness
+      # warnings (compound / too-long) do not. Run from the folio root: the
+      # audit reads the content root relative to the working directory.
+      - name: Machine review — titles + structure (hard gate)
+        run: bun run "{{assistant}}/cat-harness/content/pipeline/qa-section-title-audit.ts"
+
+      # HARD GATE: sidecars must be regenerated when a manifest — or, in
+      # --thorough mode, any contained block (.md/.ts/.lean) or descendant
+      # subsection — changes.
+      - name: Sidecars up to date
+        run: |
+          bun run "{{assistant}}/cat-harness/content/pipeline/qa-section-title-audit.ts" --report-only --write-sidecar --thorough
+          if ! git diff --exit-code -- '{{folio}}/*/section-title-audit.qa.json'; then
+            echo "::error::section-title-audit sidecars are stale. Run: bun run {{assistant}}/cat-harness/content/pipeline/qa-section-title-audit.ts --report-only --write-sidecar --thorough"
+            exit 1
+          fi

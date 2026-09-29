@@ -123,7 +123,7 @@
  * @conformsTo w3c-rdfs
  * @conformsTo w3c-skos
  */
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
 import { NS_PREFIXES, ownElementPattern, termIri } from "../schemas/namespaces.js";
@@ -132,6 +132,7 @@ import { repoRootFor } from "../schemas/cat-harness.js";
 import { kgRoots } from "./known-skills.js";
 import { exportIdentity, makeIri } from "./kg-export.js";
 import { codeListDirs, loadCodeLists } from "../schemas/code-list.js";
+import { gitFiles } from "../schemas/git-corpus.ts";
 import { buildCodeListsDoc } from "./code-lists.js";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -170,24 +171,13 @@ export interface LaneOccurrence {
   readonly activities: number;
 }
 
+/**
+ * Every `.bpmn` diagram git accounts for, outside dot directories.
+ *
+ * `xd1g`. Measured at the conversion: **74 before, 74 after**.
+ */
 function bpmnFiles(root: string): string[] {
-  const out: string[] = [];
-  const walk = (dir: string): void => {
-    let entries;
-    try {
-      entries = readdirSync(dir, { withFileTypes: true });
-    } catch {
-      return;
-    }
-    for (const e of entries) {
-      if (e.name.startsWith(".") || e.name === "node_modules") continue;
-      const p = join(dir, e.name);
-      if (e.isDirectory()) walk(p);
-      else if (e.name.endsWith(".bpmn")) out.push(p);
-    }
-  };
-  walk(root);
-  return out.sort();
+  return gitFiles(root, (rel) => rel.endsWith(".bpmn") && !rel.split("/").some((s) => s.startsWith("."))).files;
 }
 
 /**
@@ -554,6 +544,7 @@ export function buildGlossary(opts: {
     if (!occurrences.has(r.id)) undrawn.push(r.id);
   }
 
+  const schemeLabel = `${id.stub} swimlane glossary`;
   const doc = {
     "@context": {
       skos: SKOS,
@@ -584,8 +575,15 @@ export function buildGlossary(opts: {
     // would name a set that already has a name and would not dereference
     // (`blv9`).
     "@type": "skos:ConceptScheme",
-    prefLabel: `${id.stub} swimlane glossary`,
-    title: `${id.stub} swimlane glossary`,
+    // ONE SOURCE, TWO VOCABULARIES (bean `sl9u`, owner 2026-09-23: keep
+    // both). `skos:prefLabel` is what a SKOS reader looks for and
+    // `dcterms:title` what a catalogue reader does; both are kept, and
+    // `title` is COPIED from the label so they cannot drift. The owner named
+    // the general shape — one value mapped into several target vocabularies
+    // by content type — as a family of ETL Tools still to build (bean
+    // `k74z`); this line is one hand-written instance of it.
+    prefLabel: schemeLabel,
+    title: schemeLabel,
     definition:
       "Every persona this instance's BPMN diagrams place in a swimlane, one concept each. " +
       "Labels come from the lanes, definitions from the role registry, and scope notes " +

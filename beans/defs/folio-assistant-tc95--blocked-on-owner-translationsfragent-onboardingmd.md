@@ -1,10 +1,11 @@
 ---
 # folio-assistant-tc95
 title: 'BLOCKED on owner: translations/fr/agent-onboarding.md is an English .md in a gettext directory'
-status: todo
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-20T16:14:28Z
-updated_at: 2026-09-20T16:14:28Z
+updated_at: 2026-09-23T19:25:46Z
 parent: folio-assistant-zzmr
 ---
 
@@ -61,6 +62,12 @@ and age, and wait. Both are above.
 
 ## Done when
 
-- [ ] the owner has said which
-- [ ] `bun run subgraphs` reports **0** dangling, at which point the count
+- [x] the owner has said which
+- [x] `bun run subgraphs` reports **0** dangling, at which point the count
       can be gated rather than reported
+
+## Summary of Changes
+
+Closed 2026-09-23 **on evidence, not authorship**, in the owner's "go through remaining beans" sweep. A read-only check against `main` called it landed, and it was re-verified before closing:
+
+The owner's standing rule decided it: fsh-guts, never delete. The file was moved to `fsh-guts/retired/translations-fr-agent-onboarding.md`, and nothing named agent-onboarding is left under `translations/fr/`. `bun run subgraphs` reports no dangling line, and `check:subgraphs` exits 0.

@@ -27,8 +27,40 @@
  * | `internal`, `inbound`, `outbound` | yes | see below — a ratio never travels alone |
  * | `cohesion` | yes | a derived fact |
  * | `enforcedBoundary`, `recordedBoundary`, `proseMentions` | yes | the authority counts |
+ * | `wrongDirection`, `undeterminedDirection` | yes | the DIRECTION counts — see below |
  * | `role` | **no** | derived from the counts above; pinning it duplicates them |
  * | `verdict`, `clauses` | **no** | the ruling's explicit exclusion |
+ *
+ * ## The direction counts were added AFTER the ruling, and nobody went back
+ *
+ * The ruling above is 2026-09-21. `wdir` and `undet` did not exist then —
+ * bean `j79e` added them on 2026-09-23, when `layer-direction.ts` gave
+ * `check:partition` and `kg-detangle` one shared verdict. So they were never
+ * weighed against the ruling; they were simply printed and dropped.
+ *
+ * **What that cost, measured 2026-09-26.** `j79e` records *"0 wrong-direction
+ * outbound edges across 26 groups"* on 2026-09-23. Three days later it was
+ * **1 across 28 groups** — `cat-harness/schemas/intake.ts` importing
+ * `folio-assistant-core/schemas/materialization.js`, against a `cat-harness`
+ * that declares only `bootstrap`. An inversion reached `main` and `kg:detangle
+ * --check` could not fail on it, because the field it would have had to
+ * compare was not in the file. That is bean `1xhc` exactly: a gate that cannot
+ * fire is indistinguishable from one that passed.
+ *
+ * **Why these two are pinned when `verdict` is not.** The case against
+ * `verdict` is churn: it is a threshold comparison, so a group sitting near a
+ * boundary flips on a change that moved nothing about it. Neither of these is
+ * a threshold. `wrongDirection` counts edges whose `directionOf` said
+ * `wrong-direction`, which changes only when an edge or a declaration changes
+ * — precisely the event worth failing on. They are the same KIND of fact as
+ * the authority counts already pinned: both classify boundary edges, one by
+ * authority and one by direction.
+ *
+ * **And `undeterminedDirection` rides with `wrongDirection` for the reason the
+ * raw counts ride with `cohesion`.** An undetermined edge is one whose
+ * instance declares no `needs` — the third state, which is not clean. Pinning
+ * the wrong-direction count alone would let an edge move from
+ * `wrong-direction` to `undetermined` and read as a fix.
  *
  * **Why `verdict` is excluded is worth keeping.** It is the field a reviewer
  * most wants pinned and the one most likely to churn on unrelated edits: it is
@@ -71,6 +103,10 @@ export interface DetangleSidecar {
   readonly recordedBoundary: number;
   /** Cross-group prose mentions. Neither a dependency nor a coupling. */
   readonly proseMentions: number;
+  /** Outbound edges `directionOf` called `wrong-direction` — the layering is inverted. */
+  readonly wrongDirection: number;
+  /** Outbound edges whose direction cannot be decided, because the source instance declares no `needs`. Not clean. */
+  readonly undeterminedDirection: number;
 }
 
 /**
@@ -94,6 +130,8 @@ export const PINNED_FIELDS = [
   "enforcedBoundary",
   "recordedBoundary",
   "proseMentions",
+  "wrongDirection",
+  "undeterminedDirection",
 ] as const;
 
 /**
@@ -114,6 +152,8 @@ export function sidecarFor(m: {
   enforcedBoundary: number;
   recordedBoundary: number;
   proseMentions: number;
+  wrongDirection: number;
+  undeterminedDirection: number;
 }): DetangleSidecar {
   return {
     $schema: "folio-detangle-sidecar/v1",
@@ -126,6 +166,8 @@ export function sidecarFor(m: {
     enforcedBoundary: m.enforcedBoundary,
     recordedBoundary: m.recordedBoundary,
     proseMentions: m.proseMentions,
+    wrongDirection: m.wrongDirection,
+    undeterminedDirection: m.undeterminedDirection,
   };
 }
 

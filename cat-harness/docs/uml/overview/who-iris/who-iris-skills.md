@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-uml-overview.ts — do not hand-edit
 title: "UML — who-iris/who-iris-skills"
 nav_exclude: true
 ---

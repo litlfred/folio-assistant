@@ -52,7 +52,7 @@ import {
   undeclaredNamespaces,
   unusedNamespaces,
   type ExternalSchema,
-} from "../../folio-assistant-core/schemas/external-schema.js";
+} from "../schemas/external-schema.js";
 import { handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");

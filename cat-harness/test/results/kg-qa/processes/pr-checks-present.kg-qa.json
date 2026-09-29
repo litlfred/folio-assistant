@@ -5,7 +5,7 @@
     "id": "Process_PrChecksPresent",
     "path": "processes/pr-checks-present.bpmn"
   },
-  "source_hash": "sha256:470b15af76ff3b92d7caac53a3794242a0781b057870e58f5b5dc180cbf9cfe7",
+  "source_hash": "sha256:0fb9933042605447eaa675b4c48206f1b5a68cbfc222f420b9fa5a5d934c6180",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,15 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Comment",
+          "detail": "names skill \"issue-working\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -127,7 +136,7 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 1,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   },
@@ -136,9 +145,10 @@
       "kind": "implements",
       "prose": "cat-harness/processes/pr-checks-present.bpmn",
       "code": ".github/workflows/pr-checks-present.yml",
-      "prose_hash": "470b15af76ff",
-      "code_hash": "fc09eec3e3e0",
-      "by": "baseline"
+      "prose_hash": "0fb993304260",
+      "code_hash": "73a3eb11c7c2",
+      "by": "agent",
+      "reason": "This branch changed 12 workflow files in ONE way: an `oven-sh/setup-bun@v2` step's `bun-version` literal went from `latest` (or from absent) to `1.3.14`. Re-read all six paired documentations: none mentions the runtime, `setup-bun\\', `bun-version` or `latest` — grepped, not assumed — so none of them describes the thing that changed. `upstream-pin-watch` was read most closely because this branch also adds Bun to `upstream-pins.json`, and its prose is tenant-agnostic by design: it names no pin, gives no count, and says a new tenant is 'a registry row and a call — never a second diagram'. Adding a row is what it prescribes, so the prose holds a fortiori. Bean `3ozg`."
     }
   ]
 }

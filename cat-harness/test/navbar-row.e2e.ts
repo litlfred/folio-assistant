@@ -72,7 +72,7 @@ type NavbarRow = {
   icons: string[];
   hrefs: Record<string, string>;
   notes?: Record<string, string>;
-  folders: { kind: string; path?: string; note?: string; stagingOnly?: true }[];
+  folders: { kind: string; within?: string; path?: string; note?: string; stagingOnly?: true }[];
 };
 const HARNESS = JSON.parse(readFileSync(join(ROOT, SITE, "_data/harness.json"), "utf8")) as {
   navbar: NavbarRow | null;
@@ -154,7 +154,7 @@ function page(row: NavbarRow | null | "absent" | "broken", main: string = HEADIN
     <nav class="site-nav"><a href="#">Navigation link</a></nav>
     <input type="checkbox" class="fa-nav-open" id="fa-nav-open">
     <label class="fa-nav-toggle" for="fa-nav-open" title="Keep navigation open"><span class="fa-nav-glyph" aria-hidden="true">&#9776;</span></label>
-    <label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span></label>
+    <label class="fa-nav-close" for="fa-nav-open" title="Close navigation"><span aria-hidden="true">&times;</span><span class="fa-nav-sr">Close navigation</span></label>
     <footer class="site-footer">
       <div class="fa-nav-bottom__stack">
         <details class="fa-harness-tabs">
@@ -209,6 +209,28 @@ async function load(
     r.fulfill({ contentType: "text/html", body: page(row, main, staging) }),
   );
   await p.goto("http://navbar.fixture/nav", { waitUntil: "load" });
+  // AT REST MEANS THE POINTER IS NOT OVER THE STRIP, and that is now stated
+  // rather than inherited. The strip sits at the left edge, where the pointer
+  // starts. With Playwright 1.63's Chromium, the "at rest" tests found the bar
+  // already open, as if hovered, on the bump PR (bean x89e) and passed on the
+  // same main without it. Parking the pointer in the far corner makes "no hover"
+  // a precondition these tests set, not one a browser revision decides.
+  const vp = p.viewportSize();
+  if (vp) await p.mouse.move(vp.width - 5, vp.height - 5);
+  // Moving away from a bar the browser already considered hovered STARTS its
+  // close transition. Asserting "at rest" while that runs sees a half-closed
+  // bar, which was the one failure left after the pointer was parked. So
+  // wait for every running animation or transition to finish, after two
+  // frames so a transition the move just queued is already registered.
+  await p.evaluate(async () => {
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    // An infinite animation (a spinner) never finishes, so it is left out:
+    // only something that ends can be waited for.
+    const settling = document
+      .getAnimations()
+      .filter((a) => a.effect?.getTiming().iterations !== Infinity);
+    await Promise.all(settling.map((a) => a.finished.catch(() => undefined)));
+  });
   return { errors, console: logs };
 }
 
@@ -221,12 +243,21 @@ test.describe("the icon row — line 2 of the fixed top", () => {
     const { errors } = await load(page, LIVE);
     expect(errors).toEqual([]);
     const drawn = LIVE.icons.filter((i) => i !== "close");
-    await expect(page.locator(".fa-nav-icons .fa-nav-icon")).toHaveCount(drawn.length);
+    // The DECLARED slots. The light/dark switch and the moved [x] follow them
+    // (owner, 2026-09-27: "light dark mode on main icon tab", "close
+    // navigation in line with the rest of icons") and are not declared slots.
+    const slots = ".fa-nav-icons .fa-nav-icon:not(.fa-nav-scheme):not(.fa-nav-close)";
+    await expect(page.locator(slots)).toHaveCount(drawn.length);
     expect(drawn).not.toContain("close");
-    const labels = await page.locator(".fa-nav-icons .fa-nav-icon").evaluateAll((ns) =>
+    const labels = await page.locator(slots).evaluateAll((ns) =>
       ns.map((n) => n.getAttribute("aria-label")),
     );
     expect(labels).toEqual(["Todos", "Beans", "Processes", "Knowledge graph", "More actions"]);
+    // ...then the switch, then the [x], last.
+    const tail = await page.locator(".fa-nav-icons > *").evaluateAll((ns) =>
+      ns.slice(-2).map((n) => (n.classList.contains("fa-nav-scheme") ? "scheme" : n.classList.contains("fa-nav-close") ? "close" : n.className)),
+    );
+    expect(tail).toEqual(["scheme", "close"]);
   });
 
   test("FIVE DISTINCT drawings — a row where slots look alike says nothing", async ({ page }) => {
@@ -359,7 +390,10 @@ test.describe("the middle — controlled folders, then the harness navigation, O
       .locator(".fa-nav-middle > *")
       .evaluateAll((ns) => ns.map((n) => n.className));
     expect(order[0]).toContain("fa-nav-folders");
-    expect(order[1]).toContain("site-nav");
+    // The page list's own heading (owner, 2026-09-27: "no title on the
+    // navbar component w/ pages"), then the list.
+    expect(order[1]).toContain("fa-nav-pages");
+    expect(order[2]).toContain("site-nav");
   });
 
   test("every declared kind is listed; one with no viewer is a non-link", async ({ page }) => {
@@ -588,6 +622,18 @@ test.describe("at rest the strip carries marks and nothing else", () => {
     }
     return out;
   };
+
+  test("the folio handle is not in the sidebar, and the ☰ still takes its clicks", async ({ page }) => {
+    // Owner, 2026-09-27: the handle is back at the top centre, "not on
+    // navbar". Kept as a guard: the ☰ must still open and close the bar.
+    await load(page, CUSTOM);
+    await expect(page.locator(".side-bar .fa-glass-handle")).toHaveCount(0);
+    await expect(page.locator("body > .fa-glass-handle")).toHaveCount(1);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-close").click();
+    await page.waitForTimeout(200);
+    await page.locator(".fa-nav-toggle").click({ timeout: 5000 });
+  });
 
   test("NO text region is visible until the bar is opened", async ({ page }) => {
     const { errors } = await load(page, CUSTOM);
@@ -842,6 +888,26 @@ test.describe("the navbar can be closed, and it stays closed", () => {
     await expect(page.locator(".fa-nav-close")).toBeVisible();
   });
 
+  test("only the [x] SHOWS — its words are for a screen reader (owner, 2026-09-27)", async ({ page }) => {
+    // Owner: the open sidebar showed "× Close navigatio", the words wrapped
+    // over two lines on the grey box and over the icon row. The span that
+    // carries the name was clipped only by the RAIL's stylesheet, and this
+    // fixture had been written without it, so nothing here could see it.
+    await load(page, CUSTOM);
+    await page.hover(".side-bar");
+    const close = page.locator(".fa-nav-close");
+    await expect(close).toBeVisible();
+    const box = (await close.boundingBox())!;
+    expect(box.width).toBeLessThanOrEqual(40);
+    expect(box.height).toBeLessThanOrEqual(40);
+    expect(box.height).toBeGreaterThanOrEqual(24);
+    const sr = (await page.locator(".fa-nav-close .fa-nav-sr").boundingBox())!;
+    expect(sr.width).toBeLessThanOrEqual(1);
+    expect(sr.height).toBeLessThanOrEqual(1);
+    // Hidden from the eye, still the control's name.
+    await expect(close).toContainText("Close navigation");
+  });
+
   test("pressing it does NOT pin the bar open — the label would have", async ({ page }) => {
     // The defect this intercepts. `[x]` is a `<label for="fa-nav-open">` and a
     // label TOGGLES; with the bar open by hover the checkbox is already clear,
@@ -964,5 +1030,97 @@ test.describe("a page withheld from this deploy is not linked", () => {
     await page.hover(".side-bar");
     const row = page.locator(".fa-nav-folders__item", { hasText: "fsh-guts" });
     await expect(row.locator("a[href]")).toHaveAttribute("href", BASEURL + "/fsh-guts/");
+  });
+});
+
+test.describe("a sub-graph is drawn INSIDE its parent's row, folded — issue #1164", () => {
+  /* Owner, 2026-09-23: proposals live in *"a docs/proposals/ sub-graph
+   * declared sub-sub-graph (which starts closed in navbar, general
+   * behavior)"*. GENERAL: whatever carries `within`, not a case for docs. */
+  const NESTED: NavbarRow = {
+    icons: ["close"],
+    hrefs: {},
+    folders: [
+      // The children come FIRST in the data on purpose: the page must still
+      // find their parent's row.
+      { kind: "proposals", within: "docs", path: "/proposals/" },
+      { kind: "docs", path: "/docs/" },
+      { kind: "requirements", within: "docs", path: "/requirements/" },
+      { kind: "library", path: "/library/" },
+      // A parent that is not listed: the child stands on its own rather than
+      // vanishing.
+      { kind: "orphan", within: "nowhere", path: "/orphan/" },
+    ],
+  };
+
+  test("the children sit under their parent, in a disclosure that starts CLOSED", async ({ page }) => {
+    await load(page, NESTED);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-folders__heading").click();
+    const docs = page.locator(".fa-nav-folders__list > .fa-nav-folders__item", { hasText: /^docs/ });
+    const sub = docs.locator(":scope > .fa-nav-folders__sub");
+    await expect(sub).toHaveCount(1);
+    await expect(sub).not.toHaveAttribute("open", "");
+    await expect(sub.locator(".fa-nav-folders__item")).toHaveCount(2);
+    // Not also at the top level.
+    await expect(page.locator(".fa-nav-folders__list:not(.fa-nav-folders__list--sub) > .fa-nav-folders__item"))
+      .toHaveCount(3);
+    await sub.locator("summary").click();
+    await expect(sub).toHaveAttribute("open", "");
+    await expect(sub.locator('a[href]').first()).toHaveAttribute("href", BASEURL + "/proposals/");
+  });
+
+  test("a child whose parent is not listed stands on its own", async ({ page }) => {
+    await load(page, NESTED);
+    await page.hover(".side-bar");
+    await page.locator(".fa-nav-folders__heading").click();
+    await expect(page.locator(".fa-nav-folders__list:not(.fa-nav-folders__list--sub) > .fa-nav-folders__item",
+      { hasText: "orphan" })).toHaveCount(1);
+  });
+
+  test("the LIVE data nests proposals and requirements under docs", () => {
+    const f = (LIVE?.folders ?? []);
+    expect(f.find((x) => x.kind === "proposals")?.within).toBe("docs");
+    expect(f.find((x) => x.kind === "requirements")?.within).toBe("docs");
+  });
+});
+
+test.describe("the page list has a heading and folds — owner, 2026-09-27", () => {
+  test("a 'Pages' button with a count sits in front of the nav and folds it", async ({ page }) => {
+    const { errors } = await load(page, CUSTOM);
+    expect(errors).toEqual([]);
+    const btn = page.locator(".fa-nav-pages");
+    await expect(btn).toHaveCount(1);
+    await expect(btn).toContainText("Pages");
+    await expect(btn).toHaveAttribute("aria-expanded", "true");
+    await page.hover(".side-bar");
+    await btn.click();
+    await expect(btn).toHaveAttribute("aria-expanded", "false");
+    await expect(page.locator(".site-nav")).toBeHidden();
+    await page.locator(".fa-nav-pages").click();
+    await expect(page.locator(".site-nav")).toBeVisible();
+  });
+});
+
+test.describe("the avatar opens and closes the bar — owner, 2026-09-27", () => {
+  // "navbar starts hidden, click avatar opens for a split second then returns
+  // to hidden": the avatar was the home link, so a click reloaded the page.
+  test("one click pins the bar open, a second closes it, and neither navigates", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await load(page, CUSTOM);
+    await page.locator(".site-title").evaluate((a) => a.setAttribute("href", "http://navbar.fixture/elsewhere"));
+    const avatar = page.locator(".side-bar .site-title");
+    await expect(avatar).toHaveAttribute("aria-expanded", "false");
+    await avatar.click();
+    expect(page.url()).toBe("http://navbar.fixture/nav");
+    expect(await page.locator("#fa-nav-open").isChecked()).toBe(true);
+    await expect(avatar).toHaveAttribute("aria-expanded", "true");
+    await avatar.click();
+    expect(page.url()).toBe("http://navbar.fixture/nav");
+    expect(await page.locator("#fa-nav-open").isChecked()).toBe(false);
+    expect(await page.evaluate(() => localStorage.getItem("fa-nav"))).toBe("closed");
+    // Closed means closed: not held open by the avatar's focus.
+    await page.mouse.move(900, 400);
+    await expect.poll(async () => (await page.locator(".side-bar").boundingBox())!.width).toBeLessThan(100);
   });
 });

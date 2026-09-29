@@ -243,6 +243,14 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 188,
     reads: "two boxes and a flow between them, with a token part-way",
   },
+  // A SURVEY of a commit window. Two endpoint marks with a span between them,
+  // because the two edge commits ARE the artefact: a survey whose window
+  // cannot be pinned tells a reader nothing about today (bean `6ptx`).
+  "session-survey": {
+    glyph: "M5 12h14M5 9v6M19 9v6M9 5h6",
+    tone: 168,
+    reads: "a span between two marked endpoints — the window a survey covers",
+  },
   // THE BOARD AND ITS LAYOUT. Two glyphs because they are two kinds, and the
   // pair says the split: a frame with cards ON it, and the same frame with the
   // cards' POSITIONS marked. A reader who sees them side by side should be
@@ -431,6 +439,20 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     glyph: "M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h4",
     tone: 212,
     reads: "a page with a folded corner — documentation about the graph itself",
+  },
+  proposals: {
+    // A lightbulb over a page — an idea argued on paper, not yet agreed.
+    // A sub-graph of `docs` (issue #1164), so it shares the page's outline.
+    glyph: "M12 3a5 5 0 00-3 9v2h6v-2a5 5 0 00-3-9zM10 17h4M10.5 20h3",
+    tone: 38,
+    reads: "a lightbulb — an idea being argued, not yet a promise",
+  },
+  requirements: {
+    // A page with two ticked lines — what was agreed, each line checkable.
+    // A proposal is MOVED here when its feature ships (issue #1164).
+    glyph: "M6 3h12v18H6zM9 8l1.5 1.5L13 7M9 14l1.5 1.5L13 13M15 8h1M15 14h1",
+    tone: 148,
+    reads: "a page of ticked lines — what the harness promises, each checkable",
   },
   interaction: {
     // A speech bubble with a tick inside — a preference that has been STATED,

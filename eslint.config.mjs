@@ -37,7 +37,12 @@ export default tseslint.config(
     ignores: [
       "node_modules/**",
       "**/.lake/**",
-      "dist/**",
+      // `**/`, not root-anchored: a PUBLISHABLE package builds into its own
+      // `dist/`, and since `check:published-packages` builds it (bean `rsi6`),
+      // that output now exists on any machine that has run the gate set.
+      // Root-anchored, this matched only the platform's own build, and
+      // `bun run lint` reported 3 errors in generated CJS nobody wrote.
+      "**/dist/**",
       "**/*.d.ts",
       "viewer/**",
       "ui/**",

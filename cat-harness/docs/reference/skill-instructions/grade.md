@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'grade'
 parent: Skill instructions
 ---
@@ -13,7 +14,7 @@ parent: Skill instructions
 # grade
 
 > Skill id: `grade` · Package: `authoring-who-smart-guidelines` · The grading
-> SYSTEM that [`evidence-appraisal`](../content-lifecycle/evidence-appraisal.md)
+> SYSTEM that [`evidence-appraisal`](evidence-appraisal.md)
 > applies when a folio declares GRADE. Origin: the GRADE Working Group
 > (gradeworkinggroup.org); Evidence-to-Decision frameworks per Alonso-Coello et
 > al., *BMJ* 2016; WHO applies it through the *WHO Handbook for Guideline
@@ -107,6 +108,6 @@ reason they are two code lists rather than one score.
 - **Never grade a single citation.** The body, per outcome.
 - **Never report a recommendation without its direction and strength.** One
   without the other is not a GRADE recommendation.
-- **Never table it in DMN.** See [`dmn`](../../methodologies/dmn.md) — tabling
+- **Never table it in DMN.** See [`dmn`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/dmn.md) — tabling
   asserts a repeatability the method denies.
 {% endraw %}

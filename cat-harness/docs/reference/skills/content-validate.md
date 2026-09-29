@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-schema-docs.ts — do not hand-edit; edit the schema
 title: Content Validate
 parent: Skill schema reference
 ---
@@ -21,7 +22,7 @@ Input schema for content validation.
 | `schemaRefs` | array<string> | no | Schema files to validate against. |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/content-validate/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/content-validate/input.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-validate/input.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-validate/input.schema.json){: .fa-edit-source }
 
 ## Output
 
@@ -42,4 +43,4 @@ Output schema for content validation results.
 | `location` | string | no |  |
 
 
-[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/schemas/skills/content-validate/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/schemas/skills/content-validate/output.schema.json){: .fa-edit-source }
+[Raw schema](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/content-validate/output.schema.json) · [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/schemas/skills/content-validate/output.schema.json){: .fa-edit-source }

@@ -67,7 +67,7 @@
  *
  * ## Usage
  *
- *   bun run content/pipeline/lean-triviality-probe.ts \
+ *   bun run cat-harness/content/pipeline/lean-triviality-probe.ts \
  *     --lake-root content/<paper>/lean --limit 20 [--out docs/audits/lean-triviality.json]
  *
  * Requires a Lean toolchain and restored oleans:

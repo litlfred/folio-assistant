@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: '/rendered-verification'
 parent: Skill instructions
 ---
@@ -90,7 +91,7 @@ into it rather than re-installing.
 
 ## Running it here
 
-Building the site is [`preview:site`](../../scripts/preview-site.sh), whose
+Building the site is [`preview:site`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/preview-site.sh), whose
 header carries the two things that make a naive `bundle exec jekyll` fail
 in this repo. **It is not what CI builds** — CI uses the pinned
 `remote_theme`, this uses the gem — so read a *theme-chrome* question off
@@ -120,6 +121,15 @@ one step from reporting a contrast failure that did not exist — the real
 toggle is `jtd.setTheme(name)`. *A test that silently does nothing reports
 the old state as the new one.* Assert the switch landed (here: the sidebar
 background changed) before reading anything off it.
+
+And know what that toggle DOES: `setTheme` swaps the theme's first stylesheet,
+so for the moment the new file is in flight the page has no ground but the
+browser's white canvas. That was the owner's *"flashes white before goignt o
+dark mode"* (2026-09-24). A scheme check that only reads the SETTLED page
+cannot see it — hold the new sheet in flight with `page.route` and read the
+ground then, as `first-paint-scheme.e2e.ts` does. The rule itself lives in
+[`theme-artefacts`](theme-artefacts.md) §"The page ground: the
+first paint is DARK".
 
 ## The REAL build is reachable — take it off `gh-pages`
 

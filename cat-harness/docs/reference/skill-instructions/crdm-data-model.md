@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'CRDM'
 parent: Skill instructions
 ---
@@ -13,7 +14,7 @@ parent: Skill instructions
 # CRDM — the data-modelling phase
 
 **This skill says WHEN and WITH WHOM. It does not say how to model.** That is
-[`data-modelling`](../../skills/folio-core/data-modelling.md), and it is deliberately free of CRDM so
+[`data-modelling`](data-modelling.md), and it is deliberately free of CRDM so
 a folio modelling data outside a requirements process can read it without
 inheriting a methodology it is not running.
 

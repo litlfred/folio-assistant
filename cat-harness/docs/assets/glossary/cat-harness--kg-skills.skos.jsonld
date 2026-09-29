@@ -382,6 +382,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/branch-freshness",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "branch-freshness"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan. Prevents stale assumptions, merge conflicts, and duplicated work — especially after session restarts, long idle periods, or heavy sibling activity on main."
+        }
+      ],
+      "skos:notation": "branch-freshness",
+      "dcterms:source": "cat-harness/skills/workflow/branch-freshness.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/build-docs",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -559,6 +579,26 @@
       ],
       "skos:notation": "code-node-review",
       "dcterms:source": "cat-harness/skills/folio-core/code-node-review.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/code-review-process",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "code-review-process"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where code review sits in the release lifecycle. Review types, who reviews what, how feedback maps to beans, and the path from review to approval to release. Works with prepare-merge-auto for mechanics and release-lifecycle for the broader flow."
+        }
+      ],
+      "skos:notation": "code-review-process",
+      "dcterms:source": "cat-harness/skills/workflow/code-review-process.md",
       "skos:note": "candidate"
     },
     {
@@ -1007,8 +1047,73 @@
           "@value": "crdm-detect"
         }
       ],
+      "skos:definition": [
+        {
+          "@value": "Detect when a request needs requirements agreed before anything is built, and which of the two parallel requirements methodologies governs it."
+        }
+      ],
       "skos:notation": "crdm-detect",
       "dcterms:source": "cat-harness/skills/crdm/crdm-detect.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/crdm-impact-analysis",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "crdm-impact-analysis"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Guide for CRDM Phase 4 — Impact Analysis and Migration Planning. Systematic scan across 7 dimensions: schema, pipeline, adapter, folio, skill, migration, and test/documentation impact. Produces a structured assessment for posting to the GitHub issue."
+        }
+      ],
+      "skos:notation": "crdm-impact-analysis",
+      "dcterms:source": "cat-harness/skills/crdm/crdm-impact-analysis.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/crdm-needs-assessment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "crdm-needs-assessment"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Facilitate Phase 1 (Needs Assessment) of the CRDM requirements workflow. Guide the BA through stakeholder identification, source material gathering, and synthesising a domain-language needs statement. Post to the GitHub issue and iterate until the BA confirms the need is correctly captured."
+        }
+      ],
+      "skos:notation": "crdm-needs-assessment",
+      "dcterms:source": "cat-harness/skills/crdm/crdm-needs-assessment.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/crdm-requirements-template",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "crdm-requirements-template"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Guide and template for CRDM Phase 3 — Requirements Definition. Helps the agent structure requirements from conversation using a REQ-### format with acceptance criteria, priority, and traceability."
+        }
+      ],
+      "skos:notation": "crdm-requirements-template",
+      "dcterms:source": "cat-harness/skills/crdm/crdm-requirements-template.md",
       "skos:note": "candidate"
     },
     {
@@ -1164,6 +1269,26 @@
       ],
       "skos:notation": "decision-comparison",
       "dcterms:source": "cat-harness/skills/folio-core/decision-comparison.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/decision-methodology-selector",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "decision-methodology-selector"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Given a decision context, select the applicable methodology from the methodology graph. Reads the graph's applies-when declarations, matches them against the context, and returns the ranked applicable methods with rationale. Extends methodology-adoption's four-question protocol with quantitative method-selection criteria from the MCDM literature."
+        }
+      ],
+      "skos:notation": "decision-methodology-selector",
+      "dcterms:source": "cat-harness/skills/folio-core/decision-methodology-selector.md",
       "skos:note": "candidate"
     },
     {
@@ -1627,26 +1752,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/fhir-client-operations",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "fhir-client-operations"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "STUB. Client-side FHIR operations: search, read, transaction bundles. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task."
-        }
-      ],
-      "skos:notation": "fhir-client-operations",
-      "dcterms:source": "cat-harness/skills/remote-stubs/fhir-client-operations.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/fhir-validation",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1719,6 +1824,26 @@
       ],
       "skos:notation": "formalizer",
       "dcterms:source": "cat-harness/skills/folio-paper-adapter/formalizer.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/gate-tree-mutation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "gate-tree-mutation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Reading `bun run gates`' \"NOT clean\" verdict. Why every gate can pass and the run still exit 1, the two causes and how to tell them apart in one command, and the question that settles whether a churning field is a defect in the writer: does it describe the SUBJECT or the RUN?"
+        }
+      ],
+      "skos:notation": "gate-tree-mutation",
+      "dcterms:source": "cat-harness/skills/folio-core/gate-tree-mutation.md",
       "skos:note": "candidate"
     },
     {
@@ -1984,11 +2109,11 @@
       ],
       "skos:definition": [
         {
-          "@value": "STUB. Proposing candidate hypotheses from observations, with what each predicts. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task."
+          "@value": "Formulate evidence-bounded scientific questions, candidate hypotheses, rival explanations, causal or associational claims, discriminating predictions, measurements, and preregistration-ready analysis plans. Use when turning observations or preliminary findings into transparent, testable research plans without treating hypotheses as facts."
         }
       ],
       "skos:notation": "hypothesis-generation",
-      "dcterms:source": "cat-harness/skills/remote-stubs/hypothesis-generation.md",
+      "dcterms:source": "cat-harness/skills/hypothesis-generation/hypothesis-generation.md",
       "skos:note": "candidate"
     },
     {
@@ -2059,6 +2184,26 @@
       ],
       "skos:notation": "incremental-render",
       "dcterms:source": "cat-harness/skills/folio-core/incremental-render.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/injection-boundaries",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "injection-boundaries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the gate covers, why a step output carries a severity rather than having one, and the argv rule."
+        }
+      ],
+      "skos:notation": "injection-boundaries",
+      "dcterms:source": "cat-harness/skills/security/injection-boundaries.md",
       "skos:note": "candidate"
     },
     {
@@ -2379,7 +2524,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`scripts/install-tex.sh`) and quick changed-chapter feature builds (`scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes."
+          "@value": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`cat-harness/scripts/install-tex.sh`) and quick changed-chapter feature builds (`cat-harness/scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes."
         }
       ],
       "skos:notation": "latex-build-cache",
@@ -2937,6 +3082,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/package-release",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "package-release"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Cut a release of a repository's packages: decide the next version, write the release notes, tag, and create the release — for any repository, the platform or a folio. Publishing the built artefact to a registry is a separate, later step that a person starts."
+        }
+      ],
+      "skos:notation": "package-release",
+      "dcterms:source": "cat-harness/skills/folio-core/package-release.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/paper-importer",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2954,6 +3119,26 @@
       ],
       "skos:notation": "paper-importer",
       "dcterms:source": "cat-harness/skills/folio-paper-adapter/paper-importer.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/path-containment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "path-containment"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check."
+        }
+      ],
+      "skos:notation": "path-containment",
+      "dcterms:source": "cat-harness/skills/security/path-containment.md",
       "skos:note": "candidate"
     },
     {
@@ -3492,6 +3677,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/release-epic-planning",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "release-epic-planning"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Plan and track releases using bean epics. Covers epic creation, story/task decomposition, release readiness tracking, and the relationship between epics and GitHub milestones. Applies to code releases, paper publications, and project milestones."
+        }
+      ],
+      "skos:notation": "release-epic-planning",
+      "dcterms:source": "cat-harness/skills/workflow/release-epic-planning.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/release-lifecycle",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "release-lifecycle"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases. Applies to code releases, paper publications, and project milestones. Complements package-release (which handles the mechanics of cutting a release) with the process and policy layer."
+        }
+      ],
+      "skos:notation": "release-lifecycle",
+      "dcterms:source": "cat-harness/skills/workflow/release-lifecycle.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/remark-audit",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3774,11 +3999,11 @@
       ],
       "skos:definition": [
         {
-          "@value": "STUB. Appraising a scientific claim — what would falsify it, what the evidence actually supports. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task."
+          "@value": "Evaluate scientific claims and evidence quality. Use for assessing experimental design validity, identifying biases and confounders, applying evidence grading frameworks (GRADE, Cochrane Risk of Bias), or teaching critical analysis. Best for understanding evidence quality, identifying flaws. For formal peer review writing use peer-review."
         }
       ],
       "skos:notation": "scientific-critical-thinking",
-      "dcterms:source": "cat-harness/skills/remote-stubs/scientific-critical-thinking.md",
+      "dcterms:source": "cat-harness/skills/scientific-critical-thinking/scientific-critical-thinking.md",
       "skos:note": "candidate"
     },
     {
@@ -3794,11 +4019,31 @@
       ],
       "skos:definition": [
         {
-          "@value": "STUB. Plotting and figure production for scientific results. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task."
+          "@value": "Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning."
         }
       ],
       "skos:notation": "scientific-visualization",
-      "dcterms:source": "cat-harness/skills/remote-stubs/scientific-visualization.md",
+      "dcterms:source": "cat-harness/skills/scientific-visualization/scientific-visualization.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/security",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "security"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The security sub-KG's entry point. What the boundaries are, which machinery already guards each one, and the single rule that unifies them — refuse, never repair. Read this before adding a check, so the answer that already exists is reused rather than rebuilt in a fourth place."
+        }
+      ],
+      "skos:notation": "security",
+      "dcterms:source": "cat-harness/skills/security/security.md",
       "skos:note": "candidate"
     },
     {
@@ -3952,6 +4197,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/skill-registration",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "skill-registration"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Adding a skill is never a one-file change. What a new skill file owes, the one command that performs the derived half, the one declaration it deliberately leaves to you, why running it once is not enough, and the two orphan directions it reports rather than fixes. Read this before adding, renaming or removing a skill."
+        }
+      ],
+      "skos:notation": "skill-registration",
+      "dcterms:source": "cat-harness/skills/folio-core/skill-registration.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/skills-and-tools",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3987,26 +4252,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/smart-launch",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "smart-launch"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "STUB. The SMART on FHIR launch sequence — authorisation, context, scopes. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task."
-        }
-      ],
-      "skos:notation": "smart-launch",
-      "dcterms:source": "cat-harness/skills/remote-stubs/smart-launch.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/smart-stack-layering",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -4024,6 +4269,26 @@
       ],
       "skos:notation": "smart-stack-layering",
       "dcterms:source": "cat-harness/skills/authoring-who-smart-guidelines/smart-stack-layering.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/spec-kit",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "spec-kit"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Spec-driven development, adopted whole: define what and why before deciding how, and do not develop before a spec exists. Carries what this platform adopts and — separately, with reasons — what it refuses."
+        }
+      ],
+      "skos:notation": "spec-kit",
+      "dcterms:source": "cat-harness/skills/spec-kit/spec-kit.md",
       "skos:note": "candidate"
     },
     {

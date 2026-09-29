@@ -39,3 +39,7 @@ is doing work rather than describing one.
   layer runs, and the list of what it refuses to know about.
 - [`ig-render-jekyll`](skills/fhir-ig-base/ig-render-jekyll.md) — the three
   contracts: JSON only, navigation derived from `sushi-config.yaml`, LHS rail.
+- [`smart-launch`](skills/fhir-client/smart-launch.md) — SMART on FHIR EHR and
+  standalone launch through the SMARTerFHIR library.
+- [`fhir-client-operations`](skills/fhir-client/fhir-client-operations.md) —
+  reading, searching and writing FHIR resources through its client.

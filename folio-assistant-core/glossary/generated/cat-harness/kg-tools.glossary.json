@@ -222,6 +222,14 @@
       "status": "candidate"
     },
     {
+      "id": "headless-render-qc",
+      "prefLabel": "Headless render QC (Playwright)",
+      "definition": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering.",
+      "notation": "headless-render-qc",
+      "source": "cat-harness/tools/index.ts#headless-render-qc",
+      "status": "candidate"
+    },
+    {
       "id": "ingest-extended",
       "prefLabel": "Ingest, with PDF and image extensions",
       "definition": "Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow.",
@@ -374,6 +382,14 @@
       "status": "candidate"
     },
     {
+      "id": "package-release-manual",
+      "prefLabel": "Package release by hand",
+      "definition": "A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `<package>-v<version>`, and creates the release on the host. The same four steps with nothing to configure.",
+      "notation": "package-release-manual",
+      "source": "cat-harness/tools/index.ts#package-release-manual",
+      "status": "candidate"
+    },
+    {
       "id": "pages-index",
       "prefLabel": "Published-paper index page",
       "definition": "Write the gh-pages `index.html` for a built paper: a Paper tab embedding the PDF and, when given, a Visualizer tab, with download links and the build's branch and commit.",
@@ -475,6 +491,14 @@
       "definition": "Rewrite each generated README region, and only where the README already carries that section's marker pair. Nothing outside a marked region is touched.",
       "notation": "readme-sync",
       "source": "cat-harness/tools/mcp.ts#readme-sync",
+      "status": "candidate"
+    },
+    {
+      "id": "release-please",
+      "prefLabel": "release-please (declared, not configured here)",
+      "definition": "Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`).",
+      "notation": "release-please",
+      "source": "cat-harness/tools/index.ts#release-please",
       "status": "candidate"
     },
     {
@@ -582,6 +606,22 @@
       "status": "candidate"
     },
     {
+      "id": "tex-snippet-validate",
+      "prefLabel": "TeX snippet validation (AST)",
+      "definition": "Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one.",
+      "notation": "tex-snippet-validate",
+      "source": "cat-harness/tools/index.ts#tex-snippet-validate",
+      "status": "candidate"
+    },
+    {
+      "id": "tex-source-audit",
+      "prefLabel": "TeX-source hazard audit",
+      "definition": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion.",
+      "notation": "tex-source-audit",
+      "source": "cat-harness/tools/index.ts#tex-source-audit",
+      "status": "candidate"
+    },
+    {
       "id": "themes-css",
       "prefLabel": "Theme stylesheet",
       "definition": "Render the declared theme nodes into the stylesheet the site serves. The nodes are the source: a colour has one home, and light and dark are two valuations of one token set rather than two hand-kept blocks.",
@@ -619,6 +659,30 @@
       "definition": "Render this instance's Tool nodes, and the skills each satisfies, as one page.",
       "notation": "tools-viewer",
       "source": "cat-harness/tools/viewers.ts#tools-viewer",
+      "status": "candidate"
+    },
+    {
+      "id": "transcribe-faster-whisper",
+      "prefLabel": "Transcribe audio — faster-whisper (option, not installed)",
+      "definition": "Transcribe an audio file with faster-whisper (the Whisper models on CTranslate2), from Python. A declared OPTION: not installed in this repository.",
+      "notation": "transcribe-faster-whisper",
+      "source": "cat-harness/tools/index.ts#transcribe-faster-whisper",
+      "status": "candidate"
+    },
+    {
+      "id": "transcribe-vosk",
+      "prefLabel": "Transcribe audio — vosk (option, not installed)",
+      "definition": "Transcribe an audio file with vosk (Kaldi-based), offline, from Python, with small per-language models. A declared OPTION: not installed in this repository.",
+      "notation": "transcribe-vosk",
+      "source": "cat-harness/tools/index.ts#transcribe-vosk",
+      "status": "candidate"
+    },
+    {
+      "id": "transcribe-whisper-cpp",
+      "prefLabel": "Transcribe audio — whisper.cpp (option, not installed)",
+      "definition": "Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`).",
+      "notation": "transcribe-whisper-cpp",
+      "source": "cat-harness/tools/index.ts#transcribe-whisper-cpp",
       "status": "candidate"
     },
     {

@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Lean Witness Audit'
 parent: Skill instructions
 ---
@@ -68,7 +69,7 @@ python3 witness_base.py check-stale my-computation.witness.json
 python3 witness_base.py check-all
 
 # Unified audit (Lean + Python)
-bun run scripts/witness-audit.ts
+bun run cat-harness/scripts/witness-audit.ts
 ```
 
 ### Legacy witness migration

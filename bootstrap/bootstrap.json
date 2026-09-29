@@ -1,5 +1,5 @@
 {
-  "_comment": "The bootstrap instance. It declares two directories — `skills/` and `workflows/` — because discovery reads declarations rather than walking the tree, and an undeclared directory is not this instance's graph however many files sit in it. TWO processes live here and exactly one of them is an ENTRY POINT: `workflows/initialize-harness.bpmn`. A Bootstrapping Agent that has read README.md is at its start event with nowhere else to begin. `workflows/log-message.bpmn` is the other, and it is an independent SUB-PROCESS — reached only by a callActivity from a step, never started — so it does not compete with the first for being the thing you begin. The constraint was never 'one file'; it is that there is one place to start. Cat-harness is composed ON TOP of this rather than being its parent, which is why nothing here may import from it.",
+  "_comment": "The bootstrap instance. It declares its directories under `directories` below, because discovery reads declarations rather than walking the tree, and an undeclared directory is not this instance's graph however many files sit in it. THREE processes live in `processes/` and exactly one of them is an ENTRY POINT: `processes/initialize-harness.bpmn`. A Bootstrapping Agent that has read README.md is at its start event with nowhere else to begin. `processes/log-message.bpmn` is an independent SUB-PROCESS, reached only by a callActivity from a step and never started. `processes/discussion.bpmn` is entered from within the entry process when a fact is needed that no file holds. Neither competes with the first for being the thing you begin. The constraint was never 'one file'; it is that there is one place to start. Every harness is composed ON TOP of this rather than being its parent, which is why nothing here may refer to one.",
   "name": "bootstrap",
   "version": "0.1.0",
   "_title_comment": "The display name. `name` stays the identifier that file names use; `title` is what a person reads.",
@@ -11,7 +11,7 @@
       "src": "AGENTS.md",
       "role": "agent-instructions",
       "title": "AGENTS.md — bootstrap",
-      "description": "Phase one of two. Valid with nothing installed: no skills, no knowledge graph, no MCP, no beans. The default behaviour of initialisation is to copy this file, and the last bootstrap step re-enters through the installed harness, which is what supplies phase two. No `source` because this is the origin — an absent source means authored here, which is a different fact from an upstream that cannot be reached."
+      "description": "Phase one of two. Valid with nothing installed: no skills, no knowledge graph, no MCP, no work-plan store. The default behaviour of initialisation is to copy this file, and the last bootstrap step re-enters through the installed harness, which is what supplies phase two. No `source` because this is the origin — an absent source means authored here, which is a different fact from an upstream that cannot be reached."
     },
     {
       "id": "readme",
@@ -21,7 +21,7 @@
       "description": "The flow, with every term linked to the schema that defines it. Self-documenting on GitHub: a person landing on the directory reads the thing itself rather than a pointer to a site."
     }
   ],
-  "_directories_comment": "ONE entry, and it is a subdirectory rather than `bootstrap/` itself. `isSkillMd` is declaration-over-location: a markdown file that does NOT declare `$schema:` is a skill. README.md and AGENTS.md declare neither, so a graph rooted at `bootstrap/` would count this instance's two DECLARED ASSETS as skill nodes — the instance has already said what those files are, and a scan would contradict its own declaration. Keeping the graph one level down means the two mechanisms cannot collide. Declared explicitly rather than relying on DEFAULT_DIRECTORIES: a declaration that exists is honoured as written, so defaults do not apply to an instance that declares anything at all.",
+  "_directories_comment": "Every entry is a subdirectory rather than `bootstrap/` itself. `isSkillMd` is declaration-over-location: a markdown file that does NOT declare `$schema:` is a skill. README.md and AGENTS.md declare neither, so a graph rooted at `bootstrap/` would count this instance's two DECLARED ASSETS as skill nodes — the instance has already said what those files are, and a scan would contradict its own declaration. Keeping the graph one level down means the two mechanisms cannot collide. Declared explicitly rather than relying on DEFAULT_DIRECTORIES: a declaration that exists is honoured as written, so defaults do not apply to an instance that declares anything at all.",
   "stickies": [
     {
       "_comment": "bootstrap's own card on a Harness's landing board. Order 90 puts it last: a layer can state only its own priority. It links to bootstrap's source and its README, because bootstrap has no site of its own.",
@@ -34,7 +34,7 @@
         {
           "label": "bootstrap, in the source",
           "href": "https://github.com/litlfred/folio-assistant/tree/main/bootstrap",
-          "note": "One process lives here and only one: workflows/initialize-harness.bpmn."
+          "note": "One process here is the place to start: processes/initialize-harness.bpmn."
         },
         {
           "label": "RTFM — the bootstrap docs",
@@ -51,7 +51,7 @@
         },
         "scale": 0.82
       },
-      "bodyAppend": "**Scope:** phase one of two, and valid with NOTHING installed — no skills, no knowledge graph, no MCP, no beans. One process lives here and only one. Everything else is composed on top of it, and nothing here may import from the layer above."
+      "bodyAppend": "**Scope:** phase one of two, and valid with NOTHING installed — no skills, no knowledge graph, no MCP, no work-plan store. One process here is the place to start. Everything else is composed on top of it, and nothing here may import from the layer above."
     }
   ],
   "directories": [
@@ -109,17 +109,17 @@
       ]
     },
     {
-      "id": "bootstrap-translations",
-      "path": "translations/",
+      "id": "qa",
+      "path": "test/results/",
       "dependents": "reproduce",
-      "description": "Translation templates (`.pot`) for bootstrap's Process diagrams, one directory per target language.",
+      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict in this repository is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: the auditor writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 15 files across the three families this instance has subjects in — skills/ (7), processes/ (3) and scenarios/ (5). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be the same over-claim pointed the other way. dependents: reproduce, because a dependent instance audits its OWN graph — these verdicts are about this instance's nodes, and inheriting them would attribute one instance's findings to another. That is exactly the leak which had to be fixed before this directory could be declared at all: an instance-scoped audit run from the layer above wrote 119 tool sidecars and 23 skill findings here for subjects belonging to that layer, because the tool registry and the skill overlay both took no instance root. Declared WITH its files in one commit: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "graphKinds": [
-        "translation-sources"
+        "qa"
       ]
     }
   ],
   "renderExemption": {
-    "_comment": "Owner, 2026-09-20, verbatim: \"it is exception to harness/layer not having visualtion/workflow visualizer. but it must have its json/jsonld... that is its existence.\" Declared here rather than hardcoded in the `2krx` checker, because a checker that names one instance states a rule true only for the instance somebody remembered. `owes` is required by the schema: an exemption with no substitute is a hole, and bootstrap is not dropping out of the requirement — it is trading a criterion it could fail quietly for one it cannot.",
+    "_comment": "Owner, 2026-09-20, verbatim: \"it is exception to harness/layer not having visualtion/workflow visualizer. but it must have its json/jsonld... that is its existence.\" Declared here rather than hardcoded in a checker, because a checker that names one instance states a rule true only for the instance somebody remembered. `owes` is required by the schema: an exemption with no substitute is a hole, and bootstrap is not dropping out of the requirement — it is trading a criterion it could fail quietly for one it cannot.",
     "of": [
       "visualiser",
       "workflow-visualiser"

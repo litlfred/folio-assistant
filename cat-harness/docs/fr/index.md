@@ -1,12 +1,7 @@
 ---
 layout: default
-title: Accueil (FR)
+title: Folio assistant
 lang: fr
-# `lang` above is what makes this a translation -- nothing reads `fr` out of
-# the path. `nav_exclude` keeps it out of the statically built nav, and
-# `mountNavLocale` (docs/assets/js/docs-ui.js) puts it back in place of its
-# source when this locale is selected. There is no `nav_order`: it stands
-# where its source stands. skills/folio-core/translation-manager.md
 nav_exclude: true
 translation_status: unverified
 translation_source: index.md
@@ -25,6 +20,14 @@ appuyé par un serveur MCP, un contrôle d'accès basé sur les rôles, et un mo
 d'objets de contenu typé.
 {: .fs-6 .fw-300 }
 
+<!--
+  `View on GitHub` STAYS. The site-wide `aux_links` GitHub text was removed from
+  the chrome above every page (bean `udx8`, PR #352), and the obvious follow-up
+  is to delete this button for consistency. Do not. Put to the repo owner on
+  2026-09-19: this button is part of the landing page's own readme/description
+  note — authored content on one page, not chrome — and the forge remains
+  reachable from the navbar's Source tile regardless.
+-->
 [Démarrer](../getting-started.html){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [Installer](../installation.html){: .btn .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [Voir sur GitHub](https://github.com/litlfred/folio-assistant){: .btn .fs-5 .mb-4 .mb-md-0 }
@@ -109,33 +112,56 @@ plan de travail partagé.
 - **[Démarrage](../getting-started.html)** — connectez le serveur MCP à votre LLM et exécutez votre première compétence.
 - **[Tutoriel : Rédiger un article avec folio-assistant](../guides/writing-a-paper.html)** — un guide complet piloté par LLM avec une session de chat simulée.
 - **[Types de contenu](../content-types.html)** — le formalisme de chaque domaine de rédaction.
-- **[Flux de publication](../publication-workflow.html)** — diagrammes BPMN à couloirs des processus d'édition et de publication.
-- **[Intégration de l'agent](../guides/fr/agent-onboarding.html)** — orientation pour un agent LLM intégré dans un folio.
+- **[Flux de publication](../publication-workflow.html)** — diagrammes BPMN à couloirs des processus d'édition et de publication : la porte de validation IHM, qui révise quoi, et le plan de travail partagé.
+- **[Intégration de l'agent](../guides/agent-onboarding.html)** — orientation pour un agent LLM intégré dans un folio : premières étapes, recherche de compétences, modèle d'objets de contenu, side-cars d'assurance qualité.
 - **[Compétences et rôles](../skills.html)** — chaque compétence et rôle, et comment ils fonctionnent ensemble avec le LLM.
 - **[Référence du schéma de compétences](../reference/skills/)** — contrats d'entrée/sortie générés pour chaque compétence.
 - **[Référence de l'API TypeScript](../api/)** — le modèle d'objets de contenu (`Block`, `Chapter`, `Paper`, builders, contraintes Zod).
 - **[Architecture](../architecture.html)** — adaptateurs, serveur MCP, RBAC, le modèle de blocs.
+- **[Le KGraph](../kgraph.html)** — la taxonomie des sous-graphes, le sens dans lequel les références s'exécutent, et la manière dont les dépôts répartissent le travail.
+- **[Le Harness](../harness.html)** — instanciation, le parcours des dépendances, et ce à quoi oblige le harnachement d'un répertoire.
+
+Deux compétences méritent d'être lues avant les pages ci-dessus, car tout le reste
+les présuppose : [`getting-started`](../reference/skill-instructions/getting-started.html)
+oriente ce que vous essayez réellement de faire, et
+[`placement`](../reference/skill-instructions/placement.html) détermine où doit se
+situer un nouveau nœud avant que vous n'en créiez un.
 
 ## Carte de la documentation
 
 ```mermaid
 flowchart TD
-    Accueil --> Installer[Installation]
-    Accueil --> Dém[Démarrage]
-    Installer --> Dém
-    Dém --> Tut[Tutoriel : rédiger un article]
-    Dém --> TC[Types de contenu]
-    TC --> Comp[Compétences et rôles]
-    TC --> FP["Flux de publication<br/>(BPMN à couloirs)"]
-    TC --> Guides[Guides de rédaction]
-    Guides --> Article[Articles : Lean + LaTeX]
+    Home[Accueil] --> Install[Installation]
+    Home --> GS[Démarrage]
+    Install --> GS
+    GS --> Tut[Tutoriel : rédiger un article]
+    GS --> CT[Types de contenu]
+    CT --> Skills[Compétences et rôles]
+    CT --> WF["Flux de publication<br/>(BPMN à couloirs)"]
+    CT --> Guides[Guides de rédaction]
+    Guides --> Paper[Articles : Lean + LaTeX]
     Guides --> DAK[WHO SMART DAK / L2]
     Guides --> IG[WHO SMART IG / L3 FHIR]
-    Guides --> Nouveau[Ajouter un type]
-    Comp --> Réf[Référence des schémas]
-    TC --> Réf
-    Réf --> API[Référence API TypeScript]
-    Accueil --> Arch[Architecture]
+    Guides --> New[Ajouter un type de contenu]
+    Skills --> Ref[Référence des schémas de compétences]
+    CT --> Ref
+    Ref --> API[Référence API TypeScript]
+    Home --> Arch[Architecture]
+
+    click Skills "skills.html" "Skills & roles"
+    click WF "publication-workflow.html" "Publication workflow (BPMN)"
+    click Install "installation.html" "Installation"
+    click GS "getting-started.html" "Getting started"
+    click Tut "guides/writing-a-paper.html" "Tutorial: writing a paper"
+    click CT "content-types.html" "Content types"
+    click Guides "guides/" "Authoring guides"
+    click Paper "guides/writing-a-paper.html" "Papers: Lean + LaTeX"
+    click DAK "guides/who-smart-dak.html" "WHO SMART DAK (L2)"
+    click IG "guides/who-smart-ig.html" "WHO SMART IG (L3 FHIR)"
+    click New "guides/new-content-type.html" "Add a content type"
+    click Ref "reference/skills/" "Skill schema reference"
+    click API "api/" "TypeScript API reference"
+    click Arch "architecture.html" "Architecture"
 ```
 
 > Les nœuds de la carte sont cliquables sur le site de documentation.

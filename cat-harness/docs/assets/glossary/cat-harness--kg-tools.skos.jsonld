@@ -552,6 +552,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/headless-render-qc",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Headless render QC (Playwright)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering."
+        }
+      ],
+      "skos:notation": "headless-render-qc",
+      "dcterms:source": "cat-harness/tools/index.ts#headless-render-qc",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/ingest-extended",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -932,6 +952,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/package-release-manual",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Package release by hand"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `<package>-v<version>`, and creates the release on the host. The same four steps with nothing to configure."
+        }
+      ],
+      "skos:notation": "package-release-manual",
+      "dcterms:source": "cat-harness/tools/index.ts#package-release-manual",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/pages-index",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1189,6 +1229,26 @@
       ],
       "skos:notation": "readme-sync",
       "dcterms:source": "cat-harness/tools/mcp.ts#readme-sync",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/release-please",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "release-please (declared, not configured here)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`)."
+        }
+      ],
+      "skos:notation": "release-please",
+      "dcterms:source": "cat-harness/tools/index.ts#release-please",
       "skos:note": "candidate"
     },
     {
@@ -1452,6 +1512,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/tex-snippet-validate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TeX snippet validation (AST)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one."
+        }
+      ],
+      "skos:notation": "tex-snippet-validate",
+      "dcterms:source": "cat-harness/tools/index.ts#tex-snippet-validate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/tex-source-audit",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TeX-source hazard audit"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion."
+        }
+      ],
+      "skos:notation": "tex-source-audit",
+      "dcterms:source": "cat-harness/tools/index.ts#tex-source-audit",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/themes-css",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1549,6 +1649,66 @@
       ],
       "skos:notation": "tools-viewer",
       "dcterms:source": "cat-harness/tools/viewers.ts#tools-viewer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/transcribe-faster-whisper",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Transcribe audio — faster-whisper (option, not installed)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Transcribe an audio file with faster-whisper (the Whisper models on CTranslate2), from Python. A declared OPTION: not installed in this repository."
+        }
+      ],
+      "skos:notation": "transcribe-faster-whisper",
+      "dcterms:source": "cat-harness/tools/index.ts#transcribe-faster-whisper",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/transcribe-vosk",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Transcribe audio — vosk (option, not installed)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Transcribe an audio file with vosk (Kaldi-based), offline, from Python, with small per-language models. A declared OPTION: not installed in this repository."
+        }
+      ],
+      "skos:notation": "transcribe-vosk",
+      "dcterms:source": "cat-harness/tools/index.ts#transcribe-vosk",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/transcribe-whisper-cpp",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Transcribe audio — whisper.cpp (option, not installed)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`)."
+        }
+      ],
+      "skos:notation": "transcribe-whisper-cpp",
+      "dcterms:source": "cat-harness/tools/index.ts#transcribe-whisper-cpp",
       "skos:note": "candidate"
     },
     {

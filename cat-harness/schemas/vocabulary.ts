@@ -213,6 +213,18 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   Schema: {
     gloss: "A schema definition, itself a node in the knowledge graph rather than an island beside one.",
   },
+  ExternalSchema: {
+    gloss:
+      "A published specification this corpus conforms to or reads — BPMN, DMN, ODRL, PROV-O — recorded by name and edition rather than copied in.",
+    seeAlso: "/external-schemas/",
+  },
+  Decision: {
+    // Owner, 2026-09-27: each DMN decision table is its own node, linked to
+    // the gateway that uses it and to the DMN 1.3 standard.
+    gloss:
+      "A DMN decision — a table that computes a gateway's branch from supplied facts, rather than a judgement somebody makes.",
+    seeAlso: "/external-schemas/",
+  },
   Capability: {
     gloss: "Something an actor's environment provides — a binary, a service, a credential — probed rather than assumed.",
   },
@@ -443,6 +455,17 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   maintains: { gloss: "An artefact this tool generates and keeps current." },
   maintainsFrom: { gloss: "The source a maintained artefact is generated from." },
   maintainedBy: { gloss: "The tool that generates and keeps this artefact current." },
+
+  // ── Schemas and the standards a graph conforms to ────────────────────
+  conformsTo: { gloss: "A published specification this node's files are written in, e.g. BPMN 2.0 for a process." },
+  validator: { gloss: "The schema node that runtime-validates a node of this kind." },
+  validatorRef: { gloss: "The `module#Export` a kind names as its validator, where no schema node for it is in this graph." },
+  validatorNotApplicable: { gloss: "Why no runtime validator applies to this kind, and what grades it instead." },
+  authority: { gloss: "The body that publishes a specification, e.g. OMG or W3C." },
+  specVersion: { gloss: "The edition of a specification this corpus is pinned to." },
+  specUse: { gloss: "How the corpus uses a specification: conforms to it, or only reads it." },
+  specUrl: { gloss: "Where a specification is published." },
+  namespace: { gloss: "An XML or RDF namespace a specification defines." },
   canonicalDocument: { gloss: "The document a node's canonical IRI resolves to." },
 
   // ── Process ──────────────────────────────────────────────────────────
@@ -453,6 +476,8 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   from: { gloss: "The node a sequence flow leaves." },
   to: { gloss: "The node a sequence flow arrives at." },
   decisionRef: { gloss: "The DMN table that computes this gateway's branch." },
+  decidedBy: { gloss: "The Decision node whose table computes this gateway's branch." },
+  hitPolicy: { gloss: "How a DMN decision table picks among matching rules, e.g. FIRST or UNIQUE." },
   enforcement: { gloss: "Whether a process's steps are strict or advisory." },
   relaxable: { gloss: "Whether a step may be relaxed by a downstream package." },
   touchesWorkPlan: { gloss: "Whether completing this step performs a work-plan operation." },
@@ -465,6 +490,16 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   sourceCommitAt: { gloss: "When that commit was made." },
   sourceTreeDirty: { gloss: "Whether the working tree had uncommitted changes when the export ran." },
   sourceCommitUnavailable: { gloss: "That the commit could not be determined — never rendered as clean." },
+  // On a PER-LOCALE document only. It is the language of the document's
+  // UNTAGGED strings, not of its content: for `cat-harness.fr.jsonld` the
+  // content is French while this field says English. That is why the term is
+  // minted rather than borrowed from `schema:inLanguage`, and the gloss has to
+  // carry the distinction or a reader resolves the wrong one.
+  //
+  // Arrived with #1410's publishing fix, which declared it in `buildContext()`
+  // and glossed it nowhere — so `ns:check` refused it, exactly as it refused the
+  // staging terms below. Third time this shape: minting a term is two edits.
+  sourceLanguage: { gloss: "The language a locale document's untagged strings are in — its SOURCE language, not the language it was translated into." },
 
   // ── Staging provenance ───────────────────────────────────────────────
   //

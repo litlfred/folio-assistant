@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 321,
+      "count": 429,
       "unit": "beans"
     }
   },
@@ -21,6 +21,20 @@
       "updatedAt": "2026-09-24T17:45:58Z",
       "preview": "The Folio glass handle is fixed at the top and overlaps each page's heading, and at 390 px the glass's own first controls. Reserve space for it, or move it out of the reading flow.\n\nObserved on: `external-schemas`, `folio`, `library`, `navbar`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.\n\n## Done when\n\n- [x] No pag",
       "file": "beans/defs/folio-assistant-015u--the-fixed-folio-handle-covers-page-titles-and-cont.md"
+    },
+    {
+      "id": "folio-assistant-065p",
+      "title": "SWEEP TRAP: a stale local `main` ref makes every branch look like it carries unmerged beans",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T15:48:01Z",
+      "updatedAt": "2026-09-27T08:27:57Z",
+      "preview": "Found 2026-09-25 during a `/goal-review` sweep, by axis 4's own instruction —\n*\"Items that exist only on a branch … Sweep the open branches' stores too, or\nthe review is blind to the largest workstream.\"*\n\n## The trap\n\nThe natural way to write that comparison is the way the skill's prose implies:\n\n```sh\ngit diff --name-only --diff-filter=A main..origin/<branch> -- beans/defs/\n```\n\nIn this containe",
+      "file": "beans/defs/folio-assistant-065p--sweep-trap-a-stale-local-main-ref-makes-every-bran.md"
     },
     {
       "id": "folio-assistant-06e3",
@@ -93,6 +107,20 @@
       "file": "beans/defs/folio-assistant-0hi8--deploy-a-local-http-server-that-serves-a-rendering.md"
     },
     {
+      "id": "folio-assistant-0js9",
+      "title": "INGEST + METHODOLOGY: five subject-indexing papers (SemEval-2025 Task 5 x3, LCSH agentic pipeline, LCSHBench)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T19:46:16Z",
+      "updatedAt": "2026-09-26T12:13:49Z",
+      "preview": "Ingest five open-access subject-indexing papers into `cat-harness/library/`, and adopt the methodology they support. The platform library holds only sources a methodology cites (`library-ref.test.ts`), so the ingest and the methodology nodes have to land together.\n\n## The five sources\n\n| bib-slug | paper | role |\n|---|---|---|\n| `arxiv-2605.03537v1` | Chow, skill-based agentic pipeline for LCSH in",
+      "file": "beans/defs/folio-assistant-0js9--ingest-methodology-five-subject-indexing-papers-se.md"
+    },
+    {
       "id": "folio-assistant-0jtl",
       "title": "SKILLS: a review package in folio-assistant-core — large-document-review, review-heatmap, review-navigation, learned from WHO SOPs and inspection practice",
       "status": "todo",
@@ -135,16 +163,30 @@
       "file": "beans/defs/folio-assistant-0uu2--declaration-gap-every-top-level-directory-is-a-dec.md"
     },
     {
+      "id": "folio-assistant-0xfe",
+      "title": "GATE RED ON MAIN: 25 published translations carry no `.po` catalogue, compounding across three merges",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T06:44:45Z",
+      "updatedAt": "2026-09-26T06:47:24Z",
+      "preview": "`translation-drift`'s ratchet test — \"no NEW drift, and nothing unreadable\" —\nwas failing on `main`: 25 published translations served with no `.po` catalogue\nand no entry in `UNCATALOGED`.\n\n**Fixed on `main` by #1364, not by this bean.** Closed on evidence rather than\nauthorship, per `bean-coordination` §\"Closing a bean whose work has already\nlanded\" — the evidence is re-derived below rather than ",
+      "file": "beans/defs/folio-assistant-0xfe--gate-red-on-main-25-published-translations-carry-n.md"
+    },
+    {
       "id": "folio-assistant-0ytk",
       "title": "CODE LISTS: closed sets of codes as SKOS nodes, each code with a definition and a source",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:29:49Z",
-      "updatedAt": "2026-09-23T19:29:49Z",
+      "updatedAt": "2026-09-25T16:37:09Z",
       "preview": "Owner, 2026-09-23, on the adjudication answers bean bvuk had written into diagrams as bare strings: \"we need an expandable option, not just declared in code. list of codes and corresponding narrative desc and source should be part of a node/asset. can we use existing tools for new Skills?\" Chosen: all of adjudication answers, JSON-LD namespaces (2j09), our own namespaces; published through the exi",
       "file": "beans/defs/folio-assistant-0ytk--code-lists-closed-sets-of-codes-as-skos-nodes-each.md"
     },
@@ -191,6 +233,76 @@
       "file": "beans/defs/folio-assistant-12ws--one-name-two-meanings-check-l1-complete-declares-a.md"
     },
     {
+      "id": "folio-assistant-197s",
+      "title": "Dependabot cannot run Bun here: 'could not run Bun … configuration error' on #908, and the npm ecosystem never touches bun.lock",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T16:58:15Z",
+      "updatedAt": "2026-09-26T16:58:15Z",
+      "preview": "Measured 2026-09-26.\n\n## What happened\n\n- At 15:26Z dependabot commented on #908: *\"Dependabot could not run Bun to update your dependencies due to a configuration error.\"* That came about 13 minutes after #1407 put the same bumps on main.\n- **This is not evidence of a defect in our config.** The same message appeared on 25–26 Sep across many unrelated repos with different setups. Examples: [bun-c",
+      "file": "beans/defs/folio-assistant-197s--dependabot-cannot-run-bun-here-could-not-run-bun-c.md"
+    },
+    {
+      "id": "folio-assistant-1dre",
+      "title": "PAGES SERVING PROBE: the instrument pages-publish-health counts, and it can only be built in CI because egress refuses every route from an agent",
+      "status": "todo",
+      "type": "feature",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T03:55:45Z",
+      "updatedAt": "2026-09-26T03:55:45Z",
+      "preview": "`pages-publish-health` (bean `qj9a`) counts instruments for observing the\npublished site. The count is **0**, so it reports a `major` finding whose action\nis this bean. This is that probe, specified rather than built, because it cannot\nbe built here.\n\n## Why it cannot be written or tested from an agent's container\n\nMeasured 2026-09-25 and 2026-09-26, every route refused:\n\n| route | result |\n|---|-",
+      "file": "beans/defs/folio-assistant-1dre--pages-serving-probe-the-instrument-pages-publish-h.md"
+    },
+    {
+      "id": "folio-assistant-1gf7",
+      "title": "ASSESS: open standards for requirements, and methodologies that fit the bootstrap Requirement",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-2upx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:34:01Z",
+      "updatedAt": "2026-09-23T19:34:01Z",
+      "preview": "Issue #1164. Owner, 2026-09-23, choosing markdown front matter for requirement documents: '1 for now. need bean to assess open stds for requirements/methodologies that fit in'.\n\nThe bootstrap Requirement is deliberately free of outside concepts. This bean asks which open standards a harness could MAP it to or from, in a layer above bootstrap, and at what cost.\n\n## Done when\n- [ ] a survey of open ",
+      "file": "beans/defs/folio-assistant-1gf7--assess-open-standards-for-requirements-and-methodo.md"
+    },
+    {
+      "id": "folio-assistant-1h6u",
+      "title": "main red after 2c295f8 + translation batches #1404/#1409: 6 dangling skill links, 9 stale derived sets",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T14:30:05Z",
+      "updatedAt": "2026-09-26T14:34:12Z",
+      "preview": "Measured on pristine main f850f721a06, 2026-09-26. The failing checks were glossary-page, gen-skill-docs, gen-docs-pages, docs:auto, translation:index, check:ci-invocations (which re-runs the two generators), check:subgraphs, state:visualizer and docs:harness. Every open PR inherited them through its merge ref.\n\nCauses:\n- **2c295f8**, committed straight to main, rewrote skill script paths as `../.",
+      "file": "beans/defs/folio-assistant-1h6u--main-red-after-2c295f8-translation-batches-1404140.md"
+    },
+    {
+      "id": "folio-assistant-1l13",
+      "title": "witness-pipeline.yml has never run — keep, template, or retire?",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T06:47:37Z",
+      "updatedAt": "2026-09-24T12:14:40Z",
+      "preview": "Split from 52dz (2026-09-24). 52dz's owner decisions moved section-title-audit into folio_init templates, but witness-pipeline.yml was not part of that decision and still sits in .github/workflows with ZERO runs all time (measured 2026-09-20), so check:ci-health cannot see it by construction.\n\n## Done when\n- [ ] measured: does it run against the platform at all, or only a folio's computations?\n- [",
+      "file": "beans/defs/folio-assistant-1l13--witness-pipelineyml-has-never-run-keep-template-or.md"
+    },
+    {
       "id": "folio-assistant-1lfx",
       "title": "DEPLOY: STAGING must report which host rendered it, not assume gh-pages",
       "status": "todo",
@@ -221,6 +333,20 @@
       "file": "beans/defs/folio-assistant-1r0p--ingest-audio-transcription-and-translation.md"
     },
     {
+      "id": "folio-assistant-1s5s",
+      "title": "The published package's PYTHON half runs nowhere — CI's pytest job globs a directory that does not contain it",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T09:13:49Z",
+      "updatedAt": "2026-09-26T10:38:03Z",
+      "preview": "Split out of `rsi6` 2026-09-26. **That bean was closed `completed` carrying two\nunchecked boxes**, which the store's own rule forbids — \"ONLY if the bean has\nno unchecked todo items left\". Recorded here rather than quietly re-ticked,\nbecause a completed bean holding live work is exactly the shape that makes the\nstore unreadable, and this session has spent the day filing that class against\nother pe",
+      "file": "beans/defs/folio-assistant-1s5s--the-published-packages-python-half-runs-nowhere-ci.md"
+    },
+    {
       "id": "folio-assistant-1swy",
       "title": "QA: verdicts, sidecars and the audited review record",
       "status": "in-progress",
@@ -239,12 +365,12 @@
       "title": "CI RELIABILITY: a gate that does not fire is indistinguishable from one that passed",
       "status": "in-progress",
       "type": "epic",
-      "priority": "",
+      "priority": "normal",
       "parent": "",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T11:43:44Z",
-      "updatedAt": "2026-09-19T11:58:51Z",
+      "updatedAt": "2026-09-26T18:34:06Z",
       "preview": "A gate that does not fire is indistinguishable from one that passed.\n\nThat is `xom7`'s lesson one layer up, and every item here is an instance:\n`3pqn` (a PR that opens with zero checks looks exactly like one whose checks\nare green), `dzl3` (playwright fails before any test body runs), `t373`\n(`readme:audit` is in no workflow at all, and `main` carried eight dead links),\n`bgle` (a guard that enumer",
       "file": "beans/defs/folio-assistant-1xhc--ci-reliability-a-gate-that-does-not-fire-is-indist.md"
     },
@@ -279,7 +405,7 @@
     {
       "id": "folio-assistant-269z",
       "title": "Folio handle covers the who-iris replica's INGESTED COPY banner — conflicts with jpjt 'replica unchanged'",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-4ccr",
@@ -289,6 +415,20 @@
       "updatedAt": "2026-09-24T18:04:45Z",
       "preview": "Found by bean 015u (2026-09-24). On the who-iris replica the fixed ▾ Folio handle covers the 'INGESTED COPY — not WHO' banner at 390 px, and at 1280 px a link sits centred under it, so a click there opens the glass instead.\n\nThe obvious fix, reserving the handle's band with top padding, is ruled out by an existing rule: `folio-mount.e2e` asserts a replica is UNCHANGED while the glass is closed (be",
       "file": "beans/defs/folio-assistant-269z--folio-handle-covers-the-who-iris-replicas-ingested.md"
+    },
+    {
+      "id": "folio-assistant-27u0",
+      "title": "check:anchor-names was blind to 2 of 4 base spellings: 75 ascents unseen, 9 real findings, and it printed a green check",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T05:47:27Z",
+      "updatedAt": "2026-09-27T05:47:27Z",
+      "preview": "Found 2026-09-27 while reading `check-translation-catalogue.ts`, which arrived on\n`main` in the 36 commits merged into `claude/brave-hypatia-r820sf`. Its docblock\njustified deriving the instance root locally with *\"because no module exports\nit\"*. That claim is false — `cat-harness.ts:2702` exports `instanceRootFor` — and\nchecking it opened the real defect one level down.\n\n## The defect\n\n`check:anc",
+      "file": "beans/defs/folio-assistant-27u0--checkanchor-names-was-blind-to-2-of-4-base-spellin.md"
     },
     {
       "id": "folio-assistant-2b5s",
@@ -373,6 +513,20 @@
       "updatedAt": "2026-09-21T16:21:34Z",
       "preview": "Owner, 2026-09-21. A large body of direction on documentation, captured here as the frame; the children carry the work.\n\n**The writing standard.** We are writing as an SDO writes — W3C, IHE. Glossary Terms are Capitalized throughout. Requirement levels follow RFC 2119 (MUST / MUST NOT / REQUIRED / SHALL / SHALL NOT / SHOULD / SHOULD NOT / RECOMMENDED / MAY / OPTIONAL). The RFC is queued at `upload",
       "file": "beans/defs/folio-assistant-2upx--documentation-one-sdo-voice-rfc-2119-requirement-l.md"
+    },
+    {
+      "id": "folio-assistant-2vne",
+      "title": "Folio handle back to top-centre as a short pill",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T05:19:36Z",
+      "updatedAt": "2026-09-27T05:19:46Z",
+      "preview": "Owner 2026-09-27: 'i want purple folio button, not on navbar but at top middle of display screen. not so tall'. Reverses 269z's navbar placement.\n\n## Summary of Changes\n\n- `docs-ui.js` `placeHandle`: the handle is appended to `body` again (fixed top centre) on every page, rail or theme sidebar alike.\n- `docs-ui.css`: pill 1.75rem tall (was 3.25rem), rounded bottom corners, 0.85rem label; `--in-nav",
+      "file": "beans/defs/folio-assistant-2vne--folio-handle-back-to-top-centre-as-a-short-pill.md"
     },
     {
       "id": "folio-assistant-2yyh",
@@ -473,6 +627,20 @@
       "file": "beans/defs/folio-assistant-3lbz--tools-zod-schemas-are-not-reachable-as-tools-and-k.md"
     },
     {
+      "id": "folio-assistant-3mo4",
+      "title": "EXTRACTION: cleanMarkdownText leaves literal **** in a msgid when a code span is wrapped in emphasis, and eats the spacing when there are two",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T12:53:23Z",
+      "updatedAt": "2026-09-27T08:07:11Z",
+      "preview": "Found 2026-09-26 while measuring `lvk9`, and **pre-existing rather than introduced\nby it** — proven below.\n\n`cleanMarkdownText` strips an inline code span and strips emphasis markers, but\nwhen a code span is WRAPPED in emphasis it does neither cleanly, and it is not\nconsistent about which way it fails:\n\n| input | output |\n|---|---|\n| ``` **`clarity-defn-single`** — fail if x ``` | `\"**** — fail if",
+      "file": "beans/defs/folio-assistant-3mo4--extraction-cleanmarkdowntext-leaves-literal-in-a-m.md"
+    },
+    {
       "id": "folio-assistant-3oqj",
       "title": "FOUR KINDS NOTHING AUDITS: health, interaction, issue-marks, todos - 13 files, 0 criteria, 0 gates",
       "status": "completed",
@@ -485,6 +653,20 @@
       "updatedAt": "2026-09-24T13:08:49Z",
       "preview": "Measured 2026-09-24 by `bun run audit:coverage` (bean `xutg`). Four declared\ngraph kinds hold files that **no `kg-audit` criterion and no gate declaring\n`@covers` reaches**:\n\n| kind | files | directories |\n|---|---|---|\n| `health` | 1 | `cat-harness/test/health/results` |\n| `interaction` | 1 | `interaction` |\n| `issue-marks` | 2 | `issue-marks` |\n| `todos` | 9 | `todos` |\n\n## This is an UPPER boun",
       "file": "beans/defs/folio-assistant-3oqj--four-kinds-nothing-audits-health-interaction-issue.md"
+    },
+    {
+      "id": "folio-assistant-3ozg",
+      "title": "bun test rewrites 72 committed script-sidecars, so bun run gates reports NOT clean on every branch, main included",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T05:06:01Z",
+      "updatedAt": "2026-09-27T07:15:00Z",
+      "preview": "Measured 2026-09-27 on pristine main `c6960465301`, and the same on 2026-09-26 at `8fb8a041a8e`.\n\n## What happens\n\nA full `bun test` rewrites all 72 files under `cat-harness/content/pipeline/script-sidecars/`, changing only three fields in each:\n\n    last_run_at     wall-clock time of this run\n    last_run_sha    the checked-out HEAD\n    engine_version  the local bun (bun-1.3.11 here; the committe",
+      "file": "beans/defs/folio-assistant-3ozg--bun-test-rewrites-72-committed-script-sidecars-so.md"
     },
     {
       "id": "folio-assistant-3q47",
@@ -501,6 +683,20 @@
       "file": "beans/defs/folio-assistant-3q47--process-walk-deterministically-set-an-agents-conte.md"
     },
     {
+      "id": "folio-assistant-3sm2",
+      "title": "A gate held red by decision cannot ratchet its own subject — so the catalogue question is asked of the CHANGE (the 25→36 growth claim is RETRACTED: it was a mutant's output)",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T19:39:54Z",
+      "updatedAt": "2026-09-27T05:06:39Z",
+      "preview": "Owner chose the route on 2026-09-26: **make the drift gate green rather than move\nthe masked gates out from behind it** (asked with four options, against `cpss`'s\n108 masked checks). Measuring first turned that into a finding: the gate cannot be\nbrought green by finishing a fixed list, because the list is growing faster than it\nis being cleared, and nothing stops it.\n\n## The arithmetic, measured o",
+      "file": "beans/defs/folio-assistant-3sm2--the-t8g3-campaign-closed-24-catalogue-gaps-today-a.md"
+    },
+    {
       "id": "folio-assistant-3srh",
       "title": "TEN GATES HAVE NOT DECLARED @covers, so every audit-coverage verdict is an upper bound",
       "status": "completed",
@@ -515,6 +711,34 @@
       "file": "beans/defs/folio-assistant-3srh--ten-gates-have-not-declared-covers-so-every-audit.md"
     },
     {
+      "id": "folio-assistant-3vc1",
+      "title": "A nested bun install makes root tsc report 12 errors that CI does not have — and it is the only way to fix a stale nested lockfile",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T17:25:05Z",
+      "updatedAt": "2026-09-27T10:04:12Z",
+      "preview": "## The trap, measured 2026-09-26\n\n`cat-harness/adapters/mcp-server/bun.lock` was stale against its own manifest, so\nfixing it means `bun install` **in that directory** — there is no other way to\nregenerate a lockfile. That install creates a 56 MB\n`cat-harness/adapters/mcp-server/node_modules`, and from that moment the ROOT\n`bunx tsc --noEmit` reports **12 errors across 3 files under\n`cat-harness/a",
+      "file": "beans/defs/folio-assistant-3vc1--a-nested-bun-install-makes-root-tsc-report-12-erro.md"
+    },
+    {
+      "id": "folio-assistant-3x2o",
+      "title": "Two generated skill pages name a source directory that does not exist — the oe98 banner bug recurs for remote stubs",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T10:44:49Z",
+      "updatedAt": "2026-09-27T06:12:28Z",
+      "preview": "Found 2026-09-26 while verifying `hloc`'s link rewriting — by checking that\nevery rewritten link points at something that EXISTS, which also swept the\nlinks the generator already composed.\n\n## The measurement\n\n`cat-harness/docs/reference/skill-instructions/fhir-client-operations.md` and\n`smart-launch.md` each open with:\n\n    > Generated from [`cat-harness/skills/remote-stubs/<name>.md`](\n    >   h",
+      "file": "beans/defs/folio-assistant-3x2o--two-generated-skill-pages-name-a-source-directory.md"
+    },
+    {
       "id": "folio-assistant-423d",
       "title": "REVIEW COMMENTS: anchored to block id as 9gyz Findings, surviving moves — and the write path a static page lacks",
       "status": "in-progress",
@@ -527,6 +751,20 @@
       "updatedAt": "2026-09-23T07:10:03Z",
       "preview": "Owner: *\"and then manage review comments etc.\"*\n\n**The real obstacle, measured.** `docs-ui.js` states it outright: *\"A\npublished page cannot write back to the repo\"* (lines 2077 and 2592). The\nreview page is static on gh-pages, so \"manage comments\" needs a WRITE PATH,\nand choosing it is the owner's decision:\n\n| option | anchors to | cost |\n|---|---|---|\n| A. GitHub PR review comments | a line of a",
       "file": "beans/defs/folio-assistant-423d--review-comments-anchored-to-block-id-as-9gyz-findi.md"
+    },
+    {
+      "id": "folio-assistant-46l0",
+      "title": "The same commit fails DIFFERENTLY in three environments, so a green run cannot be read as a green tree",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T06:33:48Z",
+      "updatedAt": "2026-09-27T14:27:06Z",
+      "preview": "Measured 2026-09-26 on ONE commit, `3c2523a8071`, three ways:\n\n| where | `bun test` failures |\n|---|---|\n| GitHub Actions | **7** |\n| a clean `git worktree` of that exact sha, full suite | **8** |\n| the two disagreeing files, run alone | **0** |\n\nThe sets are not nested. CI had two the worktree did not (`this repository's own\ncorpus`, `the real corpus`); the worktree had three CI did not (`FOLIO_R",
+      "file": "beans/defs/folio-assistant-46l0--the-same-commit-fails-differently-in-three-environ.md"
     },
     {
       "id": "folio-assistant-46nf",
@@ -599,6 +837,20 @@
       "file": "beans/defs/folio-assistant-4kj4--avatars-per-kind-avatar-in-and-out-of-trash-both-s.md"
     },
     {
+      "id": "folio-assistant-4kq7",
+      "title": "Adopt github/spec-kit: spec-before-code gate, one spec template, specs as issue comments, change-size splitting",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T14:46:51Z",
+      "updatedAt": "2026-09-21T17:15:47Z",
+      "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/730\n\nOwner request 2026-09-21: align folio-assistant with github/spec-kit; no development before a spec exists; all specs in one template; specs posted as GitHub issue comments; oversized changes split into multiple issues so human adjudication on the PR stays feasible; follow industry standards for the split.\n\n## Blocking decision\nmethodol",
+      "file": "beans/defs/folio-assistant-4kq7--adopt-githubspec-kit-spec-before-code-gate-one-spe.md"
+    },
+    {
       "id": "folio-assistant-4l5q",
       "title": "B7b (#1168): a skill declares the directories it governs (graph-kinds:, governs:); coverage.skill removed",
       "status": "completed",
@@ -615,28 +867,28 @@
     {
       "id": "folio-assistant-4pm8",
       "title": "PAGEFIND: evaluate as the search engine for the large-datasets subgraph",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-5a3l",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T09:21:09Z",
-      "updatedAt": "2026-09-24T19:30:00Z",
+      "updatedAt": "2026-09-25T00:00:00Z",
       "preview": "Owner, 2026-09-20: '4 bean up. for now give requrements/constraings/issues/pros/cons/otpons here only for analysis/discussion./ not durable.'\n\nSo this bean is the TRACKING ITEM and deliberately not the analysis. The requirements, constraints, pros, cons and options were given in chat for discussion and are explicitly NOT to be written into the repository yet. Recording that instruction here matter",
       "file": "beans/defs/folio-assistant-4pm8--pagefind-evaluate-as-the-search-engine-for-the-lar.md"
     },
     {
       "id": "folio-assistant-4sim",
       "title": "DCAT: describe a RELEASE of the glossary / terminology as a published dataset — held until the term model lands",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T11:48:00Z",
-      "updatedAt": "2026-09-22T11:48:00Z",
+      "updatedAt": "2026-09-23T22:13:21Z",
       "preview": "Owner, 2026-09-22, ruling on #596's ruling 2: **\"DCAT: hold as bean as render of whatever we land on.\"**\n\nSo this is deliberately NOT built, and the reason is in the ruling's own words: DCAT renders *whatever we land on*, so building it before the term model is settled would render a moving target.\n\n## What DCAT is and is not\n\n**Not a term model.** It describes a `dcat:Dataset` and its `dcat:Distr",
       "file": "beans/defs/folio-assistant-4sim--dcat-describe-a-release-of-the-glossary-terminolog.md"
     },
@@ -685,7 +937,7 @@
     {
       "id": "folio-assistant-52dz",
       "title": "|-",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
@@ -701,12 +953,12 @@
       "title": "Add a first-class `recommendation` block kind for document folios",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-0lmb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-08-28T15:04:51Z",
-      "updatedAt": "2026-08-28T15:04:51Z",
+      "updatedAt": "2026-09-23T22:39:31Z",
       "preview": "Split out of `ehve`, which added the `document` content type and deliberately\nstopped short of this.\n\n## Why\n\nAn L1 health-policy guidance note exists to state **recommendations**. A\nrecommendation is the block readers cite, implementers trace to, and reviewers\nsign off individually — it wants a label, a stable identity and a place in the\n`uses[]` graph, which is everything a `theorem` has. It is ",
       "file": "beans/defs/folio-assistant-55ao--add-a-first-class-recommendation-block-kind-for-do.md"
     },
@@ -723,6 +975,20 @@
       "updatedAt": "2026-09-22T21:05:00Z",
       "preview": "Opened 2026-09-19 from [issue #363](https://github.com/litlfred/folio-assistant/issues/363),\n\"self-sovereign compute + test harness deployments\", at the owner's direction:\n\"bean up to may strwperson and create issue to review these\".\n\n## The claim this epic rests on\n\n#363 lists roughly ten deployment and utilization scenarios — local git only,\nprivate GitHub, sovereign cloud, self-sovereign, devel",
       "file": "beans/defs/folio-assistant-5a3l--deployment-topologies-and-operating-modes-are-two.md"
+    },
+    {
+      "id": "folio-assistant-5gqn",
+      "title": "MERGE FRICTION: beans index.json should join oxka -merge set; harness.json must NOT",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T06:16:21Z",
+      "updatedAt": "2026-09-27T06:16:21Z",
+      "preview": "Measured 2026-09-27 while driving #1439: **three** merges of `origin/main` in\nabout forty minutes, and `docs/assets/beans/index.json` conflicted on the third\none. `oxka` fixed this for three files and marked them\n`linguist-generated=true -diff -merge` in `.gitattributes`. This file is a fourth\nwith the same shape and is not marked.\n\n| file | conflicts paid today | marked `-merge`? |\n|---|---|---|\n",
+      "file": "beans/defs/folio-assistant-5gqn--merge-friction-beans-indexjson-should-join-oxka-me.md"
     },
     {
       "id": "folio-assistant-5uuf",
@@ -790,7 +1056,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T12:32:20Z",
-      "updatedAt": "2026-09-20T22:56:24Z",
+      "updatedAt": "2026-09-26T03:51:27Z",
       "preview": "Owner, 2026-09-20, verbatim — the structure is specific enough that paraphrase\nwould lose the parts that constrain the design:\n\n> then landing page rendering is now cleaer... scan the root of the repo, look\n> for <harness>.config.json as named instances. do their rendering (in\n> depdendcy ordering). on LHS navbar, there is global section (w/ themed color)\n> for each harness. when collapsed on LHS ",
       "file": "beans/defs/folio-assistant-603s--landing-the-lhs-navbar-is-one-themed-section-per-i.md"
     },
@@ -835,6 +1101,34 @@
       "updatedAt": "2026-09-19T09:01:53Z",
       "preview": "**Strawperson.** From [#363](https://github.com/litlfred/folio-assistant/issues/363):\n\"self-soveringn mode: like soveregion cloud but hosted on own infrastructure, in\nL4-L5 context may have data stores like hapi. not designed for external facing\nservices. more for managing wallets. have incoming DAK content. bean up to may\nstrwperson and create issue to review these.\"\n\n## Strawperson position, to ",
       "file": "beans/defs/folio-assistant-61tg--topology-self-sovereign-own-infrastructure-inward.md"
+    },
+    {
+      "id": "folio-assistant-6b8u",
+      "title": "EXTRACTION: MD_MIN_TEXT_LEN is a threshold in CHARACTERS, so the same table cell is translatable in Arabic and not in English",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T08:56:25Z",
+      "updatedAt": "2026-09-27T08:06:12Z",
+      "preview": "Found while deriving `.po` catalogues for #206 (bean `tbdg`). Measured\n2026-09-26 on `main` + this branch.\n\n`MD_MIN_TEXT_LEN = 3` in `content/pipeline/pot-extract.ts` gates every one of the\nfour emission paths (heading, paragraph, list-item, blockquote, table-cell). It is\na minimum in **characters**, used as a proxy for \"is there translatable text\nhere\". A character count is not script-neutral, so",
+      "file": "beans/defs/folio-assistant-6b8u--extraction-md-min-text-len-is-a-threshold-in-chara.md"
+    },
+    {
+      "id": "folio-assistant-6bhf",
+      "title": "SECURITY SUB-KG: an external identifier reaches join() unvalidated in three HTTP handlers, and the containment helper that fixes it already exists in one script",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:38:20Z",
+      "updatedAt": "2026-09-26T14:31:39Z",
+      "preview": "Owner, 2026-09-25, verbatim:\n\n> add lots of precautions/double checking/fails safe on rm -fr... is variable\n> there? injection hazard. that is needed on ALL I/O. bean as ceybeesquity sub\n> KG in tools. first is injection et. related skills already man y in folio and\n> smart-base. consolidate.\n\nOwner chose scope **2 + 3**: consolidate the scattered pieces **and** audit every\nI/O site. This bean is ",
+      "file": "beans/defs/folio-assistant-6bhf--security-sub-kg-an-external-identifier-reaches-joi.md"
     },
     {
       "id": "folio-assistant-6brk",
@@ -923,6 +1217,20 @@
       "file": "beans/defs/folio-assistant-6pfo--staging-previews-on-gh-pages-carry-metadata-that-e.md"
     },
     {
+      "id": "folio-assistant-6ptx",
+      "title": "COORDINATION: eight sessions woke into the same 2435-commit gap and all eight re-surveyed it independently",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T15:44:18Z",
+      "updatedAt": "2026-09-26T17:32:56Z",
+      "preview": "## Measured 2026-09-25, from the session API\n\n`list_sessions` returned 30 sessions, of which **eight were RUNNING at the same\nminute** (15:38–15:39Z). Their own `task_summary` fields, verbatim:\n\n```\nrebasing from main; 2369 commits (PR #477→#1306); facts before plan\nreviewing PR #542 impact; fast-forward reset blocked; surveying origin/main\nre-fetching main after date change; will propose next ste",
+      "file": "beans/defs/folio-assistant-6ptx--coordination-eight-sessions-woke-into-the-same-243.md"
+    },
+    {
       "id": "folio-assistant-6qk5",
       "title": "QA REVIEW MODE: translation QA joins the audited review record under test/results",
       "status": "todo",
@@ -953,15 +1261,15 @@
     {
       "id": "folio-assistant-70c7",
       "title": "docs/assets/qa was undeclared: 134 committed files no consumer scans",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T06:33:39Z",
-      "updatedAt": "2026-09-19T06:33:39Z",
-      "preview": "",
+      "updatedAt": "2026-09-23T19:25:46Z",
+      "preview": "## Summary of Changes\n\nClosed 2026-09-23 **on evidence, not authorship**, in the owner's \"go through remaining beans\" sweep. A read-only check against `main` called it landed, and it was re-verified before closing:\n\nThe witnesses now live in the declared `qa` graph at `cat-harness/test/results/witnesses/`. `cat-harness/docs/assets/qa/` holds only `index.json`, which `gen-docs-pages.ts` writes, and",
       "file": "beans/defs/folio-assistant-70c7--docs-assets-qa-was-undeclared-134-committed-files-.md"
     },
     {
@@ -1021,6 +1329,20 @@
       "file": "beans/defs/folio-assistant-7deg--librarian-an-avatar-for-knowledge-content-and-dubl.md"
     },
     {
+      "id": "folio-assistant-7e59",
+      "title": "INGEST: decision-making methodologies — skill takes decision context as input, outputs ranked applicable methods with criteria and rationale. Source: qou bd0c2cb7 (3 arxiv PDFs: 2508.21620 probabilistic/bandits, 2509.06388 MCDM/AHP/SAW, 2607.20636 sequential/social). Covers all methodology families with when-to-use criteria.",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T15:38:03Z",
+      "updatedAt": "2026-09-25T16:43:37Z",
+      "preview": "## Body added by a gate fix, not by this bean's author\n\n**This is not the author's scoping.** `check:bean-bodies` was red on `main`\nwith `[empty-body]: \"todo\" with front matter and nothing else — a sibling\nreading the store learns nothing about it`, and `check:bean-parents` was red\nbecause this bean carried no `parent:`. Both were fixed here as part of\nclearing `main`'s red gates, on the owner's \"",
+      "file": "beans/defs/folio-assistant-7e59--ingest-decision-making-methodologies-skill-takes-d.md"
+    },
+    {
       "id": "folio-assistant-7h1c",
       "title": "publish-verify scope misses our own SKOS code-lists document",
       "status": "completed",
@@ -1061,6 +1383,20 @@
       "updatedAt": "2026-09-20T16:14:51Z",
       "preview": "Owner, 2026-09-20, verbatim — three separate instructions in one message:\n\n> workflows/ is declared under the id cat-harness-workflows, content should be\n> at graph cat-harness/workflows except the bare minimum declarations (what is\n> bpmn, how use) under bootstrap/,\n> cat-harness/workflows is for more elboration on use of bpmn and such\n> cat-harness/workflows/state should describe beans and todos",
       "file": "beans/defs/folio-assistant-7po1--workflows-bootstrap-keeps-the-bare-minimum-cat-har.md"
+    },
+    {
+      "id": "folio-assistant-7ppv",
+      "title": "resolveCanonicalLean is O(refs x tree) without a cache, and its two index builders walk .lake/ while listPackageLeanFiles excludes it",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T09:37:16Z",
+      "updatedAt": "2026-09-27T09:41:47Z",
+      "preview": "Found 2026-09-27 while moving the resolver from `content/pipeline/qa-utils.ts`\ninto `content/pipeline/lean-formal-ref.ts` (PR #1465). **The code is unchanged**\n— it moved verbatim — so this is a pre-existing cost, not a regression, and it\nis filed because it was measured rather than because the move introduced it.\n\n## What is measured\n\n`resolveCanonicalLean(ref, repoRoot, cache?)` takes an OPTIONA",
+      "file": "beans/defs/folio-assistant-7ppv--resolvecanonicallean-is-orefs-x-tree-without-a-cac.md"
     },
     {
       "id": "folio-assistant-7s52",
@@ -1133,16 +1469,30 @@
       "file": "beans/defs/folio-assistant-7x7g--external-schemas-visualiser-8-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-7x8o",
+      "title": "TRANSLATIONS: 8 pairs may carry less than their source — but 7 of the original 9 were the extractor's hard wrap, not the translators (see lvk9)",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T08:57:09Z",
+      "updatedAt": "2026-09-26T13:22:34Z",
+      "preview": "Found while deriving `.po` catalogues for #206 (bean `tbdg`). Measured\n2026-09-26.\n\n`derive-po.ts` refuses 18 of 25 (page, locale) pairs because the published\ntranslation does not have the same SHAPE as its source. **9 of those 18 are\nartefacts of the extractor** (beans `6b8u` and `ig4a`) and disappear once the\nthreshold is script-neutral. These are the **other 9**, which are still mismatched\nwith",
+      "file": "beans/defs/folio-assistant-7x8o--translations-9-published-pages-carry-less-than-the.md"
+    },
+    {
       "id": "folio-assistant-81t5",
       "title": "TOOL 8/13: ingest-extract-structure — document ingestion (15 files, 7 entry points)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-d308",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T04:34:56Z",
-      "updatedAt": "2026-09-20T16:38:42Z",
+      "updatedAt": "2026-09-26T00:00:00Z",
       "preview": "Group 8 of 13 in `d308`. **15 files, 7 entry points.**\n\n`pdf-extract`, `pdf-ocr`, `pdf-pages`, `pdf-structure`, `pdf-tables`,\n`split-pdf-by-chapter`, `extract-candidates`, `tabular-records`,\n`archive-contents`, `ingest-document`, `scan-repo-content`,\n`smart-base-transform`, `_pdf_doc_id`, `_pypdf_compat`, `_tech_meta`,\n`pypdf_safe`.\n\n**BPMN:** `ingest-extract-structure · Task_ExtractText · Task_Oc",
       "file": "beans/defs/folio-assistant-81t5--tool-813-ingest-extract-structure-document-ingesti.md"
     },
@@ -1161,6 +1511,20 @@
       "file": "beans/defs/folio-assistant-81vy--deployment-awareness-the-agent-must-know-its-ui-su.md"
     },
     {
+      "id": "folio-assistant-872t",
+      "title": "The Python half's WHEEL BUILD is unchecked — rsi6's lesson applied to only one of the two halves",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T09:53:40Z",
+      "updatedAt": "2026-09-26T09:53:56Z",
+      "preview": "Split out of `1s5s` 2026-09-26, while wiring the Python half into\n`check:published-packages`. Recorded rather than decided, because the answer\ncosts something on every CI run and nobody has been asked.\n\n## The asymmetry\n\n`rsi6`'s finding was that **a package that ships and is not built lands green\nand broken** — measured, not predicted: PR #914 bumped `typescript` 5.9.3 →\n7.0.2, passed ten checks,",
+      "file": "beans/defs/folio-assistant-872t--the-python-halfs-wheel-build-is-unchecked-rsi6s-le.md"
+    },
+    {
       "id": "folio-assistant-88mg",
       "title": "CONSOLIDATION: one voice over bootstrap and cat-harness docs, with skills and docs sharing content rather than restating it",
       "status": "in-progress",
@@ -1173,6 +1537,20 @@
       "updatedAt": "2026-09-21T19:50:20Z",
       "preview": "Owner, 2026-09-21: a thorough analysis of the existing documentation AND skills, consolidated, in ONE voice. All of the documentation eventually; **bootstrap and cat-harness first**.\n\n**Two structural asks:**\n- **Reuse content between `skills/` and `docs/`** so both consolidate, with the docs pointing at the skill for rendering where the skill was written correctly.\n- **Some documentation will nee",
       "file": "beans/defs/folio-assistant-88mg--consolidation-one-voice-over-bootstrap-and-cat-har.md"
+    },
+    {
+      "id": "folio-assistant-89wq",
+      "title": "Four QA checkers are unconditional n/a stubs — 8949 sidecar entries indistinguishable from a correct decline, two of them proof-build-green / proof-no-axiom-growth",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T10:37:00Z",
+      "updatedAt": "2026-09-27T10:37:00Z",
+      "preview": "Measured 2026-09-27 against this branch's `cat-harness/`, and cross-checked\nagainst qou's committed sidecars at platform pin `37a36ce`.\n\n## Four exported checkers whose entire body is `return { result: \"n/a\", hits: [] }`\n\nFound by parsing every `export function check*` in\n`cat-harness/content/pipeline/qa-checkers*.ts` and keeping those with exactly\none `return` statement, which returns `n/a`:\n\n| c",
+      "file": "beans/defs/folio-assistant-89wq--four-qa-checkers-are-unconditional-na-stubs-8949-s.md"
     },
     {
       "id": "folio-assistant-8i57",
@@ -1247,14 +1625,14 @@
     {
       "id": "folio-assistant-95ir",
       "title": "Library scanners FILTER OUT a declared-but-absent directory, so a partial checkout reports a clean pass",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:29:50Z",
-      "updatedAt": "2026-09-20T16:30:17Z",
+      "updatedAt": "2026-09-23T21:40:48Z",
       "preview": "Found by review 2026-09-20, on this branch's own fan-out work (`a02m`).\n\n`check-tabular-stubs.ts:137`, `check-l1-complete.ts:756` and `:936` each end\ntheir directory resolution with a `.filter(existsSync)`. So a library the\ndeclaration names and the tree does not carry is not a finding — it is not\neven a line of output. The check then passes over the libraries that DO exist\nand reports a clean run",
       "file": "beans/defs/folio-assistant-95ir--library-scanners-filter-out-a-declared-but-absent.md"
     },
@@ -1287,6 +1665,20 @@
       "file": "beans/defs/folio-assistant-9791--qa-summary-passing-counts-only-script-checkable-cr.md"
     },
     {
+      "id": "folio-assistant-9cc0",
+      "title": "ROOT TYPECHECK IS RED ON MAIN: tsconfig sweeps a separately-published sub-package whose vitest dep is not installed at the root",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T11:06:36Z",
+      "updatedAt": "2026-09-26T12:54:56Z",
+      "preview": "## What is failing\n\n`bunx tsc --noEmit` exits **2** on `main`:\n\n    cat-harness/schemas/block-qa-schema/tests/parity.test.ts(26,40):\n    error TS2307: Cannot find module 'vitest' or its corresponding type declarations.\n\n**Measured on pristine `origin/main` at `a7b5f021498c786a90198196e18eb3d6c27a61ce`\nin a clean detached worktree with `bun install --frozen-lockfile` — not on a\nbranch, not in a dir",
+      "file": "beans/defs/folio-assistant-9cc0--root-typecheck-is-red-on-main-tsconfig-sweeps-a-se.md"
+    },
+    {
       "id": "folio-assistant-9fdi",
       "title": "Task_Review needs theme-ui-review, which NO role carries — and the ruling to re-lane it contradicts the diagram's own no-call reason",
       "status": "completed",
@@ -1315,6 +1707,34 @@
       "file": "beans/defs/folio-assistant-9gyz--qa-review-schemas-finding-decision-and-auditnote-a.md"
     },
     {
+      "id": "folio-assistant-9rnf",
+      "title": "DISCOVERY: publishedPairs scans the site root only, so a translated page in a subdirectory is invisible to every catalogue tool",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T04:59:40Z",
+      "updatedAt": "2026-09-27T08:07:02Z",
+      "preview": "## The gap\n\n`publishedPairs` in `cat-harness/content/pipeline/derive-po.ts` reads the site\ndirectory with a single `readdirSync`, so it sees pages at the root and nothing\nbelow it. Measured on `main` at `c6960465301`:\n\n| | |\n|---|---|\n| published translated pages | **14** |\n| of those, found by discovery | 13 (top level) |\n| **invisible** | **1** — `guides/agent-onboarding.md`, in ar, es, fr, ru, ",
+      "file": "beans/defs/folio-assistant-9rnf--discovery-publishedpairs-scans-the-site-root-only.md"
+    },
+    {
+      "id": "folio-assistant-9rrb",
+      "title": "CATALOGUE DISCOVERY: derive-po held a list of five page names, so #1404's four new pages took drift from 1 to 21 unseen",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T14:13:00Z",
+      "updatedAt": "2026-09-26T17:26:28Z",
+      "preview": "Found 2026-09-26, minutes after #1369 merged, by watching what happened next.\n\n#1369 took `translation-drift` from 25 findings to 1. **PR #1404 then merged four\nmore translated pages across five locales with no catalogues, and the gate went to\n21.** The tool that had just catalogued 24 pairs could not see any of them, because\nits CLI held a list:\n\n```ts\nconst pages = [\"accessibility\", \"content-typ",
+      "file": "beans/defs/folio-assistant-9rrb--catalogue-discovery-derive-po-held-a-list-of-five.md"
+    },
+    {
       "id": "folio-assistant-9scf",
       "title": "folio visualiser: 5 wireframe findings",
       "status": "todo",
@@ -1329,6 +1749,20 @@
       "file": "beans/defs/folio-assistant-9scf--folio-visualiser-5-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-9v4m",
+      "title": "TEST INTERFERENCE: a profile-gate test fails in the full suite and passes in isolation on the same commit",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T03:40:20Z",
+      "updatedAt": "2026-09-27T14:31:29Z",
+      "preview": "Measured 2026-09-26 on `985d0bada2a` (branch claude/brave-hypatia-r820sf, diff = two bean .md files only).\n\n## What happened\n\n`bun run gates` failed with ONE test failure:\n\n    (fail) the sweep's profile gate, end to end > a paper-only criterion is n/a'd in a document folio, under its OWN outcome [5769.02ms]\n\nThe same test, by name, **passes in isolation** — both with the branch's changes applied ",
+      "file": "beans/defs/folio-assistant-9v4m--test-interference-a-profile-gate-test-fails-in-the.md"
+    },
+    {
       "id": "folio-assistant-9wb0",
       "title": "PUBLICATION IS A STATE, NOT A BOOLEAN: every asset carries id + version and sits in draft; formal publication is an undefined process",
       "status": "in-progress",
@@ -1341,6 +1775,34 @@
       "updatedAt": "2026-09-23T21:30:16Z",
       "preview": "Owner ruling, 2026-09-23: *\"all assets get a version and are in 'draft' publication. formal publication process needs to be deinfed/neeeds tools/depends on instance\"*.\n\nCorrects §3.1 as `snjh` shipped it. Not a gap in that work — a different model.\n\n## What §3.1 got wrong, precisely\n\nIt models `publishable?: boolean` with three states, and REFUSES id and version unless `publishable: true`:\n\n    re",
       "file": "beans/defs/folio-assistant-9wb0--publication-is-a-state-not-a-boolean-every-asset-c.md"
+    },
+    {
+      "id": "folio-assistant-9x01",
+      "title": "available_locales claims a locale with no translated page behind it, and nothing checks the two against each other",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T14:26:44Z",
+      "updatedAt": "2026-09-26T20:14:52Z",
+      "preview": "Found while fixing an e2e fixture (bean `6bhf`, PR #1408), not while looking for\nit — so the measurement below is narrow on purpose and the sweep is part of the\nwork.\n\n## The contradiction\n\n`cat-harness/docs/crdm-methodology.md` declares\n\n    available_locales: [\"en\",\"fr\"]\n\nand there is **no `cat-harness/docs/fr/crdm-methodology.md`**. It is also absent\nfrom `docs/_data/translations.json`, which i",
+      "file": "beans/defs/folio-assistant-9x01--available-locales-claims-a-locale-with-no-translat.md"
+    },
+    {
+      "id": "folio-assistant-9x9r",
+      "title": "check:head-has-run passes on ANY run naming the sha — two unrelated push runs satisfy it while the gate workflow never fired",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T19:38:43Z",
+      "updatedAt": "2026-09-25T18:14:49Z",
+      "preview": "Measured 2026-09-24, on PR #1309's head. The script printed a ✓, and the gate\nset had never fired.\n\n## The pass condition is strictly weaker than the defect it detects\n\n`runsForHead` asks the Actions API for every run whose `head_sha` is this\ncommit, and line 191 decides:\n\n```ts\nreturn runs.length > 0 ? { state: \"has-run\", runs } : { state: \"no-run\" };\n```\n\nAny run. Any workflow, any event. The he",
+      "file": "beans/defs/folio-assistant-9x9r--checkhead-has-run-passes-on-any-run-naming-the-sha.md"
     },
     {
       "id": "folio-assistant-a0s3",
@@ -1369,6 +1831,20 @@
       "updatedAt": "2026-09-22T20:13:04Z",
       "preview": "Hit while ingesting the SWOT paper, 2026-09-22.\n\n## What happened\n\n`bun run ingest <pdf>` stages, then prints:\n\n> Next: run the remaining arms with `-o ingest-staging/<slug>`, then: ... --promote\n\nFollowing that literally:\n\n```\npython3 cat-harness/scripts/pdf-images.py -o cat-harness/ingest-staging/gurel-tat-2017-swot-analysis <pdf>\n  wrote cat-harness/ingest-staging/gurel-tat-2017-swot-analysis/g",
       "file": "beans/defs/folio-assistant-a7t8--ingest-documents-run-the-remaining-arms-line-doubl.md"
+    },
+    {
+      "id": "folio-assistant-a8wy",
+      "title": "VECTOR FIGURE ARM: extract positioned labels from vector-only figures — 69 of 87 caption pages",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-2yyh",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T18:04:22Z",
+      "updatedAt": "2026-09-24T18:35:11Z",
+      "preview": "Sibling of `m4xy` under the same epic, and the second of its two open arms, and the narrow one: **the labels, and\nnothing above them.** `pdf-images.py` recovers the raster layer; a WHO\nconceptual figure is drawn in path operators and text, so there is no image\nobject and that arm places nothing. `9789240120747-eng` declares six captioned\nfigures and places zero images, and `check-l1-complete` repo",
+      "file": "beans/defs/folio-assistant-a8wy--vector-figure-arm-extract-positioned-labels-from-v.md"
     },
     {
       "id": "folio-assistant-a98i",
@@ -1413,6 +1889,20 @@
       "file": "beans/defs/folio-assistant-aazi--workflow-statemgmt-rendering-a-status-dashboard-at.md"
     },
     {
+      "id": "folio-assistant-ahab",
+      "title": "Translated pages carry 225 unresolved links — 43 distinct, five near-copies each, and the English sources do not carry them",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T10:40:05Z",
+      "updatedAt": "2026-09-26T17:29:28Z",
+      "preview": "Found 2026-09-26 while re-deriving `hloc`'s premise. `hloc` records the `docs/`\nunresolved-link count as **120** after `mi97` took it from 246. Re-measured\ntoday with `scanSubgraphs()` it is **340** — higher than the pre-`mi97` figure.\n\nThat is not an `mi97` regression. It is a different population, and it splits:\n\n| source | links |\n|---|---|\n| translated pages — `docs/{ar,es,fr,ru,zh}/` | **225*",
+      "file": "beans/defs/folio-assistant-ahab--translated-pages-carry-225-unresolved-links-43-dis.md"
+    },
+    {
       "id": "folio-assistant-ahvw",
       "title": "PROCESS: how an agent decides what it is doing, and what governs each step",
       "status": "in-progress",
@@ -1429,14 +1919,14 @@
     {
       "id": "folio-assistant-ajx9",
       "title": "WHO IG CHROME: the blue bar, DRAFT watermark and publish box, ingested from the template chain rather than transcribed",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:56:03Z",
-      "updatedAt": "2026-09-23T20:15:41Z",
+      "updatedAt": "2026-09-26T03:54:14Z",
       "preview": "Owner, 2026-09-23, chose \"All three, fetch HL7's base template\" and \"smart-base, inherited\".\n\nFinishes what 0818 left open: the WHO visual styling, a different question from the menu it shipped.\n\n## The template chain is three layers, and the three items do not come from one of them\n\n    smart-trust local-template  ->  who.template.root 0.5.0  ->  fhir.base.template 1.0.0\n\n- BLUE BAR is WHO's: --n",
       "file": "beans/defs/folio-assistant-ajx9--who-ig-chrome-the-blue-bar-draft-watermark-and-pub.md"
     },
@@ -1525,6 +2015,20 @@
       "file": "beans/defs/folio-assistant-b91x--decide-keep-beans-hmans-or-move-to-beads-gastownha.md"
     },
     {
+      "id": "folio-assistant-b94c",
+      "title": "Cross-platform support: detect Linux-specific assumptions and provide a Windows path",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-21T16:15:47Z",
+      "updatedAt": "2026-09-21T16:15:47Z",
+      "preview": "Issue [#735](https://github.com/litlfred/folio-assistant/issues/735). CRDM\nPhase 1 (needs assessment) — requester @costateixeira, sign-off @litlfred.\n\n## What\n\nA stated cross-platform policy, a mechanical check that detects Linux-specific\nassumptions across scripts, tooling, docs and content pipelines, and a Windows\npath wherever the check fires. Where Windows cannot be supported, a **declared**\ne",
+      "file": "beans/defs/folio-assistant-b94c--cross-platform-support-detect-linux-specific-assum.md"
+    },
+    {
       "id": "folio-assistant-b963",
       "title": "COLD START: the entry documents named scripts/ for the whole split, and nothing checks a command path",
       "status": "in-progress",
@@ -1539,6 +2043,20 @@
       "file": "beans/defs/folio-assistant-b963--cold-start-the-entry-documents-named-scripts-for-t.md"
     },
     {
+      "id": "folio-assistant-bf5l",
+      "title": "WRONG DIRECTION on main: cat-harness/schemas/intake.ts imports folio-assistant-core, and two of three checks cannot see it",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T04:01:42Z",
+      "updatedAt": "2026-09-26T13:50:15Z",
+      "preview": "`cat-harness/schemas/intake.ts:28`:\n\n```ts\nimport { ProvenanceSchema } from \"../../folio-assistant-core/schemas/materialization.js\";\n```\n\n`cat-harness` declares `needs: ['bootstrap']`. `folio-assistant-core` declares\n`needs: ['cat-harness']`. So the code adds a **harness → core** edge against a\ndeclared **core → harness** dependency. The declarations alone have no cycle;\nthe declarations plus the ",
+      "file": "beans/defs/folio-assistant-bf5l--wrong-direction-on-main-cat-harnessschemasintakets.md"
+    },
+    {
       "id": "folio-assistant-bgrz",
       "title": "translation-status visualiser: 6 wireframe findings",
       "status": "todo",
@@ -1551,6 +2069,34 @@
       "updatedAt": "2026-09-23T10:36:15Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/translation-status/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **Horizontal scroll at phone width.** At 390 px the document is 509 px wide (`scrollWidth` 509). The *fuzzy* and *untranslated* columns start off-scr",
       "file": "beans/defs/folio-assistant-bgrz--translation-status-visualiser-6-wireframe-findings.md"
+    },
+    {
+      "id": "folio-assistant-biz4",
+      "title": "An untracked _kg/ at the container root silently inflates local detangle counts — 229 becomes 1443, and the gate reads as a code defect",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T11:26:16Z",
+      "updatedAt": "2026-09-27T09:37:00Z",
+      "preview": "Found 2026-09-26 while establishing whether `kg:detangle:check` was `hloc`'s\nfailure or `main`'s. It was neither — it was the container.\n\n## The measurement\n\n`bun run gates` in this checkout rewrote\n`cat-harness/test/results/detangle/cat-harness/schemas.detangle.json`:\n\n```\n-  \"size\": 229,       +  \"size\": 1443,\n-  \"internal\": 125,   +  \"internal\": 709,\n-  \"cohesion\": 0.82,  +  \"cohesion\": 0.96,\n`",
+      "file": "beans/defs/folio-assistant-biz4--an-untracked-kg-at-the-container-root-silently-inf.md"
+    },
+    {
+      "id": "folio-assistant-bjzs",
+      "title": "PER-INSTANCE GATES: kg:audit, render:bpmn and check:workflow-refs run at the root only, so 15 nested instances are counted and none is audited",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-d308",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T04:14:07Z",
+      "updatedAt": "2026-09-27T10:36:45Z",
+      "preview": "Split out of `sa8y` 2026-09-26. It was `sa8y`'s last genuinely open item and the\nonly one of its four; the other three are done and `sa8y` closed on the wording\nfix that is its actual subject. It gets its own bean because it is a different\nsubject — `sa8y` is about a finding's **wording**, this is about a gate's\n**range** — and because a wording bean carrying an infrastructure item is how\n`sa8y` c",
+      "file": "beans/defs/folio-assistant-bjzs--per-instance-gates-kgaudit-renderbpmn-and-checkwor.md"
     },
     {
       "id": "folio-assistant-bkje",
@@ -1569,16 +2115,30 @@
     {
       "id": "folio-assistant-bqrg",
       "title": "stripLeanComments is implemented six times — converge on lean-lexer.ts",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-0lmb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T22:52:21Z",
-      "updatedAt": "2026-09-18T22:52:21Z",
+      "updatedAt": "2026-09-25T16:22:38Z",
       "preview": "## Measured 2026-09-18, on `claude/festive-galileo-s7ibx0`\n\n```\ngrep -rn \"stripLeanComments\" --include=*.ts . | grep -v node_modules\n```\n\nSix independent implementations of a Lean comment stripper:\n\n| file | line | shape |\n|---|---|---|\n| `content/pipeline/lean-lexer.ts` | 23 | **canonical** — extracted this session from `lean-atlas-ingest.ts` |\n| `content/pipeline/qa-checkers-extended.ts` | 2925 ",
       "file": "beans/defs/folio-assistant-bqrg--stripleancomments-is-implemented-six-times-converg.md"
+    },
+    {
+      "id": "folio-assistant-bsay",
+      "title": "A declaration that points at nothing, where nothing can fail: three live cases and the gate that reports two of them and exits 0",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T06:13:41Z",
+      "updatedAt": "2026-09-27T07:07:40Z",
+      "preview": "## The three cases, measured on `8cce91e4eab`\n\n### 1. A banner naming a page that does not exist -- detected by NOTHING\n\n`SAME_BASENAME_DIFFERENT_DOCUMENT[\"kg-navigation\"]` in `gen-skill-docs.ts`\nnamed a twin published as `local-kg-navigation`. That page does not exist and\ncannot: the `local-` prefix comes from `.claude/skills/local/`, which holds\nthree skills and `kg-navigation` is not one. So th",
+      "file": "beans/defs/folio-assistant-bsay--a-declaration-that-points-at-nothing-where-nothing.md"
     },
     {
       "id": "folio-assistant-byql",
@@ -1621,6 +2181,20 @@
       "updatedAt": "2026-09-19T11:43:43Z",
       "preview": "Everything from a `.pot` template to a rendered page that declares its own\n`lang`, and the QA that says the rendering is right.\n\nThe through-line is that a translation is the SAME KIND of thing as the page it\ntranslates, differing by a field the file declares — never by its directory's\nname. These items are the parts of that claim that are not yet true: diagrams\nwhose labels never reach a catalogu",
       "file": "beans/defs/folio-assistant-bzyu--translation-the-gettext-pipeline-translated-render.md"
+    },
+    {
+      "id": "folio-assistant-c3d7",
+      "title": "CLAIM STOMPING: 97 of 100 claims record no holder, so beans:claim reports '✓ claimed' for work a sibling is doing",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:08:51Z",
+      "updatedAt": "2026-09-26T03:53:36Z",
+      "preview": "Found while acting on the owner's decision (2026-09-25) to *\"add the\nre-read-before-claim rule\"*. **The rule is already implemented** — `35nj` built\n`bun run beans:claim`, which reads the default branch first and has an\n`already-claimed` outcome that refuses and names the holder. This bean is the\nhole that makes it vacuous for almost the whole store.\n\n## Measured 2026-09-25, on `origin/main`\n\n| | ",
+      "file": "beans/defs/folio-assistant-c3d7--claim-stomping-97-of-100-claims-record-no-holder-s.md"
     },
     {
       "id": "folio-assistant-c4rz",
@@ -1693,6 +2267,20 @@
       "file": "beans/defs/folio-assistant-chq5--stuck-check-trap-a-parent-token-in-the-agents-lane.md"
     },
     {
+      "id": "folio-assistant-cjvs",
+      "title": "190 dangling refs in the KG: 137 ts-import, 28 md-link, 25 bpmn-skill",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T06:33:48Z",
+      "updatedAt": "2026-09-26T06:33:48Z",
+      "preview": "`bun run kg:detangle`, measured 2026-09-26 on `main`:\n\n```\nDetangle — 697 nodes, 2828 edges, 190 dangling\n```\n\nBreakdown, from the tool's own JSON rather than from prose:\n\n| via | count |\n|---|---|\n| `ts-import` | 137 |\n| `md-link` | 28 |\n| `bpmn-skill` | 25 |\n\nA dangling ref is a link-shaped value that does not dereference — bean `blv9`\n— at scale, in the graph the whole separation effort is comp",
+      "file": "beans/defs/folio-assistant-cjvs--190-dangling-refs-in-the-kg-137-ts-import-28-md-li.md"
+    },
+    {
       "id": "folio-assistant-cmsl",
       "title": "DEDUPE: 11 directories declared twice — and both obvious fixes are measurably wrong",
       "status": "todo",
@@ -1707,6 +2295,20 @@
       "file": "beans/defs/folio-assistant-cmsl--dedupe-11-directories-declared-twice-and-both-obvi.md"
     },
     {
+      "id": "folio-assistant-cn8y",
+      "title": "Page follows the remembered locale; mark source-language fallbacks in a translated navbar",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T05:39:33Z",
+      "updatedAt": "2026-09-27T05:39:33Z",
+      "preview": "Owner 2026-09-27: an English page sat inside a French navbar. 'user selects locale in icon, then only those pages exist (if translated) otherwise source language fallback'. Chose: page follows too, and fallback items tagged (EN).\n\n## Summary of Changes\n\n- `docs-ui.js` `followRememberedLocale`: with a STORED `fa-locale`, a page that has a version in that locale (by its own `availableLocales`) is re",
+      "file": "beans/defs/folio-assistant-cn8y--page-follows-the-remembered-locale-mark-source-lan.md"
+    },
+    {
       "id": "folio-assistant-cpmo",
       "title": "SMART-BASE CROSSWALKS: the v1 to v2 ConceptMaps exist, are draft, and one is incomplete",
       "status": "todo",
@@ -1719,6 +2321,20 @@
       "updatedAt": "2026-09-22T11:55:46Z",
       "preview": "The owner, 2026-09-22: *\"See smart-base for more info on classications and mappings better 1 and 2...\"*, then chose to have the crosswalks ingested.\n\n## Summary of Changes\n\n`smart-base/fhir-artifact-index/` — the published IG's artefact index, reconstructed by `ingest:ig` from `smart.who.int.base` v0.3.0 (FHIR 4.0.1), the same shape `smart-trust` and `smart-immunizations` are on.\n\n**225 artefacts ",
       "file": "beans/defs/folio-assistant-cpmo--smart-base-crosswalks-the-v1-to-v2-conceptmaps-exi.md"
+    },
+    {
+      "id": "folio-assistant-cpss",
+      "title": "The deliberately-red drift gate masked 104 checks from inside a `set -e` batch — moved to last, and enforced",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T18:09:12Z",
+      "updatedAt": "2026-09-27T05:14:00Z",
+      "preview": "Measured while fixing an unrelated finding (bean `9x01`), so the population below\nis exact and the recommendation is not.\n\n## What is unreachable\n\n`.github/workflows/code-quality-gates.yml`, job `gates`: **46 steps**, and the\nstep named *\"gates that were registered and never run\"* is **step 40**. A job\nstops at its first failing step, and that step's batch contains\n`translation:drift:check`, which",
+      "file": "beans/defs/folio-assistant-cpss--six-gates-in-the-code-quality-job-cannot-fire-the.md"
     },
     {
       "id": "folio-assistant-ctp3",
@@ -1863,6 +2479,20 @@
       "file": "beans/defs/folio-assistant-dc64--dashboards-are-dark-only-and-ignore-the-colour-sch.md"
     },
     {
+      "id": "folio-assistant-do70",
+      "title": "SIBLINGS: seven generated artefacts go stale when a catalogue or a BEAN changes, and no gate names its remedy — reuse skills:register's converging chain",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T10:05:01Z",
+      "updatedAt": "2026-09-26T18:42:37Z",
+      "preview": "Found 2026-09-26 by paying the cost, then reading PR #1361 and finding the\nmechanism already built for a sibling problem.\n\n## What it cost, measured on one change\n\nAdding 10 `.po` catalogues (#206, PR #1369) left **six** generated artefacts\nstale. I discovered them one at a time, from failing gates, across three full\n`bun run gates` runs:\n\n| gate that went red | what regenerates it |\n|---|---|\n| `",
+      "file": "beans/defs/folio-assistant-do70--translation-siblings-adding-a-po-catalogue-stales.md"
+    },
+    {
       "id": "folio-assistant-dp1j",
       "title": "KG AFFORDANCES: browse, materialise, instantiate, copy-into-my-folio — as processes and skills, gated by write capability",
       "status": "todo",
@@ -1903,6 +2533,48 @@
       "updatedAt": "2026-09-24T18:51:25Z",
       "preview": "## Owner decision 2026-09-24\n\"B: type all 9 now\". The graph-kind registry (@general) named the script writing each untyped family. Typing them removes the backwards pointer and the finding it recorded.\n\n## Families\nfolio-bean-index/v1, folio-translation-status/v1, folio-schema-graph/v1, folio-library-index/v1, folio-library-entry/v1, folio-voices-index/v1, folio-graph-projection/v1, folio-qa-index",
       "file": "beans/defs/folio-assistant-dv8v--b6b-1168-the-9-writtenby-families-get-zod-schemas.md"
+    },
+    {
+      "id": "folio-assistant-dvcx",
+      "title": "`bun test` carries the SAME deliberate-red assertion as the declared drift gate, and the matcher cannot see it",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T10:33:16Z",
+      "updatedAt": "2026-09-27T10:44:51Z",
+      "preview": "## What\n\n`check:red-gate-is-last` (bean `cpss`) makes one thing structural: a gate that is\nred **by decision** must be the last step of its job, so the set it masks is\nempty by construction rather than by a passing run.\n\nIts declaration had **one** entry, `translation:drift:check`. There were **two**\ngates carrying that assertion, and the second could not be declared.\n\n`cat-harness/content/pipelin",
+      "file": "beans/defs/folio-assistant-dvcx--bun-test-carries-the-same-deliberate-red-assertion.md"
+    },
+    {
+      "id": "folio-assistant-dx5j",
+      "title": "Nothing indexes a defect to the beans and PRs describing it — three duplicate-work collisions in one window",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T14:32:59Z",
+      "updatedAt": "2026-09-26T17:52:18Z",
+      "preview": "## What was measured, 2026-09-26\n\nThree duplicate-work collisions in one working window, each found only because\nsomebody happened to read a sibling's PR:\n\n| defect | named as | and also as | how it was found |\n|---|---|---|---|\n| CI's gates job masked its own steps | `om30` (#1390) | `m5gx` (#1401) | #1401 opened a near file-for-file duplicate ~3h after #1390 |\n| the fast gate set was hardcoded |",
+      "file": "beans/defs/folio-assistant-dx5j--nothing-indexes-a-defect-to-the-beans-and-prs-desc.md"
+    },
+    {
+      "id": "folio-assistant-e8m3",
+      "title": "ARCHIVING IS A THIRD TERMINAL PATH, and it bypasses the scrapped-with-reasons rule",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T15:44:18Z",
+      "updatedAt": "2026-09-26T17:06:07Z",
+      "preview": "## Measured 2026-09-25, window `2133f720eb` → `origin/main` `0a2150d3f6`\n\n`beans/defs/` has an **`archive/` subdirectory**, and it is now the larger half\nof the store:\n\n```\nactive  (beans/defs/*.md)          327   todo 123 · in-progress 120 · completed 82 · scrapped 2\narchive (beans/defs/archive/*.md)  631   (219 at the window's open edge, +412)\n```\n\nIn this five-day window **131 beans left the to",
+      "file": "beans/defs/folio-assistant-e8m3--archiving-is-a-third-terminal-path-and-it-bypasses.md"
     },
     {
       "id": "folio-assistant-edx7",
@@ -2003,6 +2675,20 @@
       "file": "beans/defs/folio-assistant-f4gj--measured-fsh-cone-is-a-second-route-to-logic-layer.md"
     },
     {
+      "id": "folio-assistant-f6r1",
+      "title": "TRANSLATION CATALOGUES: 19 of 27 are provably not derivable, 8 undetermined — and the roundtrip test that says otherwise fails on known-good catalogues",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T09:59:36Z",
+      "updatedAt": "2026-09-26T10:42:14Z",
+      "preview": "Asked whether `main`'s 27 uncatalogued translations could be resolved by\nDERIVING their `.po` catalogues, rather than by recording their absence (which\nthe owner ruled out, bean `ngxj`) or by fresh authoring.\n\n**Answer: 19 provably not, 8 undetermined, 0 demonstrated derivable.** The\nundetermined 8 are undetermined *because the test that would decide them is\ninvalid* — see below. Three states, and",
+      "file": "beans/defs/folio-assistant-f6r1--translation-catalogues-19-of-27-are-provably-not-d.md"
+    },
+    {
       "id": "folio-assistant-fgkb",
       "title": "smart-base: clear qou/uploads once the bytes have a home",
       "status": "todo",
@@ -2015,6 +2701,34 @@
       "updatedAt": "2026-09-22T11:55:45Z",
       "preview": "Issue #877. The eight PDFs are in `litlfred/qou` as https://github.com/litlfred/qou/commit/a3d2266a1b08018af5f8f88c222c1e7b45e6a36c — a mathematics repository, which is not their home.\n\n**`deletion-requires-confirmation` governs and this is not the agent's call.** What follows is the report the skill requires: what would go, with sizes, and the evidence that nothing would be lost. Nothing has been",
       "file": "beans/defs/folio-assistant-fgkb--smart-base-clear-qouuploads-once-the-bytes-have-a.md"
+    },
+    {
+      "id": "folio-assistant-fjwi",
+      "title": "Where can the registration-chain check go in CI? Every placement today is masked or red on arrival",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T10:24:13Z",
+      "updatedAt": "2026-09-26T11:23:18Z",
+      "preview": "Split out of `v625` rather than blocking it: the command itself, its flags and\nits QA sidecar all landed, so the parent has work that can proceed. What cannot\nproceed without a decision is **whether the chain gets a CI gate, and where** —\nbecause every placement available today is either masked or red on arrival.\n\n## Why the obvious placement does not work\n\n`skill:register:check` runs the five `--",
+      "file": "beans/defs/folio-assistant-fjwi--where-can-the-registration-chain-check-go-in-ci-ev.md"
+    },
+    {
+      "id": "folio-assistant-fx5r",
+      "title": "The PR endpoint keeps serving a merged PR's pre-merge view, and merge_pull_request reports success on it",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T18:09:14Z",
+      "updatedAt": "2026-09-26T12:12:45Z",
+      "preview": "## What happened, 2026-09-25\n\nI reported merging PR #1317. **It had been merged an hour earlier, by somebody\nelse.** Every check I made before saying so came from the PR endpoint, and the\nPR endpoint was serving a view from before the merge — with nothing marking it\nstale.\n\n## The measurements, in the order they misled me\n\nPR #1317's true state, read later from the same endpoint:\n\n```\nstate=closed",
+      "file": "beans/defs/folio-assistant-fx5r--the-pr-endpoint-keeps-serving-a-merged-prs-pre-mer.md"
     },
     {
       "id": "folio-assistant-fz39",
@@ -2043,6 +2757,20 @@
       "updatedAt": "2026-09-20T16:47:53Z",
       "preview": "**In one sentence:** every staging preview stores a full ~37.5 MB copy of the\nsite because three per-preview facts are baked into all ~530 pages, so git's\ncontent-hash deduplication has nothing to grip — and moving those facts into one\nsmall data file read in the browser would turn 530 differing files into one.\n[View this bean](https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio",
       "file": "beans/defs/folio-assistant-g196--every-preview-stores-a-full-copy-of-the-site-becau.md"
+    },
+    {
+      "id": "folio-assistant-g5o5",
+      "title": "kg-skills glossary stale on main since 2c295f8ac06 — and CI reads the MERGE, which is why no local probe saw it",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T14:02:57Z",
+      "updatedAt": "2026-09-26T14:28:14Z",
+      "preview": "## What was measured, 2026-09-26, on PR #1405\n\nCI step 15 of the `gates` job — `glossary page and SKOS` — failed on `ba7af05f6a1`:\n\n    ✗ stale: cat-harness/docs/glossary/skills/index.md\n    ✗ stale: cat-harness/docs/assets/glossary/cat-harness--kg-skills.skos.jsonld\n    ✗ stale: folio-assistant-core/glossary/generated/cat-harness/kg-skills.glossary.json\n    Run `bun run glossary:page` and commit ",
+      "file": "beans/defs/folio-assistant-g5o5--checkglossary-calls-kg-skills-stale-in-ci-and-curr.md"
     },
     {
       "id": "folio-assistant-ga3q",
@@ -2101,6 +2829,34 @@
       "file": "beans/defs/folio-assistant-gpdo--compiled-artefact-caching-olean-for-mathlib-and-th.md"
     },
     {
+      "id": "folio-assistant-gr0r",
+      "title": "A link into the bean store breaks when the bean is ARCHIVED — the path moves, nothing re-points it",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:21:47Z",
+      "updatedAt": "2026-09-25T17:47:29Z",
+      "preview": "Found 2026-09-25 while closing `mi97`'s bean-store box.\n\n`docs/translation-support.md` links four beans. Three are in `beans/defs/`;\n`folio-assistant-p2en` is `completed` and lives in `beans/defs/archive/`, so\nthe link written when it was open now points at nothing.\n\n**This is not a typo, it is a shape.** Completing a bean MOVES its file, and\nevery reference to that file — from a document, an issu",
+      "file": "beans/defs/folio-assistant-gr0r--a-link-into-the-bean-store-breaks-when-the-bean-is.md"
+    },
+    {
+      "id": "folio-assistant-gw8h",
+      "title": "A scripts/ -> cat-harness/scripts/ rewrite doubled six hrefs and left the glossary stale — two red checks on every open PR, one cause",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T14:16:58Z",
+      "updatedAt": "2026-09-26T14:33:46Z",
+      "preview": "## Two red checks on `main`, in two different jobs, from one edit\n\nMeasured 2026-09-26 in a clean worktree of pristine `origin/main` at\n`f850f721a06`, so neither is any PR's:\n\n| job | check | failure |\n|---|---|---|\n| `TypeScript — tests, lint, types (hard)` | `bun test` | `the entanglement report > the dangling category exists and is computed, not skipped` — 6 dangling links |\n| `Repository gates",
+      "file": "beans/defs/folio-assistant-gw8h--a-scripts-cat-harnessscripts-rewrite-doubled-six-h.md"
+    },
+    {
       "id": "folio-assistant-h1wq",
       "title": "JUDGE the four typed-only kinds: health, todos, interaction, issue-marks",
       "status": "completed",
@@ -2124,7 +2880,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T00:47:08Z",
-      "updatedAt": "2026-09-22T10:57:18Z",
+      "updatedAt": "2026-09-22T12:43:26Z",
       "preview": "`sddf` fixed the sweep's advice by asking `gh pr view --json mergeable` before\nchoosing it. **That field is not a reliable discriminator**, and the first run\nafter the fix proved it.\n\n## Measured, on the first run carrying the fix\n\nRun 32 of `PRs without checks` (2026-09-21T23:41Z) — the first success after\nfive consecutive failures — commented on PR #731 with the **UNKNOWN** variant:\n\n> Its merge",
       "file": "beans/defs/folio-assistant-h2s9--the-sweep-asks-gh-for-mergeable-whose-unknown-mean.md"
     },
@@ -2152,7 +2908,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T19:31:09Z",
-      "updatedAt": "2026-09-21T05:29:17Z",
+      "updatedAt": "2026-09-26T03:57:20Z",
       "preview": "The owner, 2026-09-20, after four questions that broke the rule:\n\n> *\"ask specific questiosn w/ context/ recommendations/pros/cons (see skills,\n> why not invoked?)\"*\n>\n> *\"fix skills so interaction modality would be triggered\"*\n>\n> *\"can we struture schema better to help enforce?\"*\n\n## The measurement\n\n`interaction-modality` §4.1 was STRICT and complete, and was broken the same day\nby the agent im",
       "file": "beans/defs/folio-assistant-hajp--interaction-the-asking-rule-is-enforced-by-three-l.md"
     },
@@ -2171,6 +2927,20 @@
       "file": "beans/defs/folio-assistant-hj9d--b3b-1168-a-skill-names-its-inputoutput-contracts-c.md"
     },
     {
+      "id": "folio-assistant-hloc",
+      "title": "gen-skill-docs flattens packages but leaves 120 non-skill links addressing the source layout",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:21:48Z",
+      "updatedAt": "2026-09-26T19:38:18Z",
+      "preview": "Measured 2026-09-25, after `mi97` took `check:subgraphs`' unresolved-link count\nin `docs/` from **246** to **120**.\n\nThe 120 that remain are NOT published-tree addresses, which is what the\n`siteResolved` bucket assumes of them. Classified by target:\n\n| target kind | count |\n|---|---|\n| directory or generated path | 33 |\n| `.md` | 32 |\n| `.html` | 19 |\n| `.bpmn` | 17 |\n| `.ts` | 12 |\n| `.json` | 4 ",
+      "file": "beans/defs/folio-assistant-hloc--gen-skill-docs-flattens-packages-but-leaves-120-no.md"
+    },
+    {
       "id": "folio-assistant-hs08",
       "title": "MIGRATION: the content/ -> folio/ rename has reached the declaration and NOTHING that reads a folio",
       "status": "in-progress",
@@ -2187,14 +2957,14 @@
     {
       "id": "folio-assistant-hylg",
       "title": "Workflow interpreter descends into call activities — subprocesses give increasing context",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T20:26:42Z",
-      "updatedAt": "2026-09-19T00:41:16Z",
+      "updatedAt": "2026-09-23T19:25:46Z",
       "preview": "## Progress — 2026-09-18\n\nMechanism landed on `claude/festive-galileo-s7ibx0` ([PR #282](https://github.com/litlfred/folio-assistant/pull/282)).\n\nBefore: a `callActivity` was an opaque box completed in one step, so decomposing\na diagram made it read better and gate LESS. `editing-hci-validation` asked for\none `CallActivity_Evidence` and skipped the ten gated steps of\n`evidence-retrieval`; `documen",
       "file": "beans/defs/folio-assistant-hylg--workflow-interpreter-descends-into-call-activities.md"
     },
@@ -2213,6 +2983,48 @@
       "file": "beans/defs/folio-assistant-i4i1--c-uml-task-implements-skill-voice-role-skill-io-sc.md"
     },
     {
+      "id": "folio-assistant-ibxa",
+      "title": "REQUIREMENTS SUB-GRAPHS: proposals under docs/proposals/, filed to docs/requirements/ on ship; a bootstrap Requirement; test runs reference requirements",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-2upx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:34:00Z",
+      "updatedAt": "2026-09-23T20:42:41Z",
+      "preview": "Issue #1164. Owner, 2026-09-23: CRDM proposal documents for harness feature work live under docs/proposals/ (a declared sub-graph of docs, folded in the navbar — general behaviour); when the feature ships they become docs/requirements/, filed against a requirements schema generalised from the DAK one with NO outside concept in bootstrap; the Test schema lists requirements as an array.\n\nOwner's cho",
+      "file": "beans/defs/folio-assistant-ibxa--requirements-sub-graphs-proposals-under-docspropos.md"
+    },
+    {
+      "id": "folio-assistant-ig4a",
+      "title": "EXTRACTION: an indented code fence is not recognised, so list-item code blocks are extracted as prose — 74 code fragments offered to translators and 16 real strings hidden",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T08:56:47Z",
+      "updatedAt": "2026-09-26T10:14:10Z",
+      "preview": "Found while deriving `.po` catalogues for #206 (bean `tbdg`). Measured\n2026-09-26. Same family as `lrbx` — the extractor's segmentation is not the\nreader's — and a separate cause.\n\n`MD_CODE_FENCE_RE = /^(`{3,}|~{3,})/` is anchored at column 0 and is matched\nagainst `line`, not `stripped`:\n\n```ts\nconst fenceMatch = line.match(MD_CODE_FENCE_RE);\n```\n\nAn **indented** fence — the ordinary way to put a",
+      "file": "beans/defs/folio-assistant-ig4a--extraction-an-indented-code-fence-is-not-recognise.md"
+    },
+    {
+      "id": "folio-assistant-ih6x",
+      "title": "RENDERED BPMN: 46 exclusive gateways drew as blank diamonds — isMarkerVisible was never set",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T09:00:59Z",
+      "updatedAt": "2026-09-26T09:01:15Z",
+      "preview": "Salvaged from #1340 (owner's choice, 2026-09-26), which fixed 7 shapes in 5 diagrams when the repo had 18. Re-measured on origin/main: 46 exclusive-gateway BPMNShapes across 25 of 74 .bpmn files carry no isMarkerVisible, and none is explicitly false. bpmn-js draws the X only when it is true, so each rendered as an empty diamond — the notation's way of NOT saying exclusive.\n\n## Done when\n- [x] ever",
+      "file": "beans/defs/folio-assistant-ih6x--rendered-bpmn-46-exclusive-gateways-drew-as-blank.md"
+    },
+    {
       "id": "folio-assistant-iwtn",
       "title": "BOOTSTRAP SELF-DEFINITIONAL: ~130 mentions of harnesses above bootstrap across 16 files (bpmn, skills, bootstrap.json)",
       "status": "in-progress",
@@ -2222,21 +3034,21 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:19:45Z",
-      "updatedAt": "2026-09-23T19:44:11Z",
+      "updatedAt": "2026-09-27T05:53:39Z",
       "preview": "Owner, 2026-09-23: *\"bootstrap = self definitional. no semantic leakage, no graph leakage.\"* The README, AGENTS.md and the new `schemas/graph.schema.json` now comply (pv51, with a test in `bootstrap-tools/schemas/graph.test.ts`). The rest of `bootstrap/` does not.\n\n**Measured 2026-09-23:** mentions of WHO, DAK, smart-guidelines, smart-base, cat-harness, folio or f-a-sci, or a `../` path, per file:",
       "file": "beans/defs/folio-assistant-iwtn--bootstrap-self-definitional-130-mentions-of-harnes.md"
     },
     {
       "id": "folio-assistant-iym1",
       "title": "VACUITY IS GUARDED ONE SCRIPT AT A TIME: no cross-gate reader pins a corpus-walking gate non-empty",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T07:36:35Z",
-      "updatedAt": "2026-09-21T07:36:35Z",
+      "updatedAt": "2026-09-27T07:52:24Z",
       "preview": "FOUND 2026-09-21 by the sweep that closed `a6kl`'s open question.\n\nAn empty corpus makes every count zero, and zero reads as a clean run. That is\n`6tkl`, and this repository has already paid for it three times — `6tkl` itself\n(`check-declared-assets` hardcoding two instances of eight), `pzdv` (two HARD\ngates green over zero titles and zero flagged lines), and `a6kl` (an L1 gate\nreporting `nothing ",
       "file": "beans/defs/folio-assistant-iym1--vacuity-is-guarded-one-script-at-a-time-no-cross-g.md"
     },
@@ -2253,6 +3065,20 @@
       "updatedAt": "2026-09-22T22:56:13Z",
       "preview": "Owner, 2026-09-22 (session_017nyJj3PsjvszpF3DyGeBgE), a side request, verbatim:\n\n> *\"when bootstrapo initailzies, if repo is empty, it should seed main then bootstrap\"*\n\n**Why it matters.** A brand-new GitHub repository has no commits and no `main`. Every later step assumes both:\n- a feature branch needs a base to branch from;\n- a PR needs a base branch to target;\n- staging compares against `main`",
       "file": "beans/defs/folio-assistant-izqr--bootstrap-on-an-empty-repo-seed-main-first-then-bo.md"
+    },
+    {
+      "id": "folio-assistant-j0zs",
+      "title": "INJECTION: the gate reads `run:` only — `actions/github-script` blocks are JavaScript and carry the same laundering",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T13:59:53Z",
+      "updatedAt": "2026-09-26T16:57:07Z",
+      "preview": "Split out of `6bhf` rather than widened into it, because extending the scanner to\na second language changes what the gate CLAIMS to read, and that is a decision\nrather than a fix.\n\n## What is true today, measured 2026-09-26\n\n`check-workflow-injection.ts` grades `${{ }}` expressions inside `run:` blocks.\nIts docblock says so, and `scanWorkflows` enforces it. That was the right scope\nwhen the surfac",
+      "file": "beans/defs/folio-assistant-j0zs--injection-the-gate-reads-run-only-actionsgithub-sc.md"
     },
     {
       "id": "folio-assistant-j1r2",
@@ -2313,14 +3139,14 @@
     {
       "id": "folio-assistant-j820",
       "title": "PDF EXTRACTOR FRAGMENTS A COMPOSITE FIGURE: 383 placed images against 7 captioned figures, 335 from one page",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T21:14:17Z",
-      "updatedAt": "2026-09-24T05:10:40Z",
+      "updatedAt": "2026-09-24T13:46:41Z",
       "preview": "Found 2026-09-23 while ingesting arXiv:2510.21603v1 (bean `ctp3`). Split out\nrather than worked around, because routing around it would have meant writing 383\nimage descriptions from nothing.\n\n## CORRECTED 2026-09-24 — the original diagnosis in this bean was WRONG\n\nEverything below the next heading was written on 2026-09-23 from counts and\nfile sizes. **Two file reads falsified it**, and the corre",
       "file": "beans/defs/folio-assistant-j820--pdf-extractor-fragments-a-composite-figure-383-pla.md"
     },
@@ -2343,14 +3169,14 @@
     {
       "id": "folio-assistant-jh2j",
       "title": "TOOL 7/13: Task_Render — LaTeX / PDF rendering (16 files, 3 entry points)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-d308",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T04:34:56Z",
-      "updatedAt": "2026-09-20T04:34:56Z",
+      "updatedAt": "2026-09-26T03:34:32Z",
       "preview": "Group 7 of 13 in `d308`. **16 files, 3 entry points.**\n\n`render-latex`, `generate-block-tex`, `generate-main-tex`, `latex-preflight`,\n`latex-overfull-report`, `audit-tex-source`, `validate-tex`, `latexmk-compile`,\n`render-changed-blocks`, `render-on-change`, `render-pre-commit`,\n`render-discovery`, `render-value`, `headless-render-qc`, `refresh-authors-note`,\n`scripts/render-tex/`.\n\n**BPMN:** `aut",
       "file": "beans/defs/folio-assistant-jh2j--tool-713-task-render-latex-pdf-rendering-16-files.md"
     },
@@ -2411,6 +3237,20 @@
       "file": "beans/defs/folio-assistant-jwox--changeset-a-block-level-diff-of-the-folio-graph-be.md"
     },
     {
+      "id": "folio-assistant-k3tw",
+      "title": "GATE RED ON MAIN: docs/_data/translations.json is stale — the batch PRs add locale pages without regenerating the index",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T13:56:51Z",
+      "updatedAt": "2026-09-26T14:36:43Z",
+      "preview": "## What is red\n\n`bun test cat-harness/content/pipeline/translation-index.test.ts`\n→ `this repository's own corpus > the committed index is up to date and valid`\n\n```\nexpect(r.state, `run: bun run translation:index`).toBe(\"ok\")\nExpected: \"ok\"   Received: \"stale\"\n```\n\nIt runs inside the `TypeScript — tests, lint, types (hard)` job, so every open\nPR's merged tree is red on it, on top of the `t8g3` dr",
+      "file": "beans/defs/folio-assistant-k3tw--gate-red-on-main-docs-datatranslationsjson-is-stal.md"
+    },
+    {
       "id": "folio-assistant-k59d",
       "title": "MILESTONE CRITICAL PATHS GO STALE: p5wm and yg29 both advertise blockers that are completed or settled, and check:bean-bodies cannot see them",
       "status": "in-progress",
@@ -2420,7 +3260,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T06:30:00Z",
-      "updatedAt": "2026-09-21T11:03:00Z",
+      "updatedAt": "2026-09-26T03:23:23Z",
       "preview": "Found 2026-09-21 by the `goal-review` sweep of 2026-09-20T19:00Z →\n2026-09-21T06:25Z (session_01AYHimvYMmf8h8e9fFN6dW5), independently by **two**\ndelegated agents reading two different milestones. An instruction gap.\n\n## Measured\n\n| milestone | what its own body advertises | what the store says |\n|---|---|---|\n| `p5wm` (GOAL 2) | critical path `b5f0 → 603s → hfkl → 2krx → (6lb8 ‖ ivfw + 5y4b) → pb",
       "file": "beans/defs/folio-assistant-k59d--milestone-critical-paths-go-stale-p5wm-and-yg29-bo.md"
     },
@@ -2437,6 +3277,20 @@
       "updatedAt": "2026-09-22T18:29:28Z",
       "preview": "## What this is\n\nA **queued** stream: not claimed, not started. One of three queue entries\ncovering the 49 beans the three-GOAL split parked, created 2026-09-22 when the\nowner asked that a finishing stream be given the next piece of work rather than\ngoing idle.\n\nStatus is `todo` deliberately — see the sibling entry under `slw1` for why a\nqueue entry that claims itself in advance is the exact defec",
       "file": "beans/defs/folio-assistant-k660--queued-stream-b-the-authoring-surface-content-mode.md"
+    },
+    {
+      "id": "folio-assistant-k74z",
+      "title": "ETL TOOLS: map a value between metadata vocabularies by source and target content type",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T21:33:31Z",
+      "updatedAt": "2026-09-23T21:33:31Z",
+      "preview": "Owner, 2026-09-23, choosing to keep a glossary scheme's name in both skos:prefLabel and dcterms:title from one source (bean sl9u): 'this is going to be common pattern... need Tools for this type of ETL procedure depending on source / target content type and other metadata'.\n\n## The pattern\nOne value, several target vocabularies. Today every such mapping is a hand-written line in a generator (gloss",
+      "file": "beans/defs/folio-assistant-k74z--etl-tools-map-a-value-between-metadata-vocabularie.md"
     },
     {
       "id": "folio-assistant-k8rc",
@@ -2465,6 +3319,20 @@
       "updatedAt": "2026-09-24T18:37:44Z",
       "preview": "Owner 2026-09-24: \"i want sticky themes to by default use the square avatar layout but mostly faded, if not specified. themes/ pages should show sticky as square\".\n\n## Summary of Changes\n- ThemedTodoFieldsSchema gains an optional `layout` (laptop|mobile|card); absent means the square card crop. todos.ts reads it from front matter.\n- docs-ui.js buildBackdrop: the square crop on every screen, no lon",
       "file": "beans/defs/folio-assistant-k9yq--sticky-art-default-square-crop-faded-unless-the-to.md"
+    },
+    {
+      "id": "folio-assistant-kfkh",
+      "title": "A clean merge produces a DUPLICATE front-matter key — three instances, no conflict marker on any of them",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T17:44:01Z",
+      "updatedAt": "2026-09-27T10:58:11Z",
+      "preview": "Found 2026-09-25 while merging `main` into a PR branch. Distinct from `oxka`\n(completed), which is the same territory from the opposite side: that one is\nabout generated files conflicting on **nearly every merge**, and `.gitattributes`\nnow marks three of them `-diff -merge`. This is about hand-authored files\nmerging with **no conflict at all** and producing a duplicate key.\n\n`-merge` is not the re",
+      "file": "beans/defs/folio-assistant-kfkh--a-clean-merge-produces-a-duplicate-front-matter-ke.md"
     },
     {
       "id": "folio-assistant-kn0t",
@@ -2565,6 +3433,20 @@
       "file": "beans/defs/folio-assistant-lfxa--qa-write-the-proof-no-placeholder-stub-checker-and.md"
     },
     {
+      "id": "folio-assistant-li5y",
+      "title": "BPMN labels are DOUBLE-escaped: 126 `&amp;#10;` across 8 diagrams render as literal text in 7 published SVGs",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T11:40:56Z",
+      "updatedAt": "2026-09-27T07:46:48Z",
+      "preview": "Found 2026-09-26 by LOOKING at a rendered SVG, not by any gate. `render:bpmn:check`\nwas green throughout: it grades whether the committed SVG matches what the\nrenderer produces, and the renderer faithfully produced the wrong thing. That is\nthe currency-vs-validity split `check:artefact-verification` exists for, arriving\nin the diagrams.\n\n## What renders\n\nA BPMN `name` attribute written `&amp;#10;`",
+      "file": "beans/defs/folio-assistant-li5y--bpmn-labels-are-double-escaped-126-amp10-across-8.md"
+    },
+    {
       "id": "folio-assistant-lqo9",
       "title": "GLOSSARY: a coded, versioned glossary content kind in core, a defined-terms index in docs/ from every KG asset, translatable — roast first",
       "status": "in-progress",
@@ -2593,6 +3475,34 @@
       "file": "beans/defs/folio-assistant-lrbx--extraction-the-kramdown-toc-placeholder-is-extract.md"
     },
     {
+      "id": "folio-assistant-lvk9",
+      "title": "EXTRACTION: list items and blockquotes are extracted PER LINE, so a msgid depends on the author's hard wrap — translators get sentences in halves",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T09:20:19Z",
+      "updatedAt": "2026-09-27T05:08:36Z",
+      "preview": "Found 2026-09-26 while diagnosing bean `7x8o` at the owner's instruction to find\nthe cause before touching any translation. **It is the third and largest member of\nthe `6b8u`/`ig4a` family, and it refutes most of `7x8o`.**\n\n`extractMarkdown` accumulates a PARAGRAPH until a blank line, so a hard-wrapped\nparagraph is correctly one entry. **List items and blockquotes are not\naccumulated** — each matc",
+      "file": "beans/defs/folio-assistant-lvk9--extraction-list-items-and-blockquotes-are-extracte.md"
+    },
+    {
+      "id": "folio-assistant-lvw0",
+      "title": "PUBLISHING BLOCKED: the locale .jsonld exports re-publish the QA findings the core strips, and add an undeclared sourceLanguage",
+      "status": "completed",
+      "type": "bug",
+      "priority": "critical",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T13:57:48Z",
+      "updatedAt": "2026-09-26T14:33:46Z",
+      "preview": "## What is blocked\n\n`publish:verify` fails on the built site, so `deploy to gh-pages` is **skipped**\nand nothing is published. The live site is a previous publish. Tracking issue\nopened automatically by `processes/publish-alert.bpmn`:\n[#1406](https://github.com/litlfred/folio-assistant/issues/1406), on main's own\npublish of `430052ad`.\n\n```\njsonld-expand: 20 finding(s) — 156 document(s) checked\n  ",
+      "file": "beans/defs/folio-assistant-lvw0--publishing-blocked-the-locale-jsonld-exports-re-pu.md"
+    },
+    {
       "id": "folio-assistant-lx2s",
       "title": "Feature-branch staging under gh-pages (issue #215)",
       "status": "in-progress",
@@ -2607,18 +3517,62 @@
       "file": "beans/defs/folio-assistant-lx2s--feature-branch-staging-under-gh-pages-issue-215.md"
     },
     {
+      "id": "folio-assistant-m1k4",
+      "title": "DUPLICATE manifest entry survives every gate — the uniqueness check uses a Set, which collapses it",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T08:05:18Z",
+      "updatedAt": "2026-09-26T08:54:33Z",
+      "preview": "Measured on `origin/main` at `0c5086db6c1`, 2026-09-26.\n\n`cat-harness/skills/workflow/package-manifest.json` lists **14** skills of which\n**13 are distinct**. `release-epic-planning` appears **twice**.\n\n    skills entries: 14 | distinct: 13\n    DUPLICATES: {'release-epic-planning': 2}\n\n## Why no gate sees it\n\n`scripts/tests/skill-manifest-coverage.test.ts:133`:\n\n    const listed = new Set(p.listed",
+      "file": "beans/defs/folio-assistant-m1k4--duplicate-manifest-entry-survives-every-gate-the-u.md"
+    },
+    {
+      "id": "folio-assistant-m4s1",
+      "title": "TRANSLATION CATALOGUES: 36 (locale, page) .po files must be AUTHORED — the templates now exist, nobody has been ASKED, and #1399 is held on it",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [
+        "folio-assistant-tbdg"
+      ],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T16:58:29Z",
+      "updatedAt": "2026-09-26T16:58:29Z",
+      "preview": "Created 2026-09-26 on the owner's explicit decision: **hold PR #1399 until the\ncatalogues exist, and make sure that work exists.** It did not. This bean is the\n\"make sure it exists\" half.\n\n## Why nothing tracked it, which is the interesting part\n\nThree beans circle this subject and none of them ASKS for the work:\n\n| bean | what it is | why it is not this |\n|---|---|---|\n| `ngxj` | the owner ruling",
+      "file": "beans/defs/folio-assistant-m4s1--translation-catalogues-36-locale-page-po-files-mus.md"
+    },
+    {
       "id": "folio-assistant-m4xy",
       "title": "INGEST ARM: pdf-images recovers the raster layer, and WHO's real figures are vector",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-2yyh",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T08:48:53Z",
-      "updatedAt": "2026-09-22T11:55:18Z",
+      "updatedAt": "2026-09-24T18:00:36Z",
       "preview": "Surveyed across all seven entries 2026-09-22 (issue #877). The cheapest of the three candidate fixes has shipped; the other two remain the owner's call.\n\n## The finding\n\n`pdf-images.py` recovers the **raster** layer. WHO's conceptual figures — frameworks, maturity models, taxonomies, process flows — are drawn in **vector**, so they are never extracted. What IS extracted is furniture.\n\n| entry | de",
       "file": "beans/defs/folio-assistant-m4xy--ingest-arm-pdf-images-recovers-the-raster-layer-an.md"
+    },
+    {
+      "id": "folio-assistant-m5gx",
+      "title": "One red test at step 5 makes 149 gate commands unreachable in CI — the typescript job stops and 45 of its 50 steps never run",
+      "status": "scrapped",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T10:20:26Z",
+      "updatedAt": "2026-09-26T13:39:46Z",
+      "preview": "Found 2026-09-26 while wiring bean `1s5s` (the published package's Python half)\ninto `check:published-packages`. Noticed because the new gate **could not be\nverified on a runner** — not because it failed, but because it never ran.\n\n## The measurement\n\n`.github/workflows/code-quality-gates.yml`, job `typescript`, parsed rather\nthan eyeballed:\n\n- `bun test` is **step 5 of 50**, with no `continue-on-",
+      "file": "beans/defs/folio-assistant-m5gx--one-red-test-at-step-5-makes-149-gate-commands-unr.md"
     },
     {
       "id": "folio-assistant-m8gz",
@@ -2651,28 +3605,28 @@
     {
       "id": "folio-assistant-mi97",
       "title": "Audit the 171 unresolved links in docs/ — 23 carry one ../ too many from the cat-harness move",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T17:06:16Z",
-      "updatedAt": "2026-09-20T17:06:37Z",
+      "updatedAt": "2026-09-26T17:58:04Z",
       "preview": "Surfaced 2026-09-20 by declaring `docs/` as a graph directory — 241 markdown\nfiles that were, until then, invisible to every declaration-driven consumer.\n`check:subgraphs` walked them for the first time and found 171 links that do\nnot resolve in the source tree.\n\nThey are NOT one problem. Measured, by trying each repair against disk:\n\n| shape | count | example |\n|---|---|---|\n| one `../` too many ",
       "file": "beans/defs/folio-assistant-mi97--audit-the-171-unresolved-links-in-docs-23-carry-on.md"
     },
     {
       "id": "folio-assistant-mkao",
       "title": "LIBRARY VIEWER LEAK: withheld who-iris entries still published verbatim text and covers via /assets/library/",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T19:22:42Z",
-      "updatedAt": "2026-09-24T19:22:42Z",
+      "updatedAt": "2026-09-24T20:42:03Z",
       "preview": "Found by the 2026-09-24 channel audit after cw35 (#1300) excluded refused items from the site mount.\n\nThe platform library viewer (gen-library-viz.ts) reads library entries directly and publishes them under /assets/library/, bypassing the mount's withheld.json:\n- entries/9789241548960-eng.json: ~124k chars of verbatim prose excerpts\n- entries/who-pub-tps-931.json: ~65k chars\n- avatars/who-iris/{bo",
       "file": "beans/defs/folio-assistant-mkao--library-viewer-leak-withheld-who-iris-entries-stil.md"
     },
@@ -2761,6 +3715,34 @@
       "file": "beans/defs/folio-assistant-nba0--qa-scoping-automatedfalse-criteria-bypass-both-the.md"
     },
     {
+      "id": "folio-assistant-nfv3",
+      "title": "SKILL REGISTRATION: one command performs the artefact chain, and a gate refuses a skill that arrives without it — 7 merges have paid for its absence",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T07:38:20Z",
+      "updatedAt": "2026-09-26T14:17:46Z",
+      "preview": "## What this is\n\n`v625`'s open item, both halves: *\"the chain is written down somewhere an author\nadding a skill will find it — or, better, one command performs it.\"* Neither\nexisted. `#1383`'s author reached the same conclusion and left it deliberately —\n*\"a pre-merge gate … is the actual fix, and it's a separate decision I have not\ntaken here\"* — and the owner took it on 2026-09-26.\n\n## The defe",
+      "file": "beans/defs/folio-assistant-nfv3--skill-registration-one-command-performs-the-artefa.md"
+    },
+    {
+      "id": "folio-assistant-ngxj",
+      "title": "TRANSLATION CATALOGUES: five pages shipped .md-only, so translation:drift holds every open PR red — and it is a regression in t8g3's own practice",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T06:46:02Z",
+      "updatedAt": "2026-09-26T14:28:56Z",
+      "preview": "## NOT a claim on `t8g3`'s work\n\nThis bean is the **gate blocker and the measurement**, not the translation work.\n`t8g3` (issue #206) is `in-progress` and its campaign is somebody else's to run;\n`bean-coordination` §\"Mid-flight is still off limits\" applies and nothing here\nmay be closed by producing catalogues on their behalf. It exists so the next\nagent hitting a red queue finds the measurement i",
+      "file": "beans/defs/folio-assistant-ngxj--translation-catalogues-five-pages-shipped-md-only.md"
+    },
+    {
       "id": "folio-assistant-nm7l",
       "title": "B3a (#1168): scripts/validators/mcpServices become Tools; satisfiedBy and GraphKindDef.skill flipped",
       "status": "completed",
@@ -2829,6 +3811,20 @@
       "updatedAt": "2026-09-23T13:26:05Z",
       "preview": "_2026-09-19T00:35:15Z_ — A THIRD instance of this shape, 2026-09-19, different mechanism again — worth recording together because the FAMILY is what matters. feature-staging's stage job checks out github.event.pull_request.head.ref, the BRANCH HEAD, while the workflow FILE comes from the merge ref. So main's steps run against the branch's files. PR #307 added both a new step ('Emit the knowledge-g",
       "file": "beans/defs/folio-assistant-nytj--a-sidecar-records-its-auditor-s-hash-so-two-concur.md"
+    },
+    {
+      "id": "folio-assistant-o29r",
+      "title": "EXTRACTION: cleanMarkdownText strips the underscores of LaTeX subscripts and snake_case identifiers — a translator receives a corrupted formula",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T14:43:40Z",
+      "updatedAt": "2026-09-27T04:56:09Z",
+      "preview": "## The defect, minimally\n\n`MD_ITALIC_UNDER_RE` in `cat-harness/content/pipeline/pot-extract.ts` is\n\n    /(?<!_)_([^_]+)_(?!_)/g\n\nwith no word-boundary condition, so any two underscores in one extracted string\nare read as an `_emphasis_` span and both are deleted. Measured:\n\n| input | `cleanMarkdownText` gives | should be |\n|---|---|---|\n| `$a_1$ and $b_2$` | `$a1$ and $b2$` | unchanged |\n| `x_1 y_",
+      "file": "beans/defs/folio-assistant-o29r--extraction-cleanmarkdowntext-strips-the-underscore.md"
     },
     {
       "id": "folio-assistant-o3xy",
@@ -2929,32 +3925,88 @@
       "file": "beans/defs/folio-assistant-oi3h--fsh-guts-visualiser-7-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-om30",
+      "title": "MAIN'S RED-BY-DECISION TEST MASKED 151 GATE INVOCATIONS, lint and tsc among them: bun test was step 2 of 47 with nothing continue-on-error — SPLIT, owner's choice",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T09:42:57Z",
+      "updatedAt": "2026-09-27T10:35:39Z",
+      "preview": "## What\n\n`main`'s `typescript` job fails at **step 2 of 47**, and GitHub Actions stops a job\nat its first failing step. So every later step in that job does not run — and on\n`main` that failure is red **by the owner's decision**, not by accident.\n\nMeasured on `.github/workflows/code-quality-gates.yml` at `74f27e4c7fb`:\n\n| | |\n|---|---|\n| `bun test` | step 2 (line 234) of the `typescript` job |\n| s",
+      "file": "beans/defs/folio-assistant-om30--mains-red-by-decision-test-masks-113-gate-invocati.md"
+    },
+    {
+      "id": "folio-assistant-omki",
+      "title": "QUIET CLAIMS, THE NETWORK HALF: the check's own basis calls its count an upper bound — supply the signal it cannot see",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:26:09Z",
+      "updatedAt": "2026-09-25T16:26:09Z",
+      "preview": "`bean-quiet-claims` reads one signal — hours since the bean's own `updated_at` —\nand its threshold `basis` says so in as many words: the count is an **UPPER\nBOUND**, because a bean it lists may carry a liveness signal the sweep cannot\nsee. `bean-coordination.md` §\"A quiet claim\" names three:\n\n> A claim is LIVE when something outside the bean says so — an open PR naming\n> it, an unmerged branch tou",
+      "file": "beans/defs/folio-assistant-omki--quiet-claims-the-network-half-the-checks-own-basis.md"
+    },
+    {
+      "id": "folio-assistant-oq57",
+      "title": "GATES CANNOT PASS ANYWHERE: script sidecars commit engine_version, so main's new tree-write detector fails on whichever bun version is in the minority",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T20:07:20Z",
+      "updatedAt": "2026-09-27T06:07:18Z",
+      "preview": "Measured 2026-09-26, immediately after merging 51 commits of `main`.\n\n`main` added a check I welcome — `bun run gates` now FAILS a run in which a gate\nwrote to the tree it is being judged on, even when every gate passed:\n\n    ✗ every gate passed, and the run is NOT clean — 1 gate(s) changed the tree.\n      164 verdict(s) above were reached against a tree that a gate had already\n      repaired, so ",
+      "file": "beans/defs/folio-assistant-oq57--gates-cannot-pass-anywhere-script-sidecars-commit.md"
+    },
+    {
       "id": "folio-assistant-oqdr",
       "title": "Bootstrap diagrams' SVGs are published but rendered by nothing since the split",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T17:52:19Z",
-      "updatedAt": "2026-09-24T17:52:19Z",
+      "updatedAt": "2026-09-26T09:54:12Z",
       "preview": "## What\n`cat-harness/docs/assets/img/workflows/` holds `initialize-harness.svg`, `log-message.svg` and `discussion.svg`, whose sources are `bootstrap/processes/*.bpmn`. `render-bpmn.ts` renders `workflowFiles(cat-harness)`, which does not reach bootstrap, so these three are never re-rendered and `render:bpmn:check` cannot see them drift. The generated process pages (`docs/processes/initialize-harn",
       "file": "beans/defs/folio-assistant-oqdr--bootstrap-diagrams-svgs-are-published-but-rendered.md"
     },
     {
       "id": "folio-assistant-ovkk",
       "title": "The @context declares 19 terms; the graph uses 53 — 3461 property occurrences are dropped by any JSON-LD processor",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T00:07:39Z",
-      "updatedAt": "2026-09-19T05:53:12Z",
+      "updatedAt": "2026-09-23T19:25:46Z",
       "preview": "_2026-09-19T00:07:53Z_ — Found 2026-09-19 while building the kg-viewer (bean 1dfh) — the viewer is the first real consumer of the document, and a consumer is what makes this visible. MEASURED: bun run kg:export now reports it. 34 property names, 3461 occurrences, used in @graph and absent from @context. A term that is neither in the context nor an absolute IRI is not a property at all: a JSON-LD p",
       "file": "beans/defs/folio-assistant-ovkk--the-context-declares-19-terms-the-graph-uses-53-34.md"
+    },
+    {
+      "id": "folio-assistant-oxka",
+      "title": "MERGE FRICTION: three generated files conflict on nearly every merge, and nothing declares them generated",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T19:11:59Z",
+      "updatedAt": "2026-09-24T19:19:59Z",
+      "preview": "Merging one branch cost **three rounds on one file** in a single sitting.\nMeasured over three days, 2026-09-24:\n\n| commits | file |\n|---|---|\n| 106 | `cat-harness/docs/cat-harness/docs-auto/index/index.html` |\n| 45 | `cat-harness/docs/glossary/index.md` (1.5 MB) |\n| 18 | `cat-harness/test/results/audit-coverage.qa-results.json` |\n\n**No `.gitattributes` existed at all.** So every concurrent pull re",
+      "file": "beans/defs/folio-assistant-oxka--merge-friction-three-generated-files-conflict-on-n.md"
     },
     {
       "id": "folio-assistant-oz5w",
@@ -2969,6 +4021,20 @@
       "updatedAt": "2026-09-21T20:12:17Z",
       "preview": "Reported by the owner, 2026-09-21, as a bare fact: the staging URL **404s**.\nIt was not propagation.\n\n## Measured on `gh-pages`, not inferred\n\nThis branch's preview has been **deleted four times today**, each time by the\n`cleanup` job firing when one of this session's own PRs merged:\n\n```\ncf39207d  staging(cleanup): remove STAGING/claude-lhs-…  (PR #786 closed)\n05f5cfae  staging(cleanup): remove S",
       "file": "beans/defs/folio-assistant-oz5w--staging-cleanup-vs-branch-reuse-merging-pr-n-delet.md"
+    },
+    {
+      "id": "folio-assistant-p11x",
+      "title": "check:partition cannot see cross-instance edges: its ROOT is cat-harness/, so every 0 it reports is scoped to one instance",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T09:52:20Z",
+      "updatedAt": "2026-09-27T09:52:59Z",
+      "preview": "Opened 2026-09-27 because **`bf5l` asked for it and it did not exist.** That\nbean's closing section says, of making the blind checks see the edge it found:\n*\"Making the blind checks see it is NOT done here … it wants its own bean.\"* A\ncorpus-grep across `beans/defs/` and `beans/defs/archive/` found no such bean, so\n`bf5l` completed with its follow-up unrecorded.\n\n## What is measured\n\nVerified dire",
+      "file": "beans/defs/folio-assistant-p11x--checkpartition-cannot-see-cross-instance-edges-its.md"
     },
     {
       "id": "folio-assistant-p5wm",
@@ -2999,6 +4065,34 @@
       "updatedAt": "2026-09-20T14:08:26Z",
       "preview": "## What\n\nFor a CSV or spreadsheet, extract what makes a dataset findable rather than\nmerely stored: sheet/tab names, column and row headers, the shape (rows ×\ncolumns per sheet), and a narrative description of what the data is about.\n\n## Done when\n\n`manifest.jsonld` carries a tabular record per sheet, the narrative carries its\nprovenance stamp, and a grep for a column header finds the dataset that",
       "file": "beans/defs/folio-assistant-p67i--ingest-csv-and-spreadsheet-sheet-names-headers-sha.md"
+    },
+    {
+      "id": "folio-assistant-pesg",
+      "title": "A review re-derived a finding the instrument had already computed, and got it wrong",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:05:34Z",
+      "updatedAt": "2026-09-27T08:21:26Z",
+      "preview": "## What happened, 2026-09-25\n\n`bun run health` reported **one** orphaned staging preview, named, sized and\nreasoned:\n\n> `STAGING/dependabot-github_actions-actions-c1d4c18a44` (101.6 MB, 1426 files)\n> — no open pull request; and no branch on the remote slugifies to it.\n\nRunning a `goal-review`, I re-derived that finding instead of quoting it. I\nwrote a slug function inline — `re.sub(r'[^a-zA-Z0-9]+",
+      "file": "beans/defs/folio-assistant-pesg--a-review-re-derived-a-finding-the-instrument-had-a.md"
+    },
+    {
+      "id": "folio-assistant-pgzn",
+      "title": "kg:audit --instance . crashes: the ROOT instance's repoRoot resolves outside the checkout",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T08:00:22Z",
+      "updatedAt": "2026-09-27T08:19:24Z",
+      "preview": "## What was measured\n\n`bun run cat-harness/scripts/kg-audit.ts --instance .` exits 1 before auditing\nanything. Measured 2026-09-27 on `main` (b4d85f2cf4) as well as on the branch, so\nit is pre-existing and not introduced by the skill-resolution fix that found it:\n\n    ENOENT: no such file or directory, open '/home/user/package.json'\n      at rootScripts (cat-harness/scripts/pair-claims.ts:181:26)\n",
+      "file": "beans/defs/folio-assistant-pgzn--kgaudit-instance-crashes-the-root-instances-reporo.md"
     },
     {
       "id": "folio-assistant-pomp",
@@ -3127,6 +4221,48 @@
       "file": "beans/defs/folio-assistant-qgjh--references-are-shown-as-plain-text-not-links.md"
     },
     {
+      "id": "folio-assistant-qh1s",
+      "title": "LIT SEARCH: a process and methodologies for organising requirements as they are filed",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-2upx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T19:34:01Z",
+      "updatedAt": "2026-09-23T19:34:01Z",
+      "preview": "Issue #1164. Owner, 2026-09-23, on filing a shipped feature's proposal into docs/requirements/: 'make sure no name collision, need to organize things when filing. need process to do so and methodologies. (we dont have yet... bean up for lit search)'.\n\nWhat exists: one page per shipped feature, id = file name, check:requirements refuses a slug used twice. Nothing says how requirements are GROUPED, ",
+      "file": "beans/defs/folio-assistant-qh1s--lit-search-a-process-and-methodologies-for-organis.md"
+    },
+    {
+      "id": "folio-assistant-qj9a",
+      "title": "STAGING SIZE: the measurement is right and the SEVERITY is an unverifiable claim — critical predicts a failed publish, and nothing in this repo can observe enforcement",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T18:10:30Z",
+      "updatedAt": "2026-09-25T18:10:30Z",
+      "preview": "`health` reports `staging-preview-size` as **critical** while every deploy keeps\nsucceeding. I went looking for a wrong number and did not find one: **the\nmeasurement is sound.** What is wrong is one level up, in what `critical` is\nasserting.\n\n## Measured first-hand, 2026-09-25\n\nDirectly off the publish ref — `git ls-tree -r -l origin/gh-pages`, not the\ncheck's own report:\n\n| | files | size |\n|---",
+      "file": "beans/defs/folio-assistant-qj9a--staging-size-the-measurement-is-right-and-the-seve.md"
+    },
+    {
+      "id": "folio-assistant-qook",
+      "title": "check:merged reports a merged tree defective when no real checkout of it is — a symlinked node_modules leaks into the corpus",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T11:04:49Z",
+      "updatedAt": "2026-09-27T05:33:45Z",
+      "preview": "## CORRECTED 2026-09-26 — the cause is NOT `ymsu`, and the title understates it\n\nThis bean was opened saying *\"a sweep artefact\"* and pointing at `ymsu` — a\ngate that writes what a later gate reads. **That was wrong**, and it was a\nhypothesis stated in a bean's title as though it were the finding. The actual\ncause is a one-character `.gitignore` bug that distorts the CORPUS of every\nworktree `chec",
+      "file": "beans/defs/folio-assistant-qook--checkmerged-reports-umloverviewcheck-red-on-a-merg.md"
+    },
+    {
       "id": "folio-assistant-qrnz",
       "title": "SECOND IG: ingest smart-immunizations, and find out whether the artefact-index pipeline actually generalises",
       "status": "in-progress",
@@ -3143,7 +4279,7 @@
     {
       "id": "folio-assistant-r279",
       "title": "DECIDE: which transcription backend, and what CI pays for it",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-slw1",
@@ -3152,23 +4288,37 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-09-20T13:02:22Z",
-      "updatedAt": "2026-09-20T13:02:22Z",
+      "updatedAt": "2026-09-23T21:59:43Z",
       "preview": "## Why this is its own bean\n\n`1r0p` (audio transcription) waited on `68dt` — declare Python dependencies and\ninstall them in CI. **`68dt` has landed**: `requirements.txt` is generated from\n`schemas/python-deps.ts` and `code-quality-gates.yml` runs\n`pip install -r requirements.txt`. The mechanism exists.\n\nWhat does not exist is a **decision about which backend**, and that is not a\nline to add quiet",
       "file": "beans/defs/folio-assistant-r279--decide-which-transcription-backend-and-what-ci-pay.md"
     },
     {
       "id": "folio-assistant-r8br",
       "title": "BLOCKER: pdf-images classifies browser-print nav icons as figures, so 7 documents cannot be promoted",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:36:29Z",
-      "updatedAt": "2026-09-21T14:02:42Z",
+      "updatedAt": "2026-09-25T16:36:33Z",
       "preview": "Seven of the nine agent-skill documents are staged and cannot be promoted.\nThey fail exactly one requirement — `image-descriptions` — and the images in\nquestion are not figures.\n\n## Measured 2026-09-20\n\n`Agent Skills — Google Antigravity Docs`, a **four-page** browser print:\n\n- **104 images, all classified `figure`**\n- page 1 alone carries 26\n- coverage of the first three: **0.000183, 0.000183, 0.",
       "file": "beans/defs/folio-assistant-r8br--blocker-pdf-images-classifies-browser-print-nav-ic.md"
+    },
+    {
+      "id": "folio-assistant-ramz",
+      "title": "check-context-emission scans GITIGNORED directories, so local residue fails a test about the repository",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:02:11Z",
+      "updatedAt": "2026-09-25T16:21:36Z",
+      "preview": "Found 2026-09-25 by a `goal-review` sweep, by causing it rather than reading it.\n\n`bun test` on a clean checkout of `main` reported **1 failure**:\n\n    (fail) the real corpus > every spoken prefix is bound and every own prefix is a stub\n    + \"count\": 145,\n    + \"example\": \"cat-harness/ingest-staging/agent-skills---google-antigravity-docs/manifest.jsonld\",\n    + \"prefix\": \"folio\",\n\n`cat-harness/in",
+      "file": "beans/defs/folio-assistant-ramz--check-context-emission-scans-gitignored-directorie.md"
     },
     {
       "id": "folio-assistant-rdy0",
@@ -3241,6 +4391,34 @@
       "file": "beans/defs/folio-assistant-rkqp--ingest-gemini-cli-agent-skill-best-practices-pdf-c.md"
     },
     {
+      "id": "folio-assistant-rmcf",
+      "title": "72 script sidecars churn on every gates run because engine_version records the CONTAINER, and it went 1.3.14 -> 1.3.11",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T21:03:15Z",
+      "updatedAt": "2026-09-27T05:48:16Z",
+      "preview": "Measured 2026-09-26 while running `bun run gates` on a clean tree: **72** committed\nscript sidecars were rewritten, and the only content change in each was run\nprovenance:\n\n    -  \"last_run_at\": \"2026-09-26T19:43:36.482Z\",\n    -  \"last_run_sha\": \"abee3acee29e15ad7ae540e254fe31f2cf31cc40\",\n    -  \"engine_version\": \"bun-1.3.14\"\n    +  \"last_run_at\": \"2026-09-26T20:46:45.496Z\",\n    +  \"last_run_sha\":",
+      "file": "beans/defs/folio-assistant-rmcf--72-script-sidecars-churn-on-every-gates-run-becaus.md"
+    },
+    {
+      "id": "folio-assistant-rmor",
+      "title": "INJECTION: injectMarkdown deletes EVERY blank line in the document, not the ones it introduced — the written page is structurally destroyed",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T12:57:59Z",
+      "updatedAt": "2026-09-27T06:40:21Z",
+      "preview": "Found 2026-09-26 while doing `lvk9`. Pre-existing, and the most damaging thing in\nthis family so far.\n\n`injectMarkdown` ends with:\n\n```ts\n// Remove blank lines introduced by paragraph collapse\nconst result = outLines.filter((line) => line !== \"\").join(\"\\n\");\n```\n\nThe comment says *\"introduced by paragraph collapse\"*. The code removes **every\nempty line in the document**, including every one the au",
+      "file": "beans/defs/folio-assistant-rmor--injection-injectmarkdown-deletes-every-blank-line.md"
+    },
+    {
       "id": "folio-assistant-rn3o",
       "title": "Diagrams: download PNG, download SVG, copy to clipboard on every figure",
       "status": "completed",
@@ -3281,6 +4459,20 @@
       "updatedAt": "2026-09-22T18:54:19Z",
       "preview": "Found 2026-09-21 by the `goal-review` sweep of 2026-09-20T19:00Z →\n2026-09-21T06:25Z (session_01AYHimvYMmf8h8e9fFN6dW5). An instruction gap, and\nthe sweep's headline finding.\n\n## Measured\n\n`list_sessions` returned **7 sibling sessions**. **Four of them were stopped,\nwaiting on the owner**, each holding a question in the owner's own terms:\n\n| session | the question it is holding |\n|---|---|\n| WHO I",
       "file": "beans/defs/folio-assistant-rq8s--a-session-blocked-on-the-owner-is-invisible-four-s.md"
+    },
+    {
+      "id": "folio-assistant-rsi6",
+      "title": "PUBLISHED PACKAGE, UNBUILT: block-qa-schema ships to npm and no gate built it — #914 merged green and broken",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T03:24:48Z",
+      "updatedAt": "2026-09-26T04:01:27Z",
+      "preview": "Measured 2026-09-26, by building the package rather than by reading about it.\n\n`@litlfred/block-qa-schema` is the **only** package in this repository that\nships to npm. It is named in no `.github/workflows/*.yml`, and the root\n`package.json` declares no `workspaces`, so its devDependencies had never been\ninstalled on a runner and its `build` and `test` scripts had never run. Its\n`node_modules/` di",
+      "file": "beans/defs/folio-assistant-rsi6--published-package-unbuilt-block-qa-schema-ships-to.md"
     },
     {
       "id": "folio-assistant-rtuo",
@@ -3355,16 +4547,44 @@
     {
       "id": "folio-assistant-sa8y",
       "title": "QA WORDING: a graph-scoped finding worded absolutely sent a session to a wrong fix",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-d308",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T05:52:43Z",
-      "updatedAt": "2026-09-20T14:17:35Z",
+      "updatedAt": "2026-09-26T00:00:00Z",
       "preview": "A finding scoped to one graph but **worded absolutely** sent this session to a\nwrong fix, and the wrong fix was caught only by a test written the day before.\n\n## What the report says, and what is true\n\n`kg:audit` at the repo root reports:\n\n> skill \"confirm-harness\" is listed by no package manifest, carried by no role\n> and named by no activity.\n\nEach clause is true **of the root instance's graph**",
       "file": "beans/defs/folio-assistant-sa8y--qa-wording-a-graph-scoped-finding-worded-absolutel.md"
+    },
+    {
+      "id": "folio-assistant-sff8",
+      "title": "Contention inflates a per-test budget ~35x, and vxho fixed ONE of 505 files — two more just failed on main",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T03:31:40Z",
+      "updatedAt": "2026-09-27T11:10:31Z",
+      "preview": "Measured 2026-09-26 on a clean checkout of `main` at `0ef9543ccf3`, while\nstarting unrelated work. `bun test` **exited 1**:\n\n```\ncat-harness/content/pipeline/translation-block-qa.test.ts:\n(fail) buildReport — absence is absence > a translated block reports coverage,\n       terms and echo — and NO round-trip verdict [5031.09ms]\n  ^ this test timed out after 5000ms.\n\ncat-harness/scripts/tests/profil",
+      "file": "beans/defs/folio-assistant-sff8--contention-inflates-a-per-test-budget-35x-and-vxho.md"
+    },
+    {
+      "id": "folio-assistant-sfjo",
+      "title": "INJECTION: the retranslate path DROPS front-matter keys — 5 locales lost `description:`, and `ar` lost `dir: rtl`",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T19:43:43Z",
+      "updatedAt": "2026-09-27T08:25:15Z",
+      "preview": "Found 2026-09-26 by bisecting `docs:auto:check` red on main.\n\n## Measured\n\n`docs:auto:check` is green at `3f0518b81ea` and red at `bfec1f9b88b` (#1427,\n\"retranslate index.md + installation.md\"). Bisected across six consecutive\nmain commits, one check per commit — not inferred from the PR's subject.\n\n#1427 rewrote ten locale files. Comparing front-matter KEYS before and after,\nper file:\n\n| file | k",
+      "file": "beans/defs/folio-assistant-sfjo--injection-the-retranslate-path-drops-front-matter.md"
     },
     {
       "id": "folio-assistant-sjic",
@@ -3383,14 +4603,14 @@
     {
       "id": "folio-assistant-sl9u",
       "title": "skos:prefLabel and dcterms:title carry the identical string on the glossary scheme node, with nothing saying which is authoritative",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1swy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T11:48:29Z",
-      "updatedAt": "2026-09-22T11:48:29Z",
+      "updatedAt": "2026-09-23T21:33:41Z",
       "preview": "Measured 2026-09-22 on output shipped the same morning, in PR #841:\n\n```\n_kg/cat-harness-glossary.jsonld\n   skos:prefLabel : 'cat-harness swimlane glossary'\n   dcterms:title  : 'cat-harness swimlane glossary'\n   SAME?          : True\n\n_kg/bootstrap-glossary.jsonld   — same, both fields\n```\n\nTwo predicates, one fact, and nothing declaring which is the source. They agree today and will diverge the f",
       "file": "beans/defs/folio-assistant-sl9u--skospreflabel-and-dctermstitle-carry-the-identical.md"
     },
@@ -3451,6 +4671,20 @@
       "file": "beans/defs/folio-assistant-supn--harness-cards-become-todos-outstanding-work-a-next.md"
     },
     {
+      "id": "folio-assistant-syrl",
+      "title": "check-subgraphs prints '23 carry one ../ too many' as a STRING LITERAL, not a measurement",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:02:11Z",
+      "updatedAt": "2026-09-25T16:21:36Z",
+      "preview": "`cat-harness/scripts/check-subgraphs.ts:382` prints:\n\n> NOT a clean bill either — bean `mi97` audits them, and 23 carry one `../`\n> too many.\n\n**That 23 is a string literal.** It was measured once, on 2026-09-20, and\nwritten into the message. The check re-measures the TOTAL every run (it read\n171 that day and reads **246** today) but the 23 never moves, so the output\ncannot tell a reader whether a",
+      "file": "beans/defs/folio-assistant-syrl--check-subgraphs-prints-23-carry-one-too-many-as-a.md"
+    },
+    {
       "id": "folio-assistant-t3n8",
       "title": "HARNESS DISPLAY NAMES: every instance declares a human title, and the schema should say so",
       "status": "completed",
@@ -3493,6 +4727,20 @@
       "file": "beans/defs/folio-assistant-t490--task-authorization-authn-role-odrl-content-access.md"
     },
     {
+      "id": "folio-assistant-t5dm",
+      "title": "INSTANCE NAME FROM THE CHECKOUT FOLDER: library-graph attributes root uploads to basename(repoRoot), so a clone's directory name is published",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T10:38:48Z",
+      "updatedAt": "2026-09-26T10:38:48Z",
+      "preview": "Found 2026-09-26 resolving #1290's conflicts in a worktree named `pr1290` (session_01ERf1yH3k69x37rXCrb6GYt). `bun run library:viz` wrote `\"uploadInstance\": \"pr1290\"` into 12 entries of `cat-harness/docs/assets/library/index.json` and emitted a page at `cat-harness/docs/cat-harness/library/pr1290/index.html`. Caught before push; regenerated from a directory named `folio-assistant`, after which all",
+      "file": "beans/defs/folio-assistant-t5dm--instance-name-from-the-checkout-folder-library-gra.md"
+    },
+    {
       "id": "folio-assistant-t8g3",
       "title": "Translation support foundation (issue #206)",
       "status": "in-progress",
@@ -3507,16 +4755,32 @@
       "file": "beans/defs/folio-assistant-t8g3--translation-support-foundation-issue-206.md"
     },
     {
+      "id": "folio-assistant-tbdg",
+      "title": "main is RED on translation-drift: #1374 published 27 translated pages with no .po catalogue, and the backlog list is not the fix",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [
+        "folio-assistant-m4s1"
+      ],
+      "createdAt": "2026-09-26T04:22:55Z",
+      "updatedAt": "2026-09-26T16:58:54Z",
+      "preview": "Measured 2026-09-26. `main` is RED on `translation-drift`, independently of\nanything else, and it is the SECOND of two unrelated breakages on `main` this\nmorning.\n\n## The failure, and that it is `main`'s\n\n```\n(fail) the real corpus — and the gate can actually fail > no NEW drift, and\n       nothing unreadable\nExpected 0, Received 27\n   error ar/accessibility: published with no `.po` catalogue and ",
+      "file": "beans/defs/folio-assistant-tbdg--main-is-red-on-translation-drift-1374-published-27.md"
+    },
+    {
       "id": "folio-assistant-tc95",
       "title": "BLOCKED on owner: translations/fr/agent-onboarding.md is an English .md in a gettext directory",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T16:14:28Z",
-      "updatedAt": "2026-09-20T16:14:28Z",
+      "updatedAt": "2026-09-23T19:25:46Z",
       "preview": "Found 2026-09-20 while draining bean `rl3h`. **Needs the owner: this is a\ndeletion, and an agent does not remove a durable artefact on its own\ninitiative.**\n\n## The file\n\n`cat-harness/translations/fr/agent-onboarding.md` — 8,656 bytes, added\n2026-09-20 (commit `169b7510b5`, *\"Merge main, and fix the sweep main's\nmemory move made blind\"*).\n\n## Why it looks wrong\n\nIt is the **only `.md` anywhere und",
       "file": "beans/defs/folio-assistant-tc95--blocked-on-owner-translationsfragent-onboardingmd.md"
     },
@@ -3537,6 +4801,20 @@
       "file": "beans/defs/folio-assistant-tfo1--ingestion-a-skill-that-takes-3-avatartheme-layouts.md"
     },
     {
+      "id": "folio-assistant-thsz",
+      "title": "PAGES REPORT: a cancellation share cannot tell coalescing from starvation, and it read as alarming to its own author",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:28:41Z",
+      "updatedAt": "2026-09-26T03:54:28Z",
+      "preview": "`3yi4` built the Pages section so somebody could ask *\"are the previews\nactually building?\"*. It reports the counts and deliberately grades no share —\nthere is no calibrated threshold for \"too many cancellations\", the same refusal\nthat stopped `6xaz` inventing a size threshold.\n\n**That refusal was right and it is not enough.** The number it prints is the\none a reader forms a judgement from anyway,",
+      "file": "beans/defs/folio-assistant-thsz--pages-report-a-cancellation-share-cannot-tell-coal.md"
+    },
+    {
       "id": "folio-assistant-tr05",
       "title": "KG MODELLING: dependents point at the general node; typed KG refs; skill I/O schemas (#1168)",
       "status": "in-progress",
@@ -3549,6 +4827,34 @@
       "updatedAt": "2026-09-23T19:53:25Z",
       "preview": "Owner 2026-09-23 (#1168). Plan A (guidance) -> B (data model) -> C (UML), in that order.",
       "file": "beans/defs/folio-assistant-tr05--kg-modelling-dependents-point-at-the-general-node.md"
+    },
+    {
+      "id": "folio-assistant-tuvg",
+      "title": "MAIN IS RED: three crdm skills are in no package manifest and carry a retired roles: field",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T04:09:28Z",
+      "updatedAt": "2026-09-26T07:10:10Z",
+      "preview": "Measured 2026-09-26 on `origin/main` at `6840b14097b`. **This fails every open PR, not one.**\n\n## The two failures\n\nBoth name the same three files, added by main's commit `7edf7b7ed5a` (*\"feat: CRDM Phase 4b prioritization, SDLC/release skills, CRDM phase detail skills\"*):\n\n    cat-harness/skills/crdm/crdm-needs-assessment.md\n    cat-harness/skills/crdm/crdm-impact-analysis.md\n    cat-harness/skil",
+      "file": "beans/defs/folio-assistant-tuvg--main-is-red-three-crdm-skills-are-in-no-package-ma.md"
+    },
+    {
+      "id": "folio-assistant-tvf8",
+      "title": "STALE OPEN PRs: three untouched 4-8 days, and #229's 'clean' merge would RESURRECT a path main deleted",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T10:32:05Z",
+      "updatedAt": "2026-09-26T10:32:05Z",
+      "preview": "Swept the 15 open pull requests for staleness at 2026-09-26 10:30Z. Three are\nuntouched for 4 days or more; the rest were base-merged by their sessions within\nthe day, so the population needing attention is small.\n\n| PR | stale | behind `main` | merge | files | author |\n|---|---|---|---|---|---|\n| #229 | **8.2 d** | 4,287 | \"clean\" | 1 | Carl Leitner |\n| #231 | **8.1 d** | 4,316 | CONFLICTS | 43 |",
+      "file": "beans/defs/folio-assistant-tvf8--stale-open-prs-three-untouched-4-8-days-and-229s-c.md"
     },
     {
       "id": "folio-assistant-txut",
@@ -3581,14 +4887,14 @@
     {
       "id": "folio-assistant-u2ol",
       "title": "TYPESCRIPT 7: the compiler API exists, and every path to it is namespaced `unstable/`",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T01:37:44Z",
-      "updatedAt": "2026-09-23T01:37:44Z",
+      "updatedAt": "2026-09-27T09:25:00Z",
       "preview": "## What\n\nDependabot #910 and #914 raise `typescript` 6 → 7. The owner ruled *\"everything,\nincluding the TS 7 rewrite\"* (issue #956, 2026-09-22), with the stated escape:\n*if TS 7 ships no supported compiler-API equivalent, pin to 6 and say so.*\n\n**Neither branch of that ruling is what the measurement found.** An equivalent\nexists, it works, and its own package path says `unstable`.\n\n## Measured 202",
       "file": "beans/defs/folio-assistant-u2ol--typescript-7-the-compiler-api-exists-and-every-pat.md"
     },
@@ -3616,7 +4922,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T05:57:48Z",
-      "updatedAt": "2026-09-22T21:40:00Z",
+      "updatedAt": "2026-09-26T09:00:43Z",
       "preview": "Found 2026-09-22 while re-deriving `j41m`'s own numbers adversarially, in the\nspirit of `w4tq`. **Not fixed, because it cannot be confirmed from here** —\nsee §\"Why this is a bean and not a push\".\n\n## What the files say\n\n    .github/workflows/discoverability-docs.yml:206   working-directory: folio-assistant\n    .github/workflows/publish.yml:566                working-directory: folio-assistant\n\nNei",
       "file": "beans/defs/folio-assistant-u9r9--two-typedoc-steps-name-a-working-directory-that-do.md"
     },
@@ -3633,6 +4939,20 @@
       "updatedAt": "2026-09-22T19:07:55Z",
       "preview": "## The owner's ruling, verbatim\n\nParaphrase would lose the shape, and the shape is the whole decision:\n\n> `core->fhir-harness-> smart-base->siblings{smart-l1, smart-dak, smart-ig}`,  no smart-guidelines.\n\nGiven 2026-09-22, in answer to four options offered on the same question. The\noption chosen was NOT among the four — the owner supplied a fifth, and the\ndifference matters: every option offered k",
       "file": "beans/defs/folio-assistant-uhkv--smart-stack-core-fhir-harness-smart-base-smart-l1.md"
+    },
+    {
+      "id": "folio-assistant-uj55",
+      "title": "Windows .bat wrappers for every .sh a user runs from the normal workflow",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-5a3l",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-18T07:47:05Z",
+      "updatedAt": "2026-09-18T07:50:21Z",
+      "preview": "Branch `claude/windows-bat-wrappers-2026-09-18`, PR #231. 36 wrappers generated by `cat-harness/scripts/gen-bat-wrappers.sh` (moved from `scripts/` when main split into `cat-harness/`), `bun run bat:sync:check` in the code-quality gate, `.gitattributes` pins `.sh`→LF and `.bat`→CRLF.\n\nThe platform ships 49 `.sh` scripts and no Windows entry point for any of\nthem. `.mcp.json` names `scripts/sage-mc",
+      "file": "beans/defs/folio-assistant-uj55--windows-bat-wrappers-for-every-sh-a-user-runs.md"
     },
     {
       "id": "folio-assistant-uknu",
@@ -3658,7 +4978,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T18:08:55Z",
-      "updatedAt": "2026-09-22T18:37:50Z",
+      "updatedAt": "2026-09-23T09:18:18Z",
       "preview": "## What this is\n\nA **consolidation claim**, not new subject matter. The work plan stalled: between\n11:00Z and 15:19Z on 2026-09-22 seventeen PRs merged, and **nothing merged in the\n2h40m after**. CI is not the cause — `check:ci-health` reports all eight\nworkflows that ran in the window green, 48 Pages deploys succeeded and 0 failed.\nWhat stalled is that PRs went **conflicted** against a `main` mov",
       "file": "beans/defs/folio-assistant-upgd--stream-13-goal-1-the-repo-split-and-the-kgs-own-de.md"
     },
@@ -3733,6 +5053,20 @@
       "file": "beans/defs/folio-assistant-v556--two-kg-export-sidecars-carry-three-script-hashes-b.md"
     },
     {
+      "id": "folio-assistant-v625",
+      "title": "MAIN IS RED: six skills landed with no manifest entry and no reference page — one cause, four failing gates",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T05:10:48Z",
+      "updatedAt": "2026-09-26T14:02:01Z",
+      "preview": "`main` was red in CI, and four of its seven failures had one cause: **six skill\nfiles existed with no package-manifest entry and no published reference page.**\n\n| file | manifest | reference page |\n|---|---|---|\n| `crdm/crdm-needs-assessment.md` | missing | missing |\n| `crdm/crdm-impact-analysis.md` | missing | missing |\n| `crdm/crdm-requirements-template.md` | missing | missing |\n| `workflow/code",
+      "file": "beans/defs/folio-assistant-v625--main-is-red-six-skills-landed-with-no-manifest-ent.md"
+    },
+    {
       "id": "folio-assistant-v7bg",
       "title": "TOOL 1/13: Task_Publish — publication & export (34 files, 19 entry points)",
       "status": "in-progress",
@@ -3745,6 +5079,20 @@
       "updatedAt": "2026-09-20T16:39:06Z",
       "preview": "Group 1 of 13 in `d308`. **34 files, 19 entry points** — the largest loose surface in the repo.\n\n`kg-export`, `pages-bootstrap`, `gen-*-jsonld`, `gen-site-jsonld`, `site-links`,\n`serve-rendering`, `strip-preview-seo`, `staging-*`, `readme-sections`,\n`readme-links`, `gen-schema-docs`, `gen-skill-docs`, `harness-schema-export`.\n\n**BPMN:** `authoring-a-paper · Task_Publish` and `authoring-a-document ",
       "file": "beans/defs/folio-assistant-v7bg--tool-113-task-publish-publication-export-34-files.md"
+    },
+    {
+      "id": "folio-assistant-v9ah",
+      "title": "SELF-DECLARED-DONE NAMES ONLY MID-FLIGHT BEANS: every finding the check produces is one no session may act on, which is thux's o5qj shape unfixed on the second axis",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T17:34:43Z",
+      "updatedAt": "2026-09-25T17:34:43Z",
+      "preview": "`bean-store`'s `bean-self-declared-done` finding names a claimed bean whose every\n`## Done when` box is ticked, and its implied action is that somebody closes it.\n`0pes` settled who may: **a bean closes on EVIDENCE, not on authorship** — with\nthree obligations, the third of which is that **mid-flight is off limits**, where\nmid-flight means a claim naming a branch, an open PR, *or a recent note*.\n\n",
+      "file": "beans/defs/folio-assistant-v9ah--self-declared-done-names-only-mid-flight-beans-eve.md"
     },
     {
       "id": "folio-assistant-vigi",
@@ -3763,7 +5111,7 @@
     {
       "id": "folio-assistant-vjbl",
       "title": "Second annotator for the crdm-detect eval corpus",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
@@ -3833,6 +5181,20 @@
       "file": "beans/defs/folio-assistant-vq8o--prior-art-page-open-source-projects-taking-a-simil.md"
     },
     {
+      "id": "folio-assistant-vrfx",
+      "title": "stripLeanComments eats newlines inside block comments, so 99% of Lean QA hit lines are wrong",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-0lmb",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:20:52Z",
+      "updatedAt": "2026-09-27T10:12:35Z",
+      "preview": "Found 2026-09-25 while converging the declaration splitter (`bqrg`). Not part of\nthat change, and deliberately not folded into it: this one moves a reported\nline number on almost every file in a Lean corpus, which is the corpus-wide\nre-scoring `bqrg` warns against doing on the strength of an unrelated sweep.\n\n## The defect\n\n`stripLeanComments` blanks a comment by writing a space over each of its\nc",
+      "file": "beans/defs/folio-assistant-vrfx--stripleancomments-eats-newlines-inside-block-comme.md"
+    },
+    {
       "id": "folio-assistant-vsv4",
       "title": "voices visualiser: 7 wireframe findings",
       "status": "todo",
@@ -3863,14 +5225,14 @@
     {
       "id": "folio-assistant-vxho",
       "title": "A test 14% under the default timeout is a gate that fails on a busy machine, not a red one",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T12:19:24Z",
-      "updatedAt": "2026-09-24T18:51:24Z",
+      "updatedAt": "2026-09-25T16:37:25Z",
       "preview": "Recorded 2026-09-24 while running `bun run gates` on a two-markdown-file diff.\n\n```\ncat-harness/schemas/viz-generators.test.ts:\n(fail) the readers agree with what the generators publish > a queue's\n       declared intake is ONE unit, not one per file it carries [5683.71ms]\n  ^ this test timed out after 5000ms.\n```\n\n**It is not a correctness failure and it was not the diff's.** The diff was two\nbea",
       "file": "beans/defs/folio-assistant-vxho--a-test-14-under-the-default-timeout-is-a-gate-that.md"
     },
@@ -3891,14 +5253,14 @@
     {
       "id": "folio-assistant-w5h0",
       "title": "TOOL 9/13: Task_AuthorBlocks — block authoring & prose structure (14 files, 1 entry point)",
-      "status": "todo",
+      "status": "scrapped",
       "type": "task",
       "priority": "low",
       "parent": "folio-assistant-d308",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T04:34:56Z",
-      "updatedAt": "2026-09-20T04:39:59Z",
+      "updatedAt": "2026-09-25T17:34:06Z",
       "preview": "Group 9 of 13 in `d308`. **14 files, 1 entry point.**\n\n`render-markdown`, `markdown-ast`, `block-module`, `front-matter`,\n`build-foreshadows`, `generate-index`, `readme-toc`, `section-story-audit`,\n`audit-status-sections`, `extract-status-sections`, `find-dangling-remarks`,\n`conditional-class-banner-audit`, `language-trap-audit`, `check-voices`.\n\n**BPMN:** `authoring-a-paper · Task_AuthorBlocks` (",
       "file": "beans/defs/folio-assistant-w5h0--tool-913-task-authorblocks-block-authoring-prose-s.md"
     },
@@ -4003,7 +5365,7 @@
     {
       "id": "folio-assistant-wlqd",
       "title": "skills/remote-packages/ is declared but nothing syncs, serves or registers a remote package",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
@@ -4013,6 +5375,20 @@
       "updatedAt": "2026-09-20T17:19:50Z",
       "preview": "Found 2026-09-19 while working `nup0`. Two remote packages are declared and\n**five skills** are named across them, none of which this instance can offer:\n\n| file | `wrapper.skills` |\n|---|---|\n| `claude-scientific-skills.json` | `scientific-visualization`, `scientific-critical-thinking`, `hypothesis-generation` |\n| `smarter-fhir.json` | `smart-launch`, `fhir-client-operations` |\n\nBoth carry `sync:",
       "file": "beans/defs/folio-assistant-wlqd--skillsremote-packages-is-declared-but-nothing-sync.md"
+    },
+    {
+      "id": "folio-assistant-wlyg",
+      "title": "ROUND TRIP: pot-extract and po-inject declare ten copies of the same markdown constants, and one of them diverged inside a single change",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T10:03:23Z",
+      "updatedAt": "2026-09-26T13:48:19Z",
+      "preview": "Found 2026-09-26 while shipping `ig4a`, by asking whether anything else shared the\nfact being changed before committing it.\n\n`pot-extract.ts` (extract) and `po-inject.ts` (inject) are the two halves of one\nround trip, and they parse markdown with **ten separately declared copies** of the\nsame constants:\n\n| constant | identical today? |\n|---|---|\n| `MD_CODE_FENCE_RE` | **no — diverged, now consolid",
+      "file": "beans/defs/folio-assistant-wlyg--round-trip-pot-extract-and-po-inject-declare-ten-c.md"
     },
     {
       "id": "folio-assistant-wm63",
@@ -4041,6 +5417,20 @@
       "updatedAt": "2026-09-19T08:55:36Z",
       "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"test mode:\nresults are compiled for things like benchmarking across a model, running a bank\nof test scenarios for a single model (verifiablility). restuls not intended to\nbe stored in the KG, more to synthesizsd in a benchmarking report.\"\n\n## The rule, and why it is not obvious\n\nEvery other verdict this project produces goes **i",
       "file": "beans/defs/folio-assistant-wp49--test-mode-benchmarking-output-is-a-report-and-deli.md"
+    },
+    {
+      "id": "folio-assistant-ws99",
+      "title": "GENERATED OUTPUT: every generator's output should declare its writer — five write into docs/ and none did",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T06:27:05Z",
+      "updatedAt": "2026-09-24T06:27:05Z",
+      "preview": "Issue #1254. Found while building check:reference-direction (#1219, bean zhg2): gen-skill-docs, gen-schema-docs and gen-uml-overview wrote 769 occurrences of undeclared generated output into docs/, 54% of that check's original findings. docs/ is a content graph and correctly so, so the directory cannot answer for a generator's output inside it — the file must. Markers added in PR #1222 for the thr",
+      "file": "beans/defs/folio-assistant-ws99--generated-output-every-generators-output-should-de.md"
     },
     {
       "id": "folio-assistant-wwi6",
@@ -4127,16 +5517,30 @@
       "file": "beans/defs/folio-assistant-x80s--ingest-agent-summaries-of-prose-blocks-a-qa-sideca.md"
     },
     {
+      "id": "folio-assistant-x89e",
+      "title": "deps: land #908's two bumps with both bun.lock files regenerated",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T13:41:12Z",
+      "updatedAt": "2026-09-26T16:58:15Z",
+      "preview": "#908 (dependabot, minor-and-patch group) bumps @anthropic-ai/sdk ^0.104.2 -> ^0.127.0 in the root and mcp-server manifests, and @playwright/test 1.61.1 -> 1.63.0 in the root. It changes package.json only, never bun.lock, so under --frozen-lockfile it cannot go green, and it conflicts with main. Two @dependabot commands posted through the GitHub MCP tool arrived defanged (with middle dots inserted)",
+      "file": "beans/defs/folio-assistant-x89e--deps-land-908s-two-bumps-with-both-bunlock-files-r.md"
+    },
+    {
       "id": "folio-assistant-x89g",
       "title": "BEAN GRAPH: beans/ is a real graph with defs and workflows nodes; paths leave harness config",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T17:56:09Z",
-      "updatedAt": "2026-09-18T17:56:09Z",
+      "updatedAt": "2026-09-23T19:25:46Z",
       "preview": "## The ask\n\nOwner, in chat 2026-09-18:\n\n> instead of beans/ and beans/workflow lets do beans/ beans/defs and\n> beans/workflows with beans/ being a bean graph with a definitions node and\n> workflow node\n\nClarified by the owner when asked whether the graph is a declaration or an\nartefact:\n\n> a real graph, move content out of harness config. make beangraph schema.\n\n## What changes\n\n| | before (bean `",
       "file": "beans/defs/folio-assistant-x89g--bean-graph-beans-is-a-real-graph-with-defs-and-wor.md"
     },
@@ -4157,16 +5561,30 @@
     {
       "id": "folio-assistant-xcyh",
       "title": "The KG viewer must be translated",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-bzyu",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T00:23:01Z",
-      "updatedAt": "2026-09-19T06:03:09Z",
+      "updatedAt": "2026-09-23T20:57:53Z",
       "preview": "_2026-09-19T00:23:43Z_ — OWNER, 2026-09-19: 'kg viewer needs to be translated too'. The viewer (scripts/kg-viewer.ts, merged in #307) emits ~30 English UI strings inline in generated HTML and JS: the facet heading 'Kind', 'Nodes', the search placeholder, 'Select a node.', 'No node matches.', 'none', 'No links to or from this node.', 'referenced by', the undeclared-property warning sentence, the co",
       "file": "beans/defs/folio-assistant-xcyh--the-kg-viewer-must-be-translated.md"
+    },
+    {
+      "id": "folio-assistant-xd1g",
+      "title": "11 root-rooted scans have no gitignore awareness — ramz's sibling audit, answered",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T16:21:48Z",
+      "updatedAt": "2026-09-27T11:01:10Z",
+      "preview": "`ramz`'s third box, asked and answered 2026-09-25.\n\n`ramz` fixed ONE scanner: `check-context-emission` walked the filesystem behind\na hand-written denylist and swept 145 gitignored documents as repository\ncontent. It was found by accident — a clean checkout failing a test about code\nnobody had touched — so the bean asked *\"which others?\"*.\n\n**Eleven**, under `cat-harness/scripts/`, each walking fr",
+      "file": "beans/defs/folio-assistant-xd1g--11-root-rooted-scans-have-no-gitignore-awareness-r.md"
     },
     {
       "id": "folio-assistant-xeer",
@@ -4253,6 +5671,20 @@
       "file": "beans/defs/folio-assistant-xlg2--run-the-sample-import-one-real-end-to-end-instance.md"
     },
     {
+      "id": "folio-assistant-xm31",
+      "title": "om30 residual masking MEASURED: five gate failures on main that CI has never reported",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T14:46:29Z",
+      "updatedAt": "2026-09-26T19:34:10Z",
+      "preview": "`om30` recorded a KNOWN LIMIT rather than implying it: the gates-job split took\nthe masked region from 45 steps to 6, not to 0, and \"local evidence says all six\npass today\" was explicitly a fact about that day's tree rather than a property of\nthe arrangement.\n\nThat fact has expired, and here is the measurement.\n\n## What is masked today, and how it was established\n\nmain's `Repository gates` job sto",
+      "file": "beans/defs/folio-assistant-xm31--om30-residual-masking-measured-five-gate-failures.md"
+    },
+    {
       "id": "folio-assistant-xp72",
       "title": "SCALE FIXTURE: a before/after large-document pair with a golden ChangeSet and a measured performance budget",
       "status": "todo",
@@ -4321,6 +5753,20 @@
       "updatedAt": "2026-09-19T12:15:59Z",
       "preview": "**In one sentence:** generalise `fsh-guts`'s flush behaviour into a *flushable\ncontainer* — a named store with a declared buffer limit, an over-full badge and\nthree actions (flush all / trim to limit / select to prune) — and make staging\npreviews and the console log two more instances of it.\n[View this bean](https://github.com/litlfred/folio-assistant/blob/main/beans/defs/folio-assistant-xxku--flu",
       "file": "beans/defs/folio-assistant-xxku--flushable-containers-a-named-store-with-a-buffer-l.md"
+    },
+    {
+      "id": "folio-assistant-y0n2",
+      "title": "isPushed() returns false when git COULD NOT ANSWER, so a transient git failure reads as 'you never pushed' — and it made a test fail in the suite and pass alone",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T05:11:35Z",
+      "updatedAt": "2026-09-27T07:46:48Z",
+      "preview": "Found 2026-09-27 while hunting `9v4m`'s remaining clause. Not the test I was\nlooking for, and a better finding than the one I was after.\n\n## The defect\n\n`isPushed` in `cat-harness/scripts/check-head-has-run.ts:360`:\n\n    export function isPushed(repo: string, sha: string): boolean {\n      try {\n        return execFileSync(\"git\", [\"-C\", repo, \"branch\", \"-r\", \"--contains\", sha], {\n          encoding",
+      "file": "beans/defs/folio-assistant-y0n2--ispushed-returns-false-when-git-could-not-answer-s.md"
     },
     {
       "id": "folio-assistant-y1w9",
@@ -4407,6 +5853,20 @@
       "file": "beans/defs/folio-assistant-yj32--harness-as-interface-a-harness-instances-default-r.md"
     },
     {
+      "id": "folio-assistant-ymsu",
+      "title": "kg:detangle:check CANNOT FAIL inside bun run gates — bun test repairs the sidecar 1140 lines earlier in the same run",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-25T18:38:34Z",
+      "updatedAt": "2026-09-27T05:55:41Z",
+      "preview": "Measured 2026-09-25, while establishing whether PR #1348 still had anything to\nfix. It is the ROOT CAUSE of #1348's own subject: the detangle staleness that\nbroke `main` was invisible to `bun run gates` and surfaced only because a test\nrun left the working tree dirty.\n\n## The mechanism\n\n`bun run gates` runs 152 gates in order. Gate 1 is `bun test`. Somewhere in that\nsuite the detangle **writer** r",
+      "file": "beans/defs/folio-assistant-ymsu--kgdetanglecheck-cannot-fail-inside-bun-run-gates-b.md"
+    },
+    {
       "id": "folio-assistant-yo4m",
       "title": "B5 (#1168): arrow-direction QA — @general nodes point only at general nodes",
       "status": "completed",
@@ -4449,6 +5909,20 @@
       "file": "beans/defs/folio-assistant-yt7j--schema-coverage-is-repo-root-relative-while-a-dire.md"
     },
     {
+      "id": "folio-assistant-yx9p",
+      "title": "SEPARATION: the 5 partition package names and the 5 instance directory names do not agree — 1 of 5 does",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-26T06:33:48Z",
+      "updatedAt": "2026-09-26T06:33:48Z",
+      "preview": "Measured 2026-09-26. `repo-partition.ts` partitions 1143 modules into five\ntarget packages. The repository holds sixteen declared instances as sibling\ndirectories. **The two naming schemes agree on one of five.**\n\n| partition package | directory | the directory's declared `name` |\n|---|---|---|\n| `agentic-harness` | `cat-harness/` | `cat-harness` |\n| `folio-assist-core` | `folio-assistant-core/` |",
+      "file": "beans/defs/folio-assistant-yx9p--separation-the-5-partition-package-names-and-the-5.md"
+    },
+    {
       "id": "folio-assistant-z4mq",
       "title": "Zod modules are tool KG nodes that maintain the public JSON-LD / JSON Schema",
       "status": "in-progress",
@@ -4475,6 +5949,34 @@
       "updatedAt": "2026-09-24T19:19:05Z",
       "preview": "Found by ojcx's real run, 2026-09-23. `init-folio --link sibling --assistant ../platform` writes `platform_dir: ../platform` into `.github/workflows/staging.yml`. In Actions, that path is outside the checkout, so the reusable workflow's \"Check out the platform\" step cannot place the platform there. A sibling checkout exists on the author's machine, never in CI. The folio-test run worked only becau",
       "file": "beans/defs/folio-assistant-zdfa--init-sibling-link-stagingyml-gets-platform-dir-pla.md"
+    },
+    {
+      "id": "folio-assistant-zhg2",
+      "title": "REFERENCE DIRECTION: generalise bootstrap's no-upward-reference rule to all 17 instances, sharing check:partition's direction computation",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-23T22:51:10Z",
+      "updatedAt": "2026-09-24T11:52:37Z",
+      "preview": "## State — delivered, advisory, green. Not merged.\n\nIssue #1219, PR #1222, `bun run gates` 139/139, 34 tests in 194ms on synthetic trees.\n\n## The rule\n\nOwner, 2026-09-23: *\"if sub1 depends (directly or through chain) stub0, no references/context etc points stub0 → sub1.\"* `bootstrap-tools/schemas/graph.test.ts` enforces it for ONE instance (`iwtn`); this generalises it to all 17.\n\n## Absorbing `ch",
+      "file": "beans/defs/folio-assistant-zhg2--reference-direction-generalise-bootstraps-no-upwar.md"
+    },
+    {
+      "id": "folio-assistant-zldg",
+      "title": "BLOCKING IS UNRECORDABLE: the skill prescribes `status: blocked`, which the CLI and schema both refuse — so 0 of 99 blocks carry an expiry",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-22T11:43:50Z",
+      "updatedAt": "2026-09-22T11:50:46Z",
+      "preview": "Found 2026-09-22 by a dispatched audit of the in-progress population, then\nre-derived from `origin/main` rather than from the audit's report.\n\n## The contradiction, checked three ways\n\n| source | says |\n|---|---|\n| `skills/folio-core/bean-blocking.md` §\"When it really is blocked\" | its worked example is **`status: blocked`** · waits on · since · expires · handoff |\n| `beans update --help` | *\"New ",
+      "file": "beans/defs/folio-assistant-zldg--blocking-is-unrecordable-the-skill-prescribes-stat.md"
     },
     {
       "id": "folio-assistant-zlmp",
@@ -4505,6 +6007,20 @@
       "file": "beans/defs/folio-assistant-zmdo--split-bootstrap-agentic-harness-folio-assistant-co.md"
     },
     {
+      "id": "folio-assistant-zru7",
+      "title": "ACCESSIBILITY: all 70 translated pages serve html lang=en-US; 56 are never corrected even at runtime",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T08:24:45Z",
+      "updatedAt": "2026-09-27T10:48:41Z",
+      "preview": "Found 2026-09-27 while settling `sfjo`'s last item. **Observed in a built site, not\ninferred** — which matters, because `sfjo` carries a correction about exactly the\nopposite mistake (inferring a consequence from a key's name).\n\n## Measured, by building the site with `bun run preview:site`\n\n    translated pages built                              70\n    declaring a `lang` that is NOT their locale  ",
+      "file": "beans/defs/folio-assistant-zru7--accessibility-all-70-translated-pages-serve-html-l.md"
+    },
+    {
       "id": "folio-assistant-zzmr",
       "title": "KG: the knowledge graph's own structure, declaration and publication",
       "status": "in-progress",
@@ -4528,9 +6044,9 @@
     },
     {
       "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-r279",
-      "blocks": "folio-assistant-1r0p",
-      "detail": "blocks `folio-assistant-1r0p` and states no expiry, so the block cannot be told from abandoned work"
+      "bean": "folio-assistant-m4s1",
+      "blocks": "folio-assistant-tbdg",
+      "detail": "blocks `folio-assistant-tbdg` and states no expiry, so the block cannot be told from abandoned work"
     },
     {
       "kind": "blocked-without-expiry",
@@ -4540,9 +6056,9 @@
     },
     {
       "kind": "blocker-closed",
-      "bean": "folio-assistant-6o1z",
-      "blocks": "folio-assistant-vjbl",
-      "detail": "is completed but still blocks `folio-assistant-vjbl`, which is todo"
+      "bean": "folio-assistant-r279",
+      "blocks": "folio-assistant-1r0p",
+      "detail": "is completed but still blocks `folio-assistant-1r0p`, which is todo"
     }
   ]
 }

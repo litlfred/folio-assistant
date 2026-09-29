@@ -7,7 +7,7 @@
  * then writes a markdown table with links to each block's location.
  *
  * Usage:
- *   bun run content/pipeline/generate-index.ts [paper-name]
+ *   bun run cat-harness/content/pipeline/generate-index.ts [paper-name]
  */
 
 import { folioDirDeferred } from "../../schemas/cat-harness.js";

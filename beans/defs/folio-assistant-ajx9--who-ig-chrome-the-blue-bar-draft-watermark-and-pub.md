@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ajx9
 title: 'WHO IG CHROME: the blue bar, DRAFT watermark and publish box, ingested from the template chain rather than transcribed'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-09-23T19:56:03Z
-updated_at: 2026-09-23T20:15:41Z
+updated_at: 2026-09-26T03:54:14Z
 parent: folio-assistant-yj32
 ---
 
@@ -127,3 +127,121 @@ settled a layering question inside a stylesheet loader. The question is
 - The mirrored rule set is four selectors, listed explicitly in `MIRRORED`.
   A regex over selectors would quietly widen the mirror every time upstream
   added a rule that matched it.
+
+
+---
+
+## Re-verification ATTEMPTED and it did not pass — left open, 2026-09-25
+
+Found by `bun run beans:landed` as `done-ticked` alongside `0ytk` and `vxho`.
+Both of those closed on re-run evidence. **This one did not, and that is the
+point of the obligation being re-measurement rather than trust**
+(`bean-coordination.md`: *"Two of seven candidates in that sweep failed
+re-verification"*).
+
+Not mid-flight — no `Claimed by` note, no open PR, last commit on `main`
+touching it is its own merge (`6b99bd65`).
+
+**What was run, 2026-09-25:**
+
+```sh
+bun run ingest:ig-chrome:check     # exit 2
+```
+
+```
+could not determine: no --ig and --layer checkouts, so there is nothing to
+read the chrome from.
+  The committed chrome was NOT verified.
+```
+
+**Exit 2 is the gate working, not the gate failing.** It is the `0818` CI
+exemption this bean's own sixth box required it to document, firing exactly as
+designed: without the IG checkout and its `fhir.template` chain there is
+nothing to compare the committed chrome against, and the gate says so instead
+of reporting clean. Refusing to close on it is the same discipline.
+
+So three boxes are verifiable from here (a schema exists; an ingest exists and
+exits 2 with no `--source`; a `--check` gate exists and documents the
+exemption) and **three are not**: the three-layer overlay with its recorded
+type conflicts, that the smart-trust pages carry the blue bar / DRAFT watermark
+/ publish box, and the "135 of 136" gate count — which is a snapshot, and
+`bun run gates` counts differently today.
+
+### What would discharge it
+
+Any ONE of these, by whoever has the checkouts:
+
+- run `bun run ingest:ig-chrome:check --ig <checkout> --layer <base> --layer <…>`
+  and record a **non-2** exit here; or
+- point at a CI run that did, on a named sha; or
+- re-derive from the published smart-trust pages that the three chrome elements
+  are present.
+
+**Expiry: 2026-10-25.** If nothing has discharged it by then, it is not waiting
+on a measurement any more — it is abandoned, and should be re-scoped or
+scrapped with its reasons rather than left reading as in-flight. Same
+requirement `bean-blocking.md` puts on a block, and for the same reason: an
+exception carrying no way to re-derive it cannot be told from an oversight.
+
+**Status deliberately unchanged.** Nothing here reopens, re-scopes or reverts
+anything; it records one failed re-verification and what would settle it.
+
+---
+
+## Evidence
+
+_2026-09-26, a second session reaching the same refusal — tagged
+`ready-to-close` so it is visible to `check:ready-to-close`._
+
+The session above refused this bean for the right reason and left it
+`in-progress` without the tag. `bean-coordination` §"When you cannot re-derive
+it yourself" is explicit that the un-taggable version of this state is the one
+that accumulates: four beans read as finished in their own bodies and sat
+`in-progress`, *"every session that met one discharged it the same way — by
+leaving it open"*. The tag is what puts it on `bun run check:ready-to-close`, so
+the owner confirms a batch in one read instead of meeting it again on the next
+sweep.
+
+**What I independently re-derived**, on a tree identical to `origin/main`, clean
+and with no untracked pollution:
+
+| box | how |
+|---|---|
+| a schema for the ingested chrome | `cat-harness/schemas/ig-chrome.ts` present |
+| an ingest; `no --source exits 2` | `cat-harness/scripts/ingest-ig-chrome.ts` present |
+| a `--check` gate exists and runs | `ingest:ig-chrome:check` |
+| declared at smart-base | carried in `graph-kind-registry.ts` |
+| tests | `ig-chrome.test.ts` + `ingest-ig-chrome.test.ts` → **28 pass, 0 fail** |
+
+**What neither session can re-derive, in one line:** that the smart-trust pages
+actually carry the blue bar, the DRAFT watermark and the publish box. The gate
+reports the third state — *"could not determine … The committed chrome was NOT
+verified"* — and **exits 0 while saying so**, which a caller reading only the
+exit code records as a pass. It needs the IG and each `fhir.template` cloned and
+passed base-first with `--layer`.
+
+One thing I did NOT take on trust, and the reason is recent: the last box reads
+*"gates green — 135 of 136, the one failure pre-existing on main"*. I published
+exactly that shape of claim wrongly on 2026-09-25, from a working directory
+holding an untracked root `scripts/` that `git status` could not see — bean
+`pomp`'s shape, third recorded occurrence. A "pre-existing on main" claim is
+only as good as the cleanliness of the tree it was measured in.
+
+## Closed 2026-09-26 on the owner's confirmation
+
+The owner confirmed the close in session
+`session_01SFCwxF2nePwDpnQrX66fZE`, answering the one item
+`bun run check:ready-to-close` was reporting.
+
+`ready-to-close` tag removed with the close: the tag's whole job is to make an
+un-re-derivable bean visible to that check, and a tag that outlives the
+confirmation would keep a settled bean on the owner's next batch.
+
+**What stays unverified, and is deliberately not claimed by this close.** The
+gate reports *"could not determine … the committed chrome was NOT verified"* and
+**exits 0 while saying so**. So a caller reading only the exit code records a
+pass over a question nobody answered — that no session could confirm the
+published pages actually carry the blue bar, watermark and publish box. That is
+`ci-health`'s first rule pointed at this bean: could-not-determine is never
+green. It is why the close needed a person, and it is the reason the parent
+`yj32` still has work.

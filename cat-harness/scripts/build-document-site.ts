@@ -202,7 +202,7 @@ if (import.meta.main) {
     return i >= 0 ? args[i + 1] : undefined;
   };
   if (args.includes("--help")) {
-    console.log("usage: bun run build-document-site.ts [--repo <folio repo root>] [--out _site]");
+    console.log("usage: bun run cat-harness/scripts/build-document-site.ts [--repo <folio repo root>] [--out _site]");
     process.exit(0);
   }
   const repo = resolve(opt("repo") ?? process.cwd());

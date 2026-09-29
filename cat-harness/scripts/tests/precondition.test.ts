@@ -13,7 +13,7 @@
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 
 import {
   evaluatePrecondition,
@@ -26,9 +26,17 @@ import { repoRootFor } from "../../schemas/cat-harness.js";
 const ROOT = repoRootFor(join(import.meta.dir, "../.."));
 const REAL = join(ROOT, "bootstrap/processes/initialize-harness.bpmn");
 
-/** A minimal loadable process, with whatever extension XML the case needs. */
-function fixture(ext: string): string {
+/**
+ * A minimal loadable process, with whatever extension XML the case needs.
+ *
+ * `declared` writes an instance declaration beside it. A `file-exists` ref
+ * resolves against the instance that owns the diagram, so a checkable fixture
+ * needs one; a stated-only fixture does not, and leaving it out keeps the
+ * refusal tests down to the one reason each is about.
+ */
+function fixture(ext: string, declared = false): string {
   const dir = mkdtempSync(join(tmpdir(), "precondition-"));
+  if (declared) writeFileSync(join(dir, "fixture.json"), JSON.stringify({ name: "fixture" }));
   const p = join(dir, "p.bpmn");
   writeFileSync(
     p,
@@ -46,7 +54,8 @@ function fixture(ext: string): string {
   return p;
 }
 
-const refuses = (ext: string) => expect(loadProcessModel(fixture(ext))).rejects.toThrow();
+const refuses = (ext: string, declared = false) =>
+  expect(loadProcessModel(fixture(ext, declared))).rejects.toThrow();
 
 describe("the real diagram — `initialize-harness`", () => {
   // Loaded BY PATH because no corpus test covers `bootstrap/processes/`:
@@ -66,7 +75,7 @@ describe("the real diagram — `initialize-harness`", () => {
 
   test("the three claims about the ACTOR all come back could-not-determine", async () => {
     const m = await loadProcessModel(REAL);
-    const v = evaluatePreconditions(m, ROOT);
+    const v = evaluatePreconditions(m);
     expect(v.filter((x) => x.verdict === "could-not-determine").map((x) => x.precondition.id)).toEqual([
       "knows-the-vocabulary",
       "told-it-is-a-bootstrapping-agent",
@@ -78,14 +87,19 @@ describe("the real diagram — `initialize-harness`", () => {
     // It checks that README.md EXISTS. Whether the Bootstrapping Agent READ it is not
     // observable, and the declaration says so rather than implying otherwise.
     const m = await loadProcessModel(REAL);
-    const readme = evaluatePreconditions(m, ROOT).find((x) => x.precondition.id === "readme-present")!;
+    const readme = evaluatePreconditions(m).find((x) => x.precondition.id === "readme-present")!;
     expect(readme.verdict).toBe("satisfied");
-    expect(readme.precondition.check).toEqual({ kind: "file-exists", ref: "bootstrap/README.md" });
-    // And it is a real check, not a constant: point it at a root without the
+    // `README.md`, not `bootstrap/README.md`: relative to the instance, so the
+    // same ref names the same file once bootstrap is a repository of its own.
+    expect(readme.precondition.check).toEqual({
+      kind: "file-exists",
+      ref: "README.md",
+      base: join(ROOT, "bootstrap"),
+    });
+    // And it is a real check, not a constant: point it at a base without the
     // file and it must say so.
-    expect(evaluatePrecondition(readme.precondition, mkdtempSync(join(tmpdir(), "empty-")))).toBe(
-      "unsatisfied",
-    );
+    const elsewhere = { ...readme.precondition.check!, base: mkdtempSync(join(tmpdir(), "empty-")) };
+    expect(evaluatePrecondition({ ...readme.precondition, check: elsewhere })).toBe("unsatisfied");
   });
 });
 
@@ -99,14 +113,14 @@ describe("a stated precondition can never read as satisfied", () => {
       id: "x",
       text: "the actor understands roles",
       kind: "stated",
-      check: { kind: "file-exists", ref: "bootstrap/README.md" },
+      check: { kind: "file-exists", ref: "README.md", base: join(ROOT, "bootstrap") },
     } as unknown as Precondition;
-    expect(evaluatePrecondition(smuggled, ROOT)).toBe("could-not-determine");
+    expect(evaluatePrecondition(smuggled)).toBe("could-not-determine");
   });
 
   test("a checkable one with no check is could-not-determine, never satisfied", () => {
     const broken = { id: "x", text: "t", kind: "checkable" } as Precondition;
-    expect(evaluatePrecondition(broken, ROOT)).toBe("could-not-determine");
+    expect(evaluatePrecondition(broken)).toBe("could-not-determine");
   });
 });
 
@@ -153,6 +167,27 @@ describe("refusals — every way of writing a precondition that lies", () => {
     await refuses('<bootstrap.processes:precondition id="a" kind="stated"/>');
   });
 
+  test("a ref that climbs out of the instance", async () => {
+    // Declared, so the ONLY reason left to refuse is the `..`.
+    await refuses(
+      '<bootstrap.processes:precondition id="a" kind="checkable" check="file-exists" ref="../x" text="t"/>',
+      true,
+    );
+  });
+
+  test("an absolute ref", async () => {
+    await refuses(
+      '<bootstrap.processes:precondition id="a" kind="checkable" check="file-exists" ref="/etc/hosts" text="t"/>',
+      true,
+    );
+  });
+
+  test("a file check on a diagram no instance owns — there is no root to resolve against", async () => {
+    // The same XML loads when declared (the next describe), so this refuses
+    // for the missing owner and nothing else.
+    await refuses('<bootstrap.processes:precondition id="a" kind="checkable" check="file-exists" ref="x" text="t"/>');
+  });
+
   test("two sharing an id", async () => {
     await refuses(
       '<bootstrap.processes:precondition id="a" kind="stated" text="one"/>' +
@@ -167,6 +202,21 @@ describe("a process that declares none", () => {
     // already. The empty case must be ordinary rather than exceptional.
     const m = await loadProcessModel(fixture('<cat-harness.processes:policy enforcement="advisory"/>'));
     expect(m.preconditions).toEqual([]);
-    expect(evaluatePreconditions(m, ROOT)).toEqual([]);
+    expect(evaluatePreconditions(m)).toEqual([]);
+  });
+});
+
+describe("a file-exists ref resolves against the owning instance", () => {
+  test("not the repository root and not the working directory", async () => {
+    const p = fixture(
+      '<bootstrap.processes:precondition id="a" kind="checkable" check="file-exists" ref="here.txt" text="t"/>',
+      true,
+    );
+    const m = await loadProcessModel(p);
+    const base = m.preconditions[0].check!.base;
+    expect(base).toBe(dirname(p));
+    expect(evaluatePreconditions(m)[0].verdict).toBe("unsatisfied");
+    writeFileSync(join(base, "here.txt"), "present");
+    expect(evaluatePreconditions(m)[0].verdict).toBe("satisfied");
   });
 });

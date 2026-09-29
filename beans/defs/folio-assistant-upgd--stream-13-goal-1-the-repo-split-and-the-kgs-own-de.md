@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-09-22T18:08:55Z
-updated_at: 2026-09-22T18:37:50Z
+updated_at: 2026-09-23T09:18:18Z
 parent: folio-assistant-vuip
 ---
 
@@ -228,3 +228,60 @@ no known breaking surface and are the cheapest of the ten.
 ### Put to the owner
 
 Asked as a selection. Nothing merged.
+
+
+---
+
+## CORRECTION 2026-09-23 — my zod count was wrong, and a sibling found it with the right tool
+
+The §"Dependabot triaged" table above says the `zod` 3→4 blast radius is
+**3 one-arg `z.record()` calls in 1 file**. **It is 5, across 3 files.**
+
+`e3303e58` ("zod 3 -> 4, and the converter that emptied a published schema
+without failing") landed the migration and records the two I missed —
+`tool-types.ts:496` and `workflow.ts:252` — found with `tsc` rather than with
+a scan.
+
+**Why my walk missed them, stated so it is not repeated.** I replaced a naive
+regex with a paren-matching walk after noticing that
+`z\.record\([^)]*\)` truncates `z.record(z.string(), z.unknown())` at the
+first `)` and reports every two-arg call as one-arg. That fixed the ARITY
+question and left the MATCHING question untouched: my walk still anchored on
+`re.finditer(r'z\.record\(')`, so it required `z.record` and its paren to be
+adjacent. The corpus writes
+
+    z
+      .record(z.union([...]))
+
+and neither scan could see it.
+
+**This is `q2wn`'s lesson arriving again**, and `x4a6` already wrote it down
+after three regex walkers each produced a different plausible wrong number:
+
+> do not hand-roll a module-graph walker when the toolchain will resolve the
+> graph for you. A regex over import syntax has now been wrong here in three
+> different directions, and **each failure produced a plausible number rather
+> than an error**.
+
+Mine produced a plausible number too — small enough to look like good news,
+which is the shape that gets a count believed rather than checked. The
+measurement was published to the owner as a decision input and to #956 as
+evidence, so it is corrected in both places rather than edited away here.
+
+**The `typescript` half of that table stands** — 107 errors in 2 files,
+compiler-API cause — and is superseded in a better direction by **#994** /
+bean `u2ol`, which establishes what my entry left open: TS 7 *does* ship an
+AST API at `typescript/unstable/`, with all 10 type guards these files need
+present, but no `createSourceFile` and no `forEachChild`. So it is a
+re-architecture, not a port, and the open question is whether two scripts on
+the `bun run gates` path should depend on a subpath named `unstable`.
+
+**Two beans I created for this work were duplicates and were not committed** —
+one for the zod migration (landed as `e3303e58`) and one for the TS 7
+deferral (covered by `u2ol`). Both were untracked and never pushed. Recorded
+here because `beans create` dedupes on nothing, and the near-miss is the
+point: I did check the store first, and both siblings' beans were invisible
+because they live on unmerged branches. **Checking the store is not sufficient
+when the store is branch-local** — the claim's own §"A claim is branch-local"
+says a claim announces rather than reserves until the PR exists, and this is
+the same fact biting from the other side.

@@ -27,5 +27,6 @@ specific content, and any content shown is illustrative only.
   dictionaries.
 - **[Authoring a WHO SMART IG (L3)](who-smart-ig.html)** — FHIR / FSH / SUSHI /
   IG Publisher.
+- **[Voices — editorial overlays](voices.html)** — how to activate, use, and review against shipped editorial and visual registers.
 - **[Adding a new content type](new-content-type.html)** — extend the platform
   with a new adapter + skill package.

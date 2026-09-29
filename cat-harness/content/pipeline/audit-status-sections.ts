@@ -29,9 +29,9 @@
  * is performed by an agent/human draining the emitted queue.
  *
  * Usage:
- *   bun run content/pipeline/audit-status-sections.ts
- *   bun run content/pipeline/audit-status-sections.ts --paper quantum-observable-universe
- *   bun run content/pipeline/audit-status-sections.ts --out build/status-section-audit.json
+ *   bun run cat-harness/content/pipeline/audit-status-sections.ts
+ *   bun run cat-harness/content/pipeline/audit-status-sections.ts --paper quantum-observable-universe
+ *   bun run cat-harness/content/pipeline/audit-status-sections.ts --out build/status-section-audit.json
  *
  * @module content/pipeline/audit-status-sections
  */

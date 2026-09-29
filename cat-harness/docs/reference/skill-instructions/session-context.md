@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Session context'
 parent: Skill instructions
 ---
@@ -27,7 +28,7 @@ rather than containing them.
 
 Shape: `schemas/session-context.ts`. Graph kind: `session-state`, layer
 `state` — a session writes its own record as it goes, which is exactly what
-[`content-context-and-state-graphs`](../folio-core/content-context-and-state-graphs.md)
+[`content-context-and-state-graphs`](content-context-and-state-graphs.md)
 means by live state.
 
 ## The fields — read them off the schema, never off this page
@@ -52,7 +53,7 @@ derived from anything.**
 
 The machine keeping the session cannot infer it — the same reason the Logger
 cannot infer who wrote a log line, which is why
-[`log-message`](../../../bootstrap/skills/log-message.md) takes `actor` too. A
+[`log-message`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/log-message.md) takes `actor` too. A
 session record that cannot name its actor records that something is happening
 and nothing about **who is answerable for it**, which is the first question a
 sibling session needs answered before it touches the same bean.
@@ -86,13 +87,13 @@ one.
 
 **`claimed` is by reference because a claim announces rather than reserves.**
 The bean is the authority on its own status
-([`bean-coordination`](../folio-core/bean-coordination.md)); a status copied
+([`bean-coordination`](bean-coordination.md)); a status copied
 here would be free to contradict it, and a sibling reading the copy would act
 on a claim that had already been released.
 
 **`waitingOn` carries `since` or it carries nothing.** A wait with no start
 cannot be told from abandoned work — the same argument
-[`bean-blocking`](../folio-core/bean-blocking.md) makes for requiring an
+[`bean-blocking`](bean-blocking.md) makes for requiring an
 expiry. `what` is free text on purpose: a human answer, a CI run, a sibling's
 PR is an open set no enum would survive.
 
@@ -128,7 +129,7 @@ and the parse is where it is enforced.
 session; this says who is working and where they are right now. Delete every
 session record and the plan is intact.
 
-**Not a log.** [`log-message`](../../../bootstrap/skills/log-message.md)
+**Not a log.** [`log-message`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/log-message.md)
 records what an actor DID at a moment, append-only. This is the current
 position, overwritten as it moves. A log tells you how you got here; this tells
 you where you are.

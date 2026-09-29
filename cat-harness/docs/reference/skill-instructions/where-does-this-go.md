@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Where does this go?'
 parent: Skill instructions
 ---
@@ -51,13 +52,13 @@ placement.
 | # | the question you are actually asking | who answers it |
 |---|---|---|
 | 1 | Is this a work item, a sign-off, or a code review? | [`issue-working`](issue-working.md) §"What an issue is *for*, against its neighbours" |
-| 2 | Is this feature work that needs a GitHub issue first? | [`crdm-detect`](../crdm/crdm-detect.md) §"Issue association" |
+| 2 | Is this feature work that needs a GitHub issue first? | [`crdm-detect`](crdm-detect.md) §"Issue association" |
 | 3 | What TYPE of bean is it, and under which parent? | [`todo-manager`](todo-manager.md), and `check:bean-parents` enforces it |
 | 4 | Does a bean for this already exist? | [`todo-manager`](todo-manager.md) §"Check before you create" |
 | 5 | May I claim it — is a sibling already on it? | [`bean-coordination`](bean-coordination.md) §"A claim is branch-local" |
 | 6 | Which directory, and what KIND of graph does it hold? | [`content-context-and-state-graphs`](content-context-and-state-graphs.md) and [`directory-conventions`](directory-conventions.md) |
 | 7 | Is this an adapter, a profile, or a visualiser? | [`content-profiles`](content-profiles.md), and [issue #764](https://github.com/litlfred/folio-assistant/issues/764) for the axis still open |
-| 8 | Does this belong in `AGENTS.md` or in a skill? | the banner atop [`AGENTS.md`](../../../AGENTS.md) — **always the skill** |
+| 8 | Does this belong in `AGENTS.md` or in a skill? | the banner atop [`AGENTS.md`](https://github.com/litlfred/folio-assistant/blob/main/AGENTS.md) — **always the skill** |
 | 9 | Is this a skill, or an agent's memory? | [`agent-memory`](agent-memory.md) |
 
 **Nine, and the count is here on purpose** where the repository's own rule is

@@ -79,7 +79,7 @@ jobs:
     name: Lean bare-import gate (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # HARD GATE: a bare `import Mathlib` (optionally trailing whitespace)
       # at the start of a line is forbidden in content Lean files. Use
@@ -137,9 +137,9 @@ jobs:
     name: Python unused/wildcard imports (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -191,6 +191,19 @@ jobs:
             --exclude '**/_deprecated/**' \
             $targets
 
+      # THIS STEP IS FOR THIS REPOSITORY'S OWN SCRIPTS, NOT FOR PACKAGES IT
+      # PUBLISHES. A publishable package's Python tests run in the `typescript`
+      # job, under `bun run check:published-packages`, which discovers them
+      # from each package's `pyproject.toml` and installs that package's own
+      # `[project.optional-dependencies] test`.
+      #
+      # The split is not tidiness. This step runs each file as a BARE SCRIPT
+      # (`python3 "$t"`) and installs no pytest, so a pytest suite dropped into
+      # the glob below would define its test functions, execute none of them
+      # and exit 0 — reporting a pass it never computed. That is exactly what
+      # `cat-harness/schemas/block-qa-schema/tests/test_python.py` would have
+      # done, and why widening this glob was the WRONG repair for bean `1s5s`.
+      #
       # The Python tests under scripts/tests/ ran nowhere. run-tests.sh
       # delegates to `bun test`, which only collects `*.test.ts`, and no
       # workflow named them — so pdf-text-repair.test.py and
@@ -220,19 +233,28 @@ jobs:
     name: TypeScript — tests, lint, types (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          bun-version: 1.3.14
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      # Each step is a separate gate so the Actions UI names the one that
-      # broke, rather than a single opaque "quality" failure.
-      - name: bun test
-        run: bun test
+      # ## Order matters here, and it is not stylistic
+      #
+      # Actions stops a job at its first failing step, so ANYTHING after a red
+      # step does not run. `bun test` is red on `main` by the owner's decision
+      # (the `t8g3` drift), and while it sat FIRST in this job, lint and
+      # typecheck were masked behind it — `main` had not been linted or
+      # typechecked in CI for as long as that test had been failing. Bean
+      # `om30`, whose split moved the 43 repository gates into their own job;
+      # this reordering is the same defect inside what remains.
+      #
+      # So the two checks that cannot fail for a reason outside their own
+      # subject go FIRST, and `bun test` goes LAST, with nothing behind it to
+      # mask. Adding a step to this job means adding it ABOVE `bun test`.
 
       # Exits 0 on warnings by design; a non-zero exit means a rule that had
       # been driven to zero has regressed.
@@ -242,6 +264,70 @@ jobs:
       - name: tsc --noEmit
         run: bunx tsc --noEmit -p tsconfig.json
 
+      # Each step is a separate gate so the Actions UI names the one that
+      # broke, rather than a single opaque "quality" failure. LAST on purpose —
+      # see the ordering note above.
+      - name: bun test
+        run: bun test
+
+
+
+  gates:
+    # bpmn-node: Task_RepositoryGates
+    name: Repository gates (hard)
+    #
+    # ## Why this is a SECOND job and not more steps in `typescript`
+    #
+    # Bean `om30`. `bun test` was step 2 of 47 here, and Actions stops a job at
+    # its first failing step. No step in the job carried `continue-on-error`, so
+    # while `main` carried its deliberate `t8g3` drift failure, the 45 steps
+    # after it — **113 `bun run` invocations** — did not execute at all. A gate
+    # that was never asked and a gate that passed look identical from outside,
+    # which is bean `xom7`'s defect one level down: at the STEP rather than the
+    # workflow.
+    #
+    # It was not hypothetical. `kg:detangle:check` sits in this block, and it is
+    # the only instrument positioned to catch the defect `xd1g` fixed:
+    # `check:published-packages` (also in this block) installs that package's own
+    # declared devDependencies into
+    # `cat-harness/schemas/block-qa-schema`, so a runner reaching the detangle
+    # check has no nested `node_modules` and measures the tracked corpus, while
+    # any developer container has the install and agrees with the poisoned
+    # value. CI was the one place that disagreement was visible, and CI never
+    # got there. The committed number drifted 1441 -> 1442 unnoticed meanwhile.
+    #
+    # There is deliberately NO `needs: typescript`. The whole point is that a
+    # red test must not stop these from being asked; they are independent
+    # questions about the repository and the owner chose this split over
+    # `continue-on-error` precisely because it changes nothing about what is
+    # asserted — the drift still fails, in its own lane.
+    #
+    # Adding a gate step here rather than to `typescript` is the default now.
+    # `typescript` is the three checks its name promises; everything else is a
+    # repository gate and belongs in this job.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      # `check:published-packages`, below, is the one gate in this job that
+      # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
+      # beside its npm one, and a package this repository publishes has to
+      # work in both languages or neither. The gate installs that package's
+      # OWN declared test extras itself, so nothing about it is named here —
+      # but it cannot conjure an interpreter, and it treats an absent one as
+      # a FINDING rather than a skip, so this step is what keeps that finding
+      # from being the normal state. Bean `1s5s`.
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
       # The base workflow processes are strict; a content package may relax a
       # step only by declaring it with a reason, and never a step the BPMN marks
       # relaxable="false". This fails when a relaxation names something that no
@@ -249,6 +335,22 @@ jobs:
       # permitting nothing, and nobody finds out until the day it matters.
       - name: workflow policy
         run: bun run check:workflow-policy
+
+      # Guards the placement of the step at the END of this job. Kept here, near
+      # the top, because it is cheap and because a structural rule about the file
+      # should be checked before the file's other 100-odd gates spend five
+      # minutes acting on it. Bean `cpss`.
+      - name: a gate that may be red by decision is its job's last step
+        run: bun run check:red-gate-is-last
+
+      # Beside the step above because both judge the WORKFLOW rather than the
+      # corpus, and both want to fail before the job spends five minutes acting
+      # on a file that is wrong. Bean `3ozg`: an unpinned Bun made
+      # `engine_version` record whoever ran last, which rewrote 86 QA sidecars
+      # and left `bun run gates`' tree-mutation detector reporting "NOT clean"
+      # on every branch, pristine `main` included.
+      - name: every workflow installs the pinned Bun
+        run: bun run check:bun-pin
 
       # Every skill citation naming a section of an `AGENTS.md` resolves, or
       # says WHICH `AGENTS.md` it means. Turned on 2026-09-19 once the backlog
@@ -455,6 +557,28 @@ jobs:
       - name: workflow BPMN coverage
         run: bun run check:workflow-coverage
 
+      # CURRENCY IS NOT VALIDITY, and this is the pair that proves it.
+      # `render:bpmn:check` asks whether the committed SVG is what the renderer
+      # produces. It was GREEN across 68 labels reading
+      # `Dependency advisories&#10;(WARN-ONLY)` in published diagrams, and
+      # correctly so — the renderer faithfully produced the wrong thing. This
+      # asks about the OUTPUT'S CONTENT, which is the question a reader has.
+      # Bean `li5y`.
+      #
+      # In the FAST SET, not beside `render:bpmn:check` in the e2e job, and that
+      # placement was corrected after measuring it: `render:bpmn:check` lives
+      # there because bpmn-js renders through a BROWSER. This check needs none —
+      # it reads committed SVG text — so putting it there bought cohesion and
+      # cost reach, since `bun run gates` is the fast set and would never have
+      # run it. A contributor editing a diagram runs that, not `--all`.
+      #
+      # A ratchet, not a gate on the whole corpus: six diagrams are already
+      # affected and fixing them is a sweep with a five-locale translation
+      # consequence. Known counts are baselined; a NEW file, or a baselined file
+      # GAINING a label, fails.
+      - name: no rendered label shows a character reference as literal text
+        run: bun run check:rendered-labels
+
       # Every Tool's `satisfies` names a skill that exists, and every io port
       # references a type the shared vocabulary declares. The schema can require
       # `satisfies` to be non-empty; it cannot know whether the names resolve,
@@ -529,6 +653,22 @@ jobs:
       - name: workflow script paths
         run: bun run check:workflow-paths
 
+      # The same defect one layer in, and the one a READER hits first: a script
+      # whose own usage string names a path that is not the script. 178
+      # occurrences across 67 files when this was added, every one a casualty of
+      # the #223 split moving the platform under `cat-harness/` while the usage
+      # strings kept the pre-split spelling.
+      #
+      # A separate step from the one above for the reason those two are separate
+      # from each other: this needs no cwd model and no exemptions, because a
+      # self-reference has no audience to guess at. `check:command-paths` PASSES
+      # over all 178 by design — `aboutThisTree` judges a path only when its
+      # first segment is a directory that exists at the root, so these land in
+      # its folio-relative bucket (306 of them, counted rather than judged). The
+      # general question is bean `52dz`'s open half and is NOT gated here.
+      - name: usage strings name their own script
+        run: bun run check:usage-paths
+
       # THE OTHER DIRECTION FROM `ovkk`, and the reason it needs a gate at all
       # is that this direction is silent.
       #
@@ -580,8 +720,42 @@ jobs:
       - name: skill manifests and framework JSON
         run: bun run check:skills
 
+      # A skill that arrived without its declarations, REFUSED HERE instead of
+      # surfacing as six obscure failures on somebody else's PR. Seven merges
+      # between 2026-09-24 and 2026-09-26 each broke the gate set that way, and
+      # each was repaired by whoever opened the next PR rather than by its
+      # author -- because CI judges the MERGE of each head into the base, so the
+      # cost lands downstream of the change that caused it. The failure names
+      # `bun run skill:register`, which performs the whole chain; a gate that
+      # states the defect and not the remedy is how six tests came to mean
+      # "somebody read the corpus and work it out".
+      #
+      # The command it names was `skills:register` until the owner consolidated
+      # the two (2026-09-26). Keep this step pointed at whichever one survives:
+      # the gate is the only thing that makes the obligation binding, and for
+      # four days it was on the command that was NOT in CI.
+      - name: every skill is declared, and declares nothing absent
+        run: bun run skill:register:check
+
       - name: knowledge-graph audit
         run: bun run kg:audit:check
+
+      # The same audit, over EVERY declared instance rather than the root alone.
+      #
+      # Not a second answer to the step above — it is the step above, with its
+      # range fixed. `kg:audit:check` audits the auditor's own instance, so for
+      # as long as it was the only step, 13 of 15 nested instances had no
+      # `test/results` at all and `audit:coverage` could not tell "audited and
+      # clean" from "never audited" for any of them (bean `bjzs`, the `dh4f`
+      # defect at instance scale).
+      #
+      # It also catches a staleness nothing else could: an instance's
+      # `kg-qa.manifest.json` records the auditor's hash, so every instance's
+      # manifest goes stale the moment `kg-audit.ts` changes. Measured on this
+      # loop's first run — bootstrap's had been stale and no gate said so,
+      # because no gate ran its audit.
+      - name: knowledge-graph audit, every declared instance
+        run: bun run kg:audit:all:check
 
       # WHICH audits reach which kind of node — the neighbour of the audit
       # above, not a second answer to it. `kg:audit:check` judges the nodes it
@@ -608,6 +782,22 @@ jobs:
       # them back into an upper bound.
       - name: audit coverage is measured, current, and every gate has declared
         run: bun run audit:coverage:require-all
+
+      # ADVISORY ON THE FINDINGS, HARD ON THE STALENESS, and the split is the
+      # whole point of this step existing at all. `xd1g` Done-when 3 wanted a
+      # check that catches the next bare-walk scanner; a syntactic filter
+      # cannot be one (62 findings loose, 4 tight, and the tight one misses
+      # eleven of twelve), so what this gates is DRIFT: the committed census
+      # disagreeing with the tree means the number moved and nobody looked.
+      #
+      # The counts themselves never fail. Gating on them would be the wall
+      # somebody switches off, which is `2krx`'s reasoning and it is right.
+      # The owner ruled on 2026-09-27 that the census ships anyway so the
+      # number stays visible, over the objection that a check which cannot
+      # fail is `1xhc`; this arrangement is what gives it something real to
+      # fail on.
+      - name: the root-scan census is current
+        run: bun run root-scan-census:check
 
       # The four graphs `audit:coverage` reported as `typed-only` — a schema
       # parses their nodes and nothing had an opinion about what they SAY.
@@ -682,7 +872,7 @@ jobs:
       - name: generated docs are current
         run: |
           bun run cat-harness/scripts/gen-schema-docs.ts --check
-          bun run cat-harness/scripts/gen-skill-docs.ts --check
+          bun run skills:docs:check
 
       # The README's AUTHORED half. `readme-sections.ts` owns the marked
       # regions; this owns every other link, and `AGENTS.md` claims that
@@ -716,6 +906,13 @@ jobs:
 
       - name: The root README's generated sections are current
         run: bun run readme:sync:root:check
+
+      # bootstrap's README carries `kg:processes` (its diagrams, drawn) and
+      # `kg:files` (every file it holds), both generated from its declaration
+      # (owner, 2026-09-29). The pictures themselves are checked by
+      # `render:bpmn:check`; this checks the README that shows them.
+      - name: bootstrap's README generated sections are current
+        run: bun run readme:sync:bootstrap:check
 
       # Agent memory is authored under `memory/` and ASSEMBLED into
       # `.claude/agent-memory/<agent>/MEMORY.md`, which is what the Claude Code
@@ -762,6 +959,130 @@ jobs:
       # needing "a translation toolchain not installed on this runner"; both
       # run clean on a bare checkout, measured 2026-09-20, and both are wired
       # below. A reason nothing checks is free to stop being true.
+      # `ahab`: a translated page sits one directory deeper than the page it
+      # was translated from, and 745 of its links did not move with it. That
+      # is invisible to `check:subgraphs` BY DESIGN — `docs/` is renderable,
+      # so a link it cannot resolve here goes to the counted-never-asserted
+      # bucket, where `architecture.md -> api/` legitimately lives.
+      #
+      # The control that separates them only exists for a translated page:
+      # the same link, read from its SOURCE page's directory. 745 resolved
+      # there and 30 did not, and the 30 are the ones a blanket rewrite would
+      # have broken.
+      #
+      # ABOVE the drift gate DELIBERATELY. It was first registered below it,
+      # beside `translation index is current`, and CI showed what that costs:
+      # steps 43-49 read `skipped` because a job stops at its first failing
+      # step, and step 42 is red on main by the owner's decision. A gate in
+      # that region is registered and can never fire — `1xhc` — and this one
+      # would have been born that way, in a change whose own subject is a
+      # check that could not report. `om30` is the precedent and this is the
+      # same mistake one job over.
+      - name: translated pages' links resolve at their own depth
+        run: bun run translated-links:check
+
+      # ABOVE the drift gate DELIBERATELY, same as `translated-links:check`
+      # directly above and for the same reason it records: this step sat 535
+      # lines BELOW the drift batch, and a job stops at its first failing step.
+      # The drift is deliberately red (owner's decision, bean `ngxj`, issue
+      # #206), so `docs:pages:check` could not fire on any PR — the `om30`
+      # masking shape, third instance in this file.
+      #
+      # Measured 2026-09-26 (bean `9x01`): the drift batch is step 40 of this
+      # job's 46, so SIX steps were unreachable. Five remain below it and are
+      # not this change's to move; the count and their names are on the bean.
+      # One of the five is "translation index is current", which is masked by
+      # the translation drift — so the gate that would catch a stale
+      # `translations.json` cannot fire while the catalogues are missing, and
+      # that is why the stale index found earlier today had to be fixed by hand.
+      - name: generated docs pages are current
+        run: bun run docs:pages:check
+
+      # ABOVE the drift batch DELIBERATELY, like the two steps directly above.
+      # A gate registered INSIDE that batch does not run at all: the batch is
+      # one `run: |` block under `set -e` holding 106 gates, and
+      # `translation:drift:check` is the THIRD of them, so the 103 after it have
+      # never executed on any PR or any push to `main`. Bean `cpss` carries the
+      # measurement; `check:workflow-injection` and
+      # `check:artefact-verification` are two of the 103, both landed the same
+      # day this was measured.
+      #
+      # That is the whole reason this gate is its own step. Satisfying
+      # `no check script is unrun` by appending to the batch would have
+      # registered it, reported it, and never run it — which is worse than not
+      # wiring it, because the PR would go green saying otherwise.
+      - name: every claimed locale has a page behind it
+        run: bun run check:available-locales
+
+      # ITS OWN STEP, above the batch. The reason changed under this gate while it
+      # was in review, and the original is recorded because it is why the gate
+      # exists: `translation:drift:check` used to be the THIRD of 106 commands in
+      # one `set -e` batch, so a check placed after it never ran, and a check
+      # ABOUT the drift's silence placed there would have been silenced by it.
+      #
+      # `cpss` has since fixed that structurally (#1436, option (b)): the drift is
+      # no longer in the batch at all, it is the LAST step of the job, and a gate
+      # enforces that it stays there. So this step is no longer dodging the drift
+      # specifically. It stays its own step above the batch anyway, for the reason
+      # `check:available-locales` above states: a gate inside that batch is one the
+      # batch can still stop, and being registered while never running is worse
+      # than not being wired, because the PR goes green saying otherwise.
+      #
+      # WHAT THIS GATE ASKS, and the measurement is corrected from an earlier
+      # revision of this comment. It asks of the CHANGE what the drift gate asks of
+      # the corpus: does what you are about to merge publish a translated page with
+      # no `.po`? On `6ec97bd64ab^` it reports 5, exit 1. An earlier version of
+      # this block said the backlog "went 25 -> 36" and that 35 was this gate's
+      # finding count — BOTH WRONG and retracted on bean `3sm2`. 35 and 15 are the
+      # counts of added files that PUBLISH a translation; the findings were 5 and 2,
+      # and the 35 came from a hand-mutation that dropped the `existsSync` check.
+      # The corpus backlog went 27 -> 8, downward.
+      #
+      # The argument that survives is about control flow and never rested on a
+      # count: a job stops at its first failing step, so a gate held red by decision
+      # cannot report GROWTH in its own subject — which is what a change-keyed gate
+      # can do and a corpus-keyed one cannot.
+      #
+      # It reads the DIFF, so it needs the base ref: `actions/checkout` fetches
+      # shallowly and `origin/main` is not a ref until this fetch. Without it the
+      # gate exits 2 — could not determine — which is red rather than a false
+      # pass, on purpose (`nytj`): a gate that cannot run must not read as green.
+      - name: a change may not publish a translation with no catalogue
+        env:
+          # BOUND, not interpolated into the `run:` body — bean `j0zs` hardened
+          # exactly this surface, and the rule there is to refuse the SHAPE rather
+          # than judge each value, even for something as inert as a SHA.
+          #
+          # Read by the SCRIPT rather than spliced into its argv, and that is the
+          # load-bearing part. `gatesFrom` in `gates.ts` takes every `bun …` LINE
+          # of a step body as its own gate and runs it verbatim, so an `if`/`else`
+          # holding two invocations registers the same check twice and runs both
+          # with this variable unset — measured 2026-09-26, one of the two exited 2
+          # locally with `--base needs a ref`, and the pair also took the gate
+          # census from 167 to 168 and stranded `audit-coverage`'s sidecar. One
+          # command line is what makes `bun run gates` run what CI runs.
+          CATALOGUE_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          # THE FETCH is conditional; the invocation is not. On a `pull_request`
+          # checkout HEAD is the merge commit, so it already CONTAINS the base:
+          # `merge-base(base, HEAD) == base`, which makes `base..HEAD` the same SET
+          # as `base...HEAD` while computing no merge base at all. That matters
+          # because this gate's first CI run exited 2 — `--depth=200 origin main`
+          # created the ref (`* [new branch] main -> origin/main`) and
+          # `origin/main...HEAD` still could not resolve, a grafted shallow history
+          # having no common ancestor to find. Two dots need none, so one commit
+          # is enough to fetch.
+          #
+          # With no base handed to us (a `push` run, or locally) the script falls
+          # back to three dots against `main`, where the history is connected, and
+          # names the range it used either way.
+          if [ -n "$CATALOGUE_BASE_SHA" ]; then
+            git fetch --no-tags --depth=1 origin "$CATALOGUE_BASE_SHA"
+          else
+            git fetch --no-tags --prune --depth=200 origin main || true
+          fi
+          bun run translation:catalogue:check
+
       - name: gates that were registered and never run
         run: |
           set -e
@@ -770,9 +1091,43 @@ jobs:
           # main for an unknown stretch while CI stayed green -- a gate no
           # workflow runs cannot fail, which is bean `xom7` one level down.
           bun run translate-kg-viewer:check
-          # Bean `07p7`: a published translation that has drifted from its
-          # source is a section a reader cannot reach in their language.
-          bun run translation:drift:check
+          # Every uncatalogued page has a `.pot` for a translator to work from.
+          #
+          # It used to carry an ordering note — "BEFORE the drift check on
+          # purpose ... anything placed after it never runs" — and that note is
+          # gone because the thing it worked around is gone:
+          # `translation:drift:check` is no longer in this block at all. It is
+          # the LAST step of this job, so it masks nothing. Bean `cpss`.
+          #
+          # This does NOT turn the drift check green and is not meant to: a
+          # `.pot` is the translator's input, a `.po` is their output, and 19 of
+          # 27 of those outputs are provably not derivable (bean `f6r1`). What it
+          # guards is that the input exists — measured 2026-09-26, not one of
+          # the 25 pages had a `.pot` OR a `.po` in any locale, so the campaign
+          # had nothing to be handed.
+          bun run translation:pot:check
+          # `lvk9`: when the extractor's segmentation changes, msgids in the
+          # committed catalogues stop matching their source. Deleting them throws
+          # away translation work; leaving them shows a translator strings the
+          # page does not contain. This fails when a stale entry is not `#~`
+          # obsolete, and `bun run translation:obsolete` marks them.
+          #
+          # It also reports three states it will NOT fold into a count — a
+          # catalogue sourced from a `.ts` rather than markdown, one that declares
+          # no source at all, and one whose declared source is ambiguous — because
+          # "no findings over the subset I could resolve" is exactly what produced
+          # a wrong published claim on #1433.
+          #
+          # This step carried a placement rationale until the `cpss` merge: it
+          # asked to sit BEFORE `translation:drift:check` so a deliberately-red
+          # gate could not bury it, the `1xhc` shape. That reason is gone rather
+          # than satisfied — the drift check is no longer in this block at all,
+          # it is the last step of the job, and `check:red-gate-is-last` enforces
+          # that structurally near the top. The note is recorded rather than
+          # deleted because a reader who finds this line above nothing in
+          # particular would otherwise re-derive the ordering question from
+          # scratch.
+          bun run translation:obsolete:check
           # Bean `eief`: a stubbed tool must not read as a working one, and a
           # stub that has outlived its tool must fail rather than linger.
           bun run check:tabular-stubs
@@ -795,6 +1150,16 @@ jobs:
           # about, arriving again through the back door.
           bun run navbar:include:check
           bun run check:agents-xref
+          # Bean `rsi6`: `@litlfred/block-qa-schema` is the only package here
+          # that ships to npm, and NO workflow built it. PR #914 bumped its
+          # typescript 5.9.3 -> 7.0.2, passed TEN checks, and left the package
+          # unbuildable -- `tsup --dts` delegates to rollup-plugin-dts, which
+          # bundles its own TypeScript 5.7.3 and dies on TypeScript 7's
+          # compiler API. Ten green checks, not one of which read the file the
+          # PR changed. The set is derived from the git index, and an EMPTY
+          # set fails rather than passing: a sweep that examined nothing has
+          # not cleared anything.
+          bun run check:published-packages
           # Bean `b963`: a path inside a fenced COMMAND is not a link, not a
           # symbol claim and not a literal in a .ts file, so all three
           # neighbouring checks miss it by design. The cold-start line every
@@ -806,6 +1171,15 @@ jobs:
           # defect hid behind: PLATFORM meant the repo root in one test and
           # cat-harness/ in five siblings, in one directory.
           bun run check:anchor-names
+          # Bean `fx5r`'s last open item, and the only one a test could not
+          # close: the other four fixed particular strings. PR #1362 fixed the
+          # two advice strings in check-head-has-run.ts and MISSED the third
+          # copy in pr-checks-present.yml, which kept being posted to live PRs
+          # for four days, because nothing linked them. The rule is structural
+          # rather than about intent -- a mention passes when its neighbourhood
+          # says something about the field's reliability, whether that is a
+          # caution or a measured licence, and fails when it is bare.
+          bun run check:stale-field-advice
           # Bean `jijc`, under the owner's REPLACE ruling on `b5f0`:
           # DECLARATION_FILENAME existed the whole time and 20 non-test call
           # sites built the path from a literal instead, which is what turns
@@ -840,6 +1214,15 @@ jobs:
           # `imagesForRole` is layout-keyed and a mark declares no layout.
           bun run check:image-roles
           bun run check:bean-parents
+          # Bean `e8m3`, on the owner's VIEW ruling. `beans/defs/archive/` held 631
+          # bean-defs while `beans/beans.json` declared it nowhere — the `dh4f`
+          # family INVERTED, and invisible to check:declared-dirs and
+          # check:harness-dirs by construction, because both compare declarations
+          # against disk and not the reverse. It also holds the invariant the
+          # ruling implies: an archived bean that is still open is work no count
+          # can see, which is the 35-bean defect e8m3 was filed over.
+          bun run check:bean-archive
+          bun run check:bean-blocks
           # Bean `kpcl`, issue #956: `in-progress` stopped carrying information --
           # 99 claims, 77 untouched for a day or more. The obvious sweep assumes
           # its own answer, so this gate owns only the half that is PURE GRAPH:
@@ -965,9 +1348,18 @@ jobs:
           # in the same change, which is what makes the exception checkable
           # instead of a carve-out.
           bun run check:materialized-fixity
+          # Every skill a remote-package wrapper declares is MATERIALIZED at the
+          # commit that wrapper pins — offline, no fetch (issue #556).
+          bun run check:remote-skills
           bun run check:read-only-graphs
           bun run check:actor-reach
           bun run check:harness-dirs
+          # A bootstrap schema names no outside concept — no derivative's
+          # content model, layer names or standards (owner, issue #1164).
+          bun run check:bootstrap-concepts
+          # A filed requirement parses as one, its id is its file name, and no
+          # name is both a proposal and a requirement (issue #1164).
+          bun run check:requirements
           # Does a path-filtered workflow rebuild when the scripts it RUNS
           # change? `docs-site.yml` named eight generators and ran 22, so a
           # fix to `kg-export.ts` -- the script producing both graph documents
@@ -1242,8 +1634,18 @@ jobs:
       # What a red here means now: somebody added a node, renamed a block, ran
       # a first sweep, or moved a sidecar, and did not regenerate. A real
       # omission, every time.
-      - name: generated docs pages are current
-        run: bun run cat-harness/scripts/gen-docs-pages.ts --check
+      # NAMED, not the long path, and that is the whole point of bean `9x01`
+      # finding 4: every page this generator writes carries a banner ending "and
+      # `docs:pages:check` fails on the difference", and that script did not
+      # exist — `bun run docs:pages:check` answered `Script not found` while this
+      # step ran the same guard by its path. The documented command and the
+      # enforced command are now ONE STRING, so neither can drift from the other.
+      #
+      # Adding the script alone was not enough: `gates.test.ts > no check script
+      # is unrun` then reported `docs:pages:check` as declared and run by no
+      # workflow — bean `ot9a`'s defect, which is what this job's "gates that
+      # were registered and never run" step exists for. Two guards, opposite
+      # directions, and only this line satisfies both.
 
       # GATED, unlike the two projections below, and the difference is the
       # INPUT SET — which is the standard those two are excused against.
@@ -1337,6 +1739,42 @@ jobs:
       - name: translation index is current
         run: bun run translation:index:check
 
+      # ── LAST ON PURPOSE, and this is the whole point of the placement ──────
+      #
+      # `translation:drift:check` is the one gate in this job that has been red
+      # BY DECISION (bean `ngxj`, issue #206) rather than by defect. It used to
+      # be the THIRD of 107 `bun run` lines inside "gates that were registered
+      # and never run" — one `run: |` block under `set -e` — so while it was red
+      # the 104 invocations after it never executed, on any PR or any push to
+      # `main`.
+      #
+      # Measured 2026-09-26 (bean `cpss`): of those 104, eighteen have no test
+      # anywhere that references the same script, so for those eighteen the
+      # masked gate was the only thing watching. The other 86 had a test twin,
+      # which is a second line of defence rather than an excuse — and both
+      # figures are BOUNDS, not counts, because the twin was matched on script
+      # basename.
+      #
+      # The cost was measured too, twice. `check:partition` (in the masked
+      # region) reported an unclassified module the hour the batch first ran
+      # through. And "translation index is current", three steps above, is the
+      # gate that would have caught a stale `docs/_data/translations.json` —
+      # which had to be repaired BY HAND on 2026-09-26 after CI reported green
+      # on the branch carrying it. The gate existed the whole time.
+      #
+      # So the invariant is now STRUCTURAL rather than remembered: a gate that
+      # may be deliberately red belongs last, where the set it masks is empty.
+      # Anything added after this step re-creates the defect, and the reason it
+      # is safe here is only that nothing follows.
+      #
+      # Three earlier changes moved ONE gate each to just above the batch
+      # (`ee964c7411` for `translated-links:check`, then `docs:pages:check` and
+      # `check:available-locales`). Each was correct and none of them scaled:
+      # "put your gate above the drift" is a rule every future author has to be
+      # told, while "the deliberate red is last" is a rule the file enforces.
+      - name: translations have not drifted from their source
+        run: bun run translation:drift:check
+
   # ── End-to-end, including the accessibility gate ────────────────────
   #
   # `bunx playwright test` ran in NO workflow before this job. Twenty-nine e2e
@@ -1357,11 +1795,11 @@ jobs:
     name: End-to-end + accessibility (hard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          bun-version: 1.3.14
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
@@ -1383,12 +1821,19 @@ jobs:
       - name: playwright test
         run: bunx playwright test
 
+      # Every .sh a user runs by hand or wires into a config has a .bat beside
+      # it, generated from one template by scripts/gen-bat-wrappers.sh. A
+      # script added to WRAPPED without a regenerate, or a wrapper edited by
+      # hand, is the drift this catches; --check writes nothing.
+      - name: windows .bat wrappers are current
+        run: bun run bat:sync:check
+
   rust-wildcard:
     # bpmn-node: Task_Rust
     name: Rust wildcard imports (warn-only)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # WARN-ONLY ratchet: count non-test `use ...::*;` wildcard imports in
       # tools/. Test modules (`#[cfg(test)]` / `use super::*;`) are the bulk
@@ -1425,10 +1870,10 @@ jobs:
     name: Dependency advisories (warn-only)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          bun-version: 1.3.14
 
       # WARN-ONLY by the owner's decision on bean `j41m`, and the reason is
       # worth keeping next to the step: a HARD gate on advisories hands a
@@ -1451,3 +1896,37 @@ jobs:
       # baseline it had never computed."
       - name: Known advisories against the resolved tree
         run: bun run check:dependency-advisories
+
+  skill-registration-chain:
+    # bpmn-node: Task_SkillChain
+    name: Skill-registration chain, unmasked (hard)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # THE ORIGINAL JUSTIFICATION IS GONE, and saying so is the point. This
+      # job was added because all six of these checks lived in the `typescript`
+      # job behind `bun test`, which runs the kg-audit and detangle WRITERS and
+      # repaired two artefacts before their checks read them (bean `ymsu`) --
+      # making this "the only place they are read against the tree as checked
+      # out". The `gates` job now runs all six and never runs `bun test`, so
+      # they are unmasked there. Measured 2026-09-26 on the merged tree.
+      #
+      # What survives, and why this is kept rather than deleted: ONE command a
+      # skill author runs (`bun run skill:register`) that regenerates and
+      # verifies the chain together, a committed QA sidecar recording which
+      # steps ran, and ONE named failure instead of six unrelated generated
+      # files -- which is bean `v625`'s actual complaint, and what the six
+      # separate steps cannot give.
+      #
+      # Its first CI run earned the place regardless: it went red on
+      # `kg:detangle:check` and the cause was 1214 files of a gitignored
+      # `node_modules/` counted as graph nodes, pinned in a committed sidecar.
+      - name: the registration chain is current, read unmasked
+        run: bun run skill:register:check

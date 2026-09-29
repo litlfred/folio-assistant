@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Opening brief'
 parent: Skill instructions
 ---
@@ -122,7 +123,7 @@ Three places to look, in this order, and none of them is the code:
 
 1. **The proposals — the design corpus.** They live in the `docs/` of the
    instance whose stub needs them; today that is
-   [`cat-harness/docs/proposals/`](../../docs/proposals/index.md), and its
+   [`cat-harness/docs/proposals/`](../../proposals/index.html), and its
    `index.md` is where to start.
 
    They were in `fsh-guts/proposals/` until 2026-09-23, under a kind named for
@@ -233,6 +234,6 @@ to begin.
 
 | process | step(s) that name it |
 |---|---|
-| [A sub-graph wants to leave](../../processes/graph-detanglement.html) | Brief the topic before&#10;touching anything |
+| [A sub-graph wants to leave](../../processes/graph-detanglement.html) | Brief the topic before touching anything |
 | [Options analysis](../../processes/options-analysis.html) | Frame the decision and check the trigger |
 

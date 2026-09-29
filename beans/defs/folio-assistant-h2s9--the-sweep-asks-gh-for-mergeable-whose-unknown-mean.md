@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-22T00:47:08Z
-updated_at: 2026-09-22T10:57:18Z
+updated_at: 2026-09-22T12:43:26Z
 parent: folio-assistant-1xhc
 ---
 
@@ -55,7 +55,7 @@ reopens it.
 - [x] Both halves use the same instrument, so they cannot disagree
 - [x] The UNKNOWN branch is reserved for the probe genuinely failing, never
       for a value that merely has not been computed
-- [ ] Verified on the next scheduled run against a live PR, not asserted
+- [x] Verified on the next scheduled run against a live PR, not asserted
 
 
 ---
@@ -187,3 +187,81 @@ That the **workflow reaches this step in production**. Steps 7 and 8 are gated `
 
 - [ ] **PRODUCTION:** the sweep flags a PR with no run and reports `MERGEABLE` or `CONFLICTING`, never `UNKNOWN` — **still open after two clean sweeps**
 - [x] **THE DEPLOYED STEP'S LOGIC:** all five branches exercised against real forge refs, four of them with no synthetic input at all; no `UNKNOWN` mergeability verdict in any case
+
+
+_2026-09-22T12:40:00Z_ — **THIRD CLEAN SWEEP. Box still unticked.** Run 44 fired 11:42:37 on `0a818847b9`; steps 7 and 8 both `skipped`, step 9 succeeded. Nobody flagged, so the `no-run` branch has now failed to execute on three consecutive post-fix runs (42, 43, 44).
+
+Three is where a run of clean results is most tempting to read as evidence, and it is the same non-evidence as one. Recorded as a count rather than a conclusion.
+
+## THE FIX WAS USED IN ANGER, on this session's own pull request
+
+Reading #944 minutes later:
+
+    "mergeable_state": "unknown"
+
+**That is this bean's exact subject, arriving unprompted on my own PR.** The pre-fix reading would have been *"mergeability cannot be determined"*. The instrument this bean established says otherwise, and it was applied rather than the field trusted:
+
+    git ls-remote origin refs/pull/944/merge   -> 1 ref
+    git ls-remote origin refs/pull/944/head    -> 1 ref
+    => MERGEABLE
+
+The merge ref exists. The API had simply **not computed the field yet** — lazily, as `h2s9` says — and the PR merged cleanly against a base six commits ahead with zero conflicts, which confirms the probe's verdict over the field's.
+
+**This is not the production verification and must not be counted as one.** The sweep did not flag #944; I read its state by hand because a check-in told me to look. What it does establish is narrower and still worth writing down: **the field went `unknown` on a genuinely mergeable PR again, in ordinary use, six days-worth of commits after the first observation on #731.** The defect this bean fixed is live and recurring, not a one-off race that has since settled — which is the strongest available answer to anyone asking whether the fix was worth making.
+
+## Done when
+
+- [ ] **PRODUCTION:** the sweep flags a PR with no run and reports `MERGEABLE` or `CONFLICTING`, never `UNKNOWN` — **open after three clean sweeps**
+- [x] **THE DEPLOYED STEP'S LOGIC:** all five branches exercised against real forge refs
+- [x] **THE DEFECT IS RECURRENT, not a settled race:** `mergeable_state: "unknown"` observed again on #944, a mergeable PR, and correctly resolved by the merge-ref probe
+
+## 2026-09-25 — a second, sharper instance: `fx5r`
+
+The same root (a forge API's view of a PR treated as current) hit again, and
+worse. `update-branch` returned **"merge conflict between base and head"** for a
+PR that had been **closed and merged 45 minutes earlier**, while
+`GET /pulls/1317` still served `mergeable=None`, `mergeable_state=unknown` and
+the pre-merge `head.sha`.
+
+That is beyond this bean's subject in one respect worth naming: here the field
+was merely *uninformative* (`unknown` rendered as "could not be read"). There
+the API **named a cause that was false** — a conflict, when `git merge-tree`
+and a real `git merge --no-commit` both reported zero unmerged paths. A wrong
+error string is worse than an absent one, because it is a hypothesis delivered
+with the authority of a measurement, and an agent will build on it.
+
+This bean's own remedy generalises and is the right one:
+`git ls-remote origin refs/pull/N/merge` here, `git merge-base --is-ancestor`
+there — **when a forge API and git disagree about git, git is the subject and
+the API is a cache.** Details and the full measurement table: `fx5r`.
+
+---
+
+## 2026-09-26 — verified on a live scheduled run, as the last item demanded
+
+Run **133** of `PRs without checks` ([36218768664](https://github.com/litlfred/folio-assistant/actions/runs/36218768664)),
+`event=schedule`, 04:45:19Z, conclusion **success**, against the live PR set.
+
+The workflow's own sweep at `pr-checks-present.yml:163` is
+
+```sh
+if ! merge_ref="$(git ls-remote origin "refs/pull/$pr/merge" 2>/dev/null)"; then
+```
+
+— the merge-ref probe, not `gh pr view --json mergeable`. So the third
+Done-when ("both halves use the same instrument") is confirmed **in the
+workflow as it actually ran**, not by reading the script it shares a bean with.
+
+It found one affected PR and reported `already told #1340 about 9cafca3dd`,
+so the idempotence mark works too. Step 9 ("Close the tracking issue when
+every head has a run") was correctly SKIPPED rather than run, because not
+every head had one.
+
+**This closes the bean's last item on evidence.** Closing is still the owner's
+call, not mine.
+
+## And it turned up what `fx5r` was still open on
+
+The workflow's UNKNOWN **advice string** had not been updated with the script's
+— see `fx5r`. The code agreed; the prose did not.
+

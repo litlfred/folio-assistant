@@ -32,7 +32,7 @@ jobs:
     name: Build libhecke_engine_c.so
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install system deps
         run: sudo apt-get update && sudo apt-get install -y libgmp-dev libmpfr-dev
       - uses: dtolnay/rust-toolchain@stable
@@ -42,7 +42,7 @@ jobs:
       - name: Build hecke-engine-c
         run: cd tools/hecke-engine-c && cargo build --release
       - name: Upload artefacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: hecke-engine-c
           path: |
@@ -56,10 +56,10 @@ jobs:
     needs: build-c-abi
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install system deps
         run: sudo apt-get update && sudo apt-get install -y libgmp-dev libmpfr-dev
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: hecke-engine-c
           path: tools/hecke-engine-c/
@@ -82,12 +82,12 @@ jobs:
     needs: build-c-abi
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install Octave + system deps
         run: |
           sudo apt-get update
           sudo apt-get install -y octave octave-dev libgmp-dev libmpfr-dev
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: hecke-engine-c
           path: tools/hecke-engine-c/
@@ -113,14 +113,14 @@ jobs:
     needs: build-c-abi
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install system deps
         run: sudo apt-get update && sudo apt-get install -y libgmp-dev libmpfr-dev
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: hecke-engine-c
           path: tools/hecke-engine-c/
-      - uses: julia-actions/setup-julia@v2
+      - uses: julia-actions/setup-julia@v3
         with:
           version: '1.11'
       - name: Run Julia smoke
@@ -141,7 +141,7 @@ jobs:
     needs: build-c-abi
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install GAP + system deps
         run: |
           sudo apt-get update
@@ -149,7 +149,7 @@ jobs:
           # the kernel extension's HeckeEngine.c #includes.  Without it
           # `gap` alone installs the runtime only.
           sudo apt-get install -y gap libgap-dev autoconf libtool libgmp-dev libmpfr-dev gcc make
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: hecke-engine-c
           path: tools/hecke-engine-c/
@@ -191,14 +191,14 @@ jobs:
     name: Node napi-rs smoke
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install system deps
         run: sudo apt-get update && sudo apt-get install -y libgmp-dev libmpfr-dev
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: tools/hecke-engine-node -> target
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '20'
       - name: Build native module + run tests
@@ -213,7 +213,7 @@ jobs:
     name: JVM Rust unit tests + Kotlin bindings
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install system deps
         run: sudo apt-get update && sudo apt-get install -y libgmp-dev libmpfr-dev
       - uses: dtolnay/rust-toolchain@stable
@@ -258,7 +258,7 @@ jobs:
           done
           echo "Kotlin bindings generated with all 9 Phase A+B functions present."
       - name: Upload Kotlin bindings
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: kotlin-bindings
           path: tools/hecke-engine-jvm/bindings/kotlin/
@@ -269,7 +269,7 @@ jobs:
     name: WASM Rust unit tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
         with:
@@ -289,7 +289,7 @@ jobs:
     name: WASM bundle build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: wasm32-unknown-unknown
@@ -308,7 +308,7 @@ jobs:
     name: R extendr smoke
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install system deps
         run: sudo apt-get update && sudo apt-get install -y libgmp-dev libmpfr-dev
       - uses: r-lib/actions/setup-r@v2
@@ -403,7 +403,7 @@ jobs:
       image: sagemath/sagemath:latest
       options: --user root
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install pyhecke + qou-substrate from local sources
         run: |
           sage -pip install --no-deps \

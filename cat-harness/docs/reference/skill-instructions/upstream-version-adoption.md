@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Adopting an upstream version bump'
 parent: Skill instructions
 ---
@@ -22,8 +23,8 @@ ordering:
 
 | Diagram | What it is |
 |---|---|
-| [`upstream-pin-watch.bpmn`](../../processes/upstream-pin-watch.bpmn) | The **watcher**. Scheduled, mechanical, ends at either "every pin is current" or "one tracking issue says which is not". |
-| [`upstream-version-adoption.bpmn`](../../processes/upstream-version-adoption.bpmn) | The **reusable subprocess**, entered once per stale pin. Scope → impact → MVP → review → decide. |
+| [`upstream-pin-watch.bpmn`](../../processes/upstream-pin-watch.html) | The **watcher**. Scheduled, mechanical, ends at either "every pin is current" or "one tracking issue says which is not". |
+| [`upstream-version-adoption.bpmn`](../../processes/upstream-version-adoption.html) | The **reusable subprocess**, entered once per stale pin. Scope → impact → MVP → review → decide. |
 
 The second is called, not copied: `calledElement="Process_UpstreamAdoption"`.
 Any pinned upstream dependency enters it the same way, and a new tenant is a
@@ -109,7 +110,7 @@ run the row's `mvp` commands. For the theme:
 rm -rf _kg _site
 bun test                              # unit tests
 CI=1 bunx playwright test             # a11y, action tiles, sidebar panels, qa panel
-bun run scripts/site-links.ts --site ./_site   # every navbar tile resolves in the BUILT site
+bun run cat-harness/scripts/site-links.ts --site ./_site   # every navbar tile resolves in the BUILT site
 ```
 
 `site-links.ts` is the one that earns its place here: it checks the tiles

@@ -137,3 +137,29 @@ Coordinate on `o7eq` rather than deciding it unilaterally.
       each to be put in full when it is next, per `interaction-modality`
       §"More than one decision pending". `alox`/`o3xy` still need a PAGE link,
       not the site root
+
+---
+
+## Re-checked 2026-09-25 — stays open, and the health sweep's reading of it is wrong
+
+This bean is reported by `bun run health` as *"`in-progress` with all 4 of its
+Done-when boxes ticked"*. It is not.
+
+**One box is `[~]`, not `[x]`:**
+
+> - [~] The six owner-blocked beans asked as questions the owner can answer by
+
+So the sweep counts `[~]` as ticked. That is a small defect in the sweep rather
+than a fact about this bean, and it is worth knowing because it inflates the
+"finished but open" population the sweep asks a person to act on.
+
+**And that box is not an agent's to discharge.** `bean-coordination` obligation
+2: *"A Done-when only a person can satisfy is not yours to discharge."* Six
+owner-blocked beans waiting on owner answers is precisely that.
+
+**Expiry** — required of any verified-done-but-not-closable exception, same
+shape `bean-blocking` requires: re-check when the six owner-blocked beans have
+answers, or on **2026-10-25**, whichever is first. If the six have been
+answered or withdrawn by then, the box resolves and this closes on the next
+sweep.
+

@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'The Milnor exposition standard'
 parent: Skill instructions
 ---
@@ -22,7 +23,7 @@ a perfect 16/16**. Scoring against eight bare words is how eight reviewers
 produce eight different sixteens. Bean `bfmf`.
 
 **It is now derived from the paper, not from the name.** The source is
-[`folio-assistant-sci/library/milnorlink/`](../../../folio-assistant-sci/library/milnorlink/)
+[`folio-assistant-sci/library/milnorlink/`](https://github.com/litlfred/folio-assistant/tree/main/folio-assistant-sci/library/milnorlink)
 — John Milnor, *Link Groups*,
 Annals of Mathematics, Second Series, 59(2), March 1954, pp. 177–195
 ([JSTOR 1969685](http://www.jstor.org/stable/1969685)), ingested at journal-page
@@ -34,7 +35,7 @@ so `milnorlink` went to the science instance. This link went on pointing at
 `cat-harness/library/` for a day and nothing reported it — `check:subgraphs`
 only began walking this directory once `main` added its zero-dangling
 assertion, which is what finally surfaced it. Every rule in
-[`milnor`'s voice skill](../../../folio-assistant-sci/skills/voices/milnor/voice.json) quotes a page. 8899 words, 496
+[`milnor`'s voice skill](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/voices/milnor/voice.json) quotes a page. 8899 words, 496
 sentences; measured 2026-09-19.
 
 ### What the measurement found, including where WE are wrong

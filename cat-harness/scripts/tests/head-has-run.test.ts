@@ -19,8 +19,10 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import {
-  isPushed,
+  pushedState,
+  lastPushedReason,
   mergeStateForHead,
+  missingRequiredAdvice,
   noRunAdvice,
   prNumberForHead,
   resolveCommit,
@@ -134,7 +136,11 @@ describe("pushed or not, because the two need different advice", () => {
   test("a commit on a remote-tracking ref reads as pushed", () => {
     // Asserted against `origin/main`, which any clone that can run this has.
     const sha = resolveCommit(REPO, "origin/main") ?? resolveCommit(REPO, "HEAD")!;
-    expect(isPushed(REPO, sha)).toBe(true);
+    // `toBe("pushed")`, NOT `not.toBe("not-pushed")`. Bean `y0n2`: the third
+    // state exists precisely so a git failure cannot pass as either answer, and
+    // a negative assertion would be satisfied by `cannot-tell` — reinstating the
+    // conflation the type was introduced to remove.
+    expect(pushedState(REPO, sha)).toBe("pushed");
   });
 
   test("a commit in a fresh repo with no remote reads as NOT pushed", () => {
@@ -146,7 +152,19 @@ describe("pushed or not, because the two need different advice", () => {
     g("config", "user.email", "t@e");
     g("config", "user.name", "t");
     g("commit", "-q", "--allow-empty", "-m", "only commit");
-    expect(isPushed(root, resolveCommit(root, "HEAD")!)).toBe(false);
+    expect(pushedState(root, resolveCommit(root, "HEAD")!)).toBe("not-pushed");
+  });
+
+  test("git unable to answer is `cannot-tell`, NOT `not-pushed`", () => {
+    // Bean `y0n2`, the whole point. A path that is not a git repository makes
+    // `git branch -r --contains` exit non-zero, which the old boolean caught and
+    // returned as `false` — so somebody who HAD pushed was told to push again.
+    // Asserted on a real git failure rather than a stub, because the defect was
+    // in what a real non-zero exit became.
+    const notARepo = mkdtempSync(join(tmpdir(), "headrun-norepo-"));
+    expect(pushedState(notARepo, "0".repeat(40))).toBe("cannot-tell");
+    // And the reason survives, which it could not before: stderr was discarded.
+    expect(lastPushedReason()).toContain("exited");
   });
 });
 
@@ -255,5 +273,43 @@ describe("sddf — the advice, per state", () => {
     expect(msg).toContain("by hand");
     expect(msg).toContain("a tree that will never exist");
     expect(msg).not.toContain("safe HERE");
+  });
+
+  /**
+   * "Check by hand" has to resolve to something, and for a while it resolved
+   * to the wrong thing.
+   *
+   * Both UNKNOWN messages said *"check `mergeable_state` by hand"* — inside a
+   * module whose own {@link mergeStateForHead} deliberately asks
+   * `git ls-remote origin refs/pull/N/merge` instead, because `h2s9` had
+   * already established the field is not a reliable discriminator. The code
+   * had the right instinct and the prose sent the reader the other way.
+   *
+   * Bean `fx5r` then measured the cost: 45 minutes after a PR merged, its
+   * `mergeable`, `mergeable_state`, `head.sha` and `updated_at` all still
+   * served the pre-merge view, and `update-branch` answered "merge conflict
+   * between base and head" for a PR that was CLOSED — a wrong cause, stated
+   * with the authority of a measurement. Only `merged` went stale-safe.
+   *
+   * So these pin the REFERENT of "by hand", which the assertion above cannot:
+   * it is satisfied by any advice containing the phrase, including advice
+   * that names the field that misleads.
+   */
+  test("...and 'by hand' means ASK GIT, not the field that goes stale", () => {
+    for (const msg of [flat(noRunAdvice("unknown")), flat(missingRequiredAdvice(["Code-quality gates"], "unknown"))]) {
+      // The discriminators that hold: `merged`, and the merge ref itself.
+      expect(msg).toContain("--json merged");
+      expect(msg).toContain("refs/pull/");
+      // And the field is named only to warn against it.
+      expect(msg).toContain("not `mergeable_state`");
+    }
+  });
+
+  test("the warning is specific about WHY, not just that", () => {
+    // A bare "don't trust it" ages into folklore. The measurement is what
+    // lets a future reader decide whether it still holds.
+    const msg = flat(noRunAdvice("unknown"));
+    expect(msg).toContain("45 minutes");
+    expect(msg).toContain("stale-safe");
   });
 });

@@ -652,6 +652,110 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
     }),
 
+    // ── jh2j's remaining half: the TeX scripts that had no declared command ──
+    //
+    // Seven files, none with a `package.json` script, so nothing in the
+    // repository named them — `d308`'s premise exactly. Three are reachable and
+    // get a node; `render-latex` and `generate-block-tex` are LIBRARIES reached
+    // through their consumers (the criterion that already exempted
+    // `pdf-extract` and `pdf-structure` in `81t5`); and two are recorded on the
+    // bean rather than noded, for reasons that are findings:
+    //
+    //   `generate-main-tex.ts`  exits 1 having printed a STACK TRACE from its
+    //                           own source, so it has no refusal to document.
+    //   `latexmk-compile.sh`    compiles LaTeX with a security boundary
+    //                           (shell-escape only on trusted events) and NO
+    //                           skill in the corpus is about compiling. The
+    //                           `yean` shape — a mechanism with no skill —
+    //                           which is the owner's call to author.
+    //
+    // **All three nodes below exit 1 where the house rule wants 2**, and that is
+    // documented rather than silently fixed. `latex-preflight` and
+    // `latex-overfull` above DO exit 2, so the divergence is inside one family.
+    // Changing five scripts' exit codes is a behaviour change the owner should
+    // take deliberately; a node that lies about the exit it will get is worse
+    // than one that records the inconsistency.
+    //
+    // None of the skills these satisfy carries an input contract, so
+    // `check-tools` cannot verify these edges against one. A clean run does not
+    // mean the edge was tested — the same caveat `l1-complete-check` records.
+
+    defineTool({
+      id: "tex-snippet-validate",
+      title: "TeX snippet validation (AST)",
+      description:
+        "Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/validate-tex.ts" },
+      io: {
+        inputs: [
+          { name: "paper", schema: t("Slug"), required: false, arg: { flag: "--paper" }, description: "One folio by slug. Absent, every folio the content root holds." },
+          { name: "file", schema: t("RepoPath"), required: false, arg: { flag: "--file" }, description: "A single `.md` block, for the narrow case." },
+          { name: "compile", schema: t("Flag"), required: false, arg: { flag: "--compile" }, description: "Also compile each snippet with pdflatex — needs a TeX distribution, which the base `requires` does NOT claim." },
+          { name: "json", schema: t("Flag"), required: false, arg: { flag: "--json" } },
+          { name: "warningsLog", schema: t("RepoPath"), required: false, arg: { flag: "--warnings-log" }, description: "Write a QA-compatible log to this path." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "Per snippet, what will not compile. Run in the platform it reports `Files scanned: 0` and exits 1 — measured. That is a could-not-determine wearing a finding's exit code: this repository carries no folio, so there was nothing to scan. Read the scanned count before reading the verdict." },
+        ],
+      },
+      satisfies: ["latex-validation"],
+      // `alternativeTo` stays EMPTY against its two siblings. They are
+      // complementary rather than substitutable, and the sequence says why:
+      // preflight gates the source BEFORE a compile, this parses the snippets
+      // IN it, overfull reads the log AFTER. Naming them alternatives would tell
+      // a caller that running one covers another.
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "tex-source-audit",
+      title: "TeX-source hazard audit",
+      description:
+        "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/content/pipeline/audit-tex-source.ts" },
+      io: {
+        inputs: [
+          { name: "strict", schema: t("Flag"), required: false, arg: { flag: "--strict" }, description: "Exit 1 on any finding, for use as a gate." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "Hazards with file and line, plus a committed sidecar. Its refusal is the model of the pair: run where no folio exists it says `No .md files found … refusing to report success. This audits a FOLIO's content; folio-assistant is the platform.` — then exits 1, where 2 is the house value for could-not-determine. The MESSAGE is right and the exit code is not." },
+        ],
+      },
+      satisfies: ["latex-validation"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    defineTool({
+      id: "headless-render-qc",
+      title: "Headless render QC (Playwright)",
+      description:
+        "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/headless-render-qc.ts" },
+      io: {
+        inputs: [
+          { name: "screenshot", schema: t("Flag"), required: false, arg: { flag: "--screenshot" }, description: "Save the screenshots as well as the verdict — which is the point when the reader is a person rather than a gate." },
+        ],
+        outputs: [
+          { name: "report", schema: t("Text"), description: "Per block: rendered, or the failure. Needs a FOLIO's `build/viewer/paper.json` and its `folio-assistant/ui`, so it exits 1 with `No paper.json found` in the platform — could-not-determine, again spelled 1 rather than 2." },
+        ],
+      },
+      // `rendered-verification`, NOT `html-rendering-qc`. Established by reading
+      // the bodies rather than matching the names: `html-rendering-qc` and
+      // `markdown-render-check` both audit `.md` SOURCE for patterns that will
+      // fail, while `rendered-verification` is the one about "LOOKING at it in a
+      // browser … driving it with Playwright in this environment" — which is
+      // what this script does. The first guess was `html-rendering-qc` and it
+      // was wrong.
+      satisfies: ["rendered-verification"],
+      // A FOLIO's build output, so a node rather than a script here — it reaches
+      // downstream where the tree exists. Same posture and same reason as
+      // `l1-complete-check`.
+      requires: { runtime: ["bun", "chromium"], network: false },
+    }),
+
     // ── The Lean family, which is a FAMILY and not one command ────────────
     //
     // Bean `eu38` wrote the caution before the work: 16 entry points spanning
@@ -2140,5 +2244,146 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     ...viewerTools(t),
 
     ...mcpTools(t),
+    /* ── AUDIO TRANSCRIPTION — OPTIONS, DECLARED AND NOT MATERIALIZED ──────
+     *
+     * Bean `r279`. Owner, 2026-09-23, asked which speech-to-text backend to
+     * adopt: *"describe options as Tools fulfilling task but dont need to
+     * materialize"*. So the three candidates are declared as Tool nodes —
+     * substitutable siblings, each with when/limits/cost — and NONE is in
+     * `schemas/python-deps.ts`, `requirements.txt` or CI. There is no audio in
+     * `uploads/` or `library/` to transcribe (measured 2026-09-20 and still
+     * true); choosing one and installing it is `1r0p`'s first step when the
+     * first recording arrives. `install.cli` says how, and is not run. */
+    // `package-release` (bean `v7bg`, owner 2026-09-24: "Yes, general skill").
+    // Two mechanisms for the same four steps. release-please is DECLARED, not
+    // configured here: `.github/workflows/release-please.yml` is dispatch-only
+    // with no config and zero tags (bean `frq2`), so this node says what it
+    // would do and what it needs, and claims no release it has made.
+    defineTool({
+      id: "release-please",
+      title: "release-please (declared, not configured here)",
+      description:
+        "Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`).",
+      install: { cli: "npm install -g release-please (or the GitHub Action googleapis/release-please-action@v4)" },
+      invoke: { shell: "release-please release-pr" },
+      requires: { runtime: ["node", "release-please"], network: true },
+      io: {
+        inputs: [
+          { name: "repo", schema: t("RepoFullName"), required: true, arg: { flag: "--repo-url" }, description: "owner/name of the repository whose packages are released." },
+          { name: "config", schema: t("RepoPath"), required: false, arg: { flag: "--config-file" }, description: "The release config. Must exist: a missing one falls back to defaults that find nothing." },
+        ],
+        outputs: [{ name: "releasePr", schema: t("Url"), description: "The release PR it opened or updated. Merging it is the approval." }],
+      },
+      satisfies: ["package-release"],
+      alternativeTo: ["package-release-manual"],
+      selection: {
+        when:
+          "A repository whose commits follow conventional-commit messages and that releases often enough that doing it by hand is the bottleneck. Several packages in one repository, each with its own tag, is its strength.",
+        limits:
+          "The bump comes from commit MESSAGES, not from what changed: a `feat:` that removed something gives a minor bump. Check it against the surface diff (skill step 1). With the default token it cannot open PRs unless the repository allows Actions to (bean `frq2`).",
+        cost: "Not configured here. One config file and one manifest per repository; each run is a few seconds of API calls.",
+      },
+    }),
+    defineTool({
+      id: "package-release-manual",
+      title: "Package release by hand",
+      description:
+        "A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `<package>-v<version>`, and creates the release on the host. The same four steps with nothing to configure.",
+      install: { none: true },
+      invoke: { manual: true },
+      io: {
+        inputs: [
+          { name: "package", schema: t("PackageName"), required: true, description: "The package being released." },
+        ],
+        outputs: [{ name: "tag", schema: t("Text"), description: "The tag created, `<package>-v<version>`." }],
+      },
+      satisfies: ["package-release"],
+      alternativeTo: ["release-please"],
+      selection: {
+        when: "A first release, a rare one, or a repository whose commit messages carry no conventional prefixes.",
+        limits: "Every step is a person's, so each is a place to slip; the skill's rules (build first, no reused version) are checked by nobody.",
+        cost: "A few minutes of a person's time per release.",
+      },
+      requires: {},
+    }),
+
+    defineTool({
+      id: "transcribe-whisper-cpp",
+      title: "Transcribe audio — whisper.cpp (option, not installed)",
+      description:
+        "Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`).",
+      install: { cli: "build whisper.cpp from source and download a ggml model (tiny ≈ 75 MB, base ≈ 142 MB)" },
+      invoke: { shell: "whisper-cli" },
+      requires: { runtime: ["whisper-cli"], network: false },
+      io: {
+        inputs: [
+          { name: "file", schema: t("RepoPath"), required: true, arg: { flag: "-f" }, description: "The recording, under the declared `uploads` graph." },
+          { name: "language", schema: t("Locale"), required: false, arg: { flag: "-l" } },
+        ],
+        outputs: [{ name: "transcript", schema: t("RepoPath"), description: "Timed transcript under the entry's `transcript/`." }],
+      },
+      satisfies: ["library-ingestion"],
+      alternativeTo: ["transcribe-faster-whisper", "transcribe-vosk"],
+      selection: {
+        when:
+          "The default candidate: offline, no Python, good accuracy from the tiny model up, and timestamps per segment — what a transcript that can be translated segment by segment needs.",
+        limits:
+          "A C++ build and a model file per container; weights are either vendored (repository size) or fetched at run time (a third-party host in the gate, the `5rfy` shape). Speaker labels are not included.",
+        cost: "Not installed. Build ≈ 1–2 min; tiny model ≈ 75 MB. CPU transcription runs near real time for tiny, slower for larger models.",
+      },
+    }),
+
+    defineTool({
+      id: "transcribe-faster-whisper",
+      title: "Transcribe audio — faster-whisper (option, not installed)",
+      description:
+        "Transcribe an audio file with faster-whisper (the Whisper models on CTranslate2), from Python. A declared OPTION: not installed in this repository.",
+      install: { cli: "pip install faster-whisper (model weights download on first use)" },
+      invoke: { shell: "python3 -m faster_whisper" },
+      requires: { runtime: ["python3", "faster-whisper"], network: true },
+      io: {
+        inputs: [
+          { name: "file", schema: t("RepoPath"), required: true, arg: { positional: 0 } },
+          { name: "language", schema: t("Locale"), required: false, arg: { flag: "--language" } },
+        ],
+        outputs: [{ name: "transcript", schema: t("RepoPath") }],
+      },
+      satisfies: ["library-ingestion"],
+      alternativeTo: ["transcribe-whisper-cpp", "transcribe-vosk"],
+      selection: {
+        when:
+          "When the ingestion pipeline should stay in Python beside the PDF arms and `schemas/python-deps.ts` is the one place dependencies are declared. Same models as whisper.cpp, typically faster on CPU.",
+        limits:
+          "Weights download on first use unless pre-fetched — a network dependency in a gate that must run offline. A heavier wheel set than anything in `requirements.txt` today.",
+        cost: "Not installed. A pip install of several wheels plus the model; the CI install time must be re-measured before it is gated (`r279`).",
+      },
+    }),
+
+    defineTool({
+      id: "transcribe-vosk",
+      title: "Transcribe audio — vosk (option, not installed)",
+      description:
+        "Transcribe an audio file with vosk (Kaldi-based), offline, from Python, with small per-language models. A declared OPTION: not installed in this repository.",
+      install: { cli: "pip install vosk, plus a per-language model (small ≈ 40–50 MB)" },
+      invoke: { shell: "vosk-transcriber" },
+      requires: { runtime: ["python3", "vosk"], network: false },
+      io: {
+        inputs: [
+          { name: "file", schema: t("RepoPath"), required: true, arg: { flag: "-i" } },
+          { name: "language", schema: t("Locale"), required: false, arg: { flag: "-l" } },
+        ],
+        outputs: [{ name: "transcript", schema: t("RepoPath"), description: "Written where `-o` names." }],
+      },
+      satisfies: ["library-ingestion"],
+      alternativeTo: ["transcribe-whisper-cpp", "transcribe-faster-whisper"],
+      selection: {
+        when:
+          "When size and speed matter more than accuracy: the lightest offline option, with a separate small model per language.",
+        limits:
+          "Noticeably lower accuracy than the Whisper family on varied recordings; one model per language to fetch and keep.",
+        cost: "Not installed. Small wheel; ≈ 40–50 MB per language model.",
+      },
+    }),
+
   ];
 }

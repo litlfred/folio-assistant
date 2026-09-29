@@ -61,3 +61,15 @@ outward-facing axis.
 
 https://github.com/litlfred/folio-assistant/issues/369, opened per #363's instruction. This bean is the input to
 that review, not its conclusion.
+
+--------
+
+## Owner, 2026-09-24: **"Artefacts only"**
+
+The strawperson's L4–L5 boundary stands for sovereign cloud: **the harness
+never connects to a live clinical store** (HAPI FHIR or similar), for read or
+write. It produces artefacts; a running deployment pulls and serves them.
+This was asked right after 61tg ("a self-sovereign harness may hold
+credentials"), and the owner chose to keep the two separate. Custody in
+self-sovereign mode does not carry over to a live-store connection in
+sovereign cloud.

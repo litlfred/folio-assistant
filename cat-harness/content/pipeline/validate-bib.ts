@@ -38,9 +38,9 @@
  *   --strict        Exit non-zero on any failure (default: warn-only).
  *
  * Usage examples:
- *   bun run pipeline/validate-bib.ts --doi
- *   bun run pipeline/validate-bib.ts --cross-check --strict
- *   bun run pipeline/validate-bib.ts --all
+ *   bun run cat-harness/content/pipeline/validate-bib.ts --doi
+ *   bun run cat-harness/content/pipeline/validate-bib.ts --cross-check --strict
+ *   bun run cat-harness/content/pipeline/validate-bib.ts --all
  *
  * Per CLAUDE.md §"Bibliography architecture": references.ts is the
  * source of truth; this script verifies external correctness of every

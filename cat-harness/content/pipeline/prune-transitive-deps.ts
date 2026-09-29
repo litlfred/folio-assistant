@@ -27,9 +27,9 @@
  * this script would change.
  *
  * Usage:
- *   bun run content/pipeline/prune-transitive-deps.ts              # dry-run (report only)
- *   bun run content/pipeline/prune-transitive-deps.ts --apply      # rewrite .ts files
- *   bun run content/pipeline/prune-transitive-deps.ts --paper NAME # multi-paper folio
+ *   bun run cat-harness/content/pipeline/prune-transitive-deps.ts              # dry-run (report only)
+ *   bun run cat-harness/content/pipeline/prune-transitive-deps.ts --apply      # rewrite .ts files
+ *   bun run cat-harness/content/pipeline/prune-transitive-deps.ts --paper NAME # multi-paper folio
  *
  * @module content/pipeline/prune-transitive-deps
  */

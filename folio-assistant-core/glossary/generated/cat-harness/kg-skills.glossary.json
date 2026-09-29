@@ -156,6 +156,14 @@
       "status": "candidate"
     },
     {
+      "id": "branch-freshness",
+      "prefLabel": "branch-freshness",
+      "definition": "Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan. Prevents stale assumptions, merge conflicts, and duplicated work — especially after session restarts, long idle periods, or heavy sibling activity on main.",
+      "notation": "branch-freshness",
+      "source": "cat-harness/skills/workflow/branch-freshness.md",
+      "status": "candidate"
+    },
+    {
       "id": "build-docs",
       "prefLabel": "build-docs",
       "definition": "Builds the Lean HTML documentation (doc-gen4) locally in the workspace, for any paper folio's Lean package.",
@@ -225,6 +233,14 @@
       "definition": "Review the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/` — for the joins a reader cannot see: that a node declares what it is, that what it names resolves, and that the mechanism it describes is the one that actually runs.",
       "notation": "code-node-review",
       "source": "cat-harness/skills/folio-core/code-node-review.md",
+      "status": "candidate"
+    },
+    {
+      "id": "code-review-process",
+      "prefLabel": "code-review-process",
+      "definition": "Where code review sits in the release lifecycle. Review types, who reviews what, how feedback maps to beans, and the path from review to approval to release. Works with prepare-merge-auto for mechanics and release-lifecycle for the broader flow.",
+      "notation": "code-review-process",
+      "source": "cat-harness/skills/workflow/code-review-process.md",
       "status": "candidate"
     },
     {
@@ -413,8 +429,33 @@
     {
       "id": "crdm-detect",
       "prefLabel": "crdm-detect",
+      "definition": "Detect when a request needs requirements agreed before anything is built, and which of the two parallel requirements methodologies governs it.",
       "notation": "crdm-detect",
       "source": "cat-harness/skills/crdm/crdm-detect.md",
+      "status": "candidate"
+    },
+    {
+      "id": "crdm-impact-analysis",
+      "prefLabel": "crdm-impact-analysis",
+      "definition": "Guide for CRDM Phase 4 — Impact Analysis and Migration Planning. Systematic scan across 7 dimensions: schema, pipeline, adapter, folio, skill, migration, and test/documentation impact. Produces a structured assessment for posting to the GitHub issue.",
+      "notation": "crdm-impact-analysis",
+      "source": "cat-harness/skills/crdm/crdm-impact-analysis.md",
+      "status": "candidate"
+    },
+    {
+      "id": "crdm-needs-assessment",
+      "prefLabel": "crdm-needs-assessment",
+      "definition": "Facilitate Phase 1 (Needs Assessment) of the CRDM requirements workflow. Guide the BA through stakeholder identification, source material gathering, and synthesising a domain-language needs statement. Post to the GitHub issue and iterate until the BA confirms the need is correctly captured.",
+      "notation": "crdm-needs-assessment",
+      "source": "cat-harness/skills/crdm/crdm-needs-assessment.md",
+      "status": "candidate"
+    },
+    {
+      "id": "crdm-requirements-template",
+      "prefLabel": "crdm-requirements-template",
+      "definition": "Guide and template for CRDM Phase 3 — Requirements Definition. Helps the agent structure requirements from conversation using a REQ-### format with acceptance criteria, priority, and traceability.",
+      "notation": "crdm-requirements-template",
+      "source": "cat-harness/skills/crdm/crdm-requirements-template.md",
       "status": "candidate"
     },
     {
@@ -478,6 +519,14 @@
       "definition": "Lay a decision out as a comparison before you ask it — what each option does, its pro, its con, what it changes downstream, and how reversible it is — in the prose that precedes the question, never inside the option labels. Required whenever a choice is handed to a person.",
       "notation": "decision-comparison",
       "source": "cat-harness/skills/folio-core/decision-comparison.md",
+      "status": "candidate"
+    },
+    {
+      "id": "decision-methodology-selector",
+      "prefLabel": "decision-methodology-selector",
+      "definition": "Given a decision context, select the applicable methodology from the methodology graph. Reads the graph's applies-when declarations, matches them against the context, and returns the ranked applicable methods with rationale. Extends methodology-adoption's four-question protocol with quantitative method-selection criteria from the MCDM literature.",
+      "notation": "decision-methodology-selector",
+      "source": "cat-harness/skills/folio-core/decision-methodology-selector.md",
       "status": "candidate"
     },
     {
@@ -673,14 +722,6 @@
       "status": "candidate"
     },
     {
-      "id": "fhir-client-operations",
-      "prefLabel": "fhir-client-operations",
-      "definition": "STUB. Client-side FHIR operations: search, read, transaction bundles. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
-      "notation": "fhir-client-operations",
-      "source": "cat-harness/skills/remote-stubs/fhir-client-operations.md",
-      "status": "candidate"
-    },
-    {
       "id": "fhir-validation",
       "prefLabel": "fhir-validation",
       "notation": "fhir-validation",
@@ -709,6 +750,14 @@
       "definition": "Lean 4 Formalizer — translates the logical skeleton of narrative mathematical proofs into Lean 4 tactic blocks. Uses the Ontologist's glossary to resolve types, maps narrative proof phrases to Lean tactics, and generates sorry-bridged partial proofs that compile.",
       "notation": "formalizer",
       "source": "cat-harness/skills/folio-paper-adapter/formalizer.md",
+      "status": "candidate"
+    },
+    {
+      "id": "gate-tree-mutation",
+      "prefLabel": "gate-tree-mutation",
+      "definition": "Reading `bun run gates`' \"NOT clean\" verdict. Why every gate can pass and the run still exit 1, the two causes and how to tell them apart in one command, and the question that settles whether a churning field is a defect in the writer: does it describe the SUBJECT or the RUN?",
+      "notation": "gate-tree-mutation",
+      "source": "cat-harness/skills/folio-core/gate-tree-mutation.md",
       "status": "candidate"
     },
     {
@@ -816,9 +865,9 @@
     {
       "id": "hypothesis-generation",
       "prefLabel": "hypothesis-generation",
-      "definition": "STUB. Proposing candidate hypotheses from observations, with what each predicts. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
+      "definition": "Formulate evidence-bounded scientific questions, candidate hypotheses, rival explanations, causal or associational claims, discriminating predictions, measurements, and preregistration-ready analysis plans. Use when turning observations or preliminary findings into transparent, testable research plans without treating hypotheses as facts.",
       "notation": "hypothesis-generation",
-      "source": "cat-harness/skills/remote-stubs/hypothesis-generation.md",
+      "source": "cat-harness/skills/hypothesis-generation/hypothesis-generation.md",
       "status": "candidate"
     },
     {
@@ -849,6 +898,14 @@
       "definition": "Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH KINDS rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.",
       "notation": "incremental-render",
       "source": "cat-harness/skills/folio-core/incremental-render.md",
+      "status": "candidate"
+    },
+    {
+      "id": "injection-boundaries",
+      "prefLabel": "injection-boundaries",
+      "definition": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the gate covers, why a step output carries a severity rather than having one, and the argv rule.",
+      "notation": "injection-boundaries",
+      "source": "cat-harness/skills/security/injection-boundaries.md",
       "status": "candidate"
     },
     {
@@ -979,7 +1036,7 @@
     {
       "id": "latex-build-cache",
       "prefLabel": "latex-build-cache",
-      "definition": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`scripts/install-tex.sh`) and quick changed-chapter feature builds (`scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
+      "definition": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`cat-harness/scripts/install-tex.sh`) and quick changed-chapter feature builds (`cat-harness/scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
       "notation": "latex-build-cache",
       "source": "cat-harness/skills/folio-paper-adapter/latex-build-cache.md",
       "status": "candidate"
@@ -1211,11 +1268,27 @@
       "status": "candidate"
     },
     {
+      "id": "package-release",
+      "prefLabel": "package-release",
+      "definition": "Cut a release of a repository's packages: decide the next version, write the release notes, tag, and create the release — for any repository, the platform or a folio. Publishing the built artefact to a registry is a separate, later step that a person starts.",
+      "notation": "package-release",
+      "source": "cat-harness/skills/folio-core/package-release.md",
+      "status": "candidate"
+    },
+    {
       "id": "paper-importer",
       "prefLabel": "paper-importer",
       "definition": "Import external papers from PDF, LaTeX, or arXiv into the content object system. Scans for theorems, definitions, propositions, lemmas, and other formal environments. Generates .ts manifests and .md content files, optionally creates .lean stubs with sorry-bridged proofs citing the original source. Integrates with proof-writer skills so imported theorems can inform and accelerate formalization of the main paper.",
       "notation": "paper-importer",
       "source": "cat-harness/skills/folio-paper-adapter/paper-importer.md",
+      "status": "candidate"
+    },
+    {
+      "id": "path-containment",
+      "prefLabel": "path-containment",
+      "definition": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check.",
+      "notation": "path-containment",
+      "source": "cat-harness/skills/security/path-containment.md",
       "status": "candidate"
     },
     {
@@ -1438,6 +1511,22 @@
       "status": "candidate"
     },
     {
+      "id": "release-epic-planning",
+      "prefLabel": "release-epic-planning",
+      "definition": "Plan and track releases using bean epics. Covers epic creation, story/task decomposition, release readiness tracking, and the relationship between epics and GitHub milestones. Applies to code releases, paper publications, and project milestones.",
+      "notation": "release-epic-planning",
+      "source": "cat-harness/skills/workflow/release-epic-planning.md",
+      "status": "candidate"
+    },
+    {
+      "id": "release-lifecycle",
+      "prefLabel": "release-lifecycle",
+      "definition": "Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases. Applies to code releases, paper publications, and project milestones. Complements package-release (which handles the mechanics of cutting a release) with the process and policy layer.",
+      "notation": "release-lifecycle",
+      "source": "cat-harness/skills/workflow/release-lifecycle.md",
+      "status": "candidate"
+    },
+    {
       "id": "remark-audit",
       "prefLabel": "remark-audit",
       "definition": "Audit remarks for provable content. Every remark must interpret a mathematical statement that can be formalized in Lean. Detects dangling remarks (no `interprets` link), ambiguous domain terms, and missing formalization.",
@@ -1550,17 +1639,25 @@
     {
       "id": "scientific-critical-thinking",
       "prefLabel": "scientific-critical-thinking",
-      "definition": "STUB. Appraising a scientific claim — what would falsify it, what the evidence actually supports. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
+      "definition": "Evaluate scientific claims and evidence quality. Use for assessing experimental design validity, identifying biases and confounders, applying evidence grading frameworks (GRADE, Cochrane Risk of Bias), or teaching critical analysis. Best for understanding evidence quality, identifying flaws. For formal peer review writing use peer-review.",
       "notation": "scientific-critical-thinking",
-      "source": "cat-harness/skills/remote-stubs/scientific-critical-thinking.md",
+      "source": "cat-harness/skills/scientific-critical-thinking/scientific-critical-thinking.md",
       "status": "candidate"
     },
     {
       "id": "scientific-visualization",
       "prefLabel": "scientific-visualization",
-      "definition": "STUB. Plotting and figure production for scientific results. Declared by the remote package `claude-scientific-skills` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
+      "definition": "Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning.",
       "notation": "scientific-visualization",
-      "source": "cat-harness/skills/remote-stubs/scientific-visualization.md",
+      "source": "cat-harness/skills/scientific-visualization/scientific-visualization.md",
+      "status": "candidate"
+    },
+    {
+      "id": "security",
+      "prefLabel": "security",
+      "definition": "The security sub-KG's entry point. What the boundaries are, which machinery already guards each one, and the single rule that unifies them — refuse, never repair. Read this before adding a check, so the answer that already exists is reused rather than rebuilt in a fourth place.",
+      "notation": "security",
+      "source": "cat-harness/skills/security/security.md",
       "status": "candidate"
     },
     {
@@ -1626,6 +1723,14 @@
       "status": "candidate"
     },
     {
+      "id": "skill-registration",
+      "prefLabel": "skill-registration",
+      "definition": "Adding a skill is never a one-file change. What a new skill file owes, the one command that performs the derived half, the one declaration it deliberately leaves to you, why running it once is not enough, and the two orphan directions it reports rather than fixes. Read this before adding, renaming or removing a skill.",
+      "notation": "skill-registration",
+      "source": "cat-harness/skills/folio-core/skill-registration.md",
+      "status": "candidate"
+    },
+    {
       "id": "skills-and-tools",
       "prefLabel": "skills-and-tools",
       "definition": "A skill states a capability generically; a Tool node carries the concrete mechanism. Read before writing or editing any skill, and whenever a skill is about to name a vendor, a CLI, a binary or an API endpoint.",
@@ -1641,19 +1746,19 @@
       "status": "candidate"
     },
     {
-      "id": "smart-launch",
-      "prefLabel": "smart-launch",
-      "definition": "STUB. The SMART on FHIR launch sequence — authorisation, context, scopes. Declared by the remote package `smarter-fhir` and not vendored here, so this body exists only so the graph traverses and `skill_fetch` answers instead of failing mid-task.",
-      "notation": "smart-launch",
-      "source": "cat-harness/skills/remote-stubs/smart-launch.md",
-      "status": "candidate"
-    },
-    {
       "id": "smart-stack-layering",
       "prefLabel": "smart-stack-layering",
       "definition": "Which of the five layers a WHO SMART asset, rule, script or page belongs to, and the one question that settles it. Read before adding anything to fhir-harness, smart-base, smart-l1, smart-dak or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",
       "notation": "smart-stack-layering",
       "source": "cat-harness/skills/authoring-who-smart-guidelines/smart-stack-layering.md",
+      "status": "candidate"
+    },
+    {
+      "id": "spec-kit",
+      "prefLabel": "spec-kit",
+      "definition": "Spec-driven development, adopted whole: define what and why before deciding how, and do not develop before a spec exists. Carries what this platform adopts and — separately, with reasons — what it refuses.",
+      "notation": "spec-kit",
+      "source": "cat-harness/skills/spec-kit/spec-kit.md",
       "status": "candidate"
     },
     {

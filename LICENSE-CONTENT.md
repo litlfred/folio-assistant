@@ -23,6 +23,13 @@ take Apache-2.0: it is the more permissive of the two for reuse in software.
 Content authored in a *folio* repository is **not** covered by either licence
 here. folio-assistant is the platform; a folio carries its own.
 
+**Third-party skills are not covered either.** A skill package that carries a
+`materialization.json` is somebody else's text, synced at a pinned commit
+(issue #556). It keeps its **upstream licence**, whose text is the `LICENSE`
+file beside it, and neither CC BY 3.0 nor Apache-2.0 applies to it. Those
+packages are listed in [`NOTICE`](./NOTICE). The `skills/**/*.md` row above
+means the skills authored here.
+
 ## Summary
 
 This is a human-readable summary of the

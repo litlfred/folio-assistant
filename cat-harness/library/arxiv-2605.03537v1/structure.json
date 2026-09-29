@@ -1,0 +1,366 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2605.03537v1",
+ "source": {
+  "file": "2605.03537v1.pdf",
+  "sha256": "62231fab250d00d07cc9fec55238ba5ab4bdfbee868aa5034a59ffee66353ac5",
+  "bytes": 207869,
+  "pages": 9,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-24T19:21:15Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2605.03537",
+   "version": "1",
+   "primary_class": "cs.DL",
+   "stamp_date": "5 May 2026"
+  },
+  "doi": null,
+  "title": "A Skill-Based Agentic Pipeline for Library of Congress Subject Indexing",
+  "authors_raw": "Eric H. C. Chow",
+  "title_lines": [
+   "A Skill-Based Agentic Pipeline for Library of Congress Subject Indexing"
+  ],
+  "abstract": "This paper presents a modular AI agentic skill pipeline for au- tomating subject indexing with Library of Congress Subject Headings (LCSH). Subject indexing\u2014the process of analyzing a work\u2019s aboutness, selecting controlled vocabulary terms, and encoding them as MARC 21 subject access fields\u2014is one of the most time-consuming components of library cataloging. The system decomposes this process into four discrete, sequentially executed agent skills: conceptual analysis, quantitative filtering, authority validation, and MARC field synthesis. Each skill encodes domain knowledge drawn directly from Library of Congress Subject Headings Manual (SHM) instruction sheets and subject analysis theory. The pipeline was evaluated against a corpus of ten titles whose existing subject headings were captured from the Harvard Library bibliographic dataset (a snapshot of their Alma ILS). Results demonstrate strong con- ceptual alignment with professional subject indexing practice, with notable differences in specificity, subdivision practice, and the agent\u2019s adherence to the 2026 LC policy discontinuing form subdivisions ($v) in favor of LCGFT 655 fields.",
+  "docinfo": {
+   "Title": "A Skill-Based AI Agentic Pipeline for Library of Congress Subject Indexing",
+   "Author": "Eric H. C. Chow",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:a6404ea)"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Literature Review",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Traditional Machine Learning Approaches",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Large Language Models for Subject Indexing",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Present Contribution",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Methodology",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Source Material and Skill Construction",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "The Four-Skill Pipeline",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Test Corpus",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Evaluation Method",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Results",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Heading-by-Heading Comparison",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Patterns Observed",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Discussion",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Strengths of the Agent Skill Approach",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Limitations and Areas for Improvement",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Comparison Baseline Considerations",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1453,
+   "n_words": 202
+  },
+  {
+   "id": "sec-000-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1205,
+   "n_words": 169
+  },
+  {
+   "id": "sec-001-literature-review",
+   "number": null,
+   "title": "Literature Review",
+   "level": 2,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 5,
+   "n_words": 1
+  },
+  {
+   "id": "sec-002-traditional-machine-learning-approaches",
+   "number": null,
+   "title": "Traditional Machine Learning Approaches",
+   "level": 3,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 2358,
+   "n_words": 330
+  },
+  {
+   "id": "sec-003-large-language-models-for-subject-indexing",
+   "number": null,
+   "title": "Large Language Models for Subject Indexing",
+   "level": 3,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 3970,
+   "n_words": 553
+  },
+  {
+   "id": "sec-004-present-contribution",
+   "number": null,
+   "title": "Present Contribution",
+   "level": 3,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 3573,
+   "n_words": 520
+  },
+  {
+   "id": "sec-005-methodology",
+   "number": null,
+   "title": "Methodology",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-006-source-material-and-skill-construction",
+   "number": null,
+   "title": "Source Material and Skill Construction",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 1451,
+   "n_words": 199
+  },
+  {
+   "id": "sec-007-the-four-skill-pipeline",
+   "number": null,
+   "title": "The Four-Skill Pipeline",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 4550,
+   "n_words": 716
+  },
+  {
+   "id": "sec-008-test-corpus",
+   "number": null,
+   "title": "Test Corpus",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 1031,
+   "n_words": 145
+  },
+  {
+   "id": "sec-009-evaluation-method",
+   "number": null,
+   "title": "Evaluation Method",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 750,
+   "n_words": 108
+  },
+  {
+   "id": "sec-010-results",
+   "number": null,
+   "title": "Results",
+   "level": 1,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-011-heading-by-heading-comparison",
+   "number": null,
+   "title": "Heading-by-Heading Comparison",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 7,
+   "n_chars": 9944,
+   "n_words": 1413
+  },
+  {
+   "id": "sec-012-patterns-observed",
+   "number": null,
+   "title": "Patterns Observed",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 2931,
+   "n_words": 422
+  },
+  {
+   "id": "sec-013-discussion",
+   "number": null,
+   "title": "Discussion",
+   "level": 1,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-014-strengths-of-the-agent-skill-approach",
+   "number": null,
+   "title": "Strengths of the Agent Skill Approach",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 1307,
+   "n_words": 177
+  },
+  {
+   "id": "sec-015-limitations-and-areas-for-improvement",
+   "number": null,
+   "title": "Limitations and Areas for Improvement",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 8,
+   "n_chars": 2123,
+   "n_words": 292
+  },
+  {
+   "id": "sec-016-comparison-baseline-considerations",
+   "number": null,
+   "title": "Comparison Baseline Considerations",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 492,
+   "n_words": 69
+  },
+  {
+   "id": "sec-017-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 8,
+   "page_end": 9,
+   "n_chars": 4785,
+   "n_words": 641
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 18,
+  "toc_inferred_entries": 0,
+  "sections": 19,
+  "chars_total": 41937
+ }
+}

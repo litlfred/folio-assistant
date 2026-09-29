@@ -18,19 +18,19 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ## Totals
 
-5 instance(s), 61 step(s) checked, 61 `prov:Activity` emitted, 63 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
+6 instance(s), 66 step(s) checked, 66 `prov:Activity` emitted, 70 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
 
 | finding | count | means |
 |---|---|---|
 | `no-actor` | 0 | the entry names nobody; no activity is emitted, because `prov:agent` is required and would have to be invented |
 | `no-role` | 0 | the node's lane binds no role; no activity is emitted, because `ProvActivitySchema` requires `prov:hadRole` (PROV-O itself does not) |
-| `undeclared-actor` | 0 | the actor is not declared in `.claude/skills/actors/` |
+| `undeclared-actor` | 1 | the actor is not declared in `.claude/skills/actors/` |
 | `not-eligible` | 0 | the actor's `roles` do not include the role the lane binds |
-| `unknown` | 50 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
+| `unknown` | 55 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
 | `deny` | 0 | an ODRL policy prohibits `perform-task` here |
 | `authz-disagrees` | 0 | the verdict recorded in the entry's `authz` differs from the one recomputed now |
 | `node-not-in-model` | 4 | the entry names a node its process model does not have |
-| `source-moved` | 9 | the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's |
+| `source-moved` | 10 | the `.bpmn` the instance recorded is gone; the diagram was found by file name, as `workflow_start` resolves one, and its process id matches the instance's |
 | `source-missing` | 0 | the `.bpmn` the instance recorded is gone and no diagram with that name and process id exists; nothing in it can be checked |
 
 ## By instance
@@ -114,6 +114,20 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `crdm--folio-assistant-6lb8/Call_Requirements` | 6 | `GW_Reqs` | `unknown` | no policy grants perform-task for Process_CRDM_Requirements/GW_Reqs as authoring-agent |
 | `crdm--folio-assistant-6lb8/Call_Signoff` | (instance) | `Process_CRDM_Signoff` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-signoff.bpmn does not exist; read cat-harness/processes/crdm-signoff.bpmn, which defines Process_CRDM_Signoff |
 | `crdm--folio-assistant-6lb8/Call_Signoff` | 1 | `A_CreateBeans` | `unknown` | no policy grants perform-task for Process_CRDM_Signoff/A_CreateBeans as authoring-agent |
+
+### crdm--folio-assistant-b94c
+
+5 step(s) checked, 5 `prov:Activity` emitted, 7 finding(s). Source: `cat-harness/methodologies/crdm/workflows/crdm-requirements.bpmn`. [PROV JSON-LD]({{ '/assets/prov/crdm--folio-assistant-b94c.prov.jsonld' | relative_url }})
+
+| instance | entry | node | finding | detail |
+|---|---|---|---|---|
+| `crdm--folio-assistant-b94c` | (instance) | `Process_CRDM` | `source-moved` | cat-harness/methodologies/crdm/workflows/crdm-requirements.bpmn does not exist; read cat-harness/processes/crdm-requirements.bpmn, which defines Process_CRDM |
+| `crdm--folio-assistant-b94c` | 1 | `BA_Submit` | `undeclared-actor` | "costateixeira" is not a declared actor |
+| `crdm--folio-assistant-b94c` | 1 | `BA_Submit` | `unknown` | no policy grants perform-task for Process_CRDM/BA_Submit as business-analyst |
+| `crdm--folio-assistant-b94c` | 2 | `A_Detect` | `unknown` | no policy grants perform-task for Process_CRDM/A_Detect as authoring-agent |
+| `crdm--folio-assistant-b94c` | 3 | `GW_Feature` | `unknown` | no policy grants perform-task for Process_CRDM/GW_Feature as authoring-agent |
+| `crdm--folio-assistant-b94c` | 4 | `Call_Issue` | `unknown` | no policy grants perform-task for Process_CRDM/Call_Issue as authoring-agent |
+| `crdm--folio-assistant-b94c` | 5 | `Call_Needs` | `unknown` | no policy grants perform-task for Process_CRDM/Call_Needs as authoring-agent |
 
 ### crdm--issue-607-kg-to-cdn-portal
 

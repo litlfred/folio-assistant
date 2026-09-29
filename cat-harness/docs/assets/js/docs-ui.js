@@ -138,10 +138,9 @@
      `fa-locale` was WRITE-ONLY before this: the sidebar switcher stored the
      choice on click and nothing ever read it back, so picking French and
      navigating anywhere landed you in English again with the preference
-     sitting in localStorage unused. This deliberately does NOT redirect --
-     a docs link that silently lands somewhere other than where it points is
-     worse than one extra click -- it just makes the remembered language
-     visibly one click away. */
+     sitting in localStorage unused. It used to stop at marking the remembered
+     language in the bar; since 2026-09-27 `followRememberedLocale` also takes
+     the reader there, on the owner's call. */
   function rememberedLocale(currentLang, available) {
     var loc = getGlobalLocale();
     if (!loc || loc === currentLang) return null;
@@ -150,6 +149,44 @@
     // offered English on a folio that has no English.
     if (available.indexOf(loc) === -1) return null;
     return loc;
+  }
+
+  /**
+   * THE PAGE FOLLOWS THE CHOSEN LANGUAGE. Owner, 2026-09-27: *"user selects
+   * locale in icon, then only those pages exist (if translated) otherwise
+   * source language fallback"*, after an English page sat inside a French
+   * navbar.
+   *
+   * This reverses the "does NOT redirect" note on `rememberedLocale` above:
+   * a page whose remembered language differs from the one it is in, and that
+   * HAS a page in the remembered one, is replaced by that page. Returns true
+   * when it navigated, so `init` can stop.
+   *
+   * Three guards, each against a specific wrong jump:
+   *  - only a STORED choice counts. `getGlobalLocale` answers "en" when
+   *    nothing is stored, which would bounce every shared French link to
+   *    English for a reader who never chose;
+   *  - `?lang=` on the URL wins, because somebody asked for that page;
+   *  - only a locale the page's own meta declares available, so the jump
+   *    never lands on a 404. The language bar writes the choice on click,
+   *    before it navigates, so choosing a language never fights this.
+   */
+  function followRememberedLocale(meta) {
+    if (!meta) return false;
+    var stored = null;
+    try { stored = localStorage.getItem("fa-locale"); } catch (_e) { return false; }
+    if (!stored) return false;
+    try {
+      if (new URL(window.location.href).searchParams.get("lang")) return false;
+    } catch (_e) { return false; }
+    var currentLang = meta.lang || "en";
+    var available = localesAvailable(meta, meta.supportedLocales || UN_LOCALES);
+    var target = rememberedLocale(currentLang, available);
+    if (!target) return false;
+    var dest = localePath(deriveBasePath(window.location.pathname, currentLang), target);
+    if (dest === window.location.pathname) return false;
+    window.location.replace(dest + window.location.search + window.location.hash);
+    return true;
   }
 
   function localePath(basePath, locale) {
@@ -352,9 +389,17 @@
     // and a function that eats everything downstream of it is a trap for the
     // next one.
     //
-    // `null` is a VALID second argument -- it appends -- so the fallback is
-    // the correct placement rather than a bail-out.
-    if (insertTarget && insertTarget.parentNode !== mainContent) insertTarget = null;
+    // Fallback chain: badges container → first child (not `null` which
+    // appends at the end — the landing page's h1 is outside mainContent,
+    // so `null` put the bar at y=5519).
+    if (insertTarget && insertTarget.parentNode !== mainContent) {
+      var badges = mainContent.querySelector(".fa-translation-badges");
+      insertTarget = badges ? badges.nextSibling : mainContent.firstChild;
+    }
+    // The badges row can ALSO sit outside `mainContent` (it is lifted under
+    // the h1), so its sibling is no safer than the h1's. Checked again, 2026-09-27:
+    // the throw was back on the home page, measured with a `pageerror` listener.
+    if (insertTarget && insertTarget.parentNode !== mainContent) insertTarget = mainContent.firstChild;
     mainContent.insertBefore(container, insertTarget);
   }
 
@@ -403,6 +448,12 @@
   function currentScheme() {
     var stored = storedScheme();
     if (stored === "light" || stored === "dark") return stored;
+    // WHAT THE FIRST-PAINT SNIPPET DECIDED (`head_custom.html`), before this
+    // deferred bundle existed: stored, else the OS, else dark. Asked second,
+    // because a page that painted in a scheme must not be re-decided by a
+    // later, weaker guess — that re-decision IS a flash.
+    var painted = document.documentElement.getAttribute("data-fa-scheme");
+    if (painted === "light" || painted === "dark") return painted;
     if (window.jtd && typeof window.jtd.getTheme === "function") {
       var t = window.jtd.getTheme();
       if (t === "light" || t === "dark") return t;
@@ -419,9 +470,26 @@
     // Always explicit. Passing "default" would work today and would break the
     // day _config.yml's color_scheme changes, because "default" is a moving
     // target and "dark" is not.
-    window.jtd.setTheme(name);
+    //
+    // BUT ONLY WHEN THE SHEET IS NOT ALREADY THAT SCHEME — owner, 2026-09-24:
+    // *"when any page/foio-asst/cat-harness first loads if flashes white
+    // before goignt o dark mode."* `setTheme` swaps the theme's first
+    // stylesheet, and a swap UNLOADS the sheet painting the page until the new
+    // file arrives: the white canvas shows through. Applying a stored "dark"
+    // on this dark-configured site swapped `-default.css` for `-dark.css` —
+    // the same colours — on every load, for every reader who had ever pressed
+    // the toggle. Measured by `first-paint-scheme.e2e.ts`, which holds the
+    // new file in flight and reads the ground: `rgb(255, 255, 255)`.
+    if (!jtdShows(name)) window.jtd.setTheme(name);
     document.documentElement.setAttribute("data-fa-scheme", name);
     return true;
+  }
+
+  /** Is the theme's loaded stylesheet already `name`? "default" means the configured scheme. */
+  function jtdShows(name) {
+    if (typeof window.jtd.getTheme !== "function") return false;
+    var t = window.jtd.getTheme();
+    return t === name || (t === "default" && configuredScheme() === name);
   }
 
   /* ── ONE scheme, TWO controls that must never disagree ─────────────────
@@ -458,7 +526,11 @@
     if (schemeInitialised) return;
     schemeInitialised = true;
     var scheme = currentScheme();
-    if (storedScheme()) applyScheme(scheme);
+    // Applied whenever the theme can be switched — not only for a stored
+    // choice — because the first-paint snippet may have decided from the OS.
+    // `applyScheme` leaves a sheet that already shows the scheme alone, so
+    // this costs no swap in the common case.
+    if (window.jtd && typeof window.jtd.setTheme === "function") applyScheme(scheme);
     else document.documentElement.setAttribute("data-fa-scheme", scheme);
   }
 
@@ -1601,10 +1673,21 @@
          * worse than no control. */
         cornerIcon.setAttribute("aria-label", corner ? "Open search" : "Search this site");
         cornerIcon.setAttribute("title", cornerIcon.getAttribute("aria-label"));
-        slide.setAttribute("aria-label",
-          corner ? "Dock search back into the navbar" : "Slide search out to the corner");
+        /* SAID IN WORDS, not a chevron alone — owner, 2026-09-24: *"hiding
+         * search makes it go away compleletey, cant restore."* The way back
+         * was a lone "⌄" beside a magnifier, and a glyph whose meaning lives
+         * only in a tooltip is not a control a low-dexterity reader finds.
+         * The visible words start the accessible name (WCAG 2.5.3), so a
+         * voice user can say what they see. The reachability half of the
+         * same report — the corner was drawn UNDER the staging banner — is
+         * fixed in the stylesheet (`--fa-staging-offset`). */
+        slide.setAttribute("aria-label", corner
+          ? "Show search — dock it back into the navbar"
+          : "Hide search — slide it out to the corner");
         slide.setAttribute("title", slide.getAttribute("aria-label"));
-        slide.textContent = corner ? "⌄" : "⌃";
+        while (slide.firstChild) slide.removeChild(slide.firstChild);
+        slide.appendChild(el("span", { class: "fa-search-slide-glyph", "aria-hidden": "true" }, corner ? "⌄" : "⌃"));
+        slide.appendChild(el("span", { class: "fa-search-slide-word" }, corner ? "Show search" : "Hide search"));
       }
 
       slide.addEventListener("click", function () {
@@ -2744,7 +2827,7 @@
    * key. Swallowing unconditionally would eat a reader's scrolling the moment
    * a window had focus and the mode did not.
    */
-  function nudge(panel, key, shift) {
+  function nudge(panel, key, shift, unbounded) {
     var g = geometryOf(panel);
     var step = shift ? RESIZE_STEP : MOVE_STEP;
     if (key === "ArrowLeft") { if (shift) g.width = Math.max(MIN_WINDOW, g.width - step); else g.left -= step; }
@@ -2752,10 +2835,21 @@
     else if (key === "ArrowUp") { if (shift) g.height = Math.max(MIN_WINDOW, g.height - step); else g.top -= step; }
     else if (key === "ArrowDown") { if (shift) g.height += step; else g.top += step; }
     else return false;
-    // NEVER off the top-left. A window moved past the origin is a window a
-    // reader cannot reach the controls of, which is `l4zi` by another route.
-    g.left = Math.max(0, g.left);
-    g.top = Math.max(0, g.top);
+    // NEVER off the top-left — FOR A WINDOW. A window moved past the origin is
+    // a window a reader cannot reach the controls of, which is `l4zi` by
+    // another route: the board window and the floating sticky sit in a frame
+    // the size of the viewport, and nothing pans that frame.
+    //
+    // A CARD ON THE GLASS is `unbounded`. Owner, 2026-09-24: *"you shoud be
+    // able to put things on folio w/ x,y <0, can't move negative right now."*
+    // The glass pans and zooms (`b8eq`), so a card left of the origin is one
+    // pan away rather than lost — and Home frames it, and Tidy regrids it.
+    // The clamp protected controls from going off a surface that cannot move;
+    // on one that can, it only stopped the reader using the whole surface.
+    if (!unbounded) {
+      g.left = Math.max(0, g.left);
+      g.top = Math.max(0, g.top);
+    }
     applyGeometry(panel, g);
     return true;
   }
@@ -2775,7 +2869,7 @@
    * selection, and a reader who cannot select the text of a note cannot quote
    * it.
    */
-  function wireMove(panel, handle, live, onSettle) {
+  function wireMove(panel, handle, live, onSettle, opts) {
     // `onSettle(geometry)`, OPTIONAL: told where the panel came to rest, once
     // per arrow press and once per drag. The board window and the floating
     // sticky pass nothing and keep their session-only geometry; the GLASS
@@ -2783,6 +2877,10 @@
     // pages (bean `zrvt`). One implementation of moving, and the callers
     // differ only in whether a position outlives the page.
     function settle() { if (onSettle) onSettle(geometryOf(panel)); }
+    // `opts.unbounded`, OPTIONAL: the panel may go past the origin. Only the
+    // GLASS passes it, because only the glass pans — see `nudge` for why a
+    // window keeps its clamp (`l4zi`) and a card on the glass does not.
+    var unbounded = !!(opts && opts.unbounded);
 
     // THE KEYBOARD PATH, and it acts only in the mode. Outside it the arrows
     // go on scrolling the page, which is what a reader expects of them.
@@ -2795,7 +2893,7 @@
         panel.dispatchEvent(new CustomEvent("fa:move-mode", { detail: { on: false } }));
         return;
       }
-      if (nudge(panel, e.key, e.shiftKey)) {
+      if (nudge(panel, e.key, e.shiftKey, unbounded)) {
         e.preventDefault();
         e.stopPropagation();
         settle();
@@ -2827,7 +2925,11 @@
           e.target.closest("a")) return;
       if (e.pointerType !== "mouse" && panel.getAttribute("data-fa-moving") !== "true" &&
           !e.target.closest("[data-fa-grip]")) return;
+      // A drag still live from a release this page never heard ends here
+      // rather than being silently replaced — it settles where it stood.
+      if (from) finish();
       from = { x: e.clientX, y: e.clientY, g: geometryOf(panel), id: e.pointerId };
+      listen(true);
       // NOT for a mouse. `preventDefault` on `pointerdown` suppresses the
       // compatibility `mousedown` that follows it, and the board windows RAISE
       // on `mousedown` — the switch to pointer events broke "selecting any part
@@ -2842,8 +2944,37 @@
     handle.addEventListener("mousedown", function (e) {
       if (from) e.preventDefault();
     });
-    document.addEventListener("pointermove", function (e) {
+
+    /* EVERY DRAG ENDS — owner, 2026-09-24: *"drag drop avatar and cant
+     * un-drag when not on avata"*.
+     *
+     * A drag used to end on exactly one thing: a `pointerup` on `document`.
+     * A button released where the page cannot hear it — past the window's
+     * edge, over the browser's own chrome, under a native menu — sends no
+     * `pointerup` at all, and the card then followed a pointer with no button
+     * held until the reader happened to press again. Measured: after such a
+     * release the card went on following the pointer for 300px. So a drag
+     * now ends on ANY of the ways a browser says the press is over:
+     *
+     *   - `pointerup` / `pointercancel`, wherever they land;
+     *   - `lostpointercapture` — a finger's capture taken away;
+     *   - a mouse `pointermove` with NO button held, which is what the unheard
+     *     release looks like from inside the page;
+     *   - the window losing focus mid-drag;
+     *   - and `Escape`, which CANCELS: the card goes back where it was and
+     *     nothing is saved. A drag the reader cannot take back is a gesture
+     *     with no inverse, which is `l4zi` for pointers.
+     *
+     * The document listeners exist only WHILE a drag is live. They used to be
+     * added once per card and never removed, and the glass rebuilds its cards
+     * on every change — so each rebuild left three more listeners behind,
+     * closed over cards no longer on the page. */
+    function onMove(e) {
       if (!from || e.pointerId !== from.id) return;
+      // A MOUSE only. A finger or a pen cannot be lifted unheard — its
+      // contact ends in `pointerup` or `pointercancel`, and it is captured —
+      // while a mouse button let go outside the window can be.
+      if (e.pointerType === "mouse" && e.buttons === 0) { finish(); return; }
       // A SECOND FINGER made this a pinch of the whole glass (`b8eq`): the
       // card stands still rather than following one of two fingers.
       if (panel.closest && panel.closest("[data-fa-pinching]")) return;
@@ -2852,20 +2983,57 @@
       // or it slides out from under the finger.
       var host = panel.parentNode && panel.parentNode.closest ? panel.parentNode.closest("[data-fa-scale]") : null;
       var scale = (host && parseFloat(host.getAttribute("data-fa-scale"))) || 1;
+      var left = from.g.left + (e.clientX - from.x) / scale;
+      var top = from.g.top + (e.clientY - from.y) / scale;
       applyGeometry(panel, {
-        left: Math.max(0, from.g.left + (e.clientX - from.x) / scale),
-        top: Math.max(0, from.g.top + (e.clientY - from.y) / scale),
+        left: unbounded ? left : Math.max(0, left),
+        top: unbounded ? top : Math.max(0, top),
         width: from.g.width,
         height: from.g.height,
       });
-    });
-    function end(e) {
-      if (!from || (e && e.pointerId !== from.id)) return;
-      settle();
-      from = null;
     }
-    document.addEventListener("pointerup", end);
-    document.addEventListener("pointercancel", end);
+    function onEnd(e) {
+      if (!from || (e && e.pointerId !== from.id)) return;
+      finish();
+    }
+    function onKey(e) {
+      if (!from || e.key !== "Escape") return;
+      // CAPTURE PHASE, and stopped: the glass's own Escape puts the glass
+      // away, and a reader cancelling a drag has not asked for that.
+      e.preventDefault();
+      e.stopPropagation();
+      applyGeometry(panel, from.g);
+      stop();
+      if (live) live.textContent = "Move cancelled; back where it was.";
+    }
+    function onBlur() { if (from) finish(); }
+    function listen(on) {
+      var f = on ? "addEventListener" : "removeEventListener";
+      document[f]("pointermove", onMove);
+      document[f]("pointerup", onEnd);
+      document[f]("pointercancel", onEnd);
+      document[f]("keydown", onKey, true);
+      window[f]("blur", onBlur);
+      handle[f]("lostpointercapture", onEnd);
+    }
+    function stop() {
+      from = null;
+      listen(false);
+    }
+    function finish() {
+      stop();
+      settle();
+    }
+
+    // The same step an arrow key takes, for a caller that offers it as a
+    // BUTTON — the glass's move bar, for a reader who cannot press arrows.
+    return {
+      step: function (key, shift) {
+        if (!nudge(panel, key, shift, unbounded)) return false;
+        settle();
+        return true;
+      },
+    };
   }
 
   /* ═══ The fishbone — relocate, behind a confirm that names the scope ═══
@@ -3184,18 +3352,140 @@
       });
   }
 
-  /** Paragraphs, split on blank lines. Text only -- see the header. */
-  function renderBody(text) {
+  /**
+   * Paragraphs, split on blank lines. Text only -- see the header.
+   *
+   * `{ markdown: true }` renders the note's MARKDOWN instead, and only a
+   * caller that owns its text may ask for it. Owner, 2026-09-24, on a sticky
+   * popped out onto the folio glass: *"i expected to see themed square sticky
+   * avatar faded with markdown overlayed"*. A todo's `comment` is authored
+   * markdown in the declared `todos/` graph, and showing its asterisks and
+   * hashes as text is showing the SOURCE, not the note. `fsh-guts/` keeps the
+   * plain path, for the reason in the header: a dumping ground is not
+   * interpreted.
+   *
+   * ONE body renderer with a switch, not a second one. And still no
+   * `innerHTML`: the markdown is parsed into DOM nodes whose text is set with
+   * `textContent`, and a link goes through `safeHref`, so an authored note
+   * cannot carry markup or a hostile scheme into the page.
+   */
+  function renderBody(text, opts) {
     var wrap = el("div", { class: "fa-sticky-body" });
-    var paras = String(text || "").split(/\n{2,}/);
-    for (var i = 0; i < paras.length; i++) {
-      var p = paras[i].trim();
-      if (p !== "") wrap.appendChild(el("p", null, p));
+    if (opts && opts.markdown) {
+      renderMarkdownInto(wrap, text);
+    } else {
+      var paras = String(text || "").split(/\n{2,}/);
+      for (var i = 0; i < paras.length; i++) {
+        var p = paras[i].trim();
+        if (p !== "") wrap.appendChild(el("p", null, p));
+      }
     }
     if (wrap.childNodes.length === 0) {
       wrap.appendChild(el("p", { class: "fa-sticky-empty" }, "No detail recorded."));
     }
     return wrap;
+  }
+
+  /**
+   * The block half of a note's markdown: paragraphs, headings, lists.
+   *
+   * The subset a todo actually uses — measured over `todos/`: paragraphs,
+   * `##` headings, `-` and `1.` lists, `**bold**`, `*emphasis*`, inline code
+   * and links. Anything else stays as its text, which is the safe failure: a
+   * construct this does not know is SHOWN, never dropped.
+   *
+   * A heading is a styled paragraph (`.fa-md-heading`), not an `<h2>`: a
+   * note's `##` is structure inside a card, and minting a real heading would
+   * put every sticky's sections into the PAGE's outline.
+   */
+  function renderMarkdownInto(wrap, text) {
+    var lines = String(text || "").replace(/\r\n?/g, "\n").split("\n");
+    var para = [];
+    var list = null;
+    var listTag = null;
+    function flushPara() {
+      if (!para.length) return;
+      var p = el("p");
+      appendInlineMarkdown(p, para.join(" "));
+      wrap.appendChild(p);
+      para = [];
+    }
+    function flushList() {
+      if (!list) return;
+      wrap.appendChild(list);
+      list = null;
+      listTag = null;
+    }
+    lines.forEach(function (raw) {
+      var line = raw.replace(/\s+$/, "");
+      var m;
+      if (!line.trim()) { flushPara(); flushList(); return; }
+      m = line.match(/^\s{0,3}#{1,6}\s+(.*?)\s*#*$/);
+      if (m) {
+        flushPara(); flushList();
+        var h = el("p", { class: "fa-md-heading" });
+        appendInlineMarkdown(h, m[1]);
+        wrap.appendChild(h);
+        return;
+      }
+      m = line.match(/^\s*([-*+]|\d+[.)])\s+(.*)$/);
+      if (m) {
+        flushPara();
+        var tag = /\d/.test(m[1]) ? "ol" : "ul";
+        if (!list || listTag !== tag) { flushList(); list = el(tag); listTag = tag; }
+        var li = el("li");
+        appendInlineMarkdown(li, m[2]);
+        list.appendChild(li);
+        return;
+      }
+      // An indented line under a list item continues that item.
+      if (list && /^\s{2,}\S/.test(raw)) {
+        list.lastChild.appendChild(document.createTextNode(" "));
+        appendInlineMarkdown(list.lastChild, line.trim());
+        return;
+      }
+      flushList();
+      m = line.match(/^\s*>\s?(.*)$/);
+      para.push((m ? m[1] : line).trim());
+    });
+    flushPara();
+    flushList();
+  }
+
+  /**
+   * The inline half: code, strong, emphasis, links — as nodes, never markup.
+   *
+   * `_underscore_` emphasis is deliberately NOT recognised: notes here name
+   * files and identifiers (`human_todos`, `fa_first_paint`), and reading their
+   * underscores as emphasis would silently eat characters out of a path.
+   */
+  function appendInlineMarkdown(parent, text) {
+    var re = /(`+)([\s\S]*?)\1|\*\*([^*]+?)\*\*|\*([^*\s][^*]*?)\*|\[([^\]]+)\]\(([^)\s]+)\)/g;
+    var last = 0;
+    var m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) parent.appendChild(document.createTextNode(text.slice(last, m.index)));
+      if (m[1]) {
+        parent.appendChild(el("code", null, m[2]));
+      } else if (m[3]) {
+        var s = el("strong");
+        appendInlineMarkdown(s, m[3]);
+        parent.appendChild(s);
+      } else if (m[4]) {
+        var em = el("em");
+        appendInlineMarkdown(em, m[4]);
+        parent.appendChild(em);
+      } else {
+        // A link a note may not carry is still its words — `pb04`: no link
+        // beats a link to nowhere, and dropping the words would lose the note.
+        var href = safeHref(m[6]);
+        var a = href ? el("a", { href: href }) : el("span");
+        appendInlineMarkdown(a, m[5]);
+        parent.appendChild(a);
+      }
+      last = re.lastIndex;
+    }
+    if (last < text.length) parent.appendChild(document.createTextNode(text.slice(last)));
   }
 
 
@@ -3391,6 +3681,35 @@
     return pic;
   }
 
+  /* THE CROP FOLLOWS THE CARD'S SHAPE, on the glass — owner, 2026-09-27:
+   * *"use laptop layout for the existing todos"* and then *"theme todos layout
+   * should be dynamic in case user resized"*. A card on the glass is resized
+   * freely, so one crop cannot suit it: the square `card` crop in a wide card
+   * left the art as a picture in the middle of the text. So the shape picks:
+   * wide takes `laptop`, tall takes `mobile`, near-square keeps `card`, and a
+   * ResizeObserver re-picks as the reader resizes. A todo that NAMES a layout
+   * keeps it. Board stickies follow the same rule (owner, same day: "board
+   * stickies adapt too"), so a sticky reflowed wide by the board is wide.
+   * The scrim is unchanged, so the fade does not depend on the crop. */
+  function cropForShape(art, w, h) {
+    var r = w / Math.max(h, 1);
+    var pick = r >= 1.3 ? "laptop" : r <= 0.8 ? "mobile" : "card";
+    return art[pick] || art.card || art.mobile || art.laptop;
+  }
+  function followCardShape(card, art, layout) {
+    if (layout && art[layout]) return;
+    var img = card.querySelector(".fa-sticky-art");
+    if (!img) return;
+    function fit() {
+      var r = card.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      var src = cropForShape(art, r.width, r.height);
+      if (src && img.getAttribute("src") !== src) img.setAttribute("src", src);
+    }
+    fit();
+    if (typeof ResizeObserver === "function") new ResizeObserver(fit).observe(card);
+  }
+
   /* The pencil and the eye, as inline SVG rather than `✎` and `⎘`.
    *
    * Which glyph a font actually has for those two characters varies, and `⎘`
@@ -3535,7 +3854,12 @@
     var art = todo.theme && todoState.themeArt[todo.theme];
     if (art) attrs.class += " fa-sticky--backdrop";
     var card = el("article", attrs);
-    if (art) card.appendChild(buildBackdrop(art, todo.layout));
+    if (art) {
+      card.appendChild(buildBackdrop(art, todo.layout));
+      // THE BOARD ADAPTS TOO — owner, 2026-09-27, the glass change carried to
+      // the board: a sticky's crop follows its shape as the board reflows.
+      followCardShape(card, art, todo.layout);
+    }
 
     var head = el("div", { class: "fa-sticky-head" });
     var toggle = el("button", {
@@ -3913,9 +4237,14 @@
   function placeOnGlass(key, geom) {
     var all = folioAssets();
     if (!all[key]) return;
+    // NO CLAMP AT ZERO. Owner, 2026-09-24: *"you shoud be able to put things
+    // on folio w/ x,y <0"*. The glass pans (`b8eq`), so a negative place is a
+    // place, and Home and Tidy are how a reader gets it back in view. A store
+    // that clamped would move the card on the next page load, and the reader
+    // would find it somewhere they never put it.
     all[key].geom = {
-      left: Math.max(0, Math.round(geom.left)),
-      top: Math.max(0, Math.round(geom.top)),
+      left: Math.round(geom.left),
+      top: Math.round(geom.top),
       width: Math.round(geom.width),
       height: Math.round(geom.height),
     };
@@ -4105,10 +4434,15 @@
    */
   var GLASS_PREFS_KEY = "fa-glass-prefs";
   var GLASS_THEMES = [
-    { id: "glass", label: "Glass", hint: "see-through and blurred", opacity: 20 },
-    { id: "contrast", label: "High contrast", hint: "black and white, strong outlines", opacity: 100 },
-    { id: "paper", label: "Paper", hint: "light and nearly solid", opacity: 92 },
-    { id: "night", label: "Night", hint: "dark and nearly solid", opacity: 92 },
+    // Each carries a jewelled purple pattern (owner, 2026-09-24: "Mix, per
+    // theme"), and the hint names the sticky themes it suits. Contrast
+    // stays plain: it is the usability theme.
+    { id: "glass", label: "Glass", hint: "amethyst facets, see-through and blurred — suits Analyst, Operations", opacity: 20 },
+    { id: "contrast", label: "High contrast", hint: "black and white, strong outlines, no pattern", opacity: 100 },
+    { id: "paper", label: "Paper", hint: "iris haze, light and nearly solid — suits Pale sage, Dusty Carolina blue", opacity: 92 },
+    { id: "night", label: "Night", hint: "opal night, dark and nearly solid", opacity: 92 },
+    { id: "rose", label: "Rose window", hint: "cathedral stained glass — suits Library, Grumpy cat", opacity: 30 },
+    { id: "leaded", label: "Leaded grid", hint: "modern stained glass panes — suits Architecture, Engineer", opacity: 30 },
   ];
   var GLASS_AVATAR_STYLES = [
     { id: "pictures", label: "Pictures", hint: "a book's cover when it has one, otherwise its kind avatar" },
@@ -4145,6 +4479,11 @@
     layer.setAttribute("data-fa-glass-avatars", p.avatars);
     layer.setAttribute("data-fa-glass-blur", p.blur ? "on" : "off");
     layer.style.setProperty("--fa-glass-opacity", String(p.opacity / 100));
+    // The handle wears the SAME stained glass as the layer (owner,
+    // 2026-09-27: "appropriate theme stained glass, not solid purple"). It is
+    // a sibling of the layer, not a child, so the theme is mirrored onto it.
+    var h = document.querySelector(".fa-glass-handle");
+    if (h) h.setAttribute("data-fa-glass-theme", p.theme);
   }
 
   /**
@@ -4161,6 +4500,26 @@
       rel: "stylesheet",
       href: safeHref(withBase("/assets/css/avatars.css")),
       "data-fa-glass-avatars-css": "",
+    }));
+  }
+
+  /**
+   * `themes.css` on a page that did not load it, for the same reason as
+   * `avatars.css` above. A replica (who-iris) loads `docs-ui.css` alone, so a
+   * themed todo on its glass had the theme's art but NOT its scrim or ink:
+   * `--fa-sticky-scrim` is declared in `themes.css`, and without it the
+   * backdrop fell back to an 8% grey and the picture sat unfaded behind the
+   * text (owner, 2026-09-27: "it should be faded for legibility").
+   */
+  function ensureThemesCss() {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      if (/\/themes\.css(\?|$)/.test(links[i].getAttribute("href") || "")) return;
+    }
+    document.head.appendChild(el("link", {
+      rel: "stylesheet",
+      href: safeHref(withBase("/assets/css/themes.css")),
+      "data-fa-glass-themes-css": "",
     }));
   }
 
@@ -4242,6 +4601,21 @@
       });
   }
 
+  /**
+   * Where the handle lives: FIXED AT THE TOP CENTRE of the viewport, as a
+   * short pill. Owner, 2026-09-27: *"i want purple folio button, not on
+   * navbar but at top middle of display screen. not so tall"*.
+   *
+   * This reverses the 2026-09-24 placement in the left navbar (bean `269z`),
+   * which rendered as a tall purple block with only a ▾ in the strip. The
+   * overlap that placement was solving (a viewer's h1, `015u`; a replica's
+   * banner, `269z`) is answered by HEIGHT instead: the pill is about 1.75rem
+   * tall, and viewers still reserve its band in `docs-ui.css`.
+   */
+  function placeHandle(handle) {
+    document.body.appendChild(handle);
+  }
+
   var glassLayer = null;
   function mountGlass() {
     if (glassLayer && glassLayer.isConnected) return glassLayer;
@@ -4256,6 +4630,7 @@
     var prefs = glassPrefs();
     applyGlassPrefs(layer, prefs);
     ensureAvatarsCss();
+    ensureThemesCss();
     // THE ZOOM DECLARATION, for pages whose board never asked for it — a
     // replica page has no board and no `fa-zoom-src` meta. Asked once; absent
     // stays null, which keeps every card's words (see `zoomState`).
@@ -4283,8 +4658,14 @@
       "aria-expanded": "false",
       "aria-label": "Pull down your folio",
       title: "Pull down your folio",
-    }, "▾ Folio");
-    document.body.appendChild(handle);
+    });
+    // A MARK and a LABEL, not one string, so the stylesheet can size the ▾
+    // apart from the word. The accessible name is the aria-label.
+    handle.appendChild(el("span", { class: "fa-glass-handle__mark", "aria-hidden": "true" }, "▾"));
+    handle.appendChild(document.createTextNode(" "));
+    handle.appendChild(el("span", { class: "fa-glass-handle__label" }, "Folio"));
+    placeHandle(handle);
+    applyGlassPrefs(layer, prefs);
 
     // The glass's own chrome, so an open glass is never `:empty`.
     var sheet = el("div", { class: "fa-glass-sheet", role: "region", "aria-label": "Your folio" });
@@ -4348,8 +4729,12 @@
       // *"artefact avatar should cover sheet"*), and a landscape card would
       // show a cover's middle band. 4:3 upright, which every rendered cover
       // here is near. Rows are laid out at the tallest card's height.
+      // A STICKY IS SQUARE — owner, 2026-09-24: *"i expected to see themed
+      // square sticky avatar"*. A todo is a sticky note everywhere else on
+      // this site, and a sticky note is square; the wide 152px strip it used
+      // to pop out as read as a list row, not as the note.
       var h = zoomKindOf(a) === "library" && prefs.avatars !== "text"
-        ? Math.round(w * 4 / 3) : GLASS_CARD_H;
+        ? Math.round(w * 4 / 3) : zoomKindOf(a) === "todo" ? w : GLASS_CARD_H;
       return {
         left: (i % cols) * (w + GLASS_GAP),
         top: Math.floor(i / cols) * (Math.max(h, GLASS_CARD_H) + GLASS_GAP),
@@ -4409,7 +4794,34 @@
       try { localStorage.setItem(VIEW_KEY, JSON.stringify(view)); } catch (_e) { /* a view that resets next page is the safe failure */ }
     }
     var view = loadView();
-    function atHome() { return view.s === 1 && view.x === 0 && view.y === 0; }
+    /* WHERE HOME IS, now that a card may sit left of or above the origin.
+     *
+     * Owner, 2026-09-24: *"you shoud be able to put things on folio w/ x,y
+     * <0"*. Home used to be the origin, full stop — so a card the reader put
+     * at x = −400 was still off the glass's left edge after Home, and the one
+     * press that is meant to always find the folio did not find all of it.
+     *
+     * Home is now "100%, where your folio STARTS", and the folio starts at its
+     * top-left-most card: the view shifts right and down just far enough to
+     * bring that card's corner to the glass's corner. With every card at or
+     * past the origin — the only case there was before — that shift is zero,
+     * and Home is the origin exactly as it was. The cards' own places are
+     * never touched; Tidy is the control that regrids them. */
+    function homeView() {
+      var minLeft = 0, minTop = 0;
+      Array.prototype.forEach.call(shelf.querySelectorAll(".fa-glass-asset"), function (c) {
+        // A card the reader's filter hides is not one Home should frame.
+        if (c.hasAttribute("data-fa-filtered-out")) return;
+        minLeft = Math.min(minLeft, parseFloat(c.style.left) || 0);
+        minTop = Math.min(minTop, parseFloat(c.style.top) || 0);
+      });
+      return { s: 1, x: Math.round(-minLeft), y: Math.round(-minTop) };
+    }
+    function atHome() {
+      var h = homeView();
+      return view.s === 1 && view.x === h.x && view.y === h.y;
+    }
+    function atOrigin() { return view.s === 1 && view.x === 0 && view.y === 0; }
 
     var glassLive = el("p", { class: "fa-sr-only", "aria-live": "polite" });
     var zoomBar = el("div", { class: "fa-glass-zoom", role: "group", "aria-label": "Zoom and position of your folio" });
@@ -4434,7 +4846,9 @@
 
     function applyView() {
       shelf.style.transformOrigin = "0 0";
-      shelf.style.transform = atHome() ? "" :
+      // No transform at the ORIGIN, rather than at home: home may now be a
+      // shift (see `homeView`), and a shift has to be drawn.
+      shelf.style.transform = atOrigin() ? "" :
         "translate(" + view.x + "px, " + view.y + "px) scale(" + view.s + ")";
       shelf.setAttribute("data-fa-scale", String(view.s));
       var pct = Math.round(view.s * 100);
@@ -4444,6 +4858,35 @@
       // The scale changes a card's RENDERED width without resizing its box,
       // so the ResizeObserver never hears of it. Asked here instead.
       Array.prototype.forEach.call(shelf.querySelectorAll(".fa-glass-asset"), zoomGlassCard);
+      placePanel();
+    }
+
+    /* A TILE'S POP-OUT RIDES ON THE FOLIO — owner, 2026-09-24: *"dragging
+     * folio should also drag todos/other tile popouts"*.
+     *
+     * WHICH "DRAGGING FOLIO". Two things here move: a CARD, by `wireMove`,
+     * and the FOLIO — the glass the reader drags from empty space, which is
+     * this view (`panFrom`, the pinch, and the zoom controls). The sheet is
+     * labelled "Your folio" and the handle "Pull down your folio"; a folio
+     * WINDOW (`.fa-board-window`) lives on board pages, not on the glass,
+     * where the Todos pop-out is. So "dragging folio" is panning the glass,
+     * and a pop-out must move as if it sat on it.
+     *
+     * The pop-out was a sibling of the shelf, in the sheet's flow, so the
+     * view's transform — which is on the shelf alone — left it where it was
+     * while every card slid away from it. It now takes the same view, as a
+     * TRANSLATION ONLY: its corner goes where that point of the folio goes
+     * (`view + P·(s − 1)`, P its place relative to the shelf's origin), but
+     * it is never scaled — a pop-out zoomed to 25% is a list nobody can read
+     * or press, and this instance's profile is low-dexterity. Home brings it
+     * back with everything else; the keyboard reaches it exactly as before.
+     * On a phone the column stands and nothing is transformed (`c132`). */
+    function placePanel() {
+      if (!panel) return;
+      if (atOrigin() || !isSurface() || panel.hasAttribute("hidden")) { panel.style.transform = ""; return; }
+      var px = panel.offsetLeft - shelf.offsetLeft, py = panel.offsetTop - shelf.offsetTop;
+      panel.style.transform = "translate(" + Math.round(view.x + px * (view.s - 1)) + "px, " +
+        Math.round(view.y + py * (view.s - 1)) + "px)";
     }
 
     /** Zoom to `s`, keeping the point under (cx, cy) where it is. No point: the middle of the glass. */
@@ -4470,7 +4913,7 @@
     zoomInBtn.addEventListener("click", function () { zoomAbout(view.s + ZOOM_STEP / 100); sayZoom(); });
     zoomSlider.addEventListener("input", function () { zoomAbout(Number(zoomSlider.value) / 100); });
     homeBtn.addEventListener("click", function () {
-      view = { s: 1, x: 0, y: 0 };
+      view = homeView();
       applyView();
       saveView();
       glassLive.textContent = "Back home: 100%, where your folio starts.";
@@ -4496,23 +4939,53 @@
     var touches = {};
     var pinch = null;
     function distance(a, b) { return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)); }
+    /* Is this the laptop/tablet SURFACE, where the glass pans and zooms? On a
+     * phone the column stands (`c132`): the zoom bar is not drawn, the shelf
+     * carries no transform, and a finger must scroll the column — so nothing
+     * below may take a finger there. Asked of the rendered zoom bar rather
+     * than of a width literal, so the stylesheet stays the one place that
+     * draws the line. */
+    function isSurface() { return zoomBar.getClientRects().length > 0; }
     sheet.addEventListener("pointerdown", function (e) {
       if (e.pointerType === "mouse" && e.button !== 0) return;
-      // A finger only pans where the browser has been told not to scroll —
-      // the shelf (`touch-action: none`). Elsewhere a finger scrolls the glass.
-      if (e.pointerType !== "mouse" && e.target !== shelf) return;
+      if (pinch) return;   // a second finger is a pinch, never a second pan
+      /* A FINGER PANS FROM ANY EMPTY GLASS — owner, 2026-09-24: *"clicking on
+       * glass, but not avatar, should pan the glass."*
+       *
+       * It used to pan only from the SHELF, the one element the stylesheet
+       * tells the browser not to scroll. But the shelf is what the view
+       * transforms: zoomed out it shrinks, panned it slides, and everywhere
+       * it no longer covers is the sheet — empty glass to the reader, where a
+       * finger did nothing at all. Measured at 50% on a 1024px tablet: the
+       * right half of the glass. So a finger on the sheet pans too, and the
+       * browser's own scroll is held off by `touchmove` below rather than by
+       * `touch-action` — which could not be set on the sheet without also
+       * stopping a finger scrolling a long panel, since a scroller's
+       * `touch-action` binds everything inside it. A finger on a panel, a note
+       * or a card still scrolls; only empty glass pans. */
+      if (e.pointerType !== "mouse" && !isSurface()) return;
       if (!onEmptyGlass(e)) return;
-      panFrom = { id: e.pointerId, x: e.clientX, y: e.clientY, vx: view.x, vy: view.y, moved: false };
+      panFrom = { id: e.pointerId, x: e.clientX, y: e.clientY, vx: view.x, vy: view.y, moved: false,
+                  touch: e.pointerType !== "mouse" };
     });
     sheet.addEventListener("mousedown", function (e) {
       // No text selection while dragging the surface.
       if (e.button === 0 && onEmptyGlass(e)) e.preventDefault();
     });
-    // TWO FINGERS, wherever they land on the shelf — over a card too. Seen in
-    // the CAPTURE phase so a card's own drag cannot hide the second finger;
-    // `data-fa-pinching` then tells that drag to stand still (`wireMove`).
-    shelf.addEventListener("pointerdown", function (e) {
-      if (e.pointerType !== "touch") return;
+    // While a FINGER pans or pinches, the browser must not also scroll the
+    // glass under it. Needed only for a pan that began on the sheet — the
+    // shelf already says `touch-action: none` — and harmless on the shelf.
+    document.addEventListener("touchmove", function (e) {
+      if (pinch || (panFrom && panFrom.touch)) e.preventDefault();
+    }, { passive: false });
+    // TWO FINGERS, wherever they land on the shelf — over a card too — or on
+    // the empty glass beside it, since that is glass the reader sees as the
+    // same surface. Seen in the CAPTURE phase so a card's own drag cannot hide
+    // the second finger; `data-fa-pinching` then tells that drag to stand
+    // still (`wireMove`). Not on a panel or a note: a finger there scrolls.
+    sheet.addEventListener("pointerdown", function (e) {
+      if (e.pointerType !== "touch" || !isSurface()) return;
+      if (!shelf.contains(e.target) && !onEmptyGlass(e)) return;
       touches[e.pointerId] = { x: e.clientX, y: e.clientY };
       var ids = Object.keys(touches);
       if (ids.length === 2) {
@@ -4541,6 +5014,9 @@
         return;
       }
       if (panFrom && e.pointerId === panFrom.id) {
+        // The button came up where this page could not hear it: the pan is
+        // over, exactly as a card's drag is (`wireMove`).
+        if (e.pointerType === "mouse" && e.buttons === 0) { endViewPointer(e); return; }
         var dx = e.clientX - panFrom.x, dy = e.clientY - panFrom.y;
         if (!panFrom.moved && Math.abs(dx) + Math.abs(dy) < 4) return;
         panFrom.moved = true;
@@ -4563,6 +5039,84 @@
     }
     document.addEventListener("pointerup", endViewPointer);
     document.addEventListener("pointercancel", endViewPointer);
+
+    /* ── THE MOVE BAR: what ✜ is FOR, said and offered on screen ──────────
+     *
+     * Owner, 2026-09-24: *"exploding icon outlines the avatar but appears to
+     * do nothing else."* The exploding icon is ✜, the card's Move control.
+     * What it was meant to do is written on it and in `zrvt`: *"✥ enters move
+     * mode, arrows move, Shift+arrows resize, Escape or Enter leaves"* — and
+     * it did exactly that. But the only thing a SIGHTED reader was shown was
+     * the dashed outline; the sentence saying what the arrow keys now do went
+     * to a screen-reader live region and nowhere else. To a reader with a
+     * mouse the mode looked like a button that draws a box.
+     *
+     * So while a card is in the mode this bar says the same sentence where it
+     * can be read, and offers the mode's own step — the one `nudge` takes for
+     * an arrow press — as four buttons, plus Done. Nothing new is decided
+     * here: the steps, the resize chord and the ways out are the mode's, and
+     * the buttons call the SAME step through `wireMove`'s controller. They are
+     * the pointer path to the mode for a reader who cannot comfortably press
+     * arrow keys, as −/+ already are for size, and the declared profile here
+     * is low-dexterity (WCAG 2.5.7).
+     *
+     * In the ZOOM BAR's row, because that row is sticky to the top of the
+     * glass: the bar stays on screen however far the glass is scrolled, and
+     * at full size however far it is zoomed out — a bar drawn on the card
+     * would shrink with it. */
+    var moveBar = el("div", { class: "fa-glass-move-bar", role: "group", hidden: "hidden" });
+    var moveSay = el("p", { class: "fa-glass-move-say" });
+    moveBar.appendChild(moveSay);
+    var moving = null;   // { card, mover, done } for the one card in the mode
+    var STEPS = [
+      { key: "ArrowLeft", glyph: "←", word: "left" },
+      { key: "ArrowUp", glyph: "↑", word: "up" },
+      { key: "ArrowDown", glyph: "↓", word: "down" },
+      { key: "ArrowRight", glyph: "→", word: "right" },
+    ];
+    var stepButtons = STEPS.map(function (st) {
+      var b = el("button", { type: "button", class: "fa-glass-zoom-btn fa-glass-move-step", "data-fa-step": st.key }, st.glyph);
+      b.addEventListener("click", function () { if (moving) moving.mover.step(st.key, false); });
+      moveBar.appendChild(b);
+      return { b: b, st: st };
+    });
+    var moveDone = el("button", { type: "button", class: "fa-glass-zoom-btn fa-glass-move-done", "data-fa-step": "done" },
+      "Done");
+    moveDone.addEventListener("click", function () { if (moving) moving.done(); });
+    moveBar.appendChild(moveDone);
+    // The mode's KEYS work here too: arrows step (Shift resizes), and Escape
+    // leaves the mode — stopped, so the glass's own Escape does not also put
+    // the glass away under a reader who only meant "stop moving".
+    moveBar.addEventListener("keydown", function (e) {
+      if (!moving) return;
+      if (e.key === "Escape") {
+        e.preventDefault();
+        e.stopPropagation();
+        moving.done();
+        return;
+      }
+      if (moving.mover.step(e.key, e.shiftKey)) e.preventDefault();
+    });
+    zoomBar.appendChild(moveBar);
+
+    function showMoveBar(card, title, mover, done) {
+      if (moving && moving.card !== card) moving.done();
+      moving = { card: card, mover: mover, done: done };
+      moveBar.setAttribute("aria-label", "Move " + title);
+      moveSay.textContent = "Moving “" + title + "”: use these buttons or the arrow keys " +
+        "(Shift + arrows resize). Escape or Done to finish.";
+      stepButtons.forEach(function (x) {
+        x.b.setAttribute("aria-label", "Move " + title + " " + x.st.word);
+        x.b.title = "Move " + x.st.word;
+      });
+      moveDone.setAttribute("aria-label", "Done moving " + title);
+      moveBar.removeAttribute("hidden");
+    }
+    function hideMoveBar(card) {
+      if (card && moving && moving.card !== card) return;
+      moving = null;
+      moveBar.setAttribute("hidden", "hidden");
+    }
 
     function buildGlassCard(key, a) {
       var card = el("article", {
@@ -4597,13 +5151,23 @@
         "aria-pressed": "false",
         title: "Move (arrow keys; Shift+arrows resize)",
       }, CONTROL_GLYPHS.move || "\u271C");
+      // Leaving the mode by any route — Escape or Enter on the card, Escape or
+      // Done on the move bar — is this one path, so the bar, the pressed state
+      // and focus cannot disagree about whether the card is still moving.
+      function leaveMoveMode() {
+        setMoveMode(card, false, live);
+        card.dispatchEvent(new CustomEvent("fa:move-mode", { detail: { on: false } }));
+      }
       moveBtn.addEventListener("click", function () {
         var on = card.getAttribute("data-fa-moving") !== "true";
-        setMoveMode(card, on, live);
-        moveBtn.setAttribute("aria-pressed", on ? "true" : "false");
+        if (!on) { leaveMoveMode(); return; }
+        setMoveMode(card, true, live);
+        moveBtn.setAttribute("aria-pressed", "true");
+        showMoveBar(card, a.title, mover, leaveMoveMode);
       });
       card.addEventListener("fa:move-mode", function () {
         moveBtn.setAttribute("aria-pressed", "false");
+        hideMoveBar(card);
         moveBtn.focus();
       });
       function resizeBy(d) {
@@ -4654,14 +5218,97 @@
       card.addEventListener("mousedown", raise);
       card.addEventListener("focusin", raise);
 
-      wireMove(card, card, live, function (g) {
+      // UNBOUNDED: a card on the glass may go past the origin (see `nudge`).
+      // Where it settles may also move Home, so the Home button's state is
+      // asked again — `applyView` redraws nothing that did not change.
+      var mover = wireMove(card, card, live, function (g) {
         placeOnGlass(key, g);
         fitShelf();
-      });
+        applyView();
+      }, { unbounded: true });
+      if (a.kind === "todos" && key.indexOf("todo/") === 0) {
+        var todoId = key.slice("todo/".length);
+        glassTodoIndex(function (idx) {
+          var item = idx && idx.byId[todoId];
+          if (item) dressGlassSticky(card, item, idx.themeArt);
+        });
+      }
       return card;
     }
 
+    /* ── A POPPED-OUT STICKY IS THE STICKY ──────────────────────────────────
+     *
+     * Owner, 2026-09-24, on a todo pulled onto the glass: *"i expected to see
+     * themed square sticky avatar faded with markdown overlayed when stikcy
+     * poopped out."* What popped out was a wide card with a generic yellow
+     * note in the middle and none of the note's words.
+     *
+     * THE SAME THEMED STICKY, NOT A SECOND LOOK. The card takes the todo's
+     * `data-fa-sticky-theme` and `fa-sticky--backdrop`, and its art comes
+     * from `buildBackdrop` — the attribute, class and function the board's
+     * sticky (`buildSticky`) and the landing stickies already use. So the
+     * art's crop and clipping, the SCRIM that fades it, and the theme's ink
+     * all come from `themes.css` and the backdrop rules as they are; nothing
+     * here sets a colour or restates a fade. The note's words are
+     * `renderBody(comment, { markdown: true })` — the board's body renderer,
+     * asked for markdown.
+     *
+     * The theme and the words live in the published todo index, not in the
+     * reader's folio (which keeps a title and a link), so they are read from
+     * the index when the card is drawn — once per page, cached. An index that
+     * cannot be read leaves the plain card as it was: absent is a real state,
+     * and a card with no theme stays the plain note. */
+    var glassTodoIdx;
+    var glassTodoWaiting = null;
+    function glassTodoIndex(done) {
+      if (glassTodoIdx !== undefined) return done(glassTodoIdx);
+      if (glassTodoWaiting) { glassTodoWaiting.push(done); return; }
+      glassTodoWaiting = [done];
+      function settle(v) {
+        glassTodoIdx = v;
+        var w = glassTodoWaiting;
+        glassTodoWaiting = null;
+        w.forEach(function (f) { f(v); });
+      }
+      fetch(todoIndexUrl())
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(function (doc) {
+          var byId = {};
+          (doc && Array.isArray(doc.items) ? doc.items : []).forEach(function (t) { if (t && t.id) byId[t.id] = t; });
+          settle({ byId: byId, themeArt: baseurlResolved((doc && doc.themeArt) || {}) });
+        })
+        .catch(function (e) {
+          console.warn("docs-ui: the glass could not read the todo index (" + e.message +
+                       "); popped-out stickies keep their plain card.");
+          settle(null);
+        });
+    }
+
+    function dressGlassSticky(card, todo, themeArt) {
+      if (card.classList.contains("fa-glass-sticky")) return;
+      card.classList.add("fa-glass-sticky");
+      var art = todo.theme && themeArt[todo.theme];
+      if (todo.theme) card.setAttribute("data-fa-sticky-theme", todo.theme);
+      // The reader's "text only" avatar style is honoured here as everywhere
+      // on the glass: the theme's colours stay, its picture does not.
+      if (art && prefs.avatars !== "text") {
+        card.classList.add("fa-sticky--backdrop");
+        card.insertBefore(buildBackdrop(art, todo.layout), card.firstChild);
+        followCardShape(card, art, todo.layout);
+        // The theme's art IS the avatar now; the generic yellow note goes.
+        var generic = card.querySelector(".fa-glass-asset-face > .fa-glass-avatar");
+        if (generic) generic.parentNode.removeChild(generic);
+      }
+      var body = renderBody(todo.comment, { markdown: true });
+      body.classList.add("fa-glass-sticky-body");
+      var tools = card.querySelector(".fa-glass-asset-tools");
+      card.insertBefore(body, tools);
+    }
+
     function renderShelf() {
+      // The cards are about to be rebuilt; a bar for a card that is gone
+      // would move nothing.
+      hideMoveBar();
       while (shelf.firstChild) shelf.removeChild(shelf.firstChild);
       while (notes.firstChild) notes.removeChild(notes.firstChild);
       var all = folioAssets();
@@ -4698,13 +5345,53 @@
       // "PUT YOUR FOLIO AWAY FIRST" is a measured fix rather than politeness:
       // while the glass is down the library row underneath takes no clicks.
       var shelved = Object.keys(all).filter(function (k) { return !all[k].shown; });
-      if (shelved.length > 0) {
-        notes.appendChild(el("p", { class: "fa-glass-shelved-note" },
+      /* ITS OWN CARD ON THE GLASS, not a strip across the bottom — owner,
+       * 2026-09-27: *"lower tooltip should be its own todo"*. It moves and
+       * resizes like every other card, and its × dismisses it until the
+       * number of shelved items changes (a new one is news again). It is not
+       * stored in the folio: it describes the folio, it is not in it, so its
+       * place lasts for this view only. */
+      if (shelved.length > 0 && shelvedNoteDismissedAt() !== shelved.length) {
+        var noteTitle = shelved.length === 1
+          ? "1 item in your folio is not on the glass"
+          : shelved.length + " items in your folio are not on the glass";
+        var noteCard = buildGlassCard("note/shelved", { title: noteTitle, kind: "todos" });
+        noteCard.classList.add("fa-glass-sticky", "fa-glass-note-card");
+        // Words only: the generic note picture sat behind the sentence.
+        var noteAva = noteCard.querySelector(".fa-glass-asset-face > .fa-glass-avatar");
+        if (noteAva) noteAva.parentNode.removeChild(noteAva);
+        noteCard.insertBefore(el("p", { class: "fa-glass-shelved-note fa-glass-sticky-body" },
           (shelved.length === 1
             ? "1 item is in your folio but not displayed. "
             : shelved.length + " items are in your folio but not displayed. ") +
           "Put your folio away, then open the library view to put it back on the glass " +
-          "(for a todo, use the Todos tile below)."));
+          "(for a todo, use the Todos tile below)."), noteCard.querySelector(".fa-glass-asset-tools"));
+        // The shared close SHELVES an asset; this card is not one, so its ×
+        // dismisses instead, and says so.
+        var oldClose = noteCard.querySelector(".fa-glass-asset-close");
+        var noteClose = oldClose.cloneNode(true);
+        noteClose.setAttribute("aria-label", "Dismiss this note until another item leaves the glass");
+        noteClose.title = "Dismiss";
+        noteClose.addEventListener("click", function () {
+          setShelvedNoteDismissedAt(shelved.length);
+          if (noteCard.parentNode) noteCard.parentNode.removeChild(noteCard);
+          handle.focus();
+        });
+        oldClose.parentNode.replaceChild(noteClose, oldClose);
+        shelf.appendChild(noteCard);
+        // SIZED TO ITS WORDS: measured at each candidate width with the height
+        // left to the content, so no line is cut (a fixed 180px cut the last
+        // one at 420px wide). Then placed where a card of that size is free.
+        var noteGeom = defaultGlassGeom({ kind: "todos" }, keys.length);
+        var shapes = [Math.max(noteGeom.width, 420), noteGeom.width].map(function (w) {
+          noteCard.style.width = w + "px";
+          noteCard.style.height = "auto";
+          return { width: w, height: Math.ceil(noteCard.getBoundingClientRect().height / (view.s || 1)) + 2 };
+        });
+        applyGeometry(noteCard, freeSpotFor(shapes, placed, noteGeom));
+        placed.push(noteCard);
+        fitShelf();
+        zoomGlassCard(noteCard);
       }
 
       // Saved in THIS BROWSER, said in words wherever the reader's own items
@@ -4736,6 +5423,61 @@
         notes.appendChild(localNote);
       }
       return keys.length;
+    }
+
+    /* WHERE A NEW CARD CAN BE SEEN — owner, 2026-09-27: the shelved-items
+     * card was placed below every card and so started half under the tile
+     * bar. This finds the first spot, scanning the VISIBLE glass top to
+     * bottom and left to right, that overlaps no card and none of the glass's
+     * own chrome (the Folio handle, the zoom bar, the tile dock). Measured on
+     * screen and converted back through the view (`translate` then `scale`,
+     * origin 0 0), so it is right at any pan or zoom. With no free spot it
+     * falls back to below every card, which is where it used to go. */
+    function freeSpotFor(shapes, cards, fallback) {
+      var s = view.s || 1;
+      var sh = shelf.getBoundingClientRect();
+      var lay = layer.getBoundingClientRect();
+      var blocks = cards.map(function (c) { return c.getBoundingClientRect(); });
+      // The page's own navigation too: the glass spans the viewport, and a
+      // card placed under the left rail or sidebar is a card nobody sees.
+      [handle, zoomBar, dock, notes, document.querySelector(".fa-nav"), document.querySelector(".side-bar")].forEach(function (n) {
+        if (n && n.isConnected) { var r = n.getBoundingClientRect(); if (r.width && r.height) blocks.push(r); }
+      });
+      var pad = GLASS_GAP;
+      var dockTop = dock && dock.isConnected && dock.getBoundingClientRect().height
+        ? dock.getBoundingClientRect().top : lay.bottom;
+      var bottom = Math.min(lay.bottom, dockTop) - pad;
+      // SHAPES TRIED IN TURN, as the caller orders them (wide and short
+      // first: the free band on a full glass is usually a strip above or
+      // beside the cards rather than a square).
+      for (var k = 0; k < shapes.length; k++) {
+        var w = shapes[k].width * s, h = shapes[k].height * s;
+        for (var y = lay.top + pad; y + h <= bottom; y += 12) {
+          for (var x = lay.left + pad; x + w <= lay.right - pad; x += 12) {
+            var hit = blocks.some(function (r) {
+              return x < r.right + pad && x + w + pad > r.left && y < r.bottom + pad && y + h + pad > r.top;
+            });
+            if (!hit) {
+              return { left: (x - sh.left) / s, top: (y - sh.top) / s, width: shapes[k].width, height: shapes[k].height };
+            }
+          }
+        }
+      }
+      var geom = { left: fallback.left, top: fallback.top, width: shapes[0].width, height: shapes[0].height };
+      if (cards.length > 0) {
+        var gs = cards.map(geometryOf);
+        geom.top = Math.max.apply(null, gs.map(function (g) { return g.top + g.height; })) + GLASS_GAP;
+        geom.left = Math.min.apply(null, gs.map(function (g) { return g.left; }));
+      }
+      return geom;
+    }
+
+    var SHELVED_NOTE_KEY = "fa-glass-shelved-note-dismissed";
+    function shelvedNoteDismissedAt() {
+      try { return Number(localStorage.getItem(SHELVED_NOTE_KEY) || "0"); } catch (_e) { return 0; }
+    }
+    function setShelvedNoteDismissedAt(n) {
+      try { localStorage.setItem(SHELVED_NOTE_KEY, String(n)); } catch (_e) { /* back next view */ }
     }
 
     var NOTE_KEY = "fa-glass-local-note-dismissed";
@@ -4796,6 +5538,8 @@
       panel.appendChild(body);
       build(body);
       panel.removeAttribute("hidden");
+      // Opened on a folio already dragged away: open where the folio is.
+      placePanel();
       if (panelButtons[id]) panelButtons[id].setAttribute("aria-expanded", "true");
       h.focus();
     }
@@ -4984,14 +5728,25 @@
      * slides down the tab is still on screen — `l4zi`: the inverse of hiding
      * is reachable from the same control. The choice is the reader's and is
      * remembered in this browser. A hidden strip is `inert`, so the keyboard
-     * cannot land on a tile nobody can see. */
+     * cannot land on a tile nobody can see.
+     *
+     * AND IT IS INSIDE THE PANEL — owner, 2026-09-24: *"HIDE/show tiles
+     * should be inside of tiles panel."* It was a separate bordered tab on a
+     * dock that painted nothing, so to the eye it hung outside the panel with
+     * a second heavy border stacked on the strip's. Now the DOCK is the
+     * panel: it paints the surface and the edge, the toggle sits in the
+     * panel's own header row, and the strip below it is the tiles. Hidden,
+     * the panel slides down to that header row — still the panel, still
+     * holding the way back. */
     var dock = el("div", { class: "fa-glass-dock" });
+    var dockHead = el("div", { class: "fa-glass-dock-head" });
     var stripToggle = el("button", {
       type: "button",
       class: "fa-glass-strip-toggle",
       "aria-controls": "fa-glass-strip",
     });
-    dock.appendChild(stripToggle);
+    dockHead.appendChild(stripToggle);
+    dock.appendChild(dockHead);
     dock.appendChild(strip);
     sheet.appendChild(dock);
     var STRIP_HIDDEN_KEY = "fa-glass-strip-hidden";
@@ -7850,6 +8605,13 @@
         // nothing, on purpose, so the item keeps the source-language page it
         // already points at.
         link.setAttribute("data-fa-translated", "source");
+        // MARKED, on the owner's call (2026-09-27): a source-language item in
+        // a translated navbar says so, e.g. "CRDM methodology (EN)", so the
+        // mix reads as a fallback rather than a mistake. `lang` makes a screen
+        // reader pronounce the title as the language it is written in.
+        var src = data.sourceLocale || "en";
+        link.setAttribute("lang", src);
+        link.setAttribute("data-fa-source-locale", src.toUpperCase());
         continue;
       }
       link.setAttribute("href", (idx.baseurl || "") + t.url);
@@ -8941,6 +9703,37 @@
       }
     }
 
+    /* LIGHT / DARK IN THE ROW — owner, 2026-09-27: *"i want light dark mode
+     * on main icon tab at top of LHS"*. The same switch as the Settings tile
+     * and the header mini-button (which this row hides from 50rem up), so it
+     * REGISTERS a painter rather than owning the state: three controls over
+     * one fact, and none of them can disagree. */
+    var scheme = el("button", { type: "button", class: "fa-nav-icon fa-nav-scheme" });
+    registerSchemePainter(function (name) {
+      scheme.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
+      var said = name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light";
+      scheme.setAttribute("aria-label", said);
+      scheme.title = said;
+      scheme.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
+    });
+    scheme.addEventListener("click", toggleScheme);
+    host.appendChild(scheme);
+
+    /* THE [x] IN THE ROW, as its last item — owner, 2026-09-27: *"make close
+     * navigation in line with the rest of icons"*. It was PAINTED over the
+     * row's end from `.site-footer` (absolute, with its own box), and never
+     * quite sat on the row's line. It is a `<label for="fa-nav-open">`, and a
+     * label drives its checkbox from anywhere, so moving it keeps the no-script
+     * behaviour; it is moved only when `mountNavPreference` has run (the
+     * `.fa-nav-js` mark), because that handler is what makes the hover-case
+     * click mean "close" rather than "pin". Without script it stays where the
+     * stylesheet already places it. */
+    var closeCtl = bar.querySelector(".fa-nav-close");
+    if (closeCtl && bar.classList.contains("fa-nav-js")) {
+      closeCtl.classList.add("fa-nav-icon", "fa-nav-close--in-row");
+      host.appendChild(closeCtl);
+    }
+
     // AFTER the header: line 1 is the avatar and the name, line 2 is this.
     var header = bar.querySelector(".site-header");
     if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
@@ -9049,9 +9842,32 @@
         return span;
       };
 
-      for (var j = 0; j < graphs.length; j++) {
-        var g = graphs[j];
+      /* SUB-GRAPHS NEST, FOLDED — owner, 2026-09-23 (issue #1164): a
+       * sub-graph such as `docs/proposals/` *"starts closed in navbar,
+       * general behavior"*. GENERAL: any folder whose kind declares `within`
+       * is drawn inside its parent's row, under a `<details>` with no `open`,
+       * so the parent reads as one row until the reader opens it. Parents are
+       * drawn first so a child always finds its row; a child whose parent is
+       * not listed stands on its own rather than disappearing. */
+      var rowOf = {};
+      var nestOf = function (parentKind) {
+        var row = rowOf[parentKind];
+        if (!row) return null;
+        var sub = row.querySelector(":scope > .fa-nav-folders__sub > ul");
+        if (sub) return sub;
+        var d = el("details", { class: "fa-nav-folders__sub" });
+        d.appendChild(el("summary", { class: "fa-nav-folders__sub-heading" }, "Sub-graphs of " + parentKind));
+        var ul = el("ul", { class: "fa-nav-folders__list fa-nav-folders__list--sub" });
+        d.appendChild(ul);
+        row.appendChild(d);
+        return ul;
+      };
+      var ordered = graphs.filter(function (x) { return !(x && x.within); })
+        .concat(graphs.filter(function (x) { return x && x.within; }));
+      for (var j = 0; j < ordered.length; j++) {
+        var g = ordered[j];
         var li = el("li", { class: "fa-nav-folders__item" });
+        if (g && g.kind) rowOf[g.kind] = li;
         if (g && g.path && g.stagingOnly && !isStagingPreview()) {
           /* WITHHELD FROM THIS DEPLOY — a path that resolves and a page that
            * is not there.
@@ -9091,7 +9907,8 @@
         } else {
           li.appendChild(inert((g && g.kind) || "?", g && g.note));
         }
-        list.appendChild(li);
+        var into = (g && g.within && nestOf(g.within)) || list;
+        into.appendChild(li);
       }
       box.appendChild(list);
       middle.appendChild(box);
@@ -9099,6 +9916,48 @@
 
     bar.insertBefore(middle, nav);
     middle.appendChild(nav);
+  }
+
+  /**
+   * A TITLED, FOLDABLE PAGE LIST — owner, 2026-09-27: *"no title on the
+   * navbar component w/ pages"* and *"cant minimize them either"*. The two
+   * regions above it ("On this page", "Folders") are disclosures with a
+   * count; the theme's page list was bare. This puts a heading button in
+   * front of `.site-nav`, wherever the nav now lives, and folds the list with
+   * it. Open by default, since the pages are what most readers came for;
+   * a fold is remembered per browser (`fa-nav-pages`), guarded like every
+   * other storage call here.
+   */
+  var NAV_PAGES_KEY = "fa-nav-pages";
+  function mountNavPagesHeading() {
+    var nav = document.querySelector(".side-bar .site-nav");
+    if (!nav || !nav.parentNode || nav.parentNode.querySelector(":scope > .fa-nav-pages")) return;
+    if (!nav.id) nav.id = "site-nav";
+    var top = nav.querySelectorAll(":scope > .nav-list > .nav-list-item").length;
+    var btn = el("button", {
+      type: "button",
+      class: "fa-nav-pages",
+      "aria-controls": nav.id,
+      "aria-expanded": "true",
+    }, "Pages");
+    btn.appendChild(el("span", { class: "fa-nav-pages__count" }, String(top)));
+    function set(open) {
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) nav.removeAttribute("data-fa-folded");
+      else nav.setAttribute("data-fa-folded", "");
+    }
+    var stored = null;
+    try { stored = window.localStorage.getItem(NAV_PAGES_KEY); } catch (_e) { /* default open */ }
+    set(stored !== "closed");
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") !== "true";
+      set(open);
+      try {
+        if (open) window.localStorage.removeItem(NAV_PAGES_KEY);
+        else window.localStorage.setItem(NAV_PAGES_KEY, "closed");
+      } catch (_e) { /* this page only */ }
+    });
+    nav.parentNode.insertBefore(btn, nav);
   }
 
   /* ── STAY CLOSED, REMEMBERED ─────────────────────────────────────────────
@@ -9167,7 +10026,11 @@
 
     var box = document.getElementById("fa-nav-open");
     var close = document.querySelector(".fa-nav-close");
-    var open = document.querySelector(".fa-nav-toggle");
+    // `.fa-nav-head` is the SAME control as `lib/navbar.ts` renders it (`sjic`).
+    // Only the old Liquid markup said `.fa-nav-toggle`, so on the live footer
+    // this handler never attached and a stay-closed bar could not be lifted by
+    // the ☰ (found 2026-09-27).
+    var open = document.querySelector(".fa-nav-toggle, .side-bar .fa-nav-head");
 
     if (close) {
       close.addEventListener("click", function (e) {
@@ -9189,12 +10052,54 @@
         applyNavPref(null);
       });
     }
+
+    /* THE AVATAR OPENS AND CLOSES THE BAR — owner, 2026-09-27: *"navbar
+     * starts hidden, click avatar opens for a split second then returns to
+     * hidden"*. The avatar is the theme's home link, so a click RELOADED the
+     * page: the bar peeked under the pointer, then came back at rest. With
+     * stay-closed set it did not open at all.
+     *
+     * From 50rem up it is now the bar's toggle: pin open (lifting stay-closed),
+     * or close (setting it, so the hover peek does not hold it open under the
+     * pointer). Home is still one click away, as ⌂ at the foot of the bar and
+     * as the first page. Below 50rem the theme's ☰ owns the menu and the
+     * avatar stays the home link. With no script it is the home link too. */
+    var avatar = bar.querySelector(".site-title");
+    if (avatar && box && window.matchMedia) {
+      var wide = window.matchMedia("(min-width: 50rem)");
+      var label = function () {
+        if (!wide.matches) {
+          avatar.removeAttribute("aria-expanded");
+          avatar.removeAttribute("aria-controls");
+          return;
+        }
+        avatar.setAttribute("aria-controls", bar.id || "");
+        avatar.setAttribute("aria-expanded", box.checked ? "true" : "false");
+        avatar.title = box.checked ? "Close navigation" : "Open navigation";
+      };
+      if (!bar.id) bar.id = "fa-side-bar";
+      label();
+      box.addEventListener("change", label);
+      avatar.addEventListener("click", function (e) {
+        if (!wide.matches) return;
+        e.preventDefault();
+        box.checked = !box.checked;
+        writeNavPref(box.checked ? null : "closed");
+        applyNavPref(box.checked ? null : "closed");
+        label();
+        // Closing must drop focus too: the bar also opens on `:focus-within`
+        // (the keyboard path), so a focused avatar held it open after the
+        // click that closed it. Measured: 264px wide with the pointer away.
+        if (!box.checked) avatar.blur();
+      });
+    }
   }
 
   function init() {
     // RTL detection — Arabic pages get dir="rtl" on <html> which
     // triggers the CSS rules in docs-ui.css for smooth sidebar slide.
     var meta = getTranslationMeta();
+    if (followRememberedLocale(meta)) return;
     var pageLang = (meta && meta.lang) || "en";
     var RTL_LANGS = ["ar", "he", "fa", "ur"];
     if (RTL_LANGS.indexOf(pageLang) !== -1) {
@@ -9222,6 +10127,8 @@
     // line rather than the only one.
     mountDocumentIndex();
     mountInstanceGraphs();
+    // AFTER the wrapper exists, so the heading lands beside the nav inside it.
+    mountNavPagesHeading();
     // Before the badges: both read the same translation metadata, and the nav
     // is the thing a reader sees first.
     mountNavLocale();

@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'integration-watcher (abstract parent)'
 parent: Skill instructions
 ---
@@ -155,9 +156,9 @@ those citations have to keep resolving.
 | § | what | where |
 |---|---|---|
 | `0`, `0a`, `0c`, `0d` | invocation, and the policies binding on every watcher | **here** — read before you start |
-| `0b` | idle-time backlog policy (5-minute trigger) | [`integration-watcher/idle-backlog.md`](#part-idle-backlog) |
-| `1`–`4` | setup, active watching, trigger filter, per-event QA pipeline | [`integration-watcher/lifecycle.md`](#part-lifecycle) |
-| `5` | idle backlog sweep, and the handover issue template | [`integration-watcher/idle-backlog.md`](#part-idle-backlog) |
+| `0b` | idle-time backlog policy (5-minute trigger) | [`integration-watcher/idle-backlog.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/integration-watcher/idle-backlog.md) |
+| `1`–`4` | setup, active watching, trigger filter, per-event QA pipeline | [`integration-watcher/lifecycle.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/integration-watcher/lifecycle.md) |
+| `5` | idle backlog sweep, and the handover issue template | [`integration-watcher/idle-backlog.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/integration-watcher/idle-backlog.md) |
 | `6`–`9`, anti-patterns, checklist | invariants, output style, integration, role gating | **here** |
 
 **Running a watcher:** read this file, then `lifecycle.md`. You reach
@@ -254,7 +255,7 @@ idle branch — a watcher processing events never reaches it.
 
 ## 0b. Idle-time backlog policy (5-minute trigger)
 
-Per [`idle-backlog`](../idle-backlog.md) (the 5-minute idle
+Per [`idle-backlog`](idle-backlog.md) (the 5-minute idle
 trigger): when this watcher has been idle for > 5 minutes (no
 substantive output beyond TICK heartbeats or empty acks),
 automatically start processing backlog without waiting for the user
@@ -1283,7 +1284,7 @@ question.** Two-part pattern:
 1. **Context preamble (chat text).** Before the `AskUserQuestion` call,
    write a short chat message: the finding (one sentence, with
    severity); the affected file (GitHub blob URL, `.md` preferred per
-   [`turn-reporting`](../turn-reporting.md) §"Asking for review means
+   [`turn-reporting`](turn-reporting.md) §"Asking for review means
    linking the artefact"); evidence (verbatim quote
    with line numbers); what was attempted and what failed.
 2. **Structured question.** Then call `AskUserQuestion` with a tight

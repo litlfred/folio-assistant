@@ -1,5 +1,5 @@
 classDiagram
-  direction TB
+  direction LR
   namespace folio_assistant__uploads {
     class folio_assistant_uploads_folio_extraction_v1_Asset["Asset"] {
       <<json: ExtractionSchema>>
@@ -29,8 +29,15 @@ classDiagram
       omitted [0..*] Omitted[]
     }
   }
+  namespace folio_assistant__root_tools {
+    class n_folio_assistant_root_tools_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
   folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Asset : assets
   folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Omitted : omitted
   cssClass "folio_assistant_uploads_folio_extraction_v1_Asset" fa_uml_kind_uploads
   cssClass "folio_assistant_uploads_folio_extraction_v1_Omitted" fa_uml_kind_uploads
   cssClass "folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1" fa_uml_kind_uploads
+  cssClass "n_folio_assistant_root_tools_code" fa_uml_kind_code
+  cssClass "n_folio_assistant_root_tools_code" fa_uml_undetermined

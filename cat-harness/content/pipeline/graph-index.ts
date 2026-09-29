@@ -490,9 +490,9 @@ export function relPath(repoRoot: string, file: string): string {
  * A human-runnable view of the same index the MCP tools serve, so the graph
  * can be inspected without an MCP client.
  *
- *   bun run content/pipeline/graph-index.ts --stats
- *   bun run content/pipeline/graph-index.ts --search "torsion" --text
- *   bun run content/pipeline/graph-index.ts --neighbors thm:main --in --hops 2
+ *   bun run cat-harness/content/pipeline/graph-index.ts --stats
+ *   bun run cat-harness/content/pipeline/graph-index.ts --search "torsion" --text
+ *   bun run cat-harness/content/pipeline/graph-index.ts --neighbors thm:main --in --hops 2
  */
 if (import.meta.main) {
   const { findContentRepoRoot } = await import("./repo-root");

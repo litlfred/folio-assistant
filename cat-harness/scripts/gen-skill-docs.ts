@@ -23,7 +23,7 @@
  * @covers skills, docs
  */
 
-import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
 import { join, resolve, basename, relative, isAbsolute, sep } from "path";
 
 import { isSkillMd, kgDirectories } from "./known-skills.js";
@@ -135,6 +135,134 @@ function reportCollisions(): void {
   process.exit(1);
 }
 
+/**
+ * Pages sitting in the output directory that THIS RUN did not produce.
+ *
+ * `index.md` is the generator's own, so it is never an orphan.
+ *
+ * Pure and exported so the guard can be falsified without a corpus: on the real
+ * tree the answer is now the empty set, and an empty set is exactly what a
+ * guard that computes nothing also returns.
+ */
+export function orphanPages(onDisk: readonly string[], produced: Iterable<string>): string[] {
+  const made = new Set(produced);
+  return onDisk
+    .filter((f) => f.endsWith(".md") && f !== "index.md" && !made.has(f.slice(0, -".md".length)))
+    .sort();
+}
+
+/**
+ * A committed page no source produces is a STALE DOCUMENT, and it is the one
+ * failure `--check` was structurally unable to see.
+ *
+ * `emit` compares content per path and collects what DIFFERS. A page whose
+ * source has gone is never emitted at all, so it is never compared: the drift
+ * report reads "up to date" over it, for as many months as nobody looks. Bean
+ * `3x2o` measured it — `fhir-client-operations.md` and `smart-launch.md`, two
+ * pages produced by nothing, dated to the commit that last regenerated them
+ * while the skills they were generated from had become unreachable.
+ *
+ * The danger is not the stale bytes, it is the BANNER. Every page carries
+ * "Generated from `<path>` — do not edit here" with an edit link; on an orphan
+ * that is an instruction to go and edit a source that is not the source of
+ * anything published. A reader cannot tell it apart from a live page.
+ *
+ * It REPORTS and never deletes. That is
+ * `deletion-requires-confirmation` — an agent does not remove a durable
+ * artefact on its own initiative — and it is not timidity here: an orphan has
+ * two opposite causes. Either the skill was removed and the page should go, or
+ * the DIRECTORY STOPPED BEING DECLARED and the page is the only surviving
+ * evidence that it used to publish. This generator cannot tell which, and the
+ * second case is what actually happened: `rm`-ing these two would have
+ * destroyed the trace that led to the missing declaration.
+ *
+ * Promoted to a hard failure while the count is ZERO, which is this
+ * repository's rule for every ratchet and also the only moment it is free.
+ * Fails in writing mode too, for `reportCollisions`' reason: a re-run does not
+ * fix it, so exiting 0 would bury it.
+ */
+/**
+ * Twin entries naming a page this run does not produce.
+ *
+ * Pure and exported, for the reason {@link orphanPages} is: on the real corpus
+ * the answer is the empty set, and an empty set is also what a guard computing
+ * nothing returns.
+ *
+ * Both halves matter and they fail differently. A `published` name nothing
+ * produces is the `bsay` defect — a banner asserting a document that is not
+ * there, with a link to it. An entry whose OWN name is not among the twins is
+ * a table that contradicts itself, which would make `other`/`self` below pick
+ * the wrong side silently.
+ */
+export function unpublishedTwins(
+  table: Readonly<Record<string, ReadonlyArray<{ published: string }>>>,
+  produced: Iterable<string>,
+): string[] {
+  const made = new Set(produced);
+  const out: string[] = [];
+  for (const [name, twins] of Object.entries(table)) {
+    if (!twins.some((t) => t.published === name)) out.push(`${name}: no twin publishes under "${name}" itself`);
+    for (const t of twins) if (!made.has(t.published)) out.push(`${name} -> ${t.published}`);
+  }
+  return out.sort();
+}
+
+/**
+ * A twin entry is only true while BOTH its pages are produced.
+ *
+ * Bean `bsay`. `kg-navigation` named a second document that stopped publishing
+ * when `pve3` ruled bootstrap's skills out of this instance, and the generator
+ * kept emitting a banner for it — naming a page and linking to it — because
+ * the table is consulted for a name being PUBLISHED and never asked whether
+ * the partner is. So the check ran on the wrong side of the relation.
+ *
+ * Distinct from {@link reportOrphans}, which compares the output DIRECTORY
+ * against this run. An orphan is a page with no source; this is a LINK to a
+ * page that was never a page, so no sweep of the directory can see it.
+ *
+ * Fatal, and in writing mode too, for `reportCollisions`' reason: the wrong
+ * banner is already written by the time this runs, and a re-run does not
+ * unwrite it. The count is zero once `kg-navigation` is out, so the ratchet is
+ * free — this repository's rule for every promotion.
+ */
+function reportUnpublishedTwins(produced: Iterable<string>): void {
+  const bad = unpublishedTwins(SAME_BASENAME_DIFFERENT_DOCUMENT, produced);
+  if (bad.length === 0) return;
+  console.error(
+    `\n✗ ${bad.length} SAME_BASENAME_DIFFERENT_DOCUMENT entr(y/ies) name a page this run did not produce.\n` +
+      `  Each makes the OTHER page carry a banner asserting a document that is not there,\n` +
+      `  with a link to it — which a reader acts on.\n`,
+  );
+  for (const b of bad) console.error(`  ${b}`);
+  console.error(
+    `\n  Either the twin stopped publishing (remove the entry, and SAY WHY — the entry is\n` +
+      `  the record of a real collision), or it should publish and its group is missing.\n` +
+      `  Do not "fix" it by renaming the target: a banner naming a page that exists but is\n` +
+      `  not the twin is the same lie, harder to find.`,
+  );
+  process.exit(1);
+}
+
+function reportOrphans(produced: Iterable<string>): void {
+  const orphans = orphanPages(readdirSync(OUT_DIR), produced);
+  if (orphans.length === 0) return;
+  console.error(
+    `\n✗ ${orphans.length} page(s) in the output directory were produced by NO source.\n` +
+      `  Each carries a "Generated from … — do not edit here" banner naming a source that\n` +
+      `  publishes nothing, which a reader cannot distinguish from a live page.\n`,
+  );
+  for (const f of orphans) console.error(`  ${join(OUT_DIR, f)}`);
+  console.error(
+    `\n  TWO opposite causes, and this cannot tell them apart, so it removes nothing:\n` +
+      `    - the skill was deleted, and the page should be deleted too; or\n` +
+      `    - its directory stopped being DECLARED, and the page is the only evidence\n` +
+      `      that it used to publish — which is what bean \`3x2o\` found.\n` +
+      `  Check the declaration first. If the source really is gone, a person deletes the\n` +
+      `  page; \`deletion-requires-confirmation\` is why this does not.`,
+  );
+  process.exit(1);
+}
+
 function reportDrift(): void {
   if (!CHECK_ONLY) return;
   if (drifted.length === 0) {
@@ -211,20 +339,29 @@ const SAME_BASENAME_DIFFERENT_DOCUMENT: Record<
       label: "todo-manager (local stub)",
     },
   ],
-  // Collided exactly as `todo-manager` did and carried NO banner, so a reader
-  // landing on either page could not tell the other existed. Added with the
-  // `tdmg` resolution.
-  "kg-navigation": [
-    {
-      published: "kg-navigation",
-      label: "Reading the knowledge graph (tooled)",
-      canonical: true,
-    },
-    {
-      published: "local-kg-navigation",
-      label: "Reading a knowledge graph before you have anything (bootstrap)",
-    },
-  ],
+  // THERE IS NO `kg-navigation` ENTRY, and removing it was the `bsay` repair.
+  //
+  // It was added with `tdmg` for a real collision: bootstrap's copy and the
+  // tooled one are different documents, and neither page said the other
+  // existed. Then `pve3` ruled bootstrap's skills out of this instance
+  // entirely, and the SECOND DOCUMENT STOPPED PUBLISHING HERE while this entry
+  // stayed. Nothing downstream checks that a twin's page is produced, so the
+  // generator went on emitting the banner:
+  //
+  // > **This is the skill `skill_fetch` serves.** A stub of the same name is
+  // > published as [Reading a knowledge graph before you have anything
+  // > (bootstrap)](local-kg-navigation.html); it only points here.
+  //
+  // `local-kg-navigation.html` does not exist and cannot: that name comes from
+  // the `local-` prefixed group, and `.claude/skills/local/` holds three
+  // skills of which `kg-navigation` is not one. So the live page a reader is
+  // sent to for "how to find the skill you need" asserted a document that is
+  // not there and linked a 404 — worse than the `bootstrap` heading's silence,
+  // because a reader ACTS on a banner.
+  //
+  // {@link twinsPublish} is the guard, and it is the reason this is a comment
+  // rather than a quiet deletion: an entry here is only meaningful while BOTH
+  // its pages are produced, and until now nothing said so.
   "bean-coordination": [
     {
       published: "bean-coordination",
@@ -252,6 +389,12 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   workflow: "Workflow & process (workflow)",
   "graph-management": "Graph management (graph-management)",
   theming: "Theming (theming)",
+  // Keyed by basename: a package subdirectory of the declared `skills/`,
+  // like `theming` above. Bean `6bhf`, owner 2026-09-25 — "bean as
+  // ceybeesquity sub KG in tools ... consolidate". The heading names the
+  // BOUNDARY axis rather than a list of attacks, because that is the split
+  // the package is built on and a reader meeting it here should see which.
+  security: "Security — values crossing a boundary (security)",
   "folio-document-adapter": "Document adapter (folio-document-adapter)",
   "folio-paper-adapter": "Paper adapter (folio-paper-adapter)",
   "authoring-math": "Mathematical authoring (authoring-math)",
@@ -290,7 +433,13 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // how this was caught rather than shipped as two uncategorised packages.
   crdm: "CRDM requirements methodology (skills/crdm)",
   raci: "RACI involvement model (skills/raci)",
-  "remote-stubs": "Declared but not implemented here (stubs)",
+  "spec-kit": "Spec Kit spec-driven development (skills/spec-kit)",
+  // Synced from claude-scientific-skills at a pinned commit (issue #556):
+  // somebody else's bytes, one package per skill so upstream's relative links
+  // resolve. `remote-stubs` was retired when these arrived.
+  "hypothesis-generation": "Synced from claude-scientific-skills (pinned, read-only)",
+  "scientific-critical-thinking": "Synced from claude-scientific-skills (pinned, read-only)",
+  "scientific-visualization": "Synced from claude-scientific-skills (pinned, read-only)",
   // The entries below are declared kg directories that hold their skills
   // DIRECTLY rather than in package subdirectories, so they are keyed by the
   // directory's DECLARED ID — `bootstrap`, not `bootstrap/skills`.
@@ -308,7 +457,26 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // `cat-harness` while the declaration gave that id to `skills/`: one name,
   // two real directories. `corpus-grep` now sits in `folio-core` with its
   // siblings and needs no category of its own.
-  "bootstrap": "CatBootstrap (read before anything else is known)",
+  // THERE IS NO `bootstrap` HEADING, AND THERE MUST NOT BE — the owner ruled
+  // it out. `pve3`, 2026-09-21: the root declares BOTH halves of bootstrap or
+  // NEITHER, and the answer was neither. Carrying its skills without its
+  // process minted three dangling `bindsLane` links and the `v3se` collision;
+  // carrying both would undo #432's isolation and put a process this instance
+  // does not own into its published graph. So bootstrap's skills publish
+  // through `bootstrap.jsonld` alone, and their absence from this site is the
+  // DECISION, not a gap.
+  //
+  // A heading survived that ruling, keyed `bootstrap`, reaching nothing. On
+  // 2026-09-27 I read it as evidence that bootstrap publishes, declared
+  // `bootstrap/skills/` here to make the seven pages appear, and three tests
+  // caught it: `tools.test.ts`'s deliberately INVERTED
+  // `expect(s.has("confirm-harness")).toBe(false)`, and `kg-export.test.ts`'s
+  // `a Tool satisfying a sibling's skill links into the SIBLING's document` —
+  // `#tool/discuss` stopped pointing into bootstrap's document the moment this
+  // instance claimed the skill. Removing the key rather than rekeying it is
+  // the fix, because the key WAS the lure: `discoverGroups` throws on an id
+  // with no heading and never on a heading with no id, so a stale one is
+  // unfalsifiable from this file and reads as an unfinished job.
   // CatBootstrap's SECOND declared directory, and the one that constitutes its
   // exemption rather than describing it: the layer is excused a visualiser and
   // owes its own `.jsonld`/`.json` instead, so the skills governing that
@@ -335,6 +503,14 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "folio-assistant-core-skills": "Content layer (folio-assistant-core)",
   "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
   "who-iris-skills": "WHO IRIS (catalogue instance)",
+  // The `fhir-harness` instance's two packages, keyed by BASENAME because they
+  // are package subdirectories of a declared root (`fhir-ig-skills`), not roots
+  // holding skills directly. Two headings rather than one "FHIR IG" because the
+  // packages answer different questions — how an IG is BUILT versus how a
+  // client TALKS to a server — and a reader meeting `smart-launch` under "IG
+  // build pipeline" would reasonably conclude it is a build step.
+  "fhir-ig-base": "FHIR IG build (fhir-harness/skills/fhir-ig-base)",
+  "fhir-client": "FHIR client & SMART launch (fhir-harness/skills/fhir-client)",
 };
 
 /**
@@ -484,7 +660,13 @@ const GROUPS: Group[] = [
  * a path that 404s there. The link rewrite below is the other half — a
  * relative `](name/part.md)` becomes an in-page anchor.
  */
-function withParts(dir: string, name: string, body: string): string {
+function withParts(
+  dir: string,
+  name: string,
+  body: string,
+  flat: ReadonlyMap<string, string>,
+  processPages: ReadonlyMap<string, string>,
+): string {
   const partsDir = join(dir, name);
   if (!existsSync(partsDir)) return body;
   const parts = readdirSync(partsDir)
@@ -499,9 +681,164 @@ function withParts(dir: string, name: string, body: string): string {
   for (const part of parts) {
     const stem = basename(part, ".md");
     const text = stripFrontMatter(readFileSync(join(partsDir, part), "utf-8")).replace(/^\n+/, "");
-    out += `\n\n---\n\n<a id="part-${stem}"></a>\n\n${text}`;
+    // A part is authored one directory deeper than its skill, so its links
+    // are rebased against `partsDir`, not against the skill's own directory.
+    out += `\n\n---\n\n<a id="part-${stem}"></a>\n\n${rebaseLinks(partsDir, text, flat, processPages)}`;
   }
   return out;
+}
+
+/**
+ * A skill body's relative links, re-expressed for the FLAT output directory.
+ *
+ * Skills are authored in PACKAGES — `skills/workflow/process-state.md` links
+ * to a sibling package as `](../folio-core/task-authorization.md)` — and this
+ * generator publishes every one of them into a single flat directory. The
+ * link is correct where it is written and wrong once the page moves, so a
+ * body copied through verbatim arrives on the site addressing a directory
+ * layout the site does not have.
+ *
+ * Measured 2026-09-25 while closing bean `mi97`: **110** such links across the
+ * generated pages, every one a 404 for a reader. They were invisible for the
+ * same reason the `mi97` links were — `docs/` was undeclared until 2026-09-20,
+ * so no consumer walked them (the `dh4f` shape).
+ *
+ * RESOLVED against disk and looked up in the published set, never composed —
+ * the rule `repoRelative` keeps for the same reason (bean `oe98`). A target
+ * this cannot place is **left alone**, so it stays a finding in
+ * `check:subgraphs` rather than being quietly rewritten into a path that
+ * merely exists. Rewriting to something plausible is how a broken link
+ * becomes an undetectable one.
+ */
+/**
+ * Absolute source path → the flat page name it publishes under.
+ *
+ * Built from {@link GROUPS} by exactly the rule the writer below uses, so the
+ * two cannot disagree: the same `isSkillMd` predicate, the same
+ * `publishPrefix`, the same first-group-wins on a duplicate. Where two groups
+ * hold one basename the index calls them "(same page)" — so BOTH source paths
+ * map to that one page, and a link to either lands where the reader expects.
+ */
+function flatPublishedNames(): Map<string, string> {
+  const flat = new Map<string, string>();
+  for (const group of GROUPS) {
+    if (!existsSync(group.dir)) continue;
+    for (const file of readdirSync(group.dir)) {
+      if (!file.endsWith(".md") || !isSkillMd(join(group.dir, file))) continue;
+      flat.set(join(group.dir, file), `${group.publishPrefix ?? ""}${basename(file, ".md")}`);
+    }
+  }
+  return flat;
+}
+
+/** The instance's site root — what `../../` means from a published skill page. */
+const SITE_ROOT = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT));
+
+/**
+ * Absolute diagram path → the stem its published page uses.
+ *
+ * Keyed on the ABSOLUTE PATH rather than the basename, because
+ * {@link ProcessRow.file} is documented as the identity for precisely this
+ * reason: basenames collide across instances, and two diagrams sharing one
+ * would otherwise make a link land on whichever page was built last.
+ */
+function processPageStems(rows: readonly ProcessRow[]): Map<string, string> {
+  const byPath = new Map<string, string>();
+  for (const r of rows) byPath.set(join(REPO_ROOT, r.file), r.stem);
+  return byPath;
+}
+
+/**
+ * Where a link target publishes, or `undefined` if this cannot say.
+ *
+ * FOUR answers, in order, because a target can satisfy more than one and the
+ * most specific is the right one. Every branch RESOLVES against disk and looks
+ * the result up; none composes a path and hopes.
+ *
+ * `undefined` is a real answer and the most important one. It means the caller
+ * leaves the link exactly as written, so it stays a finding in
+ * `check:subgraphs` instead of becoming a plausible path that 404s. Bean
+ * `hloc`: "rewriting to something plausible is how a broken link becomes an
+ * undetectable one."
+ *
+ * Two of the four rules are NOT new here. `../../processes/<stem>.html` is
+ * what {@link processRows} already composes for a skill's own process, and the
+ * blob URL is what the source/edit banner already composes through
+ * {@link repoRelative} (bean `oe98`). Restating either would be a second
+ * answer free to disagree with the first.
+ */
+function publishedLocation(
+  baseDir: string,
+  target: string,
+  flat: ReadonlyMap<string, string>,
+  processPages: ReadonlyMap<string, string>,
+): string | undefined {
+  const abs = resolve(baseDir, target);
+
+  // Outside this checkout — a dependency resolved from a sibling clone has no
+  // path in THIS repository, so it gets no link rather than a normalised one
+  // that 404s. `repoRelative` already draws that line; do not redraw it.
+  const rel = repoRelative(abs);
+  if (rel === undefined) return undefined;
+
+  // Broken at the SOURCE. Rewriting it would move a detectable defect into the
+  // generated tree and hide it; the source is where it wants fixing.
+  if (!existsSync(abs)) return undefined;
+
+  // 1. Another published skill — the flat page name, the `mi97` rule.
+  const skill = flat.get(abs);
+  if (skill !== undefined) return `${skill}.md`;
+
+  // 2. A process or decision diagram that publishes a page of its own. The
+  //    page is what a reader can read; the XML is not.
+  //
+  //    ASKED OF `processRows`, not of the filesystem. The first draft joined
+  //    a literal `"processes"` onto the site root, which `check:declared-paths`
+  //    refused — "a DIRECTORY the declaration already answers" — and it was
+  //    right twice over: the directory is declared, and a stem test would key
+  //    on a BASENAME, which `ProcessRow.file` documents as exactly the wrong
+  //    identity ("basenames collide across instances"). Matching the absolute
+  //    path fixes both.
+  const stem = processPages.get(abs);
+  if (stem !== undefined) return `../../processes/${stem}.html`;
+
+  // 3. A page already inside the site tree — address it site-relatively.
+  //    `.md` only: an asset under the site tree is served at its own path.
+  const fromSite = relative(SITE_ROOT, abs).split(sep).join("/");
+  if (!fromSite.startsWith("../")) {
+    return fromSite.endsWith(".md")
+      ? `../../${fromSite.slice(0, -".md".length)}.html`
+      : `../../${fromSite}`;
+  }
+
+  // 4. A repository file that publishes no page — `.ts`, `.py`, `.sh`,
+  //    `.json`, and the markdown under `methodologies/` and `content/docs/`
+  //    that this checked for rather than assumed: `docs/methodologies/` holds
+  //    only `index.md`, so those nine sources publish NOWHERE, and the bean's
+  //    instruction to give them a site-relative path would have composed nine
+  //    links to pages that do not exist.
+  // `tree` for a directory, `blob` for a file. GitHub serves a directory under
+  // `blob/` as a 404, so getting this wrong would trade one broken link for
+  // another — and the directory case only started arriving here when the
+  // matcher below learned to see it.
+  const kind = statSync(abs).isDirectory() ? "tree" : "blob";
+  return `https://github.com/litlfred/folio-assistant/${kind}/main/${rel}`;
+}
+
+function rebaseLinks(
+  baseDir: string,
+  text: string,
+  flat: ReadonlyMap<string, string>,
+  processPages: ReadonlyMap<string, string>,
+): string {
+  return text.replace(
+    /\]\((\.{0,2}[^)\s:]*?(?:\.[A-Za-z0-9]+|\/))(#[^)\s]*)?\)/g,
+    (whole, target: string, anchor?: string) => {
+      if (isAbsolute(target) || target.startsWith("#")) return whole;
+      const published = publishedLocation(baseDir, target, flat, processPages);
+      return published === undefined ? whole : `](${published}${anchor ?? ""})`;
+    },
+  );
 }
 
 /** Strip a leading YAML front-matter block (`---\n…\n---`) if present. */
@@ -576,6 +913,18 @@ async function main(): Promise<void> {
   // first group wins and later duplicates are listed as a cross-reference.
   const written = new Map<string, string>(); // skill name → category that emitted it
 
+  // WHERE EVERY SKILL LANDS, computed before a single body is written.
+  //
+  // `rebaseLinks` needs to answer "does this path publish, and under what
+  // name" for a target in ANOTHER package, which the group loop below has not
+  // reached yet. A one-pass generator can only answer it for groups already
+  // seen, and a link would then be rebased or not depending on alphabetical
+  // order — the worst kind of defect, because half the corpus looks correct.
+  const flat = flatPublishedNames();
+  // Same one-pass hazard as `flat` above: computed before any body is written,
+  // so a link never rebases or not depending on which group was reached first.
+  const processPages = processPageStems(procRows);
+
   for (const group of GROUPS) {
     indexRows[group.category] = [];
     if (!existsSync(group.dir)) continue;
@@ -625,7 +974,10 @@ async function main(): Promise<void> {
       // that publishes no banner, because a reader acts on it.
       const twin = SAME_BASENAME_DIFFERENT_DOCUMENT[name];
       const raw = readFileSync(join(group.dir, file), "utf-8");
-      let body = withParts(group.dir, name, stripFrontMatter(raw).replace(/^\n+/, ""));
+      // The body first, based at the skill's own package; then the parts, each
+      // based one level deeper. Two different bases, so two calls.
+      let body = rebaseLinks(group.dir, stripFrontMatter(raw).replace(/^\n+/, ""), flat, processPages);
+      body = withParts(group.dir, name, body, flat, processPages);
       if (twin) {
         const other = twin.find((t) => t.published !== published);
         const self = twin.find((t) => t.published === published);
@@ -665,6 +1017,12 @@ async function main(): Promise<void> {
       const page: string[] = [];
       page.push("---");
       page.push("layout: default");
+      // The page SAYS it is generated, so a consumer need not infer it from a
+      // path. `check:reference-direction` reads exactly this: a name in
+      // machine output is not an authored reference, and the fix for one is
+      // in the SOURCE skill, not here (145 occurrences across 31 of these
+      // pages were reporting as authored prose until 2026-09-24).
+      page.push("generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill");
       // QUOTED, always. A skill's title is its H1, which is prose — so it
       // carries colons ("Contrast: measured over the darkest thing that could
       // be there") and backticks, and YAML rejects both unquoted. The page
@@ -727,6 +1085,7 @@ async function main(): Promise<void> {
   const idx: string[] = [];
   idx.push("---");
   idx.push("layout: default");
+  idx.push("generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill");
   idx.push("title: Skill instructions");
   idx.push("nav_order: 6");
   idx.push("has_children: true");
@@ -766,6 +1125,11 @@ async function main(): Promise<void> {
   // BEFORE the drift report: a dropped document is not staleness, and a run
   // that exits 0 on "up to date" would bury it.
   reportCollisions();
+  // BEFORE `reportDrift`, which `process.exit(0)`s on a clean tree — anything
+  // after it is unreachable in exactly the run that matters, `--check` on a
+  // tree whose only defect is an orphan.
+  reportOrphans(written.keys());
+  reportUnpublishedTwins(written.keys());
   reportDrift();
   console.log(`\nWrote skill instruction docs to ${OUT_DIR}`);
 }

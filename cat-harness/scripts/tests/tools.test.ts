@@ -14,6 +14,7 @@ import { ToolDefinitionSchema, defineTool } from "../../schemas/tool.js";
 import { TOOL_TYPES } from "../../schemas/tool-types.js";
 import { checkTools, knownSkills, contractRequires } from "../check-tools.js";
 import { knownSkills as canonicalKnownSkills } from "../known-skills.js";
+import { buildExport } from "../kg-export.js";
 import { buildToolTypes, buildToolSchema, buildSkillIoContracts, skillIoIri, staleSkillIoIds } from "../harness-schema-export.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 
@@ -35,6 +36,37 @@ const BASE = "https://example.invalid/fa";
  */
 const INSTANCE = resolve(import.meta.dir, "../..");
 
+/**
+ * The Tool audit, run ONCE at module scope.
+ *
+ * Bean `sff8`. Five tests called `checkTools()` and each paid the full scan, putting
+ * two of them among the repository's highest timeout exposure — measured by
+ * `check:test-budgets` at **4.45 s and 3.27 s of a 5000 ms default budget** (89 % and
+ * 65 %), named before either had gone red.
+ *
+ * Safe to share because nothing in this file mutates the corpus: all five calls are
+ * no-arg, and no test writes a fixture, so five runs could only ever produce the same
+ * answer. Module scope also belongs to no test's timeout, which is the remedy `sff8`
+ * settled on over a raised budget — a number decays as the corpus grows.
+ */
+const CHECKED = checkTools();
+
+/**
+ * A STAGING-based export, built once — the base the `io IRIs` test needs.
+ *
+ * Bean `sff8`. It was `await buildExport({ baseUrl: STAGING })` in the test body at
+ * 4.23 s of a 5000 ms budget (85 %), and 2.6 s once `checkTools` above stopped being
+ * re-run five times. Hoisted for the same reason as the rest: module scope belongs to
+ * no test's timeout.
+ *
+ * The base is deliberately a STAGING-shaped URL rather than the canonical one — the
+ * whole assertion is that a minted IRI follows the publication base rather than the
+ * declaration, so a canonical base here would make the test pass without testing
+ * anything.
+ */
+const STAGING_BASE = "https://example.invalid/fa/STAGING/demo";
+const STAGING_EXPORT = await buildExport({ baseUrl: STAGING_BASE });
+
 describe("tools", () => {
   test("there are tools to check — otherwise everything below is vacuous", () => {
     expect(tools().length).toBeGreaterThanOrEqual(4);
@@ -43,7 +75,7 @@ describe("tools", () => {
   test("every satisfies names a skill that exists", () => {
     // The constraint a schema cannot express: Zod can require `satisfies` to be
     // non-empty, but it does not get to read the tree.
-    expect(checkTools().danglingSatisfies).toEqual([]);
+    expect(CHECKED.danglingSatisfies).toEqual([]);
   });
 
   test("every satisfies edge agrees with its skill's own input contract", () => {
@@ -57,21 +89,21 @@ describe("tools", () => {
     // `workflow-complete` claimed `dmn-authoring` (whose contract wants
     // `decisionName`/`inputVariables` — what you supply to WRITE a table, not
     // to answer one).
-    expect(checkTools().unmetContracts).toEqual([]);
+    expect(CHECKED.unmetContracts).toEqual([]);
   });
 
   test("where a Tool input and a contract property share a name, their types agree", () => {
     // The type half of the comparison (#1168, B3b). Weak — most contract
     // properties are bare strings — but it catches an `array` contract served
     // by a `string` port, which the name check alone passes.
-    expect(checkTools().mistypedContracts).toEqual([]);
+    expect(CHECKED.mistypedContracts).toEqual([]);
   });
 
   test("a contract that is present but unreadable is never counted as agreement", () => {
     // The third state. `undefined` (no contract) and `[]` (a contract
     // requiring nothing) are different answers and the checker keeps them
     // apart; an unreadable file is reported rather than passed.
-    expect(checkTools().unreadableContracts).toEqual([]);
+    expect(CHECKED.unreadableContracts).toEqual([]);
     expect(contractRequires(INSTANCE, "no-such-skill-exists")).toBeUndefined();
     const req = contractRequires(INSTANCE, "content-validate");
     expect(req).toContain("targetPath");
@@ -97,7 +129,7 @@ describe("tools", () => {
   });
 
   test("every io port references a type the shared vocabulary declares", () => {
-    expect(checkTools().unknownTypes).toEqual([]);
+    expect(CHECKED.unknownTypes).toEqual([]);
   });
 
   test("io references are absolute IRIs into the published types document", () => {
@@ -201,7 +233,7 @@ describe("tools", () => {
     expect(canonicalKnownSkills(join(INSTANCE, "../bootstrap")).has("log-message")).toBe(true);
   });
 
-  test("io IRIs follow the publication base, not the declaration", async () => {
+  test("io IRIs follow the publication base, not the declaration", () => {
     // A staging build published tool-types.schema.json at the STAGING url while
     // its Tool nodes referenced the CANONICAL one — a document that did not
     // exist yet, because the same PR introduced it. The refs looked resolvable
@@ -210,9 +242,8 @@ describe("tools", () => {
     //
     // The rule this pins: anything that mints an IRI takes its base from the
     // same source as the document it will be published beside.
-    const { buildExport } = await import("../kg-export.js");
-    const STAGING = "https://example.invalid/fa/STAGING/demo";
-    const g = await buildExport({ baseUrl: STAGING });
+    const STAGING = STAGING_BASE;
+    const g = STAGING_EXPORT;
     const toolNodes = g["@graph"].filter((n) => String(n["@type"]).endsWith("Tool"));
     expect(toolNodes.length).toBeGreaterThanOrEqual(4);
 

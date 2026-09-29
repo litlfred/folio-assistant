@@ -79,6 +79,33 @@ classDiagram
       $schema [1] 'folio-model-registry/v1'
       models [0..*] Model[]
     }
+    class bootstrap_schemas_requirement_schema_json_Statement["Statement"] {
+      <<schema: requirement.schema.json>>
+      key [1] string
+      label [1] string
+      conformance [1] SHALL | SHOULD | MAY | SHALL NOT
+      requirement [1] string
+      kind [0..1] functional | non-functional
+      activity [0..1] string
+      capability [0..1] string
+      benefit [0..1] string
+      category [0..1] string
+      actors [0..*] string[]
+      dependsOn [0..*] string[]
+    }
+    class bootstrap_schemas_requirement_schema_json_Requirement["Requirement"] {
+      <<schema: requirement.schema.json>>
+      id [1] string
+      title [1] string
+      description [1] string
+      status [0..1] proposed | in-force | superseded | retired
+      derivedFrom [0..*] string[]
+      actors [0..*] string[]
+      statements [1..*] Statement[]
+      tags [0..*] string[]
+      proposedIn [0..1] string
+      supersededBy [0..1] string
+    }
   }
   namespace bootstrap__scenarios {
     class bootstrap_scenarios_Role["Role"] {
@@ -160,14 +187,30 @@ classDiagram
       concepts [1] Record~string, LedgerEntry~
     }
   }
-  namespace bootstrap__bootstrap_translations {
-    class bootstrap_bootstrap_translations_TranslationConfig["TranslationConfig"] {
-      <<json: TranslationConfigSchema>>
-      defaultLocale [0..1] string
-      supportedLocales [0..*] string[]
-      translationDir [0..1] string
-      potGranularity [0..1] block | chapter | folio
-      officialRequired [0..1] boolean
+  namespace bootstrap__qa {
+    class bootstrap_qa_kg_qa_v1_Pair_attestation["Pair_attestation"] {
+      <<json: KgQaReportSchema>>
+      kind [1] implements | co-located
+      prose [1] string
+      code [1] string
+      prose_hash [1] string
+      code_hash [1] string
+      by [1] baseline | agent | human
+      reason [0..1] string
+    }
+    class bootstrap_qa_kg_qa_v1_kg_qa_v1["kg-qa/v1"] {
+      <<json: KgQaReportSchema>>
+      $schema [1] 'kg-qa/v1'
+      subject [1] object
+      source_hash [1] string | null
+      criteria [1] map~object~
+      totals [1] map~number~
+      pair_attestations [0..*] Pair_attestation[]
+    }
+    class bootstrap_qa_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
+      <<json: KgQaManifestSchema>>
+      $schema [1] 'kg-qa-manifest/v1'
+      auditor [1] object
     }
   }
   cssClass "n_bootstrap_skills_skills" fa_uml_kind_skills
@@ -178,6 +221,7 @@ classDiagram
   bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration *-- "0..*" bootstrap_schemas_graph_schema_json_Directory : directories
   bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration *-- "0..*" bootstrap_schemas_graph_schema_json_Asset : assets
   bootstrap_schemas_model_registry_schema_json_Model_Registry *-- "0..*" bootstrap_schemas_model_registry_schema_json_Model : models
+  bootstrap_schemas_requirement_schema_json_Requirement *-- "1..*" bootstrap_schemas_requirement_schema_json_Statement : statements
   cssClass "bootstrap_schemas_discussion_input_schema_json_KnownRepository" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_discussion_input_schema_json_Discussion_Input" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_discussion_output_schema_json_Repository" fa_uml_kind_schemas
@@ -188,6 +232,8 @@ classDiagram
   cssClass "bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_model_registry_schema_json_Model" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_model_registry_schema_json_Model_Registry" fa_uml_kind_schemas
+  cssClass "bootstrap_schemas_requirement_schema_json_Statement" fa_uml_kind_schemas
+  cssClass "bootstrap_schemas_requirement_schema_json_Requirement" fa_uml_kind_schemas
   bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
   bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
   cssClass "bootstrap_scenarios_Role" fa_uml_kind_scenarios
@@ -198,4 +244,7 @@ classDiagram
   cssClass "bootstrap_models_Model" fa_uml_kind_models
   cssClass "bootstrap_models_ModelRegistry" fa_uml_kind_models
   cssClass "bootstrap_swimlane_glossary_folio_glossary_ledger_v1" fa_uml_kind_swimlane_glossary
-  cssClass "bootstrap_bootstrap_translations_TranslationConfig" fa_uml_kind_translation_sources
+  bootstrap_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" bootstrap_qa_kg_qa_v1_Pair_attestation : pair_attestations
+  cssClass "bootstrap_qa_kg_qa_v1_Pair_attestation" fa_uml_kind_qa
+  cssClass "bootstrap_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
+  cssClass "bootstrap_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa

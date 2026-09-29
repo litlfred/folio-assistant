@@ -1,0 +1,210 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2504.21474v1",
+ "source": {
+  "file": "2504.21474v1.pdf",
+  "sha256": "68a09fcd43927e7a27b4d01d0615f59f8382ddc4cf62b332c6ae0500e2cd36e2",
+  "bytes": 254946,
+  "pages": 7,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-24T19:21:15Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2504.21474",
+   "version": "1",
+   "primary_class": "cs.CL",
+   "stamp_date": "30 Apr 2025"
+  },
+  "doi": null,
+  "title": "Homa at SemEval-2025 Task 5: Aligning Librarian Records with OntoAligner for Subject Tagging",
+  "authors_raw": "Hadi Bayrami Asl Tekanlou1, Jafar Razmara1, Mahsa Sanaei1",
+  "title_lines": [
+   "Homa at SemEval-2025 Task 5: Aligning Librarian Records with",
+   "OntoAligner for Subject Tagging"
+  ],
+  "abstract": "This paper presents our system, Homa, for SemEval-2025 Task 5: Subject Tagging, which focuses on automatically assigning subject la- bels to technical records from TIBKAT us- ing the Gemeinsame Normdatei (GND) tax- onomy. We leverage OntoAligner, a modu- lar ontology alignment toolkit, to address this task by integrating retrieval-augmented genera- tion (RAG) techniques. Our approach formu- lates the subject tagging problem as an align- ment task, where records are matched to GND categories based on semantic similarity. We evaluate OntoAligner\u2019s adaptability for sub- ject indexing and analyze its effectiveness in handling multilingual records. Experimental results demonstrate the strengths and limita- tions of this method, highlighting the potential of alignment techniques for improving subject tagging in digital libraries.",
+  "docinfo": {
+   "Producer": "pdfTeX-1.40.25",
+   "Creator": "LaTeX with hyperref",
+   "CreationDate": "D:20250501003925Z"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Related Work",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Methodology",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "OntoAligner Pipeline",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Fine-Tuning",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Results",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Dataset",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Quantitative Results",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Qualitative Results",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Limitation and Conclusion",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1300,
+   "n_words": 168
+  },
+  {
+   "id": "sec-000-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 3138,
+   "n_words": 446
+  },
+  {
+   "id": "sec-001-dataset",
+   "number": null,
+   "title": "Dataset",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 378,
+   "n_words": 59
+  },
+  {
+   "id": "sec-002-related-work",
+   "number": null,
+   "title": "Related Work",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 1581,
+   "n_words": 207
+  },
+  {
+   "id": "sec-003-methodology",
+   "number": null,
+   "title": "Methodology",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 595,
+   "n_words": 88
+  },
+  {
+   "id": "sec-004-ontoaligner-pipeline",
+   "number": null,
+   "title": "OntoAligner Pipeline",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 4100,
+   "n_words": 596
+  },
+  {
+   "id": "sec-005-results",
+   "number": null,
+   "title": "Results",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 5,
+   "n_chars": 5397,
+   "n_words": 928
+  },
+  {
+   "id": "sec-006-qualitative-results",
+   "number": null,
+   "title": "Qualitative Results",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 2650,
+   "n_words": 412
+  },
+  {
+   "id": "sec-007-limitation-and-conclusion",
+   "number": null,
+   "title": "Limitation and Conclusion",
+   "level": 1,
+   "page_start": 5,
+   "page_end": 7,
+   "n_chars": 6233,
+   "n_words": 877
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 10,
+  "toc_inferred_entries": 0,
+  "sections": 9,
+  "chars_total": 25372
+ }
+}

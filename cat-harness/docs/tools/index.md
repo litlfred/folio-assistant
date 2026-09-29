@@ -27,9 +27,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>96</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>61</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>77</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>104</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>63</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>84</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>23</b><span>reachable over MCP</span></div>
 </div>
 
@@ -39,19 +39,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 77 |
+| <span class="tg-tag tg-shell">shell</span> | 84 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 23 |
 | <span class="tg-tag tg-mcp">mcp</span> | 23 |
-| <span class="tg-tag tg-manual">manual</span> | 5 |
+| <span class="tg-tag tg-manual">manual</span> | 6 |
 
 | installation | tools |
 |---|---|
-| `none` | 91 |
-| `cli` | 5 |
+| `none` | 95 |
+| `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **61** skills named across **96** tools resolve to a
+Yes — all **63** skills named across **104** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -86,6 +86,7 @@ tool advertising a capability the graph cannot locate.
 | `gates-merged`<br>Gates on the merged tree | Build this branch merged with the current base in a throwaway worktree and run the full `bun run gates` there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched. | <span class="tg-tag tg-shell">shell</span> | `prepare-merge` | 1 in / 1 out |
 | `github`<br>GitHub | Open and drive change proposals on GitHub — branches, pull requests, reviews, checks. One forge among possible others; the skills it satisfies name none. | <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `coordinate`<br>`pickup`<br>`prepare-merge-auto`<br>`watch` | 3 in / 1 out |
 | `glossary-build`<br>Glossary build | Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change. | <span class="tg-tag tg-shell">shell</span> | `document-intake` | 2 in / 1 out |
+| `headless-render-qc`<br>Headless render QC (Playwright) | Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering. | <span class="tg-tag tg-shell">shell</span> | `rendered-verification` | 1 in / 1 out |
 | `ingest-extended`<br>Ingest, with PDF and image extensions | Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 3 in / 1 out |
 | `ingest-stdlib`<br>Ingest, standard library only | Ingest an upload into `library/` using only the Python standard library — archive listings, CSV and spreadsheet records, technical file metadata, and the content sniff that routes a file to its rung. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 3 in / 1 out |
 | `kg-audit`<br>Knowledge-graph audit | Audit every join in the actor→role→skill→task sentence and write a committed QA sidecar per node. A printed verdict is gone; a sidecar is what makes "unbound since it was drawn" distinguishable from "broken in the commit under review". | <span class="tg-tag tg-shell">shell</span> | `code-node-review` | 2 in / 2 out |
@@ -105,6 +106,7 @@ tool advertising a capability the graph cannot locate.
 | `methodologies-viewer`<br>Methodologies viewer | Render the declared methodology graph as one page. | <span class="tg-tag tg-shell">shell</span> | `graph-rendering` | 1 in / 1 out |
 | `narrative-queue`<br>What narratives are waiting on a person | List the agent-drafted narratives awaiting human confirmation, numbered, with the numbered rejection reasons beside them. The queue is the only place a draft's state is visible before someone accepts it. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 0 in / 1 out |
 | `ns-vocabulary`<br>Namespace vocabulary | Emit the folio namespace as a document that dereferences — one node per class and property, each with an @id, a type, a label and a definition, so a consumer holding only the JSON-LD can resolve any term it meets. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 2 in / 1 out |
+| `package-release-manual`<br>Package release by hand | A person follows the package-release skill: computes the bump, writes the CHANGELOG entry, tags `<package>-v<version>`, and creates the release on the host. The same four steps with nothing to configure. | <span class="tg-tag tg-manual">manual</span> | `package-release` | 1 in / 1 out |
 | `pages-index`<br>Published-paper index page | Write the gh-pages `index.html` for a built paper: a Paper tab embedding the PDF and, when given, a Visualizer tab, with download links and the build's branch and commit. | <span class="tg-tag tg-shell">shell</span> | `docs-generation` | 8 in / 1 out |
 | `pages-publish`<br>GitHub Pages publish | Push a built directory to the `gh-pages` branch, where it is served. How the knowledge graph and its schema reach a URL. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 2 in / 1 out |
 | `paper-latex-build`<br>Paper build to LaTeX chapters | Render a paper's content objects to LaTeX chapters: load the paper manifest, resolve its chapters and blocks, render, validate the LaTeX AST, and write the chapter files. With no manifest it builds the folio's only paper, and refuses — naming them — when there are several or none. | <span class="tg-tag tg-shell">shell</span> | `content-validation` | 2 in / 1 out |
@@ -118,6 +120,7 @@ tool advertising a capability the graph cannot locate.
 | `qa-sweep`<br>QA sweep | Run every registered criterion over the blocks under a path and write a per-block QA sidecar. A sidecar rather than a console report, because a printed verdict cannot distinguish "never checked" from "checked and clean". | <span class="tg-tag tg-shell">shell</span> | `content-test` | 4 in / 1 out |
 | `readme-audit`<br>Audit README links | Verify every Markdown link in a folio's README still resolves — relative paths against the tree, repo refs against a real ls-tree, Pages URLs against the publish ref. Writes nothing. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `docs-generation` | 3 in / 1 out |
 | `readme-sync`<br>Sync generated README sections | Rewrite each generated README region, and only where the README already carries that section's marker pair. Nothing outside a marked region is touched. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `docs-generation` | 5 in / 1 out |
+| `release-please`<br>release-please (declared, not configured here) | Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`). | <span class="tg-tag tg-shell">shell</span> | `package-release` | 2 in / 1 out |
 | `render-log`<br>Record what the publish branch served | Append one entry to the render log on the publish branch: what was published or taken down, when, from which commit, and — for a removal or a retention — WHY. The log is the only place a preview that vanished leaves a trace. | <span class="tg-tag tg-shell">shell</span> | `render-logging` | 9 in / 1 out |
 | `render-order`<br>The render pipeline, in dependency order | Flatten the repository's renders into the order their `needs` imply, and optionally run them. Two stages: the current declared state as json/jsonld and the README derived from it are FATAL; the dynamic renderers (viewers, visualisers, doc pages, diagrams) skip and log; the dynamic-state export closes it. A cycle or a missing dependency yields NO order rather than a partial one. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `docs-generation` | 1 in / 1 out |
 | `schema-docs`<br>Skill contract reference | Render each skill's input/output JSON Schema as a browsable Markdown reference page, with an index. The generated pages are committed so they are readable on the forge as well as on the site. | <span class="tg-tag tg-shell">shell</span> | `docs-generation` | 1 in / 1 out |
@@ -131,11 +134,16 @@ tool advertising a capability the graph cannot locate.
 | `state-viewer`<br>State graph viewer | Render each declared state graph with a projection as a dashboard page: what the work plan holds, and what state it is in. | <span class="tg-tag tg-shell">shell</span> | `graph-rendering` | 1 in / 1 out |
 | `tabular-csv`<br>CSV tabular metadata (STUB) | STUB — not implemented. Would read a delimited text file into CSVW: one table, its columns and their datatypes. A CSV has no sheets and no cells outside the table, so `fac:anchor.sheet` and `fac:anchor.cell` are a determined null rather than an absence. Routing a CSV is not a sniff — it has no magic bytes — and must not become an extension guess (bean `p67i`). | <span class="tg-tag tg-manual">manual</span> | `tabular-metadata` | 1 in / 1 out |
 | `tabular-xlsx`<br>Spreadsheet tabular metadata (STUB) | STUB — not implemented. Would read a workbook into a CSVW TableGroup: one table per sheet, with the location CSVW cannot express (`fac:anchor`, `fac:headerRow`, `fac:extent`) carried as annotations on valid CSVW. A workbook is the case that motivates those terms: tables that do not start at A1, headers that are not row 1, several tables on one sheet. | <span class="tg-tag tg-manual">manual</span> | `tabular-metadata` | 1 in / 1 out |
+| `tex-snippet-validate`<br>TeX snippet validation (AST) | Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one. | <span class="tg-tag tg-shell">shell</span> | `latex-validation` | 5 in / 1 out |
+| `tex-source-audit`<br>TeX-source hazard audit | Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `\|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion. | <span class="tg-tag tg-shell">shell</span> | `latex-validation` | 1 in / 1 out |
 | `themes-css`<br>Theme stylesheet | Render the declared theme nodes into the stylesheet the site serves. The nodes are the source: a colour has one home, and light and dark are two valuations of one token set rather than two hand-kept blocks. | <span class="tg-tag tg-shell">shell</span> | `site-presentation-assets` | 1 in / 1 out |
 | `tool-coverage`<br>Which uncovered skills warrant a Tool? | Triage the skills that have no Tool by EVIDENCE rather than by grep: a serviceTask naming it or an I/O contract puts it in tier A, a userTask only in B, a shell block or a declared script in C, and nothing in D. The answer to "which of these still have their mechanism inlined in their prose". | <span class="tg-tag tg-shell">shell</span> | `code-node-review` | 0 in / 1 out |
 | `tool-schema`<br>Tool node schema | The zod definition of a Tool node — what `defineTool` accepts — and the published JSON Schema generated from it. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
 | `tool-types-schema`<br>Tool I/O type vocabulary | The zod definitions of the shared types a Tool's inputs and outputs reference by IRI, and the published JSON Schema whose `$defs` those IRIs point into. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
 | `tools-viewer`<br>Tools viewer | Render this instance's Tool nodes, and the skills each satisfies, as one page. | <span class="tg-tag tg-shell">shell</span> | `graph-rendering` | 1 in / 1 out |
+| `transcribe-faster-whisper`<br>Transcribe audio — faster-whisper (option, not installed) | Transcribe an audio file with faster-whisper (the Whisper models on CTranslate2), from Python. A declared OPTION: not installed in this repository. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 2 in / 1 out |
+| `transcribe-vosk`<br>Transcribe audio — vosk (option, not installed) | Transcribe an audio file with vosk (Kaldi-based), offline, from Python, with small per-language models. A declared OPTION: not installed in this repository. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 2 in / 1 out |
+| `transcribe-whisper-cpp`<br>Transcribe audio — whisper.cpp (option, not installed) | Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`). | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 2 in / 1 out |
 | `translation-extract`<br>Extract translatable strings | Segment a folio's prose into a GNU gettext .pot template, leaving code, math and identifiers untranslated. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `translation-manager` | 3 in / 1 out |
 | `translation-inject`<br>Inject translations | Produce a translated copy of a source markdown file from a .po, using the same segmentation the extractor used. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `translation-manager` | 3 in / 1 out |
 | `translation-roundtrip-record`<br>Record a round-trip translation verdict | Write a back-translation verdict, produced by a pair of translation agents, into a block's existing translation-QA sidecar. It records a judgement rather than making one, and refuses where no sidecar exists — a round trip cannot be what decides a block is translated. | <span class="tg-tag tg-shell">shell</span> | `translation-manager` | 1 in / 1 out |

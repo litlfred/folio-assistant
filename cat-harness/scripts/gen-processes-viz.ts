@@ -663,7 +663,27 @@ export function processPage(
   const skill = (s: string): string =>
     skillPages.has(s) ? `[\`${s}\`](../reference/skill-instructions/${s}.html)` : `\`${s}\``;
   const proc = (r: ProcessRow): string => `[${esc(r.name)}](${r.stem}.html)`;
-  const cell = (s: string | undefined): string => (s ? esc(s) : "—");
+  /**
+   * A `<bpmn:documentation>` body inside a MARKDOWN TABLE CELL.
+   *
+   * Newlines become `<br>`, and that is not cosmetic: a real newline ends the
+   * table ROW, so one paragraph break in a step's documentation would corrupt
+   * every column to its right and the rest of the table below it.
+   *
+   * Measured 2026-09-26 (bean `li5y`): `esc` handled `|` and nothing handled
+   * newlines, so an author had NO WAY to put a break in documentation that
+   * worked. 90 instances across 8 files were written `&amp;#10;` —
+   * double-escaped — and the published page showed the five characters
+   * `&#10;` as literal text. Single-escaping them without this would have
+   * traded visible garbage for a corrupted table, which is worse: garbage is
+   * obvious and a broken table reads as a content error.
+   *
+   * `\n\n` collapses to ONE `<br>` rather than two, because a cell is not a
+   * place for a blank line — the author's intent there is "new line", and two
+   * `<br>` renders as a gap that looks like a mistake.
+   */
+  const cell = (s: string | undefined): string =>
+    s ? esc(s).replace(/\n+/g, "<br>") : "—";
   const callers = rows.filter((r) => r.stem !== row.stem && r.steps.some((st) => st.calledElement === row.id));
   const namers = rows.filter(
     (r) => r.stem !== row.stem && r.steps.some((st) => st.calledElement === undefined && st.skills.includes(row.stem)),

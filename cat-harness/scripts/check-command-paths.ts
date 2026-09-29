@@ -57,6 +57,7 @@ import { join, resolve } from "node:path";
 import { findDeclarationFile, directoriesForGraph, repoRootFor, KG_CONTENT_GRAPH_KINDS } from "../schemas/cat-harness.js";
 
 import { findEntryFiles } from "./check-agent-entry-links.ts";
+import { isSyncedSkillDir } from "./sync-remote-skills.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
 export const INSTANCE_ROOT = resolve(import.meta.dir, "..");
@@ -645,6 +646,9 @@ export function corpus(repo: string): { file: string; corpus: Corpus }[] {
 
 function walkMarkdown(dir: string): string[] {
   const out: string[] = [];
+  // A SYNCED skill is upstream's prose, pinned: a dead path in it is not ours
+  // to repair, and editing it would fork the copy fixity vouches for (#556).
+  if (isSyncedSkillDir(dir)) return out;
   for (const name of readdirSync(dir)) {
     if (name.startsWith(".") || name === "node_modules") continue;
     const p = join(dir, name);

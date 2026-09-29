@@ -47,7 +47,7 @@
  * @module scripts/serve-rendering
  */
 import { existsSync, realpathSync, statSync } from "node:fs";
-import { join, normalize, resolve, sep } from "node:path";
+import { join, resolve, sep } from "node:path";
 
 import { renderingMediaType, siteDirFor } from "../schemas/cat-harness.js";
 
@@ -60,36 +60,12 @@ export interface ServeOptions {
   hostname?: string;
 }
 
-/**
- * Resolve a URL path to a path inside `root`, or `undefined` if it cannot be.
- *
- * **Lexical containment only — this is half the check, and the weaker half.**
- * A URL pathname always begins with `/`, so `normalize` absorbs leading `..`
- * segments against the root and `%2e%2e` decodes to the same thing before it
- * is normalised. Traversal by spelling therefore cannot escape here; what it
- * produces is a path inside the root that usually does not exist.
- *
- * It does NOT catch a symlink, because `resolve` is pure string arithmetic
- * and never touches the filesystem. `resolveFile` does that part, and the
- * split is deliberate: this function is total and testable without a disk,
- * and the check that needs a disk is where the disk is already being read.
- */
-export function resolveWithin(root: string, urlPath: string): string | undefined {
-  let decoded: string;
-  try {
-    decoded = decodeURIComponent(urlPath);
-  } catch {
-    // A malformed percent-escape is a bad request, not a traversal attempt,
-    // but either way there is no file it can name.
-    return undefined;
-  }
-  // A NUL byte truncates the path for some syscalls; no legitimate URL has one.
-  if (decoded.includes("\0")) return undefined;
-  const base = resolve(root);
-  const target = resolve(join(base, normalize(decoded)));
-  if (target !== base && !target.startsWith(base + sep)) return undefined;
-  return target;
-}
+// `resolveWithin` now lives in `src/core/safe-path.ts` and is re-exported here
+// so this module's existing importers and tests keep working. It moved because
+// three HTTP handlers in the MCP server hand-rolled `join(base, external)`
+// while the correct helper sat in this one script — bean `6bhf`.
+import { resolveWithin } from "../src/core/safe-path";
+export { resolveWithin };
 
 /**
  * The file a request resolves to, applying the directory-index rule and the

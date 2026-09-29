@@ -10,7 +10,15 @@
   },
   "homepage": "https://github.com/litlfred/folio-assistant/tree/main/schemas/block-qa-schema",
   "bugs": "https://github.com/litlfred/folio-assistant/issues",
-  "keywords": ["qa", "audit", "json-schema", "zod", "folio", "provenance", "staleness"],
+  "keywords": [
+    "qa",
+    "audit",
+    "json-schema",
+    "zod",
+    "folio",
+    "provenance",
+    "staleness"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -30,7 +38,7 @@
     "./schema/qa-script": "./schema/qa-script.schema.json"
   },
   "scripts": {
-    "build": "tsup js/index.ts --format cjs,esm --dts --out-dir dist",
+    "build": "tsup js/index.ts --format cjs,esm --out-dir dist && tsc -p tsconfig.json",
     "test": "vitest run"
   },
   "peerDependencies": {
@@ -38,7 +46,7 @@
   },
   "devDependencies": {
     "tsup": "^8",
-    "typescript": "^5",
+    "typescript": "^7",
     "vitest": "^4",
     "zod": "^4.6.5"
   }

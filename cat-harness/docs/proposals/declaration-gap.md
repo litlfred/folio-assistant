@@ -494,6 +494,110 @@ other 830 lines of document-class, packages and macros. Both were live, for
 different documents. `latex/` is now removed rather than declared, because qou
 holds the newer and corrected copy.
 
+## Implementing the rulings: two of the four do not survive contact
+
+The owner ruled all seven classifications on 2026-09-24. Two of the four
+"declare" items landed; two did not compile, for reasons that are findings about
+the declaration model rather than about the directories.
+
+**Landed** — `cat-harness/deploy/` and root `tools/`, both `graphKinds: ["code"]`,
+`dependents: "skip"`, each with a `coverage.skill`: `deployment-auth` for
+`deploy/` (that skill's architecture diagram is *of* those files) and
+`skills-and-tools` for `tools/`. 143/143 gates. Ten gates went red on the first
+attempt and every one was generated-artefact staleness: `gen-schema-docs`,
+`docs:harness`, `handler:index`, `uml:overview`, `kg:schema`, `audit:coverage`
+and `kg:audit` all derive from the declaration, so adding an entry is never a
+one-file change.
+
+`tools/` is declared by the **root** instance rather than by `cat-harness` with
+`scope: "repository"`. Both would work. The root owns its own top-level
+directory, and repository-scoped entries from `cat-harness` are exactly what put
+15 paths under two declarations each.
+
+### `ns/` cannot be `schemas` — the kind is single-per-instance
+
+The ruling was to declare `cat-harness/ns/` as `schemas` rather than `code`,
+because it is the vocabulary other documents resolve against rather than a
+module that computes one. That reading is right and the declaration still throws:
+
+```
+instance at …/cat-harness declares 2 directories for graph "schemas" at its own
+root, and this call site expects one:
+  schemas → …/cat-harness/schemas; cat-harness-ns → …/cat-harness/ns
+```
+
+`instanceDirectoryForGraph` enforces one directory per graph kind per instance,
+and `schemasRoot` in `gen-schema-docs.ts` calls it. `cat-harness/schemas/` is
+already that one. **`code` has no such constraint** — `cat-harness` declares six
+code directories and nothing objects — because no call site resolves "the code
+directory" singularly. So the constraint is not a property of the kind's
+definition but of whether some consumer treats it as a singleton, and nothing in
+the kind registry says which kinds are which.
+
+Three ways out, and they are not equivalent: declare it `code` (contradicts the
+ruling's reasoning), mint a kind for it (`renderable: false`, `holds: "derived"`
+— it is *generated* by `ns-export.ts` and drift-checked by `jsonld-gen-check.yml`,
+so `derived` fits it better than `schemas`' `content` does), or relax
+`instanceDirectoryForGraph` (a platform change touching every singular consumer).
+Left undeclared pending that choice.
+
+### `ui/` makes the served SPA look like site documentation
+
+Declaring `cat-harness/ui/` as `code` turned `standalone-rail.test.ts` red:
+
+```
+Expected to not contain: "cat-harness"
+Received: [ "cat-harness", "who-iris", "code/cat-harness", … ]
+```
+
+That test's own comment states the invariant — *"the root instance's own docs
+are not among them — it is already the site root."* Bisected: `ui/` alone causes
+it; `deploy/` and `tools/` do not.
+
+The mechanism is the interesting part. `mountable()` in `mount-instance-docs.ts`
+decides what the mount pass publishes with one test: **does the directory contain
+an `index.html`.** `cat-harness/ui/index.html` does — it is the assistant's
+single-page interface — so declaring the directory makes the SPA a mount
+candidate and gives it a route at the site root.
+
+**`mountable()` never consults `renderable`.** The word appears six times in that
+file and every one is in prose; `mountRoutes` filters only `kind === "docs"` for
+the built instance. So the reasoning the ruling rests on — *these pages are
+served, not site-built, so `renderable: false` is right* — is correct about the
+declaration and **not enforced by the pipeline that would publish them**. The
+prose says renderable, the predicate says `index.html`, and `ui/` is where they
+disagree.
+
+That is a defect in the mount pass, not in the ruling, and fixing it is a
+behaviour change to the publishing pipeline rather than a declaration. Left
+undeclared pending it.
+
+### The `coverage` obligation, measured before making it required
+
+The owner also ruled that `coverage` becomes required on every directory entry.
+Measured first, repo-wide:
+
+```
+declared entries:                     92
+  with a coverage block:              71   (77%)
+  with coverage.serialisations:        0   (0%)
+```
+
+Two things follow. The `coverage` field's own docblock argues **against**
+requiring it, in terms: *"An absent field is exactly the finding
+`check:subgraph-coverage` exists to raise, so making it required would both
+destroy the measurement and bill every concurrent branch for a field they had no
+reason to know about — which is what `dependents` did the day it landed."* That
+gate exists, runs in CI, and currently reports 233 findings while exiting 0.
+Requiring the field converts a measurement into a merge blocker for 21
+directories at once.
+
+And `serialisations` — the one sub-field the schema calls **not waivable**, *"the
+existence claim"*, excused to nothing, not even `bootstrap` — is declared by
+**zero of 92 entries**. The obligation the model describes as non-negotiable is
+met by nothing in the corpus. That is a larger and better-evidenced finding than
+the 21 missing `coverage` blocks, and it is not addressed here.
+
 ## What would falsify this
 
 - **If any of the four `remove` candidates is reachable from a workflow, a

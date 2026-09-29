@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5uuf
 title: 'FOLIO PREVIEW BEFORE-SIDE: no main-site publish, so before pictures and ''view on main'' are empty; stacked PRs compare with the wrong base'
-status: in-progress
+status: todo
 type: bug
 priority: normal
 created_at: 2026-09-23T18:06:56Z
-updated_at: 2026-09-24T19:00:50Z
+updated_at: 2026-09-29T18:14:48Z
 parent: folio-assistant-q4jm
 ---
 
@@ -23,3 +23,9 @@ Found by ojcx's real run, 2026-09-23 (litlfred/folio-test#6). The visual diff's 
 - Implemented: `publish-main` job in `folio-staging.yml` + `publish-main-site.ts` (manifest-scoped: deletes only files its own `_main-site.json` lists); `init-folio` caller gains `push: branches: [main]` for document folios.
 - Implemented: base resolved once (`base_ref` empty → PR base → default branch) and used by both the ChangeSet and the pictures; stacked PR pictures its base's `STAGING/<base-slug>/`; banner, review page and PR comment name the before side (`beforeRef`).
 - Not yet verified on a real folio run (litlfred/folio-test). Close after that run shows before pictures.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

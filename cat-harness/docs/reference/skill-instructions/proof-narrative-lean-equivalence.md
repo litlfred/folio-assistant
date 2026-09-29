@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Proof Narrative ↔ Lean Equivalence Audit'
 parent: Skill instructions
 ---
@@ -12,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Proof Narrative ↔ Lean Equivalence Audit
 
-> **Specialises [`narrative-asserts-code`](../folio-core/narrative-asserts-code.md)**
+> **Specialises [`narrative-asserts-code`](narrative-asserts-code.md)**
 > (issue #1042, stage C). That skill asks, for every declared prose ↔ code
 > pair, whether the prose still says what the code does. This one answers it
 > for the one pair kind a proof assistant can settle mechanically: a block's

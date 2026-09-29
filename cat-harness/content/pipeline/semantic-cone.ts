@@ -53,9 +53,9 @@
  *
  * ## Usage
  *
- *   bun run content/pipeline/semantic-cone.ts --targets thm:a,thm:b
- *   bun run content/pipeline/semantic-cone.ts --targets thm:a --coverage
- *   bun run content/pipeline/semantic-cone.ts --targets thm:a --json
+ *   bun run cat-harness/content/pipeline/semantic-cone.ts --targets thm:a,thm:b
+ *   bun run cat-harness/content/pipeline/semantic-cone.ts --targets thm:a --coverage
+ *   bun run cat-harness/content/pipeline/semantic-cone.ts --targets thm:a --json
  *
  * @module content/pipeline/semantic-cone
  */

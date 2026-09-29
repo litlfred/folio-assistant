@@ -33,7 +33,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { tools } from "../tools/discover.js";
+import { tools, toolsOf } from "../tools/discover.js";
 import { TOOL_TYPES, isInjectionSafe } from "../schemas/tool-types.js";
 import { toJsonSchema } from "../schemas/to-json-schema.js";
 import { contractFile, skillContracts } from "./skill-contracts.js";
@@ -60,6 +60,30 @@ import { instanceRootsIn, repoRootFor } from "../schemas/cat-harness.js";
  */
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+
+/**
+ * The Tools an answer is about: ONE instance's, or the whole repository's.
+ *
+ * **Absent means the repository, and that is the pre-existing behaviour rather
+ * than a default chosen here.** `tools()` reads every declared instance's
+ * `tools` graph, which is right for a repo-wide check — `discover.ts` says so
+ * on `tools` itself ("A check or an audit over the whole repository reads
+ * tools"). Passing an instance switches to `toolsOf`, whose docblock names
+ * exactly the failure this parameter exists to fix: filling one instance's
+ * document with another's Tools gives `satisfies` links into documents that are
+ * never published.
+ *
+ * Measured 2026-09-26, and it is why the parameter was added: `kg:audit
+ * --instance ./bootstrap` wrote **119** tool sidecars into an instance that
+ * declares no `tools` directory and has no `bootstrap/tools/`. They were
+ * cat-harness's Tool nodes audited as bootstrap's, so `graph.test.ts > nothing
+ * in bootstrap/ names anything above it` (bean `iwtn`) failed on the NAMES —
+ * `tools/folio-init` and three more — with zero path escapes. A criterion
+ * scoped to an instance is only as instance-scoped as the data it reads.
+ */
+export function toolsFor(instance?: string) {
+  return instance === undefined ? tools() : toolsOf(instance);
+}
 
 /** The repository, one level above the instance. `invoke.shell` runs from here. */
 const REPO = join(ROOT, "..");
@@ -98,9 +122,14 @@ const REPO = join(ROOT, "..");
  * is reported as not-checkable rather than as passing: `requires.runtime` is where
  * that claim lives, and this check has no business ruling on it.
  */
-export function unresolvedPaths(): { field: string; tool: string; value: string; expected: string }[] {
+export function unresolvedPaths(
+  instance?: string,
+): { field: string; tool: string; value: string; expected: string }[] {
   const out: { field: string; tool: string; value: string; expected: string }[] = [];
-  for (const t of tools()) {
+  // `REPO` stays the checkout either way: an `invoke` path is repo-relative
+  // whichever instance declared the Tool, so narrowing the tool SET must not
+  // narrow where its paths are resolved.
+  for (const t of toolsFor(instance)) {
     const inv = t.invoke as Record<string, unknown> | undefined;
     if (!inv) continue;
 
@@ -280,25 +309,28 @@ export interface ToolCheck {
  * instance's skills, so adding a sibling cannot silently create an obligation
  * to write Tools for it.
  */
-function satisfiableSkills(): Set<string> {
-  const out = new Set(knownSkills());
+function satisfiableSkills(instance: string = ROOT): Set<string> {
+  const out = new Set(knownSkillsIn(instance));
   // `ROOT` is THIS INSTANCE (`cat-harness/`), not the checkout. Sibling
   // instances are enumerated from the repository root, and reading the wrong
   // one here returns an empty list that looks exactly like "no siblings
   // declare it" — the vacuous-green shape, arrived at by using a variable
   // whose name does not say which root it is.
-  for (const instance of instanceRootsIn(repoRootFor(ROOT))) {
-    if (resolve(instance) === resolve(ROOT)) continue;
-    for (const id of knownSkillsIn(instance)) out.add(id);
+  for (const sibling of instanceRootsIn(repoRootFor(instance))) {
+    if (resolve(sibling) === resolve(instance)) continue;
+    for (const id of knownSkillsIn(sibling)) out.add(id);
   }
   return out;
 }
 
-export function checkTools(): ToolCheck {
-  // Coverage is asked of THIS instance's skills; resolution is asked of every
-  // declared one. Two questions, two sets — see `satisfiableSkills`.
-  const skills = knownSkills();
-  const resolvable = satisfiableSkills();
+export function checkTools(instance?: string): ToolCheck {
+  // Coverage is asked of THE AUDITED instance's skills; resolution is asked of
+  // every declared one. Two questions, two sets — see `satisfiableSkills`.
+  //
+  // `instance` absent keeps every existing call site and the repo-wide gate
+  // exactly as they were: this instance's skills, the repository's Tools.
+  const skills = instance === undefined ? knownSkills() : knownSkillsIn(instance);
+  const resolvable = satisfiableSkills(instance);
   const typeNames = new Set(Object.keys(TOOL_TYPES));
   const dangling: Array<{ tool: string; skill: string }> = [];
   const unknownTypes: Array<{ tool: string; port: string; ref: string }> = [];
@@ -310,7 +342,7 @@ export function checkTools(): ToolCheck {
   const danglingAlternatives: ToolCheck["danglingAlternatives"] = [];
   const asymmetricAlternatives: ToolCheck["asymmetricAlternatives"] = [];
 
-  for (const t of tools()) {
+  for (const t of toolsFor(instance)) {
     const portNames = new Set(t.io.inputs.map((i) => i.name));
     for (const s of t.satisfies) {
       if (skills.has(s)) covered.add(s);
@@ -372,11 +404,11 @@ export function checkTools(): ToolCheck {
 
   // The alternative relation, checked in a second pass because it is about
   // pairs: the first pass cannot know whether a Tool later in the list returns
-  // the edge. Built from the same `tools()` call, so a Tool that fails to
+  // the edge. Built from the same `toolsFor()` call, so a Tool that fails to
   // parse never reaches here.
   {
-    const byId = new Map(tools().map((t) => [t.id, t]));
-    for (const t of tools()) {
+    const byId = new Map(toolsFor(instance).map((t) => [t.id, t]));
+    for (const t of toolsFor(instance)) {
       for (const other of t.alternativeTo ?? []) {
         const peer = byId.get(other);
         if (peer === undefined) {
@@ -405,6 +437,9 @@ export function checkTools(): ToolCheck {
 }
 
 if (import.meta.main) {
+  // The CLI is the REPOSITORY-wide gate and passes no instance on purpose:
+  // `check:tools` is one verdict over every declared instance's Tools, which is
+  // what it has always been. Per-instance auditing is `kg:audit --instance`.
   const r = checkTools();
   const all = tools();
   console.log(`Tools: ${all.length}\n`);

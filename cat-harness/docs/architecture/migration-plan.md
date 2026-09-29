@@ -75,7 +75,7 @@ the platform already owns: shadowing `theorem` from a config file two repos away
 would change what every existing folio validates against.
 
 **A diamond is not a collision.** The proposed graph *is* a diamond —
-`smart-base → smart-kg → core` and `folio-asst-sci → core` — so a depth-first
+`smart-base → smart-kg → core` and `folio-assistant-sci → core` — so a depth-first
 walk reaches `core` twice. Re-registering identical content from the same
 contributor is a no-op. Without that rule every realistic dependency tree throws
 a false collision on first load, and the obvious fix (dropping the collision
@@ -94,7 +94,7 @@ mode, caught at the point it occurs.
 `schemas/contributions.ts`, not `src/core/`. The registry is about the content
 model — which kinds exist, which adapter owns them — so it belongs with the
 model, and putting it under `src/` would have added another
-`agentic-harness → folio-assist-core` import, already the largest
+`cat-harness → folio-assistant-core` import, already the largest
 wrong-direction group. A mechanism built to enable the split must not deepen
 what the split has to undo. Verified: `check:partition` reports 45 edges before
 and after. MCP tool contributions are carried as opaque registrar callbacks for
@@ -122,7 +122,7 @@ Two results change the plan below rather than merely confirming it:
 - **`smart-kg` partitions to zero modules.** There is no L1 code to move, so
   that repo is new construction like the Test repos, not an extraction. It is
   re-sequenced accordingly.
-- **21 of the 46 edges are `agentic-harness` → `folio-assist-core`** — the
+- **21 of the 46 edges are `cat-harness` → `folio-assistant-core`** — the
   harness importing the content-object model, which is its defining constraint
   failing in practice. Extracting the harness is therefore *harder* than
   extracting sci, not easier, and Phase II's order reflects that.
@@ -178,7 +178,7 @@ archaeology.
 repo publishes its own knowledge graph, and the graphs are only mergeable if
 their node IRIs do not collide. Naming every artefact after its repository and
 minting `@id`s under that repository's `canonicalUrl` guarantees that by
-construction: `agentic-harness.jsonld` and `folio-assist-core.jsonld` cannot
+construction: `cat-harness.jsonld` and `folio-assistant-core.jsonld` cannot
 assert the same node IRI, because the document IRI is part of every node's.
 
 The corollary is the rule the skill states and a test enforces: **artefacts are
@@ -212,13 +212,13 @@ One repo at a time, each becoming a folio-assistant instance in its own right.
 
 | order | repo | proves | why here |
 |---|---|---|---|
-| 1 | `folio-asst-sci` | a dependency can contribute schemas, an adapter and MCP tools | hardest mechanism, cleanest boundary — 101 files that already cluster |
-| 2 | `agentic-harness` | the harness genuinely does nothing on its own | extracting it *from underneath* core is how you find out what core assumed |
+| 1 | `folio-assistant-sci` | a dependency can contribute schemas, an adapter and MCP tools | hardest mechanism, cleanest boundary — 101 files that already cluster |
+| 2 | `cat-harness` | the harness genuinely does nothing on its own | extracting it *from underneath* core is how you find out what core assumed |
 | 3 | `smart-base` | a dependency-of-a-dependency resolves | the depth-first walk is exercised for real |
 | 4 | `smart-kg` | the L1/L2 line holds | needs WHO context; least-built today |
 | 5 | `smart-kg-tools`, `smart-base-tools` | the Tool/Content kind split | only worth doing once the parents are stable |
 
-`folio-assist-core` is never extracted: it is what remains.
+`folio-assistant-core` is never extracted: it is what remains.
 
 **Per-repo gate — all five required:**
 
@@ -238,7 +238,7 @@ and it is the only commit in Phase II worth reverting as a unit.
 ## Phase III — build on the harness
 
 New construction, not migration. L4/L5 Content, Tool and Test repos built off
-`agentic-harness`, and healthworker- and individual-facing workflows
+`cat-harness`, and healthworker- and individual-facing workflows
 (immunizations is the issue's example).
 
 The Test repos are the substantive new thing, because
@@ -250,7 +250,7 @@ is the same workflow, with the same QA sidecars and the same translation path,
 as review of anything else.
 
 **Phase III is the test of whether the split worked.** If a
-healthworker-facing folio has to depend on `folio-asst-sci` to get a working
+healthworker-facing folio has to depend on `folio-assistant-sci` to get a working
 install, the boundary is in the wrong place and Phase II is not finished.
 
 ## Risks
@@ -269,10 +269,10 @@ install, the boundary is in the wrong place and Phase II is not finished.
 Stated plainly so the gaps are not mistaken for omissions:
 
 - **Whether a dependency may contribute adapters and MCP tools** (0.1). The
-  largest open question; `folio-asst-sci` is unbuildable until it is answered.
+  largest open question; `folio-assistant-sci` is unbuildable until it is answered.
 - **Where the L1/L2 boundary falls** between `smart-kg` and `smart-base`.
 - **Whether the viewer splits by content type** or exposes a registration point
-  ([future state](future-state.html#folio-assist-core)).
+  ([future state](future-state.html#folio-assistant-core)).
 - **Repo ownership, naming and hosting** — org, visibility, release cadence.
-- **Whether `folio-asst-sci` depends on core only**, as the issue states, or
+- **Whether `folio-assistant-sci` depends on core only**, as the issue states, or
   also needs harness surface that core does not re-export.

@@ -49,7 +49,7 @@ flat-file issue tracker storing issues as markdown under `beans/`. Cloud
 sandboxes do **not** ship it, so reinstall on demand (Go ships in the sandbox):
 
 ```bash
-scripts/install-beans.sh          # idempotent; installs into a PATH dir
+cat-harness/scripts/install-beans.sh          # idempotent; installs into a PATH dir
 # equivalently, the one-liner it runs:
 GOBIN="$HOME/.local/bin" go install github.com/hmans/beans@latest
 ```
@@ -117,13 +117,22 @@ print(f"{len(m)} exact match(es)")
 [print(" ", b["id"], b["status"]) for b in m]' "$T"
 ```
 
-- **≥ 1 match** → do **not** create. Claim the existing bean instead:
-  `beans update <id> --status in-progress --body-append "Claimed by <branch>"`
-  — and note that the claim is **branch-local**: a sibling reading
-  `origin/main` sees `todo` until your PR exists, so it announces rather than
-  reserves. Also `git fetch origin main` and check the open PR list for the
-  bean id. Two sessions claimed one bean 61 s apart on 2026-09-19 and shipped
-  two PRs. [`bean-coordination.md` §"A claim is branch-local"](bean-coordination.md).
+- **≥ 1 match** → do **not** create. Claim the existing bean instead, with
+  **`bun run beans:claim <id>`** — which reads the default branch first, refuses
+  a bean a sibling holds or one already closed, and records a holder note so the
+  next session's check can see you.
+
+  **Not `beans update <id> --status in-progress`.** That is the older advice and
+  it is what this line used to say. It writes no holder note, so the claim is
+  invisible to `beans:claim`'s own `already-claimed` check — measured 2026-09-25,
+  97 of the 100 non-epic `in-progress` beans on `main` record no holder, and the
+  guard answered "go ahead" for all 97 (bean `c3d7`). Two sessions claimed one
+  bean 61 s apart on 2026-09-19 and shipped two PRs; that is the failure the tool
+  exists to stop, and routing around it puts it back.
+
+  Read the outcome — three of them are refusals, and `held-unknown` means it
+  could not tell a live sibling from an abandoned claim:
+  [`bean-coordination.md` §"`bun run beans:claim`"](bean-coordination.md).
 - **0 matches** → `beans create "$T" --type task`
 
 `--search` is a fuzzy Bleve query, so the exact-title comparison inside the
@@ -412,7 +421,9 @@ You can map out sequence blockers using:
 `beans update <id> --blocking <blocked-id>`
 
 **3. Updating Status & Adding Comments**
-- When starting work: `beans update <id> --status in-progress`
+- When starting work: `bun run beans:claim <id>` — a claim goes through the
+  claim tool, never through `beans update`, so it is visible to the next
+  session's check (bean `c3d7`)
 - When completed: `beans update <id> --status completed`
 - To add notes or discussion: `beans update <id> --body-append "Your note"`,
   or `--body-append -` with a heredoc when it runs to paragraphs. **Never
@@ -525,4 +536,4 @@ this skill by name never received them. Ported here as part of bean `tdmg`.
 - `scripts/session-start-coord-sweep.sh` — the CLI-independent session-start
   surface: fetches `origin/main` and summarises sibling branch activity. Works
   even when the `beans` CLI is absent.
-- `scripts/install-beans.sh` — provisions the CLI.
+- `cat-harness/scripts/install-beans.sh` — provisions the CLI.
