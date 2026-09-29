@@ -137,14 +137,21 @@ const GENERATOR_WRITTEN: ReadonlySet<string> = new Set(
 /**
  * Does the file SAY a generator wrote it, in its own first lines?
  *
- * Two conventions already in the corpus, both self-declarations rather than
+ * Two conventions in the corpus, both self-declarations rather than
  * inferences from a path:
  *
- *  - a top-level `"_generated"` key in JSON, which `sync-docs-harness.ts`
- *    has emitted into `docs/_data/harness.json` all along (84 occurrences);
- *  - a `generated:` front-matter key in Markdown, which `gen-skill-docs.ts`
- *    and `gen-schema-docs.ts` now emit into the `docs/reference/**` mirrors
- *    (145 occurrences across 31 pages).
+ *  - a top-level `"_generated"` key in JSON — `sync-docs-harness.ts` into
+ *    `docs/_data/harness.json` all along, and `glossary-page.ts` into the
+ *    SKOS assets and the extracted glossary schemes (bean `ws99`);
+ *  - a `generated:` front-matter key in Markdown — `gen-skill-docs.ts` and
+ *    `gen-schema-docs.ts` into the `docs/reference/**` mirrors (#1222),
+ *    `gen-uml-overview.ts` into `docs/uml/`, and `glossary-page.ts` and
+ *    `gen-docs-pages.ts` into their own pages (`ws99`).
+ *
+ * No count of either: the summary line prints how many files take this route
+ * on the run in front of you, and a number written down here is a claim about
+ * a corpus that changes whenever a generator gains a page. This paragraph
+ * carried two such numbers and both were stale within four days.
  *
  * The mirrors are the clearest case for reading a declaration rather than a
  * path: each is a COPY of a skill that sits one directory away, so a finding
@@ -288,6 +295,15 @@ const EXEMPTIONS: readonly ReferenceExemption[] = [
  *
  * **It compares as a SET.** A new multi-target file fails, and so does a
  * FIXED one — a PENDING that only grows stops meaning anything.
+ *
+ * That half fired on bean `ws99`, which is the first evidence it works.
+ * `cat-harness/docs/ig-publisher.md` and `cat-harness/docs/publication-workflow.md`
+ * were held here as prose naming two or three instances with no single
+ * destination. They are not prose: `gen-docs-pages.ts` writes both, and once it
+ * began saying so in their front matter they stopped being read at all. Their
+ * entries were DELETED rather than left, because an entry recording a choice
+ * nobody has to make any more is a question the owner would be asked twice.
+ * Neither file was edited to earn that — the generator was.
  */
 const PENDING: readonly { file: string; names: number }[] = [
   // THIS FILE, and it is listed rather than exempted on purpose.
@@ -336,7 +352,6 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "cat-harness/scripts/kg-export.ts", names: 2 },
   { file: "cat-harness/scripts/layout-norms-baseline.json", names: 2 },
   { file: "cat-harness/tools/discover.ts", names: 2 },
-  { file: "cat-harness/docs/ig-publisher.md", names: 3 },
   { file: "cat-harness/skills/folio-core/harness-tiles.md", names: 2 },
   { file: "cat-harness/schemas/harness-config.ts", names: 3 },
   { file: "cat-harness/content/docs/ig-publisher/what-it-cannot-be-asked-for.md", names: 2 },
@@ -355,7 +370,6 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "cat-harness/scripts/ingest-ig-chrome.ts", names: 2 },
   { file: "cat-harness/scripts/gen-object-model-uml.ts", names: 2 },
   { file: "cat-harness/docs/processes/index.md", names: 2 },
-  { file: "cat-harness/docs/publication-workflow.md", names: 2 },
   { file: "smart-ig/smart-ig.json", names: 2 },
 ];
 

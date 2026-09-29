@@ -52,9 +52,16 @@ document, and a Markdown page that merely discusses generation.
 
 | | before | after |
 |---|---|---|
-| wrong-direction | 790 in 211 files | 697 in 193 files |
-| files skipped by their own declaration | 476 | 520 (+44) |
+| wrong-direction | 790 in 211 files | 688 in 189 files |
+| files skipped by their own declaration | 476 | 536 (+60) |
 | multi-destination not in PENDING | 31 | 20 |
+
+Two `PENDING` entries had to be DELETED, and that is the first time the list's
+set comparison has fired for a good reason: `cat-harness/docs/ig-publisher.md`
+and `cat-harness/docs/publication-workflow.md` were held there as prose with no
+single destination. They are not prose — `gen-docs-pages.ts` writes both, and
+once it says so they are not read at all. Neither file was edited to earn that;
+the generator was.
 
 **NOT done, and why — the 5 translated `docs/<locale>/publication-workflow.md`.**
 The brief expected these to fall too, which would have put the last number at

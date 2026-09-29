@@ -486,8 +486,10 @@ q.addEventListener("input",run);})();
  * `_generated` in {@link outputs} is the JSON form of the same fact. The
  * comment was the only one until bean `ws99`, and it sits BELOW the front
  * matter — correct information in the one place the checker cannot read, so
- * five generated pages and six generated JSON files were being graded as
- * authored prose.
+ * every page and every JSON file this writes was being graded as authored
+ * prose. No count here on purpose: {@link outputs} is what says how many
+ * there are, and a number restated in a comment is a claim that goes stale
+ * the next time a scheme is added.
  */
 const GENERATED_BY = "folio-assistant-core/scripts/glossary-page.ts";
 
