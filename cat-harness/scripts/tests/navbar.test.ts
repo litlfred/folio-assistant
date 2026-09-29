@@ -393,7 +393,14 @@ describe("every declared graph reaches the navbar, linked or not", () => {
     // what "every kind the instance declares" is for; pinning it at six would
     // have made the assertion a statement about 2026-09-22 rather than about
     // the declaration.
-    expect(kinds()).toEqual(["catalogue", "code", "docs", "library", "skills", "themes", "uploads"]);
+    // EIGHT since 2026-09-27: `qa` joined when `who-iris/test/results/` was
+    // declared, so that auditing this instance produces a committed verdict
+    // rather than nothing — 13 instances had no `test/results` at all, which
+    // made "audited clean" and "never audited" the same observation (bean
+    // `bjzs`). The list grew because the instance did, exactly as it did for
+    // `code`; pinning it at seven would make the assertion a statement about
+    // 2026-09-26 rather than about the declaration.
+    expect(kinds()).toEqual(["catalogue", "code", "docs", "library", "qa", "skills", "themes", "uploads"]);
   });
 
   it("links exactly the kinds it was told are published", () => {
@@ -407,6 +414,11 @@ describe("every declared graph reaches the navbar, linked or not", () => {
       // this assertion exists to keep visible, rather than a gap to hide.
       "code",
       "library",
+      // `qa` is declared and publishes no page, like `code` above: the audit
+      // writes sidecars, and the viewer for them is the QA index rather than a
+      // per-instance graph page. Declared-and-unrendered is the state this
+      // assertion keeps visible.
+      "qa",
       "skills",
       "themes",
       "uploads",

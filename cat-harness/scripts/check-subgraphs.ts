@@ -1,11 +1,43 @@
 #!/usr/bin/env bun
 /**
- * A folder corresponds to a subgraph, and subgraphs should be disconnected.
+ * Do the declared directories' subgraphs have any edge between them?
  *
  * Bean `x4v4`. The owner, 2026-09-20: *"`cat-harness/methodologies/` is a
  * subgraph. should be disconnected. convention folder corresponds to subgraph
  * (but may be in process of being disentangled). use schema
  * declaration/definition."*
+ *
+ * ## Vocabulary, because the headline here said it backwards until 2026-09-27
+ *
+ * It read *"a folder corresponds to a subgraph"*, which inverts the two. The
+ * owner's own sentence carries the correction and this file dropped the load-
+ * bearing word: **convention** folder corresponds to subgraph.
+ *
+ * - A **subgraph** is the mathematical object — a set of nodes together with
+ *   the edges of the graph between them. Every set of files induces one.
+ *   Nothing has to be cohesive, large, or disconnected to *be* a subgraph, and
+ *   an edgeless set of nodes is a perfectly good one.
+ * - A **directory** is a CONVENIENCE: where a subgraph somebody chose to name
+ *   gets written down so tooling can find it. Bookkeeping, not the object.
+ *   `subgraphTree` and `owningDirectory` in `schemas/cat-harness.ts` are pure
+ *   path containment for exactly this reason.
+ *
+ * The inversion is not pedantry, because it is what makes the property this
+ * script measures sayable at all. "A folder is a subgraph" is unfalsifiable —
+ * any set of files induces a subgraph, so there is nothing to check. What is
+ * checkable is a relation BETWEEN the declared subgraphs:
+ *
+ * > **The partition by declared directory should have no edge crossing it** —
+ * > equivalently, it should COARSEN the graph's partition into connected
+ * > components. Each declared subgraph is then a union of components, and
+ * > "should be disconnected" means mutually disconnected.
+ *
+ * That is one comparison of two partitions, and it is what `byPair` below
+ * computes. Note "disconnected" is a claim about PAIRS: a single subgraph is
+ * not disconnected from anything, and a connected component is by definition
+ * connected, so the verdict has to name the pairwise property or it says
+ * something false. It did — *"every declared directory is a disconnected
+ * component"* — and that is corrected below too.
  *
  * The declaration half lives in `schemas/cat-harness.ts` — `subgraphTree` and
  * `owningDirectory`, both DERIVED from the paths already declared rather than
@@ -415,7 +447,11 @@ if (import.meta.main) {
   }
 
   if (byPair.size === 0) {
-    console.log("\n✓ every declared directory is a disconnected component.");
+    // Pairwise, and about the PARTITION rather than about any one directory:
+    // a lone subgraph is not disconnected from anything, and a component is
+    // connected by definition. See §"Vocabulary" for why the old wording —
+    // "every declared directory is a disconnected component" — was false.
+    console.log("\n✓ no edge crosses a declared directory: the declared partition coarsens the components.");
   } else {
     console.log(`\nENTANGLEMENT — ${edges.length} edge(s) crossing ${byPair.size} pair(s).`);
     console.log("Reported, not refused: the owner's own framing is that these are");

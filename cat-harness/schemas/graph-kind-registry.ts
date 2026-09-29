@@ -550,7 +550,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     nodeSchemas: {
       "folio-voice/v1": { validator: "schemas/voices.ts#VoiceProfileSchema" },
       "folio-voice-skill/v1": { validator: "schemas/voice-skill.ts#VoiceSkillSchema" },
-      "kg-qa-manifest/v1": { validator: "schemas/kg-qa.ts#KgQaManifestSchema" },
       // A synced remote skill's pinned, per-file fixity record (issue #556).
       "folio-remote-skill/v1": { validator: "schemas/skill-package.ts#RemoteSkillRecordSchema" },
     },
@@ -874,6 +873,15 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
       "kg-qa/v1": { validator: "schemas/kg-qa.ts#KgQaReportSchema" },
+      // The auditor's identity for the `kg-qa/v1` files beside it — one per
+      // instance, not one per sidecar, for the reason `KG_QA_MANIFEST_SCHEMA`
+      // gives. Registered under `skills` until 2026-09-27, because the file
+      // lived in `skills/`; it moved to `test/results/` when auditing every
+      // instance made the old home CREATE a skills directory holding no skills,
+      // and this registration had to move with it. A kind claiming a `$schema`
+      // whose files live in another kind's directory is a validator aimed at
+      // nothing.
+      "kg-qa-manifest/v1": { validator: "schemas/kg-qa.ts#KgQaManifestSchema" },
       "block-qa/v1": { validator: "schemas/block-qa-schema/js/index.ts#BlockQaReport" },
       "folio-test-run/v1": { validator: "schemas/test-run.ts#TestRunSchema" },
       "qa-witness/v1": { shape: "content/pipeline/qa-witness.ts#QaWitness" },
