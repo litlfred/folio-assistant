@@ -490,6 +490,11 @@ export const STEPS: readonly Step[] = [
     because: "the generated docs index",
   },
   {
+    write: ["lsi:skills"],
+    verify: ["lsi:skills:check"],
+    because: "the skills graph's LSI index — a new or edited skill changes its fingerprint, and kg:audit's `lsi-index-fresh` reads it next",
+  },
+  {
     write: ["kg:audit"],
     verify: ["kg:audit:check"],
     because: "the skill's kg-qa sidecar — masked inside `gates` by `bun test`",

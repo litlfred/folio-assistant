@@ -737,6 +737,13 @@ jobs:
       - name: every skill is declared, and declares nothing absent
         run: bun run skill:register:check
 
+      # The skills graph's LSI index is written by the registration chain
+      # (`lsi:skills`) and read by kg:audit's `lsi-index-fresh`. Checked on its
+      # own so an edited skill with a stale index names THIS step, not a
+      # kg-qa sidecar two generators away (bean `ansc`).
+      - name: the skills graph's LSI index is fresh
+        run: bun run lsi:skills:check
+
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 

@@ -1210,6 +1210,18 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "unfalsifiable opt-out.",
   },
   {
+    id: "lsi-index-fresh",
+    applies: ["graph"],
+    scope: "instance",
+    severity: "minor",
+    summary:
+      "A prose graph this instance owns is large enough to need a Latent Semantic Indexing index and has none, or has " +
+      "one built before the graph last changed (method `lsi`, step 7: an index is stale by construction once its corpus " +
+      "changes). The threshold is a HOUSE number with its basis in `scripts/lsi.ts`; below it the graph is not judged. " +
+      "`minor` because an index is a retrieval aid, not content: its absence costs recall on a vocabulary gap, never " +
+      "correctness. Bean `ansc`.",
+  },
+  {
     id: "manifest-skill-exists",
     applies: ["graph"],
     scope: "instance",

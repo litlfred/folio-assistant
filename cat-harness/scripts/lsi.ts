@@ -263,33 +263,45 @@ export function refreshLibraryIndex(libraryDir: string, slug: string): string[] 
   }
 }
 
+export interface GraphVerdict {
+  result: "pass" | "fail" | "n/a";
+  /** Human detail WITH counts — for the console and the qa-results file. */
+  detail: string;
+  /** The same verdict with NO counts, for the kg:audit sidecar: it changes
+   *  only when the verdict does, so an edit that keeps an index fresh (or
+   *  keeps it missing) does not make the committed audit stale. */
+  stableDetail: string;
+  units: number;
+  words: number;
+}
+
+/** Does this graph need an LSI index, and is the one it has fresh? One answer
+ *  for `lsi:audit` and for kg:audit's `lsi-index-fresh`. */
+export function graphVerdict(t: GraphTarget): GraphVerdict {
+  const us = unitsOf(t.absPath, t.graphKinds);
+  const units = us.length;
+  const words = us.reduce((s, u) => s + tokenize(u.text).length, 0);
+  const sc = sidecarPath(t);
+  if (t.graphKinds.some((k) => ON_DEMAND_KINDS.has(k)))
+    return { result: "n/a", detail: `state graph — indexed on demand, never committed (${units} units)`, stableDetail: "state graph — indexed on demand, never committed", units, words };
+  if (!(units >= NEED_UNITS && words >= NEED_WORDS))
+    return { result: "n/a", detail: `below threshold (${units} units, ${words} words)`, stableDetail: "below the need-an-index threshold — not judged", units, words };
+  if (!existsSync(sc))
+    return { result: "fail", detail: `needs an index (${units} units, ${words} words) and has none`, stableDetail: `needs an LSI index and has none — run \`bun run lsi index --instance ${t.instance} --graph ${t.id}\``, units, words };
+  const s = JSON.parse(readFileSync(sc, "utf8")) as LsiSidecar;
+  const fresh = fingerprintUnits(us, s.options) === s.fingerprint;
+  return fresh
+    ? { result: "pass", detail: `fresh (${units} units)`, stableDetail: "fresh", units, words }
+    : { result: "fail", detail: `stale — the graph changed since ${relative(REPO, sc)} was built`, stableDetail: `stale — re-run \`bun run lsi index --instance ${t.instance} --graph ${t.id}\``, units, words };
+}
+
 function audit(strict: boolean): number {
   const rows: Array<Record<string, unknown>> = [];
   let failing = 0;
   for (const t of proseGraphs()) {
-    const units = unitsOf(t.absPath, t.graphKinds);
-    const words = units.reduce((s, u) => s + tokenize(u.text).length, 0);
-    const needs = units.length >= NEED_UNITS && words >= NEED_WORDS;
-    const sc = sidecarPath(t);
-    let result: "pass" | "fail" | "n/a";
-    let detail: string;
-    if (t.graphKinds.some((k) => ON_DEMAND_KINDS.has(k))) {
-      result = "n/a";
-      detail = `state graph — indexed on demand, never committed (${units.length} units)`;
-    } else if (!needs) {
-      result = "n/a";
-      detail = `below threshold (${units.length} units, ${words} words)`;
-    } else if (!existsSync(sc)) {
-      result = "fail";
-      detail = `needs an index (${units.length} units, ${words} words) and has none`;
-    } else {
-      const s = JSON.parse(readFileSync(sc, "utf8"));
-      const fp = fingerprintUnits(units, s.options);
-      result = fp === s.fingerprint ? "pass" : "fail";
-      detail = result === "pass" ? `fresh (${units.length} units)` : `stale — the graph changed since ${relative(REPO, sc)} was built`;
-    }
+    const { result, detail, units, words } = graphVerdict(t);
     if (result === "fail") failing++;
-    rows.push({ instance: t.instance, graph: t.id, path: relative(REPO, t.absPath), kinds: t.graphKinds, units: units.length, words, result, detail });
+    rows.push({ instance: t.instance, graph: t.id, path: relative(REPO, t.absPath), kinds: t.graphKinds, units, words, result, detail });
     console.log(`${result.padEnd(4)}  ${`${t.instance}/${t.id}`.padEnd(40)} ${detail}`);
   }
   const failed = (pred: (d: string) => boolean) =>
@@ -370,6 +382,16 @@ if (import.meta.main) {
         console.log(`  ${h.cosine.toFixed(3)}  ${lexical ? "lexical+latent" : "latent only   "}  ${h.id}`);
       }
     }
+  } else if (cmd === "check") {
+    // Strict freshness for the graphs selected — the verify half of a
+    // `skill:register` step (`lsi:skills` / `lsi:skills:check`).
+    let bad = 0;
+    for (const t of targets()) {
+      const v = graphVerdict(t);
+      if (v.result === "fail") bad++;
+      console.log(`${v.result.padEnd(4)}  ${t.instance}/${t.id}  ${v.detail}`);
+    }
+    process.exit(bad ? 1 : 0);
   } else if (cmd === "audit") {
     process.exit(audit(process.argv.includes("--strict")));
   } else {

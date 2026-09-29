@@ -116,6 +116,25 @@ basis stated in `scripts/lsi.ts`; the method gives no corpus-size rule. It
 reports and does not gate (exit 0), like `check:methodology-evidence`;
 `--strict` exits 1 for a caller that has decided; no CI step runs it yet.
 
+### The same verdict in the audited record — `kg:audit`'s `lsi-index-fresh`
+
+`kg:audit` carries the criterion `lsi-index-fresh` (graph level, `minor`), for
+the prose graphs the audited instance OWNS. It uses the same verdict function
+as `lsi:audit`, but its finding text carries **no counts**, so the committed
+kg-qa sidecar moves only when a verdict flips — an edit that keeps an index
+fresh, or keeps it missing, does not make `kg:audit:check` stale.
+
+Two chains keep the committed indexes fresh, so the criterion stays quiet in
+ordinary work:
+
+- **a skill edit** — `skill:register` runs `lsi:skills` before `kg:audit`, and
+  CI checks it with `lsi:skills:check`;
+- **an ingest** — `--promote` re-indexes the library (§"On ingestion").
+
+A graph nobody has indexed yet (today: `cat-harness/docs`) is a standing
+`minor` finding. That is the point of recording it: "needs one and has none"
+is now a fact in the audited record instead of a line in a report.
+
 ## Epic filing — the qou hierarchy, proposed by evidence
 
 The qou project-management skills (`todo-manager`, `session-intent`) require

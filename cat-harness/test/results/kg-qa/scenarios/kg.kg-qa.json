@@ -241,6 +241,15 @@
         }
       ]
     },
+    "lsi-index-fresh": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "cat-harness/docs",
+          "detail": "needs an LSI index and has none — run `bun run lsi index --instance cat-harness --graph docs`"
+        }
+      ]
+    },
     "manifest-skill-exists": {
       "result": "pass",
       "findings": []
@@ -390,7 +399,7 @@
   },
   "totals": {
     "pass": 16,
-    "fail": 4,
+    "fail": 5,
     "n/a": 0,
     "unknown": 0
   }
