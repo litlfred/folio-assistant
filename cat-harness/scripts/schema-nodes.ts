@@ -74,7 +74,12 @@ import { directoriesForGraph } from "../schemas/cat-harness.js";
  * `schemas` one by name rather than being handed a single-home guess.
  */
 function schemasRoots(root: string): string[] {
-  const declared = directoriesForGraph(root, "schemas");
+  // De-duplicated by PATH: an instance that needs cat-harness resolves the
+  // inherited `schemas` entry against its own root as well as its own
+  // differently-id'd entry, so the same directory can come back twice — and
+  // every module in it would be minted as two identical nodes (bean `81tw`,
+  // measured on the first bootstrap-tools export: 4 Schema nodes for 2 modules).
+  const declared = [...new Set(directoriesForGraph(root, "schemas"))];
   return declared.length > 0 ? declared : [join(root, "schemas")];
 }
 

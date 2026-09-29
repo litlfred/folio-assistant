@@ -98,6 +98,10 @@ describe("what was not looked for is not reported as clean", () => {
       const { nodes } = await collectInstanceNodes(inst, DOC, BASE, []);
       const schemas = nodes.filter((n) => String(n["@type"]).endsWith("#Schema"));
       for (const n of schemas) expect(String(n["@id"]).startsWith(`${DOC}#schema/`)).toBe(true);
+      // One node per module: an inherited `schemas` entry resolving onto the
+      // instance's own directory once minted every module twice.
+      const ids = schemas.map((n) => String(n["@id"]));
+      expect(new Set(ids).size).toBe(ids.length);
       checked += schemas.length;
     }
     expect(checked).toBeGreaterThan(0); // not vacuous
