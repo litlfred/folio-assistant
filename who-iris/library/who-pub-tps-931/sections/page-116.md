@@ -12,7 +12,7 @@ granularity: page
 ---
 Annex 3 — Place names
 
-English/approved nome Local/other name
+English/approved name Local/other name
 
 ‘English/approved name Local/other name
 

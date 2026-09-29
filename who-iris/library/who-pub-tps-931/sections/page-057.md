@@ -10,7 +10,7 @@ source_sha256: ecc88eee99756755
 text_source: ocr
 granularity: page
 ---
-WHO Editorial Style Manval
+WHO Editorial Style Manual
 
 It should be noted that the bacterial and viral codes of nomenclature
 differ substantially; CTT should be consulted for details. A full list of

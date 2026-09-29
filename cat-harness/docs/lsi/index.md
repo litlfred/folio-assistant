@@ -115,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## who-iris / library
 
-**342** units · **3936** terms · k = **100** · retains **69.6 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/who-iris/library.lsi.json`
+**342** units · **3930** terms · k = **100** · retains **69.7 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/who-iris/library.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -125,12 +125,12 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 |---|---|---|---|
 | 1 | 23.77 | evidence, review, group, health, quality, interest, development, systematic | *(none)* |
 | 2 | 14.97 | vel, eam, mea, probo, quis, tamquam, vivendum, dolor | group, gender, gdg, equity, rights, steering, interests, grc |
-| 3 | 13.83 | imprecision, effect, confidence, inconsistency, estimate, studies, rated, indirectness | organization, november, accessed, world, grc, planning, group, doi |
+| 3 | 13.83 | imprecision, effect, confidence, inconsistency, estimate, studies, rated, indirectness | organization, november, accessed, grc, world, planning, group, doi |
 | 4 | 13.07 | accessed, november, pmid, cochrane, website, doi, oxman, org | interests, interest, members, conflict, coi, financial, individuals, chair |
-| 5 | 12.13 | names, international, social, nomenclature, used, determinants, style, human | gdg, doi, grade, interest, interests, review, grc, evidence |
+| 5 | 12.14 | names, international, nomenclature, social, used, name, republic, style | gdg, doi, grade, interest, interests, review, grc, evidence |
 | 6 | 11.85 | gender, determinants, social, equity, rights, services, human, right | names, name, republic, style, full, nomenclature, text, english |
 | 7 | 11.59 | doi, coi, financial, accessed, november, conflict, interests, cois | rapid, proposal, canada, advice, planning, updating, key, review |
-| 8 | 10.81 | republic, local, name, nome, approved, english, haiti, addis | nomenclature, symbols, international, world, abbreviations, text, used, medical |
+| 8 | 10.79 | republic, name, local, approved, english, haiti, addis, abu | nomenclature, symbols, international, world, abbreviations, text, used, organization |
 
 **Findings** — 2 narrow dimension(s), 12 near-duplicate pair(s).
 
@@ -147,7 +147,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 - 0.951 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-007.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-008.md`
 - 0.955 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-008.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-010.md`
 - 0.992 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-014.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-015.md`
-- 0.956 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-020.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-021.md`
+- 0.957 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-020.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-021.md`
 - 1.000 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-029.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-031.md`
 - 1.000 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-029.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-030.md`
 - 1.000 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-030.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-031.md`

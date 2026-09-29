@@ -81,7 +81,7 @@ the Republic of Zimbabwe
 Kingdom (of Great
 
 Britain and Northern
-Treland), British
+Ireland), British
 
 Tanzanian Dodoma
 

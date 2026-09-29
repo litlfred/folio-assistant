@@ -12,7 +12,7 @@ granularity: page
 ---
 WHO Editorial Style Manual
 
-Local/other name English/approved name Local/other name English/opproved name
+Local/other name English/approved name Local/other name English/approved name
 Rangoon Yangon Tashi Chho Thimphu
 Reikjavik Reykjavik Dzong
 Riad Riyadh Tchad. Chad*

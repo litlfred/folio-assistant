@@ -16,7 +16,7 @@ Place names
 
 Alphabetical list by English/approved names
 
-English/approved nome Local/other nome
+English/approved name Local/other name
 
 English /approved name Local/other name
 

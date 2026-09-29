@@ -10,7 +10,7 @@ source_sha256: ecc88eee99756755
 text_source: ocr
 granularity: page
 ---
-WHO Editorial Style Manval
+WHO Editorial Style Manual
 
 For an explanation of the correct use of the full point in quotations see
 section 6.

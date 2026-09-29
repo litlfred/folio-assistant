@@ -22,7 +22,7 @@ pp. 5-55
 London-Brighton race.
 
 However, if the word “from” is used, e.g. from 1850 to 1895, then the
-en tule is inappropriate and “to” must be used.
+en rule is inappropriate and “to” must be used.
 
 For typographical reasons, a spaced en rule is sometimes used — as in
 this manual — to perform the functions of an em rule.
