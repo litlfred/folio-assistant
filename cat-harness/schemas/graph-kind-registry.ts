@@ -1332,6 +1332,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     nodeSchemas: {
       "folio-document-images/v1": { validator: "schemas/document-image.ts#ImagesSidecarSchema" },
       "folio-image-verdicts/v1": { shape: "scripts/apply-image-verdicts.ts#VerdictFile" },
+      // The section analogue of image verdicts (bean `fnqn`): which sections are
+      // mostly SAMPLE text. Read by summaries and the LSI units.
+      "folio-section-verdicts/v1": { validator: "schemas/section-verdicts.ts#SectionVerdictFileSchema" },
       // The OTHER layer of the same page — bean `a8wy`. `folio-document-images`
       // holds what the PDF PLACES; this holds the positioned text of a figure
       // the PDF DRAWS, for which there is no image object to place. Two

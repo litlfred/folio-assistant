@@ -46,6 +46,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { dirname, join, relative, resolve } from "node:path";
 import { declaredGraphs, instanceRootsIn } from "../schemas/cat-harness";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
+import { specimenSections } from "../schemas/section-verdicts.ts";
 import {
   buildLsi,
   crossGroupLinks,
@@ -102,9 +103,18 @@ export function unitsOf(absPath: string, graphKinds: string[], docs?: string[]):
   let files: string[];
   if (graphKinds.includes("library")) {
     const slugs = docs?.length ? docs : readdirSync(absPath, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name);
+    // A section the library marks SPECIMEN (section-verdicts.json, bean
+    // `fnqn`) is sample text, not the document speaking: indexing it teaches
+    // the index filler's vocabulary as a theme, which is how it was found.
+    const specimens = specimenSections(absPath);
     files = slugs.flatMap((s) => {
       const sec = join(absPath, s, "sections");
-      return existsSync(sec) ? readdirSync(sec).filter((f) => f.endsWith(".md")).sort().map((f) => join(sec, f)) : [];
+      return existsSync(sec)
+        ? readdirSync(sec)
+            .filter((f) => f.endsWith(".md") && !specimens.has(`${s}/${f.replace(/\.md$/, "")}`))
+            .sort()
+            .map((f) => join(sec, f))
+        : [];
     });
   } else {
     files = walk(absPath).sort();

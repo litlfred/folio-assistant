@@ -24,7 +24,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>3</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>996</b><span>units indexed</span></div>
+<div class="lv-stat"><b>990</b><span>units indexed</span></div>
 <div class="lv-stat"><b>4</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -115,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## who-iris / library
 
-**342** units · **3930** terms · k = **100** · retains **69.7 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/who-iris/library.lsi.json`
+**336** units · **3827** terms · k = **100** · retains **69.2 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/who-iris/library.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -123,35 +123,27 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 23.77 | evidence, review, group, health, quality, interest, development, systematic | *(none)* |
-| 2 | 14.97 | vel, eam, mea, probo, quis, tamquam, vivendum, dolor | group, gender, gdg, equity, rights, steering, interests, grc |
-| 3 | 13.83 | imprecision, effect, confidence, inconsistency, estimate, studies, rated, indirectness | organization, november, accessed, grc, world, planning, group, doi |
-| 4 | 13.07 | accessed, november, pmid, cochrane, website, doi, oxman, org | interests, interest, members, conflict, coi, financial, individuals, chair |
-| 5 | 12.14 | names, international, nomenclature, social, used, name, republic, style | gdg, doi, grade, interest, interests, review, grc, evidence |
-| 6 | 11.85 | gender, determinants, social, equity, rights, services, human, right | names, name, republic, style, full, nomenclature, text, english |
-| 7 | 11.59 | doi, coi, financial, accessed, november, conflict, interests, cois | rapid, proposal, canada, advice, planning, updating, key, review |
-| 8 | 10.79 | republic, name, local, approved, english, haiti, addis, abu | nomenclature, symbols, international, world, abbreviations, text, used, organization |
+| 1 | 23.69 | evidence, review, group, quality, health, interest, development, systematic | *(none)* |
+| 2 | 13.83 | imprecision, effect, confidence, inconsistency, estimate, studies, rated, indirectness | organization, november, accessed, grc, world, planning, group, doi |
+| 3 | 13.06 | accessed, november, pmid, cochrane, website, doi, oxman, org | interests, interest, members, conflict, coi, financial, individuals, chair |
+| 4 | 12.13 | names, international, nomenclature, used, name, republic, style, social | gdg, doi, grade, interest, interests, review, evidence, coi |
+| 5 | 11.85 | gender, determinants, social, equity, rights, human, services, right | name, names, republic, style, full, text, nomenclature, english |
+| 6 | 11.57 | doi, coi, financial, accessed, november, conflict, cois, interests | rapid, proposal, canada, advice, planning, updating, key, review |
+| 7 | 10.79 | republic, name, local, approved, english, haiti, addis, abu | nomenclature, symbols, world, international, abbreviations, text, used, organization |
+| 8 | 10.54 | determinants, interests, canada, conflict, effect, declarations, social, conflicts | gdg, cost, questions, key, condition, steering, diabetes, effectiveness |
 
-**Findings** — 2 narrow dimension(s), 12 near-duplicate pair(s).
-
-*Narrow dimensions* — carried by very few units; usually boilerplate, specimen text or a bad page:
-
-- dimension 2: `who-iris/library/wpr-rdo-2020-003-eng/sections/page-029.md`, `who-iris/library/wpr-rdo-2020-003-eng/sections/page-031.md`, `who-iris/library/wpr-rdo-2020-003-eng/sections/page-030.md`
-- dimension 11: `who-iris/library/wpr-rdo-2020-003-eng/sections/page-014.md`, `who-iris/library/wpr-rdo-2020-003-eng/sections/page-015.md`
+**Findings** — 0 narrow dimension(s), 9 near-duplicate pair(s).
 
 *Near-duplicates* (cosine ≥ 0.95) — similar is not duplicate; read both:
 
-- 0.964 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-006.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-008.md`
-- 0.962 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-006.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-010.md`
-- 0.954 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-006.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-007.md`
-- 0.951 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-007.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-008.md`
-- 0.955 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-008.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-010.md`
-- 0.992 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-014.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-015.md`
-- 0.957 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-020.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-021.md`
-- 1.000 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-029.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-031.md`
-- 1.000 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-029.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-030.md`
-- 1.000 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-030.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-031.md`
-- 0.953 — `who-iris/library/who-pub-tps-931/sections/page-039.md` ~ `who-iris/library/who-pub-tps-931/sections/page-040.md`
+- 0.973 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-006.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-010.md`
+- 0.973 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-006.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-008.md`
+- 0.965 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-006.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-007.md`
+- 0.961 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-007.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-008.md`
+- 0.954 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-007.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-010.md`
+- 0.968 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-008.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-010.md`
+- 0.966 — `who-iris/library/wpr-rdo-2020-003-eng/sections/page-020.md` ~ `who-iris/library/wpr-rdo-2020-003-eng/sections/page-021.md`
+- 0.957 — `who-iris/library/who-pub-tps-931/sections/page-039.md` ~ `who-iris/library/who-pub-tps-931/sections/page-040.md`
 - 0.999 — `who-iris/library/who-pub-tps-931/sections/page-116.md` ~ `who-iris/library/who-pub-tps-931/sections/page-119.md`
 
 ---

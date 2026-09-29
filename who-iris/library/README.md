@@ -16,6 +16,7 @@ Part of [C@T Harness](../../cat-harness/README.md), declared as `who-iris-librar
 | [`item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html`](item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html) | a file |  |
 | [`item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html`](item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html) | a file |  |
 | [`item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html`](item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html) | a file |  |
+| [`section-verdicts.json`](section-verdicts.json) | data |  |
 | [`who-pub-tps-931-cover.png`](who-pub-tps-931-cover.png) | a file |  |
 | [`withheld.json`](withheld.json) | data |  |
 | [`wpr-rdo-2020-003-eng-cover.png`](wpr-rdo-2020-003-eng-cover.png) | a file |  |

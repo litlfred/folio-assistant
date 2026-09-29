@@ -20,6 +20,13 @@ package "who-iris/library" as pkg_who_iris_library <<library>> {
     inspected_at [1] : string
     verdicts [1] : Record<string, Record<string, Verdict>>
   }
+  class "folio-section-verdicts/v1" as who_iris_library_folio_section_verdicts_v1_folio_section_verdicts_v1 <<json: SectionVerdictFileSchema>> #f4f4f1 {
+    $schema [1] : 'folio-section-verdicts/v1'
+    _comment [0..1] : string
+    inspected_by [1] : object
+    inspected_at [1] : string
+    verdicts [1] : map<map<object>>
+  }
   class "Path" as who_iris_library_folio_withheld_v1_Path <<json: WithheldSchema>> #f4f4f1 {
     path [1] : string
     reason [1] : string

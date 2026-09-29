@@ -39,7 +39,7 @@
  * @module scripts/summaries
  */
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
-import { basename, join, posix, relative, resolve } from "node:path";
+import { basename, dirname, join, posix, relative, resolve } from "node:path";
 
 import { AttributionSchema, type Attribution } from "../schemas/attribution.ts";
 import {
@@ -58,6 +58,7 @@ import {
 } from "../schemas/block-summary.ts";
 import { NarrativeSchema, type Narrative } from "../schemas/narrative.ts";
 import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.ts";
+import { specimenSections } from "../schemas/section-verdicts.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -78,6 +79,10 @@ export interface SummaryItem {
   body: string | null;
   /** Its sha256, or null when unreadable. */
   hash: string | null;
+  /** `specimen` when the library's `section-verdicts.json` says the section is
+   *  mostly sample text (bean `fnqn`). Still summarised — its guidance line is
+   *  real — but the drafter is told what the page is. */
+  role?: "specimen";
   /** The sidecar's record for this block, if any. */
   record?: BlockSummary;
   status: SummaryStatus;
@@ -112,6 +117,7 @@ export function entryItems(entryDir: string, sidecar = readSidecar(entryDir)): S
   if (!existsSync(blocksDir)) return [];
   const byBlock = new Map((sidecar?.summaries ?? []).map((s) => [s.block, s]));
   const entry = basename(entryDir);
+  const specimens = specimenSections(dirname(entryDir));
   const out: SummaryItem[] = [];
   for (const f of readdirSync(blocksDir).sort()) {
     if (!f.endsWith(".jsonld")) continue;
@@ -134,6 +140,8 @@ export function entryItems(entryDir: string, sidecar = readSidecar(entryDir)): S
     }
     const hash = body === null ? null : bodyHash(body);
     const record = byBlock.get(block);
+    const sectionId = source === null ? null : basename(source).replace(/\.md$/, "");
+    const role = sectionId !== null && specimens.has(`${entry}/${sectionId}`) ? ("specimen" as const) : undefined;
     out.push({
       block,
       entry,
@@ -146,6 +154,7 @@ export function entryItems(entryDir: string, sidecar = readSidecar(entryDir)): S
       hash,
       record,
       status: summaryStatus(record, body),
+      ...(role ? { role } : {}),
     });
   }
   // Page order, then id, unplaced last — the order `readEntryBlocks` shows.
@@ -232,8 +241,17 @@ export interface NextBlock {
   status: SummaryStatus;
   /** When the last draft was rejected: what it said and why it was turned down. */
   rejected?: { text: string; reason: string };
+  /** Present for a SPECIMEN page: how to summarise it (bean `fnqn`). */
+  instruction?: string;
   text: string;
 }
+
+/** Said to the drafter of a specimen page, so a summary describes the page
+ *  rather than paraphrasing its filler. */
+export const SPECIMEN_INSTRUCTION =
+  "SPECIMEN PAGE (section-verdicts.json): most of its words are sample or placeholder text. " +
+  "Summarise what the page EXHIBITS (e.g. a cover layout, a font sample) and keep its real guidance line; " +
+  "do not summarise or translate the filler.";
 
 export function next(root = ROOT, opts: { n?: number; entry?: string } = {}): NextBlock[] {
   const k = opts.n ?? 5;
@@ -257,6 +275,7 @@ export function next(root = ROOT, opts: { n?: number; entry?: string } = {}): Ne
         ...(nar?.state === "rejected" && nar.text && nar.rejection_reason
           ? { rejected: { text: nar.text, reason: nar.rejection_reason } }
           : {}),
+        ...(it.role === "specimen" ? { instruction: SPECIMEN_INSTRUCTION } : {}),
         text: it.body ?? "",
       };
     });

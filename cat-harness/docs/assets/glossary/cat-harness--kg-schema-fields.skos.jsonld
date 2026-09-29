@@ -19221,6 +19221,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/section-verdicts.sectionverdictfileschema.verdicts",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SectionVerdictFileSchema.verdicts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "entry slug → section id (the `sections/<id>.md` stem) → verdict."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/section-verdicts.ts#SectionVerdictFileSchema.verdicts",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/section-verdicts.sectionverdictschema.saw",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SectionVerdictSchema.saw"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the inspector SAW — the reason for the role, checkable against the page."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/section-verdicts.ts#SectionVerdictSchema.saw",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/semantic-zoom.kindzoomschema.because",
       "@type": "skos:Concept",
       "skos:inScheme": {

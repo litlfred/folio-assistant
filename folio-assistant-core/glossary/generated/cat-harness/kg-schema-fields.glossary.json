@@ -7083,6 +7083,20 @@
       "status": "candidate"
     },
     {
+      "id": "section-verdicts.sectionverdictfileschema.verdicts",
+      "prefLabel": "SectionVerdictFileSchema.verdicts",
+      "definition": "entry slug → section id (the `sections/<id>.md` stem) → verdict.",
+      "source": "cat-harness/schemas/section-verdicts.ts#SectionVerdictFileSchema.verdicts",
+      "status": "candidate"
+    },
+    {
+      "id": "section-verdicts.sectionverdictschema.saw",
+      "prefLabel": "SectionVerdictSchema.saw",
+      "definition": "What the inspector SAW — the reason for the role, checkable against the page.",
+      "source": "cat-harness/schemas/section-verdicts.ts#SectionVerdictSchema.saw",
+      "status": "candidate"
+    },
+    {
       "id": "semantic-zoom.kindzoomschema.because",
       "prefLabel": "KindZoomSchema.because",
       "definition": "Why this kind differs from the folio's default. Required on every override.",
