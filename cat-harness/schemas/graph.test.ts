@@ -285,36 +285,49 @@ describe("bootstrap's graph kinds are its own (bean r3gy, D1)", () => {
   });
 });
 
-describe("every $schema a bootstrap file carries resolves inside bootstrap (bean r3gy, D2)", () => {
-  const schemasDir = join(BOOTSTRAP, "schemas");
-  /** The tags bootstrap's own schemas fix: `properties.$schema.const`. */
-  const owned = new Set<string>();
-  for (const f of readdirSync(schemasDir).filter((f) => f.endsWith(".schema.json"))) {
-    const doc = JSON.parse(readFileSync(join(schemasDir, f), "utf-8")) as {
-      properties?: { $schema?: { const?: string } };
-    };
-    const tag = doc.properties?.$schema?.const;
-    if (tag) owned.add(tag);
-  }
+describe("every $schema a bootstrap file carries is a Node Kind its declaration lists (r3gy D2; nodeSchemas, 2026-09-29)", () => {
+  const decl = JSON.parse(readFileSync(join(BOOTSTRAP, "bootstrap.json"), "utf-8")) as {
+    nodeSchemas?: Record<string, string>;
+  };
+  const kinds = decl.nodeSchemas ?? {};
 
-  test("each tag names a schema in bootstrap/schemas/", () => {
-    const unresolved: string[] = [];
+  test("each file's $schema is declared in bootstrap.json's nodeSchemas", () => {
+    const undeclared: string[] = [];
     const walk = (d: string) => {
       for (const f of readdirSync(d)) {
         const p = join(d, f);
         if (statSync(p).isDirectory()) walk(p);
-        else if (f.endsWith(".json") && !f.endsWith(".schema.json")) {
+        else if (f.endsWith(".json")) {
           const tag = (JSON.parse(readFileSync(p, "utf-8")) as { $schema?: unknown }).$schema;
-          if (typeof tag === "string" && !owned.has(tag)) unresolved.push(`${p.slice(BOOTSTRAP.length + 1)}: ${tag}`);
+          if (typeof tag === "string" && !(tag in kinds)) undeclared.push(`${p.slice(BOOTSTRAP.length + 1)}: ${tag}`);
         }
       }
     };
     walk(BOOTSTRAP);
-    expect(unresolved).toEqual([]);
+    expect(undeclared).toEqual([]);
+  });
+
+  test("a local Node Schema exists inside bootstrap and fixes that very tag", () => {
+    const bad: string[] = [];
+    for (const [tag, where] of Object.entries(kinds)) {
+      if (/^[a-z][a-z0-9+.-]*:\/\//i.test(where)) continue; // a published standard
+      const p = join(BOOTSTRAP, where);
+      if (!p.startsWith(BOOTSTRAP) || !existsSync(p)) {
+        bad.push(`${tag}: ${where} is not a file in bootstrap/`);
+        continue;
+      }
+      const c = (JSON.parse(readFileSync(p, "utf-8")) as { properties?: { $schema?: { const?: string } } }).properties?.$schema?.const;
+      if (c !== tag) bad.push(`${tag}: ${where} fixes ${JSON.stringify(c)}`);
+    }
+    expect(bad).toEqual([]);
   });
 
   test("the two tags that used to name the platform are bootstrap's own", () => {
-    expect(owned.has("model-registry/1.0.0")).toBe(true);
-    expect(owned.has("glossary-ledger/1.0.0")).toBe(true);
+    expect(kinds["model-registry/1.0.0"]).toBe("schemas/model-registry.schema.json");
+    expect(kinds["glossary-ledger/1.0.0"]).toBe("schemas/glossary-ledger.schema.json");
+  });
+
+  test("the declaration shape knows the field", () => {
+    expect(KnowledgeGraphDeclarationSchema.safeParse(decl).success).toBe(true);
   });
 });

@@ -114,6 +114,18 @@
         "description": "A Declaration's `needs` entry naming another Knowledge Graph. References may point from this graph's Node Instances into the named one, never back."
       }
     },
+    "nodeSchemas": {
+      "description": "Its Node Kinds: each `$schema` value its Node Instances may carry, paired with the Node Schema that defines it — an IRI, or a path relative to this Declaration.",
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1
+      },
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
     "assets": {
       "type": "array",
       "items": {
@@ -177,7 +189,7 @@
       "uses": [
         "NodeSchema"
       ],
-      "isDefinedBy": "#/$defs/NodeKind"
+      "isDefinedBy": "#/properties/nodeSchemas"
     },
     "Subkind": {
       "title": "Subkind",

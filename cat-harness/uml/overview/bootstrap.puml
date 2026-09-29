@@ -69,6 +69,7 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
     description [0..1] : string
     directories [0..*] : Directory[]
     needs [0..*] : string[]
+    nodeSchemas [0..1] : map<string>
     assets [0..*] : Asset[]
   }
   class "Model" as bootstrap_schemas_model_registry_schema_json_Model <<schema: model-registry.schema.json>> #e9edf3 {

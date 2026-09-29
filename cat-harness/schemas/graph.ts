@@ -132,7 +132,7 @@ export const BOOTSTRAP_TERM_DEFINED_BY: Readonly<Record<BootstrapTerm, string>> 
   Node: "https://www.w3.org/TR/json-ld11/#node-objects",
   Reference: "https://www.rfc-editor.org/rfc/rfc3987",
   NodeSchema: JSON_SCHEMA,
-  NodeKind: "#/$defs/NodeKind",
+  NodeKind: "#/properties/nodeSchemas",
   Subkind: "#/$defs/Subkind",
   NodeInstance: "#/$defs/NodeInstance",
   GraphKind: "#/$defs/GraphKind",
@@ -232,6 +232,12 @@ export const KnowledgeGraphDeclarationSchema = z
     description: z.string().optional(),
     directories: z.array(SubgraphSchema).optional().describe("Its Subgraphs: zero or more."),
     needs: z.array(DependencySchema).optional().describe("Its Dependencies: the Knowledge Graphs it may refer into."),
+    nodeSchemas: z
+      .record(z.string().min(1), z.string().min(1))
+      .optional()
+      .describe(
+        "Its Node Kinds: each `$schema` value its Node Instances may carry, paired with the Node Schema that defines it — an IRI, or a path relative to this Declaration.",
+      ),
     assets: z.array(AssetSchema).optional(),
   })
   // Every other field is an Extension: a Harness above bootstrap adds its

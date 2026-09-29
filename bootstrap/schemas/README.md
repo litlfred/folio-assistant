@@ -45,7 +45,7 @@ drawn below links to its drawing.
 | 1 | <a id="node"></a>**Node** | One file, or one part of a file addressable by an IRI fragment, named by an IRI. | — | [JSON-LD 1.1 node object](https://www.w3.org/TR/json-ld11/#node-objects) |
 | 2 | <a id="reference"></a>**Reference** | A Node's naming of another Node by its IRI. | [Node](#node) | [IRI (RFC 3987)](https://www.rfc-editor.org/rfc/rfc3987) |
 | 3 | <a id="node-schema"></a>**Node Schema** | A schema a Node can be checked against: a JSON Schema, or a published external schema such as BPMN's. | [Node](#node) | [JSON Schema draft-07](http://json-schema.org/draft-07/schema#) |
-| 4 | <a id="node-kind"></a>**Node Kind** | A name paired with a Node Schema. | [Node Schema](#node-schema) | [src](graph.schema.json#/$defs/NodeKind) |
+| 4 | <a id="node-kind"></a>**Node Kind** | A name paired with a Node Schema. | [Node Schema](#node-schema) | [src](graph.schema.json#/properties/nodeSchemas) |
 | 5 | <a id="subkind"></a>**Subkind** | A Node Kind whose Node Schema requires everything another Node Kind's does, so every Node that satisfies it satisfies the other too. | [Node Kind](#node-kind), [Node Schema](#node-schema), [Node](#node) | [src](graph.schema.json#/$defs/Subkind) |
 | 6 | <a id="node-instance"></a>**Node Instance** | A Node that names its Node Kind, in `$schema` or front matter, and satisfies that kind's Node Schema. | [Node](#node), [Node Kind](#node-kind), [Node Schema](#node-schema) | [src](graph.schema.json#/$defs/NodeInstance) |
 | 7 | <a id="graph-kind"></a>**Graph Kind** | A named set of Node Kinds. | [Node Kind](#node-kind) | [src](graph.schema.json#/$defs/GraphKind) |
@@ -154,18 +154,19 @@ Rules the drawing cannot show:
 A Declaration. Any field not listed here is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning.
 
 ```text
-+---------------------------------------+
-| Knowledge Graph declaration           |
-+---------------------------------------+
-| * name         [1]     string         |
-|   version      [0..1]  string         |
-|   iriBase      [0..1]  string         |
-|   title        [0..1]  string         |
-|   description  [0..1]  string         |
-|   directories  [0..*]  Subgraph list  |
-|   needs        [0..*]  list of string |
-|   assets       [0..*]  Asset list     |
-+---------------------------------------+
++---------------------------------------------+
+| Knowledge Graph declaration                 |
++---------------------------------------------+
+| * name         [1]     string               |
+|   version      [0..1]  string               |
+|   iriBase      [0..1]  string               |
+|   title        [0..1]  string               |
+|   description  [0..1]  string               |
+|   directories  [0..*]  Subgraph list        |
+|   needs        [0..*]  list of string       |
+|   nodeSchemas  [0..1]  map of key to string |
+|   assets       [0..*]  Asset list           |
++---------------------------------------------+
   |
   +-- directories (each item) --> +---------------------------------------------------------------------------------------------------------------------------------------+
   |                               | Subgraph                                                                                                                              |
