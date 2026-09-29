@@ -69,8 +69,16 @@ describe("validatedLanguages — only a human's check is acted on", () => {
 
 describe("parseModelRegistry — refuses rather than defaults", () => {
   test("a valid registry parses", () => {
-    const r = parseModelRegistry({ $schema: "folio-model-registry/v1", models: [entry()] }, "x");
+    const r = parseModelRegistry({ $schema: "model-registry/1.0.0", models: [entry()] }, "x");
     expect(r.models).toHaveLength(1);
+  });
+
+  test("the tag is semver: a newer minor or patch of major 1 is read, major 2 is not", () => {
+    // The old platform-named tag is read too, until the schema's next major.
+    for (const tag of ["model-registry/1.4.2", "folio-model-registry/v1"]) {
+      expect(parseModelRegistry({ $schema: tag, models: [entry()] }, "x").models).toHaveLength(1);
+    }
+    expect(() => parseModelRegistry({ $schema: "model-registry/2.0.0", models: [entry()] }, "x")).toThrow();
   });
 
   test("a human validation with no name and no date is REFUSED", () => {
@@ -79,7 +87,7 @@ describe("parseModelRegistry — refuses rather than defaults", () => {
     // state an agent may act on.
     expect(() =>
       parseModelRegistry(
-        { $schema: "folio-model-registry/v1", models: [entry({ validatedBy: undefined, validatedOn: undefined })] },
+        { $schema: "model-registry/1.0.0", models: [entry({ validatedBy: undefined, validatedOn: undefined })] },
         "x",
       ),
     ).toThrow(/validatedBy, validatedOn/);
@@ -87,14 +95,14 @@ describe("parseModelRegistry — refuses rather than defaults", () => {
 
   test("a duplicate model id is refused", () => {
     expect(() =>
-      parseModelRegistry({ $schema: "folio-model-registry/v1", models: [entry(), entry()] }, "x"),
+      parseModelRegistry({ $schema: "model-registry/1.0.0", models: [entry(), entry()] }, "x"),
     ).toThrow(/declared twice/);
   });
 
   test("a missing validation state is refused — there is no default", () => {
     const bad = { ...entry() } as Record<string, unknown>;
     delete bad.validation;
-    expect(() => parseModelRegistry({ $schema: "folio-model-registry/v1", models: [bad] }, "x")).toThrow();
+    expect(() => parseModelRegistry({ $schema: "model-registry/1.0.0", models: [bad] }, "x")).toThrow();
   });
 
   test("the wrong $schema is refused", () => {
@@ -105,7 +113,7 @@ describe("parseModelRegistry — refuses rather than defaults", () => {
 describe("checkModelLanguages", () => {
   test("it sorts the three states apart", () => {
     const dir = fixture({
-      $schema: "folio-model-registry/v1",
+      $schema: "model-registry/1.0.0",
       models: [
         entry({ id: "a" }),
         entry({ id: "b", validation: "self-reported", validatedBy: undefined, validatedOn: undefined }),
@@ -124,7 +132,7 @@ describe("checkModelLanguages", () => {
   });
 
   test("a human-validated EMPTY list is reported, so it is not read as a gap", () => {
-    const dir = fixture({ $schema: "folio-model-registry/v1", models: [entry({ preferredLanguages: [] })] });
+    const dir = fixture({ $schema: "model-registry/1.0.0", models: [entry({ preferredLanguages: [] })] });
     try {
       expect(checkModelLanguages(dir).problems).toHaveLength(1);
     } finally {

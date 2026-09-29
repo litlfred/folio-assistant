@@ -44,10 +44,15 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
     exchange [1..*] : Exchange[]
     stillOpen [0..*] : list<harness | repositories>
   }
+  class "Glossary Ledger" as bootstrap_schemas_glossary_ledger_schema_json_Glossary_Ledger <<schema: glossary-ledger.schema.json>> #e9edf3 {
+    $schema [1] : 'glossary-ledger/1.0.0'
+    instance [1] : string
+    concepts [1] : map<object>
+  }
   class "Directory" as bootstrap_schemas_graph_schema_json_Directory <<schema: graph.schema.json>> #e9edf3 {
     id [1] : string
     path [1] : string
-    graphKinds [1..*] : string[]
+    graphKinds [1..*] : list<'skills' | 'schemas' | 'scenarios' | 'processes' | 'models' | 'swimlane-glossary' | string>
     title [0..1] : string
     description [0..1] : string
   }
@@ -58,6 +63,8 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
   }
   class "Knowledge Graph declaration" as bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration <<schema: graph.schema.json>> #e9edf3 {
     name [1] : string
+    version [0..1] : string
+    iriBase [0..1] : string<uri>
     title [0..1] : string
     description [0..1] : string
     directories [0..*] : Directory[]
@@ -73,7 +80,7 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
     note [0..1] : string
   }
   class "Model Registry" as bootstrap_schemas_model_registry_schema_json_Model_Registry <<schema: model-registry.schema.json>> #e9edf3 {
-    $schema [1] : 'folio-model-registry/v1'
+    $schema [1] : 'model-registry/1.0.0'
     models [0..*] : Model[]
   }
   class "Statement" as bootstrap_schemas_requirement_schema_json_Statement <<schema: requirement.schema.json>> #e9edf3 {
@@ -164,38 +171,15 @@ package "bootstrap/models" as pkg_bootstrap_models <<models>> {
     note [0..1] : string
   }
   class "ModelRegistry" as bootstrap_models_ModelRegistry <<json: ModelRegistrySchema>> #e8f0ee {
-    $schema [1] : 'folio-model-registry/v1'
+    $schema [1] : 'model-registry/1.0.0'
     models [0..*] : Model[]
   }
 }
 package "bootstrap/swimlane-glossary" as pkg_bootstrap_swimlane_glossary <<swimlane-glossary>> {
-  class "folio-glossary-ledger/v1" as bootstrap_swimlane_glossary_folio_glossary_ledger_v1 <<ts: Ledger>> #f4f4f1 {
-    $schema [1] : string
+  class "glossary-ledger/1.0.0" as bootstrap_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0 <<json: LedgerSchema>> #f4f4f1 {
+    $schema [1] : 'glossary-ledger/1.0.0'
     instance [1] : string
-    concepts [1] : Record<string, LedgerEntry>
-  }
-}
-package "bootstrap/qa" as pkg_bootstrap_qa <<qa>> {
-  class "Pair_attestation" as bootstrap_qa_kg_qa_v1_Pair_attestation <<json: KgQaReportSchema>> #f4e6e6 {
-    kind [1] : implements | co-located
-    prose [1] : string
-    code [1] : string
-    prose_hash [1] : string
-    code_hash [1] : string
-    by [1] : baseline | agent | human
-    reason [0..1] : string
-  }
-  class "kg-qa/v1" as bootstrap_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
-    $schema [1] : 'kg-qa/v1'
-    subject [1] : object
-    source_hash [1] : string | null
-    criteria [1] : map<object>
-    totals [1] : map<number>
-    pair_attestations [0..*] : Pair_attestation[]
-  }
-  class "kg-qa-manifest/v1" as bootstrap_qa_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #f4e6e6 {
-    $schema [1] : 'kg-qa-manifest/v1'
-    auditor [1] : object
+    concepts [1] : map<object>
   }
 }
 
@@ -209,11 +193,9 @@ bootstrap_schemas_requirement_schema_json_Requirement *-- "1..*" bootstrap_schem
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
 bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
-bootstrap_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" bootstrap_qa_kg_qa_v1_Pair_attestation : pair_attestations
-' grid: portrait, 2 column(s) — pkg_bootstrap_skills pkg_bootstrap_schemas pkg_bootstrap_scenarios pkg_bootstrap_processes pkg_bootstrap_models pkg_bootstrap_swimlane_glossary pkg_bootstrap_qa
+' grid: portrait, 2 column(s) — pkg_bootstrap_skills pkg_bootstrap_schemas pkg_bootstrap_scenarios pkg_bootstrap_processes pkg_bootstrap_models pkg_bootstrap_swimlane_glossary
 pkg_bootstrap_skills -[hidden]down- pkg_bootstrap_scenarios
 pkg_bootstrap_schemas -[hidden]down- pkg_bootstrap_processes
 pkg_bootstrap_scenarios -[hidden]down- pkg_bootstrap_models
 pkg_bootstrap_processes -[hidden]down- pkg_bootstrap_swimlane_glossary
-pkg_bootstrap_models -[hidden]down- pkg_bootstrap_qa
 @enduml

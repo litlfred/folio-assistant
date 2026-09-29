@@ -3,7 +3,7 @@
 
 Scenarios — the Roles an Actor takes on, in `roles.json`, and the User Stories told as them, in `stories.json`. A Role IS a BPMN swimlane: it carries the Skills its lane's activities need and the Actor kinds that may play it; a lane names its Role, and a story names the Role it is told as, so the Role lists neither (#1168). SPLIT OUT OF `skills/` on 2026-09-21 so that "give me the Scenarios" is a query on the kind rather than a match on a path.
 
-Part of [C@T Harness](../README.md), declared as `scenarios`, holding `scenarios`.
+Part of [C@T Harness](../README.md) 0.1.0, declared as `scenarios`, holding `scenarios`.
 
 | file | what it is | used by |
 |---|---|---|

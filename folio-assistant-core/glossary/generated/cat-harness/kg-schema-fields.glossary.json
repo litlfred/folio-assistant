@@ -2099,6 +2099,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclarationschema.iribase",
+      "prefLabel": "CatHarnessDeclarationSchema.iriBase",
+      "definition": "The address this instance's IRIs are minted under, BEFORE the version — bootstrap's `iriBase` (see `graph.ts`), and the one place a fork edits.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.iriBase",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclarationschema.navbaricons",
       "prefLabel": "CatHarnessDeclarationSchema.navbarIcons",
       "definition": "Which icons this instance's navbar row shows.",
@@ -6646,6 +6653,41 @@
       "prefLabel": "ReferenceExemption.to",
       "definition": "Limit to one target instance; omitted means any.",
       "source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.to",
+      "status": "candidate"
+    },
+    {
+      "id": "release-iri.releaseiris.agent",
+      "prefLabel": "ReleaseIris.agent",
+      "definition": "`<iriBase><version>/` — what a program reads.",
+      "source": "cat-harness/schemas/release-iri.ts#ReleaseIris.agent",
+      "status": "candidate"
+    },
+    {
+      "id": "release-iri.releaseiris.human",
+      "prefLabel": "ReleaseIris.human",
+      "definition": "`<iriBase>v<major>/` — what a person reads.",
+      "source": "cat-harness/schemas/release-iri.ts#ReleaseIris.human",
+      "status": "candidate"
+    },
+    {
+      "id": "release-iri.releaseiris.iribase",
+      "prefLabel": "ReleaseIris.iriBase",
+      "definition": "The declared `iriBase`, ending in `/`.",
+      "source": "cat-harness/schemas/release-iri.ts#ReleaseIris.iriBase",
+      "status": "candidate"
+    },
+    {
+      "id": "release-iri.releaseiris.major",
+      "prefLabel": "ReleaseIris.major",
+      "definition": "`MAJOR` alone, as a number.",
+      "source": "cat-harness/schemas/release-iri.ts#ReleaseIris.major",
+      "status": "candidate"
+    },
+    {
+      "id": "release-iri.releaseiris.version",
+      "prefLabel": "ReleaseIris.version",
+      "definition": "The declared version, `MAJOR.MINOR.PATCH`.",
+      "source": "cat-harness/schemas/release-iri.ts#ReleaseIris.version",
       "status": "candidate"
     },
     {

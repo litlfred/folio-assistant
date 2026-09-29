@@ -3,7 +3,7 @@
 
 _No description is declared for `who-iris-themes`._
 
-Part of [WHO IRIS](../README.md), declared as `who-iris-themes`, holding `themes`.
+Part of [WHO IRIS](../README.md) 0.1.0, declared as `who-iris-themes`, holding `themes`.
 
 | file | what it is | used by |
 |---|---|---|
