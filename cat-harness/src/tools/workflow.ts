@@ -36,7 +36,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { workflowFiles } from "../../scripts/known-skills.js";
 import { orderedDependencies } from "../../schemas/harness-config.js";
 import { z } from "zod";
-import { basename, join, resolve } from "node:path";
+import { basename, resolve } from "node:path";
 import { findInModel, loadProcessModel, type ProcessModel } from "../workflow/process-model.js";
 import { complete, describe, startInstance, type InstanceState } from "../workflow/instance.js";
 import { describePreflight, preflight, preflightRefusal } from "../workflow/preflight.js";
