@@ -1,11 +1,11 @@
 ---
 # folio-assistant-m4xy
 title: 'INGEST ARM: pdf-images recovers the raster layer, and WHO''s real figures are vector'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T08:48:53Z
-updated_at: 2026-09-24T18:00:36Z
+updated_at: 2026-09-29T20:03:12Z
 parent: folio-assistant-2yyh
 ---
 
@@ -154,3 +154,9 @@ already exists: `apply-image-verdicts`, an `inspection` basis naming who looked.
 - [x] the arm's real cost is measured — no OCR, no VLM, assembly only
 - [x] the role threshold has evidence — and it argues against a number
 - [ ] the owner rules on whether to build the assembly step
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

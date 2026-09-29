@@ -465,6 +465,14 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
     reason: "rewrites the built `_site` before a preview deploy; there is no `_site` in a checkout",
   },
   {
+    match: "set-html-lang.ts",
+    kind: "ci-only",
+    reason:
+      "takes `--site ./_site`: it rewrites the BUILT site's `<html>` tags before a deploy (bean " +
+      "`zru7`); there is no `_site` in a checkout, and its logic is covered here by " +
+      "set-html-lang.test.ts, which builds pages as strings",
+  },
+  {
     // Four call sites, one entry — `match` is a substring and the script is
     // the same in every retry loop in `feature-staging.yml`.
     match: "backoff-sleep.ts",
@@ -806,6 +814,12 @@ export interface ScriptExemption {
  * whole difference, since the comment silently covered six of nine.
  */
 export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
+  {
+    script: "check:test-budgets",
+    kind: "report",
+    reason:
+      "IT HAS NO SUBJECT UNTIL A SUITE HAS RUN — bean `sff8`. It reads a junit report produced by `bun test --reporter=junit`, so as a gate it would either duplicate the ~5-minute suite or run against a file that is not there; a missing report is exit 2, `could not determine`, which as a CI step would be a gate whose normal state is unable to fire. Its subject is also the wrong KIND for a gate: a test's cost is a fact about the MACHINE, not about this repository, so red here would report the runner while every reviewer read it as a verdict on the diff — the always-red-signal defect `check:bun-runtime` names one input over. Nothing it reports is a defect in this repository's source, so it exits 0 or 2 and never 1 (`nytj`), and 0 cases is exit 2 rather than a clean run over nothing (`6tkl`). It writes NO sidecar, deliberately, because committing milliseconds would pin this container's numbers as the corpus's — the `3vc1` defect — and `check:ci-health` already carries the precedent for asking a machine-shaped question externally every run and caching it nowhere. Whether a threshold should ever GATE is left open on the bean rather than settled here: ~50 cases sit at half the default budget under load, so a threshold gate would need 50 exemptions nobody has read, which is the empty exemption `xd1g` removed a gate for",
+  },
   {
     script: "check:environment",
     kind: "report",

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-t8g3
 title: 'Translation support foundation (issue #206)'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-17T22:07:18Z
-updated_at: 2026-09-19T00:41:16Z
+updated_at: 2026-09-29T18:14:50Z
 parent: folio-assistant-bzyu
 ---
 
@@ -179,3 +179,9 @@ copied into every target-locale directory, 363 templates against 19
 catalogues, and the copies differ only in their headers. `translation_extract`
 writes to `translations/en/`, a directory that `docs-ui.js:107` says will
 never exist. This is reported, not changed.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

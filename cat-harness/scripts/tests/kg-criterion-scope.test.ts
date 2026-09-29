@@ -27,7 +27,7 @@
  * @module cat-harness/scripts/tests/kg-criterion-scope
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { KG_CRITERIA, KG_CRITERION_SCOPES, KG_CRITERIA_BY_ID } from "../../schemas/kg-qa.js";
@@ -84,6 +84,17 @@ describe("every criterion has decided its scope", () => {
 describe("the auditor acts on scope, measured by running it", () => {
   const OUT = join(REPO, "bootstrap", "test");
 
+  /** Every file under `dir` with its mtime, so a write of any kind shows up. */
+  const snapshot = (dir: string): Record<string, number> => {
+    if (!existsSync(dir)) return {};
+    const out: Record<string, number> = {};
+    for (const rel of readdirSync(dir, { recursive: true }) as string[]) {
+      const st = statSync(join(dir, rel));
+      if (st.isFile()) out[rel] = st.mtimeMs;
+    }
+    return out;
+  };
+
   /**
    * The whole point, and it cannot be asserted any other way: `kg-audit.ts` runs
    * its entire audit at MODULE SCOPE, with no `import.meta.main` guard, so
@@ -102,13 +113,17 @@ describe("the auditor acts on scope, measured by running it", () => {
    * shape: a test that writes what another test reads.
    *
    * `--check` writes nothing and prints the same summary, so the interference is
-   * removed rather than cleaned up after. Its exit code is **1** here, correctly:
-   * bootstrap's sidecars are deliberately not committed (their directory is not
-   * declared), so "stale or missing" is the honest verdict. The assertions are
-   * therefore about the REPORT, plus one that it wrote nothing.
+   * removed rather than cleaned up after. The exit code is still not asserted,
+   * but for a different reason than the one this comment used to give. It said
+   * the code was **1** because bootstrap's sidecars were not committed and their
+   * directory was not declared; both stopped being true at `e46ab4bc109`, which
+   * declared `test/results/` and committed the files. Whether those sidecars are
+   * CURRENT is `kg:audit:all:check`'s question, run as its own CI step, and this
+   * test does not answer it a second time. The assertions are about the REPORT,
+   * plus one that it wrote nothing.
    */
   test("an instance run reports ZERO criticals where it once reported 76, and writes nothing", async () => {
-    const before = existsSync(OUT);
+    const before = snapshot(OUT);
     const p = Bun.spawn(
       ["bun", "run", "cat-harness/scripts/kg-audit.ts", "--instance", "./bootstrap", "--check"],
       { cwd: REPO, stdout: "pipe", stderr: "pipe" },
@@ -153,6 +168,10 @@ describe("the auditor acts on scope, measured by running it", () => {
 
     // `--check` is the reading form. If this ever fails, the test itself has
     // started polluting `bootstrap/` again and `iwtn`'s guard will follow.
-    expect(existsSync(OUT), "`--check` wrote into bootstrap/ — it must not").toBe(before);
+    //
+    // Compared file by file, not by whether the directory exists. That was the
+    // first spelling, and it went vacuous when `e46ab4bc109` committed the
+    // directory: present before, present after, equal whatever was written.
+    expect(snapshot(OUT), "`--check` wrote into bootstrap/ — it must not").toEqual(before);
   }, 300_000);
 });

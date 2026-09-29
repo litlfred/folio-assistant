@@ -8,11 +8,11 @@
     "kind": "root-scan-census",
     "id": "scripts"
   },
-  "updated_at": "2026-09-27T17:07:56.924Z",
+  "updated_at": "2026-09-29T21:58:18.229Z",
   "families": {
     "enumerating-scripts": {
-      "summary": "Every script that binds a root constant and enumerates the filesystem, with whether its scan is SEEDED at that root and whether it asks git. A FLOOR, not a count: both filters are syntactic, so a scanner spelled differently is missed — which is not hypothetical, since `xd1g`'s own list of eleven was one short (`kg-audit`, found by a sibling session). The two filters disagree by design: 0 seeded at a root against 66 enumerating at all, and that GAP is the finding — it is why a syntactic check cannot answer this question and the guard lives in `scripts/tests/git-corpus-conversions.test.ts` instead.",
-      "count": 66,
+      "summary": "Every script that binds a root constant and enumerates the filesystem, with whether its scan is SEEDED at that root and whether it asks git. A FLOOR, not a count: both filters are syntactic, so a scanner spelled differently is missed — which is not hypothetical, since `xd1g`'s own list of eleven was one short (`kg-audit`, found by a sibling session). The two filters disagree by design: 0 seeded at a root against 67 enumerating at all, and that GAP is the finding — it is why a syntactic check cannot answer this question and the guard lives in `scripts/tests/git-corpus-conversions.test.ts` instead.",
+      "count": 67,
       "entries": [
         {
           "file": "cat-harness/scripts/agent-memory.ts",
@@ -343,14 +343,19 @@
           "file": "cat-harness/scripts/tool-coverage.ts",
           "seededAtRoot": false,
           "gitAware": false
+        },
+        {
+          "file": "cat-harness/scripts/translate-bpmn.ts",
+          "seededAtRoot": false,
+          "gitAware": false
         }
       ]
     },
     "seeded-at-root-not-git-aware": {
-      "summary": "The shape that actually costs something: a scan whose start argument IS a root constant, that does not ask git. 0 of 0 such scans, 66 enumerating scripts in all. Reported and NEVER failed — the owner's ruling of 2026-09-27, over the objection that a check which cannot fail is the 1xhc pattern; what CAN fail here is the sidecar going stale.",
+      "summary": "The shape that actually costs something: a scan whose start argument IS a root constant, that does not ask git. 0 of 0 such scans, 67 enumerating scripts in all. Reported and NEVER failed — the owner's ruling of 2026-09-27, over the objection that a check which cannot fail is the 1xhc pattern; what CAN fail here is the sidecar going stale.",
       "count": 0,
       "entries": []
     }
   },
-  "total": 66
+  "total": 67
 }

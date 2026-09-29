@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jo87
 title: 'QUEUED STREAM A: INGEST — uploads/ to a complete L1 library (slw1, 13 open beans)'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T18:29:28Z
-updated_at: 2026-09-23T06:49:25Z
+updated_at: 2026-09-29T20:03:12Z
 parent: folio-assistant-slw1
 ---
 
@@ -112,3 +112,9 @@ live.
 **So the agent-actionable work in this stream** is `apui`, `r8br`'s promotion
 step, `3psh`, `v1hw`, `eief` and `xeg6` — and *not* the two headline items,
 which wait on the owner.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

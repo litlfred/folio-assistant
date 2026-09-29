@@ -193,6 +193,12 @@ export const RULES: Rule[] = [
       // is its only caller and is itself harness, so the edge runs
       // harness -> harness.
       "scripts/check-environment.ts",
+      // HARNESS, by the same test again: its subject is a TEST RUN's timings and
+      // the budgets this repository's own test files declare — harness meta, not
+      // any folio's content. It reads a junit report and `.test.ts` sources, and
+      // imports `node:fs`, `node:path` and `typescript` (for the AST) and nothing
+      // else, so it cannot drag a folio in. Bean `sff8`.
+      "scripts/check-test-budgets.ts",
       // The prose half of the same arrow this tool measures for imports, and
       // harness for the same reason `repo-partition.ts` is: its subject is
       // which INSTANCE a file belongs to and what that instance declares it
@@ -539,6 +545,12 @@ export const RULES: Rule[] = [
       // subject is `.github/workflows/` plus one repo-root pin file, and it
       // reads no folio content.
       "scripts/check-bun-pin.ts",
+      // The shared "a gate that examined nothing must refuse" decision (bean
+      // `iym1`). Harness because it is a helper for the harness's own gates and
+      // reads nothing at all: it is handed a list of what a caller looked at and
+      // returns a message. It has no corpus of its own, which is why it can be
+      // tested over a CONSTRUCTED empty one while the gates it serves cannot.
+      "scripts/vacuity-refusal.ts",
       // Whether each methodology's cited `origin` resolves to an ingested
       // source. Harness for the same reason as the two above: it reads the
       // declaration for the `methodology` and `library` graphs and fans out
@@ -735,6 +747,9 @@ export const RULES: Rule[] = [
       // reason the others here do not have: bootstrap must hold no executable
       // code, so the generator cannot live beside what it generates.
       "scripts/gen-bootstrap-schemas.ts",
+      // Its drawn page, `bootstrap/schemas/README.md`. Beside the generator
+      // that calls it, and for the same reason: bootstrap holds no code.
+      "scripts/bootstrap-schema-page.ts",
       "scripts/check-docs-populated.ts",     // every harness owes one populated doc page
       "scripts/library-refs.ts",             // who references a slug — the L1 property
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
@@ -1102,6 +1117,14 @@ export const RULES: Rule[] = [
       // dropped. Harness machinery over declarations; imports only node:fs.
       "scripts/lib/declared-presence.ts",
       "scripts/kg-audit.ts",
+      // The same audit over every declared instance rather than the root alone
+      // (bean `bjzs`). Harness layer for exactly the reason `kg-audit.ts` is —
+      // it spawns that audit and imports only `instanceRootsIn`, so its subject
+      // is the instance declarations, never the content vocabulary. Assigned
+      // here in the same change that added it: `unassigned` is what the tool's
+      // own report says not to read as clean, and four scripts sat that way
+      // until somebody looked.
+      "scripts/kg-audit-all.ts",
       // WHICH audits reach which kind of node (bean `xutg`). Harness machinery
       // for the same reason `kg-audit.ts` is: its subject is the graph-kind
       // registry and the gate set, not the content vocabulary. Beside the audit
@@ -1344,6 +1367,7 @@ export const RULES: Rule[] = [
       "scripts/kg-validate.ts",             // one Tool, parameterised by graph kind
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
       "scripts/strip-preview-seo.ts",       // the preview site build
+      "scripts/set-html-lang.ts",           // ...and the served language on its `<html>` (bean `zru7`). Beside the SEO strip for the same reason: a pass over the EMITTED tree, coupling to no content type and to no theme file
       "scripts/staging-banner.ts",          // ...and its banner (bean `g196`)
       "scripts/html-comments.ts",           // the one "is this inside a comment" scan the banner's body-finder and the folio mount's marker check share (bean `ur84`)
       "scripts/folio-mount.ts",             // the fragment that carries the reader's folio onto a library page — machinery, not a content model (bean `jpjt`)
