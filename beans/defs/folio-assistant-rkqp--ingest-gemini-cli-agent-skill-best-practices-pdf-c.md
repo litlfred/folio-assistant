@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rkqp
 title: Ingest Gemini-CLI agent-skill best-practices PDF + commit 4677175 as MODEL-SPECIFIC voices for skills
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T14:45:12Z
-updated_at: 2026-09-21T21:46:40Z
+updated_at: 2026-09-29T20:03:12Z
 parent: folio-assistant-slw1
 ---
 
@@ -132,3 +132,9 @@ plus one override per vendor") — but that is the owner's call, not mine.
 
 Both are in the gate set. If you author against `main` today, neither this
 layout nor these gates exist there yet; they arrive when #773 merges.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

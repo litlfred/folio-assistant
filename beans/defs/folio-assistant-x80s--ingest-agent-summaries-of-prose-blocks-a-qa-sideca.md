@@ -1,10 +1,11 @@
 ---
 # folio-assistant-x80s
 title: 'INGEST: agent summaries of prose blocks, a QA sidecar drained slowly during ingestion'
-status: in-progress
+status: todo
 type: task
+priority: normal
 created_at: 2026-09-24T05:54:04Z
-updated_at: 2026-09-24T14:00:00Z
+updated_at: 2026-09-29T20:03:12Z
 parent: folio-assistant-slw1
 ---
 
@@ -42,3 +43,9 @@ Measured 2026-09-24: 1335 prose blocks, 10 with empty text, so 1325 to summarise
 ## Owner decision, 2026-09-24
 
 **Library summaries for `agent-skills` entries → "No, keep held back".** The drain does not draft summaries for the entries in `agent-skills/library/`. No code change.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
