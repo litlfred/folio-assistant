@@ -16,7 +16,7 @@ Tracks litlfred/folio-assistant#1492. Owner decisions (2026-09-29): the hybrid, 
 
 ## Todo
 - [x] core: `elaborated` source label, `isElaborated`, and one `summarizeSources` rule shared by the reader (content-graph.ts) and the writer (lean-atlas-ingest.ts); `--ingest --source elaborated`
-- [x] folio-assistant-sci/lean/formal-edges.template.lean: LeanArchitect's collectUsed rule over a tagged SET (the lean.ref targets); reports missing names
+- [x] folio-assistant-sci/lean/formal-edges.lean.tmpl: LeanArchitect's collectUsed rule over a tagged SET (the lean.ref targets); reports missing names
 - [ ] folio-assistant-sci/content/pipeline/formal-edges.ts: driver that collects lean.ref targets, imports every built module, runs `lake env lean`, and ingests with --source elaborated; unit tests
 - [ ] MCP Tool contributed through folio-assistant-sci/contributions.ts, plus wiring ContributionRegistry.registerTools into the MCP server (today no production caller)
 - [ ] skill in folio-assistant-sci (directory declared); core lean-formal-graph.md points to it

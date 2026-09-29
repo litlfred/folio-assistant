@@ -8,7 +8,9 @@
  * 2. Lists the folio's BUILT modules (`.olean` under `.lake/build/lib/lean`).
  *    A tagged declaration in an unbuilt module is reported missing, never
  *    silently given no dependencies.
- * 3. Fills `../../lean/formal-edges.template.lean` with an `import` per built
+ * 3. Fills `../../lean/formal-edges.lean.tmpl` (a TEMPLATE, deliberately not
+ *    `.lean`: the platform tracks no Lean content, and
+ *    `lean-decl-starts-are-shared.test.ts` holds it to that) with an `import` per built
  *    module and runs it with `lake env lean` inside the folio's Lake project.
  *    It applies LeanArchitect's dependency rule with the tagged set in place of
  *    `@[blueprint]`: recurse THROUGH untagged constants, stop AT tagged ones;
@@ -49,7 +51,7 @@ import { folioDir } from "../../../cat-harness/schemas/cat-harness.js";
 /** The placeholder line in the template that the module imports replace. */
 export const IMPORTS_MARKER = "-- FORMAL_EDGES_IMPORTS";
 
-export const TEMPLATE_PATH = resolve(import.meta.dir, "../../lean/formal-edges.template.lean");
+export const TEMPLATE_PATH = resolve(import.meta.dir, "../../lean/formal-edges.lean.tmpl");
 
 /** A tagged declaration and the `.lean` a block ties it to, if any. */
 export interface Tagged {

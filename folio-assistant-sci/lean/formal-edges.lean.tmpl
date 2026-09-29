@@ -1,4 +1,8 @@
 /-
+(Stored as `.lean.tmpl`, not `.lean`: the platform tracks no Lean content, and
+lean-decl-starts-are-shared.test.ts holds it to that. The driver writes the
+filled copy into the folio's own `.lake/formal-edges/Driver.lean`.)
+
 Formal-edge extractor — TEMPLATE. `content/pipeline/formal-edges.ts` fills in the
 imports below and runs the result with `lake env lean` inside the folio's own
 Lake project, so it elaborates against exactly the code the folio builds.
