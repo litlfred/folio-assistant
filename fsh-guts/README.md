@@ -8,5 +8,6 @@ Part of [C@T Harness](../cat-harness/README.md), declared as `fsh-guts`, holding
 | file | what it is | used by |
 |---|---|---|
 | [`retired/`](retired/) | 15 files | |
+| [`samples/`](samples/) | 1 file | |
 | [`scripts/`](scripts/) | 16 files | |
 <!-- kg:subgraph:end -->

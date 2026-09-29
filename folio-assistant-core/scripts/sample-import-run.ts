@@ -43,7 +43,7 @@ import { CatalogueNodeSchema, type CatalogueNode } from "../schemas/catalogue.js
 import { PUBLICATION_GATES } from "../schemas/materialization.js";
 import { checkSampleImport, describeImportCheck } from "./sample-import-check.ts";
 
-type Handler = (args: Record<string, unknown>) => Promise<{ content: { text: string }[] }>;
+export type Handler = (args: Record<string, unknown>) => Promise<{ content: { text: string }[] }>;
 
 export interface RunOptions {
   /** The repository root: where `beans/workflows/` and `fsh-guts/` live. */
@@ -61,6 +61,13 @@ export interface RunOptions {
   bundles?: string[];
   /** Says whether egress to `host` is available. Default: never — this environment's rule. */
   canFetch?: (host: string) => boolean;
+  /**
+   * The workflow tools to drive. Default: the REAL registered handlers, with
+   * their GitHub-vouched authorization — what a recorded run must go through.
+   * A test injects handlers over the same engine (`startInstance` /
+   * `complete`) because a temp root has no GitHub identity to authorize.
+   */
+  tools?: Map<string, Handler>;
 }
 
 export interface RunResult {
@@ -106,8 +113,10 @@ export async function runSampleImport(opts: RunOptions): Promise<RunResult> {
   const actor = opts.actor ?? "claude";
   const canFetch = opts.canFetch ?? (() => false);
 
-  const tools = new Map<string, Handler>();
-  registerWorkflowTools({ tool: (n: string, _d: string, _s: unknown, fn: Handler) => tools.set(n, fn) } as never, root);
+  const tools = opts.tools ?? new Map<string, Handler>();
+  if (!opts.tools) {
+    registerWorkflowTools({ tool: (n: string, _d: string, _s: unknown, fn: Handler) => tools.set(n, fn) } as never, root);
+  }
   const call = (name: string, args: Record<string, unknown>) => {
     const h = tools.get(name);
     if (!h) throw new Error(`${name} is not registered`);
