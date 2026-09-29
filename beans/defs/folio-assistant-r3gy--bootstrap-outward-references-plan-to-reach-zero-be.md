@@ -1,10 +1,11 @@
 ---
 # folio-assistant-r3gy
 title: 'BOOTSTRAP OUTWARD REFERENCES: plan to reach zero before the repo split'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-29T18:18:26Z
-updated_at: 2026-09-29T18:18:26Z
+updated_at: 2026-09-29T19:14:25Z
 parent: folio-assistant-vke6
 ---
 
@@ -15,20 +16,20 @@ parent: folio-assistant-vke6
 ## Groups, in order
 
 ### A. Stale text inside bootstrap (content only, no decision)
-- [ ] `bootstrap.json:2,37` says `workflows/`; the directory is `processes/`
-- [ ] `bootstrap.json:24` says "ONE entry"; 7 are declared
-- [ ] `skills/discussion.md:83` says the schemas sit in `bootstrap/skills/`; they are in `schemas/`
-- [ ] `processes/log-message.bpmn:14-18` says "the second and last diagram"; `discussion.bpmn` is a third
-- [ ] "CAT_BOOTSTRAP" / "cat-bootstrap" in 3 BPMN files → "bootstrap"
-- [ ] `initialize-harness.bpmn:83` says `kg-navigation`; bootstrap's skill is `bootstrap-kg-navigation`
-- [ ] README "every file here" table: add `models.json`, `model-registry.schema.json`, `requirement.schema.json`, `glossary-ledger.json`, `test/results/`
+- [x] `bootstrap.json:2,37` says `workflows/`; the directory is `processes/`
+- [x] `bootstrap.json:24` says "ONE entry"; 7 are declared
+- [x] `skills/discussion.md:83` says the schemas sit in `bootstrap/skills/`; they are in `schemas/`
+- [x] ~~`processes/log-message.bpmn:14-18` says "the second and last diagram"~~ — a false report from the analysis: the phrase is not in the file. Nothing to change.
+- [x] "CAT_BOOTSTRAP" / "cat-bootstrap" in 3 BPMN files → "bootstrap"
+- [x] `initialize-harness.bpmn:83` says `kg-navigation`; bootstrap's skill is `bootstrap-kg-navigation`
+- [x] README "every file here" table: add `models.json`, `model-registry.schema.json`, `requirement.schema.json`, `glossary-ledger.json`, `test/results/`
 
 ### B. Upward names in bootstrap prose (content only, no decision)
 Rule: bootstrap may name a ROLE the Harness plays ("the Harness's README tool"), never a specific artefact of the layer above.
-- [ ] bean ids `lv3j`, `ug4r` (BPMN comments), `dh4f`, `2krx` (`bootstrap.json:115,122`)
-- [ ] `readme_sync`, `content-context-and-state-graphs` (`initialize-harness.bpmn:119,121`, `skills/root-readme.md:35,52,66`)
-- [ ] "data-modelling, step 8" (`skills/log-message.md:19`)
-- [ ] `models/models.json:3`: `skills/communication-language.md` (does not exist in bootstrap) and `check:model-languages`
+- [x] bean ids `lv3j`, `ug4r` (BPMN comments), `dh4f`, `2krx` (`bootstrap.json:115,122`)
+- [x] `readme_sync`, `content-context-and-state-graphs` (`initialize-harness.bpmn:119,121`, `skills/root-readme.md:35,52,66`)
+- [x] "data-modelling, step 8" (`skills/log-message.md:19`)
+- [x] `models/models.json:3`: `skills/communication-language.md` (does not exist in bootstrap) and `check:model-languages`
 
 ### C. Repository-root-relative paths (needs a code change in cat-harness)
 - [ ] `initialize-harness.bpmn:26` precondition `ref="bootstrap/README.md"` is resolved from the repository root. Make `file-exists` resolve against the INSTANCE root (`src/workflow/process-model.ts`), change the ref to `README.md`, and update `precondition.test.ts:81-102`.
@@ -53,3 +54,18 @@ Rule: bootstrap may name a ROLE the Harness plays ("the Harness's README tool"),
 
 ## Done when
 `graph.test.ts`'s `ALLOW` list needs only the entries decision 1 keeps, and `check:reference-direction --findings` reports no edge from a file under `bootstrap/` to any instance above it.
+
+
+## Decision 1 — settled by the owner, 2026-09-29
+
+Owner chose option 2: **bootstrap's IRIs move to a base the new bootstrap repository owns** (not `litlfred.github.io/folio-assistant/bootstrap/`). All 71 external `xmlns:bootstrap.processes` bindings change once. Group E proceeds on that basis. Decision 2 (where the kg-qa sidecars live) remains open; group D design dispatched to an agent.
+
+Groups A and B authorised to start (owner: "Do A B").
+
+## Groups A and B — done (2026-09-29)
+
+- A: `bootstrap.json` `_comment` rewritten for 7 directories and 3 processes; "ONE entry" and the `workflows/` note fixed; `discussion.md` points at `schemas/`; `CAT_BOOTSTRAP` / `CatBootstrap` / `cat-bootstrap` → bootstrap; `kg-navigation` → `bootstrap-kg-navigation`; README file table gains 5 rows.
+- A, beyond the list: `bootstrap.json:2` also said "two directories" and "TWO processes", and named cat-harness as the layer composed on top. All three corrected.
+- B: bean ids `lv3j`, `ug4r`, `dh4f`, `2krx`, `46uh` removed; `readme_sync` → "the harness's own README tool"; `content-context-and-state-graphs` → "its own skill on context and state"; "data-modelling, step 8" dropped; `models.json` no longer names `check:model-languages` or `skills/communication-language.md`; `skill_fetch` and `beans` → "skill-fetching tool", "work-plan store".
+- Regenerated with their own tools, not by hand: 15 `.pot` templates (`translate-bpmn.ts --instance ./bootstrap --extract`) and 7 bootstrap kg-qa sidecars (`kg:audit:all`; only `source_hash` changed, no verdict).
+- Still present by design: `kg-audit.ts`-era wording is gone, but `bootstrap.json`'s `qa` description still describes the auditor generically; that directory is decision 2.

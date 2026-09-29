@@ -130,6 +130,8 @@ a step can name it: Functional Requirement 1 is FR-1.
 | [`schemas/graph.schema.json`](schemas/graph.schema.json) | schema | the shape of a declaration, and the definition of every term on this page |
 | [`schemas/discussion.input.schema.json`](schemas/discussion.input.schema.json) | schema | what you know before asking the Requestor |
 | [`schemas/discussion.output.schema.json`](schemas/discussion.output.schema.json) | schema | the Requestor's answer; a document matching it completes step 2 |
+| [`schemas/requirement.schema.json`](schemas/requirement.schema.json) | schema | the shape of a Requirement: statements made with SHALL, SHOULD or MAY |
+| [`schemas/model-registry.schema.json`](schemas/model-registry.schema.json) | schema | the shape of `models/models.json` |
 | [`scenarios/roles.json`](scenarios/roles.json) | data | the four Roles |
 | [`skills/bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md) | Skill | how to open anything here |
 | [`skills/confirm-harness.md`](skills/confirm-harness.md) | Skill | what to ask the Requestor |
@@ -143,3 +145,6 @@ a step can name it: Functional Requirement 1 is FR-1.
 | [`processes/discussion.bpmn`](processes/discussion.bpmn) | diagram | asking the Requestor (step 2) |
 | [`processes/log-message.bpmn`](processes/log-message.bpmn) | diagram | recording what you are doing, and any failure |
 | [`processes/ns.jsonld`](processes/ns.jsonld) | data | the elements the diagrams add (`skill`, `role`, `precondition`), written `bootstrap.processes:` |
+| [`models/models.json`](models/models.json) | data | which languages each model is good at, and whether a person checked; empty until one does |
+| [`glossary/glossary-ledger.json`](glossary/glossary-ledger.json) | data | every term the glossary has held, with when it first appeared and when it was retired |
+| [`test/results/`](test/results/) | results | what auditing this Harness found, one file per Skill, Process and Role |
