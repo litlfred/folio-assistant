@@ -1130,6 +1130,7 @@ export const RULES: Rule[] = [
       // imports (`content/pipeline/lsi.ts`) is linear algebra over any text.
       "scripts/lsi.ts",
       "scripts/lsi-epics.ts",
+      "scripts/gen-lsi-viz.ts",
       // The four state/context graphs nothing judged (bean `h1wq`). Harness for
       // the same reason as the two above: its subjects are the harness's own
       // bookkeeping — the health report, the work plan, interaction preferences,

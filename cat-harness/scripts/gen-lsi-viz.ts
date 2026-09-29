@@ -69,7 +69,11 @@ export function render(): string {
   L.push(".lv-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}");
   L.push(".lv-stat b{display:block;font-size:1.25rem;line-height:1.2}");
   L.push(".lv-stat span{font-size:.75rem;opacity:.75}");
-  L.push(".lv-pass{color:#0d6e5e;font-weight:600}.lv-fail{color:#a8200f;font-weight:600}.lv-na{opacity:.7}");
+  // Light tints for the site's DARK scheme (#27262b): #5fd3b8 is ~8:1 and
+  // #ff9486 ~6.9:1. The methodologies viewer's #0d6e5e / #a8200f measured
+  // 2.4 / 2.1:1 there (its wireframe, finding 6), so they are not reused; the
+  // word carries the state either way.
+  L.push(".lv-pass{color:#5fd3b8;font-weight:600}.lv-fail{color:#ff9486;font-weight:600}.lv-na{opacity:.8}");
   L.push("</style>");
   L.push("");
   L.push("A **latent semantic index** places every unit of a prose graph — a library");

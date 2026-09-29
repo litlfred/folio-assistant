@@ -7,7 +7,7 @@ description: "Every committed LSI index over a declared prose graph — its late
 .lv-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
 .lv-stat b{display:block;font-size:1.25rem;line-height:1.2}
 .lv-stat span{font-size:.75rem;opacity:.75}
-.lv-pass{color:#0d6e5e;font-weight:600}.lv-fail{color:#a8200f;font-weight:600}.lv-na{opacity:.7}
+.lv-pass{color:#5fd3b8;font-weight:600}.lv-fail{color:#ff9486;font-weight:600}.lv-na{opacity:.8}
 </style>
 
 A **latent semantic index** places every unit of a prose graph — a library
