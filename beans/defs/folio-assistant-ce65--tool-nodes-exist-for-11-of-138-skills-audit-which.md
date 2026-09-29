@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ce65
 title: Tool nodes exist for 11 of 138 skills — audit which uncovered skills describe an action
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-18T20:21:01Z
-updated_at: 2026-09-19T07:07:53Z
+updated_at: 2026-09-29T21:43:12Z
 parent: folio-assistant-zzmr
 ---
 
@@ -205,3 +205,9 @@ FALSIFICATION CHECK, stated before the work and run after: if widening `reviewer
 Both readers updated to set semantics with the reasoning recorded: `readsProse` uses ANY (one reader is enough for prose to be reachable), and the fulfilment check uses a non-empty INTERSECTION between the step's allowed kinds and the role's admitted kinds -- requiring every kind would fail a lane the moment it was widened, which is exactly backwards.
 
 Still untouched: the bean's ORIGINAL question (Tool nodes for 11 of 138 skills) and the 88 abstract bpmn:Task activities that assert nothing.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
