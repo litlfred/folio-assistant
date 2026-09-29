@@ -152,6 +152,11 @@ describe("this repository's own instances", () => {
       "folio-assistant",
       "agent-skills",
       "bootstrap",
+      // Added 2026-09-29 (bean `81tw`): the toolchain that renders and
+      // validates bootstrap, staged again outside cat-harness on the owner's
+      // ruling. Found by discovery alone -- nothing in cat-harness's own
+      // declaration names it, because it needs cat-harness.
+      "bootstrap-tools",
       "cat-harness",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
       // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
