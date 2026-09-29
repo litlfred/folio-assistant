@@ -28,6 +28,7 @@ import { basename, join, relative, sep } from "node:path";
 
 import {
   directoriesForGraph,
+  instanceDirectoryForGraph,
   repoRootFor,
   visualisationsOf,
   type Tile,
@@ -266,6 +267,8 @@ export function withViewers<T extends ViewedDirectory>(
  * `undefined` when the handler declares no directory of the kind.
  */
 export function conventionalPage(handlerRoot: string, kind: string): string | undefined {
-  const dir = directoriesForGraph(handlerRoot, kind)[0];
+  // THE one at the handler's own root — `instanceDirectoryForGraph` refuses
+  // rather than silently taking the first of several (bean `no-silent-first`).
+  const dir = instanceDirectoryForGraph(handlerRoot, kind);
   return dir === undefined ? undefined : `${basename(dir)}/index.md`;
 }
