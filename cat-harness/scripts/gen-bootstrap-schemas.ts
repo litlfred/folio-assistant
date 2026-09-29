@@ -61,7 +61,7 @@ import {
   DiscussionOutputObjectSchema,
   JSON_SCHEMA_CONDITIONALS,
 } from "../schemas/discussion.ts";
-import { BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "../schemas/graph.ts";
+import { BOOTSTRAP_TERMS, BOOTSTRAP_TERM_SHAPES, KnowledgeGraphDeclarationSchema } from "../schemas/graph.ts";
 import { renderSchemaPage, type PageDocument } from "./bootstrap-schema-page.ts";
 import { ModelRegistrySchema } from "../schemas/model-registry.ts";
 import {
@@ -254,7 +254,18 @@ export function render(t: (typeof TARGETS)[number]): string {
   // definition only, which JSON Schema expresses as a title and a description.
   const terms = Object.entries(t.terms);
   if (terms.length) {
-    doc.$defs = Object.fromEntries(terms.map(([name, definition]) => [name, { title: name, description: definition }]));
+    // A term with a shape of its own (GraphKind: bootstrap's kinds, open to a
+    // Harness's) carries it beside the definition, so the list is published
+    // where the term is, not only inline in the field that uses it.
+    const shapes = t.terms === BOOTSTRAP_TERMS ? (BOOTSTRAP_TERM_SHAPES as Record<string, z.ZodType>) : {};
+    doc.$defs = Object.fromEntries(
+      terms.map(([name, definition]) => {
+        const shape = shapes[name];
+        const extra = shape ? (z.toJSONSchema(shape, { io: "input", reused: "inline" }) as Record<string, unknown>) : {};
+        delete extra.$schema;
+        return [name, { title: name, ...extra, description: definition }];
+      }),
+    );
   }
 
   return `${JSON.stringify(doc, null, 2)}\n`;

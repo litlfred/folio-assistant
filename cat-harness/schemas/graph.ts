@@ -77,11 +77,51 @@ export const BOOTSTRAP_TERMS = {
 
 export type BootstrapTerm = keyof typeof BOOTSTRAP_TERMS;
 
+/**
+ * The Graph Kinds bootstrap's own Declaration uses, one plain sentence each.
+ *
+ * Defined HERE so bootstrap can say what its own Subgraphs hold without a
+ * Harness present. They were defined only in cat-harness's registry
+ * (`graph-kind-registry.ts`), which now reads these sentences as its
+ * summaries rather than holding its own (bean `r3gy`, D1). A Harness adds
+ * kinds of its own; to a reader that knows only bootstrap, those are
+ * Extensions.
+ */
+export const BOOTSTRAP_GRAPH_KINDS = {
+  skills: "A Subgraph of Skills: the instructions an Actor follows to carry out a Task.",
+  schemas: "A Subgraph of Node Schemas: files that state the shape other files must have.",
+  scenarios: "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on.",
+  processes:
+    "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from.",
+  models:
+    "A Subgraph describing the language models an Actor may be: which languages each is good at, and whether a person checked.",
+  "swimlane-glossary":
+    "A Subgraph recording every term a Knowledge Graph's Processes have ever named, and when each stopped being used, so a retired term is never silently reused.",
+} as const;
+
+export type BootstrapGraphKind = keyof typeof BOOTSTRAP_GRAPH_KINDS;
+
+/** One entry of a Subgraph's `graphKinds`: one of bootstrap's, or an Extension. */
+export const GraphKindSchema = z
+  .union([
+    ...(Object.entries(BOOTSTRAP_GRAPH_KINDS) as [string, string][]).map(([k, d]) => z.literal(k).describe(d)),
+    z
+      .string()
+      .min(1)
+      .describe(`A Graph Kind a Harness defines. To a reader that knows only bootstrap it is an Extension: ${BOOTSTRAP_TERMS.Extension}`),
+  ])
+  .describe(BOOTSTRAP_TERMS.GraphKind);
+
+/** A term whose `$defs` entry carries a shape as well as its definition. */
+export const BOOTSTRAP_TERM_SHAPES: Readonly<Partial<Record<BootstrapTerm, z.ZodType>>> = {
+  GraphKind: GraphKindSchema,
+};
+
 export const SubgraphSchema = z
   .object({
     id: z.string().min(1).describe("The Subgraph's name, unique within its Knowledge Graph."),
     path: z.string().min(1).describe("The directory, relative to the declaration."),
-    graphKinds: z.array(z.string().min(1)).min(1).describe("The Graph Kinds it holds."),
+    graphKinds: z.array(GraphKindSchema).min(1).describe("The Graph Kinds it holds."),
     title: z.string().optional().describe("A short name for people, shown as its README's heading."),
     description: z.string().optional().describe("What it holds, in a sentence or two, shown under that heading."),
   })

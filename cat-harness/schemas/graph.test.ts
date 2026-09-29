@@ -8,8 +8,9 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 import { findDeclarationFile, instanceRootsIn } from "./cat-harness.ts";
-import { CLASS_GLOSSES } from "./vocabulary.ts";
-import { BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "./graph.ts";
+import { CLASS_GLOSSES, termLayer } from "./vocabulary.ts";
+import { BASE_GRAPH_KINDS } from "./graph-kind-registry.ts";
+import { BOOTSTRAP_GRAPH_KINDS, BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "./graph.ts";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
 const BOOTSTRAP = join(REPO_ROOT, "bootstrap");
@@ -185,5 +186,32 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
       }
     }
     expect(found.sort()).toEqual([...PENDING].sort());
+  });
+});
+
+describe("bootstrap's graph kinds are its own (bean r3gy, D1)", () => {
+  const decl = JSON.parse(readFileSync(join(BOOTSTRAP, "bootstrap.json"), "utf-8")) as {
+    directories: { id: string; graphKinds: string[] }[];
+  };
+  const own = Object.keys(BOOTSTRAP_GRAPH_KINDS);
+
+  test("every kind bootstrap's declaration uses is defined in bootstrap", () => {
+    const used = new Set(decl.directories.flatMap((d) => d.graphKinds));
+    expect([...used].filter((k) => !own.includes(k))).toEqual([]);
+  });
+
+  test("every kind bootstrap defines, it uses — no definition for a kind it does not hold", () => {
+    const used = new Set(decl.directories.flatMap((d) => d.graphKinds));
+    expect(own.filter((k) => !used.has(k))).toEqual([]);
+  });
+
+  test("the harness's registry reads bootstrap's sentence, and mints the type in bootstrap's layer", () => {
+    for (const k of own) {
+      const def = BASE_GRAPH_KINDS[k as keyof typeof BASE_GRAPH_KINDS];
+      expect(def, k).toBeDefined();
+      expect(def.summary).toBe(BOOTSTRAP_GRAPH_KINDS[k as keyof typeof BOOTSTRAP_GRAPH_KINDS]);
+      const local = def.type.split("#").pop()!;
+      expect(termLayer(local), `${k} → ${local}`).toBe("bootstrap");
+    }
   });
 });

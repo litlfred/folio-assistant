@@ -215,15 +215,15 @@ A Declaration. Any field not listed here is an Extension: A field of a Declarati
 |   assets       [0..*]  Asset list    |
 +--------------------------------------+
   |
-  +-- directories (each item) --> +---------------------------------------+
-  |                               | Subgraph                              |
-  |                               +---------------------------------------+
-  |                               | * id           [1]     string         |
-  |                               | * path         [1]     string         |
-  |                               | * graphKinds   [1..*]  list of string |
-  |                               |   title        [0..1]  string         |
-  |                               |   description  [0..1]  string         |
-  |                               +---------------------------------------+
+  +-- directories (each item) --> +---------------------------------------------------------------------------------------------------------------------------------------+
+  |                               | Subgraph                                                                                                                              |
+  |                               +---------------------------------------------------------------------------------------------------------------------------------------+
+  |                               | * id           [1]     string                                                                                                         |
+  |                               | * path         [1]     string                                                                                                         |
+  |                               | * graphKinds   [1..*]  list of = "skills" | = "schemas" | = "scenarios" | = "processes" | = "models" | = "swimlane-glossary" | string |
+  |                               |   title        [0..1]  string                                                                                                         |
+  |                               |   description  [0..1]  string                                                                                                         |
+  |                               +---------------------------------------------------------------------------------------------------------------------------------------+
   |
   +-- assets (each item) --> +---------------------+
                              | Asset               |
