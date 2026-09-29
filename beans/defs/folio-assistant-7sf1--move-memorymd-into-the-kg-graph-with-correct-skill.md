@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7sf1
 title: Move MEMORY.md into the kg graph, with correct skill/task pairings
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T00:04:29Z
-updated_at: 2026-09-19T00:37:53Z
+updated_at: 2026-09-29T21:43:12Z
 parent: folio-assistant-8jt6
 ---
 
@@ -121,3 +121,9 @@ already has to `skills/` — rather than moving it.
 
 Whether this bean covers the agent-memory quadrant alone, or whether the empty
 human-workflow-management quadrant is in scope too. Not started pending that.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

@@ -92,9 +92,9 @@ describe("kg:files", () => {
   });
 
   test("each file described from itself; used-by only from a recorded relation", () => {
-    expect(md).toContain("| [`skills/do-it.md`](skills/do-it.md) | Does it. | \"Main\" |");
-    expect(md).toContain("| [`processes/sub.bpmn`](processes/sub.bpmn) | a Process: Sub | \"Main\" |");
-    expect(md).toContain("| [`processes/main.bpmn`](processes/main.bpmn) | a Process: Main |  |");
+    expect(md).toContain("| [`do-it.md`](skills/do-it.md) | Does it. | \"Main\" |");
+    expect(md).toContain("| [`sub.bpmn`](processes/sub.bpmn) | a Process: Sub | \"Main\" |");
+    expect(md).toContain("| [`main.bpmn`](processes/main.bpmn) | a Process: Main |  |");
     expect(md).toContain("the picture of `main.bpmn`, generated from it");
   });
 
