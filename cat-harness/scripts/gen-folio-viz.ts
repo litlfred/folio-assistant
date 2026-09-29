@@ -76,6 +76,7 @@ import {
   siteDirFor,
 } from "../schemas/cat-harness.js";
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
+import { withRenders } from "./viewer-declarations.js";
 
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
@@ -329,7 +330,11 @@ if (import.meta.main) {
 
   emit(join(dataDir, "index.json"), JSON.stringify(projection(g), null, 2) + "\n");
   const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
-  emitPage(nav)(join(pageDir, "index.html"), viewerHtml(dataHref, mount));
+  // The page says which directories it draws (#1168 B7a-2).
+  emitPage(nav)(
+    join(pageDir, "index.html"),
+    withRenders(viewerHtml(dataHref, mount), g.directories.filter((d) => d.present).map((d) => d.dir)),
+  );
 
   const absent = g.directories.filter((d) => !d.present).length;
   console.log(

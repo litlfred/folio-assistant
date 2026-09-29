@@ -1,6 +1,11 @@
 ---
 title: Processes
 nav_exclude: true
+renders:
+  - bootstrap/processes
+  - cat-harness/processes
+  - folio-assistant-core/processes
+  - smart-base/methodologies/processes
 ---
 
 # Processes — every executable diagram, searchable

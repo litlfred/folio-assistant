@@ -50,6 +50,7 @@ import { join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { docsLayers } from "./compose-docs.js";
+import { handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 /** The graph kind this renders. A KIND, never a path. */
@@ -337,7 +338,8 @@ if (import.meta.main) {
     console.error(`::error::gen-tools-viz: no visualiser declared for graph kind '${KIND}'`);
     process.exit(1);
   }
-  const rendered = page(rows, skillIds(REPO));
+  // The page says which directories it draws (#1168 B7a-2).
+  const rendered = withRendersFrontMatter(page(rows, skillIds(REPO)), handledDirectories(REPO, join(REPO, "cat-harness"), KIND));
   const out = join(baseDocs(REPO), PAGE);
 
   if (check) {
