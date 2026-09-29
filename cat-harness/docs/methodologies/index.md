@@ -166,6 +166,7 @@ these.
 - `library/landauer-foltz-laham-1998-intro-lsa`
 - `library/arxiv-0909.4061v2`
 - `library/qi-hessen-vanderheijden-2023-ca-vs-lsa`
+- `library/arxiv-2202.02427v1`
 
 ### MADR — Markdown Architectural Decision Records
 

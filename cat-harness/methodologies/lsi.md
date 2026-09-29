@@ -25,6 +25,7 @@ evidence:
   - library/landauer-foltz-laham-1998-intro-lsa
   - library/arxiv-0909.4061v2
   - library/qi-hessen-vanderheijden-2023-ca-vs-lsa
+  - library/arxiv-2202.02427v1
 applies-when: >
   **Finding or relating units of text that discuss the same thing in different
   words, across a corpus too large to read whole, where no controlled
