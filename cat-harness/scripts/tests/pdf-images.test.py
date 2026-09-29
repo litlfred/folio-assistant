@@ -12,7 +12,9 @@ chapters. Two spellings are affordable only while something checks them.
 The threshold is READ out of both sources rather than restated here. A literal
 `0.8` in this file would be a third spelling, which is the defect itself.
 """
+import glob
 import importlib.util
+import json
 import os
 import re
 import sys
@@ -224,6 +226,34 @@ def main() -> int:
               all("narrative" in i for i in s2["images"] if i["role"] == "figure"))
     if not ran_capture:
         print("  NOTE no browser-print capture present — the capture end-to-end arm did not run")
+
+    # ── A `figure` ENTRY MUST HAVE ITS FILE — bean `a8wy` follow-up, 2026-09-29
+    #
+    # `pdf-images.py` writes a PNG only for a `figure`; `chrome` and
+    # `page-scan` entries name a file that was never meant to exist, so the
+    # check is scoped to figures and NOT to every entry. Measured over the
+    # committed corpus the day this was written: 289 figures, 289 files, and
+    # 351 absent files all of them `chrome` (210) or `page-scan` (141).
+    #
+    # It exists because of a failure that looked exactly like unfinished work.
+    # An image may carry BOTH an alpha channel and a separate soft mask, and
+    # MuPDF refuses `Pixmap(pix, mask)` on a base that already has alpha
+    # ("color pixmap must not have an alpha channel"). The writer's `except`
+    # swallowed it and left `images.json` naming a PNG nobody could open, so
+    # `image-descriptions` demanded a narrative for a file that was not there.
+    # Three of the eight images in `2509.06388v1.pdf` were in that state.
+    figure_files = 0
+    for path in sorted(glob.glob(os.path.join(os.path.dirname(ROOT), "*/library/*/images.json"))):
+        with open(path, encoding="utf-8") as fh:
+            side = json.load(fh)
+        root = os.path.dirname(path)
+        for i in (side.get("images") or []):
+            if i.get("role") != "figure" or not i.get("file"):
+                continue
+            figure_files += 1
+            check(f"{os.path.basename(root)}/{i['id']}: the figure's file is on disk",
+                  os.path.exists(os.path.join(root, i["file"])))
+    print(f"  ...checked {figure_files} figure file(s) across the committed corpus")
 
     print()
     print("  all checks passed" if rc == 0 else "  FAILURES above")

@@ -12,10 +12,15 @@ parent: folio-assistant-5yhm
 Under `5yhm`. Owner, 2026-09-25: *"we will integrate, for example, OCL at some
 point as a Tool"*.
 
-**Read as Open Concept Lab** (openconceptlab.org), the terminology service
-already in the WHO SMART Guidelines ecosystem — NOT the Object Constraint
-Language. Recorded as a reading, not a fact: the acronym is ambiguous and a
-wrong guess costs the whole design. **Confirm before building anything.**
+**CONFIRMED by the owner 2026-09-29:** *"OCL = open concept lab, will be used
+for WHO smart guidelines tetrminolgy mgnt as a tool"*. Open Concept Lab
+(openconceptlab.org), not the Object Constraint Language, and the use case is
+named: **terminology management for WHO SMART Guidelines**.
+
+That settles the acronym and narrows the scope with it. The first consumer is
+the SMART Guidelines side, so this Tool serves `authoring-who-smart-guidelines`
+as much as it serves `7wou`'s generic mapping check — and the two must not
+fork: one Tool node, one mapping contract, whatever the caller.
 
 Checked 2026-09-29: neither reading appears anywhere in `cat-harness/` source.
 The only hits in the tree are inside ingested WHO PDF data and image files, so
@@ -25,7 +30,7 @@ A terminology service here is a **Tool node** in `cat-harness/tools/index.ts`
 satisfying a named skill, gated by `check:tools` — like every other script and
 service. It is not a client library imported from the mapping skill.
 
-## Open, before any code
+## Still open, before any code
 
 - Which collections/sources, and whose. A terminology service is not one
   vocabulary, and `vocabulary-authority` decides what each is authoritative
@@ -40,7 +45,7 @@ service. It is not a client library imported from the mapping skill.
 
 ## Done when
 
-- [ ] OCL confirmed or corrected by the owner
+- [x] OCL confirmed by the owner 2026-09-29 — Open Concept Lab, for WHO SMART Guidelines terminology management
 - [ ] a Tool node satisfying the `7wou` mapping skill, passing `check:tools`
 - [ ] unreachable-service behaviour is the third state, with a test that
       proves it rather than a comment that claims it

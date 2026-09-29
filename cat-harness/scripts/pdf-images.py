@@ -281,6 +281,23 @@ def extract(pdf: Path, outdir: Path, dry_run: bool) -> dict:
                     # mask so the PNG carries the alpha the page renders with.
                     smask = doc.extract_image(xref).get("smask", 0)
                     if smask:
+                        # DROP ANY ALPHA THE BASE ALREADY HAS FIRST. MuPDF
+                        # refuses the combine otherwise -- "color pixmap must
+                        # not have an alpha channel" (FzErrorArgument) -- and
+                        # the `except` below then swallowed it, leaving
+                        # `images.json` naming a file that was never written.
+                        # An image can carry BOTH an alpha channel and a
+                        # separate soft mask; measured 2026-09-29 on
+                        # `2509.06388v1.pdf`, where three of eight images did
+                        # (xrefs 52, 124, 155, each n=4 with alpha=1 AND an
+                        # smask). Every one of the three was a figure the
+                        # chapter demonstrably contains, and the gate went on
+                        # demanding a narrative for a PNG no inspector could
+                        # open -- the expensive direction, because a missing
+                        # file reads as an unfinished description rather than
+                        # as a broken extraction.
+                        if pix.alpha:
+                            pix = pymupdf.Pixmap(pix, 0)
                         pix = pymupdf.Pixmap(pix, pymupdf.Pixmap(doc, smask))
                     pix.save(target)
                 except Exception as exc:  # noqa: BLE001
