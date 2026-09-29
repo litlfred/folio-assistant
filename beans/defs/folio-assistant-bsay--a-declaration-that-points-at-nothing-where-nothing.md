@@ -1,11 +1,11 @@
 ---
 # folio-assistant-bsay
 title: 'A declaration that points at nothing, where nothing can fail: three live cases and the gate that reports two of them and exits 0'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-27T06:13:41Z
-updated_at: 2026-09-27T06:26:57Z
+updated_at: 2026-09-27T07:07:40Z
 parent: folio-assistant-1xhc
 ---
 

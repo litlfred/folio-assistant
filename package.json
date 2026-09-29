@@ -41,6 +41,8 @@
   "scripts": {
     "agent-memory": "bun run cat-harness/scripts/agent-memory.ts",
     "agent-memory:check": "bun run cat-harness/scripts/agent-memory.ts --check",
+    "root-scan-census": "bun run cat-harness/scripts/root-scan-census.ts",
+    "root-scan-census:check": "bun run cat-harness/scripts/root-scan-census.ts --check",
     "audit:coverage": "bun run cat-harness/scripts/audit-coverage.ts",
     "audit:coverage:check": "bun run cat-harness/scripts/audit-coverage.ts --check",
     "audit:coverage:require-all": "bun run cat-harness/scripts/audit-coverage.ts --check --require-all",
@@ -97,6 +99,7 @@
     "check:declaration-filename": "bun run cat-harness/scripts/check-declaration-filename.ts",
     "check:declared-assets": "bun run cat-harness/scripts/check-declared-assets.ts",
     "check:declared-dirs": "bun run cat-harness/scripts/check-declared-dirs.ts",
+    "check:test-budgets": "bun run cat-harness/scripts/check-test-budgets.ts",
     "check:environment": "bun run cat-harness/scripts/check-environment.ts",
     "check:declared-paths": "bun run cat-harness/scripts/check-declared-paths.ts",
     "check:dependency-advisories": "bun run cat-harness/scripts/check-dependency-advisories.ts",

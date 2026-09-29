@@ -193,6 +193,12 @@ export const RULES: Rule[] = [
       // is its only caller and is itself harness, so the edge runs
       // harness -> harness.
       "scripts/check-environment.ts",
+      // HARNESS, by the same test again: its subject is a TEST RUN's timings and
+      // the budgets this repository's own test files declare — harness meta, not
+      // any folio's content. It reads a junit report and `.test.ts` sources, and
+      // imports `node:fs`, `node:path` and `typescript` (for the AST) and nothing
+      // else, so it cannot drag a folio in. Bean `sff8`.
+      "scripts/check-test-budgets.ts",
       // The prose half of the same arrow this tool measures for imports, and
       // harness for the same reason `repo-partition.ts` is: its subject is
       // which INSTANCE a file belongs to and what that instance declares it
@@ -501,6 +507,12 @@ export const RULES: Rule[] = [
       // `harness.json` for the directories, DERIVES the nesting from their
       // declared paths, and has nothing to say about any folio's content.
       "scripts/check-subgraphs.ts",
+      // How many scripts enumerate the filesystem, and how many ask git what
+      // the corpus is (bean `xd1g`). Harness for `check-subgraphs.ts`' reason
+      // and more plainly still: its whole subject is this repository's own
+      // `scripts/` directory read through `gitCorpus`, and it cannot express
+      // an opinion about a folio because it never looks at one.
+      "scripts/root-scan-census.ts",
       // Whether a translated page's links survived being one directory
       // deeper than the page they were translated from (bean `ahab`).
       // Harness for `check-subgraphs.ts`' reason and by the same route — it
@@ -526,6 +538,12 @@ export const RULES: Rule[] = [
       // subject is `.github/workflows/` plus one repo-root pin file, and it
       // reads no folio content.
       "scripts/check-bun-pin.ts",
+      // The shared "a gate that examined nothing must refuse" decision (bean
+      // `iym1`). Harness because it is a helper for the harness's own gates and
+      // reads nothing at all: it is handed a list of what a caller looked at and
+      // returns a message. It has no corpus of its own, which is why it can be
+      // tested over a CONSTRUCTED empty one while the gates it serves cannot.
+      "scripts/vacuity-refusal.ts",
       // Whether each methodology's cited `origin` resolves to an ingested
       // source. Harness for the same reason as the two above: it reads the
       // declaration for the `methodology` and `library` graphs and fans out
@@ -1331,6 +1349,7 @@ export const RULES: Rule[] = [
       "scripts/kg-validate.ts",             // one Tool, parameterised by graph kind
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
       "scripts/strip-preview-seo.ts",       // the preview site build
+      "scripts/set-html-lang.ts",           // ...and the served language on its `<html>` (bean `zru7`). Beside the SEO strip for the same reason: a pass over the EMITTED tree, coupling to no content type and to no theme file
       "scripts/staging-banner.ts",          // ...and its banner (bean `g196`)
       "scripts/html-comments.ts",           // the one "is this inside a comment" scan the banner's body-finder and the folio mount's marker check share (bean `ur84`)
       "scripts/folio-mount.ts",             // the fragment that carries the reader's folio onto a library page — machinery, not a content model (bean `jpjt`)
@@ -1379,30 +1398,37 @@ export const RULES: Rule[] = [
   //    makes that field on those kinds part of the science vocabulary.
   //
   //    The test was applied FIVE times in this block ("Same test again",
-  //    "Same test a third time"), so the ruling reaches four entries, not one.
-  //    Two have moved to the sci block above and cost NOTHING — measured, zero
-  //    new wrong-direction edges. The remaining two stay here for now and the
-  //    reason is a measurement, not a disagreement: reassigning
-  //    `schemas/lean-packages.ts` and `content/pipeline/lean-signature.ts`
-  //    yields SIX core -> sci edges --
+  //    "Same test a third time"), so the ruling reached four entries, not one.
+  //    Two moved to the sci block above and cost NOTHING. The other two --
+  //    `schemas/lean-packages.ts` and `content/pipeline/lean-signature.ts` --
+  //    cost SIX core -> sci edges, measured twice (at `.folio-assistant-pin`
+  //    and on current `main`, so not a pin artifact):
   //      schemas/constraints.ts          -> lean-packages
   //      adapters/mcp-server/server.ts   -> lean-packages
   //      adapters/document/resolver.ts   -> lean-packages
   //      adapters/manifest-entries.ts    -> lean-packages
   //      content/pipeline/qa-utils.ts    -> lean-packages
   //      content/pipeline/qa-utils.ts    -> lean-signature
-  //    -- because the header above is, as a statement of FACT about today's
-  //    code, correct: core really does reach into the grammar. Honouring the
-  //    ruling therefore needs core to carry a formal reference whose
-  //    vocabulary it does not own -- `lean` off `BlockBase` and behind the
-  //    same injection `configureLeanPackages` already established for the
-  //    LIST, extended to the GRAMMAR. That changes `BlockBase`, so it is the
-  //    owner's call and is not made here. qou bean `qou-7ko6`.
   //
-  //    NOTE for whoever picks this up: the two entries left below now carry a
-  //    rationale their own header says is overruled. That is deliberate -- the
-  //    classification still matches the code -- but do not cite it as the
-  //    reason they are core. The reason is the six edges.
+  //    🟩 PAID. All six are gone and both modules are now `sci` (they fall
+  //    there on the `lean` keyword rule below, so they need no entry at all).
+  //    `schemas/formal-ref.ts` is the injection point core reaches instead --
+  //    the third instance of the `references-registry-di` / `value-registry-di`
+  //    pattern -- and `content/pipeline/lean-formal-ref.ts` is the sci-side
+  //    implementation, which is where the resolution bodies moved verbatim from
+  //    `qa-utils.ts`. `BlockBase` is UNCHANGED: core still carries a field
+  //    named `lean`, it simply no longer knows the grammar of its `ref`. The
+  //    earlier note here said the ruling "changes `BlockBase`, so it is the
+  //    owner's call" -- that was wrong, and the whole cost was five call sites,
+  //    one of which dissolved by deleting a helper. qou bean `qou-7ko6`.
+  //
+  //    NOTE: NINE core modules import `lean-packages`, not six. The other
+  //    three -- `export-json.ts`, `conjectural-propagation-audit.ts`,
+  //    `conditional-class-banner-audit.ts` -- are composition roots
+  //    (`import.meta.main`), and `engine.ts` exempts a composition root from
+  //    the direction rule while still counting its edge in `totalEdges`. So a
+  //    reader who greps importers finds nine; re-measure with `--edges`, and
+  //    do not read six as an undercount.
   {
     repo: "core",
     triaged: true,
@@ -1424,12 +1450,6 @@ export const RULES: Rule[] = [
       // is subject matter, which is what its own comment says. This is one
       // module whose NAME collides with it.
       "content/pipeline/validate-simulator.ts",
-      "schemas/lean-packages.ts",           // the `lean.ref` grammar + the DI registry
-      // Statement-level hashing for `.lean` files, by the same test: the
-      // `lean_granularity: "statement"` field is on `QaCriterionDefinition` in
-      // core, and `qa-utils` consults it on every freshness check. The
-      // grammar belongs wherever the field does.
-      "content/pipeline/lean-signature.ts",
       // The QA sidecar PROJECTION — the families (`block`, `translation`,
       // `script`, `kg`), their states and freshness, read by `gen-docs-pages`
       // to publish one file per (subject, family). Nothing in it is science:

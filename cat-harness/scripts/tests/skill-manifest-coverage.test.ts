@@ -175,6 +175,31 @@ describe("skill package manifests cover the package", () => {
     expect(duplicated.sort()).toEqual([]);
   });
 
+  test("each manifest's `skills` list is SORTED — the convention that is instructed", () => {
+    // WHY THIS IS A GATE AND NOT A STYLE NOTE. Bean `kfkh`: an unenforced order
+    // is what lets two sessions insert the same entry at different INDICES, so
+    // git sees two independent additions and keeps both. Enforcing the order
+    // turns that into an ordinary conflict, which a person resolves, instead of
+    // a silent duplicate the test above then has to catch after the fact.
+    //
+    // The convention is already INSTRUCTED, in two places — `skill-register.ts`
+    // prints "Add the slug to its `package-manifest.json` `skills` list, sorted"
+    // and `skills/folio-core/skill-registration.md` says "you add the slug,
+    // sorted". Measured 2026-09-27: 6 of the 22 manifests carrying a `skills`
+    // array did not obey it. An instruction nothing checks is an instruction
+    // that drifts, and `kfkh` asked for it to be enforced or dropped; dropping
+    // would mean deleting a correct instruction from two places.
+    const unsorted: string[] = [];
+    for (const p of packages()) {
+      const sorted = [...p.listed].sort();
+      if (p.listed.join("\u0000") !== sorted.join("\u0000")) {
+        const at = p.listed.findIndex((s, i) => s !== sorted[i]);
+        unsorted.push(`${p.name}: ${p.listed[at]} should come after ${sorted[at]}`);
+      }
+    }
+    expect(unsorted.sort()).toEqual([]);
+  });
+
   test("no NEW manifest entry is missing its skill file", () => {
     const dangling: string[] = [];
     const known = knownSkills(join(import.meta.dir, "../.."));
