@@ -123,6 +123,7 @@ classDiagram
       title [0..1] string
       description [0..1] string
       directories [0..*] Directory[]
+      needs [0..*] string[]
       assets [0..*] Asset[]
     }
     class bootstrap_schemas_model_registry_schema_json_Model["Model"] {
