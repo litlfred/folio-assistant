@@ -512,32 +512,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790708221">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790713649">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790708221">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790713649">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790708221">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790713649">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790708221">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790713649">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790708221">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790713649">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790708221">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790713649">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -554,7 +554,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790708221" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790713649" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -964,6 +964,10 @@ so the difference could not show. Use the pair:</p>
       <td><code class="language-plaintext highlighter-rouge">readme:sync:root</code> · <code class="language-plaintext highlighter-rouge">readme:audit:root</code></td>
       <td>the REPOSITORY’s README</td>
     </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">readme:sync:bootstrap</code></td>
+      <td>bootstrap’s README — renders its diagrams first</td>
+    </tr>
   </tbody>
 </table></div>
 
@@ -971,6 +975,46 @@ so the difference could not show. Use the pair:</p>
 when the split landed, the bare <code class="language-plaintext highlighter-rouge">readme:audit</code> silently narrowed to
 cat-harness’s and took the root README’s 41 links out of the gate <strong>without
 failing anything</strong>. A gate that stops covering something still reports green.</p>
+<h2 id="kgprocesses-and-kgfiles--an-instances-diagrams-and-files-from-its-declaration">
+  
+  
+    <a href="#kgprocesses-and-kgfiles--an-instances-diagrams-and-files-from-its-declaration" class="anchor-heading" aria-labelledby="kgprocesses-and-kgfiles--an-instances-diagrams-and-files-from-its-declaration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">kg:processes</code> and <code class="language-plaintext highlighter-rouge">kg:files</code> — an instance’s diagrams and files, from its declaration
+  
+  
+</h2>
+    
+
+<p>Two sections any instance’s README may carry, both read from the instance’s
+own declaration and the files it names (<code class="language-plaintext highlighter-rouge">content/pipeline/readme-graph-sections.ts</code>).
+Owner, 2026-09-29: <em>“display bpmn(s) etc in README.md”</em>, <em>“part of readme.md
+generation is to do rendering”</em>, and the file list at the end must be <em>“a
+skill and tool in cat-harness”</em>.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">kg:processes</code></strong> — every <code class="language-plaintext highlighter-rouge">.bpmn</code> in the declared directories, the entry
+Process first (the one no other calls), each with its picture. The picture
+is the SVG <code class="language-plaintext highlighter-rouge">render:bpmn</code> writes <strong>beside</strong> the <code class="language-plaintext highlighter-rouge">.bpmn</code> for an instance
+exempt from <code class="language-plaintext highlighter-rouge">workflow-visualiser</code> — one with no site of its own, so its
+README is where its diagrams are seen. This section <strong>reads</strong> the SVG and
+never draws; rendering needs a browser, so <code class="language-plaintext highlighter-rouge">readme:sync:bootstrap</code> runs
+<code class="language-plaintext highlighter-rouge">render:bpmn</code> first. A diagram with no picture beside it leaves the region
+untouched — never a broken image.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">kg:files</code></strong> — every file, grouped by declared directory, with “what it
+is” read from the file itself (front-matter <code class="language-plaintext highlighter-rouge">description</code>, a Process’s
+name, a schema’s <code class="language-plaintext highlighter-rouge">title</code>, a JSON file’s own <code class="language-plaintext highlighter-rouge">description</code> or <code class="language-plaintext highlighter-rouge">$comment</code>)
+and “used by” <strong>only</strong> where a diagram records the relation: a task naming
+a Skill, a call activity naming a Process. Blank otherwise, never guessed.
+A directory whose files all sit in subdirectories collapses to one row.</li>
+</ul>
+
+<p><strong>Why <code class="language-plaintext highlighter-rouge">kg:</code> and not <code class="language-plaintext highlighter-rouge">cat-harness:</code>.</strong> The marker is written into the
+instance’s README, and the floor instance must not name the layer above it
+— its leak test fails on the word. <code class="language-plaintext highlighter-rouge">kg</code> is vocabulary every instance has.</p>
+
+<p><strong>A blank “used by” is a finding, not decoration.</strong> On bootstrap it showed
+<code class="language-plaintext highlighter-rouge">skills/discussion.md</code> used by nothing although a diagram names it: the file
+has no front matter, so by bootstrap’s own rule it is not a Skill. A
+hand-kept table had said “step 2” and hidden that.</p>
 <h3 id="where-the-readme-render-sits-in-the-pipeline">
   
   
@@ -1198,7 +1242,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36615384238"><code>13292b6</code></a> &middot; 2026-09-29T18:56:58Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36626318226"><code>ab69d2a</code></a> &middot; 2026-09-29T20:27:25Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
