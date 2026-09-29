@@ -76,30 +76,44 @@ with at least one item, and <code>[0..*]</code> means a list that may be empty.<
 <p>Each defined term, in the words of
 <a href="graph.schema.json"><code>graph.schema.json</code></a>. A term whose shape is drawn below links to
 its drawing; the rest are defined in words only.</p>
-<h4>Knowledge Graph</h4>
-<p>Information kept as files in a repository: things, and the named relations between them. It is declared by one file at its root, <code>&#x3C;name>.json</code>, which gives its name and lists its Subgraphs. Drawn in <a href="#knowledge-graph-declaration">Knowledge Graph declaration</a>. <a href="graph.schema.json#/$defs/KnowledgeGraph">src</a></p>
-<h4>Subgraph</h4>
-<p>A named directory of a Knowledge Graph, declared with the Graph Kind or Kinds it holds. A Knowledge Graph has zero or more. Drawn in <a href="#knowledge-graph-declaration">Knowledge Graph declaration</a>. <a href="graph.schema.json#/$defs/Subgraph">src</a></p>
+<h4>Node</h4>
+<p>One unit of recorded knowledge, held in one file or as one identifiable part of a file, and named by an IRI. <a href="graph.schema.json#/$defs/Node">src</a></p>
+<h4>Node Kind</h4>
+<p>A name for a class of Nodes, together with its Node Schema: a JSON Schema that every Node of that kind satisfies. <a href="graph.schema.json#/$defs/NodeKind">src</a></p>
+<h4>Node Instance</h4>
+<p>A Node that states its Node Kind and satisfies that kind's Node Schema. <a href="graph.schema.json#/$defs/NodeInstance">src</a></p>
 <h4>Graph Kind</h4>
-<p>What a Subgraph holds, such as skills, processes or schemas. A reader matches on it to decide whether to look inside. <a href="graph.schema.json#/$defs/GraphKind">src</a></p>
+<p>A named set of Node Kinds whose instances may be held together. <a href="graph.schema.json#/$defs/GraphKind">src</a></p>
+<h4>Declaration</h4>
+<p>A JSON document, <code>&#x3C;name>.json</code>, that gives a name and lists entries, each naming either a directory of Node Instances with the Graph Kinds they belong to, or a single file with its purpose. <a href="graph.schema.json#/$defs/Declaration">src</a></p>
+<h4>Subgraph</h4>
+<p>A named subset of Node Instances: a Declaration's directory entry, with its id, its directory and its Graph Kinds. Drawn in <a href="#knowledge-graph-declaration">Knowledge Graph declaration</a>. <a href="graph.schema.json#/$defs/Subgraph">src</a></p>
 <h4>Asset</h4>
-<p>A single file a Knowledge Graph declares as its own, together with the part it plays, such as its README. Drawn in <a href="#knowledge-graph-declaration">Knowledge Graph declaration</a>. <a href="graph.schema.json#/$defs/Asset">src</a></p>
-<h4>Harness</h4>
-<p>What an Actor uses to work with a Knowledge Graph: Skills, Processes, Roles and Tools. A Harness is itself a Knowledge Graph, declared the same way; bootstrap is the first Harness. <a href="graph.schema.json#/$defs/Harness">src</a></p>
+<p>A Declaration's file entry: one file about the repository itself, such as its README, with its stated purpose. Drawn in <a href="#knowledge-graph-declaration">Knowledge Graph declaration</a>. <a href="graph.schema.json#/$defs/Asset">src</a></p>
+<h4>Knowledge Graph</h4>
+<p>A semi-static description of one or more datasets or information repositories as of one version: a set of Node Schemas and Node Instances, and the Declaration that divides them into Subgraphs. Published as JSON-LD, each Subgraph is a named graph. Drawn in <a href="#knowledge-graph-declaration">Knowledge Graph declaration</a>. <a href="graph.schema.json#/$defs/KnowledgeGraph">src</a></p>
+<h4>Dependency</h4>
+<p>One Knowledge Graph depends on another when its Declaration names the other. The dependent's Nodes may refer to the other's; the other's never refer back. <a href="graph.schema.json#/$defs/Dependency">src</a></p>
+<h4>Content</h4>
+<p>The Node Kinds whose instances describe the datasets and other information a Knowledge Graph is about: their records, documents, catalogues and terms, and links to other sources of knowledge inside or outside the repository. <a href="graph.schema.json#/$defs/Content">src</a></p>
 <h4>Actor</h4>
-<p>A participant, whether a person, an agent or a program, that takes a Role in each Process it takes part in. <a href="graph.schema.json#/$defs/Actor">src</a></p>
-<h4>Role</h4>
-<p>The part an Actor plays in a Process. A Process diagram draws each Role as one lane, and a Role carries the Skills its lane needs. <a href="graph.schema.json#/$defs/Role">src</a></p>
-<h4>Process</h4>
-<p>A diagram of the steps, decisions and order of some work, with one lane per Role. It is written in Business Process Model and Notation (BPMN), a standard diagram format, in a <code>.bpmn</code> file. <a href="graph.schema.json#/$defs/Process">src</a></p>
-<h4>Process Node</h4>
-<p>One element of a Process: a step, a decision, a start or an end. <a href="graph.schema.json#/$defs/ProcessNode">src</a></p>
-<h4>Sequence Flow</h4>
-<p>An arrow in a Process, from one Process Node to the next. <a href="graph.schema.json#/$defs/SequenceFlow">src</a></p>
+<p>A person, an agent or a program that can carry out work. <a href="graph.schema.json#/$defs/Actor">src</a></p>
+<h4>Task</h4>
+<p>A unit of work an Actor carries out: what it needs to begin, and what it produces. <a href="graph.schema.json#/$defs/Task">src</a></p>
 <h4>Skill</h4>
-<p>Written instructions an Actor follows to carry out one step of a Process, in a <code>.md</code> file. <a href="graph.schema.json#/$defs/Skill">src</a></p>
+<p>The Node Kind whose instances are natural-language instructions an Actor follows to carry out one Task. <a href="graph.schema.json#/$defs/Skill">src</a></p>
 <h4>Tool</h4>
-<p>A program an Actor calls to carry out a step. A Harness may declare Tools; bootstrap declares none, because it runs nothing. <a href="graph.schema.json#/$defs/Tool">src</a></p>
+<p>The Node Kind whose instances describe a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it. <a href="graph.schema.json#/$defs/Tool">src</a></p>
+<h4>Role</h4>
+<p>The Node Kind whose instances name a responsibility an Actor takes on when carrying out Tasks, and list the Skills that responsibility needs. <a href="graph.schema.json#/$defs/Role">src</a></p>
+<h4>Process Node</h4>
+<p>One element of a BPMN diagram: a Task, a decision, a start or an end. <a href="graph.schema.json#/$defs/ProcessNode">src</a></p>
+<h4>Sequence Flow</h4>
+<p>An arrow in a BPMN diagram, from one Process Node to the next. <a href="graph.schema.json#/$defs/SequenceFlow">src</a></p>
+<h4>Process</h4>
+<p>The Node Kind whose instances coordinate Tasks: a BPMN diagram whose Process Nodes are joined by Sequence Flows, in lanes that each name the Role an Actor takes to carry out that lane's Tasks. <a href="graph.schema.json#/$defs/Process">src</a></p>
+<h4>Harness</h4>
+<p>A Knowledge Graph whose Subgraphs hold Skills, Tools, Roles and Processes: what an Actor needs in order to work with another Knowledge Graph. <a href="graph.schema.json#/$defs/Harness">src</a></p>
 <h3>Discussion Input</h3>
 <p><a href="discussion.input.schema.json">src</a></p>
 <p>The occasion for asking: what the agent already knows, and which unknown is still open. Deliberately small — a Bootstrapping Agent has read one README and can look nothing up, so an input it cannot populate is an input that stops the process.</p>
@@ -174,7 +188,7 @@ its drawing; the rest are defined in words only.</p>
 </ul>
 <h3>Knowledge Graph declaration</h3>
 <p><a href="graph.schema.json">src</a> · describes <code>&#x3C;name>.json</code></p>
-<p>Information kept as files in a repository: things, and the named relations between them. It is declared by one file at its root, <code>&#x3C;name>.json</code>, which gives its name and lists its Subgraphs. This schema is the shape of that declaration, and its <code>$defs</code> define every term bootstrap uses.</p>
+<p>A semi-static description of one or more datasets or information repositories as of one version: a set of Node Schemas and Node Instances, and the Declaration that divides them into Subgraphs. Published as JSON-LD, each Subgraph is a named graph. This schema is the shape of that declaration, and its <code>$defs</code> define every term bootstrap uses.</p>
 <pre><code class="language-text">+--------------------------------------+
 | Knowledge Graph declaration          |
 +--------------------------------------+

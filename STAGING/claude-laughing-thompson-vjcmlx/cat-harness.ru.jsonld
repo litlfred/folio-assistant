@@ -297,14 +297,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-29T20:37:30.219Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9df7b5baea6bb5a2969dedd0ce6d110a697eb057",
-  "sourceCommitSha": "9df7b5baea6bb5a2969dedd0ce6d110a697eb057",
-  "sourceCommitAt": "2026-09-29T20:34:36Z",
+  "generatedAt": "2026-09-29T21:47:41.880Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/46b4b61400341e05127a1e4e0c3cbdd7dc338d9f",
+  "sourceCommitSha": "46b4b61400341e05127a1e4e0c3cbdd7dc338d9f",
+  "sourceCommitAt": "2026-09-29T21:44:34Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 280,
+    "Skill": 281,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
@@ -318,7 +318,7 @@
     "Schema": 127,
     "ExternalSchema": 17,
     "GraphKind": 35,
-    "Directory": 46,
+    "Directory": 45,
     "Asset": 3
   },
   "@graph": [
@@ -2715,6 +2715,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/adjudication"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#skill/liquid-templates",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "liquid-templates",
+      "title": "Liquid templates — layout only, every fact from the graph",
+      "description": "Authoring a Liquid template in this repository — a README template the `subgraph-readmes` Tool renders with liquidjs, or a Jekyll include on the just-the-docs site. Where templates live (inside a declared directory, reached through its id), what a template may read (only what the Knowledge Graph hands it), the leading comment the generator reads as the file's description, includes, whitespace control, escaping, and regenerate-then-commit with the `--check` gate. Read it before adding or changing any `.liquid` file or anything under `docs/_includes/`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/liquid-templates.md",
+      "instructionLines": 139,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/liquid-templates"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#skill/methodology-adoption",
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
       "name": "methodology-adoption",
@@ -3079,7 +3096,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 1067,
+      "instructionLines": 1109,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3383,7 +3400,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/readme-sections.md",
-      "instructionLines": 227,
+      "instructionLines": 228,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6534,6 +6551,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#skill/kg-to-portal",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#skill/kg-viewer",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#skill/library-ingestion",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#skill/liquid-templates",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#skill/literature-search",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#skill/markdown-render-check",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#skill/mcp-assembly",
@@ -36167,7 +36185,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "subgraph-readmes",
       "title": "Directory READMEs from the Knowledge Graph",
-      "description": "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in the declared `readme-templates` directory, which may `{% include %}` one another. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
+      "description": "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
       "install": {
         "none": true
       },
@@ -44896,7 +44914,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/docs"
       ],
-      "description": "Documentation ABOUT the knowledge graph itself -- 241 markdown files, the entire published surface, and UNDECLARED until 2026-09-20. That is the dh4f defect in its purest form: every declaration-driven consumer scanned straight past the thing readers actually see. Owner, same day: 'docs/ is about documentation about the KG itself... docs/ in cat-harness', with the intent that this is WHERE DOCUMENTATION GOES and therefore the only place a forward reference may be authored. The `docs` kind is RENDERABLE and is registered by `schemas/docs-graph-kind.ts` rather than added to BASE_GRAPH_KINDS, so the assertion that the harness's base vocabulary carries no renderable kind stays true and its test stays unchanged. Distinct from `folio`, which is core's: the difference is the SUBJECT. A page explaining how ingestion works is `docs`; a note an author writes about an ingested catalogue is a `folio`; the catalogue itself is `library/`. `dependents` is `skip`, unlike the other renderable graph `folio`: this is documentation THIS instance publishes about the knowledge graph, so a dependent folio inherits the pages rather than an empty directory to refill — it authors its own subject matter under `folio/`, which is `reproduce`. CHANGED TO `reproduce` 2026-09-21 ON THE OWNER'S COMPOSE RULING (bean `n0nf`, issue #638), and the paragraph above is kept rather than deleted because its reasoning was right for the question it answered. It argued `skip` on the grounds that a dependent should INHERIT THE PAGES rather than get an empty directory to refill. Under compose it gets BOTH: the pages still reach it, and `reproduce` gives it the place to override one. So this is not a reversal of that argument, it is the second half of it arriving. The `dependents` doc warns that defaulting to `reproduce` ships junk -- twelve inherited directories, four of them the platform's own, each empty with a committed keep marker, the `dh4f` shape shipped downstream. That warning is about a DEFAULT, and the test it turns on is the one that schema states: is this directory part of the SHAPE a folio has, or merely where THIS instance's content lives? Before the ruling `docs/` was the second. After it, a folio is expected to author and override its own documentation, which makes it the first -- the same answer `uploads/` and `library/` get, and they are `reproduce` and also start empty. WHAT THIS DOES NOT DO is give the REPOSITORY ROOT a `docs/`. The root does not depend on cat-harness (measured: its declaration chain has length 1), so nothing is inherited there, and the root's own `harness.json` carries the owner's \"only uploads/ on this repo's root\". `n0nf` says the root's docs \"is not its own: cat-harness installs it\", which needs a dependency edge that does not exist. That is left for the owner rather than settled here. A viewer IS declared for this `docs` directory, and `owesVisualiser` not demanding one is not the same as forbidding one. The kind is `renderable`, so it does not OWE a viewer — but the owner's rule, quoted in full in `mount-instance-docs.ts`'s module note, is that a harness which instantiates a directory MAKES a visualiser for it, docs and library included. It points at the `docs-auto` index, NOT at the mount route `/docs/<instance>/`: that mount is a VERBATIM copy of the directory, and `visualiserHref` exists precisely because linking a rail to it lands on a byte-identical page — the owner's *\"clicking on doc/ ... under who-iris navbar did nothing\"*. The owner's sentence is CITED rather than quoted here on purpose: it names a graph whose viewer is `publish: \"staging-only\"`, and a test asserts that name appears NOWHERE in the built export — including in a declaration's own prose, which is where quoting it put it. The test caught that, and this paragraph is the second attempt.",
+      "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
       "readmePath": "docs/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#directory/docs",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
@@ -44923,7 +44941,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/schemas",
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
       ],
-      "description": "The CONTENT layer's schema nodes, staged as a top-level directory ahead of the split (#223). Owner, 2026-09-20: 'not in cat-harness, in folio-assitant-core/ as a named subgraph.' A NAMED SUBGRAPH and not a second `schemas` entry: overrides match on the entry's id, so reusing `schemas` would REPLACE this instance's schema graph rather than add to it -- the same trap the `cat-harness-src` entry above documents from the other side. REPOSITORY-scoped, like `bootstrap/skills/`: it sits at the top of the checkout, not inside this instance, and is deliberately never overlaid by a dependency. This entry is the mirror of `folio-assistant-core/harness.json`'s own, and it has to be stated twice only because `resolveSkillDirs` has no caller -- when that is wired, THIS entry is the one to delete.",
+      "description": "The schemas of the content layer's Node Kinds, kept as their own Subgraph until this repository is split.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assist-core-schemas"
     },
     {
@@ -44934,7 +44952,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/skills"
       ],
-      "description": "The `large-datasets` subgraph's instruction bodies. Declared here as well as in its own harness.json for the same reason kg-navigation is: `resolveSkillDirs` has no caller yet, so a nested instance's directories are not reachable from the root. `materialize-remote` lives here and is named by two diagrams in cat-harness/processes/ -- a skill ref resolves across the declared graphs, not within one directory. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
+      "description": "The instructions for working with large datasets: one Skill per file.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/large-datasets-skills"
     },
     {
@@ -45035,20 +45053,6 @@
       "readmePath": "test/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#directory/cat-harness-tests",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/cat-harness-tests"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#directory/readme-templates",
-      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Directory",
-      "name": "readme-templates",
-      "path": "tools/templates/readme/",
-      "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/code"
-      ],
-      "title": "README templates",
-      "description": "The Liquid templates `subgraph-readmes` renders into each declared directory's README. They may `{% include %}` one another, Jekyll style, and read every value from the Knowledge Graph: the directory's declared title, description and kinds, and each file as it describes itself.",
-      "readmePath": "tools/templates/readme/README.md",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#directory/readme-templates",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/readme-templates"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld#directory/folio-templates",

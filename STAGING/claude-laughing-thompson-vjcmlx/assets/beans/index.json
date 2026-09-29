@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 433,
+      "count": 434,
       "unit": "beans"
     }
   },
@@ -4037,6 +4037,20 @@
       "file": "beans/defs/folio-assistant-oz5w--staging-cleanup-vs-branch-reuse-merging-pr-n-delet.md"
     },
     {
+      "id": "folio-assistant-oz9e",
+      "title": "BENCHMARK: outcome evaluation of harness runs across models (close B8 — accuracy, not only structure)",
+      "status": "todo",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-5a3l",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-29T21:30:50Z",
+      "updatedAt": "2026-09-29T21:32:03Z",
+      "preview": "From the ARG-Designer mapping (arXiv 2507.18224), row B8: *they measure\naccuracy on benchmarks; we check structure.* The owner, 2026-09-29: that gap is\n**intended** to be closed, as part of the tool-harness / multi-model\nbenchmarking work under this epic — not left as a permanent difference.\n\n## What is missing today\n\nEvery check cat-harness runs is **structural**: a lane binds a role, a step is\ne",
+      "file": "beans/defs/folio-assistant-oz9e--benchmark-outcome-evaluation-of-harness-runs-acros.md"
+    },
+    {
       "id": "folio-assistant-p11x",
       "title": "check:partition cannot see cross-instance edges: its ROOT is cat-harness/, so every 0 it reports is scoped to one instance",
       "status": "todo",
@@ -4330,7 +4344,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-29T18:18:26Z",
-      "updatedAt": "2026-09-29T19:14:25Z",
+      "updatedAt": "2026-09-29T21:44:11Z",
       "preview": "## Why\n\n`bootstrap/` is the floor (`needs: []`) and is meant to become `litlfred/bootstrap`. An analysis on 2026-09-29 (artifact https://claude.ai/artifact/92M8FmwCJeHUvs6NXutsar, §3) listed 22 places where bootstrap's own files point outside bootstrap or at folio-assistant. Each one dangles once the directory is its own repository. This bean is the plan to remove them, grouped by how each group g",
       "file": "beans/defs/folio-assistant-r3gy--bootstrap-outward-references-plan-to-reach-zero-be.md"
     },
