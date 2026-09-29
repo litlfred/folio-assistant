@@ -1,6 +1,10 @@
 ---
 title: "Methodologies"
 description: "The methodologies this repository has adopted — what each is for, where it came from, and whether the source it rests on is held here."
+renders:
+  - cat-harness/methodologies
+  - folio-assistant-core/methodologies
+  - smart-base/methodologies
 ---
 <style>
 .mv-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;

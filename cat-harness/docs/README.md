@@ -47,7 +47,7 @@ Part of [C@T Harness](../README.md), declared as `docs`, holding `docs`.
 | [`assets/`](assets/) | 447 files | |
 | [`beans/`](beans/) | 1 file | |
 | [`bootstrap/`](bootstrap/) | 1 file | |
-| [`cat-harness/`](cat-harness/) | 42 files | |
+| [`cat-harness/`](cat-harness/) | 44 files | |
 | [`es/`](es/) | 13 files | |
 | [`external-schemas/`](external-schemas/) | 1 file | |
 | [`fr/`](fr/) | 13 files | |
