@@ -6,6 +6,10 @@
     subgraph  the directory's declaration entry (id, path, title,
               description, kinds) — `kg.directories[]` in the declaration
     instance  the declaring instance (name, title, readme: a relative link)
+    release   its version, and for an instance declaring an iriBase its
+              release addresses: version, major, agent (<iriBase><version>/,
+              for what a program reads), human (<iriBase>v<major>/, for
+              pages). Empty strings where not declared — never a typed number.
     kg        the whole declaration, for any field a template wants
     files     each file directly here: path, what (read from the file),
               usedBy (from diagrams that name it)
@@ -19,6 +23,6 @@
 _No description is declared for `{{ subgraph.id }}`._
 {%- endif %}
 
-Part of [{{ instance.title | default: instance.name }}]({{ instance.readme }}), declared as `{{ subgraph.id }}`, holding {% for k in subgraph.kinds %}`{{ k }}`{% unless forloop.last %}, {% endunless %}{% endfor %}.
+Part of [{{ instance.title | default: instance.name }}]({{ instance.readme }}){% if release.version != "" %} {{ release.version }}{% endif %}, declared as `{{ subgraph.id }}`, holding {% for k in subgraph.kinds %}`{{ k }}`{% unless forloop.last %}, {% endunless %}{% endfor %}.
 
 {% include files.liquid -%}

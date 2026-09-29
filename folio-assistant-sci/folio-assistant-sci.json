@@ -5,14 +5,14 @@
   "needs": [
     "folio-assistant-core"
   ],
-  "description": "Scientific source material used by folios that formalise mathematics \u2014 one document today.",
+  "description": "Scientific source material used by folios that formalise mathematics, and the methodologies for formalising it in Lean that this layer adopts from that material.",
   "assets": [
     {
       "id": "agent-instructions",
       "src": "AGENTS.md",
       "role": "agent-instructions",
-      "title": "AGENTS.md \u2014 folio-assistant-sci",
-      "description": "Cold start for work in this layer. Source material a folio READS, never mathematics this repository authors \u2014 and the placement rule that has already been got wrong once: a repository named for one catalogue is not a place to keep things belonging to another (beans `r1lz`, `frs5`)."
+      "title": "AGENTS.md — folio-assistant-sci",
+      "description": "Cold start for work in this layer. Source material a folio READS, never mathematics this repository authors — and the placement rule that has already been got wrong once: a repository named for one catalogue is not a place to keep things belonging to another (beans `r1lz`, `frs5`)."
     },
     {
       "id": "readme",
@@ -27,31 +27,35 @@
       "id": "library",
       "path": "library/",
       "dependents": "reproduce",
-      "description": "Ingested L1 source material for the sciences. `milnorlink` is the whole of it: the source text the derived `milnor` skill reads, moved out of cat-harness/library/ because the PLATFORM holds no content (bean r1lz, and the rule AGENTS.md states as 'folio-assistant is the platform, not the content'). Its `image-verdicts.json` moved with it rather than staying behind: a verdict belongs to the library it judges, and one file judging documents in two libraries is how one library's judgement comes to rewrite another's sidecar. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
+      "description": "Ingested L1 source material for the sciences. `milnorlink` was the whole of it until 2026-09-29, when three Lean-autoformalization papers arrived as the `evidence` of this layer's methodology nodes (bean h3rw). `milnorlink` is the source text the derived `milnor` skill reads, moved out of cat-harness/library/ because the PLATFORM holds no content (bean r1lz, and the rule AGENTS.md states as 'folio-assistant is the platform, not the content'). Its `image-verdicts.json` moved with it rather than staying behind: a verdict belongs to the library it judges, and one file judging documents in two libraries is how one library's judgement comes to rewrite another's sidecar. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
       "graphKinds": [
         "library"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html"
-      }
+      ]
     },
     {
       "id": "voices",
       "path": "skills/voices/",
       "dependents": "reproduce",
-      "description": "The `milnor` voice skill \u2014 a mathematics-exposition voice derived from the exemplar paper, as `voice.json` (12 rules, each citing what it was read from) beside `SKILL.md`. It lived in the PLATFORM until 2026-09-21, which meant cat-harness shipped voice CONTENT while claiming to hold none; the owner settled that it belongs to the science layer, the instance that derived it. Under `skills/` because a voice is a skill. Declared HERE rather than in `folio-assistant-sci.config.json`: #727 split the two, and a directory is something this instance IS rather than how it behaves when a folio loads it.",
+      "description": "The `milnor` voice skill — a mathematics-exposition voice derived from the exemplar paper, as `voice.json` (12 rules, each citing what it was read from) beside `SKILL.md`. It lived in the PLATFORM until 2026-09-21, which meant cat-harness shipped voice CONTENT while claiming to hold none; the owner settled that it belongs to the science layer, the instance that derived it. Under `skills/` because a voice is a skill. Declared HERE rather than in `folio-assistant-sci.config.json`: #727 split the two, and a directory is something this instance IS rather than how it behaves when a folio loads it.",
       "graphKinds": [
         "voices"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/voices/folio-assistant-sci/index.html"
-      }
+      ]
+    },
+    {
+      "id": "sci-methodologies",
+      "theme": "analyst",
+      "path": "methodologies/",
+      "dependents": "skip",
+      "description": "The methodologies this layer adopts from its own library: external, named methods for formalising mathematics in Lean. Separate from `cat-harness/methodologies/` for the reason `core-methodologies` is separate from both -- a method belongs to the layer whose job it describes, so this directory lifts out with this instance and nothing else moves (`methodology-adoption` §4). Each node renders the METHOD and states where the rendering stops; the paper's tools and numbers are not adopted. Bean h3rw.",
+      "graphKinds": [
+        "methodology"
+      ]
     },
     {
       "id": "qa",
       "path": "test/results/",
       "dependents": "reproduce",
-      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" \u2014 a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject\u2019s own path, and ONE kg-qa-manifest/v1 recording the auditor\u2019s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 2 files across scenarios (1), skills (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph \u2014 these verdicts are about this instance\u2019s nodes, and inheriting them would attribute one instance\u2019s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 2 files across scenarios (1), skills (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "graphKinds": [
         "qa"
       ]

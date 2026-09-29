@@ -63,6 +63,10 @@ import { directoryByVisualisationRef } from "./graph-tiles.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 import { itemState } from "./gen-uploads-viz.ts";
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
+import { renderedPath, withRenders, withViewers } from "./viewer-declarations.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "library-viewer";
 
 const ROOT = join(import.meta.dir, "..");
 const REPO_ROOT = repoRootFor(ROOT);
@@ -914,7 +918,7 @@ if (import.meta.main) {
   //
   // The rule that falls out: look the ref up in the SAME list the tiles came
   // from, or the ids do not correspond to tiles at all.
-  const byRef = directoryByVisualisationRef(readDeclaration(ROOT)?.directories ?? []);
+  const byRef = directoryByVisualisationRef(withViewers(readDeclaration(ROOT)?.directories ?? [], ROOT));
   const refOf = (dirPath: string): string =>
     relative(REPO_ROOT, join(viewerPlacement(site, dirPath, seg).pageDir, "index.html"))
       .split(sep)
@@ -1002,10 +1006,25 @@ if (import.meta.main) {
     }
   }
   const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
-  emitPage(nav)(join(pageDir, "index.html"), viewerHtml(dataHref, "", folioMount));
+  // Each page says which directories it draws (#1168 B7a-2): the library
+  // directories and upload queues whose entries it shows — every one on the
+  // whole page, the subject's own on a subject page.
+  // A queue carries its instance; a library directory's is its first path
+  // segment, since no instance keeps a library at the repository root.
+  const drawn = (subject?: string): string[] =>
+    [
+      ...libDirs.map((d) => renderedPath(repoRoot, d)).map((p) => [p, p.split("/")[0]!] as const),
+      ...g.queues.map((q) => [q.dir, q.instance] as const),
+    ]
+      .filter(([, instance]) => subject === undefined || instance === subject)
+      .map(([p]) => p);
+  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref, "", folioMount), drawn(), VIEWER_TOOL));
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject, folioMount));
+    emitPage({ ...nav, instance: subject })(
+      join(sub.pageDir, "index.html"),
+      withRenders(viewerHtml(sub.dataHref, subject, folioMount), drawn(subject), VIEWER_TOOL),
+    );
   }
 
 

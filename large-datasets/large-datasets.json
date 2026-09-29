@@ -5,14 +5,14 @@
   "needs": [
     "folio-assistant-core"
   ],
-  "description": "Taking a subset of a corpus you will never hold \u2014 and publishing artifacts too big for the site that describes them.",
+  "description": "Taking a subset of a corpus you will never hold — and publishing artifacts too big for the site that describes them.",
   "assets": [
     {
       "id": "agent-instructions",
       "src": "AGENTS.md",
       "role": "agent-instructions",
-      "title": "AGENTS.md \u2014 large-datasets",
-      "description": "Cold start for work in this layer, and the boundary it exists to hold: this layer does NOT decide whether to take something \u2014 that is `materialize-remote`'s five gates in core. Here the deliverable is the descriptor, because no source's enumeration API is guessable and an answer given to a human once is recorded nowhere."
+      "title": "AGENTS.md — large-datasets",
+      "description": "Cold start for work in this layer, and the boundary it exists to hold: this layer does NOT decide whether to take something — that is `materialize-remote`'s five gates in core. Here the deliverable is the descriptor, because no source's enumeration API is guessable and an answer given to a human once is recorded nowhere."
     },
     {
       "id": "readme",
@@ -27,14 +27,11 @@
       "id": "large-datasets-schemas",
       "path": "schemas/",
       "dependents": "skip",
-      "description": "`source-descriptor` \u2014 how to enumerate a corpus and ask it for a subset. `artifact-store` \u2014 where an artifact too large for the site tree goes, as a DECLARATION rather than a hardcoded host, per the owner's 'make tool that can be done another way potentially if not github cdn'.",
+      "description": "`source-descriptor` — how to enumerate a corpus and ask it for a subset. `artifact-store` — where an artifact too large for the site tree goes, as a DECLARATION rather than a hardcoded host, per the owner's 'make tool that can be done another way potentially if not github cdn'.",
       "graphKinds": [
         "schemas",
         "cat-harness"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/large-datasets/index.html"
-      }
+      ]
     },
     {
       "id": "large-datasets-sources",
@@ -83,7 +80,7 @@
       "id": "qa",
       "path": "test/results/",
       "dependents": "reproduce",
-      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" \u2014 a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject\u2019s own path, and ONE kg-qa-manifest/v1 recording the auditor\u2019s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 4 files across scenarios (1), skills (3). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph \u2014 these verdicts are about this instance\u2019s nodes, and inheriting them would attribute one instance\u2019s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 4 files across scenarios (1), skills (3). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "graphKinds": [
         "qa"
       ]

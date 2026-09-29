@@ -46,12 +46,16 @@ export const BOOTSTRAP_TERMS = {
     "One unit of recorded knowledge, held in one file or as one identifiable part of a file, and named by an IRI.",
   NodeKind:
     "A name for a class of Nodes, together with its Node Schema: a JSON Schema that every Node of that kind satisfies.",
+  SubKind:
+    "A Node Kind whose Node Schema requires everything another Node Kind's does, so every Node of it is also a Node of that other kind.",
   NodeInstance: "A Node that states its Node Kind and satisfies that kind's Node Schema.",
   GraphKind: "A named set of Node Kinds whose instances may be held together.",
   Declaration:
     "A JSON document, `<name>.json`, that gives a name and lists entries, each naming either a directory of Node Instances with the Graph Kinds they belong to, or a single file with its purpose.",
   Subgraph: "A named subset of Node Instances: a Declaration's directory entry, with its id, its directory and its Graph Kinds.",
   Asset: "A Declaration's file entry: one file about the repository itself, such as its README, with its stated purpose.",
+  Extension:
+    "A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning.",
   KnowledgeGraph:
     "A semi-static description of one or more datasets or information repositories as of one version: a set of Node Schemas and Node Instances, and the Declaration that divides them into Subgraphs. Published as JSON-LD, each Subgraph is a named graph.",
   Dependency:
@@ -75,11 +79,51 @@ export const BOOTSTRAP_TERMS = {
 
 export type BootstrapTerm = keyof typeof BOOTSTRAP_TERMS;
 
+/**
+ * The Graph Kinds bootstrap's own Declaration uses, one plain sentence each.
+ *
+ * Defined HERE so bootstrap can say what its own Subgraphs hold without a
+ * Harness present. They were defined only in cat-harness's registry
+ * (`graph-kind-registry.ts`), which now reads these sentences as its
+ * summaries rather than holding its own (bean `r3gy`, D1). A Harness adds
+ * kinds of its own; to a reader that knows only bootstrap, those are
+ * Extensions.
+ */
+export const BOOTSTRAP_GRAPH_KINDS = {
+  skills: "A Subgraph of Skills: the instructions an Actor follows to carry out a Task.",
+  schemas: "A Subgraph of Node Schemas: files that state the shape other files must have.",
+  scenarios: "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on.",
+  processes:
+    "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from.",
+  models:
+    "A Subgraph describing the language models an Actor may be: which languages each is good at, and whether a person checked.",
+  "swimlane-glossary":
+    "A Subgraph recording every term a Knowledge Graph's Processes have ever named, and when each stopped being used, so a retired term is never silently reused.",
+} as const;
+
+export type BootstrapGraphKind = keyof typeof BOOTSTRAP_GRAPH_KINDS;
+
+/** One entry of a Subgraph's `graphKinds`: one of bootstrap's, or an Extension. */
+export const GraphKindSchema = z
+  .union([
+    ...(Object.entries(BOOTSTRAP_GRAPH_KINDS) as [string, string][]).map(([k, d]) => z.literal(k).describe(d)),
+    z
+      .string()
+      .min(1)
+      .describe(`A Graph Kind a Harness defines. To a reader that knows only bootstrap it is an Extension: ${BOOTSTRAP_TERMS.Extension}`),
+  ])
+  .describe(BOOTSTRAP_TERMS.GraphKind);
+
+/** A term whose `$defs` entry carries a shape as well as its definition. */
+export const BOOTSTRAP_TERM_SHAPES: Readonly<Partial<Record<BootstrapTerm, z.ZodType>>> = {
+  GraphKind: GraphKindSchema,
+};
+
 export const SubgraphSchema = z
   .object({
     id: z.string().min(1).describe("The Subgraph's name, unique within its Knowledge Graph."),
     path: z.string().min(1).describe("The directory, relative to the declaration."),
-    graphKinds: z.array(z.string().min(1)).min(1).describe("The Graph Kinds it holds."),
+    graphKinds: z.array(GraphKindSchema).min(1).describe("The Graph Kinds it holds."),
     title: z.string().optional().describe("A short name for people, shown as its README's heading."),
     description: z.string().optional().describe("What it holds, in a sentence or two, shown under that heading."),
   })
@@ -99,9 +143,25 @@ export const AssetSchema = z
 export const KnowledgeGraphDeclarationSchema = z
   .object({
     name: z.string().min(1).describe("The Knowledge Graph's name. The declaration file is `<name>.json`."),
+    version: z
+      .string()
+      .regex(/^\d+\.\d+\.\d+$/)
+      .optional()
+      .describe("Its version, as MAJOR.MINOR.PATCH (semantic versioning)."),
+    iriBase: z
+      .string()
+      .url()
+      .optional()
+      .describe(
+        "The address its IRIs are minted under, before the version. An identifier a program reads is `<iriBase><version>/…`; a page meant for a person is `<iriBase>v<major>/…`.",
+      ),
     title: z.string().optional(),
     description: z.string().optional(),
     directories: z.array(SubgraphSchema).optional().describe("Its Subgraphs: zero or more."),
     assets: z.array(AssetSchema).optional(),
   })
-  .passthrough();
+  // Every other field is an Extension: a Harness above bootstrap adds its
+  // own (`stickies`, and a sticky's `theme`, are cat-harness's), and a reader
+  // that does not know one ignores it rather than rejecting the file.
+  .passthrough()
+  .describe(`A Declaration. Any field not listed here is an Extension: ${BOOTSTRAP_TERMS.Extension}`);
