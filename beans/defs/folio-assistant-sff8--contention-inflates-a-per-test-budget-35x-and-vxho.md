@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T03:31:40Z
-updated_at: 2026-09-27T11:38:38Z
+updated_at: 2026-09-27T18:32:29Z
 parent: folio-assistant-1xhc
 ---
 
@@ -533,3 +533,294 @@ owner's call, not an agent's.
       failure (`skill-coverage`) and stop; keep fixing per-test as they surface;
       build the instrument that makes cost-vs-budget visible; or leave it recorded.
       Not chosen here.
+
+
+## The owner chose BOTH: the instrument, and keep fixing as they surface — 2026-09-27
+
+### `check:test-budgets`, and the distinction it rests on
+
+`cat-harness/scripts/check-test-budgets.ts`. It reads a junit report and, for every
+case, decides from the SOURCE whether the test declares its own budget — then gives
+a share of the 5000 ms default only to the ones that do not.
+
+That split is the whole tool. Assuming 5000 ms everywhere is what made the earlier
+counting useless: **it reports nine-plus correct tests as the worst offenders.**
+`declared-directory-resolves.test.ts` runs 22 s green on `modules.length * 600`.
+
+The budget is read from the AST and never evaluated. A declared budget is an
+arbitrary expression, so its VALUE is not statically knowable — and does not need to
+be, because the only question is whether the author budgeted the test at all, which
+is the presence of a third argument. Ranges rather than lines, because the runner
+attributes a case to the call's line or its name's, and a `test(` spanning thirty
+lines makes those differ — which is exactly the shape of the one test this most needs
+to classify correctly.
+
+### It cross-validates the arithmetic on this bean
+
+Earlier I derived *"at least nine tests already run past the default and carry their
+own"* from 12 over-budget cases against 3 failures. Measured directly by the tool:
+**30 cases declare a budget** (24 in the earlier run). Two independent methods, and
+the bound holds.
+
+    run 1 (3 fail)   12300 cases   24 declared   4 default-budget over 5000 ms
+    run 2 (1 fail)   12348 cases   30 declared   1 default-budget over 5000 ms
+
+### THE OBVIOUS READING IS WRONG, and it is measured
+
+A share over 100 % does **not** predict a timeout. Run 1 had **four**
+default-budget cases over 5000 ms and **three** failures. The fourth —
+`tests/tools.test.ts:204` at **5.22 s**, declaring no budget anywhere in its file —
+**passed**, and passed again at 4.23 s in run 2.
+
+So junit's `time` and the quantity bun charges against the timeout are not the same:
+`time` is the outer measurement and includes work the budget does not. The share is
+therefore a **ranking of exposure, not a prediction**, and the tool says so in its
+docblock and in its own output. Calling >100 % "will fail" would have been a
+confident false claim about a passing test, on the very run that motivated the tool.
+
+The ranking still does the job: the three highest-share default-budget cases in run 1
+were exactly the three that timed out.
+
+### Two deliberate refusals, both with precedent here
+
+**No sidecar.** Every other auditing tool here commits one, and the reason is sound —
+a printed verdict cannot tell "never measured" from "measured clean". It does not
+apply, because **a timing is a fact about the machine, not the repository**.
+Committing the milliseconds would pin this container's numbers as the corpus's, which
+is `3vc1`'s defect. `check:ci-health` carries the precedent: a fact *about* the
+repository rather than one it *holds* is asked externally every run and cached
+nowhere.
+
+**Not a pass/fail gate.** ~32 cases sit at half the default under load. A threshold
+gate needs all of them acknowledged on day one, and 50 exemptions nobody has read is
+the empty exemption `xd1g` removed a gate for. Exit 0 or 2, never 1 (`nytj`); 0 cases
+is exit 2, not a clean run over nothing (`6tkl`).
+
+Named `check:test-budgets` rather than `test:budgets` after the census caught it:
+`checkScriptNames` selects `check:*` / `*:check`, so the original name sat outside the
+wiring audit entirely and its `SCRIPT_EXEMPTIONS` row was stale by construction.
+`check:environment` and `check:bun-runtime` are the precedent — reports that exit 0/2
+and still carry `check:` names so the census sees them.
+
+### The live failure, fixed — the FOURTH in this family
+
+    skill-coverage.test.ts:94   every resolvable skill is a node in the exported graph
+    5312 ms (timed out)  ->  19.3 ms
+
+Same remedy as the other three: `await buildExport(...)` hoisted out of the test body
+to module scope, which belongs to no test's timeout.
+
+### And the next ones are now NAMED rather than waiting to be discovered
+
+From run 2, default-budget cases by share — this is the deliverable:
+
+    4.77 s   95 %  tests/fsh-guts-export.test.ts:100   the main graph still does not mention fsh-guts at all
+    4.45 s   89 %  tests/tools.test.ts:43              every satisfies names a skill that exists
+    4.43 s   89 %  tests/kg-export.test.ts:479         a preview says so in its type and links every node back
+    4.27 s   85 %  tests/fallback-roles.test.ts:55     a skill with no human-only lane derives nothing
+    4.23 s   85 %  tests/tools.test.ts:204             io IRIs follow the publication base
+
+### Verification
+
+15 new tests (fixtures plus one corpus case asserting
+`declared-directory-resolves` IS seen to declare a budget — if it were not, the tool
+would report the repository's best-behaved slow test as its worst offender).
+`bun run gates` **170 of 170**, tree clean afterwards. `tsc` and `eslint` clean.
+
+- [x] **OWNER DECISION** — **BOTH (1 and 3)**, 2026-09-27: the instrument is built
+      (`check:test-budgets`) and the live failure is fixed (`skill-coverage`).
+- [ ] Standing, per that decision: keep fixing per-test as they surface. The five
+      named above are the queue, worst first, and no longer need a red run to find.
+
+
+## Working the named queue — 3 of 5 down, and the 4th is NOT a hoist — 2026-09-27
+
+`check:test-budgets` named five default-budget tests by exposure. Three are fixed by
+the module-scope hoist, measured individually:
+
+| test | before | after |
+|---|---|---|
+| `fsh-guts-export.test.ts:100` | **4.77 s** (95 %) | **16.9 ms** |
+| `tools.test.ts:43` | **4.45 s** (89 %) | **23.4 ms** (file max) |
+| `tools.test.ts:204` | 4.23 s (85 %) | — same file, same change |
+| `kg-export.test.ts:479` | **4.43 s** (89 %) | **96.1 ms** (file max) |
+
+`tools.test.ts` was two of the five in one file, and the cause was **five tests each
+calling `checkTools()`** and paying the full scan. Safe to share because nothing in
+that file mutates the corpus — all five calls are no-arg and no test writes a fixture
+— so five runs could only ever produce the same answer.
+
+`kg-export.test.ts:479` **finishes what bean `w82m` started.** That session hoisted
+the CANONICAL export out of this very test, recording in a comment that building it
+in the body put the test at ~5.2 s, over budget — and left the PREVIEW build in.
+Measured a year of commits later: 4.43 s, over budget again, same reason, one build
+down. A hoist that leaves a sibling build in the body buys one round.
+
+### The fifth is a PRODUCTION fix, not a test one — and it is the more valuable find
+
+`fallback-roles.test.ts:55` at **4.27 s** (85 %) does not yield to a hoist, because
+its three calls pass DIFFERENT skill names. Read the callee:
+
+`fallbackRoleFor(root, skill)` in `check-fallback-roles.ts:240` iterates
+`workflowFiles(root)` and `await loadProcessModel(f)` for **every `.bpmn` in the
+repository**, and only then filters by `skill`. So the expensive half — parsing every
+diagram — is identical on every call and redone each time. The skill argument narrows
+nothing that was not already computed.
+
+That is the `gitFileCommitSha` shape exactly: not a test-budget quirk but a cost every
+caller pays, with the test merely being where it became visible. The remedy is
+memoising the parsed model per path, and **mtime invalidation is available here**,
+which is better than the HEAD-keyed cache that question needed for git — it is
+per-file and precise, so a long-running MCP server cannot hold a stale diagram.
+
+Deliberately NOT done in the same change as three test hoists: it touches production
+code on a path the MCP server uses, and bundling it would put a behavioural change
+in a commit whose stated subject is test scoping.
+
+- [ ] Standing queue, updated: `fallback-roles.test.ts:55` remains, and it wants
+      `loadProcessModel` memoised per path with mtime invalidation rather than a
+      hoist. Re-run `check:test-budgets` on a loaded suite afterwards — each round so
+      far has revealed the next-nearest, which is the point of having the list.
+
+
+## The fifth queue item, done — and my proposed MECHANISM was wrong — 2026-09-27
+
+### Retracting what this bean said one entry ago
+
+I wrote: *"the remedy is memoising the parsed model per path, and **mtime invalidation
+is available here**, which is better than the HEAD-keyed cache that question needed for
+git."* **I asserted that before reading `loadProcessModel`, and it is unsafe.** Read:
+
+- It threads `seen` through its recursive descent to refuse a call-activity cycle —
+  `const path = [...seen, proc.id]`, then `path.includes(node.calledElement)` throws.
+  A model cached under one call path and returned under another **skips a refusal that
+  is the entire point of the parameter.**
+- `normaliseOwnExtensions(rootElement)` **mutates the parse tree in place**, so sharing
+  a parsed model across callers shares mutable state.
+- **160 call sites.**
+
+A cache keyed on path alone would have been a correctness bug in a cycle detector, in a
+function with 160 callers, shipped as a performance fix. Measured nothing; read the
+code and the claim collapsed.
+
+### What the cost actually was — worse than the test suggested
+
+The test was the symptom. `src/index.ts:94` ran `await fallbackRoleFor(instance, s.id)`
+**in a loop over every skill**, and the comment directly above it already noticed that
+*"the derivation reads every BPMN in the corpus"* — it hoisted the call out of a
+synchronous predicate and left the repetition.
+
+Measured on this corpus, **74 diagrams and 23 skills**:
+
+| | |
+|---|---|
+| one `fallbackRoleFor` call | **1745.8 ms** |
+| the loop over all 23 skills | **26016.8 ms** |
+| `fallbackRolesBySkill`, one pass | **1417.6 ms** |
+| disagreements between the two, all 23 skills | **0** |
+
+**~18x off a user-facing operation.** I nearly wrote "~15,000 parses" from 276 skills —
+`loadSkillNeeds` returns **23**, not 276, and 276 is the skill count across packages.
+Measured instead: 23 x 74 = 1702 parses where 74 would do.
+
+### The fix is a single pass, NOT a cache — and that is why it has no staleness question
+
+`fallbackRolesBySkill(root)` builds skill -> roles in one pass; `fallbackRoleFor`
+delegates to it, keeping its signature and its cost. Nothing outlives the call, so
+none of the three hazards above applies, and there is no invalidation question to get
+wrong. Equivalent rather than similar: the three conditions (the node's skills, its
+fulfilment kinds, its `roleRef`) are independent per node, so filtering kinds and
+`roleRef` first and then attributing to each of the node's skills selects the same
+pairs.
+
+### My own test committed this bean's defect, and the fix is the taxonomy applied
+
+The first equivalence test compared all 28 batch entries against the single-skill path
+— 28 full passes, **36 s**, and it **timed out** on the 5000 ms default. The test
+proving the fix paid the pre-fix price.
+
+Fixed with all three moves from this bean rather than a raised number:
+
+1. **Hoist** — the batch is built at module scope, charged to no test's budget.
+2. **Derive** — the remaining budget is `SAMPLE.length * 5000`, ~3.3x the measured
+   quiet cost, matching `declared-directory-resolves`' ~3.5x, so it grows with the
+   corpus.
+3. **Bound** — the exhaustive version added **34 s to a ~270 s suite, 13 % on every
+   run for every contributor, forever**, to re-check a property whose structural
+   argument is in the code. It is now a **regression detector over a fixed sample of
+   6**, labelled as one, and the full 28-skill comparison is recorded above as having
+   been run once by hand with 0 disagreements. File cost: 4.2 s -> 13.2 s, not 38 s.
+
+Spending 13 % of every suite run to verify a performance fix would have been this
+bean's own defect committed by its own fix.
+
+### Verification
+
+`bun run gates` **171 of 171**, tree clean. 17 tests in the file (was 14), `tsc` exit 0
+— it caught a real `string[] | undefined` in my first draft, fixed by holding the
+sample as entries rather than asserting the non-null away. `eslint` clean.
+
+- [x] Standing queue item `fallback-roles.test.ts:55` — done, and it was a production
+      fix of ~18x rather than a test-scoping one. The mechanism first proposed here was
+      wrong and is retracted above.
+- [ ] Re-run `check:test-budgets` on a loaded suite: every round so far has revealed
+      the next-nearest test, which is what the list is for.
+
+
+## The loop CLOSED: the instrument predicted the next failure, and the class shrank — 2026-09-27
+
+Third loaded run, same recipe (6 hogs on 4 CPUs), after the five queue items landed:
+
+    12370 pass / 56 skip / 1 fail    632.4 s    547 files
+
+### The instrument named the failure BEFORE it happened
+
+The one failure is `staging-stamp.test.ts:52` at **5097 ms** — and it was **7th on the
+exposure list** from the previous run, at 4.02 s (80 %), with no red run anywhere in its
+history. That is the whole purpose of `check:test-budgets` discharged: the next failure
+arrived from a list rather than from a surprise.
+
+### The CLASS shrank, which the whack-a-mole reading did not predict
+
+Default-budget cases by share, as the tool reports them across all three loaded runs:
+
+| ≥ share of the 5000 ms default | run 1 | run 2 | run 3 |
+|---|---|---|---|
+| ≥ 5000 ms (100 %) | 4 | 1 | **1** |
+| ≥ 4000 ms (80 %) | 11 | 7 | **1** |
+| ≥ 3000 ms (60 %) | 22 | 12 | **5** |
+| ≥ 2500 ms (50 %) | 37 | 32 | **14** |
+| ≥ 2000 ms (40 %) | 56 | 51 | **35** |
+
+**Fixing five tests improved dozens.** Hoisting `checkTools()` and the exports removed
+work that many tests in those files SHARED, so the population at ≥80 % went 11 → 1 and
+at ≥50 % went 37 → 14. Earlier entries on this bean framed each round as revealing the
+next-nearest test, which was true and incomplete: it also moved the whole distribution.
+
+### This round
+
+    staging-stamp.test.ts:52       5097 ms (timed out)  ->  off the file's top 3
+    fallback-roles.test.ts:56      3.93 s (79 %)        ->  off the file's top 3
+
+`staging-stamp` is the same hoist as the five before it. `fallback-roles.test.ts:56` was
+two full passes over 74 diagrams, and the second — `no-such-skill-anywhere` — asserted a
+claim the absence test added in the previous commit already makes **through both paths
+rather than one**. So that line moved rather than went, and the comment left in its place
+says so; the file still contains the skill name.
+
+### One thing about my OWN addition, so it is not read as an oversight
+
+The bounded cross-check `the same roles come back for 6 sampled skills` is now the
+largest test in `fallback-roles.test.ts` at **6858.5 ms** — 6 single-skill passes at
+~1.15 s each. It passes because it DECLARES a derived budget
+(`SAMPLE.length * 5000`), which also means **`check:test-budgets` will never surface
+it**, by design: the tool gives a share only to tests inheriting the default.
+
+That is ~2.5 % of a ~270 s suite spent cross-checking an ~18x production change, and it
+is deliberate. Recorded here because a budgeted test is invisible to the instrument, so
+the next reader would have no way to tell a considered cost from a forgotten one.
+
+- [x] Re-run `check:test-budgets` on a loaded suite — done, and it predicted the
+      failure it was built to predict.
+- [ ] Standing: `instance-render.test.ts:212` (68 %) and `audit-coverage.test.ts:265`
+      (66 %) now head the list. Nothing is over budget but the one just fixed.
