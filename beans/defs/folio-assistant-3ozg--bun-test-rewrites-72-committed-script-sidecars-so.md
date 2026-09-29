@@ -545,4 +545,41 @@ made it.
 Not reopening: the boxes are closed on evidence I did not produce, which is
 `bean-coordination`'s rule working as intended.
 
+## CORRECTION 2026-09-27 — Done-when 1 DOES have an answer, and my earlier note here said it did not
 
+An earlier append to this bean, from session `05ca3417`, said:
+
+> **There is no such test.** The trigger is the `engine_version` term in
+> `saveQaScriptSidecar`'s write-skip guard plus an off-pin engine.
+
+The second sentence is right. The first is **wrong**, and `main` had the answer
+before I wrote it: `init-folio-qa.test.ts` runs a real sweep. Verified — four
+sweep-related references in that file.
+
+Both facts are needed and they are compatible. A test does perform a sweep; the
+`engine_version` term is what made that sweep WRITE rather than skip. I had the
+second and concluded the first was false, which does not follow, and I asserted
+it in three places (this bean, PR #1451's title and body, and a comment on
+#1445). All three are corrected.
+
+The reasoning error is the same shape as the one this session already recorded
+on `qmqg`: I proved a mechanism and then denied a neighbouring fact that the
+mechanism said nothing about. A measurement that explains a count does not
+thereby rule out every other participant.
+
+## And the residue reported here has changed
+
+That append listed 14 sidecars at `bun-1.3.11` against 72 at `bun-1.3.14`, and
+asked for a gate comparing all 86 against `.bun-version`. **Both are stale.**
+`main` now carries `bun-1.3.11` in all 86, and `main` also dropped
+`engine_version` from the comparison — so the split is gone and the churn is
+fixed at the root rather than pinned around.
+
+What survives is one question, smaller than the gate I proposed: all 86 now
+record an engine that is NOT `.bun-version` (1.3.14, which CI runs). Since no
+reader uses the field for freshness — `entryIsFresh` compares hashes, per
+main's own comment — that may be exactly the intended "a record of the last
+CONTENT change's engine". If so there is nothing to gate and nothing to
+regenerate, and the gate I proposed would have been wrong. Recorded as a
+question rather than a finding, because I cannot tell which from here and the
+session that made the change can.

@@ -22,10 +22,17 @@ import { chromium } from "@playwright/test";
 import { workflowFiles } from "./known-skills.js";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { existsSync, readFileSync } from "node:fs";
-import { basename, join, relative, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
 import { chromiumExecutable } from "./bpmn-render";
 import { checkXmlComments } from "./xml-comment-check";
-import { siteDirFor, repoRootFor, instanceRootsIn } from "../schemas/cat-harness.ts";
+import {
+  siteDirFor,
+  repoRootFor,
+  instanceRootsIn,
+  findInstanceRoot,
+  readDeclaration,
+  isExemptFrom,
+} from "../schemas/cat-harness.ts";
 import { processPresentations, processTarget } from "./process-presentations.js";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -204,7 +211,62 @@ function wrapShapeInLink(svg: string, elementId: string, href: string): string {
   return svg.slice(0, start) + a + svg.slice(start, i) + "</a>" + svg.slice(i);
 }
 
+/**
+ * Diagrams that ALSO get an SVG beside their own `.bpmn`.
+ *
+ * An instance exempt from the `workflow-visualiser` obligation has no site of
+ * its own, so this site's `workflows/` copy is the only drawing of its
+ * diagrams, and its README cannot link to it: an instance's README links only
+ * inside the instance, and the link would break the day the instance becomes
+ * a repository of its own. Owner, 2026-09-29: *"display bpmn(s) etc in
+ * README.md"*. Keyed on the declared exemption, never on an instance's name.
+ */
+const besideSource = new Set(
+  sources.filter((f) => {
+    const inst = findInstanceRoot(dirname(f));
+    const decl = inst ? readDeclaration(inst) : undefined;
+    return decl !== undefined && isExemptFrom(decl, "workflow-visualiser");
+  }),
+);
+
+/**
+ * Links for the copy beside the source: a call activity links to the called
+ * diagram's SVG when it sits in the same directory, and to nothing otherwise.
+ * The site copy's links point into this site, which the instance's own copy
+ * must not name.
+ */
+function siblingLinks(file: string, xml: string): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const m of xml.matchAll(/<bpmn:callActivity\b([^>]*)>/g)) {
+    const id = /\sid="([^"]+)"/.exec(m[1])?.[1];
+    const called = /\scalledElement="([^"]+)"/.exec(m[1])?.[1];
+    const home = called ? processFile.get(called) : undefined;
+    if (!id || !home) continue;
+    if (dirname(join(ROOT, home)) !== dirname(file)) continue;
+    out.set(id, `${basename(home, ".bpmn")}.svg`);
+  }
+  return out;
+}
+
 let stale = 0;
+
+/** Write `text` to `out`, or with `--check` report whether it is current. */
+async function emit(out: string, text: string): Promise<void> {
+  const previous = existsSync(out) ? await readFile(out, "utf8") : null;
+  const shown = relative(repoRootFor(ROOT), out);
+  if (check) {
+    if (previous !== text) {
+      console.error(`✗ ${shown} is stale — re-run \`bun run render:bpmn\``);
+      stale++;
+    } else {
+      console.log(`✓ ${shown} up to date`);
+    }
+    return;
+  }
+  await mkdir(dirname(out), { recursive: true });
+  await writeFile(out, text, "utf8");
+  console.log(`${previous === text ? "=" : "✓"} ${shown}`);
+}
 
 for (const file of sources) {
   const xml = await readFile(file, "utf8");
@@ -297,22 +359,22 @@ for (const file of sources) {
     continue;
   }
 
-  const out = join(OUT_DIR, `${basename(file, ".bpmn")}.svg`);
-  const previous = existsSync(out) ? await readFile(out, "utf8") : null;
+  await emit(join(OUT_DIR, `${basename(file, ".bpmn")}.svg`), linked);
 
-  if (check) {
-    if (previous !== linked) {
-      console.error(`✗ ${basename(out)} is stale — re-run \`bun run render:bpmn\``);
-      stale++;
-    } else {
-      console.log(`✓ ${basename(out)} up to date`);
+  if (besideSource.has(file)) {
+    const own = siblingLinks(file, xml);
+    // The arrowhead ids above are named for the site that renders them; the
+    // instance's own copy names nothing outside itself.
+    let local = responsive.replaceAll("folio-marker-", "bpmn-marker-");
+    for (const [id, href] of own) local = wrapShapeInLink(local, id, href);
+    const n = (local.match(/class="fa-subprocess-link"/g) ?? []).length;
+    if (n !== own.size) {
+      console.error(`✗ ${file}: ${own.size} sibling link(s) to write but ${n} wrapped`);
+      process.exitCode = 1;
+      continue;
     }
-    continue;
+    await emit(file.replace(/\.bpmn$/, ".svg"), local);
   }
-
-  await mkdir(OUT_DIR, { recursive: true });
-  await writeFile(out, linked, "utf8");
-  console.log(`${previous === linked ? "=" : "✓"} ${basename(out)}`);
 }
 
 await browser.close();

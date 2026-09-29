@@ -189,7 +189,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
       // in the output — three of the four preconditions in this repository are
       // `stated` and structurally unobservable, so blocking on them would not be
       // a gate, it would be an outage. See `workflow/preflight.ts`.
-      const gate = preflight(model, root);
+      const gate = preflight(model);
       const refusal = preflightRefusal(gate);
       if (refusal) throw new Error(refusal);
       const state = startInstance(model, { id, subject, bean });

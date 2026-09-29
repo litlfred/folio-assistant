@@ -740,6 +740,23 @@ jobs:
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 
+      # The same audit, over EVERY declared instance rather than the root alone.
+      #
+      # Not a second answer to the step above — it is the step above, with its
+      # range fixed. `kg:audit:check` audits the auditor's own instance, so for
+      # as long as it was the only step, 13 of 15 nested instances had no
+      # `test/results` at all and `audit:coverage` could not tell "audited and
+      # clean" from "never audited" for any of them (bean `bjzs`, the `dh4f`
+      # defect at instance scale).
+      #
+      # It also catches a staleness nothing else could: an instance's
+      # `kg-qa.manifest.json` records the auditor's hash, so every instance's
+      # manifest goes stale the moment `kg-audit.ts` changes. Measured on this
+      # loop's first run — bootstrap's had been stale and no gate said so,
+      # because no gate ran its audit.
+      - name: knowledge-graph audit, every declared instance
+        run: bun run kg:audit:all:check
+
       # WHICH audits reach which kind of node — the neighbour of the audit
       # above, not a second answer to it. `kg:audit:check` judges the nodes it
       # covers; this measures WHAT IS COVERED AT ALL, which nothing asked
@@ -889,6 +906,19 @@ jobs:
 
       - name: The root README's generated sections are current
         run: bun run readme:sync:root:check
+
+      # bootstrap's README carries `kg:processes` (its diagrams, drawn) and
+      # `kg:files` (every file it holds), both generated from its declaration
+      # (owner, 2026-09-29). The pictures themselves are checked by
+      # `render:bpmn:check`; this checks the README that shows them.
+      - name: bootstrap's README generated sections are current
+        run: bun run readme:sync:bootstrap:check
+
+      # One README per declared directory, generated from the declaration by
+      # `subgraph-readmes` (owner, 2026-09-29). The pre-commit hook runs the
+      # same check; this is the gate a commit that skipped the hook still meets.
+      - name: Every declared directory's README is current
+        run: bun run readme:subgraphs:check
 
       # Agent memory is authored under `memory/` and ASSEMBLED into
       # `.claude/agent-memory/<agent>/MEMORY.md`, which is what the Claude Code

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yag0
 title: 'WHO-IRIS LIBRARY VIEWER IS A SHELL: the page generates, the link is right, and neither the corpus entry nor the 3 materialized assets appear'
-status: in-progress
+status: todo
 type: bug
 priority: high
 created_at: 2026-09-23T05:46:53Z
-updated_at: 2026-09-23T06:49:58Z
+updated_at: 2026-09-29T18:14:47Z
 parent: folio-assistant-yj32
 ---
 
@@ -148,3 +148,9 @@ entry, which sits beside `library` as a one-letter glyph plus a bare kind word.
 - [x] the deployment question settled: current, not stale
 - [ ] whether the rail's adjacent one-letter targets need distinguishing — the
       owner's call, and not this bean's to decide
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

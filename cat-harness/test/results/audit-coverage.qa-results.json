@@ -8,10 +8,10 @@
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-29T21:58:42.846Z",
+  "updated_at": "2026-09-29T22:46:04.054Z",
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 45 of 45 declared kind(s), 171 gate(s), 69 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 45 of 45 declared kind(s), 174 gate(s), 69 criteria.",
       "count": 45,
       "entries": [
         {
@@ -140,12 +140,14 @@
             "bun run check:version-bump",
             "bun run check:wireframes",
             "bun run harness:dirs:check",
+            "bun run kg:audit:all:check",
             "bun run kg:audit:check",
             "bun run kg:detangle:check",
             "bun run kg:locale:check",
             "bun run kg:locale:check:bootstrap",
             "bun run kg:schema:check",
             "bun run ns:check",
+            "bun run readme:subgraphs:check",
             "bun run root-scan-census:check",
             "bun run skill:register:check",
             "bun run translation:pot:check"
@@ -254,6 +256,7 @@
             "bun run landing:data:check",
             "bun run readme:audit",
             "bun run readme:audit:root",
+            "bun run readme:sync:bootstrap:check",
             "bun run readme:sync:check",
             "bun run readme:sync:root:check",
             "bun run skills:docs:check",
@@ -520,6 +523,7 @@
             "bun run check:workflow-coverage",
             "bun run check:workflow-refs",
             "bun run check:xml-comments",
+            "bun run kg:audit:all:check",
             "bun run kg:audit:check",
             "bun run processes:viz:check",
             "bun run render:bpmn:check",
@@ -545,8 +549,21 @@
           "kind": "qa",
           "state": "covered",
           "directories": [
+            "agent-skills/test/results",
             "bootstrap/test/results",
-            "cat-harness/test/results"
+            "cat-harness/test/results",
+            "fhir-harness/test/results",
+            "folio-assistant-core/test/results",
+            "folio-assistant-sci/test/results",
+            "large-datasets/test/results",
+            "smart-base/test/results",
+            "smart-dak/test/results",
+            "smart-ig/test/results",
+            "smart-immunizations/test/results",
+            "smart-l1/test/results",
+            "smart-trust/test/results",
+            "who-iris/test/results",
+            "who-style-guide/test/results"
           ],
           "criteria": [],
           "subjectKinds": [],
@@ -619,6 +636,7 @@
             "bun run check:raci",
             "bun run glossary:check",
             "bun run glossary:check:bootstrap",
+            "bun run kg:audit:all:check",
             "bun run kg:audit:check"
           ],
           "typed": true,
@@ -710,6 +728,7 @@
             "bun run check:tools",
             "bun run check:voice-skills",
             "bun run check:workflow-refs",
+            "bun run kg:audit:all:check",
             "bun run kg:audit:check",
             "bun run kg:detangle:check",
             "bun run skill:register:check",
@@ -809,6 +828,7 @@
           ],
           "gates": [
             "bun run check:tools",
+            "bun run kg:audit:all:check",
             "bun run kg:audit:check",
             "bun run tools:viz:check"
           ],
@@ -819,7 +839,6 @@
           "kind": "translation-sources",
           "state": "covered",
           "directories": [
-            "bootstrap/translations",
             "cat-harness/translations"
           ],
           "criteria": [],
@@ -1020,7 +1039,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 171 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 174 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }

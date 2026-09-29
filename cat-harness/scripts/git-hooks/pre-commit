@@ -13,3 +13,16 @@ if git diff --cached --name-only | grep -qF "$MANIFEST"; then
     echo ""
     exit 1
 fi
+
+# Every declared directory's README is generated from the Knowledge Graph
+# (`bun run readme:subgraphs`). A commit that changes the tree without
+# regenerating them is refused here, as it would be in CI.
+if command -v bun >/dev/null 2>&1; then
+    if ! bun run --silent readme:subgraphs:check >/dev/null 2>&1; then
+        echo ""
+        echo "⚠  A directory README is stale. Run:  bun run readme:subgraphs"
+        echo "   then stage the result. To commit anyway: git commit --no-verify"
+        echo ""
+        exit 1
+    fi
+fi

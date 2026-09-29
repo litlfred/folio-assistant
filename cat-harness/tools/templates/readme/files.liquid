@@ -1,0 +1,20 @@
+{%- comment -%}
+  The file table: files directly in the directory, then its subdirectories.
+  Included by subgraph.liquid; reads `files`, `subdirs` and `summary`.
+{%- endcomment -%}
+{%- if summary != "" -%}
+_{{ summary }}_
+
+{% endif -%}
+{%- if files.size == 0 and subdirs.size == 0 and summary == "" -%}
+_This directory holds no files yet._
+{%- else -%}
+| file | what it is | used by |
+|---|---|---|
+{% for f in files -%}
+| [`{{ f.path }}`]({{ f.path }}) | {{ f.what }} | {{ f.usedBy }} |
+{% endfor -%}
+{% for d in subdirs -%}
+| [`{{ d.name }}/`]({% if d.readme != "" %}{{ d.readme }}{% else %}{{ d.name }}/{% endif %}) | {{ d.count }} file{% if d.count != 1 %}s{% endif %} | |
+{% endfor -%}
+{%- endif %}

@@ -1,13 +1,13 @@
 ---
 # folio-assistant-oh78
 title: 'ISSUE DISCIPLINE assumes every change has an issue: 54 merges, 2 issue updates, and #558 has no bean link'
-status: in-progress
+status: todo
 type: task
 priority: normal
 tags:
     - instruction-gap
 created_at: 2026-09-20T18:05:19Z
-updated_at: 2026-09-21T06:14:42Z
+updated_at: 2026-09-29T20:50:33Z
 parent: folio-assistant-ahvw
 ---
 
@@ -114,3 +114,9 @@ one. It was **baselined an hour ago rather than repaired**, because it was not
 yet claimed and repairing an unclaimed bean is what `bean-coordination`
 cautions against. Claimed, repaired in place, and **removed from the
 baseline** — a baseline entry is a deferral, not a home.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
