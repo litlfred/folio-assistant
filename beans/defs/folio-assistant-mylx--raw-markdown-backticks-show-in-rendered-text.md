@@ -1,7 +1,7 @@
 ---
 # folio-assistant-mylx
 title: Raw Markdown backticks show in rendered text
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - cross-cutting
 created_at: 2026-09-23T10:36:13Z
-updated_at: 2026-09-29T22:51:20Z
+updated_at: 2026-09-29T23:05:45Z
 parent: folio-assistant-4ccr
 ---
 
@@ -56,3 +56,14 @@ a path claim, and `check:declaration-filename` caught it. The source doc comment
 `sticky-contribution.ts` still named the retired `harness.json` files. It is fixed
 to `<instance>/<instance>.json`.
 
+
+## Re-measured on the port — 2026-09-29
+
+Ported onto `origin/main` 35402147f. 2,534 commits had landed there since the 24th, and the count had GROWN from 10,071 to **13,428**: the todo listing gained bodies (10,633), and so did the sidebar titles (1,372) and the glossary's new per-type pages (1,212). The same helper covers all three. There is no new call site: `glossary-page.ts` had moved its term rendering into `termEntry`, and the helper went there.
+
+| | occurrences |
+|---|---|
+| main 35402147f | **13,428** |
+| this branch | **22** |
+
+Left on purpose: 13 in the wireframes' `as-is` snapshots, and 9 slugs or diagram labels on process pages.
