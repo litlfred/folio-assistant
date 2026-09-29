@@ -296,14 +296,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-29T17:40:51.355Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/f20b5eb7fb089edc47d7304586afb852d8a66d5d",
-  "sourceCommitSha": "f20b5eb7fb089edc47d7304586afb852d8a66d5d",
-  "sourceCommitAt": "2026-09-29T17:38:08Z",
+  "generatedAt": "2026-09-29T18:30:37.505Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/09c672dec030710fed973ef6d0e3a92ae5b01dc0",
+  "sourceCommitSha": "09c672dec030710fed973ef6d0e3a92ae5b01dc0",
+  "sourceCommitAt": "2026-09-29T18:19:03Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 280,
+    "Skill": 281,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
@@ -820,6 +820,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/domain-fencing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/lsi-indexing",
+      "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Skill",
+      "name": "lsi-indexing",
+      "title": "LSI indexing — the platform's application of `methodologies/lsi.md`",
+      "description": "Build, read and audit a Latent Semantic Indexing index over a declared prose graph — a library, the skills, the beans, docs — to find units that discuss the same thing in different words, near-duplicates, outlier clusters, and a proposed home for unfiled work. Every output is a proposal; LSI never writes a relation.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#package/graph-management"
+      ],
+      "instructionsPath": "skills/graph-management/lsi-indexing.md",
+      "instructionLines": 123,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lsi-indexing"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/crdm-needs-assessment",
@@ -6384,7 +6401,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/domain-fencing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/edge-kinds-and-blast-radius",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/graph-detanglement",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/graph-rendering"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/graph-rendering",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/lsi-indexing"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -44264,7 +44282,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/qa"
       ],
-      "description": "Everything a QA process produced, in one declared tree. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs under `test/results/` as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. Three kinds live here and the FILES say which they are, per the `$schema` contract: `qa-results/v1` (`<producer>.qa-results.json`, a whole-artefact review — findings about a document the build just produced), `qa-witness/v1` (`witnesses/**`, one per audited subject in the families `block`, `kg` and `translation`, the published projection) and `kg-qa/v1` (`kg-qa/**`, the KG verdicts themselves — what `kg-audit` wrote). The `kg-qa/` tree MIRRORS each subject's path rather than being flat, and that is not tidiness: measured 2026-09-19, four sidecar basenames already occur twice across packages (`editor`, `getting-started`, `idle-backlog`, `l2-dak-authoring`), so a flat directory would silently overwrite four verdicts. `kgQaSidecarPath` in `schemas/kg-qa.ts` is the one answer for writer and reader alike. A directory is a PLACE TO LOOK and may hold more than one part of a graph; extension is a coincidence, a declaration inside the file is the contract. ONE entry rather than a nested set, deliberately: #263's own comment names the defect a declaration inside another declaration creates. STILL OUTSIDE: the 122 block verdicts `*.qa.json`, which sit beside their blocks and move next. The witnesses are PUBLISHED at `/assets/qa/`, which is where every badge points; the publishing workflows copy them into `_site/assets/qa/` after Jekyll, since Jekyll builds only `docs/`. Where a file lives and where it is served from are different questions.",
+      "description": "Everything a QA process produced, in one declared tree. The owner's rule, 2026-09-19: an artefact generated primarily as a QA reviewer belongs under `test/results/` as part of a QA process — placement follows PROVENANCE, not file family and not who fetches it afterwards. Four kinds live here and the FILES say which they are, per the `$schema` contract: `qa-results/v1` (`<producer>.qa-results.json`, a whole-artefact review — findings about a document the build just produced), `qa-witness/v1` (`witnesses/**`, one per audited subject in the families `block`, `kg` and `translation`, the published projection) `kg-qa/v1` (`kg-qa/**`, the KG verdicts themselves — what `kg-audit` wrote) and `kg-qa-manifest/v1` (`kg-qa.manifest.json`, the auditor's identity for all of them, ONE per instance rather than one per sidecar). The manifest moved here from `skills/` on 2026-09-27: `kg-audit.ts` writes it unconditionally, so auditing every declared instance made its old home CREATE a `skills/` directory holding no skills in each of the six instances that have none. Its registration in `graph-kind-registry.ts` moved from the `skills` kind to `qa` with it — a kind claiming a `$schema` whose files live in another kind's directory is a validator aimed at nothing. The `kg-qa/` tree MIRRORS each subject's path rather than being flat, and that is not tidiness: measured 2026-09-19, four sidecar basenames already occur twice across packages (`editor`, `getting-started`, `idle-backlog`, `l2-dak-authoring`), so a flat directory would silently overwrite four verdicts. `kgQaSidecarPath` in `schemas/kg-qa.ts` is the one answer for writer and reader alike. A directory is a PLACE TO LOOK and may hold more than one part of a graph; extension is a coincidence, a declaration inside the file is the contract. ONE entry rather than a nested set, deliberately: #263's own comment names the defect a declaration inside another declaration creates. STILL OUTSIDE: the 122 block verdicts `*.qa.json`, which sit beside their blocks and move next. The witnesses are PUBLISHED at `/assets/qa/`, which is where every badge points; the publishing workflows copy them into `_site/assets/qa/` after Jekyll, since Jekyll builds only `docs/`. Where a file lives and where it is served from are different questions.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#directory/qa",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/qa"
     },
