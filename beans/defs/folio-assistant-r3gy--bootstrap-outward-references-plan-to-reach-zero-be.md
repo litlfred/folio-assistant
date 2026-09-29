@@ -19,7 +19,7 @@ parent: folio-assistant-vke6
 - [x] `bootstrap.json:2,37` says `workflows/`; the directory is `processes/`
 - [x] `bootstrap.json:24` says "ONE entry"; 7 are declared
 - [x] `skills/discussion.md:83` says the schemas sit in `bootstrap/skills/`; they are in `schemas/`
-- [x] ~~`processes/log-message.bpmn:14-18` says "the second and last diagram"~~ — a false report from the analysis: the phrase is not in the file. Nothing to change.
+- [ ] "the second and last diagram" — NOT a false report, as first recorded: the analysis named the wrong file. It is at `processes/initialize-harness.bpmn:101`. Still to fix (voice pass).
 - [x] "CAT_BOOTSTRAP" / "cat-bootstrap" in 3 BPMN files → "bootstrap"
 - [x] `initialize-harness.bpmn:83` says `kg-navigation`; bootstrap's skill is `bootstrap-kg-navigation`
 - [x] README "every file here" table: add `models.json`, `model-registry.schema.json`, `requirement.schema.json`, `glossary-ledger.json`, `test/results/`
@@ -77,3 +77,33 @@ Groups A and B authorised to start (owner: "Do A B").
 - `initialize-harness.bpmn`: `ref="bootstrap/README.md"` -> `ref="README.md"`. Four prose mentions -> "bootstrap's README.md". `processes/ns.jsonld` now says what `ref` is relative to.
 - Sabotage: resolving against the working directory fails 3 tests; dropping the `..` guard fails 1; dropping the no-owner guard fails 1.
 - The GitHub link at `bootstrap.json:41` is group E and stays for now.
+
+## Decision 2 — settled by the owner, 2026-09-29
+
+Owner chose: **move bootstrap's kg-qa sidecars to `cat-harness/test/results/bootstrap/`**, as #1448 moved the `.pot` templates. This takes `qa` out of D1, the `kg-qa` tags out of D2, and makes group F moot.
+
+## Group D design (agent, 2026-09-29) — recommended order D3 → D4 → D1 → D2 → E
+
+- **D4 (move sidecars):** `kgQaHomeFor(instanceRoot, hostRoot)` modelled on `translationsHomeFor` (own | hosted | convention); `kg-audit.ts` writes sidecars, manifest and orphan sweep under the hosted home, OUTSIDE cat-harness's own `test/results/kg-qa/` so its sweep does not claim them; drop `qa` from `bootstrap.json`; `git mv` 16 files; regenerate audit-coverage, UML overview, harness data, census.
+- **D1 (graph kinds):** `BOOTSTRAP_GRAPH_KINDS` in `graph.ts`, one plain sentence per kind; generator emits `$defs.GraphKind` as an open, documented `anyOf`; registry `summary` sourced from it; closure test that bootstrap uses only its own kinds. Pre-existing defect confirmed: `termIri` puts every graph kind in the cat-harness namespace (`termLayer` defaults to harness) while `ns-export`'s `GRAPH_KIND_LAYERS` publishes `schemas` and `cat-harness` as bootstrap's; one layer table fixes it; the IRIs themselves move in E.
+- **D2 ($schema tags):** unprefixed bootstrap-owned tags (`model-registry/v1`, `glossary-ledger/v1`) resolved by `properties.$schema.const` inside `bootstrap/schemas/`, old tags accepted for one release; test that every bootstrap `$schema` resolves inside bootstrap; remove `ALLOW` for `folio-*/v1`.
+- **D3 (theme):** one `Extension` term in `BOOTSTRAP_TERMS`: a field bootstrap does not define, for a harness above, ignored by a reader that does not know it.
+
+## Relevance audit (agent, 2026-09-29) — which files bootstrap's own process reaches
+
+Needed by the steps: README, AGENTS, bootstrap.json, the 3 BPMN files, ns.jsonld, roles.json, graph + discussion schemas, the 5 step skills. Reached by nothing in bootstrap, read only by cat-harness: `models/models.json` + `model-registry.schema.json`, `requirement.schema.json` (owner ruled "1 + 2" on #1164 — only right if bootstrap files its own FR-1..8 as a Requirement), the two graph export/publication skills, `package-manifest.json`, `glossary/glossary-ledger.json` (harness-written state). Owner, 2026-09-29: package-manifest.json "seems out of place"; the two graph skills "may need to be rewritten a bit"; "there needs to be SOMEWHERE (one place only) in bootstrap/ a place the describes the json(ld) setup of the KG with skills etc."; and the corpus's explanation of the self-describing JSON-LD (cat-harness `kg-export.md` §"The graph carries its own vocabulary", `harness-schema-export.ts` header, `content/docs/kgraph/the-taxonomy.md` §Schema, bean x3bd) "should be in bootstrap/ self-documentation". Owner also: `graph.schema.json#/$defs/KnowledgeGraph` "doesnt declare node types" — confirmed: every `$defs` entry is title + description only, and cat-harness's `BootstrapGraphNodeSchema` requires only `@id` + `@type`. The published graph has 8 node types (Asset, Directory, GraphKind, Process, ProcessNode, SequenceFlow, Role, Skill) whose shapes nothing declares; the schema says "Subgraph" where the graph says "Directory".
+
+## Voice audit (agent, 2026-09-29) — 118 findings
+
+Audience: the Bootstrapping Agent reads almost everything; Requestor has no persona; no voice profile addresses `bootstrapping-agent`. Recommended single voice: "you", imperative, plain US English, "set up" as the only verb for the act, defined terms always capitalised, no capitals for emphasis; third person only where something is defined (roles, schemas, ns.jsonld); rationale and history out of reader-facing text. Top fixes: the non-existent `discuss` / `log-message` tools; two definitions of a Skill; `initialize-harness` never calls `discussion`; "both failure paths" (three exist); stale "BPMN has no precondition element"; logging "not a gate" vs README "record and stop"; owner quotes, dates and file counts in agent-facing text; remaining upward names (`isSkillMd`, `DEFAULT_DIRECTORIES`, "DMN-backed gateways elsewhere in this corpus", `_needs_comment`, "the harness's own README tool", "RTFM" on the landing card).
+
+## Owner additions, 2026-09-29 — process and skills
+
+Verbatim: *"skill determine the installed harnesses in a repo (intput = repo local ore remote, output = list of harness instantaited (partially or fully)) on the repo"*; *"before intitating a harness, determine if it has already started intitating, if not then don't reintiate"*; *"put in agents.md and/or readme.md and the bpmn the guidance that the Bootstaping agent, upon succesful bootstraping should review harnessed KGs and begin a user discussion workflow"*. Reading of the second, to confirm: a set-up already begun is reported and resumed, never started again (FR-5 today covers only a finished one).
+
+- [ ] Skill: find the harnesses a repository has, fully or partially set up (input: local or remote repository)
+- [ ] `initialize-harness`: check for a set-up already begun before starting one
+- [ ] After a successful set-up: review the installed harnesses' KGs and start a discussion with the user (AGENTS.md / README + BPMN); also closes the missing call to `discussion`
+- [ ] Voice rewrite of all of bootstrap (with the above, same files)
+- [ ] One place for the KG's JSON-LD form and its self-description; `graph.schema.json` declares node shapes
+- [ ] Remove `skills/package-manifest.json`
