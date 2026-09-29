@@ -8,9 +8,11 @@ Part of [C@T Harness](../README.md), declared as `methodologies`, holding `metho
 | file | what it is | used by |
 |---|---|---|
 | [`consensus-grounded-subject-evaluation.md`](consensus-grounded-subject-evaluation.md) | Consensus-grounded subject evaluation: score against where experts agree, and read the panel |  |
+| [`correspondence-analysis.md`](correspondence-analysis.md) | Correspondence analysis: the SVD of the standardised residuals |  |
 | [`dmn.md`](dmn.md) | DMN — the computable case |  |
 | [`hybrid-llm-deterministic.md`](hybrid-llm-deterministic.md) | Hybrid LLM/deterministic — generate the rule, then execute it |  |
 | [`kepner-tregoe.md`](kepner-tregoe.md) | Kepner-Tregoe Decision Analysis |  |
+| [`lsi.md`](lsi.md) | Latent Semantic Indexing: the vocabulary problem, answered with a truncated SVD |  |
 | [`madr.md`](madr.md) | MADR — the record, not the method |  |
 | [`raci.md`](raci.md) | RACI — involvement, in four kinds |  |
 | [`rasci.md`](rasci.md) | RASCI — the fifth letter, and when it earns its place |  |

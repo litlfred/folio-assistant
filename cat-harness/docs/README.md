@@ -56,12 +56,13 @@ Part of [C@T Harness](../README.md), declared as `docs`, holding `docs`.
 | [`guides/`](guides/) | 14 files | |
 | [`health/`](health/) | 1 file | |
 | [`issue-marks/`](issue-marks/) | 1 file | |
+| [`lsi/`](lsi/) | 1 file | |
 | [`methodologies/`](methodologies/) | 1 file | |
 | [`processes/`](processes/) | 75 files | |
-| [`proposals/`](proposals/) | 15 files | |
+| [`proposals/`](proposals/) | 18 files | |
 | [`prov-qaqc/`](prov-qaqc/) | 1 file | |
 | [`qa/`](qa/) | 1 file | |
-| [`reference/`](reference/) | 310 files | |
+| [`reference/`](reference/) | 311 files | |
 | [`requirements/`](requirements/) | 1 file | |
 | [`research-and-analysis/`](research-and-analysis/) | 2 files | |
 | [`ru/`](ru/) | 13 files | |
@@ -72,6 +73,6 @@ Part of [C@T Harness](../README.md), declared as `docs`, holding `docs`.
 | [`translation-status/`](translation-status/) | 1 file | |
 | [`uml/`](uml/) | 124 files | |
 | [`uploads/`](uploads/) | 1 file | |
-| [`wireframes/`](wireframes/) | 140 files | |
+| [`wireframes/`](wireframes/) | 146 files | |
 | [`zh/`](zh/) | 13 files | |
 <!-- kg:subgraph:end -->
