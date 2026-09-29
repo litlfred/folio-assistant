@@ -17,7 +17,7 @@ Issue #1482. Methodology node, applicability analysis, options, prototype on thr
 - [x] Engine content/pipeline/lsi.ts (log-entropy + seeded randomized SVD)
 - [x] CLI scripts/lsi.ts: index / query / audit (need-an-index)
 - [x] Skill graph-management/lsi-indexing.md, registered
-- [x] Run on who-iris library (3 docs, 342 sections): 2 narrow dims = Lorem-ipsum specimen in WPRO guide pp. 21, 29-31; 12 near-dup page pairs
+- [x] Run on who-iris library (3 docs, 342 sections): 2 narrow dims = placeholder text in WPRO guide (Lorem-ipsum filler pp. 21, 29-31; pseudo-Latin font specimens pp. 14-15, 28); 12 near-dup page pairs
 - [x] Applicability analysis + options: docs/proposals/lsi-applicability.md
 - [x] Epic-filing proposal: docs/proposals/lsi-epic-filing-2026-09-29.md (7/254 unfiled; 59% leave-one-out agreement; 34 disputed; 13 dup pairs; 145 unmerged branches)
 - [ ] Owner picks options A-F

@@ -51,6 +51,16 @@ A **unit** is the graph's own chunk: a library **section** (what ingestion
 already produced), otherwise one markdown file. Units under 20 tokens are
 skipped — too little vocabulary to place.
 
+## On ingestion — the index refreshes itself
+
+`bun run ingest … --promote` ends by re-indexing the library it wrote into
+and printing, for the promoted document only, its near-duplicate section
+pairs and any narrow dimension it carries. **Advisory**: an index is not part
+of L1, so a failure prints "not refreshed — this is not a pass" and the
+ingest still succeeds. Read the lines while the document is fresh: a narrow
+dimension on a new document is almost always boilerplate, specimen text or a
+mis-extracted page, and it is cheapest to mark now.
+
 ## Where the index lives, and what is committed
 
 `cat-harness/test/results/lsi/<instance>/<graph>.lsi.json` — the fingerprint,
@@ -76,8 +86,9 @@ and a merge-conflict magnet. `lsi:epics` rebuilds it each run.
   it.
 - **`narrowDimensions`** — a dimension ≥ 80 % of whose mass sits on ≤ 3 units
   (or 1 %). Almost always non-prose: in who-iris it found two different
-  Lorem-ipsum specimen passages in the WPRO style guide (pp. 21, 29–31) on the
-  first run. Treat as an ingestion finding.
+  kinds of placeholder text in the WPRO style guide on the first run —
+  Lorem-ipsum layout filler (pp. 21, 29–31) and pseudo-Latin font specimens
+  (pp. 14–15, 28). Treat as an ingestion finding.
 - **`nearDuplicates`** — cosine ≥ 0.95. In the bean store it found pairs such
   as `3ozg`/`rmcf` (the same 72-sidecar churn, filed twice). A duplicate bean
   is **scrapped with a pointer**, never deleted (`bean-coordination`).

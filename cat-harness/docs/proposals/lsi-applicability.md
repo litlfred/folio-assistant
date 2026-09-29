@@ -33,7 +33,7 @@ retrieval aid, so every output here is a proposal (method refusals 1–4).
 
 | use | measured on who-iris (3 docs, 342 sections, 47,552 words, ~1 s) | verdict |
 |---|---|---|
-| **Outlier / non-prose detection** (`narrowDimensions`) | dims 2 and 11 are two different Lorem-ipsum specimen passages in the WPRO style guide (pp. 21, 29–31). Found on the first run, by nobody looking for it | **strong** — cheap, and finds what a per-page check cannot, because "unusual" is only defined against the rest of the corpus |
+| **Outlier / non-prose detection** (`narrowDimensions`) | two dimensions are placeholder text in the WPRO style guide: Lorem-ipsum layout filler (pp. 21, 29–31) and pseudo-Latin font specimens (pp. 14–15, 28). Found on the first run, by nobody looking for it | **strong** — cheap, and finds what a per-page check cannot, because "unusual" is only defined against the rest of the corpus |
 | **Near-duplicate pages** (`nearDuplicates`) | 12 pairs, all inside the WPRO guide: repeated layout pages (pp. 6–10) and font-specimen pages (14/15, cos 0.993) | **useful**, needs a person: similar is not duplicate |
 | **Cross-document "about the same thing"** | query *certainty of the evidence* → Handbook §9.5.2, §9.1 lexically, then §9.2 *GRADE evidence profiles* and §9.6 **latent-only**; *tuberculosis drug susceptibility* → the Handbook's PICO examples, all latent-only | **strong** for the vocabulary gap; weak across documents whose vocabularies do not overlap (the style manuals and the guideline handbook share little) |
 | Prioritising agent summaries (bean `x80s`) | not run | plausible: summarise a dimension's central units first |

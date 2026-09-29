@@ -58,6 +58,7 @@ import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
 import { checkEntry, type Requirement } from "./check-l1-complete.ts";
 import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
 import { directoriesForGraph } from "../schemas/cat-harness.ts";
+import { refreshLibraryIndex } from "./lsi.ts";
 
 /**
  * This module's own instance root — where its `harness.json` is.
@@ -894,4 +895,7 @@ if (import.meta.main) {
   for (const r of verdict.requirements.filter((r) => r.state === "not-derivable")) {
     console.log(`  · ${r.name}: ${r.detail}`);
   }
+  // The library changed, so its LSI index is stale by construction. Advisory:
+  // an index is not part of L1 (skill `lsi-indexing`, option B of bean `ansc`).
+  for (const line of refreshLibraryIndex(resolve(INSTANCE_ROOT, destination), slug)) console.log(line);
 }

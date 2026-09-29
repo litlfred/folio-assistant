@@ -198,7 +198,7 @@ function findings(index: LsiIndex) {
 
 // ─── Commands ────────────────────────────────────────────────────────────────
 
-function index(t: GraphTarget, docs: string[] | undefined, opts: LsiOptions) {
+export function index(t: GraphTarget, docs: string[] | undefined, opts: LsiOptions = DEFAULT_OPTS): LsiSidecar {
   const units = unitsOf(t.absPath, t.graphKinds, docs);
   const t0 = performance.now();
   const ix = buildLsi(units, opts);
@@ -231,6 +231,35 @@ function index(t: GraphTarget, docs: string[] | undefined, opts: LsiOptions) {
     `${t.instance}/${t.id}${docs ? ` [${docs.join(", ")}]` : ""}: ${units.length} units, ${ix.terms.length} terms, k=${ix.k}, retained ${(ix.retained * 100).toFixed(1)}%, ${ms} ms` +
       ` — ${f.dupes.length} near-duplicate pair(s), ${f.narrow.length} narrow dimension(s) → ${relative(REPO, out)}`,
   );
+  return sidecar;
+}
+
+/**
+ * Rebuild the index of the library that holds `libraryDir`, and say what it
+ * found about one newly promoted document. Called by `ingest --promote`
+ * (option B, bean `ansc`): a promotion changes the library, so its index is
+ * stale by construction (method step 7), and the two ingestion findings LSI
+ * gives — outlier dimensions and near-duplicate sections — are cheapest to
+ * act on while the document is fresh. ADVISORY: returns lines to print and
+ * never throws, because an index is not part of L1 and must not fail an
+ * ingest that met every L1 requirement.
+ */
+export function refreshLibraryIndex(libraryDir: string, slug: string): string[] {
+  try {
+    const abs = resolve(libraryDir);
+    const t = proseGraphs().find((g) => g.absPath === abs || g.absPath === abs + "/");
+    if (!t) return [`  · lsi: ${relative(REPO, abs)} is not a declared prose graph — no index to refresh`];
+    const sc = index(t, undefined);
+    const mine = (id: string) => id.includes(`/${slug}/`);
+    const dupes = sc.findings.nearDuplicates.filter((d) => mine(d.a) || mine(d.b));
+    const narrow = sc.findings.narrowDimensions.filter((d) => d.units.some(mine));
+    const out = [`  · lsi: ${t.instance}/${t.id} re-indexed (${sc.units} units); this document: ${dupes.length} near-duplicate pair(s), ${narrow.length} narrow dimension(s)`];
+    for (const d of dupes.slice(0, 5)) out.push(`      near-duplicate ${d.cosine}: ${relative(REPO, join(REPO, d.a))} ~ ${relative(REPO, join(REPO, d.b))}`);
+    for (const d of narrow) out.push(`      narrow dimension ${d.dim} (boilerplate, specimen text or a bad page?): ${d.units.join(", ")}`);
+    return out;
+  } catch (e) {
+    return [`  · lsi: index NOT refreshed — ${(e as Error).message}. Run \`bun run lsi index\` for this library; this is not a pass.`];
+  }
 }
 
 function audit(strict: boolean): number {
