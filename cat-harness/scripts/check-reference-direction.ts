@@ -154,16 +154,43 @@ const GENERATOR_WRITTEN: ReadonlySet<string> = new Set(
  *
  * Front matter only, and only the first lines: a page that DISCUSSES
  * generation must not be able to exempt itself by mentioning the word.
+ *
+ * JSON is read the way {@link isGeneratorWritten} reads it — PARSED, and
+ * `_generated` taken from the top level wherever it sits. It was a regex
+ * anchored to the first key until bean `ws99`, which is a different rule than
+ * the one this docblock states: it made POSITION part of the contract, so a
+ * file whose first key is `$schema` or `@context` could not declare itself
+ * without moving the key that says what it IS. Both are worth keeping first —
+ * `$schema` because every validator looks for it there, `@context` because a
+ * JSON-LD reader does — so the position requirement cost the declaration
+ * rather than buying anything. The principle the regex was defending is
+ * unchanged and is met better by parsing, in the words of this file's own
+ * {@link isGeneratorWritten}: *"Parsing and reading the top level is the
+ * difference between what a file IS and what it mentions."* A `_generated`
+ * nested inside a projection of another file is still not this file's
+ * declaration, and a whole-text scan would have read it as one.
+ *
+ * Markdown keeps the head-only front-matter route unchanged: there is no
+ * top level to read in prose, so the first lines are the only place a page
+ * can speak about itself rather than about its subject.
  */
-function declaresGenerated(abs: string): boolean {
-  let head: string;
+export function declaresGenerated(abs: string): boolean {
+  let text: string;
   try {
-    head = readFileSync(abs, "utf-8").slice(0, 2000);
+    text = readFileSync(abs, "utf-8");
   } catch {
     return false;
   }
-  if (/^\s*\{\s*"_generated"\s*:/.test(head)) return true;
-  const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(head);
+  if (abs.endsWith(".json") || abs.endsWith(".jsonld")) {
+    try {
+      const top = JSON.parse(text) as unknown;
+      if (typeof top !== "object" || top === null || Array.isArray(top)) return false;
+      return (top as { _generated?: unknown })._generated !== undefined;
+    } catch {
+      return false; // unparseable is not a licence to skip it
+    }
+  }
+  const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(text.slice(0, 2000));
   return fm !== null && /^generated:\s*\S/m.test(fm[1]!);
 }
 
