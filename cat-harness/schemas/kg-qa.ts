@@ -82,8 +82,34 @@ export const KG_QA_SCHEMA = "kg-qa/v1";
  */
 export const KG_QA_MANIFEST_SCHEMA = "kg-qa-manifest/v1";
 
-/** Repo-relative location of that manifest, so every reader agrees on it. */
-export const KG_QA_MANIFEST_PATH = "skills/kg-qa.manifest.json";
+/**
+ * Instance-relative location of that manifest, so every reader agrees on it.
+ *
+ * ## Why it moved out of `skills/` (2026-09-27)
+ *
+ * It was `skills/kg-qa.manifest.json`, which was harmless while ONE instance
+ * was audited — cat-harness, which has a `skills/` directory. Auditing every
+ * declared instance made it a defect: `kg-audit.ts` writes this file
+ * unconditionally, so running the audit against an instance with no skills
+ * CREATED a `skills/` directory holding nothing but this manifest. Measured on
+ * the first full sweep: six instances (`smart-dak`, `smart-ig`,
+ * `smart-immunizations`, `smart-l1`, `smart-trust`, `agent-skills`) gained one,
+ * and the generated UML and navbar both moved to report a skills graph that
+ * holds no skills.
+ *
+ * `test/results/` is where it belongs on its own terms, not merely where it is
+ * harmless: this file describes the SIDECARS, and a fact about a set of
+ * artefacts belongs with them. Its old home was an accident of the period when
+ * the role graph and the skill packages shared one directory.
+ *
+ * It is the CONVENTION rather than a declaration read at run time, and that is
+ * deliberate for one consumer's sake: `qa-witness.ts` reads it as
+ * `join(repoRoot, KG_QA_MANIFEST_PATH)` and has no instance in hand. All 15
+ * declared instances declare `qa` → `test/results/`, so the constant and every
+ * declaration agree today; if one ever moves its `qa` directory, this is the
+ * line that has to learn to ask.
+ */
+export const KG_QA_MANIFEST_PATH = "test/results/kg-qa.manifest.json";
 
 /**
  * The directory name sidecars used to sit in, beside their subject.
