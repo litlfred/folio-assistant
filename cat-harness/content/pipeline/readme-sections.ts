@@ -65,6 +65,7 @@ import {
   readDeclaration,
   workPlanGraphsIn,
 } from "../../schemas/cat-harness";
+import { filesSection, processesSection } from "./readme-graph-sections";
 
 // ── Section contract ────────────────────────────────────────────────────────
 
@@ -674,6 +675,8 @@ export const SECTIONS: readonly ReadmeSection[] = [
   leanModulesSection,
   simulatorsSection,
   workflowsSection,
+  processesSection,
+  filesSection,
 ];
 
 // ── Sync ────────────────────────────────────────────────────────────────────

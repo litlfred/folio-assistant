@@ -98,6 +98,24 @@ Requirement it must meet (see the next section).
     At any step: something cannot be found or read  --->  record it and stop
 ```
 
+The same steps, and the Processes they start, as the diagrams themselves:
+
+<!-- kg:processes:begin -->
+
+**Determine the harness and repositories**: [`processes/discussion.bpmn`](processes/discussion.bpmn), the one you start.
+
+![Determine the harness and repositories](processes/discussion.svg)
+
+**Initialize a harness**: [`processes/initialize-harness.bpmn`](processes/initialize-harness.bpmn), the one you start; it calls "Log a message".
+
+![Initialize a harness](processes/initialize-harness.svg)
+
+**Log a message**: [`processes/log-message.bpmn`](processes/log-message.bpmn), started from "Initialize a harness".
+
+![Log a message](processes/log-message.svg)
+
+<!-- kg:processes:end -->
+
 1. **Learn how to open files here.** Read
    [`skills/bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md).
    Opening files is all you can do (Functional Requirement 1, FR-1).
@@ -149,60 +167,77 @@ a step can name it: Functional Requirement 1 is FR-1.
 
 ## Every file here
 
-Grouped by directory. "Used in" names the step that reads the file; a file no
-step reads says so.
+Grouped by directory, each described from the file itself. "Used by" names the
+Process that reads a file, where a diagram says so.
+
+<!-- kg:files:begin -->
 
 **At the top**
 
-| file | what it is | used in |
+| file | what it is | used by |
 |---|---|---|
-| [`README.md`](README.md) | this page | start here |
-| [`AGENTS.md`](AGENTS.md) | points an agent that opens `AGENTS.md` first to this page | start here |
-| [`bootstrap.json`](bootstrap.json) | this Harness's declaration: its Subgraphs and its files | step 1 |
+| [`AGENTS.md`](AGENTS.md) | Phase one of two. |  |
+| [`README.md`](README.md) | The flow, with every term linked to the schema that defines it. |  |
+| [`bootstrap.json`](bootstrap.json) | Bootstrap |  |
 
-**`schemas/`**: the shapes of the JSON files
+**`skills/`**
 
-| file | what it is | used in |
+| file | what it is | used by |
 |---|---|---|
-| [`schemas/README.md`](schemas/README.md) | every schema here drawn as boxes, and every term's definition | every step |
-| [`schemas/graph.schema.json`](schemas/graph.schema.json) | the shape of a declaration, and the definition of every term on this page | step 1 |
-| [`schemas/discussion.input.schema.json`](schemas/discussion.input.schema.json) | what you know before asking the Requestor | step 2 |
-| [`schemas/discussion.output.schema.json`](schemas/discussion.output.schema.json) | the Requestor's answer; a document matching it completes step 2 | step 2 |
-| [`schemas/requirement.schema.json`](schemas/requirement.schema.json) | the shape of a Requirement: statements made with SHALL, SHOULD, MAY or SHALL NOT | no step |
-| [`schemas/model-registry.schema.json`](schemas/model-registry.schema.json) | the shape of `models/models.json` | no step |
+| [`skills/bootstrap-graph-emission.md`](skills/bootstrap-graph-emission.md) | What bootstrap's own Knowledge Graph must be when it is written out as a data file, `.jsonld` with a `.json` copy. |  |
+| [`skills/bootstrap-graph-publication.md`](skills/bootstrap-graph-publication.md) | Where bootstrap's Knowledge Graph file is published, why its `@id` must be exactly that address, why a `.json` copy sits beside the `.jsonld`, and why the fi… |  |
+| [`skills/bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md) | Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. | "Initialize a harness" |
+| [`skills/confirm-harness.md`](skills/confirm-harness.md) | Narrow the harnesses and locations this could be, then have the Requestor settle it. | "Initialize a harness" |
+| [`skills/discussion.md`](skills/discussion.md) | discussion — settling what an agent cannot read off disk |  |
+| [`skills/log-message.md`](skills/log-message.md) | Say what you are doing, to the Logger, in a form a reader can act on. | "Initialize a harness", "Log a message" |
+| [`skills/package-manifest.json`](skills/package-manifest.json) | What an agent reads before it knows whether this repository is an instance, what kind, or what for. |  |
+| [`skills/root-readme.md`](skills/root-readme.md) | Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. | "Initialize a harness" |
 
-**`processes/`**: the diagrams
+**`schemas/`**: The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and…
 
-| file | what it is | used in |
+| file | what it is | used by |
 |---|---|---|
-| [`processes/initialize-harness.bpmn`](processes/initialize-harness.bpmn) | the steps on this page, drawn | every step |
-| [`processes/discussion.bpmn`](processes/discussion.bpmn) | asking the Requestor | step 2 |
-| [`processes/log-message.bpmn`](processes/log-message.bpmn) | recording what you are doing, and any failure | step 4, and on failure |
-| [`processes/ns.jsonld`](processes/ns.jsonld) | the elements the diagrams add (`skill`, `role`, `precondition`), written `bootstrap.processes:` | reading any diagram |
+| [`schemas/README.md`](schemas/README.md) | Schemas, drawn |  |
+| [`schemas/discussion.input.schema.json`](schemas/discussion.input.schema.json) | Discussion Input |  |
+| [`schemas/discussion.output.schema.json`](schemas/discussion.output.schema.json) | Discussion Output |  |
+| [`schemas/graph.schema.json`](schemas/graph.schema.json) | Knowledge Graph declaration |  |
+| [`schemas/model-registry.schema.json`](schemas/model-registry.schema.json) | Model Registry |  |
+| [`schemas/requirement.schema.json`](schemas/requirement.schema.json) | Requirement |  |
 
-**`scenarios/`**: who takes part
+**`scenarios/`**: bootstrap's four Roles: Bootstrapping Agent, Requestor, Knowledge Graph Data Store and Logger.
 
-| file | what it is | used in |
+| file | what it is | used by |
 |---|---|---|
-| [`scenarios/roles.json`](scenarios/roles.json) | the four Roles | every step |
+| [`scenarios/roles.json`](scenarios/roles.json) | data |  |
 
-**`skills/`**: instructions for one step each
+**`processes/`**: bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to ask the Requestor; and `log-message.bpmn…
 
-| file | what it is | used in |
+| file | what it is | used by |
 |---|---|---|
-| [`skills/bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md) | how to open anything here | step 1 |
-| [`skills/confirm-harness.md`](skills/confirm-harness.md) | what to ask the Requestor | step 2 |
-| [`skills/discussion.md`](skills/discussion.md) | how to ask | step 2 |
-| [`skills/log-message.md`](skills/log-message.md) | how to record what you are doing | step 4, and on failure |
-| [`skills/root-readme.md`](skills/root-readme.md) | how to write the root README | step 6 |
-| [`skills/bootstrap-graph-emission.md`](skills/bootstrap-graph-emission.md) | what this Harness's Knowledge Graph looks like as one data file | no step |
-| [`skills/bootstrap-graph-publication.md`](skills/bootstrap-graph-publication.md) | where that file is published | no step |
-| [`skills/package-manifest.json`](skills/package-manifest.json) | the list of Skills | no step |
+| [`processes/discussion.bpmn`](processes/discussion.bpmn) | a Process: Determine the harness and repositories |  |
+| [`processes/discussion.svg`](processes/discussion.svg) | the picture of `discussion.bpmn`, generated from it |  |
+| [`processes/initialize-harness.bpmn`](processes/initialize-harness.bpmn) | a Process: Initialize a harness |  |
+| [`processes/initialize-harness.svg`](processes/initialize-harness.svg) | the picture of `initialize-harness.bpmn`, generated from it |  |
+| [`processes/log-message.bpmn`](processes/log-message.bpmn) | a Process: Log a message | "Initialize a harness" |
+| [`processes/log-message.svg`](processes/log-message.svg) | the picture of `log-message.bpmn`, generated from it |  |
+| [`processes/ns.jsonld`](processes/ns.jsonld) | data |  |
 
-**Other data**
+**`models/`**: Which languages a model is good at, and whether anybody checked.
 
-| file | what it is | used in |
+| file | what it is | used by |
 |---|---|---|
-| [`models/models.json`](models/models.json) | which languages each model is good at, and whether a person checked; empty until one does | no step |
-| [`glossary/glossary-ledger.json`](glossary/glossary-ledger.json) | every term the glossary has held, with when it first appeared and when it was retired | no step |
-| [`test/results/`](test/results/) | what auditing this Harness found, one file per Skill, Process and Role | no step |
+| [`models/models.json`](models/models.json) | Which languages a model is good at, and whether anybody checked. |  |
+
+**`glossary/`**: The swimlane glossary's retirement ledger.
+
+| file | what it is | used by |
+|---|---|---|
+| [`glossary/glossary-ledger.json`](glossary/glossary-ledger.json) | data |  |
+
+**`test/results/`**: What auditing THIS instance produced, committed so a consumer can tell "never audited" from "audited clean" — a printed verdict cannot, which is why every QA…
+
+| file | what it is | used by |
+|---|---|---|
+| [`test/results/`](test/results/) | 16 files, in subdirectories | |
+
+<!-- kg:files:end -->
