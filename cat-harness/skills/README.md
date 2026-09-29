@@ -11,7 +11,7 @@ Part of [C@T Harness](../README.md), declared as `skills`, holding `skills`.
 | [`authoring-who-smart-guidelines/`](authoring-who-smart-guidelines/) | 15 files | |
 | [`content-lifecycle/`](content-lifecycle/) | 11 files | |
 | [`crdm/`](crdm/) | 7 files | |
-| [`folio-core/`](folio-core/) | 167 files | |
+| [`folio-core/`](folio-core/) | 168 files | |
 | [`folio-document-adapter/`](folio-document-adapter/) | 6 files | |
 | [`folio-paper-adapter/`](folio-paper-adapter/) | 66 files | |
 | [`framework/`](framework/) | 1 file | |

@@ -189,7 +189,8 @@ by" only a relation a diagram records.
 **The layout is Liquid**, in `tools/templates/readme/`, part of the tools
 graph and found through the `tools` declaration. Templates may `{% include %}` one another, Jekyll
 style, and read any declared field through `kg`. Change a template, run the
-command, commit the result.
+command, commit the result. How to write one is
+[`liquid-templates`](liquid-templates.md).
 
 **It writes only between `<!-- kg:subgraph:begin -->` and `:end`.** A README
 with no markers is left alone and reported: somebody wrote it. A generator
