@@ -6255,6 +6255,13 @@
           "array": false
         },
         {
+          "name": "tile",
+          "type": "TileSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "How this directory's tile looks. See {@link TileSchema}."
+        },
+        {
           "name": "visualisedAs",
           "type": "z.enum(VISUALISER_KINDS).optional()",
           "optional": true,
@@ -6304,7 +6311,8 @@
       "refs": [
         "cat-harness/schemas/cat-harness.ts#DependentMaterialisationSchema",
         "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
-        "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema"
+        "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema",
+        "cat-harness/schemas/cat-harness.ts#TileSchema"
       ],
       "unresolved": [],
       "external": [
@@ -7006,6 +7014,37 @@
       "extendsNames": [],
       "values": [],
       "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#Tile",
+      "name": "Tile",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#TileSchema",
+      "name": "TileSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-object",
+      "doc": "How a directory's tile looks — everything a {@link Visualisation} carries",
+      "fields": [],
+      "extendsNames": [
+        "VisualisationSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/cat-harness.ts#VisualisationSchema"
+      ],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -41454,6 +41493,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape",
+      "to": "cat-harness/schemas/cat-harness.ts#TileSchema",
+      "via": "tile",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/cat-harness.ts#DeclaredGraph",
       "to": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
       "via": "graphKinds",
@@ -41547,6 +41594,14 @@
       "via": "visualiser",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#TileSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#VisualisationSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
       "array": false
     },
     {
