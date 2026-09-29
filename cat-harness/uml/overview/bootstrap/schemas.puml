@@ -41,10 +41,15 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
     exchange [1..*] : Exchange[]
     stillOpen [0..*] : list<harness | repositories>
   }
+  class "Glossary Ledger" as bootstrap_schemas_glossary_ledger_schema_json_Glossary_Ledger <<schema: glossary-ledger.schema.json>> #e9edf3 {
+    $schema [1] : 'glossary-ledger/v1'
+    instance [1] : string
+    concepts [1] : map<object>
+  }
   class "Directory" as bootstrap_schemas_graph_schema_json_Directory <<schema: graph.schema.json>> #e9edf3 {
     id [1] : string
     path [1] : string
-    graphKinds [1..*] : string[]
+    graphKinds [1..*] : list<'skills' | 'schemas' | 'scenarios' | 'processes' | 'models' | 'swimlane-glossary' | string>
     title [0..1] : string
     description [0..1] : string
   }
@@ -70,7 +75,7 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
     note [0..1] : string
   }
   class "Model Registry" as bootstrap_schemas_model_registry_schema_json_Model_Registry <<schema: model-registry.schema.json>> #e9edf3 {
-    $schema [1] : 'folio-model-registry/v1'
+    $schema [1] : 'model-registry/v1'
     models [0..*] : Model[]
   }
   class "Statement" as bootstrap_schemas_requirement_schema_json_Statement <<schema: requirement.schema.json>> #e9edf3 {

@@ -201,11 +201,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `qa`
 
-1 of 15 published.
+1 of 14 published.
 {: .fa-hx-dim }
 
 - agent-skills — *declared, not published*
-- Bootstrap — *declared, not published*
 - [C@T Harness]({{ '/qa/' | relative_url }})
 - FHIR IG Harness — *declared, not published*
 - folio-assistant-core — *declared, not published*

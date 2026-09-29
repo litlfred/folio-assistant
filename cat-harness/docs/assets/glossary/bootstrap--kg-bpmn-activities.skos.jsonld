@@ -224,7 +224,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "REQUIRED logging, which is what drawing the call says. Logged before anything is written, so an install interrupted halfway is distinguishable from one never begun. A callActivity rather than a task: `log-message` is an independent sub-process, the second and last diagram in bootstrap. Any step may call it without being drawn; this one is drawn because here it is a step rather than a courtesy."
+          "@value": "REQUIRED logging, which is what drawing the call says. Logged before anything is written, so an install interrupted halfway is distinguishable from one never begun. A callActivity rather than a task: `log-message` is an independent sub-process, one of bootstrap's own diagrams. Any step may call it without being drawn; this one is drawn because here it is a step rather than a courtesy."
         }
       ],
       "skos:notation": "A_LogInstallStart",

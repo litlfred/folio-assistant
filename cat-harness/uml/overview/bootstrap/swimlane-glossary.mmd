@@ -1,11 +1,11 @@
 classDiagram
   direction TB
   namespace bootstrap__swimlane_glossary {
-    class bootstrap_swimlane_glossary_folio_glossary_ledger_v1["folio-glossary-ledger/v1"] {
-      <<ts: Ledger>>
-      $schema [1] string
+    class bootstrap_swimlane_glossary_glossary_ledger_v1_glossary_ledger_v1["glossary-ledger/v1"] {
+      <<json: LedgerSchema>>
+      $schema [1] 'glossary-ledger/v1'
       instance [1] string
-      concepts [1] Record~string, LedgerEntry~
+      concepts [1] map~object~
     }
   }
-  cssClass "bootstrap_swimlane_glossary_folio_glossary_ledger_v1" fa_uml_kind_swimlane_glossary
+  cssClass "bootstrap_swimlane_glossary_glossary_ledger_v1_glossary_ledger_v1" fa_uml_kind_swimlane_glossary

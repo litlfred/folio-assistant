@@ -1510,10 +1510,10 @@ package "cat-harness/large-datasets-schemas" as pkg_cat_harness_large_datasets_s
   note "schemas: no node schema declared\n(no node here carries a $schema family schemas names (3 named): could not determine)" as n_cat_harness_large_datasets_schemas_schemas
 }
 package "cat-harness/swimlane-glossary" as pkg_cat_harness_swimlane_glossary <<swimlane-glossary>> {
-  class "folio-glossary-ledger/v1" as cat_harness_swimlane_glossary_folio_glossary_ledger_v1 <<ts: Ledger>> #f4f4f1 {
-    $schema [1] : string
+  class "glossary-ledger/v1" as cat_harness_swimlane_glossary_glossary_ledger_v1_glossary_ledger_v1 <<json: LedgerSchema>> #f4f4f1 {
+    $schema [1] : 'glossary-ledger/v1'
     instance [1] : string
-    concepts [1] : Record<string, LedgerEntry>
+    concepts [1] : map<object>
   }
 }
 package "cat-harness/cat-harness-scripts" as pkg_cat_harness_cat_harness_scripts <<code>> {

@@ -43,11 +43,17 @@ classDiagram
       exchange [1..*] Exchange[]
       stillOpen [0..*] list~harness | repositories~
     }
+    class bootstrap_schemas_glossary_ledger_schema_json_Glossary_Ledger["Glossary Ledger"] {
+      <<schema: glossary-ledger.schema.json>>
+      $schema [1] 'glossary-ledger/v1'
+      instance [1] string
+      concepts [1] map~object~
+    }
     class bootstrap_schemas_graph_schema_json_Directory["Directory"] {
       <<schema: graph.schema.json>>
       id [1] string
       path [1] string
-      graphKinds [1..*] string[]
+      graphKinds [1..*] list~'skills' | 'schemas' | 'scenarios' | 'processes' | 'models' | 'swimlane-glossary' | string~
       title [0..1] string
       description [0..1] string
     }
@@ -77,7 +83,7 @@ classDiagram
     }
     class bootstrap_schemas_model_registry_schema_json_Model_Registry["Model Registry"] {
       <<schema: model-registry.schema.json>>
-      $schema [1] 'folio-model-registry/v1'
+      $schema [1] 'model-registry/v1'
       models [0..*] Model[]
     }
     class bootstrap_schemas_requirement_schema_json_Statement["Statement"] {
@@ -176,42 +182,16 @@ classDiagram
     }
     class bootstrap_models_ModelRegistry["ModelRegistry"] {
       <<json: ModelRegistrySchema>>
-      $schema [1] 'folio-model-registry/v1'
+      $schema [1] 'model-registry/v1'
       models [0..*] Model[]
     }
   }
   namespace bootstrap__swimlane_glossary {
-    class bootstrap_swimlane_glossary_folio_glossary_ledger_v1["folio-glossary-ledger/v1"] {
-      <<ts: Ledger>>
-      $schema [1] string
+    class bootstrap_swimlane_glossary_glossary_ledger_v1_glossary_ledger_v1["glossary-ledger/v1"] {
+      <<json: LedgerSchema>>
+      $schema [1] 'glossary-ledger/v1'
       instance [1] string
-      concepts [1] Record~string, LedgerEntry~
-    }
-  }
-  namespace bootstrap__qa {
-    class bootstrap_qa_kg_qa_v1_Pair_attestation["Pair_attestation"] {
-      <<json: KgQaReportSchema>>
-      kind [1] implements | co-located
-      prose [1] string
-      code [1] string
-      prose_hash [1] string
-      code_hash [1] string
-      by [1] baseline | agent | human
-      reason [0..1] string
-    }
-    class bootstrap_qa_kg_qa_v1_kg_qa_v1["kg-qa/v1"] {
-      <<json: KgQaReportSchema>>
-      $schema [1] 'kg-qa/v1'
-      subject [1] object
-      source_hash [1] string | null
-      criteria [1] map~object~
-      totals [1] map~number~
-      pair_attestations [0..*] Pair_attestation[]
-    }
-    class bootstrap_qa_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
-      <<json: KgQaManifestSchema>>
-      $schema [1] 'kg-qa-manifest/v1'
-      auditor [1] object
+      concepts [1] map~object~
     }
   }
   cssClass "n_bootstrap_skills_skills" fa_uml_kind_skills
@@ -228,6 +208,7 @@ classDiagram
   cssClass "bootstrap_schemas_discussion_output_schema_json_Repository" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_discussion_output_schema_json_Exchange" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_discussion_output_schema_json_Discussion_Output" fa_uml_kind_schemas
+  cssClass "bootstrap_schemas_glossary_ledger_schema_json_Glossary_Ledger" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_graph_schema_json_Directory" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_graph_schema_json_Asset" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration" fa_uml_kind_schemas
@@ -244,8 +225,4 @@ classDiagram
   bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
   cssClass "bootstrap_models_Model" fa_uml_kind_models
   cssClass "bootstrap_models_ModelRegistry" fa_uml_kind_models
-  cssClass "bootstrap_swimlane_glossary_folio_glossary_ledger_v1" fa_uml_kind_swimlane_glossary
-  bootstrap_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" bootstrap_qa_kg_qa_v1_Pair_attestation : pair_attestations
-  cssClass "bootstrap_qa_kg_qa_v1_Pair_attestation" fa_uml_kind_qa
-  cssClass "bootstrap_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
-  cssClass "bootstrap_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa
+  cssClass "bootstrap_swimlane_glossary_glossary_ledger_v1_glossary_ledger_v1" fa_uml_kind_swimlane_glossary

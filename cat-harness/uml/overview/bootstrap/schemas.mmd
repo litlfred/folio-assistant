@@ -38,11 +38,17 @@ classDiagram
       exchange [1..*] Exchange[]
       stillOpen [0..*] list~harness | repositories~
     }
+    class bootstrap_schemas_glossary_ledger_schema_json_Glossary_Ledger["Glossary Ledger"] {
+      <<schema: glossary-ledger.schema.json>>
+      $schema [1] 'glossary-ledger/v1'
+      instance [1] string
+      concepts [1] map~object~
+    }
     class bootstrap_schemas_graph_schema_json_Directory["Directory"] {
       <<schema: graph.schema.json>>
       id [1] string
       path [1] string
-      graphKinds [1..*] string[]
+      graphKinds [1..*] list~'skills' | 'schemas' | 'scenarios' | 'processes' | 'models' | 'swimlane-glossary' | string~
       title [0..1] string
       description [0..1] string
     }
@@ -72,7 +78,7 @@ classDiagram
     }
     class bootstrap_schemas_model_registry_schema_json_Model_Registry["Model Registry"] {
       <<schema: model-registry.schema.json>>
-      $schema [1] 'folio-model-registry/v1'
+      $schema [1] 'model-registry/v1'
       models [0..*] Model[]
     }
     class bootstrap_schemas_requirement_schema_json_Statement["Statement"] {
@@ -115,6 +121,7 @@ classDiagram
   cssClass "bootstrap_schemas_discussion_output_schema_json_Repository" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_discussion_output_schema_json_Exchange" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_discussion_output_schema_json_Discussion_Output" fa_uml_kind_schemas
+  cssClass "bootstrap_schemas_glossary_ledger_schema_json_Glossary_Ledger" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_graph_schema_json_Directory" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_graph_schema_json_Asset" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration" fa_uml_kind_schemas

@@ -9,6 +9,7 @@ Part of [Bootstrap](../README.md), declared as `schemas`, holding `schemas`.
 |---|---|---|
 | [`discussion.input.schema.json`](discussion.input.schema.json) | Discussion Input |  |
 | [`discussion.output.schema.json`](discussion.output.schema.json) | Discussion Output |  |
+| [`glossary-ledger.schema.json`](glossary-ledger.schema.json) | Glossary Ledger |  |
 | [`graph.schema.json`](graph.schema.json) | Knowledge Graph declaration |  |
 | [`model-registry.schema.json`](model-registry.schema.json) | Model Registry |  |
 | [`requirement.schema.json`](requirement.schema.json) | Requirement |  |
