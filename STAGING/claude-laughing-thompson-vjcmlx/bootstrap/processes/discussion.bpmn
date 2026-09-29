@@ -17,7 +17,7 @@ SYMMETRIC IN ITS PARTICIPANTS. Human-to-agent and agent-to-agent are the same pr
 
 THE TOOL DOES NOT DECIDE. `discuss` carries a question out and an answer back. Judgement — the Bootstrapping Agent's — chooses what to ask and rules on when an answer settles the matter. The task is finished when a document conforming to `discussion.output.schema.json` exists, not when a pleasant exchange has occurred.
 
-PRECONDITION: the Bootstrapping Agent has read bootstrap/README.md and has narrowed the candidates as far as context allows. BPMN has no precondition element and this schema adds none yet, so it is stated here as `initialize-harness` states its own.
+PRECONDITION: the Bootstrapping Agent has read bootstrap's README.md and has narrowed the candidates as far as context allows. BPMN has no precondition element and this schema adds none yet, so it is stated here as `initialize-harness` states its own.
 
 NO work-plan element on any activity, and isExecutable is false, for the reasons `initialize-harness` gives: a work plan and an engine are both harness machinery, and a Bootstrapping Agent runs before either exists. This is data a Bootstrapping Agent reads.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_Discussion">

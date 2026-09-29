@@ -302,10 +302,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-29T19:19:54.176Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9a15ca728277a8bdd42e2e111144e1db1696b20c",
-  "sourceCommitSha": "9a15ca728277a8bdd42e2e111144e1db1696b20c",
-  "sourceCommitAt": "2026-09-29T19:17:56Z",
+  "generatedAt": "2026-09-29T19:25:23.238Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b64d84c55e690f5466fb6a4ecf1635c4898fd384",
+  "sourceCommitSha": "b64d84c55e690f5466fb6a4ecf1635c4898fd384",
+  "sourceCommitAt": "2026-09-29T19:22:56Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -1460,7 +1460,7 @@
       "@type": "https://litlfred.github.io/folio-assistant/bootstrap/ns#Role",
       "name": "bootstrapping-agent",
       "title": "Bootstrapping Agent",
-      "description": "An agent asked to set up a Harness with ONLY the knowledge bootstrap/README.md hands it. That constraint is the role, not a caveat on it: a Bootstrapping Agent has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step a Bootstrapping Agent cannot perform. It stops being a Bootstrapping Agent the moment the harness is installed and it re-enters through that harness instead.",
+      "description": "An agent asked to set up a Harness with ONLY the knowledge bootstrap's README.md hands it. That constraint is the role, not a caveat on it: a Bootstrapping Agent has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step a Bootstrapping Agent cannot perform. It stops being a Bootstrapping Agent the moment the harness is installed and it re-enters through that harness instead.",
       "sourceKind": "role-registry",
       "actorKinds": [
         "agent"
@@ -1622,8 +1622,8 @@
   ],
   "staging": {
     "branch": "claude/laughing-thompson-vjcmlx",
-    "sha": "9ebe1605be85ee86aa60722dbc86a9e01579be17",
+    "sha": "1313c7822e9a10c05dfa07e3b63ddc3817045b04",
     "pr": "1486/merge",
-    "run": "36618256045"
+    "run": "36618896156"
   }
 }
