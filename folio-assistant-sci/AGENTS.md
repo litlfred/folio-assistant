@@ -11,6 +11,15 @@ not mathematics this repository writes. A proof, a definition or a chapter
 belongs in a folio, which is a separate repository. If you are about to author
 a mathematical claim here, you are in the wrong place.
 
+## Methodologies are adopted, not authored
+
+`methodologies/` holds external methods for formalising mathematics in Lean,
+each rendered from a paper in `library/` and citing it as `evidence`. The
+discipline is `methodology-adoption`: render the method, not the paper's tools;
+state what the paper measured and did not; state what this platform refuses.
+A paper's empirical results are the paper's findings and are reported as such,
+never restated as mathematics. Bean `h3rw`.
+
 ## The placement rule, and it has already been got wrong once
 
 `milnorlink` sat under `cat-harness/library/` beside three WHO IRIS
