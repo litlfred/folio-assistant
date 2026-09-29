@@ -13,6 +13,7 @@
  *
  *   bun run lsi index  [--instance <name>] [--graph <id>] [--doc <slug>…] [--k N]
  *   bun run lsi query  "<text>" [--instance <name>] [--graph <id>] [--doc <slug>…] [--top N]
+ *   echo "<text>" | bun run lsi query --instance <name> --graph <id>   # the Tool node's form
  *   bun run lsi audit  [--strict]      # which graphs need an index; is each fresh?
  *
  * ## What is committed, and why not the vectors
@@ -353,7 +354,9 @@ if (import.meta.main) {
       }
     }
   } else if (cmd === "query") {
-    const text = process.argv[3];
+    // The query on STDIN when no positional is given — the Tool node's form,
+    // since free text never goes on a command line (check:tools).
+    const text = process.argv[3] && !process.argv[3].startsWith("--") ? process.argv[3] : (await Bun.stdin.text()).trim();
     const top = Number(arg("top") ?? 10);
     for (const t of targets()) {
       const units = unitsOf(t.absPath, t.graphKinds, args("doc"));

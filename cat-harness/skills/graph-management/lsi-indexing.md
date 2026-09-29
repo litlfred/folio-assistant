@@ -45,7 +45,14 @@ bun run lsi index --instance who-iris --graph library --doc 9789241548960-eng   
 bun run lsi query "certainty of the evidence" --instance who-iris --graph library
 bun run lsi:audit                                          # which graphs need one; is each fresh?
 bun run lsi:epics --out <file.md> [--prs <open-prs.json>]  # epic-filing proposal
+bun run lsi:near "<planned bean title>"                    # before `beans create`
+bun run cat-harness/content/pipeline/graph-search.ts "<q>" --latent   # lexical + graph, THEN a separate latent list
 ```
+
+**From an MCP host**: the `lsi_query` tool (Tool node `lsi-query`), with the
+query as `text` and optional `instance` / `graph`. On a shell the query goes on
+STDIN (`echo "<q>" | bun run lsi query --instance who-iris --graph library`),
+because free text never goes on a command line.
 
 A **unit** is the graph's own chunk: a library **section** (what ingestion
 already produced), otherwise one markdown file. Units under 20 tokens are

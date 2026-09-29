@@ -51,6 +51,7 @@ import { registerFolioInitTools } from "../../src/tools/folio-init.js";
 import { registerReadmeSyncTools } from "../../src/tools/readme-sync.js";
 import { registerRenderOrderTools } from "../../src/tools/render-order.js";
 import { registerReadmeAuditTools } from "../../src/tools/readme-audit.js";
+import { registerLsiQueryTools } from "../../src/tools/lsi-query.js";
 
 import type {
   ContentAdapter,
@@ -1195,6 +1196,10 @@ End every response with suggested follow-ups:
     // graph. Generic for the same reason: the order comes from the instance's
     // declarations, and no block kind enters into it.
     registerRenderOrderTools(server);
+    // Vocabulary-gap search over the declared prose graphs (bean `ansc`).
+    // Generic: a library, the skills and the beans exist whatever the
+    // content type, and no block kind enters into it.
+    registerLsiQueryTools(server);
   }
 
   /**

@@ -52,6 +52,8 @@ import {
   searchGraph,
 } from "./graph-index";
 import type { GraphEdgeTerm } from "../../schemas/jsonld";
+import { existsSync, readFileSync } from "node:fs";
+import { buildLsi, query as lsiQuery, tokenize } from "./lsi";
 
 /** How a result got into the answer. */
 export type Reason =
@@ -305,6 +307,50 @@ export function graphSearch(
 
 // ── CLI ──────────────────────────────────────────────────────────
 
+// ─── Latent hits: the case the docblock above names and the graph cannot reach ─
+
+export interface LatentHit {
+  id: string;
+  label?: string;
+  provenance: string;
+  cosine: number;
+  /** Whether the unit's text also contains a query word. `false` is the case
+   *  this exists for: related, not linked, and not worded the same. */
+  lexical: boolean;
+}
+
+/**
+ * LSI over every node that carries a companion text file, queried by folding
+ * the search text in (method `lsi`, step 6). **Reported beside the lexical
+ * result and never merged into it** — refusal 1 of the method: a cosine is a
+ * defined quantity, but it answers "close in co-occurrence structure", not
+ * "contains the words", and the refusal to rank above still holds for the
+ * lexical half. Opt-in (`--latent`) because it builds an index per call.
+ */
+export function latentSearch(index: GraphIndex, text: string, top = 10): { hits: LatentHit[]; units: number; k: number } {
+  const units: Array<{ id: string; text: string }> = [];
+  for (const n of index.nodes.values()) {
+    if (!n.textFile || !existsSync(n.textFile)) continue;
+    const body = readFileSync(n.textFile, "utf8");
+    if (tokenize(body).length >= 20) units.push({ id: n.id, text: body });
+  }
+  if (units.length < 3) return { hits: [], units: units.length, k: 0 };
+  const ix = buildLsi(units, { k: 100, seed: 1990 });
+  const words = tokenize(text);
+  const byId = new Map(units.map((u) => [u.id, u.text.toLowerCase()]));
+  const hits = lsiQuery(ix, text, top).map((h) => {
+    const node = index.nodes.get(h.id)!;
+    return {
+      id: h.id,
+      label: node.label ?? node.title,
+      provenance: node.provenance,
+      cosine: Number(h.cosine.toFixed(3)),
+      lexical: words.some((w) => byId.get(h.id)!.includes(w)),
+    };
+  });
+  return { hits, units: units.length, k: ix.k };
+}
+
 if (import.meta.main) {
   const { findContentRepoRoot } = await import("./repo-root");
   const argv = process.argv.slice(2);
@@ -351,5 +397,13 @@ if (import.meta.main) {
     }
     if (r.dangling.length) console.log(`\n  dangling edge targets: ${r.dangling.length}`);
     for (const u of r.unexpandable) console.log(`  ! seed ${u.seed} could not be expanded: ${u.error}`);
+  }
+  if (argv.includes("--latent")) {
+    const l = latentSearch(index, query, Number(flag("--limit") ?? 10));
+    if (argv.includes("--json")) console.log(JSON.stringify({ latent: l }, null, 2));
+    else {
+      console.log(`\nlatent — LSI over ${l.units} text-bearing node(s), k=${l.k}. A SEPARATE answer: cosine in the latent space, not a lexical match, not merged with the list above.`);
+      for (const h of l.hits) console.log(`  ${h.cosine.toFixed(3)}  ${h.lexical ? "lexical+latent" : "latent only   "}  [${h.provenance}] ${h.label ?? h.id}`);
+    }
   }
 }

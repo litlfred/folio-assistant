@@ -41,11 +41,28 @@ bun run lsi index --instance who-iris --graph library --doc 9789241548960-eng   
 bun run lsi query "certainty of the evidence" --instance who-iris --graph library
 bun run lsi:audit                                          # which graphs need one; is each fresh?
 bun run lsi:epics --out <file.md> [--prs <open-prs.json>]  # epic-filing proposal
+bun run lsi:near "<planned bean title>"                    # before `beans create`
+bun run cat-harness/content/pipeline/graph-search.ts "<q>" --latent   # lexical + graph, THEN a separate latent list
 ```
+
+**From an MCP host**: the `lsi_query` tool (Tool node `lsi-query`), with the
+query as `text` and optional `instance` / `graph`. On a shell the query goes on
+STDIN (`echo "<q>" | bun run lsi query --instance who-iris --graph library`),
+because free text never goes on a command line.
 
 A **unit** is the graph's own chunk: a library **section** (what ingestion
 already produced), otherwise one markdown file. Units under 20 tokens are
 skipped — too little vocabulary to place.
+
+## On ingestion — the index refreshes itself
+
+`bun run ingest … --promote` ends by re-indexing the library it wrote into
+and printing, for the promoted document only, its near-duplicate section
+pairs and any narrow dimension it carries. **Advisory**: an index is not part
+of L1, so a failure prints "not refreshed — this is not a pass" and the
+ingest still succeeds. Read the lines while the document is fresh: a narrow
+dimension on a new document is almost always boilerplate, specimen text or a
+mis-extracted page, and it is cheapest to mark now.
 
 ## Where the index lives, and what is committed
 
@@ -72,8 +89,9 @@ and a merge-conflict magnet. `lsi:epics` rebuilds it each run.
   it.
 - **`narrowDimensions`** — a dimension ≥ 80 % of whose mass sits on ≤ 3 units
   (or 1 %). Almost always non-prose: in who-iris it found two different
-  Lorem-ipsum specimen passages in the WPRO style guide (pp. 21, 29–31) on the
-  first run. Treat as an ingestion finding.
+  kinds of placeholder text in the WPRO style guide on the first run —
+  Lorem-ipsum layout filler (pp. 21, 29–31) and pseudo-Latin font specimens
+  (pp. 14–15, 28). Treat as an ingestion finding.
 - **`nearDuplicates`** — cosine ≥ 0.95. In the bean store it found pairs such
   as `3ozg`/`rmcf` (the same 72-sidecar churn, filed twice). A duplicate bean
   is **scrapped with a pointer**, never deleted (`bean-coordination`).

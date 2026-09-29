@@ -350,6 +350,14 @@
       "status": "candidate"
     },
     {
+      "id": "lsi-query",
+      "prefLabel": "Latent Semantic Indexing over a prose graph",
+      "definition": "Find units of a declared prose graph (a library, the skills, the beans, docs) that discuss a query in OTHER words — the vocabulary gap lexical search cannot reach. Each hit is labelled lexical+latent or latent only, and the score is a cosine in the latent space, never merged with a lexical result.",
+      "notation": "lsi-query",
+      "source": "cat-harness/tools/mcp.ts#lsi-query",
+      "status": "candidate"
+    },
+    {
       "id": "mcp-capture",
       "prefLabel": "What this instance's MCP server serves",
       "definition": "Read the real tool surface from the registrars by mounting each against a capture object — the same objects the server asks, so the Zod shapes and their optionality are the served ones rather than a reading of the source.",
