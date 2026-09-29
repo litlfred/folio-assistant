@@ -1,11 +1,11 @@
 ---
 # folio-assistant-4kj4
 title: 'AVATARS: per-kind avatar, in and out of trash, both schemes, with a QA axis for coverage'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T11:08:23Z
-updated_at: 2026-09-19T15:29:04Z
+updated_at: 2026-09-29T18:14:49Z
 parent: folio-assistant-o3xy
 ---
 
@@ -251,3 +251,9 @@ is a rule this repository already applies elsewhere:
       fallback that happens to pick a real avatar would pass a weaker test.
 - [ ] `check:avatar-coverage` reports "blank (no avatar declared)" as its own
       state, distinct from both "declared" and "could not determine".
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
