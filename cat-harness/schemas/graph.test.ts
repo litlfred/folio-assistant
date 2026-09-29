@@ -105,9 +105,17 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
   const walk = (d: string) => {
     for (const f of readdirSync(d)) {
       const p = join(d, f);
-      if (statSync(p).isDirectory()) {
-        if (f !== "translations") walk(p);
-      } else files.push(p);
+      // No skip. `translations/` used to be excepted here because bootstrap held
+      // 15 `.pot` extraction templates, which are tooling OUTPUT — nobody reads
+      // a `.pot`, so they contradicted bootstrap's own promise of "a file you
+      // read, not something you run" and have moved to
+      // `cat-harness/translations/<locale>/bootstrap/processes/`.
+      //
+      // The exception is gone rather than kept-and-unused, because while it
+      // stood this test scanned 23 of 38 files under a name claiming all of
+      // them. It now scans every file in `bootstrap/`, which is what it says.
+      if (statSync(p).isDirectory()) walk(p);
+      else files.push(p);
     }
   };
   walk(BOOTSTRAP);

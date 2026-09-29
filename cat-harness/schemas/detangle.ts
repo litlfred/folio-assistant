@@ -261,13 +261,32 @@ export interface DetangleMetrics {
   distinctTargetGroups: number;
   /** The outbound edges themselves — the detangling worklist. */
   worklist: DetangleEdge[];
+  /**
+   * The INTERNAL edges themselves, not just their count.
+   *
+   * Added 2026-09-27 because the `maxSize` clause shipped advice nobody could
+   * act on: it tells a reader *"the internal clusters are the seam; splitting
+   * along them cuts few edges"* while `internal` was a bare number and the
+   * edges existed nowhere — not in the committed sidecar, not in `--json`.
+   * `worklist` looks like it would hold them and does not; it is the OUTBOUND
+   * list, 15 entries where `internal` was 154.
+   *
+   * A finding whose remedy names evidence the tool does not emit is a finding
+   * that cannot be adjudicated, and §"taste is a declared step" makes the carve
+   * an adjudication — so the adjudicator has to be handed the seam.
+   *
+   * Not projected into the committed sidecar: 154 edges across 29 groups is a
+   * query, not a measurement, and the sidecar already omits `worklist` for the
+   * same reason.
+   */
+  internalEdges: DetangleEdge[];
 }
 
 /** Metrics for one candidate group. */
 export function measure(group: string, nodes: DetangleNode[], edges: DetangleEdge[]): DetangleMetrics {
   const inGroup = new Set(nodes.filter((n) => n.group === group).map((n) => n.id));
   const known = new Map(nodes.map((n) => [n.id, n.group]));
-  let internal = 0;
+  const internalEdges: DetangleEdge[] = [];
   let inbound = 0;
   const worklist: DetangleEdge[] = [];
   /** Every boundary edge, either direction — needed to weigh enforced against recorded. */
@@ -287,11 +306,12 @@ export function measure(group: string, nodes: DetangleNode[], edges: DetangleEdg
     }
     const f = inGroup.has(e.from);
     const t = inGroup.has(e.to);
-    if (f && t) internal += 1;
+    if (f && t) internalEdges.push(e);
     else if (!f && t) { inbound += 1; boundary.push(e); }
     else if (f && !t) { worklist.push(e); boundary.push(e); }
   }
   const outbound = worklist.length;
+  const internal = internalEdges.length;
   const total = internal + inbound + outbound;
   const oneWayness = inbound + outbound === 0 ? 0 : inbound / (inbound + outbound);
   // The role is read off ENFORCED edges only. A boundary made of recorded ones
@@ -313,6 +333,7 @@ export function measure(group: string, nodes: DetangleNode[], edges: DetangleEdg
     group,
     size: inGroup.size,
     internal,
+    internalEdges,
     inbound,
     outbound,
     // Measured against the boundary only. Dividing by `total` made cohesion and
@@ -345,6 +366,31 @@ export function measure(group: string, nodes: DetangleNode[], edges: DetangleEdg
 export const DEFAULT_THRESHOLDS = {
   /** "large collection" — below this it is a file move. */
   minSize: 5,
+  /**
+   * Above this, one subgraph is too many things — the BREAK-APART bound, added
+   * 2026-09-27 on the owner's *"call out if subgraph gets too large… sign to
+   * break apart"*.
+   *
+   * ## The size criterion existed in one direction only
+   *
+   * `minSize` asks "is this big enough to BE a subgraph?" and nothing asked
+   * whether it had stopped being one. So a directory could grow without limit
+   * and every clause stayed green.
+   *
+   * ## The basis, because a bare number would be rejected here
+   *
+   * `uml:overview` renders each of these groups as ONE diagram. The bound is
+   * where that diagram stops being readable by a person, which is a property of
+   * the artefact rather than of today's corpus — so it does not drift when the
+   * corpus grows, and growing everything cannot hide the finding. A percentile
+   * of the measured set was the alternative and was rejected for exactly that:
+   * a recorded value that moves on every commit is the `do70` defect.
+   *
+   * 70 rather than 60 or 80 because those are the same judgement to one
+   * significant figure, and pretending otherwise would dress a round number as
+   * a measurement.
+   */
+  maxSize: 70,
   /** "thematically related" — the files must actually reference each other. */
   minCohesion: 0.5,
   /** "arrows mostly one way" — the owner's clause, as a number, and DIRECTION-BLIND. */
@@ -361,13 +407,98 @@ export const DEFAULT_THRESHOLDS = {
 
 export type Thresholds = typeof DEFAULT_THRESHOLDS;
 
+/**
+ * The connected components of a group's INTERNAL edge graph, largest first —
+ * the seam a carve would cut along, computed rather than guessed.
+ *
+ * ## Why components, and what they are not
+ *
+ * This is the cheapest honest answer to *"where would this split?"*. Two files
+ * in different components do not reference each other at all, directly or
+ * transitively, so separating them cuts **zero** internal edges. That makes a
+ * component boundary the one split with no coupling cost, and it is a fact
+ * rather than a preference.
+ *
+ * It is NOT the carve. A component may still be several subjects, and two
+ * components may belong together for reasons no edge records — which is exactly
+ * what §"taste is a declared step" reserves for an adjudicator. Components are
+ * the evidence put in front of that decision, and singletons are the loudest
+ * part of it: a file in a component of one is referenced by nothing in its own
+ * group, so its membership rests entirely on which directory it sits in.
+ *
+ * Union-find rather than a traversal, because the input is an edge list and
+ * this keeps it one pass with no adjacency map to build.
+ */
+export function internalClusters(m: Pick<DetangleMetrics, "internalEdges">, members: readonly string[]): string[][] {
+  const parent = new Map<string, string>(members.map((id) => [id, id]));
+  const find = (x: string): string => {
+    let r = x;
+    while (parent.get(r) !== r) r = parent.get(r) ?? r;
+    // Path compression, so a long chain does not make the next lookup walk it.
+    let c = x;
+    while (parent.get(c) !== r) {
+      const next = parent.get(c) ?? r;
+      parent.set(c, r);
+      c = next;
+    }
+    return r;
+  };
+  for (const e of m.internalEdges) {
+    if (!parent.has(e.from) || !parent.has(e.to)) continue;
+    const a = find(e.from);
+    const b = find(e.to);
+    if (a !== b) parent.set(a, b);
+  }
+  const byRoot = new Map<string, string[]>();
+  for (const id of members) {
+    const r = find(id);
+    const list = byRoot.get(r) ?? [];
+    list.push(id);
+    byRoot.set(r, list);
+  }
+  return [...byRoot.values()]
+    .map((c) => c.sort())
+    .sort((a, b) => b.length - a.length || (a[0] ?? "").localeCompare(b[0] ?? ""));
+}
+
 export function failingClauses(m: DetangleMetrics, t: Thresholds = DEFAULT_THRESHOLDS): string[] {
   const out: string[] = [];
   if (m.size < t.minSize) out.push(`size ${m.size} < ${t.minSize} — a file move, not a subgraph`);
-  if (m.cohesion < t.minCohesion)
+  // Size RAISES the finding; cohesion decides what the finding SAYS. It does
+  // not decide whether there is one.
+  //
+  // A first draft required both — `size > maxSize && cohesion < minCohesion` —
+  // and the owner caught it: *"cat-harness/schemas semantic categorification by
+  // judgment?"*. That conjunction is this module deciding that a large cohesive
+  // group is FINE, which is precisely the judgement §"taste is a declared step"
+  // says it may not make. It also meant the largest directory in the repository
+  // (234 nodes) could never be reported at all.
+  //
+  // Cohesion cannot settle the question because of what it measures. Schemas
+  // import schemas; `cat-harness/schemas` scores 0.82 because its members are
+  // the same KIND, which is not evidence that they are one SUBJECT. A semantic
+  // carve is a different axis from a coupling metric, and only an adjudicator
+  // reads it.
+  //
+  // So both branches fire, with different evidence and different remedies:
+  if (m.size > t.maxSize)
     out.push(
-      `cohesion ${m.cohesion.toFixed(2)} < ${t.minCohesion} — the members barely reference each other, ` +
-        `so "thematically related" is asserted rather than shown`,
+      m.cohesion < t.minCohesion
+        ? `size ${m.size} > ${t.maxSize} with cohesion ${m.cohesion.toFixed(2)} < ${t.minCohesion} — too ` +
+          `large to review as one diagram AND its members barely reference each other, so it is several ` +
+          `subgraphs filed as one. Ask \`internalClusters\` for the seam BEFORE assuming there is one — ` +
+          `measured 2026-09-27, the two lowest-cohesion groups here are each a SINGLE connected component, ` +
+          `so their low score comes from boundary traffic and not from internal fragmentation, and no split ` +
+          `of them is free.`
+        : `size ${m.size} > ${t.maxSize} with cohesion ${m.cohesion.toFixed(2)} — too large to review as ` +
+          `one diagram, and cohesion does NOT settle it: members of one KIND reference each other whether ` +
+          `or not they are one SUBJECT. Whether to carve semantically is an adjudication, not a ` +
+          `measurement — this clause reports the size and says nothing about the answer. Splitting here ` +
+          `would turn ${m.internal} internal edges into boundary edges, so a carve needs a reason beyond ` +
+          `the count. Note that cohesion says nothing about PARTICIPATION: measured 2026-09-27, ` +
+          `\`cat-harness/schemas\` scored 0.82 while 129 of its 235 members had no internal edge at all, ` +
+          `because the ratio is taken over the members that do. Count the isolated nodes before reading a ` +
+          `high score as "one thing".`,
     );
   if (m.role === "undetermined")
     out.push(
