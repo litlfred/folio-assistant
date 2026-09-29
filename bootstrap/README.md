@@ -6,21 +6,32 @@ and knows nothing else about it. Everything here is a file to read: text
 you need nothing installed to use it.
 
 A capitalized word on this page is a defined term. It links to its definition
-the first time it appears. Every definition is in one file,
+the first time it appears, and `[src]` beside it opens the schema that defines
+it. Every definition is drawn on one page,
+[`schemas/README.md`](schemas/README.md), from one file,
 [`schemas/graph.schema.json`](schemas/graph.schema.json).
+
+**Contents**
+
+1. [What you are setting up](#what-you-are-setting-up): what a repository becomes
+2. [Who takes part](#who-takes-part): you, the person who asked, and the rest
+3. [User story](#user-story): what you are here to do, in one sentence
+4. [Steps](#steps): the six steps, drawn and then in order
+5. [Functional Requirements](#functional-requirements): the eight rules the steps meet
+6. [Every file here](#every-file-here): what each file is
 
 ---
 
 ## What you are setting up
 
-A [Knowledge Graph](schemas/graph.schema.json#/$defs/KnowledgeGraph) is
+A [Knowledge Graph](schemas/README.md#knowledge-graph) ([src](schemas/graph.schema.json#/$defs/KnowledgeGraph)) is
 information kept as files in a repository: things, and the named relations
 between them. One file at its root, `<name>.json`, declares it. That file
 gives its name and lists its
-[Subgraphs](schemas/graph.schema.json#/$defs/Subgraph), the named directories
+[Subgraphs](schemas/README.md#subgraph) ([src](schemas/graph.schema.json#/$defs/Subgraph)), the named directories
 it is divided into.
 
-A [Harness](schemas/graph.schema.json#/$defs/Harness) is what you use to work
+A [Harness](schemas/README.md#harness) ([src](schemas/graph.schema.json#/$defs/Harness)) is what you use to work
 with a Knowledge Graph. A Harness is a Knowledge Graph too, declared the same
 way. This directory is the first Harness, `bootstrap`, declared by
 [`bootstrap.json`](bootstrap.json).
@@ -33,8 +44,8 @@ repository afterwards is built on it.
 
 ## Who takes part
 
-An [Actor](schemas/graph.schema.json#/$defs/Actor) is a person, an agent or a
-program. Each Actor takes a [Role](schemas/graph.schema.json#/$defs/Role), and
+An [Actor](schemas/README.md#actor) ([src](schemas/graph.schema.json#/$defs/Actor)) is a person, an agent or a
+program. Each Actor takes a [Role](schemas/README.md#role) ([src](schemas/graph.schema.json#/$defs/Role)), and
 the four Roles here are declared in [`scenarios/roles.json`](scenarios/roles.json):
 
 | Role | who plays it |
@@ -45,7 +56,7 @@ the four Roles here are declared in [`scenarios/roles.json`](scenarios/roles.jso
 | **Logger** | the record of what you did. Here, it is the conversation you are in. |
 
 As the Bootstrapping Agent you have no Harness yet, so you have no
-[Tools](schemas/graph.schema.json#/$defs/Tool) (programs to call). If a step
+[Tools](schemas/README.md#tool) ([src](schemas/graph.schema.json#/$defs/Tool)) (programs to call). If a step
 seems to need one, it belongs to the Harness you are about to set up, not to
 this one.
 
@@ -65,11 +76,27 @@ up, or the reason it could not be is recorded.
 ## Steps
 
 The steps are drawn as a
-[Process](schemas/graph.schema.json#/$defs/Process),
+[Process](schemas/README.md#process) ([src](schemas/graph.schema.json#/$defs/Process)),
 [`initialize-harness.bpmn`](processes/initialize-harness.bpmn). It is the only
 Process you start. Each step names the
-[Skill](schemas/graph.schema.json#/$defs/Skill) to read and the Functional
+[Skill](schemas/README.md#skill) ([src](schemas/graph.schema.json#/$defs/Skill)) to read and the Functional
 Requirement it must meet (see the next section).
+
+```text
+ 1  Learn how to open files here
+ |
+ 2  Find the candidates  --- ask --->  the Requestor chooses one Harness
+ |
+ 3  Check each repository  --- already set up? --->  record it and stop
+ |
+ 4  Record that you are starting
+ |
+ 5  Follow the chosen Harness's own instructions
+ |
+ 6  Leave a README at the repository's root, if it has none
+
+    At any step: something cannot be found or read  --->  record it and stop
+```
 
 1. **Learn how to open files here.** Read
    [`skills/bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md).
@@ -127,6 +154,7 @@ a step can name it: Functional Requirement 1 is FR-1.
 | [`README.md`](README.md) | text | this page |
 | [`AGENTS.md`](AGENTS.md) | text | sends an agent that reads `AGENTS.md` first to this page |
 | [`bootstrap.json`](bootstrap.json) | declaration | this Harness's declaration: its Subgraphs and its files |
+| [`schemas/README.md`](schemas/README.md) | text | every schema here, drawn as boxes, and every term's definition |
 | [`schemas/graph.schema.json`](schemas/graph.schema.json) | schema | the shape of a declaration, and the definition of every term on this page |
 | [`schemas/discussion.input.schema.json`](schemas/discussion.input.schema.json) | schema | what you know before asking the Requestor |
 | [`schemas/discussion.output.schema.json`](schemas/discussion.output.schema.json) | schema | the Requestor's answer; a document matching it completes step 2 |

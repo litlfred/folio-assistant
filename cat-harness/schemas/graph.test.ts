@@ -67,6 +67,21 @@ describe("bootstrap/README.md is self-definitional", () => {
       expect(`${term}: ${links.filter((l) => l === target).length}`).toBe(`${term}: 1`);
     }
   });
+
+  test("each term also links to its drawing, and the drawing's heading exists", () => {
+    // The `[src]` link above opens JSON; a person reads the drawn page. Both
+    // are asserted, because a link to a heading that was renamed lands at the
+    // top of the page with nothing to say it missed.
+    const page = readFileSync(join(BOOTSTRAP, "schemas", "README.md"), "utf-8");
+    const headings = new Set(
+      [...page.matchAll(/^#{1,6} (.+)$/gm)].map((m) =>
+        m[1]!.toLowerCase().replace(/[^a-z0-9 -]/g, "").trim().replace(/ /g, "-"),
+      ),
+    );
+    const drawn = links.filter((l) => l.startsWith("schemas/README.md#"));
+    expect(drawn.length).toBeGreaterThanOrEqual(8);
+    expect(drawn.map((l) => l.split("#")[1]!).filter((a) => !headings.has(a))).toEqual([]);
+  });
 });
 
 describe("FR-7: bootstrap holds no program code", () => {
