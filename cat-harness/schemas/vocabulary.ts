@@ -439,6 +439,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // ── Instructions and contracts ───────────────────────────────────────
   hasInstructions: { gloss: "Whether a skill has an instruction body at all." },
   instructionsPath: { gloss: "Where a skill's instruction body lives, relative to the instance root." },
+  readmePath: { gloss: "Where a declared directory's README lives, relative to the instance root: the page a person reads about that directory." },
   instructionLines: { gloss: "How long a skill's instruction body is." },
   hasIOContract: { gloss: "Whether a skill declares input and output schemas." },
   inputSchema: { gloss: "The published schema a skill's input must satisfy." },

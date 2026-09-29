@@ -174,6 +174,38 @@ instance's README, and the floor instance must not name the layer above it
 has no front matter, so by bootstrap's own rule it is not a Skill. A
 hand-kept table had said "step 2" and hidden that.
 
+## `subgraph-readmes` — one README per declared directory
+
+A large instance cannot list every file on one page, but it declares its
+directories, and each declared directory gets its own README
+(`bun run readme:subgraphs`, the `subgraph-readmes` Tool). The instance
+README's `kg:files` then links each directory to it, and above 200 files lists
+directories instead of files. The README is part of the graph: the exported
+Directory node carries `readmePath`.
+
+**Everything shown is read from the Knowledge Graph**, never composed: the
+heading is the directory's declared `title`, the paragraph its `description`,
+the kinds its `graphKinds`, each file row what the file says it is, and "used
+by" only a relation a diagram records.
+
+**The layout is Liquid**, in `tools/templates/readme/`, part of the tools
+graph and found through the `tools` declaration. Templates may `{% include %}` one another, Jekyll
+style, and read any declared field through `kg`. Change a template, run the
+command, commit the result. How to write one is
+[`liquid-templates`](liquid-templates.md).
+
+**It writes only between `<!-- kg:subgraph:begin -->` and `:end`.** A README
+with no markers is left alone and reported: somebody wrote it. A generator
+that owns a whole README (bootstrap's schema page) keeps that region intact.
+
+**A missing fact is a QA finding, not a blank.**
+`test/results/subgraph-readmes.qa-results.json` records every directory with
+no `title`, no `description` or a description over 60 words, every declared
+directory absent from disk, and every unmarked README. Findings are reported,
+not failed: filling a declaration is its owner's work. `--check` fails on a
+stale README or a stale record, and runs in CI and in the pre-commit hook
+(`scripts/git-hooks/pre-commit`).
+
 ### Where the README render sits in the pipeline
 
 Stage 1, **after** the current-state json/jsonld and **before** every other

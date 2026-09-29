@@ -229,7 +229,7 @@ function boxNames(box: Box): string[] {
 /** One document's section: heading, what it is, the drawing, its rules. */
 function section(doc: PageDocument, root: Box): string[] {
   const s = doc.schema;
-  const out = [`## ${root.name}`, ""];
+  const out = [`### ${root.name}`, ""];
   out.push(`[src](${doc.file})${doc.describes ? ` · describes \`${doc.describes}\`` : ""}`, "");
   if (s.description) out.push(s.description, "");
   out.push("```text", ...drawTree(root), "```", "");
@@ -254,7 +254,7 @@ export function renderSchemaPage(docs: readonly PageDocument[], termsFrom: strin
     throw new Error(`bootstrap-schema-page: ${termsFrom} has no $defs, so there are no terms to list.`);
   }
   const out = [
-    "# Schemas, drawn",
+    "## Schemas, drawn",
     "",
     "<!-- Generated from the schemas in this directory. Change a schema, not this page. -->",
     "",
@@ -270,7 +270,7 @@ export function renderSchemaPage(docs: readonly PageDocument[], termsFrom: strin
     "- A field that holds another object points to that object's box, below it.",
     "- `[src]` opens the schema itself.",
     "",
-    "## Terms",
+    "### Terms",
     "",
     "Each defined term, in the words of",
     `[\`${termsFrom}\`](${termsFrom}). A term whose shape is drawn below links to`,
@@ -289,7 +289,7 @@ export function renderSchemaPage(docs: readonly PageDocument[], termsFrom: strin
   for (const [name, def] of Object.entries(termDoc.schema.$defs)) {
     const at = drawnIn(name);
     const drawn = at ? ` Drawn in [${at}](#${anchor(at)}).` : "";
-    out.push(`### ${spaced(name)}`, "", `${def.description ?? ""}${drawn} [src](${termsFrom}#/$defs/${name})`, "");
+    out.push(`#### ${spaced(name)}`, "", `${def.description ?? ""}${drawn} [src](${termsFrom}#/$defs/${name})`, "");
   }
   docs.forEach((doc, i) => out.push(...section(doc, roots[i]!)));
   return `${out.join("\n").trimEnd()}\n`;
