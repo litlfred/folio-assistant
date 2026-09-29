@@ -193,6 +193,14 @@ describe("the rendered page", () => {
     for (const r of rows) expect(html).toContain(`\`${r.id}\``);
   });
 
+  it("carries no Liquid syntax, because Jekyll renders it as a page", () => {
+    // A Tool description quoting a Liquid include tag reached this page and
+    // Jekyll tried to execute it: the staging build died on `tools/index.md`
+    // while every repository gate was green (PR #1489). Say it in words.
+    const body = html.replace(/^---\n[\s\S]*?\n---\n/, "");
+    expect(body).not.toMatch(/\{%|\{\{/);
+  });
+
   it("is markdown, not HTML wearing front matter", () => {
     const body = html.replace(/^---\n[\s\S]*?\n---\n/, "").replace(/<style>[\s\S]*?<\/style>/g, "");
     expect(body).toMatch(/^## /m);

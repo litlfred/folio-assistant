@@ -1,11 +1,11 @@
 ---
 # folio-assistant-9wb0
 title: 'PUBLICATION IS A STATE, NOT A BOOLEAN: every asset carries id + version and sits in draft; formal publication is an undefined process'
-status: in-progress
+status: todo
 type: feature
 priority: normal
 created_at: 2026-09-23T21:29:44Z
-updated_at: 2026-09-23T21:30:16Z
+updated_at: 2026-09-29T21:43:13Z
 parent: folio-assistant-vke6
 ---
 
@@ -55,3 +55,9 @@ One mechanical rule covers all 17: reverse the host, append the path. It is the 
 - [ ] `check:publishable` reports the draft corpus rather than a 17-item worklist
 - [ ] the proposal's §3.1 and §6 Q1 updated — Q1 is ANSWERED by this ruling
 - [ ] gates green
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
