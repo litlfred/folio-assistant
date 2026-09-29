@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-29T17:34:06Z
-updated_at: 2026-09-29T17:49:08Z
+updated_at: 2026-09-29T20:15:35Z
 parent: folio-assistant-zzmr
 ---
 
@@ -23,3 +23,14 @@ Issue #1482. Methodology node, applicability analysis, options, prototype on thr
 - [ ] Owner picks options A-F
 - [ ] Owner decides symptom-vs-subject epic axis
 - [ ] Apply accepted filings one bean at a time
+
+
+## Round 2 (2026-09-29)
+- [x] Sources ingested (owner PDFs): Deerwester 1990, Landauer-Foltz-Laham 1998, Halko et al. arXiv:0909.4061v2, Qi et al. 2023, Hang et al. arXiv:2202.02427. H91-1044 was the wrong paper (Magerman & Marcus); not ingested.
+- [x] Method node checked against the primary: corrected k (50-100) and stemming (CISI); log-entropy form divergence recorded; CA is a parallel track (option G).
+- [x] Engine test reproduces the 1990 Appendix singular values and the c3/c5 retrieval.
+- [x] A: lsi:near in check-before-create
+- [x] B: ingest --promote re-indexes the library
+- [x] C: graph-search --latent + lsi_query MCP tool (Tool node lsi-query)
+- [x] D: kg:audit lsi-index-fresh; skill:register step lsi:skills + CI lsi:skills:check
+- [ ] Owner: apply epic filings? (F) / build CA (G)?
