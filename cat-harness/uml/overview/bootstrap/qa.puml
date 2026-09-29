@@ -26,6 +26,10 @@ package "bootstrap/qa" as pkg_bootstrap_qa <<qa>> {
     totals [1] : map<number>
     pair_attestations [0..*] : Pair_attestation[]
   }
+  class "kg-qa-manifest/v1" as bootstrap_qa_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #f4e6e6 {
+    $schema [1] : 'kg-qa-manifest/v1'
+    auditor [1] : object
+  }
 }
 
 bootstrap_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" bootstrap_qa_kg_qa_v1_Pair_attestation : pair_attestations

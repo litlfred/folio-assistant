@@ -316,7 +316,7 @@
       ],
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
-      "count": 169,
+      "count": 179,
       "unit": "modules"
     },
     {
@@ -487,12 +487,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 3
+          "value": 4
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -513,10 +513,14 @@
           "kind": "fhir-artifact-index",
           "readOnly": true,
           "note": "no viewer yet"
+        },
+        {
+          "kind": "qa",
+          "note": "no viewer yet"
         }
       ],
       "findings": [
-        "smart-trust: declares 2 graph(s) with no published viewer — code, fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: declares 3 graph(s) with no published viewer — code, fhir-artifact-index, qa. Declared and not rendered is a gap, not a dead link.",
         "smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ],
@@ -546,12 +550,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
@@ -565,11 +569,16 @@
           "path": "/cat-harness/library/agent-skills/"
         },
         {
+          "kind": "qa",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "voices",
           "path": "/cat-harness/voices/agent-skills/"
         }
       ],
       "findings": [
+        "agent-skills: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
         "agent-skills: no avatar declared for this instance — showing the generic mark.",
         "agent-skills: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/agent-skills/) rather than the instance's own themed root.",
         "agent-skills: declares no `needs`, so its place in the stack is alphabetical rather than derived."
@@ -600,12 +609,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
@@ -619,11 +628,16 @@
           "path": "/cat-harness/library/folio-assistant-sci/"
         },
         {
+          "kind": "qa",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "voices",
           "path": "/cat-harness/voices/folio-assistant-sci/"
         }
       ],
       "findings": [
+        "folio-assistant-sci: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root.",
         "folio-assistant-sci: declares no `needs`, so its place in the stack is alphabetical rather than derived."
@@ -654,12 +668,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 6
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 4
+          "value": 5
         },
         {
           "id": "views",
@@ -677,6 +691,10 @@
           "note": "no viewer yet"
         },
         {
+          "kind": "qa",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "schemas",
           "path": "/cat-harness/schemas/large-datasets/"
         },
@@ -686,7 +704,7 @@
         }
       ],
       "findings": [
-        "large-datasets: declares 2 graph(s) with no published viewer — code, skills. Declared and not rendered is a gap, not a dead link.",
+        "large-datasets: declares 3 graph(s) with no published viewer — code, qa, skills. Declared and not rendered is a gap, not a dead link.",
         "large-datasets: no avatar declared for this instance — showing the generic mark.",
         "large-datasets: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/large-datasets/) rather than the instance's own themed root.",
         "large-datasets: declares no `needs`, so its place in the stack is alphabetical rather than derived."
@@ -717,12 +735,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 7
+          "value": 8
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 7
+          "value": 8
         },
         {
           "id": "views",
@@ -749,6 +767,10 @@
           "path": "/cat-harness/library/who-iris/"
         },
         {
+          "kind": "qa",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "skills",
           "note": "no viewer yet"
         },
@@ -763,7 +785,7 @@
         }
       ],
       "findings": [
-        "who-iris: declares 3 graph(s) with no published viewer — code, skills, themes. Declared and not rendered is a gap, not a dead link.",
+        "who-iris: declares 4 graph(s) with no published viewer — code, qa, skills, themes. Declared and not rendered is a gap, not a dead link.",
         "who-iris: 1 graph(s) hold materialized content and are READ-ONLY — catalogue. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "who-iris: declares no `needs`, so its place in the stack is alphabetical rather than derived."
       ],
@@ -793,12 +815,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 1
+          "value": 2
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 1
+          "value": 2
         },
         {
           "id": "views",
@@ -808,11 +830,16 @@
       ],
       "visualisations": [
         {
+          "kind": "qa",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "voices",
           "path": "/cat-harness/voices/who-style-guide/"
         }
       ],
       "findings": [
+        "who-style-guide: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
         "who-style-guide: no avatar declared for this instance — showing the generic mark.",
         "who-style-guide: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/voices/who-style-guide/) rather than the instance's own themed root.",
         "who-style-guide: declares no `needs`, so its place in the stack is alphabetical rather than derived."
@@ -844,12 +871,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 1
+          "value": 2
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 1
+          "value": 2
         },
         {
           "id": "views",
@@ -862,10 +889,14 @@
           "kind": "fhir-artifact-index",
           "readOnly": true,
           "note": "no viewer yet"
+        },
+        {
+          "kind": "qa",
+          "note": "no viewer yet"
         }
       ],
       "findings": [
-        "smart-immunizations: declares 1 graph(s) with no published viewer — fhir-artifact-index. Declared and not rendered is a gap, not a dead link.",
+        "smart-immunizations: declares 2 graph(s) with no published viewer — fhir-artifact-index, qa. Declared and not rendered is a gap, not a dead link.",
         "smart-immunizations: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-immunizations: no avatar declared for this instance — showing the generic mark."
       ],
@@ -896,12 +927,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 0
+          "value": 1
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 0
+          "value": 1
         },
         {
           "id": "views",
@@ -909,8 +940,14 @@
           "value": 0
         }
       ],
-      "visualisations": [],
+      "visualisations": [
+        {
+          "kind": "qa",
+          "note": "no viewer yet"
+        }
+      ],
       "findings": [
+        "smart-l1: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
         "smart-l1: no avatar declared for this instance — showing the generic mark."
       ],
       "navbarIcons": [
@@ -940,12 +977,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 0
+          "value": 1
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 0
+          "value": 1
         },
         {
           "id": "views",
@@ -953,8 +990,14 @@
           "value": 0
         }
       ],
-      "visualisations": [],
+      "visualisations": [
+        {
+          "kind": "qa",
+          "note": "no viewer yet"
+        }
+      ],
       "findings": [
+        "smart-ig: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
         "smart-ig: no avatar declared for this instance — showing the generic mark."
       ],
       "navbarIcons": [
@@ -984,12 +1027,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 0
+          "value": 1
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 0
+          "value": 1
         },
         {
           "id": "views",
@@ -997,8 +1040,14 @@
           "value": 0
         }
       ],
-      "visualisations": [],
+      "visualisations": [
+        {
+          "kind": "qa",
+          "note": "no viewer yet"
+        }
+      ],
       "findings": [
+        "smart-dak: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
         "smart-dak: no avatar declared for this instance — showing the generic mark."
       ],
       "navbarIcons": [
@@ -1030,12 +1079,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 6
+          "value": 7
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 7
         },
         {
           "id": "views",
@@ -1062,6 +1111,10 @@
           "note": "no viewer yet"
         },
         {
+          "kind": "qa",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "tools",
           "note": "no viewer yet"
         },
@@ -1071,7 +1124,7 @@
         }
       ],
       "findings": [
-        "smart-base: declares 4 graph(s) with no published viewer — fhir-artifact-index, methodology, processes, tools. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: declares 5 graph(s) with no published viewer — fhir-artifact-index, methodology, processes, qa, tools. Declared and not rendered is a gap, not a dead link.",
         "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-base: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/smart-base/) rather than the instance's own themed root."
       ],
@@ -1190,12 +1243,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
@@ -1204,6 +1257,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "qa",
+          "note": "no viewer yet"
+        },
         {
           "kind": "skills",
           "note": "no viewer yet"
@@ -1214,7 +1271,7 @@
         }
       ],
       "findings": [
-        "fhir-harness: declares 2 graph(s) with no published viewer — skills, tools. Declared and not rendered is a gap, not a dead link.",
+        "fhir-harness: declares 3 graph(s) with no published viewer — qa, skills, tools. Declared and not rendered is a gap, not a dead link.",
         "fhir-harness: no avatar declared for this instance — showing the generic mark."
       ],
       "navbarIcons": [
@@ -1278,12 +1335,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 10
+          "value": 11
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 11
+          "value": 12
         },
         {
           "id": "views",
@@ -1321,6 +1378,10 @@
           "note": "no viewer yet"
         },
         {
+          "kind": "qa",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "schemas",
           "path": "/cat-harness/schemas/folio-assistant-core/"
         },
@@ -1338,7 +1399,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-core: declares 6 graph(s) with no published viewer — code, folio, methodology, processes, skills, tools. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-core: declares 7 graph(s) with no published viewer — code, folio, methodology, processes, qa, skills, tools. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -2034,7 +2095,7 @@
           },
           {
             "key": "directories",
-            "summary": "3: smart-trust-artifact-index, smart-trust-docs, smart-trust-scripts"
+            "summary": "4: smart-trust-artifact-index, smart-trust-docs, smart-trust-scripts, qa"
           },
           {
             "key": "stickies",
@@ -2072,7 +2133,7 @@
           },
           {
             "key": "directories",
-            "summary": "2: library, voices"
+            "summary": "3: library, voices, qa"
           },
           {
             "key": "version",
@@ -2102,7 +2163,7 @@
           },
           {
             "key": "directories",
-            "summary": "2: library, voices"
+            "summary": "3: library, voices, qa"
           },
           {
             "key": "version",
@@ -2132,7 +2193,7 @@
           },
           {
             "key": "directories",
-            "summary": "5: large-datasets-schemas, large-datasets-sources, large-datasets-skills, large-datasets-scr…"
+            "summary": "6: large-datasets-schemas, large-datasets-sources, large-datasets-skills, large-datasets-scr…"
           },
           {
             "key": "version",
@@ -2170,7 +2231,7 @@
           },
           {
             "key": "directories",
-            "summary": "7: library, who-iris-catalogue, who-iris-uploads, who-iris-skills, who-iris-themes, who-iris…"
+            "summary": "8: library, who-iris-catalogue, who-iris-uploads, who-iris-skills, who-iris-themes, who-iris…"
           },
           {
             "key": "version",
@@ -2200,7 +2261,7 @@
           },
           {
             "key": "directories",
-            "summary": "1: voices"
+            "summary": "2: voices, qa"
           },
           {
             "key": "version",
@@ -2230,7 +2291,7 @@
           },
           {
             "key": "directories",
-            "summary": "1: smart-immunizations-artifact-index"
+            "summary": "2: smart-immunizations-artifact-index, qa"
           },
           {
             "key": "needs",
@@ -2267,6 +2328,10 @@
             "summary": "2: agent-instructions, instance-readme"
           },
           {
+            "key": "directories",
+            "summary": "1: qa"
+          },
+          {
             "key": "needs",
             "summary": "smart-base"
           },
@@ -2301,6 +2366,10 @@
             "summary": "2: agent-instructions, instance-readme"
           },
           {
+            "key": "directories",
+            "summary": "1: qa"
+          },
+          {
             "key": "needs",
             "summary": "smart-base"
           },
@@ -2333,6 +2402,10 @@
           {
             "key": "assets",
             "summary": "2: agent-instructions, instance-readme"
+          },
+          {
+            "key": "directories",
+            "summary": "1: qa"
           },
           {
             "key": "needs",
@@ -2374,7 +2447,7 @@
           },
           {
             "key": "directories",
-            "summary": "6: library, methodologies, voices, processes, smart-base-artifact-index, tools"
+            "summary": "7: library, methodologies, voices, processes, smart-base-artifact-index, tools, qa"
           },
           {
             "key": "needs",
@@ -2458,7 +2531,7 @@
           },
           {
             "key": "directories",
-            "summary": "2: fhir-ig-skills, fhir-ig-tools"
+            "summary": "3: fhir-ig-skills, fhir-ig-tools, qa"
           },
           {
             "key": "needs",
@@ -2492,7 +2565,7 @@
           },
           {
             "key": "directories",
-            "summary": "10: core-schemas, folios, glossary, voices, core-tools, core-scripts, core-library, core-meth…"
+            "summary": "11: core-schemas, folios, glossary, voices, core-tools, core-scripts, core-library, core-meth…"
           },
           {
             "key": "stickies",
