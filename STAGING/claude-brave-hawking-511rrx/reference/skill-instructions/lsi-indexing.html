@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/docs-ui.css?v=1790711357">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/docs-ui.css?v=1790713023">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/narrow-viewport.css?v=1790711357">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/narrow-viewport.css?v=1790713023">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/work-plan.css?v=1790711357">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/work-plan.css?v=1790713023">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/themes.css?v=1790711357">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/themes.css?v=1790713023">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/uml.css?v=1790711357">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/uml.css?v=1790713023">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/avatars.css?v=1790711357">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/avatars.css?v=1790713023">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/js/docs-ui.js?v=1790711357" defer></script>
+<script src="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/js/docs-ui.js?v=1790713023" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -875,11 +875,34 @@ bun run lsi index <span class="nt">--instance</span> who-iris <span class="nt">-
 bun run lsi query <span class="s2">"certainty of the evidence"</span> <span class="nt">--instance</span> who-iris <span class="nt">--graph</span> library
 bun run lsi:audit                                          <span class="c"># which graphs need one; is each fresh?</span>
 bun run lsi:epics <span class="nt">--out</span> &lt;file.md&gt; <span class="o">[</span><span class="nt">--prs</span> &lt;open-prs.json&gt;]  <span class="c"># epic-filing proposal</span>
+bun run lsi:near <span class="s2">"&lt;planned bean title&gt;"</span>                    <span class="c"># before `beans create`</span>
+bun run cat-harness/content/pipeline/graph-search.ts <span class="s2">"&lt;q&gt;"</span> <span class="nt">--latent</span>   <span class="c"># lexical + graph, THEN a separate latent list</span>
 </code></pre></div></div>
+
+<p><strong>From an MCP host</strong>: the <code class="language-plaintext highlighter-rouge">lsi_query</code> tool (Tool node <code class="language-plaintext highlighter-rouge">lsi-query</code>), with the
+query as <code class="language-plaintext highlighter-rouge">text</code> and optional <code class="language-plaintext highlighter-rouge">instance</code> / <code class="language-plaintext highlighter-rouge">graph</code>. On a shell the query goes on
+STDIN (<code class="language-plaintext highlighter-rouge">echo "&lt;q&gt;" | bun run lsi query --instance who-iris --graph library</code>),
+because free text never goes on a command line.</p>
 
 <p>A <strong>unit</strong> is the graph’s own chunk: a library <strong>section</strong> (what ingestion
 already produced), otherwise one markdown file. Units under 20 tokens are
 skipped — too little vocabulary to place.</p>
+<h2 id="on-ingestion--the-index-refreshes-itself">
+  
+  
+    <a href="#on-ingestion--the-index-refreshes-itself" class="anchor-heading" aria-labelledby="on-ingestion--the-index-refreshes-itself"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> On ingestion — the index refreshes itself
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">bun run ingest … --promote</code> ends by re-indexing the library it wrote into
+and printing, for the promoted document only, its near-duplicate section
+pairs and any narrow dimension it carries. <strong>Advisory</strong>: an index is not part
+of L1, so a failure prints “not refreshed — this is not a pass” and the
+ingest still succeeds. Read the lines while the document is fresh: a narrow
+dimension on a new document is almost always boilerplate, specimen text or a
+mis-extracted page, and it is cheapest to mark now.</p>
 <h2 id="where-the-index-lives-and-what-is-committed">
   
   
@@ -919,8 +942,9 @@ negative poles together. Refusal 2: it is not a topic until a person names
 it.</li>
   <li><strong><code class="language-plaintext highlighter-rouge">narrowDimensions</code></strong> — a dimension ≥ 80 % of whose mass sits on ≤ 3 units
 (or 1 %). Almost always non-prose: in who-iris it found two different
-Lorem-ipsum specimen passages in the WPRO style guide (pp. 21, 29–31) on the
-first run. Treat as an ingestion finding.</li>
+kinds of placeholder text in the WPRO style guide on the first run —
+Lorem-ipsum layout filler (pp. 21, 29–31) and pseudo-Latin font specimens
+(pp. 14–15, 28). Treat as an ingestion finding.</li>
   <li><strong><code class="language-plaintext highlighter-rouge">nearDuplicates</code></strong> — cosine ≥ 0.95. In the bean store it found pairs such
 as <code class="language-plaintext highlighter-rouge">3ozg</code>/<code class="language-plaintext highlighter-rouge">rmcf</code> (the same 72-sidecar churn, filed twice). A duplicate bean
 is <strong>scrapped with a pointer</strong>, never deleted (<code class="language-plaintext highlighter-rouge">bean-coordination</code>).</li>
@@ -964,6 +988,33 @@ instance and writes <code class="language-plaintext highlighter-rouge">cat-harne
 basis stated in <code class="language-plaintext highlighter-rouge">scripts/lsi.ts</code>; the method gives no corpus-size rule. It
 reports and does not gate (exit 0), like <code class="language-plaintext highlighter-rouge">check:methodology-evidence</code>;
 <code class="language-plaintext highlighter-rouge">--strict</code> exits 1 for a caller that has decided; no CI step runs it yet.</p>
+<h3 id="the-same-verdict-in-the-audited-record--kgaudits-lsi-index-fresh">
+  
+  
+    <a href="#the-same-verdict-in-the-audited-record--kgaudits-lsi-index-fresh" class="anchor-heading" aria-labelledby="the-same-verdict-in-the-audited-record--kgaudits-lsi-index-fresh"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The same verdict in the audited record — <code class="language-plaintext highlighter-rouge">kg:audit</code>’s <code class="language-plaintext highlighter-rouge">lsi-index-fresh</code>
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">kg:audit</code> carries the criterion <code class="language-plaintext highlighter-rouge">lsi-index-fresh</code> (graph level, <code class="language-plaintext highlighter-rouge">minor</code>), for
+the prose graphs the audited instance OWNS. It uses the same verdict function
+as <code class="language-plaintext highlighter-rouge">lsi:audit</code>, but its finding text carries <strong>no counts</strong>, so the committed
+kg-qa sidecar moves only when a verdict flips — an edit that keeps an index
+fresh, or keeps it missing, does not make <code class="language-plaintext highlighter-rouge">kg:audit:check</code> stale.</p>
+
+<p>Two chains keep the committed indexes fresh, so the criterion stays quiet in
+ordinary work:</p>
+
+<ul>
+  <li><strong>a skill edit</strong> — <code class="language-plaintext highlighter-rouge">skill:register</code> runs <code class="language-plaintext highlighter-rouge">lsi:skills</code> before <code class="language-plaintext highlighter-rouge">kg:audit</code>, and
+CI checks it with <code class="language-plaintext highlighter-rouge">lsi:skills:check</code>;</li>
+  <li><strong>an ingest</strong> — <code class="language-plaintext highlighter-rouge">--promote</code> re-indexes the library (§”On ingestion”).</li>
+</ul>
+
+<p>A graph nobody has indexed yet (today: <code class="language-plaintext highlighter-rouge">cat-harness/docs</code>) is a standing
+<code class="language-plaintext highlighter-rouge">minor</code> finding. That is the point of recording it: “needs one and has none”
+is now a fact in the audited record instead of a line in a report.</p>
 <h2 id="epic-filing--the-qou-hierarchy-proposed-by-evidence">
   
   

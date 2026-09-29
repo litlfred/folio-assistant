@@ -872,6 +872,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/lsi-query",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Latent Semantic Indexing over a prose graph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Find units of a declared prose graph (a library, the skills, the beans, docs) that discuss a query in OTHER words — the vocabulary gap lexical search cannot reach. Each hit is labelled lexical+latent or latent only, and the score is a cosine in the latent space, never merged with a lexical result."
+        }
+      ],
+      "skos:notation": "lsi-query",
+      "dcterms:source": "cat-harness/tools/mcp.ts#lsi-query",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/mcp-capture",
       "@type": "skos:Concept",
       "skos:inScheme": {

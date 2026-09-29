@@ -296,10 +296,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-29T19:50:19.833Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ed67fee4b693e02e8708fa32cd4b23af617bed0a",
-  "sourceCommitSha": "ed67fee4b693e02e8708fa32cd4b23af617bed0a",
-  "sourceCommitAt": "2026-09-29T19:38:44Z",
+  "generatedAt": "2026-09-29T20:18:34.698Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7925c54d93748bad173fe205a7c7cfb7c161821f",
+  "sourceCommitSha": "7925c54d93748bad173fe205a7c7cfb7c161821f",
+  "sourceCommitAt": "2026-09-29T20:15:35Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -313,7 +313,7 @@
     "SequenceFlow": 912,
     "Role": 148,
     "ProcessNode": 862,
-    "Tool": 104,
+    "Tool": 105,
     "Schema": 127,
     "ExternalSchema": 17,
     "GraphKind": 35,
@@ -831,7 +831,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/graph-management/lsi-indexing.md",
-      "instructionLines": 127,
+      "instructionLines": 164,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2521,7 +2521,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 540,
+      "instructionLines": 556,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -40290,6 +40290,70 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/docs-generation"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/readme-audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#tool/lsi-query",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "lsi-query",
+      "title": "Latent Semantic Indexing over a prose graph",
+      "description": "Find units of a declared prose graph (a library, the skills, the beans, docs) that discuss a query in OTHER words — the vocabulary gap lexical search cannot reach. Each hit is labelled lexical+latent or latent only, and the score is a cosine in the latent space, never merged with a lexical result.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run lsi query",
+        "mcp": {
+          "tool": "lsi_query"
+        },
+        "inProcess": {
+          "module": "src/tools/lsi-query.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "text",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/tool-types.schema.json#/$defs/Text",
+            "description": "The query, in any words, on STDIN — free text never goes on a command line.",
+            "required": true,
+            "arg": {
+              "stdin": true
+            }
+          },
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/tool-types.schema.json#/$defs/Slug",
+            "description": "Instance declaring the graph, e.g. `who-iris`.",
+            "required": false,
+            "arg": {
+              "flag": "--instance"
+            }
+          },
+          {
+            "name": "graph",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/tool-types.schema.json#/$defs/Slug",
+            "description": "Graph id within the instance, e.g. `library`.",
+            "required": false,
+            "arg": {
+              "flag": "--graph"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/tool-types.schema.json#/$defs/Markdown",
+            "description": "Per graph: the top hits by cosine, each marked lexical+latent or latent only."
+          }
+        ]
+      },
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#skill/lsi-indexing"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/lsi-query"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-brave-hawking-511rrx/cat-harness.jsonld#tool/render-order",
