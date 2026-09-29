@@ -27,5 +27,5 @@ Move, with history (`git mv`):
 - [ ] IRIs: own namespace `…/bootstrap-tools/ns#` minted in own-namespaces.json; moved schema nodes resolve under the bootstrap-tools document IRI; no stale `cat-harness.jsonld#schema/{discussion,bootstrap-graph}` reference remains
 - [ ] the 5 published `bootstrap/schemas/*.schema.json` are BYTE-IDENTICAL before and after (their `$id`s are a published contract)
 - [ ] Zod validation runs as a step of the bootstrap render pipeline (owner: "need Zod usage in bootstrap tools as part of validation in rendering pipeline")
-- [ ] SEMVER skills in bootstrap-tools — scope to be confirmed with the owner
+- [ ] SEMVER skill in bootstrap-tools — owner, 2026-09-29, chose **"Bootstrap contract semver"**: a skill defining major/minor/patch for bootstrap's PUBLISHED schemas and graph, with the bump COMPUTED by the bootstrap-tools pipeline from a diff of the generated schemas (in the spirit of the instance-versioning proposal, #592: "a version bump COMPUTED by diffing the exported graph rather than asserted"). Not the every-instance version, and the release skills stay where they are.
 - [ ] `bun run gates` green apart from the known local-only `.claude/worktrees` failures
