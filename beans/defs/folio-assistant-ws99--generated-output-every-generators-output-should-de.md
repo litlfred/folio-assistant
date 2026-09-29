@@ -79,5 +79,23 @@ hand would have been an unverifiable claim that exempts a file from a check,
 which is the defect this bean exists to close, pointed the other way. Left for
 a ruling; the false banner is worth a bean of its own.
 
+**Gates.** `bun run gates` — **174/174 pass**, and the route there is worth
+recording because the first sweep was red on seven and every one was a stale
+generated artefact. Four were this branch's own consequence: `gen-docs-pages.ts`
+emits ONE more front-matter line, so every `#:` line reference in 31
+`translations/*/*.pot` catalogues moved by one (`:481` → `:482`), and the UML
+overview renders two doc comments this branch rewrote. Three were already stale
+on `main` and are swept up because the same regenerators own them
+(`beans/README.md`, `uploads/README.md`, `docs/qa/index.html` +
+`docs/_data/harness.json`). Each of the six red gates was then verified on its
+own rather than through `gates`, per `skill-register.ts`'s own warning that
+`bun test` repairs what later gates read (bean `ymsu`).
+
+Two test failures in the first sweep were **neither**: `folio-root.test.ts` and
+`instance-render.test.ts` both assert the checkout directory is named
+`folio-assistant`, so they fail in any worktree that is not. Confirmed by moving
+the worktree and re-running: 18 pass, 0 fail. Worth knowing before anybody else
+loses an hour to it.
+
 Bean stays `in-progress`: the five-generator class is closed, the translated
 copies are not.
