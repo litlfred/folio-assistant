@@ -292,10 +292,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-29T18:10:41.069Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bcde6eebfc95d53a6161bfaa5d819f8ef25418af",
-  "sourceCommitSha": "bcde6eebfc95d53a6161bfaa5d819f8ef25418af",
-  "sourceCommitAt": "2026-09-29T20:07:21+02:00",
+  "generatedAt": "2026-09-29T18:58:48.469Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/13292b6a0d8855f1edb391f456ef52fb674757c1",
+  "sourceCommitSha": "13292b6a0d8855f1edb391f456ef52fb674757c1",
+  "sourceCommitAt": "2026-09-29T20:54:15+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -39308,6 +39308,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/external-schema",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "external-schema",
+      "title": "A specification this repository DEPENDS ON and does not hold.",
+      "module": "schemas/external-schema.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/schemas"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/folio-graph-kind",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "folio-graph-kind",
@@ -39987,14 +39995,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assist-core-schemas"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/external-schema",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
-      "name": "external-schema",
-      "title": "A specification this repository DEPENDS ON and does not hold.",
-      "module": "../folio-assistant-core/schemas/external-schema.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assist-core-schemas"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/extraction",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "extraction",
@@ -40405,7 +40405,7 @@
       "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ExternalSchemaGraph",
       "renderable": false,
       "summary": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
-      "validatorRef": "folio-assistant-core:schemas/external-schema.ts#ExternalSchemaSchema"
+      "validator": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/external-schema"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/code-list",

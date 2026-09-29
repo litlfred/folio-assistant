@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 430,
+      "count": 432,
       "unit": "beans"
     }
   },
@@ -4263,6 +4263,20 @@
       "file": "beans/defs/folio-assistant-qj9a--staging-size-the-measurement-is-right-and-the-seve.md"
     },
     {
+      "id": "folio-assistant-qmqg",
+      "title": "TRANSLATIONS: the convention fallback would have made #1448's declaration edit a silent no-op",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-bzyu",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T06:20:28Z",
+      "updatedAt": "2026-09-27T06:38:17Z",
+      "preview": "Found 2026-09-27 while doing the `.pot` relocation in PR #1448, which is the\nthing that makes this measurable rather than theoretical.\n\n## The shape\n\nTen production readers resolve the translations directory like this:\n\n```ts\ndirectoryForGraph(root, \"translation-sources\") ?? join(root, \"translations\")\n```\n\n`po-resolve.ts` documents it as a deliberate **third source**: *\"the\nconvention, `translatio",
+      "file": "beans/defs/folio-assistant-qmqg--translations-the-convention-fallback-would-have-ma.md"
+    },
+    {
       "id": "folio-assistant-qook",
       "title": "check:merged reports a merged tree defective when no real checkout of it is — a symlinked node_modules leaks into the corpus",
       "status": "in-progress",
@@ -4272,7 +4286,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T11:04:49Z",
-      "updatedAt": "2026-09-27T05:33:45Z",
+      "updatedAt": "2026-09-27T10:30:21Z",
       "preview": "## CORRECTED 2026-09-26 — the cause is NOT `ymsu`, and the title understates it\n\nThis bean was opened saying *\"a sweep artefact\"* and pointing at `ymsu` — a\ngate that writes what a later gate reads. **That was wrong**, and it was a\nhypothesis stated in a bean's title as though it were the finding. The actual\ncause is a one-character `.gitignore` bug that distorts the CORPUS of every\nworktree `chec",
       "file": "beans/defs/folio-assistant-qook--checkmerged-reports-umloverviewcheck-red-on-a-merg.md"
     },
@@ -5865,6 +5879,20 @@
       "updatedAt": "2026-09-20T18:48:38Z",
       "preview": "Owner, 2026-09-20, verbatim — this is the largest architectural statement in\nthe session and paraphrasing it would lose the parts that constrain the design:\n\n> these avatars should aslso be the default display background for their\n> corresponding docs/ (ghpages) rendering, on which panels and folios and what\n> not renders. kindof like the shared miro board background... the harness\n> instnace disp",
       "file": "beans/defs/folio-assistant-yj32--harness-as-interface-a-harness-instances-default-r.md"
+    },
+    {
+      "id": "folio-assistant-yj6r",
+      "title": "ESCAPES: 15 instance-boundary imports check:partition cannot see, and the gate that sees them but never fails",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-27T07:47:30Z",
+      "updatedAt": "2026-09-27T08:17:37Z",
+      "preview": "Found 2026-09-27 while answering the owner's question *\"how resolve/gate/qa escape\nimports?\"* — sibling to `zlmp` under the same SPLIT epic, and **not** a reopening\nof it.\n\n## Two axes, and only one of them has ever been driven to zero\n\n`zlmp` drove the MODULE axis to zero: `check:partition` reports **0**\nwrong-direction edges today, and that is correct on its own terms — it measures\nedges between",
+      "file": "beans/defs/folio-assistant-yj6r--escapes-15-instance-boundary-imports-checkpartitio.md"
     },
     {
       "id": "folio-assistant-ymsu",
