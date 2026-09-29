@@ -37,26 +37,40 @@ import { z } from "zod";
 
 /** Every term bootstrap uses, with its definition. The generator emits each as a `$defs` entry. */
 export const BOOTSTRAP_TERMS = {
+  // ORDERED, and the order is the point: each definition uses only terms
+  // defined above it, and never itself (owner, 2026-09-29: "logically tight,
+  // non self-referential definitions"). `graph.test.ts` checks it. Primitives,
+  // not defined here: file, directory, JSON, JSON Schema, JSON-LD, IRI, BPMN,
+  // and a repository at one version.
+  Node:
+    "One unit of recorded knowledge, held in one file or as one identifiable part of a file, and named by an IRI.",
+  NodeKind:
+    "A name for a class of Nodes, together with its Node Schema: a JSON Schema that every Node of that kind satisfies.",
+  NodeInstance: "A Node that states its Node Kind and satisfies that kind's Node Schema.",
+  GraphKind: "A named set of Node Kinds whose instances may be held together.",
+  Declaration:
+    "A JSON document, `<name>.json`, that gives a name and lists entries, each naming either a directory of Node Instances with the Graph Kinds they belong to, or a single file with its purpose.",
+  Subgraph: "A named subset of Node Instances: a Declaration's directory entry, with its id, its directory and its Graph Kinds.",
+  Asset: "A Declaration's file entry: one file about the repository itself, such as its README, with its stated purpose.",
   KnowledgeGraph:
-    "Information kept as files in a repository: things, and the named relations between them. It is declared by one file at its root, `<name>.json`, which gives its name and lists its Subgraphs.",
-  Subgraph:
-    "A named directory of a Knowledge Graph, declared with the Graph Kind or Kinds it holds. A Knowledge Graph has zero or more.",
-  GraphKind:
-    "What a Subgraph holds, such as skills, processes or schemas. A reader matches on it to decide whether to look inside.",
-  Asset:
-    "A single file a Knowledge Graph declares as its own, together with the part it plays, such as its README.",
-  Harness:
-    "What an Actor uses to work with a Knowledge Graph: Skills, Processes, Roles and Tools. A Harness is itself a Knowledge Graph, declared the same way; bootstrap is the first Harness.",
-  Actor:
-    "A participant, whether a person, an agent or a program, that takes a Role in each Process it takes part in.",
+    "A semi-static description of one or more datasets or information repositories as of one version: a set of Node Schemas and Node Instances, and the Declaration that divides them into Subgraphs. Published as JSON-LD, each Subgraph is a named graph.",
+  Dependency:
+    "One Knowledge Graph depends on another when its Declaration names the other. The dependent's Nodes may refer to the other's; the other's never refer back.",
+  Content:
+    "The Node Kinds whose instances describe the datasets and other information a Knowledge Graph is about: their records, documents, catalogues and terms, and links to other sources of knowledge inside or outside the repository.",
+  Actor: "A person, an agent or a program that can carry out work.",
+  Task: "A unit of work an Actor carries out: what it needs to begin, and what it produces.",
+  Skill: "The Node Kind whose instances are natural-language instructions an Actor follows to carry out one Task.",
+  Tool:
+    "The Node Kind whose instances describe a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
   Role:
-    "The part an Actor plays in a Process. A Process diagram draws each Role as one lane, and a Role carries the Skills its lane needs.",
+    "The Node Kind whose instances name a responsibility an Actor takes on when carrying out Tasks, and list the Skills that responsibility needs.",
+  ProcessNode: "One element of a BPMN diagram: a Task, a decision, a start or an end.",
+  SequenceFlow: "An arrow in a BPMN diagram, from one Process Node to the next.",
   Process:
-    "A diagram of the steps, decisions and order of some work, with one lane per Role. It is written in Business Process Model and Notation (BPMN), a standard diagram format, in a `.bpmn` file.",
-  ProcessNode: "One element of a Process: a step, a decision, a start or an end.",
-  SequenceFlow: "An arrow in a Process, from one Process Node to the next.",
-  Skill: "Written instructions an Actor follows to carry out one step of a Process, in a `.md` file.",
-  Tool: "A program an Actor calls to carry out a step. A Harness may declare Tools; bootstrap declares none, because it runs nothing.",
+    "The Node Kind whose instances coordinate Tasks: a BPMN diagram whose Process Nodes are joined by Sequence Flows, in lanes that each name the Role an Actor takes to carry out that lane's Tasks.",
+  Harness:
+    "A Knowledge Graph whose Subgraphs hold Skills, Tools, Roles and Processes: what an Actor needs in order to work with another Knowledge Graph.",
 } as const;
 
 export type BootstrapTerm = keyof typeof BOOTSTRAP_TERMS;
@@ -66,7 +80,8 @@ export const SubgraphSchema = z
     id: z.string().min(1).describe("The Subgraph's name, unique within its Knowledge Graph."),
     path: z.string().min(1).describe("The directory, relative to the declaration."),
     graphKinds: z.array(z.string().min(1)).min(1).describe("The Graph Kinds it holds."),
-    description: z.string().optional(),
+    title: z.string().optional().describe("A short name for people, shown as its README's heading."),
+    description: z.string().optional().describe("What it holds, in a sentence or two, shown under that heading."),
   })
   .passthrough()
   .describe(BOOTSTRAP_TERMS.Subgraph);

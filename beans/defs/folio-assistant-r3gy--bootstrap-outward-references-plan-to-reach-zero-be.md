@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-29T18:18:26Z
-updated_at: 2026-09-29T19:14:25Z
+updated_at: 2026-09-29T21:44:11Z
 parent: folio-assistant-vke6
 ---
 
@@ -107,3 +107,12 @@ Verbatim: *"skill determine the installed harnesses in a repo (intput = repo loc
 - [ ] Voice rewrite of all of bootstrap (with the above, same files)
 - [ ] One place for the KG's JSON-LD form and its self-description; `graph.schema.json` declares node shapes
 - [ ] Remove `skills/package-manifest.json`
+
+
+## Owner additions, 2026-09-29 (later)
+
+- [ ] **No tools in bootstrap.** Bootstrap declares no `tools` directory already (`bootstrap.json`: "no Tools"). Definitions v3 follow suit: **Tool** is not a bootstrap term; it is defined in cat-harness. Harness is defined as Subgraphs holding Skills, Roles or Processes.
+- [ ] `discussion.bpmn`: overlapping labels; lane role becomes a reusable **Discussion Agent**, not the Bootstrapping Agent.
+- [ ] `log-message`: a **validate input schema** sub-process used by skills; partial data never stops the run, it returns false; output schema carries success/fail code words.
+- [ ] `initialize-harness.bpmn`: restructure with sub-processes, using the business-analyst skills.
+- [x] Instance README file tables name files relative to the directory heading they sit under (`readme-graph-sections.ts`), PR #1489.

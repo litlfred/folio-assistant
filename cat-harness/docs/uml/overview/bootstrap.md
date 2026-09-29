@@ -102,6 +102,7 @@ classDiagram
       id [1] string
       path [1] string
       graphKinds [1..*] string[]
+      title [0..1] string
       description [0..1] string
     }
     class bootstrap_schemas_graph_schema_json_Asset["Asset"] {
