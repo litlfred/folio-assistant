@@ -56,7 +56,7 @@ the four Roles here are declared in [`scenarios/roles.json`](scenarios/roles.jso
 | **Logger** | the record of what you did. Here, it is the conversation you are in. |
 
 As the Bootstrapping Agent you have no Harness yet, so you have no
-[Tools](schemas/README.md#tool) ([src](schemas/graph.schema.json#/$defs/Tool)) (programs to call). If a step
+tools (programs to call): a Harness defines those, and bootstrap does not. If a step
 seems to need one, it belongs to the Harness you are about to set up, not to
 this one.
 

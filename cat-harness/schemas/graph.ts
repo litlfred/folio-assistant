@@ -39,45 +39,119 @@ import { z } from "zod";
 export const BOOTSTRAP_TERMS = {
   // ORDERED, and the order is the point: each definition uses only terms
   // defined above it, and never itself (owner, 2026-09-29: "logically tight,
-  // non self-referential definitions"). `graph.test.ts` checks it. Primitives,
-  // not defined here: file, directory, JSON, JSON Schema, JSON-LD, IRI, BPMN,
-  // and a repository at one version.
-  Node:
-    "One unit of recorded knowledge, held in one file or as one identifiable part of a file, and named by an IRI.",
-  NodeKind:
-    "A name for a class of Nodes, together with its Node Schema: a JSON Schema that every Node of that kind satisfies.",
-  SubKind:
-    "A Node Kind whose Node Schema requires everything another Node Kind's does, so every Node of it is also a Node of that other kind.",
-  NodeInstance: "A Node that states its Node Kind and satisfies that kind's Node Schema.",
-  GraphKind: "A named set of Node Kinds whose instances may be held together.",
-  Declaration:
-    "A JSON document, `<name>.json`, that gives a name and lists entries, each naming either a directory of Node Instances with the Graph Kinds they belong to, or a single file with its purpose.",
-  Subgraph: "A named subset of Node Instances: a Declaration's directory entry, with its id, its directory and its Graph Kinds.",
-  Asset: "A Declaration's file entry: one file about the repository itself, such as its README, with its stated purpose.",
+  // non self-referential definitions"). BOOTSTRAP_TERM_USES below records
+  // which, and `graph.test.ts` holds the two together and checks the order
+  // with `checkDeclaredOrder`. Primitives, not defined here: file, directory,
+  // JSON document, JSON Schema, JSON-LD (with its named graphs), IRI, BPMN
+  // (process, flow node, gateway, event, lane, call activity), program, and a
+  // repository at one version.
+  //
+  // Version 3, owner-approved 2026-09-29. Tool is NOT here: "no tools in
+  // bootstrap" — a Harness defines it. Extension and Subkind are both kept.
+  Node: "One file, or one part of a file addressable by an IRI fragment, named by an IRI.",
+  Reference: "A Node's naming of another Node by its IRI.",
+  NodeSchema: "A schema a Node can be checked against: a JSON Schema, or a published external schema such as BPMN's.",
+  NodeKind: "A name paired with a Node Schema.",
+  Subkind:
+    "A Node Kind whose Node Schema requires everything another Node Kind's does, so every Node that satisfies it satisfies the other too.",
+  NodeInstance: "A Node that names its Node Kind, in `$schema` or front matter, and satisfies that kind's Node Schema.",
+  GraphKind: "A named set of Node Kinds.",
+  Declaration: "A JSON document, `<name>.json`, that gives a name and lists directory entries and file entries.",
   Extension:
     "A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning.",
+  Subgraph: "A directory entry of a Declaration: an id, a directory, and the Graph Kinds its Node Instances' kinds belong to.",
+  Asset: "A file entry of a Declaration: one file about the repository itself, whose `role` field says what it is for.",
   KnowledgeGraph:
-    "A semi-static description of one or more datasets or information repositories as of one version: a set of Node Schemas and Node Instances, and the Declaration that divides them into Subgraphs. Published as JSON-LD, each Subgraph is a named graph.",
+    "The Node Schemas, Node Instances and Assets one Declaration lists, as of one version of the repository. Published as JSON-LD, the statements of each Subgraph's Node Instances form one named graph.",
   Dependency:
-    "One Knowledge Graph depends on another when its Declaration names the other. The dependent's Nodes may refer to the other's; the other's never refer back.",
+    "A Declaration's `needs` entry naming another Knowledge Graph. References may point from this graph's Node Instances into the named one, never back.",
   Content:
-    "The Node Kinds whose instances describe the datasets and other information a Knowledge Graph is about: their records, documents, catalogues and terms, and links to other sources of knowledge inside or outside the repository.",
-  Actor: "A person, an agent or a program that can carry out work.",
-  Task: "A unit of work an Actor carries out: what it needs to begin, and what it produces.",
-  Skill: "The Node Kind whose instances are natural-language instructions an Actor follows to carry out one Task.",
-  Tool:
-    "The Node Kind whose instances describe a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
-  Role:
-    "The Node Kind whose instances name a responsibility an Actor takes on when carrying out Tasks, and list the Skills that responsibility needs.",
-  ProcessNode: "One element of a BPMN diagram: a Task, a decision, a start or an end.",
-  SequenceFlow: "An arrow in a BPMN diagram, from one Process Node to the next.",
+    "Node Instances that describe the subject matter of a Knowledge Graph, such as records, documents, catalogues and their terms, rather than how to work with it.",
+  Task: "A unit of work, stated by what it needs to begin and what it produces.",
+  Actor: "A person, an agent or a program that can carry out Tasks.",
+  Skill: "A Node Instance holding natural-language instructions an Actor follows to carry out a Task.",
+  Role: "A Node Instance naming a part an Actor takes on to carry out Tasks, and listing the Skills that part needs.",
+  ProcessNode: "A BPMN flow node: an activity (a task or call activity), a gateway, or an event.",
+  SequenceFlow: "A directed connection in a BPMN process from one Process Node to the next.",
   Process:
-    "The Node Kind whose instances coordinate Tasks: a BPMN diagram whose Process Nodes are joined by Sequence Flows, in lanes that each name the Role an Actor takes to carry out that lane's Tasks.",
+    "A Node Instance holding a BPMN process that coordinates Tasks: its Process Nodes, joined by Sequence Flows, sit in lanes that each name a Role.",
   Harness:
-    "A Knowledge Graph whose Subgraphs hold Skills, Tools, Roles and Processes: what an Actor needs in order to work with another Knowledge Graph.",
+    "A Knowledge Graph whose Subgraphs hold Skills, Roles or Processes: what an Actor uses to work with a Knowledge Graph, including itself.",
 } as const;
 
 export type BootstrapTerm = keyof typeof BOOTSTRAP_TERMS;
+
+/**
+ * Which earlier terms each definition uses — AUTHORED, not inferred.
+ *
+ * The editorial relation, in the sense `uses[]` has everywhere in this
+ * repository: what a reader must already know to follow the definition. A
+ * matcher over the text in `graph.test.ts` is kept as a GUARD that this list
+ * and the prose agree, never as the source, because a word can appear in a
+ * definition without being used as a term (Process Node's "a task" is BPMN's
+ * word, not bootstrap's Task).
+ */
+export const BOOTSTRAP_TERM_USES: Readonly<Record<BootstrapTerm, readonly BootstrapTerm[]>> = {
+  Node: [],
+  Reference: ["Node"],
+  NodeSchema: ["Node"],
+  NodeKind: ["NodeSchema"],
+  Subkind: ["NodeKind", "NodeSchema", "Node"],
+  NodeInstance: ["Node", "NodeKind", "NodeSchema"],
+  GraphKind: ["NodeKind"],
+  Declaration: [],
+  Extension: ["Declaration"],
+  Subgraph: ["Declaration", "GraphKind", "NodeInstance"],
+  Asset: ["Declaration"],
+  KnowledgeGraph: ["NodeSchema", "NodeInstance", "Asset", "Declaration", "Subgraph"],
+  Dependency: ["Declaration", "KnowledgeGraph", "Reference", "NodeInstance"],
+  Content: ["NodeInstance", "KnowledgeGraph"],
+  Task: [],
+  Actor: ["Task"],
+  Skill: ["NodeInstance", "Actor", "Task"],
+  Role: ["NodeInstance", "Actor", "Task", "Skill"],
+  ProcessNode: [],
+  SequenceFlow: ["ProcessNode"],
+  Process: ["NodeInstance", "Task", "ProcessNode", "SequenceFlow", "Role"],
+  Harness: ["KnowledgeGraph", "Subgraph", "Skill", "Role", "Process", "Actor"],
+};
+
+/** JSON Schema draft-07 — the meta-schema a bootstrap Node Schema is written in. */
+const JSON_SCHEMA = "http://json-schema.org/draft-07/schema#";
+/** BPMN 2.0, the published standard a Process conforms to. */
+const BPMN = "https://www.omg.org/spec/BPMN/2.0/";
+
+/**
+ * The schema that DEFINES each term, by IRI (owner, 2026-09-29: "definitions
+ * should link to IRI of schemas defining them"). `#/$defs/<Term>` is this
+ * document's own entry; an outside IRI is a standard bootstrap builds on and
+ * does not restate. Published beside each definition as `rdfs:isDefinedBy`
+ * and in the Terms table.
+ */
+export const BOOTSTRAP_TERM_DEFINED_BY: Readonly<Record<BootstrapTerm, string>> = {
+  Node: "https://www.w3.org/TR/json-ld11/#node-objects",
+  Reference: "https://www.rfc-editor.org/rfc/rfc3987",
+  NodeSchema: JSON_SCHEMA,
+  NodeKind: "#/$defs/NodeKind",
+  Subkind: "#/$defs/Subkind",
+  NodeInstance: "#/$defs/NodeInstance",
+  GraphKind: "#/$defs/GraphKind",
+  Declaration: "#",
+  Extension: "#/$defs/Extension",
+  Subgraph: "#/$defs/Subgraph",
+  Asset: "#/$defs/Asset",
+  KnowledgeGraph: "#",
+  Dependency: "#/$defs/Dependency",
+  Content: "#/$defs/Content",
+  Task: `${BPMN}#task`,
+  Actor: "http://www.w3.org/ns/prov#Agent",
+  Skill: "#/$defs/Skill",
+  Role: "#/$defs/Role",
+  ProcessNode: `${BPMN}#flowNode`,
+  SequenceFlow: `${BPMN}#sequenceFlow`,
+  Process: `${BPMN}#process`,
+  Harness: "#",
+};
 
 /**
  * The Graph Kinds bootstrap's own Declaration uses, one plain sentence each.
@@ -114,10 +188,6 @@ export const GraphKindSchema = z
   ])
   .describe(BOOTSTRAP_TERMS.GraphKind);
 
-/** A term whose `$defs` entry carries a shape as well as its definition. */
-export const BOOTSTRAP_TERM_SHAPES: Readonly<Partial<Record<BootstrapTerm, z.ZodType>>> = {
-  GraphKind: GraphKindSchema,
-};
 
 export const SubgraphSchema = z
   .object({
@@ -139,6 +209,9 @@ export const AssetSchema = z
   .passthrough()
   .describe(BOOTSTRAP_TERMS.Asset);
 
+/** A `needs` entry: the other Knowledge Graph's name. */
+export const DependencySchema = z.string().min(1).describe(BOOTSTRAP_TERMS.Dependency);
+
 /** The shape every `<name>.json` shares. Loose on purpose: a Harness above bootstrap adds fields. */
 export const KnowledgeGraphDeclarationSchema = z
   .object({
@@ -158,6 +231,7 @@ export const KnowledgeGraphDeclarationSchema = z
     title: z.string().optional(),
     description: z.string().optional(),
     directories: z.array(SubgraphSchema).optional().describe("Its Subgraphs: zero or more."),
+    needs: z.array(DependencySchema).optional().describe("Its Dependencies: the Knowledge Graphs it may refer into."),
     assets: z.array(AssetSchema).optional(),
   })
   // Every other field is an Extension: a Harness above bootstrap adds its
@@ -165,3 +239,15 @@ export const KnowledgeGraphDeclarationSchema = z
   // that does not know one ignores it rather than rejecting the file.
   .passthrough()
   .describe(`A Declaration. Any field not listed here is an Extension: ${BOOTSTRAP_TERMS.Extension}`);
+
+/**
+ * A term whose `$defs` entry carries a shape as well as its definition, so the
+ * term a README links to is the same object the declaration is checked
+ * against — not a description of it beside the real thing.
+ */
+export const BOOTSTRAP_TERM_SHAPES: Readonly<Partial<Record<BootstrapTerm, z.ZodType>>> = {
+  GraphKind: GraphKindSchema,
+  Subgraph: SubgraphSchema,
+  Asset: AssetSchema,
+  Dependency: DependencySchema,
+};

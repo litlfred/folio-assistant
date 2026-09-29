@@ -10,7 +10,14 @@ import { join } from "node:path";
 import { findDeclarationFile, instanceRootsIn } from "./cat-harness.ts";
 import { CLASS_GLOSSES, termLayer } from "./vocabulary.ts";
 import { BASE_GRAPH_KINDS } from "./graph-kind-registry.ts";
-import { BOOTSTRAP_GRAPH_KINDS, BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "./graph.ts";
+import {
+  BOOTSTRAP_GRAPH_KINDS,
+  BOOTSTRAP_TERM_DEFINED_BY,
+  BOOTSTRAP_TERM_USES,
+  BOOTSTRAP_TERMS,
+  KnowledgeGraphDeclarationSchema,
+} from "./graph.ts";
+import { checkDeclaredOrder } from "./dependency-order.ts";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
 const BOOTSTRAP = join(REPO_ROOT, "bootstrap");
@@ -36,9 +43,14 @@ describe("bootstrap's terms are its own", () => {
   });
 
   test("the published vocabulary uses bootstrap's definitions, and bootstrap's terms link nowhere above", () => {
-    for (const [cls, term] of [["Actor", "Actor"], ["Role", "Role"], ["Skill", "Skill"], ["Process", "Process"], ["Directory", "Subgraph"], ["Tool", "Tool"], ["Harness", "Harness"]] as const) {
+    for (const [cls, term] of [["Actor", "Actor"], ["Role", "Role"], ["Skill", "Skill"], ["Process", "Process"], ["Directory", "Subgraph"], ["Harness", "Harness"]] as const) {
       expect(CLASS_GLOSSES[cls]!.gloss).toBe(BOOTSTRAP_TERMS[term]);
+      // A term bootstrap defines is bootstrap's, IRI included (v3: Harness moved).
+      expect(CLASS_GLOSSES[cls]!.layer, cls).toBe("bootstrap");
     }
+    // Owner, 2026-09-29: "no tools in bootstrap". A Harness defines Tool.
+    expect("Tool" in BOOTSTRAP_TERMS).toBe(false);
+    expect(CLASS_GLOSSES.Tool!.layer ?? "harness").toBe("harness");
     const bootstrapLinks = Object.entries(CLASS_GLOSSES).filter(([, g]) => g.layer === "bootstrap" && g.seeAlso);
     expect(bootstrapLinks.map(([n]) => n)).toEqual([]);
   });
@@ -76,6 +88,44 @@ describe("the terms are ordered: each definition uses only terms above it", () =
       expect(later).toEqual([]);
     });
   }
+
+  // The AUTHORED relation is the source; the matcher above is its guard.
+  test("the authored uses lists keep the declared order (checkDeclaredOrder)", () => {
+    const steps = order.map((id) => ({ id, needs: BOOTSTRAP_TERM_USES[id as keyof typeof BOOTSTRAP_TERM_USES] }));
+    expect(checkDeclaredOrder(steps)).toEqual([]);
+  });
+
+  test("each authored uses list names exactly the terms its definition's text uses", () => {
+    const disagree = order.flatMap((key) => {
+      const k = key as keyof typeof BOOTSTRAP_TERMS;
+      const said = new Set(uses(BOOTSTRAP_TERMS[k]));
+      const authored = new Set(BOOTSTRAP_TERM_USES[k]);
+      const onlySaid = [...said].filter((u) => !authored.has(u as never));
+      const onlyAuthored = [...authored].filter((u) => !said.has(u));
+      return onlySaid.length || onlyAuthored.length ? [`${key}: text ${[...said]} vs authored ${[...authored]}`] : [];
+    });
+    expect(disagree).toEqual([]);
+  });
+
+  test("checkDeclaredOrder names a forward, a self and a missing use", () => {
+    expect(
+      checkDeclaredOrder([
+        { id: "a", needs: ["b"] },
+        { id: "b", needs: ["b", "z"] },
+      ]),
+    ).toEqual([
+      { id: "a", uses: "b", kind: "forward" },
+      { id: "b", uses: "b", kind: "self" },
+      { id: "b", uses: "z", kind: "missing" },
+    ]);
+  });
+
+  test("every term names the schema that defines it", () => {
+    for (const key of order) {
+      const by = BOOTSTRAP_TERM_DEFINED_BY[key as keyof typeof BOOTSTRAP_TERM_DEFINED_BY];
+      expect(by, key).toMatch(/^(#|https?:\/\/)/);
+    }
+  });
 });
 
 describe("bootstrap/README.md is self-definitional", () => {
@@ -103,7 +153,8 @@ describe("bootstrap/README.md is self-definitional", () => {
   });
 
   test("each defined term is linked to its definition once, at its first use", () => {
-    for (const term of ["KnowledgeGraph", "Subgraph", "Harness", "Actor", "Role", "Process", "Skill", "Tool"]) {
+    // No Tool: "no tools in bootstrap" (owner, 2026-09-29); a Harness defines it.
+    for (const term of ["KnowledgeGraph", "Subgraph", "Harness", "Actor", "Role", "Process", "Skill"]) {
       const target = `schemas/graph.schema.json#/$defs/${term}`;
       expect(`${term}: ${links.filter((l) => l === target).length}`).toBe(`${term}: 1`);
     }
@@ -113,15 +164,24 @@ describe("bootstrap/README.md is self-definitional", () => {
     // The `[src]` link above opens JSON; a person reads the drawn page. Both
     // are asserted, because a link to a heading that was renamed lands at the
     // top of the page with nothing to say it missed.
+    // A target is a heading OR an explicit `<a id>`. The Terms table uses the
+    // second: the staging site's kramdown gave headings no ids, so a deep link
+    // to a heading there landed at the top of the page.
     const page = readFileSync(join(BOOTSTRAP, "schemas", "README.md"), "utf-8");
-    const headings = new Set(
-      [...page.matchAll(/^#{1,6} (.+)$/gm)].map((m) =>
+    const targets = new Set([
+      ...[...page.matchAll(/^#{1,6} (.+)$/gm)].map((m) =>
         m[1]!.toLowerCase().replace(/[^a-z0-9 -]/g, "").trim().replace(/ /g, "-"),
       ),
-    );
+      ...[...page.matchAll(/<a id="([^"]+)"><\/a>/g)].map((m) => m[1]!),
+    ]);
     const drawn = links.filter((l) => l.startsWith("schemas/README.md#"));
-    expect(drawn.length).toBeGreaterThanOrEqual(8);
-    expect(drawn.map((l) => l.split("#")[1]!).filter((a) => !headings.has(a))).toEqual([]);
+    expect(drawn.length).toBeGreaterThanOrEqual(7);
+    expect(drawn.map((l) => l.split("#")[1]!).filter((a) => !targets.has(a))).toEqual([]);
+    // Every term in the table carries its own anchor, so every term can be linked.
+    for (const key of Object.keys(BOOTSTRAP_TERMS)) {
+      const id = key.replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase().replace(/ /g, "-");
+      expect(targets.has(id), key).toBe(true);
+    }
   });
 });
 
