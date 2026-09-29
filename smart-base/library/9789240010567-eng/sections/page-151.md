@@ -27,9 +27,7 @@ ways to help improve data quality include standardizing the definitions associat
 birth and death events, such as for stillbirths, and making these definitions accessible to those 
 inputting the data.
 OPPORTUNITIES 
-FOR INTEROPERA­
-BILITY AND LINK­
-AGES TO OTHER 
+FOR INTEROPERABILITY AND LINKAGES TO OTHER 
 DIGITAL HEALTH 
 INTERVENTIONS
 Consider linking birth notification to health services that have high coverage, such as immunization 

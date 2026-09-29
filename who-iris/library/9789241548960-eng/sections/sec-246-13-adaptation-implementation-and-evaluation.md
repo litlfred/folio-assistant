@@ -13,13 +13,11 @@ rise to new evidence of impact and new research questions. Practice needs to
 be continually re-evaluated, and guidance updated in light of new evidence. 
 Although implementation and evaluation plans do not need to be described 
 in the guideline, they should be considered by the steering group, made 
-available to all guideline contributors and actively supported by the depart­
-ment authoring the guideline. The steering group and GDG should discuss 
+available to all guideline contributors and actively supported by the department authoring the guideline. The steering group and GDG should discuss 
 and document a list of the tools and resources that will need to be made 
 available to countries, such as implementation checklists, costing models 
 and the data that inform assumptions used in economic models. The group 
-may wish to consider which partner(s) will eventually lead guideline adap­
-tation and implementation, the steps they will be expected to take, and any 
+may wish to consider which partner(s) will eventually lead guideline adaptation and implementation, the steps they will be expected to take, and any 
 regulatory or licensing implications of specific products.
 Research on how best to implement guidelines shows that training, ease 
 of use, financial and professional development incentives and feedback of 
@@ -29,10 +27,8 @@ those on the Integrated Management of Childhood Illness (1), have been
 funded and published over the years.
 13.1 Adaptation
 Adaptation of WHO guidelines, taking into account local circumstances 
-and resource considerations, can be done at the regional, national or subna­
-tional level. Translation is one element in the adaptation process. The manual 
-and toolkit for guideline adaptation published by the Guidelines Interna­
-tional Network (2) describes the approaches used when deciding whether 
+and resource considerations, can be done at the regional, national or subnational level. Translation is one element in the adaptation process. The manual 
+and toolkit for guideline adaptation published by the Guidelines International Network (2) describes the approaches used when deciding whether 
 to accept or reject a guideline in a particular setting, whether to endorse its 
 evidence summary and/or recommendations, or whether to modify specific 
 recommendations.
@@ -47,11 +43,9 @@ Implementation of a guideline should be taken into account right from the
 beginning of the guideline development. Implementation is generally the 
 responsibility of national or subnational groups, which explains why their 
 participation in guideline development is critical. WHO headquarters and 
-regional and country offices can support implementation activities by pro­
-moting new guidelines at international conferences and providing guideline 
+regional and country offices can support implementation activities by promoting new guidelines at international conferences and providing guideline 
 dissemination workshops, tools, resources and overall coordination.
-Implementation strategies are context-specific. The basic steps for imple­
-menting a guideline are:
+Implementation strategies are context-specific. The basic steps for implementing a guideline are:
 ■■
 convene a multidisciplinary working group to analyse local needs and 
 priorities (looking for additional data on actual practice);

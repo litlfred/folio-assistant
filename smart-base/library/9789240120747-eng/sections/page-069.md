@@ -56,10 +56,8 @@ Analytics
 Health 
 analytics 
 platform
-Pharmacovigi­
-lance
-Pharmacovig­
-ilance mobile 
+Pharmacovigilance
+Pharmacovigilance mobile 
 app
 Cold chain 
 management

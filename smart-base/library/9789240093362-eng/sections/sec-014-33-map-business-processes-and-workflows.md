@@ -187,8 +187,7 @@ Lane 3
 Pool
 Lane 1
 Swim lane 
-Each individual or type of user is assigned to a swim lane, a designated area for not­
-ing the activities performed or expected by that specific actor. For example, a nurse 
+Each individual or type of user is assigned to a swim lane, a designated area for noting the activities performed or expected by that specific actor. For example, a nurse 
 may have one swim lane; the supervisor would be in another swim lane; the health 
 service users would be classified in another swim lane. 
 Start event 
@@ -201,8 +200,7 @@ message
 This is a type of start event. In some instances, the workflow can start with a start 
 event “message”. A “message” in BPMN does not mean only letters, emails or 
 calls, but also information exchanged between two different systems, such as data 
-exchange, notifications, etc. Any action that refers to a specific addressee, and rep­
-resents or contains information for the addressee, is a message. 
+exchange, notifications, etc. Any action that refers to a specific addressee, and represents or contains information for the addressee, is a message. 
 End event
 There can be multiple end events depicted across multiple swim lanes in a business 
 process diagram. However, for diagram clarity, there should only be one end event 
@@ -216,14 +214,11 @@ the successive actions performed by the actor in that swim lane. There can also 
 subprocesses of each activity. 
 Activity with 
 subprocess
-This denotes an activity that has a much longer subprocess to be detailed in anoth­
-er diagram. If the diagram starts to become too complex and unhelpful, the subpro­
-cess symbol should be used to reference another process depicted on another page.
+This denotes an activity that has a much longer subprocess to be detailed in another diagram. If the diagram starts to become too complex and unhelpful, the subprocess symbol should be used to reference another process depicted on another page.
 Activity with 
 business 
 rule
-This denotes a decision-making activity that requires the business rule, or deci­
-sion-support logic, to be detailed in a decision-support table. This means that the 
+This denotes a decision-making activity that requires the business rule, or decision-support logic, to be detailed in a decision-support table. This means that the 
 logic described in the decision-support table will come into play during this activity, 
 as outlined in the business process. This is usually reserved for complex decisions. 
 Loop activity
@@ -255,8 +250,7 @@ these activities need to be finished before moving on to the next activity.
 Sequence 
 flow
 This denotes the flow direction from one process to the next. The end event should 
-not have any output arrows. All symbols (except for start event) may have an unlim­
-ited number of input arrows. All symbols (except for end event and gateway) should 
+not have any output arrows. All symbols (except for start event) may have an unlimited number of input arrows. All symbols (except for end event and gateway) should 
 have one and only one output arrow, leading to a new symbol, looping back to a 
 previously used symbol or to the end event symbol. Connecting arrows should not 
 intersect (cross) each other. 

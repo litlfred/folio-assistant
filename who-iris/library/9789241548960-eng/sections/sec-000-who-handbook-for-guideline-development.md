@@ -600,8 +600,7 @@ Adaptation, implementation and evaluation
 167
 xi
 This handbook provides step-by-step guidance on how to plan, develop and 
-publish a World Health Organization (WHO) guideline. It covers the meth­
-ods, processes and procedures for producing a document that meets WHO 
+publish a World Health Organization (WHO) guideline. It covers the methods, processes and procedures for producing a document that meets WHO 
 standards. It does not provide detailed technical guidance on many of the 
 steps: this can be obtained from the references in the handbook and through 
 references to the published scientific literature listed on WHO’s Guideline 
@@ -612,8 +611,7 @@ intranet site in response to the needs of WHO guideline developers.
 The first edition of this handbook, published in 2012, provided general 
 guidance on the steps involved in guideline development and on GRC and 
 WHO processes and procedures. This, the second edition, provides additional 
-detailed guidance on each step in guideline development, as well as two addi­
-tional chapters. Chapter 5 deals with the importance of considering equity, 
+detailed guidance on each step in guideline development, as well as two additional chapters. Chapter 5 deals with the importance of considering equity, 
 human rights, gender and the social determinants of health in formulating 
 recommendations. The chapter provides specific entry points for integrating 
 these issues into each and every guideline developed by WHO. Chapter 11 

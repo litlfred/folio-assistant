@@ -9,8 +9,7 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 after the GRC has approved the planning proposal?
-It is not unusual for changes to occur after the planning proposal is devel­
-oped and approved by the GRC. New or unanticipated evidence, or new ideas 
+It is not unusual for changes to occur after the planning proposal is developed and approved by the GRC. New or unanticipated evidence, or new ideas 
 from the steering group, the GDG or other interested parties, can engender 
 discussions and the decision to change course. Such changes in planning 
 proposals generally fall into one of the following categories:
@@ -23,8 +22,7 @@ recommendations is published before the entire set, due to an urgent
 request from Member States.
 ■■
 A major change in the proposed methods ‒ Example: the planning 
-proposal might indicate that long-term follow-up data from compara­
-tive cohort studies will be used to inform cost–effectiveness analyses, 
+proposal might indicate that long-term follow-up data from comparative cohort studies will be used to inform cost–effectiveness analyses, 
 43
 Topic
 Subtopic
@@ -72,13 +70,10 @@ who else also collaborates in determining the approach.
 but after exploration of the available data, modelling will be needed to 
 examine economic efficiency.
 ■■
-A change in a key question without a major change in scope ‒ Exam­
-ple: after further discussion and input from the guideline methodolo­
-gist, a key question might be deemed poorly formulated and therefore 
+A change in a key question without a major change in scope ‒ Example: after further discussion and input from the guideline methodologist, a key question might be deemed poorly formulated and therefore 
 unanswerable, and the question is therefore reformulated.
 ■■
-Minor changes in process or methods ‒ Example: the original time­
-line is extended, new members are added to the GDG, or the search 
+Minor changes in process or methods ‒ Example: the original timeline is extended, new members are added to the GDG, or the search 
 strategies or bibliographic databases to be examined are changed.
 Major changes to the methods and/or scope presented in the planning 
 proposal (the first three categories listed) need to be reviewed by the GRC 
@@ -88,5 +83,4 @@ discussion with the GRC or the Secretariat. If you are uncertain as to whether
 a change is major or minor, please discuss it with the Secretariat. Proposed 
 major changes, together with their rationale and potential impact on the 
 integrity of the guideline development process, should be documented as an 
-addendum to the original planning proposals and submitted to the Secre­
-tariat for review and assessment.
+addendum to the original planning proposals and submitted to the Secretariat for review and assessment.

@@ -1,10 +1,11 @@
 ---
 # folio-assistant-9udd
 title: 'LSI: cross-document link proposals need a minimum cosine and a hub penalty'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-29T21:51:12Z
-updated_at: 2026-09-29T21:51:12Z
+updated_at: 2026-09-29T23:19:05Z
 parent: folio-assistant-ansc
 ---
 

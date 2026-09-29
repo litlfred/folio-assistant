@@ -8,16 +8,13 @@ pages: 36-37
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-The GDG is made up of external experts whose central task is to develop evi­
-dence-based recommendations. The GDG also performs the important task 
+The GDG is made up of external experts whose central task is to develop evidence-based recommendations. The GDG also performs the important task 
 of finalizing the scope and key questions of the guideline in PICO format. 
 This group should be established early in the guideline development process, 
 once the steering group has defined the guideline’s general scope and target 
 audience and begun drafting the key questions.
 Potential members of the GDG are identified by the steering group and 
-are selected to encompass the technical skills, diverse perspectives and geo­
-graphic representation needed. The group should be small enough for effec­
-tive group interaction and decision-making, but large enough to ensure that 
+are selected to encompass the technical skills, diverse perspectives and geographic representation needed. The group should be small enough for effective group interaction and decision-making, but large enough to ensure that 
 all relevant expertise and perspectives are represented. A group of 10 to 20 is 
 usually feasible and effective, although some GDGs are larger if the scope of 
 the guideline is broad. The group can hold online or teleconference meetings 

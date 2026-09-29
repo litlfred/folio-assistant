@@ -18,5 +18,4 @@ refers to the quantitative synthesis (pooling) of an outcome across comparable
 studies to achieve a pooled estimate of effect (see Section 8.3.5). A systematic 
 review may contain one or more meta-analyses, but this is not a requirement. 
 Likewise, a meta-analysis may be a pooled estimate of an outcome from a 
-cohort of selected studies, and not from studies identified through a system­
-atic review. This latter approach is to be avoided in most situations.
+cohort of selected studies, and not from studies identified through a systematic review. This latter approach is to be avoided in most situations.

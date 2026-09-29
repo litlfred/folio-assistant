@@ -21,22 +21,18 @@ understand the various factors under consideration and their context, and the
 relationship between intermediate outcomes (e.g. serum cholesterol levels, 
 rates of participation by community members in an intervention to increase 
 physical activity) and distal health outcomes (e.g. death from cardiovascular 
-disease, quality of life). By depicting all of the elements between an interven­
-tion and important health outcomes (such as death), the types of evidence 
-used to inform each linkage and any assumptions become clear. For exam­
-ple, in examining the effectiveness of a community intervention to increase 
+disease, quality of life). By depicting all of the elements between an intervention and important health outcomes (such as death), the types of evidence 
+used to inform each linkage and any assumptions become clear. For example, in examining the effectiveness of a community intervention to increase 
 WHO handbook for guideline development
 92
 levels of physical activity, the outcome in studies included in the evidence 
 base may focus on behaviour (i.e. activity), and a single systematic review 
-may be selected to assert the relationship between activity levels and dimin­
-ished rates of death from cardiovascular disease. Analytic frameworks can 
+may be selected to assert the relationship between activity levels and diminished rates of death from cardiovascular disease. Analytic frameworks can 
 also help to illuminate reasons for agreements and disagreements when the 
 GDG formulates recommendations as each linkage is discussed in turn (5).
 The steering group should consider developing analytic frameworks 
 when drafting and revising the scope and key questions at the beginning of 
 the guideline development process. The GDG, the systematic review team 
-and the guideline methodologist should provide input. The analytic frame­
-work may be included with the planning proposal or in the final guideline 
+and the guideline methodologist should provide input. The analytic framework may be included with the planning proposal or in the final guideline 
 publication, particularly when recommendations address a series of linked 
 interventions, outcomes and health states.

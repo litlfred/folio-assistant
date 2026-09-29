@@ -11,7 +11,6 @@ source_sha256: bfcd856e3ad7ab20
 The Twelfth General Programme of Work (GPW) of WHO (2014) specifies 
 that in its normative and standard-setting work, WHO is and will remain 
 a science- and evidence-based organization with a focus on public health. 
-Guidelines are the fundamental means through which the Organization ful­
-fils its technical leadership in health, as identified in the GPW. The GPW 
+Guidelines are the fundamental means through which the Organization fulfils its technical leadership in health, as identified in the GPW. The GPW 
 states that “WHO’s legitimacy and technical authority lie in its rigorous 
 adherence to the systematic use of evidence as the basis for all policies” (1).

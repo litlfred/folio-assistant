@@ -9,9 +9,7 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 The strength of a recommendation expresses the degree to which the GDG 
-is confident in the balance between the desirable and undesirable conse­
-quences of implementing the recommendation. When a GDG is very cer­
-tain about this balance (i.e. the desirable consequences clearly outweigh the 
+is confident in the balance between the desirable and undesirable consequences of implementing the recommendation. When a GDG is very certain about this balance (i.e. the desirable consequences clearly outweigh the 
 undesirable consequences), it issues a strong recommendation in favour of 
 an intervention. When it is uncertain about this balance, however, it issues 
 a conditional (or “weak”) recommendation. Table 10.2 provides an aid to 

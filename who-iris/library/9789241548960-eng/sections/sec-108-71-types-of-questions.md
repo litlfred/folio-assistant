@@ -8,4 +8,4 @@ pages: 89-89
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-There are two basic types of questions: background and foreground ques­
+There are two basic types of questions: background and foreground ques

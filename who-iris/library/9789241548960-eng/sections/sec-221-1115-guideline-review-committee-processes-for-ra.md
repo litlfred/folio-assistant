@@ -15,18 +15,14 @@ Chapter 11 
 Rapid advice guidelines in the setting of a public health emergency
 155
 health emergency is considered when the technical unit contacts the GRC 
-Secretariat; it is formally addressed when the GRC reviews the planning pro­
-posal. The planning proposal must provide adequate justification for apply­
-ing an accelerated and abbreviated process; prolonged emergencies that call 
+Secretariat; it is formally addressed when the GRC reviews the planning proposal. The planning proposal must provide adequate justification for applying an accelerated and abbreviated process; prolonged emergencies that call 
 for a rapid advance guideline are uncommon.
 The GRC must review and ultimately approve both the rapid advice 
-guideline planning proposal and the final guideline, as is the case for stand­
-ard guidelines. The basic principles and standards outlined in this handbook 
+guideline planning proposal and the final guideline, as is the case for standard guidelines. The basic principles and standards outlined in this handbook 
 apply to rapid advice guidelines. Exceptions will be considered on a case-by-
 case basis, as dictated by the circumstances and needs associated with the 
 public health emergency.
-The GRC and its Secretariat will implement abbreviated and acceler­
-ated processes when a rapid advice guideline is undertaken and agreed to by 
+The GRC and its Secretariat will implement abbreviated and accelerated processes when a rapid advice guideline is undertaken and agreed to by 
 the GRC. The GRC will provide expedited reviews of the planning proposal 
 and the final guideline and will hold ad hoc meetings or implement other 
 processes and procedures to provide timely comments and the committee’s 

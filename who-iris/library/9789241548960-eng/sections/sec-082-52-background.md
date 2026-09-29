@@ -16,8 +16,7 @@ and that
 one of the fundamental rights of every human being without 
 distinction of race, religion, political belief, economic or social 
 condition.” 
-Guideline developers need to consider how their guidelines will contrib­
-ute to the realization of the right to health, as we shall henceforth refer to the 
+Guideline developers need to consider how their guidelines will contribute to the realization of the right to health, as we shall henceforth refer to the 
 concept embodied in the second of these statements. In so doing, they would 
 be wise to draw on the fields dealing with equity, human rights, gender and 
 other social determinants of health.
@@ -44,18 +43,14 @@ measures and their implications, such as the use of absolute versus relative
 measures of inequity. 
 5.2.2 Human rights
 To be fulfilled, the right to the highest attainable standard of health requires 
-a set of social arrangements – norms, institutions, laws, and enabling envi­
-ronments – that are conducive to the enjoyment of this right. Realization of 
+a set of social arrangements – norms, institutions, laws, and enabling environments – that are conducive to the enjoyment of this right. Realization of 
 the right to health is closely related to that of other human rights, including 
-the right to food, housing, work, education and non-discrimination; equal­
-ity; access to information; and participation (4). Specifically, human rights 
+the right to food, housing, work, education and non-discrimination; equality; access to information; and participation (4). Specifically, human rights 
 dimensions are integrated into the provision of health services by paying due 
-attention to non-discrimination; to the availability, accessibility, acceptabil­
-ity and quality of information and services; to informed decision-making; 
+attention to non-discrimination; to the availability, accessibility, acceptability and quality of information and services; to informed decision-making; 
 to privacy and confidentiality; and to participation and accountability (5).
 The right to health comprises both freedoms and entitlements. Freedoms 
-include the right to control one’s health and body (e.g. sexual and reproduc­
-tive rights) and to be free from interference (e.g. free from torture and from 
+include the right to control one’s health and body (e.g. sexual and reproductive rights) and to be free from interference (e.g. free from torture and from 
 non-consensual medical treatment and experimentation) (4). Entitlements 
 include the right to a system of health protection that gives everyone an 
 equal opportunity to enjoy the highest attainable level of health (4).

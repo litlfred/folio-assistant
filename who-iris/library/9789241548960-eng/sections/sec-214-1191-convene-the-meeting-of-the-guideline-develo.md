@@ -9,8 +9,7 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 At the very beginning of the guideline development process, the responsible 
-technical officer and the steering group need to plan for the GDG meet­
-ing where recommendations will be formulated. Because of the compressed 
+technical officer and the steering group need to plan for the GDG meeting where recommendations will be formulated. Because of the compressed 
 timeline, administrative details need to be addressed early. This includes 
 identifying a meeting space, issuing invitations to potential GDG members, 
 collecting declarations of interest and managing conflicts of interest, and 
@@ -18,8 +17,7 @@ collecting declarations of interest and managing conflicts of interest, and
 Discussion
 ■■
 The strengths and limitations of the review process, focusing particularly on how 
-the methods differed from those of a standard systematic review and the poten­
-tial risk of bias introduced by the rapid review process.
+the methods differed from those of a standard systematic review and the potential risk of bias introduced by the rapid review process.
 ■■
 Future research needs.
 Information page
@@ -50,13 +48,11 @@ Data extraction tables.
 Risk of bias summary tables.
 ■■
 GRADE evidence profiles.
-GRADE: Grading of Recommendations Assessment, Development and Evaluation; PICO: population, intervention, com­
-parator and outcome; PRISMA: Preferred Reporting Items for Systematic Reviews and Meta-Analyses.
+GRADE: Grading of Recommendations Assessment, Development and Evaluation; PICO: population, intervention, comparator and outcome; PRISMA: Preferred Reporting Items for Systematic Reviews and Meta-Analyses.
 WHO handbook for guideline development
 152
 152
-arranging travel. These tasks take significant time and dedicated adminis­
-trative support is essential.
+arranging travel. These tasks take significant time and dedicated administrative support is essential.
 Recommendations can be developed via a virtual meeting if time or 
 resource constraints preclude an in-person meeting. In general, however, 
 an in-person meeting is preferable for formulating recommendations for 

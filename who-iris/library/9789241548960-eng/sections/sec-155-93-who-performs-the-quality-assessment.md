@@ -11,8 +11,7 @@ source_sha256: bfcd856e3ad7ab20
 Assessing the evidence and developing evidence summaries are specialized 
 tasks that should be performed by a methodological expert with experience 
 using GRADE. Systematic review teams commissioned to support guideline 
-development at WHO must have expertise in using GRADE to conduct evi­
-dence assessments.
+development at WHO must have expertise in using GRADE to conduct evidence assessments.
 Chapter 9 
 Evidence assessment
 111

@@ -12,7 +12,6 @@ rights, gender and the social determinants of health
 into WHO guidelines
 WHO’s normative work, including its recommendations and guidelines, 
 must integrate equity, human rights, gender and the social determinants of 
-health. Eight entry points (Box 5.1) provide a practical approach for integrat­
-ing these aspects into WHO guidelines. The relevance of specific strategies 
+health. Eight entry points (Box 5.1) provide a practical approach for integrating these aspects into WHO guidelines. The relevance of specific strategies 
 varies across guideline topic areas, but all strategies should be systematically 
 considered in the guideline development process.

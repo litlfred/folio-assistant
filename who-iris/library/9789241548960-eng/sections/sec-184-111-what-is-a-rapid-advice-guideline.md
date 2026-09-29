@@ -10,6 +10,5 @@ source_sha256: bfcd856e3ad7ab20
 ---
 In response to a public health emergency, WHO must provide global leadership 
 and timely guidance in the form of an evidence-informed guideline produced 
-within one to three months. The steering group for such a rapid advice guide­
-line must follow all of the basic steps for guideline development as described in 
+within one to three months. The steering group for such a rapid advice guideline must follow all of the basic steps for guideline development as described in 
 this handbook, but with modifications to meet the accelerated timeline.

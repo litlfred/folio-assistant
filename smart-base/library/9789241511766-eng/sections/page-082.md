@@ -30,8 +30,7 @@ Case report,
 Case-series 
 report
 Qualitative
-Phenomen­
-ology
+Phenomenology
 Grounded 
 theory
 Case study

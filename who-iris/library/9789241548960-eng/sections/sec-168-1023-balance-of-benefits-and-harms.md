@@ -8,8 +8,7 @@ pages: 138-138
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-When considering the balance between an intervention’s or exposure’s ben­
-efits and harms, the GDG should examine the magnitude of the effects and 
+When considering the balance between an intervention’s or exposure’s benefits and harms, the GDG should examine the magnitude of the effects and 
 the relative importance of the outcomes, including any disadvantages or 
 inconveniences associated with the intervention (as informed by data on 
 values and preferences). If the benefits clearly outweigh the harms, a strong 

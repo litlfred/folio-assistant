@@ -10,10 +10,8 @@ source_sha256: bfcd856e3ad7ab20
 ---
 59
 The declaration of one or more secondary interests (declaration of 
-interests) does not automatically mean that a conflict of interest is pre­
-sent: there is a distinction between the two. A transparent and objective 
+interests) does not automatically mean that a conflict of interest is present: there is a distinction between the two. A transparent and objective 
 process for assessing a declaration of interests is required to determine if a 
 conflict exists and what its effects might be, and to manage any significant 
 conflict of interest. This chapter describes the processes and procedures 
-for identifying and managing conflicts of interest during guideline devel­
-opment at WHO.
+for identifying and managing conflicts of interest during guideline development at WHO.

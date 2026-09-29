@@ -17,8 +17,7 @@ that are considered critical for answering the key question (i.e. for making a
 decision or a recommendation).
 GDGs must determine the overall quality of the evidence across all the 
 critical outcomes for each recommendation. Because quality of evidence is 
-rated separately for each outcome, the quality frequently differs across out­
-comes. If the quality of the evidence is the same for all critical outcomes, 
+rated separately for each outcome, the quality frequently differs across outcomes. If the quality of the evidence is the same for all critical outcomes, 
 then this is the level of quality that applies to all of the evidence supporting 
 the answer to the key question. If the quality of the evidence differs across 
 critical outcomes, the overall confidence in effect estimates cannot be higher 
@@ -26,18 +25,15 @@ than the lowest level of confidence in the effect estimates for an individual
 outcome. Therefore, the lowest quality of the evidence for any single critical 
 outcome determines the overall quality of the evidence.
 The judgement about which outcomes are critical for decision-making 
-may depend on the evidence. Although it happens rarely, the overall qual­
-ity of the evidence is sometimes not based on the outcomes judged critical 
+may depend on the evidence. Although it happens rarely, the overall quality of the evidence is sometimes not based on the outcomes judged critical 
 at the beginning of the guideline development process. There can be two 
 reasons for this:
 ■■
-An outcome turns out not to be critical for decision-making (e.g. a par­
-ticular adverse event considered critical at the outset of the guideline 
+An outcome turns out not to be critical for decision-making (e.g. a particular adverse event considered critical at the outset of the guideline 
 Chapter 9 
 Evidence assessment
 121
-development process turns out to be very infrequent and of question­
-able relevance to the intervention).
+development process turns out to be very infrequent and of questionable relevance to the intervention).
 ■■
 If there is higher quality of evidence for some critical outcomes that 
 is sufficient to support a recommendation, then there is no reason to 

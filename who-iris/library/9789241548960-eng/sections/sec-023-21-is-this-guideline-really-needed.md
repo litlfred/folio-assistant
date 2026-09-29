@@ -8,12 +8,9 @@ pages: 27-27
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-When planning to develop a guideline, you must begin by asking a criti­
-cal question: Is this guideline really needed? Guideline development is time-
+When planning to develop a guideline, you must begin by asking a critical question: Is this guideline really needed? Guideline development is time-
 consuming and expensive. You must carefully consider several issues before 
 embarking on the process.
-Priority-setting in the normative work at WHO needs continuous eval­
-uation and revision as priorities evolve within and across technical units. 
-Requests for guidelines exceed the number of guidelines that can be pro­
-duced with available resources. In keeping with the need to prioritize, be 
+Priority-setting in the normative work at WHO needs continuous evaluation and revision as priorities evolve within and across technical units. 
+Requests for guidelines exceed the number of guidelines that can be produced with available resources. In keeping with the need to prioritize, be 
 sure to ask certain key questions before deciding to develop a guideline.

@@ -9,5 +9,4 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 outcomes
-The steering group should list the high-priority key questions and the out­
-comes which the GDG will use to formulate recommendations.
+The steering group should list the high-priority key questions and the outcomes which the GDG will use to formulate recommendations.

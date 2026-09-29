@@ -9,11 +9,9 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 It is particularly important for the responsible technical officer of a rapid 
-advice guideline to contact the GRC Secretariat early in the guideline devel­
-opment process. The GRC and the Secretariat will provide guidance as to 
+advice guideline to contact the GRC Secretariat early in the guideline development process. The GRC and the Secretariat will provide guidance as to 
 whether a rapid advice guideline is appropriate in the situation at hand. In 
 addition, the Secretariat can assist in developing the planning proposal and 
 identifying a review team and a guideline methodologist. The GRC needs 
-to approve the development of a rapid advice guideline at the planning pro­
-posal stage, or else the final guideline cannot be reviewed and assessed in an 
+to approve the development of a rapid advice guideline at the planning proposal stage, or else the final guideline cannot be reviewed and assessed in an 
 accelerated manner.

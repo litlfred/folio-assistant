@@ -23,15 +23,13 @@ Activities
 NMRA
 Ministry of 
 health
-Imple­
-mentation 
+Implementation 
 partner
 Medical 
 product 
 industry
 Health 
-care pro­
-fessionals
+care professionals
 Others...
 Others...
 Define project 

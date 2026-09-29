@@ -8,10 +8,8 @@ pages: 99-101
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-The purpose of any recommendation is to achieve a net benefit. Thus, select­
-ing the most important outcomes is critical to producing a useful guideline. 
-The value attached to a given outcome by different populations and subpop­
-ulations varies. For this reason, it is essential to ask members of the GDG 
+The purpose of any recommendation is to achieve a net benefit. Thus, selecting the most important outcomes is critical to producing a useful guideline. 
+The value attached to a given outcome by different populations and subpopulations varies. For this reason, it is essential to ask members of the GDG 
 − which should contain end-users, implementers, patient representatives, 
 policy-makers, technical experts and perhaps also other stakeholders – to 
 identify the key outcomes that need to be considered in a guideline.

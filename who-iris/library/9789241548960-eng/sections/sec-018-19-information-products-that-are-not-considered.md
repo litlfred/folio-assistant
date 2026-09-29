@@ -15,23 +15,18 @@ to be submitted to the GRC for review. They include:
 documents that state established principles (e.g. human rights, WHO 
 constitutional issues);
 ■■
-WHO Secretariat reports and other papers submitted to the Govern­
-ing Bodies (Executive Board, Regional Committees, World Health 
+WHO Secretariat reports and other papers submitted to the Governing Bodies (Executive Board, Regional Committees, World Health 
 Assembly);
 ■■
-information documents that report facts, describe evidence, or docu­
-ment or review existing practices and interventions, provided that such 
-documents are not making recommendations or advocating commit­
-ment of resources;
+information documents that report facts, describe evidence, or document or review existing practices and interventions, provided that such 
+documents are not making recommendations or advocating commitment of resources;
 ■■
-documents containing standards for manufacturing health technolo­
-gies, such as pharmaceuticals and vaccines;
+documents containing standards for manufacturing health technologies, such as pharmaceuticals and vaccines;
 ■■
 “how to” documents such as operational manuals (e.g. how to set up 
 a research project or how to implement a service) or implementation 
 guides or tools based on GRC-approved guidelines; and
 ■■
-documents that describe standard operating procedures for organiza­
-tions or systems.
+documents that describe standard operating procedures for organizations or systems.
 If you are not sure whether your proposed document is a guideline, 
 please consult with the GRC Secretariat.

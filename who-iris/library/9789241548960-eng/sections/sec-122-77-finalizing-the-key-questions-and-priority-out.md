@@ -9,11 +9,9 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 Key questions should be finalized by the steering group after receiving input 
-from all the relevant experts, including end-users (e.g. programme manag­
-ers, partner agencies, and consumer and patient groups). Because the number 
+from all the relevant experts, including end-users (e.g. programme managers, partner agencies, and consumer and patient groups). Because the number 
 of questions that call for systematic reviews will be a major determinant of 
 the time and resources needed to complete the guideline, the steering group 
-should aim to restrict the questions to those dealing with the areas of great­
-est controversy and uncertainty. This will help to ensure a comprehensive 
+should aim to restrict the questions to those dealing with the areas of greatest controversy and uncertainty. This will help to ensure a comprehensive 
 and useful guideline. The following steps should be followed to develop and 
 finalize the key questions (Fig. 7.2):

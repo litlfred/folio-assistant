@@ -10,8 +10,7 @@ source_sha256: bfcd856e3ad7ab20
 ---
 It is important to consider what type of guideline will best fit the intended 
 purpose, as this will determine the methods, resources and time frame for 
-development, finalization and dissemination (see Table 1.2). WHO guide­
-lines comprise a broad spectrum of products that vary mainly in terms of 
+development, finalization and dissemination (see Table 1.2). WHO guidelines comprise a broad spectrum of products that vary mainly in terms of 
 the following features:
 ■■
 purpose;
@@ -23,14 +22,12 @@ the life-span of an intervention;
 ■■
 the organizations or entities developing the guideline;
 ■■
-the presence in the guideline of new versus previously published rec­
-ommendations; and
+the presence in the guideline of new versus previously published recommendations; and
 ■■
 the timeline.
 WHO develops four main types of guidelines, defined in terms of the 
 above characteristics: standard, consolidated and interim guidelines, and 
-guidelines produced in response to an emergency or urgent need. In addi­
-tion, there are other, less frequent types of guidelines.
+guidelines produced in response to an emergency or urgent need. In addition, there are other, less frequent types of guidelines.
 4
 Table 1.1.	
 The guideline development process at WHO
@@ -97,8 +94,7 @@ Conduct external peer review
 Publishing and updating
 WHO guideline steering group and 
 editors
-Finalize the guideline document; perform copy-editing and techni­
-cal editing; submit the final guideline to the GRC for review and 
+Finalize the guideline document; perform copy-editing and technical editing; submit the final guideline to the GRC for review and 
 approval
 12
 GRC
@@ -138,8 +134,7 @@ or condition
 Focused or 
 comprehensive
 WHO technical staff
-Usually new; may contain existing recommenda­
-tions if they have been evaluated and updated 
+Usually new; may contain existing recommendations if they have been evaluated and updated 
 as appropriate
 6 months to 
 2 years
@@ -148,50 +143,41 @@ To aggregate all the existing guidance on a
 disease or condition
 Comprehensive
 WHO technical staff
-Existing recommendations that have been evalu­
-ated and found to be up to date; may contain 
+Existing recommendations that have been evaluated and found to be up to date; may contain 
 some new recommendations
 1 to 2 years
 Interim
 To provide guidance when new interventions, 
-exposures or diseases arise or when new evi­
-dence becomes available or data are likely to be 
+exposures or diseases arise or when new evidence becomes available or data are likely to be 
 incomplete
 Focused
 WHO technical staff
 New
 6 to 9 months
 Guidelines produced in 
-response to an emer­
-gency or urgent need
+response to an emergency or urgent need
 To meet an emergent or urgent public health 
-need when the short timeline mandates a modi­
-fied process
+need when the short timeline mandates a modified process
 Focused
 WHO technical staff
-Usually new; may contain existing recommenda­
-tions if they have been evaluated and updated 
+Usually new; may contain existing recommendations if they have been evaluated and updated 
 as appropriate
 1 to 3 months
 Other types of guidelines
-Developed in collabora­
-tion with (an) external 
+Developed in collaboration with (an) external 
 organization(s)
 To provide recommendations on a specific topic 
 or condition when organizations have a shared 
 interest or remit
 Focused or 
 comprehensive
-WHO techni­
-cal staff and staff 
+WHO technical staff and staff 
 from the external 
 organization(s)
-Usually new; may contain existing recommenda­
-tions if they have been evaluated and updated 
+Usually new; may contain existing recommendations if they have been evaluated and updated 
 as appropriate
 1 to 2 years
-Developed by (an) exter­
-nal organization(s)
+Developed by (an) external organization(s)
 To provide recommendations on a specific topic 
 or condition when a guideline produced by an 
 external organization already exists
@@ -208,8 +194,7 @@ context where they will be implemented
 Focused or 
 comprehensive
 Policy-makers and 
-programme manag­
-ers in WHO Member 
+programme managers in WHO Member 
 States
 Reflect the content of the original guideline
 1 to 3 months

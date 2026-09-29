@@ -12,7 +12,6 @@ The number of key questions for a guideline varies greatly, depending on the
 scope of the guideline (the number of areas of uncertainty) and the available 
 resources and timeline. In addition, key questions vary greatly in scope and 
 complexity for each component of PICO. As noted above, for some types 
-of recommendations, several key questions are needed to provide the evi­
-dence base; for others, only one key question and one systematic review are 
+of recommendations, several key questions are needed to provide the evidence base; for others, only one key question and one systematic review are 
 required. There is no point in wrapping several key questions into one: the 
 workload and resources required remain the same.

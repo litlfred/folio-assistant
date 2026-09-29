@@ -10,10 +10,8 @@ source_sha256: bfcd856e3ad7ab20
 ---
 effect?
 The GRC approves planning proposals for a period of six months beyond 
-the publication date indicated in the planning proposal. If the final guide­
-line is not submitted to the GRC before the end of the six-month period, the 
-responsible technical officer should discuss the delay with the GRC Secre­
-tariat. If the extended timeline may compromise the original methods and 
+the publication date indicated in the planning proposal. If the final guideline is not submitted to the GRC before the end of the six-month period, the 
+responsible technical officer should discuss the delay with the GRC Secretariat. If the extended timeline may compromise the original methods and 
 bibliographic database searches, a revised planning proposal may have to 
 be submitted to the GRC. Significant delays in the production of the final 
 guideline should be discussed with the Secretariat.

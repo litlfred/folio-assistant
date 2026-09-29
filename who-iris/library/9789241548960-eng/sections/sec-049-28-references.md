@@ -29,14 +29,12 @@ Once the technical unit has decided to proceed with developing a guideline,
 the steering group should be formulated, led by the responsible technical 
 officer. The steering group includes members from all WHO departments 
 and regional offices whose work deals directly with the topic of the guideline. 
-It is wise, however, to limit the group to fewer than 8 or 10 members to maxi­
-mize efficiency, although some guidelines require a larger steering group to 
+It is wise, however, to limit the group to fewer than 8 or 10 members to maximize efficiency, although some guidelines require a larger steering group to 
 encompass representatives from all relevant departments and regions.
 Steering group members must be prepared to allocate a lot of time to this 
 work: senior WHO staff who cannot do so should not be listed as members. 
 Instead, they should be consulted as appropriate during the development 
-process. If the guideline is being developed jointly with another organiza­
-tion, individuals from that organization will also be members of the steering 
+process. If the guideline is being developed jointly with another organization, individuals from that organization will also be members of the steering 
 group. Otherwise, the steering group is composed exclusively of WHO staff 
 from headquarters and the regional offices.
 The role of the steering group is to:
@@ -60,8 +58,7 @@ oversee evidence retrieval, assessment and synthesis;
 ■■
 select members of the GDG and the external review group;
 ■■
-collect and assess disclosures of interest and manage conflicts in col­
-laboration with the director of the technical unit and in consultation 
+collect and assess disclosures of interest and manage conflicts in collaboration with the director of the technical unit and in consultation 
 with the Office of Compliance, Risk Management and Ethics (CRE), as 
 needed (see Chapter 6);
 ■■
@@ -82,6 +79,5 @@ oversee publication and dissemination of the guideline; and
 monitor new information, user needs and requests that inform when 
 an update may be needed.
 The responsible technical officer is responsible for the efficient and 
-effective function of this group and for liaising and consulting with depart­
-ments and experts internal to WHO, and with the chair and members of 
+effective function of this group and for liaising and consulting with departments and experts internal to WHO, and with the chair and members of 
 the GDG as needed.

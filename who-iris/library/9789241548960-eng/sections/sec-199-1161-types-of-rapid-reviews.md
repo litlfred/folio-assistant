@@ -10,11 +10,9 @@ source_sha256: bfcd856e3ad7ab20
 ---
 The reviews that underpin rapid advice guidelines may be categorized into 
 four basic types: a full, standard systematic review performed rapidly; a 
-review involving a variety of abbreviated methods and including only sys­
-tematic reviews and existing guidelines; a review of primary studies and 
+review involving a variety of abbreviated methods and including only systematic reviews and existing guidelines; a review of primary studies and 
 existing systematic reviews, or a review of primary studies only. Fig 11.1 
-outlines the types of rapid reviews, along with their similarities and distin­
-guishing features.
+outlines the types of rapid reviews, along with their similarities and distinguishing features.
 WHO handbook for guideline development
 142
 142

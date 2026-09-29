@@ -12,6 +12,5 @@ During meetings, the chair must ensure that GDG members can present their
 viewpoints and that all relevant issues are discussed in a respectful and efficient 
 manner. In addition, the chair should keep the group focused on the agenda; 
 reflect on and summarize the opinions of GDG members; raise issues that 
-could inform the decision process; and manage the group so as to achieve con­
-sensus. The chair and vice-chair should not impose their own opinions on the 
+could inform the decision process; and manage the group so as to achieve consensus. The chair and vice-chair should not impose their own opinions on the 
 group, however they may put forth their views in a purely personal capacity.

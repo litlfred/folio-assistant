@@ -1,10 +1,11 @@
 ---
 # folio-assistant-fnqn
 title: 'INGEST: WPRO style guide specimen pages (Lorem ipsum, font, table and graph samples) read as prose'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-29T21:51:12Z
-updated_at: 2026-09-29T21:51:12Z
+updated_at: 2026-09-29T23:19:04Z
 parent: folio-assistant-slw1
 ---
 

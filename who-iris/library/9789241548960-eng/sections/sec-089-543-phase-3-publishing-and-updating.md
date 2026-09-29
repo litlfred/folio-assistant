@@ -9,13 +9,11 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 5.4.3.1 Producing and publishing the guideline (Chapter 12)
-The final guideline and in its derivative products must convey clear mes­
-sages with respect to equity, human rights, gender and social determinants. 
+The final guideline and in its derivative products must convey clear messages with respect to equity, human rights, gender and social determinants. 
 WHO handbook for guideline development
 54
 For example, the process of developing a gender-sensitive guideline starts 
-before the first words are put on paper and only ends when the last illustra­
-tion has been chosen. Throughout the process careful attention should be 
+before the first words are put on paper and only ends when the last illustration has been chosen. Throughout the process careful attention should be 
 paid to the use of language, the selection of case examples, the expressions 
 used to refer to population groups, the choice of photographs, etc. Setting 
 the ground rules up front is much easier than trying to modify a document 

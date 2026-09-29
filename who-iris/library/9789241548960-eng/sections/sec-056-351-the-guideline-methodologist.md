@@ -13,8 +13,7 @@ and methods − should be involved in the development of WHO guidelines.
 The methodologist complements the technical expertise of the subject matter 
 experts, programme managers and other members of the GDG. The guideline 
 methodologist is an expert in systematic reviews, GRADE, and the translation 
-of evidence into recommendations. They generally have experience formulat­
-ing public health recommendations. Methodologists should be identified early 
+of evidence into recommendations. They generally have experience formulating public health recommendations. Methodologists should be identified early 
 in the guideline process so that they can participate in planning, scoping and 
 the development of key questions. The methodologist also plays a critical role in 
 GDG meetings by helping the GDG to formulate recommendations informed 

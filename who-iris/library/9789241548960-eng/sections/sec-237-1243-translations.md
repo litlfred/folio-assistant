@@ -9,8 +9,7 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 Because WHO guidelines target a global audience, it is often necessary to 
-provide the guideline in one or several languages, particularly the six offi­
-cial languages; Arabic, Chinese, English, French, Russian and Spanish. To 
+provide the guideline in one or several languages, particularly the six official languages; Arabic, Chinese, English, French, Russian and Spanish. To 
 ensure accurate translation of technical content, experts should be involved 
 in checking the translations. Translations must be planned in advance 
 and their timing discussed with the translation suppliers or regional office 

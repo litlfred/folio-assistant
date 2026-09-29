@@ -8,11 +8,9 @@ pages: 122-122
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-GRADE evidence profiles contain the assessment of the quality of the evi­
-dence and a summary of findings across studies for each important or 
+GRADE evidence profiles contain the assessment of the quality of the evidence and a summary of findings across studies for each important or 
 critical outcome and each key question (in PICO format). The GDG uses 
-these summaries as the basis for its discussions and to formulate recom­
-mendations (Table  9.1) Outcomes are listed in rows and the judgements 
+these summaries as the basis for its discussions and to formulate recommendations (Table  9.1) Outcomes are listed in rows and the judgements 
 made about the factors that determine the quality of the body of evidence 
 are described briefly for each outcome, along with a summary of the effect 
 estimates for each. Additional details are provided in explanatory footnotes. 

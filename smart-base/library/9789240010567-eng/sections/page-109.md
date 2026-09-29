@@ -37,10 +37,8 @@ needed to disseminate
 Recurring
 Hardware 
 maintenance, 
-ongoing ad­
-ministration 
-and replace­
-ment rate 
+ongoing administration 
+and replacement rate 
 	» Number of end users and 
 devices managed
 	» Sophistication of the 

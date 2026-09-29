@@ -15,7 +15,6 @@ What materials need to be sent to GDG members ahead of time and
 when should they be sent to allow adequate time for review?
 ■■
 Have all DOI forms been collected and assessed and have appropriate 
-management plans been agreed upon with the director of the responsi­
-ble technical officer’s technical unit?
+management plans been agreed upon with the director of the responsible technical officer’s technical unit?
 WHO handbook for guideline development
 37

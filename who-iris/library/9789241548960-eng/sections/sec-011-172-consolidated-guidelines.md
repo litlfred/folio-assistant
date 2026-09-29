@@ -8,14 +8,12 @@ pages: 18-19
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-A consolidated guideline (also known as a compilation of guidelines) con­
-tains recommendations from existing WHO guidelines, or from guidelines 
+A consolidated guideline (also known as a compilation of guidelines) contains recommendations from existing WHO guidelines, or from guidelines 
 produced by other organizations that have followed processes consistent 
 Chapter 1 
  Introduction
 7
-with those used by WHO (see Section 1.8.2). Producing consolidated guide­
-lines is complex because existing guidelines may need to be updated and 
+with those used by WHO (see Section 1.8.2). Producing consolidated guidelines is complex because existing guidelines may need to be updated and 
 new recommendations may have to be added to address important gaps in 
 the existing guidance. In addition, maintaining the document is difficult, 
 since individual recommendations may become outdated at different times. 
@@ -24,13 +22,10 @@ All recommendations contained in a consolidated guideline should be
 up to date and approved by the WHO Guideline Review Committee (GRC): 
 existing recommendations may need to be updated during preparation of 
 the consolidated guideline. During the updating process, all the standard 
-procedures as outlined in this handbook should be followed. Existing rec­
-ommendations must be thoroughly, clearly and explicitly cross-referenced.
+procedures as outlined in this handbook should be followed. Existing recommendations must be thoroughly, clearly and explicitly cross-referenced.
 Consolidated guidelines require review by the GRC if any of the included 
-recommendations were initially published without GRC review; the updat­
-ing process led to changes in any of the existing recommendations; or new 
+recommendations were initially published without GRC review; the updating process led to changes in any of the existing recommendations; or new 
 recommendations were developed. A compilation of guidelines that includes 
 recommendations developed by organizations external to WHO must also 
-be reviewed by the GRC. Only consolidated guidelines whose recommen­
-dations have all been previously approved by the GRC and have remained 
+be reviewed by the GRC. Only consolidated guidelines whose recommendations have all been previously approved by the GRC and have remained 
 unchanged during the updating process do not require review by the GRC.

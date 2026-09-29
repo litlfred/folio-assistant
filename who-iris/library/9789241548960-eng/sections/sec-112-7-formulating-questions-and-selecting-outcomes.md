@@ -14,10 +14,7 @@ In multi-drug-resistant tuberculosis patients, does the addition
 of bedaquiline to WHO-recommended second-line drug therapy 
 improve outcomes, as reflected by culture conversion and the time to 
 such conversion?
-Foreground questions are the most important ones for guideline devel­
-opment. The evidence identified on these questions will be used by the GDG 
-to underpin the recommendations and these questions usually require a sys­
-tematic review and assessment of the quality of the evidence for selected out­
-comes using the GRADE approach (see Chapter 9) (1). Foreground questions 
+Foreground questions are the most important ones for guideline development. The evidence identified on these questions will be used by the GDG 
+to underpin the recommendations and these questions usually require a systematic review and assessment of the quality of the evidence for selected outcomes using the GRADE approach (see Chapter 9) (1). Foreground questions 
 should therefore be framed in a way that enables a systematic search of the 
 literature. The PICO format is an effective way to do this.

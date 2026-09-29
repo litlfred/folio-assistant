@@ -11,15 +11,13 @@ source_sha256: bfcd856e3ad7ab20
 159
 159
 ■■
-Systematic review protocols outlining the search strategy, study eli­
-gibility criteria and research synthesis methods can be circulated to 
+Systematic review protocols outlining the search strategy, study eligibility criteria and research synthesis methods can be circulated to 
 members of the external review group for comments.
 ■■
 The list of included studies identified by searching bibliographic databases 
 can be sent to technical experts to look for studies that have been missed.
 ■■
-Draft evidence profiles can be circulated to experts, again for the iden­
-tification of missing data.
+Draft evidence profiles can be circulated to experts, again for the identification of missing data.
 All WHO guidelines require some form of external peer review of the 
 draft final guideline. Because of the time constraints in the development 
 of rapid advice guidelines, a small number of external reviewers may be 

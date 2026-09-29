@@ -16,11 +16,9 @@ paying standard salaries (Comparator), increase the number of health
 workers in rural areas (Outcome) within a 5-year period?
 ■■
 In babies born to HIV-positive women (P), does screening with a new 
-rapid diagnostic test (I), compared with standard diagnostic meth­
-ods (C), accurately detect disease (O) by 12 months of age?
+rapid diagnostic test (I), compared with standard diagnostic methods (C), accurately detect disease (O) by 12 months of age?
 ■■
-In an urban population (P), is exposure to an environmental chemi­
-cal (I), compared with no exposure (C), associated with the risk of 
+In an urban population (P), is exposure to an environmental chemical (I), compared with no exposure (C), associated with the risk of 
 cancer (O) at 10 years of follow-up?
 ■■
 Is breast cancer screening (I) in women 70 years of age or older with an 
@@ -31,8 +29,7 @@ In a national population (P), how does one intervention (I) perform,
 compared with another (C), in terms of cost per quality-adjusted life 
 years gained over a 5-year period (O)?
 ■■
-In general populations (P), does gender balance in health facility staff­
-ing (I), compared with lack of gender balance (C), improve equity in 
+In general populations (P), does gender balance in health facility staffing (I), compared with lack of gender balance (C), improve equity in 
 health outcomes (O)?”
 The following is a poorly-formulated key question:
 ■■
@@ -55,8 +52,7 @@ as death? What about harms?
 The key question is better phrased as:
 ■■
 Among different groups of multi-drug-resistant tuberculosis patients 
-(P), does the addition of drug X for Y months (I) to the WHO-rec­
-ommended regimen (C) improve the rate of cure at 24 months (O)?
+(P), does the addition of drug X for Y months (I) to the WHO-recommended regimen (C) improve the rate of cure at 24 months (O)?
 Chapter 7 
 Formulating questions and selecting outcomes
 83
@@ -64,8 +60,7 @@ The following key question is also poorly formulated:
 ■■
 Is screening of adults for diabetes cost‒effective?
 ––
-What is the specific population? Although this may not be speci­
-fied in the key question per se, “adults” should be further defined in 
+What is the specific population? Although this may not be specified in the key question per se, “adults” should be further defined in 
 terms of age, sex, risk factors for cardiovascular disease, for example.
 ––
 What type of diabetes is being considered here? Diabetes mellitus? 
@@ -84,12 +79,10 @@ to assess whether screening is considered cost‒effective?
 ––
 For what time frame is cost–effectiveness being considered?
 In general, key questions are poorly crafted if they have not included 
-all four components of the PICO format, or if they do not provide suffi­
-cient specificity for one or more of these components, such that a systematic 
+all four components of the PICO format, or if they do not provide sufficient specificity for one or more of these components, such that a systematic 
 review search strategy cannot be devised without further clarification.
 Key questions in PICO format can become unwieldy at times if all four 
-components are encompassed together with additional details on each com­
-ponent. It is therefore usually preferable to craft a simple, clear key question 
+components are encompassed together with additional details on each component. It is therefore usually preferable to craft a simple, clear key question 
 that includes the essential aspects of the PICO format, and follow it with a 
 detailed list of inclusion and exclusion criteria for the body of evidence that 
 will be used to answer the key question (see Chapter 8).

@@ -9,5 +9,4 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 The steering group, with input from the GDG, the systematic review team 
-and the guideline methodologist, applies the PICO framework to the fore­
-ground questions.
+and the guideline methodologist, applies the PICO framework to the foreground questions.

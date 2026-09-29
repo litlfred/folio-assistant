@@ -9,10 +9,7 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 The GRC was established by WHO’s Director-General in 2007 to ensure that 
-WHO guidelines are of high quality, that they are developed using a trans­
-parent and explicit process, and that, to the extent possible, recommenda­
-tions are based on evidence (3).
-The GRC is composed of approximately 30 individuals, including rep­
-resentatives from all WHO regions as well as external members, and meets 
+WHO guidelines are of high quality, that they are developed using a transparent and explicit process, and that, to the extent possible, recommendations are based on evidence (3).
+The GRC is composed of approximately 30 individuals, including representatives from all WHO regions as well as external members, and meets 
 monthly to review submitted documents.
 12

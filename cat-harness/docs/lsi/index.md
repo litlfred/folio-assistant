@@ -115,7 +115,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## who-iris / library
 
-**342** units · **3937** terms · k = **100** · retains **69.7 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/who-iris/library.lsi.json`
+**342** units · **3936** terms · k = **100** · retains **69.6 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/who-iris/library.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -123,14 +123,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 23.78 | evidence, review, group, health, quality, interest, development, systematic | *(none)* |
-| 2 | 14.96 | vel, eam, mea, probo, quis, tamquam, vivendum, dolor | group, gdg, gender, equity, rights, interests, steering, grc |
+| 1 | 23.77 | evidence, review, group, health, quality, interest, development, systematic | *(none)* |
+| 2 | 14.97 | vel, eam, mea, probo, quis, tamquam, vivendum, dolor | group, gender, gdg, equity, rights, steering, interests, grc |
 | 3 | 13.83 | imprecision, effect, confidence, inconsistency, estimate, studies, rated, indirectness | organization, november, accessed, world, grc, planning, group, doi |
-| 4 | 13.11 | accessed, november, pmid, cochrane, website, doi, org, oxman | interests, interest, members, conflict, coi, financial, individuals, chair |
-| 5 | 12.13 | names, international, social, nomenclature, used, determinants, style, human | gdg, doi, grade, interest, interests, review, grc, coi |
+| 4 | 13.07 | accessed, november, pmid, cochrane, website, doi, oxman, org | interests, interest, members, conflict, coi, financial, individuals, chair |
+| 5 | 12.13 | names, international, social, nomenclature, used, determinants, style, human | gdg, doi, grade, interest, interests, review, grc, evidence |
 | 6 | 11.85 | gender, determinants, social, equity, rights, services, human, right | names, name, republic, style, full, nomenclature, text, english |
-| 7 | 11.59 | doi, coi, financial, interests, conflict, cois, accessed, november | rapid, canada, proposal, advice, planning, updating, key, review |
-| 8 | 10.81 | republic, local, name, nome, approved, english, haiti, addis | nomenclature, symbols, international, world, abbreviations, text, used, organization |
+| 7 | 11.59 | doi, coi, financial, accessed, november, conflict, interests, cois | rapid, proposal, canada, advice, planning, updating, key, review |
+| 8 | 10.81 | republic, local, name, nome, approved, english, haiti, addis | nomenclature, symbols, international, world, abbreviations, text, used, medical |
 
 **Findings** — 2 narrow dimension(s), 12 near-duplicate pair(s).
 

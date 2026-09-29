@@ -8,14 +8,11 @@ pages: 13-13
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-A WHO guideline is any document developed by the World Health Organi­
-zation containing recommendations for clinical practice or public health 
+A WHO guideline is any document developed by the World Health Organization containing recommendations for clinical practice or public health 
 policy. A recommendation tells the intended end-user of the guideline what 
 he or she can or should do in specific situations to achieve the best health 
-outcomes possible, individually or collectively. It offers a choice among dif­
-ferent interventions or measures having an anticipated positive impact on 
+outcomes possible, individually or collectively. It offers a choice among different interventions or measures having an anticipated positive impact on 
 health and implications for the use of resources.
-Recommendations help the user of the guideline to make informed deci­
-sions on whether to undertake specific interventions, clinical tests or public 
+Recommendations help the user of the guideline to make informed decisions on whether to undertake specific interventions, clinical tests or public 
 health measures, and on where and when to do so. Recommendations also 
 help the user to select and prioritize across a range of potential interventions.

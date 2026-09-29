@@ -14,11 +14,9 @@ of interest involving GDG members and commissioned experts. Declara-
 Chapter 3 
 Contributors and their role in guideline development
 35
-tions of interests (DOI) are collected and reviewed before making appoint­
-ments to the GDG. Any subsequent changes in GDG members’ declaration 
+tions of interests (DOI) are collected and reviewed before making appointments to the GDG. Any subsequent changes in GDG members’ declaration 
 of interests must be reported to the steering group. Potential candidates for 
-membership who have major conflicts of interest, be they financial or non­
-financial, cannot be appointed to the GDG. Minor conflicts of interest can 
+membership who have major conflicts of interest, be they financial or nonfinancial, cannot be appointed to the GDG. Minor conflicts of interest can 
 be managed at the individual level (e.g. by restricting participation in parts 
 of the GDG meeting) or at the group level (e.g. by balancing GDG members’ 
 perspectives and experiences). See Chapter 6 for details.

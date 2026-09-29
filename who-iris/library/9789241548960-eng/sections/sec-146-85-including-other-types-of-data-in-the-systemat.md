@@ -10,8 +10,7 @@ source_sha256: bfcd856e3ad7ab20
 ---
 Many other types and sources of data may be relevant to WHO guidelines. 
 For example, for questions about substances that are potentially toxic to 
-humans or the environment, mechanistic and animal studies may be rele­
-vant. Questions about cost and measures of economic efficiency, such as cost–
+humans or the environment, mechanistic and animal studies may be relevant. Questions about cost and measures of economic efficiency, such as cost–
 effectiveness, may require information on prices from manufacturers or data 
 from programme evaluations, or may involve modelling based on evidence-
 informed assumptions. The values and preferences of the people affected by a 

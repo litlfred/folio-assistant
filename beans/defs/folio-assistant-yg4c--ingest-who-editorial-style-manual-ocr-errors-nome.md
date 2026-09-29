@@ -1,10 +1,11 @@
 ---
 # folio-assistant-yg4c
 title: 'INGEST: WHO Editorial Style Manual OCR errors (''nome'', ''Manval'', ''opproved'') are strong enough to shape an LSI dimension'
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-29T21:51:12Z
-updated_at: 2026-09-29T21:51:12Z
+updated_at: 2026-09-29T23:19:05Z
 parent: folio-assistant-slw1
 ---
 

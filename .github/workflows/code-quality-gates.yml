@@ -747,6 +747,11 @@ jobs:
       - name: the LSI index viewer page is current
         run: bun run lsi:viz:check
 
+      # Bean 3spu: a soft hyphen in section text splits a word for every
+      # reader; both PDF rungs join them, and this says none came back.
+      - name: no library section carries a soft hyphen
+        run: bun run check:soft-hyphens
+
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 

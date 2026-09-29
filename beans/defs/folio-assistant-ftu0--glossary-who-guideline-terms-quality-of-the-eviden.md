@@ -1,10 +1,11 @@
 ---
 # folio-assistant-ftu0
 title: 'GLOSSARY: WHO guideline terms — ''quality of the evidence'' (77) vs ''certainty of the evidence'' (1) as prefLabel/altLabel, and who owns the glossary'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-29T21:51:12Z
-updated_at: 2026-09-29T21:51:12Z
+updated_at: 2026-09-29T23:19:05Z
 parent: folio-assistant-lqo9
 ---
 

@@ -12,18 +12,14 @@ source_sha256: bfcd856e3ad7ab20
 Third, a carefully constructed planning proposal makes it more likely that 
 the guideline development process will be smooth and efficient. Resources 
 will closely match the proposed scope; relevant expertise will be identified 
-and engaged early and throughout the development process; and potential dif­
-ficulties, both procedural and technical, can be anticipated and planned for.
+and engaged early and throughout the development process; and potential difficulties, both procedural and technical, can be anticipated and planned for.
 Fourth, the planning proposal promotes accountability. When the scope, 
-methods and timeline of the guideline are laid out and approved by the steer­
-ing group a priori, each member of the steering group and the director of the 
-technical unit leading the process are more accountable for the final guide­
-line. Adherence to the original timeline may also be improved.
+methods and timeline of the guideline are laid out and approved by the steering group a priori, each member of the steering group and the director of the 
+technical unit leading the process are more accountable for the final guideline. Adherence to the original timeline may also be improved.
 Finally, and perhaps most importantly, the planning proposal promotes 
 the integrity of the development process and of the final guideline. By deciding 
 in advance on the steps and methods to be followed, arbitrariness in decision-
 making can be minimized. In addition, thoughtful development and detailed 
 documentation of the planned methods and key questions and outcomes may 
-reduce the risk of bias in the evidence synthesis and in the formulation of rec­
-ommendations. Changes in methods mid-stream based on the findings of the 
+reduce the risk of bias in the evidence synthesis and in the formulation of recommendations. Changes in methods mid-stream based on the findings of the 
 systematic review or the interests of dominant GDG members must be avoided.

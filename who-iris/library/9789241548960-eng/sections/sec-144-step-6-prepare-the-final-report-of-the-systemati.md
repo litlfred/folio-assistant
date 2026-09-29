@@ -12,9 +12,7 @@ Systematic reviews conducted in developing WHO guidelines should be
 reported in a standard format using the PRISMA reporting guidelines (20). 
 For some purposes, the methods and results section of the review may be 
 all that WHO will require; for other purposes it may require a full report 
-with detailed introduction and discussion sections. GRADE evidence pro­
-files should generally be part of the final report of the systematic review (see 
+with detailed introduction and discussion sections. GRADE evidence profiles should generally be part of the final report of the systematic review (see 
 Chapter 9). This report should be sufficiently detailed for WHO staff and the 
 GDG to know exactly what was done and what the findings are. However, 
-excessive detail in the text of the characteristics and findings at the indi­
-vidual study level is unnecessary.
+excessive detail in the text of the characteristics and findings at the individual study level is unnecessary.

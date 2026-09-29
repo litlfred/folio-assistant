@@ -16,18 +16,14 @@ What group or population is targeted by the intervention or exposure
 under consideration?
 ■■
 How can the members of the target population be most accurately 
-described? What are the relevant demographic characteristics? Con­
-sider age, sex and other social, geographic and environmental charac­
-teristics that are of relevance to the guideline topic.
+described? What are the relevant demographic characteristics? Consider age, sex and other social, geographic and environmental characteristics that are of relevance to the guideline topic.
 ■■
-What is the setting? Is it, for example, hospitals, communities, work­
-places or schools?
+What is the setting? Is it, for example, hospitals, communities, workplaces or schools?
 WHO handbook for guideline development
 80
 ■■
 Should any subpopulations be considered? These may include, for 
-example, subpopulations whose gender, education, income, geographi­
-cal location or other characteristics makes them subject to increased 
+example, subpopulations whose gender, education, income, geographical location or other characteristics makes them subject to increased 
 environmental exposures or to reduced access to health services, or 
 less able to benefit from such services.
 ■■
@@ -43,25 +39,19 @@ measure is being evaluated?
 ■■
 What health policy or health-care system is being evaluated? Is it, for 
 example, pharmaceutical pricing policies at the country level, or the 
-integration of an opportunistic screening programme into rural pri­
-mary care clinics?
+integration of an opportunistic screening programme into rural primary care clinics?
 ■■
-What social, economic, or environmental determinants are being eval­
-uated? Some possibilities are social protection; regulation of product 
+What social, economic, or environmental determinants are being evaluated? Some possibilities are social protection; regulation of product 
 formulae, marketing and advertisement; occupational health standards; 
 urban planning; or psychosocial support to families and communities.
 ■■
-Are variations in the level of an intervention or exposure being con­
-sidered? Examples are drug dosages and frequency, a range of levels of 
-a risk factor or environmental exposure, or the intensity of an educa­
-tional intervention.
-“Intervention” is defined very broadly. It can mean anything from diag­
-nostic tests or other technologies, to complex public health measures, to 
+Are variations in the level of an intervention or exposure being considered? Examples are drug dosages and frequency, a range of levels of 
+a risk factor or environmental exposure, or the intensity of an educational intervention.
+“Intervention” is defined very broadly. It can mean anything from diagnostic tests or other technologies, to complex public health measures, to 
 measures aimed at modifying aspects of the health-care system, to give a few 
 examples. For interventions that are complex, consider which components 
 are of greatest interest to the target audience of the guideline and how they 
 might best be described. An “exposure” is any factor that can influence the 
-risk of a given outcome. Some exposures determine baseline risk or progno­
-sis, whereas others can change baseline risk. One example of the latter is the 
+risk of a given outcome. Some exposures determine baseline risk or prognosis, whereas others can change baseline risk. One example of the latter is the 
 presence of chemical contaminants in the air or community water supply.
 Chapter 7

@@ -18,9 +18,7 @@ equity and human rights;
 acceptability; and
 ■■
 feasibility.
-Table 10.1 lists the detailed GRADE criteria that determine the direc­
-tion and strength of a recommendation and describes how they influ­
-ence the recommendation. These criteria are also included in the GRADE 
+Table 10.1 lists the detailed GRADE criteria that determine the direction and strength of a recommendation and describes how they influence the recommendation. These criteria are also included in the GRADE 
 guideline development tool (6). To formulate a recommendation, the GDG 
 considers each factor in turn and judges its importance and effect on the 
 recommendation.

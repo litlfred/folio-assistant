@@ -14,9 +14,7 @@ the group’s chair and vice-chair before the first GDG meeting. It should
 be presented to GDG members at the beginning of this first meeting, with 
 the opportunity for questions and discussion. GDGs sponsored by WHO 
 should generally make their recommendations through consensus, which 
-can be achieved by various means. Acceptable approaches for group deci­
-sion-making must be defined and made explicit before any recommenda­
-36
+can be achieved by various means. Acceptable approaches for group decision-making must be defined and made explicit before any recommenda36
 tions are formulated, and a plan as to how to proceed if consensus cannot 
 be achieved must also be in place. Such decisions cannot be made when the 
 GDG encounters serious internal dissention (6).

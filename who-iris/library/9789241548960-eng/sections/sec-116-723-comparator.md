@@ -17,17 +17,13 @@ current practice or policy.
 ■■
 Comparators may be placebo, no intervention, the standard of 
 care, a gold or reference standard diagnostic test, variations of the 
-intervention under consideration (such as different dosages), a dif­
-ferent level of exposure or intervention, or a completely different 
+intervention under consideration (such as different dosages), a different level of exposure or intervention, or a completely different 
 intervention.
 ■■
-Comparisons may also be established, for example, between individ­
-ual-level and population-level interventions, or between interventions 
-involving the health sector alone versus the health sector in collabora­
-tion with other sectors.
+Comparisons may also be established, for example, between individual-level and population-level interventions, or between interventions 
+involving the health sector alone versus the health sector in collaboration with other sectors.
 The most important comparators are generally those that are most 
-closely related to current practice because they provide guideline develop­
-ers with the information needed to formulate recommendations relevant to 
+closely related to current practice because they provide guideline developers with the information needed to formulate recommendations relevant to 
 end-users’ needs.
 7.2.4 Outcomes
 What are the outcomes of the intervention or exposure that matter most to 
@@ -41,7 +37,6 @@ What are its potential harms?
 ■■
 What impact will it have on equity (distribution of health)?
 Outcomes, both positive and negative, need to be carefully selected with 
-input from experts, the programme managers who will implement the recom­
-mendations and the individuals who will be affected by them (see Section 7.6).
+input from experts, the programme managers who will implement the recommendations and the individuals who will be affected by them (see Section 7.6).
 WHO handbook for guideline development
 82

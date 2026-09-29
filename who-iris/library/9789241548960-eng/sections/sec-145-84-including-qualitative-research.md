@@ -11,14 +11,11 @@ source_sha256: bfcd856e3ad7ab20
 Qualitative data can address certain types of key questions that cannot be 
 answered by quantitative research methods, such as “how” and “why” a given 
 intervention produces its effects. Qualitative evidence can help explain, 
-interpret and apply the quantitative results of a systematic review. A syn­
-thesis of the findings from qualitative research can be done as part of the 
+interpret and apply the quantitative results of a systematic review. A synthesis of the findings from qualitative research can be done as part of the 
 scoping of the guideline and can help to define and refine the key questions. 
-Qualitative data may also inform the interpretation of studies on both ben­
-efits and harm, address questions on the contextual barriers and facilitators 
+Qualitative data may also inform the interpretation of studies on both benefits and harm, address questions on the contextual barriers and facilitators 
 to an effective intervention, and examine the values and preferences of the 
-people receiving the intervention or experiencing the outcomes the interven­
-tion can affect. Qualitative research can also help bring to light what some 
+people receiving the intervention or experiencing the outcomes the intervention can affect. Qualitative research can also help bring to light what some 
 subpopulations experience when they access and use services, including 
 unintended social consequences, such as stigmatization or impoverishment. 
 The GRC intranet site (27) provides additional guidance on when and how 

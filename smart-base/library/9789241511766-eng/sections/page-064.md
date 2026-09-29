@@ -79,8 +79,7 @@ Late: Low
 ■Server operation capacity
 Fidelity
 During 
-implemen­
-tation
+implementation
 Do the realities 
 of field 
 implementation 
@@ -118,8 +117,7 @@ Late: Low
 Quality
 Pre-launch 
 & during 
-implemen­
-tation
+implementation
 Is the content and 
 the delivery of 
 the intervention 
@@ -141,8 +139,7 @@ accuracy)
 ■
 ■Quality control reports on users
 User interaction 
-+ implemen­
-tation
++ implementation
 User
 Early: Low
 Mid: High

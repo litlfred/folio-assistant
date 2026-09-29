@@ -10,8 +10,7 @@ source_sha256: bfcd856e3ad7ab20
 ---
 Recommendations that are conditional or weak are made when a GDG is less 
 certain about the balance between the benefits and harms or disadvantages 
-of implementing a recommendation. Conditional recommendations gener­
-ally include a description of the conditions under which the end-user should 
+of implementing a recommendation. Conditional recommendations generally include a description of the conditions under which the end-user should 
 or should not implement the recommendation.
 Table 10.2.	 Interpretation of strong and conditional recommendations 
 for an intervention
@@ -20,13 +19,11 @@ Strong recommendation
 Conditional recommendation
 Patients
 Most individuals in this situation would want the 
-recommended course of action; only a small propor­
-tion would not.
+recommended course of action; only a small proportion would not.
 Formal decision aides are not likely to be needed to 
 help individuals make decisions consistent with their 
 values and preferences.
-Most individuals in this situation would want the sug­
-gested course of action, but many would not.
+Most individuals in this situation would want the suggested course of action, but many would not.
 Clinicians
 Most individuals should receive the intervention. 
 Adherence to the recommendation could be used as 
@@ -34,8 +31,7 @@ a quality criterion or performance indicator.
 Different choices will be appropriate for individual 
 patients, who will require assistance in arriving at a 
 management decision consistent with his or her values 
-and preferences. Decision aides may be useful in help­
-ing individuals make decisions consistent with their 
+and preferences. Decision aides may be useful in helping individuals make decisions consistent with their 
 values and preferences.
 Policy-
 makers

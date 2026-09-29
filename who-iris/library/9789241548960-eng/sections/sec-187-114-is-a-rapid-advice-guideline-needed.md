@@ -17,6 +17,5 @@ Rapid advice guidelines in the setting of a public health emergency
 The need for, and appropriateness of, undertaking a rapid advice guideline, 
 in light of the potential limitations of this approach, warrant consideration 
 in the initial planning stage of a rapid advice guideline. Several issues need 
-to be considered when deciding whether to develop a rapid advice guide­
-line instead of a standard guideline, or to defer development of a guideline 
+to be considered when deciding whether to develop a rapid advice guideline instead of a standard guideline, or to defer development of a guideline 
 altogether.

@@ -115,8 +115,7 @@ Domain
 Definition
 Business 
 architecture
-Defines the digital health solution strategy, governance, organization and health system business pro­
-cesses that identify the components and technologies needed.
+Defines the digital health solution strategy, governance, organization and health system business processes that identify the components and technologies needed.
 Data 
 architecture
 Describes the structure of an organization’s logical and physical data assets and data management 
@@ -164,8 +163,7 @@ Domain
 Definition
 Syntactic 
 interoperability
-Also referred to as structural interoperability, refers to the way technology enables interoperabili­
-ty across digital systems. Under syntactic interoperability, two or more systems can communicate 
+Also referred to as structural interoperability, refers to the way technology enables interoperability across digital systems. Under syntactic interoperability, two or more systems can communicate 
 structured data and securely share or exchange data (i.e. interface specifications and communication 
 protocols), thus allowing different types of software to work together. Syntactic standards are used 
 for specifying data formats to be shared such as HL7 FHIR, JSON (JavaScript Object Notation) or XML 
@@ -174,8 +172,7 @@ Semantic
 interoperability
 Refers to the way in which two or more systems connect and share data elements that each system 
 understands in a meaningful way (i.e. data representation standards). Semantic standards include 
-terminology and classification standards, which are used for classifying diseases with the ICD (Interna­
-tional Statistical Classification of Diseases and Related Health Problems) or health-care interventions 
+terminology and classification standards, which are used for classifying diseases with the ICD (International Statistical Classification of Diseases and Related Health Problems) or health-care interventions 
 with ICHI (International Classification of Health Interventions), for example.
 Organizational 
 interoperability
@@ -189,8 +186,7 @@ across organizations, sharing strategy documents, and establishing formal or inf
 and partnerships.
 Legal 
 interoperability
-Consists of the legal frameworks and legal basis to facilitate smooth data usage and exchange be­
-tween different organizations working across different jurisdictions (e.g. regions, countries). Legal 
+Consists of the legal frameworks and legal basis to facilitate smooth data usage and exchange between different organizations working across different jurisdictions (e.g. regions, countries). Legal 
 frameworks need to consider individuals’ rights to privacy and access to their health-care data; and 
 mechanisms for ensuring data and privacy protection, and secure data processing and storage. Legal 
 interoperability also includes policies that enable the secure sharing and use of person-centred data 

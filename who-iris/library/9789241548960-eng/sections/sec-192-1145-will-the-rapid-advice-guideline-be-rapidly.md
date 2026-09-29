@@ -9,12 +9,9 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 Rapid advice guidelines should only be developed if a mechanism is in place 
-for disseminating and implementing them, and if implementing the recom­
-mendations is feasible in the context of the emergency. Various factors need 
+for disseminating and implementing them, and if implementing the recommendations is feasible in the context of the emergency. Various factors need 
 to be carefully considered before embarking on the guideline development 
-process. They include the existence of health systems and other infrastruc­
-ture, the acceptability of the proposed intervention, the training require­
-ments involved, and resource availability.
+process. They include the existence of health systems and other infrastructure, the acceptability of the proposed intervention, the training requirements involved, and resource availability.
 In summary, the decision to develop a rapid advice guideline should be 
 informed by the above-mentioned factors, in combination with the overall 
 judgment of the relevant technical units and WHO’s senior officers. Before 

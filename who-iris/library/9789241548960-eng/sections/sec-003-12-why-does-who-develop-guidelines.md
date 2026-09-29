@@ -11,7 +11,5 @@ source_sha256: bfcd856e3ad7ab20
 WHO develops guidelines whenever Member States, WHO country offices, 
 external experts or other stakeholders ask for guidance on a clinical or public 
 health problem or policy area. This generally happens when they are uncertain 
-about what to do or how to choose among a range of potential policies or inter­
-ventions. Uncertainty can be triggered by a new public health problem or emer­
-gency; the uncovering of new evidence; an absence of good-quality evidence (or 
+about what to do or how to choose among a range of potential policies or interventions. Uncertainty can be triggered by a new public health problem or emergency; the uncovering of new evidence; an absence of good-quality evidence (or 
 of any evidence at all); or a change in resource availability or access to services.

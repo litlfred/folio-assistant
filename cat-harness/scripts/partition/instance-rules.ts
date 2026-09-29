@@ -1134,6 +1134,7 @@ export const RULES: Rule[] = [
       "scripts/lsi.ts",
       "scripts/lsi-epics.ts",
       "scripts/gen-lsi-viz.ts",
+      "scripts/check-soft-hyphens.ts",
       // The four state/context graphs nothing judged (bean `h1wq`). Harness for
       // the same reason as the two above: its subjects are the harness's own
       // bookkeeping — the health report, the work plan, interaction preferences,

@@ -11,5 +11,4 @@ source_sha256: bfcd856e3ad7ab20
 programme’s work area and budget?
 Under the WHO reform (1) all work at WHO should fall within the scope of the 
 General Programme of Work and Programme Budget, as agreed with WHO’s 
-Governing Bodies. If the guideline does not fall within this remit, it will be dif­
-ficult to justify the resources and budget needed to complete the work.
+Governing Bodies. If the guideline does not fall within this remit, it will be difficult to justify the resources and budget needed to complete the work.

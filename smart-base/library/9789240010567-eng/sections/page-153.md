@@ -63,9 +63,7 @@ DEPLOYMENT
 needs. For instance, where systems deal with quarterly stock orders, ensure that they can also 
 accommodate unexpected or seasonal needs. 
 OPPORTUNITIES 
-FOR INTEROPERA­
-BILITY AND LINK­
-AGES TO OTHER 
+FOR INTEROPERABILITY AND LINKAGES TO OTHER 
 DIGITAL HEALTH 
 INTERVENTIONS
 Prioritize integrating notifications with existing data reporting systems, including national or 

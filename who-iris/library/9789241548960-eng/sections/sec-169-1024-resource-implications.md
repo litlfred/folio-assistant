@@ -8,8 +8,7 @@ pages: 138-139
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-Resource considerations are generally included in the formulation of recom­
-mendations, unless there is a deliberate and explicit decision to omit them. 
+Resource considerations are generally included in the formulation of recommendations, unless there is a deliberate and explicit decision to omit them. 
 In considering resource implications, the GDG can be informed by a formal 
 economic evaluation based on estimates collected during evidence retrieval 
 and by modelling of cost–benefit and cost–effectiveness. If a full evaluation 

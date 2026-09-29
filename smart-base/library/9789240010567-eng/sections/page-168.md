@@ -55,9 +55,7 @@ way of increasing their uptake.
 to ensure that the content of the mLearning programmes aligns with current scopes of practice 
 and national training curricula for health workers.
 OPPORTUNITIES 
-FOR INTEROPERA­
-BILITY AND LINK­
-AGES TO OTHER 
+FOR INTEROPERABILITY AND LINKAGES TO OTHER 
 DIGITAL HEALTH 
 INTERVENTIONS
 Embed mLearning content on devices used by health workers for other digital health interventions to 

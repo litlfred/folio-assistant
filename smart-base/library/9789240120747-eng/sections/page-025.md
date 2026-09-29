@@ -18,8 +18,7 @@ Category
 Challenges and barriers
 Potential solutions
 Health care 
-profession­
-al capacity
+professional capacity
 Health care professionals 
 overburdened with work
 Time constraints

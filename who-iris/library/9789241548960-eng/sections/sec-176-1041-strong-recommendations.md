@@ -9,9 +9,7 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 Strong recommendations communicate the message that the guideline is 
-based on the confidence that the desirable effects of adherence to the recom­
-mendation outweigh the undesirable consequences. Strong recommenda­
-tions are uncommon because the balance between the benefits and harms 
+based on the confidence that the desirable effects of adherence to the recommendation outweigh the undesirable consequences. Strong recommendations are uncommon because the balance between the benefits and harms 
 of implementing a recommendation is rarely certain. In particular, GDGs 
 need to be cautious when considering making strong recommendations on 
 the basis of evidence whose quality is low or very low.

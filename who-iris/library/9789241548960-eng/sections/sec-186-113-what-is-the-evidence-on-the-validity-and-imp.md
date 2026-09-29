@@ -10,14 +10,10 @@ source_sha256: bfcd856e3ad7ab20
 ---
 rapid reviews and rapid advice guidelines?
 To date limited guidance has been provided on when and how to conduct 
-a rapid review, and few data exist on how a rapid review performs com­
-pared with a standard systematic review. Available data do point to wide 
+a rapid review, and few data exist on how a rapid review performs compared with a standard systematic review. Available data do point to wide 
 and increasing interest − and great variability − in the approaches used and 
-level of reporting of the methods and results across organizations produc­
-ing rapid reviews and rapid advice guidelines (2–4). Rapid reviews may be 
+level of reporting of the methods and results across organizations producing rapid reviews and rapid advice guidelines (2–4). Rapid reviews may be 
 narrower in scope and more tailored to the needs of the commissioning 
-body and intended users than standard systematic reviews (2). Most impor­
-tantly, little is known about how rapid reviews compare with standard sys­
-tematic reviews in terms of bias and credibility, the ways in which rapid 
+body and intended users than standard systematic reviews (2). Most importantly, little is known about how rapid reviews compare with standard systematic reviews in terms of bias and credibility, the ways in which rapid 
 advice guidelines are developed and implemented, and the impact of such 
 guidelines on health outcomes.

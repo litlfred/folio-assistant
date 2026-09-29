@@ -34,18 +34,15 @@ Accessible studies
 ■■
 Publication status is limited to full text only (abstracts are not usually included).
 ■■
-To maximize efficiency, articles should be electronically available through ejour­
-nal subscriptions available to the rapid review team.
+To maximize efficiency, articles should be electronically available through ejournal subscriptions available to the rapid review team.
 ■■
-Articles should be purchased directly from a journal only under special cir­
-cumstances, namely when the paper is deemed essential and is not available 
+Articles should be purchased directly from a journal only under special circumstances, namely when the paper is deemed essential and is not available 
 through other means. 
 Grey literature
 ■■
 The utility of the grey literature is assessed for each topic.
 ■■
-Websites of relevant organizations may be examined, depending on the sub­
-ject under review.
+Websites of relevant organizations may be examined, depending on the subject under review.
 Year (search dates)
 ■■
 Publication dates are limited (e.g. only the most recent decade is searched).

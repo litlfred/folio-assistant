@@ -9,8 +9,7 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 constituting guideline development groups
-There is scant evidence upon which to base recommendations on the opti­
-mal composition of GDGs to minimize the risk that intellectual conflicts of 
+There is scant evidence upon which to base recommendations on the optimal composition of GDGs to minimize the risk that intellectual conflicts of 
 interest will bias their decisions. The following suggestions are based largely 
 Chapter 6 
 Declaration and management of interests
@@ -38,12 +37,10 @@ interest, either financial or nonfinancial.
 ––
 Individuals with financial conflicts of interest should generally not 
 be members of GDGs. This applies especially to individuals with 
-substantial financial interests in an intervention under considera­
-tion in the guideline.
+substantial financial interests in an intervention under consideration in the guideline.
 ––
 If the GDG must include some members with financial and/or 
-intellectual conflicts of interest, every effort should be made to bal­
-ance the perspectives of these individuals in the group. This can be 
+intellectual conflicts of interest, every effort should be made to balance the perspectives of these individuals in the group. This can be 
 achieved by selecting people whose opinions are known to differ, 
 including a variety of stakeholders.
 ––
@@ -66,9 +63,7 @@ Methodologists
 ––
 Ideally several of the topic experts will also have experience with 
 systematic reviews and guideline development methods. However, 
-GDG members do not often have such expertise, so a methodolo­
-gist is commissioned to guide and inform the guideline develop­
-ment process, referring the group back to the evidence and to 
+GDG members do not often have such expertise, so a methodologist is commissioned to guide and inform the guideline development process, referring the group back to the evidence and to 
 other explicit factors, helping to mitigate the effects of intellectual 
 conflicts of interest.
 ■■

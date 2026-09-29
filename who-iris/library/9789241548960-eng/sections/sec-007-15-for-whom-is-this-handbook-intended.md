@@ -10,8 +10,7 @@ source_sha256: bfcd856e3ad7ab20
 ---
 This handbook is intended for:
 ■■
-any WHO department, programme or staff member wishing to pro­
-duce a guideline;
+any WHO department, programme or staff member wishing to produce a guideline;
 ■■
 members of a WHO guideline steering group;
 ■■

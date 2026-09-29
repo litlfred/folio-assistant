@@ -11,13 +11,11 @@ source_sha256: bfcd856e3ad7ab20
 WHO staff may consider producing a rapid advice guideline primarily in the 
 face of one of two types of events:
 ■■
-a new situation (e.g. a new strain of influenza; the Middle East respira­
-tory syndrome [MERS] coronavirus; or an earthquake); or
+a new situation (e.g. a new strain of influenza; the Middle East respiratory syndrome [MERS] coronavirus; or an earthquake); or
 ■■
 an event encountered previously but causing problems in a different 
 context (e.g. a natural disaster; a change in disease pattern such as the 
-Ebola virus disease in West Africa in 2014; or a prolonged armed con­
-flict compounded by a disease outbreak).
+Ebola virus disease in West Africa in 2014; or a prolonged armed conflict compounded by a disease outbreak).
 WHO handbook for guideline development
 136
 136
