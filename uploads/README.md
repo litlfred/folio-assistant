@@ -10,11 +10,14 @@ Part of [Folio Assistant](../README.md), declared as `uploads`, holding `uploads
 | [`2504.07199v3.pdf`](2504.07199v3.pdf) | a file |  |
 | [`2504.19675v2.pdf`](2504.19675v2.pdf) | a file |  |
 | [`2504.21474v1.pdf`](2504.21474v1.pdf) | a file |  |
+| [`2508.21620v2.pdf`](2508.21620v2.pdf) | a file |  |
+| [`2509.06388v1.pdf`](2509.06388v1.pdf) | a file |  |
 | [`2602.12670v4.pdf`](2602.12670v4.pdf) | a file |  |
 | [`2602.12670v4.pdf.extraction.json`](2602.12670v4.pdf.extraction.json) | data |  |
 | [`2605.03537v1.pdf`](2605.03537v1.pdf) | a file |  |
 | [`2606.04382v1.pdf`](2606.04382v1.pdf) | a file |  |
 | [`2607.14456v1.pdf`](2607.14456v1.pdf) | a file |  |
+| [`2607.20636v1.pdf`](2607.20636v1.pdf) | a file |  |
 | [`2607.25032v1.pdf`](2607.25032v1.pdf) | a file |  |
 | [`2607.25032v1.pdf.extraction.json`](2607.25032v1.pdf.extraction.json) | data |  |
 | [`2608.08453v1.pdf`](2608.08453v1.pdf) | a file |  |
