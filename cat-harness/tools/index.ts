@@ -125,6 +125,24 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: { runtime: ["bun"], network: false },
     }),
     defineTool({
+      id: "subgraph-readmes",
+      title: "Directory READMEs from the Knowledge Graph",
+      description:
+        "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in the declared `readme-templates` directory, which may `{% include %}` one another. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
+      install: { none: true },
+      invoke: { shell: "bun run readme:subgraphs" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Fail if any directory README or the QA record is stale; write nothing." },
+        ],
+        outputs: [
+          { name: "readmes", schema: t("RepoPath"), description: "`<directory>/README.md` for each declared directory, and the QA record." },
+        ],
+      },
+      satisfies: ["docs-generation"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+    defineTool({
       id: "folio-block-screenshots",
       title: "Folio block screenshots",
       description:

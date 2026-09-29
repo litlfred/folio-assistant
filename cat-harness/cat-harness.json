@@ -1035,6 +1035,15 @@
       ]
     },
     {
+      "id": "readme-templates",
+      "path": "tools/templates/readme/",
+      "dependents": "skip",
+      "title": "README templates",
+      "description": "The Liquid templates `subgraph-readmes` renders into each declared directory's README. They may `{% include %}` one another, Jekyll style, and read every value from the Knowledge Graph: the directory's declared title, description and kinds, and each file as it describes itself.",
+      "graphKinds": ["code"],
+      "coverage": { "skill": "readme-sections" }
+    },
+    {
       "id": "folio-templates",
       "path": "templates/",
       "dependents": "skip",

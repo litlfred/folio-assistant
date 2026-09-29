@@ -1472,6 +1472,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/subgraph-readmes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Directory READMEs from the Knowledge Graph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in the declared `readme-templates` directory, which may `{% include %}` one another. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`."
+        }
+      ],
+      "skos:notation": "subgraph-readmes",
+      "dcterms:source": "cat-harness/tools/index.ts#subgraph-readmes",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/tabular-csv",
       "@type": "skos:Concept",
       "skos:inScheme": {

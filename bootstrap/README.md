@@ -180,7 +180,7 @@ Process that reads a file, where a diagram says so.
 | [`README.md`](README.md) | The flow, with every term linked to the schema that defines it. |  |
 | [`bootstrap.json`](bootstrap.json) | Bootstrap |  |
 
-**`skills/`**
+**[`skills/`](skills/README.md)**
 
 | file | what it is | used by |
 |---|---|---|
@@ -193,24 +193,23 @@ Process that reads a file, where a diagram says so.
 | [`skills/package-manifest.json`](skills/package-manifest.json) | What an agent reads before it knows whether this repository is an instance, what kind, or what for. |  |
 | [`skills/root-readme.md`](skills/root-readme.md) | Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. | "Initialize a harness" |
 
-**`schemas/`**: The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and…
+**[`schemas/`](schemas/README.md)**: The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and…
 
 | file | what it is | used by |
 |---|---|---|
-| [`schemas/README.md`](schemas/README.md) | Schemas, drawn |  |
 | [`schemas/discussion.input.schema.json`](schemas/discussion.input.schema.json) | Discussion Input |  |
 | [`schemas/discussion.output.schema.json`](schemas/discussion.output.schema.json) | Discussion Output |  |
 | [`schemas/graph.schema.json`](schemas/graph.schema.json) | Knowledge Graph declaration |  |
 | [`schemas/model-registry.schema.json`](schemas/model-registry.schema.json) | Model Registry |  |
 | [`schemas/requirement.schema.json`](schemas/requirement.schema.json) | Requirement |  |
 
-**`scenarios/`**: bootstrap's four Roles: Bootstrapping Agent, Requestor, Knowledge Graph Data Store and Logger.
+**[`scenarios/`](scenarios/README.md)**: bootstrap's four Roles: Bootstrapping Agent, Requestor, Knowledge Graph Data Store and Logger.
 
 | file | what it is | used by |
 |---|---|---|
 | [`scenarios/roles.json`](scenarios/roles.json) | data |  |
 
-**`processes/`**: bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to ask the Requestor; and `log-message.bpmn…
+**[`processes/`](processes/README.md)**: bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to ask the Requestor; and `log-message.bpmn…
 
 | file | what it is | used by |
 |---|---|---|
@@ -222,19 +221,19 @@ Process that reads a file, where a diagram says so.
 | [`processes/log-message.svg`](processes/log-message.svg) | the picture of `log-message.bpmn`, generated from it |  |
 | [`processes/ns.jsonld`](processes/ns.jsonld) | data |  |
 
-**`models/`**: Which languages a model is good at, and whether anybody checked.
+**[`models/`](models/README.md)**: Which languages a model is good at, and whether anybody checked.
 
 | file | what it is | used by |
 |---|---|---|
 | [`models/models.json`](models/models.json) | Which languages a model is good at, and whether anybody checked. |  |
 
-**`glossary/`**: The swimlane glossary's retirement ledger.
+**[`glossary/`](glossary/README.md)**: The swimlane glossary's retirement ledger.
 
 | file | what it is | used by |
 |---|---|---|
 | [`glossary/glossary-ledger.json`](glossary/glossary-ledger.json) | data |  |
 
-**`test/results/`**: What auditing THIS instance produced, committed so a consumer can tell "never audited" from "audited clean" — a printed verdict cannot, which is why every QA…
+**[`test/results/`](test/results/README.md)**: What auditing THIS instance produced, committed so a consumer can tell "never audited" from "audited clean" — a printed verdict cannot, which is why every QA…
 
 | file | what it is | used by |
 |---|---|---|

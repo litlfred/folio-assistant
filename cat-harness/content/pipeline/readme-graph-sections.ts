@@ -111,15 +111,18 @@ function ordered(g: Graph): Graph["bpmn"] {
 }
 
 /** The declared directories, or `undefined` when the declaration cannot be read. */
-function declaredDirs(root: string): { id: string; path: string; description?: string }[] | undefined {
+function declaredDirs(root: string): { id: string; path: string; title?: string; description?: string }[] | undefined {
   try {
     const decl = readDeclaration(root);
     if (!decl) return undefined;
-    return (decl.directories ?? []).map((d) => ({ id: d.id, path: d.path, description: d.description }));
+    return (decl.directories ?? []).map((d) => ({ id: d.id, path: d.path, title: d.title, description: d.description }));
   } catch {
     return undefined;
   }
 }
+
+/** More files than this in one instance and `kg:files` lists directories, not files. */
+export const INSTANCE_LIST_LIMIT = 200;
 
 const skip = (why: string): SectionOutput => ({ markdown: "", notes: [`left unchanged — ${why}`], skip: true });
 
@@ -160,8 +163,30 @@ export const processesSection: ReadmeSection = {
   },
 };
 
+/**
+ * Who uses a file, as the diagrams record it: the Processes whose tasks name
+ * a Skill, and those that call a Process. Blank where no diagram says so.
+ * `file` is relative to `root`.
+ */
+export function usedByIndex(root: string, dirPaths: string[]): (file: string) => string {
+  const g = readGraph(root, dirPaths);
+  const usedBy = new Map<string, string[]>();
+  for (const p of g.bpmn) {
+    for (const s of new Set(p.skills)) usedBy.set(`skill:${s}`, [...(usedBy.get(`skill:${s}`) ?? []), p.name]);
+    for (const c of new Set(p.calls)) {
+      const callee = g.bpmn.find((q) => q.id === c);
+      if (callee) usedBy.set(callee.file, [...(usedBy.get(callee.file) ?? []), p.name]);
+    }
+  }
+  return (file: string): string => {
+    const md = file.endsWith(".md") ? frontMatter(readFileSync(join(root, file), "utf-8")).name : undefined;
+    const who = usedBy.get(file) ?? (md ? usedBy.get(`skill:${md}`) : undefined) ?? [];
+    return [...new Set(who)].map((w) => `"${cell(w)}"`).join(", ");
+  };
+}
+
 /** What one file is, read from the file itself. */
-function describe(root: string, file: string, assets: Map<string, string>): string {
+export function describe(root: string, file: string, assets: Map<string, string>): string {
   const asset = assets.get(file);
   if (asset) return asset;
   const text = () => readFileSync(join(root, file), "utf-8");
@@ -172,6 +197,11 @@ function describe(root: string, file: string, assets: Map<string, string>): stri
     return h ? h.replace(/`/g, "") : "text";
   }
   if (file.endsWith(".bpmn")) return `a Process: ${processOf(text())?.name ?? basename(file)}`;
+  if (file.endsWith(".liquid")) {
+    // A template says what it is in its leading `{% comment %}` block.
+    const c = /\{%-?\s*comment\s*-?%\}([\s\S]*?)\{%-?\s*endcomment\s*-?%\}/.exec(text())?.[1];
+    return c ? firstSentence(c) : "a template";
+  }
   if (file.endsWith(".svg")) {
     const src = file.replace(/\.svg$/, ".bpmn");
     return existsSync(join(root, src)) ? `the picture of \`${basename(src)}\`, generated from it` : "a picture";
@@ -217,20 +247,7 @@ export const filesSection: ReadmeSection = {
       const src = (a as { src?: string }).src;
       if (src) assets.set(src, firstSentence((a as { description?: string }).description ?? a.role ?? "an asset"));
     }
-    const g = readGraph(root, dirs.map((d) => d.path));
-    const usedBy = new Map<string, string[]>();
-    for (const p of g.bpmn) {
-      for (const s of new Set(p.skills)) usedBy.set(`skill:${s}`, [...(usedBy.get(`skill:${s}`) ?? []), p.name]);
-      for (const c of new Set(p.calls)) {
-        const callee = g.bpmn.find((q) => q.id === c);
-        if (callee) usedBy.set(callee.file, [...(usedBy.get(callee.file) ?? []), p.name]);
-      }
-    }
-    const used = (file: string): string => {
-      const md = file.endsWith(".md") ? frontMatter(readFileSync(join(root, file), "utf-8")).name : undefined;
-      const who = usedBy.get(file) ?? (md ? usedBy.get(`skill:${md}`) : undefined) ?? [];
-      return [...new Set(who)].map((w) => `"${cell(w)}"`).join(", ");
-    };
+    const used = usedByIndex(root, dirs.map((d) => d.path));
     const row = (f: string) => `| [\`${cell(f)}\`](${f}) | ${cell(describe(root, f, assets))} | ${used(f)} |`;
     const head = ["| file | what it is | used by |", "|---|---|---|"];
 
@@ -239,10 +256,38 @@ export const filesSection: ReadmeSection = {
     // caller's layout; either way the row is the file's name at this root.
     const top = [...assets.keys(), basename(declFile)].filter((f) => existsSync(join(root, f)));
     lines.push("**At the top**", "", ...head, ...top.map(row), "");
-    for (const d of dirs) {
-      const files = filesUnder(root, join(root, d.path));
-      if (files.length === 0) continue;
-      lines.push(`**\`${d.path}\`**${d.description ? `: ${cell(firstSentence(d.description))}` : ""}`, "");
+
+    // Each directory's own README, generated by `subgraph-readmes`, is where
+    // its full listing lives. Here: a link to it, and the files themselves
+    // only while the instance is small enough to show them on one page.
+    const perDir = dirs
+      .map((d) => {
+        const own = relative(root, join(root, d.path, "README.md"));
+        return { d, files: filesUnder(root, join(root, d.path)).filter((f) => f !== own) };
+      })
+      .filter((x) => x.files.length > 0);
+    const total = perDir.reduce((n, x) => n + x.files.length, 0);
+    const readmeOf = (path: string) => (existsSync(join(root, path, "README.md")) ? join(path, "README.md") : undefined);
+
+    if (total > INSTANCE_LIST_LIMIT) {
+      lines.push(
+        `${total} files in ${perDir.length} directories, too many for one page. Each directory's README lists its own.`,
+        "",
+        "| directory | what it holds | files |",
+        "|---|---|---|",
+        ...perDir.map(({ d, files }) => {
+          const label = d.title ? ` ${cell(d.title)}` : "";
+          return `| [\`${cell(d.path)}\`](${readmeOf(d.path) ?? d.path})${label} | ${cell(d.description ? firstSentence(d.description) : "")} | ${files.length} |`;
+        }),
+        "",
+      );
+      return { markdown: lines.join("\n"), notes: [`${total} files: listed by directory`] };
+    }
+
+    for (const { d, files } of perDir) {
+      const r = readmeOf(d.path);
+      const heading = r ? `[\`${d.path}\`](${r})` : `\`${d.path}\``;
+      lines.push(`**${heading}**${d.description ? `: ${cell(firstSentence(d.description))}` : ""}`, "");
       const nested = files.some((f) => relative(d.path, f).includes("/"));
       if (nested && files.every((f) => f.endsWith(".json"))) {
         lines.push(...head, `| [\`${d.path}\`](${d.path}) | ${files.length} files, in subdirectories | |`, "");

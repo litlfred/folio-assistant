@@ -66,7 +66,8 @@ export const SubgraphSchema = z
     id: z.string().min(1).describe("The Subgraph's name, unique within its Knowledge Graph."),
     path: z.string().min(1).describe("The directory, relative to the declaration."),
     graphKinds: z.array(z.string().min(1)).min(1).describe("The Graph Kinds it holds."),
-    description: z.string().optional(),
+    title: z.string().optional().describe("A short name for people, shown as its README's heading."),
+    description: z.string().optional().describe("What it holds, in a sentence or two, shown under that heading."),
   })
   .passthrough()
   .describe(BOOTSTRAP_TERMS.Subgraph);

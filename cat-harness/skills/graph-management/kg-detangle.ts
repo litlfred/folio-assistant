@@ -197,7 +197,12 @@ const byId = new Map<string, string>(); // id -> absolute path
 const byName = new Map<string, string[]>();
 
 for (const { path } of SCAN) {
-  const scanned = corpusOf(join(ROOT, path));
+  // A README is documentation ABOUT a directory, never a node IN it — the
+  // rule `isSkillMd` states for the skill scan. It mattered little while
+  // READMEs were rare; `subgraph-readmes` writes one into every declared
+  // directory, and counting them would add a node to every group and tilt
+  // `groupDepthFor`'s here-vs-nested count at every root.
+  const scanned = corpusOf(join(ROOT, path)).filter((p) => !p.endsWith("/README.md"));
   const groupDepth = groupDepthFor(path, scanned);
   for (const abs of scanned) {
     const id = relative(ROOT, abs);

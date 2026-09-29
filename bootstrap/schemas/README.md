@@ -1,4 +1,20 @@
-# Schemas, drawn
+<!-- kg:subgraph:begin -->
+# schemas
+
+The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and output of the discussion Process. Their published `$id`s do not change when a file moves.
+
+Part of [Bootstrap](../README.md), declared as `schemas`, holding `schemas`.
+
+| file | what it is | used by |
+|---|---|---|
+| [`discussion.input.schema.json`](discussion.input.schema.json) | Discussion Input |  |
+| [`discussion.output.schema.json`](discussion.output.schema.json) | Discussion Output |  |
+| [`graph.schema.json`](graph.schema.json) | Knowledge Graph declaration |  |
+| [`model-registry.schema.json`](model-registry.schema.json) | Model Registry |  |
+| [`requirement.schema.json`](requirement.schema.json) | Requirement |  |
+<!-- kg:subgraph:end -->
+
+## Schemas, drawn
 
 <!-- Generated from the schemas in this directory. Change a schema, not this page. -->
 
@@ -14,61 +30,61 @@ How to read a drawing:
 - A field that holds another object points to that object's box, below it.
 - `[src]` opens the schema itself.
 
-## Terms
+### Terms
 
 Each defined term, in the words of
 [`graph.schema.json`](graph.schema.json). A term whose shape is drawn below links to
 its drawing; the rest are defined in words only.
 
-### Knowledge Graph
+#### Knowledge Graph
 
 Information kept as files in a repository: things, and the named relations between them. It is declared by one file at its root, `<name>.json`, which gives its name and lists its Subgraphs. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). [src](graph.schema.json#/$defs/KnowledgeGraph)
 
-### Subgraph
+#### Subgraph
 
 A named directory of a Knowledge Graph, declared with the Graph Kind or Kinds it holds. A Knowledge Graph has zero or more. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). [src](graph.schema.json#/$defs/Subgraph)
 
-### Graph Kind
+#### Graph Kind
 
 What a Subgraph holds, such as skills, processes or schemas. A reader matches on it to decide whether to look inside. [src](graph.schema.json#/$defs/GraphKind)
 
-### Asset
+#### Asset
 
 A single file a Knowledge Graph declares as its own, together with the part it plays, such as its README. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). [src](graph.schema.json#/$defs/Asset)
 
-### Harness
+#### Harness
 
 What an Actor uses to work with a Knowledge Graph: Skills, Processes, Roles and Tools. A Harness is itself a Knowledge Graph, declared the same way; bootstrap is the first Harness. [src](graph.schema.json#/$defs/Harness)
 
-### Actor
+#### Actor
 
 A participant, whether a person, an agent or a program, that takes a Role in each Process it takes part in. [src](graph.schema.json#/$defs/Actor)
 
-### Role
+#### Role
 
 The part an Actor plays in a Process. A Process diagram draws each Role as one lane, and a Role carries the Skills its lane needs. [src](graph.schema.json#/$defs/Role)
 
-### Process
+#### Process
 
 A diagram of the steps, decisions and order of some work, with one lane per Role. It is written in Business Process Model and Notation (BPMN), a standard diagram format, in a `.bpmn` file. [src](graph.schema.json#/$defs/Process)
 
-### Process Node
+#### Process Node
 
 One element of a Process: a step, a decision, a start or an end. [src](graph.schema.json#/$defs/ProcessNode)
 
-### Sequence Flow
+#### Sequence Flow
 
 An arrow in a Process, from one Process Node to the next. [src](graph.schema.json#/$defs/SequenceFlow)
 
-### Skill
+#### Skill
 
 Written instructions an Actor follows to carry out one step of a Process, in a `.md` file. [src](graph.schema.json#/$defs/Skill)
 
-### Tool
+#### Tool
 
 A program an Actor calls to carry out a step. A Harness may declare Tools; bootstrap declares none, because it runs nothing. [src](graph.schema.json#/$defs/Tool)
 
-## Discussion Input
+### Discussion Input
 
 [src](discussion.input.schema.json)
 
@@ -101,7 +117,7 @@ The occasion for asking: what the agent already knows, and which unknown is stil
                                         +--------------------------------------------+
 ```
 
-## Discussion Output
+### Discussion Output
 
 [src](discussion.output.schema.json)
 
@@ -150,7 +166,7 @@ Rules the drawing cannot show:
 - If `determinedBy` is "assumed", `assumption` must be present.
 - If `outcome` is "unsettled", `stillOpen` must be present.
 
-## Knowledge Graph declaration
+### Knowledge Graph declaration
 
 [src](graph.schema.json) · describes `<name>.json`
 
@@ -173,6 +189,7 @@ Information kept as files in a repository: things, and the named relations betwe
   |                               | * id           [1]     string         |
   |                               | * path         [1]     string         |
   |                               | * graphKinds   [1..*]  list of string |
+  |                               |   title        [0..1]  string         |
   |                               |   description  [0..1]  string         |
   |                               +---------------------------------------+
   |
@@ -185,7 +202,7 @@ Information kept as files in a repository: things, and the named relations betwe
                              +---------------------+
 ```
 
-## Model Registry
+### Model Registry
 
 [src](model-registry.schema.json) · describes `models/models.json`
 
@@ -212,7 +229,7 @@ Which languages a model is good at, and whether a person checked. Only `human-va
                              +----------------------------------------------------------------------------------+
 ```
 
-## Requirement
+### Requirement
 
 [src](requirement.schema.json)
 
