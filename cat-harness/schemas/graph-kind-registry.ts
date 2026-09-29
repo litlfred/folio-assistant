@@ -45,6 +45,7 @@
  * @graphNode schema
  */
 import { termIri } from "./namespaces";
+import { BOOTSTRAP_GRAPH_KINDS } from "./graph";
 
 
 // ── Graph kinds ─────────────────────────────────────────────────
@@ -553,7 +554,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // A synced remote skill's pinned, per-file fixity record (issue #556).
       "folio-remote-skill/v1": { validator: "schemas/skill-package.ts#RemoteSkillRecordSchema" },
     },
-    summary: "Skill packages — the authored instruction bodies an Actor performs a Task from.",
+    // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
+    summary: BOOTSTRAP_GRAPH_KINDS["skills"],
   },
   processes: {
     type: termIri("ProcessGraph"),
@@ -570,7 +572,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "its nodes are `.bpmn` and `.dmn` — XML, counted 2026-09-24 as 77 and 9. A Zod schema parses JSON, so one " +
       "here would be a category error; `check:workflows`, `xml-comment-check` and `check-process-documentation` " +
       "grade them instead.",
-    summary: "Executable BPMN processes and the DMN tables their gateways compute from.",
+    // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
+    summary: BOOTSTRAP_GRAPH_KINDS["processes"],
   },
   scenarios: {
     type: termIri("ScenarioGraph"),
@@ -584,7 +587,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
     // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
     validator: "schemas/role-graph.ts#RoleGraphSchema",
-    summary: "Actors, the Roles they take on, and the User Stories those Roles serve.",
+    // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
+    summary: BOOTSTRAP_GRAPH_KINDS["scenarios"],
   },
   // ── What an Actor may do: W3C ODRL 2.2 policies — issue #1180 ──────────
   //
@@ -823,7 +827,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
       "folio-source-descriptor/v1": { validator: "large-datasets:schemas/source-descriptor.ts#SourceDescriptorSchema" },
     },
-    summary: "A Subgraph of schema definitions: files that state the shape other files must have.",
+    // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
+    summary: BOOTSTRAP_GRAPH_KINDS["schemas"],
   },
   // UML renderings of the declared sub-graphs — one `.puml` and one `.mmd`
   // per named sub-graph and per instance, both written from one model by
@@ -1054,7 +1059,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "state",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "folio-glossary-ledger/v1": { shape: "scripts/glossary-export.ts#Ledger" },
+      "glossary-ledger/1.0.0": { validator: "schemas/glossary-ledger.ts#LedgerSchema" },
     },
     // NOT work. A bean is something somebody is partway through; this is a
     // record that a term exists, true whether or not anybody is doing
@@ -1062,10 +1067,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // decided, and it was right to: "state" alone does not say whether a
     // reader is looking at a queue or at a fact.
     recordsWork: false,
-    summary:
-      "The swimlane glossary's retirement ledger — every concept this instance has ever minted, " +
-      "with the date it was first seen and the date it stopped being derivable. Written by " +
-      "scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
+    // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
+    // The harness's detail, formerly in the summary: written by
+    // scripts/glossary-export.ts; the glossary document itself is derived and
+    // not stored here — only the ledger, the one fact that cannot be re-derived.
+    summary: BOOTSTRAP_GRAPH_KINDS["swimlane-glossary"],
   },
   models: {
     type: termIri("ModelGraph"),
@@ -1079,10 +1085,12 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "context",
     // declared-path-literal: this table IS the declaration, as on `health`.
     validator: "schemas/model-registry.ts#ModelRegistrySchema",
-    summary:
-      "Which languages a model is good at, and whether a human checked. Read when a session opens, " +
-      "as ONE input to the communication-language determination and never as the answer. " +
-      "Declared in bootstrap because an agent reaching for it has not yet loaded the harness.",
+    // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
+    // The harness's detail, formerly in the summary: read when a session opens
+    // as ONE input to the communication-language determination and never as
+    // the answer; declared in bootstrap because an agent reaching for it has
+    // not yet loaded the harness.
+    summary: BOOTSTRAP_GRAPH_KINDS["models"],
   },
   beans: {
     type: termIri("BeanGraph"),

@@ -58,7 +58,8 @@ function pairsIn(workflow: string): Array<{ layer: Layer; dir: string }> {
 /** The path segment a layer's namespace IRI names, e.g. `folio-assistant-core`. */
 function segmentOf(layer: Layer): string {
   const ns = namespaceForLayer(layer);
-  const m = ns.match(/\/([^/]+)\/ns#$/);
+  // Skipping a release segment (`0.1.0`), which is the version and not the layer.
+  const m = ns.match(/\/([^/]+)\/(?:(?:\d+\.\d+\.\d+|v\d+)\/)?ns#$/);
   if (!m) throw new Error(`namespace for ${layer} is not <base>/<segment>/ns#: ${ns}`);
   return m[1]!;
 }

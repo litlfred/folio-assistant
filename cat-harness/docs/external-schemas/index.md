@@ -29,7 +29,7 @@ depends on it**, and **which of its terms this repository branches on**.
 <div class="xs-grid">
 <div class="xs-stat"><b>17</b><span>specifications</span></div>
 <div class="xs-stat"><b>98</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>192</b><span>declared uses</span></div>
+<div class="xs-stat"><b>189</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -402,7 +402,6 @@ a subset of the edition rather than a transcription of it.
 | `cat-harness/scripts/code-lists.ts` | `@conformsTo` tag |
 | `cat-harness/scripts/glossary-export.ts` | `@conformsTo` tag |
 | `cat-harness/scripts/ns-export.ts` | `@conformsTo` tag |
-| `folio-glossary-ledger/v1 nodes` | through the module that types it (`cat-harness/scripts/glossary-export.ts`) |
 
 **Operative terms (3).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -479,7 +478,6 @@ a subset of the edition rather than a transcription of it.
 | `cat-harness/scripts/glossary-export.ts` | `@conformsTo` tag |
 | `cat-harness/scripts/kg-export.ts` | `@conformsTo` tag |
 | `cat-harness/scripts/ns-export.ts` | `@conformsTo` tag |
-| `folio-glossary-ledger/v1 nodes` | through the module that types it (`cat-harness/scripts/glossary-export.ts`) |
 
 **Operative terms (5).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -509,7 +507,6 @@ a subset of the edition rather than a transcription of it.
 | `cat-harness/schemas/vocabulary.ts` | `@conformsTo` tag |
 | `cat-harness/scripts/glossary-export.ts` | `@conformsTo` tag |
 | `cat-harness/scripts/ns-export.ts` | `@conformsTo` tag |
-| `folio-glossary-ledger/v1 nodes` | through the module that types it (`cat-harness/scripts/glossary-export.ts`) |
 
 **Operative terms (14).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
