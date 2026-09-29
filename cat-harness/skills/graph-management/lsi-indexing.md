@@ -58,6 +58,18 @@ A **unit** is the graph's own chunk: a library **section** (what ingestion
 already produced), otherwise one markdown file. Units under 20 tokens are
 skipped — too little vocabulary to place.
 
+## Correspondence analysis — the parallel track
+
+[`correspondence-analysis`](../../methodologies/correspondence-analysis.md)
+is a separate method over the same term matrix (`content/pipeline/ca.ts`):
+the SVD of the χ² residuals, so no dimension carries document length or term
+frequency. `bun run lsi:epics --method ca` runs it on the bean store.
+**Measured 2026-09-29: not significantly better or worse than LSI at filing
+beans** (exact McNemar p = 0.17–0.71), so LSI stays the default. Reach for CA
+when an LSI dimension 1 has no negative pole, or when the question is which
+units are UNUSUAL — CA's leading dimensions go to the most distinctive
+profiles. Pick one per question; never average the two scores.
+
 ## On ingestion — the index refreshes itself
 
 `bun run ingest … --promote` ends by re-indexing the library it wrote into

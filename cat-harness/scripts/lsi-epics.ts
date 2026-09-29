@@ -31,6 +31,8 @@
  *
  *   bun run lsi:epics [--out <file.md>]
  *   bun run lsi:near "<planned bean title>" [--body "<text>"]
+ *   bun run lsi:epics --method ca        # the parallel track (correspondence analysis)
+ *   LSI_DUMP=<file.json> bun run lsi:epics  # per-bean agreement, for a PAIRED comparison
  */
 
 import { execFileSync } from "node:child_process";
@@ -38,6 +40,7 @@ import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { buildLsi, centroid, cosineVectors, foldIn, unitVector, type LsiIndex } from "../content/pipeline/lsi";
 import { declaredGraphs } from "../schemas/cat-harness";
+import { buildCa } from "../content/pipeline/ca";
 import { BEAN_GRAPH_FILE } from "../schemas/bean-graph";
 
 const REPO = resolve(import.meta.dir, "../..");
@@ -144,7 +147,17 @@ if (import.meta.main) {
   const byId = new Map(beans.map((b) => [b.id, b]));
   const byShort = new Map(beans.map((b) => [b.short, b]));
   const epics = beans.filter((b) => b.type === "epic" && OPEN.has(b.status));
-  const ix = buildLsi(beans.map((b) => ({ id: b.id, text: b.text })), { k: Number(process.env.LSI_K ?? 100), weighting: (process.env.LSI_W as "tfidf" | "log-entropy") ?? "log-entropy", seed: 1990 });
+  // `--method ca` runs the parallel track (correspondence analysis) over the
+  // same beans, so the two can be compared on the one ground truth this
+  // repository has: the epics beans are already filed under.
+  const methodIdx = process.argv.indexOf("--method");
+  const method = methodIdx > 0 ? process.argv[methodIdx + 1] : "lsi";
+  const unitsIn = beans.map((b) => ({ id: b.id, text: b.text }));
+  const kOpt = Number(process.env.LSI_K ?? 100);
+  const ix =
+    method === "ca"
+      ? buildCa(unitsIn, { k: kOpt, alpha: Number(process.env.CA_ALPHA ?? 1), weighting: (process.env.LSI_W as "raw" | "tfidf" | "log-entropy") ?? "raw", seed: 1990 })
+      : buildLsi(unitsIn, { k: kOpt, weighting: (process.env.LSI_W as "raw" | "tfidf" | "log-entropy") ?? "log-entropy", seed: 1990 });
 
   const members = new Map<string, string[]>(epics.map((e) => [e.id, [e.id]]));
   for (const b of beans) {
@@ -267,6 +280,10 @@ if (import.meta.main) {
   section("Unmerged branches with no bean named — latent home", latentOnly.sort((a, b) => (a.lastCommit! < b.lastCommit! ? 1 : -1)), (r) =>
     fmtRow(r, `${r.pr ? `**PR #${r.pr}**; ` : ""}${r.best.cosine < FIT_FLOOR ? "**no fit**; " : r.margin < MARGIN_FLOOR ? `ambiguous vs \`${short(r.second?.epic)}\`; ` : ""}${r.ahead} ahead, last ${r.lastCommit}`));
 
+  // `LSI_DUMP=<file>`: per-bean agreement, so two methods can be compared
+  // PAIRED on the same beans (McNemar) rather than by two marginal rates.
+  if (process.env.LSI_DUMP)
+    writeFileSync(process.env.LSI_DUMP, JSON.stringify(Object.fromEntries(filed.map((r) => [r.key, r.best.epic === r.current]))));
   const report = lines.join("\n") + "\n";
   if (out) writeFileSync(resolve(out), report);
   else process.stdout.write(report);

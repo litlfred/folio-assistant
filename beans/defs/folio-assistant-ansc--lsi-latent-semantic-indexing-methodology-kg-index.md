@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-29T17:34:06Z
-updated_at: 2026-09-29T20:15:35Z
+updated_at: 2026-09-29T21:29:45Z
 parent: folio-assistant-zzmr
 ---
 
@@ -34,3 +34,10 @@ Issue #1482. Methodology node, applicability analysis, options, prototype on thr
 - [x] C: graph-search --latent + lsi_query MCP tool (Tool node lsi-query)
 - [x] D: kg:audit lsi-index-fresh; skill:register step lsi:skills + CI lsi:skills:check
 - [ ] Owner: apply epic filings? (F) / build CA (G)?
+
+
+## Round 4 (2026-09-29): owner 'go' on G
+- [x] Correspondence analysis adopted as its own methodology node (Qi et al. 2023, held); engine content/pipeline/ca.ts on the shared term matrix, tested on Qi et al. Table 1 (0.475/93.2%, 0.017/3.4%, inertia = chi2/N, transition formula).
+- [x] Measured vs LSI on the PRE-refiling bean store (post-refiling would score LSI against itself): CA-raw 146 vs LSI-raw 136 of 250 (Qi's direction, McNemar p=0.17); vs log-entropy LSI p=0.71. No significant difference; LSI stays the filing default.
+- [x] who-iris: LSI dim 1 = margin (342/342 one side), CA dim 1 = contrast (46/296); CA leading dims go to outliers (place-name list, placeholder text).
+- [ ] Owner: index visualiser / central index page (queued question)

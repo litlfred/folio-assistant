@@ -25,8 +25,8 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>14</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>9</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>15</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>10</b><span>with the source held here</span></div>
 <div class="mv-stat"><b>5</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>3</b><span>instance(s) declaring the graph</span></div>
 </div>
@@ -40,6 +40,7 @@ agent picks by resemblance, which is why the schema requires the field.
 | methodology | applies when | origin held? | declared by |
 |---|---|---|---|
 | **[Consensus-grounded subject evaluation — independent indexers as the answer key, and a panel instead of one score](#consensus-grounded-subject-evaluation)**<br>`consensus-grounded-subject-evaluation` | **Judging how good a set of controlled-vocabulary assignments is, when qualified people would themselves disagree about the exact answer.** Use it to… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[Correspondence analysis for retrieval — decompose the departure from independence, not the counts](#correspondence-analysis)**<br>`correspondence-analysis` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[DIIG — Digital Implementation Investment Guide](#diig)**<br>`diig` | Planning, costing and monitoring a DIGITAL HEALTH IMPLEMENTATION inside a health programme — from forming the team through to the budget and the moni… | <span class="mv-tag mv-cited">cited, not ingested</span> | `smart-base` |
 | **[DMN — Decision Model and Notation](#dmn)**<br>`dmn` | The criteria RECUR and the inputs are data. A gateway that must branch the same way on the same facts every time. Not for a one-off judgement — that… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[Doc-Researcher — parse for multiple granularities, then research iteratively against a sufficiency threshold](#doc-researcher)**<br>`doc-researcher` | **A question must be answered from documents this folio has ingested, and one retrieval pass will not do it.** Use it when the answer is spread acros… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-core` |
@@ -79,6 +80,20 @@ strictly worse than declaring none.
 
 - `library/arxiv-2606.04382v1`
 - `library/arxiv-2504.07199v3`
+
+### Correspondence analysis for retrieval — decompose the departure from independence, not the counts
+
+<a id="correspondence-analysis"></a>
+
+`correspondence-analysis` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **The same question as `lsi` — which units of a prose graph are close in what they are about — when the answer must not be dominated by how LONG a unit is or how COMMON a term is.** CA removes those margins by construction, so it is the method to reach for when LSI's first dimensions are margins (a first dimension with no negative pole) or when the question is which units are UNUSUAL — outlier pages, specimen text, a list among prose. It answers *which units have similar term profiles, relative to independence*. Like `lsi`, every output is a PROPOSAL. Not for choosing between the two methods by blending them (`methodology-adoption` §"Parallel, not composable"), not for a controlled vocabulary (`skill-pipeline-subject-indexing`), and not for any decision.
+
+**Origin.** Correspondence analysis is Jean-Paul Benzécri's (L'Analyse des Données, 1973) and is set out in Michael Greenacre, Theory and Applications of Correspondence Analysis (Academic Press, 1984) and Correspondence Analysis in Practice (3rd ed., 2017). Its application to information retrieval, and the comparison with latent semantic analysis this node rests on, is Qianqian Qi, David J. Hessen and Peter G. M. van der Heijden, "Improving information retrieval through correspondence analysis instead of latent semantic analysis", Journal of Intelligent Information Systems (2023), doi:10.1007/s10844-023-00815-y — open access, ingested whole and read.
+
+**Ingested sources:**
+
+- `library/qi-hessen-vanderheijden-2023-ca-vs-lsa`
 
 ### DIIG — Digital Implementation Investment Guide
 

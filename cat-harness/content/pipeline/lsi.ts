@@ -72,7 +72,7 @@ export function tokenize(raw: string): string[] {
 
 // ─── Deterministic PRNG and small dense linear algebra ───────────────────────
 
-function mulberry32(seed: number): () => number {
+export function mulberry32(seed: number): () => number {
   let a = seed >>> 0;
   return () => {
     a = (a + 0x6d2b79f5) >>> 0;
@@ -83,24 +83,24 @@ function mulberry32(seed: number): () => number {
   };
 }
 
-function gaussian(rand: () => number): number {
+export function gaussian(rand: () => number): number {
   const u = Math.max(rand(), 1e-12);
   return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * rand());
 }
 
 /** Column-major dense matrix: `rows × cols`, element (i, j) at `j * rows + i`. */
-interface Dense {
+export interface Dense {
   rows: number;
   cols: number;
   data: Float64Array;
 }
 
-function dense(rows: number, cols: number): Dense {
+export function dense(rows: number, cols: number): Dense {
   return { rows, cols, data: new Float64Array(rows * cols) };
 }
 
 /** Modified Gram–Schmidt, in place, twice for stability ("twice is enough"). */
-function orthonormalizeColumns(M: Dense): void {
+export function orthonormalizeColumns(M: Dense): void {
   const { rows, cols, data } = M;
   for (let pass = 0; pass < 2; pass++) {
     for (let j = 0; j < cols; j++) {
@@ -125,7 +125,7 @@ function orthonormalizeColumns(M: Dense): void {
 
 /** Cyclic Jacobi eigendecomposition of a small symmetric matrix (row-major,
  *  `n × n`). Returns eigenvalues descending with eigenvectors as columns. */
-function symmetricEigen(S: Float64Array, n: number): { values: Float64Array; vectors: Float64Array } {
+export function symmetricEigen(S: Float64Array, n: number): { values: Float64Array; vectors: Float64Array } {
   const a = Float64Array.from(S);
   const v = new Float64Array(n * n);
   for (let i = 0; i < n; i++) v[i * n + i] = 1;
@@ -175,7 +175,7 @@ function symmetricEigen(S: Float64Array, n: number): { values: Float64Array; vec
 // ─── Sparse term × unit matrix ───────────────────────────────────────────────
 
 /** Compressed sparse columns: one column per unit. */
-interface Csc {
+export interface Csc {
   rows: number; // terms
   cols: number; // units
   colPtr: Int32Array;
@@ -184,7 +184,7 @@ interface Csc {
 }
 
 /** Y = A · X  (A: m×n sparse, X: n×r dense) → m×r dense. */
-function spmm(A: Csc, X: Dense): Dense {
+export function spmm(A: Csc, X: Dense): Dense {
   const Y = dense(A.rows, X.cols);
   for (let r = 0; r < X.cols; r++) {
     const xo = r * X.rows;
@@ -199,7 +199,7 @@ function spmm(A: Csc, X: Dense): Dense {
 }
 
 /** Z = Aᵀ · Y  (A: m×n sparse, Y: m×r dense) → n×r dense. */
-function spmmT(A: Csc, Y: Dense): Dense {
+export function spmmT(A: Csc, Y: Dense): Dense {
   const Z = dense(A.cols, Y.cols);
   for (let r = 0; r < Y.cols; r++) {
     const yo = r * Y.rows;
@@ -268,13 +268,23 @@ export function fingerprintUnits(units: LsiUnit[], opts: LsiOptions = {}): strin
   return h.digest("hex");
 }
 
-export function buildLsi(units: LsiUnit[], opts: LsiOptions = {}): LsiIndex {
+/** The weighted term × unit matrix both decompositions start from — LSI takes
+ *  its SVD directly, correspondence analysis (`ca.ts`) takes the SVD of its
+ *  standardised residuals. Shared so that "the same vocabulary, the same
+ *  weighting" is true by construction when the two are compared. */
+export interface TermMatrix {
+  terms: string[];
+  A: Csc;
+  globalWeight: Float64Array;
+  weighting: "log-entropy" | "tfidf" | "raw";
+}
+
+export function buildTermMatrix(units: LsiUnit[], opts: LsiOptions = {}): TermMatrix {
   const weighting = opts.weighting ?? "log-entropy";
   const minDf = opts.minDf ?? 2;
   const maxDfShare = opts.maxDfShare ?? 0.5;
-  const q = opts.powerIterations ?? 4;
   const n = units.length;
-  if (n < 3) throw new Error(`LSI needs at least 3 units, got ${n}`);
+  if (n < 3) throw new Error(`needs at least 3 units, got ${n}`);
 
   // Term frequencies per unit, then document frequency.
   const tfs = units.map((u) => {
@@ -291,7 +301,7 @@ export function buildLsi(units: LsiUnit[], opts: LsiOptions = {}): LsiIndex {
     .sort();
   const termIdx = new Map(terms.map((t, i) => [t, i]));
   const m = terms.length;
-  if (m < 3) throw new Error(`LSI kept only ${m} terms from ${n} units — the units share no vocabulary`);
+  if (m < 3) throw new Error(`kept only ${m} terms from ${n} units — the units share no vocabulary`);
 
   // Global weights.
   const globalWeight = new Float64Array(m);
@@ -332,6 +342,14 @@ export function buildLsi(units: LsiUnit[], opts: LsiOptions = {}): LsiIndex {
     colPtr[j + 1] = rowIdx.length;
   });
   const A: Csc = { rows: m, cols: n, colPtr, rowIdx: Int32Array.from(rowIdx), vals: Float64Array.from(vals) };
+  return { terms, A, globalWeight, weighting };
+}
+
+export function buildLsi(units: LsiUnit[], opts: LsiOptions = {}): LsiIndex {
+  const q = opts.powerIterations ?? 4;
+  const { terms, A, globalWeight, weighting } = buildTermMatrix(units, opts);
+  const m = A.rows;
+  const n = A.cols;
   let frob2 = 0;
   for (const v of A.vals) frob2 += v * v;
 
