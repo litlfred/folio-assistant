@@ -1,7 +1,7 @@
 <!-- kg:subgraph:begin -->
 # schemas
 
-The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and output of the discussion Process. Their published `$id`s do not change when a file moves.
+The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and output of the discussion [Process](README.md#process). Their published `$id`s do not change when a file moves.
 
 Part of [Bootstrap](../README.md) 0.1.0, declared as `schemas`, holding `schemas`.
 
@@ -10,7 +10,7 @@ Part of [Bootstrap](../README.md) 0.1.0, declared as `schemas`, holding `schemas
 | [`discussion.input.schema.json`](discussion.input.schema.json) | Discussion Input |  |
 | [`discussion.output.schema.json`](discussion.output.schema.json) | Discussion Output |  |
 | [`glossary-ledger.schema.json`](glossary-ledger.schema.json) | Glossary Ledger |  |
-| [`graph.schema.json`](graph.schema.json) | Knowledge Graph declaration |  |
+| [`graph.schema.json`](graph.schema.json) | [Knowledge Graph](README.md#knowledge-graph) declaration |  |
 | [`model-registry.schema.json`](model-registry.schema.json) | Model Registry |  |
 | [`requirement.schema.json`](requirement.schema.json) | Requirement |  |
 <!-- kg:subgraph:end -->

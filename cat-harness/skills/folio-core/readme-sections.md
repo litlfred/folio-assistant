@@ -211,6 +211,25 @@ harness render, and **fatal** on failure — it is the file a reader opens first
 The order and the reasoning are in
 [`render-order`](render-order.md); do not restate them here.
 
+## Defined terms are links, everywhere in a README (owner, 2026-09-29)
+
+*"terms in readme like Skills, Process, Role, etc should be links in README.md
+s"*. A capitalized term bootstrap defines links to its row in
+`bootstrap/schemas/README.md` wherever it appears in prose — not only at first
+use — so a reader who lands mid-page is one click from the definition.
+
+- **Generated READMEs** link them as they are written: `subgraph-readmes` runs
+  `linkTerms` (`content/pipeline/term-links.ts`) over each declared
+  description and each file's description, with links made relative to the
+  README by `bootstrapTermTargets`.
+- **Hand-written READMEs** are not rewritten by a generator — the folio owns
+  the file. Link the terms as you write, and a guard catches a miss:
+  `graph.test.ts` fails on any unlinked term in `bootstrap/README.md`'s prose
+  (`unlinkedTerms`).
+- **Left alone:** code, headings, table header rows, existing links, and
+  **bold** names — a Role's name in a table (`**Knowledge Graph Data Store**`)
+  is a name of its own, and a link inside it would split it.
+
 ## Maintaining these files is memory work, not documentation work
 
 `README.md` and `AGENTS.md` are **declared assets with a declared purpose**

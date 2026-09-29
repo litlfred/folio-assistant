@@ -18,6 +18,7 @@ import {
   KnowledgeGraphDeclarationSchema,
 } from "./graph.ts";
 import { checkDeclaredOrder } from "./dependency-order.ts";
+import { unlinkedTerms } from "../content/pipeline/term-links.ts";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
 const BOOTSTRAP = join(REPO_ROOT, "bootstrap");
@@ -158,6 +159,14 @@ describe("bootstrap/README.md is self-definitional", () => {
       const target = `schemas/graph.schema.json#/$defs/${term}`;
       expect(`${term}: ${links.filter((l) => l === target).length}`).toBe(`${term}: 1`);
     }
+  });
+
+  test("every defined term in the prose is a link (owner, 2026-09-29)", () => {
+    // Hand-written prose only: the generated regions (`<!-- kg:… -->`) are
+    // linked by their generator.
+    const text = readme.slice(0, readme.indexOf("<!-- kg:") >= 0 ? readme.indexOf("<!-- kg:") : undefined);
+    const targets = Object.keys(BOOTSTRAP_TERMS).map((key) => ({ key, href: "x" }));
+    expect(unlinkedTerms(text, targets)).toEqual([]);
   });
 
   test("each term also links to its drawing, and the drawing's heading exists", () => {
