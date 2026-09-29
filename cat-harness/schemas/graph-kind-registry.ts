@@ -888,6 +888,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // now a directory of this harness (bean `byql`), so the shape is an
       // ordinary instance-relative path under `schemas/` and needs no `detangle:` qualifier.
       "folio-detangle-sidecar/v1": { shape: "schemas/detangle-sidecar.ts#DetangleSidecar" },
+      // The per-graph LSI index sidecar (bean `ansc`): fingerprint, pole terms,
+      // neighbours and findings — never the vectors.
+      "folio-lsi-index/v1": { shape: "scripts/lsi.ts#LsiSidecar" },
       // The viewer-navbar audit (bean `edx7`). A VERDICT PER PAGE rather than
       // a count, because the owner's rule has two clauses -- present unless
       // EXPLICITLY removed -- and a count cannot tell a deliberate removal

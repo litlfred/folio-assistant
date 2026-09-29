@@ -136,7 +136,7 @@ embedding model is a house method; see `methodology-adoption`
 
 ## How it is performed here
 
-The skill is [`lsi-indexing`](../skills/kg-navigation/lsi-indexing.md); the
+The skill is [`lsi-indexing`](../skills/graph-management/lsi-indexing.md); the
 engine is `content/pipeline/lsi.ts`; the CLI is `bun run lsi`. The skill
 carries which graphs get an index, where the sidecar lives, and the QA
 criterion that says a graph needs one.

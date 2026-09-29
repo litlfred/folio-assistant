@@ -1113,6 +1113,12 @@ export const RULES: Rule[] = [
       // it complements rather than duplicates — that one judges the nodes it
       // covers, this one measures what is covered at all.
       "scripts/audit-coverage.ts",
+      // LSI over the declared prose graphs, and the epic-filing proposal it
+      // drives (bean `ansc`). Harness for the same reason as the audit: its
+      // subjects are the declarations and the work plan, and the engine it
+      // imports (`content/pipeline/lsi.ts`) is linear algebra over any text.
+      "scripts/lsi.ts",
+      "scripts/lsi-epics.ts",
       // The four state/context graphs nothing judged (bean `h1wq`). Harness for
       // the same reason as the two above: its subjects are the harness's own
       // bookkeeping — the health report, the work plan, interaction preferences,
