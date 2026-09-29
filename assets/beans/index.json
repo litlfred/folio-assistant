@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 438,
+      "count": 439,
       "unit": "beans"
     }
   },
@@ -3755,6 +3755,20 @@
       "updatedAt": "2026-09-18T17:18:22Z",
       "preview": "## The defect\n\n`content/pipeline/qa-sweep.ts` short-circuits a criterion with\n`automated: false` straight to `needs-agent` **before** either scoping gate\nruns. So neither `adapters` nor the new `profiles` axis can scope an\nagent-adjudicated criterion — the gates are unreachable for exactly the\ncriteria whose adjudication is most expensive.\n\nFound while building the profile axis (bean `g6yr`, merge",
       "file": "beans/defs/folio-assistant-nba0--qa-scoping-automatedfalse-criteria-bypass-both-the.md"
+    },
+    {
+      "id": "folio-assistant-nf2z",
+      "title": "WORKFLOW TOOLS SEE NO PROCESS: from the repo root workflow_list reports none — diagrams live in dependencies, the resolver is root-only",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-29T22:32:34Z",
+      "updatedAt": "2026-09-29T22:35:14Z",
+      "preview": "Found 2026-09-29 while starting xlg2 (bean `xlg2`, the first real sample-import run).\n\n**Measured:** `registerWorkflowTools` captured with a stub server (the pattern in `precondition-consumer.test.ts`), rooted at the repository root — the MCP server's default (`src/index.ts`: `resolve(import.meta.dir, \"../..\")`). `workflow_list` returned **\"Processes: _(none)_\"**. `workflowFiles(repoRoot)` → 0 `.b",
+      "file": "beans/defs/folio-assistant-nf2z--workflow-tools-see-no-process-from-the-repo-root-w.md"
     },
     {
       "id": "folio-assistant-nfv3",
