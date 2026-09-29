@@ -3,7 +3,7 @@
 
 Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth, not illustrations of one: a lane binds a Role, an activity names the Skill to run through `<folio:skill ref>`, and `workflow_complete` refuses a step that is not enabled. WHERE A RUNNING INSTANCE GOT TO is not here — that is `beans/workflows/`, kind `workflow-state`, which is `state` rather than `content`. Two questions, two graphs.
 
-Part of [C@T Harness](../README.md), declared as `processes`, holding `processes`.
+Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `processes`.
 
 | file | what it is | used by |
 |---|---|---|

@@ -3,7 +3,7 @@
 
 The incoming queue — raw captures as dropped, before ingestion. NOT L1 and not greppable as corpus. Holds the IRIS capture for the worked example: the saved DSpace item page, its asset zip (which carries the IRIS web theme), the full item record in qualified Dublin Core, and the item page printed to PDF — the last recorded with role `none`, because 'we looked and it is not what it appears to be' is a different fact from 'nobody looked'.
 
-Part of [WHO IRIS](../README.md), declared as `who-iris-uploads`, holding `uploads`.
+Part of [WHO IRIS](../README.md) 0.1.0, declared as `who-iris-uploads`, holding `uploads`.
 
 | file | what it is | used by |
 |---|---|---|

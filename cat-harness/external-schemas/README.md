@@ -3,7 +3,7 @@
 
 The specifications this instance depends on, one record per specification, each pinning the EDITION in use and carrying the operative terms DERIVED from the corpus rather than hand-listed. Owner, 2026-09-20: "dont need to materalize, but should reference specific version being used" and "some schema that is operational should be in KG". UNDECLARED UNTIL 2026-09-22, which is the dh4f shape inverted: dh4f is a declared directory nothing holds, reported as a clean scan; this was a held directory nothing declared, so every consumer that fans out over declared directories skipped a registry that pins four external namespaces. It was reachable only by the one script that hardcodes its path. `dependents: reproduce` because a dependent folio consumes its own specifications — it inherits the convention, an id and a relative path, not this instance's records.
 
-Part of [C@T Harness](../README.md), declared as `external-schemas`, holding `external-schema`.
+Part of [C@T Harness](../README.md) 0.1.0, declared as `external-schemas`, holding `external-schema`.
 
 | file | what it is | used by |
 |---|---|---|

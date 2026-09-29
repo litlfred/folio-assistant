@@ -2,6 +2,8 @@
   "_comment": "The bootstrap instance. It declares its directories under `directories` below, because discovery reads declarations rather than walking the tree, and an undeclared directory is not this instance's graph however many files sit in it. THREE processes live in `processes/` and exactly one of them is an ENTRY POINT: `processes/initialize-harness.bpmn`. A Bootstrapping Agent that has read README.md is at its start event with nowhere else to begin. `processes/log-message.bpmn` is an independent SUB-PROCESS, reached only by a callActivity from a step and never started. `processes/discussion.bpmn` is entered from within the entry process when a fact is needed that no file holds. Neither competes with the first for being the thing you begin. The constraint was never 'one file'; it is that there is one place to start. Every harness is composed ON TOP of this rather than being its parent, which is why nothing here may refer to one.",
   "name": "bootstrap",
   "version": "0.1.0",
+  "_iriBase_comment": "The one place bootstrap's address is written. Every IRI bootstrap mints is derived from it and `version`: `<iriBase><version>/…` for what a program reads, `<iriBase>v<major>/…` for pages a person reads. A fork changes this line and re-runs the sync; nothing else names the address by hand.",
+  "iriBase": "https://litlfred.github.io/bootstrap/",
   "_title_comment": "The display name. `name` stays the identifier that file names use; `title` is what a person reads.",
   "title": "Bootstrap",
   "description": "The graph an agent reads before it knows what this repository is.",
@@ -106,15 +108,6 @@
       "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived — that a concept was once minted — is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
       "graphKinds": [
         "swimlane-glossary"
-      ]
-    },
-    {
-      "id": "qa",
-      "path": "test/results/",
-      "dependents": "reproduce",
-      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict in this repository is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: the auditor writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 15 files across the three families this instance has subjects in — skills/ (7), processes/ (3) and scenarios/ (5). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be the same over-claim pointed the other way. dependents: reproduce, because a dependent instance audits its OWN graph — these verdicts are about this instance's nodes, and inheriting them would attribute one instance's findings to another. That is exactly the leak which had to be fixed before this directory could be declared at all: an instance-scoped audit run from the layer above wrote 119 tool sidecars and 23 skill findings here for subjects belonging to that layer, because the tool registry and the skill overlay both took no instance root. Declared WITH its files in one commit: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
-      "graphKinds": [
-        "qa"
       ]
     }
   ],

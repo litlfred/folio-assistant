@@ -101,6 +101,9 @@ import { withInlineCode } from "../schemas/inline-code.ts";
 import { ownElementPattern } from "../schemas/namespaces.js";
 import { renderedPath, withRenders } from "./viewer-declarations.js";
 
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "docs-auto-viewer";
+
 const ROOT = join(import.meta.dir, "..");
 const REPO_ROOT = repoRootFor(ROOT);
 const REPO = join(ROOT, "..");
@@ -877,12 +880,12 @@ if (import.meta.main) {
         return d ? [renderedPath(REPO_ROOT, d.absPath)] : [];
       });
     const { pageDir } = viewerPlacement(site, `${handler}/docs-auto/${type.id}`, "docs-auto");
-    emit(join(pageDir, "index.html"), withRenders(autoDocPage(type, items, "", undefined, siblings), drawn(populated)));
+    emit(join(pageDir, "index.html"), withRenders(autoDocPage(type, items, "", undefined, siblings), drawn(populated), VIEWER_TOOL));
     for (const id of populated) {
       const sub = viewerPlacement(site, `${handler}/docs-auto/${type.id}/${id}`, "docs-auto");
       emit(
         join(sub.pageDir, "index.html"),
-        withRenders(autoDocPage(type, byDir.get(id)!, id, dirs.find((d) => d.id === id)?.path, siblings), drawn([id])),
+        withRenders(autoDocPage(type, byDir.get(id)!, id, dirs.find((d) => d.id === id)?.path, siblings), drawn([id]), VIEWER_TOOL),
       );
     }
 
