@@ -80,7 +80,7 @@ guess, and not an error. The process has an end for it.
 - `discussion.output.schema.json` — `harness`, `repositories[]`, `outcome`,
   `determinedBy`, `answeredBy`, and the `exchange` that produced it.
 
-Both sit beside this file, in `bootstrap/skills/`, and are plain JSON Schema.
+Both sit in `schemas/`, beside `graph.schema.json`, and are plain JSON Schema.
 That is deliberate: a Bootstrapping Agent has no MCP server and no validator, so the
 contract has to be something it can **read**, not something it must call.
 

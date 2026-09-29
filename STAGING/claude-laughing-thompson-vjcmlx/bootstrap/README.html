@@ -219,6 +219,16 @@ a step can name it: Functional Requirement 1 is FR-1.</p>
 <td>the Requestor's answer; a document matching it completes step 2</td>
 </tr>
 <tr>
+<td><a href="schemas/requirement.schema.json"><code>schemas/requirement.schema.json</code></a></td>
+<td>schema</td>
+<td>the shape of a Requirement: statements made with SHALL, SHOULD or MAY</td>
+</tr>
+<tr>
+<td><a href="schemas/model-registry.schema.json"><code>schemas/model-registry.schema.json</code></a></td>
+<td>schema</td>
+<td>the shape of <code>models/models.json</code></td>
+</tr>
+<tr>
 <td><a href="scenarios/roles.json"><code>scenarios/roles.json</code></a></td>
 <td>data</td>
 <td>the four Roles</td>
@@ -282,6 +292,21 @@ a step can name it: Functional Requirement 1 is FR-1.</p>
 <td><a href="processes/ns.jsonld"><code>processes/ns.jsonld</code></a></td>
 <td>data</td>
 <td>the elements the diagrams add (<code>skill</code>, <code>role</code>, <code>precondition</code>), written <code>bootstrap.processes:</code></td>
+</tr>
+<tr>
+<td><a href="models/models.json"><code>models/models.json</code></a></td>
+<td>data</td>
+<td>which languages each model is good at, and whether a person checked; empty until one does</td>
+</tr>
+<tr>
+<td><a href="glossary/glossary-ledger.json"><code>glossary/glossary-ledger.json</code></a></td>
+<td>data</td>
+<td>every term the glossary has held, with when it first appeared and when it was retired</td>
+</tr>
+<tr>
+<td><a href="test/results/"><code>test/results/</code></a></td>
+<td>results</td>
+<td>what auditing this Harness found, one file per Skill, Process and Role</td>
 </tr>
 </tbody>
 </table>

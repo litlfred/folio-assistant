@@ -110,7 +110,7 @@ already knows, and which of the two unknowns is open.</li>
 <li><code>discussion.output.schema.json</code> — <code>harness</code>, <code>repositories[]</code>, <code>outcome</code>,
 <code>determinedBy</code>, <code>answeredBy</code>, and the <code>exchange</code> that produced it.</li>
 </ul>
-<p>Both sit beside this file, in <code>bootstrap/skills/</code>, and are plain JSON Schema.
+<p>Both sit in <code>schemas/</code>, beside <code>graph.schema.json</code>, and are plain JSON Schema.
 That is deliberate: a Bootstrapping Agent has no MCP server and no validator, so the
 contract has to be something it can <strong>read</strong>, not something it must call.</p>
 <h2>Why this is in bootstrap at all</h2>

@@ -11,7 +11,7 @@ consulted: true
 # Reading a knowledge graph before you have anything
 
 **This skill assumes a text editor and nothing else.** No MCP server, no
-`skill_fetch`, no `beans`, no build. If those exist they are not yours to rely
+skill-fetching tool, no work-plan store, no build. If those exist they are not yours to rely
 on yet — see [`AGENTS.md`](../AGENTS.md).
 
 That constraint is the reason this skill exists rather than a pointer to the

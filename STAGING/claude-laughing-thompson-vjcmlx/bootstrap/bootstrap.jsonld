@@ -302,10 +302,10 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-29T18:58:29.459Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c1cda686f2c1ab5c18f82c2f563cca35ad756603",
-  "sourceCommitSha": "c1cda686f2c1ab5c18f82c2f563cca35ad756603",
-  "sourceCommitAt": "2026-09-29T18:55:13Z",
+  "generatedAt": "2026-09-29T19:19:54.176Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9a15ca728277a8bdd42e2e111144e1db1696b20c",
+  "sourceCommitSha": "9a15ca728277a8bdd42e2e111144e1db1696b20c",
+  "sourceCommitAt": "2026-09-29T19:17:56Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -1595,7 +1595,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/qa"
       ],
-      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict in this repository is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 15 files across the three families this instance has subjects in — skills/ (7), processes/ (3) and scenarios/ (5). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be the same over-claim pointed the other way. dependents: reproduce, because a dependent instance audits its OWN graph — these verdicts are about this instance's nodes, and inheriting them would attribute one instance's findings to another. That is exactly the leak which had to be fixed before this directory could be declared at all: an instance-scoped audit run from the layer above wrote 119 tool sidecars and 23 skill findings here for subjects belonging to that layer, because the tool registry and the skill overlay both took no instance root. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict in this repository is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: the auditor writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 15 files across the three families this instance has subjects in — skills/ (7), processes/ (3) and scenarios/ (5). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be the same over-claim pointed the other way. dependents: reproduce, because a dependent instance audits its OWN graph — these verdicts are about this instance's nodes, and inheriting them would attribute one instance's findings to another. That is exactly the leak which had to be fixed before this directory could be declared at all: an instance-scoped audit run from the layer above wrote 119 tool sidecars and 23 skill findings here for subjects belonging to that layer, because the tool registry and the skill overlay both took no instance root. Declared WITH its files in one commit: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/bootstrap/bootstrap.jsonld#directory/qa",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#directory/qa"
     },
@@ -1606,7 +1606,7 @@
       "path": "AGENTS.md",
       "assetRole": "agent-instructions",
       "title": "AGENTS.md — bootstrap",
-      "description": "Phase one of two. Valid with nothing installed: no skills, no knowledge graph, no MCP, no beans. The default behaviour of initialisation is to copy this file, and the last bootstrap step re-enters through the installed harness, which is what supplies phase two. No `source` because this is the origin — an absent source means authored here, which is a different fact from an upstream that cannot be reached.",
+      "description": "Phase one of two. Valid with nothing installed: no skills, no knowledge graph, no MCP, no work-plan store. The default behaviour of initialisation is to copy this file, and the last bootstrap step re-enters through the installed harness, which is what supplies phase two. No `source` because this is the origin — an absent source means authored here, which is a different fact from an upstream that cannot be reached.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#asset/agent-instructions"
     },
     {
@@ -1622,8 +1622,8 @@
   ],
   "staging": {
     "branch": "claude/laughing-thompson-vjcmlx",
-    "sha": "34e6d706211ab8e9f98a600426bdc4a02f6461af",
+    "sha": "9ebe1605be85ee86aa60722dbc86a9e01579be17",
     "pr": "1486/merge",
-    "run": "36615618059"
+    "run": "36618256045"
   }
 }
