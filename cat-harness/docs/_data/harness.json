@@ -596,7 +596,7 @@
       "name": "folio-assistant-sci",
       "title": "folio-assistant-sci",
       "label": "folio-assistant-sci",
-      "description": "Scientific source material used by folios that formalise mathematics — one document today.",
+      "description": "Scientific source material used by folios that formalise mathematics, and the methodologies for formalising it in Lean that this layer adopts from that material.",
       "footer": false,
       "icon": null,
       "tone": 0,
@@ -609,12 +609,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 3
+          "value": 4
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -628,6 +628,10 @@
           "path": "/cat-harness/library/folio-assistant-sci/"
         },
         {
+          "kind": "methodology",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "qa",
           "note": "no viewer yet"
         },
@@ -637,7 +641,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 2 graph(s) with no published viewer — methodology, qa. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root.",
         "folio-assistant-sci: declares no `needs`, so its place in the stack is alphabetical rather than derived."
@@ -1466,7 +1470,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 48
+          "value": 49
         },
         {
           "id": "kinds",
@@ -2155,7 +2159,7 @@
           },
           {
             "key": "description",
-            "summary": "Scientific source material used by folios that formalise mathematics — one document today."
+            "summary": "Scientific source material used by folios that formalise mathematics, and the methodologi…"
           },
           {
             "key": "assets",
@@ -2163,7 +2167,7 @@
           },
           {
             "key": "directories",
-            "summary": "3: library, voices, qa"
+            "summary": "4: library, voices, sci-methodologies, qa"
           },
           {
             "key": "version",
@@ -2631,7 +2635,7 @@
           },
           {
             "key": "directories",
-            "summary": "46: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
+            "summary": "47: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
           },
           {
             "key": "associatedHarnesses",
