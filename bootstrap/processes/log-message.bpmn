@@ -15,18 +15,18 @@
 
 It may be called OPTIONALLY from any task in any process — an actor logging what it is doing needs no permission — and a diagram may also REQUIRE it, which it says by drawing the call activity explicitly. The two are the same sub-process; the difference is whether the caller drew it.
 
-It lives in CAT_BOOTSTRAP rather than in the harness on purpose. CatBootstrap may not import the harness, so a logger defined upstream would be unusable by a Bootstrapping Agent — the actor with the most need to say what it is doing and the least machinery to do it with. Defined here, everything downstream inherits it.
+It lives in bootstrap rather than in the harness on purpose. Bootstrap may not refer to a harness, so a logger defined upstream would be unusable by a Bootstrapping Agent — the actor with the most need to say what it is doing and the least machinery to do it with. Defined here, everything downstream inherits it.
 
 NO work-plan element, and isExecutable is false, for the same reasons as initialize-harness.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_LogMessage">
       <bpmn:lane id="Lane_Actor" name="Actor">
-        <!-- NO ROLE, DECLARED rather than merely absent (bean `ug4r`). The
+        <!-- NO ROLE, DECLARED rather than merely absent. The
              actor here is whoever called this sub-process, which is why
              `log-message` takes `actor` as a required input and why the
              `logger` role says the skill belongs to whoever is DOING the
              thing being logged. A role binding `Actor` would assert the
              opposite. Until this attribute existed the decision lived only in
-             a prose comment in cat-bootstrap's roles.json, so no tool could
+             a prose comment in bootstrap's roles.json, so no tool could
              tell it from a lane nobody got round to binding. -->
         <bpmn:documentation>Whichever process called this sub-process, composing the five required fields and nothing more. GW_Complete then refuses an incomplete message rather than logging it anyway, because a partial entry that reads as a whole one is worse than no entry at all.</bpmn:documentation>
         <bpmn:extensionElements><bootstrap.processes:role variable="true"/></bpmn:extensionElements>

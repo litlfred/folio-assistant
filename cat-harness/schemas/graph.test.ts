@@ -4,7 +4,7 @@
  * graph leakage").
  */
 import { describe, expect, test } from "bun:test";
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 import { findDeclarationFile, instanceRootsIn } from "./cat-harness.ts";
@@ -57,6 +57,18 @@ describe("bootstrap/README.md is self-definitional", () => {
     expect(links.filter((l) => l.startsWith("../") || l.startsWith("/") || /^[a-z]+:/.test(l))).toEqual([]);
   });
 
+  test("every relative link and image resolves to a file in bootstrap/", () => {
+    // What a reader of the README actually hits: the diagram pictures and the
+    // file list are generated (kg:processes, kg:files), so a generator that
+    // wrote a path to nothing would pass its own currency check. This is the
+    // consumer-side check `artefact-verification.json` names for them.
+    const broken = links
+      .filter((l) => !/^[a-z]+:/.test(l) && !l.startsWith("#"))
+      .map((l) => l.split("#")[0]!)
+      .filter((p) => p !== "" && !existsSync(join(BOOTSTRAP, p)));
+    expect(broken).toEqual([]);
+  });
+
   test("names nothing above bootstrap", () => {
     expect(LEAKS.filter((re) => re.test(readme)).map(String)).toEqual([]);
   });
@@ -66,6 +78,21 @@ describe("bootstrap/README.md is self-definitional", () => {
       const target = `schemas/graph.schema.json#/$defs/${term}`;
       expect(`${term}: ${links.filter((l) => l === target).length}`).toBe(`${term}: 1`);
     }
+  });
+
+  test("each term also links to its drawing, and the drawing's heading exists", () => {
+    // The `[src]` link above opens JSON; a person reads the drawn page. Both
+    // are asserted, because a link to a heading that was renamed lands at the
+    // top of the page with nothing to say it missed.
+    const page = readFileSync(join(BOOTSTRAP, "schemas", "README.md"), "utf-8");
+    const headings = new Set(
+      [...page.matchAll(/^#{1,6} (.+)$/gm)].map((m) =>
+        m[1]!.toLowerCase().replace(/[^a-z0-9 -]/g, "").trim().replace(/ /g, "-"),
+      ),
+    );
+    const drawn = links.filter((l) => l.startsWith("schemas/README.md#"));
+    expect(drawn.length).toBeGreaterThanOrEqual(8);
+    expect(drawn.map((l) => l.split("#")[1]!).filter((a) => !headings.has(a))).toEqual([]);
   });
 });
 
