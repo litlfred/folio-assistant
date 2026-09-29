@@ -1,12 +1,12 @@
 {
   "$schema": "folio-image-verdicts/v1",
-  "_comment": "Bean d5f1. One agent's INSPECTION of every extracted image, as data rather than code, so the judgement can be reviewed line by line and re-run. `saw` is the REASON for the role, not the description; `draft` is the description. Every entry here was produced by LOOKING at the image — all fourteen were opened and read, and the figure-number mapping below was CHECKED against each diagram's content rather than inferred from page order, because inferring it is exactly the assumption `document-image.ts`'s inspection basis exists to refuse. Applied by scripts/apply-image-verdicts.ts, which writes an `inspection` basis naming this agent and leaves every narrative in `draft` — only a human may confirm one (schemas/narrative.ts). THIS LIBRARY HAD NO VERDICT FILE UNTIL NOW: cat-harness/library held arxiv-2508.05192v2, whose images were judged before this mechanism reached it. This file is created with arxiv-2607.14456v1 and judges only that document; the other entry is untouched and is NOT asserted to be unjudged, only unjudged HERE. WHERE A DRAFT RECORDS SOMETHING THE TEXT DOES NOT SAY — the per-workflow reversals in Figure 3, the prose/figure mismatch in Figure 2, the duplicated edge label in Figure 8, the crossed outcomes in Figure 14, the caption/name question in Figure 13 — it is marked as a reading of the chart or as drawn, and never as a finding about the authors' work. A draft is a draft: nobody has confirmed any of it. 2026-09-24 adds arxiv-2504.07199v3 (SemEval-2025 Task 5), eight images, every one opened. Its four figures are each a stack of panels, and WHICH PANEL IS WHICH WAS SETTLED BY GEOMETRY, not by reading order: the sub-captions and the figure captions interleave in the extracted text stream, so `page.get_image_rects` was compared against each `(a)`/`(b)` block's own bbox. That check also turned up something worth recording: Figure 1 is the RECORD-TYPE ablation and its legend reads A/B/C/R/T, but both of its sub-captions say \"based on the language ablation\" — the same wording Figure 2's sub-captions carry. Marked in the drafts as a reading of the page, never as a finding about the authors' work.",
+  "_comment": "Bean d5f1. One agent's INSPECTION of every extracted image, as data rather than code, so the judgement can be reviewed line by line and re-run. `saw` is the REASON for the role, not the description; `draft` is the description. Every entry here was produced by LOOKING at the image — all fourteen were opened and read, and the figure-number mapping below was CHECKED against each diagram's content rather than inferred from page order, because inferring it is exactly the assumption `document-image.ts`'s inspection basis exists to refuse. Applied by scripts/apply-image-verdicts.ts, which writes an `inspection` basis naming this agent and leaves every narrative in `draft` — only a human may confirm one (schemas/narrative.ts). THIS LIBRARY HAD NO VERDICT FILE UNTIL NOW: cat-harness/library held arxiv-2508.05192v2, whose images were judged before this mechanism reached it. This file is created with arxiv-2607.14456v1 and judges only that document; the other entry is untouched and is NOT asserted to be unjudged, only unjudged HERE. WHERE A DRAFT RECORDS SOMETHING THE TEXT DOES NOT SAY — the per-workflow reversals in Figure 3, the prose/figure mismatch in Figure 2, the duplicated edge label in Figure 8, the crossed outcomes in Figure 14, the caption/name question in Figure 13 — it is marked as a reading of the chart or as drawn, and never as a finding about the authors' work. A draft is a draft: nobody has confirmed any of it. 2026-09-24 adds arxiv-2504.07199v3 (SemEval-2025 Task 5), eight images, every one opened. Its four figures are each a stack of panels, and WHICH PANEL IS WHICH WAS SETTLED BY GEOMETRY, not by reading order: the sub-captions and the figure captions interleave in the extracted text stream, so `page.get_image_rects` was compared against each `(a)`/`(b)` block's own bbox. That check also turned up something worth recording: Figure 1 is the RECORD-TYPE ablation and its legend reads A/B/C/R/T, but both of its sub-captions say \"based on the language ablation\" — the same wording Figure 2's sub-captions carry. Marked in the drafts as a reading of the page, never as a finding about the authors' work. 2026-09-29 adds the two decision-methodology sources. `250906388v1` (Wang & Rangaiah, MCDM aggregation methods) is eight images, every one opened; three of them (Figs 8.1, 8.3, 8.4(c)) could not be written at all until the alpha+soft-mask fix in the same PR, so they are the first images here judged from files that did not previously exist. Panel letters were settled by comparing `page.get_image_rects` against each caption's own bbox, as for arxiv-2504.07199v3. It also adds arxiv-2607.20636v1 (Ravichandran's PhD thesis), 17 images over 184 pages, every one opened. Three of them are ~0.0026-coverage thumbnails placed INSIDE Figure 4.1's schematic rather than figures of their own, and the appendix pairs (B.1/B.2, C.1-C.4) were identified from each page's own caption lines rather than from page order.",
   "inspected_by": {
     "kind": "agent",
     "id": "claude",
     "model": "claude-opus-5"
   },
-  "inspected_at": "2026-09-24",
+  "inspected_at": "2026-09-29",
   "verdicts": {
     "arxiv-2607.14456v1": {
       "img-p005-1": {
@@ -120,6 +120,135 @@
         "role": "figure",
         "saw": "the same 14-series domain chart one panel down, same axis, generally lower bars",
         "draft": "Figure 4(b): average precision@k per domain, over k = 5, 10, 15, 20. The same fourteen domain series and the same thirteen teams as panel (a), on the same 0-to-0.8 axis, with no printed values. The bars are lower throughout — most teams peak between 0.4 and 0.6 rather than 0.6 and 0.7 — and the ordering within a team's group differs from the recall panel: architecture (arc, blue) is the tallest bar for most teams here, where computer science led on recall. RUC Team's social sciences (sow) bar is the tallest single bar at about 0.61, and DUTIR831's architecture bar reaches about 0.67."
+      }
+    },
+    "250906388v1": {
+      "img-p007-1": {
+        "role": "figure",
+        "saw": "a three-level node-and-edge diagram, Goal over Criteria over Alternatives, fully connected between levels",
+        "draft": "Figure 8.1, the AHP decision hierarchy in the general case. A green rounded box at the top reads \"Goal: Rank m alternatives considering n criteria\". Below it a row of five blue boxes — Criterion 1, Criterion 2, Criterion 3, an ellipsis box, and Criterion n — each joined to the goal. Below those a row of four peach boxes — Alternative 1, Alternative 2, an ellipsis box, and Alternative m. Every criterion is joined to every alternative, which is the property that makes the hierarchy complete: AHP asks for a pairwise comparison of the alternatives under each criterion in turn. The edges are plain lines with no arrowheads, so the diagram asserts membership rather than direction — contrast Figure 8.3, where the ANP version is drawn with arrows."
+      },
+      "img-p017-1": {
+        "role": "figure",
+        "saw": "a Windows screenshot of SuperDecisions showing the same three-level hierarchy as clusters",
+        "draft": "Figure 8.2(a), the AHP model as built in SuperDecisions. A screenshot of the application's main window, titled \"Super Decisions Main Window: AHP.sdmod\", with its menu bar (File, Design, Assess/Compare, Computations, Networks, Help) and toolbar visible. Three cluster windows are stacked and joined by downward arrows: L1-Goal holding one node \"Goal_Node\"; L2-Criteria holding C1, C2 and C3; and L3-Alternatives holding A1 to A4. It is the worked example's concrete instance of Figure 8.1 — three criteria and four alternatives."
+      },
+      "img-p017-2": {
+        "role": "figure",
+        "saw": "a SuperDecisions supermatrix table with two blocks outlined in red",
+        "draft": "Figure 8.2(b), the unweighted supermatrix for the AHP example — a screenshot titled \"Super Decisions Main Window: AHP.sdmod: Unweighted Super Matrix\". Rows and columns are grouped by cluster (L1-Goal / Goal_Node, L2-Criteria / C1-C3, L3-Alternatives / A1-A4) and every cell is printed to six decimals. Two blocks are outlined in red, which is what the caption points at: the criteria weights in the Goal_Node column (C1 0.626696, C2 0.279688, C3 0.093616) and the alternatives' local priorities under each criterion (A1 0.529640 / 0.267456 / 0.040746; A2 0.038790 / 0.583045 / 0.082529; A3 0.174103 / 0.108638 / 0.390851; A4 0.257467 / 0.040862 / 0.485875). Everything else in the visible matrix is 0.000000 — the strictly hierarchical structure AHP assumes, with no feedback between clusters."
+      },
+      "img-p018-1": {
+        "role": "figure",
+        "saw": "a small SuperDecisions priorities panel, four alternatives with a bar column",
+        "draft": "Figure 8.2(c), the global priorities of the four alternatives — a SuperDecisions results panel headed \"Here are the priorities.\" with columns Name, a blue bar column, and \"Normalized by Cluster\" in green: A1 0.41054, A2 0.19511, A3 0.17608, A4 0.21827. A1 ranks first. The four sum to 1.0000."
+      },
+      "img-p020-1": {
+        "role": "figure",
+        "saw": "the same three-level diagram redrawn with directed arrows and dash-dot edges between criteria",
+        "draft": "Figure 8.3, the ANP representation of a simplified version of the same problem — the figure that shows what ANP adds to AHP. The green goal box (\"Goal: Rank m alternatives considering n criteria\") feeds three blue criteria boxes, and two peach alternative boxes sit below. Two things differ from Figure 8.1. Every edge now carries an arrowhead, so direction is asserted; and the criteria are joined to one another by dash-dot double-headed arrows — Criterion 1 to Criterion 2, Criterion 2 to Criterion 3, and Criterion 1 to Criterion 3 in an arc over the top — which is the interdependence AHP's hierarchy forbids. The alternatives also point back up into the criteria as well as receiving arrows from them, so the feedback runs both ways."
+      },
+      "img-p025-1": {
+        "role": "figure",
+        "saw": "a SuperDecisions supermatrix for the ANP model, with non-zero off-diagonal blocks",
+        "draft": "Figure 8.4(a), the weighted supermatrix W for the ANP example — a screenshot titled \"Super Decisions Main Window: Chapter_8_ANP.sdmod\". Clusters are L1-GOAL (Goal_Node), L2-Criteria (C1-C3) and L3-Alternatives (A1, A2). Unlike the AHP matrix in Figure 8.2(b), the criteria-to-criteria block is not zero (C1 column: C2 0.083333, C3 0.166667; C2 column: C1 0.125000, C3 0.125000; C3 column: C1 0.187500, C2 0.062500) and the alternatives feed back into the criteria (A1 column: C2 0.333333, C3 0.666667; A2 column: C2 0.500000, C3 0.500000). That non-zero feedback is the structural difference the chapter is illustrating."
+      },
+      "img-p025-2": {
+        "role": "figure",
+        "saw": "the same matrix after convergence — every column identical",
+        "draft": "Figure 8.4(b), the limit supermatrix W∞ for the same ANP model, in the same SuperDecisions window. The structural fact to read off it: **every column is identical**, each holding C1 0.079748, C2 0.199064, C3 0.292616, A1 0.240932, A2 0.187639, with Goal_Node 0.000000. That is what convergence of a column-stochastic supermatrix to its limit means — the long-run priority no longer depends on where the walk started — and it is why ANP reads its answer off any single column. A \"Done\" button is at the foot of the window."
+      },
+      "img-p026-1": {
+        "role": "figure",
+        "saw": "a SuperDecisions priorities panel for the ANP model, the two alternatives boxed in red",
+        "draft": "Figure 8.4(c), the normalised global priority scores from the ANP run — the \"Here are the priorities.\" panel again, listing Goal_Node 0.00000, C1 0.13956, C2 0.34836, C3 0.51208, and, outlined in red, A1 0.56218 and A2 0.43782. The red box marks the two numbers that answer the decision: A1 ranks above A2. The alternatives' two values sum to 1.0000 and the three criteria's to 1.0000 separately, which is the \"normalized by cluster\" the column heading names."
+      }
+    },
+    "arxiv-2607.20636v1": {
+      "img-p045-1": {
+        "role": "figure",
+        "saw": "a small unlabelled line plot with no axis titles, placed at about 0.26% of the page inside the Figure 4.1 schematic",
+        "draft": "One of three miniature learning-curve plots embedded inside Figure 4.1, the chapter's framework schematic (\"In phase 1 (left), the learning...\"). It shows five coloured curves rising from 0 and flattening by roughly x=20 on an unlabelled 0-50 horizontal axis against a 0.0-1.0 vertical one: an orange curve settling near 0.97, red and green both near 0.62 (green rising more slowly and crossing red at about x=27), blue near 0.46 and purple near 0.33. No axis titles, legend or tick labels beyond the numbers — it is an illustration of the SHAPE of a learning curve inside the diagram, not a figure to be read for values."
+      },
+      "img-p045-2": {
+        "role": "figure",
+        "saw": "a small unlabelled line plot with no axis titles, placed at about 0.26% of the page inside the Figure 4.1 schematic, placed twice",
+        "draft": "A second miniature learning-curve plot inside Figure 4.1, placed at two points in the schematic. Five curves on the same unlabelled 0-50 by 0.0-1.0 axes: red highest and flat near 0.75 from about x=7, orange and green together near 0.48-0.50, purple just below at about 0.43, and blue lowest at about 0.25. Same role as the other two thumbnails — illustrative, not quantitative."
+      },
+      "img-p045-4": {
+        "role": "figure",
+        "saw": "a small unlabelled line plot with no axis titles, placed at about 0.26% of the page inside the Figure 4.1 schematic",
+        "draft": "The third miniature learning-curve plot inside Figure 4.1. Blue is highest and flattens fastest, near 0.90 by x=7; green settles near 0.70; orange plateaus low near 0.20; and red and purple both keep climbing across the whole range to meet around 0.42 at x=50 — the only one of the three thumbnails in which two curves have not converged by the right-hand edge. Illustrative, not quantitative."
+      },
+      "img-p052-1": {
+        "role": "figure",
+        "saw": "a six-series line chart with shaded confidence bands, x-axis alpha",
+        "draft": "Figure 4.4: \"Sensitivity of PTRRα to α on selected LCDB instances (T = 44, k = 22)\". Normalised cumulative reward (ALG/OPT) against α from 0.1 to 1.0, six datasets, each a line with a shaded 95% band. The reading the figure is for is that the datasets DISAGREE about α: ds 55 is flat at about 0.995 throughout, ds 67 RISES with α (0.943 to 0.954), ds 16 peaks in the middle around 0.846 at α≈0.4-0.7, while ds 58 (0.907 to 0.886), ds 19 (0.789 to 0.722) and ds 46 (0.735 to 0.696) all FALL. Every curve's total variation across the sweep is small — the largest, ds 19, moves about 0.067 — so the sensitivity is real but shallow, and the bands of ds 19 and ds 46 overlap over much of the range."
+      },
+      "img-p053-1": {
+        "role": "figure",
+        "saw": "three side-by-side line panels, many unlabelled curves each, shared y-axis",
+        "draft": "Figure 4.5: mean LCDB reward curves for three datasets whose best α on the grid differs — Dataset 19 (best α = 0.1), Dataset 16 (best α = 0.7) and Dataset 67 (best α = 1.0). Each panel plots reward = 1 − error_rate against pull count (anchor index) from 0 to about 44, with one coloured curve per arm and no legend. The panels look different in exactly the way the caption's framing implies: Dataset 19's curves are still climbing and widely spread at the right-hand edge (roughly 0.25 to 0.85); Dataset 16's are tighter and mostly flattening (about 0.55 to 0.93); Dataset 67's jump almost immediately to a dense band near 0.9-0.97 with three visible stragglers at about 0.73, 0.64 and 0.60. Placed twice on the page."
+      },
+      "img-p090-1": {
+        "role": "figure",
+        "saw": "a two-series line chart with error bars, subsidy vs no subsidy",
+        "draft": "Figure 6.1: \"Impact of Financial Supplement on Finding Correct Cascade with Supplement, 100 agents\". Proportion of correct cascades against signal strength from 0.5 to 1.0. The orange \"our subsidy\" curve starts at about 0.89 at signal strength 0.5 and reaches 1.0 by 0.6, staying there; the blue \"no subsidy\" curve starts at about 0.51 and climbs through roughly 0.70 at 0.6, 0.85 at 0.7 and 0.94 at 0.8 before meeting 1.0 near 0.9. The gap is largest at the weakest signal and closed by 0.9, which is the claim: the subsidy matters precisely where signals are weak."
+      },
+      "img-p090-2": {
+        "role": "figure",
+        "saw": "a three-series line chart, population sizes 10/100/1000, no subsidy",
+        "draft": "Figure 6.2: \"Probability of Finding Correct Cascade without Supplement\", for 10, 100 and 1000 agents. All three curves lie on top of one another within their error bars — about 0.50 at signal strength 0.5, 0.67 at 0.6, 0.80 at 0.7, 0.93 at 0.8, and 1.0 by 0.9 — so the figure's content is a NEGATIVE: without the supplement, population size makes no visible difference to the chance of a correct cascade. Read against Figure 6.1, that is what isolates the subsidy as the cause there."
+      },
+      "img-p091-1": {
+        "role": "figure",
+        "saw": "a six-series line chart with error bars, subsidy per agent index",
+        "draft": "Figure 6.3: \"Average Subsidy Progression for 100 Agents\", one curve per signal strength. The curves separate by how long the subsidy has to keep paying. At signal strength 0.99 (yellow) and 0.9 (magenta) the subsidy is at or near zero throughout. At 0.8 (cyan) it spikes early and is gone by about agent 18; at 0.7 (red) it peaks near 0.07 at about agent 4 and decays to zero by about agent 60; at 0.6 (green) it peaks near 0.062 around agent 8 and is still decaying, at about 0.003, at agent 100. At 0.51 (blue) it behaves differently in kind — it RISES to about 0.022 by agent 40 and then stays flat to agent 100 rather than decaying. The weakest signal is the one where the subsidy never stops being needed."
+      },
+      "img-p100-1": {
+        "role": "figure",
+        "saw": "a 4x3 table of formulae with graded green shading",
+        "draft": "Figure 7.1, which the caption itself calls a table: the reward the agents of Section 7.3.2 receive as a function of where the true threshold θ falls. Columns are Agent A, Agent B and Agent C; rows are the four cases θ < s_A, s_A ≤ θ < s_B, s_B ≤ θ < s_C, and s_C ≤ θ. A cell is either the quadratic (α/2)(T−θ)² — dark green, the un-switched payoff — or the square root √(2T/α̃_X) for that agent, in progressively paler green. The shading tracks the staircase: the top row is all quadratic, and each row down converts one more agent, left to right, so the bottom row is all square roots. The colour carries no quantity beyond that ordering."
+      },
+      "img-p107-1": {
+        "role": "figure",
+        "saw": "a two-series line chart, switch point against prior standard deviation",
+        "draft": "Figure 7.2: \"Switch point as a function of standard deviation σ for prior of N(25, σ²)\". The blue \"switches\" curve starts at 25 when σ is near 0 — coinciding with the flat orange μ = 25 reference line — rises steeply to about 70 by σ = 20, then flattens, reaching roughly 80 by σ = 40 and about 82 at σ = 100, with visible small steps in the upper range where the switch point moves by discrete amounts. The two lines meet only at the left-hand edge: the more uncertain the prior, the later the switch, but with sharply diminishing effect."
+      },
+      "img-p150-1": {
+        "role": "figure",
+        "saw": "an alpha sweep over datasets 0-25, nine series with 95% bands",
+        "draft": "Figure B.1, first of three panels: alpha sweeps with 95% t-intervals for LCDB datasets 0-25 (T = 44, k = 22) — the appendix's full-corpus version of Figure 4.4. Nine datasets, normalised cumulative reward against α from 0.1 to 1.0. Most are close to flat between 0.84 and 0.94; ds 19 (pink) is the clear outlier, falling from 0.789 to 0.722 across the sweep and sitting about 0.09 below the next lowest. ds 25 leads at about 0.938 falling gently to 0.928; ds 12 and ds 16 rise slightly; ds 9 and ds 17 fall away after about α = 0.6."
+      },
+      "img-p150-2": {
+        "role": "figure",
+        "saw": "an alpha sweep over datasets 28-50, nine series with 95% bands",
+        "draft": "Figure B.1, second panel: datasets 28-50 on the same axes. ds 42 is highest and almost perfectly flat at about 0.955; ds 32, ds 50 and ds 33 cluster near 0.91-0.92; ds 28, ds 30 and ds 49 sit around 0.89-0.91 with ds 49 rising slightly; ds 41 is flat at 0.866 until about α = 0.8 then falls to 0.857. ds 46 (pink) is the outlier here, falling steadily from 0.735 to 0.696 — the same shape ds 19 has in the first panel."
+      },
+      "img-p150-3": {
+        "role": "figure",
+        "saw": "an alpha sweep over datasets 51-71, nine series with 95% bands",
+        "draft": "Figure B.1, third panel: datasets 51-71. The tightest of the three — every curve lies between 0.885 and 1.0, with no outlier of the ds 19 / ds 46 kind. ds 55 is flat at about 0.995, ds 51 flat at 0.958. ds 67 rises from 0.943 to about 0.955 and ds 63 rises then falls back to 0.926; ds 58 falls from 0.908 to 0.885 and ds 71 from 0.903 to 0.889. Across all three panels the pattern is that a few datasets are α-sensitive in opposite directions and most are nearly flat, which is what makes a single global α defensible and a per-dataset one better."
+      },
+      "img-p177-1": {
+        "role": "figure",
+        "saw": "a two-series line chart with error bars, 10 agents",
+        "draft": "Figure C.1: \"Proportion Correct Cascades for 10 Agents\" — the small-population version of Figure 6.1. The orange \"our subsidy\" and blue \"no subsidy\" curves are nearly on top of each other, orange only slightly above: about 0.53 against 0.49 at signal strength 0.5, 0.67 against 0.63 at 0.6, 0.85 against 0.80 at 0.7, and both at 1.0 by 0.9, with overlapping error bars throughout. With ten agents the subsidy buys almost nothing."
+      },
+      "img-p177-2": {
+        "role": "figure",
+        "saw": "a two-series line chart with error bars, 1000 agents",
+        "draft": "Figure C.2: \"Proportion Correct Cascades for 1000 Agents\". The same pair at the large-population end, and the separation is at its widest: \"our subsidy\" is already at about 0.98 at signal strength 0.5 and at 1.0 from 0.6 onward, while \"no subsidy\" starts at about 0.53 and climbs through 0.70, 0.87 and 0.95 before converging near 0.9. Set beside Figure C.1 and Figure 6.1 (100 agents), the three make one point the individual figures do not: the subsidy's benefit GROWS with population size."
+      },
+      "img-p178-1": {
+        "role": "figure",
+        "saw": "a six-series line chart with error bars, 10 agents, subsidy per agent",
+        "draft": "Figure C.3: \"Average Subsidy Progression for 10 Agents\". With only ten agents the curves are jagged rather than smooth: red (0.7) oscillates between about 0.03 and 0.083 with no clear decay, green (0.6) between 0.03 and 0.054, cyan (0.8) spikes to 0.061 at agent 2 and decays erratically to near zero by agent 8, magenta (0.9) peaks at 0.024 and fades, blue (0.51) creeps up to about 0.012, and yellow (0.99) is flat at zero. The decay-to-zero structure visible at 100 and 1000 agents is not resolvable at this population size."
+      },
+      "img-p178-2": {
+        "role": "figure",
+        "saw": "a six-series line chart with dense error bars, 1000 agents",
+        "draft": "Figure C.4: \"Average Subsidy Progression for 1000 Agents\". The clearest of the three subsidy figures. Cyan (0.8), magenta (0.9) and red (0.7) all spike in the first few agents and are at zero within roughly 10, 10 and 40 agents; green (0.6) peaks near 0.075 and decays to zero by about agent 130; yellow (0.99) never leaves zero. Blue (0.51) again behaves differently in kind — it rises to about 0.022 by agent 100 and then decays very slowly, still paying about 0.011 at agent 1000. The error bars are dense enough to read as a band. Same qualitative story as Figure 6.3 at 100 agents, with the slow decay of the weakest-signal curve now visible over a longer horizon."
       }
     }
   }

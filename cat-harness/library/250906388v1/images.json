@@ -1,0 +1,214 @@
+{
+  "$schema": "folio-document-images/v1",
+  "doc_id": "250906388v1",
+  "images": [
+    {
+      "id": "img-p007-1",
+      "file": "images/img-p007-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "a three-level node-and-edge diagram, Goal over Criteria over Alternatives, fully connected between levels",
+        "page": 7
+      },
+      "narrative": {
+        "text": "Figure 8.1, the AHP decision hierarchy in the general case. A green rounded box at the top reads \"Goal: Rank m alternatives considering n criteria\". Below it a row of five blue boxes — Criterion 1, Criterion 2, Criterion 3, an ellipsis box, and Criterion n — each joined to the goal. Below those a row of four peach boxes — Alternative 1, Alternative 2, an ellipsis box, and Alternative m. Every criterion is joined to every alternative, which is the property that makes the hierarchy complete: AHP asks for a pairwise comparison of the alternatives under each criterion in turn. The edges are plain lines with no arrowheads, so the diagram asserts membership rather than direction — contrast Figure 8.3, where the ANP version is drawn with arrows.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "img-p017-1",
+      "file": "images/img-p017-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "a Windows screenshot of SuperDecisions showing the same three-level hierarchy as clusters",
+        "page": 17
+      },
+      "narrative": {
+        "text": "Figure 8.2(a), the AHP model as built in SuperDecisions. A screenshot of the application's main window, titled \"Super Decisions Main Window: AHP.sdmod\", with its menu bar (File, Design, Assess/Compare, Computations, Networks, Help) and toolbar visible. Three cluster windows are stacked and joined by downward arrows: L1-Goal holding one node \"Goal_Node\"; L2-Criteria holding C1, C2 and C3; and L3-Alternatives holding A1 to A4. It is the worked example's concrete instance of Figure 8.1 — three criteria and four alternatives.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "img-p017-2",
+      "file": "images/img-p017-2.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "a SuperDecisions supermatrix table with two blocks outlined in red",
+        "page": 17
+      },
+      "narrative": {
+        "text": "Figure 8.2(b), the unweighted supermatrix for the AHP example — a screenshot titled \"Super Decisions Main Window: AHP.sdmod: Unweighted Super Matrix\". Rows and columns are grouped by cluster (L1-Goal / Goal_Node, L2-Criteria / C1-C3, L3-Alternatives / A1-A4) and every cell is printed to six decimals. Two blocks are outlined in red, which is what the caption points at: the criteria weights in the Goal_Node column (C1 0.626696, C2 0.279688, C3 0.093616) and the alternatives' local priorities under each criterion (A1 0.529640 / 0.267456 / 0.040746; A2 0.038790 / 0.583045 / 0.082529; A3 0.174103 / 0.108638 / 0.390851; A4 0.257467 / 0.040862 / 0.485875). Everything else in the visible matrix is 0.000000 — the strictly hierarchical structure AHP assumes, with no feedback between clusters.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "img-p018-1",
+      "file": "images/img-p018-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "a small SuperDecisions priorities panel, four alternatives with a bar column",
+        "page": 18
+      },
+      "narrative": {
+        "text": "Figure 8.2(c), the global priorities of the four alternatives — a SuperDecisions results panel headed \"Here are the priorities.\" with columns Name, a blue bar column, and \"Normalized by Cluster\" in green: A1 0.41054, A2 0.19511, A3 0.17608, A4 0.21827. A1 ranks first. The four sum to 1.0000.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "img-p020-1",
+      "file": "images/img-p020-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "the same three-level diagram redrawn with directed arrows and dash-dot edges between criteria",
+        "page": 20
+      },
+      "narrative": {
+        "text": "Figure 8.3, the ANP representation of a simplified version of the same problem — the figure that shows what ANP adds to AHP. The green goal box (\"Goal: Rank m alternatives considering n criteria\") feeds three blue criteria boxes, and two peach alternative boxes sit below. Two things differ from Figure 8.1. Every edge now carries an arrowhead, so direction is asserted; and the criteria are joined to one another by dash-dot double-headed arrows — Criterion 1 to Criterion 2, Criterion 2 to Criterion 3, and Criterion 1 to Criterion 3 in an arc over the top — which is the interdependence AHP's hierarchy forbids. The alternatives also point back up into the criteria as well as receiving arrows from them, so the feedback runs both ways.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "img-p025-1",
+      "file": "images/img-p025-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "a SuperDecisions supermatrix for the ANP model, with non-zero off-diagonal blocks",
+        "page": 25
+      },
+      "narrative": {
+        "text": "Figure 8.4(a), the weighted supermatrix W for the ANP example — a screenshot titled \"Super Decisions Main Window: Chapter_8_ANP.sdmod\". Clusters are L1-GOAL (Goal_Node), L2-Criteria (C1-C3) and L3-Alternatives (A1, A2). Unlike the AHP matrix in Figure 8.2(b), the criteria-to-criteria block is not zero (C1 column: C2 0.083333, C3 0.166667; C2 column: C1 0.125000, C3 0.125000; C3 column: C1 0.187500, C2 0.062500) and the alternatives feed back into the criteria (A1 column: C2 0.333333, C3 0.666667; A2 column: C2 0.500000, C3 0.500000). That non-zero feedback is the structural difference the chapter is illustrating.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "img-p025-2",
+      "file": "images/img-p025-2.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "the same matrix after convergence — every column identical",
+        "page": 25
+      },
+      "narrative": {
+        "text": "Figure 8.4(b), the limit supermatrix W∞ for the same ANP model, in the same SuperDecisions window. The structural fact to read off it: **every column is identical**, each holding C1 0.079748, C2 0.199064, C3 0.292616, A1 0.240932, A2 0.187639, with Goal_Node 0.000000. That is what convergence of a column-stochastic supermatrix to its limit means — the long-run priority no longer depends on where the walk started — and it is why ANP reads its answer off any single column. A \"Done\" button is at the foot of the window.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    },
+    {
+      "id": "img-p026-1",
+      "file": "images/img-p026-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-29",
+        "saw": "a SuperDecisions priorities panel for the ANP model, the two alternatives boxed in red",
+        "page": 26
+      },
+      "narrative": {
+        "text": "Figure 8.4(c), the normalised global priority scores from the ANP run — the \"Here are the priorities.\" panel again, listing Goal_Node 0.00000, C1 0.13956, C2 0.34836, C3 0.51208, and, outlined in red, A1 0.56218 and A2 0.43782. The red box marks the two numbers that answer the decision: A1 ranks above A2. The alternatives' two values sum to 1.0000 and the three criteria's to 1.0000 separately, which is the \"normalized by cluster\" the column heading names.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-29"
+      }
+    }
+  ]
+}

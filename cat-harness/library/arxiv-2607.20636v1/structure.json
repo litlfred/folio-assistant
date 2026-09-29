@@ -1,0 +1,2503 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2607.20636v1",
+ "source": {
+  "file": "2607.20636v1.pdf",
+  "sha256": "0ae6a9f230342c5069f69ecb66c7c789f490a689141ac0933c13131d19dbfffa",
+  "bytes": 2784891,
+  "pages": 184,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-29T22:17:50Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2607.20636",
+   "version": "1",
+   "primary_class": "cs.DS",
+   "stamp_date": "22 Jul 2026"
+  },
+  "doi": null,
+  "title": "Algorithmic Approaches to",
+  "authors_raw": "Sequential Decision-Making and",
+  "title_lines": [
+   "Algorithmic Approaches to"
+  ],
+  "abstract": null,
+  "docinfo": {
+   "Title": "Algorithmic Approaches to Sequential Decision-Making and Social Epistemology",
+   "Author": "Kavya Ravichandran",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:8def8d8)"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 17,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Unifying Framework",
+   "page": 18,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Outline of Thesis",
+   "page": 19,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Part I: Improving Multi-Armed Bandits",
+   "page": 19,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Part II: Social Epistemology",
+   "page": 20,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Bibliographic Notes",
+   "page": 21,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Takeaways",
+   "page": 21,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "I Improving Multi-Armed Bandits",
+   "page": 23,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Setting and Preliminaries",
+   "page": 24,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Improving Multi-Armed Bandit Setting",
+   "page": 24,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Formal Preliminaries",
+   "page": 25,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "External and Policy Regret, Adversary Model",
+   "page": 25,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Optimality and Competitive Ratio",
+   "page": 27,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Diminishing Returns",
+   "page": 28,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Related Work",
+   "page": 29,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Nearly-Tight Approximation Guarantees in the Worst Case",
+   "page": 31,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Worst-Case Setting",
+   "page": 31,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Lower Bound",
+   "page": 32,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Upper Bound",
+   "page": 33,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Removing Assumptions",
+   "page": 37,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Computing Range for a Fixed Arm",
+   "page": 38,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Upper and Lower Bounds on Final Value of Best Arm From Exploration",
+   "page": 38,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Reward Approximation Guarantee With Learned Parameter",
+   "page": 39,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Removing Dependence on Having To Know T",
+   "page": 40,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Conclusion",
+   "page": 41,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Beyond Worst-Case: Data-Driven Algorithm Design",
+   "page": 42,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Data-Driven Algorithm Design Setting",
+   "page": 42,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Our Contributions",
+   "page": 44,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Data-Driven Algorithm Design Perspective",
+   "page": 45,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Using Strength of Concavity",
+   "page": 46,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Algorithm Family",
+   "page": 47,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Sharper Competitive Ratio",
+   "page": 47,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Sample Complexity of Learning the Curvature Parameter",
+   "page": 50,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Empirical Evaluation",
+   "page": 52,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Achieving Best-of-both-worlds Best Arm Identification",
+   "page": 53,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Hybrid Algorithm Family",
+   "page": 55,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Best-of-Both-Worlds BAI guarantees",
+   "page": 55,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Sample Complexity for Tuning Curvature and Switch Parameters",
+   "page": 57,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Conclusion",
+   "page": 58,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "II Social Epistemology",
+   "page": 60,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Why Algorithmic Approaches?",
+   "page": 61,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "On The Use of Models",
+   "page": 61,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Introduction",
+   "page": 61,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Taxonomy of TCS-based Social Models",
+   "page": 63,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Reproduce Phenomenon",
+   "page": 65,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Explain Phenomenon",
+   "page": 67,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Suggest Intervention",
+   "page": 71,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "What Models Can and Cannot Do",
+   "page": 73,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "On Process",
+   "page": 75,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Modeling Ambition",
+   "page": 76,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Pessimism Traps and Algorithmic Interventions",
+   "page": 78,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Introduction",
+   "page": 78,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Our Contributions",
+   "page": 79,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Related Work",
+   "page": 80,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Preliminaries and Basic Model",
+   "page": 81,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Single Sequence Model",
+   "page": 81,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "On Our Modeling Choices",
+   "page": 83,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Time-Varying Subsidy",
+   "page": 84,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Extension to multiple groups",
+   "page": 86,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Formally Defining The Setting",
+   "page": 87,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Main Result",
+   "page": 87,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Experiments",
+   "page": 89,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Data Generation and Procedure",
+   "page": 89,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Results",
+   "page": 89,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Discussion and Implications",
+   "page": 91,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Discussion and Conclusion",
+   "page": 92,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "A Theoretical Model for Grit",
+   "page": 93,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Introduction",
+   "page": 93,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Our Approach To Studying Grit",
+   "page": 94,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Our Contributions",
+   "page": 95,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Related Work",
+   "page": 95,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Formal Setting: Improving MAB",
+   "page": 96,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Rationality in Terms of Competitive Ratio",
+   "page": 97,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Rationality in This Model",
+   "page": 97,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Modelling Grit: Optimism",
+   "page": 98,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Modelling Grit: Discomfort Tolerance",
+   "page": 101,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Financial Support",
+   "page": 103,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "No Safety Net",
+   "page": 103,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Free Reimbursement",
+   "page": 103,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Which Wins? Trust Fund or Grit?",
+   "page": 104,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Rationality as Being Bayesian",
+   "page": 105,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Rationality in This Model",
+   "page": 105,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Setting",
+   "page": 105,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Results for Modelling Grit as Uncertainty Tolerance",
+   "page": 106,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Discussion of Modelling Choices",
+   "page": 107,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Conclusion",
+   "page": 108,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Discussion in Relation to Pessimsim Traps",
+   "page": 108,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "III Reflections and Conclusion",
+   "page": 110,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Conclusion",
+   "page": 111,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Interplay between sequential and social decision-making",
+   "page": 111,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "General vs Specific",
+   "page": 112,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Open Problems and Future Directions",
+   "page": 113,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Concrete Technical Questions",
+   "page": 113,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Broad Future Directions",
+   "page": 113,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Parting Thoughts",
+   "page": 114,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Appendices for Improving Multi-Armed Bandits",
+   "page": 125,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Proof of Lemma 3.4.4",
+   "page": 125,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Maximum Reward Objective",
+   "page": 126,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Lower Bound",
+   "page": 126,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Upper Bound",
+   "page": 126,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Extension to noisy rewards",
+   "page": 127,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Extension of Algorithm 1",
+   "page": 127,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Extension of Algorithm 2",
+   "page": 129,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Appendices for Algorithm Design for Improving Multi-Armed Bandits",
+   "page": 130,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Additional Related Work",
+   "page": 130,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Full Proofs for Sharper Competitive Ratio",
+   "page": 131,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Upper Bound",
+   "page": 131,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Lower Bound",
+   "page": 135,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Doubling Trick for Unknown T",
+   "page": 139,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Details for Sample Complexity Analysis",
+   "page": 140,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Results from Prior Work",
+   "page": 141,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Uniform Convergence Implies Population Loss Near-Optimality",
+   "page": 141,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Average Regret",
+   "page": 142,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Computational Complexity of ERM",
+   "page": 142,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "An Algorithm for Finding a Suitable Value of the Parameter",
+   "page": 145,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Full Empirical Evaluation",
+   "page": 148,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Best-of-both-worlds for Maximizing Cumulative Reward",
+   "page": 151,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Motivating Examples",
+   "page": 151,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Data-driven Hybrid Approach",
+   "page": 152,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "BAI Comparison with Prior Work and Proof Details",
+   "page": 153,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Comparison With Prior Work",
+   "page": 153,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Difficulty in Corralling Improving Bandit Algorithms",
+   "page": 154,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Proofs for results in Section 4.4.2",
+   "page": 157,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Proof of Lemma 4.4.2",
+   "page": 158,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Cumulative Reward Best Arm Identification",
+   "page": 158,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Best-of-Both-Worlds Best arm identification guarantees",
+   "page": 159,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Appendices for Pessimism Traps",
+   "page": 163,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Key features of pessimism traps",
+   "page": 163,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Related Works",
+   "page": 163,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Proof for Posterior Update (Eqn. 6.1)",
+   "page": 165,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Formulation as a Random Walk",
+   "page": 165,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Time-Varying Subsidy Proofs",
+   "page": 168,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Proof of Theorem 6.3.1",
+   "page": 168,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Proof of Theorem 6.3.2",
+   "page": 170,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Details for extension to multiple groups",
+   "page": 170,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Defining The Setting",
+   "page": 170,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Analyzing the Subsidy Scheme",
+   "page": 171,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Extra Experiments",
+   "page": 176,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Proportion Correct Cascades",
+   "page": 176,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Subsidy Size",
+   "page": 176,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Appendices for Grit",
+   "page": 179,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Related Work",
+   "page": 179,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Why This Instance and Not Something Else?",
+   "page": 180,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Proofs of Results",
+   "page": 181,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Proof of Lemma 7.3.2",
+   "page": 181,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Proof of Lemma 7.3.3",
+   "page": 181,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 4,
+   "title": "Proof of Lemma 7.3.4",
+   "page": 182,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Fixed Time Financial Support",
+   "page": 182,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Calculations For Interplay of Grit and Trust Fund",
+   "page": 183,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 17,
+   "n_chars": 39165,
+   "n_words": 8929
+  },
+  {
+   "id": "sec-000-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 17,
+   "page_end": 18,
+   "n_chars": 3083,
+   "n_words": 483
+  },
+  {
+   "id": "sec-001-unifying-framework",
+   "number": null,
+   "title": "Unifying Framework",
+   "level": 2,
+   "page_start": 18,
+   "page_end": 19,
+   "n_chars": 4209,
+   "n_words": 674
+  },
+  {
+   "id": "sec-002-outline-of-thesis",
+   "number": null,
+   "title": "Outline of Thesis",
+   "level": 2,
+   "page_start": 19,
+   "page_end": 19,
+   "n_chars": 1019,
+   "n_words": 155
+  },
+  {
+   "id": "sec-003-part-i-improving-multi-armed-bandits",
+   "number": null,
+   "title": "Part I: Improving Multi-Armed Bandits",
+   "level": 3,
+   "page_start": 19,
+   "page_end": 20,
+   "n_chars": 2796,
+   "n_words": 436
+  },
+  {
+   "id": "sec-004-part-ii-social-epistemology",
+   "number": null,
+   "title": "Part II: Social Epistemology",
+   "level": 3,
+   "page_start": 20,
+   "page_end": 21,
+   "n_chars": 2569,
+   "n_words": 389
+  },
+  {
+   "id": "sec-005-bibliographic-notes",
+   "number": null,
+   "title": "Bibliographic Notes",
+   "level": 3,
+   "page_start": 21,
+   "page_end": 21,
+   "n_chars": 860,
+   "n_words": 149
+  },
+  {
+   "id": "sec-006-takeaways",
+   "number": null,
+   "title": "Takeaways",
+   "level": 2,
+   "page_start": 21,
+   "page_end": 24,
+   "n_chars": 1859,
+   "n_words": 284
+  },
+  {
+   "id": "sec-007-setting-and-preliminaries",
+   "number": null,
+   "title": "Setting and Preliminaries",
+   "level": 2,
+   "page_start": 24,
+   "page_end": 24,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-008-improving-multi-armed-bandit-setting",
+   "number": null,
+   "title": "Improving Multi-Armed Bandit Setting",
+   "level": 3,
+   "page_start": 24,
+   "page_end": 25,
+   "n_chars": 4657,
+   "n_words": 744
+  },
+  {
+   "id": "sec-009-formal-preliminaries",
+   "number": null,
+   "title": "Formal Preliminaries",
+   "level": 3,
+   "page_start": 25,
+   "page_end": 25,
+   "n_chars": 794,
+   "n_words": 146
+  },
+  {
+   "id": "sec-010-external-and-policy-regret-adversary-model",
+   "number": null,
+   "title": "External and Policy Regret, Adversary Model",
+   "level": 4,
+   "page_start": 25,
+   "page_end": 27,
+   "n_chars": 5475,
+   "n_words": 944
+  },
+  {
+   "id": "sec-011-optimality-and-competitive-ratio",
+   "number": null,
+   "title": "Optimality and Competitive Ratio",
+   "level": 4,
+   "page_start": 27,
+   "page_end": 28,
+   "n_chars": 2572,
+   "n_words": 456
+  },
+  {
+   "id": "sec-012-diminishing-returns",
+   "number": null,
+   "title": "Diminishing Returns",
+   "level": 4,
+   "page_start": 28,
+   "page_end": 29,
+   "n_chars": 1547,
+   "n_words": 260
+  },
+  {
+   "id": "sec-013-related-work",
+   "number": null,
+   "title": "Related Work",
+   "level": 3,
+   "page_start": 29,
+   "page_end": 31,
+   "n_chars": 3911,
+   "n_words": 650
+  },
+  {
+   "id": "sec-014-worst-case-setting",
+   "number": null,
+   "title": "Worst-Case Setting",
+   "level": 3,
+   "page_start": 31,
+   "page_end": 32,
+   "n_chars": 2350,
+   "n_words": 383
+  },
+  {
+   "id": "sec-015-lower-bound",
+   "number": null,
+   "title": "Lower Bound",
+   "level": 3,
+   "page_start": 32,
+   "page_end": 32,
+   "n_chars": 269,
+   "n_words": 49
+  },
+  {
+   "id": "sec-016-upper-bound",
+   "number": null,
+   "title": "Upper Bound",
+   "level": 3,
+   "page_start": 32,
+   "page_end": 37,
+   "n_chars": 12265,
+   "n_words": 2509
+  },
+  {
+   "id": "sec-017-removing-assumptions",
+   "number": null,
+   "title": "Removing Assumptions",
+   "level": 3,
+   "page_start": 37,
+   "page_end": 38,
+   "n_chars": 2150,
+   "n_words": 423
+  },
+  {
+   "id": "sec-018-computing-range-for-a-fixed-arm",
+   "number": null,
+   "title": "Computing Range for a Fixed Arm",
+   "level": 4,
+   "page_start": 38,
+   "page_end": 38,
+   "n_chars": 1002,
+   "n_words": 240
+  },
+  {
+   "id": "sec-019-upper-and-lower-bounds-on-final-value-of-best-ar",
+   "number": null,
+   "title": "Upper and Lower Bounds on Final Value of Best Arm From Exploration",
+   "level": 4,
+   "page_start": 38,
+   "page_end": 39,
+   "n_chars": 909,
+   "n_words": 203
+  },
+  {
+   "id": "sec-020-reward-approximation-guarantee-with-learned-para",
+   "number": null,
+   "title": "Reward Approximation Guarantee With Learned Parameter",
+   "level": 4,
+   "page_start": 39,
+   "page_end": 40,
+   "n_chars": 2332,
+   "n_words": 488
+  },
+  {
+   "id": "sec-021-removing-dependence-on-having-to-know-t",
+   "number": null,
+   "title": "Removing Dependence on Having To Know T",
+   "level": 4,
+   "page_start": 40,
+   "page_end": 41,
+   "n_chars": 1369,
+   "n_words": 292
+  },
+  {
+   "id": "sec-022-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 3,
+   "page_start": 41,
+   "page_end": 42,
+   "n_chars": 2550,
+   "n_words": 412
+  },
+  {
+   "id": "sec-023-data-driven-algorithm-design-setting",
+   "number": null,
+   "title": "Data-Driven Algorithm Design Setting",
+   "level": 3,
+   "page_start": 42,
+   "page_end": 44,
+   "n_chars": 5402,
+   "n_words": 865
+  },
+  {
+   "id": "sec-024-our-contributions",
+   "number": null,
+   "title": "Our Contributions",
+   "level": 4,
+   "page_start": 44,
+   "page_end": 45,
+   "n_chars": 3769,
+   "n_words": 582
+  },
+  {
+   "id": "sec-025-data-driven-algorithm-design-perspective",
+   "number": null,
+   "title": "Data-Driven Algorithm Design Perspective",
+   "level": 3,
+   "page_start": 45,
+   "page_end": 46,
+   "n_chars": 3466,
+   "n_words": 582
+  },
+  {
+   "id": "sec-026-using-strength-of-concavity",
+   "number": null,
+   "title": "Using Strength of Concavity",
+   "level": 3,
+   "page_start": 46,
+   "page_end": 47,
+   "n_chars": 1511,
+   "n_words": 240
+  },
+  {
+   "id": "sec-027-algorithm-family",
+   "number": null,
+   "title": "Algorithm Family",
+   "level": 4,
+   "page_start": 47,
+   "page_end": 47,
+   "n_chars": 1059,
+   "n_words": 221
+  },
+  {
+   "id": "sec-028-sharper-competitive-ratio",
+   "number": null,
+   "title": "Sharper Competitive Ratio",
+   "level": 4,
+   "page_start": 47,
+   "page_end": 50,
+   "n_chars": 6978,
+   "n_words": 1270
+  },
+  {
+   "id": "sec-029-sample-complexity-of-learning-the-curvature-para",
+   "number": null,
+   "title": "Sample Complexity of Learning the Curvature Parameter",
+   "level": 4,
+   "page_start": 50,
+   "page_end": 52,
+   "n_chars": 5890,
+   "n_words": 989
+  },
+  {
+   "id": "sec-030-empirical-evaluation",
+   "number": null,
+   "title": "Empirical Evaluation",
+   "level": 4,
+   "page_start": 52,
+   "page_end": 53,
+   "n_chars": 3005,
+   "n_words": 518
+  },
+  {
+   "id": "sec-031-achieving-best-of-both-worlds-best-arm-identific",
+   "number": null,
+   "title": "Achieving Best-of-both-worlds Best Arm Identification",
+   "level": 3,
+   "page_start": 53,
+   "page_end": 55,
+   "n_chars": 4625,
+   "n_words": 790
+  },
+  {
+   "id": "sec-032-hybrid-algorithm-family",
+   "number": null,
+   "title": "Hybrid Algorithm Family",
+   "level": 4,
+   "page_start": 55,
+   "page_end": 55,
+   "n_chars": 1148,
+   "n_words": 200
+  },
+  {
+   "id": "sec-033-best-of-both-worlds-bai-guarantees",
+   "number": null,
+   "title": "Best-of-Both-Worlds BAI guarantees",
+   "level": 4,
+   "page_start": 55,
+   "page_end": 57,
+   "n_chars": 4340,
+   "n_words": 816
+  },
+  {
+   "id": "sec-034-sample-complexity-for-tuning-curvature-and-switc",
+   "number": null,
+   "title": "Sample Complexity for Tuning Curvature and Switch Parameters",
+   "level": 4,
+   "page_start": 57,
+   "page_end": 58,
+   "n_chars": 4292,
+   "n_words": 743
+  },
+  {
+   "id": "sec-035-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 3,
+   "page_start": 58,
+   "page_end": 61,
+   "n_chars": 1648,
+   "n_words": 233
+  },
+  {
+   "id": "sec-036-why-algorithmic-approaches",
+   "number": null,
+   "title": "Why Algorithmic Approaches?",
+   "level": 2,
+   "page_start": 61,
+   "page_end": 61,
+   "n_chars": 516,
+   "n_words": 84
+  },
+  {
+   "id": "sec-037-on-the-use-of-models",
+   "number": null,
+   "title": "On The Use of Models",
+   "level": 3,
+   "page_start": 61,
+   "page_end": 61,
+   "n_chars": 5,
+   "n_words": 1
+  },
+  {
+   "id": "sec-038-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 4,
+   "page_start": 61,
+   "page_end": 63,
+   "n_chars": 6299,
+   "n_words": 1019
+  },
+  {
+   "id": "sec-039-taxonomy-of-tcs-based-social-models",
+   "number": null,
+   "title": "Taxonomy of TCS-based Social Models",
+   "level": 4,
+   "page_start": 63,
+   "page_end": 65,
+   "n_chars": 6464,
+   "n_words": 1067
+  },
+  {
+   "id": "sec-040-reproduce-phenomenon",
+   "number": null,
+   "title": "Reproduce Phenomenon",
+   "level": 4,
+   "page_start": 65,
+   "page_end": 67,
+   "n_chars": 7128,
+   "n_words": 1157
+  },
+  {
+   "id": "sec-041-explain-phenomenon",
+   "number": null,
+   "title": "Explain Phenomenon",
+   "level": 4,
+   "page_start": 67,
+   "page_end": 71,
+   "n_chars": 14852,
+   "n_words": 2344
+  },
+  {
+   "id": "sec-042-suggest-intervention",
+   "number": null,
+   "title": "Suggest Intervention",
+   "level": 4,
+   "page_start": 71,
+   "page_end": 73,
+   "n_chars": 8999,
+   "n_words": 1458
+  },
+  {
+   "id": "sec-043-what-models-can-and-cannot-do",
+   "number": null,
+   "title": "What Models Can and Cannot Do",
+   "level": 4,
+   "page_start": 73,
+   "page_end": 75,
+   "n_chars": 6659,
+   "n_words": 1092
+  },
+  {
+   "id": "sec-044-on-process",
+   "number": null,
+   "title": "On Process",
+   "level": 4,
+   "page_start": 75,
+   "page_end": 76,
+   "n_chars": 4520,
+   "n_words": 726
+  },
+  {
+   "id": "sec-045-modeling-ambition",
+   "number": null,
+   "title": "Modeling Ambition",
+   "level": 3,
+   "page_start": 76,
+   "page_end": 78,
+   "n_chars": 2851,
+   "n_words": 445
+  },
+  {
+   "id": "sec-046-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 3,
+   "page_start": 78,
+   "page_end": 79,
+   "n_chars": 2411,
+   "n_words": 348
+  },
+  {
+   "id": "sec-047-our-contributions",
+   "number": null,
+   "title": "Our Contributions",
+   "level": 4,
+   "page_start": 79,
+   "page_end": 80,
+   "n_chars": 5044,
+   "n_words": 799
+  },
+  {
+   "id": "sec-048-related-work",
+   "number": null,
+   "title": "Related Work",
+   "level": 4,
+   "page_start": 80,
+   "page_end": 81,
+   "n_chars": 2959,
+   "n_words": 423
+  },
+  {
+   "id": "sec-049-preliminaries-and-basic-model",
+   "number": null,
+   "title": "Preliminaries and Basic Model",
+   "level": 3,
+   "page_start": 81,
+   "page_end": 81,
+   "n_chars": 460,
+   "n_words": 84
+  },
+  {
+   "id": "sec-050-single-sequence-model",
+   "number": null,
+   "title": "Single Sequence Model",
+   "level": 4,
+   "page_start": 81,
+   "page_end": 83,
+   "n_chars": 5084,
+   "n_words": 883
+  },
+  {
+   "id": "sec-051-on-our-modeling-choices",
+   "number": null,
+   "title": "On Our Modeling Choices",
+   "level": 4,
+   "page_start": 83,
+   "page_end": 84,
+   "n_chars": 2789,
+   "n_words": 446
+  },
+  {
+   "id": "sec-052-time-varying-subsidy",
+   "number": null,
+   "title": "Time-Varying Subsidy",
+   "level": 3,
+   "page_start": 84,
+   "page_end": 86,
+   "n_chars": 5061,
+   "n_words": 951
+  },
+  {
+   "id": "sec-053-extension-to-multiple-groups",
+   "number": null,
+   "title": "Extension to multiple groups",
+   "level": 3,
+   "page_start": 86,
+   "page_end": 87,
+   "n_chars": 2113,
+   "n_words": 371
+  },
+  {
+   "id": "sec-054-formally-defining-the-setting",
+   "number": null,
+   "title": "Formally Defining The Setting",
+   "level": 4,
+   "page_start": 87,
+   "page_end": 87,
+   "n_chars": 1890,
+   "n_words": 342
+  },
+  {
+   "id": "sec-055-main-result",
+   "number": null,
+   "title": "Main Result",
+   "level": 4,
+   "page_start": 87,
+   "page_end": 89,
+   "n_chars": 4905,
+   "n_words": 905
+  },
+  {
+   "id": "sec-056-experiments",
+   "number": null,
+   "title": "Experiments",
+   "level": 3,
+   "page_start": 89,
+   "page_end": 89,
+   "n_chars": 483,
+   "n_words": 70
+  },
+  {
+   "id": "sec-057-data-generation-and-procedure",
+   "number": null,
+   "title": "Data Generation and Procedure",
+   "level": 4,
+   "page_start": 89,
+   "page_end": 89,
+   "n_chars": 713,
+   "n_words": 119
+  },
+  {
+   "id": "sec-058-results",
+   "number": null,
+   "title": "Results",
+   "level": 4,
+   "page_start": 89,
+   "page_end": 91,
+   "n_chars": 3213,
+   "n_words": 508
+  },
+  {
+   "id": "sec-059-discussion-and-implications",
+   "number": null,
+   "title": "Discussion and Implications",
+   "level": 4,
+   "page_start": 91,
+   "page_end": 92,
+   "n_chars": 925,
+   "n_words": 120
+  },
+  {
+   "id": "sec-060-discussion-and-conclusion",
+   "number": null,
+   "title": "Discussion and Conclusion",
+   "level": 3,
+   "page_start": 92,
+   "page_end": 93,
+   "n_chars": 1742,
+   "n_words": 270
+  },
+  {
+   "id": "sec-061-a-theoretical-model-for-grit",
+   "number": null,
+   "title": "A Theoretical Model for Grit",
+   "level": 2,
+   "page_start": 93,
+   "page_end": 93,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-062-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 3,
+   "page_start": 93,
+   "page_end": 94,
+   "n_chars": 4207,
+   "n_words": 650
+  },
+  {
+   "id": "sec-063-our-approach-to-studying-grit",
+   "number": null,
+   "title": "Our Approach To Studying Grit",
+   "level": 4,
+   "page_start": 94,
+   "page_end": 95,
+   "n_chars": 1668,
+   "n_words": 274
+  },
+  {
+   "id": "sec-064-our-contributions",
+   "number": null,
+   "title": "Our Contributions",
+   "level": 4,
+   "page_start": 95,
+   "page_end": 95,
+   "n_chars": 2249,
+   "n_words": 357
+  },
+  {
+   "id": "sec-065-related-work",
+   "number": null,
+   "title": "Related Work",
+   "level": 4,
+   "page_start": 95,
+   "page_end": 96,
+   "n_chars": 3576,
+   "n_words": 550
+  },
+  {
+   "id": "sec-066-formal-setting-improving-mab",
+   "number": null,
+   "title": "Formal Setting: Improving MAB",
+   "level": 3,
+   "page_start": 96,
+   "page_end": 97,
+   "n_chars": 2654,
+   "n_words": 471
+  },
+  {
+   "id": "sec-067-rationality-in-terms-of-competitive-ratio",
+   "number": null,
+   "title": "Rationality in Terms of Competitive Ratio",
+   "level": 3,
+   "page_start": 97,
+   "page_end": 97,
+   "n_chars": 5,
+   "n_words": 1
+  },
+  {
+   "id": "sec-068-rationality-in-this-model",
+   "number": null,
+   "title": "Rationality in This Model",
+   "level": 4,
+   "page_start": 97,
+   "page_end": 98,
+   "n_chars": 4165,
+   "n_words": 753
+  },
+  {
+   "id": "sec-069-modelling-grit-optimism",
+   "number": null,
+   "title": "Modelling Grit: Optimism",
+   "level": 4,
+   "page_start": 98,
+   "page_end": 101,
+   "n_chars": 7245,
+   "n_words": 1362
+  },
+  {
+   "id": "sec-070-modelling-grit-discomfort-tolerance",
+   "number": null,
+   "title": "Modelling Grit: Discomfort Tolerance",
+   "level": 4,
+   "page_start": 101,
+   "page_end": 103,
+   "n_chars": 4694,
+   "n_words": 926
+  },
+  {
+   "id": "sec-071-financial-support",
+   "number": null,
+   "title": "Financial Support",
+   "level": 3,
+   "page_start": 103,
+   "page_end": 103,
+   "n_chars": 862,
+   "n_words": 148
+  },
+  {
+   "id": "sec-072-no-safety-net",
+   "number": null,
+   "title": "No Safety Net",
+   "level": 4,
+   "page_start": 103,
+   "page_end": 103,
+   "n_chars": 696,
+   "n_words": 151
+  },
+  {
+   "id": "sec-073-free-reimbursement",
+   "number": null,
+   "title": "Free Reimbursement",
+   "level": 4,
+   "page_start": 103,
+   "page_end": 104,
+   "n_chars": 1593,
+   "n_words": 302
+  },
+  {
+   "id": "sec-074-which-wins-trust-fund-or-grit",
+   "number": null,
+   "title": "Which Wins? Trust Fund or Grit?",
+   "level": 4,
+   "page_start": 104,
+   "page_end": 104,
+   "n_chars": 1683,
+   "n_words": 293
+  },
+  {
+   "id": "sec-075-setting",
+   "number": null,
+   "title": "Setting",
+   "level": 4,
+   "page_start": 104,
+   "page_end": 105,
+   "n_chars": 813,
+   "n_words": 147
+  },
+  {
+   "id": "sec-076-rationality-as-being-bayesian",
+   "number": null,
+   "title": "Rationality as Being Bayesian",
+   "level": 3,
+   "page_start": 105,
+   "page_end": 105,
+   "n_chars": 205,
+   "n_words": 33
+  },
+  {
+   "id": "sec-077-rationality-in-this-model",
+   "number": null,
+   "title": "Rationality in This Model",
+   "level": 4,
+   "page_start": 105,
+   "page_end": 106,
+   "n_chars": 4089,
+   "n_words": 805
+  },
+  {
+   "id": "sec-078-results-for-modelling-grit-as-uncertainty-tolera",
+   "number": null,
+   "title": "Results for Modelling Grit as Uncertainty Tolerance",
+   "level": 4,
+   "page_start": 106,
+   "page_end": 107,
+   "n_chars": 1915,
+   "n_words": 330
+  },
+  {
+   "id": "sec-079-discussion-of-modelling-choices",
+   "number": null,
+   "title": "Discussion of Modelling Choices",
+   "level": 3,
+   "page_start": 107,
+   "page_end": 108,
+   "n_chars": 2943,
+   "n_words": 457
+  },
+  {
+   "id": "sec-080-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 3,
+   "page_start": 108,
+   "page_end": 108,
+   "n_chars": 513,
+   "n_words": 81
+  },
+  {
+   "id": "sec-081-discussion-in-relation-to-pessimsim-traps",
+   "number": null,
+   "title": "Discussion in Relation to Pessimsim Traps",
+   "level": 3,
+   "page_start": 108,
+   "page_end": 110,
+   "n_chars": 1812,
+   "n_words": 285
+  },
+  {
+   "id": "sec-082-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 2,
+   "page_start": 110,
+   "page_end": 111,
+   "n_chars": 892,
+   "n_words": 140
+  },
+  {
+   "id": "sec-083-interplay-between-sequential-and-social-decision",
+   "number": null,
+   "title": "Interplay between sequential and social decision-making",
+   "level": 3,
+   "page_start": 111,
+   "page_end": 112,
+   "n_chars": 1810,
+   "n_words": 279
+  },
+  {
+   "id": "sec-084-general-vs-specific",
+   "number": null,
+   "title": "General vs Specific",
+   "level": 3,
+   "page_start": 112,
+   "page_end": 113,
+   "n_chars": 3228,
+   "n_words": 538
+  },
+  {
+   "id": "sec-085-open-problems-and-future-directions",
+   "number": null,
+   "title": "Open Problems and Future Directions",
+   "level": 3,
+   "page_start": 113,
+   "page_end": 113,
+   "n_chars": 232,
+   "n_words": 38
+  },
+  {
+   "id": "sec-086-concrete-technical-questions",
+   "number": null,
+   "title": "Concrete Technical Questions",
+   "level": 4,
+   "page_start": 113,
+   "page_end": 113,
+   "n_chars": 1439,
+   "n_words": 216
+  },
+  {
+   "id": "sec-087-broad-future-directions",
+   "number": null,
+   "title": "Broad Future Directions",
+   "level": 4,
+   "page_start": 113,
+   "page_end": 114,
+   "n_chars": 1235,
+   "n_words": 198
+  },
+  {
+   "id": "sec-088-parting-thoughts",
+   "number": null,
+   "title": "Parting Thoughts",
+   "level": 3,
+   "page_start": 114,
+   "page_end": 125,
+   "n_chars": 20024,
+   "n_words": 2710
+  },
+  {
+   "id": "sec-089-proof-of-lemma-344",
+   "number": null,
+   "title": "Proof of Lemma 3.4.4",
+   "level": 3,
+   "page_start": 125,
+   "page_end": 126,
+   "n_chars": 1568,
+   "n_words": 356
+  },
+  {
+   "id": "sec-090-maximum-reward-objective",
+   "number": null,
+   "title": "Maximum Reward Objective",
+   "level": 3,
+   "page_start": 126,
+   "page_end": 126,
+   "n_chars": 258,
+   "n_words": 43
+  },
+  {
+   "id": "sec-091-upper-bound",
+   "number": null,
+   "title": "Upper Bound",
+   "level": 4,
+   "page_start": 126,
+   "page_end": 126,
+   "n_chars": 178,
+   "n_words": 29
+  },
+  {
+   "id": "sec-092-lower-bound",
+   "number": null,
+   "title": "Lower Bound",
+   "level": 4,
+   "page_start": 126,
+   "page_end": 127,
+   "n_chars": 2251,
+   "n_words": 457
+  },
+  {
+   "id": "sec-093-extension-to-noisy-rewards",
+   "number": null,
+   "title": "Extension to noisy rewards",
+   "level": 3,
+   "page_start": 127,
+   "page_end": 127,
+   "n_chars": 5,
+   "n_words": 1
+  },
+  {
+   "id": "sec-094-extension-of-algorithm-1",
+   "number": null,
+   "title": "Extension of Algorithm 1",
+   "level": 4,
+   "page_start": 127,
+   "page_end": 129,
+   "n_chars": 4011,
+   "n_words": 864
+  },
+  {
+   "id": "sec-095-extension-of-algorithm-2",
+   "number": null,
+   "title": "Extension of Algorithm 2",
+   "level": 4,
+   "page_start": 129,
+   "page_end": 130,
+   "n_chars": 621,
+   "n_words": 132
+  },
+  {
+   "id": "sec-096-additional-related-work",
+   "number": null,
+   "title": "Additional Related Work",
+   "level": 3,
+   "page_start": 130,
+   "page_end": 130,
+   "n_chars": 443,
+   "n_words": 68
+  },
+  {
+   "id": "sec-097-upper-bound",
+   "number": null,
+   "title": "Upper Bound",
+   "level": 4,
+   "page_start": 130,
+   "page_end": 131,
+   "n_chars": 1810,
+   "n_words": 269
+  },
+  {
+   "id": "sec-098-full-proofs-for-sharper-competitive-ratio",
+   "number": null,
+   "title": "Full Proofs for Sharper Competitive Ratio",
+   "level": 3,
+   "page_start": 131,
+   "page_end": 135,
+   "n_chars": 8855,
+   "n_words": 1987
+  },
+  {
+   "id": "sec-099-lower-bound",
+   "number": null,
+   "title": "Lower Bound",
+   "level": 4,
+   "page_start": 135,
+   "page_end": 139,
+   "n_chars": 7141,
+   "n_words": 1407
+  },
+  {
+   "id": "sec-100-doubling-trick-for-unknown-t",
+   "number": null,
+   "title": "Doubling Trick for Unknown T",
+   "level": 4,
+   "page_start": 139,
+   "page_end": 140,
+   "n_chars": 2463,
+   "n_words": 541
+  },
+  {
+   "id": "sec-101-details-for-sample-complexity-analysis",
+   "number": null,
+   "title": "Details for Sample Complexity Analysis",
+   "level": 3,
+   "page_start": 140,
+   "page_end": 141,
+   "n_chars": 157,
+   "n_words": 28
+  },
+  {
+   "id": "sec-102-results-from-prior-work",
+   "number": null,
+   "title": "Results from Prior Work",
+   "level": 4,
+   "page_start": 141,
+   "page_end": 141,
+   "n_chars": 1208,
+   "n_words": 221
+  },
+  {
+   "id": "sec-103-uniform-convergence-implies-population-loss-near",
+   "number": null,
+   "title": "Uniform Convergence Implies Population Loss Near-Optimality",
+   "level": 4,
+   "page_start": 141,
+   "page_end": 142,
+   "n_chars": 1002,
+   "n_words": 209
+  },
+  {
+   "id": "sec-104-average-regret",
+   "number": null,
+   "title": "Average Regret",
+   "level": 4,
+   "page_start": 142,
+   "page_end": 142,
+   "n_chars": 965,
+   "n_words": 178
+  },
+  {
+   "id": "sec-105-computational-complexity-of-erm",
+   "number": null,
+   "title": "Computational Complexity of ERM",
+   "level": 4,
+   "page_start": 142,
+   "page_end": 145,
+   "n_chars": 6783,
+   "n_words": 1283
+  },
+  {
+   "id": "sec-106-an-algorithm-for-finding-a-suitable-value-of-the",
+   "number": null,
+   "title": "An Algorithm for Finding a Suitable Value of the Parameter",
+   "level": 4,
+   "page_start": 145,
+   "page_end": 148,
+   "n_chars": 6956,
+   "n_words": 1248
+  },
+  {
+   "id": "sec-107-full-empirical-evaluation",
+   "number": null,
+   "title": "Full Empirical Evaluation",
+   "level": 4,
+   "page_start": 148,
+   "page_end": 151,
+   "n_chars": 5442,
+   "n_words": 897
+  },
+  {
+   "id": "sec-108-best-of-both-worlds-for-maximizing-cumulative-re",
+   "number": null,
+   "title": "Best-of-both-worlds for Maximizing Cumulative Reward",
+   "level": 3,
+   "page_start": 151,
+   "page_end": 151,
+   "n_chars": 789,
+   "n_words": 122
+  },
+  {
+   "id": "sec-109-motivating-examples",
+   "number": null,
+   "title": "Motivating Examples",
+   "level": 4,
+   "page_start": 151,
+   "page_end": 152,
+   "n_chars": 1961,
+   "n_words": 352
+  },
+  {
+   "id": "sec-110-data-driven-hybrid-approach",
+   "number": null,
+   "title": "Data-driven Hybrid Approach",
+   "level": 4,
+   "page_start": 152,
+   "page_end": 153,
+   "n_chars": 1964,
+   "n_words": 319
+  },
+  {
+   "id": "sec-111-bai-comparison-with-prior-work-and-proof-details",
+   "number": null,
+   "title": "BAI Comparison with Prior Work and Proof Details",
+   "level": 3,
+   "page_start": 153,
+   "page_end": 154,
+   "n_chars": 3172,
+   "n_words": 574
+  },
+  {
+   "id": "sec-112-difficulty-in-corralling-improving-bandit-algori",
+   "number": null,
+   "title": "Difficulty in Corralling Improving Bandit Algorithms",
+   "level": 4,
+   "page_start": 154,
+   "page_end": 157,
+   "n_chars": 6538,
+   "n_words": 1123
+  },
+  {
+   "id": "sec-113-proofs-for-results-in-section-442",
+   "number": null,
+   "title": "Proofs for results in Section 4.4.2",
+   "level": 4,
+   "page_start": 157,
+   "page_end": 158,
+   "n_chars": 2803,
+   "n_words": 541
+  },
+  {
+   "id": "sec-114-proof-of-lemma-442",
+   "number": null,
+   "title": "Proof of Lemma 4.4.2",
+   "level": 4,
+   "page_start": 158,
+   "page_end": 158,
+   "n_chars": 769,
+   "n_words": 148
+  },
+  {
+   "id": "sec-115-cumulative-reward-best-arm-identification",
+   "number": null,
+   "title": "Cumulative Reward Best Arm Identification",
+   "level": 4,
+   "page_start": 158,
+   "page_end": 159,
+   "n_chars": 1796,
+   "n_words": 357
+  },
+  {
+   "id": "sec-116-best-of-both-worlds-best-arm-identification-guar",
+   "number": null,
+   "title": "Best-of-Both-Worlds Best arm identification guarantees",
+   "level": 4,
+   "page_start": 159,
+   "page_end": 163,
+   "n_chars": 6174,
+   "n_words": 1143
+  },
+  {
+   "id": "sec-117-appendices-for-pessimism-traps",
+   "number": null,
+   "title": "Appendices for Pessimism Traps",
+   "level": 2,
+   "page_start": 163,
+   "page_end": 163,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-118-key-features-of-pessimism-traps",
+   "number": null,
+   "title": "Key features of pessimism traps",
+   "level": 3,
+   "page_start": 163,
+   "page_end": 163,
+   "n_chars": 941,
+   "n_words": 146
+  },
+  {
+   "id": "sec-119-related-works",
+   "number": null,
+   "title": "Related Works",
+   "level": 3,
+   "page_start": 163,
+   "page_end": 165,
+   "n_chars": 5990,
+   "n_words": 829
+  },
+  {
+   "id": "sec-120-proof-for-posterior-update-eqn-61",
+   "number": null,
+   "title": "Proof for Posterior Update (Eqn. 6.1)",
+   "level": 3,
+   "page_start": 165,
+   "page_end": 165,
+   "n_chars": 569,
+   "n_words": 121
+  },
+  {
+   "id": "sec-121-formulation-as-a-random-walk",
+   "number": null,
+   "title": "Formulation as a Random Walk",
+   "level": 3,
+   "page_start": 165,
+   "page_end": 168,
+   "n_chars": 5244,
+   "n_words": 1134
+  },
+  {
+   "id": "sec-122-time-varying-subsidy-proofs",
+   "number": null,
+   "title": "Time-Varying Subsidy Proofs",
+   "level": 3,
+   "page_start": 168,
+   "page_end": 168,
+   "n_chars": 5,
+   "n_words": 1
+  },
+  {
+   "id": "sec-123-proof-of-theorem-631",
+   "number": null,
+   "title": "Proof of Theorem 6.3.1",
+   "level": 4,
+   "page_start": 168,
+   "page_end": 170,
+   "n_chars": 2741,
+   "n_words": 687
+  },
+  {
+   "id": "sec-124-proof-of-theorem-632",
+   "number": null,
+   "title": "Proof of Theorem 6.3.2",
+   "level": 4,
+   "page_start": 170,
+   "page_end": 170,
+   "n_chars": 767,
+   "n_words": 152
+  },
+  {
+   "id": "sec-125-details-for-extension-to-multiple-groups",
+   "number": null,
+   "title": "Details for extension to multiple groups",
+   "level": 3,
+   "page_start": 170,
+   "page_end": 170,
+   "n_chars": 5,
+   "n_words": 1
+  },
+  {
+   "id": "sec-126-defining-the-setting",
+   "number": null,
+   "title": "Defining The Setting",
+   "level": 4,
+   "page_start": 170,
+   "page_end": 171,
+   "n_chars": 784,
+   "n_words": 151
+  },
+  {
+   "id": "sec-127-analyzing-the-subsidy-scheme",
+   "number": null,
+   "title": "Analyzing the Subsidy Scheme",
+   "level": 4,
+   "page_start": 171,
+   "page_end": 176,
+   "n_chars": 11462,
+   "n_words": 2381
+  },
+  {
+   "id": "sec-128-extra-experiments",
+   "number": null,
+   "title": "Extra Experiments",
+   "level": 3,
+   "page_start": 176,
+   "page_end": 176,
+   "n_chars": 72,
+   "n_words": 11
+  },
+  {
+   "id": "sec-129-proportion-correct-cascades",
+   "number": null,
+   "title": "Proportion Correct Cascades",
+   "level": 4,
+   "page_start": 176,
+   "page_end": 176,
+   "n_chars": 5,
+   "n_words": 1
+  },
+  {
+   "id": "sec-130-subsidy-size",
+   "number": null,
+   "title": "Subsidy Size",
+   "level": 4,
+   "page_start": 176,
+   "page_end": 179,
+   "n_chars": 242,
+   "n_words": 37
+  },
+  {
+   "id": "sec-131-appendices-for-grit",
+   "number": null,
+   "title": "Appendices for Grit",
+   "level": 2,
+   "page_start": 179,
+   "page_end": 179,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-132-related-work",
+   "number": null,
+   "title": "Related Work",
+   "level": 3,
+   "page_start": 179,
+   "page_end": 180,
+   "n_chars": 3626,
+   "n_words": 552
+  },
+  {
+   "id": "sec-133-why-this-instance-and-not-something-else",
+   "number": null,
+   "title": "Why This Instance and Not Something Else?",
+   "level": 3,
+   "page_start": 180,
+   "page_end": 181,
+   "n_chars": 2526,
+   "n_words": 467
+  },
+  {
+   "id": "sec-134-proofs-of-results",
+   "number": null,
+   "title": "Proofs of Results",
+   "level": 3,
+   "page_start": 181,
+   "page_end": 181,
+   "n_chars": 5,
+   "n_words": 1
+  },
+  {
+   "id": "sec-135-proof-of-lemma-732",
+   "number": null,
+   "title": "Proof of Lemma 7.3.2",
+   "level": 4,
+   "page_start": 181,
+   "page_end": 181,
+   "n_chars": 568,
+   "n_words": 114
+  },
+  {
+   "id": "sec-136-proof-of-lemma-733",
+   "number": null,
+   "title": "Proof of Lemma 7.3.3",
+   "level": 4,
+   "page_start": 181,
+   "page_end": 182,
+   "n_chars": 2043,
+   "n_words": 394
+  },
+  {
+   "id": "sec-137-proof-of-lemma-734",
+   "number": null,
+   "title": "Proof of Lemma 7.3.4",
+   "level": 4,
+   "page_start": 182,
+   "page_end": 182,
+   "n_chars": 861,
+   "n_words": 213
+  },
+  {
+   "id": "sec-138-fixed-time-financial-support",
+   "number": null,
+   "title": "Fixed Time Financial Support",
+   "level": 3,
+   "page_start": 182,
+   "page_end": 183,
+   "n_chars": 1639,
+   "n_words": 319
+  },
+  {
+   "id": "sec-139-calculations-for-interplay-of-grit-and-trust-fun",
+   "number": null,
+   "title": "Calculations For Interplay of Grit and Trust Fund",
+   "level": 3,
+   "page_start": 183,
+   "page_end": 184,
+   "n_chars": 1017,
+   "n_words": 245
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 1,
+  "likely_scanned": false,
+  "toc_entries": 149,
+  "toc_inferred_entries": 0,
+  "sections": 141,
+  "chars_total": 440584
+ }
+}
