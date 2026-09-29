@@ -1875,7 +1875,7 @@ Log the failure <span class="fa-gloss-status">candidate, extracted</span>
 Log the start of the install <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>REQUIRED logging, which is what drawing the call says. Logged before anything is written, so an install interrupted halfway is distinguishable from one never begun. A callActivity rather than a task: `log-message` is an independent sub-process, the second and last diagram in bootstrap. Any step may call it without being drawn; this one is drawn because here it is a step rather than a courtesy.</p>
+<p>REQUIRED logging, which is what drawing the call says. Logged before anything is written, so an install interrupted halfway is distinguishable from one never begun. A callActivity rather than a task: `log-message` is an independent sub-process, one of bootstrap's own diagrams. Any step may call it without being drawn; this one is drawn because here it is a step rather than a courtesy.</p>
 <p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_LogInstallStart</code></a></p>
 </dd>
 </dl>

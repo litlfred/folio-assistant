@@ -58,6 +58,23 @@ one level down.
 - **A new variable is a generator change first.** Add it to the object passed
   to `renderFile`, list it in the template's comment, then use it.
 
+## Versions are variables, never numbers
+
+A version typed into a template is stale on the next bump. Read it:
+
+- **README templates** get `release`: `version` (every instance declares one),
+  and — for an instance declaring an `iriBase` — `major`, `agent`
+  (`<iriBase><version>/`, for identifiers) and `human` (`<iriBase>v<major>/`,
+  for pages). Empty strings where not declared: test with `!= ""`, and show
+  nothing rather than a guess.
+- **Site templates** read `site.data.harness.releases.<instance>` — the same
+  four fields for every instance, written by `sync-docs-harness` into
+  `_data/harness.json` under the `docs:harness:check` gate.
+
+Link a person to `human`, never `agent`: the full-version address is for
+programs, which pin exactly ([`instance-publication`](instance-publication.md)
+§"Release IRIs").
+
 ## The leading comment IS the file's description
 
 Open every template with a `{%- comment -%}` block. Its **first sentence** is

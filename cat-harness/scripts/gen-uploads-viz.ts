@@ -97,6 +97,9 @@ import {
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
 import { withRenders } from "./viewer-declarations.js";
 
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "uploads-viewer";
+
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
 let stale = 0;
@@ -357,7 +360,7 @@ if (import.meta.main) {
   // queues it shows — every one here, the subject's own on a subject page.
   const drawn = (subject?: string): string[] =>
     g.queues.filter((q) => subject === undefined || q.instance === subject).map((q) => q.dir);
-  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn()));
+  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn(), VIEWER_TOOL));
 
   // One page per SUBJECT — read from the QUEUES rather than from the declared
   // directory list, so a declared-but-empty uploads directory gets no page
@@ -365,7 +368,7 @@ if (import.meta.main) {
   const subjects = [...new Set(g.queues.map((q) => q.instance))].sort();
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, "library");
-    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject)));
+    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
   }
 
   if (!check) {

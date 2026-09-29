@@ -3,7 +3,7 @@
 
 The ingested corpus — one `<bib-slug>/` per document, holding `sections/*.md` and `structure.json`. THREE PUBLISHERS AND TWO KINDS, and the distinction is load-bearing rather than bibliographic: the vendor documentation is ASSERTION (a publisher describing its own product, revisable without notice and in one case describing a product that no longer exists), while the arXiv papers are EVIDENCE (a measurement somebody else can repeat). A voice rule derived from the first is a convention; one derived from the second is a finding. Nothing in the schema can tell them apart, which is why each document's `structure.json` carries its publisher and why the voices state which kind they are reading.
 
-Part of [agent-skills](../README.md), declared as `library`, holding `library`.
+Part of [agent-skills](../README.md) 0.1.0, declared as `library`, holding `library`.
 
 | file | what it is | used by |
 |---|---|---|

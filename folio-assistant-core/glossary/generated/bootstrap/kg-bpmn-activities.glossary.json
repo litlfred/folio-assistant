@@ -89,7 +89,7 @@
     {
       "id": "process_initializeharness.a_loginstallstart",
       "prefLabel": "Log the start of the install",
-      "definition": "REQUIRED logging, which is what drawing the call says. Logged before anything is written, so an install interrupted halfway is distinguishable from one never begun. A callActivity rather than a task: `log-message` is an independent sub-process, the second and last diagram in bootstrap. Any step may call it without being drawn; this one is drawn because here it is a step rather than a courtesy.",
+      "definition": "REQUIRED logging, which is what drawing the call says. Logged before anything is written, so an install interrupted halfway is distinguishable from one never begun. A callActivity rather than a task: `log-message` is an independent sub-process, one of bootstrap's own diagrams. Any step may call it without being drawn; this one is drawn because here it is a step rather than a courtesy.",
       "notation": "A_LogInstallStart",
       "source": "bootstrap/processes/initialize-harness.bpmn#A_LogInstallStart",
       "status": "candidate"

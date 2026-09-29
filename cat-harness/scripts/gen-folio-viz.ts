@@ -78,6 +78,9 @@ import {
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
 import { withRenders } from "./viewer-declarations.js";
 
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "folio-viewer";
+
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
 
@@ -333,7 +336,7 @@ if (import.meta.main) {
   // The page says which directories it draws (#1168 B7a-2).
   emitPage(nav)(
     join(pageDir, "index.html"),
-    withRenders(viewerHtml(dataHref, mount), g.directories.filter((d) => d.present).map((d) => d.dir)),
+    withRenders(viewerHtml(dataHref, mount), g.directories.filter((d) => d.present).map((d) => d.dir), VIEWER_TOOL),
   );
 
   const absent = g.directories.filter((d) => !d.present).length;
