@@ -50,6 +50,7 @@ import { join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { docsLayers } from "./compose-docs.js";
+import { handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 /** The graph kind this renders. A KIND, never a path. */
@@ -322,6 +323,11 @@ export function page(rows: readonly ToolRow[], known: ReadonlySet<string>): stri
   return b.join("\n").trimEnd() + "\n";
 }
 
+/** The page as committed: {@link page} plus the directories it draws (#1168 B7a-2). */
+export function publishedPage(rows: Parameters<typeof page>[0], known: Parameters<typeof page>[1], repo = REPO): string {
+  return withRendersFrontMatter(page(rows, known), handledDirectories(repo, join(repo, "cat-harness"), KIND));
+}
+
 if (import.meta.main) {
   const check = process.argv.includes("--check");
   const { tools } = (await import("../tools/index.js")) as { tools: () => unknown[] };
@@ -337,7 +343,7 @@ if (import.meta.main) {
     console.error(`::error::gen-tools-viz: no visualiser declared for graph kind '${KIND}'`);
     process.exit(1);
   }
-  const rendered = page(rows, skillIds(REPO));
+  const rendered = publishedPage(rows, skillIds(REPO));
   const out = join(baseDocs(REPO), PAGE);
 
   if (check) {

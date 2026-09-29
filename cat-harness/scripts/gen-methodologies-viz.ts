@@ -67,6 +67,7 @@ import {
   type EvidenceReport,
   type MethodologyNode,
 } from "./check-methodology-evidence.js";
+import { handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REPO = resolve(INSTANCE_ROOT, "..");
@@ -393,7 +394,8 @@ if (import.meta.main) {
     process.exit(1);
   }
 
-  const rendered = page(rows, report);
+  // The page says which directories it draws (#1168 B7a-2).
+  const rendered = withRendersFrontMatter(page(rows, report), handledDirectories(REPO, INSTANCE_ROOT, KIND));
   const out = join(baseDocs(REPO), PAGE);
 
   if (check) {

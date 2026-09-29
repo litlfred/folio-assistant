@@ -242,6 +242,7 @@ export function viewerPlacement(
  * to ask an ownership question. */
 import { orphanSubjectPages } from "./orphan-pages.ts";
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
+import { withRenders } from "./viewer-declarations.js";
 
 export { orphanSubjectPages, declaresItsOwnDirectory, carriesMarker } from "./orphan-pages.ts";
 export type { OwnershipTest } from "./orphan-pages.ts";
@@ -1256,11 +1257,18 @@ if (import.meta.main) {
   const { pageDir, dataDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, seg);
   emit(join(dataDir, "index.json"), data);
   const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
-  emitPage(nav)(join(pageDir, "index.html"), viewerHtml(dataHref));
+  // Each page says which directories it draws (#1168 B7a-2): the schema
+  // directories read — every one here, those holding the subject's modules on
+  // a subject page.
+  const drawn = (subject?: string): string[] =>
+    g.roots.filter((r) =>
+      subject === undefined || g.modules.some((m) => m.instance === subject && m.module.startsWith(`${r}/`)),
+    );
+  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn()));
 
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
+    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject)));
   }
 
 
