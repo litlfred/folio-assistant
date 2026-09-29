@@ -1107,6 +1107,14 @@ export const RULES: Rule[] = [
       // dropped. Harness machinery over declarations; imports only node:fs.
       "scripts/lib/declared-presence.ts",
       "scripts/kg-audit.ts",
+      // The same audit over every declared instance rather than the root alone
+      // (bean `bjzs`). Harness layer for exactly the reason `kg-audit.ts` is —
+      // it spawns that audit and imports only `instanceRootsIn`, so its subject
+      // is the instance declarations, never the content vocabulary. Assigned
+      // here in the same change that added it: `unassigned` is what the tool's
+      // own report says not to read as clean, and four scripts sat that way
+      // until somebody looked.
+      "scripts/kg-audit-all.ts",
       // WHICH audits reach which kind of node (bean `xutg`). Harness machinery
       // for the same reason `kg-audit.ts` is: its subject is the graph-kind
       // registry and the gate set, not the content vocabulary. Beside the audit

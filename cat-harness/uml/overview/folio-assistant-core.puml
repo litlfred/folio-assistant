@@ -173,6 +173,29 @@ package "folio-assistant-core/core-processes" as pkg_folio_assistant_core_core_p
     bpmn:userTask [0..*] : element
   }
 }
+package "folio-assistant-core/qa" as pkg_folio_assistant_core_qa <<qa>> {
+  class "Pair_attestation" as folio_assistant_core_qa_kg_qa_v1_Pair_attestation <<json: KgQaReportSchema>> #f4e6e6 {
+    kind [1] : implements | co-located
+    prose [1] : string
+    code [1] : string
+    prose_hash [1] : string
+    code_hash [1] : string
+    by [1] : baseline | agent | human
+    reason [0..1] : string
+  }
+  class "kg-qa/v1" as folio_assistant_core_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
+    $schema [1] : 'kg-qa/v1'
+    subject [1] : object
+    source_hash [1] : string | null
+    criteria [1] : map<object>
+    totals [1] : map<number>
+    pair_attestations [0..*] : Pair_attestation[]
+  }
+  class "kg-qa-manifest/v1" as folio_assistant_core_qa_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #f4e6e6 {
+    $schema [1] : 'kg-qa-manifest/v1'
+    auditor [1] : object
+  }
+}
 
 folio_assistant_core_voices_VoiceProfile *-- "1..*" folio_assistant_core_voices_Source : sources
 folio_assistant_core_voices_Rule *-- "0..*" folio_assistant_core_voices_Pattern : patterns
@@ -183,7 +206,8 @@ folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_
 folio_assistant_core_core_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_core_core_skills_folio_voice_v1_Pattern : patterns
 folio_assistant_core_core_skills_folio_voice_v1_Rule *-- "0..*" folio_assistant_core_core_skills_folio_voice_v1_Terminology : terminology
 folio_assistant_core_core_skills_folio_voice_v1_folio_voice_v1 *-- "1..*" folio_assistant_core_core_skills_folio_voice_v1_Rule : rules
-' grid: portrait, 3 column(s) — pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_glossary pkg_folio_assistant_core_voices pkg_folio_assistant_core_core_tools pkg_folio_assistant_core_core_scripts pkg_folio_assistant_core_core_library pkg_folio_assistant_core_core_methodologies pkg_folio_assistant_core_core_skills pkg_folio_assistant_core_core_processes
+folio_assistant_core_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" folio_assistant_core_qa_kg_qa_v1_Pair_attestation : pair_attestations
+' grid: portrait, 3 column(s) — pkg_folio_assistant_core_core_schemas pkg_folio_assistant_core_folios pkg_folio_assistant_core_glossary pkg_folio_assistant_core_voices pkg_folio_assistant_core_core_tools pkg_folio_assistant_core_core_scripts pkg_folio_assistant_core_core_library pkg_folio_assistant_core_core_methodologies pkg_folio_assistant_core_core_skills pkg_folio_assistant_core_core_processes pkg_folio_assistant_core_qa
 pkg_folio_assistant_core_core_schemas -[hidden]down- pkg_folio_assistant_core_voices
 pkg_folio_assistant_core_folios -[hidden]down- pkg_folio_assistant_core_core_tools
 pkg_folio_assistant_core_glossary -[hidden]down- pkg_folio_assistant_core_core_scripts
@@ -191,4 +215,5 @@ pkg_folio_assistant_core_voices -[hidden]down- pkg_folio_assistant_core_core_lib
 pkg_folio_assistant_core_core_tools -[hidden]down- pkg_folio_assistant_core_core_methodologies
 pkg_folio_assistant_core_core_scripts -[hidden]down- pkg_folio_assistant_core_core_skills
 pkg_folio_assistant_core_core_library -[hidden]down- pkg_folio_assistant_core_core_processes
+pkg_folio_assistant_core_core_methodologies -[hidden]down- pkg_folio_assistant_core_qa
 @enduml
