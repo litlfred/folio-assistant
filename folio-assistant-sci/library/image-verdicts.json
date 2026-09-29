@@ -1,6 +1,6 @@
 {
   "$schema": "folio-image-verdicts/v1",
-  "_comment": "Bean d5f1. One agent's INSPECTION of every extracted image, as data rather than code, so the judgement can be reviewed line by line and re-run. `saw` is the REASON for the role, not the description; `draft` is the description. Every entry here was produced by looking at the image. Applied by scripts/apply-image-verdicts.ts, which writes an `inspection` basis naming this agent and leaves every narrative in `draft` — only a human may confirm one (schemas/narrative.ts). SPLIT 2026-09-20 (bean frs5): this file judged documents that now live in TWO libraries, so it became two files, each beside the documents it judges. A single verdict file spanning libraries is how one library's judgement comes to rewrite another's `images.json` -- `apply-image-verdicts` resolves each document against the library its verdict file is IN, and could not do that from one shared file. Nothing was re-judged: every verdict below is byte-identical to the one it was split from, and `inspected_by`/`inspected_at` are carried over unchanged because the inspection they record actually happened, once, before the split.",
+  "_comment": "Bean d5f1. One agent's INSPECTION of every extracted image, as data rather than code, so the judgement can be reviewed line by line and re-run. `saw` is the REASON for the role, not the description; `draft` is the description. Every entry here was produced by looking at the image. Applied by scripts/apply-image-verdicts.ts, which writes an `inspection` basis naming this agent and leaves every narrative in `draft` — only a human may confirm one (schemas/narrative.ts). SPLIT 2026-09-20 (bean frs5): this file judged documents that now live in TWO libraries, so it became two files, each beside the documents it judges. A single verdict file spanning libraries is how one library's judgement comes to rewrite another's `images.json` -- `apply-image-verdicts` resolves each document against the library its verdict file is IN, and could not do that from one shared file. Nothing was re-judged: every verdict below is byte-identical to the one it was split from, and `inspected_by`/`inspected_at` are carried over unchanged because the inspection they record actually happened, once, before the split. ADDED 2026-09-29: verdicts for arxiv-2601.22554v1, arxiv-2406.01940v2 and arxiv-2602.16554v1, each produced by opening the image. The file-level `inspected_at` still names the milnorlink inspection because the schema carries one date per file; the three arXiv documents were inspected on 2026-09-29, and this sentence is where that is recorded rather than restamping milnorlink's date.",
   "inspected_by": {
     "kind": "agent",
     "id": "claude",
@@ -13,6 +13,87 @@
         "role": "logo",
         "saw": "the JSTOR publisher mark",
         "draft": "The JSTOR logo: an ornate decorated capital J in a black square, above the word STOR, with a registered-trademark symbol."
+      }
+    },
+    "arxiv-2406.01940v2": {
+      "img-p002-1": {
+        "role": "decorative",
+        "saw": "an empty white rectangle with a soft grey drop shadow and nothing drawn inside it -- the background panel of one of Figure 1's boxes; the figure's text and arrows are vector graphics the image extractor does not capture",
+        "draft": "An empty white rectangular panel with a soft grey drop shadow and no content of its own: the background of one of the boxes in Figure 1, the overview of the Process-Driven Autoformalization loop. The box's text and arrows are drawn as vector graphics on top of it and are not part of this image."
+      },
+      "img-p002-2": {
+        "role": "decorative",
+        "saw": "an empty white rectangle with a soft grey drop shadow and nothing drawn inside it -- the background panel of one of Figure 1's boxes; the figure's text and arrows are vector graphics the image extractor does not capture",
+        "draft": "An empty white rectangular panel with a soft grey drop shadow and no content of its own: the background of one of the boxes in Figure 1, the overview of the Process-Driven Autoformalization loop. The box's text and arrows are drawn as vector graphics on top of it and are not part of this image."
+      },
+      "img-p002-3": {
+        "role": "decorative",
+        "saw": "an empty white rectangle with a soft grey drop shadow and nothing drawn inside it -- the background panel of one of Figure 1's boxes; the figure's text and arrows are vector graphics the image extractor does not capture",
+        "draft": "An empty white rectangular panel with a soft grey drop shadow and no content of its own: the background of one of the boxes in Figure 1, the overview of the Process-Driven Autoformalization loop. The box's text and arrows are drawn as vector graphics on top of it and are not part of this image."
+      },
+      "img-p002-4": {
+        "role": "decorative",
+        "saw": "an empty white rectangle with a soft grey drop shadow and nothing drawn inside it -- the background panel of one of Figure 1's boxes; the figure's text and arrows are vector graphics the image extractor does not capture",
+        "draft": "An empty white rectangular panel with a soft grey drop shadow and no content of its own: the background of one of the boxes in Figure 1, the overview of the Process-Driven Autoformalization loop. The box's text and arrows are drawn as vector graphics on top of it and are not part of this image."
+      },
+      "img-p002-5": {
+        "role": "decorative",
+        "saw": "an empty white rectangle with a soft grey drop shadow and nothing drawn inside it -- the background panel of one of Figure 1's boxes; the figure's text and arrows are vector graphics the image extractor does not capture",
+        "draft": "An empty white rectangular panel with a soft grey drop shadow and no content of its own: the background of one of the boxes in Figure 1, the overview of the Process-Driven Autoformalization loop. The box's text and arrows are drawn as vector graphics on top of it and are not part of this image."
+      },
+      "img-p002-6": {
+        "role": "decorative",
+        "saw": "an empty white rectangle with a soft grey drop shadow and nothing drawn inside it -- the background panel of one of Figure 1's boxes; the figure's text and arrows are vector graphics the image extractor does not capture",
+        "draft": "An empty white rectangular panel with a soft grey drop shadow and no content of its own: the background of one of the boxes in Figure 1, the overview of the Process-Driven Autoformalization loop. The box's text and arrows are drawn as vector graphics on top of it and are not part of this image."
+      },
+      "img-p002-7": {
+        "role": "figure",
+        "saw": "a network glyph placed on the Figure 1 overview beside the verifier box",
+        "draft": "A dark navy line icon of a small layered network: two nodes on the left, three in the middle column and three on the right, joined by straight edges that cross between the columns, two of the left-hand edges drawn with a small gap as if passing under another. In the paper's Figure 1 it stands for the Process-Supervised Verifier, the trained model that scores autoformalization candidates."
+      }
+    },
+    "arxiv-2602.16554v1": {
+      "img-p003-1": {
+        "role": "logo",
+        "saw": "the Lean wordmark with a trademark sign",
+        "draft": "The Lean wordmark: the letters L, E, A and N drawn as a single continuous thin black line of straight strokes, sharing verticals between letters, with a small grey TM at the upper right. In Figure 1 it marks the Lean 4 stage of the pipeline."
+      }
+    },
+    "arxiv-2601.22554v1": {
+      "img-p008-1": {
+        "role": "figure",
+        "saw": "Figure 2(a), the blueprint dependency graph of the multivariate Taylor case study, the initial blueprint drafted by the language model",
+        "draft": "Figure 2(a): the first blueprint produced for multivariate Taylor's theorem in integral form, before any automated proving. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. Most theorem nodes are light blue (unproved); only taylor_integral_one_shot, integrationByParts_smul and ftoc_bochner_wrapper are dark green."
+      },
+      "img-p008-2": {
+        "role": "figure",
+        "saw": "Figure 2(b), the same graph after the automated prover's first pass",
+        "draft": "Figure 2(b): the same initial blueprint after the automated prover's sorry-filling pass. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. The leaf lemmas taylorKernel_deriv_t, taylorKernel_at_right and taylorRemainder_eq_explicit have turned dark green; taylor_integral_kernel and lineCurve_iteratedDeriv remain light blue, and taylor_integral_explicit and frechet_taylor_integral are filled a lighter green; the caption distinguishes only blue (unproved) from green (proved), so what the two shades of green separate is not stated in the paper."
+      },
+      "img-p008-3": {
+        "role": "figure",
+        "saw": "Figure 2(c), the refined blueprint with extra intermediate lemmas, all unproved",
+        "draft": "Figure 2(c): the refined blueprint after the planner model decomposed the stuck nodes further. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. New intermediate nodes appear -- taylor_remainder_by_parts, taylor_integral_kernel_base, taylorPoly_succ, ftoc_bochner_on_uIcc and lineCurve_contDiffOn_onSeg -- and every theorem node is light blue, i.e. nothing is yet proved in this version."
+      },
+      "img-p008-4": {
+        "role": "figure",
+        "saw": "Figure 2(d), the refined graph after the second prover pass with three nodes left",
+        "draft": "Figure 2(d): the refined blueprint after the prover's second pass. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. Nearly every lemma is dark green; three remain light blue -- taylor_remainder_by_parts, lineCurve_iteratedDeriv and frechet_taylor_integral -- which are the nodes the text says were left for a human. taylor_integral_kernel, taylor_integral_explicit and taylor_integral_one_shot are a lighter green."
+      },
+      "img-p008-5": {
+        "role": "figure",
+        "saw": "Figure 2(e), the completed graph with every node dark green",
+        "draft": "Figure 2(e): the completed formalization after a human proved the remaining nodes. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. Every theorem node is dark green, meaning the whole graph, including the target frechet_taylor_integral, is proved without sorry."
+      },
+      "img-p012-1": {
+        "role": "figure",
+        "saw": "Figure 3(a), the rendered blueprint document of the MyNat example",
+        "draft": "Figure 3(a): the web blueprint generated from the appendix's MyNat example. It lists Definition 1 (Natural numbers) and Definition 2 (Natural number addition), each with a check mark; Theorem 3, for any natural number a, 0 + a = a, where + is definition 2, with a check mark and a collapsed proof; Theorem 4, (a + 1) + b = (a + b) + 1, with no check mark and the proof text 'Proof by induction on b'; and Theorem 5, a + b = b + a, with no check mark and a proof reading 'The base case follows from theorem 3. The inductive case follows from theorem 4.', both references rendered as links."
+      },
+      "img-p012-2": {
+        "role": "figure",
+        "saw": "Figure 3(b), the dependency graph of the MyNat example",
+        "draft": "Figure 3(b): the dependency graph of the MyNat example. Green rectangles MyNat and nat-add at the top, with dashed arrows from nat-add to a blue-bordered rectangle MyNat.mul and to the ellipses MyNat.succ_add (light blue) and MyNat.zero_add (dark green); solid arrows run from both of those into MyNat.add_comm (light blue), and a dashed arrow from MyNat.mul to a white ellipse MyNat.mul_comm, whose outgoing edge is cut off at the bottom of the image."
       }
     }
   }
