@@ -76,6 +76,17 @@ ingest still succeeds. Read the lines while the document is fresh: a narrow
 dimension on a new document is almost always boilerplate, specimen text or a
 mis-extracted page, and it is cheapest to mark now.
 
+## Where to LOOK at an index
+
+`bun run lsi:viz` writes one page, `/lsi/` ("Latent semantic indexes"): every
+committed index with its dimensions as two poles, its findings, and the
+need-an-index verdicts. It is declared as a titled visualiser on the `qa`
+directory, so it appears on the navbar, the board and the central
+**Published graphs** page (`/cat-harness/`, §"Every declared viewer") with no
+further wiring. `lsi:viz:check` fails in CI when the page is stale — so after
+`lsi index`, run `lsi:viz` too. The page is excluded from every index's units:
+indexing a page that reports on the indexes would never reach a fixed point.
+
 ## Where the index lives, and what is committed
 
 `cat-harness/test/results/lsi/<instance>/<graph>.lsi.json` — the fingerprint,

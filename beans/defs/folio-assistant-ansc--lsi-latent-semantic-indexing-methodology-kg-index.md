@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-29T17:34:06Z
-updated_at: 2026-09-29T21:29:45Z
+updated_at: 2026-09-29T22:10:07Z
 parent: folio-assistant-zzmr
 ---
 
@@ -41,3 +41,9 @@ Issue #1482. Methodology node, applicability analysis, options, prototype on thr
 - [x] Measured vs LSI on the PRE-refiling bean store (post-refiling would score LSI against itself): CA-raw 146 vs LSI-raw 136 of 250 (Qi's direction, McNemar p=0.17); vs log-entropy LSI p=0.71. No significant difference; LSI stays the filing default.
 - [x] who-iris: LSI dim 1 = margin (342/342 one side), CA dim 1 = contrast (46/296); CA leading dims go to outliers (place-name list, placeholder text).
 - [ ] Owner: index visualiser / central index page (queued question)
+
+
+## Round 6 (2026-09-29): owner chose 'Viewer + surface page'
+- [x] /lsi/ viewer (gen-lsi-viz.ts, lsi:viz + CI lsi:viz:check), declared as a titled visualiser on the qa directory, registered in tools/viewers.ts
+- [x] Published graphs (/cat-harness/) put in the sidebar (was nav_exclude) and given an 'Every declared viewer' section from graphTiles — the same tiles the navbar/board read — so a titled viewer on a kind that already has a conventional page is reachable from the central page
+- [x] Viewer output excluded from index units (self-reference fixed point)

@@ -59,6 +59,13 @@ const VIEWERS: Viewer[] = [
     renders: ["library"],
   },
   {
+    id: "lsi-viewer",
+    title: "Latent semantic index viewer",
+    description: "Render every committed LSI index — dimensions as two poles, narrow-dimension and near-duplicate findings — and which declared prose graphs still need one.",
+    script: "lsi:viz",
+    renders: ["qa"],
+  },
+  {
     id: "methodologies-viewer",
     title: "Methodologies viewer",
     description: "Render the declared methodology graph as one page.",

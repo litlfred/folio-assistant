@@ -59,6 +59,8 @@ import {
 
 const REPO = resolve(import.meta.dir, "../..");
 const RESULTS = join(REPO, "cat-harness/test/results/lsi");
+/** Where `gen-lsi-viz.ts` writes; never a unit of any index (see `unitsOf`). */
+export const VIEWER_DIR = join(REPO, "cat-harness/docs/lsi") + "/";
 
 export const NEED_UNITS = 100;
 export const NEED_WORDS = 20_000;
@@ -105,6 +107,10 @@ export function unitsOf(absPath: string, graphKinds: string[], docs?: string[]):
     files = walk(absPath).sort();
   }
   return files
+    // The index viewer's own page reports on the indexes; indexing it would
+    // make every regeneration stale the index it reports on, and the page
+    // would never reach a fixed point (the self-reference class of bean 1xrg).
+    .filter((f) => !f.startsWith(VIEWER_DIR))
     .map((f) => ({ id: relative(REPO, f), text: readFileSync(f, "utf8") }))
     .filter((u) => tokenize(u.text).length >= MIN_TOKENS);
 }

@@ -3,7 +3,7 @@ layout: default
 title: Published graphs
 lang: en
 description: "Every graph this handler renders, by kind and by the instance whose material it shows."
-nav_exclude: true
+nav_order: 2
 permalink: /cat-harness/
 ---
 
@@ -25,6 +25,13 @@ permalink: /cat-harness/
 Every graph this handler renders, by kind and by the instance whose material it
 shows. The handler segment of each route is this instance's declared name; the
 subject segment, where there is one, is the instance the material belongs to.
+
+**This is the one place every index is reached from** — the tables of contents
+(`docs`, `skills`), the glossaries, the methodologies, the tools, the
+libraries' catalogues and the latent semantic indexes (`qa`) are each a kind
+below. It is listed in the sidebar for that reason (bean `ansc`: it had been
+excluded from navigation, so the page that answers "where are all the indexes?"
+could only be found by knowing its address).
 
 A kind listed as **declared, not published** is one an instance declared and
 nothing renders yet. It is shown rather than omitted: "nothing renders this" and
@@ -329,6 +336,34 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 {: .fa-hx-dim }
 
 - C@T Harness — *declared, not published*
+
+## Every declared viewer
+
+The same viewers the navbar and the board show, by title.
+
+- [agent-skills-library]({{ '/cat-harness/library/agent-skills/' | relative_url }}) — declared on `agent-skills-library`
+- [beans]({{ '/beans/' | relative_url }}) — declared on `beans`
+- [Docs — cat-harness]({{ '/cat-harness/docs-auto/index/docs/docs/' | relative_url }}) — declared on `docs`
+- [External schemas]({{ '/external-schemas/' | relative_url }}) — declared on `external-schemas`
+- [folio]({{ '/cat-harness/folio/' | relative_url }}) — declared on `folio`
+- [folio-assist-core-schemas]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }}) — declared on `folio-assist-core-schemas`
+- [folio-assistant-sci-library]({{ '/cat-harness/library/folio-assistant-sci/' | relative_url }}) — declared on `folio-assistant-sci-library`
+- [fsh-guts]({{ '/fsh-guts/' | relative_url }}) — declared on `fsh-guts`
+- [large-datasets-schemas]({{ '/cat-harness/schemas/large-datasets/' | relative_url }}) — declared on `large-datasets-schemas`
+- [Latent semantic indexes]({{ '/lsi/' | relative_url }}) — declared on `qa`
+- [library]({{ '/cat-harness/library/cat-harness/' | relative_url }}) — declared on `library`
+- [Methodologies]({{ '/methodologies/' | relative_url }}) — declared on `methodologies`
+- [processes]({{ '/processes/' | relative_url }}) — declared on `processes`
+- [schemas]({{ '/cat-harness/schemas/cat-harness/' | relative_url }}) — declared on `schemas`
+- [Skills — cat-harness]({{ '/cat-harness/docs-auto/index/skills/skills/' | relative_url }}) — declared on `skills`
+- [Skills — large-datasets]({{ '/cat-harness/docs-auto/index/skills/large-datasets-skills/' | relative_url }}) — declared on `large-datasets-skills`
+- [Skills — who-iris]({{ '/cat-harness/docs-auto/index/skills/who-iris-skills/' | relative_url }}) — declared on `who-iris-skills`
+- [swimlane-glossary]({{ '/cat-harness/docs-auto/glossary/swimlane-glossary/' | relative_url }}) — declared on `swimlane-glossary`
+- [todos]({{ '/todos/' | relative_url }}) — declared on `todos`
+- [Tools]({{ '/tools/' | relative_url }}) — declared on `tools`
+- [translation-sources]({{ '/translation-status/' | relative_url }}) — declared on `translation-sources`
+- [uploads]({{ '/cat-harness/uploads/' | relative_url }}) — declared on `uploads`
+- [who-iris-library]({{ '/cat-harness/library/who-iris/' | relative_url }}) — declared on `who-iris-library`
 
 ---
 

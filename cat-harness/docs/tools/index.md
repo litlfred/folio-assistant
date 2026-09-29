@@ -25,9 +25,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>105</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>106</b><span>Tool nodes</span></div>
 <div class="tg-stat"><b>64</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>85</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>86</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -37,19 +37,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 85 |
+| <span class="tg-tag tg-shell">shell</span> | 86 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 24 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 6 |
 
 | installation | tools |
 |---|---|
-| `none` | 96 |
+| `none` | 97 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **64** skills named across **105** tools resolve to a
+Yes — all **64** skills named across **106** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -101,6 +101,7 @@ tool advertising a capability the graph cannot locate.
 | `library-viewer`<br>Library viewer | Render each declared library directory — its entries, intakes and avatars — as a page per subject instance. | <span class="tg-tag tg-shell">shell</span> | `graph-rendering` | 1 in / 1 out |
 | `log-message`<br>Log a message to the discussion | Write a log line where the human actor will read it: the discussion you are already in. Takes the five required fields and the optional body, and renders them as one entry. | <span class="tg-tag tg-manual">manual</span> | `log-message` | 6 in / 1 out |
 | `lsi-query`<br>Latent Semantic Indexing over a prose graph | Find units of a declared prose graph (a library, the skills, the beans, docs) that discuss a query in OTHER words — the vocabulary gap lexical search cannot reach. Each hit is labelled lexical+latent or latent only, and the score is a cosine in the latent space, never merged with a lexical result. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `lsi-indexing` | 3 in / 1 out |
+| `lsi-viewer`<br>Latent semantic index viewer | Render every committed LSI index — dimensions as two poles, narrow-dimension and near-duplicate findings — and which declared prose graphs still need one. | <span class="tg-tag tg-shell">shell</span> | `graph-rendering` | 1 in / 1 out |
 | `mcp-capture`<br>What this instance's MCP server serves | Read the real tool surface from the registrars by mounting each against a capture object — the same objects the server asks, so the Zod shapes and their optionality are the served ones rather than a reading of the source. | <span class="tg-tag tg-shell">shell</span> | `mcp-contract` | 1 in / 1 out |
 | `methodologies-viewer`<br>Methodologies viewer | Render the declared methodology graph as one page. | <span class="tg-tag tg-shell">shell</span> | `graph-rendering` | 1 in / 1 out |
 | `narrative-queue`<br>What narratives are waiting on a person | List the agent-drafted narratives awaiting human confirmation, numbered, with the numbered rejection reasons beside them. The queue is the only place a draft's state is visible before someone accepts it. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 0 in / 1 out |

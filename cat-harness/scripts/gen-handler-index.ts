@@ -53,6 +53,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { dirname, join, relative } from "node:path";
 
 import { harnessTiles, type HarnessTile } from "./harness-tiles.ts";
+import { graphTiles, type GraphTile } from "./graph-tiles.ts";
 import { readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.ts";
 
 const ROOT = join(import.meta.dir, "..");
@@ -118,7 +119,7 @@ function esc(s: string): string {
  * viewers, which are zero-dependency apps fetching a projection. This one
  * renders a list that is already computed; it needs no client at all.
  */
-export function handlerIndexPage(handler: string, rows: readonly HandlerRow[]): string {
+export function handlerIndexPage(handler: string, rows: readonly HandlerRow[], viewers: readonly GraphTile[] = []): string {
   const byKind = new Map<string, HandlerRow[]>();
   for (const r of rows) {
     const list = byKind.get(r.kind) ?? byKind.set(r.kind, []).get(r.kind)!;
@@ -151,7 +152,7 @@ layout: default
 title: Published graphs
 lang: en
 description: "Every graph this handler renders, by kind and by the instance whose material it shows."
-nav_exclude: true
+nav_order: 2
 permalink: /${handler}/
 ---
 
@@ -174,18 +175,49 @@ Every graph this handler renders, by kind and by the instance whose material it
 shows. The handler segment of each route is this instance's declared name; the
 subject segment, where there is one, is the instance the material belongs to.
 
+**This is the one place every index is reached from** — the tables of contents
+(\`docs\`, \`skills\`), the glossaries, the methodologies, the tools, the
+libraries' catalogues and the latent semantic indexes (\`qa\`) are each a kind
+below. It is listed in the sidebar for that reason (bean \`ansc\`: it had been
+excluded from navigation, so the page that answers "where are all the indexes?"
+could only be found by knowing its address).
+
 A kind listed as **declared, not published** is one an instance declared and
 nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 "this does not exist" are different answers, and a gap says neither.
 
 ${sections.join("\n\n")}
-
+${viewerSection(viewers)}
 ---
 
 Looking for what the platform *is* rather than what it publishes?
 [The platform]({{ '/platform.html' | relative_url }}) carries the actor, role,
 process and skill model.
 `;
+}
+
+/**
+ * Every DECLARED viewer, by title — the second half of "where are all the
+ * indexes?".
+ *
+ * The sections above list one page per (instance, kind), and discovery there
+ * is convention-first, so a kind that already has a page at its conventional
+ * route keeps that link and a titled viewer declared for the same kind never
+ * shows. That is how the latent-semantic-index viewer (declared on the `qa`
+ * directory, bean `ansc`) reached the navbar and the board and not this page.
+ * These are the SAME tiles the navbar and the board read — `graphTiles` over
+ * the same declaration — so the three surfaces cannot disagree about which
+ * viewers exist. Hidden tiles and tiles with no published href are left out:
+ * a row that is not a link is not a way to reach anything.
+ */
+export function viewerSection(viewers: readonly GraphTile[]): string {
+  const shown = viewers.filter((v) => !v.hidden && v.href !== undefined);
+  if (shown.length === 0) return "";
+  const items = [...shown]
+    .sort((a, b) => a.title.localeCompare(b.title, "en"))
+    .map((v) => `- [${esc(v.title)}]({{ '${esc(v.href!)}' | relative_url }}) — declared on \`${esc(v.directory)}\``)
+    .join("\n");
+  return `\n## Every declared viewer\n\nThe same viewers the navbar and the board show, by title.\n\n${items}\n`;
 }
 
 let stale = 0;
@@ -219,7 +251,8 @@ if (import.meta.main) {
   const rows = handlerRows(harnessTiles(repoRoot, ROOT, names));
   const site = join(ROOT, siteDirFor(ROOT));
   const out = join(site, decl.name, PAGE_FILE);
-  emit(out, handlerIndexPage(decl.name, rows));
+  const viewers = graphTiles(decl.directories ?? [], relative(repoRoot, site));
+  emit(out, handlerIndexPage(decl.name, rows, viewers));
 
   if (!check) {
     const published = rows.filter((r) => r.path !== undefined).length;

@@ -744,6 +744,9 @@ jobs:
       - name: the skills graph's LSI index is fresh
         run: bun run lsi:skills:check
 
+      - name: the LSI index viewer page is current
+        run: bun run lsi:viz:check
+
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 
