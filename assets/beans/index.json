@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 434,
+      "count": 438,
       "unit": "beans"
     }
   },
@@ -823,6 +823,20 @@
       "file": "beans/defs/folio-assistant-4dbr--forge-portability-gitlab-and-sovereign-compute-as.md"
     },
     {
+      "id": "folio-assistant-4dxv",
+      "title": "goal-review axis 1: the session listing is ordered by CREATION, so a window filter must page until creation predates the window",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T12:20:12Z",
+      "updatedAt": "2026-09-24T12:20:12Z",
+      "preview": "Found 2026-09-24 in a 1-day goal review. The rule concerned is `goal-review` §\"The six axes\", axis 1 (\"ASK THE SESSION API FIRST … List the sessions\").\n\n**Measured:** `list_sessions(mine, limit 40)` returned 40 sessions, 22 of them updated in the window, and `has_more: true`. The in-window rows were interleaved with sessions last active on 07-03, because the list is ordered by creation, not activi",
+      "file": "beans/defs/folio-assistant-4dxv--goal-review-axis-1-the-session-listing-is-ordered.md"
+    },
+    {
       "id": "folio-assistant-4kj4",
       "title": "AVATARS: per-kind avatar, in and out of trash, both schemes, with a QA axis for coverage",
       "status": "todo",
@@ -947,6 +961,20 @@
       "updatedAt": "2026-09-20T09:12:10Z",
       "preview": "Owner, 2026-09-20: *\"whats using them? give more info\"*.\n\n## Answer: NOTHING is using them\n\nMeasured 2026-09-20 — and the measurement **corrected this bean's own\nframing**, which called them \"folio workflows living in the platform\".\n\n### 1. Nothing triggers them\n\nAll eight are **`workflow_dispatch` only**. `publish.yml` also declares\n`workflow_call`, and **no workflow calls it**. They fire if, and",
       "file": "beans/defs/folio-assistant-52dz--folio-workflows-live-in-the-platform-repo-do-they.md"
+    },
+    {
+      "id": "folio-assistant-52rd",
+      "title": "goal-review axis 6: the CI-health tool covers the last 100 runs, which can be shorter than the review window",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T12:20:12Z",
+      "updatedAt": "2026-09-24T12:20:12Z",
+      "preview": "Found 2026-09-24 in a 1-day goal review. The rule concerned is `goal-review` §\"The six axes\", axis 6 (\"Runs in the window by workflow and outcome\"), and rule 1 (\"Could not determine is never rendered as clean\").\n\n**Measured:** `bun run check:ci-health` reported \"100 recent run(s) spanning 13.4h\" for a 24h window, plus 12.9h of Pages deployments. The first ~10.6h of the window had no CI verdict at ",
+      "file": "beans/defs/folio-assistant-52rd--goal-review-axis-6-the-ci-health-tool-covers-the-l.md"
     },
     {
       "id": "folio-assistant-55ao",
@@ -4871,6 +4899,20 @@
       "file": "beans/defs/folio-assistant-thsz--pages-report-a-cancellation-share-cannot-tell-coal.md"
     },
     {
+      "id": "folio-assistant-tjj6",
+      "title": "goal-review with no goals given ignores the goal milestones already in the store",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T12:20:12Z",
+      "updatedAt": "2026-09-24T12:20:12Z",
+      "preview": "Found 2026-09-24. The owner ran `/goal-review 1d` with no goals. The command says: *\"With no goals, produce the synopsis and the instruction gaps, and say that no queue was built because no goal was given.\"* The skill's inputs table agrees (\"none — ask, or review without a queue and say so\").\n\n**But the store carries the goals as objects:** milestones `vuip` (GOAL 1: separation of repos…), `p5wm` ",
+      "file": "beans/defs/folio-assistant-tjj6--goal-review-with-no-goals-given-ignores-the-goal-m.md"
+    },
+    {
       "id": "folio-assistant-tr05",
       "title": "KG MODELLING: dependents point at the general node; typed KG refs; skill I/O schemas (#1168)",
       "status": "in-progress",
@@ -5559,6 +5601,20 @@
       "file": "beans/defs/folio-assistant-x4mt--cross-agent-skill-install-fa-prefix.md"
     },
     {
+      "id": "folio-assistant-x6lu",
+      "title": "goal-review axis 4: 'items only on a branch' must be compared by bean ID — a stale merge base reported 131 where 1 was real",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-24T12:20:12Z",
+      "updatedAt": "2026-09-24T12:20:12Z",
+      "preview": "Found 2026-09-24 in a 1-day goal review. The rule concerned is `goal-review` §\"The six axes\", axis 4, \"Items that exist only on a branch … Sweep the open branches' stores too\".\n\n**Measured:** `git diff --diff-filter=A origin/main...origin/claude/peaceful-heisenberg-dzgsf1 -- beans/defs` listed **131** added bean files. The branch is 822 commits behind main (merge base 09-22). Compared by bean id a",
+      "file": "beans/defs/folio-assistant-x6lu--goal-review-axis-4-items-only-on-a-branch-must-be.md"
+    },
+    {
       "id": "folio-assistant-x80s",
       "title": "INGEST: agent summaries of prose blocks, a QA sidecar drained slowly during ingestion",
       "status": "todo",
@@ -5715,14 +5771,14 @@
     {
       "id": "folio-assistant-xlg2",
       "title": "RUN THE SAMPLE IMPORT: one real end-to-end instance of sample-import.bpmn, recorded, with a test",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:01:44Z",
-      "updatedAt": "2026-09-24T18:01:44Z",
+      "updatedAt": "2026-09-29T22:26:13Z",
       "preview": "From the `v048` roast, objection 5. Placed under `kupb` by the owner, 2026-09-24.\n\n**Measured:** `sample-import.bpmn` loads and renders, with skills and roles bound, but `beans/workflows/` holds **no** instance of it or of `materialize-remote`, no `.ts` file names it, and the three worked items arrived as owner uploads, not through it. `hfwl`'s Done-when asked only for a diagram, a skill and a ren",
       "file": "beans/defs/folio-assistant-xlg2--run-the-sample-import-one-real-end-to-end-instance.md"
     },
