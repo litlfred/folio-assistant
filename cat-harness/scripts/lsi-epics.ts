@@ -30,6 +30,7 @@
  * is a coin toss — and says so.
  *
  *   bun run lsi:epics [--out <file.md>]
+ *   bun run lsi:near "<planned bean title>" [--body "<text>"]
  */
 
 import { execFileSync } from "node:child_process";
@@ -53,6 +54,11 @@ function beanDefDirs(): string[] {
 const FIT_FLOOR = 0.3;
 /** Best minus runner-up below this: ambiguous, a person decides. */
 const MARGIN_FLOOR = 0.05;
+/** `--near`: a hit this close is worth reading before creating. House
+ *  number, measured 2026-09-29: a REWORDED title for the known duplicate pair
+ *  `3ozg`/`rmcf` scored 0.72-0.75 against both (a title is short against a
+ *  full bean body), while unrelated beans sat below 0.5. */
+const NEAR_READ = 0.7;
 
 interface Bean {
   id: string;
@@ -70,7 +76,7 @@ function loadBeans(): Bean[] {
   return files.map((file) => {
     const text = readFileSync(file, "utf8");
     const fm = text.match(/^---\n([\s\S]*?)\n---/)?.[1] ?? "";
-    const get = (k: string) => fm.match(new RegExp(`^${k}:\\s*(.*)$`, "m"))?.[1]?.replace(/^['"]|['"]$/g, "").trim();
+    const get = (k: string) => fm.match(new RegExp(`^${k}:\\s*(.*)$`, "m"))?.[1]?.replace(/^['"]|['"]$/g, "").replace(/''/g, "'").trim();
     const id = fm.match(/^# (\S+)/m)?.[1] ?? file.split("/").pop()!.split("--")[0];
     return {
       id,
@@ -144,6 +150,39 @@ if (import.meta.main) {
   for (const b of beans) {
     const e = epicOf(b, byId);
     if (e && members.has(e)) members.get(e)!.push(b.id);
+  }
+
+  // ── `--near "<title>"`: the semantic half of check-before-create ──
+  //
+  // `beans create` dedupes on nothing, and the exact-title check in
+  // `todo-manager` §"Check before you create" only catches the SAME words.
+  // This folds the planned title (and any `--body`) into the index and shows
+  // the closest existing beans of every status, plus the closest epic — so a
+  // restatement in different words is seen before the file exists. It prints;
+  // deciding that a hit IS the same work is the reader's act.
+  const nearIdx = process.argv.indexOf("--near");
+  if (nearIdx > 0) {
+    const title = process.argv[nearIdx + 1] ?? "";
+    const bodyIdx = process.argv.indexOf("--body");
+    const text = `${title}\n${bodyIdx > 0 ? process.argv[bodyIdx + 1] : ""}`;
+    const v = foldIn(ix, text);
+    if (v.every((x) => x === 0)) {
+      console.log(`no term of ${JSON.stringify(title)} is in the bean vocabulary — nothing to compare (this is not "no duplicate")`);
+      process.exit(0);
+    }
+    const hits = ix.unitIds
+      .map((id) => ({ b: byId.get(id)!, cos: cosineVectors(v, unitVector(ix, id)!) }))
+      .sort((a, b) => b.cos - a.cos)
+      .slice(0, Number(process.env.LSI_NEAR_TOP ?? 5));
+    console.log(`nearest beans to ${JSON.stringify(title)} (latent cosine; READ any >= ${NEAR_READ} before creating):`);
+    for (const { b, cos } of hits)
+      console.log(`  ${cos.toFixed(2)}${cos >= NEAR_READ ? " ←" : "  "} ${b.short.padEnd(5)} ${b.status.padEnd(11)} ${b.type.padEnd(8)} ${b.title.slice(0, 90)}`);
+    const cents = new Map<string, Float64Array>();
+    for (const [e, ids] of members) cents.set(e, centroid(ix, ids));
+    const [best, second] = rankEpics(ix, v, cents);
+    const tag = best.cosine < FIT_FLOOR ? "no epic fits — a new one?" : best.cosine - second.cosine < MARGIN_FLOOR ? `ambiguous vs ${second.epic.replace(/^folio-assistant-/, "")}` : "";
+    console.log(`closest epic: ${best.epic.replace(/^folio-assistant-/, "")} ${byId.get(best.epic)!.title.split(":")[0]} (${best.cosine.toFixed(2)}) ${tag}`);
+    process.exit(0);
   }
 
   // ── Items: open non-epic beans, and unmerged branches ──

@@ -133,7 +133,23 @@ print(f"{len(m)} exact match(es)")
   Read the outcome — three of them are refusals, and `held-unknown` means it
   could not tell a live sibling from an abandoned claim:
   [`bean-coordination.md` §"`bun run beans:claim`"](bean-coordination.md).
-- **0 matches** → `beans create "$T" --type task`
+- **0 matches** → run the **semantic** check before creating:
+
+  ```bash
+  bun run lsi:near "$T"          # add --body "<first paragraph>" when you have one
+  ```
+
+  The exact-title check above catches the same WORDS; this catches the same
+  work in other words. It folds the title into an LSI index of every bean (all
+  statuses — a completed one is often the answer) and prints the nearest five
+  plus the closest epic. **Read every hit marked `←` (cosine ≥ 0.7) before
+  creating.** If one is the same work, claim or reopen it rather than create;
+  if it is related, create and say so in the body. Measured when it landed: a
+  reworded title for the known duplicate pair `3ozg`/`rmcf` found both at
+  0.72–0.75. The score proposes; whether a hit IS the same work is your call
+  (method [`lsi`](../../methodologies/lsi.md), refusal 3).
+- **Still new** → `beans create "$T" --type task`, under the epic `lsi:near`
+  printed if it fits (§"WHICH parent — the criterion nobody wrote down" below).
 
 `--search` is a fuzzy Bleve query, so the exact-title comparison inside the
 pipe is load-bearing — do not drop it and trust `--search` alone.
