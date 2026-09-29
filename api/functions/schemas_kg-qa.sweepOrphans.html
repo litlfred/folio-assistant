@@ -14,7 +14,7 @@
 <section class="tsd-panel">
 <ul class="tsd-signatures">
 <li class="">
-<div class="tsd-signature tsd-anchor-link" id="sweeporphans"><span class="tsd-kind-call-signature">sweepOrphans</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">root</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-kind-parameter">written</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/schemas_kg-qa.OrphanSidecar.html" class="tsd-signature-type tsd-kind-interface">OrphanSidecar</a><span class="tsd-signature-symbol">[]</span><a href="#sweeporphans" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-signature tsd-anchor-link" id="sweeporphans"><span class="tsd-kind-call-signature">sweepOrphans</span><span class="tsd-signature-symbol">(</span><br/>    <span class="tsd-kind-parameter">root</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">written</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">tree</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/schemas_kg-qa.OrphanSidecar.html" class="tsd-signature-type tsd-kind-interface">OrphanSidecar</a><span class="tsd-signature-symbol">[]</span><a href="#sweeporphans" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
 <div class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Sidecars under the results tree that this run did not write.</p>
 <h2 id="why-it-reads-each-sidecar-rather-than-only-its-filename" class="tsd-anchor-link">Why it reads each sidecar rather than only its filename<a href="#why-it-reads-each-sidecar-rather-than-only-its-filename" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
@@ -42,10 +42,13 @@ rather than making it automatic.</p>
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li><span><span class="tsd-kind-parameter">root</span>: <span class="tsd-signature-type">string</span></span></li>
-<li><span><span class="tsd-kind-parameter">written</span>: <span class="tsd-signature-type">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></span></li></ul></div>
+<li><span><span class="tsd-kind-parameter">written</span>: <span class="tsd-signature-type">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></span></li>
+<li><span><span class="tsd-kind-parameter">tree</span>: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = ...</span></span>
+<div class="tsd-comment tsd-typography"><p>The <code>kg-qa/</code> tree to sweep; the instance's own by default.</p>
+</div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="../interfaces/schemas_kg-qa.OrphanSidecar.html" class="tsd-signature-type tsd-kind-interface">OrphanSidecar</a><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0e75869eb8da3b2b1b7a20bd8e49c57de8d99652/cat-harness/schemas/kg-qa.ts#L267">work/folio-assistant/folio-assistant/cat-harness/schemas/kg-qa.ts:267</a></li></ul></aside></div></li></ul></section></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/676eb29bfd85584291c1e3bb061fc5f03dd05432/cat-harness/schemas/kg-qa.ts#L272">work/folio-assistant/folio-assistant/cat-harness/schemas/kg-qa.ts:272</a></li></ul></aside></div></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
