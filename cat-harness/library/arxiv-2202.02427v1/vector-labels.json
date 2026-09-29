@@ -1,0 +1,5069 @@
+{
+  "$schema": "folio-vector-labels/v1",
+  "doc_id": "arxiv-2202.02427v1",
+  "pages": [
+    {
+      "page": 6,
+      "rotation": 0,
+      "drawings": 395,
+      "rasterImagesOnPage": 0,
+      "captionCandidates": [
+        "Figure 2: Incremental (solid lines) and skyline (dotted lines) performance of various methods on Yelp (2a), LibraryThing (2b) and Epinions (2c) datasets. LCE refers to one of 𝐿𝐶𝐸𝑚𝑒𝑎𝑛or 𝐿𝐶𝐸𝑠𝑢𝑚variants with better validation performance (𝐿𝐶𝐸𝑠𝑢𝑚for both datasets). On Yelp and Librarything datset, our model LCE is comparable or slightly better than the best baseline (i.e. LightGCN) when no streaming data is available, but gain becomes larger as more data comes in. The smallest gap between the two lines of our model reveals its ability to utilize streaming data via incremental updates. On Epinions dataset, our model is consistently better than the best baseline (i.e. LightGCN).",
+        "Figure 3: Recommendation performance considering cold- start items of various methods on LibraryThing (3a) and Epinions (3b). LCE consistently improves the performance on both datasets compared with SLIM and ALS. Note that LightGCN and ENSFM do not support new items.",
+        "Figure 4: Recommendation performance on Yelp dataset when updating embeddings for only user or item nodes. The superior performance of updating item embeddings vali- dates our assumption that items are more non-stationary."
+      ],
+      "labels": [
+        {
+          "text": "Machine Learning on Graph (MLoG) Workshop at WSDM’22, Feb 25th, 2022, Virtual",
+          "bbox": [
+            53.8,
+            64.61,
+            296.45,
+            71.59
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinBiolinumT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "Hang and Schnabel, et al.",
+          "bbox": [
+            485.09,
+            64.61,
+            558.2,
+            71.59
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinBiolinumT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "0.019",
+          "bbox": [
+            407.97,
+            86.19,
+            415.99,
+            90.94
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.032",
+          "bbox": [
+            236.84,
+            87.5,
+            244.86,
+            92.25
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.065",
+          "bbox": [
+            65.7,
+            89.81,
+            73.72,
+            94.57
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.018",
+          "bbox": [
+            407.97,
+            95.07,
+            415.99,
+            99.82
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.030",
+          "bbox": [
+            236.84,
+            97.04,
+            244.86,
+            101.79
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.017",
+          "bbox": [
+            407.97,
+            103.94,
+            415.99,
+            108.7
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.060",
+          "bbox": [
+            65.7,
+            105.44,
+            73.72,
+            110.19
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.028",
+          "bbox": [
+            236.84,
+            106.58,
+            244.86,
+            111.34
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.016",
+          "bbox": [
+            407.97,
+            112.82,
+            415.99,
+            117.58
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.026",
+          "bbox": [
+            236.84,
+            116.13,
+            244.86,
+            120.88
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "recall",
+          "bbox": [
+            60.54,
+            119.92,
+            65.3,
+            127.62
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "recall",
+          "bbox": [
+            231.68,
+            119.92,
+            236.43,
+            127.62
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.055",
+          "bbox": [
+            65.7,
+            121.07,
+            73.72,
+            125.82
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "recall",
+          "bbox": [
+            402.81,
+            121.13,
+            407.56,
+            128.83
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.015",
+          "bbox": [
+            407.97,
+            121.7,
+            415.99,
+            126.45
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.024",
+          "bbox": [
+            236.84,
+            125.67,
+            244.86,
+            130.43
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.014",
+          "bbox": [
+            407.97,
+            130.58,
+            415.99,
+            135.33
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.022",
+          "bbox": [
+            236.84,
+            135.22,
+            244.86,
+            139.97
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.050",
+          "bbox": [
+            65.7,
+            136.69,
+            73.72,
+            141.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.013",
+          "bbox": [
+            407.97,
+            139.46,
+            415.99,
+            144.21
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.020",
+          "bbox": [
+            236.84,
+            144.76,
+            244.86,
+            149.52
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.012",
+          "bbox": [
+            407.97,
+            148.34,
+            415.99,
+            153.09
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.045",
+          "bbox": [
+            65.7,
+            152.32,
+            73.72,
+            157.07
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.018",
+          "bbox": [
+            236.84,
+            154.31,
+            244.86,
+            159.06
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0.011",
+          "bbox": [
+            407.97,
+            157.21,
+            415.99,
+            161.97
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0",
+          "bbox": [
+            80.48,
+            163.25,
+            82.27,
+            168.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "1 month",
+          "bbox": [
+            113.4,
+            163.25,
+            125.17,
+            168.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "2 month",
+          "bbox": [
+            151.31,
+            163.25,
+            163.08,
+            168.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "3 month",
+          "bbox": [
+            189.22,
+            163.25,
+            200.99,
+            168.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0",
+          "bbox": [
+            251.62,
+            163.25,
+            253.4,
+            168.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "4 month",
+          "bbox": [
+            284.53,
+            163.25,
+            296.3,
+            168.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "8 month",
+          "bbox": [
+            322.44,
+            163.25,
+            334.22,
+            168.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "12 month",
+          "bbox": [
+            359.47,
+            163.25,
+            373.02,
+            168.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "0",
+          "bbox": [
+            422.75,
+            163.7,
+            424.53,
+            168.46
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "4 month",
+          "bbox": [
+            455.67,
+            163.7,
+            467.44,
+            168.46
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "8 month",
+          "bbox": [
+            493.58,
+            163.7,
+            505.35,
+            168.46
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "12 month",
+          "bbox": [
+            530.6,
+            163.7,
+            544.15,
+            168.46
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "streaming data size",
+          "bbox": [
+            123.92,
+            167.08,
+            152.56,
+            171.83
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "streaming data size",
+          "bbox": [
+            295.05,
+            167.08,
+            323.69,
+            171.83
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "streaming data size",
+          "bbox": [
+            466.19,
+            167.54,
+            494.83,
+            172.29
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "LCE (incremental)",
+          "bbox": [
+            67.03,
+            175.25,
+            92.19,
+            180.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "LightGCN (incremental)",
+          "bbox": [
+            105.66,
+            175.25,
+            138.76,
+            180.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "SLIM (incremental)",
+          "bbox": [
+            152.23,
+            175.25,
+            178.69,
+            180.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "ALS (incremental)",
+          "bbox": [
+            192.16,
+            175.25,
+            217.29,
+            180.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "LCE (incremental)",
+          "bbox": [
+            238.16,
+            175.25,
+            263.33,
+            180.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "LightGCN (incremental)",
+          "bbox": [
+            276.79,
+            175.25,
+            309.89,
+            180.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "SLIM (incremental)",
+          "bbox": [
+            323.36,
+            175.25,
+            349.83,
+            180.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "ALS (incremental)",
+          "bbox": [
+            363.29,
+            175.25,
+            388.43,
+            180.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "LCE (incremental)",
+          "bbox": [
+            409.29,
+            175.25,
+            434.46,
+            180.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "LightGCN (incremental)",
+          "bbox": [
+            447.93,
+            175.25,
+            481.03,
+            180.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "SLIM (incremental)",
+          "bbox": [
+            494.5,
+            175.25,
+            520.96,
+            180.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "ALS (incremental)",
+          "bbox": [
+            534.43,
+            175.25,
+            559.56,
+            180.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "LCE (skyline)",
+          "bbox": [
+            67.03,
+            179.36,
+            85.19,
+            184.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "LightGCN (skyline)",
+          "bbox": [
+            105.66,
+            179.36,
+            131.76,
+            184.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "SLIM (skyline)",
+          "bbox": [
+            152.23,
+            179.36,
+            171.69,
+            184.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "ALS (skyline)",
+          "bbox": [
+            192.16,
+            179.36,
+            210.29,
+            184.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "LCE (skyline)",
+          "bbox": [
+            238.16,
+            179.36,
+            256.33,
+            184.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "LightGCN (skyline)",
+          "bbox": [
+            276.79,
+            179.36,
+            302.89,
+            184.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "SLIM (skyline)",
+          "bbox": [
+            323.36,
+            179.36,
+            342.83,
+            184.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "ALS (skyline)",
+          "bbox": [
+            363.29,
+            179.36,
+            381.43,
+            184.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "LCE (skyline)",
+          "bbox": [
+            409.29,
+            179.36,
+            427.46,
+            184.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "LightGCN (skyline)",
+          "bbox": [
+            447.93,
+            179.36,
+            474.03,
+            184.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "SLIM (skyline)",
+          "bbox": [
+            494.5,
+            179.36,
+            513.96,
+            184.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "ALS (skyline)",
+          "bbox": [
+            534.43,
+            179.36,
+            552.56,
+            184.12
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.8
+          ]
+        },
+        {
+          "text": "(a) Yelp",
+          "bbox": [
+            127.67,
+            190.83,
+            150.84,
+            197.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "(b) LibraryThing",
+          "bbox": [
+            284.24,
+            190.83,
+            336.55,
+            197.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "(c) Epinions",
+          "bbox": [
+            462.83,
+            190.83,
+            500.23,
+            197.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "Figure 2: Incremental (solid lines) and skyline (dotted lines) performance of various methods on Yelp (2a), LibraryThing (2b)",
+          "bbox": [
+            53.8,
+            202.84,
+            558.77,
+            211.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "and Epinions (2c) datasets. LCE refers to one of 𝐿𝐶𝐸𝑚𝑒𝑎𝑛or 𝐿𝐶𝐸𝑠𝑢𝑚variants with better validation performance (𝐿𝐶𝐸𝑠𝑢𝑚for",
+          "bbox": [
+            53.8,
+            211.83,
+            558.39,
+            222.77
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LibertineMathMI7",
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            7.27,
+            8.97
+          ]
+        },
+        {
+          "text": "both datasets). On Yelp and Librarything datset, our model LCE is comparable or slightly better than the best baseline (i.e.",
+          "bbox": [
+            53.8,
+            224.76,
+            559.74,
+            233.73
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "LightGCN) when no streaming data is available, but gain becomes larger as more data comes in. The smallest gap between the",
+          "bbox": [
+            53.8,
+            235.72,
+            558.2,
+            244.68
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "two lines of our model reveals its ability to utilize streaming data via incremental updates. On Epinions dataset, our model is",
+          "bbox": [
+            53.8,
+            246.68,
+            558.2,
+            255.64
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "consistently better than the best baseline (i.e. LightGCN).",
+          "bbox": [
+            53.8,
+            257.64,
+            284.88,
+            266.6
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Yelp",
+          "bbox": [
+            420.99,
+            286.39,
+            436.54,
+            295.35
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "LibraryThing",
+          "bbox": [
+            452.71,
+            286.39,
+            501.42,
+            295.35
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Epinions",
+          "bbox": [
+            511.38,
+            286.39,
+            543.62,
+            295.35
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "0.022",
+          "bbox": [
+            101.18,
+            288.51,
+            109.86,
+            293.65
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "0.0387★",
+          "bbox": [
+            414.78,
+            294.54,
+            442.54,
+            306.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "NewTXMI7"
+          ],
+          "sizes": [
+            7.27,
+            8.97
+          ]
+        },
+        {
+          "text": "0.0283★",
+          "bbox": [
+            463.08,
+            294.54,
+            490.84,
+            306.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "NewTXMI7"
+          ],
+          "sizes": [
+            7.27,
+            8.97
+          ]
+        },
+        {
+          "text": "0.0148★",
+          "bbox": [
+            513.52,
+            294.54,
+            541.28,
+            306.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "NewTXMI7"
+          ],
+          "sizes": [
+            7.27,
+            8.97
+          ]
+        },
+        {
+          "text": "LCE-item",
+          "bbox": [
+            351.22,
+            297.74,
+            386.13,
+            306.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "0.020",
+          "bbox": [
+            101.18,
+            302.52,
+            109.86,
+            307.66
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "LCE-user (equal 𝐷)",
+          "bbox": [
+            333.57,
+            307.13,
+            403.77,
+            317.67
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "0.0320",
+          "bbox": [
+            417.35,
+            308.7,
+            440.17,
+            317.67
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "0.0235",
+          "bbox": [
+            465.66,
+            308.7,
+            488.48,
+            317.67
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "0.0109",
+          "bbox": [
+            516.09,
+            308.7,
+            538.91,
+            317.67
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "0.018",
+          "bbox": [
+            101.18,
+            316.52,
+            109.86,
+            321.67
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "LCE-user (larger 𝐷)",
+          "bbox": [
+            332.53,
+            318.09,
+            404.82,
+            328.63
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Performance",
+          "bbox": [
+            95.6,
+            318.88,
+            100.74,
+            338.26
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "0.0322",
+          "bbox": [
+            417.35,
+            319.66,
+            440.17,
+            328.63
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "0.0248",
+          "bbox": [
+            465.66,
+            319.66,
+            488.48,
+            328.63
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "0.0111",
+          "bbox": [
+            516.09,
+            319.66,
+            538.91,
+            328.63
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "0.016",
+          "bbox": [
+            101.18,
+            330.53,
+            109.86,
+            335.68
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "Table 4: The recommendation performance of LCE with dif-",
+          "bbox": [
+            317.66,
+            334.3,
+            559.81,
+            343.26
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "0.014",
+          "bbox": [
+            101.18,
+            344.54,
+            109.86,
+            349.69
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "ferent implicit (compositional) embeddings listed in blue.",
+          "bbox": [
+            317.95,
+            345.26,
+            559.73,
+            354.22
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "LCE-item is the best performing LCE in Table 3. Numbers",
+          "bbox": [
+            317.95,
+            356.22,
+            558.2,
+            365.18
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "0.012",
+          "bbox": [
+            101.18,
+            358.55,
+            109.86,
+            363.69
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "with ★represent significant improvement in a paired t-test",
+          "bbox": [
+            317.6,
+            365.16,
+            558.21,
+            376.14
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB",
+            "NewTXMI"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "0",
+          "bbox": [
+            117.17,
+            370.47,
+            119.1,
+            375.62
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "4 month",
+          "bbox": [
+            152.79,
+            370.47,
+            165.53,
+            375.62
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "8 month",
+          "bbox": [
+            193.82,
+            370.47,
+            206.56,
+            375.62
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "12 month",
+          "bbox": [
+            233.89,
+            370.47,
+            248.56,
+            375.62
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "streaming data size",
+          "bbox": [
+            164.18,
+            374.62,
+            195.17,
+            379.77
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "at the 𝑝< 0.05 level compared with the best baseline.",
+          "bbox": [
+            317.95,
+            376.12,
+            530.35,
+            387.1
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT",
+            "LinLibertineTB",
+            "NewTXMI"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "LCE (nDCG@20)",
+          "bbox": [
+            131.66,
+            382.97,
+            156.33,
+            388.11
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "SLIM (nDCG@20)",
+          "bbox": [
+            170.9,
+            382.97,
+            196.98,
+            388.11
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "ALS (nDCG@20)",
+          "bbox": [
+            211.55,
+            382.97,
+            236.18,
+            388.11
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "LCE (recall@20)",
+          "bbox": [
+            131.66,
+            387.42,
+            155.93,
+            392.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "SLIM (recall@20)",
+          "bbox": [
+            170.9,
+            387.42,
+            196.58,
+            392.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "ALS (recall@20)",
+          "bbox": [
+            211.55,
+            387.42,
+            235.78,
+            392.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "0.07",
+          "bbox": [
+            364.29,
+            389.3,
+            370.73,
+            394.2
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "(a) LibraryThing",
+          "bbox": [
+            147.87,
+            399.48,
+            199.76,
+            406.46
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "0.06",
+          "bbox": [
+            364.29,
+            403.05,
+            370.73,
+            407.96
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "recall / ndcg",
+          "bbox": [
+            358.96,
+            415.57,
+            363.87,
+            433.43
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "0.05",
+          "bbox": [
+            364.29,
+            416.8,
+            370.73,
+            421.71
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "0.04",
+          "bbox": [
+            364.29,
+            430.55,
+            370.73,
+            435.46
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "0.010",
+          "bbox": [
+            101.18,
+            430.99,
+            109.86,
+            436.13
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "0.03",
+          "bbox": [
+            364.29,
+            444.3,
+            370.73,
+            449.21
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "0.009",
+          "bbox": [
+            101.18,
+            445.13,
+            109.86,
+            450.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "Performance",
+          "bbox": [
+            95.6,
+            452.88,
+            100.74,
+            472.26
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "0.02",
+          "bbox": [
+            364.29,
+            458.06,
+            370.73,
+            462.97
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "0.008",
+          "bbox": [
+            101.18,
+            459.27,
+            109.86,
+            464.42
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "Bucket 1",
+          "bbox": [
+            372.24,
+            464.48,
+            385.01,
+            469.39
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "Bucket 2",
+          "bbox": [
+            411.39,
+            464.48,
+            424.16,
+            469.39
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "Bucket 3",
+          "bbox": [
+            450.54,
+            464.48,
+            463.3,
+            469.39
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "Bucket 4",
+          "bbox": [
+            489.69,
+            464.48,
+            502.45,
+            469.39
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "Data",
+          "bbox": [
+            433.9,
+            468.44,
+            440.81,
+            473.35
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "0.007",
+          "bbox": [
+            101.18,
+            473.41,
+            109.86,
+            478.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "update item (recall)",
+          "bbox": [
+            364.05,
+            480.65,
+            392.83,
+            485.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "update item (ndcg)",
+          "bbox": [
+            406.74,
+            480.65,
+            434.67,
+            485.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "update user (recall)",
+          "bbox": [
+            448.58,
+            480.65,
+            477.13,
+            485.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "update user (ndcg)",
+          "bbox": [
+            491.03,
+            480.65,
+            518.74,
+            485.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            2.89
+          ]
+        },
+        {
+          "text": "0.006",
+          "bbox": [
+            101.18,
+            487.55,
+            109.86,
+            492.7
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "Figure 4: Recommendation performance on Yelp dataset",
+          "bbox": [
+            317.95,
+            492.41,
+            558.2,
+            501.38
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "when updating embeddings for only user or item nodes. The",
+          "bbox": [
+            317.6,
+            503.37,
+            558.2,
+            512.34
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "0",
+          "bbox": [
+            117.17,
+            504.47,
+            119.1,
+            509.62
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "4 month",
+          "bbox": [
+            152.79,
+            504.47,
+            165.53,
+            509.62
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "8 month",
+          "bbox": [
+            193.82,
+            504.47,
+            206.56,
+            509.62
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "12 month",
+          "bbox": [
+            233.89,
+            504.47,
+            248.56,
+            509.62
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "streaming data size",
+          "bbox": [
+            164.18,
+            508.62,
+            195.17,
+            513.76
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "superior performance of updating item embeddings vali-",
+          "bbox": [
+            317.95,
+            514.33,
+            559.81,
+            523.29
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "LCE (nDCG@20)",
+          "bbox": [
+            131.66,
+            516.97,
+            156.33,
+            522.11
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "SLIM (nDCG@20)",
+          "bbox": [
+            170.9,
+            516.97,
+            196.98,
+            522.11
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "ALS (nDCG@20)",
+          "bbox": [
+            211.55,
+            516.97,
+            236.18,
+            522.11
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "LCE (recall@20)",
+          "bbox": [
+            131.66,
+            521.42,
+            155.93,
+            526.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "SLIM (recall@20)",
+          "bbox": [
+            170.9,
+            521.42,
+            196.58,
+            526.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "ALS (recall@20)",
+          "bbox": [
+            211.55,
+            521.42,
+            235.78,
+            526.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.03
+          ]
+        },
+        {
+          "text": "dates our assumption that items are more non-stationary.",
+          "bbox": [
+            317.95,
+            525.29,
+            551.55,
+            534.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "(b) Epinions",
+          "bbox": [
+            154.71,
+            533.48,
+            192.91,
+            540.45
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "4.6",
+          "bbox": [
+            317.95,
+            545.03,
+            331.83,
+            555.94
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "Explicit v.s. implicit embeddings",
+          "bbox": [
+            342.74,
+            545.03,
+            503.21,
+            555.94
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "Figure 3: Recommendation performance considering cold-",
+          "bbox": [
+            53.8,
+            545.49,
+            295.65,
+            554.46
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "start items of various methods on LibraryThing (3a) and",
+          "bbox": [
+            53.8,
+            556.45,
+            294.04,
+            565.41
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "One important assumption of our model is that one node type",
+          "bbox": [
+            327.92,
+            556.97,
+            558.21,
+            565.93
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.04
+          ]
+        },
+        {
+          "text": "Epinions (3b). LCE consistently improves the performance",
+          "bbox": [
+            53.8,
+            567.41,
+            294.04,
+            576.37
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "is more amenable to “static” representation than the other, so we",
+          "bbox": [
+            317.95,
+            567.93,
+            558.2,
+            576.89
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.04
+          ]
+        },
+        {
+          "text": "on both datasets compared with SLIM and ALS. Note that",
+          "bbox": [
+            53.8,
+            578.37,
+            294.04,
+            587.33
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "learn a static representation for that node type (e.g, users) and learn",
+          "bbox": [
+            317.95,
+            578.88,
+            558.2,
+            587.85
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "LightGCN and ENSFM do not support new items.",
+          "bbox": [
+            53.8,
+            589.32,
+            251.89,
+            598.29
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "an implicit, compositional function to calculate the representation",
+          "bbox": [
+            317.95,
+            589.84,
+            558.2,
+            599.28
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "LinLibertineTI"
+          ],
+          "sizes": [
+            8.99
+          ]
+        },
+        {
+          "text": "of the other nodes (e.g, items). In our earlier experiments, we con-",
+          "bbox": [
+            317.95,
+            600.8,
+            559.72,
+            609.77
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "LCE with three layers, which shows the effectiveness of modeling",
+          "bbox": [
+            53.8,
+            607.55,
+            294.05,
+            616.51
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.95
+          ]
+        },
+        {
+          "text": "sidered the smaller node set to be the more static one, which is",
+          "bbox": [
+            317.95,
+            611.76,
+            558.2,
+            620.73
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "long-range dependency in the graph by applying multiple GCN",
+          "bbox": [
+            53.8,
+            618.5,
+            294.05,
+            627.47
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "the set of users in all the three datasets. We also tried the reverse",
+          "bbox": [
+            317.95,
+            622.72,
+            558.2,
+            631.69
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.03
+          ]
+        },
+        {
+          "text": "layers. Note that the number of layers is also a hyper-parameter,",
+          "bbox": [
+            53.8,
+            629.46,
+            295.03,
+            638.43
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "(i.e. explicitly embedding items and using a compositional func-",
+          "bbox": [
+            317.69,
+            633.68,
+            559.72,
+            642.65
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "and we can fully expect to further boost the LCE performance by",
+          "bbox": [
+            53.8,
+            640.42,
+            294.28,
+            649.39
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.01
+          ]
+        },
+        {
+          "text": "tion for users). Let the embedding dimension of LCE-item be 𝑑𝑖𝑡𝑒𝑚.",
+          "bbox": [
+            317.95,
+            643.06,
+            559.58,
+            653.6
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LibertineMathMI7",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            7.27,
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "searching in a larger space.",
+          "bbox": [
+            53.8,
+            651.38,
+            153.06,
+            660.35
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Since the LCE-item model learns two explicit embeddings for each",
+          "bbox": [
+            317.95,
+            655.6,
+            558.21,
+            664.56
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.9
+          ]
+        },
+        {
+          "text": "Besides, the choice of composition function 𝑓(·) is a hyper-",
+          "bbox": [
+            63.76,
+            660.77,
+            295.56,
+            671.31
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "user, the number of parameters is 𝐷= 2𝑑𝑖𝑡𝑒𝑚|𝑢𝑠𝑒𝑟𝑠|. When we",
+          "bbox": [
+            317.95,
+            664.98,
+            558.2,
+            675.58
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LibertineMathMI7",
+            "LinLibertineT",
+            "txmiaX",
+            "txsys"
+          ],
+          "sizes": [
+            7.27,
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "parameter in our model. We compared two common composition",
+          "bbox": [
+            53.8,
+            673.3,
+            294.04,
+            682.27
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.99
+          ]
+        },
+        {
+          "text": "learn explicit embeddings for items (LCE-user (equal 𝐷)), we set",
+          "bbox": [
+            317.95,
+            675.94,
+            558.2,
+            686.48
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "functions 𝑎𝑣𝑔and 𝑠𝑢𝑚on the three datasets, with the performance",
+          "bbox": [
+            53.8,
+            682.68,
+            294.05,
+            693.22
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "𝑑𝑢𝑠𝑒𝑟= |𝑢𝑠𝑒𝑟𝑠|",
+          "bbox": [
+            317.51,
+            685.85,
+            370.96,
+            699.28
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LibertineMathMI7",
+            "txmiaX",
+            "txsys"
+          ],
+          "sizes": [
+            7.27,
+            8.97
+          ]
+        },
+        {
+          "text": "|𝑖𝑡𝑒𝑚𝑠| × 𝑑𝑖𝑡𝑒𝑚so the total number of parameters is held",
+          "bbox": [
+            349.26,
+            688.69,
+            558.2,
+            702.61
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LibertineMathMI7",
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            7.27,
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "shown as 𝐿𝐶𝐸𝑚𝑒𝑎𝑛and 𝐿𝐶𝐸𝑠𝑢𝑚in Table 3. We can see that both",
+          "bbox": [
+            53.8,
+            693.64,
+            294.04,
+            704.18
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LibertineMathMI7",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            7.27,
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "constant, ie. 2𝑑𝑢𝑠𝑒𝑟|𝑖𝑡𝑒𝑚𝑠| = 𝐷. To measure the effect of increasing",
+          "bbox": [
+            317.95,
+            701.05,
+            558.2,
+            711.65
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LibertineMathMI7",
+            "LinLibertineT",
+            "txmiaX",
+            "txsys"
+          ],
+          "sizes": [
+            7.27,
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "variants achieved comparable performance.",
+          "bbox": [
+            53.57,
+            706.18,
+            212.92,
+            715.14
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        }
+      ]
+    },
+    {
+      "page": 9,
+      "rotation": 0,
+      "drawings": 55,
+      "rasterImagesOnPage": 0,
+      "captionCandidates": [
+        "Figure 5: Recommendation performance of LCE and Light- GCN varying model size (i.e. embedding dimension) on Yelp. LCE refers to 𝐿𝐶𝐸𝑚𝑒𝑎𝑛which has better validation perfor- mance than 𝐿𝐶𝐸𝑠𝑢𝑚on Yelp. LCE achieves competitive of- fline performance (see dotted lines) with a much smaller model size, and clearly outperforms LightGCN when stream- ing data is available (see solid lines)."
+      ],
+      "labels": [
+        {
+          "text": "Lightweight Compositional Embeddings",
+          "bbox": [
+            53.8,
+            56.38,
+            169.51,
+            63.36
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinBiolinumT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "for Incremental Streaming Recommendation",
+          "bbox": [
+            53.8,
+            64.61,
+            181.63,
+            71.59
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinBiolinumT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "Machine Learning on Graph (MLoG) Workshop at WSDM’22, Feb 25th, 2022, Virtual",
+          "bbox": [
+            315.55,
+            64.61,
+            558.2,
+            71.59
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinBiolinumT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "0.070",
+          "bbox": [
+            352.98,
+            86.97,
+            362.62,
+            92.68
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "A",
+          "bbox": [
+            53.8,
+            87.85,
+            61.87,
+            98.76
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "APPENDIX",
+          "bbox": [
+            72.78,
+            87.85,
+            128.81,
+            98.76
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "A.1",
+          "bbox": [
+            53.8,
+            103.55,
+            70.14,
+            114.45
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "Comparison with related methods",
+          "bbox": [
+            81.05,
+            103.55,
+            250.04,
+            114.45
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "0.065",
+          "bbox": [
+            352.98,
+            105.28,
+            362.62,
+            110.99
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "While there are some existing top-k recommendation methods",
+          "bbox": [
+            63.76,
+            118.31,
+            294.04,
+            127.28
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.99
+          ]
+        },
+        {
+          "text": "0.060",
+          "bbox": [
+            352.98,
+            123.59,
+            362.62,
+            129.3
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "that can be applied in an incremental streaming scenario, they have",
+          "bbox": [
+            53.8,
+            129.27,
+            294.05,
+            138.24
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "recall",
+          "bbox": [
+            346.78,
+            131.0,
+            352.5,
+            140.25
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "clear limitations. Many common methods, e.g., matrix factorization-",
+          "bbox": [
+            53.8,
+            140.23,
+            295.56,
+            149.2
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "0.055",
+          "bbox": [
+            352.98,
+            141.9,
+            362.62,
+            147.62
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "based models [11, 18] have no concept of user-user edges and thus",
+          "bbox": [
+            53.8,
+            151.19,
+            294.04,
+            160.16
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.9,
+            8.97
+          ]
+        },
+        {
+          "text": "0.050",
+          "bbox": [
+            352.98,
+            160.22,
+            362.62,
+            165.93
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "have to use heuristics to accommodate such information. Another",
+          "bbox": [
+            53.8,
+            162.15,
+            294.22,
+            171.12
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.94
+          ]
+        },
+        {
+          "text": "limitation is that many methods are transductive by nature and do",
+          "bbox": [
+            53.8,
+            173.11,
+            294.04,
+            182.07
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.91
+          ]
+        },
+        {
+          "text": "0.045",
+          "bbox": [
+            352.98,
+            178.53,
+            362.62,
+            184.24
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "0",
+          "bbox": [
+            367.67,
+            182.17,
+            369.81,
+            187.88
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "5",
+          "bbox": [
+            391.2,
+            182.17,
+            393.34,
+            187.88
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "10",
+          "bbox": [
+            413.66,
+            182.17,
+            417.95,
+            187.88
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "15",
+          "bbox": [
+            437.2,
+            182.17,
+            441.48,
+            187.88
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "20",
+          "bbox": [
+            460.73,
+            182.17,
+            465.02,
+            187.88
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "25",
+          "bbox": [
+            484.26,
+            182.17,
+            488.55,
+            187.88
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "30",
+          "bbox": [
+            507.8,
+            182.17,
+            512.08,
+            187.88
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "not support new items/nodes at test time. Incremental inference",
+          "bbox": [
+            53.8,
+            184.07,
+            294.05,
+            193.03
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "Number of model parameters (*10^6)",
+          "bbox": [
+            407.83,
+            186.77,
+            472.49,
+            192.49
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "can be added on as a posthoc modification, e.g., through folding",
+          "bbox": [
+            53.8,
+            195.03,
+            294.05,
+            204.48
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "LinLibertineTI"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "LightGCN (streaming)",
+          "bbox": [
+            363.36,
+            200.99,
+            400.04,
+            206.7
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "LightGCN (offline)",
+          "bbox": [
+            416.23,
+            200.99,
+            446.33,
+            206.7
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "LCE (streaming)",
+          "bbox": [
+            462.52,
+            200.99,
+            489.66,
+            206.7
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "LCE (offline)",
+          "bbox": [
+            505.85,
+            200.99,
+            526.42,
+            206.7
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.37
+          ]
+        },
+        {
+          "text": "in [1], but this can be ineffective due to the violation of modeling",
+          "bbox": [
+            53.8,
+            205.98,
+            294.05,
+            215.43
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "LinLibertineTI"
+          ],
+          "sizes": [
+            8.97,
+            9.02
+          ]
+        },
+        {
+          "text": "assumptions.",
+          "bbox": [
+            53.8,
+            216.94,
+            101.5,
+            225.91
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Figure 5: Recommendation performance of LCE and Light-",
+          "bbox": [
+            317.95,
+            222.47,
+            559.81,
+            231.43
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "We summarize the properties of several graph-based and tradi-",
+          "bbox": [
+            63.76,
+            227.9,
+            295.56,
+            236.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.99
+          ]
+        },
+        {
+          "text": "GCN varying model size (i.e. embedding dimension) on Yelp.",
+          "bbox": [
+            317.95,
+            233.43,
+            559.73,
+            242.39
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "tional recommender systems along these dimensions in Table 5.",
+          "bbox": [
+            53.8,
+            238.86,
+            295.43,
+            247.83
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "LCE refers to 𝐿𝐶𝐸𝑚𝑒𝑎𝑛which has better validation perfor-",
+          "bbox": [
+            317.95,
+            242.41,
+            559.81,
+            253.35
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LibertineMathMI7",
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            7.27,
+            8.97
+          ]
+        },
+        {
+          "text": "The table shows that our method (LCE) is the only method designed",
+          "bbox": [
+            53.53,
+            249.82,
+            294.05,
+            258.79
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "mance than 𝐿𝐶𝐸𝑠𝑢𝑚on Yelp. LCE achieves competitive of-",
+          "bbox": [
+            317.95,
+            253.37,
+            559.81,
+            264.31
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LibertineMathMI7",
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            7.27,
+            8.97
+          ]
+        },
+        {
+          "text": "for top-k recommendation in streaming graph scenarios with user-",
+          "bbox": [
+            53.8,
+            260.78,
+            295.56,
+            269.75
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.9
+          ]
+        },
+        {
+          "text": "fline performance (see dotted lines) with a much smaller",
+          "bbox": [
+            317.95,
+            266.3,
+            558.39,
+            275.27
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "user interaction links, which natively supports predictions over",
+          "bbox": [
+            53.8,
+            271.74,
+            294.21,
+            280.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "model size, and clearly outperforms LightGCN when stream-",
+          "bbox": [
+            317.95,
+            277.26,
+            559.81,
+            286.23
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "new items and efficient incremental updates, and doesn’t require",
+          "bbox": [
+            53.8,
+            282.7,
+            294.04,
+            291.66
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.04
+          ]
+        },
+        {
+          "text": "ing data is available (see solid lines).",
+          "bbox": [
+            317.95,
+            288.22,
+            464.36,
+            297.19
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "node/item features.",
+          "bbox": [
+            53.8,
+            293.66,
+            124.5,
+            302.62
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "A.2",
+          "bbox": [
+            53.8,
+            316.58,
+            70.14,
+            327.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "Training procedure",
+          "bbox": [
+            81.05,
+            316.58,
+            176.96,
+            327.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "increment the counts during online incremental updating. The",
+          "bbox": [
+            326.4,
+            321.54,
+            558.2,
+            330.51
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.03
+          ]
+        },
+        {
+          "text": "hyper-parameter negative weight is tuned in {0.1, 0.2, 0.5}.",
+          "bbox": [
+            326.4,
+            330.92,
+            541.05,
+            341.46
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "We use the default Xavier initializer [8] to initialize the model",
+          "bbox": [
+            63.76,
+            331.35,
+            294.04,
+            340.31
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97,
+            9.05
+          ]
+        },
+        {
+          "text": "parameters (Z𝑈, ˜Z𝑈), and train our models using Adam optimizer",
+          "bbox": [
+            53.8,
+            340.29,
+            294.22,
+            351.69
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LibertineMathMI7",
+            "LinLibertineT",
+            "LinLibertineTZ",
+            "txsys"
+          ],
+          "sizes": [
+            7.27,
+            8.93,
+            8.97
+          ]
+        },
+        {
+          "text": "• 𝑅𝑃3",
+          "bbox": [
+            317.95,
+            341.56,
+            340.17,
+            352.22
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            7.27,
+            8.97
+          ]
+        },
+        {
+          "text": "𝛽[6]: a graph vertex ranking recommendation method that",
+          "bbox": [
+            336.28,
+            343.46,
+            558.2,
+            354.77
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI7",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            7.27,
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "with weight decay. The model is trained for a maximum of 800",
+          "bbox": [
+            53.47,
+            353.27,
+            294.05,
+            362.23
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "re-ranks items based on 3-hop random walk transition prob-",
+          "bbox": [
+            326.4,
+            356.28,
+            559.71,
+            365.24
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "epochs with early stopping, i.e., stopping training if recall@20 on",
+          "bbox": [
+            53.8,
+            364.22,
+            294.05,
+            373.19
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.99
+          ]
+        },
+        {
+          "text": "abilities. The hyper-parameter neighbor size 𝑘is searched in",
+          "bbox": [
+            326.4,
+            365.66,
+            558.2,
+            376.2
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "the validation data (the last 10% of offline data) does not increase",
+          "bbox": [
+            53.8,
+            375.18,
+            294.04,
+            384.15
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.03
+          ]
+        },
+        {
+          "text": "{50, 100, 200, 500}. To further include the user-user interactions",
+          "bbox": [
+            326.62,
+            376.62,
+            558.2,
+            387.16
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.97,
+            8.99
+          ]
+        },
+        {
+          "text": "for 50 successive epochs. We also search the best hyperparame-",
+          "bbox": [
+            53.8,
+            386.14,
+            295.56,
+            395.11
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "in the model when the social network is available, we use a 4-",
+          "bbox": [
+            326.4,
+            389.15,
+            559.71,
+            398.12
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "ters using validation set. Specifically, the embedding dimension is",
+          "bbox": [
+            53.8,
+            397.1,
+            294.04,
+            406.07
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "hop random walk with type user-user-item-user instead of the",
+          "bbox": [
+            326.4,
+            400.11,
+            558.21,
+            409.08
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.03
+          ]
+        },
+        {
+          "text": "searched in {16, 32, 64, 128, 256, 512}, no. of GCN layers 𝐿is set to",
+          "bbox": [
+            53.8,
+            406.49,
+            294.04,
+            417.03
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.97,
+            9.02
+          ]
+        },
+        {
+          "text": "original 3-hop path user-item-user.",
+          "bbox": [
+            326.4,
+            411.07,
+            454.31,
+            420.04
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "3, batch size is tuned in {2048, 5000, 10000}, and the weight decay",
+          "bbox": [
+            53.8,
+            417.45,
+            294.27,
+            427.99
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.97,
+            9.0
+          ]
+        },
+        {
+          "text": "• Sparse Linear Method (SLIM) [19]. SLIM is one of the most com-",
+          "bbox": [
+            317.96,
+            421.82,
+            559.72,
+            431.0
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.92,
+            8.97
+          ]
+        },
+        {
+          "text": "factor 𝜆is tuned in {10−3, 10−4, 10−5}.",
+          "bbox": [
+            53.8,
+            427.91,
+            192.64,
+            438.95
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            7.27,
+            8.97
+          ]
+        },
+        {
+          "text": "petitive baselines in top-𝑁recommendation. In our experiments,",
+          "bbox": [
+            326.4,
+            431.42,
+            559.19,
+            441.96
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "the binary user - (item ∪user) matrix is used as input to the model,",
+          "bbox": [
+            326.4,
+            443.74,
+            559.19,
+            452.91
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "A.3",
+          "bbox": [
+            53.8,
+            452.9,
+            70.14,
+            463.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "Datasets",
+          "bbox": [
+            81.05,
+            452.9,
+            122.56,
+            463.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "and we perform incremental inference by using the learned item-",
+          "bbox": [
+            326.4,
+            454.91,
+            559.72,
+            463.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "item matrix𝐴with the updated adjacency matrix. The l1 and l2 co-",
+          "bbox": [
+            326.4,
+            464.29,
+            559.72,
+            474.83
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "Yelp. We apply the same 10-core setting as previous papers [10, 32]",
+          "bbox": [
+            53.8,
+            467.67,
+            294.05,
+            477.04
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "efficients are tuned by grid search in𝑙1 = {0.01, 0.1, 0.5, 1, 2, 5, 10},",
+          "bbox": [
+            326.4,
+            475.25,
+            559.19,
+            485.85
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT",
+            "txmiaX",
+            "txsys"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": ", i.e., retaining users and items with at least ten interactions.",
+          "bbox": [
+            78.21,
+            478.63,
+            295.34,
+            487.6
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.9
+          ]
+        },
+        {
+          "text": "𝑙2 = {0.1, 0.5, 1, 2, 5, 10, 20}.",
+          "bbox": [
+            325.98,
+            486.21,
+            424.0,
+            496.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT",
+            "txmiaX",
+            "txsys"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Epinions. We select the products from top 10 categories from the",
+          "bbox": [
+            53.8,
+            489.59,
+            294.05,
+            498.95
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.9,
+            8.97
+          ]
+        },
+        {
+          "text": "• LightGCN [10]: LightGCN is a state-of-the-art graph-based model",
+          "bbox": [
+            317.95,
+            498.54,
+            558.2,
+            507.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "year of 2002 to 2011, and filter out users that were inactive",
+          "bbox": [
+            78.21,
+            500.55,
+            294.05,
+            509.51
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.0
+          ]
+        },
+        {
+          "text": "for collaborative filtering. To leverage the social network infor-",
+          "bbox": [
+            326.4,
+            509.7,
+            559.72,
+            518.67
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.01
+          ]
+        },
+        {
+          "text": "since 2004.",
+          "bbox": [
+            78.21,
+            511.51,
+            117.73,
+            520.47
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "mation, we feed the heterogeneous graph including both user-",
+          "bbox": [
+            326.4,
+            520.66,
+            559.71,
+            529.63
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "LibraryThing. We filter out users that were inactive since 2007,",
+          "bbox": [
+            53.8,
+            522.46,
+            295.03,
+            531.83
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "item and user-user edges instead of the bipartite graph consid-",
+          "bbox": [
+            326.4,
+            531.62,
+            559.71,
+            540.59
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "and only keep users/items with at least 2 reviews before the",
+          "bbox": [
+            78.21,
+            533.42,
+            294.04,
+            542.39
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.89
+          ]
+        },
+        {
+          "text": "ered in the original paper. For incremental updates, the new",
+          "bbox": [
+            326.4,
+            542.58,
+            558.53,
+            551.54
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "end of 2009.",
+          "bbox": [
+            78.21,
+            544.38,
+            122.04,
+            553.35
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "updated graphs are fed to the model. The embedding dimension",
+          "bbox": [
+            326.4,
+            553.54,
+            558.2,
+            562.5
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.92
+          ]
+        },
+        {
+          "text": "is tuned in {16, 32, 64, 128, 256, 512}, # layers = 3, batch size tuned",
+          "bbox": [
+            326.4,
+            562.92,
+            558.2,
+            573.46
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "A.4",
+          "bbox": [
+            53.8,
+            567.31,
+            70.14,
+            578.22
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "Baselines",
+          "bbox": [
+            81.05,
+            567.31,
+            127.47,
+            578.22
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "in {2048, 5000, 10000}, and the weight decay factor is tuned in",
+          "bbox": [
+            326.4,
+            573.88,
+            558.2,
+            584.42
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "• Top-Popu: always recommend most popular items excluding",
+          "bbox": [
+            53.8,
+            581.87,
+            294.05,
+            591.04
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "{1𝑒−3, 1𝑒−4, 1𝑒−5}.",
+          "bbox": [
+            326.62,
+            584.35,
+            392.98,
+            595.38
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            7.27,
+            8.97
+          ]
+        },
+        {
+          "text": "already interacted ones.",
+          "bbox": [
+            62.24,
+            593.03,
+            149.41,
+            602.0
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "• LCE variants: In our ablation study (see Section 4.5), we compare",
+          "bbox": [
+            317.95,
+            597.17,
+            558.2,
+            606.34
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "• Alternative Least Squares (ALS) [11, 27]: We applied this com-",
+          "bbox": [
+            53.8,
+            603.79,
+            295.56,
+            612.96
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "to two variants of our model: \"LCE-1 emb\" and \"LCE-1 layer\".",
+          "bbox": [
+            326.4,
+            608.33,
+            559.59,
+            617.3
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "mon matrix factorization based method to a user-(item ∪user)",
+          "bbox": [
+            62.24,
+            614.75,
+            294.58,
+            623.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.97,
+            9.05
+          ]
+        },
+        {
+          "text": "\"LCE-1 emb\" does not have a separate user embedding for scoring",
+          "bbox": [
+            326.4,
+            619.29,
+            558.2,
+            628.26
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "matrix that was created by concatenating the user-user inter-",
+          "bbox": [
+            62.24,
+            625.91,
+            295.56,
+            634.88
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "user-item pairs, but uses the user embedding generated by GCN",
+          "bbox": [
+            326.4,
+            630.25,
+            558.2,
+            639.22
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.92
+          ]
+        },
+        {
+          "text": "action matrix with the user-item matrix. We first train a model",
+          "bbox": [
+            62.24,
+            636.87,
+            294.04,
+            645.84
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.02
+          ]
+        },
+        {
+          "text": "layers instead (i.e., setting z𝑢with Equation (4)). \"LCE-1 layer\"",
+          "bbox": [
+            326.4,
+            641.21,
+            558.2,
+            650.59
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI7",
+            "LinLibertineT",
+            "LinLibertineTZ"
+          ],
+          "sizes": [
+            7.27,
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "using the offline data, and use the learned matrix as a basis for",
+          "bbox": [
+            62.24,
+            647.83,
+            294.21,
+            656.79
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.05
+          ]
+        },
+        {
+          "text": "uses a single GCN layer instead of three layers.",
+          "bbox": [
+            326.4,
+            652.17,
+            498.78,
+            661.13
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "streaming evaluation. New edges are being incorporated via fold-",
+          "bbox": [
+            62.24,
+            658.79,
+            295.56,
+            667.75
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "in. The hyper-parameter embedding dimension 𝑑is searched in",
+          "bbox": [
+            62.24,
+            668.17,
+            294.05,
+            678.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.96,
+            8.97
+          ]
+        },
+        {
+          "text": "A.5",
+          "bbox": [
+            317.96,
+            676.9,
+            334.3,
+            687.8
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "Model capacity v.s. performance",
+          "bbox": [
+            345.21,
+            676.9,
+            504.01,
+            687.8
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "{32, 64, 128, 256, 512}.",
+          "bbox": [
+            62.46,
+            679.13,
+            139.83,
+            689.67
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Note that under the same embedding dimension𝑑, LCE has much",
+          "bbox": [
+            327.92,
+            690.09,
+            558.2,
+            700.63
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "• Efficient Non-sampling Factorization Machines (ENSFM) [4]. We",
+          "bbox": [
+            53.8,
+            691.46,
+            294.05,
+            700.63
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT",
+            "txsys"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "represent the user-item graph as one-hot feature vectors and",
+          "bbox": [
+            62.24,
+            702.62,
+            294.05,
+            711.59
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "fewer model parameters than LightGCN. As shown in Table 2, LCE",
+          "bbox": [
+            317.95,
+            702.62,
+            558.2,
+            711.59
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        }
+      ]
+    }
+  ]
+}

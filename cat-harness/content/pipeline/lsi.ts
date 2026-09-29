@@ -226,7 +226,7 @@ export interface LsiOptions {
    *  literature's working range for small collections is 50–300, and
    *  `k` is reported with the variance it retains so a reader can judge it. */
   k?: number;
-  weighting?: "log-entropy" | "tfidf";
+  weighting?: "log-entropy" | "tfidf" | "raw";
   /** A term must occur in at least this many units to be kept. A term in one
    *  unit can create no co-occurrence and only adds a row. Default 2. */
   minDf?: number;
@@ -239,7 +239,7 @@ export interface LsiOptions {
 
 export interface LsiIndex {
   k: number;
-  weighting: "log-entropy" | "tfidf";
+  weighting: "log-entropy" | "tfidf" | "raw";
   terms: string[];
   unitIds: string[];
   /** Σ_k, descending. */
@@ -295,7 +295,12 @@ export function buildLsi(units: LsiUnit[], opts: LsiOptions = {}): LsiIndex {
 
   // Global weights.
   const globalWeight = new Float64Array(m);
-  if (weighting === "tfidf") {
+  if (weighting === "raw") {
+    // Deerwester et al. (1990) §5: "each cell indicates the frequency with
+    // which each term occurs" — no weighting. Kept so the engine can be
+    // checked against the paper's own worked example (lsi.test.ts).
+    globalWeight.fill(1);
+  } else if (weighting === "tfidf") {
     for (let i = 0; i < m; i++) globalWeight[i] = Math.log(n / df.get(terms[i])!);
   } else {
     const gf = new Float64Array(m);
@@ -320,7 +325,7 @@ export function buildLsi(units: LsiUnit[], opts: LsiOptions = {}): LsiIndex {
     const entries = [...tf].map(([t, c]) => [termIdx.get(t), c] as const).filter((e): e is [number, number] => e[0] !== undefined);
     entries.sort((a, b) => a[0] - b[0]);
     for (const [i, c] of entries) {
-      const local = weighting === "tfidf" ? c : Math.log1p(c);
+      const local = weighting === "log-entropy" ? Math.log1p(c) : c;
       const w = local * globalWeight[i];
       if (w !== 0) { rowIdx.push(i); vals.push(w); }
     }
@@ -427,7 +432,7 @@ export function foldIn(index: LsiIndex, text: string): Float64Array {
   for (const t of tokenize(text)) { const i = termIdx.get(t); if (i !== undefined) tf.set(i, (tf.get(i) ?? 0) + 1); }
   const out = new Float64Array(index.k);
   for (const [i, c] of tf) {
-    const w = (index.weighting === "tfidf" ? c : Math.log1p(c)) * index.globalWeight[i];
+    const w = (index.weighting === "log-entropy" ? Math.log1p(c) : c) * index.globalWeight[i];
     for (let d = 0; d < index.k; d++) out[d] += w * index.U[i * index.k + d];
   }
   // Scale into the same frame as unit coordinates (V Σ = Aᵀ U).

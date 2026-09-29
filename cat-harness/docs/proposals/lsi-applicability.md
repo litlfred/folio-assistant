@@ -68,7 +68,8 @@ classes. Full output: [`lsi-epic-filing-2026-09-29.md`](lsi-epic-filing-2026-09-
 - **The store is already well filed**: 7 of 254 open beans have no epic.
 - **Calibration**: leave-one-out, LSI's best epic equals the current one for
   **145 / 247 (59 %)**; chance is ~5 %. Flat across k = 50–250 (59–63 %).
-  Log-entropy beat tf-idf (59 % vs 52 %) — the direction Dumais (1991) reports.
+  Log-entropy beat tf-idf (59 % vs 52 %). (Dumais 1991, credited with that
+  weighting, is not held, so this is our measurement, not a replication.)
 - **34 disputed filings.** The strongest are *symptom vs subject*: translation
   catalogue beans under CI RELIABILITY (they turned `main` red) that LSI puts
   under TRANSLATION (what they are about). Both are defensible; which axis an
@@ -80,6 +81,16 @@ classes. Full output: [`lsi-epic-filing-2026-09-29.md`](lsi-epic-filing-2026-09-
   one-commit leftovers whose work landed another way.
 
 ## 3. What LSI is NOT good at, here
+
+Since this page was first written, the sources were ingested and the method
+node was checked against them ([`lsi`](../../methodologies/lsi.md)): the
+engine reproduces the 1990 paper's worked example, and two claims in the
+first draft were corrected — `k` (the paper uses 50–100) and stemming (the
+paper's CISI result shows stemming captured structure LSI did not).
+
+- **The first dimension is a margin.** Qi et al. (2023): LSA's first
+  dimensions mainly show document length and term frequency. Both our
+  committed indexes have a dimension 1 with no negative pole — that signature.
 
 - **Word order and negation.** Bag of words: "X is not Y" and "X is Y" are the
   same vector. Useless for checking what a text *asserts*.
@@ -107,3 +118,4 @@ who-iris and skills, this page and the epic proposal.
 | D | Fold `lsi-index-fresh` into `kg:audit` as a sidecar criterion | the verdict joins the audited record, like `check:raci` did (bean `3kbd`) | medium; kg:audit sidecar churn, and PR #1472 is reshaping kg:audit now | after #1472 lands |
 | E | Index the five remaining graphs | `bun run lsi index` per graph; `docs` is 434k words (~10 s) | trivial compute, large sidecars to review | after deciding sidecar size policy |
 | F | Apply the epic proposal | `beans update --parent` for the 7 unfiled, scrap-with-pointer for confirmed duplicates | owner review per bean | owner decides |
+| G | **Correspondence analysis as its own method node** (Qi et al. 2023, now held) | an SVD of the χ² residuals instead of the weighted counts; the paper finds it beats LSA on all four datasets, and it removes the margin effect our dimension 1 shows | medium: a second decomposition behind the same engine, then compare on the epic calibration | measure before adopting: run both on the epic-filing ground truth |

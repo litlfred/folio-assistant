@@ -67,6 +67,10 @@ and a merge-conflict magnet. `lsi:epics` rebuilds it each run.
 - **`retained`** — share of ‖A‖²_F the rank-`k` approximation keeps. It is not
   a quality score; a low value on a large heterogeneous graph (beans: ~45 %)
   is expected.
+- **Dimension 1 is usually a margin.** Qi et al. (2023): LSA's first
+  dimensions mainly carry document length and overall term frequency. A
+  dimension with no negative pole is that signature — skip it when reading
+  themes.
 - **`dimensions`** — a dimension is a *contrast*, so read the positive and
   negative poles together. Refusal 2: it is not a topic until a person names
   it.
