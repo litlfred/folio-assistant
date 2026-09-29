@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/css/docs-ui.css?v=1790723555">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/css/docs-ui.css?v=1790724238">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/css/narrow-viewport.css?v=1790723555">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/css/narrow-viewport.css?v=1790724238">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/css/work-plan.css?v=1790723555">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/css/work-plan.css?v=1790724238">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/css/themes.css?v=1790723555">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/css/themes.css?v=1790724238">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/css/uml.css?v=1790723555">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/css/uml.css?v=1790724238">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/css/avatars.css?v=1790723555">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/css/avatars.css?v=1790724238">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/js/docs-ui.js?v=1790723555" defer></script>
+<script src="/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/assets/js/docs-ui.js?v=1790724238" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -986,6 +986,14 @@ narrative: “for any $n \ge 1$”; Lean: <code class="language-plaintext highli
 <code class="language-plaintext highlighter-rouge">theorem foo (C : Category) : ...</code> — missing the rest of the ambient
 structure as a hypothesis, possibly making the claim vacuously
 stronger or unsound.</p>
+
+<p>The drift that most needs catching runs the other way: <strong>the Lean assumes, as
+a hypothesis, the step that is the content of the paper’s proof</strong>, and the
+conclusion then follows in a few lines. A published worked case is the
+showcase theorem of the MerLean paper (arXiv:2602.16554v1, Appendix A.1),
+read in <code class="language-plaintext highlighter-rouge">bidirectional-agentic-autoformalization</code> §”Two findings”. Test: list
+the paper’s hypotheses and the Lean’s; for each Lean hypothesis the paper does
+not state, ask whether proving it is most of the proof.</p>
 <h3 id="class-d--notation-drift">
   
   
@@ -1050,6 +1058,24 @@ the content-object structure: <code class="language-plaintext highlighter-rouge"
 <code class="language-plaintext highlighter-rouge">&lt;block&gt;-proof.md</code> is the proof)</li>
   <li>Record: stated hypotheses, conclusion, level of generality</li>
 </ul>
+<h4 id="optional-a-blind-informalization-as-the-second-statement">
+  
+  
+    <a href="#optional-a-blind-informalization-as-the-second-statement" class="anchor-heading" aria-labelledby="optional-a-blind-informalization-as-the-second-statement"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Optional: a blind informalization as the second statement
+  
+  
+</h4>
+    
+
+<p>When the Lean is too long to read against the prose directly, informalize it
+<strong>without the narrative in context</strong>, then compare the two prose statements.
+A reading made with the narrative in view recognises its input; one made
+without it is an independent reading. Decompose it as
+<code class="language-plaintext highlighter-rouge">process-driven-autoformalization</code> §3 does — statement, then a throwaway
+term-by-term gloss, then a proof that names no Lean identifier — or the result
+is a transliteration of the Lean and inherits its errors. Source of the
+technique: <code class="language-plaintext highlighter-rouge">bidirectional-agentic-autoformalization</code> §4. It feeds this audit;
+it does not replace Phase 3.</p>
 <h3 id="phase-3--classify-each-block">
   
   
