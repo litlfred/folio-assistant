@@ -86,6 +86,7 @@ import {
 } from "../schemas/role-graph.js";
 import { ownElementPattern } from "../schemas/namespaces.js";
 import { processPresentations, type Presentation } from "./process-presentations.js";
+import { handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const KIND = "processes";
@@ -812,6 +813,15 @@ export function pageRelPath(repo = REPO): string | undefined {
   return undefined;
 }
 
+/**
+ * The index as committed: {@link page} plus the directories it draws
+ * (#1168 B7a-2) — every instance's declared processes directories, because
+ * every instance's diagrams are on it.
+ */
+export function publishedIndex(rows: Parameters<typeof page>[0], repo = REPO): string {
+  return withRendersFrontMatter(page(rows), instanceRoots(repo).flatMap((r) => handledDirectories(repo, r, KIND)));
+}
+
 if (import.meta.main) {
   const check = process.argv.includes("--check");
   const rel = pageRelPath();
@@ -830,7 +840,7 @@ if (import.meta.main) {
     console.error("✗ no BPMN diagrams found — refusing to write an index over nothing");
     process.exit(1);
   }
-  const html = page(rows);
+  const html = publishedIndex(rows);
   const skillDir = join(baseDocs(REPO), "reference", "skill-instructions");
   const skillPages = new Set(
     existsSync(skillDir) ? readdirSync(skillDir).filter((f) => f.endsWith(".md")).map((f) => basename(f, ".md")) : [],
