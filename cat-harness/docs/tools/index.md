@@ -1,6 +1,8 @@
 ---
 title: "Tools"
 description: "The Tool nodes this instance declares — how each is installed and invoked, and which skill it satisfies."
+renders:
+  - cat-harness/tools
 ---
 <style>
 .tg-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;

@@ -30,7 +30,7 @@ import { join, resolve } from "node:path";
 import { declarationPathIn } from "../../schemas/cat-harness.js";
 import { docsLayers } from "../compose-docs.js";
 import { docsPages, documentingPages } from "../docs-declarations.js";
-import { page, pageRelPath, skillIds, toolRows } from "../gen-tools-viz.js";
+import { page, publishedPage, pageRelPath, skillIds, toolRows } from "../gen-tools-viz.js";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 /**
@@ -227,6 +227,6 @@ describe("the generator writes where the declaration says", () => {
     // The gate runs this too; asserting it here means a stale page fails the
     // unit suite rather than only the gate, which is where it is noticed first.
     const rel = pageRelPath(REPO)!;
-    expect(readFileSync(join(DOCS, rel), "utf-8")).toBe(page(rows, skillIds(REPO)));
+    expect(readFileSync(join(DOCS, rel), "utf-8")).toBe(publishedPage(rows, skillIds(REPO)));
   });
 });
