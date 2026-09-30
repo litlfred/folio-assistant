@@ -1,11 +1,11 @@
 ---
 # folio-assistant-yag0
 title: 'WHO-IRIS LIBRARY VIEWER IS A SHELL: the page generates, the link is right, and neither the corpus entry nor the 3 materialized assets appear'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-23T05:46:53Z
-updated_at: 2026-09-29T18:14:47Z
+updated_at: 2026-09-30T13:39:18Z
 parent: folio-assistant-yj32
 ---
 
