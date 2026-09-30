@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 191,
+      "count": 192,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -1180,6 +1180,14 @@
       "name": "skill-package",
       "graphNode": "schema",
       "summary": "The SKILL-FRAMEWORK vocabulary — actors, capabilities, skills, requirements,",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/skill-topics.ts",
+      "instance": "cat-harness",
+      "name": "skill-topics",
+      "graphNode": "schema",
+      "summary": "The shape of `skills.json`, the labelling node that says which",
       "isTest": false
     },
     {
@@ -3241,7 +3249,7 @@
           "type": "string",
           "optional": true,
           "array": false,
-          "doc": "The skill or tool that dispatched the authoring, e.g. `folio-core/library-ingestion`."
+          "doc": "The skill or tool that dispatched the authoring, e.g. `library-core/library-ingestion`."
         }
       ],
       "extendsNames": [],
@@ -27201,6 +27209,97 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/skill-topics.ts#SkillTopic",
+      "name": "SkillTopic",
+      "module": "cat-harness/schemas/skill-topics.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/skill-topics.ts#SkillTopicSchema",
+      "name": "SkillTopicSchema",
+      "module": "cat-harness/schemas/skill-topics.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "path",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/, \"one plain segment\")",
+          "optional": false,
+          "array": false,
+          "doc": "One plain segment: a topic is a direct subdirectory, never deeper."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/skill-topics.ts#SkillTopicsSchema",
+      "name": "SkillTopicsSchema",
+      "module": "cat-harness/schemas/skill-topics.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(SKILL_TOPICS_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "_comment",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "topics",
+          "type": "z.array(SkillTopicSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/skill-topics.ts#SkillTopicSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "SKILL_TOPICS_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/source-licence.ts#LicenceSearched",
       "name": "LicenceSearched",
       "module": "cat-harness/schemas/source-licence.ts",
@@ -45250,6 +45349,14 @@
       "from": "cat-harness/schemas/skill-package.ts#SkillRegistrySchema",
       "to": "cat-harness/schemas/skill-package.ts#SkillPackageManifestSchema",
       "via": "packages",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/skill-topics.ts#SkillTopicsSchema",
+      "to": "cat-harness/schemas/skill-topics.ts#SkillTopicSchema",
+      "via": "topics",
       "kind": "field",
       "optional": false,
       "array": true
