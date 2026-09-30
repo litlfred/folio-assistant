@@ -14,7 +14,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { BEGIN, END, instancesIn, plan, splice } from "./subgraph-readmes.ts";
+import { BEGIN, END, hrefFor, instancesIn, plan, splice } from "./subgraph-readmes.ts";
 
 function repo(): string {
   const r = mkdtempSync(join(tmpdir(), "subgraph-readmes-"));
@@ -99,5 +99,41 @@ describe("plan, on a fixture", async () => {
     expect(readFileSync(join(inst, "skills", "README.md"), "utf-8")).toContain("\nold\n");
     expect(existsSync(join(inst, "notes", "README.md"))).toBe(false);
     rmSync(r, { recursive: true, force: true });
+  });
+});
+
+describe("hrefFor — a link target survives the markdown parser", () => {
+  test("parentheses are encoded — the `main`-reddening case", () => {
+    // `uploads/PIIS2589750021000388 (2).pdf`. A markdown target ends at the
+    // first `)`, so the raw name produced a target of `PIIS2589750021000388 (2`.
+    expect(hrefFor("PIIS2589750021000388 (2).pdf")).toBe("PIIS2589750021000388%20%282%29.pdf");
+  });
+
+  test("spaces are encoded", () => {
+    expect(hrefFor("Skills in OpenAI API.pdf")).toBe("Skills%20in%20OpenAI%20API.pdf");
+  });
+
+  test("`#` and `?` are encoded — else the target becomes a fragment or a query", () => {
+    expect(hrefFor("a#b.md")).toBe("a%23b.md");
+    expect(hrefFor("a?b.md")).toBe("a%3Fb.md");
+  });
+
+  test("SLASHES survive — this encodes a path, not an opaque string", () => {
+    // `encodeURIComponent` would give `sub%2Ffile.md` and break every nested
+    // link. The separator is structure, not content.
+    expect(hrefFor("sub/dir/file.md")).toBe("sub/dir/file.md");
+  });
+
+  test("an ordinary name is unchanged, so the common row does not churn", () => {
+    expect(hrefFor("README.md")).toBe("README.md");
+  });
+
+  test("it ROUND-TRIPS — decodeURIComponent recovers the path on disk", () => {
+    // The property the link test depends on. Without it, encoding the target
+    // would swap one lie for its opposite: every encoded link reported broken
+    // while every one of them resolves.
+    for (const n of ["PIIS2589750021000388 (2).pdf", "a#b.md", "a?b.md", "sub/dir/file.md", "README.md"]) {
+      expect(decodeURIComponent(hrefFor(n))).toBe(n);
+    }
   });
 });

@@ -43,7 +43,26 @@ test("over the real tree, every link in every generated README resolves", async 
     for (const m of region.matchAll(/\]\(([^)]+)\)/g)) {
       const l = m[1]!;
       if (/^[a-z]+:/.test(l) || l.startsWith("#")) continue;
-      if (!existsSync(join(dirname(file), l.split("#")[0]!))) broken.push(`${file}: ${l}`);
+      // A link TARGET is percent-encoded; a path on disk is not. Decoding
+      // before the existence check is what makes the two comparable, and
+      // `hrefFor` is the encoder this pairs with.
+      //
+      // Getting this wrong in EITHER direction hides a real defect. Before
+      // `hrefFor`, a filename with `(` in it produced a target that this
+      // regex truncated at the first `)` — reported as broken, and it WAS
+      // broken, as markdown. Encoding the target without decoding it here
+      // would swap that for the opposite lie: every encoded link reported
+      // broken while every one of them resolves.
+      let target: string;
+      try {
+        target = decodeURIComponent(l.split("#")[0]!);
+      } catch {
+        // Not valid percent-encoding. That is a defect in the generated link,
+        // so it is a finding rather than something to skip past.
+        broken.push(`${file}: ${l} (target is not valid percent-encoding)`);
+        continue;
+      }
+      if (!existsSync(join(dirname(file), target))) broken.push(`${file}: ${l}`);
     }
   }
   expect(broken).toEqual([]);

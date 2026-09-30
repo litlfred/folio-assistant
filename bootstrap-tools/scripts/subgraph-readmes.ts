@@ -182,6 +182,44 @@ export interface InstanceInput {
   dirs: SubgraphInput[];
 }
 
+/**
+ * A markdown link TARGET for a filename — encoded, while the label stays raw.
+ *
+ * ## The defect, measured on `main` 2026-09-30
+ *
+ * `uploads/` holds `PIIS2589750021000388 (2).pdf`. The template emitted its
+ * name as both label and target, so the row read
+ *
+ * ```
+ * | [`PIIS2589750021000388 (2).pdf`](PIIS2589750021000388 (2).pdf) | a file | |
+ * ```
+ *
+ * A markdown link target is delimited by `)`, so this one ENDS at the first
+ * one: the target is `PIIS2589750021000388 (2`, which is not a file. It broke
+ * `subgraph-readmes.test.ts`'s "every link in every generated README resolves"
+ * and turned `main` red — and it would have mis-rendered for a human reader
+ * too, which is the part that matters. The test caught a real markdown defect,
+ * not an artefact of its own regex.
+ *
+ * ## Why `encodeURI` alone is not enough
+ *
+ * `encodeURI` deliberately leaves `(` and `)` alone — they are legal in a URI.
+ * They are not legal UNESCAPED inside a markdown inline link, so the two
+ * disagree and markdown is the stricter one here. `#` and `?` are encoded for
+ * the same reason: a filename containing either would otherwise be read as a
+ * fragment or a query.
+ *
+ * The LABEL is deliberately left raw. A reader should see the filename as it
+ * is on disk; only the target needs to survive the parser.
+ */
+export function hrefFor(path: string): string {
+  return encodeURI(path)
+    .replace(/\(/g, "%28")
+    .replace(/\)/g, "%29")
+    .replace(/\?/g, "%3F")
+    .replace(/#/g, "%23");
+}
+
 export interface Finding {
   instance: string;
   directory: string;
@@ -333,6 +371,7 @@ export async function plan(repo: string, instances: InstanceInput[], templates: 
             const relToInst = relative(inst, join(abs, f));
             return {
               path: f,
+              href: hrefFor(f),
               what: linked(cell(describeFile(inst, relToInst, assets))),
               usedBy: used(relToInst),
             };
