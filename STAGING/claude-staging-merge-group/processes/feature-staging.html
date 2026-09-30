@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-staging-merge-group/assets/css/docs-ui.css?v=1790777419">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-staging-merge-group/assets/css/docs-ui.css?v=1790778262">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-staging-merge-group/assets/css/narrow-viewport.css?v=1790777419">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-staging-merge-group/assets/css/narrow-viewport.css?v=1790778262">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-staging-merge-group/assets/css/work-plan.css?v=1790777419">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-staging-merge-group/assets/css/work-plan.css?v=1790778262">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-staging-merge-group/assets/css/themes.css?v=1790777419">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-staging-merge-group/assets/css/themes.css?v=1790778262">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-staging-merge-group/assets/css/uml.css?v=1790777419">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-staging-merge-group/assets/css/uml.css?v=1790778262">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-staging-merge-group/assets/css/avatars.css?v=1790777419">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-staging-merge-group/assets/css/avatars.css?v=1790778262">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-staging-merge-group/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-staging-merge-group/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-staging-merge-group/assets/js/docs-ui.js?v=1790777419" defer></script>
+<script src="/folio-assistant/STAGING/claude-staging-merge-group/assets/js/docs-ui.js?v=1790778262" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -828,7 +828,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <tr>
       <td>CI/CD Pipeline</td>
       <td><code class="language-plaintext highlighter-rouge">build-pipeline</code></td>
-      <td>Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes <code class="language-plaintext highlighter-rouge">STAGING/</code> writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why.</td>
+      <td>Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes <code class="language-plaintext highlighter-rouge">STAGING/</code> writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why.<br />A FOURTH trigger starts none of them, and that is deliberate rather than an omission from this diagram. <code class="language-plaintext highlighter-rouge">merge_group</code> is declared on the workflow so it REPORTS in the merge queue — a required check that never reports on a <code class="language-plaintext highlighter-rouge">merge_group</code> event leaves every queued pull request pending forever — and all three jobs skip on it. A preview exists for the reviewers of a pull request; a queue entry has none and lives for minutes. Without the skip, <code class="language-plaintext highlighter-rouge">stage</code>’s existing guards all pass on a queue run (<code class="language-plaintext highlighter-rouge">github.event.action</code> is empty and the event is not a dispatch), so it would publish <code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/</code> named after the ephemeral <code class="language-plaintext highlighter-rouge">gh-readonly-queue/...</code> ref, and nothing would ever remove it — <code class="language-plaintext highlighter-rouge">Start_Closed</code> below fires on <code class="language-plaintext highlighter-rouge">pull_request_target: closed</code>, and a queue branch is never a pull request that closes. That is the <code class="language-plaintext highlighter-rouge">plj1</code> shape arriving once per MERGE rather than once per pull request.</td>
     </tr>
     <tr>
       <td>Human actor</td>
