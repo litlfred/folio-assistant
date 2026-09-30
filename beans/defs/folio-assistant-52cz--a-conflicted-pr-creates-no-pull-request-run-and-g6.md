@@ -123,3 +123,13 @@ Live, 2026-09-30 19:10, `ci:watch --pr <n> --once`:
 - #1665 → FAIL on its real run
 
 **New finding, not fixed here:** #1652, which is **merged**, also reads "CONFLICTED". A merged PR keeps `refs/pull/N/head` but loses `refs/pull/N/merge`, so `mergeStateForHead` cannot tell merged from conflicted. That matters only for `--pr` on a closed PR. It is `check-head-has-run`'s probe to refine, not this branch's.
+
+## 2026-09-30 19:35 — a merge ref that is PRESENT can still be STALE
+
+`ci:watch --pr 1665` reported a "partial check set", while REST said `dirty`. The cause: `refs/pull/1665/merge` was 8cdfbc1, which GitHub built for the **earlier** head 1b7b537. When a new head conflicts, GitHub leaves the old merge ref in place. `mergeStateForHead` read existence alone, so it called the head `mergeable`, and `noRunAdvice` then offered to dispatch a run on a tree that will never exist.
+
+**Fixed in #1659:** the merge commit's second parent must BE the head. When it is not, the answer is `unknown`, never `mergeable`. It is also not `conflicted`, because a mergeable head's ref is stale too for about 15 s after a push (PR #813), and one read cannot tell the two apart.
+
+Live, 2026-09-30:
+- #1665, stale ref → `unknown`, where it used to be `mergeable`;
+- #1673, fresh ref → `mergeable`.
