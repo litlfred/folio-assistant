@@ -30,7 +30,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`index.md`](index.md) | "folio-assistant — a content-agnostic agent skills framework." |  |
 | [`installation.md`](installation.md) | Installation |  |
 | [`kg-navigation.md`](kg-navigation.md) | kg-navigation |  |
-| [`kgraph.md`](kgraph.md) | The KGraph |  |
+| [`knowledge-graph.md`](knowledge-graph.md) | The [Knowledge Graph](../../bootstrap/schemas/README.md#knowledge-graph) |  |
 | [`managing-agent-context.md`](managing-agent-context.md) | Managing agent context |  |
 | [`platform.md`](platform.md) | "What the platform does, and how its processes, roles, tasks and skills fit together." |  |
 | [`publication-workflow.md`](publication-workflow.md) | Publication workflow |  |

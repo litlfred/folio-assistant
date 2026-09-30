@@ -36,8 +36,8 @@ from the table; an agent cannot assert which way it went. That is a stronger
 guarantee than the methodology itself asks for, and it is the reason a table is
 worth the ceremony: the decision cannot be quietly overridden at the call site.
 
-See [`bpmn-processes`](../skills/workflow/bpmn-processes.md) for the gateway
-contract and [`dmn-authoring`](../skills/workflow/dmn-authoring.md)
+See [`bpmn-processes`](../skills/process/workflow/bpmn-processes.md) for the gateway
+contract and [`dmn-authoring`](../skills/process/workflow/dmn-authoring.md)
 for authoring the table.
 
 ## Hit policy is a modelling decision, not a detail

@@ -104,7 +104,7 @@ This bean's open Done-when was *"the chain is written down somewhere an author
 adding a skill will find it — or, better, one command performs it."* It was a
 prediction. It is now a measurement.
 
-`cat-harness/skills/workflow/release-epic-planning.md` landed on `main` from a
+`cat-harness/skills/process/workflow/release-epic-planning.md` landed on `main` from a
 sibling session **after** #1378 merged, carrying:
 
 | | |

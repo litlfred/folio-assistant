@@ -417,7 +417,7 @@ folio 的一个完整周期，从规划到退役。上述两个图表在此处�
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/who-is-who.md){: .fa-node-edit title="Edit content/docs/publication-workflow/who-is-who.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="who-is-who.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/publication-workflow/who-is-who.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-泳道中的角色，以及各自映射到的参与者定义。角色**具有继承性**（`viewer` → `reviewer` → `author` → `admin`）。参与者**可以做什么**并非其角色的属性：它是 `policies/` 中的 ODRL 规则，在每个任务执行之前，BPMN 执行器都会检查参与者是否已通过身份验证、是否具备泳道角色的资格、是否获得策略许可，以及是否允许接触该内容（[`task-authorization`](../../skills/folio-core/task-authorization.md)，issue #1207）。
+泳道中的角色，以及各自映射到的参与者定义。角色**具有继承性**（`viewer` → `reviewer` → `author` → `admin`）。参与者**可以做什么**并非其角色的属性：它是 `policies/` 中的 ODRL 规则，在每个任务执行之前，BPMN 执行器都会检查参与者是否已通过身份验证、是否具备泳道角色的资格、是否获得策略许可，以及是否允许接触该内容（[`task-authorization`](../../skills/process/process-core/task-authorization.md)，issue #1207）。
 
 ### 人员
 {: #people data-fa-label="sec:publication-workflow-people" }

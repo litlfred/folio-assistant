@@ -79,7 +79,7 @@ A first cut that answers only (1) is still worth having, provided it reports
 
 ## While in here: the ingest family's marker coverage
 
-`skills/workflow/bpmn-processes.md:30` requires `<folio:skill ref>` **and**
+`skills/process/workflow/bpmn-processes.md:30` requires `<folio:skill ref>` **and**
 `<folio:bean>` on an activity that touches the work plan. Measured on
 `document-ingestion.bpmn`:
 

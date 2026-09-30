@@ -22,7 +22,7 @@ the hardest edge on the page to follow.
 
 ## The rule, now in the skill
 
-`skills/workflow/bpmn-processes.md` §"Edge routing" carries it:
+`skills/process/workflow/bpmn-processes.md` §"Edge routing" carries it:
 
 - **rectilinear** — a sequence flow turns at right angles; a diagonal reads as
   a different kind of edge, and the notation has no such kind;
