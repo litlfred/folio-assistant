@@ -364,7 +364,18 @@ export async function plan(repo: string, instances: InstanceInput[], templates: 
       for (const f of all) if (f.includes("/")) counts.set(f.split("/")[0]!, (counts.get(f.split("/")[0]!) ?? 0) + 1);
       const subdirs = [...counts]
         .sort((a, b) => a[0].localeCompare(b[0]))
-        .map(([n, count]) => ({ name: n, count, readme: existsSync(join(abs, n, "README.md")) ? `${n}/README.md` : "" }));
+        .map(([n, count]) => ({
+          name: n,
+          count,
+          readme: existsSync(join(abs, n, "README.md")) ? `${n}/README.md` : "",
+          // Both targets encoded, for the same reason the file row's is: `n`
+          // is a DIRECTORY NAME OFF DISK, so a parenthesis or a space in it
+          // breaks the markdown link exactly as `PIIS2589750021000388 (2).pdf`
+          // did one row above. This row has not fired only because no
+          // subdirectory in the corpus currently carries one — and `uploads/`
+          // is the measure of how long that kind of latency lasts.
+          href: existsSync(join(abs, n, "README.md")) ? `${hrefFor(n)}/README.md` : `${hrefFor(n)}/`,
+        }));
       const listed = direct.length <= LIST_LIMIT;
       const files = listed
         ? direct.map((f) => {

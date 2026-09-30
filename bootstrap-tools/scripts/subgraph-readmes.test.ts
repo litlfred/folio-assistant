@@ -137,3 +137,20 @@ describe("hrefFor — a link target survives the markdown parser", () => {
     }
   });
 });
+
+describe("the SUBDIRECTORY row's target is encoded too", () => {
+  test("a directory name with a paren or a space survives the parser", () => {
+    // The sibling of the file-row defect, one line below it in the template.
+    // It has never fired only because no subdirectory in the corpus carries
+    // such a name — which is not a guarantee, it is an absence.
+    expect(hrefFor("Old Drafts (2024)")).toBe("Old%20Drafts%20%282024%29");
+  });
+
+  test("the two forms a subdir row can take are both encoded", () => {
+    // With a README the target is `<name>/README.md`; without one it is
+    // `<name>/`. Encoding one and not the other would leave half the rows
+    // broken, which is the shape of a fix that looks complete.
+    expect(`${hrefFor("a (b)")}/README.md`).toBe("a%20%28b%29/README.md");
+    expect(`${hrefFor("a (b)")}/`).toBe("a%20%28b%29/");
+  });
+});
