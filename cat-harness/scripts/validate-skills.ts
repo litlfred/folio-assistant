@@ -36,6 +36,7 @@ import {
   RequirementSchema,
   SkillDefinitionSchema,
 } from "../schemas/skill-package.js";
+import { requireActorsDir } from "../schemas/actors-dir.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, "..");
@@ -69,7 +70,7 @@ console.log("Validating skill framework files...\n");
 
 // Validate actors
 validateDir(
-  join(rootDir, ".claude", "skills", "actors"),
+  requireActorsDir(rootDir),
   ActorDefinitionSchema,
   "actors",
 );

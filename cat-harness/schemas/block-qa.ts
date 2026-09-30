@@ -54,7 +54,7 @@ export interface QaReviewer {
   version?: string;
   /**
    * The declared ACTOR this reviewer was acting as — an id in
-   * `.claude/skills/actors/`.
+   * `cat-harness/scenarios/actors/`.
    *
    * Separate from {@link id} because the two answer different questions and
    * measurably do not share a vocabulary. `id` says *what ran* — a script

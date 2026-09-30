@@ -26,6 +26,7 @@ import {
   fulfilmentKindsForBpmnType,
   type RoleGraph,
 } from "./role-graph";
+import { requireActorsDir } from "./actors-dir";
 
 function withKg(graph: unknown): string {
   const root = mkdtempSync(join(tmpdir(), "role-graph-"));
@@ -255,7 +256,7 @@ describe("this repository's own role graph", () => {
 });
 
 describe("this repository's actor registry, after the roles[] migration", () => {
-  const actors = readActors(join(import.meta.dir, "..", "..", ".claude", "skills", "actors"));
+  const actors = readActors(requireActorsDir(join(import.meta.dir, "..", "..")));
   const g = readRoleGraph(join(import.meta.dir, "..", "scenarios"))!;
 
   test("no entry still carries the deprecated `inherits`", () => {
@@ -285,7 +286,7 @@ describe("this repository's actor registry, after the roles[] migration", () => 
 
 describe("permissions are an actor property, not a role property", () => {
   const kg = join(import.meta.dir, "..", "skills");
-  const actorsDir = join(import.meta.dir, "..", "..", ".claude", "skills", "actors");
+  const actorsDir = requireActorsDir(join(import.meta.dir, "..", ".."));
 
   test("the vocabulary is declared and every id is unique", () => {
     const v = readPermissions(kg);
@@ -336,7 +337,7 @@ describe("permissions are an actor property, not a role property", () => {
 });
 
 describe("the actor kind is three-way: human, agentic, mechanical", () => {
-  const actorsDir = join(import.meta.dir, "..", "..", ".claude", "skills", "actors");
+  const actorsDir = requireActorsDir(join(import.meta.dir, "..", ".."));
 
   function withActor(entry: unknown): string {
     const dir = mkdtempSync(join(tmpdir(), "actors-"));

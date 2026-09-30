@@ -27,7 +27,7 @@
  * where its beans are explicitly *not its own to close*. The skills differ
  * because the **lane** differs, not because the actor did.
  *
- * The prior modelling had this backwards. `.claude/skills/actors/*.json` held
+ * The prior modelling had this backwards. `cat-harness/scenarios/actors/*.json` held
  * eighteen entries with an `inherits` chain — `author` inherits `reviewer`
  * inherits `viewer` — which is a **role** lattice wearing an actor's name: the
  * things it described (can review, can push) are properties of a position, not
@@ -159,7 +159,7 @@ export const ROLE_GRAPH_FILENAME = "roles.json";
  * The values live in `schemas/skill-package.ts`, the dependency-free base that
  * the registry schema reads. They were declared TWICE until 2026-09-19 — four
  * kinds here, two (`person`, `system`) there — and the registry validated
- * `.claude/skills/actors/*.json` against the narrower one, so the four-kind
+ * `cat-harness/scenarios/actors/*.json` against the narrower one, so the four-kind
  * vocabulary could not be used by the files it was written for. Re-exported so
  * there is one place to change and one answer to give.
  */
@@ -577,7 +577,7 @@ function detectCycle(graph: RoleGraph, id: string, path: string[]): void {
 /**
  * Read the actor registry.
  *
- * Reads `.claude/skills/actors/*.json`. An entry states its kind in `kind`,
+ * Reads `cat-harness/scenarios/actors/*.json`. An entry states its kind in `kind`,
  * against the full {@link ACTOR_KINDS} vocabulary, and an unknown value is
  * **rejected** rather than accepted and ignored — the same rule
  * {@link readRoleGraph} follows for an ACTOR's `kind` — one kind, unlike a role's set. An entry carrying the

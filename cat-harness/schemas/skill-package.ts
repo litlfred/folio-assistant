@@ -59,7 +59,7 @@ import { SkillNameSchema } from "./tool-types.js";
  * enum read `["person", "system"]` until 2026-09-19 while `ACTOR_KINDS` in the
  * role graph read all four — two spellings of one concept, in the one place
  * where the difference decides what a task may be handed to. The narrower of
- * the two was what `.claude/skills/actors/*.json` validated against, so an LLM
+ * the two was what `cat-harness/scenarios/actors/*.json` validated against, so an LLM
  * agent and a CI runner were both recorded `system` and no consumer could tell
  * a participant that exercises judgement from one that runs a program.
  */

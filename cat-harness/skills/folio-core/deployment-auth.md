@@ -49,7 +49,7 @@ curl -H 'Authorization: Bearer <FOLIO_API_TOKEN>' https://<folio-domain>/mcp
 **Half built, 2026-09-23 (#1207).** The API server no longer compares a
 viewer < collaborator < owner ladder. `src/core/rbac.ts` treats the gateway's
 tier as a declared actor (`viewer`, `collaborator`, `owner` in
-`.claude/skills/actors/`), each route names the ODRL **action** it performs,
+`cat-harness/scenarios/actors/`), each route names the ODRL **action** it performs,
 and `policies/http-gateway.jsonld` says which tier holds which action. It
 reproduces what the ladder allowed. An explicit `X-User-Actor` header, once the
 gateway sends one, takes precedence over the tier. What is still to build is

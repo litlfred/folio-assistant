@@ -92,6 +92,7 @@ import { stagingFields } from "./staging-stamp.js";
 import { buildQaResult, writeQaResult } from "./qa-results.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
 import { listDecisions } from "../src/workflow/decision-table.js";
+import { actorsDir } from "../schemas/actors-dir.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -1112,8 +1113,10 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
   // resolved beside the actor registry this function already reads by path.
   const grants = readPolicyGrants(join(ROOT, "policies"));
   for (const [group, type] of Object.entries(REGISTRY_GROUPS)) {
-    const abs = join(repoRootFor(ROOT), ".claude", "skills", group);
-    if (!existsSync(abs)) continue;
+    // Actors moved beside roles.json (bean `rqao`); the other registry groups
+    // are still under `.claude/skills/`.
+    const abs = group === "actors" ? actorsDir(repoRootFor(ROOT)) : join(repoRootFor(ROOT), ".claude", "skills", group);
+    if (abs === undefined || !existsSync(abs)) continue;
     for (const f of readdirSync(abs)) {
       if (!f.endsWith(".json")) continue;
       try {

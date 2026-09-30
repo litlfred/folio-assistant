@@ -20,6 +20,7 @@ import {
   KG_SUBJECT_KINDS,
 } from "./kg-qa";
 import { defaultGraphKinds, kgQaHomeFor, repoRootFor } from "./cat-harness.js";
+import { requireActorsDir } from "./actors-dir";
 
 describe("the criteria registry", () => {
   test("ids are unique", () => {
@@ -251,7 +252,7 @@ describe("requirements are the fifth node kind and only point", () => {
     const reqs = files.map((f) => JSON.parse(readFileSync(join(dir, f), "utf-8")));
     const ids = new Set(reqs.map((r) => r.id));
     const actors = new Set(
-      readdirSync(join(repoRootFor(root), ".claude", "skills", "actors")).map((f: string) => f.replace(/\.json$/, "")),
+      readdirSync(requireActorsDir(repoRootFor(root))).map((f: string) => f.replace(/\.json$/, "")),
     );
 
     const bad: string[] = [];

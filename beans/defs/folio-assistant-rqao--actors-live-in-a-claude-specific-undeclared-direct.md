@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rqao
 title: 'ACTORS LIVE IN A CLAUDE-SPECIFIC, UNDECLARED DIRECTORY: .claude/skills/actors (and capabilities/, requirements/) → an agent-generic declared graph'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T08:19:40Z
-updated_at: 2026-09-30T19:55:31Z
+updated_at: 2026-09-30T20:31:57Z
 parent: folio-assistant-tr05
 ---
 
@@ -34,3 +34,10 @@ Actors move beside `roles.json`, inside the already-declared `scenarios` graph. 
 
 ## Owner decision 2026-09-30
 Actors move BESIDE roles.json: cat-harness/scenarios/ (the declared kg directory holding roles.json and stories.json). Capabilities/requirements each decided separately.
+
+## Done (2026-09-30), owner: beside roles.json
+- 36 actors git-mv'd to cat-harness/scenarios/actors/ (the declared scenarios directory).
+- schemas/actors-dir.ts: actorsDir(repoRoot) finds actors/ in any declared scenarios directory; requireActorsDir throws.
+- Readers switched: access.ts, kg-audit (absent = no actors), kg-export (actors group), check-actor-reach, check-qa-reviewer-permission, validate-skills, generate-registry, fsh-guts generate-docs; tests role-graph, odrl, kg-qa, actor-reach-check.
+- AGENTS.md actor row, role-model (history kept accurate), task-authorization, deployment-auth, directory-conventions, schema docs updated.
+- NOT moved: capabilities/ and requirements/ (owner: decided each on its own) — follow-up bean.

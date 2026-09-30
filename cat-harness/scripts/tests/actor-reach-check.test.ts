@@ -14,6 +14,7 @@ import { join, resolve } from "node:path";
 import { buildReport } from "../check-actor-reach";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
+import { requireActorsDir } from "../../schemas/actors-dir.ts";
 
 type Actor = Record<string, unknown>;
 
@@ -110,7 +111,7 @@ describe("this repository's own registry", () => {
     // one directory when this arrived from main, so one `ROOT` answered both;
     // here it looked for actors under `cat-harness/.claude/` and examined none.
     const INSTANCE = resolve(import.meta.dir, "../..");
-    const r = buildReport(join(repoRootFor(INSTANCE), ".claude", "skills", "actors"), INSTANCE);
+    const r = buildReport(requireActorsDir(repoRootFor(INSTANCE)), INSTANCE);
     expect(r.actors.length).toBeGreaterThan(0);
     expect(r.conflicts).toEqual([]);
     // Not a count of declarers: that is a number this repo will change, and a

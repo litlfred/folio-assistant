@@ -121,6 +121,7 @@ import { graphVerdict, proseGraphs } from "./lsi.ts";
 import { orderedDependencies } from "../schemas/harness-config.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
+import { actorsDir } from "../schemas/actors-dir.ts";
 
 const ENGINE_VERSION = "1";
 
@@ -252,7 +253,9 @@ const SCENARIO_DIR = ownDirectoryById(root, "scenarios", "scenarios");
 const POLICY_DIR = ownDirectoryById(root, "policies", "policies");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
 const KG_ROOT = join(root, "skills");
-const ACTOR_DIR = join(repoRootFor(root), ".claude", "skills", "actors");
+// Absent is an answer here, not an error: a folio with no actor registry
+// audits with none, as it did when the path simply did not exist.
+const ACTOR_DIR = actorsDir(repoRootFor(root));
 const CAPABILITY_DIR = join(repoRootFor(root), ".claude", "skills", "capabilities");
 const REQUIREMENT_DIR = join(KG_ROOT, "requirements");
 // declared-path-literal: the convention fallback, at the call site. Same
@@ -2430,7 +2433,7 @@ const layeringUndetermined = ((): boolean => {
  */
 const refUnjudgeable = (ref: string): boolean =>
   layeringUndetermined && !resolvableSkills.has(ref);
-const actors = readActors(ACTOR_DIR, readPolicyGrants(POLICY_DIR));
+const actors = ACTOR_DIR === undefined ? [] : readActors(ACTOR_DIR, readPolicyGrants(POLICY_DIR));
 
 let graph: RoleGraph | undefined;
 let graphError: string | undefined;

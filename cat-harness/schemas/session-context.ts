@@ -27,7 +27,7 @@
  * question a sibling session needs answered before it touches the same bean.
  *
  * It is `actorRef` rather than an `ActorDefinition`: an agent may act without a
- * declared node under `.claude/skills/actors/`, and requiring one would make
+ * declared node under `cat-harness/scenarios/actors/`, and requiring one would make
  * the field unfillable in exactly the cold-start case a session record is most
  * useful for. The reference is resolved where one exists and is a bare name
  * where it does not — **stated, so a consumer knows which it is holding.**
