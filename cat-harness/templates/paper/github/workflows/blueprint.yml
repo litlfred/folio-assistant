@@ -45,6 +45,12 @@ on:
         default: ''
         type: string
 
+# DEPLOY GATE (folio-assistant#1492). This workflow is `workflow_dispatch`-only,
+# so a gate on `github.event_name == 'push'` never fires: until 2026-09-30 the
+# publishing steps below could not run at all. They now run when dispatched
+# from main with the `ref` input left blank, i.e. when publishing main itself.
+# A dispatch with `ref` set builds and checks that ref but does not publish it,
+# because gh-pages would then show another ref's output as main's.
 concurrency:
   group: blueprint-${{ github.ref }}
   cancel-in-progress: true
@@ -245,7 +251,7 @@ jobs:
 
       # ── Upload deploy artifacts for the deploy job ──────────────
       - name: Upload deploy artifacts
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.ref == ''
         uses: actions/upload-artifact@v4
         with:
           name: blueprint-deploy-${{ matrix.paper }}
@@ -256,7 +262,7 @@ jobs:
     name: Deploy to gh-pages
     runs-on: ubuntu-latest
     needs: [build_blueprint]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.ref == ''
     # One queue for every job that pushes gh-pages: a concurrency group
     # matches on the literal string, so every such job must name this one.
     concurrency:

@@ -21,7 +21,7 @@ Tracks litlfred/folio-assistant#1492. Owner decisions (2026-09-29): the hybrid, 
 - [x] MCP Tool contributed through folio-assistant-sci/contributions.ts, plus wiring ContributionRegistry.registerTools into the MCP server (today no production caller)
 - [x] skill in folio-assistant-sci (directory declared); core lean-formal-graph.md points to it
 - [ ] generated leanblueprint export (paper adapter), formal \uses, --check
-- [ ] fix or remove the 2 broken blueprint workflows
+- [ ] fix or remove the 2 broken blueprint workflows — template half DONE (dead push gates in paper `blueprint.yml` and `lean_ci.yml` now fire on a manual run of main; `template-dispatch-gates.test.ts` holds every dispatch-only template to it); `publish.yml`'s editorial-`\uses` job waits for the generated export
 - [ ] docs-site graph and Lean status page
 
 ## Evidence
@@ -33,3 +33,9 @@ Small-cluster measurement on #1492: the template reproduces LeanArchitect v4.25.
 - **Root choice for contributions:** the server loads from the FOLIO root (findContentRepoRoot()); where that falls back to the platform's own cat-harness/ (no folio found, as in this repository), it uses the repository root above it. Verified on the real server: tools/list gives 13 tools including lean_formal_edges.
 - **PRE-EXISTING, not fixed here:** qa-sweep.ts loads contributions from INSTANCE_ROOT = cat-harness/, which declares no dependencies, so it registers 0 contributed checkers (measured). folio-assistant-sci's two cost checkers (proof-compile-cost, proof-no-cost-regression) therefore never run in a real sweep, while qa-checker-discovery.test.ts passes because it loads from the repository root. Needs its own bean and the owner's call.
 - **Known limitation, shared with --scan:** with no formal-ref layer configured, blocks resolved only through the Lean package resolver carry no lean_path, so --stale cannot track them.
+- **Dead deploy gates in the paper templates, fixed:** `blueprint.yml` and
+  `lean_ci.yml` trigger only on `workflow_dispatch`, yet their deploy /
+  doc-gen4 steps were gated on `github.event_name == 'push'` — never true, so
+  every folio `folio_init` wrote could never publish its blueprint or Lean
+  docs, and no run failed to say so. Now gated on a dispatch of `main` with no
+  `ref` override. Calibrated test: 2 fail on the old templates, pass after.
