@@ -11186,7 +11186,7 @@ VizVisibility.stars <span class="fa-gloss-status">candidate, extracted</span>
 VoiceApplicabilitySchema.processes <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>BPMN process ids, as `&lt;bpmn:process id&gt;` spells them — `Process_CrdmRequirements`, not a filename. Resolved against the diagrams the `cat-harness` graph carries, so a typo is a dangling reference rather than a voice that quietly never activates.</p>
+<p>BPMN process ids, as `&lt;bpmn:process id&gt;` spells them — `Process_CRDM_Requirements`, not a filename (#1168, B8: the element id, as `calledElement` uses it). Resolved against the loaded diagrams by `process-refs.test.ts`, so a typo is a dangling reference rather than a voice that quietly never activates.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/voices.ts"><code>cat-harness/schemas/voices.ts#VoiceApplicabilitySchema.processes</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--voices.voiceapplicabilityschema.roles" data-fa-state="extracted" data-fa-gloss="">
