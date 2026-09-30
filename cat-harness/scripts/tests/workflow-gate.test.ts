@@ -141,6 +141,9 @@ describe("reading the package policy files", () => {
   test("a relaxation with no reason does not load", () => {
     const repo = mkdtempSync(join(tmpdir(), "policy-"));
     mkdirSync(join(repo, "skills", "pkg"), { recursive: true });
+    // A PACKAGE HOLDS A SKILL. The policy files are read from the packages
+    // discovery finds, and a directory holding no skill is not one (bean 9umr).
+    writeFileSync(join(repo, "skills", "pkg", "a-skill.md"), "# A skill\n");
     writeFileSync(
       join(repo, "skills", "pkg", "workflow-policy.json"),
       JSON.stringify({ relaxations: [{ process: "Process_Editing", activity: "Task_SmeReview" }] }),
@@ -154,6 +157,9 @@ describe("reading the package policy files", () => {
   test("a policy file claiming to be a different package does not load", () => {
     const repo = mkdtempSync(join(tmpdir(), "policy-"));
     mkdirSync(join(repo, "skills", "pkg"), { recursive: true });
+    // A PACKAGE HOLDS A SKILL. The policy files are read from the packages
+    // discovery finds, and a directory holding no skill is not one (bean 9umr).
+    writeFileSync(join(repo, "skills", "pkg", "a-skill.md"), "# A skill\n");
     writeFileSync(
       join(repo, "skills", "pkg", "workflow-policy.json"),
       JSON.stringify({ package: "somewhere-else", relaxations: [] }),

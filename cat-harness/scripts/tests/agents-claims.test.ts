@@ -149,11 +149,12 @@ describe("the two false claims from git history — the bean's done-when #3", ()
 
   test("the `no caller` half is caught SEPARATELY — a location check alone would have missed it", () => {
     // Stated against today's tree, where `resolveSkillDirs` is called by
-    // `src/tools/skill-fetch.ts`. This is the assertion that shows the bean's
+    // `scripts/skill-packages.ts` (moved out of the `skill_fetch` Tool, bean
+    // `9umr`). This is the assertion that shows the bean's
     // proposed design was insufficient for the bean's own example.
     const { findings } = checkClaims(REPO, "`resolveSkillDirs` has no caller.");
     expect(findings).toHaveLength(1);
-    expect(findings[0]!.reason).toContain("skill-fetch");
+    expect(findings[0]!.reason).toContain("skill-packages");
   });
 
   test("a TRUE location claim about today's tree passes", () => {
