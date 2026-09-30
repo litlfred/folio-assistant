@@ -51,3 +51,20 @@ The owner earlier called theme mapping *"authoring (human/agentic) decision/judg
 - **Rendered check.** `preview:site` (which runs `mount-instance-docs.ts`: 5 mounts, rail on 19 pages), served under `/folio-assistant/`, Chromium: the landing card carries `data-fa-sticky-theme="iris-sticky"` and computes `--fa-sticky-accent: #008dc9`; `#harness-who-iris` computes `--fa-tile-tone: 198`; the sidebar entry's mark is `hsl(198 45% 28%)`.
 - **Seen on the build, not fixed here:** the board uses `--fa-sticky-accent` only for the medium-priority stripe, and a landing card has no priority, so the IRIS card renders as white / `#ced4da` edge / `#212529` ink — faithful to IRIS, but the blue does not show on the card itself. Making it show needs a board CSS change or a backdrop: the owner's call.
 
+
+## The band is built — 2026-09-30, branch `claude/magical-archimedes-4qkfxp-v8n5-band`
+
+One rule in `docs-ui.css`: `.fa-sticky[data-fa-sticky-theme]:not([class*="fa-sticky-p-"])` gets a 3px `border-top` in `--fa-sticky-accent`, falling back to the edge colour. It keys on the theme ATTRIBUTE, so every instance theme gets it and no theme is named.
+
+**Top edge, not left:** the left edge is the priority channel, and medium already paints the accent there. An accent left edge on a card with no priority would read as "medium".
+
+Rendered in Chromium against the real `docs-ui.css` and `themes.css` (computed `border-top`):
+
+| card | top border |
+|---|---|
+| `iris-sticky`, no priority (the who-iris landing card) | **3px rgb(0, 141, 201)**, the IRIS blue |
+| `iris-sticky`, `fa-sticky-p-medium` | 1px edge: no band, and priority stays on the left |
+| `iris-sticky`, `fa-sticky-p-critical` | 1px edge, red left stripe unchanged |
+| `pale-sage`, no priority | 3px rgb(111, 140, 100), the sage accent |
+
+**Not verified here:** the deployed who-iris landing page itself. The staging preview is the place to look.
