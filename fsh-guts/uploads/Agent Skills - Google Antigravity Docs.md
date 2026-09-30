@@ -23,5 +23,5 @@ check refuses an unexpected child, so this is where the original lives.
 re-derivation be checked against this file.
 
 The rule and its reasoning are in
-[`library-ingestion`](../../cat-harness/skills/folio-core/library-ingestion.md)
+[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)
 §"What happens to the upload after it is ingested".

@@ -52,7 +52,7 @@ describe("publication is a STATE, and `published` is refused (§3.1, superseded 
    * say what is true — and it is what condemned the old model: all 17
    * instances reported `undecided` while the answer was known for every one.
    *
-   * `skills/folio-core/instance-publication.md`.
+   * `skills/kg/kg-core/instance-publication.md`.
    */
   test("absent `publication` is legal and means draft", () => {
     expect(CatHarnessDeclarationSchema.safeParse(decl()).success).toBe(true);

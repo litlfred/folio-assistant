@@ -144,8 +144,8 @@ describe("the three conditions", () => {
     try {
       const from = write(root, `${RESULTS}/src/skills/corpus-grep.kg-qa.json`,
         sidecar("skill", "corpus-grep", "src/skills/corpus-grep.md", "THE-OLD-VERDICT"));
-      write(root, "skills/folio-core/corpus-grep.md", "# corpus-grep\n");
-      const dest = join(root, RESULTS, "skills/folio-core/corpus-grep.kg-qa.json");
+      write(root, "skills/kg/kg-core/corpus-grep.md", "# corpus-grep\n");
+      const dest = join(root, RESULTS, "skills/kg/kg-core/corpus-grep.kg-qa.json");
 
       const moved = relocate(root, sweepOrphans(root, new Set()),
         new Map([["skill:corpus-grep", dest]]));

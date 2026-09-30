@@ -21,5 +21,5 @@ the PDF beside it, and what the ingest made of that source is in
 
 Kept rather than dropped because it records how *this* extraction ran, which
 a re-derivation can be compared against. See
-[`library-ingestion`](../../cat-harness/skills/folio-core/library-ingestion.md)
+[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)
 §"What happens to the upload after it is ingested".

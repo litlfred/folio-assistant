@@ -22,7 +22,7 @@ needs different **code** (adapter) or only different **rules** (profile plus
 a subclass).
 
 **Archived 2026-09-19** (bean `folio-assistant-4kiw`). Superseded by
-`skills/folio-core/placement.md` Step 3, which carries every operative
+`skills/kg/kg-core/placement.md` Step 3, which carries every operative
 claim here — disjoint vs nesting, `adapterForKind` staying *total and
 unambiguous*, the **eight** shared kinds, and the separating question
 (different **code** -> adapter; only different **rules** -> profile plus a

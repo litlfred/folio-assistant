@@ -93,7 +93,7 @@ export interface PublishableReport {
  * Absent means `draft` — the field exists to reserve the axis, not to be
  * typed out 17 times. `"published"` cannot reach here: it fails to PARSE, so
  * a declaration claiming it never becomes a `CatHarnessDeclaration` at all.
- * `skills/folio-core/instance-publication.md`.
+ * `skills/kg/kg-core/instance-publication.md`.
  */
 function stateOf(d: CatHarnessDeclaration): Publishability {
   return d.publication?.state ?? "draft";
@@ -186,7 +186,7 @@ export function formatReport(report: PublishableReport): string {
   const count = (s: Publishability) => rows.filter((r) => r.state === s).length;
   const out: string[] = [
     "Publication state — every asset carries an id and a version, and sits in DRAFT",
-    "(skills/folio-core/instance-publication.md)",
+    "(skills/kg/kg-core/instance-publication.md)",
     "",
   ];
 

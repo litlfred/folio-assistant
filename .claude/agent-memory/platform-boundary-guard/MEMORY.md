@@ -32,7 +32,7 @@ follow its links.
 
 ## STABLE — placement is a SKILL — run it before the first file exists
 
-`skills/folio-core/placement.md` is a four-step decision procedure with a
+`skills/kg/kg-core/placement.md` is a four-step decision procedure with a
 stop — **instance → declared graph → kind of node → which of the two
 unrelated "stub" conventions**, and when you cannot tell, ask rather than
 default to the repo you are standing in. Run it **before** adding a skill,
@@ -162,7 +162,7 @@ property of a FORMAT within a content type (`schemas/translation-tools.ts`,
 its content (e.g. markdown, bpmn) should be translatable"*. `nav_exclude: true`
 is the half JS cannot do — just-the-docs builds the nav once, for every
 reader, before anybody picks a locale. Full rule:
-`skills/folio-core/translation-manager.md#the-navbar-filters-by-locale`.
+`skills/library/library-core/translation-manager.md#the-navbar-filters-by-locale`.
 
 ## TRAP — the schema cannot catch a profile violation
 

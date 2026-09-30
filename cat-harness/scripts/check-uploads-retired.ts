@@ -25,7 +25,7 @@
  * So there are three stages and `uploads/` is the only temporary one: **queued**
  * in a declared `uploads/`, **derived** into `library/<slug>/`, **archived** in
  * `fsh-guts/uploads/` with a same-basename sidecar. The reasoning is in
- * `skills/folio-core/library-ingestion.md`.
+ * `skills/library/library-core/library-ingestion.md`.
  *
  * ## Why a check and not a sweep
  *
@@ -359,7 +359,7 @@ if (import.meta.main) {
     console.error(`      remedy: ${remedy(f)}`);
   }
   console.error(`\n  ${String(queued)} file(s) are genuinely queued and are not findings.`);
-  console.error("  The rule is in skills/folio-core/library-ingestion.md");
+  console.error("  The rule is in skills/library/library-core/library-ingestion.md");
   console.error('  §"What happens to the upload after it is ingested". Bean q7ey.');
   console.error("\n  Nothing is moved or removed here — deletion-requires-confirmation.");
   process.exit(1);

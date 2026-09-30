@@ -7,7 +7,7 @@
  * Moved out of `gen-uml-overview.ts` when a second generator
  * (`gen-content-graph-uml.ts`, a paper's block graph) needed the same things.
  * The rules they implement are the `graph-rendering` skill's
- * (`skills/graph-management/graph-rendering.md`), rules 5, 6, 8 and 9.
+ * (`skills/kg/graph-management/graph-rendering.md`), rules 5, 6, 8 and 9.
  *
  * @module scripts/plantuml-render
  */

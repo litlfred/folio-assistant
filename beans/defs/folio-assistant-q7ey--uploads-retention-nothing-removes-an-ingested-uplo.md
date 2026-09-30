@@ -20,7 +20,7 @@ then, refining where the archival copy belongs:
 > harness repo) then it should be moved to `fsh-guts`.
 
 **Both decisions this bean opened are answered.** The rule is written down in
-[`library-ingestion`](../../cat-harness/skills/folio-core/library-ingestion.md)
+[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)
 §"What happens to the upload after it is ingested", with a pointer from
 [`fsh-guts`](../../cat-harness/skills/folio-core/fsh-guts.md). What remains is
 the sweep and one naming question.

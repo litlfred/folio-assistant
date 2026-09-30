@@ -7,7 +7,7 @@
  * @covers library, skills, beans, folio, docs, methodology, memory, policies, glossary
  *
  * Method: `methodologies/lsi.md`. Engine: `content/pipeline/lsi.ts`. Skill:
- * `skills/graph-management/lsi-indexing.md`.
+ * `skills/kg/graph-management/lsi-indexing.md`.
  *
  * ## Subcommands
  *

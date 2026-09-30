@@ -98,7 +98,7 @@ Setting back to todo so a sibling can see it is unclaimed.
 
 _2026-09-19T10:19:49Z_ — Follow-up: the convention shipped in #383 lived only in code. No skill mentioned docs/<stub> — directory-conventions.md documented stub-named ARTEFACTS (<stub>.jsonld) but not the site directory. That is the failure AGENTS.md's own banner names: a rule with no home is not in the generated reference, not in the published skill docs, and not found by an agent that went looking for the skill first.
 
-Added a docs/<stub> section to skills/folio-core/directory-conventions.md with the split rationale, the source-root mechanism that preserves URLs, the measured folio-graph-kind blocker, the throw-rather-than-default rule, and the guard.
+Added a docs/<stub> section to skills/kg/kg-core/directory-conventions.md with the split rationale, the source-root mechanism that preserves URLs, the measured folio-graph-kind blocker, the throw-rather-than-default rule, and the guard.
 
 Deliberately NOT done: creating an empty docs/<other-stub>/ to 'exercise the convention'. A declared-but-absent directory is the dh4f defect — every consumer scans nothing and reports a clean run over it. The convention is exercised for a second stub by site-dir-single-answer.test.ts, which asserts siteDir({stub:'y'}) === 'docs/y'.
 

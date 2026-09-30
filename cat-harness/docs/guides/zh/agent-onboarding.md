@@ -7,7 +7,7 @@ lang: zh
 # the path. `nav_exclude` keeps it out of the statically built nav, and
 # `mountNavLocale` (docs/assets/js/docs-ui.js) puts it back in place of its
 # source when this locale is selected. There is no `nav_order`: it stands
-# where its source stands. skills/folio-core/translation-manager.md
+# where its source stands. skills/library/library-core/translation-manager.md
 nav_exclude: true
 translation_status: unverified
 translation_source: guides/agent-onboarding.md

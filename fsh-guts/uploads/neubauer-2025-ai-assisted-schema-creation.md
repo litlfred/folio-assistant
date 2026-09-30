@@ -56,5 +56,5 @@ The duplicate in `cat-harness/uploads/` is removed as of this commit, and
 `check:uploads-retired` now fails on an ingested upload left in any queue.
 
 The rule is in
-[`library-ingestion`](../../cat-harness/skills/folio-core/library-ingestion.md)
+[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)
 §"What happens to the upload after it is ingested".

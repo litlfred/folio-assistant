@@ -31,5 +31,5 @@ method produced is not correcting the method, which is why the replacement is
 `check:uploads-retired` rather than another sweep.
 
 The rule is in
-[`library-ingestion`](../../cat-harness/skills/folio-core/library-ingestion.md)
+[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)
 §"What happens to the upload after it is ingested".
