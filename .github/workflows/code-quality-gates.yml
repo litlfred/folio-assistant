@@ -864,6 +864,16 @@ jobs:
       - name: bootstrap schemas are current
         run: bun run bootstrap:schemas:check
 
+      # The second half of the same render pipeline (owner, 2026-09-29: "need
+      # Zod usage in bootstrap tools as part of validation in rendering
+      # pipeline"; ported from PR #1514, bean `81tw`): the step above judges
+      # the SCHEMAS against their Zod; this judges the DOCUMENTS bootstrap
+      # carries — its declaration, its model registry, any discussion
+      # document — against the same Zod. A run that cannot find bootstrap, or
+      # validates nothing, fails.
+      - name: bootstrap documents parse against their Zod
+        run: bun run bootstrap:validate
+
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
       # source change. document-intake.md sat 35 lines behind its source and

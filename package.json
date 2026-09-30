@@ -61,6 +61,8 @@
     "bootstrap:graph": "bun run cat-harness/scripts/gen-bootstrap-graph.ts",
     "bootstrap:schemas": "bun run bootstrap-tools/scripts/gen-bootstrap-schemas.ts",
     "bootstrap:schemas:check": "bun run bootstrap-tools/scripts/gen-bootstrap-schemas.ts --check",
+    "bootstrap:semver": "bun run bootstrap-tools/scripts/schema-semver.ts",
+    "bootstrap:validate": "bun run bootstrap-tools/scripts/validate-bootstrap.ts",
     "build:document-site": "bun run cat-harness/scripts/build-document-site.ts",
     "cache:index": "bun run folio-assistant-core/scripts/cache-index.ts",
     "check-deps": "bun run cat-harness/src/index.ts --check-deps",

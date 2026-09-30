@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-29T23:42:57Z
-updated_at: 2026-09-29T23:42:57Z
+updated_at: 2026-09-30T08:46:25Z
 parent: folio-assistant-vke6
 ---
 
@@ -38,3 +38,5 @@ Analysis: session scratchpad `separation-process-analysis.md` (94 beans, cone me
 
 ## Phase 4 — the replicable separation process
 - [ ] kg-separation BPMN + skills (done, 433d3c5) + missing gates (analysis §6–7; still open)
+
+**Port from #1514 (2026-09-30):** the two pieces unique to the overtaken PR #1514 (bean `81tw`, now scrapped) — the `bootstrap-contract-semver` skill with `scripts/schema-semver.ts` (`bootstrap:semver`), and `scripts/validate-bootstrap.ts` (`bootstrap:validate`, a CI step beside `bootstrap:schemas:check`) — are ported onto this bean's `bootstrap-tools/` under child task `folio-assistant-l9d5`, adapted to the zod-only closure; the validator's graph-document target is not ported because its Zod is still in cat-harness.
