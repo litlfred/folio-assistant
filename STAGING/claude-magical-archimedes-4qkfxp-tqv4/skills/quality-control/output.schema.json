@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-tqv4/skills/quality-control/output.schema.json",
+  "title": "Quality Control Output",
+  "description": "Output schema for quality control results.",
+  "type": "object",
+  "required": [
+    "overallResult"
+  ],
+  "properties": {
+    "overallResult": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "pass-with-warnings",
+        "fail"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "severity",
+          "category",
+          "message"
+        ],
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "category": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "remediation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "checklistResults": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "enum": [
+          "pass",
+          "fail",
+          "not-applicable"
+        ]
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-archimedes-4qkfxp-tqv4",
+    "sha": "d1f9c9ed137eb4f90714e48f8d2828c5ab0d634a",
+    "pr": "1602/merge",
+    "run": "36725352106"
+  }
+}
