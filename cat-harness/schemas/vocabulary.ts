@@ -205,9 +205,11 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     gloss: BOOTSTRAP_TERMS.SequenceFlow,
   },
   Tool: {
-    // Harness layer, so its IRI does not move; its DEFINITION is bootstrap's,
-    // because bootstrap/README.md uses the word before anything else loads.
-    gloss: BOOTSTRAP_TERMS.Tool,
+    // The harness's own term. Bootstrap defined it until v3 of its terms; the
+    // owner, 2026-09-29: "no tools in bootstrap". Bootstrap names no program an
+    // Actor runs, so the word belongs to the layer that has Tools.
+    gloss:
+      "A Node Instance describing a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
     seeAlso: "/architecture.html",
   },
   Schema: {
@@ -252,11 +254,12 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // the declaration is the harness's own object, and `cat:CatHarness`
   // stuttered the layer into the term.
   Harness: {
-    layer: "harness",
-    // Definition from bootstrap, which the owner stated: "a harness is used to
-    // interact with a knowledge graph". Layer and IRI unchanged.
+    // Bootstrap defines it, so bootstrap owns it, IRI included (terms v3,
+    // 2026-09-29). It was harness-layer with bootstrap's definition — a term
+    // published by one layer and minted by another, which the layering rule
+    // forbids. No `seeAlso`: a bootstrap term links to nothing above it.
+    layer: "bootstrap",
     gloss: BOOTSTRAP_TERMS.Harness,
-    seeAlso: "/architecture.html",
   },
   Image: {
     layer: "core",

@@ -36,7 +36,7 @@ reading:
 **Two more words you will meet in a declaration.** A field this skill does not
 describe is an **Extension**: a Harness added it, and you ignore it. A Harness's
 own kind of declaration, which requires everything bootstrap's does and adds
-Extensions, is a **SubKind** of bootstrap's: read it as bootstrap's, and it
+Extensions, is a **Subkind** of bootstrap's: read it as bootstrap's, and it
 still means what it says.
 
 **Versions and addresses.** A declaration may state its `version`

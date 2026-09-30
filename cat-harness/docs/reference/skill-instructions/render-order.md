@@ -31,6 +31,14 @@ subtly different and none tested.
 | the pipeline that uses it | `cat-harness/scripts/render-pipeline.ts` |
 | see the order without running it | `bun run render:order` |
 | run it | `bun run render` |
+| check an order someone WROTE, rather than compute one | `checkDeclaredOrder` in the same module |
+
+**Two questions, one module.** `flattenDependencies` answers a pipeline's
+question — *give me an order that honours every `needs`*. `checkDeclaredOrder`
+answers an authored list's — *does the order as written keep its promise*, each
+item using only items above it and never itself. A glossary's order is the
+second kind: it is part of what the author said, so it is checked and never
+recomputed ([`glossary-terms`](glossary-terms.md) §"Ordered glossaries").
 
 ## The four rules, and each is a decision rather than a default
 

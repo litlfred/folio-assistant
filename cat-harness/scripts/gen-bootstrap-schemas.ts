@@ -61,7 +61,13 @@ import {
   DiscussionOutputObjectSchema,
   JSON_SCHEMA_CONDITIONALS,
 } from "../schemas/discussion.ts";
-import { BOOTSTRAP_TERMS, BOOTSTRAP_TERM_SHAPES, KnowledgeGraphDeclarationSchema } from "../schemas/graph.ts";
+import {
+  BOOTSTRAP_TERM_DEFINED_BY,
+  BOOTSTRAP_TERM_SHAPES,
+  BOOTSTRAP_TERM_USES,
+  BOOTSTRAP_TERMS,
+  KnowledgeGraphDeclarationSchema,
+} from "../schemas/graph.ts";
 import { renderSchemaPage, type PageDocument } from "./bootstrap-schema-page.ts";
 import { ModelRegistrySchema } from "../schemas/model-registry.ts";
 import { LedgerSchema } from "../schemas/glossary-ledger.ts";
@@ -281,7 +287,18 @@ export function render(t: (typeof TARGETS)[number]): string {
         const shape = shapes[name];
         const extra = shape ? (z.toJSONSchema(shape, { io: "input", reused: "inline" }) as Record<string, unknown>) : {};
         delete extra.$schema;
-        return [name, { title: name, ...extra, description: definition }];
+        // Two annotations beside the definition, both read by the drawn page
+        // and by anyone else: which earlier terms it uses (authored, in order),
+        // and the schema that defines it — a `#` pointer into this document,
+        // or the standard it builds on (owner, 2026-09-29).
+        const annotations =
+          t.terms === BOOTSTRAP_TERMS
+            ? {
+                uses: [...(BOOTSTRAP_TERM_USES[name as keyof typeof BOOTSTRAP_TERM_USES] ?? [])],
+                isDefinedBy: BOOTSTRAP_TERM_DEFINED_BY[name as keyof typeof BOOTSTRAP_TERM_DEFINED_BY],
+              }
+            : {};
+        return [name, { title: name, ...extra, description: definition, ...annotations }];
       }),
     );
   }

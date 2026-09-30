@@ -46,6 +46,8 @@
  *
  * Usage: `bun run readme:subgraphs` · `bun run readme:subgraphs:check`
  */
+import { bootstrapTermTargets, linkTerms } from "../content/pipeline/term-links.ts";
+import { BOOTSTRAP_TERMS } from "../schemas/graph.ts";
 import { releaseIris } from "../schemas/release-iri.ts";
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
@@ -196,6 +198,11 @@ export async function plan(repo: string, templates: string): Promise<Plan> {
       if (!description) out.findings["no-description"].push(at);
       else if (description.split(/\s+/).length > DESCRIPTION_WORDS) out.findings["long-description"].push(at);
 
+      // Every defined term in the prose this README shows links to its
+      // definition (owner, 2026-09-29: terms "should be links in README.md s").
+      const terms = bootstrapTermTargets(repo, abs, Object.keys(BOOTSTRAP_TERMS));
+      const linked = (text: string) => linkTerms(text, terms).text;
+
       const all = filesIn(abs).filter((f) => !f.split("/").some((seg) => seg.startsWith(".")));
       const direct = all.filter((f) => !f.includes("/") && f !== "README.md");
       const counts = new Map<string, number>();
@@ -209,7 +216,7 @@ export async function plan(repo: string, templates: string): Promise<Plan> {
             const relToInst = relative(inst, join(abs, f));
             return {
               path: f,
-              what: cell(describeFile(inst, relToInst, assets)),
+              what: linked(cell(describeFile(inst, relToInst, assets))),
               usedBy: used(relToInst),
             };
           })
@@ -222,7 +229,7 @@ export async function plan(repo: string, templates: string): Promise<Plan> {
           [...byExt].sort((a, b) => b[1] - a[1]).map(([e, n]) => `${n} ${e}`).join(", ") + ".";
 
       const region = await liquid.renderFile("subgraph", {
-        subgraph: { id: d.id, path: d.path, title, description, kinds: d.graphKinds },
+        subgraph: { id: d.id, path: d.path, title, description: description ? linked(description) : description, kinds: d.graphKinds },
         instance: { name, title: decl.title, readme: relative(abs, instLink) },
         release,
         kg: decl,
