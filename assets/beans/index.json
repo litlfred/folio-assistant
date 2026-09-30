@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 468,
+      "count": 472,
       "unit": "beans"
     }
   },
@@ -1861,6 +1861,20 @@
       "file": "beans/defs/folio-assistant-9scf--folio-visualiser-5-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-9umr",
+      "title": "Concern subgraphs: cat-harness skills live in one declared subgraph per semantic concern (first: KG + library out of folio-core)",
+      "status": "todo",
+      "type": "epic",
+      "priority": "",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T08:12:08Z",
+      "updatedAt": "2026-09-30T08:12:08Z",
+      "preview": "Owner 2026-09-29: 'declared sub-graphs of cat-harness based on semantic concern (see sibling work on bootstrap definitions as named subset). dont need a separate facet. built into location.' Ruled 2026-09-30: **eight groups, KG + library move first**.\n\nA Subgraph is bootstrap's term (cat-harness/schemas/graph.ts): 'a named subset of Node Instances: a Declaration's directory entry, with its id, its",
+      "file": "beans/defs/folio-assistant-9umr--concern-subgraphs-cat-harness-skills-live-in-one-d.md"
+    },
+    {
       "id": "folio-assistant-9v4m",
       "title": "TEST INTERFERENCE: a profile-gate test fails in the full suite and passes in isolation on the same commit",
       "status": "todo",
@@ -3025,6 +3039,20 @@
       "file": "beans/defs/folio-assistant-gw8h--a-scripts-cat-harnessscripts-rewrite-doubled-six-h.md"
     },
     {
+      "id": "folio-assistant-gyoj",
+      "title": "Library viewer omits 3 of folio-assistant-sci's 4 library items",
+      "status": "scrapped",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-4ccr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T09:08:04Z",
+      "updatedAt": "2026-09-30T10:22:02Z",
+      "preview": "Measured 2026-09-30 while linking methodology sources (bean qgjh). folio-assistant-sci/library/ holds four complete items — arxiv-2406.01940v2, arxiv-2601.22554v1, arxiv-2602.16554v1, milnorlink — each with manifest.jsonld and structure.json. The library projection (cat-harness/docs/assets/library/index.json, written by gen-library-viz.ts) lists only milnorlink for that instance, and its tile says",
+      "file": "beans/defs/folio-assistant-gyoj--library-viewer-omits-3-of-folio-assistant-scis-4-l.md"
+    },
+    {
       "id": "folio-assistant-h1wq",
       "title": "JUDGE the four typed-only kinds: health, todos, interaction, issue-marks",
       "status": "completed",
@@ -3825,6 +3853,20 @@
       "updatedAt": "2026-09-24T06:32:51Z",
       "preview": "The residue `cflw` named and said *\"wants its own bean\"*. This is it, with the\nnumber re-derived rather than inherited.\n\n## Measured 2026-09-23, with `cflw`'s own probe\n\nAppend one comment line to `scripts/kg-audit.ts`, then:\n\n| run | files changed |\n|---|---|\n| `bun run kg:audit` alone | **2** — the probe itself, and `skills/kg-qa.manifest.json` |\n| `bun run regen` (43 verify/write pairs) | **2**",
       "file": "beans/defs/folio-assistant-mcdj--the-20-kg-witnesses-each-copy-the-auditor-hash-the.md"
+    },
+    {
+      "id": "folio-assistant-mdn6",
+      "title": "bun test re-stamps two proof script sidecars, so gates reports the tree changed",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T00:40:34Z",
+      "updatedAt": "2026-09-30T00:40:34Z",
+      "preview": "Measured 2026-09-30 on origin/main 0d2ec884c (worktree for g9r2): every gate passed, then gates.ts failed the run because `bun test` wrote `cat-harness/content/pipeline/script-sidecars/proof-compile-cost.script.json` and `proof-no-cost-regression.script.json`. The diff: `source_file` now reads `folio-assistant-sci/content/pipeline/qa-checkers-cost.ts` (the checker moved there), and `last_run_at`/`",
+      "file": "beans/defs/folio-assistant-mdn6--bun-test-re-stamps-two-proof-script-sidecars-so-ga.md"
     },
     {
       "id": "folio-assistant-mi97",
@@ -4827,7 +4869,7 @@
     {
       "id": "folio-assistant-rtuo",
       "title": "State tags and badges fail colour contrast on the dark theme",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-4ccr",
@@ -5711,6 +5753,20 @@
       "updatedAt": "2026-09-23T19:45:00Z",
       "preview": "## What this is\n\nStream 3 of 3 in the 2026-09-22 consolidation (see the sibling claims under\n`vuip` and `p5wm`). It owns **GOAL 3 (`yg29`) — 15 open beans**: showing who-iris\nwith its existing materialised assets, through a themed harness.\n\nSmallest of the three streams by bean count, and the one carrying the largest\nsingle pull request in the repository.\n\n## What this stream owns\n\n**Beans** — `yg",
       "file": "beans/defs/folio-assistant-w0cr--stream-33-goal-3-who-iris-through-a-themed-harness.md"
+    },
+    {
+      "id": "folio-assistant-w2gr",
+      "title": "cat-harness-tools: split the MCP server and tool implementations into their own instance, depending on cat-harness",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T08:12:08Z",
+      "updatedAt": "2026-09-30T08:12:08Z",
+      "preview": "Owner 2026-09-29/30: 'i want to split out cat-harness-tools too https://github.com/litlfred/cat-harness-tools' — 'see sibling work' (#1514, bootstrap-tools, bean 81tw). Direction ruled 2026-09-30: **tools depend on the harness** — cat-harness never imports the new instance.\n\nMeasured 2026-09-30: litlfred/cat-harness-tools is EMPTY (no commits). In scope: cat-harness/tools/ (8 files: discover, inde",
+      "file": "beans/defs/folio-assistant-w2gr--cat-harness-tools-split-the-mcp-server-and-tool-im.md"
     },
     {
       "id": "folio-assistant-w5h0",
