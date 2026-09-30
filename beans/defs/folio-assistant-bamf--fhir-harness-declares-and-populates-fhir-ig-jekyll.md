@@ -1,11 +1,11 @@
 ---
 # folio-assistant-bamf
 title: fhir-harness declares and populates FHIR IG Jekyll data (site.data.fhir.*) for the just-the-docs pipeline
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T10:16:18Z
-updated_at: 2026-09-30T18:48:48Z
+updated_at: 2026-09-30T19:07:16Z
 parent: folio-assistant-zzmr
 ---
 
@@ -18,7 +18,7 @@ Owner 2026-09-30: IG pages use Liquid site.data.fhir.* (IG Publisher convention,
 
 ## Done when
 - [x] fhir-harness declares a writer (a Tool, per 'tools declare what they write') that emits the IG Publisher-compatible site.data.fhir shape from sushi-config / fhir-artifact-index, for each IG instance
-- [ ] the just-the-docs build runs it, so {{ site.data.fhir.ig.version }} etc. resolve on the site as they do in the IG Publisher
+- [x] the just-the-docs build runs it, so {{ site.data.fhir.ig.version }} etc. resolve on the site as they do in the IG Publisher — REWORDED by the owner 2026-09-30: one Jekyll site per IG, built by the IG's OWN repository (build-ig-site, #1670), not by this one. Verified locally on smart-trust's real source; running it in an IG repo waits on the split (bean filed)
 - [x] fields with no source are reported as undetermined, never written as empty strings
 - [x] consistent with the harness-namespaced values bean (the same data under site.data.<harness>.*)
 
@@ -41,3 +41,9 @@ Owner 2026-09-30: IG pages use Liquid site.data.fhir.* (IG Publisher convention,
   - 7 pages are absent from sushi-config pages.
 - Screenshots were sent to the owner. Tests: 7, calibrated.
 - **Still open:** CI does not run it yet. The IG SOURCE is not in this repository, and where it comes from (a declared source in the instance, or a workflow clone) is the owner's call.
+
+
+## Summary of Changes
+- #1591: ig-site-data writes site.data.fhir from sushi-config or fhir-artifact-index; fhir-harness declares site.data as a pass-through prefix.
+- #1670: build-ig-site stages one IG as one just-the-docs site (owner's choice).
+- Running it inside an IG's own repository waits on the split (vke6), and is tracked in its own bean.
