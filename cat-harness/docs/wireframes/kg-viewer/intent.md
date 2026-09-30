@@ -5,7 +5,7 @@
 - **The generated viewer page.** `cat-harness/scripts/kg-viewer.ts` writes `_kg/<stub>/index.html` by default. The page is published at `<base>/cat-harness/` and reads its parent `../cat-harness.jsonld`.
   - It is the target of `links.kg` (`/cat-harness/`, target `cat-harness/index.html`) in `cat-harness/docs/_data/harness.json`.
   - It is reached from the navbar icon row's **Knowledge graph** ⌘ (`navbar.hrefs.kg`) and from the action panel's "Knowledge graph" tile.
-- **Its skill:** `cat-harness/skills/folio-core/kg-viewer.md`. Its strings: `cat-harness/scripts/kg-viewer-strings.ts`, and `cat-harness/translations/{ar,es,fr,ru,zh}/kg-viewer.po`.
+- **Its skill:** `cat-harness/skills/ui/ui-core/kg-viewer.md`. Its strings: `cat-harness/scripts/kg-viewer-strings.ts`, and `cat-harness/translations/{ar,es,fr,ru,zh}/kg-viewer.po`.
 - It is **not** a just-the-docs page. It is one standalone HTML file with no dependencies, so it has no sidebar, no harness dividers, and no "▾ Folio" handle.
 
 **Drawn from a real render.** I generated the page and the JSON-LD locally (`kg-export.ts --out`, `kg-viewer.ts --out`, both in a scratch directory), served them over HTTP, and drove the page in Chromium at 1280 × 800 and 390 × 844. That covered the initial load, the Tool facet, a Tool node (`discussion`), and a search for and selection of the Skill `wireframe-design-review`.

@@ -135,5 +135,5 @@ the drawing keeps them apart.
   kinds must stay distinct (rule 4).
 - [`uml-overview`](../kg-core/uml-overview.md): the schema diagrams, where
   these rules were first learned.
-- [`kg-viewer`](../../folio-core/kg-viewer.md): the shared rule for an HTML
+- [`kg-viewer`](../../ui/ui-core/kg-viewer.md): the shared rule for an HTML
   viewer that fetches its projection by a path relative to itself.
