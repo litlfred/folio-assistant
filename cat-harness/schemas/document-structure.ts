@@ -31,6 +31,8 @@
  * stop. A third format (HTML, DOCX) is a new variant here and no reader
  * changes.
  */
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { z } from "zod";
 
 import { PDF_STRUCTURE_SCHEMA_ID, PdfStructureSchema, type PdfStructure } from "./pdf-structure.ts";
@@ -194,4 +196,26 @@ export function structureOf(json: unknown): BaseStructure | { reason: string } {
 /** The page range of a section, or undefined when its format has no pages. */
 export function pagesOf(s: BaseSection): { start: number; end: number } | undefined {
   return s.locator.kind === "pages" ? { start: s.locator.start, end: s.locator.end } : undefined;
+}
+
+/** The one filename a library entry's structure lives under. */
+export const STRUCTURE_FILENAME = "structure.json";
+
+/**
+ * Read a library entry's `structure.json` through {@link structureOf}.
+ *
+ * `{ reason }` for every way it can fail — absent, unparseable, a variant
+ * nobody declared — so a reader keeps "could not read" as its own state and
+ * never renders it as an entry with no sections.
+ */
+export function readStructure(entryDir: string): BaseStructure | { reason: string } {
+  const p = join(entryDir, STRUCTURE_FILENAME);
+  if (!existsSync(p)) return { reason: `no ${STRUCTURE_FILENAME} in ${entryDir}` };
+  let json: unknown;
+  try {
+    json = JSON.parse(readFileSync(p, "utf-8"));
+  } catch (e) {
+    return { reason: `${p} will not parse: ${e instanceof Error ? e.message : String(e)}` };
+  }
+  return structureOf(json);
 }

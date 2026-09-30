@@ -155,7 +155,7 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 - **OpenAI** (owner: '1 + 2 … share links you need'): (1) RECORDED — the PDF capture in agent-skills/library/skills-in-openai-api is one page, step 7 of a cookbook, almost all code: no authoring guidance to cite. (2) FETCHED — developers.openai.com and github.com are denied by this environment's network policy; raw.githubusercontent.com is not. The cookbook's own registry.yaml names examples/skills_in_api.ipynb; fetched, 37 cells, 2,154 words of prose (what a skill is, when to use one, the manifest, versioning, security), MIT-licensed (repository LICENSE, 'Copyright (c) 2025 OpenAI').
   - [ ] ingest it — the pipeline has NO rung for a Jupyter notebook (ingest reports the rung undetermined and refuses), so this needs a notebook rung: markdown cells to sections by heading, code cells kept as code. Then the OpenAI vendor voice.
   - Link the owner could allow for the canonical text: https://developers.openai.com/api/docs/guides/tools-skills (the notebook's own 'Skills documentation' link).
-- [ ] **Owner, 2026-09-30: 'vendors/<id>/ should be declared subgraphs along with vendors/'.** Reverses the 2026-09-22 reading ('one declaration; vendors nested inside it', schemas/voices.ts VOICE_VENDORS_DIR). The same owner ruling of 2026-09-22 (directory-conventions §'Nesting is declared FROM WITHIN') says HOW: a node inside the directory names its subdirectories — never the root declaration reaching down a path. What it left OPEN, recorded there as not an agent's to settle: **the node's name and kind**. Proposed default for the owner: reuse the beans/beans.json pattern positionally — skills/voices/voices.json declaring vendors/, and skills/voices/vendors/vendors.json declaring each <id>/, as ContentDirectory entries. Blocked on that answer.
+- [x] **Owner, 2026-09-30: 'vendors/<id>/ should be declared subgraphs along with vendors/'.** Reverses the 2026-09-22 reading ('one declaration; vendors nested inside it', schemas/voices.ts VOICE_VENDORS_DIR). The same owner ruling of 2026-09-22 (directory-conventions §'Nesting is declared FROM WITHIN') says HOW: a node inside the directory names its subdirectories — never the root declaration reaching down a path. What it left OPEN, recorded there as not an agent's to settle: **the node's name and kind**. Proposed default for the owner: reuse the beans/beans.json pattern positionally — skills/voices/voices.json declaring vendors/, and skills/voices/vendors/vendors.json declaring each <id>/, as ContentDirectory entries. Blocked on that answer.
 
 
 ## 2026-09-30 — the OpenAI notebook needs a design decision before a rung
@@ -177,9 +177,12 @@ _2026-09-30T10:39:35Z_ — Claimed by claude/brave-hawking-511rrx — pushed to 
 ## Owner, 2026-09-30 (round 3, after a measured analysis): notebook shape — A+B
 A shared `document-structure` base with two variants. `pdf-structure/v1` stays unchanged as one variant, and `notebook-structure/v1` is new. Readers of `structure.json` measured: 17 in total. Nine read only shared fields. Three are page-aware and already null-safe (gen-library-jsonld, l1-blocks, library-graph). One is a strict validator, check-l1-complete, which breaks under any option. Four are PDF-only tools (pdf-tables, extract-candidates, document-image, and materialization fixity, whose sha256 check still works).
 Plan:
-- [ ] base schema plus a `structureOf()` accessor returning a `{pages}|{cells}` locator
+- [x] base schema plus a `structureOf()` accessor returning a `{pages}|{cells}` locator (PR #1628)
 - [ ] check-l1-complete and the three page-aware readers switched to the accessor
 - [ ] PDF-only tools skip a notebook with a stated reason
 - [ ] a check refusing a direct parse of structure.json outside the accessor
-- [ ] a notebook rung in ingest-document (markdown cells become sections by heading, code cells kept with their language)
-- [ ] ingest the OpenAI notebook, then write the OpenAI vendor voice
+- [x] a notebook rung in ingest-document (markdown cells become sections by heading, code cells kept with their language): `scripts/notebook-structure.ts`, routed by CONTENT (PR #1628)
+- [x] ingest the OpenAI notebook, then write the OpenAI vendor voice: `agent-skills/library/skills-in-openai-api-notebook` (12 sections, L1 complete, MIT licence carried) and `agent-skill-authoring-openai` (12 `oa-*` rules, each a verbatim quote), declared in `vendors/vendors.json` (PR #1628)
+
+
+_2026-09-30 15:40_ — vendors declared from within (`voices.json` names `vendors/`, `vendors/vendors.json` names each vendor; kind `voice-vendors`) landed in PR #1483. The loader refuses an undeclared vendor. Three vendor voices now: Gemini CLI, Claude, OpenAI.

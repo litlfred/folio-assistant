@@ -76,6 +76,7 @@ import { directoriesForGraph } from "../../schemas/cat-harness.js";
 import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.ts";
 import { buildTabularNodes, tabularShapeOf } from "./tabular-nodes.ts";
 import { TABULAR_CSVW_FILENAME } from "../../schemas/tabular-csvw.ts";
+import { readStructure } from "../../schemas/document-structure.ts";
 
 interface StructureSection {
   id: string;
@@ -523,8 +524,13 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
   const rung = ingestRungOf((f) => existsSync(join(dir, f)));
 
   if (rung === "paged") {
-    const structure = readJson<Structure>(join(dir, "structure.json"));
-    if (!structure) return { state: "unreadable", rung };
+    // Through the shared accessor (bean rkqp): a variant nobody declared is
+    // `unreadable` here rather than half-rendered. The variant's own fields
+    // (arXiv id, DOI, page count) are read off `raw`; a notebook has none of
+    // them and they render as null, as a PDF without them always has.
+    const read = readStructure(dir);
+    if ("reason" in read) return { state: "unreadable", rung };
+    const structure = read.raw as unknown as Structure;
     const candidates = readJson<Candidates>(join(dir, "candidates.json"));
     const images = readJson<ImagesSidecar>(join(dir, "images.json"));
     const licence = readLicence(dir);
