@@ -1995,6 +1995,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.liquid",
+      "prefLabel": "CatHarnessDeclaration.liquid",
+      "definition": "The Liquid prefix this instance's VALUES are addressed by in authored text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the platform resolves it or passes it through.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.liquid",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.name",
       "prefLabel": "CatHarnessDeclaration.name",
       "definition": "The instance's name, e.g. `\"agentic-harness\"`.",
@@ -2097,6 +2104,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.iriBase",
       "definition": "The address this instance's IRIs are minted under, BEFORE the version — bootstrap's `iriBase` (see `graph.ts`), and the one place a fork edits.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.iriBase",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.liquid",
+      "prefLabel": "CatHarnessDeclarationSchema.liquid",
+      "definition": "See {@link CatHarnessDeclaration.liquid}.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.liquid",
       "status": "candidate"
     },
     {
@@ -2265,6 +2279,20 @@
       "prefLabel": "GraphNodeDirectoryShape.absent",
       "definition": "This directory is DECLARED and deliberately not on disk, with the reason.",
       "source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.absent",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.liquidprefix.passthrough",
+      "prefLabel": "LiquidPrefix.passThrough",
+      "definition": "Leave `{{ <prefix>.… }}` for the downstream engine (Jekyll, IG Publisher).",
+      "source": "cat-harness/schemas/cat-harness.ts#LiquidPrefix.passThrough",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.liquidprefix.prefix",
+      "prefLabel": "LiquidPrefix.prefix",
+      "definition": "The first path segment(s); default the instance's `name`.",
+      "source": "cat-harness/schemas/cat-harness.ts#LiquidPrefix.prefix",
       "status": "candidate"
     },
     {
