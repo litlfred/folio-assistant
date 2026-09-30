@@ -489,7 +489,7 @@
     {
       "id": "folio-assistant-2c2b",
       "title": "CI WATCH IS TWO-STATE: cancelled read as failure and reported a green main red — bun run ci:watch, three states with undetermined never collapsing",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
@@ -1091,7 +1091,7 @@
     {
       "id": "folio-assistant-52cz",
       "title": "A CONFLICTED PR CREATES NO pull_request RUN, and g62s's headUnjudged cannot see it — the one absent-run case that needs no glob evaluation",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
@@ -3195,7 +3195,7 @@
     {
       "id": "folio-assistant-fq5u",
       "title": "DOWNSTREAM TOOLS IN QA: a run record per downstream tool, and QA goes stale when its inputs change — LSI first",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-1swy",
@@ -4157,7 +4157,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-26T08:05:18Z",
       "updatedAt": "2026-09-26T08:54:33Z",
-      "preview": "Measured on `origin/main` at `0c5086db6c1`, 2026-09-26.\n\n`cat-harness/skills/workflow/package-manifest.json` lists **14** skills of which\n**13 are distinct**. `release-epic-planning` appears **twice**.\n\n    skills entries: 14 | distinct: 13\n    DUPLICATES: {'release-epic-planning': 2}\n\n## Why no gate sees it\n\n`scripts/tests/skill-manifest-coverage.test.ts:133`:\n\n    const listed = new Set(p.listed",
+      "preview": "Measured on `origin/main` at `0c5086db6c1`, 2026-09-26.\n\n`cat-harness/skills/process/workflow/package-manifest.json` lists **14** skills of which\n**13 are distinct**. `release-epic-planning` appears **twice**.\n\n    skills entries: 14 | distinct: 13\n    DUPLICATES: {'release-epic-planning': 2}\n\n## Why no gate sees it\n\n`scripts/tests/skill-manifest-coverage.test.ts:133`:\n\n    const listed = new Set(",
       "file": "beans/defs/folio-assistant-m1k4--duplicate-manifest-entry-survives-every-gate-the-u.md"
     },
     {
@@ -4249,7 +4249,7 @@
     {
       "id": "folio-assistant-mdn6",
       "title": "bun test re-stamps two proof script sidecars, so gates reports the tree changed",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-1xhc",
@@ -6940,8 +6940,8 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T20:04:19Z",
-      "updatedAt": "2026-09-30T20:04:25Z",
-      "preview": "",
+      "updatedAt": "2026-09-30T21:00:35Z",
+      "preview": "Step 2 of the adapters closure planned in `r0tm`, **on the owner's ruling of\noption A** (two PRs, paper first). Step 1 landed as `880b707f1da` (bean\n`y5si`), so only the atomic half remained. This earns `yj6r`'s last unticked\nbox. PR #1687.\n\n## What moved\n\n**18 files**: the 12 under `cat-harness/adapters/document/` and the 6 consuming\ntests from `cat-harness/scripts/tests/`. The tests moved WITH t",
       "file": "beans/defs/folio-assistant-ybp4--adapters-closure-step-22-adaptersdocument-its-6-co.md"
     },
     {
@@ -7045,14 +7045,14 @@
     {
       "id": "folio-assistant-yn2k",
       "title": "B10f (#1168): move instance namespaces to their planned repos' own hosts? (owner decision)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T19:28:44Z",
-      "updatedAt": "2026-09-30T20:13:03Z",
+      "updatedAt": "2026-09-30T20:13:16Z",
       "preview": "B10e made the owner/repo → IRI map derived (instanceNamespace in schemas/instance-repositories.ts). Today cat-harness and folio-assistant-core mint under https://litlfred.github.io/folio-assistant/<stub>/ns#, which does NOT survive the split; bootstrap already mints under its own host (iriBase https://litlfred.github.io/bootstrap/). Moving the other two means declaring iriBase (e.g. https://litlfr",
       "file": "beans/defs/folio-assistant-yn2k--b10f-1168-move-instance-namespaces-to-their-planne.md"
     },
