@@ -22,3 +22,14 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/tools/` (intent.m
 6. **"On this page" (4 entries) exists only in the opened sidebar.** At rest the strip hides the page index, so on a page this long the section list is two interactions away.
 
 When fixed, re-draw `cat-harness/docs/wireframes/tools/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+
+## Re-verified 2026-09-29 on `main` 35402147f
+
+Each finding re-measured on a local build of that commit, at 1280×800 and 390×844, both colour schemes where contrast is involved. 6 still present, 0 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — No way to find one tool except page search; stat boxes not links: Main has 0 input/select; main table 104 rows (was 71). Stat boxes ('104 Tool nodes', '63 skills satisfied', …) are not links; only in-page anchors are the 3 heading permalinks.
+- **STILL-PRESENT** — Skills and tool ids are not links: Main table (tool|what it does|invoked|satisfies|i/o): 0/104 'satisfies' cells and 0/104 tool-id cells contain an <a>.
+- **STILL-PRESENT** — Invocation tags fail contrast on dark scheme: prefers-color-scheme dark (data-fa-scheme=dark, cell bg rgb(48,45,54)): .tg-shell 2.19, .tg-mcp 2.29, .tg-inproc 2.09, .tg-manual 2.24 :1 at 11.52px (<4.5). Light scheme passes (6.16/5.91/6.45/6.04). Default now follows OS, so fails only for dark-mode readers.
+- **STILL-PRESENT** — Mobile: 5-column table in 358px column, off-screen columns, no scroll cue: At 390x844 page scrollWidth 390, but .table-wrapper scrollWidth 570 vs clientWidth 362; headers at x: invoked 263, satisfies 370, i/o 477 (last two off-screen). Wrapper mask-image none (narrow-viewport.css cue excludes .table-wrapper > table). 'what it does' column 138px; tallest row 536px.
+- **STILL-PRESENT** — '▾ Folio' handle overlaps top of content column: .fa-glass-handle position:fixed, top centre: 1280 → rect (594,0,93x28), min-height now 28px; #main-content starts y=140 so no overlap with content, only the empty header. 390 → rect (154,0,82x25) overlaps a.site-title 'C@T Harness' box (0,2,244x49) in the top bar. Improved on desktop, still over the top bar on mobile.
+- **STILL-PRESENT** — 'On this page' (4 entries) only in the opened sidebar: details.fa-doc-index (4 links): at 390 summary visible at rest (y=96, hit-test true) — fixed on mobile. At 1280 summary at (0,299,55x58) in the collapsed strip fails hit-test (covered) and is not visible at rest.
