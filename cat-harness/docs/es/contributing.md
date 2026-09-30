@@ -63,7 +63,7 @@ cambies las pautas para agentes.
 
 - Las **instrucciones de habilidades** (`docs/reference/skill-instructions/*.md`) también son
   generadas — nunca las edites a mano. Edita el cuerpo de las habilidades en
-  `skills/content-lifecycle/*.md` o `src/skills/*.md` y vuelve a generar:
+  `skills/authoring/content-lifecycle/*.md` o `src/skills/*.md` y vuelve a generar:
 
   ```sh
   bun run scripts/gen-skill-docs.ts

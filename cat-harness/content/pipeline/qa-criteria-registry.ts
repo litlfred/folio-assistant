@@ -221,7 +221,7 @@ const VOICE: QaCriterionDefinition[] = [
     // Ten instances of one criterion across ten pages is evidence about the
     // criterion's scope, not about ten authors — so this is one edit rather
     // than ten reviewer entries, and it leaves the reason on the record
-    // (`skills/folio-core/voice-editorial-review.md` §"The scoping question").
+    // (`skills/authoring/authoring-core/voice-editorial-review.md` §"The scoping question").
     //
     // NOT final: a document folio that DOES want scholarly register — a WHO
     // guideline states recommendations in third person — should re-enable this

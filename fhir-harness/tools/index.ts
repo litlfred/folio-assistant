@@ -14,7 +14,7 @@
  * down.
  *
  * The placement question in
- * [`smart-stack-layering`](../../cat-harness/skills/authoring-who-smart-guidelines/smart-stack-layering.md)
+ * [`smart-stack-layering`](../../cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-stack-layering.md)
  * asks *would a non-WHO FHIR IG need this?*, and requires the answer to be
  * backed by naming one. It can be named, so they are here.
  *

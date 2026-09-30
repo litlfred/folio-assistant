@@ -195,7 +195,7 @@ describe("reachability reads the serving registry, not just manifests", () => {
   });
 
   test("every skill_fetch local package points at a directory that exists", async () => {
-    // The defect this whole change came from: `skills/content-lifecycle` was
+    // The defect this whole change came from: `skills/authoring/content-lifecycle` was
     // absent from LOCAL_PACKAGES while 52 activities named its skills. A
     // package pointing at a missing directory is the same failure one step on.
     const { LOCAL_PACKAGES } = await import("../src/tools/skill-fetch.js");
