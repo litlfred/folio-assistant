@@ -3,6 +3,7 @@
  * subdirectories of a skills directory are TOPICS (bean `9umr`).
  *
  * @module schemas/skill-topics
+ * @graphNode schema
  *
  * Its own module, depending on zod alone, because `scripts/skill-topics.ts`
  * parses with it and that is imported by `scripts/known-skills.ts` — a

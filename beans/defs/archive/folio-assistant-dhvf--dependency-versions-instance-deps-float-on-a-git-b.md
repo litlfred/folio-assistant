@@ -116,7 +116,7 @@ an instance actually consumed by someone who cannot see this git history.
 
 ## What "make sure documented" means
 
-[`folio-core/directory-conventions`](../../../cat-harness/skills/folio-core/directory-conventions.md)
+[`folio-core/directory-conventions`](../../../cat-harness/skills/kg/kg-core/directory-conventions.md)
 owns the declaration and what an instance inherits from a dependency. The
 version/pin rule belongs there, not in a new skill — a second skill about
 declarations is a second answer to what a declaration says. The generated
